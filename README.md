@@ -1,49 +1,40 @@
-# Hono + React Router + Vite + ShadCN UI on Cloudflare Workers
+# MustBeViral
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-hono-fullstack-template)
-![Build modern full-stack apps with Hono, React Router, and ShadCN UI on Cloudflare Workers](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/24c5a7dd-e1e3-43a9-b912-d78d9a4293bc/public)
+MustBeViral is a Cloudflare-native, multi-brand AI marketing autopilot. Phase 1 is built for local businesses, agencies, multi-brand operators, and done-for-you operators.
 
-<!-- dash-content-start -->
+The app is a clean build from Cloudflare's `react-router-hono-fullstack-template`, with the original System DNA preserved under `docs/system-dna/`, the Claude audit preserved under `audit/`, and the reconciled build strategy preserved under `final-strategy/`.
 
-A modern full-stack template powered by [Cloudflare Workers](https://workers.cloudflare.com/), using [Hono](https://hono.dev/) for backend APIs, [React Router](https://reactrouter.com/) for frontend routing, and [shadcn/ui](https://ui.shadcn.com/) for beautiful, accessible components styled with [Tailwind CSS](https://tailwindcss.com/).
+## Product Direction
 
-Built with the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/) for optimized static asset delivery and seamless local development. React is configured in single-page app (SPA) mode via Workers.
+- One user can manage multiple brands.
+- Each brand owns a persistent `MarketingAgent`.
+- Agentic onboarding scans website/social/competitor inputs safely.
+- The UI is a command center, not a chat-first app.
+- Content, image generation, approvals, manual export scheduling, reports, DM rules, billing, usage, admin, and read-only MCP are built in disciplined phases.
+- Direct social posting and DM automation are not Phase 1 dependencies.
 
-A perfect starting point for building interactive, styled, and edge-deployed SPAs with minimal configuration.
+## Local Development
 
-## Features
+This project currently needs Node 22+ for current Cloudflare tooling. The system Node in this shell is Node 20, so the initial scaffold used the bundled Codex Node 24 runtime.
 
-- ⚡ Full-stack app on Cloudflare Workers
-- 🔁 Hono for backend API endpoints
-- 🧭 React Router for client-side routing
-- 🎨 ShadCN UI with Tailwind CSS for components and styling
-- 🧱 File-based route separation
-- 🚀 Zero-config Vite build for Workers
-- 🛠️ Automatically deploys with Wrangler
-- 🔎 Built-in Observability to monitor your Worker
-<!-- dash-content-end -->
+```bash
+npm install
+npm run typecheck
+npm run build
+npm run dev
+```
 
-## Tech Stack
+Do not run production deploys from this checkout until the deployment checklist is complete.
 
-- **Frontend**: React + React Router + ShadCN UI
-  - SPA architecture powered by React Router
-  - Includes accessible, themeable UI from ShadCN
-  - Styled with utility-first Tailwind CSS
-  - Built and optimized with Vite
+## Important Paths
 
-- **Backend**: Hono on Cloudflare Workers
-  - API routes defined and handled via Hono in `/api/*`
-  - Supports REST-like endpoints, CORS, and middleware
+- `docs/system-dna/` - preserved original System DNA.
+- `docs/decisions/` - ADRs for implementation decisions.
+- `audit/` - preserved Claude audit.
+- `final-strategy/` - final Codex build strategy and logs.
+- `app/` - React Router client.
+- `src/server/` - Hono Worker entrypoint, environment types, agents, workflows, services, db, middleware, and MCP.
 
-- **Deployment**: Cloudflare Workers via Wrangler
-  - Vite plugin auto-bundles frontend and backend together
-  - Deployed worldwide on Cloudflare’s edge network
+## Current Status
 
-## Resources
-
-- 🧩 [Hono on Cloudflare Workers](https://hono.dev/docs/getting-started/cloudflare-workers)
-- 📦 [Vite Plugin for Cloudflare](https://developers.cloudflare.com/workers/vite-plugin/)
-- 🛠 [Wrangler CLI reference](https://developers.cloudflare.com/workers/wrangler/)
-- 🎨 [shadcn/ui](https://ui.shadcn.com)
-- 💨 [Tailwind CSS Documentation](https://tailwindcss.com/)
-- 🔀 [React Router Docs](https://reactrouter.com/)
+The repo has a clean Cloudflare template foundation and strategy docs. Product implementation starts with strict tooling, Cloudflare config, D1 schema, Hono API foundation, auth/RBAC, workspace/brand CRUD, `MarketingAgent`, and mock workflows.

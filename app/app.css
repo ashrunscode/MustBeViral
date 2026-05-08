@@ -8,9 +8,13 @@
 
 html,
 body {
-	@apply bg-white dark:bg-gray-950;
+	@apply bg-[#f7f7f2] text-[#171717];
+}
 
-	@media (prefers-color-scheme: dark) {
-		color-scheme: dark;
-	}
+a,
+button {
+	transition:
+		background-color 150ms ease,
+		color 150ms ease,
+		border-color 150ms ease;
 }

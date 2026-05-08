@@ -1,6 +1,19 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["tailwind.config.ts", "vite.config.ts"],
+	"include": [
+		"*.config.ts",
+		"playwright.config.ts",
+		"react-router.config.ts",
+		"scripts/**/*.ts",
+		"src/server/http/envelope.ts",
+		"src/server/services/auth/password.ts",
+		"src/server/services/scheduler/index.ts",
+		"src/server/services/security/*.ts",
+		"src/server/services/stripe/signature.ts",
+		"tests/**/*.ts",
+		"vite.config.ts",
+		"vitest.config.ts"
+	],
 	"compilerOptions": {
 		"composite": true,
 		"strict": true,

@@ -6,6 +6,11 @@
 	],
 	"compilerOptions": {
 		"checkJs": true,
+		"exactOptionalPropertyTypes": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noUncheckedIndexedAccess": true,
 		"verbatimModuleSyntax": true,
 		"skipLibCheck": true,
 		"strict": true,

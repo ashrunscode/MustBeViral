@@ -1,0 +1,4 @@
+APP_ENV=development
+PUBLIC_APP_URL=http://localhost:5173
+DEFAULT_SCHEDULER_PROVIDER=manual
+SESSION_SECRET=replace-with-local-dev-secret

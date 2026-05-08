@@ -1,0 +1,156 @@
+// wrangler.jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mustbeviral",
+  "main": "src/server/index.ts",
+  "compatibility_date": "2026-05-07",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "APP_ENV": "development",
+    "PUBLIC_APP_URL": "http://localhost:5173",
+    "DEFAULT_SCHEDULER_PROVIDER": "manual",
+    "DEFAULT_TEXT_MODEL": "kimi-2.6",
+    "DEFAULT_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-9b",
+    "PREMIUM_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-dev",
+    "FAST_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-4b"
+  },
+  "ai": {
+    "binding": "AI"
+  },
+  "browser": {
+    "binding": "BROWSER"
+  },
+  "worker_loaders": [
+    {
+      "binding": "LOADER"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mustbeviral",
+      "database_id": "__D1_DATABASE_ID__",
+      "migrations_dir": "src/server/db/migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "__R2_BUCKET_NAME__"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "__KV_NAMESPACE_ID__"
+    }
+  ],
+  "vectorize": [
+    {
+      "binding": "VECTORIZE",
+      "index_name": "__VECTORIZE_INDEX_NAME__"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MARKETING_AGENT",
+        "class_name": "MarketingAgent"
+      },
+      {
+        "name": "MUSTBEVIRAL_MCP",
+        "class_name": "MustBeViralMCP"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["MarketingAgent", "MustBeViralMCP"]
+    }
+  ],
+  "workflows": [
+    {
+      "name": "brand-onboarding-workflow",
+      "binding": "BRAND_ONBOARDING_WORKFLOW",
+      "class_name": "BrandOnboardingWorkflow"
+    },
+    {
+      "name": "content-calendar-workflow",
+      "binding": "CONTENT_CALENDAR_WORKFLOW",
+      "class_name": "ContentCalendarWorkflow"
+    },
+    {
+      "name": "image-generation-workflow",
+      "binding": "IMAGE_GENERATION_WORKFLOW",
+      "class_name": "ImageGenerationWorkflow"
+    },
+    {
+      "name": "approval-scheduling-workflow",
+      "binding": "APPROVAL_SCHEDULING_WORKFLOW",
+      "class_name": "ApprovalSchedulingWorkflow"
+    },
+    {
+      "name": "weekly-report-workflow",
+      "binding": "WEEKLY_REPORT_WORKFLOW",
+      "class_name": "WeeklyReportWorkflow"
+    },
+    {
+      "name": "growth-opportunity-workflow",
+      "binding": "GROWTH_OPPORTUNITY_WORKFLOW",
+      "class_name": "GrowthOpportunityWorkflow"
+    },
+    {
+      "name": "dm-automation-setup-workflow",
+      "binding": "DM_AUTOMATION_SETUP_WORKFLOW",
+      "class_name": "DMAutomationSetupWorkflow"
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+        "binding": "POST_PUBLISH_QUEUE",
+        "queue": "mustbeviral-post-publish"
+      },
+      {
+        "binding": "ANALYTICS_INGEST_QUEUE",
+        "queue": "mustbeviral-analytics-ingest"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "mustbeviral-post-publish",
+        "max_batch_size": 10,
+        "max_batch_timeout": 30
+      },
+      {
+        "queue": "mustbeviral-analytics-ingest",
+        "max_batch_size": 25,
+        "max_batch_timeout": 60
+      }
+    ]
+  },
+  "env": {
+    "staging": {
+      "vars": {
+        "APP_ENV": "staging",
+        "PUBLIC_APP_URL": "https://staging.mustbeviral.com",
+        "DEFAULT_SCHEDULER_PROVIDER": "manual"
+      }
+    },
+    "production": {
+      "vars": {
+        "APP_ENV": "production",
+        "PUBLIC_APP_URL": "https://mustbeviral.com",
+        "DEFAULT_SCHEDULER_PROVIDER": "vista_social"
+      }
+    }
+  }
+}
