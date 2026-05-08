@@ -1,5 +1,5 @@
 const encoder = new TextEncoder();
-const defaultIterations = 120_000;
+const defaultIterations = 100_000;
 const hashBytes = 64;
 const saltBytes = 16;
 

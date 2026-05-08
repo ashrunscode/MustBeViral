@@ -98,6 +98,26 @@ export async function createMockOnboardingArtifacts(
 	db: D1Database,
 	input: { brand: BrandRow; requestedBy?: string | undefined },
 ): Promise<Record<string, unknown>> {
+	const existingRun = await dbFirst<{ id: string; output_json: string }>(
+		db,
+		`SELECT id, output_json
+		FROM workflow_runs
+		WHERE brand_id = ? AND workflow_name = 'BrandOnboardingWorkflow' AND status = 'complete'
+		ORDER BY created_at DESC
+		LIMIT 1`,
+		[input.brand.id],
+	);
+	if (existingRun) {
+		await dbRun(db, "UPDATE brands SET onboarding_status = 'complete', updated_at = CURRENT_TIMESTAMP WHERE id = ?", [
+			input.brand.id,
+		]);
+		return {
+			...fromJson(existingRun.output_json, {}),
+			workflowRunId: existingRun.id,
+			idempotent: true,
+		};
+	}
+
 	const scanId = createId("scan");
 	const scoreId = createId("score");
 	const targetId = createId("target");

@@ -63,3 +63,27 @@ Decision:
 
 Reason:
 - Phase 1 must be sellable and safe without direct social APIs, unsafe DM automation, or trusted scanned content. Manual export and approval guardrails are production prerequisites.
+
+## 2026-05-08: Workers-Compatible PBKDF2 Cap
+
+Decision:
+- Cap the custom email/password PBKDF2-SHA512 iteration count at 100,000.
+
+Reason:
+- Cloudflare Workers rejected the previous 120,000 iteration setting during production signup with `iteration counts above 100000 are not supported`. The lower value preserves the selected WebCrypto-compatible strategy and is now covered by a regression assertion.
+
+## 2026-05-08: Onboarding Start Idempotency
+
+Decision:
+- Treat a completed `BrandOnboardingWorkflow` as an idempotent success when onboarding is started again for the same brand.
+
+Reason:
+- Brand creation can auto-run onboarding. A later explicit `startOnboardingScan` must be safe to rerun and return existing artifact IDs instead of attempting to recreate version-1 onboarding records.
+
+## 2026-05-08: Protected MCP In Production
+
+Decision:
+- Keep MCP routes admin-protected in production.
+
+Reason:
+- The MCP server is read-only, but it still exposes operational business data. Production smoke validates normal-user denial; admin-user MCP smoke should use an explicit admin account or seed path.

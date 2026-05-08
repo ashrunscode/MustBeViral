@@ -10,6 +10,7 @@ describe("auth and security primitives", () => {
 		const hash = await hashPassword("CorrectHorseBattery9");
 
 		expect(hash.startsWith("pbkdf2-sha512$")).toBe(true);
+		expect(Number(hash.split("$")[1])).toBeLessThanOrEqual(100_000);
 		await expect(verifyPassword("CorrectHorseBattery9", hash)).resolves.toBe(true);
 		await expect(verifyPassword("wrong password", hash)).resolves.toBe(false);
 	});

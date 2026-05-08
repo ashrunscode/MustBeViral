@@ -216,3 +216,37 @@ Remaining issues:
 - Stripe live charges remain disabled until live keys and price IDs are explicitly configured.
 - Playwright E2E specs exist, but full browser execution still needs a managed dev-server command or a manually started local server.
 - The local Workers runtime still warns that it falls back from compatibility date `2026-05-08` to `2025-11-25`.
+
+## Milestone 8: Production Provisioning And Deploy
+
+Files changed:
+- `wrangler.jsonc`
+- `worker-configuration.d.ts`
+- `src/server/routes/auth.ts`
+- `src/server/services/auth/password.ts`
+- `src/server/services/brand-operations.ts`
+- `tests/unit/auth-security.test.ts`
+
+Commands run:
+- `npm run typecheck`
+- `npm run lint`
+- `npm run test`
+- `npm run build`
+- `wrangler d1 migrations apply DB --env production --remote`
+- `CLOUDFLARE_ENV=production npm run build`
+- `CLOUDFLARE_ENV=production wrangler deploy`
+- Production smoke against `https://mustbeviral.com` and `https://www.mustbeviral.com`
+
+Result:
+- Pass. Provisioned production Cloudflare resources: D1 `mustbeviral-production` (`b9a428e0-038a-4df7-a59d-3a5ddde54550`), KV `mustbeviral-production-cache` (`ff374abd8ca141e8af086afb593e8a8a`), and R2 `mustbeviral-production-media`.
+- Applied production D1 migration `0001_initial.sql` with 75 commands.
+- Deployed Worker `mustbeviral-production` to `mustbeviral.com/*` and `www.mustbeviral.com/*`; latest deployed version is `2f4ead0c-3d67-4261-8867-53dc43ca5c56`.
+- Production health passed on apex and www.
+- Production smoke passed through signup, login/me, workspace create, two brand creates, unsafe private URL rejection, command center, idempotent onboarding rerun, website scan, intelligence, profile, target market, 30-day content calendar, approval queue, approval-before-export guard, approved manual export, media list, image generation mock, DM rule draft, weekly report, and growth opportunities.
+- Admin/MCP routes denied normal-user access with 403, confirming protected-route behavior.
+- Fixed two production-only blockers found during smoke: Workers PBKDF2 iteration cap and onboarding rerun idempotency after brand creation auto-onboarding.
+
+Remaining issues:
+- Stripe live charges remain disabled because production Stripe secrets and live price IDs are not configured.
+- MCP read-only tools are admin-protected; a production admin-user smoke requires an explicit admin account/seeding process.
+- Staging bindings still use placeholders until staging resources are provisioned.

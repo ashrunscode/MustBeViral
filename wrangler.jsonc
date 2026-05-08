@@ -27,10 +27,6 @@
 	"ai": {
 		"binding": "AI"
 	},
-	"browser": {
-		"binding": "BROWSER",
-		"remote": true
-	},
 	"d1_databases": [
 		{
 			"binding": "DB",
@@ -113,21 +109,6 @@
 			"class_name": "DMAutomationSetupWorkflow"
 		}
 	],
-	"queues": {
-		"producers": [
-			{
-				"binding": "POST_PUBLISH_QUEUE",
-				"queue": "mustbeviral-post-publish"
-			}
-		],
-		"consumers": [
-			{
-				"queue": "mustbeviral-post-publish",
-				"max_batch_size": 10,
-				"max_batch_timeout": 30
-			}
-		]
-	},
 	"env": {
 		"staging": {
 			"routes": [
@@ -140,9 +121,85 @@
 				"APP_ENV": "staging",
 				"PUBLIC_APP_URL": "https://staging.mustbeviral.com",
 				"DEFAULT_SCHEDULER_PROVIDER": "manual",
+				"DEFAULT_TEXT_MODEL": "kimi-2.6",
+				"DEFAULT_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-9b",
+				"PREMIUM_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-dev",
+				"FAST_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-4b",
 				"USE_MOCK_AI": "true",
 				"USE_BROWSER_RUN": "false"
-			}
+			},
+			"ai": {
+				"binding": "AI"
+			},
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "mustbeviral-staging",
+					"database_id": "00000000-0000-0000-0000-000000000000",
+					"migrations_dir": "src/server/db/migrations"
+				}
+			],
+			"r2_buckets": [
+				{
+					"binding": "MEDIA_BUCKET",
+					"bucket_name": "mustbeviral-staging-media"
+				}
+			],
+			"kv_namespaces": [
+				{
+					"binding": "CACHE",
+					"id": "00000000000000000000000000000000"
+				}
+			],
+			"durable_objects": {
+				"bindings": [
+					{
+						"name": "MARKETING_AGENT",
+						"class_name": "MarketingAgent"
+					},
+					{
+						"name": "MUSTBEVIRAL_MCP",
+						"class_name": "MustBeViralMCP"
+					}
+				]
+			},
+			"workflows": [
+				{
+					"name": "mustbeviral-staging-brand-onboarding",
+					"binding": "BRAND_ONBOARDING_WORKFLOW",
+					"class_name": "BrandOnboardingWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-content-calendar",
+					"binding": "CONTENT_CALENDAR_WORKFLOW",
+					"class_name": "ContentCalendarWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-image-generation",
+					"binding": "IMAGE_GENERATION_WORKFLOW",
+					"class_name": "ImageGenerationWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-approval-scheduling",
+					"binding": "APPROVAL_SCHEDULING_WORKFLOW",
+					"class_name": "ApprovalSchedulingWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-weekly-report",
+					"binding": "WEEKLY_REPORT_WORKFLOW",
+					"class_name": "WeeklyReportWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-growth-opportunity",
+					"binding": "GROWTH_OPPORTUNITY_WORKFLOW",
+					"class_name": "GrowthOpportunityWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-dm-automation-setup",
+					"binding": "DM_AUTOMATION_SETUP_WORKFLOW",
+					"class_name": "DMAutomationSetupWorkflow"
+				}
+			]
 		},
 		"production": {
 			"routes": [
@@ -159,9 +216,85 @@
 				"APP_ENV": "production",
 				"PUBLIC_APP_URL": "https://mustbeviral.com",
 				"DEFAULT_SCHEDULER_PROVIDER": "manual",
+				"DEFAULT_TEXT_MODEL": "kimi-2.6",
+				"DEFAULT_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-9b",
+				"PREMIUM_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-dev",
+				"FAST_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-4b",
 				"USE_MOCK_AI": "false",
 				"USE_BROWSER_RUN": "false"
-			}
+			},
+			"ai": {
+				"binding": "AI"
+			},
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "mustbeviral-production",
+					"database_id": "b9a428e0-038a-4df7-a59d-3a5ddde54550",
+					"migrations_dir": "src/server/db/migrations"
+				}
+			],
+			"r2_buckets": [
+				{
+					"binding": "MEDIA_BUCKET",
+					"bucket_name": "mustbeviral-production-media"
+				}
+			],
+			"kv_namespaces": [
+				{
+					"binding": "CACHE",
+					"id": "ff374abd8ca141e8af086afb593e8a8a"
+				}
+			],
+			"durable_objects": {
+				"bindings": [
+					{
+						"name": "MARKETING_AGENT",
+						"class_name": "MarketingAgent"
+					},
+					{
+						"name": "MUSTBEVIRAL_MCP",
+						"class_name": "MustBeViralMCP"
+					}
+				]
+			},
+			"workflows": [
+				{
+					"name": "mustbeviral-production-brand-onboarding",
+					"binding": "BRAND_ONBOARDING_WORKFLOW",
+					"class_name": "BrandOnboardingWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-content-calendar",
+					"binding": "CONTENT_CALENDAR_WORKFLOW",
+					"class_name": "ContentCalendarWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-image-generation",
+					"binding": "IMAGE_GENERATION_WORKFLOW",
+					"class_name": "ImageGenerationWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-approval-scheduling",
+					"binding": "APPROVAL_SCHEDULING_WORKFLOW",
+					"class_name": "ApprovalSchedulingWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-weekly-report",
+					"binding": "WEEKLY_REPORT_WORKFLOW",
+					"class_name": "WeeklyReportWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-growth-opportunity",
+					"binding": "GROWTH_OPPORTUNITY_WORKFLOW",
+					"class_name": "GrowthOpportunityWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-dm-automation-setup",
+					"binding": "DM_AUTOMATION_SETUP_WORKFLOW",
+					"class_name": "DMAutomationSetupWorkflow"
+				}
+			]
 		}
 	}
 }

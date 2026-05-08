@@ -76,7 +76,7 @@ authRoutes.post("/signup", async (c) => {
 		db,
 		`INSERT INTO password_credentials (user_id, password_hash, password_algo, password_params_json)
 		VALUES (?, ?, 'pbkdf2-sha512', ?)`,
-		[userId, passwordHash, toJson({ iterations: 120_000, hash: "SHA-512" })],
+		[userId, passwordHash, toJson({ iterations: 100_000, hash: "SHA-512" })],
 	);
 	await createSession(c, userId);
 	await writeAuditLog(db, {
