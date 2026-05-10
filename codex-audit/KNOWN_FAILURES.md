@@ -8,7 +8,10 @@
 - Workaround: run `wrangler types`, `react-router typegen`, and `tsc -b` through `C:\Users\ernij\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe` if the floor warning appears.
 - Status: Open environment issue; repo validation passes with bundled Node 24. The repo `.node-version` pins to `24.14.0`.
 
-## Cloudflare MCP / Wrangler Auth — Partially Resolved
+## Cloudflare MCP / Wrangler Auth — RESOLVED Run 19
+- Closed: 2026-05-10 (Run 19). `npx wrangler whoami` returns OAuth-authenticated `ernijs.ansons@gmail.com`'s account `d2897bdebfa128919bd89b265e6a712e` with workers/d1/kv/r2/ai/zone scopes. `wrangler deploy` produced `mustbeviral-staging` version `88c739f1-...` and `mustbeviral-production` version `15ce175b-...`; `wrangler secret put` wrote 13 secrets across both envs without auth issues. The Cloudflare API MCP is similarly usable. The historical text below is preserved for the diff trail.
+
+## Cloudflare MCP / Wrangler Auth — Partially Resolved (pre-Run-19 history)
 - Observed: 2026-05-09 (reconfirmed Run 17, Run 18 used MCP for resource creation + migration apply)
 - Commands/tools:
   - Cloudflare API MCP (`mcp__baade926-..._accounts_list`, `_d1_databases_list`, `_kv_namespace_get`, `_r2_bucket_get`)
@@ -26,10 +29,26 @@
 - Workaround: For verification, use the Cloudflare API MCP. To unblock `cf:readiness` specifically, restore Wrangler CLI auth via interactive `wrangler login` or provide `CLOUDFLARE_API_TOKEN` env. Do not create R2/staging resources, deploy, or run remote migrations without explicit confirmation.
 - Status: Partially resolved. API MCP works; CLI gate is still red; no mutations have been attempted in Runs 14-17.
 
-## Stripe Read-Only Discovery
-- Observed: 2026-05-09
-- Tool: Stripe MCP read-only list calls.
-- Result: customer/subscription lists were empty; existing products/prices are non-MustBeViral products.
-- Impact: MustBeViral Stripe test-mode products/prices are not confirmed.
-- Workaround: prepare product/price creation plan only; do not create resources or write secrets without explicit user confirmation.
-- Status: Open operational setup item.
+## Stripe Read-Only Discovery — RESOLVED Run 19
+- Closed: 2026-05-10 (Run 19). Stripe CLI configured for test mode (`sk_test_*`) on account `acct_1SRvMXFMXFyeuIPx` (NxtSpin sandbox). Created 4 products, 4 monthly prices, 1 webhook endpoint pointed at `https://mustbeviral.com/api/webhooks/stripe` with 5 events. All 6 Stripe secrets written to staging + production via `wrangler secret put`. Signed-payload tamper + replay smoke green against both environments. **No live-mode resources created.** Live-mode activation remains explicitly deferred to a separate run with live-key authorisation.
+
+## Wrangler env block dropped by Cloudflare Vite plugin (Run 19, mitigated)
+- Observed: 2026-05-10 (Run 19, Phase 4 first deploy attempt).
+- Symptom: `wrangler deploy --env staging` ran but used the top-level `vars` (placeholder KV `0000...0000`, `APP_ENV: "development"`) and tried to deploy a script named `mustbeviral` instead of `mustbeviral-staging`. The deploy then failed at the API layer with `KV namespace '00000000000000000000000000000000' not found`.
+- Root cause: `react-router build` + `@cloudflare/vite-plugin` emits `build/server/wrangler.json` as the deploy artifact and writes `.wrangler/deploy/config.json` to redirect wrangler to it. The redirected config is FLATTENED — `definedEnvironments: ["staging","production"]` is preserved but the actual `env.staging` / `env.production` blocks are stripped. So `--env <name>` becomes a silent no-op.
+- Fix: `scripts/patch-deploy-config.mjs` reads the real env block from the source `wrangler.jsonc`, overrides the relevant keys (vars, d1, r2, kv, durable_objects, workflows, routes, ai, send_email, queues, vectorize, hyperdrive, services, analytics_engine_datasets) in `build/server/wrangler.json`, renames `name` to `mustbeviral-<env>`, and removes `definedEnvironments` so wrangler treats the result as single-env. Run after every `npm run build`, then `wrangler deploy` (no `--env`).
+- Status: Mitigated for staging + production. Filed as a long-term concern: future Cloudflare Vite plugin / wrangler updates may make this patcher obsolete; revisit when bumping `wrangler` past 4.90.0 or `@cloudflare/vite-plugin` past 1.36.x.
+
+## Wrangler vars override secrets when keys collide (Run 19, mitigated)
+- Observed: 2026-05-10 (Run 19, Phase 4 first staging smoke).
+- Symptom: After Phase 3 wrote `USE_MOCK_AI=false` via `wrangler secret put --env staging`, the first staging smoke still showed `provider: "mock"` for image gen.
+- Root cause: The deployed `vars.USE_MOCK_AI: "true"` (from `wrangler.jsonc:132` env.staging block) shadowed the secret of the same name. Cloudflare Workers documentation suggests secrets and vars share the same namespace, but in wrangler 4 / vite-plugin 1.36 the deployed `vars` value won at runtime.
+- Fix: Patched `vars.USE_MOCK_AI` directly to `"false"` in `build/server/wrangler.json` and redeployed (version `88c739f1-...`). Subsequent image-gen smoke produced `provider: "workers_ai"`, model `@cf/black-forest-labs/flux-2-klein-9b`, byteSize 309214 written to `mustbeviral-staging-media` R2.
+- Status: Mitigated. The `scripts/patch-deploy-config.mjs` already pulls vars from the env block, so future deploys preserve the correct value.
+
+## Stale dev server on port 5173 caused spurious e2e failures (Run 19, mitigated)
+- Observed: 2026-05-10 (Run 19, Phase 0).
+- Symptom: `npm run test:e2e` failed 6/6 with signup returning 401 `Unauthorized: no token provided` from a foreign `{"error":"..."}` envelope (not the MustBeViral envelope).
+- Root cause: Port 5173 was held by a leftover `coinop-platform` dev server (PID 55688, Node 22.22.0 from `~/.nvm/versions/node/v22.22.0/bin/node.exe`). Playwright's `webServer.reuseExistingServer: !CI` reused it instead of starting a fresh MustBeViral server. The CSP returned (`script-src 'self' https://maps.googleapis.com ...`) and CORS allow-origin (`https://investinwash.com`) confirmed the wrong app.
+- Fix: Killed PID 55688 with `Stop-Process -Force`, port 5173 freed. Re-ran `npm run test:e2e` → 6/6 PASS.
+- Status: Operational caveat. Suggest checking `Get-NetTCPConnection -LocalPort 5173` before running e2e in shared environments.

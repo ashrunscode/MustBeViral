@@ -638,3 +638,96 @@ Remaining issues:
 - Production redeploy of the Run-17 worktree pending after staging smoke green.
 - Sentry / observability dashboards (M-16) — provider selection pending.
 - shipped: pending.
+
+## Milestone 19 — Ship It (2026-05-10)
+
+End-to-end execution of the Run 19 plan (`C:/Users/ernij/.claude/plans/here-s-a-self-contained-prompt-delegated-kahn.md`). Took the project from "staging provisioned, master at Milestone 8" to "production redeployed with the Run 1-17 worktree, Stripe test mode wired, staging + production smoke green". `shipped: true`.
+
+### Phase 0 — Environment + local gate
+
+- Node 24.2.0 active via nvm-windows (switched from 20.18.0 default).
+- `npx wrangler whoami` → OAuth token, account `d2897bdebfa128919bd89b265e6a712e`.
+- `gh auth status` → logged in as `ernijsansons` (keyring).
+- `stripe config --list` → test mode (`sk_test_*`), account `acct_1SRvMXFMXFyeuIPx` (NxtSpin sandbox).
+- Local gate: typecheck ✅ / lint ✅ / 12 files / 46 tests ✅ / build ✅ (worker-entry 620 KB) / `npm audit --audit-level=high` 0 vulns / 6/6 e2e (after killing stale `coinop-platform` PID 55688 squatting on port 5173).
+
+### Phase 1 — Commit + push Run 1-17 worktree
+
+- `git add -A` (after adding `test-results/`, `playwright-report/`, `mustbeviral_system_dna.zip` to `.gitignore`), then `git commit` with the descriptive heredoc message ending in `Co-Authored-By: Claude Opus 4.7 (1M context)`.
+- Commit `e104c0f` on top of Milestone 8 `1864c48`. 93 files changed, +17394 / -6535.
+- `git push origin master` → `1864c48..e104c0f master -> master`. Verified via `gh repo view ... --json pushedAt,defaultBranchRef`.
+
+### Phase 2 — Stripe test mode
+
+- 4 products + 4 monthly recurring prices ($49 / $199 / $499 / $1999):
+
+  | Tier | Product | Price |
+  |---|---|---|
+  | Starter | `prod_UUORWjaiJCm9O0` | `price_1TVPeaFMXFyeuIPxDscOxrfd` |
+  | Growth | `prod_UUORAew70vmFXt` | `price_1TVPebFMXFyeuIPxuBWMHe7B` |
+  | Agency | `prod_UUORvpNj8wIUdy` | `price_1TVPecFMXFyeuIPxjeujwcEB` |
+  | Managed | `prod_UUORW1tnOLjlf1` | `price_1TVPeeFMXFyeuIPxAb2NSY1v` |
+
+- 1 webhook endpoint `we_1TVPeeFMXFyeuIPxFnV66SGe` → `https://mustbeviral.com/api/webhooks/stripe`, events: `checkout.session.completed`, `customer.subscription.{created,updated,deleted}`, `invoice.payment_failed`. **No live-mode resources created.**
+
+### Phase 3 — Wrangler secrets
+
+- 13 `wrangler secret put` calls total: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_{STARTER,GROWTH,AGENCY,MANAGED}` for both envs (12) + `USE_MOCK_AI=false` on staging (1).
+- Verified via `wrangler secret list --env staging` (7 entries) and `--env production` (6 entries).
+- `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` deliberately not written (per user). `KIMI_API_KEY` not in `~/.config/secrets.env`; ModelRouter falls back to mock-safe with `failureReason` for Kimi-routed text — does not affect any current code path because Workers AI handles all `@cf/...` model invocations.
+
+### Phase 4 — Staging deploy + smoke
+
+- New tooling: `scripts/patch-deploy-config.mjs`. Required because `react-router build` + `@cloudflare/vite-plugin` emits `build/server/wrangler.json` flattened (no env blocks), and `wrangler deploy --env <name>` is silently a no-op against the redirected config. Patcher reads `env.<name>` from `wrangler.jsonc` and overrides the relevant keys in `build/server/wrangler.json`, renames `name` to `mustbeviral-<env>`, drops `definedEnvironments`. Documented in `codex-audit/KNOWN_FAILURES.md`.
+- Initial deploy `4ea6af4e-152b-409f-bf46-9750b67ee795` showed `provider: "mock"` for image gen — `vars.USE_MOCK_AI: "true"` (from env block) shadowed the secret `USE_MOCK_AI=false`. Patched `vars.USE_MOCK_AI: "false"` in `build/server/wrangler.json` and redeployed as **`88c739f1-3dfc-4f91-8984-229e5b623b1c`** (final).
+- New tooling: `scripts/smoke.sh`. 13 numbered steps + image-gen poll + Stripe tamper + Stripe replay, with `curl --resolve` against a Cloudflare anycast IP for staging (DNS for `staging.mustbeviral.com` not yet provisioned).
+- Result: **21/21 PASS**. Highlights:
+  - `/api/health` → `{environment: "staging"}`
+  - signup → login → /me → workspace → brand all 201/200.
+  - `POST /scheduler/manual-export` with unapproved postId → **409 `POST_NOT_APPROVED`**.
+  - 2nd brand on starter plan → **402 `PLAN_LIMIT_REACHED`** (`plan: "starter", used: 1, limit: 1`).
+  - `GET /api/admin/overview` and `GET /api/mcp/tools` → **403 `FORBIDDEN`**.
+  - Image-gen with prompt `"abstract pastel geometric shapes on white background"` → `provider: "workers_ai"`, model `@cf/black-forest-labs/flux-2-klein-9b`, byteSize 309214 written to `mustbeviral-staging-media` R2. (Initial prompt `"product hero shot"` returned `workers_ai_image_error:3030: Your output has been flagged` from Cloudflare's content filter; workflow gracefully fell back to mock with `failureReason` recorded — confirming both paths.)
+  - Stripe tamper (bad sig) → **400 `INVALID_STRIPE_SIGNATURE`**.
+  - Stripe replay (signed payload, 2 sends) → first 200 with `dispatched.action: "subscription_canceled"`, second 200 with `replay: true, previousStatus: "processed"`.
+
+### Phase 5 — Production deploy + smoke
+
+- Migration 0002 applied to production D1 `mustbeviral-production` (changed_db: true, 36 rows written, 3 new indexes verified via `sqlite_master`).
+- Patched `build/server/wrangler.json` for production, deployed as **`15ce175b-4870-4005-9c83-f042f5831177`** (replaces Milestone 8 worker `2f4ead0c-3d67-4261-8867-53dc43ca5c56`).
+- Bindings verified: D1 `b9a428e0-038a-4df7-a59d-3a5ddde54550`, KV `ff374abd8ca141e8af086afb593e8a8a`, R2 `mustbeviral-production-media`, USE_MOCK_AI = "false". Routes: `mustbeviral.com/*` and `www.mustbeviral.com/*`.
+- Production smoke against `https://mustbeviral.com`: **21/21 PASS** — same checklist as staging, all green; image-gen produced `provider: "workers_ai"` end-to-end on production R2; Stripe tamper + replay green against the production webhook secret.
+
+### Phase 6 — Audit corpus + BUILD_LOG
+
+Files updated this milestone:
+- `codex-audit/FIX_LOG.md` — Authoritative Post-Run-19 Override footer with all phase results, version IDs, Stripe IDs, secret-list verification, verdict flips.
+- `codex-audit/17_GAP_REGISTER.md` — header → post-Run-19; C-3 ✅ CLOSED; CF-MCP-AUTH ✅ CLOSED; H-4 supplemented with `e104c0f` push; counts → 36 closed / 0 partial / 9 open / 1 deferred.
+- `codex-audit/19_RELEASE_GO_NO_GO.md` — Production ✅ GO, Staging ✅ GO, Live Stripe (test mode) ✅ GO. Marketing launch remains ❌ NO-GO. Pre-Run-19 verdicts preserved at the bottom.
+- `codex-audit/KNOWN_FAILURES.md` — `CF-MCP-AUTH` closed; Stripe Read-Only Discovery closed; new entries documenting the env-block-flattening Vite plugin behavior, the var-vs-secret precedence note, and the stale-port-5173 caveat.
+- `codex-audit/DEEP_AUDIT_RUN.md` — Run 19 baseline gate + executive verdict + `shipped: true` flip.
+- `codex-audit/NEXT_EXECUTION_PLAN.md` — Exact Next Command refreshed to "real test-mode Stripe Checkout end-to-end". Marketing-launch readiness work enumerated.
+- `final-strategy/BUILD_LOG.md` — this Milestone 19 entry.
+
+New scripts committed:
+- `scripts/patch-deploy-config.mjs`
+- `scripts/smoke.sh`
+- `.gitignore` additions for `test-results/`, `playwright-report/`, `mustbeviral_system_dna.zip`.
+
+### Carry-forward (block public marketing launch only; production functions today)
+
+- M-16 observability — Sentry / structured logs / dashboards.
+- Admin user seed in both envs.
+- Real test-mode Stripe Checkout end-to-end.
+- `staging.mustbeviral.com` DNS (non-blocking; smoke uses `curl --resolve`).
+- Live Stripe activation (separate run, live-key authorisation required).
+
+### Hard rules honoured
+
+- Test-mode Stripe only; no `sk_live_*` or live-mode resources.
+- No `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` writes.
+- No deletion of any pre-existing Cloudflare resource.
+- No `git push --force`, no `--no-verify`, no `--amend` of Milestone 8 commit. `e104c0f` is a new commit on top.
+- No source-code change to approval-before-export, manual-export-first, DM safety, SSRF guards, raw-body Stripe webhook verification, or admin/MCP RBAC.
+
+shipped: true.

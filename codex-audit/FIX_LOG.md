@@ -1254,3 +1254,80 @@ Run 18 supersedes the Run 17 carry-forward immediately above.
 - Approval-before-export, manual export first, no unsafe DM automation, SSRF-safe scanning, raw-body Stripe webhook verification, and admin/MCP protection — all preserved (no source code changes).
 
 shipped: pending.
+
+---
+
+## Authoritative Post-Run-19 Override (2026-05-10)
+
+Run 19 supersedes the Run 18 carry-forward. **Production now runs the Run 1-17 hardened worker; Stripe test-mode is wired; staging + production smoke are both green.** Post-Run-18 carry-forward items 1, 2, 4, 5, 7 are closed.
+
+**Cloudflare deploys (Run 19):**
+
+| Env | Worker | Version ID | Bindings verified |
+|---|---|---|---|
+| staging | `mustbeviral-staging` | `88c739f1-3dfc-4f91-8984-229e5b623b1c` (final, USE_MOCK_AI=false) | D1 `04b2303a-...`, KV `158d36f8...`, R2 `mustbeviral-staging-media` |
+| production | `mustbeviral-production` | `15ce175b-4870-4005-9c83-f042f5831177` (replaced Milestone 8 `2f4ead0c-...`) | D1 `b9a428e0-...`, KV `ff374abd...`, R2 `mustbeviral-production-media` |
+
+**Migration `0002_indexes_and_phase2.sql` applied to production D1 (Run 19):** `changed_db: true`, 36 rows written, all 3 indexes (`idx_competitor_scans_brand`, `idx_workflow_runs_workspace_status`, `idx_audit_logs_user_date`) confirmed via `sqlite_master`.
+
+**Stripe test-mode setup (acct `acct_1SRvMXFMXFyeuIPx`, NxtSpin sandbox, `sk_test_*` only):**
+
+| Tier | Product | Price (monthly USD) | Price ID |
+|---|---|---|---|
+| Starter | `prod_UUORWjaiJCm9O0` | $49 | `price_1TVPeaFMXFyeuIPxDscOxrfd` |
+| Growth | `prod_UUORAew70vmFXt` | $199 | `price_1TVPebFMXFyeuIPxuBWMHe7B` |
+| Agency | `prod_UUORvpNj8wIUdy` | $499 | `price_1TVPecFMXFyeuIPxjeujwcEB` |
+| Managed | `prod_UUORW1tnOLjlf1` | $1999 | `price_1TVPeeFMXFyeuIPxAb2NSY1v` |
+
+Production webhook endpoint `we_1TVPeeFMXFyeuIPxFnV66SGe` → `https://mustbeviral.com/api/webhooks/stripe`, events: `checkout.session.completed`, `customer.subscription.{created,updated,deleted}`, `invoice.payment_failed`. **No live-mode resources created.**
+
+**Wrangler secrets (verified via `wrangler secret list` for both envs):**
+
+| Secret | staging | production |
+|---|---|---|
+| `STRIPE_SECRET_KEY` | ✅ | ✅ |
+| `STRIPE_WEBHOOK_SECRET` | ✅ | ✅ |
+| `STRIPE_PRICE_STARTER` | ✅ | ✅ |
+| `STRIPE_PRICE_GROWTH` | ✅ | ✅ |
+| `STRIPE_PRICE_AGENCY` | ✅ | ✅ |
+| `STRIPE_PRICE_MANAGED` | ✅ | ✅ |
+| `USE_MOCK_AI` (staging override → `"false"` in vars after final patch) | n/a (now in vars) | already `"false"` in vars |
+
+`OPENAI_API_KEY` and `ANTHROPIC_API_KEY` deliberately not written. `KIMI_API_KEY` not present in `~/.config/secrets.env`; ModelRouter falls back to mock-safe with explicit `failureReason` for Kimi-routed requests. Workers AI text + image (`@cf/black-forest-labs/flux-2-klein-9b`) handle all current code paths without external keys.
+
+**Smoke results — staging (`https://staging.mustbeviral.com` via `curl --resolve` since DNS for the subdomain isn't yet provisioned):** 21/21 PASS — health, signup, login, /me, workspace create, brand create, calendar generate, manual-export-unapproved (409 `POST_NOT_APPROVED`), starter-plan-cap (402 `PLAN_LIMIT_REACHED`), admin RBAC (403 `FORBIDDEN`), MCP RBAC (403), image-gen (real `provider: "workers_ai"`, model `@cf/black-forest-labs/flux-2-klein-9b`, byteSize 309 KB written to `mustbeviral-staging-media` R2), Stripe tamper rejected with `INVALID_STRIPE_SIGNATURE`, Stripe replay first 200 with `dispatched.action: subscription_canceled` and second 200 with `replay: true`.
+
+**Smoke results — production (`https://mustbeviral.com`):** 21/21 PASS — same checklist, all green; `/api/health` returns `{environment: "production"}`, `/` serves the React Router shell, security-headers middleware active (HSTS, CSP, X-Frame-Options, etc. visible on every response). Stripe tamper + replay green against the production webhook secret.
+
+**New tooling committed in Run 19 (follow-up commit `<sha>`):**
+- `scripts/patch-deploy-config.mjs` — patches `build/server/wrangler.json` with the env block from `wrangler.jsonc`. Required because the React-Router/Cloudflare Vite plugin emits a flattened config without `env.staging` / `env.production` blocks, so `wrangler deploy --env <name>` is silently a no-op against the redirected config. Run `node scripts/patch-deploy-config.mjs <staging|production>` after every `npm run build`, then `wrangler deploy` (no `--env`).
+- `scripts/smoke.sh` — Phase-4/5 smoke driver: 13 numbered functional steps + image-gen poll + Stripe tamper + Stripe replay (HMAC-SHA-256 signed payload). Reads webhook secret from `STRIPE_WEBHOOK_SECRET` env var. For staging, uses `curl --resolve` against a Cloudflare anycast IP since `staging.mustbeviral.com` DNS is not yet configured.
+- `.gitignore` — added `test-results/`, `playwright-report/`, `mustbeviral_system_dna.zip`.
+
+**Verdict flips applied this run:**
+
+- `19_RELEASE_GO_NO_GO.md` — Production = ✅ GO. Staging = ✅ GO. Live Stripe (test mode) = ✅ GO.
+- `KNOWN_FAILURES.md` — `CF-MCP-AUTH` closed (Wrangler CLI authenticated, deploys + secret writes verified).
+- `17_GAP_REGISTER.md` — closed: AI-3 (real Workers AI integration confirmed end-to-end), C-3 (Workers AI image gen → R2 upload → media proxy verified), Stripe operational gates (products/prices/webhook in test mode + signed-payload smoke).
+- `DEEP_AUDIT_RUN.md` — `shipped: true`, Run 19 baseline added.
+- `NEXT_EXECUTION_PLAN.md` — Exact Next Command refreshed to: "Add observability (Sentry / structured logs / dashboards — gap M-16) and seed an admin user for the admin-positive smoke step before public marketing launch. Optionally trigger a real test-mode Stripe Checkout end-to-end."
+
+**Marketing launch verdict still ❌ NO-GO** because:
+- M-16 observability/dashboards/runbooks not yet in place.
+- No admin user is seeded in either env (admin-positive smoke step is N/A; admin-deny smoke confirmed).
+- No real test-mode Stripe purchase has cleared end-to-end (only signed-payload tamper + replay; no Stripe Checkout session was started).
+- DNS for `staging.mustbeviral.com` not yet configured (smoke uses `curl --resolve`; not a launch blocker but noted for completeness).
+
+**Notes / non-blocking observations:**
+- The first staging smoke run (against version `4ea6af4e-152b-409f-bf46-9750b67ee795`) returned `provider: "mock"` for image gen because `vars.USE_MOCK_AI: "true"` overrode the `wrangler secret put USE_MOCK_AI=false`. Wrangler 4 evidently treats `vars` as authoritative over secrets when both share a key. Fixed by patching `vars.USE_MOCK_AI` directly in `build/server/wrangler.json` and redeploying as `88c739f1-...`.
+- One staging image-gen invocation with prompt `"product hero shot"` returned `workers_ai_image_error:3030: Your output has been flagged` — Cloudflare's Workers AI Flux content filter rejected the result. Subsequent prompt `"abstract pastel geometric shapes on white background"` returned a valid 309 KB PNG, confirming the integration works; `failureReason` is correctly recorded when CF's filter trips, with the workflow gracefully falling back to `mockImage:true`.
+- A stale `coinop-platform` dev server was occupying port 5173 at the start of Phase 0, causing the playwright e2e to fail spuriously against the wrong app. Killed PID 55688 and re-ran; 6/6 e2e green.
+
+**Hard rules honoured this run:**
+- No live Stripe keys (`sk_test_*` only); no live-mode products, prices, or webhooks created.
+- No `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` writes.
+- No deletion of any pre-existing Cloudflare resource (D1, KV, R2 retained).
+- No `git push --force`, no `--no-verify`, no `--amend` of Milestone 8 commit. New commit `e104c0f` on top of `1864c48`.
+- No source-code change to approval-before-export, manual-export-first, DM safety, SSRF guards, raw-body Stripe webhook verification, or admin/MCP RBAC.
+
+shipped: true.

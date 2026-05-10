@@ -1,80 +1,88 @@
-# MustBeViral Next Execution Plan
+# MustBeViral Next Execution Plan (post-Run-19)
 
 ## Ordered Task List
-1. Get explicit user confirmation before any Cloudflare resource mutation, then create or verify the missing R2/staging resources.
-2. Patch `wrangler.jsonc` staging IDs only after real staging D1/KV/R2 resources are confirmed.
-3. Run `wrangler types` after any binding change and rerun the full local/CI gate.
-4. Re-authenticate Cloudflare tooling or provide an approved Cloudflare API token, then rerun `npm run cf:readiness`.
-5. Prepare Stripe test-mode product/price setup only after explicit user confirmation for Stripe writes and secret storage.
-6. Add staging smoke scripts after staging resources exist.
-7. Add external observability dashboards/runbooks after staging smoke.
+
+After Run 19 the production worker is on the Run 1-17 hardened code, Stripe test mode is wired, and full smoke is green on both envs. The next slice is the marketing-launch readiness work:
+
+1. **Real test-mode Stripe Checkout end-to-end.** Start a Checkout session as a test user, complete with `4242 4242 4242 4242` (or `stripe trigger`), verify the `subscriptions` row advances and `entitlements` cap reacts. Closes the last operational Stripe gate.
+2. **Observability (M-16).** Pick a provider (Sentry / Logflare / Workers Observability dashboards), write the secret, wire exception/log forwarding in `src/server/index.ts`. Add a runbook section for how to react to alerts.
+3. **Seed an admin user** in both envs. SQL: `INSERT INTO users (id, email, password_hash, name, role, ...) VALUES (..., 'admin')` via `wrangler d1 execute mustbeviral-production --remote --command "..."`. Then run the admin-positive smoke step (`GET /api/admin/overview` → 200) to close the only smoke item that's currently N/A.
+4. **`staging.mustbeviral.com` DNS** (optional). Add a CNAME (proxied) so the staging hostname resolves without `curl --resolve`. Token currently has only `zone (read)`; needs user-side dashboard edit or a new `dns_records (write)` token.
+5. **Live Stripe activation.** Separate run with live-key authorisation — flip `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` to `sk_live_*` / `whsec_*` from a live webhook endpoint, create live products + prices, run signed-payload smoke against the live worker, then run a real test card.
+6. **Public marketing launch checklist.** After 1-3 above: final security/runbook signoff, confirm DNS propagation, confirm worker version IDs in monitoring, optional canary rollout via Cloudflare's deployment versions.
 
 ## Files To Inspect
-- `wrangler.jsonc`
-- `worker-configuration.d.ts`
-- `.github/workflows/validate.yml`
-- `scripts/cloudflare-readiness.ts`
-- `docs/system-dna/DEPLOYMENT_RUNBOOK.md`
-- `docs/system-dna/SECURITY_CHECKLIST.md`
-- `docs/system-dna/TEST_PLAN.md`
-- `src/server/routes/billing.ts`
-- `src/server/services/stripe/events.ts`
-- `codex-audit/KNOWN_FAILURES.md`
+
+- `codex-audit/FIX_LOG.md` — full history; Run 19 footer is the latest authoritative state.
+- `codex-audit/19_RELEASE_GO_NO_GO.md` — verdicts.
+- `codex-audit/DEEP_AUDIT_RUN.md` — `shipped: true`; Run 19 baseline gate.
+- `codex-audit/KNOWN_FAILURES.md` — the wrangler env-block patcher caveat (`scripts/patch-deploy-config.mjs`) and the var-vs-secret precedence note.
+- `scripts/patch-deploy-config.mjs` — required before every `wrangler deploy`. Until the Cloudflare Vite plugin preserves env blocks in `build/server/wrangler.json`, this patcher is the deploy contract.
+- `scripts/smoke.sh` — Phase-4/5 smoke driver; reusable for any future env.
+- `final-strategy/BUILD_LOG.md` — Milestone 19 entry.
 
 ## Files To Edit Next
-- `wrangler.jsonc` only after confirmed Cloudflare resource IDs exist
-- `worker-configuration.d.ts` only via `wrangler types` after binding changes
-- Stripe config/docs only after user confirms Stripe test-mode setup
-- staging smoke scripts after staging bindings exist
-- observability docs once dashboards/providers are selected
+
+For the test-mode Checkout flow:
+- `src/server/routes/billing.ts` — already has the checkout-session route; verify the success_url / cancel_url envs are reasonable for test runs.
+- Optional: `tests/integration/api-flow.test.ts` — add a Checkout-session-completed test that uses a Stripe test fixture.
+
+For observability (M-16):
+- `src/server/index.ts` — wire exception forwarding into the global error handler.
+- `wrangler.jsonc` — add observability config block if using Workers Observability dashboards.
+- New file `docs/system-dna/OBSERVABILITY_RUNBOOK.md` for alert response.
+
+For admin seed:
+- One-shot SQL via `wrangler d1 execute mustbeviral-production --remote --command "..."`. No source change required.
 
 ## Acceptance Criteria
-- Wrangler read-only discovery confirms D1, KV, and R2 resources for staging and production.
-- `mustbeviral-production-media` either exists or config is corrected to a verified bucket.
-- Cloudflare API MCP auth issue is either fixed or documented as non-blocking because Wrangler read-only fallback is proven.
-- CI workflow remains no-deploy and mirrors the local gate.
-- Stripe remains disabled unless test secrets and price IDs are intentionally configured.
-- No remote D1 migration, deploy, push, secret write, Cloudflare resource creation, or Stripe live activation occurs without separate explicit confirmation.
-- Production remains `shipped: pending`.
+
+- A Stripe Checkout session completed with a test card moves a workspace from `starter` → paid plan; `entitlements.checkBrandCap` lets the user create the plan-allowed number of brands.
+- Sentry (or chosen provider) shows a captured event from a deliberate test exception.
+- `GET /api/admin/overview` returns 200 for the seeded admin user.
+- `wrangler tail` against production worker emits structured logs and recent CF-RAY values are visible in the observability dashboard.
 
 ## Validation Commands
-- Exact local typecheck for warning capture:
-  `npm run typecheck`
-- Read-only Cloudflare readiness:
-  `npm run cf:readiness`
-- Bundled Node 24 typecheck:
-  `C:\Users\ernij\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe node_modules\wrangler\bin\wrangler.js types`
-  `C:\Users\ernij\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe node_modules\@react-router\dev\bin.js typegen`
-  `C:\Users\ernij\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe node_modules\typescript\bin\tsc -b`
-- `npm run lint`
-- `npm run test`
-- `npm run build`
-- `npm audit --audit-level=high`
-- `npm run test:e2e:list`
-- `npm run test:e2e`
-- `git diff --check`
+
+After every change:
+```
+node scripts/patch-deploy-config.mjs <staging|production>
+node ./node_modules/wrangler/bin/wrangler.js deploy
+STRIPE_WEBHOOK_SECRET=$(jq -r '.WEBHOOK_PROD.secret' < /c/Users/ernij/AppData/Local/Temp/mbv-run19-stripe.json) bash scripts/smoke.sh <env>
+```
+
+For DB-only changes:
+```
+node ./node_modules/wrangler/bin/wrangler.js d1 execute mustbeviral-production --remote --file <migration.sql>
+```
 
 ## Rollback / Safety Notes
-- Do not revert unrelated dirty worktree changes.
-- If Worker typegen rewrites `worker-configuration.d.ts`, keep it only when it matches `wrangler.jsonc`.
-- Keep Stripe disabled unless the user explicitly confirms secret writes.
-- Keep staging/prod provisioning blocked until explicit confirmation.
-- Do not replace manual export with direct social publishing.
-- Do not add unsafe browser-bot DM automation.
+
+- Cloudflare Workers stores deployment versions; `wrangler rollback <version-id>` reverts production to a prior version. The Milestone 8 worker `2f4ead0c-3d67-4261-8867-53dc43ca5c56` and Run 19 production version `15ce175b-4870-4005-9c83-f042f5831177` are both in the deployments list.
+- D1 migrations 0001 + 0002 are additive. No destructive migrations have been applied. Future migrations should keep the `IF NOT EXISTS` / `ALTER TABLE ... ADD COLUMN` pattern unless a rollback runbook is in place.
+- Do not flip `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` to live mode without explicit user authorisation.
+- Do not create live-mode Stripe products/prices/webhooks until live activation is approved.
+- Do not remove the existing test-mode Stripe products without deactivating the production webhook endpoint first.
 
 ## Exact Next Command
-Commit the Run 1-17 dirty worktree (40 modified + 22 untracked files spanning security headers, CSRF middleware, rate limit, AI Gateway, Stripe events, entitlements, real workflows, HTTP integration tests, audit docs) under a descriptive message and push to `origin/master`. After that, restore Wrangler CLI auth (interactive `wrangler login` in your terminal, or `CLOUDFLARE_API_TOKEN=...` env), then `wrangler deploy --env staging` to ship the Worker to `staging.mustbeviral.com`.
 
-Closed Run 18:
-- Staging D1/KV/R2 provisioned via Cloudflare API MCP, migrations 0001+0002 applied (38 tables / 39 indexes), `wrangler.jsonc` staging block patched, full local gate revalidated.
-- GitHub repo `ernijsansons/MustBeViral` (private) created and `master` pushed (currently the historic Milestone 8 commit).
+Run a real test-mode Stripe Checkout end-to-end. From the project root, with the Stripe CLI authenticated against `acct_1SRvMXFMXFyeuIPx`:
 
-Remaining tasks (all gated on user-side action or further explicit authorisation):
-- **Commit + push Run 1-17 worktree** — needs explicit `commit and push` instruction from user. Without this, `origin/master` only reflects Milestone 8.
-- **Wrangler CLI auth** — interactive `wrangler login` or `CLOUDFLARE_API_TOKEN` env. Required for any `wrangler deploy`.
-- **Configure `KIMI_API_KEY` + `AI_GATEWAY_ACCOUNT_ID` + `AI_GATEWAY_ID`** — `wrangler secret put` writes to staging and production. Per user instruction: only Kimi is mandated; OpenAI and Anthropic deferred.
-- **Deploy staging** — `wrangler deploy --env staging` after secrets + CLI auth.
-- **Staging smoke** — full checklist from `docs/system-dna/DEPLOYMENT_RUNBOOK.md`.
-- **Stripe test-mode setup** — Stripe MCP/CLI not detected in this shell. Either install Stripe CLI / connect Stripe MCP, or have the user create products/prices via the Stripe Dashboard and provide the IDs.
-- **Production redeploy** — `wrangler deploy --env production` of the Run-17 worktree, after staging smoke green and explicit user approval.
-- **Observability** — Sentry/structured logs/dashboards (M-16) — provider selection needed.
+```
+# 1. Create a test workspace and brand via the staging or production worker
+# 2. Hit POST /api/billing/checkout-session with workspaceId + plan='growth'
+# 3. Open the returned url in a browser, pay with 4242 4242 4242 4242
+# 4. Watch wrangler tail for the customer.subscription.created handler
+node ./node_modules/wrangler/bin/wrangler.js tail mustbeviral-production --format json | grep -E "stripe|subscription"
+```
+
+Closed in Run 19:
+- Run 1-17 dirty worktree committed (`e104c0f`) and pushed to `origin/master`.
+- Wrangler CLI auth restored.
+- Stripe test-mode products + prices + webhook + 6 secrets across both envs.
+- Migration 0002 applied to production D1.
+- Staging deploy `88c739f1-...` + 21/21 smoke green (real Workers AI Flux PNG in R2).
+- Production redeploy `15ce175b-...` (replaced Milestone 8 `2f4ead0c-...`) + 21/21 smoke green.
+- AI-3 (Workers AI live), CF-MCP-AUTH (CLI authenticated), Stripe operational gates (test mode).
+
+`shipped: true` for the Run-19 deploy + smoke. Marketing launch remains `pending`.

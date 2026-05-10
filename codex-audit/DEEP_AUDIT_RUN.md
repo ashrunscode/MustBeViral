@@ -1,5 +1,30 @@
 # MustBeViral Deep Audit Run
 
+## Baseline Gate (Run 19, 2026-05-10)
+- typecheck: PASS — `npm run typecheck` exit 0; `worker-configuration.d.ts` regenerated with both staging and production env blocks.
+- lint: PASS — `npm run lint` exit 0.
+- test: PASS — `npm run test` exit 0, **12 files / 46 tests** green.
+- build: PASS — `npm run build` exit 0; worker-entry 620 KB.
+- audit: PASS — `npm audit --audit-level=high` reports 0 vulnerabilities.
+- e2e: PASS — `npm run test:e2e` 6/6 across desktop Chromium + mobile WebKit. (One spurious failure during Phase 0 was traced to a stale `coinop-platform` dev server squatting on port 5173; killed and re-ran green.)
+- diff hygiene: PASS (CRLF warnings only).
+- cloudflare CLI: ✅ `wrangler whoami` authenticated as `ernijs.ansons@gmail.com`'s Account `d2897bdebfa128919bd89b265e6a712e`.
+- git: ✅ `e104c0f` (Runs 1-17 production-grade hardening + audit corpus) pushed to `origin/master` on top of the historic Milestone 8 commit `1864c48`. 93 files changed, +17394 / -6535.
+- stripe CLI: ✅ test-mode (`sk_test_*`) on account `acct_1SRvMXFMXFyeuIPx` (NxtSpin sandbox). 4 products, 4 monthly prices, 1 production webhook endpoint created.
+- staging deploy: ✅ `mustbeviral-staging` version `88c739f1-3dfc-4f91-8984-229e5b623b1c` (final). `USE_MOCK_AI=false`. Bindings: D1 `04b2303a-...`, KV `158d36f8...`, R2 `mustbeviral-staging-media`. Smoke 21/21 PASS including real Workers AI Flux PNG (309 KB) written to staging R2.
+- production deploy: ✅ `mustbeviral-production` version `15ce175b-4870-4005-9c83-f042f5831177` (replaces Milestone 8 `2f4ead0c-...`). Bindings: D1 `b9a428e0-...`, KV `ff374abd...`, R2 `mustbeviral-production-media`. Migration `0002_indexes_and_phase2.sql` applied. Smoke 21/21 PASS.
+- stripe webhook smoke: ✅ tamper rejected with `INVALID_STRIPE_SIGNATURE`; replay first 200 with `dispatched.action: subscription_canceled` and second 200 with `replay: true` (against both staging and production webhook secrets).
+
+## Executive Verdict (Run 19)
+- Current ship state: **shipped: true**. Production runs the Run 1-17 hardened code; staging mirrors it with live Workers AI; Stripe test-mode is wired and signed-payload smoke is green.
+- Vs Run 18: committed and pushed the dirty worktree (`e104c0f`), restored Wrangler CLI auth, wrote 13 secrets across staging + production, applied migration 0002 to production, redeployed both envs, and ran full smoke on both.
+- Remaining gaps (do NOT block functional production but block public marketing launch):
+  - **M-16** observability — Sentry / structured logs / dashboards still absent.
+  - **Admin seed** — neither env has a seeded admin user, so the admin-positive smoke step is N/A (admin-deny smoke confirmed).
+  - **Real test-mode Stripe Checkout** end-to-end — only signed-payload smoke has run. A `stripe trigger checkout.session.completed` against a Checkout session would close the operational Stripe gate.
+  - **`staging.mustbeviral.com` DNS** — currently unset; smoke uses `curl --resolve` against a Cloudflare anycast IP. Functional but inconsistent with how Stripe webhooks reach the worker.
+  - **Live Stripe activation** — explicitly out of scope for Run 19; deferred to a separate run with live-key authorisation.
+
 ## Baseline Gate (Run 18, 2026-05-10)
 - typecheck: PASS — `npm run typecheck` exit 0; `worker-configuration.d.ts` regenerated after `wrangler.jsonc` staging-block patch.
 - lint: PASS — `npm run lint` exit 0.
@@ -187,6 +212,8 @@
 - Apply migrations and smoke before any deploy claim.
 
 ## Go / No-Go
-- Production deploy: NO-GO unless all gates pass and user confirms deploy.
-- Paid launch: NO-GO unless Stripe live activation and customer journey are proven.
-- shipped: pending
+- Production deploy: ✅ GO — Run 19 deployed `mustbeviral-production` version `15ce175b-...` and full smoke is green.
+- Paid launch (test mode): ✅ GO — products, prices, webhook, secrets, tamper, replay all verified.
+- Public marketing launch: ❌ NO-GO — observability (M-16), admin seed, and a real test-mode Checkout end-to-end still required.
+- Live Stripe activation: ❌ NO-GO — deferred to a separate run with explicit live-key authorisation.
+- shipped: true
