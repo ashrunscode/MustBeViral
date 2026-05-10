@@ -7,6 +7,11 @@ const migration = readFileSync(
 	"utf8",
 );
 
+const indexMigration = readFileSync(
+	join(process.cwd(), "src/server/db/migrations/0002_indexes_and_phase2.sql"),
+	"utf8",
+);
+
 const requiredTables = [
 	"users",
 	"password_credentials",
@@ -68,5 +73,11 @@ describe("D1 schema", () => {
 		expect(migration).toContain("'manual_export'");
 		expect(migration).toContain("'past_due'");
 		expect(migration).toContain("CHECK (status IN");
+	});
+
+	it("adds the phase 1.1 follow-on indexes", () => {
+		expect(indexMigration).toContain("idx_competitor_scans_brand");
+		expect(indexMigration).toContain("idx_workflow_runs_workspace_status");
+		expect(indexMigration).toContain("idx_audit_logs_user_date");
 	});
 });

@@ -11,9 +11,11 @@ import { requireWorkspaceMember } from "../middleware/rbac";
 import { getWorkspaceMembership } from "../services/access";
 import { writeAuditLog } from "../services/audit";
 import { createMockOnboardingArtifacts, getBrand } from "../services/brand-operations";
+import { checkBrandCap } from "../services/entitlements";
 import { normalizeScanUrl } from "../services/security/ssrf";
 import { createId } from "../utils/id";
 import { slugify } from "../utils/slug";
+import { buildBrandWorkflowParams } from "../workflows/params";
 
 export const workspaceRoutes = new Hono<AppHonoContext>();
 
@@ -67,9 +69,16 @@ workspaceRoutes.post("/", async (c) => {
 
 	const db = getDb(c.env);
 	const slug = slugify(parsed.data.slug ?? parsed.data.name, "workspace");
-	const existing = await dbFirst(db, "SELECT id FROM workspaces WHERE slug = ? AND deleted_at IS NULL", [slug]);
+	const existing = await dbFirst(
+		db,
+		"SELECT id FROM workspaces WHERE slug = ? AND deleted_at IS NULL",
+		[slug],
+	);
 	if (existing) {
-		return c.json(errorEnvelope("WORKSPACE_SLUG_EXISTS", "Workspace slug already exists.", requestId), 409);
+		return c.json(
+			errorEnvelope("WORKSPACE_SLUG_EXISTS", "Workspace slug already exists.", requestId),
+			409,
+		);
 	}
 
 	const workspaceId = createId("ws");
@@ -82,7 +91,7 @@ workspaceRoutes.post("/", async (c) => {
 	await dbRun(
 		db,
 		"INSERT INTO workspace_members (id, workspace_id, user_id, role) VALUES (?, ?, ?, 'owner')",
-		[createId("wm"), workspaceId, auth?.userId ?? "",],
+		[createId("wm"), workspaceId, auth?.userId ?? ""],
 	);
 	await dbRun(
 		db,
@@ -99,7 +108,10 @@ workspaceRoutes.post("/", async (c) => {
 		after: { name: parsed.data.name, slug },
 	});
 
-	return c.json(successEnvelope({ workspace: { id: workspaceId, name: parsed.data.name, slug } }, requestId), 201);
+	return c.json(
+		successEnvelope({ workspace: { id: workspaceId, name: parsed.data.name, slug } }, requestId),
+		201,
+	);
 });
 
 workspaceRoutes.get("/:workspaceId", requireWorkspaceMember(), async (c) => {
@@ -146,14 +158,20 @@ workspaceRoutes.post("/:workspaceId/brands", requireWorkspaceMember(), async (c)
 		return parsed.response;
 	}
 	if (!workspaceId) {
-		return c.json(errorEnvelope("MISSING_WORKSPACE", "Workspace scope is required.", requestId), 400);
+		return c.json(
+			errorEnvelope("MISSING_WORKSPACE", "Workspace scope is required.", requestId),
+			400,
+		);
 	}
 
 	let websiteUrl: string | null = null;
 	if (parsed.data.websiteUrl) {
 		const safe = normalizeScanUrl(parsed.data.websiteUrl);
 		if (!safe.ok) {
-			return c.json(errorEnvelope("UNSAFE_WEBSITE_URL", safe.message, requestId, { reason: safe.code }), 400);
+			return c.json(
+				errorEnvelope("UNSAFE_WEBSITE_URL", safe.message, requestId, { reason: safe.code }),
+				400,
+			);
 		}
 		websiteUrl = safe.url;
 	}
@@ -162,6 +180,19 @@ workspaceRoutes.post("/:workspaceId/brands", requireWorkspaceMember(), async (c)
 	const membership = await getWorkspaceMembership(db, workspaceId, auth?.userId ?? "");
 	if (!membership) {
 		return c.json(errorEnvelope("FORBIDDEN", "Workspace access is required.", requestId), 403);
+	}
+
+	const brandCap = await checkBrandCap(db, workspaceId);
+	if (!brandCap.allowed) {
+		return c.json(
+			errorEnvelope(
+				"PLAN_LIMIT_REACHED",
+				`Plan '${brandCap.plan}' allows up to ${String(brandCap.limit)} brand${brandCap.limit === 1 ? "" : "s"}.`,
+				requestId,
+				{ plan: brandCap.plan, used: brandCap.used, limit: brandCap.limit, cap: "brands" },
+			),
+			402,
+		);
 	}
 
 	const brandId = createId("brand");
@@ -203,10 +234,26 @@ workspaceRoutes.post("/:workspaceId/brands", requireWorkspaceMember(), async (c)
 	const brand = await getBrand(db, brandId);
 	let onboarding: Record<string, unknown> | null = null;
 	if (brand && parsed.data.startOnboarding !== false) {
-		onboarding = await createMockOnboardingArtifacts(db, {
-			brand,
-			requestedBy: auth?.userId,
-		});
+		if (c.env.BRAND_ONBOARDING_WORKFLOW) {
+			const instance = await c.env.BRAND_ONBOARDING_WORKFLOW.create({
+				params: buildBrandWorkflowParams({
+					brandId: brand.id,
+					workspaceId: brand.workspace_id,
+					requestedBy: auth?.userId,
+				}),
+			});
+			onboarding = {
+				workflow: "BrandOnboardingWorkflow",
+				workflowInstanceId: instance.id,
+				status: "queued",
+				mode: "workflow",
+			};
+		} else {
+			onboarding = await createMockOnboardingArtifacts(db, {
+				brand,
+				requestedBy: auth?.userId,
+			});
+		}
 	}
 
 	return c.json(

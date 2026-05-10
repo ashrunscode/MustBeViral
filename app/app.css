@@ -18,3 +18,13 @@ button {
 		color 150ms ease,
 		border-color 150ms ease;
 }
+
+@layer components {
+	.btn-primary {
+		@apply inline-flex min-h-10 items-center justify-center rounded-md bg-[#167761] px-4 py-2 text-sm font-medium text-white hover:bg-[#125f4f] disabled:cursor-not-allowed disabled:bg-[#9ab8b0];
+	}
+
+	.btn-secondary {
+		@apply inline-flex min-h-10 items-center justify-center rounded-md border border-[#c8c7bd] bg-white px-4 py-2 text-sm font-medium text-[#26231d] hover:bg-[#efeee7] disabled:cursor-not-allowed disabled:text-[#8a877d];
+	}
+}

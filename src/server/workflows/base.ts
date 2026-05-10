@@ -1,10 +1,8 @@
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
 
-export interface BrandWorkflowInput {
-	brandId?: string;
-	workspaceId?: string;
-	requestedBy?: string;
-}
+import type { BrandWorkflowInput } from "./params";
+
+export type { BrandWorkflowInput } from "./params";
 
 export interface WorkflowStubResult {
 	workflow: string;

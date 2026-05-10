@@ -9,7 +9,9 @@ export interface PostPublishQueueMessage {
 }
 
 export type AppSecrets = {
-	SESSION_SECRET: string;
+	// SESSION_SECRET removed — sessions use raw 32-byte random tokens hashed
+	// with SHA-256 before storage. A future "pepper" rotation could reintroduce
+	// this; until then it is dead config (audit gap L-3).
 	STRIPE_SECRET_KEY: string;
 	STRIPE_WEBHOOK_SECRET: string;
 	AI_GATEWAY_TOKEN?: string;
@@ -29,6 +31,8 @@ export type AppVars = {
 	PUBLIC_APP_URL: string;
 	DEFAULT_SCHEDULER_PROVIDER: SchedulerProviderId;
 	DEFAULT_TEXT_MODEL: string;
+	AI_GATEWAY_ACCOUNT_ID?: string;
+	AI_GATEWAY_ID?: string;
 	DEFAULT_IMAGE_MODEL: string;
 	PREMIUM_IMAGE_MODEL: string;
 	FAST_IMAGE_MODEL: string;

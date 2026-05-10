@@ -1,4 +1,10 @@
 APP_ENV=development
 PUBLIC_APP_URL=http://localhost:5173
 DEFAULT_SCHEDULER_PROVIDER=manual
-SESSION_SECRET=replace-with-local-dev-secret
+DEFAULT_TEXT_MODEL=kimi-2.6
+AI_GATEWAY_ACCOUNT_ID=
+AI_GATEWAY_ID=default
+AI_GATEWAY_TOKEN=replace
+KIMI_API_KEY=replace
+OPENAI_API_KEY=replace
+ANTHROPIC_API_KEY=replace

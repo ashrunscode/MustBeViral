@@ -3,8 +3,10 @@ import { createRequestHandler, type ServerBuild } from "react-router";
 
 import { MarketingAgent } from "./agents/MarketingAgent";
 import type { AppHonoContext } from "./http/types";
+import { csrfProtection } from "./middleware/csrf";
 import { handleError, handleNotFound } from "./middleware/error";
 import { requestLogging } from "./middleware/request-logging";
+import { securityHeaders } from "./middleware/security-headers";
 import { MustBeViralMCP } from "./mcp/MustBeViralMCP";
 import { adminRoutes } from "./routes/admin";
 import { authRoutes } from "./routes/auth";
@@ -59,6 +61,8 @@ async function loadServerBuild(): Promise<ServerBuild> {
 }
 
 app.use("*", requestLogging());
+app.use("*", securityHeaders());
+app.use("*", csrfProtection());
 app.onError(handleError);
 
 api.route("/", healthRoutes);

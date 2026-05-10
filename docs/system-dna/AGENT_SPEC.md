@@ -31,26 +31,37 @@ type MarketingAgentState = {
 
 ### Callable Methods
 
-- getCommandCenter()
-- startOnboardingScan(input)
-- getBrandProfile()
-- updateBrandProfile(patch)
-- lockBrandField(fieldPath)
-- regenerateBrandField(fieldPath)
-- generateContentCalendar(input)
-- generatePost(input)
-- regeneratePost(postId)
-- approvePost(postId, userId)
-- rejectPost(postId, userId, reason)
-- scheduleApprovedPosts(input)
-- generateWeeklyReport(input)
-- getGrowthOpportunities()
-- createCampaignFromOpportunity(opportunityId)
-- createDMRule(input)
-- pauseAgent()
-- resumeAgent()
-- getAgentActivity()
-- getWorkflowStatus(workflowId)
+Each method has a "Surface" annotation describing where the implementation lives in the shipped code (per `final-strategy/DECISIONS_LOG.md` — "Route-Helper Agent Surface Pattern", 2026-05-08):
+
+| # | Method | Surface | API route | DO endpoint |
+|---|---|---|---|---|
+| 1 | getCommandCenter() | DO + API | `GET /api/brands/:brandId/command-center` | `/state`, `/command-center` |
+| 2 | startOnboardingScan(input) | DO + API | `POST /api/brands/:brandId/onboarding/start` | `/onboarding/start` |
+| 3 | getBrandProfile() | API route | `GET /api/brands/:brandId/profile` | — |
+| 4 | updateBrandProfile(patch) | API route | `PATCH /api/brands/:brandId/profile` | — |
+| 5 | lockBrandField(fieldPath) | API route (partial) | `PATCH /api/brands/:brandId/profile` (via `lockedFields[]`) | — |
+| 6 | regenerateBrandField(fieldPath) | API route | `POST /api/brands/:brandId/profile/regenerate-field` | — |
+| 7 | generateContentCalendar(input) | API route | `POST /api/brands/:brandId/content-calendar/generate` | — |
+| 8 | generatePost(input) | API route | `POST /api/brands/:brandId/posts/generate` | — |
+| 9 | regeneratePost(postId) | API route (partial) | `POST /api/brands/:brandId/approvals/:postId` with `action: "regenerate"` (resets status to draft) | — |
+| 10 | approvePost(postId, userId) | API route | `POST /api/brands/:brandId/approvals/:postId` with `action: "approve"` | — |
+| 11 | rejectPost(postId, userId, reason) | API route | `POST /api/brands/:brandId/approvals/:postId` with `action: "reject"` | — |
+| 12 | scheduleApprovedPosts(input) | API route | `POST /api/brands/:brandId/scheduler/manual-export` | — |
+| 13 | generateWeeklyReport(input) | API route | `POST /api/brands/:brandId/reports/weekly/generate` | — |
+| 14 | getGrowthOpportunities() | API route | `GET /api/brands/:brandId/growth` | — |
+| 15 | createCampaignFromOpportunity(opportunityId) | API route | `POST /api/brands/:brandId/growth/:opportunityId/campaign` | — |
+| 16 | createDMRule(input) | API route | `POST /api/brands/:brandId/dm-rules` | — |
+| 17 | pauseAgent() | DO + API | `POST /api/brands/:brandId/agent/pause` | `/pause` |
+| 18 | resumeAgent() | DO + API | `POST /api/brands/:brandId/agent/resume` | `/resume` |
+| 19 | getAgentActivity() | DO + API | `GET /api/brands/:brandId/agent/activity` | `/activity` |
+| 20 | getWorkflowStatus(workflowId) | API route | `GET /api/brands/:brandId/workflows/:workflowId` | — |
+
+Surface legend:
+- **DO + API**: implementation lives on the Durable Object; an outer Hono route forwards to the DO via `idFromName("brand:<brandId>")`.
+- **API route**: implementation lives in a route handler that talks to D1 directly through service helpers (the "route-helper" pattern); the DO is not on the request path.
+- **Missing**: spec method not yet implemented anywhere.
+
+Coverage: 20 of 20 methods are reachable via API today. Generated posts and campaigns remain draft or pending approval; schedule/export still requires explicit approval.
 
 ### Tools
 
