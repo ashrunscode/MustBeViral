@@ -1,0 +1,17 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "react-router dev (Vite + Cloudflare Worker)",
+			"runtimeExecutable": "C:\\Users\\ernij\\.nvm\\versions\\node\\v22.22.0\\bin\\node.exe",
+			"runtimeArgs": ["node_modules/@react-router/dev/bin.js", "dev"],
+			"port": 5173
+		},
+		{
+			"name": "vite preview (built production bundle)",
+			"runtimeExecutable": "C:\\Users\\ernij\\.nvm\\versions\\node\\v22.22.0\\bin\\node.exe",
+			"runtimeArgs": ["node_modules/vite/bin/vite.js", "preview"],
+			"port": 4173
+		}
+	]
+}

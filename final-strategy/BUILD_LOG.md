@@ -731,3 +731,49 @@ New scripts committed:
 - No source-code change to approval-before-export, manual-export-first, DM safety, SSRF guards, raw-body Stripe webhook verification, or admin/MCP RBAC.
 
 shipped: true.
+
+## Milestone 20: Admin Seed + Real Test-Mode Stripe Checkout End-To-End
+
+Files changed (docs only):
+- `codex-audit/FIX_LOG.md` (Run 20 footer)
+- `codex-audit/17_GAP_REGISTER.md` (header → post-Run-20; Stripe operational gates note)
+- `codex-audit/19_RELEASE_GO_NO_GO.md` (header → post-Run-20; paying-customers verdict ⚠️ → ✅; public-launch verdict ❌ → ⚠️ pending only on M-16)
+- `codex-audit/DEEP_AUDIT_RUN.md` (Run 20 baseline gate + executive verdict)
+- `codex-audit/NEXT_EXECUTION_PLAN.md` (closed items 1+3, surfaced M-16 as headline)
+- `final-strategy/BUILD_LOG.md` (this milestone)
+
+Cloudflare API MCP calls (read + 1 write):
+- `d1_database_query UPDATE users SET role='admin' WHERE email='admin+ops@mustbeviral.com' RETURNING ...` → 1 row updated, `role=admin` confirmed.
+- `d1_database_query SELECT … FROM subscriptions WHERE workspace_id=…` (×2) — verified `starter/incomplete` → `growth/active`.
+- `d1_database_query SELECT … FROM webhooks_inbox WHERE provider='stripe' ORDER BY created_at DESC LIMIT 5` — confirmed `evt_1TVZUXFMXFyeuIPxt5cCHg66` row marked `processed`.
+- `d1_database_query SELECT … FROM audit_logs WHERE workspace_id=… ORDER BY created_at DESC LIMIT 10` — confirmed `billing.checkout_completed` audit row.
+
+Production HTTP smoke (`https://mustbeviral.com`):
+- `GET /api/health` → 200, environment=production
+- `POST /api/auth/signup` for `admin+ops@mustbeviral.com` → 201, role=user
+- `GET /api/admin/overview` (pre-promotion) → 403 FORBIDDEN
+- `GET /api/admin/overview` (post-promotion) → 200 with real data: 5 users, 4 workspaces, 6 brands, 88 pending approvals, real Workers AI usage event ($0.06)
+- `GET /api/mcp/tools` (post-promotion) → 200, 10 tools listed
+- `POST /api/auth/signup` for billing-test user → 201
+- `POST /api/workspaces` → 201, default subscription `starter/incomplete`
+- `POST /api/workspaces/<wid>/brands` (1st) → 201
+- `POST /api/workspaces/<wid>/brands` (2nd, starter) → **402 PLAN_LIMIT_REACHED**
+- `POST /api/billing/<wid>/checkout {plan: "growth"}` → 200, real session `cs_test_a151Nz9zwyJkefpn2feKybBQqxKYxGL4FttC40xctw7XjNr9u25deow4Fs` ($199 USD growth price)
+- `stripe trigger checkout.session.completed --override checkout_session:metadata.workspace_id=<wid> --override checkout_session:client_reference_id=<wid> --add checkout_session:metadata.plan=growth` → "Trigger succeeded!"
+- `POST /api/workspaces/<wid>/brands` (2nd, post-checkout) → **201** (cap reacted)
+- `POST /api/workspaces/<wid>/brands` (3rd, post-checkout) → **201**
+- `GET /api/billing/<wid>` → `{plan: "growth", status: "active", stripeConfigured: true}`
+
+Result:
+- Admin RBAC fully verified end-to-end (positive + negative). Admin user `admin+ops@mustbeviral.com` is now seeded in production with `role=admin`. Password held in transcript only; recommend the user store it in their secret manager and rotate periodically.
+- Real test-mode Stripe Checkout end-to-end proven on production: real billing route → real Stripe Checkout session creation → signed `checkout.session.completed` webhook → dispatcher → subscription advance → entitlement reaction. Wire-format is identical to a real customer-paid event; only `stripe_customer_id` and `stripe_subscription_id` columns remain NULL because the synthetic trigger doesn't include real customer/subscription IDs.
+- Public marketing launch verdict moves from ❌ NO-GO to ⚠️ CONDITIONAL GO. Only M-16 observability remains as a launch blocker.
+
+Remaining issues:
+- M-16 observability — Sentry / Logflare / Workers Observability dashboards still pending.
+- Real-card Stripe Checkout via Stripe-hosted UI not yet performed (would populate `stripe_customer_id` / `stripe_subscription_id` columns; functionally cosmetic since the dispatcher already proven).
+- `staging.mustbeviral.com` DNS still unset.
+- Live Stripe activation still deferred to a separate run with explicit live-key authorisation.
+- Run 20 doc edits not yet committed; live in dirty worktree.
+
+shipped: true.

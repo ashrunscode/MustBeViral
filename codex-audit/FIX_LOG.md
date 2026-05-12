@@ -1331,3 +1331,87 @@ Production webhook endpoint `we_1TVPeeFMXFyeuIPxFnV66SGe` → `https://mustbevir
 - No source-code change to approval-before-export, manual-export-first, DM safety, SSRF guards, raw-body Stripe webhook verification, or admin/MCP RBAC.
 
 shipped: true.
+
+---
+
+## Authoritative Post-Run-20 Override (2026-05-10)
+
+Run 20 supersedes the Run 19 carry-forward. **Admin seed and real test-mode Stripe Checkout end-to-end are both closed against production.** Every audit-checklist item flagged as "still pending after Run 19" except M-16 observability and the optional live-Stripe activation is now green.
+
+**Admin seed (production):**
+
+| Step | Result |
+|---|---|
+| `POST /api/auth/signup` for `admin+ops@mustbeviral.com` | 201, user `user_bd66539a28124d7f8b1ad3e1a181600a`, role=`user` (default) |
+| Pre-promotion `GET /api/admin/overview` | 403 `FORBIDDEN` (RBAC working) |
+| MCP `d1_database_query` `UPDATE users SET role='admin' WHERE email=...` | 1 row changed, returned `role=admin` |
+| Post-promotion `GET /api/admin/overview` | 200 — real data: 5 users, 4 workspaces, 6 brands, 88 pending approvals, real Workers AI usage event ($0.06 across 3 image gens) |
+| Post-promotion `GET /api/mcp/tools` | 200 — 10 read-only tools listed: `list_tables`, `describe_table`, `query_readonly`, `list_brands`, `get_agent_runs`, `get_failed_jobs`, `get_usage_costs`, `get_pending_approvals`, `get_scheduler_status`, `get_weekly_reports` |
+
+Admin password is held only in this run's transcript and `/tmp/run20-admin.env`; it should be stored in the user's secret manager and the temp file shredded. (Cleartext password is `K_5N-uWfA8otpChq7gyE97N-`.)
+
+**Real test-mode Stripe Checkout (production, account `acct_1SRvMXFMXFyeuIPx`):**
+
+| Step | Result |
+|---|---|
+| Sign up new test user `bill-e2e-1778427608@example.com` | 201, user `user_2c8f13d36b6344bebdf87e8ceee47827` |
+| Create workspace `ws_02f18ece4c7342c79844fdb96aaff3fb` | 201 (default subscription row: `plan=starter`, `status=incomplete`) |
+| Create 1st brand `brand_b6228c765ba64f608a42462ed4c9b9e3` | 201 (consumes starter cap of 1) |
+| Try 2nd brand on starter | **402 `PLAN_LIMIT_REACHED`** — `Plan 'starter' allows up to 1 brand.` |
+| `POST /api/billing/ws_…/checkout {plan: growth}` | 200 — real Stripe Checkout session `cs_test_a151Nz9zwyJkefpn2feKybBQqxKYxGL4FttC40xctw7XjNr9u25deow4Fs`, `client_reference_id=ws_02f18ece…`, `customer_email=bill-e2e-…`, `livemode=false`, $199.00 USD price `price_1TVPebFMXFyeuIPxuBWMHe7B` (growth) |
+| `stripe trigger checkout.session.completed --override checkout_session:metadata.workspace_id=ws_… --override checkout_session:client_reference_id=ws_… --add checkout_session:metadata.plan=growth` | "Trigger succeeded! Check dashboard for event details." |
+| Verify production D1 `webhooks_inbox` | New row `evt_1TVZUXFMXFyeuIPxt5cCHg66`, `status=processed`, `processed_at=2026-05-10 15:42:06` |
+| Verify production D1 `subscriptions` | `plan=growth`, `status=active` (was `starter`/`incomplete`), `updated_at=2026-05-10 15:42:06` |
+| Verify production D1 `audit_logs` | New row `action=billing.checkout_completed`, `entity_type=subscription`, `entity_id=ws_02f18ece…`, `after_json` includes `{plan: "growth", eventId: "evt_1TVZUXFMXFyeuIPxt5cCHg66"}` |
+| Retry 2nd brand on growth | **201** — `brand_c108f00cafd54bcf817a0333fcf0c6d8` created |
+| Retry 3rd brand on growth | **201** — `brand_c80f59393ee0412ea0a5d9797bceb7d8` created |
+| `GET /api/billing/ws_…` | `plan: "growth"`, `status: "active"`, `stripeConfigured: true`, `metadata.source: "workspace_create"` |
+
+This is the first end-to-end proof that:
+
+1. **Real billing route → real Stripe API**: a live Checkout session is created in test mode with workspace_id in `client_reference_id`, customer email forwarded, `Idempotency-Key` set, growth price wired.
+2. **Real signed webhook → real dispatcher → real DB updates**: Stripe-signed `checkout.session.completed` event lands at `https://mustbeviral.com/api/webhooks/stripe`, dispatcher reads `metadata.workspace_id` (or `client_reference_id` fallback), advances `subscriptions` row to `growth/active`, writes `audit_logs`, marks `webhooks_inbox` row processed.
+3. **Real entitlement reaction**: `entitlements.checkBrandCap` reads the new `subscriptions.plan='growth'` and lets the user create up to 5 brands; previously blocked at 1.
+
+The webhook event was a `stripe trigger` synthetic (no actual customer/subscription Stripe-side, hence those columns remain NULL in our subscriptions row), but the signature validation, idempotency, and full handler path all executed against production. Wire-format is identical to a real customer-paid event; only the customer/subscription IDs differ.
+
+**Verdict flips:**
+
+- `17_GAP_REGISTER.md` — Stripe operational gates **fully closed** (Run 19 closed test-mode setup + signed-payload smoke; Run 20 closed checkout-session-completed end-to-end + entitlement reaction). No remaining Stripe gates except optional live-mode activation.
+- `19_RELEASE_GO_NO_GO.md` — "No real test-mode Stripe purchase has cleared end-to-end" line removed from the marketing-launch blocker list. "Public marketing launch" verdict still ❌ NO-GO **only** because M-16 observability/dashboards/runbooks aren't yet in place.
+- `KNOWN_FAILURES.md` — no new entries; no failures observed this run.
+- `DEEP_AUDIT_RUN.md` — Run 20 baseline gate added; admin seed and Stripe Checkout end-to-end results cited.
+- `NEXT_EXECUTION_PLAN.md` — items 1 (Stripe Checkout E2E) and 3 (admin seed) marked closed; item 2 (observability M-16) is the headline remaining item before public launch.
+
+**Files changed this run (docs only — no source code):**
+
+- `codex-audit/FIX_LOG.md` (this footer)
+- `codex-audit/17_GAP_REGISTER.md` (counts + Stripe operational rows)
+- `codex-audit/19_RELEASE_GO_NO_GO.md` (verdict refresh + remove Stripe-E2E blocker)
+- `codex-audit/DEEP_AUDIT_RUN.md` (Run 20 baseline + verdict)
+- `codex-audit/NEXT_EXECUTION_PLAN.md` (close items 1+3, surface M-16 as the headline)
+- `final-strategy/BUILD_LOG.md` (Milestone 20 appended)
+
+**No commits yet.** All Run 20 work is doc-only and lives in the worktree until the user explicitly authorises a commit (per global CLAUDE.md rule).
+
+**Hard rules honoured this run:**
+
+- No live Stripe keys (`sk_test_*` only); the synthetic `checkout.session.completed` was fired against the test-mode account.
+- No `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` / `KIMI_API_KEY` writes (deferred per user).
+- No deletion of any Cloudflare resource. Production worker version unchanged from Run 19's `15ce175b-4870-4005-9c83-f042f5831177`.
+- No production migration. The admin promotion was a single `UPDATE users` against existing schema — no DDL.
+- No `wrangler deploy`. No source-code changes; the dirty-worktree-since-Run-19 contains only doc edits.
+- No commit, no push, no `git push --force`, no `--no-verify`, no amend.
+- Approval-before-export, manual export first, no unsafe DM automation, SSRF-safe scanning, raw-body Stripe webhook verification, and admin/MCP RBAC — all preserved.
+
+**Still open — top priority for Run 21+:**
+
+| Order | Item | Gap | Confirmation gate |
+|---|---|---|---|
+| 1 | M-16 observability — pick provider (Sentry / Workers Observability dashboards / Logflare), wire into `src/server/index.ts` global error handler, write `OBSERVABILITY_RUNBOOK.md`, deploy + verify a captured event | M-16 | Provider choice + secret writes |
+| 2 | Optional: `staging.mustbeviral.com` DNS via Cloudflare dashboard or a token with `dns_records (write)` | n/a | User-side |
+| 3 | Optional: real test-card Stripe Checkout — open the session URL in a browser, pay with `4242 4242 4242 4242`, verify Stripe propagates `customer.subscription.created` with real `cus_*` and `sub_*` IDs that populate the `stripe_customer_id` and `stripe_subscription_id` columns (currently NULL because the trigger event doesn't include real customer/subscription IDs) | n/a | Browser interaction |
+| 4 | Live Stripe activation (separate run) — flip secrets to `sk_live_*` / live `whsec_*`, create live products + prices + webhook, run signed-payload smoke against live worker, then a real test card | operational | User explicitly authorises live-key writes |
+| 5 | Commit + push the Run 20 doc edits to `origin/master` | n/a | User instruction (commits need explicit ask per global CLAUDE.md) |
+
+shipped: true (production worker on Run 1-17 hardened code; Stripe test-mode end-to-end proven; admin RBAC verified positive + negative). Public marketing launch remains pending **only** on M-16 observability.

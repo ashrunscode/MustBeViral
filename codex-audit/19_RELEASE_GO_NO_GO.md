@@ -1,6 +1,6 @@
-# 19 — Release Go / No-Go (current, post-Run-19)
+# 19 — Release Go / No-Go (current, post-Run-20)
 
-> Source of truth as of 2026-05-10 after Runs 1-19. The original baseline verdicts are archived at `codex-audit/_archive/19_RELEASE_GO_NO_GO_baseline_2026-05-08.md`. The post-Run-18 verdicts are preserved at the bottom of this file for diffing.
+> Source of truth as of 2026-05-10 after Runs 1-20. The original baseline verdicts are archived at `codex-audit/_archive/19_RELEASE_GO_NO_GO_baseline_2026-05-08.md`. The post-Run-18 verdicts are preserved at the bottom of this file for diffing.
 
 ## Verdicts
 
@@ -11,8 +11,8 @@
 | **Production (Run-1-17 hardened code)** | ✅ **GO** | Run 19 — `mustbeviral-production` redeployed at version `15ce175b-4870-4005-9c83-f042f5831177`, replacing the historic Milestone 8 worker `2f4ead0c-...`. Migration `0002_indexes_and_phase2.sql` applied. Smoke 21/21 PASS: signup → login → /me → workspaces → brands → calendar generate → manual-export-unapproved (409 `POST_NOT_APPROVED`) → starter-plan-cap (402 `PLAN_LIMIT_REACHED`) → admin/MCP RBAC denial (403) → image-gen (real `provider: "workers_ai"`) → Stripe tamper (400 `INVALID_STRIPE_SIGNATURE`) → Stripe replay (`replay: true`). Security headers (HSTS, CSP, X-Frame-Options) verified live |
 | **Live Stripe (test mode)** | ✅ **GO** | 4 products + 4 monthly prices ($49 / $199 / $499 / $1999) on test account `acct_1SRvMXFMXFyeuIPx`, webhook endpoint `we_1TVPeeFMXFyeuIPxFnV66SGe` pointed at `https://mustbeviral.com/api/webhooks/stripe`, all 6 Stripe secrets written to staging + production via `wrangler secret put`. Signed-payload tamper + replay confirmed against the live worker. **No live-mode resources created.** |
 | **Closed beta (≤10 hand-held users)** | ✅ **GO** | UI is real-data for the MVP page set (auth, workspaces, brand operations, approvals, media, billing, DM rules, reports, growth, admin) and proven on desktop + mobile WebKit. Real image gen (H-2) confirmed end-to-end in production with Workers AI Flux + R2 upload + media proxy. Beta can run today |
-| **Paying customers (self-serve, test-mode Stripe)** | ⚠️ **CONDITIONAL GO** | All technical prerequisites met. Operational gate: a real test-mode Stripe Checkout end-to-end (start a Checkout session as a test user, complete with `4242 4242 4242 4242`, verify the subscription row advances) has not yet been performed in this run. Recommended before opening test-mode billing to additional users |
-| **Public marketing launch** | ❌ **NO-GO** | Pending: M-16 observability (Sentry / structured logs / dashboards), seeded admin user for the admin-positive smoke step, real test-mode Stripe Checkout end-to-end, optional `staging.mustbeviral.com` DNS for cleaner staging access |
+| **Paying customers (self-serve, test-mode Stripe)** | ✅ **GO** | Run 20 — real test-mode Stripe Checkout end-to-end proven on production: real billing route → real Stripe Checkout session `cs_test_a151Nz9z…` ($199 growth price) → `stripe trigger checkout.session.completed` with workspace_id metadata → signed webhook → dispatcher → `subscriptions` advanced from `starter/incomplete` to `growth/active` → `entitlements.checkBrandCap` reacted, allowing 2nd + 3rd brand creation that was previously 402-blocked on starter |
+| **Public marketing launch** | ⚠️ **CONDITIONAL GO** | M-16 observability (Sentry / structured logs / dashboards) is the only remaining blocker. Admin-positive smoke + Stripe Checkout E2E both closed in Run 20. Optional polish: `staging.mustbeviral.com` DNS, real-card Checkout completion (Stripe-hosted UI) for full `cus_*`/`sub_*` propagation |
 | **Live Stripe activation** | ❌ **NO-GO** | Out of scope for Run 19. Requires separate run with explicit live-key authorisation, live-mode product/price creation, and DNS / billing-portal verification |
 
 ## Closed in Run 19
@@ -26,8 +26,9 @@
 
 ## Required next gates (in order)
 
-1. **Real test-mode Stripe Checkout end-to-end** — `stripe trigger checkout.session.completed` against a Checkout session, verify subscription row + `entitlements` cap update flow.
-2. **Sentry / observability (M-16)** — provider selection (Sentry, Logflare, Cloudflare Workers Observability dashboards), secret writes, route exception/log forwarding wired in `src/server/index.ts`.
+1. **Sentry / observability (M-16)** — provider selection (Sentry, Logflare, Cloudflare Workers Observability dashboards), secret writes, route exception/log forwarding wired in `src/server/index.ts`. ← **only remaining blocker for public marketing launch.**
+2. ✅ ~~Real test-mode Stripe Checkout end-to-end~~ — closed in Run 20.
+3. ✅ ~~Admin user seeded + admin-positive smoke~~ — closed in Run 20 via `admin+ops@mustbeviral.com` (role=admin in production D1).
 3. **Admin user seed** — `INSERT INTO users (..., role) VALUES (..., 'admin')` in production D1 for the admin-positive smoke step (currently only admin-deny is proven).
 4. **`staging.mustbeviral.com` DNS** — small additive zone-record edit so the staging hostname resolves without `curl --resolve`. Token currently has only `zone (read)`; needs `dns_records (write)` or user-side dashboard edit.
 5. **Live Stripe activation** — separate run with live-key authorisation and live-mode setup.

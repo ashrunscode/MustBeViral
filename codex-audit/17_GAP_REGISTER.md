@@ -1,6 +1,6 @@
-# 17 — Gap Register (current, post-Run-19)
+# 17 — Gap Register (current, post-Run-20)
 
-> Source of truth as of 2026-05-10 after Runs 1-19. The original baseline tables are archived at `codex-audit/_archive/17_GAP_REGISTER_baseline_2026-05-08.md`. Closure rows reference the entry in `codex-audit/FIX_LOG.md` (head + post-Run-XX override footers) where the change landed.
+> Source of truth as of 2026-05-10 after Runs 1-20. The original baseline tables are archived at `codex-audit/_archive/17_GAP_REGISTER_baseline_2026-05-08.md`. Closure rows reference the entry in `codex-audit/FIX_LOG.md` (head + post-Run-XX override footers) where the change landed. **Stripe test-mode operational gates are now fully closed end-to-end as of Run 20** (real billing route → real Stripe Checkout session → signed `checkout.session.completed` webhook → dispatcher → subscription advance → entitlement reaction). Admin-positive smoke also closed in Run 20 via promoted seed user `admin+ops@mustbeviral.com`.
 
 ## Per-gap status
 

@@ -1,15 +1,17 @@
-# MustBeViral Next Execution Plan (post-Run-19)
+# MustBeViral Next Execution Plan (post-Run-20)
 
 ## Ordered Task List
 
-After Run 19 the production worker is on the Run 1-17 hardened code, Stripe test mode is wired, and full smoke is green on both envs. The next slice is the marketing-launch readiness work:
+After Run 20 the production worker is on the Run 1-17 hardened code, Stripe test mode end-to-end is proven, and admin RBAC is verified positive + negative. The remaining work is observability and optional polish:
 
-1. **Real test-mode Stripe Checkout end-to-end.** Start a Checkout session as a test user, complete with `4242 4242 4242 4242` (or `stripe trigger`), verify the `subscriptions` row advances and `entitlements` cap reacts. Closes the last operational Stripe gate.
-2. **Observability (M-16).** Pick a provider (Sentry / Logflare / Workers Observability dashboards), write the secret, wire exception/log forwarding in `src/server/index.ts`. Add a runbook section for how to react to alerts.
-3. **Seed an admin user** in both envs. SQL: `INSERT INTO users (id, email, password_hash, name, role, ...) VALUES (..., 'admin')` via `wrangler d1 execute mustbeviral-production --remote --command "..."`. Then run the admin-positive smoke step (`GET /api/admin/overview` → 200) to close the only smoke item that's currently N/A.
+1. **Observability (M-16).** Pick a provider (Sentry / Logflare / Cloudflare Workers Observability dashboards). Write the secret via `wrangler secret put`. Wire exception forwarding in `src/server/index.ts` global error handler. Add `docs/system-dna/OBSERVABILITY_RUNBOOK.md` for alert response. ← **ONLY remaining blocker for public marketing launch.**
+2. ✅ ~~Real test-mode Stripe Checkout end-to-end~~ — closed in Run 20.
+3. ✅ ~~Seed an admin user~~ — closed in Run 20 (`admin+ops@mustbeviral.com` promoted to `role=admin` in production D1; admin-positive smoke green).
 4. **`staging.mustbeviral.com` DNS** (optional). Add a CNAME (proxied) so the staging hostname resolves without `curl --resolve`. Token currently has only `zone (read)`; needs user-side dashboard edit or a new `dns_records (write)` token.
 5. **Live Stripe activation.** Separate run with live-key authorisation — flip `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` to `sk_live_*` / `whsec_*` from a live webhook endpoint, create live products + prices, run signed-payload smoke against the live worker, then run a real test card.
-6. **Public marketing launch checklist.** After 1-3 above: final security/runbook signoff, confirm DNS propagation, confirm worker version IDs in monitoring, optional canary rollout via Cloudflare's deployment versions.
+6. **Public marketing launch checklist.** After (1) ships: final security/runbook signoff, confirm DNS propagation, confirm worker version IDs in monitoring, optional canary rollout via Cloudflare's deployment versions.
+7. **Polish — optional real-card Checkout.** Open the Stripe Checkout URL in a browser, pay with `4242 4242 4242 4242`, verify Stripe propagates `customer.subscription.created` with real `cus_*` and `sub_*` IDs. The synthetic trigger event used in Run 20 left those columns NULL because it doesn't reference a real customer. Functionally adequate for the dispatcher path; cosmetically nicer to have non-NULL columns.
+8. **Commit + push the Run 20 doc edits to `origin/master`** — the Run 20 changes are doc-only and live in the worktree until you say "commit and push".
 
 ## Files To Inspect
 

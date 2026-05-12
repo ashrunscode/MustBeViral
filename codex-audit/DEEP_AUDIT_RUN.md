@@ -1,5 +1,20 @@
 # MustBeViral Deep Audit Run
 
+## Baseline Gate (Run 20, 2026-05-10)
+- prod health: ✅ `GET https://mustbeviral.com/api/health` returns `{success: true, environment: "production"}`. Worker version unchanged from Run 19's `15ce175b-4870-4005-9c83-f042f5831177`.
+- typecheck/lint/test/build/audit/e2e: cached green from Run 19 (no source-code changes in Run 20).
+- admin seed: ✅ `admin+ops@mustbeviral.com` (`user_bd66539a28124d7f8b1ad3e1a181600a`) promoted to `role=admin` in production D1 via MCP `UPDATE users`. Admin-positive smoke passed: `GET /api/admin/overview` → 200 with real counts (5 users, 4 workspaces, 6 brands, 88 pending approvals); `GET /api/mcp/tools` → 200 with 10 read-only tools.
+- stripe checkout end-to-end: ✅ real `cs_test_a151Nz9z…` Checkout session created via `POST /api/billing/<wsId>/checkout {plan: growth}`; `stripe trigger checkout.session.completed` with workspace_id override fired the signed webhook against production; dispatcher advanced the `subscriptions` row from `starter/incomplete` → `growth/active`; `audit_logs` row `billing.checkout_completed` written; `webhooks_inbox` row `evt_1TVZUXFMXFyeuIPxt5cCHg66` marked `processed`; `entitlements.checkBrandCap` reacted, allowing 2nd + 3rd brand creation that was previously 402 PLAN_LIMIT_REACHED on starter.
+
+## Executive Verdict (Run 20)
+- Current ship state: **shipped: true**. Production fully verified end-to-end including billing entitlement reactions and admin RBAC positive path. Public marketing launch is one M-16 observability ticket away.
+- Vs Run 19: admin user seeded, real test-mode Stripe Checkout end-to-end proven, paying-customer self-serve verdict flipped from CONDITIONAL GO to GO.
+- Remaining gaps:
+  - **M-16** observability — only remaining blocker for public marketing launch.
+  - Optional: real-card Checkout via Stripe-hosted UI (would populate `stripe_customer_id` + `stripe_subscription_id` in subscriptions; currently NULL because the synthetic trigger event didn't include them).
+  - Optional: `staging.mustbeviral.com` DNS.
+  - Live Stripe activation: separate run, deferred.
+
 ## Baseline Gate (Run 19, 2026-05-10)
 - typecheck: PASS — `npm run typecheck` exit 0; `worker-configuration.d.ts` regenerated with both staging and production env blocks.
 - lint: PASS — `npm run lint` exit 0.
