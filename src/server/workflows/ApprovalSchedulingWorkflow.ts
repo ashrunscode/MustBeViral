@@ -1,10 +1,14 @@
 import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloudflare:workers";
 
 import { getDb } from "../db/client";
-import { dbFirst, dbRun, toJson } from "../db/sql";
+import { dbAll, dbFirst, dbRun, toJson } from "../db/sql";
 import type { Env } from "../env";
 import { writeAuditLog } from "../services/audit";
 import { getBrand } from "../services/brand-operations";
+import { isPlatformEnabled } from "../services/platforms/feature-flags";
+import { getAdapter } from "../services/platforms/registry";
+import { readToken } from "../services/platforms/token-storage";
+import type { AccessToken, PlatformId } from "../services/platforms/types";
 import { getSchedulerProvider, type SchedulerProviderId } from "../services/scheduler";
 import { createId } from "../utils/id";
 import { type BrandWorkflowInput } from "./base";
@@ -45,6 +49,26 @@ interface PersistResult {
 	status: "complete";
 	workflowRunId: string;
 	exportedCount: number;
+}
+
+interface PlatformPublishOutcome {
+	platform: PlatformId;
+	postId: string;
+	status: "published" | "failed" | "skipped";
+	externalPostId: string | null;
+	externalUrl: string | null;
+	errorCode: string | null;
+	socialAccountTokenId: string | null;
+	publishedPostId: string | null;
+}
+
+interface SocialTokenQueryRow extends Record<string, unknown> {
+	id: string;
+	brand_id: string;
+	external_account_id: string;
+	scope_csv: string;
+	token_kv_key: string;
+	access_token_expires_at: string;
 }
 
 interface WorkflowSchedulablePostRow extends Record<string, unknown> {
@@ -303,6 +327,204 @@ export class ApprovalSchedulingWorkflow extends WorkflowEntrypoint<
 			},
 		);
 
+		// ── Option D platform publish branch (additive, flag-gated) ────────────
+		// Runs AFTER manual-export persist so the scheduled_posts row always
+		// exists as a fallback record. When the platform publish flag is on AND
+		// a connected token exists for the brand+platform, this step also calls
+		// the platform adapter's publish() and (on success) flips the post's
+		// content_posts.status to 'published' and inserts a published_posts row.
+		// Failures here do NOT roll back the manual-export receipt — the operator
+		// can still copy the caption out manually.
+		const platformOutcomes: PlatformPublishOutcome[] = await step.do(
+			"platform-publish-fanout",
+			{ retries: { limit: 2, delay: "10 seconds", backoff: "exponential" } },
+			async (): Promise<PlatformPublishOutcome[]> => {
+				const outcomes: PlatformPublishOutcome[] = [];
+				const platformsToCheck: PlatformId[] = ["linkedin", "x", "meta", "tiktok"];
+				const enabledPlatforms = platformsToCheck.filter((p) =>
+					isPlatformEnabled(this.env, p, "publish"),
+				);
+				if (enabledPlatforms.length === 0) {
+					return outcomes;
+				}
+				const db = getDb(this.env);
+				// Build postId -> caption lookup from the evaluation step's result
+				// (which has the canonical post rows). The persist step's scheduledPlans
+				// only carries the scheduling metadata, not the caption.
+				const captionByPostId = new Map<string, string>();
+				for (const post of evaluation.posts) {
+					captionByPostId.set(post.id, post.caption);
+				}
+				for (const platform of enabledPlatforms) {
+					const adapter = getAdapter(platform);
+					if (!adapter) {
+						continue;
+					}
+					const tokenRows = await dbAll<SocialTokenQueryRow>(
+						db,
+						`SELECT id, brand_id, external_account_id, scope_csv,
+							token_kv_key, access_token_expires_at
+						FROM social_account_tokens
+						WHERE brand_id = ? AND platform = ? AND status = 'active'
+						ORDER BY last_used_at DESC, created_at DESC
+						LIMIT 1`,
+						[validation.brandId, platform],
+					);
+					if (tokenRows.length === 0) {
+						for (const plan of scheduledPlans) {
+							outcomes.push({
+								platform,
+								postId: plan.postId,
+								status: "skipped",
+								externalPostId: null,
+								externalUrl: null,
+								errorCode: "no_active_token",
+								socialAccountTokenId: null,
+								publishedPostId: null,
+							});
+						}
+						continue;
+					}
+					const tokenRow = tokenRows[0]!;
+					const decryptedPayload = await readToken(this.env, {
+						brandId: validation.brandId,
+						tokenKvKey: tokenRow.token_kv_key,
+					});
+					if (!decryptedPayload) {
+						for (const plan of scheduledPlans) {
+							outcomes.push({
+								platform,
+								postId: plan.postId,
+								status: "failed",
+								externalPostId: null,
+								externalUrl: null,
+								errorCode: "token_missing",
+								socialAccountTokenId: tokenRow.id,
+								publishedPostId: null,
+							});
+						}
+						continue;
+					}
+					const accessToken: AccessToken = {
+						accessToken: decryptedPayload.access_token,
+						...(decryptedPayload.refresh_token === undefined
+							? {}
+							: { refreshToken: decryptedPayload.refresh_token }),
+						tokenType: decryptedPayload.token_type ?? "Bearer",
+						expiresAt: tokenRow.access_token_expires_at,
+						scopes: tokenRow.scope_csv.split(",").filter(Boolean),
+						externalAccountId: tokenRow.external_account_id,
+						socialAccountTokenId: tokenRow.id,
+						...(decryptedPayload.platform_metadata === undefined
+							? {}
+							: { platformMetadata: decryptedPayload.platform_metadata }),
+					};
+					for (const plan of scheduledPlans) {
+						const caption = captionByPostId.get(plan.postId) ?? "";
+						const publishResult = await adapter.publish(
+							{
+								brandId: validation.brandId,
+								workspaceId: validation.workspaceId,
+								postId: plan.postId,
+								caption,
+								mediaR2Keys: [],
+								scheduledAt: plan.scheduledAt,
+								approvedBy: validation.requestedBy ?? "",
+							},
+							accessToken,
+						);
+						if (publishResult.status === "published") {
+							const publishedPostId = createId("pubp");
+							await dbRun(
+								db,
+								`INSERT OR IGNORE INTO published_posts (
+									id, post_id, brand_id, platform, external_post_id, external_url,
+									social_account_token_id, metadata_json
+								) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+								[
+									publishedPostId,
+									plan.postId,
+									validation.brandId,
+									platform,
+									publishResult.externalPostId ?? "",
+									publishResult.externalUrl ?? null,
+									tokenRow.id,
+									toJson({
+										provider: "platform_adapter",
+										elapsedMs: publishResult.elapsedMs ?? null,
+										requestId: publishResult.requestId ?? null,
+									}),
+								],
+							);
+							await dbRun(
+								db,
+								`UPDATE content_posts
+								SET status = 'published', updated_at = CURRENT_TIMESTAMP
+								WHERE id = ? AND brand_id = ?`,
+								[plan.postId, validation.brandId],
+							);
+							await dbRun(
+								db,
+								`UPDATE social_account_tokens
+								SET last_used_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
+								WHERE id = ?`,
+								[tokenRow.id],
+							);
+							await writeAuditLog(db, {
+								workspaceId: validation.workspaceId,
+								brandId: validation.brandId,
+								userId: validation.requestedBy,
+								action: `platform.${platform}.publish.success`,
+								entityType: "content_post",
+								entityId: plan.postId,
+								after: {
+									publishedPostId,
+									externalPostId: publishResult.externalPostId ?? null,
+									socialAccountTokenId: tokenRow.id,
+									elapsedMs: publishResult.elapsedMs ?? null,
+								},
+							});
+							outcomes.push({
+								platform,
+								postId: plan.postId,
+								status: "published",
+								externalPostId: publishResult.externalPostId ?? null,
+								externalUrl: publishResult.externalUrl ?? null,
+								errorCode: null,
+								socialAccountTokenId: tokenRow.id,
+								publishedPostId,
+							});
+						} else {
+							await writeAuditLog(db, {
+								workspaceId: validation.workspaceId,
+								brandId: validation.brandId,
+								userId: validation.requestedBy,
+								action: `platform.${platform}.publish.failed`,
+								entityType: "content_post",
+								entityId: plan.postId,
+								after: {
+									errorCode: publishResult.errorCode ?? "unknown",
+									errorMessage: publishResult.errorMessage ?? null,
+									socialAccountTokenId: tokenRow.id,
+								},
+							});
+							outcomes.push({
+								platform,
+								postId: plan.postId,
+								status: "failed",
+								externalPostId: null,
+								externalUrl: null,
+								errorCode: publishResult.errorCode ?? "unknown",
+								socialAccountTokenId: tokenRow.id,
+								publishedPostId: null,
+							});
+						}
+					}
+				}
+				return outcomes;
+			},
+		);
+
 		return {
 			workflow: "ApprovalSchedulingWorkflow",
 			status: persisted.status,
@@ -311,6 +533,13 @@ export class ApprovalSchedulingWorkflow extends WorkflowEntrypoint<
 			provider: "manual",
 			exportedCount: persisted.exportedCount,
 			postIds: scheduledPlans.map((plan) => plan.postId),
+			platformOutcomes: platformOutcomes.map((o) => ({
+				platform: o.platform,
+				postId: o.postId,
+				status: o.status,
+				externalPostId: o.externalPostId,
+				errorCode: o.errorCode,
+			})),
 		};
 	}
 }

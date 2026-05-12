@@ -39,6 +39,7 @@ const brandTabs = [
 	{ key: "approvals", label: "Approvals", suffix: "/approvals" },
 	{ key: "media", label: "Media", suffix: "/media" },
 	{ key: "dm-rules", label: "DM Rules", suffix: "/dm-rules" },
+	{ key: "connections", label: "Connections", suffix: "/connections" },
 	{ key: "reports", label: "Reports", suffix: "/reports" },
 	{ key: "growth", label: "Growth", suffix: "/growth" },
 ] as const;
@@ -481,6 +482,9 @@ function BrandPage({
 	if (route.section === "dm-rules") {
 		return <DmRulesPage data={data} brandId={brandId} refresh={refresh} setNotice={setNotice} />;
 	}
+	if (route.section === "connections") {
+		return <ConnectionsPage data={data} brandId={brandId} refresh={refresh} setNotice={setNotice} />;
+	}
 	if (route.section === "reports") {
 		return <ReportsPage data={data} brandId={brandId} refresh={refresh} setNotice={setNotice} />;
 	}
@@ -781,6 +785,137 @@ function DmRulesPage({
 				)}
 			</Panel>
 			<DmRuleForm brandId={brandId} refresh={refresh} setNotice={setNotice} />
+		</div>
+	);
+}
+
+function ConnectionsPage({
+	data,
+	brandId,
+	refresh,
+	setNotice,
+}: {
+	data: ApiData;
+	brandId: string;
+	refresh: () => void;
+	setNotice: (notice: string | null) => void;
+}) {
+	const accounts = asArray(data.accounts);
+	const [busyId, setBusyId] = useState<string | null>(null);
+
+	const platforms = [
+		{ id: "linkedin", label: "LinkedIn", description: "Personal page or admin'd company URN." },
+		{ id: "x", label: "X (Twitter)", description: "Tweets + mention polling (Phase C)." },
+		{ id: "meta", label: "Meta", description: "Instagram Business + Facebook Page (Phase D)." },
+		{ id: "tiktok", label: "TikTok", description: "Video posting + comments (Phase E)." },
+	] as const;
+
+	function startConnect(platform: string) {
+		// 302 redirect handled by the server; just navigate.
+		window.location.href = `/api/brands/${brandId}/oauth/${platform}/start`;
+	}
+
+	async function disconnect(accountId: string) {
+		setBusyId(accountId);
+		try {
+			const response = await fetch(`/api/brands/${brandId}/social-accounts/${accountId}`, {
+				method: "DELETE",
+				credentials: "same-origin",
+			});
+			const payload = (await response.json().catch(() => ({}))) as ApiData;
+			if (!response.ok || payload.success === false) {
+				const error = asRecord(payload.error);
+				throw new Error(text(error.message) ?? `Disconnect failed (${response.status})`);
+			}
+			setNotice("Account disconnected.");
+			refresh();
+		} catch (error) {
+			setNotice(error instanceof Error ? error.message : "Disconnect failed.");
+		} finally {
+			setBusyId(null);
+		}
+	}
+
+	const accountsByPlatform = new Map<string, ApiData[]>();
+	for (const account of accounts) {
+		const platform = text(account.platform) ?? "unknown";
+		const list = accountsByPlatform.get(platform) ?? [];
+		list.push(account);
+		accountsByPlatform.set(platform, list);
+	}
+
+	return (
+		<div className="grid gap-5">
+			<Panel title="Connected accounts">
+				{accounts.length > 0 ? (
+					accounts.map((account) => {
+						const accountId = text(account.id) ?? "";
+						const status = text(account.status) ?? "active";
+						const platform = text(account.platform) ?? "unknown";
+						return (
+							<div
+								key={accountId}
+								className="flex flex-wrap items-center justify-between gap-3 border-b border-[#e6e5dc] py-3 last:border-b-0"
+							>
+								<div>
+									<div className="font-medium">
+										{text(account.accountLabel) ?? text(account.externalAccountId) ?? "Account"}
+									</div>
+									<div className="text-xs text-[#6c6a60]">
+										{platform} / {status} / scopes: {Array.isArray(account.scopes) ? account.scopes.join(",") : ""}
+									</div>
+									{text(account.lastUsedAt) ? (
+										<div className="text-xs text-[#6c6a60]">
+											Last used: {text(account.lastUsedAt)}
+										</div>
+									) : null}
+								</div>
+								<button
+									type="button"
+									className="btn-secondary"
+									disabled={busyId === accountId || status === "revoked"}
+									onClick={() => void disconnect(accountId)}
+								>
+									{status === "revoked" ? "Revoked" : busyId === accountId ? "Working..." : "Disconnect"}
+								</button>
+							</div>
+						);
+					})
+				) : (
+					<EmptyState title="No platforms connected yet" />
+				)}
+			</Panel>
+			<Panel title="Connect a platform">
+				<p className="mb-3 text-sm text-[#5d5a50]">
+					Connecting an account stores an encrypted refresh token in KV (D1 keeps only the
+					token metadata + scope list). Approve-before-publish stays enforced for every
+					connected platform.
+				</p>
+				<div className="grid gap-2">
+					{platforms.map((platform) => {
+						const existing = accountsByPlatform.get(platform.id) ?? [];
+						const hasActive = existing.some((account) => text(account.status) === "active");
+						return (
+							<div
+								key={platform.id}
+								className="flex flex-wrap items-center justify-between gap-3 border-b border-[#e6e5dc] py-3 last:border-b-0"
+							>
+								<div>
+									<div className="font-medium">{platform.label}</div>
+									<div className="text-xs text-[#6c6a60]">{platform.description}</div>
+								</div>
+								<button
+									type="button"
+									className={hasActive ? "btn-secondary" : "btn-primary"}
+									onClick={() => startConnect(platform.id)}
+								>
+									{hasActive ? `Re-connect ${platform.label}` : `Connect ${platform.label}`}
+								</button>
+							</div>
+						);
+					})}
+				</div>
+			</Panel>
 		</div>
 	);
 }
@@ -1464,6 +1599,8 @@ function brandEndpoint(brandId: string, section: string) {
 			return `/api/brands/${brandId}/media`;
 		case "dm-rules":
 			return `/api/brands/${brandId}/dm-rules`;
+		case "connections":
+			return `/api/brands/${brandId}/social-accounts`;
 		case "reports":
 			return `/api/brands/${brandId}/reports/weekly`;
 		case "growth":
