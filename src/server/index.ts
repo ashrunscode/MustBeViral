@@ -17,8 +17,13 @@ import { billingRoutes } from "./routes/billing";
 import { brandRoutes } from "./routes/brands";
 import { healthRoutes } from "./routes/health";
 import { mcpRoutes } from "./routes/mcp";
+import { oauthRoutes } from "./routes/oauth";
 import { webhookRoutes } from "./routes/webhooks";
 import { workspaceRoutes } from "./routes/workspaces";
+// Side-effect import: LinkedIn adapter self-registers with the platform
+// registry. Other platforms self-register the same way as they land in
+// Phase C-E.
+import "./services/platforms/linkedin";
 import {
 	allPlatformsDisabled,
 	isPlatformEnabled,
@@ -83,6 +88,7 @@ api.route("/billing", billingRoutes);
 api.route("/admin", adminRoutes);
 api.route("/mcp", mcpRoutes);
 api.route("/webhooks", webhookRoutes);
+api.route("/oauth", oauthRoutes);
 api.notFound(handleNotFound);
 
 app.route("/api", api);

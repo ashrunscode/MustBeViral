@@ -966,6 +966,176 @@ brandRoutes.post("/:brandId/agent/resume", async (c) => {
 	return c.json(successEnvelope({ agent: data }, requestId));
 });
 
+// ── Option D social-account management + OAuth start ─────────────────────────
+
+interface SocialAccountTokenRow extends Record<string, unknown> {
+	id: string;
+	platform: string;
+	account_label: string;
+	external_account_id: string;
+	scope_csv: string;
+	access_token_expires_at: string;
+	refresh_token_expires_at: string | null;
+	status: string;
+	last_used_at: string | null;
+	created_at: string;
+	updated_at: string;
+	token_kv_key: string;
+}
+
+brandRoutes.get("/:brandId/social-accounts", async (c) => {
+	const requestId = c.get("requestId");
+	const brandId = c.get("brandId") ?? "";
+	const rows = await dbAll<SocialAccountTokenRow>(
+		getDb(c.env),
+		`SELECT id, platform, account_label, external_account_id, scope_csv,
+			access_token_expires_at, refresh_token_expires_at, status,
+			last_used_at, created_at, updated_at, token_kv_key
+		FROM social_account_tokens
+		WHERE brand_id = ?
+		ORDER BY created_at DESC`,
+		[brandId],
+	);
+	// Strip token_kv_key from the public response — it's an implementation
+	// detail of the encrypted-KV storage and not for client consumption.
+	const accounts = rows.map((row) => ({
+		id: row.id,
+		platform: row.platform,
+		accountLabel: row.account_label,
+		externalAccountId: row.external_account_id,
+		scopes: row.scope_csv.split(",").filter(Boolean),
+		accessTokenExpiresAt: row.access_token_expires_at,
+		refreshTokenExpiresAt: row.refresh_token_expires_at,
+		status: row.status,
+		lastUsedAt: row.last_used_at,
+		createdAt: row.created_at,
+		updatedAt: row.updated_at,
+	}));
+	return c.json(successEnvelope({ accounts }, requestId));
+});
+
+brandRoutes.delete("/:brandId/social-accounts/:accountId", async (c) => {
+	const requestId = c.get("requestId");
+	const brandId = c.get("brandId") ?? "";
+	const auth = c.get("auth");
+	const accountId = c.req.param("accountId");
+	const db = getDb(c.env);
+	const row = await dbFirst<SocialAccountTokenRow>(
+		db,
+		`SELECT id, platform, account_label, external_account_id, scope_csv,
+			access_token_expires_at, refresh_token_expires_at, status,
+			last_used_at, created_at, updated_at, token_kv_key
+		FROM social_account_tokens
+		WHERE id = ? AND brand_id = ?
+		LIMIT 1`,
+		[accountId, brandId],
+	);
+	if (!row) {
+		return c.json(
+			errorEnvelope("SOCIAL_ACCOUNT_NOT_FOUND", "Connected social account not found.", requestId),
+			404,
+		);
+	}
+	// Delete the KV ciphertext and flip D1 status to 'revoked'. We don't hard-
+	// delete the row because published_posts may FK-reference it; status='revoked'
+	// makes it inert for adapter dispatch.
+	try {
+		const { revokeToken } = await import("../services/platforms/token-storage");
+		await revokeToken(c.env, row.token_kv_key);
+	} catch {
+		// Continue even if KV delete fails — the D1 status flip is what stops
+		// the adapter from using this row.
+	}
+	await dbRun(
+		db,
+		`UPDATE social_account_tokens SET status = 'revoked', updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+		[row.id],
+	);
+	await dbRun(
+		db,
+		`UPDATE brand_social_profiles SET connected_status = 'disconnected', updated_at = CURRENT_TIMESTAMP
+		WHERE brand_id = ? AND platform = ? AND handle = ?`,
+		[brandId, row.platform, row.external_account_id],
+	);
+	await writeAuditLog(db, {
+		workspaceId: null,
+		brandId,
+		userId: auth?.userId ?? null,
+		action: `platform.${row.platform}.disconnect`,
+		entityType: "social_account_token",
+		entityId: row.id,
+		before: { status: row.status },
+		after: { status: "revoked" },
+	});
+	return c.json(successEnvelope({ disconnected: true, accountId: row.id }, requestId));
+});
+
+// OAuth start for LinkedIn. Flag-gated; returns 503 FEATURE_DISABLED if the
+// platform's publish flag is OFF (which is the post-build default).
+brandRoutes.get("/:brandId/oauth/linkedin/start", async (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabledForBrand(c.env, "linkedin", "publish")) {
+		return c.json(
+			errorEnvelope("FEATURE_DISABLED", "LinkedIn publish flag is off.", requestId, {
+				platform: "linkedin",
+			}),
+			503,
+		);
+	}
+	const brandId = c.get("brandId") ?? "";
+	const clientId = c.env.LINKEDIN_CLIENT_ID;
+	if (!clientId) {
+		return c.json(
+			errorEnvelope(
+				"OAUTH_APP_NOT_CONFIGURED",
+				"LinkedIn client id not configured. Set LINKEDIN_CLIENT_ID via wrangler secret put.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const redirectUri =
+		c.env.LINKEDIN_REDIRECT_URI ?? `${c.env.PUBLIC_APP_URL ?? ""}/api/oauth/linkedin/callback`;
+	if (!c.env.TOKEN_ENCRYPTION_KEY) {
+		return c.json(
+			errorEnvelope(
+				"TOKEN_ENCRYPTION_KEY_MISSING",
+				"Worker secret TOKEN_ENCRYPTION_KEY is required before any OAuth flow.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const { signState } = await import("../services/platforms/oauth-state");
+	const { buildLinkedInAuthorizeUrl } = await import("../services/platforms/linkedin-oauth");
+	const state = await signState(c.env, {
+		brandId,
+		platform: "linkedin",
+		redirectAfter: `/app/brands/${brandId}/connections?connected=linkedin`,
+	});
+	const url = buildLinkedInAuthorizeUrl({
+		state,
+		clientId,
+		redirectUri,
+	});
+	return c.redirect(url, 302);
+});
+
+/**
+ * Flag-check helper. Lazily imports the feature-flags module to avoid a
+ * circular import path with services/platforms/* during dev-server warmup.
+ */
+function isPlatformEnabledForBrand(
+	env: AppHonoContext["Bindings"],
+	platform: "linkedin" | "x" | "meta" | "tiktok",
+	capability: "publish" | "ingest",
+): boolean {
+	const key = `ENABLE_${platform.toUpperCase()}_${capability.toUpperCase()}` as keyof typeof env;
+	return env[key] === "true";
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 async function callAgent(
 	c: Context<AppHonoContext>,
 	method: "GET" | "POST",

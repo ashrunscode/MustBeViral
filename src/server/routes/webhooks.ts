@@ -1,10 +1,16 @@
 import { Hono } from "hono";
 
 import { getDb } from "../db/client";
-import { dbFirst, dbRun, toJson } from "../db/sql";
+import { dbAll, dbFirst, dbRun, toJson } from "../db/sql";
 import { errorEnvelope } from "../http/envelope";
 import { successEnvelope } from "../http/envelope";
 import type { AppHonoContext } from "../http/types";
+import { isPlatformEnabled } from "../services/platforms/feature-flags";
+import { linkedInAdapter, verifyLinkedInWebhookSignature } from "../services/platforms/linkedin";
+import type {
+	PlatformId,
+	PlatformIngestEvent,
+} from "../services/platforms/types";
 import { dispatchStripeEvent, type StripeEvent } from "../services/stripe/events";
 import { verifyStripeWebhookSignature } from "../services/stripe/signature";
 import { createId } from "../utils/id";
@@ -132,3 +138,228 @@ webhookRoutes.post("/stripe", async (c) => {
 		),
 	);
 });
+
+/**
+ * LinkedIn comment / engagement webhook. LinkedIn signs the raw body with
+ * HMAC-SHA-256 against the developer app's client secret (or webhook secret,
+ * depending on subscription product).
+ *
+ * Fail-closed contract when ENABLE_LINKEDIN_INGEST="false": return 200 with
+ * {ignored: "feature_disabled"}. Platforms penalise non-2xx responses with
+ * noisy retry queues; a silent 200 drop avoids that.
+ */
+webhookRoutes.post("/linkedin", async (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabled(c.env, "linkedin", "ingest")) {
+		return c.json(
+			successEnvelope({ ignored: "feature_disabled", platform: "linkedin" }, requestId),
+		);
+	}
+	const signature = c.req.header("x-linkedin-signature") ?? c.req.header("X-LinkedIn-Signature");
+	const rawBody = await c.req.raw.clone().text();
+	const webhookSecret = c.env.LINKEDIN_WEBHOOK_SECRET;
+	if (!webhookSecret) {
+		return c.json(
+			errorEnvelope("LINKEDIN_WEBHOOK_NOT_CONFIGURED", "LinkedIn webhook secret missing.", requestId),
+			501,
+		);
+	}
+	const ok = await verifyLinkedInWebhookSignature(rawBody, signature ?? null, webhookSecret);
+	if (!ok) {
+		return c.json(
+			errorEnvelope(
+				"INVALID_LINKEDIN_SIGNATURE",
+				"LinkedIn webhook signature verification failed.",
+				requestId,
+				{ signaturePresent: Boolean(signature) },
+			),
+			400,
+		);
+	}
+	let payload: unknown;
+	try {
+		payload = JSON.parse(rawBody);
+	} catch {
+		return c.json(
+			errorEnvelope("INVALID_WEBHOOK_JSON", "LinkedIn webhook payload must be JSON.", requestId),
+			400,
+		);
+	}
+	const externalEventId = extractLinkedInEventId(payload);
+	const db = getDb(c.env);
+	await dbRun(
+		db,
+		`INSERT OR IGNORE INTO webhooks_inbox (
+			id, provider, external_event_id, payload_json, status
+		) VALUES (?, 'linkedin', ?, ?, 'received')`,
+		[createId("webhook"), externalEventId, toJson(payload)],
+	);
+	const existing = await dbFirst<{ id: string; status: string }>(
+		db,
+		`SELECT id, status FROM webhooks_inbox
+		 WHERE provider = 'linkedin' AND external_event_id = ?
+		 LIMIT 1`,
+		[externalEventId],
+	);
+	if (existing && (existing.status === "processed" || existing.status === "ignored")) {
+		return c.json(
+			successEnvelope({ received: true, replay: true, previousStatus: existing.status }, requestId),
+		);
+	}
+	let ingest;
+	try {
+		ingest = await linkedInAdapter.ingestInbound!(payload, signature ?? null, c.env);
+	} catch (err) {
+		if (existing) {
+			await dbRun(
+				db,
+				`UPDATE webhooks_inbox SET status = 'failed', processed_at = CURRENT_TIMESTAMP WHERE id = ?`,
+				[existing.id],
+			);
+		}
+		return c.json(
+			errorEnvelope(
+				"LINKEDIN_INGEST_FAILED",
+				"LinkedIn ingest handler raised an error.",
+				requestId,
+				{ message: err instanceof Error ? err.message : String(err) },
+			),
+			500,
+		);
+	}
+	const persistResult = await persistPlatformIngest(c.env, "linkedin", ingest.events);
+	if (existing) {
+		await dbRun(
+			db,
+			`UPDATE webhooks_inbox SET status = ?, processed_at = CURRENT_TIMESTAMP WHERE id = ?`,
+			[ingest.ok ? "processed" : "ignored", existing.id],
+		);
+	}
+	return c.json(
+		successEnvelope(
+			{
+				received: true,
+				eventsIngested: persistResult.commentsInserted,
+				dmEventsCreated: persistResult.dmEventsInserted,
+				ok: ingest.ok,
+				reason: ingest.reason ?? null,
+			},
+			requestId,
+		),
+	);
+});
+
+interface PersistResult {
+	commentsInserted: number;
+	dmEventsInserted: number;
+}
+
+/**
+ * Insert platform_comments + dm_events(status='received') rows for the events
+ * normalised by the adapter. The brand_id + workspace_id are resolved via the
+ * matching published_post row (when externalPostId is present) or the most
+ * recent social_account_tokens row for the brand+platform.
+ */
+async function persistPlatformIngest(
+	env: AppHonoContext["Bindings"],
+	platform: PlatformId,
+	events: PlatformIngestEvent[],
+): Promise<PersistResult> {
+	if (events.length === 0) {
+		return { commentsInserted: 0, dmEventsInserted: 0 };
+	}
+	const db = getDb(env);
+	let commentsInserted = 0;
+	let dmEventsInserted = 0;
+	for (const event of events) {
+		let publishedPostId: string | null = null;
+		let brandId: string | null = null;
+		if (event.externalPostId) {
+			const published = await dbFirst<{ id: string; brand_id: string }>(
+				db,
+				`SELECT id, brand_id FROM published_posts WHERE platform = ? AND external_post_id = ? LIMIT 1`,
+				[platform, event.externalPostId],
+			);
+			if (published) {
+				publishedPostId = published.id;
+				brandId = published.brand_id;
+			}
+		}
+		if (!brandId) {
+			// Mention-only event with no owned post — fall back to the most
+			// recent social_account_tokens row for this platform.
+			const tokens = await dbAll<{ brand_id: string }>(
+				db,
+				`SELECT brand_id FROM social_account_tokens
+				 WHERE platform = ? AND status = 'active'
+				 ORDER BY last_used_at DESC, created_at DESC
+				 LIMIT 1`,
+				[platform],
+			);
+			if (tokens[0]) {
+				brandId = tokens[0].brand_id;
+			}
+		}
+		if (!brandId) {
+			// No brand context — drop the event silently. webhooks_inbox already
+			// stores the raw payload for forensic inspection.
+			continue;
+		}
+		const commentId = createId("pcom");
+		await dbRun(
+			db,
+			`INSERT OR IGNORE INTO platform_comments (
+				id, brand_id, published_post_id, platform, external_comment_id,
+				parent_external_comment_id, author_external_id, author_handle, body, metadata_json
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			[
+				commentId,
+				brandId,
+				publishedPostId,
+				platform,
+				event.externalCommentId,
+				event.parentExternalCommentId ?? null,
+				event.authorExternalId ?? null,
+				event.authorHandle ?? null,
+				event.body,
+				toJson(event.metadata ?? {}),
+			],
+		);
+		commentsInserted += 1;
+		const dmEventId = createId("dme");
+		await dbRun(
+			db,
+			`INSERT INTO dm_events (id, brand_id, rule_id, platform, status, event_json)
+			VALUES (?, ?, NULL, ?, 'received', ?)`,
+			[
+				dmEventId,
+				brandId,
+				platform,
+				toJson({
+					platform_comment_id: commentId,
+					external_comment_id: event.externalCommentId,
+					external_post_id: event.externalPostId ?? null,
+					author_external_id: event.authorExternalId ?? null,
+					body: event.body,
+				}),
+			],
+		);
+		dmEventsInserted += 1;
+	}
+	return { commentsInserted, dmEventsInserted };
+}
+
+function extractLinkedInEventId(payload: unknown): string {
+	if (!payload || typeof payload !== "object") {
+		return createId("linkedinevt");
+	}
+	const obj = payload as Record<string, unknown>;
+	if (typeof obj.eventUrn === "string") return obj.eventUrn;
+	if (typeof obj.id === "string") return obj.id;
+	if (Array.isArray(obj.events) && obj.events.length > 0) {
+		const first = obj.events[0] as Record<string, unknown>;
+		if (typeof first.eventUrn === "string") return first.eventUrn;
+		if (typeof first.id === "string") return first.id;
+	}
+	return createId("linkedinevt");
+}

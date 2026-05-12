@@ -19,11 +19,67 @@ if (envName !== "staging" && envName !== "production") {
 }
 
 function stripJsoncComments(text) {
-	// Drop // line comments and /* ... */ block comments. Naive but adequate
-	// for wrangler.jsonc which contains no string-literal "//" sequences.
-	return text
-		.replace(/\/\*[\s\S]*?\*\//g, "")
-		.replace(/^\s*\/\/.*$/gm, "");
+	// State-machine parser. Tracks in-string vs in-line-comment vs in-block-
+	// comment so we never strip `/*` or `//` sequences embedded inside string
+	// literals (e.g. route patterns like "staging.mustbeviral.com/*").
+	let out = "";
+	let i = 0;
+	let inString = false;
+	let inLineComment = false;
+	let inBlockComment = false;
+	while (i < text.length) {
+		const c = text[i];
+		const next = text[i + 1];
+		if (inLineComment) {
+			if (c === "\n") {
+				inLineComment = false;
+				out += c;
+			}
+			i += 1;
+			continue;
+		}
+		if (inBlockComment) {
+			if (c === "*" && next === "/") {
+				inBlockComment = false;
+				i += 2;
+				continue;
+			}
+			i += 1;
+			continue;
+		}
+		if (inString) {
+			out += c;
+			if (c === "\\" && next !== undefined) {
+				out += next;
+				i += 2;
+				continue;
+			}
+			if (c === '"') {
+				inString = false;
+			}
+			i += 1;
+			continue;
+		}
+		if (c === '"') {
+			inString = true;
+			out += c;
+			i += 1;
+			continue;
+		}
+		if (c === "/" && next === "/") {
+			inLineComment = true;
+			i += 2;
+			continue;
+		}
+		if (c === "/" && next === "*") {
+			inBlockComment = true;
+			i += 2;
+			continue;
+		}
+		out += c;
+		i += 1;
+	}
+	return out;
 }
 
 const rootCfgPath = resolve(repoRoot, "wrangler.jsonc");

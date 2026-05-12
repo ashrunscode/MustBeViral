@@ -11,6 +11,8 @@
 		"src/server/services/model-router-gateway.ts",
 		"src/server/services/model-router-image.ts",
 		"src/server/services/platforms/feature-flags.ts",
+		"src/server/services/platforms/linkedin.ts",
+		"src/server/services/platforms/linkedin-oauth.ts",
 		"src/server/services/platforms/oauth-state.ts",
 		"src/server/services/platforms/rate-limit.ts",
 		"src/server/services/platforms/registry.ts",
