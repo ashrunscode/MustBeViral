@@ -24,7 +24,18 @@
 		"PREMIUM_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-dev",
 		"FAST_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-4b",
 		"USE_MOCK_AI": "true",
-		"USE_BROWSER_RUN": "false"
+		"USE_BROWSER_RUN": "false",
+		"ENABLE_LINKEDIN_PUBLISH": "false",
+		"ENABLE_LINKEDIN_INGEST": "false",
+		"ENABLE_X_PUBLISH": "false",
+		"ENABLE_X_INGEST": "false",
+		"ENABLE_META_PUBLISH": "false",
+		"ENABLE_META_INGEST": "false",
+		"ENABLE_TIKTOK_PUBLISH": "false",
+		"ENABLE_TIKTOK_INGEST": "false"
+	},
+	"triggers": {
+		"crons": ["*/5 * * * *"]
 	},
 	"ai": {
 		"binding": "AI"
@@ -109,6 +120,11 @@
 			"name": "dm-automation-setup-workflow",
 			"binding": "DM_AUTOMATION_SETUP_WORKFLOW",
 			"class_name": "DMAutomationSetupWorkflow"
+		},
+		{
+			"name": "platform-reply-workflow",
+			"binding": "PLATFORM_REPLY_WORKFLOW",
+			"class_name": "PlatformReplyWorkflow"
 		}
 	],
 	"env": {
@@ -130,7 +146,18 @@
 				"PREMIUM_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-dev",
 				"FAST_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-4b",
 				"USE_MOCK_AI": "true",
-				"USE_BROWSER_RUN": "false"
+				"USE_BROWSER_RUN": "false",
+				"ENABLE_LINKEDIN_PUBLISH": "false",
+				"ENABLE_LINKEDIN_INGEST": "false",
+				"ENABLE_X_PUBLISH": "false",
+				"ENABLE_X_INGEST": "false",
+				"ENABLE_META_PUBLISH": "false",
+				"ENABLE_META_INGEST": "false",
+				"ENABLE_TIKTOK_PUBLISH": "false",
+				"ENABLE_TIKTOK_INGEST": "false"
+			},
+			"triggers": {
+				"crons": ["*/5 * * * *"]
 			},
 			"ai": {
 				"binding": "AI"
@@ -202,6 +229,11 @@
 					"name": "mustbeviral-staging-dm-automation-setup",
 					"binding": "DM_AUTOMATION_SETUP_WORKFLOW",
 					"class_name": "DMAutomationSetupWorkflow"
+				},
+				{
+					"name": "mustbeviral-staging-platform-reply",
+					"binding": "PLATFORM_REPLY_WORKFLOW",
+					"class_name": "PlatformReplyWorkflow"
 				}
 			]
 		},
@@ -227,7 +259,18 @@
 				"PREMIUM_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-dev",
 				"FAST_IMAGE_MODEL": "@cf/black-forest-labs/flux-2-klein-4b",
 				"USE_MOCK_AI": "false",
-				"USE_BROWSER_RUN": "false"
+				"USE_BROWSER_RUN": "false",
+				"ENABLE_LINKEDIN_PUBLISH": "false",
+				"ENABLE_LINKEDIN_INGEST": "false",
+				"ENABLE_X_PUBLISH": "false",
+				"ENABLE_X_INGEST": "false",
+				"ENABLE_META_PUBLISH": "false",
+				"ENABLE_META_INGEST": "false",
+				"ENABLE_TIKTOK_PUBLISH": "false",
+				"ENABLE_TIKTOK_INGEST": "false"
+			},
+			"triggers": {
+				"crons": ["*/5 * * * *"]
 			},
 			"ai": {
 				"binding": "AI"
@@ -299,6 +342,11 @@
 					"name": "mustbeviral-production-dm-automation-setup",
 					"binding": "DM_AUTOMATION_SETUP_WORKFLOW",
 					"class_name": "DMAutomationSetupWorkflow"
+				},
+				{
+					"name": "mustbeviral-production-platform-reply",
+					"binding": "PLATFORM_REPLY_WORKFLOW",
+					"class_name": "PlatformReplyWorkflow"
 				}
 			]
 		}
