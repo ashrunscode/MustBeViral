@@ -249,6 +249,32 @@ webhookRoutes.post("/linkedin", async (c) => {
 	);
 });
 
+/**
+ * X (Twitter) webhook stub. X v2 at Free + Basic tiers does NOT deliver
+ * webhooks; mentions are polled via the scheduled cron handler. We accept
+ * the path so platform-side configuration is uniform (no surprise 404s),
+ * but always respond with 200-ignored. Future tier upgrades can extend
+ * this handler with real signature verification.
+ */
+webhookRoutes.post("/x", (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabled(c.env, "x", "ingest")) {
+		return c.json(successEnvelope({ ignored: "feature_disabled", platform: "x" }, requestId));
+	}
+	// Even with the flag on, X has no webhook at Free/Basic; cron poll is the
+	// real path. Drop the payload silently with 200 to avoid retry storms.
+	return c.json(
+		successEnvelope(
+			{
+				ignored: "unsupported_tier",
+				platform: "x",
+				note: "X v2 Free/Basic tiers do not deliver webhooks. Mentions are polled via the scheduled cron handler.",
+			},
+			requestId,
+		),
+	);
+});
+
 interface PersistResult {
 	commentsInserted: number;
 	dmEventsInserted: number;

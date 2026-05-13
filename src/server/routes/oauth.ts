@@ -34,6 +34,7 @@ import {
 import { verifyState } from "../services/platforms/oauth-state";
 import { writeToken } from "../services/platforms/token-storage";
 import type { StoredTokenPayload } from "../services/platforms/types";
+import { exchangeXCode, resolveXUserInfo } from "../services/platforms/x-oauth";
 import { createId } from "../utils/id";
 
 export const oauthRoutes = new Hono<AppHonoContext>();
@@ -220,6 +221,167 @@ oauthRoutes.get("/linkedin/callback", async (c) => {
 	}
 	return c.redirect(
 		stateResult.payload.redirectAfter ?? buildConnectionsRedirect(brandId, "linkedin"),
+		302,
+	);
+});
+
+// X (Twitter) OAuth 2.0 callback. PKCE — code_verifier was embedded in the
+// signed state at start; the callback exchanges code + verifier for tokens.
+oauthRoutes.get("/x/callback", async (c) => {
+	const env = c.env;
+	if (!isPlatformEnabled(env, "x", "publish")) {
+		return c.json({ success: false, error: { code: "FEATURE_DISABLED" } }, 503);
+	}
+	const code = c.req.query("code");
+	const state = c.req.query("state");
+	const errorParam = c.req.query("error");
+	if (errorParam) {
+		return c.redirect(buildConnectionsRedirect(undefined, "x", errorParam), 302);
+	}
+	if (!code || !state) {
+		return c.json({ success: false, error: { code: "OAUTH_CALLBACK_INVALID" } }, 400);
+	}
+	const stateResult = await verifyState(env, state);
+	if (!stateResult.ok) {
+		return c.json(
+			{ success: false, error: { code: "OAUTH_STATE_INVALID", reason: stateResult.reason } },
+			400,
+		);
+	}
+	if (stateResult.payload.platform !== "x") {
+		return c.json({ success: false, error: { code: "OAUTH_PLATFORM_MISMATCH" } }, 400);
+	}
+	const brandId = stateResult.payload.brandId;
+	const codeVerifier = stateResult.payload.codeVerifier;
+	if (!codeVerifier) {
+		return c.redirect(buildConnectionsRedirect(brandId, "x", "pkce_verifier_missing"), 302);
+	}
+	const clientId = env.X_CLIENT_ID;
+	const redirectUri = env.X_REDIRECT_URI ?? defaultRedirectUri(env, "x");
+	if (!clientId) {
+		return c.redirect(buildConnectionsRedirect(brandId, "x", "missing_app_credentials"), 302);
+	}
+	const tokenResult = await exchangeXCode({
+		code,
+		codeVerifier,
+		clientId,
+		...(env.X_CLIENT_SECRET ? { clientSecret: env.X_CLIENT_SECRET } : {}),
+		redirectUri,
+	});
+	if (!tokenResult.ok) {
+		return c.redirect(buildConnectionsRedirect(brandId, "x", tokenResult.error.error), 302);
+	}
+	const userInfo = await resolveXUserInfo(tokenResult.bundle.accessToken);
+	if (!userInfo.ok) {
+		return c.redirect(buildConnectionsRedirect(brandId, "x", "userinfo_failed"), 302);
+	}
+	const externalAccountId = userInfo.userInfo.id;
+	const payload: StoredTokenPayload = {
+		access_token: tokenResult.bundle.accessToken,
+		...(tokenResult.bundle.refreshToken
+			? { refresh_token: tokenResult.bundle.refreshToken }
+			: {}),
+		token_type: tokenResult.bundle.tokenType,
+		issued_at: new Date().toISOString(),
+		platform_metadata: {
+			username: userInfo.userInfo.username,
+			name: userInfo.userInfo.name ?? null,
+		},
+	};
+	let tokenKvKey: string;
+	try {
+		tokenKvKey = await writeToken(env, {
+			brandId,
+			platform: "x",
+			externalAccountId,
+			payload,
+		});
+	} catch (err) {
+		const reason =
+			err instanceof Error && "code" in err && typeof err.code === "string"
+				? err.code
+				: "token_write_failed";
+		return c.redirect(buildConnectionsRedirect(brandId, "x", reason), 302);
+	}
+	const accessExpiresAt = new Date(
+		Date.now() + tokenResult.bundle.expiresIn * 1000,
+	).toISOString();
+	const db = getDb(env);
+	const tokenRowId = createId("sat");
+	const accountLabel =
+		userInfo.userInfo.name ?? userInfo.userInfo.username ?? externalAccountId;
+	const scopeCsv = tokenResult.bundle.scope.split(/[\s,]+/).filter(Boolean).join(",");
+	await dbRun(
+		db,
+		`INSERT INTO social_account_tokens (
+			id, brand_id, platform, external_account_id, account_label, scope_csv,
+			token_kv_key, access_token_expires_at, refresh_token_expires_at, status
+		) VALUES (?, ?, 'x', ?, ?, ?, ?, ?, NULL, 'active')
+		ON CONFLICT(brand_id, platform, external_account_id) DO UPDATE SET
+			account_label = excluded.account_label,
+			scope_csv = excluded.scope_csv,
+			token_kv_key = excluded.token_kv_key,
+			access_token_expires_at = excluded.access_token_expires_at,
+			status = 'active',
+			updated_at = CURRENT_TIMESTAMP`,
+		[
+			tokenRowId,
+			brandId,
+			externalAccountId,
+			accountLabel,
+			scopeCsv,
+			tokenKvKey,
+			accessExpiresAt,
+		],
+	);
+	await dbRun(
+		db,
+		`INSERT INTO brand_social_profiles (
+			id, brand_id, platform, handle, profile_url, connected_status, metadata_json
+		) VALUES (?, ?, 'x', ?, ?, 'connected', ?)
+		ON CONFLICT(brand_id, platform, handle) DO UPDATE SET
+			profile_url = excluded.profile_url,
+			connected_status = 'connected',
+			metadata_json = excluded.metadata_json,
+			updated_at = CURRENT_TIMESTAMP`,
+		[
+			createId("bsp"),
+			brandId,
+			userInfo.userInfo.username,
+			`https://x.com/${userInfo.userInfo.username}`,
+			toJson({
+				external_account_id: externalAccountId,
+				name: userInfo.userInfo.name ?? null,
+				social_account_token_id: tokenRowId,
+			}),
+		],
+	);
+	const brandRow = await dbFirst<{ workspace_id: string }>(
+		db,
+		`SELECT workspace_id FROM brands WHERE id = ? LIMIT 1`,
+		[brandId],
+	);
+	await dbRun(
+		db,
+		`INSERT INTO audit_logs (
+			id, workspace_id, brand_id, user_id, action, entity_type, entity_id,
+			before_json, after_json, metadata_json
+		) VALUES (?, ?, ?, NULL, 'platform.x.connected', 'social_account_token', ?, NULL, ?, '{}')`,
+		[
+			createId("audit"),
+			brandRow?.workspace_id ?? null,
+			brandId,
+			tokenRowId,
+			toJson({
+				externalAccountId,
+				username: userInfo.userInfo.username,
+				scopeCsv,
+				redirectUri,
+			}),
+		],
+	);
+	return c.redirect(
+		stateResult.payload.redirectAfter ?? buildConnectionsRedirect(brandId, "x"),
 		302,
 	);
 });

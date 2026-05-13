@@ -20,10 +20,11 @@ import { mcpRoutes } from "./routes/mcp";
 import { oauthRoutes } from "./routes/oauth";
 import { webhookRoutes } from "./routes/webhooks";
 import { workspaceRoutes } from "./routes/workspaces";
-// Side-effect import: LinkedIn adapter self-registers with the platform
-// registry. Other platforms self-register the same way as they land in
-// Phase C-E.
+// Side-effect imports: each platform adapter self-registers with the
+// platform registry on module load. Order doesn't matter; importing them
+// here ensures the registry is populated before the first request.
 import "./services/platforms/linkedin";
+import "./services/platforms/x";
 import {
 	allPlatformsDisabled,
 	isPlatformEnabled,
@@ -124,6 +125,104 @@ function scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): voi
 			continue;
 		}
 		ctx.waitUntil(dispatchPendingReplies(env, platform));
+		if (platform === "x") {
+			ctx.waitUntil(pollXMentionsForAllAccounts(env));
+		}
+	}
+}
+
+/**
+ * X (Twitter) cron poll: fetch new mentions for every active X social_account_tokens
+ * row using a since_id cursor stored in KV `cursor:x:<accountId>`. Each new mention
+ * is persisted as a platform_comments + dm_events(status='received') row so the
+ * operator can approve a reply in the UI.
+ */
+async function pollXMentionsForAllAccounts(env: Env): Promise<void> {
+	const db = getDb(env);
+	type TokenRow = {
+		id: string;
+		brand_id: string;
+		external_account_id: string;
+		token_kv_key: string;
+	};
+	const rows = await dbAll<TokenRow>(
+		db,
+		`SELECT id, brand_id, external_account_id, token_kv_key
+		FROM social_account_tokens
+		WHERE platform = 'x' AND status = 'active'
+		ORDER BY last_used_at DESC, created_at DESC
+		LIMIT 25`,
+		[],
+	);
+	if (rows.length === 0) {
+		return;
+	}
+	const { readToken } = await import("./services/platforms/token-storage");
+	const { pollXMentions } = await import("./services/platforms/x");
+	const { dbRun, toJson } = await import("./db/sql");
+	const { createId } = await import("./utils/id");
+	for (const row of rows) {
+		try {
+			const payload = await readToken(env, {
+				brandId: row.brand_id,
+				tokenKvKey: row.token_kv_key,
+			});
+			if (!payload) continue;
+			const cursorKey = `cursor:x:${row.external_account_id}`;
+			const sinceIdRaw = env.CACHE ? await env.CACHE.get(cursorKey, { type: "text" }) : null;
+			const sinceId = typeof sinceIdRaw === "string" ? sinceIdRaw : undefined;
+			const poll = await pollXMentions({
+				accountId: row.external_account_id,
+				accessToken: payload.access_token,
+				...(sinceId === undefined ? {} : { sinceId }),
+			});
+			if (!poll.ok) {
+				console.warn(
+					`[cron] pollXMentions failed for account=${row.external_account_id} reason=${poll.errorCode ?? "unknown"}`,
+				);
+				continue;
+			}
+			for (const ev of poll.events) {
+				const commentId = createId("pcom");
+				await dbRun(
+					db,
+					`INSERT OR IGNORE INTO platform_comments (
+						id, brand_id, published_post_id, platform, external_comment_id,
+						parent_external_comment_id, author_external_id, author_handle, body, metadata_json
+					) VALUES (?, ?, NULL, 'x', ?, NULL, ?, ?, ?, ?)`,
+					[
+						commentId,
+						row.brand_id,
+						ev.externalCommentId,
+						ev.authorExternalId ?? null,
+						ev.authorHandle ?? null,
+						ev.body,
+						toJson({ referenced_tweet_id: ev.referencedTweetId ?? null, source: "cron_poll" }),
+					],
+				);
+				const dmEventId = createId("dme");
+				await dbRun(
+					db,
+					`INSERT INTO dm_events (id, brand_id, rule_id, platform, status, event_json)
+					VALUES (?, ?, NULL, 'x', 'received', ?)`,
+					[
+						dmEventId,
+						row.brand_id,
+						toJson({
+							platform_comment_id: commentId,
+							external_comment_id: ev.externalCommentId,
+							author_external_id: ev.authorExternalId ?? null,
+							body: ev.body,
+						}),
+					],
+				);
+			}
+			if (poll.newestId && env.CACHE) {
+				await env.CACHE.put(cursorKey, poll.newestId, { expirationTtl: 30 * 86400 });
+			}
+		} catch (err) {
+			console.error(`[cron] pollXMentions threw for account=${row.external_account_id}:`, err);
+		}
 	}
 }
 

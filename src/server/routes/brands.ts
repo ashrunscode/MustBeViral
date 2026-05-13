@@ -1121,6 +1121,61 @@ brandRoutes.get("/:brandId/oauth/linkedin/start", async (c) => {
 	return c.redirect(url, 302);
 });
 
+// OAuth start for X (Twitter) with PKCE. Code verifier is embedded in the
+// signed state so the callback can complete the token exchange without any
+// server-side session storage.
+brandRoutes.get("/:brandId/oauth/x/start", async (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabledForBrand(c.env, "x", "publish")) {
+		return c.json(
+			errorEnvelope("FEATURE_DISABLED", "X publish flag is off.", requestId, {
+				platform: "x",
+			}),
+			503,
+		);
+	}
+	const brandId = c.get("brandId") ?? "";
+	const clientId = c.env.X_CLIENT_ID;
+	if (!clientId) {
+		return c.json(
+			errorEnvelope(
+				"OAUTH_APP_NOT_CONFIGURED",
+				"X client id not configured. Set X_CLIENT_ID via wrangler secret put.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const redirectUri =
+		c.env.X_REDIRECT_URI ?? `${c.env.PUBLIC_APP_URL ?? ""}/api/oauth/x/callback`;
+	if (!c.env.TOKEN_ENCRYPTION_KEY) {
+		return c.json(
+			errorEnvelope(
+				"TOKEN_ENCRYPTION_KEY_MISSING",
+				"Worker secret TOKEN_ENCRYPTION_KEY is required before any OAuth flow.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const { signState } = await import("../services/platforms/oauth-state");
+	const { buildXAuthorizeUrl, generatePkcePair } = await import("../services/platforms/x-oauth");
+	const pkce = await generatePkcePair();
+	const state = await signState(c.env, {
+		brandId,
+		platform: "x",
+		codeVerifier: pkce.verifier,
+		redirectAfter: `/app/brands/${brandId}/connections?connected=x`,
+	});
+	const url = buildXAuthorizeUrl({
+		state,
+		codeChallenge: pkce.challenge,
+		clientId,
+		redirectUri,
+	});
+	return c.redirect(url, 302);
+});
+
 /**
  * Flag-check helper. Lazily imports the feature-flags module to avoid a
  * circular import path with services/platforms/* during dev-server warmup.

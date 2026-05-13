@@ -18,6 +18,8 @@
 		"src/server/services/platforms/registry.ts",
 		"src/server/services/platforms/token-storage.ts",
 		"src/server/services/platforms/types.ts",
+		"src/server/services/platforms/x.ts",
+		"src/server/services/platforms/x-oauth.ts",
 		"src/server/services/scheduler/index.ts",
 		"src/server/services/security/*.ts",
 		"src/server/services/stripe/events.ts",
