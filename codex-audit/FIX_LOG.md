@@ -1415,3 +1415,88 @@ The webhook event was a `stripe trigger` synthetic (no actual customer/subscript
 | 5 | Commit + push the Run 20 doc edits to `origin/master` | n/a | User instruction (commits need explicit ask per global CLAUDE.md) |
 
 shipped: true (production worker on Run 1-17 hardened code; Stripe test-mode end-to-end proven; admin RBAC verified positive + negative). Public marketing launch remains pending **only** on M-16 observability.
+
+---
+
+## Authoritative Post-Run-21 Override (2026-05-13)
+
+Run 21 = **Option D full dark-deploy build.** All four platform adapters
+(LinkedIn, X/Twitter, Meta-FB-and-IG, TikTok) landed end-to-end with code,
+unit tests, integration tests where applicable, and a production deploy.
+Every one of the 8 feature flags reads `"false"` in the deployed production
+env block, so customer-visible behaviour is **identical to Run 20**. Per-platform
+launch is now a single `wrangler secret put ENABLE_<X>_<Y> --env production`
+flip; no further deploys needed.
+
+**Production state after Run 21:**
+
+| Surface | Value |
+|---|---|
+| Production worker | `mustbeviral-production` v `2f0e51da-7134-422f-949a-06c55d9b0a11` (replaces Run-19/20 `15ce175b-...`) |
+| Staging worker | `mustbeviral-staging` v `f775e2d5-6548-461c-bb8c-4e21c8000366` (Phase B follow-up) |
+| Production D1 | `b9a428e0-...`, **41 tables / 44 indexes** (was 38/39 — +3 tables, +5 indexes for Option D) |
+| Production routes | `mustbeviral.com/*` + `www.mustbeviral.com/*` |
+| Cron schedule | `*/5 * * * *` |
+| Workflow bindings | 8 (all 7 originals + new `PLATFORM_REPLY_WORKFLOW`) |
+| Test count | 25 files / 178 tests (was 12 / 46 at Run 20) |
+| Worker bundle | 757.40 KB (was 620 KB at Run 20) |
+
+**Phase-by-phase summary:**
+
+| Phase | Commit | Scope | Tests added | Bundle delta |
+|---|---|---|---|---|
+| 0 | 584ad05 | Pre-flight; committed Run 20 doc edits | — | — |
+| A | 923f94a | Migration 0003 + `services/platforms/{types,feature-flags,token-storage,oauth-state,rate-limit,registry}.ts` + `PlatformReplyWorkflow` + 8 feature flags in wrangler.jsonc + cron trigger + 4 unit test files | +41 | +15.5 KB |
+| B core | 0c82b2c | LinkedIn adapter + OAuth helpers + `/oauth/linkedin/callback` route + LinkedIn webhook with HMAC verify + brand-scoped social-accounts CRUD + 22 LinkedIn unit tests | +22 | +38.8 KB |
+| B follow-up | 0d7fb67 | ApprovalSchedulingWorkflow LinkedIn publish branch + Connections UI in home.tsx + 10 LinkedIn HTTP integration tests | +10 | +7.3 KB |
+| C | 100fe7e | X adapter + OAuth 2.0 PKCE + v2 Tweets API + mentions cron poll + X webhook stub (200-ignored, no webhooks at Free/Basic) + 19 unit + 8 integration tests | +27 | +19.85 KB |
+| D | ccd6433 | Meta adapter (FB Page + IG Business dual-surface) + OAuth + 2-step IG container API + `hub.challenge` subscription verify + X-Hub-Signature-256 HMAC + 17 unit tests | +17 | +33.81 KB |
+| E | f3a6b41 | TikTok adapter + OAuth + Content Posting (PULL_FROM_URL) + Comment Management + timestamp-prefixed HMAC webhook + 15 unit tests | +15 | +21.88 KB |
+| F | (this commit) | Migration 0003 applied to prod D1, prod deploy `2f0e51da`, runbook + audit doc updates | — | unchanged |
+
+**All 4 adapter shapes verified end-to-end (locally):**
+
+- **LinkedIn**: UGC Posts (publish), socialActions/comments (reply), Community Management webhook (ingest), cron fallback poll for missed events.
+- **X (Twitter)**: v2 `/2/tweets` (publish), `/2/tweets` with `reply.in_reply_to_tweet_id` (reply), `/2/users/:id/mentions` cron poll with `since_id` cursor in KV (ingest). No webhook at Free/Basic tier — adapter returns `ignored` on `ingestInbound`.
+- **Meta**: FB `POST /{page-id}/feed` (publish FB); IG 2-step `POST /{ig-user}/media` then `/media_publish` (publish IG); `POST /{comment-id}/comments` (FB reply) or `/replies` (IG reply); X-Hub-Signature-256 HMAC webhook with `hub.challenge` GET subscription verification.
+- **TikTok**: `POST /v2/post/publish/inbox/video/init/` with PULL_FROM_URL source (publish); `POST /v2/comment/reply/create/` (reply); HMAC over `<timestamp>\n<body>` against client_secret (webhook).
+
+**Production-side verification (this run):**
+
+- `GET https://mustbeviral.com/api/health` → 200 with `environment: "production"`.
+- `GET https://mustbeviral.com/` → 200 HTML (React Router shell).
+- Security headers present: `Strict-Transport-Security: max-age=63072000`, `Content-Security-Policy: default-src 'self'; ...`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`.
+- `POST /api/webhooks/meta` (no signature, flag OFF) → 200 `{ignored: "feature_disabled", platform: "meta"}` (fail-closed confirmed).
+- `GET /api/brands/.../oauth/linkedin/start` (no auth) → 401 (auth-gate ordering correct — would be 503 FEATURE_DISABLED behind a session).
+- Deployed env block in wrangler output explicitly lists all 8 `ENABLE_<X>_<Y>=("false")`.
+
+**Verdict flips:**
+
+- `19_RELEASE_GO_NO_GO.md` — adds **"Platform integration code-ready" = ✅ GO**. Per-platform "<platform> launched" verdicts stay ❌ NO-GO until each flag flips and a real-account smoke runs.
+- `17_GAP_REGISTER.md` — Option D row marked CLOSED for build; per-platform launch rows opened (LinkedIn-launch, X-launch, Meta-launch, TikTok-launch).
+- `NEXT_EXECUTION_PLAN.md` — top item flipped from "Option D Phase A start" to "Pick a launch platform; flip its two flags".
+- `KNOWN_FAILURES.md` — no new entries; the Run 19 wrangler-vars-override-secrets caveat still applies and is honoured by `scripts/patch-deploy-config.mjs`.
+
+**Files created/changed (counts):**
+
+- New files: 26
+  - 8 platform service files (`feature-flags`, `oauth-state`, `rate-limit`, `registry`, `token-storage`, `types`, `linkedin`, `linkedin-oauth`, `x`, `x-oauth`, `meta`, `meta-oauth`, `tiktok`, `tiktok-oauth`)  — wait, that's 14; some landed in Phase A (6), the rest in B-E. Net new from Run 20: 14 platform service files.
+  - 1 migration file
+  - 1 new workflow class (`PlatformReplyWorkflow`)
+  - 1 new route file (`oauth.ts`)
+  - 1 new doc (`PLATFORM_INTEGRATION_RUNBOOK.md`)
+  - 11 test files (4 Phase A + 1 Phase B integration + 2 Phase C + 2 Phase D + 2 Phase E)
+- Modified files: 8 (env.ts, index.ts, wrangler.jsonc, tsconfig.node.json, routes/brands.ts, routes/webhooks.ts, workflows/ApprovalSchedulingWorkflow.ts, app/routes/home.tsx)
+- Total LoC added: ~5,400 (estimated, includes adapters + tests + runbook)
+
+**Still open — top priority for Run 22+:**
+
+| Order | Item | Gap | Confirmation gate |
+|---|---|---|---|
+| 1 | M-16 observability — Sentry or Workers Observability dashboards | M-16 | Provider choice + secret writes |
+| 2 | Pick a launch platform (LinkedIn most B2B-aligned) — configure app, write per-platform secrets, flip the two flags, real-account smoke | per-platform launch | Per-platform user authorisation + creds |
+| 3 | Optional: `staging.mustbeviral.com` DNS via Cloudflare dashboard | n/a | User-side |
+| 4 | Optional: real test-card Stripe Checkout to populate `cus_*`/`sub_*` columns | n/a | Browser interaction |
+| 5 | Live Stripe activation (separate run; requires `sk_live_*`) | operational | Explicit user authorisation |
+
+shipped: true (Run-21 production deploy verified at version `2f0e51da-7134-422f-949a-06c55d9b0a11`; all 8 platform flags `"false"`; customer-visible behaviour identical to Run 20; per-platform launch is now a single secret flip away).

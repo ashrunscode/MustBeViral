@@ -1,17 +1,42 @@
-# MustBeViral Next Execution Plan (post-Run-20)
+# MustBeViral Next Execution Plan (post-Run-21)
 
 ## Ordered Task List
 
-After Run 20 the production worker is on the Run 1-17 hardened code, Stripe test mode end-to-end is proven, and admin RBAC is verified positive + negative. The remaining work is observability and optional polish:
+After Run 21 (Option D dark-deploy build) all four platform adapters are code-ready and deployed to production with every flag at `"false"`. Customer-visible behaviour is unchanged from Run 20. Per-platform launches are now single-secret-flip operations, gated only on platform-side approvals + credentials.
 
-1. **Observability (M-16).** Pick a provider (Sentry / Logflare / Cloudflare Workers Observability dashboards). Write the secret via `wrangler secret put`. Wire exception forwarding in `src/server/index.ts` global error handler. Add `docs/system-dna/OBSERVABILITY_RUNBOOK.md` for alert response. ← **ONLY remaining blocker for public marketing launch.**
-2. ✅ ~~Real test-mode Stripe Checkout end-to-end~~ — closed in Run 20.
-3. ✅ ~~Seed an admin user~~ — closed in Run 20 (`admin+ops@mustbeviral.com` promoted to `role=admin` in production D1; admin-positive smoke green).
-4. **`staging.mustbeviral.com` DNS** (optional). Add a CNAME (proxied) so the staging hostname resolves without `curl --resolve`. Token currently has only `zone (read)`; needs user-side dashboard edit or a new `dns_records (write)` token.
-5. **Live Stripe activation.** Separate run with live-key authorisation — flip `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` to `sk_live_*` / `whsec_*` from a live webhook endpoint, create live products + prices, run signed-payload smoke against the live worker, then run a real test card.
-6. **Public marketing launch checklist.** After (1) ships: final security/runbook signoff, confirm DNS propagation, confirm worker version IDs in monitoring, optional canary rollout via Cloudflare's deployment versions.
-7. **Polish — optional real-card Checkout.** Open the Stripe Checkout URL in a browser, pay with `4242 4242 4242 4242`, verify Stripe propagates `customer.subscription.created` with real `cus_*` and `sub_*` IDs. The synthetic trigger event used in Run 20 left those columns NULL because it doesn't reference a real customer. Functionally adequate for the dispatcher path; cosmetically nicer to have non-NULL columns.
-8. **Commit + push the Run 20 doc edits to `origin/master`** — the Run 20 changes are doc-only and live in the worktree until you say "commit and push".
+1. **Pick a launch platform.** LinkedIn is the most natural first launch (B2B-aligned, Marketing API approval is the fastest of the four). See `docs/system-dna/PLATFORM_INTEGRATION_RUNBOOK.md` for the per-platform checklist (app approval → webhook URL register → `wrangler secret put <X>_CLIENT_*` → flag flip → real-account smoke).
+2. **Observability (M-16).** Pick a provider (Sentry / Logflare / Cloudflare Workers Observability dashboards). Write the secret via `wrangler secret put`. Wire exception forwarding in `src/server/index.ts` global error handler. Add `docs/system-dna/OBSERVABILITY_RUNBOOK.md`. Required for `Public marketing launch` verdict to flip.
+3. ✅ ~~Run 21 platform build~~ — closed. 25 files / 178 tests; production deployed at version `2f0e51da-7134-422f-949a-06c55d9b0a11`; all 8 flags `"false"`.
+4. ✅ ~~Real test-mode Stripe Checkout end-to-end~~ — closed in Run 20.
+5. ✅ ~~Seed an admin user~~ — closed in Run 20.
+6. **`staging.mustbeviral.com` DNS** (optional). Add a CNAME (proxied) so the staging hostname resolves without `curl --resolve`. Needs user-side Cloudflare dashboard edit or a token with `dns_records (write)`.
+7. **Live Stripe activation.** Separate run with live-key authorisation — flip `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` to `sk_live_*` / `whsec_*` from a live webhook endpoint, create live products + prices, signed-payload smoke, then real test card.
+8. **Polish — optional real-card Checkout.** Open the Stripe Checkout URL in a browser, pay with `4242 4242 4242 4242`, verify `customer.subscription.created` populates `cus_*`/`sub_*` columns (synthetic trigger left them NULL in Run 20).
+9. **Public marketing launch.** After (1) + (2): final security/runbook signoff, confirm DNS, monitoring + alerts active, optional canary via Cloudflare deployment versions.
+
+## Exact next command (recommended first move for Run 22)
+
+```bash
+# A. Generate the encryption key (one-time, only if not already set)
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))" \
+  | wrangler secret put TOKEN_ENCRYPTION_KEY --env staging
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))" \
+  | wrangler secret put TOKEN_ENCRYPTION_KEY --env production
+
+# B. Configure LinkedIn creds (after creating the LinkedIn Developer app and registering both staging + production redirect URIs)
+wrangler secret put LINKEDIN_CLIENT_ID --env staging
+wrangler secret put LINKEDIN_CLIENT_SECRET --env staging
+wrangler secret put LINKEDIN_REDIRECT_URI --env staging      # https://staging.mustbeviral.com/api/oauth/linkedin/callback
+wrangler secret put LINKEDIN_WEBHOOK_SECRET --env staging
+# (repeat for --env production with the production redirect URI)
+
+# C. Flip LinkedIn flags to "true" on STAGING ONLY
+echo "true" | wrangler secret put ENABLE_LINKEDIN_PUBLISH --env staging
+echo "true" | wrangler secret put ENABLE_LINKEDIN_INGEST --env staging
+
+# D. Smoke against staging: visit /app/brands/<id>/connections, click Connect LinkedIn, publish + reply
+# E. On green: flip the same flags on --env production. Done — LinkedIn live.
+```
 
 ## Files To Inspect
 

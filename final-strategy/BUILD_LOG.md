@@ -777,3 +777,39 @@ Remaining issues:
 - Run 20 doc edits not yet committed; live in dirty worktree.
 
 shipped: true.
+
+## Milestone 21: Option D — Full dark-deploy platform integration (LinkedIn / X / Meta / TikTok)
+
+Files changed: ~30 (14 new platform service files, 1 migration, 1 new workflow class, 1 new route file, 11 test files, 8 modified files, 1 new runbook).
+
+Commands run (key ones):
+- 8× MCP `d1_database_query` against production D1 `b9a428e0-...` (migration 0003: 3 tables + 5 indexes; all `CREATE … IF NOT EXISTS`)
+- `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build` after each phase
+- `node scripts/patch-deploy-config.mjs production`
+- `node ./node_modules/wrangler/bin/wrangler.js deploy` (production)
+- `curl https://mustbeviral.com/api/health` → 200
+- `curl -X POST https://mustbeviral.com/api/webhooks/meta` (no signature, flag off) → 200 `{ignored: "feature_disabled"}` (fail-closed verified)
+
+Phase-by-phase summary:
+- **Phase 0** (`584ad05`): pre-flight + committed Run 20 doc edits.
+- **Phase A** (`923f94a`): Migration 0003 (`social_account_tokens` + `published_posts` + `platform_comments`); platform foundation (`types.ts`, `feature-flags.ts`, `token-storage.ts` with AES-GCM + HKDF, `oauth-state.ts` with HMAC-SHA-256 + 5-min replay window, `rate-limit.ts` KV counter, `registry.ts`); `PlatformReplyWorkflow` workflow class; 8 feature flags + cron schedule + new workflow binding in `wrangler.jsonc`. 41 unit tests.
+- **Phase B core** (`0c82b2c`): LinkedIn adapter (UGC Posts, social actions comments, Community Management webhook with HMAC); `linkedin-oauth.ts` helpers; `routes/oauth.ts` LinkedIn callback; brand-scoped OAuth start + social-accounts CRUD routes; 22 LinkedIn unit tests.
+- **Phase B follow-up** (`0d7fb67`): `ApprovalSchedulingWorkflow` LinkedIn publish branch (additive, flag-gated); Connections UI tab in `home.tsx`; 10 LinkedIn HTTP integration tests.
+- **Phase C** (`100fe7e`): X (Twitter) adapter (v2 Tweets, OAuth 2.0 PKCE, mentions cron-poll with KV `since_id` cursor); 27 X tests.
+- **Phase D** (`ccd6433`): Meta adapter (FB Page + IG Business dual-surface, 2-step IG container API, X-Hub-Signature-256 HMAC, GET `hub.challenge` subscription verify); 17 Meta tests.
+- **Phase E** (`f3a6b41`): TikTok adapter (Content Posting via PULL_FROM_URL, Comment Management reply, HMAC over `<timestamp>\n<body>`); 15 TikTok tests.
+- **Phase F** (this commit): Production D1 migration applied → 41 tables / 44 indexes. Production deploy at version `2f0e51da-7134-422f-949a-06c55d9b0a11`. `PLATFORM_INTEGRATION_RUNBOOK.md` authored. Audit corpus updated.
+
+Result:
+- All 4 platform adapters compiled, unit-tested, and shipped to production behind feature flags.
+- All 8 `ENABLE_<X>_<Y>` flags = `"false"` in production env block.
+- Customer-visible production behaviour identical to Run 20.
+- `19_RELEASE_GO_NO_GO.md` gains verdict **"Platform integration code-ready" = ✅ GO**.
+- Per-platform launch is now a single `wrangler secret put ENABLE_<X>_<Y> --env production` flip away.
+- Worker bundle grew from 620 KB (Run 20) to 757.40 KB. Test count grew from 12/46 to 25/178.
+
+Remaining issues:
+- LinkedIn / X / Meta / TikTok all stay at ❌ NO-GO for **launch** verdicts until the per-platform credentials are configured and the flags flipped (see `docs/system-dna/PLATFORM_INTEGRATION_RUNBOOK.md`).
+- **Public marketing launch** still pending only on M-16 observability + at least one platform launched.
+
+shipped: true.

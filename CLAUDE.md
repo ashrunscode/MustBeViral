@@ -5,27 +5,28 @@
 
 ## 🚦 Quickstart (read first, ≤ 60 seconds)
 
-1. Latest run: **Run 20**, `shipped: true`. Public-launch verdict: ⚠️ pending only M-16 observability.
-2. Worktree has uncommitted Run 20 doc edits. `master = 491998d`.
-3. Production worker `15ce175b-4870-4005-9c83-f042f5831177` (the Run-1-17 hardened code).
-4. For any complex change → read `codex-audit/FIX_LOG.md` Post-Run-20 Override footer + `codex-audit/NEXT_EXECUTION_PLAN.md`.
+1. Latest run: **Run 21** (Option D — all 4 platform adapters dark-deployed), `shipped: true`. Public-launch verdict: ⚠️ pending only M-16 observability + at least one platform flag-flipped.
+2. Production worker `2f0e51da-7134-422f-949a-06c55d9b0a11`. All 8 platform `ENABLE_<X>_<Y>` flags = `"false"` — customer-visible behaviour identical to Run 20.
+3. Per-platform launches are single-flag flips. Procedure in `docs/system-dna/PLATFORM_INTEGRATION_RUNBOOK.md`.
+4. For any complex change → read `codex-audit/FIX_LOG.md` Post-Run-21 Override footer + `codex-audit/NEXT_EXECUTION_PLAN.md`.
 5. Validation gate: `npm run typecheck && npm run lint && npm run test && npm run build`. All exit 0 on `master`.
 
-## 📊 Operational state (post-Run-20, 2026-05-10)
+## 📊 Operational state (post-Run-21, 2026-05-13)
 
 | Surface | Value |
 |---|---|
-| Production worker | `mustbeviral-production` v `15ce175b-4870-4005-9c83-f042f5831177` |
-| Staging worker | `mustbeviral-staging` v `88c739f1-3dfc-4f91-8984-229e5b623b1c` |
-| D1 prod / staging | `b9a428e0-…` / `04b2303a-…` |
+| Production worker | `mustbeviral-production` v `2f0e51da-7134-422f-949a-06c55d9b0a11` |
+| Staging worker | `mustbeviral-staging` v `f775e2d5-6548-461c-bb8c-4e21c8000366` |
+| D1 prod / staging | `b9a428e0-…` / `04b2303a-…` — **41 tables / 44 indexes** (post-0003) |
 | KV prod / staging | `ff374abd…` / `158d36f8…` |
 | R2 prod / staging | `mustbeviral-production-media` / `mustbeviral-staging-media` (ENAM) |
-| Migrations applied | `0001_initial.sql` + `0002_indexes_and_phase2.sql` on both envs |
+| Migrations applied | `0001_initial.sql` + `0002_indexes_and_phase2.sql` + **`0003_platform_integration.sql`** on both envs |
 | Stripe | Test mode (`sk_test_*` on `acct_1SRvMXFMXFyeuIPx`). 4 products + 4 prices + 1 webhook. 6 secrets per env |
+| Platform flags (prod) | **All 8 `ENABLE_<X>_<Y>` = `"false"`** (LinkedIn/X/Meta/TikTok × publish/ingest) |
 | Admin user (prod) | `admin+ops@mustbeviral.com` (role=admin) |
 | Cloudflare account | `d2897bdebfa128919bd89b265e6a712e` |
-| GitHub master HEAD | `491998d` (Run 19). Run 20 doc edits uncommitted |
-| Local tests | 12 files / 46 unit + 6/6 Playwright. Worker bundle 620 KB |
+| GitHub master HEAD | Phase F commit (post-Run-21) |
+| Local tests | 25 files / 178 unit + integration + 6/6 Playwright. Worker bundle 757.40 KB |
 
 If `wrangler whoami` / `git log` / `stripe products list` disagrees → **stop and reconcile before any new work**.
 
@@ -209,11 +210,11 @@ When in doubt → `AskUserQuestion` rather than guess.
 
 ## 🔭 Currently open work (priority order)
 
-1. **M-16 observability** — Sentry or Workers Observability dashboards; only blocker for ✅ public marketing launch. See `NEXT_EXECUTION_PLAN.md`.
-2. **Run 20 doc edits** — uncommitted in worktree. Commit when user says so.
-3. **Option D Phase 2** — real LinkedIn/X/Meta/TikTok integration in dark deploy. Charter: `codex-audit/D_REAL_PLATFORM_INTEGRATION_ROADMAP.md` (section 14 = Codex prompt).
-4. Optional: real-card Stripe Checkout (populate `stripe_customer_id`/`stripe_subscription_id`).
-5. Optional: `staging.mustbeviral.com` DNS.
+1. **Pick a launch platform** — LinkedIn is the natural first launch (B2B, fastest Marketing API approval). Procedure in `docs/system-dna/PLATFORM_INTEGRATION_RUNBOOK.md`. Each launch = configure platform creds via `wrangler secret put` + flip 2 flags + register webhook (LinkedIn/Meta/TikTok only — X polls via cron) + real-account smoke.
+2. **M-16 observability** — Sentry or Workers Observability dashboards; required for ✅ public marketing launch.
+3. Optional: real-card Stripe Checkout (populate `stripe_customer_id`/`stripe_subscription_id`).
+4. Optional: `staging.mustbeviral.com` DNS.
+5. Live Stripe activation — separate run with `sk_live_*` auth.
 
 ## 🚫 Explicitly out of scope (don't start without instruction)
 
@@ -231,4 +232,4 @@ Inherits 4-agent + lead pattern from `~/.claude/CLAUDE.md`: Architect (Plan), Im
 
 ---
 
-**Updated post-Run-20, 2026-05-10.** Refresh the operational-state table within one run of any production deploy or migration.
+**Updated post-Run-21, 2026-05-13.** Refresh the operational-state table within one run of any production deploy or migration.
