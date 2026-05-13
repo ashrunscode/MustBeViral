@@ -1173,8 +1173,8 @@ brandRoutes.get("/:brandId/oauth/meta/start", async (c) => {
 	return c.redirect(url, 302);
 });
 
-// OAuth start for TikTok (placeholder — full TikTok adapter lands in Phase E).
-brandRoutes.get("/:brandId/oauth/tiktok/start", (c) => {
+// OAuth start for TikTok for Business.
+brandRoutes.get("/:brandId/oauth/tiktok/start", async (c) => {
 	const requestId = c.get("requestId");
 	if (!isPlatformEnabledForBrand(c.env, "tiktok", "publish")) {
 		return c.json(
@@ -1184,10 +1184,45 @@ brandRoutes.get("/:brandId/oauth/tiktok/start", (c) => {
 			503,
 		);
 	}
-	return c.json(
-		errorEnvelope("PLATFORM_NOT_READY", "TikTok adapter lands in Phase E.", requestId),
-		501,
+	const brandId = c.get("brandId") ?? "";
+	const clientKey = c.env.TIKTOK_CLIENT_KEY;
+	if (!clientKey) {
+		return c.json(
+			errorEnvelope(
+				"OAUTH_APP_NOT_CONFIGURED",
+				"TikTok client key not configured. Set TIKTOK_CLIENT_KEY via wrangler secret put.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const redirectUri =
+		c.env.TIKTOK_REDIRECT_URI ?? `${c.env.PUBLIC_APP_URL ?? ""}/api/oauth/tiktok/callback`;
+	if (!c.env.TOKEN_ENCRYPTION_KEY) {
+		return c.json(
+			errorEnvelope(
+				"TOKEN_ENCRYPTION_KEY_MISSING",
+				"Worker secret TOKEN_ENCRYPTION_KEY is required before any OAuth flow.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const { signState } = await import("../services/platforms/oauth-state");
+	const { buildTikTokAuthorizeUrl } = await import(
+		"../services/platforms/tiktok-oauth"
 	);
+	const state = await signState(c.env, {
+		brandId,
+		platform: "tiktok",
+		redirectAfter: `/app/brands/${brandId}/connections?connected=tiktok`,
+	});
+	const url = buildTikTokAuthorizeUrl({
+		state,
+		clientKey,
+		redirectUri,
+	});
+	return c.redirect(url, 302);
 });
 
 // OAuth start for X (Twitter) with PKCE. Code verifier is embedded in the

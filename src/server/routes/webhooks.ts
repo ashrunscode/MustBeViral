@@ -352,16 +352,118 @@ webhookRoutes.post("/meta", async (c) => {
 	);
 });
 
-// TikTok webhook stub (Phase E implements the full ingest path).
-webhookRoutes.post("/tiktok", (c) => {
+// TikTok webhook. HMAC verification: HEX(HMAC_SHA256(client_secret, timestamp + "\n" + rawBody))
+// arrives in `x-tiktok-signature` with `x-tiktok-timestamp` separately.
+webhookRoutes.post("/tiktok", async (c) => {
 	const requestId = c.get("requestId");
 	if (!isPlatformEnabled(c.env, "tiktok", "ingest")) {
 		return c.json(successEnvelope({ ignored: "feature_disabled", platform: "tiktok" }, requestId));
 	}
+	const signature = c.req.header("x-tiktok-signature") ?? c.req.header("X-Tiktok-Signature");
+	const timestamp = c.req.header("x-tiktok-timestamp") ?? c.req.header("X-Tiktok-Timestamp");
+	const rawBody = await c.req.raw.clone().text();
+	const clientSecret = c.env.TIKTOK_CLIENT_SECRET;
+	if (!clientSecret) {
+		return c.json(
+			errorEnvelope(
+				"WEBHOOK_SECRET_MISSING",
+				"Set TIKTOK_CLIENT_SECRET via wrangler secret put.",
+				requestId,
+			),
+			501,
+		);
+	}
+	if (!timestamp) {
+		return c.json(
+			errorEnvelope(
+				"INVALID_TIKTOK_SIGNATURE",
+				"Missing x-tiktok-timestamp header.",
+				requestId,
+			),
+			400,
+		);
+	}
+	const { verifyTikTokWebhookSignature, normaliseTikTokPayload } = await import(
+		"../services/platforms/tiktok"
+	);
+	const ok = await verifyTikTokWebhookSignature(timestamp, rawBody, signature ?? null, clientSecret);
+	if (!ok) {
+		return c.json(
+			errorEnvelope(
+				"INVALID_TIKTOK_SIGNATURE",
+				"TikTok webhook signature did not verify.",
+				requestId,
+			),
+			400,
+		);
+	}
+	let payload: unknown;
+	try {
+		payload = JSON.parse(rawBody);
+	} catch {
+		return c.json(
+			errorEnvelope("INVALID_WEBHOOK_JSON", "TikTok webhook body was not JSON.", requestId),
+			400,
+		);
+	}
+	const externalEventId = extractTikTokEventId(payload, timestamp);
+	const db = getDb(c.env);
+	await dbRun(
+		db,
+		`INSERT OR IGNORE INTO webhooks_inbox (
+			id, provider, external_event_id, payload_json, status
+		) VALUES (?, 'tiktok', ?, ?, 'received')`,
+		[createId("webhook"), externalEventId, toJson(payload)],
+	);
+	const existing = await dbFirst<{ id: string; status: string }>(
+		db,
+		`SELECT id, status FROM webhooks_inbox
+		 WHERE provider = 'tiktok' AND external_event_id = ?
+		 LIMIT 1`,
+		[externalEventId],
+	);
+	if (existing && (existing.status === "processed" || existing.status === "ignored")) {
+		return c.json(
+			successEnvelope(
+				{ received: true, replay: true, previousStatus: existing.status },
+				requestId,
+			),
+		);
+	}
+	const events = normaliseTikTokPayload(payload);
+	const persistResult = await persistPlatformIngest(c.env, "tiktok", events);
+	if (existing) {
+		await dbRun(
+			db,
+			`UPDATE webhooks_inbox SET status = 'processed', processed_at = CURRENT_TIMESTAMP WHERE id = ?`,
+			[existing.id],
+		);
+	}
 	return c.json(
-		successEnvelope({ ignored: "platform_not_ready", platform: "tiktok" }, requestId),
+		successEnvelope(
+			{
+				received: true,
+				eventsIngested: persistResult.commentsInserted,
+				dmEventsCreated: persistResult.dmEventsInserted,
+				ok: true,
+			},
+			requestId,
+		),
 	);
 });
+
+function extractTikTokEventId(payload: unknown, timestamp: string): string {
+	if (!payload || typeof payload !== "object") {
+		return createId("tiktokevt");
+	}
+	const obj = payload as Record<string, unknown>;
+	const content = obj.content && typeof obj.content === "object" ? (obj.content as Record<string, unknown>) : null;
+	if (content && typeof content.comment_id === "string") {
+		return `${content.comment_id}:${timestamp}`;
+	}
+	if (typeof obj.event_id === "string") return obj.event_id;
+	return createId("tiktokevt");
+}
 
 function extractMetaEventId(payload: unknown): string {
 	if (!payload || typeof payload !== "object") {

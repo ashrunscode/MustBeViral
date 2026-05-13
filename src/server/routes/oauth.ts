@@ -38,6 +38,10 @@ import {
 	exchangeMetaCode,
 	resolveMetaPages,
 } from "../services/platforms/meta-oauth";
+import {
+	exchangeTikTokCode,
+	resolveTikTokUserInfo,
+} from "../services/platforms/tiktok-oauth";
 import { exchangeXCode, resolveXUserInfo } from "../services/platforms/x-oauth";
 import { createId } from "../utils/id";
 
@@ -572,6 +576,164 @@ oauthRoutes.get("/meta/callback", async (c) => {
 	}
 	return c.redirect(
 		stateResult.payload.redirectAfter ?? buildConnectionsRedirect(brandId, "meta"),
+		302,
+	);
+});
+
+// TikTok for Business OAuth callback.
+oauthRoutes.get("/tiktok/callback", async (c) => {
+	const env = c.env;
+	if (!isPlatformEnabled(env, "tiktok", "publish")) {
+		return c.json({ success: false, error: { code: "FEATURE_DISABLED" } }, 503);
+	}
+	const code = c.req.query("code");
+	const state = c.req.query("state");
+	const errorParam = c.req.query("error");
+	if (errorParam) {
+		return c.redirect(buildConnectionsRedirect(undefined, "tiktok", errorParam), 302);
+	}
+	if (!code || !state) {
+		return c.json({ success: false, error: { code: "OAUTH_CALLBACK_INVALID" } }, 400);
+	}
+	const stateResult = await verifyState(env, state);
+	if (!stateResult.ok) {
+		return c.json(
+			{ success: false, error: { code: "OAUTH_STATE_INVALID", reason: stateResult.reason } },
+			400,
+		);
+	}
+	if (stateResult.payload.platform !== "tiktok") {
+		return c.json({ success: false, error: { code: "OAUTH_PLATFORM_MISMATCH" } }, 400);
+	}
+	const brandId = stateResult.payload.brandId;
+	const clientKey = env.TIKTOK_CLIENT_KEY;
+	const clientSecret = env.TIKTOK_CLIENT_SECRET;
+	const redirectUri = env.TIKTOK_REDIRECT_URI ?? defaultRedirectUri(env, "tiktok");
+	if (!clientKey || !clientSecret) {
+		return c.redirect(buildConnectionsRedirect(brandId, "tiktok", "missing_app_credentials"), 302);
+	}
+	const tokenResult = await exchangeTikTokCode({
+		code,
+		clientKey,
+		clientSecret,
+		redirectUri,
+	});
+	if (!tokenResult.ok) {
+		return c.redirect(buildConnectionsRedirect(brandId, "tiktok", tokenResult.error.error), 302);
+	}
+	const userInfo = await resolveTikTokUserInfo(tokenResult.bundle.accessToken);
+	if (!userInfo.ok) {
+		return c.redirect(buildConnectionsRedirect(brandId, "tiktok", "userinfo_failed"), 302);
+	}
+	const externalAccountId = userInfo.userInfo.openId;
+	const payload: StoredTokenPayload = {
+		access_token: tokenResult.bundle.accessToken,
+		refresh_token: tokenResult.bundle.refreshToken,
+		token_type: tokenResult.bundle.tokenType,
+		issued_at: new Date().toISOString(),
+		platform_metadata: {
+			open_id: userInfo.userInfo.openId,
+			display_name: userInfo.userInfo.displayName ?? null,
+			avatar_url: userInfo.userInfo.avatarUrl ?? null,
+		},
+	};
+	let tokenKvKey: string;
+	try {
+		tokenKvKey = await writeToken(env, {
+			brandId,
+			platform: "tiktok",
+			externalAccountId,
+			payload,
+		});
+	} catch (err) {
+		const reason =
+			err instanceof Error && "code" in err && typeof err.code === "string"
+				? err.code
+				: "token_write_failed";
+		return c.redirect(buildConnectionsRedirect(brandId, "tiktok", reason), 302);
+	}
+	const accessExpiresAt = new Date(
+		Date.now() + tokenResult.bundle.expiresIn * 1000,
+	).toISOString();
+	const refreshExpiresAt = tokenResult.bundle.refreshExpiresIn
+		? new Date(Date.now() + tokenResult.bundle.refreshExpiresIn * 1000).toISOString()
+		: null;
+	const db = getDb(env);
+	const tokenRowId = createId("sat");
+	const accountLabel = userInfo.userInfo.displayName ?? externalAccountId;
+	const scopeCsv = tokenResult.bundle.scope.split(/[\s,]+/).filter(Boolean).join(",");
+	await dbRun(
+		db,
+		`INSERT INTO social_account_tokens (
+			id, brand_id, platform, external_account_id, account_label, scope_csv,
+			token_kv_key, access_token_expires_at, refresh_token_expires_at, status
+		) VALUES (?, ?, 'tiktok', ?, ?, ?, ?, ?, ?, 'active')
+		ON CONFLICT(brand_id, platform, external_account_id) DO UPDATE SET
+			account_label = excluded.account_label,
+			scope_csv = excluded.scope_csv,
+			token_kv_key = excluded.token_kv_key,
+			access_token_expires_at = excluded.access_token_expires_at,
+			refresh_token_expires_at = excluded.refresh_token_expires_at,
+			status = 'active',
+			updated_at = CURRENT_TIMESTAMP`,
+		[
+			tokenRowId,
+			brandId,
+			externalAccountId,
+			accountLabel,
+			scopeCsv,
+			tokenKvKey,
+			accessExpiresAt,
+			refreshExpiresAt,
+		],
+	);
+	await dbRun(
+		db,
+		`INSERT INTO brand_social_profiles (
+			id, brand_id, platform, handle, profile_url, connected_status, metadata_json
+		) VALUES (?, ?, 'tiktok', ?, ?, 'connected', ?)
+		ON CONFLICT(brand_id, platform, handle) DO UPDATE SET
+			profile_url = excluded.profile_url,
+			connected_status = 'connected',
+			metadata_json = excluded.metadata_json,
+			updated_at = CURRENT_TIMESTAMP`,
+		[
+			createId("bsp"),
+			brandId,
+			externalAccountId,
+			`https://www.tiktok.com/@${userInfo.userInfo.displayName ?? externalAccountId}`,
+			toJson({
+				display_name: userInfo.userInfo.displayName ?? null,
+				social_account_token_id: tokenRowId,
+			}),
+		],
+	);
+	const brandRow = await dbFirst<{ workspace_id: string }>(
+		db,
+		`SELECT workspace_id FROM brands WHERE id = ? LIMIT 1`,
+		[brandId],
+	);
+	await dbRun(
+		db,
+		`INSERT INTO audit_logs (
+			id, workspace_id, brand_id, user_id, action, entity_type, entity_id,
+			before_json, after_json, metadata_json
+		) VALUES (?, ?, ?, NULL, 'platform.tiktok.connected', 'social_account_token', ?, NULL, ?, '{}')`,
+		[
+			createId("audit"),
+			brandRow?.workspace_id ?? null,
+			brandId,
+			tokenRowId,
+			toJson({
+				externalAccountId,
+				displayName: userInfo.userInfo.displayName ?? null,
+				scopeCsv,
+				redirectUri,
+			}),
+		],
+	);
+	return c.redirect(
+		stateResult.payload.redirectAfter ?? buildConnectionsRedirect(brandId, "tiktok"),
 		302,
 	);
 });

@@ -26,6 +26,7 @@ import { workspaceRoutes } from "./routes/workspaces";
 import "./services/platforms/linkedin";
 import "./services/platforms/x";
 import "./services/platforms/meta";
+import "./services/platforms/tiktok";
 import {
 	allPlatformsDisabled,
 	isPlatformEnabled,

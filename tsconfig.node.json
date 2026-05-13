@@ -18,6 +18,8 @@
 		"src/server/services/platforms/oauth-state.ts",
 		"src/server/services/platforms/rate-limit.ts",
 		"src/server/services/platforms/registry.ts",
+		"src/server/services/platforms/tiktok.ts",
+		"src/server/services/platforms/tiktok-oauth.ts",
 		"src/server/services/platforms/token-storage.ts",
 		"src/server/services/platforms/types.ts",
 		"src/server/services/platforms/x.ts",
