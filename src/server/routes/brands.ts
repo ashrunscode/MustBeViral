@@ -1121,6 +1121,75 @@ brandRoutes.get("/:brandId/oauth/linkedin/start", async (c) => {
 	return c.redirect(url, 302);
 });
 
+// OAuth start for Meta (Facebook + Instagram Business). One auth flow yields
+// up to two surfaces per page (FB Page + IG Business). The callback in
+// routes/oauth.ts splits them into separate social_account_tokens rows.
+brandRoutes.get("/:brandId/oauth/meta/start", async (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabledForBrand(c.env, "meta", "publish")) {
+		return c.json(
+			errorEnvelope("FEATURE_DISABLED", "Meta publish flag is off.", requestId, {
+				platform: "meta",
+			}),
+			503,
+		);
+	}
+	const brandId = c.get("brandId") ?? "";
+	const clientId = c.env.META_APP_ID;
+	if (!clientId) {
+		return c.json(
+			errorEnvelope(
+				"OAUTH_APP_NOT_CONFIGURED",
+				"Meta app id not configured. Set META_APP_ID via wrangler secret put.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const redirectUri =
+		c.env.META_REDIRECT_URI ?? `${c.env.PUBLIC_APP_URL ?? ""}/api/oauth/meta/callback`;
+	if (!c.env.TOKEN_ENCRYPTION_KEY) {
+		return c.json(
+			errorEnvelope(
+				"TOKEN_ENCRYPTION_KEY_MISSING",
+				"Worker secret TOKEN_ENCRYPTION_KEY is required before any OAuth flow.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const { signState } = await import("../services/platforms/oauth-state");
+	const { buildMetaAuthorizeUrl } = await import("../services/platforms/meta-oauth");
+	const state = await signState(c.env, {
+		brandId,
+		platform: "meta",
+		redirectAfter: `/app/brands/${brandId}/connections?connected=meta`,
+	});
+	const url = buildMetaAuthorizeUrl({
+		state,
+		clientId,
+		redirectUri,
+	});
+	return c.redirect(url, 302);
+});
+
+// OAuth start for TikTok (placeholder — full TikTok adapter lands in Phase E).
+brandRoutes.get("/:brandId/oauth/tiktok/start", (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabledForBrand(c.env, "tiktok", "publish")) {
+		return c.json(
+			errorEnvelope("FEATURE_DISABLED", "TikTok publish flag is off.", requestId, {
+				platform: "tiktok",
+			}),
+			503,
+		);
+	}
+	return c.json(
+		errorEnvelope("PLATFORM_NOT_READY", "TikTok adapter lands in Phase E.", requestId),
+		501,
+	);
+});
+
 // OAuth start for X (Twitter) with PKCE. Code verifier is embedded in the
 // signed state so the callback can complete the token exchange without any
 // server-side session storage.

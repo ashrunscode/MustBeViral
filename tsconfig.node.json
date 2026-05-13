@@ -13,6 +13,8 @@
 		"src/server/services/platforms/feature-flags.ts",
 		"src/server/services/platforms/linkedin.ts",
 		"src/server/services/platforms/linkedin-oauth.ts",
+		"src/server/services/platforms/meta.ts",
+		"src/server/services/platforms/meta-oauth.ts",
 		"src/server/services/platforms/oauth-state.ts",
 		"src/server/services/platforms/rate-limit.ts",
 		"src/server/services/platforms/registry.ts",

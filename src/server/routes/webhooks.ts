@@ -249,6 +249,137 @@ webhookRoutes.post("/linkedin", async (c) => {
 	);
 });
 
+// Meta subscription verification (GET). Meta calls this once when the
+// developer registers the webhook endpoint with the verify_token. We respond
+// with the hub.challenge as plain text if the token matches.
+webhookRoutes.get("/meta", (c) => {
+	const mode = c.req.query("hub.mode");
+	const verifyToken = c.req.query("hub.verify_token");
+	const challenge = c.req.query("hub.challenge");
+	if (mode !== "subscribe") {
+		return c.text("Bad request", 400);
+	}
+	const expected = c.env.META_WEBHOOK_VERIFY_TOKEN;
+	if (!expected || verifyToken !== expected) {
+		return c.text("Forbidden", 403);
+	}
+	return c.text(challenge ?? "", 200);
+});
+
+// Meta webhook ingest. Validates X-Hub-Signature-256 HMAC against META_APP_SECRET;
+// normalises page+IG feed/comment events; persists via the shared
+// persistPlatformIngest helper.
+webhookRoutes.post("/meta", async (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabled(c.env, "meta", "ingest")) {
+		return c.json(successEnvelope({ ignored: "feature_disabled", platform: "meta" }, requestId));
+	}
+	const signature = c.req.header("x-hub-signature-256") ?? c.req.header("X-Hub-Signature-256");
+	const rawBody = await c.req.raw.clone().text();
+	const appSecret = c.env.META_APP_SECRET;
+	if (!appSecret) {
+		return c.json(
+			errorEnvelope(
+				"WEBHOOK_SECRET_MISSING",
+				"Set META_APP_SECRET via wrangler secret put.",
+				requestId,
+			),
+			501,
+		);
+	}
+	const { verifyMetaWebhookSignature, normaliseMetaPayload } = await import(
+		"../services/platforms/meta"
+	);
+	const ok = await verifyMetaWebhookSignature(rawBody, signature ?? null, appSecret);
+	if (!ok) {
+		return c.json(
+			errorEnvelope("INVALID_META_SIGNATURE", "Meta webhook signature did not verify.", requestId),
+			400,
+		);
+	}
+	let payload: unknown;
+	try {
+		payload = JSON.parse(rawBody);
+	} catch {
+		return c.json(
+			errorEnvelope("INVALID_WEBHOOK_JSON", "Meta webhook body was not JSON.", requestId),
+			400,
+		);
+	}
+	const externalEventId = extractMetaEventId(payload);
+	const db = getDb(c.env);
+	await dbRun(
+		db,
+		`INSERT OR IGNORE INTO webhooks_inbox (
+			id, provider, external_event_id, payload_json, status
+		) VALUES (?, 'meta', ?, ?, 'received')`,
+		[createId("webhook"), externalEventId, toJson(payload)],
+	);
+	const existing = await dbFirst<{ id: string; status: string }>(
+		db,
+		`SELECT id, status FROM webhooks_inbox
+		 WHERE provider = 'meta' AND external_event_id = ?
+		 LIMIT 1`,
+		[externalEventId],
+	);
+	if (existing && (existing.status === "processed" || existing.status === "ignored")) {
+		return c.json(
+			successEnvelope(
+				{ received: true, replay: true, previousStatus: existing.status },
+				requestId,
+			),
+		);
+	}
+	const events = normaliseMetaPayload(payload);
+	const persistResult = await persistPlatformIngest(c.env, "meta", events);
+	if (existing) {
+		await dbRun(
+			db,
+			`UPDATE webhooks_inbox SET status = 'processed', processed_at = CURRENT_TIMESTAMP WHERE id = ?`,
+			[existing.id],
+		);
+	}
+	return c.json(
+		successEnvelope(
+			{
+				received: true,
+				eventsIngested: persistResult.commentsInserted,
+				dmEventsCreated: persistResult.dmEventsInserted,
+				ok: true,
+			},
+			requestId,
+		),
+	);
+});
+
+// TikTok webhook stub (Phase E implements the full ingest path).
+webhookRoutes.post("/tiktok", (c) => {
+	const requestId = c.get("requestId");
+	if (!isPlatformEnabled(c.env, "tiktok", "ingest")) {
+		return c.json(successEnvelope({ ignored: "feature_disabled", platform: "tiktok" }, requestId));
+	}
+	return c.json(
+		successEnvelope({ ignored: "platform_not_ready", platform: "tiktok" }, requestId),
+	);
+});
+
+function extractMetaEventId(payload: unknown): string {
+	if (!payload || typeof payload !== "object") {
+		return createId("metaevt");
+	}
+	const obj = payload as Record<string, unknown>;
+	const entries: unknown[] = Array.isArray(obj.entry) ? obj.entry : [];
+	if (entries.length === 0) return createId("metaevt");
+	const first: unknown = entries[0];
+	if (!first || typeof first !== "object") return createId("metaevt");
+	const firstObj = first as Record<string, unknown>;
+	if (typeof firstObj.id === "string" && typeof firstObj.time === "number") {
+		return `${firstObj.id}:${firstObj.time}`;
+	}
+	if (typeof firstObj.id === "string") return firstObj.id;
+	return createId("metaevt");
+}
+
 /**
  * X (Twitter) webhook stub. X v2 at Free + Basic tiers does NOT deliver
  * webhooks; mentions are polled via the scheduled cron handler. We accept

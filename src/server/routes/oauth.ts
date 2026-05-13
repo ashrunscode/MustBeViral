@@ -34,6 +34,10 @@ import {
 import { verifyState } from "../services/platforms/oauth-state";
 import { writeToken } from "../services/platforms/token-storage";
 import type { StoredTokenPayload } from "../services/platforms/types";
+import {
+	exchangeMetaCode,
+	resolveMetaPages,
+} from "../services/platforms/meta-oauth";
 import { exchangeXCode, resolveXUserInfo } from "../services/platforms/x-oauth";
 import { createId } from "../utils/id";
 
@@ -382,6 +386,192 @@ oauthRoutes.get("/x/callback", async (c) => {
 	);
 	return c.redirect(
 		stateResult.payload.redirectAfter ?? buildConnectionsRedirect(brandId, "x"),
+		302,
+	);
+});
+
+// Meta OAuth callback. The user-access-token from the code exchange is used
+// to list pages; each page (with optional IG business account) is persisted
+// as one or two social_account_tokens rows (FB and IG surfaces share the
+// same page access token).
+oauthRoutes.get("/meta/callback", async (c) => {
+	const env = c.env;
+	if (!isPlatformEnabled(env, "meta", "publish")) {
+		return c.json({ success: false, error: { code: "FEATURE_DISABLED" } }, 503);
+	}
+	const code = c.req.query("code");
+	const state = c.req.query("state");
+	const errorParam = c.req.query("error");
+	if (errorParam) {
+		return c.redirect(buildConnectionsRedirect(undefined, "meta", errorParam), 302);
+	}
+	if (!code || !state) {
+		return c.json({ success: false, error: { code: "OAUTH_CALLBACK_INVALID" } }, 400);
+	}
+	const stateResult = await verifyState(env, state);
+	if (!stateResult.ok) {
+		return c.json(
+			{ success: false, error: { code: "OAUTH_STATE_INVALID", reason: stateResult.reason } },
+			400,
+		);
+	}
+	if (stateResult.payload.platform !== "meta") {
+		return c.json({ success: false, error: { code: "OAUTH_PLATFORM_MISMATCH" } }, 400);
+	}
+	const brandId = stateResult.payload.brandId;
+	const clientId = env.META_APP_ID;
+	const clientSecret = env.META_APP_SECRET;
+	const redirectUri = env.META_REDIRECT_URI ?? defaultRedirectUri(env, "meta");
+	if (!clientId || !clientSecret) {
+		return c.redirect(buildConnectionsRedirect(brandId, "meta", "missing_app_credentials"), 302);
+	}
+	const tokenResult = await exchangeMetaCode({
+		code,
+		clientId,
+		clientSecret,
+		redirectUri,
+	});
+	if (!tokenResult.ok) {
+		return c.redirect(buildConnectionsRedirect(brandId, "meta", tokenResult.error.error), 302);
+	}
+	const pages = await resolveMetaPages({ userAccessToken: tokenResult.bundle.accessToken });
+	if (!pages.ok) {
+		return c.redirect(buildConnectionsRedirect(brandId, "meta", pages.error.error), 302);
+	}
+	if (pages.pages.length === 0) {
+		return c.redirect(buildConnectionsRedirect(brandId, "meta", "no_pages_admin"), 302);
+	}
+	const db = getDb(env);
+	const brandRow = await dbFirst<{ workspace_id: string }>(
+		db,
+		`SELECT workspace_id FROM brands WHERE id = ? LIMIT 1`,
+		[brandId],
+	);
+	const workspaceId = brandRow?.workspace_id ?? null;
+	for (const page of pages.pages) {
+		// Persist one row per surface (FB page + optional IG business).
+		const surfaces: Array<{
+			surface: "facebook_page" | "instagram_business";
+			externalId: string;
+			handle: string;
+			profileUrl: string;
+		}> = [
+			{
+				surface: "facebook_page",
+				externalId: page.pageId,
+				handle: page.pageId,
+				profileUrl: `https://www.facebook.com/${page.pageId}`,
+			},
+		];
+		if (page.instagramBusinessAccountId) {
+			surfaces.push({
+				surface: "instagram_business",
+				externalId: page.instagramBusinessAccountId,
+				handle: page.instagramBusinessAccountId,
+				profileUrl: `https://www.instagram.com/${page.instagramBusinessAccountId}`,
+			});
+		}
+		for (const surface of surfaces) {
+			const payload: StoredTokenPayload = {
+				access_token: page.pageAccessToken,
+				token_type: "bearer",
+				issued_at: new Date().toISOString(),
+				platform_metadata: {
+					surface: surface.surface,
+					page_id: page.pageId,
+					page_name: page.pageName,
+					instagram_business_account_id: page.instagramBusinessAccountId ?? null,
+				},
+			};
+			let tokenKvKey: string;
+			try {
+				tokenKvKey = await writeToken(env, {
+					brandId,
+					platform: "meta",
+					externalAccountId: surface.externalId,
+					payload,
+				});
+			} catch (err) {
+				const reason =
+					err instanceof Error && "code" in err && typeof err.code === "string"
+						? err.code
+						: "token_write_failed";
+				return c.redirect(buildConnectionsRedirect(brandId, "meta", reason), 302);
+			}
+			const accessExpiresAt = tokenResult.bundle.expiresIn
+				? new Date(Date.now() + tokenResult.bundle.expiresIn * 1000).toISOString()
+				: new Date(Date.now() + 60 * 86_400 * 1000).toISOString();
+			const tokenRowId = createId("sat");
+			await dbRun(
+				db,
+				`INSERT INTO social_account_tokens (
+					id, brand_id, platform, external_account_id, account_label, scope_csv,
+					token_kv_key, access_token_expires_at, refresh_token_expires_at, status
+				) VALUES (?, ?, 'meta', ?, ?, ?, ?, ?, NULL, 'active')
+				ON CONFLICT(brand_id, platform, external_account_id) DO UPDATE SET
+					account_label = excluded.account_label,
+					scope_csv = excluded.scope_csv,
+					token_kv_key = excluded.token_kv_key,
+					access_token_expires_at = excluded.access_token_expires_at,
+					status = 'active',
+					updated_at = CURRENT_TIMESTAMP`,
+				[
+					tokenRowId,
+					brandId,
+					surface.externalId,
+					`${page.pageName} (${surface.surface})`,
+					"pages_show_list,pages_manage_posts,pages_read_engagement,pages_manage_engagement,instagram_basic,instagram_content_publish,instagram_manage_comments",
+					tokenKvKey,
+					accessExpiresAt,
+				],
+			);
+			await dbRun(
+				db,
+				`INSERT INTO brand_social_profiles (
+					id, brand_id, platform, handle, profile_url, connected_status, metadata_json
+				) VALUES (?, ?, 'meta', ?, ?, 'connected', ?)
+				ON CONFLICT(brand_id, platform, handle) DO UPDATE SET
+					profile_url = excluded.profile_url,
+					connected_status = 'connected',
+					metadata_json = excluded.metadata_json,
+					updated_at = CURRENT_TIMESTAMP`,
+				[
+					createId("bsp"),
+					brandId,
+					surface.handle,
+					surface.profileUrl,
+					toJson({
+						surface: surface.surface,
+						page_name: page.pageName,
+						page_id: page.pageId,
+						instagram_business_account_id: page.instagramBusinessAccountId ?? null,
+						social_account_token_id: tokenRowId,
+					}),
+				],
+			);
+			await dbRun(
+				db,
+				`INSERT INTO audit_logs (
+					id, workspace_id, brand_id, user_id, action, entity_type, entity_id,
+					before_json, after_json, metadata_json
+				) VALUES (?, ?, ?, NULL, 'platform.meta.connected', 'social_account_token', ?, NULL, ?, '{}')`,
+				[
+					createId("audit"),
+					workspaceId,
+					brandId,
+					tokenRowId,
+					toJson({
+						surface: surface.surface,
+						pageId: page.pageId,
+						pageName: page.pageName,
+						instagramBusinessAccountId: page.instagramBusinessAccountId ?? null,
+					}),
+				],
+			);
+		}
+	}
+	return c.redirect(
+		stateResult.payload.redirectAfter ?? buildConnectionsRedirect(brandId, "meta"),
 		302,
 	);
 });

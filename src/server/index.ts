@@ -25,6 +25,7 @@ import { workspaceRoutes } from "./routes/workspaces";
 // here ensures the registry is populated before the first request.
 import "./services/platforms/linkedin";
 import "./services/platforms/x";
+import "./services/platforms/meta";
 import {
 	allPlatformsDisabled,
 	isPlatformEnabled,
