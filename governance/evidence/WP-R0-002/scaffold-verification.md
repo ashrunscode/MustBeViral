@@ -16,16 +16,43 @@ Verified on 2026-07-12 with Node 24.18.0 and pnpm 11.12.0.
 - `pnpm peers check`
 - `pnpm agent:preflight`
 - `pnpm governance:check`
-- `pnpm governance:test` — 14 tests passed
+- `pnpm governance:test` — 32 tests passed
+- `pnpm transition:check` — completed-packet receipt registry passed
 - `pnpm task-graph:check` — 13 workspaces and 55 required tasks scheduled
+- `pnpm lint:governance` — repository control-plane scripts and tests passed ESLint
 - `pnpm exec turbo run lint --force` — 13 uncached lint tasks passed
 - `pnpm exec turbo run test --concurrency=50% --force` — 15 uncached test/build tasks passed
 - `pnpm verify` — formatting, authority, cleanroom, generated drift, lint, types, unit, integration, Worker dry bundle, and Next production build passed
 - Core Worker unit suite — 3 tests passed in the Workers runtime
 - Core Worker integration suite — 2 tests passed in the Workers runtime
+- Core Worker integration timeout allows a 15-second Windows/OneDrive runtime cold start without
+  changing assertions; two consecutive targeted runs passed after a full-suite cold-start flake.
 - Web/Supabase integration — 1 test passed
 - Zod/OpenAPI integration — 1 test passed
 - Worker build completed with `--dry-run`, automatic provisioning disabled, and no remote mutation.
+
+## Successor-transition safety proof
+
+- The successor transition validates the project, predecessor, successor, and manifest schemas;
+  cleared blockers and decisions; a clean committed predecessor; exact evidence blobs committed in
+  `HEAD`; dependency and lifecycle invariants; the authorized predecessor branch; and both simulated
+  closed and successor states before writing authority.
+- The transition synchronizes project state, phase, blockers, next action, and timestamped evidence
+  instead of carrying obsolete predecessor state forward, and emits both a full schema-valid closed
+  packet snapshot and a receipt binding its hash, completed steps, predecessor commit, and every
+  evidence file's SHA-256 and Git blob identity.
+- Start, handoff, and finish use a durable local transaction journal. Any write or validation failure
+  restores every original authority file; an interrupted process is detected read-only by preflight
+  and recovered only through `pnpm agent:recover`.
+- Eighteen focused transition, Git evidence, receipt-integrity, and journal tests cover a valid
+  handoff, fabricated or dirty evidence, staged-new evidence, unrelated dirty paths, blocked
+  predecessor, invalid successor, unauthorized branch, closed snapshot and receipt, receipt
+  tampering, broken or deleted receipt chains, successful multi-file commit, injected later-write
+  failure, interrupted-process recovery, and path escape.
+- A deliberate `agent:finish` attempt while WP-R0-002 remained blocked exited nonzero and SHA-256
+  comparison proved `PROJECT_STATE.yaml` and `ACTIVE_WORK_PACKET.yaml` were unchanged.
+- The schema-valid `WP-D0-001` candidate is staged only in ignored local scratch. It is not a second
+  active packet and cannot be activated until the GitHub blocker is cleared.
 
 ## Clean-clone continuity proof
 

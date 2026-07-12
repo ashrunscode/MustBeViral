@@ -6,7 +6,6 @@ import {
   fromRoot,
   listRepositoryFiles,
   markdownFrontmatter,
-  readText,
   readYaml,
   validateSchema,
 } from './lib.mjs';

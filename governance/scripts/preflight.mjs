@@ -1,9 +1,17 @@
 import { execFileSync } from 'node:child_process';
 
-import { currentBranch, readYaml, worktreeCount } from './lib.mjs';
+import { hasAuthorityTransitionJournal } from './authority-transaction.mjs';
+import { currentBranch, readYaml, repoRoot, worktreeCount } from './lib.mjs';
 import { scanCleanroom } from './scan-cleanroom.mjs';
 import { validateDocs } from './validate-docs.mjs';
 import { validateWorkPacket } from './validate-work-packet.mjs';
+
+if (hasAuthorityTransitionJournal(repoRoot)) {
+  console.error(
+    'Interrupted authority transition detected. Run pnpm agent:recover before continuing.',
+  );
+  process.exit(1);
+}
 
 function safeToolVersion(command, args = ['--version']) {
   try {
