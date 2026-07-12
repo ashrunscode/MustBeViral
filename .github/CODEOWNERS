@@ -1,0 +1,19 @@
+# MustBeViral has one accountable owner until the team expands.
+* @ernijsansons
+
+# Keep critical contracts explicit for branch-protection review rules.
+/AGENTS.md @ernijsansons
+/PROJECT_STATE.yaml @ernijsansons
+/.agents/ @ernijsansons
+/.github/ @ernijsansons
+/docs/product/ @ernijsansons
+/docs/ux/ @ernijsansons
+/docs/architecture/ @ernijsansons
+/docs/decisions/ @ernijsansons
+/docs/delivery/ @ernijsansons
+/governance/ @ernijsansons
+/supabase/migrations/ @ernijsansons
+/supabase/tests/ @ernijsansons
+/packages/contracts/ @ernijsansons
+/packages/billing/ @ernijsansons
+/apps/core/ @ernijsansons

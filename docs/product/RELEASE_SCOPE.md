@@ -1,0 +1,51 @@
+---
+doc_id: release-scope
+---
+
+# Release scope
+
+## P0 private validation slice
+
+P0 includes only what is required to prove the Meta Campaign Launch Pack:
+
+- Marketing landing, authentication shell, structured onboarding, brand setup, project creation, and campaign brief.
+- Desktop graph canvas plus semantic outline, graph validation, planning-agent patches, revision history, quote, confirmation, execution, partial progress, review, affected-descendant rerun, approval, export, and receipt.
+- Initial node kinds: brief/input, brand context, planner/text, image generation/edit, video generation, QA, output/export, and non-executable group.
+- DAGs with at most 100 executable nodes and no arbitrary loop construct.
+- Supabase Auth/Postgres/RLS, one Core Worker, private R2, fal-first provider transport, immutable billing semantics without automated customer charging, and private five-operation MCP proof.
+- A curated 3–5 model catalog selected for the launch pack rather than arbitrary access to every provider model.
+- Internal operator visibility for runs, costs, reconciliation, and kill switches.
+- Desktop authoring; tablet review and limited parameter edits; mobile review, comment, approve, and export.
+
+## P1a paid single-user product
+
+P1a adds the secure paid web product: production-grade identity and RLS, durable revisions, Stripe subscription and prepaid wallet, enforced entitlements and spend caps, transactional email, durable multi-step execution where proven necessary, expanded exports, operational reconciliation, and production deployment/rollback.
+
+## P1b programmable surface
+
+P1b adds production OAuth/API-key authorization, supported public REST API, production MCP tools, CLI parity, user-authored Skills with immutable versions, and three-client semantic parity evidence.
+
+## P2 collaboration
+
+P2 adds multiplayer presence, comments, text collaboration, edit leases for expensive node configuration, and checkpointing through a dedicated collaboration Worker and one coordination object per canvas. Postgres revisions remain durable authority; collaboration state is a recoverable draft.
+
+## P3 scale and resilience
+
+P3 may add a separately deployable executor, queues, direct high-volume provider adapters, circuit breakers, canaries, disaster-recovery automation, stronger compliance controls, and BYOK only when measurements justify each addition.
+
+## P4 expansion
+
+P4 may introduce agency accounts, client approval portals, white-labeling, multi-client reporting, workflow marketplaces, enterprise identity, and internationalization after the DTC product demonstrates retention and viable economics.
+
+## Explicitly deferred before validation
+
+- Agency billing, white-labeling, client portals, complex approval hierarchies, and multi-client reporting.
+- Audio workflows, arbitrary graph loops, long-form video editing, and auto-publishing.
+- Website crawling and automatic Shopify catalog import.
+- Template marketplaces, public community sharing, and self-hosted control planes.
+- BYOK, enterprise SSO/SCIM, and internationalization.
+- Regulated or political advertising workflows.
+- Full multiplayer and mobile graph editing.
+- Multiple planning agents, autonomous provider access, or agent access to database, storage, and billing credentials.
+
+Scope can expand only through a product/architecture change linked to measured evidence and a new or superseding decision. An implementation packet cannot promote deferred work by convenience.

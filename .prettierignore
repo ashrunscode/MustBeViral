@@ -1,0 +1,15 @@
+.next/
+.pnpm-store/
+.turbo/
+.wrangler/
+.vercel/
+coverage/
+dist/
+node_modules/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+docs/generated/
+docs/INDEX.md
+docs/STATUS.md
+llms.txt

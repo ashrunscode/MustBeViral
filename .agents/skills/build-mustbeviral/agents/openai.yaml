@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Build MustBeViral'
+  short_description: 'Resume MustBeViral from its active packet'
+  default_prompt: 'Use $build-mustbeviral to continue the current MustBeViral work packet safely.'

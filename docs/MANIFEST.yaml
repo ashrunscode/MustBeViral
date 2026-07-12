@@ -1,0 +1,382 @@
+schema_version: 1
+manifest_id: mustbeviral-authority-v1
+project_id: mustbeviral-studio
+rules:
+  one_authority_per_topic: true
+  register_every_document: true
+  markdown_frontmatter_keys:
+    - doc_id
+  unresolved_marker_patterns:
+    - 'T[O]DO'
+    - 'T[B]D'
+    - 'F[I]XME'
+  forbid_supersession_cycles: true
+  require_generator_for_generated: true
+  forbid_nested_agent_contracts: true
+  forbidden_paths:
+    - docs/archive
+  forbidden_name_patterns:
+    - '^FINAL_'
+    - '^FIX_LOG'
+    - '^PROMPT_ROADMAP'
+    - '^MASTER_EXECUTION_PACKAGE'
+
+documents:
+  - id: manifest
+    path: docs/MANIFEST.yaml
+    kind: registry
+    status: accepted
+    owner: product-architecture
+    authority_topics: [documentation.registry]
+    review_triggers: [document_added, document_removed, document_status_changed, authority_changed]
+    supersedes: []
+
+  - id: docs-index
+    path: docs/INDEX.md
+    kind: navigation
+    status: accepted
+    owner: product-architecture
+    authority_topics: [documentation.navigation]
+    review_triggers: [manifest_changed]
+    supersedes: []
+
+  - id: project-status
+    path: docs/STATUS.md
+    kind: status_projection
+    status: accepted
+    owner: delivery
+    authority_topics: [documentation.current_state_projection]
+    review_triggers: [project_state_changed, active_packet_changed]
+    supersedes: []
+
+  - id: glossary
+    path: docs/GLOSSARY.md
+    kind: glossary
+    status: accepted
+    owner: product-architecture
+    authority_topics: [product.terminology]
+    review_triggers: [public_term_added, entity_added, state_machine_changed]
+    supersedes: []
+
+  - id: product-contract
+    path: docs/product/PRODUCT_CONTRACT.md
+    kind: product
+    status: accepted
+    owner: product
+    authority_topics:
+      [product.customer, product.job_to_be_done, product.launch_pack, product.success_hypothesis]
+    review_triggers: [launch_customer_changed, launch_job_changed, p0_evidence_reviewed]
+    supersedes: []
+
+  - id: release-scope
+    path: docs/product/RELEASE_SCOPE.md
+    kind: product
+    status: accepted
+    owner: product
+    authority_topics: [product.release_scope, product.non_goals, product.phase_boundaries]
+    review_triggers: [phase_changed, evidence_gate_changed, scope_change_requested]
+    supersedes: []
+
+  - id: experience-contract
+    path: docs/ux/EXPERIENCE_CONTRACT.md
+    kind: ux
+    status: accepted
+    owner: design
+    authority_topics:
+      [
+        ux.principles,
+        ux.visual_direction,
+        ux.accessibility,
+        ux.responsive_behavior,
+        ux.performance_targets,
+      ]
+    review_triggers:
+      [design_approved, design_system_changed, accessibility_finding, performance_budget_changed]
+    supersedes: []
+
+  - id: canvas-screen-states
+    path: docs/ux/CANVAS_AND_SCREEN_STATES.md
+    kind: ux
+    status: accepted
+    owner: design
+    authority_topics:
+      [
+        ux.information_architecture,
+        ux.screen_states,
+        ux.canvas_interactions,
+        ux.semantic_canvas_parity,
+      ]
+    review_triggers: [screen_added, canvas_command_changed, run_state_changed]
+    supersedes: []
+
+  - id: system-overview
+    path: docs/architecture/SYSTEM_OVERVIEW.md
+    kind: architecture
+    status: accepted
+    owner: architecture
+    authority_topics:
+      [
+        architecture.system_context,
+        architecture.platform_ownership,
+        architecture.monorepo_boundaries,
+        architecture.data_flow,
+      ]
+    review_triggers:
+      [platform_boundary_changed, application_added, package_added, deployment_topology_changed]
+    supersedes: []
+
+  - id: data-auth-tenancy
+    path: docs/architecture/DATA_AUTH_AND_TENANCY.md
+    kind: architecture
+    status: accepted
+    owner: security-data
+    authority_topics:
+      [
+        architecture.data_ownership,
+        architecture.tenancy,
+        architecture.rls,
+        architecture.graph_persistence,
+        architecture.hyperdrive_gate,
+      ]
+    review_triggers: [schema_changed, auth_changed, role_changed, database_path_changed]
+    supersedes: []
+
+  - id: execution-providers-billing
+    path: docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md
+    kind: architecture
+    status: accepted
+    owner: execution-billing
+    authority_topics:
+      [
+        architecture.execution,
+        architecture.outbox,
+        architecture.provider_adapters,
+        architecture.media,
+        architecture.billing_ledger,
+      ]
+    review_triggers:
+      [
+        provider_added,
+        model_enabled,
+        state_machine_changed,
+        price_policy_changed,
+        async_primitive_added,
+      ]
+    supersedes: []
+
+  - id: api-mcp-cli
+    path: docs/architecture/API_MCP_AND_CLI.md
+    kind: architecture
+    status: accepted
+    owner: api
+    authority_topics:
+      [
+        architecture.command_layer,
+        architecture.rest_api,
+        architecture.mcp,
+        architecture.cli,
+        architecture.error_contract,
+      ]
+    review_triggers:
+      [public_command_changed, api_version_changed, mcp_tool_changed, cli_command_changed]
+    supersedes: []
+
+  - id: adr-0001-dtc-first
+    path: docs/decisions/ADR-0001-DTC-FIRST.md
+    kind: decision
+    status: accepted
+    owner: product
+    authority_topics: [decision.0001]
+    review_triggers: [p0_evidence_reviewed, launch_customer_change_requested]
+    supersedes: []
+
+  - id: adr-0002-platform-boundaries
+    path: docs/decisions/ADR-0002-PLATFORM-BOUNDARIES.md
+    kind: decision
+    status: accepted
+    owner: architecture
+    authority_topics: [decision.0002]
+    review_triggers: [platform_boundary_change_requested, regional_latency_gate_failed]
+    supersedes: []
+
+  - id: adr-0003-fal-first
+    path: docs/decisions/ADR-0003-FAL-FIRST.md
+    kind: decision
+    status: accepted
+    owner: execution
+    authority_topics: [decision.0003]
+    review_triggers: [provider_economics_changed, provider_sla_failed, direct_adapter_proposed]
+    supersedes: []
+
+  - id: adr-0004-immutable-graph-revisions
+    path: docs/decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md
+    kind: decision
+    status: accepted
+    owner: architecture
+    authority_topics: [decision.0004]
+    review_triggers: [graph_persistence_change_requested, collaboration_model_changed]
+    supersedes: []
+
+  - id: adr-0005-document-governance
+    path: docs/decisions/ADR-0005-DOCUMENT-GOVERNANCE.md
+    kind: decision
+    status: accepted
+    owner: product-architecture
+    authority_topics: [decision.0005]
+    review_triggers: [authority_model_change_requested, external_document_system_proposed]
+    supersedes: []
+
+  - id: roadmap
+    path: docs/delivery/ROADMAP.md
+    kind: delivery
+    status: accepted
+    owner: delivery
+    authority_topics: [delivery.roadmap, delivery.phase_exits, delivery.sequence]
+    review_triggers: [phase_exit_passed, phase_exit_failed, evidence_changed]
+    supersedes: []
+
+  - id: quality-gates
+    path: docs/delivery/QUALITY_GATES.md
+    kind: quality
+    status: accepted
+    owner: quality
+    authority_topics:
+      [
+        quality.release_gates,
+        quality.p0_validation,
+        quality.test_strategy,
+        quality.definition_of_done,
+      ]
+    review_triggers: [risk_changed, incident, phase_changed, acceptance_metric_changed]
+    supersedes: []
+
+  - id: active-work-packet
+    path: docs/delivery/ACTIVE_WORK_PACKET.yaml
+    kind: work_packet
+    status: accepted
+    owner: delivery
+    authority_topics: [delivery.active_work]
+    review_triggers: [packet_started, packet_handed_off, packet_completed, packet_blocked]
+    supersedes: []
+
+  - id: local-env-secrets
+    path: docs/operations/LOCAL_ENV_AND_SECRETS.md
+    kind: runbook
+    status: accepted
+    owner: operations-security
+    authority_topics:
+      [operations.local_environment, operations.secret_handling, operations.environment_isolation]
+    review_triggers: [toolchain_changed, secret_added, environment_added, credential_incident]
+    supersedes: []
+
+  - id: toolchain-template-provenance
+    path: docs/operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md
+    kind: runbook
+    status: accepted
+    owner: developer-experience
+    authority_topics:
+      [operations.toolchain, operations.template_provenance, operations.scaffold_policy]
+    review_triggers: [tool_version_changed, template_imported, scaffold_changed]
+    supersedes: []
+
+  - id: deploy-rollback-incidents
+    path: docs/operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md
+    kind: runbook
+    status: accepted
+    owner: operations
+    authority_topics:
+      [
+        operations.deployment,
+        operations.rollback,
+        operations.incident_response,
+        operations.observability,
+      ]
+    review_triggers: [deployment_changed, rollback_rehearsed, incident_closed, slo_changed]
+    supersedes: []
+
+  - id: legacy-v1-retirement
+    path: docs/operations/LEGACY_V1_RETIREMENT.md
+    kind: temporary_runbook
+    status: accepted
+    owner: operations
+    authority_topics: [operations.legacy_inventory, operations.legacy_retirement]
+    review_triggers:
+      [
+        legacy_resource_discovered,
+        cutover_completed,
+        observation_window_completed,
+        legacy_retirement_completed,
+      ]
+    supersedes: []
+
+  - id: source-register
+    path: docs/research/sources.yaml
+    kind: research_registry
+    status: informative
+    owner: research
+    authority_topics: [research.source_register]
+    review_triggers: [source_added, source_reverified, reverify_date_reached]
+    supersedes: []
+    source_ids:
+      [
+        src-cloudflare-workers,
+        src-cloudflare-hyperdrive-supabase,
+        src-cloudflare-r2,
+        src-supabase-auth,
+        src-supabase-rls,
+        src-nextjs,
+        src-vercel,
+        src-fal,
+        src-stripe,
+        src-superdesign,
+      ]
+
+  - id: generated-openapi
+    path: docs/generated/OPENAPI.md
+    kind: generated
+    status: generated
+    owner: api
+    authority_topics: [generated.open_api]
+    review_triggers: [contract_schema_changed]
+    supersedes: []
+    generator: pnpm docs:generate
+
+  - id: generated-database-schema
+    path: docs/generated/DATABASE_SCHEMA.md
+    kind: generated
+    status: generated
+    owner: security-data
+    authority_topics: [generated.database_schema]
+    review_triggers: [migration_changed]
+    supersedes: []
+    generator: pnpm docs:generate
+
+  - id: generated-environment
+    path: docs/generated/ENVIRONMENT.md
+    kind: generated
+    status: generated
+    owner: developer-experience
+    authority_topics: [generated.environment_variables]
+    review_triggers: [typed_environment_schema_changed]
+    supersedes: []
+    generator: pnpm docs:generate
+
+  - id: generated-model-catalog
+    path: docs/generated/MODEL_CATALOG.md
+    kind: generated
+    status: generated
+    owner: execution
+    authority_topics: [generated.model_catalog]
+    review_triggers: [model_catalog_changed, price_catalog_changed]
+    supersedes: []
+    generator: pnpm docs:generate
+
+  - id: generated-traceability
+    path: docs/generated/TRACEABILITY.md
+    kind: generated
+    status: generated
+    owner: quality
+    authority_topics: [generated.traceability]
+    review_triggers: [authority_changed, acceptance_changed, implementation_changed]
+    supersedes: []
+    generator: pnpm docs:generate

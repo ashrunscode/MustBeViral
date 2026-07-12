@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mustbeviral.com/schemas/manifest.schema.json",
+  "title": "MustBeViral document manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manifest_id", "project_id", "rules", "documents"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "manifest_id": { "const": "mustbeviral-authority-v1" },
+    "project_id": { "const": "mustbeviral-studio" },
+    "rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "one_authority_per_topic",
+        "register_every_document",
+        "markdown_frontmatter_keys",
+        "unresolved_marker_patterns",
+        "forbid_supersession_cycles",
+        "require_generator_for_generated",
+        "forbid_nested_agent_contracts",
+        "forbidden_paths",
+        "forbidden_name_patterns"
+      ],
+      "properties": {
+        "one_authority_per_topic": { "const": true },
+        "register_every_document": { "const": true },
+        "markdown_frontmatter_keys": { "type": "array", "const": ["doc_id"] },
+        "unresolved_marker_patterns": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "forbid_supersession_cycles": { "const": true },
+        "require_generator_for_generated": { "const": true },
+        "forbid_nested_agent_contracts": { "const": true },
+        "forbidden_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/relativePath" }
+        },
+        "forbidden_name_patterns": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/document" }
+    }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "kind",
+        "status",
+        "owner",
+        "authority_topics",
+        "review_triggers",
+        "supersedes"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$" },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "kind": {
+          "enum": [
+            "product",
+            "ux",
+            "architecture",
+            "decision",
+            "delivery",
+            "operations",
+            "research",
+            "generated",
+            "reference",
+            "navigation",
+            "status",
+            "glossary",
+            "registry",
+            "status_projection",
+            "quality",
+            "work_packet",
+            "runbook",
+            "temporary_runbook",
+            "research_registry"
+          ]
+        },
+        "status": {
+          "enum": ["draft", "accepted", "informative", "generated", "superseded", "retired"]
+        },
+        "owner": { "type": "string", "minLength": 1 },
+        "authority_topics": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$" },
+          "uniqueItems": true
+        },
+        "review_triggers": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "supersedes": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$" },
+          "uniqueItems": true
+        },
+        "source_ids": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$" },
+          "uniqueItems": true
+        },
+        "generator": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

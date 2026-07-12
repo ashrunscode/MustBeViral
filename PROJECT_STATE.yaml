@@ -1,0 +1,36 @@
+schema_version: 1
+project_id: mustbeviral
+generation: viralgraph-cleanroom-v2
+product_name: MustBeViral Studio
+internal_engine_name: ViralGraph
+launch_customer: dtc_ecommerce_marketing_teams
+project_state: active
+phase:
+  id: R0
+  title: Authority reset and cleanroom foundation
+  state: in_progress
+release_target: P0
+active_work_packet: WP-R0-001
+next_action: Complete and verify the cleanroom authority system, then create the pinned monorepo scaffold.
+decisions_pending: []
+blockers: []
+legacy:
+  active_tree_policy: prohibited
+  rollback_tag: legacy-cloudflare-v1-run21
+  remote_retirement_state: inventory_required
+  destructive_remote_action: forbidden
+environments:
+  production:
+    generation: legacy-v1
+    traffic: live
+    mutation_policy: preserve_until_v2_cutover
+  staging:
+    generation: viralgraph-cleanroom-v2
+    state: not_created
+  preview:
+    generation: viralgraph-cleanroom-v2
+    state: not_created
+last_transition:
+  at: 2026-07-12T00:00:00Z
+  by: user-approved-reset
+  evidence: clean orphan branch created after legacy active-tree deletion

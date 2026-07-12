@@ -1,0 +1,82 @@
+schema_version: 1
+sources:
+  - id: src-cloudflare-workers
+    title: Cloudflare Workers documentation
+    publisher: Cloudflare
+    url: https://developers.cloudflare.com/workers/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [system-overview, deploy-rollback-incidents]
+  - id: src-cloudflare-hyperdrive-supabase
+    title: Connect Hyperdrive to Supabase
+    publisher: Cloudflare
+    url: https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-database-providers/supabase/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [data-auth-tenancy]
+  - id: src-cloudflare-r2
+    title: Cloudflare R2 documentation
+    publisher: Cloudflare
+    url: https://developers.cloudflare.com/r2/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [system-overview, execution-providers-billing]
+  - id: src-supabase-auth
+    title: Supabase Auth with Next.js
+    publisher: Supabase
+    url: https://supabase.com/docs/guides/auth/server-side/nextjs
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [data-auth-tenancy, toolchain-template-provenance]
+  - id: src-supabase-rls
+    title: Supabase Row Level Security
+    publisher: Supabase
+    url: https://supabase.com/docs/guides/database/postgres/row-level-security
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [data-auth-tenancy]
+  - id: src-nextjs
+    title: Next.js App Router documentation
+    publisher: Vercel
+    url: https://nextjs.org/docs/app
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [system-overview, toolchain-template-provenance]
+  - id: src-vercel
+    title: Vercel documentation
+    publisher: Vercel
+    url: https://vercel.com/docs
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [system-overview, deploy-rollback-incidents]
+  - id: src-fal
+    title: fal developer documentation
+    publisher: fal
+    url: https://docs.fal.ai/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-08-12'
+    used_by: [execution-providers-billing]
+  - id: src-stripe
+    title: Stripe documentation
+    publisher: Stripe
+    url: https://docs.stripe.com/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [execution-providers-billing, deploy-rollback-incidents]
+  - id: src-superdesign
+    title: SuperDesign skill guidance
+    publisher: SuperDesign
+    url: https://raw.githubusercontent.com/superdesigndev/superdesign-skill/main/skills/superdesign/SUPERDESIGN.md
+    source_type: primary-source
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-08-12'
+    used_by: [experience-contract, toolchain-template-provenance]

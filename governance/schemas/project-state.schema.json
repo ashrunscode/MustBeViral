@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mustbeviral.com/schemas/project-state.schema.json",
+  "title": "MustBeViral project state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "generation",
+    "product_name",
+    "internal_engine_name",
+    "launch_customer",
+    "project_state",
+    "phase",
+    "release_target",
+    "active_work_packet",
+    "next_action",
+    "decisions_pending",
+    "blockers",
+    "legacy",
+    "environments",
+    "last_transition"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "project_id": { "const": "mustbeviral" },
+    "generation": { "const": "viralgraph-cleanroom-v2" },
+    "product_name": { "const": "MustBeViral Studio" },
+    "internal_engine_name": { "const": "ViralGraph" },
+    "launch_customer": { "type": "string", "minLength": 1 },
+    "project_state": { "enum": ["active", "blocked", "paused", "complete"] },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "state"],
+      "properties": {
+        "id": { "enum": ["R0", "D0", "P0", "P1a", "P1b", "P2", "P3", "P4"] },
+        "title": { "type": "string", "minLength": 1 },
+        "state": { "enum": ["planned", "in_progress", "active", "blocked", "complete"] }
+      }
+    },
+    "release_target": { "type": "string", "minLength": 1 },
+    "active_work_packet": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$" },
+    "next_action": { "type": "string", "minLength": 1 },
+    "decisions_pending": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "blockers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "legacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_tree_policy",
+        "rollback_tag",
+        "remote_retirement_state",
+        "destructive_remote_action"
+      ],
+      "properties": {
+        "active_tree_policy": { "const": "prohibited" },
+        "rollback_tag": { "type": ["string", "null"] },
+        "remote_retirement_state": {
+          "enum": [
+            "inventory_required",
+            "inventory-blocked",
+            "inventoried",
+            "cutover-pending",
+            "observing",
+            "retired",
+            "not-applicable"
+          ]
+        },
+        "destructive_remote_action": {
+          "enum": [
+            "forbidden",
+            "blocked",
+            "approval-required",
+            "authorized",
+            "complete",
+            "not-applicable"
+          ]
+        }
+      }
+    },
+    "environments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["production", "staging", "preview"],
+      "properties": {
+        "production": { "$ref": "#/$defs/environment" },
+        "staging": { "$ref": "#/$defs/environment" },
+        "preview": { "$ref": "#/$defs/environment" }
+      }
+    },
+    "last_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["at", "by", "evidence"],
+      "properties": {
+        "at": { "$ref": "#/$defs/dateTime" },
+        "by": { "type": "string", "minLength": 1 },
+        "evidence": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "array", "items": { "$ref": "#/$defs/relativePath" }, "uniqueItems": true }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 2,
+      "properties": {
+        "generation": { "type": "string", "minLength": 1 },
+        "state": {
+          "enum": [
+            "unconfigured",
+            "not_created",
+            "planned",
+            "provisioning",
+            "ready",
+            "blocked",
+            "retired"
+          ]
+        },
+        "traffic": { "enum": ["live", "zero", "unknown"] },
+        "mutation_policy": { "type": "string", "minLength": 1 },
+        "web": { "type": ["string", "null"] },
+        "api": { "type": ["string", "null"] },
+        "supabase_project": { "type": ["string", "null"] },
+        "vercel_project": { "type": ["string", "null"] },
+        "cloudflare_worker": { "type": ["string", "null"] },
+        "notes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

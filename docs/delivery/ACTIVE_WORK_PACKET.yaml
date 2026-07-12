@@ -1,0 +1,148 @@
+schema_version: 1
+id: WP-R0-001
+spec_revision: 1
+title: Cleanroom authority and continuity foundation
+phase: R0
+status: in_progress
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Establish the cleanroom authority and agent-continuity foundation so a fresh agent can identify and execute exactly one bounded next action.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - execution-providers-billing
+  - api-mcp-cli
+  - roadmap
+  - quality-gates
+required_skills:
+  - architect-prime
+  - think
+  - skill-creator
+  - test-mastery
+depends_on: []
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - CLAUDE.md
+    - README.md
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - .agents/**
+    - .cursor/**
+    - .github/**
+    - docs/**
+    - governance/**
+    - .editorconfig
+    - .gitattributes
+    - .gitignore
+    - .node-version
+    - .nvmrc
+    - .npmrc
+    - .prettierignore
+    - .prettierrc.json
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+  forbidden_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - .superdesign/**
+    - docs/archive/**
+  required_doc_ids:
+    - docs-index
+    - project-status
+    - product-contract
+    - release-scope
+    - experience-contract
+    - canvas-screen-states
+    - system-overview
+    - data-auth-tenancy
+    - execution-providers-billing
+    - api-mcp-cli
+    - roadmap
+    - quality-gates
+deliverables:
+  - Canonical registered authority documents
+  - Project state and one active packet schemas
+  - Read-only preflight and packet lifecycle commands
+  - Repository-owned build skill and fresh-agent fixtures
+  - Governance and quality workflow foundations
+public_interfaces: []
+steps:
+  - id: r0-001-authority
+    title: Create and register cleanroom authority contracts
+    status: completed
+  - id: r0-002-validators
+    title: Implement schemas, validators, lifecycle commands, and fixtures
+    status: completed
+  - id: r0-003-preflight
+    title: Prove clean-checkout preflight and fresh-agent continuation
+    status: completed
+  - id: r0-004-handoff
+    title: Install and validate the scaffold successor packet
+    status: current
+acceptance:
+  automated:
+    - id: docs-check
+      criterion: All documents and machine-state files pass governance validation.
+      status: passed
+      evidence:
+        - governance/evidence/WP-R0-001/governance-baseline.md
+    - id: preflight-check
+      criterion: Preflight reports one phase, packet, next action, allowed paths, blockers, required docs and checks.
+      status: passed
+      evidence:
+        - governance/evidence/WP-R0-001/governance-baseline.md
+    - id: fixture-check
+      criterion: Normal, blocked, legacy-instruction, out-of-scope-diff, and missing-successor fixtures behave fail-closed.
+      status: passed
+      evidence:
+        - governance/evidence/WP-R0-001/governance-baseline.md
+  manual:
+    - id: fresh-agent-under-60s
+      criterion: A fresh agent given only a continuation instruction orients correctly in less than 60 seconds.
+      status: passed
+      evidence:
+        - governance/evidence/WP-R0-001/governance-baseline.md
+quality_gates:
+  - id: governance
+    command: pnpm docs:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-R0-001/governance-baseline.md
+  - id: packet-verification
+    command: pnpm agent:verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-R0-001/governance-baseline.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-R0-001/governance-baseline.md
+rollback:
+  strategy: Revert the local cleanroom authority commit; do not restore legacy files into the active branch.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: none
+  destructive_remote_actions: false
+handoff:
+  current_step: r0-004-handoff
+  next_action: Create and validate WP-R0-002, then activate the pinned monorepo scaffold packet.
+  blockers: []
+  changed_paths:
+    - docs/**
+  last_green_checks:
+    - pnpm agent:preflight
+    - pnpm verify
+    - clean-clone verification
+    - fresh-agent orientation
+completion:
+  successor_packet_id: WP-R0-002
+  evidence_paths:
+    - docs/generated/TRACEABILITY.md
+  completed_at: null

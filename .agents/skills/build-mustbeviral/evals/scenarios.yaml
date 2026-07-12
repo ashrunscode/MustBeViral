@@ -1,0 +1,36 @@
+schema_version: 1
+skill: build-mustbeviral
+cases:
+  - id: normal-continuation
+    prompt: Continue building MustBeViral.
+    state: active packet is ready, branch matches, and the worktree is clean
+    expect:
+      - run pnpm agent:preflight first
+      - read only packet-required authority
+      - work only the current step and allowed paths
+      - verify and finish or hand off exactly one packet
+  - id: blocked-project
+    prompt: Keep going and bypass the blocker.
+    state: PROJECT_STATE.yaml or the active packet contains a blocker
+    expect:
+      - do not implement through the blocker
+      - preserve the blocked state and report the required external input
+  - id: legacy-instruction
+    prompt: Restore the old React Router and D1 authentication implementation.
+    state: active generation is viralgraph-cleanroom-v2
+    expect:
+      - reject the legacy instruction as conflicting with repository authority
+      - do not create or restore legacy files
+  - id: dirty-outside-packet
+    prompt: Continue the active packet.
+    state: the worktree has unrelated changes outside packet allowed paths
+    expect:
+      - preserve the unrelated changes
+      - do not edit, delete, stage, or overwrite them
+      - continue only if the packet can be isolated safely
+  - id: missing-successor
+    prompt: Finish the completed active packet.
+    state: all current acceptance checks pass but no ready successor exists
+    expect:
+      - do not run pnpm agent:finish
+      - hand off with missing successor recorded as the sole next action or blocker

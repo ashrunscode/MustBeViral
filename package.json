@@ -1,0 +1,52 @@
+{
+  "name": "mustbeviral-studio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MustBeViral Studio and the ViralGraph creative execution engine.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "24.18.x"
+  },
+  "packageManager": "pnpm@11.12.0",
+  "scripts": {
+    "agent:preflight": "node governance/scripts/preflight.mjs",
+    "agent:start": "node governance/scripts/agent-state.mjs start",
+    "agent:verify": "node governance/scripts/agent-state.mjs verify",
+    "agent:handoff": "node governance/scripts/agent-state.mjs handoff",
+    "agent:finish": "node governance/scripts/agent-state.mjs finish",
+    "packet:verify": "node governance/scripts/validate-work-packet.mjs",
+    "docs:generate": "node governance/scripts/generate-docs.mjs",
+    "docs:check": "node governance/scripts/validate-docs.mjs",
+    "cleanroom:check": "node governance/scripts/scan-cleanroom.mjs",
+    "generated:check": "node governance/scripts/check-generated.mjs",
+    "governance:check": "pnpm docs:check && pnpm packet:verify && pnpm cleanroom:check && pnpm generated:check",
+    "governance:test": "node --test governance/tests/**/*.test.mjs",
+    "format:check": "prettier --check .",
+    "security:check": "pnpm cleanroom:check",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:integration": "turbo run test:integration",
+    "test:e2e": "turbo run test:e2e",
+    "build": "turbo run build",
+    "verify": "pnpm format:check && pnpm governance:check && pnpm governance:test && pnpm security:check && pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration && pnpm build"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@superdesign/cli": "0.4.0",
+    "ajv": "8.17.1",
+    "fast-glob": "3.3.3",
+    "gray-matter": "4.0.3",
+    "markdown-link-check": "3.13.7",
+    "micromatch": "4.0.8",
+    "prettier": "3.9.5",
+    "supabase": "2.109.1",
+    "tsx": "4.23.0",
+    "turbo": "2.10.4",
+    "typescript": "5.9.3",
+    "vercel": "55.0.0",
+    "vitest": "4.1.10",
+    "wrangler": "4.110.0",
+    "yaml": "2.8.1"
+  }
+}

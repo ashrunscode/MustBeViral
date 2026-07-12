@@ -1,0 +1,42 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Build and test output
+.next/
+.turbo/
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+.wrangler/
+.vercel/
+.supabase/
+
+# Generated local caches
+.cache/
+*.tsbuildinfo
+*.log
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.pem
+*.key
+
+# Operating-system and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Temporary template and export areas
+.scratch/
+legacy-exports/

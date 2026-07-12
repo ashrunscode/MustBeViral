@@ -1,0 +1,40 @@
+schema_version: 1
+policy:
+  package_manager: pnpm
+  exact_versions: true
+  frozen_lockfile: true
+  engine_strict: true
+  javascript_cli_installation: repository-local
+runtimes:
+  node: 24.18.0
+  pnpm: 11.12.0
+tools:
+  turbo: 2.10.4
+  next: 16.2.10
+  create_next_app: 16.2.10
+  react: 19.2.7
+  react_dom: 19.2.7
+  wrangler: 4.110.0
+  vercel: 55.0.0
+  supabase: 2.109.1
+  superdesign: 0.4.0
+  typescript: 5.9.3
+  vitest: 4.1.10
+  playwright: 1.61.1
+  create_cloudflare: 2.70.10
+  shadcn: 4.13.0
+host_prerequisites:
+  - nvm-windows
+  - git-for-windows
+  - github-cli
+  - docker-desktop-wsl2
+  - stripe-cli
+forbidden_tooling:
+  - bun
+  - yarn
+  - deno
+  - volta
+  - terraform
+  - pulumi
+  - git-lfs
+  - standalone-local-postgres

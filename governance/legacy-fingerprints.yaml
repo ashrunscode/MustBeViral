@@ -1,0 +1,66 @@
+schema_version: 1
+scan:
+  ignored_paths:
+    - .git/**
+    - node_modules/**
+    - .next/**
+    - .turbo/**
+    - .wrangler/**
+    - coverage/**
+    - test-results/**
+    - playwright-report/**
+    - governance/tests/**
+  content_allowlist:
+    - AGENTS.md
+    - governance/legacy-fingerprints.yaml
+    - .agents/skills/build-mustbeviral/SKILL.md
+    - .agents/skills/build-mustbeviral/evals/scenarios.yaml
+    - docs/operations/LEGACY_V1_RETIREMENT.md
+    - docs/research/**
+  binary_extensions:
+    - .avif
+    - .gif
+    - .ico
+    - .jpeg
+    - .jpg
+    - .pdf
+    - .png
+    - .webp
+forbidden_paths:
+  - '**/docs/archive/**'
+  - '**/audit/**'
+  - '**/codex-audit/**'
+  - '**/final-strategy/**'
+  - '**/system-dna/**'
+  - '**/FINAL_*'
+  - '**/FIX_LOG*'
+  - '**/PROMPT_ROADMAP*'
+  - '**/MASTER_EXECUTION_PACKAGE*'
+legacy_content_patterns:
+  - id: react-router
+    pattern: '\\bReact Router\\b'
+  - id: d1-auth
+    pattern: '\\bD1(?:-backed| based)? auth\\b'
+  - id: marketing-agent
+    pattern: '\\bMarketingAgent\\b'
+  - id: legacy-mcp
+    pattern: '\\bMustBeViralMCP\\b'
+  - id: option-d
+    pattern: '\\bOption D\\b'
+  - id: run-21
+    pattern: '\\bRun 21\\b'
+  - id: system-dna
+    pattern: '\\bSystem DNA\\b'
+  - id: social-schedulers
+    pattern: '\\b(?:Vista Social|Buffer)\\b'
+secret_patterns:
+  - id: aws-access-key
+    pattern: '\\bAKIA[0-9A-Z]{16}\\b'
+  - id: stripe-live-secret
+    pattern: '\\bsk_live_[A-Za-z0-9]{16,}\\b'
+  - id: github-token
+    pattern: '\\b(?:ghp|github_pat)_[A-Za-z0-9_]{20,}\\b'
+  - id: generic-private-key
+    pattern: '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'
+  - id: supabase-service-key
+    pattern: '\\bSUPABASE_SERVICE_ROLE_KEY\\s*[:=]\\s*[^$<{\\s][^\\s]{12,}'
