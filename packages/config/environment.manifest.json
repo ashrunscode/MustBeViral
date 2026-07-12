@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "variables": [
+    {
+      "name": "NEXT_PUBLIC_SUPABASE_URL",
+      "owner": "web",
+      "environments": ["local", "preview", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Environment-specific Supabase API URL."
+    },
+    {
+      "name": "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+      "owner": "web",
+      "environments": ["local", "preview", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Environment-specific Supabase publishable browser key; never a service-role key."
+    },
+    {
+      "name": "NEXT_PUBLIC_CORE_API_URL",
+      "owner": "web",
+      "environments": ["local", "preview", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Origin for the matching Core API environment."
+    },
+    {
+      "name": "APP_ENV",
+      "owner": "core",
+      "environments": ["local", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Explicit Core runtime environment label."
+    },
+    {
+      "name": "SUPABASE_URL",
+      "owner": "core",
+      "environments": ["local", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Environment-specific Supabase issuer and Data API origin."
+    },
+    {
+      "name": "SUPABASE_JWT_AUDIENCE",
+      "owner": "core",
+      "environments": ["local", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Expected audience for Supabase user JWT verification."
+    },
+    {
+      "name": "CORS_ALLOWED_ORIGINS",
+      "owner": "core",
+      "environments": ["local", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Comma-separated exact web origins accepted by browser-facing Core routes."
+    }
+  ]
+}

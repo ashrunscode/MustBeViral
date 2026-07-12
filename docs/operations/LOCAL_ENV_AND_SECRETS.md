@@ -15,7 +15,7 @@ The supported local path is Windows 11 with Git for Windows, PowerShell, nvm-win
 3. Run `pnpm install --frozen-lockfile`.
 4. Run `pnpm agent:preflight`; do not begin if it reports conflicting state, a blocker, or an out-of-scope working tree.
 5. Start Docker Desktop only for local Supabase work.
-6. Create ignored local environment files from generated environment documentation; never copy production values into local or preview environments.
+6. Copy `.env.example` to `apps/web/.env.local` and `.dev.vars.example` to `apps/core/.dev.vars`; replace only the local Supabase publishable value reported by `pnpm supabase:start`. Never use a service-role key in the web application or copy production values into local/preview environments.
 7. Run the packet’s checks before and after work.
 
 ## Environment isolation

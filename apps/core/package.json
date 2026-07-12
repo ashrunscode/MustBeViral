@@ -1,0 +1,23 @@
+{
+  "name": "@mustbeviral/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --env staging --outdir dist --x-provision=false --x-auto-create=false",
+    "lint": "eslint . --max-warnings 0",
+    "types:generate": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings",
+    "types:check": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --check",
+    "typecheck": "pnpm types:check && tsc --noEmit && tsc -p test/tsconfig.json --noEmit && tsc -p tsconfig.tools.json --noEmit",
+    "test": "vitest run --config vitest.config.ts test/unit",
+    "test:integration": "vitest run --config vitest.config.ts test/integration"
+  },
+  "dependencies": {
+    "@mustbeviral/contracts": "workspace:*",
+    "hono": "4.12.29"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.18.4"
+  }
+}

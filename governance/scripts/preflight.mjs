@@ -36,7 +36,9 @@ console.log(`Next action: ${packet.handoff.next_action}`);
 console.log(`Branch: ${currentBranch()}`);
 console.log(`Linked worktrees: ${worktreeCount()}`);
 console.log(`Remote destructive action: ${state.legacy.destructive_remote_action}`);
-console.log(`Blockers: ${[...state.blockers, ...packet.handoff.blockers].join('; ') || 'none'}`);
+console.log(
+  `Blockers: ${[...new Set([...state.blockers, ...packet.handoff.blockers])].join('; ') || 'none'}`,
+);
 console.log(`Pending decisions: ${state.decisions_pending.join('; ') || 'none'}`);
 const pnpmFromAgent = /pnpm\/([^\s]+)/.exec(process.env.npm_config_user_agent ?? '')?.[1];
 const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';

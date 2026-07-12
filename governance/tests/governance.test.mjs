@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import { collectDocumentErrors } from '../scripts/validate-docs.mjs';
 import { collectPacketErrors } from '../scripts/validate-work-packet.mjs';
+import { collectTaskGraphErrors } from '../scripts/validate-task-graph.mjs';
 import { hasAbsolutePath, pathMatches } from '../scripts/lib.mjs';
 
 const baseManifest = () => ({
@@ -156,4 +157,40 @@ test('detects absolute paths recursively', () => {
 test('path matcher includes dotfiles and rejects unrelated files', () => {
   assert.equal(pathMatches('.agents/skills/build/SKILL.md', ['.agents/**']), true);
   assert.equal(pathMatches('apps/web/page.tsx', ['docs/**', 'governance/**']), false);
+});
+
+test('rejects a green Turbo plan that omits required work', () => {
+  const requirements = {
+    '@mustbeviral/web': ['lint', 'build'],
+    '@mustbeviral/core': ['lint', 'build'],
+  };
+  const errors = collectTaskGraphErrors(
+    {
+      packages: ['@mustbeviral/web'],
+      tasks: [{ taskId: '@mustbeviral/web#lint' }, { taskId: '@mustbeviral/web#build' }],
+    },
+    requirements,
+  );
+  assert.deepEqual(errors, [
+    'Turbo omitted required workspace @mustbeviral/core',
+    'Turbo omitted required task @mustbeviral/core#lint',
+    'Turbo omitted required task @mustbeviral/core#build',
+  ]);
+});
+
+test('accepts a complete Turbo task plan', () => {
+  const requirements = { '@mustbeviral/contracts': ['lint', 'test'] };
+  assert.deepEqual(
+    collectTaskGraphErrors(
+      {
+        packages: ['@mustbeviral/contracts'],
+        tasks: [
+          { taskId: '@mustbeviral/contracts#lint' },
+          { taskId: '@mustbeviral/contracts#test' },
+        ],
+      },
+      requirements,
+    ),
+    [],
+  );
 });

@@ -1,0 +1,32 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #09090b;
+  color: #f4f4f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  width: min(42rem, calc(100% - 3rem));
+  margin: 20vh auto 0;
+}
+
+h1 {
+  margin-block: 0.5rem 1rem;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 1;
+}
+
+p {
+  max-width: 65ch;
+  color: #a1a1aa;
+  line-height: 1.6;
+}

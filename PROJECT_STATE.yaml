@@ -4,16 +4,17 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
-project_state: active
+project_state: blocked
 phase:
   id: R0
-  title: Authority reset and cleanroom foundation
-  state: in_progress
+  title: Pinned monorepo and platform scaffold
+  state: blocked
 release_target: P0
-active_work_packet: WP-R0-001
-next_action: Complete and verify the cleanroom authority system, then create the pinned monorepo scaffold.
+active_work_packet: WP-R0-002
+next_action: Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually.
 decisions_pending: []
-blockers: []
+blockers:
+  - 'github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path'
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21

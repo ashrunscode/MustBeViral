@@ -1,0 +1,64 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MustBeViral Core API",
+    "version": "0.0.0-cleanroom"
+  },
+  "servers": [
+    { "url": "https://api-staging.mustbeviral.com", "description": "Staging" },
+    { "url": "https://api.mustbeviral.com", "description": "Production" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Report Core Worker liveness without probing durable dependencies",
+        "responses": {
+          "200": {
+            "description": "Core is accepting requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" },
+                "example": {
+                  "schema_version": "2026-07-12",
+                  "service": "mustbeviral-core",
+                  "generation": "viralgraph-cleanroom-v2",
+                  "status": "ok",
+                  "request_id": "request-1234"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["schema_version", "service", "generation", "status", "request_id"],
+        "properties": {
+          "schema_version": { "const": "2026-07-12" },
+          "service": { "const": "mustbeviral-core" },
+          "generation": { "const": "viralgraph-cleanroom-v2" },
+          "status": { "const": "ok" },
+          "request_id": { "type": "string", "minLength": 8, "maxLength": 128 }
+        }
+      },
+      "ApiError": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message", "request_id", "retryable"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "request_id": { "type": "string" },
+          "retryable": { "type": "boolean" },
+          "details": { "type": "object", "additionalProperties": true }
+        }
+      }
+    }
+  }
+}

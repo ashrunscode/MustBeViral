@@ -1,0 +1,19 @@
+{
+  "name": "@mustbeviral/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "test": "vitest run --exclude src/http.integration.test.ts",
+    "test:integration": "vitest run src/http.integration.test.ts"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  }
+}

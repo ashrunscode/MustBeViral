@@ -8,6 +8,22 @@ sources:
     valid_as_of: '2026-07-12'
     reverify_after: '2026-10-12'
     used_by: [system-overview, deploy-rollback-incidents]
+  - id: src-cloudflare-wrangler-configuration
+    title: Wrangler configuration
+    publisher: Cloudflare
+    url: https://developers.cloudflare.com/workers/wrangler/configuration/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [toolchain-template-provenance]
+  - id: src-cloudflare-workers-vitest
+    title: Workers Vitest integration
+    publisher: Cloudflare
+    url: https://developers.cloudflare.com/workers/testing/vitest-integration/
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [toolchain-template-provenance, quality-gates]
   - id: src-cloudflare-hyperdrive-supabase
     title: Connect Hyperdrive to Supabase
     publisher: Cloudflare
@@ -48,6 +64,30 @@ sources:
     valid_as_of: '2026-07-12'
     reverify_after: '2026-10-12'
     used_by: [system-overview, toolchain-template-provenance]
+  - id: src-nextjs-typegen
+    title: Next.js CLI type generation
+    publisher: Vercel
+    url: https://nextjs.org/docs/app/api-reference/cli/next#next-typegen-options
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [toolchain-template-provenance, quality-gates]
+  - id: src-pnpm-settings
+    title: pnpm workspace settings
+    publisher: pnpm
+    url: https://pnpm.io/settings
+    source_type: official-docs
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [toolchain-template-provenance]
+  - id: src-react-19-types
+    title: React 19 TypeScript JSX namespace change
+    publisher: Meta
+    url: https://github.com/facebook/react/blob/main/CHANGELOG.md
+    source_type: primary-source
+    valid_as_of: '2026-07-12'
+    reverify_after: '2026-10-12'
+    used_by: [toolchain-template-provenance]
   - id: src-vercel
     title: Vercel documentation
     publisher: Vercel

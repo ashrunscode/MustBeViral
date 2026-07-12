@@ -1,0 +1,37 @@
+import { z } from 'zod';
+
+export const API_SCHEMA_VERSION = '2026-07-12' as const;
+export const SERVICE_GENERATION = 'viralgraph-cleanroom-v2' as const;
+
+export const RequestIdSchema = z
+  .string()
+  .min(8)
+  .max(128)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._:-]*$/);
+
+export const HealthResponseSchema = z
+  .object({
+    schema_version: z.literal(API_SCHEMA_VERSION),
+    service: z.literal('mustbeviral-core'),
+    generation: z.literal(SERVICE_GENERATION),
+    status: z.literal('ok'),
+    request_id: RequestIdSchema,
+  })
+  .strict();
+
+export const ApiErrorSchema = z
+  .object({
+    code: z.string().min(1),
+    message: z.string().min(1),
+    request_id: RequestIdSchema,
+    retryable: z.boolean(),
+    details: z.record(z.string(), z.unknown()).optional(),
+  })
+  .strict();
+
+export type HealthResponse = z.infer<typeof HealthResponseSchema>;
+export type ApiError = z.infer<typeof ApiErrorSchema>;
+
+export function createApiError(input: ApiError): ApiError {
+  return ApiErrorSchema.parse(input);
+}

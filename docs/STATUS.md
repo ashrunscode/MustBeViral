@@ -12,14 +12,14 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | R0 — Authority reset and cleanroom foundation (in_progress) |
-| Active packet | `WP-R0-001` |
-| Current step | `r0-004-handoff` |
+| Phase | R0 — Pinned monorepo and platform scaffold (blocked) |
+| Active packet | `WP-R0-002` |
+| Current step | `r0-008-d0-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
-| Blockers | None |
+| Blockers | github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Create and validate WP-R0-002, then activate the pinned monorepo scaffold packet.
+Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually

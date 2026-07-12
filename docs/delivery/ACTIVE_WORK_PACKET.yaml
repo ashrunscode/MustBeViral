@@ -1,148 +1,178 @@
 schema_version: 1
-id: WP-R0-001
+id: WP-R0-002
 spec_revision: 1
-title: Cleanroom authority and continuity foundation
+title: Pinned monorepo and platform scaffold
 phase: R0
-status: in_progress
+status: blocked
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Establish the cleanroom authority and agent-continuity foundation so a fresh agent can identify and execute exactly one bounded next action.
+objective: Create the clean, pinned, production-shaped monorepo scaffold for the Vercel web
+  application, Cloudflare Core Worker, shared packages, Supabase migrations, and phase-appropriate
+  tests without implementing unapproved production UI.
 authority_refs:
-  - product-contract
   - release-scope
+  - experience-contract
   - system-overview
   - data-auth-tenancy
   - execution-providers-billing
   - api-mcp-cli
   - roadmap
   - quality-gates
+  - toolchain-template-provenance
 required_skills:
   - architect-prime
-  - think
-  - skill-creator
+  - data-architect
+  - auth-fortress
+  - api-craft
+  - cloudflare
+  - wrangler
+  - workers-best-practices
   - test-mastery
-depends_on: []
+depends_on:
+  - WP-R0-001
 scope:
   allowed_paths:
-    - AGENTS.md
-    - CLAUDE.md
-    - README.md
-    - PROJECT_STATE.yaml
-    - llms.txt
-    - .agents/**
-    - .cursor/**
-    - .github/**
-    - docs/**
-    - governance/**
-    - .editorconfig
-    - .gitattributes
-    - .gitignore
-    - .node-version
-    - .nvmrc
-    - .npmrc
-    - .prettierignore
-    - .prettierrc.json
-    - package.json
-    - pnpm-lock.yaml
-    - pnpm-workspace.yaml
-    - turbo.json
-  forbidden_paths:
     - apps/**
     - packages/**
     - supabase/**
     - .superdesign/**
+    - .vscode/**
+    - docs/**
+    - governance/**
+    - PROJECT_STATE.yaml
+    - README.md
+    - llms.txt
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - playwright.config.ts
+    - .env.example
+    - .dev.vars.example
+    - .gitignore
+    - .prettierignore
+  forbidden_paths:
+    - app/**
+    - src/server/**
+    - workers/**
     - docs/archive/**
+    - audit/**
+    - codex-audit/**
+    - final-strategy/**
   required_doc_ids:
-    - docs-index
-    - project-status
-    - product-contract
     - release-scope
     - experience-contract
-    - canvas-screen-states
     - system-overview
     - data-auth-tenancy
     - execution-providers-billing
     - api-mcp-cli
-    - roadmap
-    - quality-gates
+    - toolchain-template-provenance
 deliverables:
-  - Canonical registered authority documents
-  - Project state and one active packet schemas
-  - Read-only preflight and packet lifecycle commands
-  - Repository-owned build skill and fresh-agent fixtures
-  - Governance and quality workflow foundations
-public_interfaces: []
+  - Pinned Turborepo with strict shared TypeScript, lint, formatting, test, and build configuration
+  - Next.js App Router web scaffold with Supabase SSR boundary and no legacy or unapproved
+    production UI
+  - Hono Cloudflare Core Worker with health endpoint, typed bindings, private R2 and Hyperdrive
+    placeholders, and Worker tests
+  - Shared package boundaries for contracts, domain, graph, database, providers, billing, artifacts,
+    AI, UI, configuration, and telemetry
+  - Supabase local configuration, ordered raw SQL migration directory, seed, and database test layout
+  - Exact official-template provenance and clean-scaffold evidence
+public_interfaces:
+  - name: core-health
+    kind: HTTP
+    contract: GET /health returns service generation, status, and request ID without secrets
 steps:
-  - id: r0-001-authority
-    title: Create and register cleanroom authority contracts
+  - id: r0-005-template-provenance
+    title: Generate official templates outside the repository and record selected provenance
     status: completed
-  - id: r0-002-validators
-    title: Implement schemas, validators, lifecycle commands, and fixtures
+  - id: r0-006-scaffold
+    title: Integrate the clean monorepo, web, Worker, packages, and Supabase skeleton
     status: completed
-  - id: r0-003-preflight
-    title: Prove clean-checkout preflight and fresh-agent continuation
+  - id: r0-007-scaffold-verification
+    title: Pass lint, types, unit, integration, build, and cleanroom checks with real package tasks
     status: completed
-  - id: r0-004-handoff
-    title: Install and validate the scaffold successor packet
+  - id: r0-008-d0-handoff
+    title: Prepare and validate the D0 product-contract and design successor packet
     status: current
 acceptance:
   automated:
-    - id: docs-check
-      criterion: All documents and machine-state files pass governance validation.
+    - id: real-package-lanes
+      criterion: Lint, typecheck, unit, integration, and build execute real tasks for web, core, and
+        shared packages.
       status: passed
       evidence:
-        - governance/evidence/WP-R0-001/governance-baseline.md
-    - id: preflight-check
-      criterion: Preflight reports one phase, packet, next action, allowed paths, blockers, required docs and checks.
+        - governance/evidence/WP-R0-002/scaffold-verification.md
+    - id: core-health-contract
+      criterion: Core Worker tests prove the versioned health response and safe error envelope.
       status: passed
       evidence:
-        - governance/evidence/WP-R0-001/governance-baseline.md
-    - id: fixture-check
-      criterion: Normal, blocked, legacy-instruction, out-of-scope-diff, and missing-successor fixtures behave fail-closed.
+        - governance/evidence/WP-R0-002/scaffold-verification.md
+    - id: cleanroom-scaffold
+      criterion: No legacy path, fingerprint, nested agent contract, alternate package manager, or
+        unregistered documentation appears.
       status: passed
       evidence:
-        - governance/evidence/WP-R0-001/governance-baseline.md
+        - governance/evidence/WP-R0-002/scaffold-verification.md
+    - id: frozen-install
+      criterion: A clean clone installs from the frozen lockfile and passes preflight and verify.
+      status: passed
+      evidence:
+        - governance/evidence/WP-R0-002/scaffold-verification.md
   manual:
-    - id: fresh-agent-under-60s
-      criterion: A fresh agent given only a continuation instruction orients correctly in less than 60 seconds.
+    - id: provenance-review
+      criterion:
+        Template provenance names the exact command, version, source, license, selected patterns,
+        rejected patterns, and modifications.
       status: passed
       evidence:
-        - governance/evidence/WP-R0-001/governance-baseline.md
+        - governance/evidence/WP-R0-002/scaffold-verification.md
 quality_gates:
   - id: governance
-    command: pnpm docs:check
+    command: pnpm governance:check
     status: passed
     evidence:
-      - governance/evidence/WP-R0-001/governance-baseline.md
-  - id: packet-verification
-    command: pnpm agent:verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-R0-001/governance-baseline.md
+      - governance/evidence/WP-R0-002/scaffold-verification.md
   - id: repository-verification
     command: pnpm verify
     status: passed
     evidence:
-      - governance/evidence/WP-R0-001/governance-baseline.md
+      - governance/evidence/WP-R0-002/scaffold-verification.md
 rollback:
-  strategy: Revert the local cleanroom authority commit; do not restore legacy files into the active branch.
+  strategy: Revert the scaffold commit while preserving the cleanroom authority commit.
   remote_actions_required: false
 external_effects:
   remote_mutation: none
   destructive_remote_actions: false
 handoff:
-  current_step: r0-004-handoff
-  next_action: Create and validate WP-R0-002, then activate the pinned monorepo scaffold packet.
-  blockers: []
+  current_step: r0-008-d0-handoff
+  next_action: Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually
+  blockers:
+    - 'github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path'
   changed_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - governance/**
     - docs/**
+    - root toolchain and environment configuration
   last_green_checks:
     - pnpm agent:preflight
+    - pnpm governance:check
+    - pnpm governance:test
+    - pnpm task-graph:check
+    - pnpm test
+    - pnpm test:integration
+    - pnpm --filter @mustbeviral/core typecheck
+    - pnpm --filter @mustbeviral/web typecheck
+    - pnpm --filter @mustbeviral/web build
     - pnpm verify
-    - clean-clone verification
-    - fresh-agent orientation
+    - clean clone frozen install, preflight, verify, and clean tracked tree
 completion:
-  successor_packet_id: WP-R0-002
+  successor_packet_id: WP-D0-001
   evidence_paths:
-    - docs/generated/TRACEABILITY.md
+    - governance/evidence/WP-R0-002/scaffold-verification.md
   completed_at: null

@@ -1,0 +1,90 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mustbeviral-v2-development-core",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {
+    "SERVICE_NAME": "mustbeviral-core",
+    "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+  },
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "mustbeviral-v2-development-media",
+    },
+  ],
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "00000000000000000000000000000000",
+      "localConnectionString": "postgres://postgres:postgres@127.0.0.1:54322/postgres",
+    },
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+    },
+  },
+  "env": {
+    "staging": {
+      "name": "mustbeviral-v2-staging-core",
+      "routes": [
+        {
+          "pattern": "api-staging.mustbeviral.com",
+          "custom_domain": true,
+        },
+      ],
+      "vars": {
+        "SERVICE_NAME": "mustbeviral-core",
+        "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+      },
+      "r2_buckets": [
+        {
+          "binding": "MEDIA_BUCKET",
+          "bucket_name": "mustbeviral-v2-staging-media",
+        },
+      ],
+      "hyperdrive": [
+        {
+          "binding": "HYPERDRIVE",
+          "id": "00000000000000000000000000000001",
+        },
+      ],
+    },
+    "production": {
+      "name": "mustbeviral-v2-production-core",
+      "routes": [
+        {
+          "pattern": "api.mustbeviral.com",
+          "custom_domain": true,
+        },
+      ],
+      "vars": {
+        "SERVICE_NAME": "mustbeviral-core",
+        "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+      },
+      "r2_buckets": [
+        {
+          "binding": "MEDIA_BUCKET",
+          "bucket_name": "mustbeviral-v2-production-media",
+        },
+      ],
+      "hyperdrive": [
+        {
+          "binding": "HYPERDRIVE",
+          "id": "00000000000000000000000000000002",
+        },
+      ],
+    },
+  },
+}

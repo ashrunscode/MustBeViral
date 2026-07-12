@@ -2,12 +2,11 @@ packages:
   - apps/*
   - packages/*
 
+engineStrict: true
+nodeVersion: 24.18.0
+
 allowBuilds:
   esbuild: true
   sharp: true
+  unrs-resolver: true
   workerd: true
-
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
-  - workerd

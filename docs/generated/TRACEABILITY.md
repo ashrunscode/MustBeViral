@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-R0-001` (in_progress). Current step: `r0-004-handoff`.
+Current packet: `WP-R0-002` (blocked). Current step: `r0-008-d0-handoff`.
 
 | Authority topic | Document | Path |
 |---|---|---|

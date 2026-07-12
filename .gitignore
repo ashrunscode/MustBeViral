@@ -13,10 +13,12 @@ test-results/
 .wrangler/
 .vercel/
 .supabase/
+supabase/.temp/
 
 # Generated local caches
 .cache/
 *.tsbuildinfo
+next-env.d.ts
 *.log
 
 # Secrets and local environment
