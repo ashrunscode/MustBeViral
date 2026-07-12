@@ -35,6 +35,18 @@ function commitExists(root, commit) {
   }
 }
 
+function commitIsAncestor(root, commit) {
+  try {
+    execFileSync('git', ['merge-base', '--is-ancestor', commit, 'HEAD'], {
+      cwd: root,
+      stdio: 'ignore',
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function sameValues(left, right) {
   return JSON.stringify([...left].sort()) === JSON.stringify([...right].sort());
 }
@@ -61,6 +73,8 @@ export function collectTransitionReceiptErrors({ root, receiptPath }) {
   }
   if (!commitExists(root, receipt.predecessor_head)) {
     errors.push(`${receiptPath} predecessor_head is not available in Git history`);
+  } else if (!commitIsAncestor(root, receipt.predecessor_head)) {
+    errors.push(`${receiptPath} predecessor_head is not an ancestor of current HEAD`);
   }
   const expectedSnapshotPath = `governance/evidence/${receipt.packet_id}/completed-work-packet.yaml`;
   if (receipt.closed_packet_path !== expectedSnapshotPath) {

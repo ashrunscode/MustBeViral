@@ -177,3 +177,18 @@ test('rejects evidence changed after the recorded predecessor commit', (t) => {
     /evidence is absent or changed from predecessor HEAD/,
   );
 });
+
+test('rejects a predecessor commit from an unrelated history', (t) => {
+  const { root, receiptPath, receipt } = fixture(t);
+  const tree = git(root, ['write-tree']);
+  const unrelatedCommit = git(root, ['commit-tree', tree, '-m', 'unrelated history']);
+  writeFileSync(
+    path.join(root, receiptPath),
+    YAML.stringify({ ...receipt, predecessor_head: unrelatedCommit }),
+    'utf8',
+  );
+  assert.match(
+    collectTransitionReceiptErrors({ root, receiptPath }).join('\n'),
+    /predecessor_head is not an ancestor of current HEAD/,
+  );
+});

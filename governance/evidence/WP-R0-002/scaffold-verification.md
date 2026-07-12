@@ -16,7 +16,7 @@ Verified on 2026-07-12 with Node 24.18.0 and pnpm 11.12.0.
 - `pnpm peers check`
 - `pnpm agent:preflight`
 - `pnpm governance:check`
-- `pnpm governance:test` — 32 tests passed
+- `pnpm governance:test` — 48 tests passed
 - `pnpm transition:check` — completed-packet receipt registry passed
 - `pnpm task-graph:check` — 13 workspaces and 55 required tasks scheduled
 - `pnpm lint:governance` — repository control-plane scripts and tests passed ESLint
@@ -41,14 +41,20 @@ Verified on 2026-07-12 with Node 24.18.0 and pnpm 11.12.0.
   instead of carrying obsolete predecessor state forward, and emits both a full schema-valid closed
   packet snapshot and a receipt binding its hash, completed steps, predecessor commit, and every
   evidence file's SHA-256 and Git blob identity.
-- Start, handoff, and finish use a durable local transaction journal. Any write or validation failure
-  restores every original authority file; an interrupted process is detected read-only by preflight
-  and recovered only through `pnpm agent:recover`.
-- Eighteen focused transition, Git evidence, receipt-integrity, and journal tests cover a valid
-  handoff, fabricated or dirty evidence, staged-new evidence, unrelated dirty paths, blocked
-  predecessor, invalid successor, unauthorized branch, closed snapshot and receipt, receipt
-  tampering, broken or deleted receipt chains, successful multi-file commit, injected later-write
-  failure, interrupted-process recovery, and path escape.
+- Start, handoff, finish, verify, and preflight use one repository-common atomic lock with a
+  worktree-owned durable journal. Every write carries exact original and intended bytes, branch,
+  commit, Git-directory, evidence, successor, and non-target worktree fingerprints. Any stale or
+  concurrent mutation fails before overwrite; rollback refuses unknown third-party file states.
+- Manual recovery uses a separately claimed lock, rejects live owners and wrong worktrees, cleans
+  nonce-addressed crash temporaries, rechecks files immediately before and after restoration, and
+  preserves the journal whenever safe recovery cannot be proven.
+- Forty-eight governance tests cover valid handoff; fabricated, dirty, staged-new, empty, and
+  out-of-packet evidence; blocked or stale writers; expected-absent history; receipt tampering,
+  ancestry, and complete chain integrity; validator mutation; unrelated same-path edits; linked
+  worktree exclusion and wrong-worktree recovery; two-process recovery contention; interrupted
+  read-only recovery; and the actual `agent:recover` and `agent:verify` command entrypoints.
+- Transition receipts require non-rewriting merge history. Squash and rebase merging must remain
+  disabled when GitHub governance is activated so recorded predecessor commits stay verifiable.
 - A deliberate `agent:finish` attempt while WP-R0-002 remained blocked exited nonzero and SHA-256
   comparison proved `PROJECT_STATE.yaml` and `ACTIVE_WORK_PACKET.yaml` were unchanged.
 - The schema-valid `WP-D0-001` candidate is staged only in ignored local scratch. It is not a second

@@ -5,7 +5,11 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { gitChangedPaths, inspectHeadEvidence } from '../scripts/git-evidence.mjs';
+import {
+  gitChangedPaths,
+  gitWorktreeFingerprint,
+  inspectHeadEvidence,
+} from '../scripts/git-evidence.mjs';
 
 function git(root, args) {
   return execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: 'pipe' }).trim();
@@ -60,4 +64,28 @@ test('reports an unrelated dirty path so finish cannot launder it', (t) => {
   const { root } = repository(t);
   writeFileSync(path.join(root, 'outside-scope.txt'), 'not authorized\n', 'utf8');
   assert.deepEqual(gitChangedPaths(root), ['outside-scope.txt']);
+});
+
+test('fingerprints content changes even when the dirty path set is unchanged', (t) => {
+  const { root, evidencePath } = repository(t);
+  writeFileSync(path.join(root, evidencePath), 'first dirty value\n', 'utf8');
+  const first = gitWorktreeFingerprint(root);
+  writeFileSync(path.join(root, evidencePath), 'second dirty value\n', 'utf8');
+  const second = gitWorktreeFingerprint(root);
+  assert.notEqual(second, first);
+  assert.deepEqual(gitChangedPaths(root), [evidencePath]);
+
+  writeFileSync(path.join(root, 'untracked.txt'), 'first untracked value\n', 'utf8');
+  const third = gitWorktreeFingerprint(root);
+  writeFileSync(path.join(root, 'untracked.txt'), 'second untracked value\n', 'utf8');
+  assert.notEqual(gitWorktreeFingerprint(root), third);
+});
+
+test('can exclude transaction targets while still detecting unrelated changes', (t) => {
+  const { root, evidencePath } = repository(t);
+  const baseline = gitWorktreeFingerprint(root, { excludePaths: [evidencePath] });
+  writeFileSync(path.join(root, evidencePath), 'transaction-owned change\n', 'utf8');
+  assert.equal(gitWorktreeFingerprint(root, { excludePaths: [evidencePath] }), baseline);
+  writeFileSync(path.join(root, 'unrelated.txt'), 'parallel change\n', 'utf8');
+  assert.notEqual(gitWorktreeFingerprint(root, { excludePaths: [evidencePath] }), baseline);
 });

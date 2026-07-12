@@ -7,6 +7,7 @@ doc_id: quality-gates
 ## Universal merge gates
 
 - Authority/packet schemas valid; documents registered; links valid; generated outputs current; no secret or legacy fingerprint leakage.
+- Preserve transition-receipt history with merge commits or another non-rewriting merge. GitHub squash merging and rebase merging are disabled because they replace the recorded predecessor commit IDs and make receipt evidence unverifiable.
 - Formatting, linting, strict types, unit/integration tests, security checks, and affected builds pass from a clean checkout with frozen dependencies.
 - Changed behavior has contract and failure-path tests; changed authority has traceability updates.
 - Implementation diff stays inside the active packet and introduces no unresolved decision.

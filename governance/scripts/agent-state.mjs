@@ -1,20 +1,24 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import path from 'node:path';
 
 import YAML from 'yaml';
 
-import { recoverAuthorityTransition, runAuthorityTransaction } from './authority-transaction.mjs';
+import {
+  recoverAuthorityTransition,
+  runAuthorityRead,
+  runAuthorityTransaction,
+} from './authority-transaction.mjs';
 import {
   command,
   currentBranch,
   fromRoot,
   pathMatches,
   readText,
-  readYaml,
   repoRoot,
   validateSchema,
 } from './lib.mjs';
-import { gitChangedPaths, inspectHeadEvidence } from './git-evidence.mjs';
+import { gitChangedPaths, gitWorktreeFingerprint, inspectHeadEvidence } from './git-evidence.mjs';
 import {
   buildSuccessorState,
   closePredecessorPacket,
@@ -38,10 +42,34 @@ function yaml(value) {
 }
 
 function load() {
+  const stateText = readText(STATE_PATH);
+  const packetText = readText(PACKET_PATH);
+  const manifestText = readText('docs/MANIFEST.yaml');
   return {
-    state: readYaml(STATE_PATH),
-    packet: readYaml(PACKET_PATH),
-    manifest: readYaml('docs/MANIFEST.yaml'),
+    state: YAML.parse(stateText),
+    packet: YAML.parse(packetText),
+    manifest: YAML.parse(manifestText),
+    loadedAuthority: {
+      stateText,
+      packetText,
+      manifestText,
+      branch: currentBranch(),
+      head: execFileSync('git', ['rev-parse', 'HEAD'], {
+        cwd: repoRoot,
+        encoding: 'utf8',
+      }).trim(),
+      gitDir: path.resolve(
+        repoRoot,
+        execFileSync('git', ['rev-parse', '--git-dir'], {
+          cwd: repoRoot,
+          encoding: 'utf8',
+        }).trim(),
+      ),
+      changedPaths: gitChangedPaths(repoRoot),
+      worktreeFingerprint: gitWorktreeFingerprint(repoRoot),
+      stableFiles: [{ path: 'docs/MANIFEST.yaml', content: manifestText }],
+      evidenceFiles: [],
+    },
   };
 }
 
@@ -58,15 +86,103 @@ function isAuthorityTransitionPath(relativePath) {
 
 function ensureCurrentAuthorityValid() {
   const errors = validateWorkPacket({ checkDiff: false });
+  errors.push(...validateTransitionReceipts());
   if (errors.length) throw new Error(errors.join('\n'));
 }
 
-function persistAuthority(writes, validate = ensureCurrentAuthorityValid) {
+function expectedExisting(content) {
+  return { existed: true, content };
+}
+
+function expectedAbsent() {
+  return { existed: false, content: null };
+}
+
+function assertGitContext(context) {
+  const currentHead = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+  }).trim();
+  if (currentBranch() !== context?.branch) {
+    throw new Error('Git branch changed after authority was loaded');
+  }
+  if (currentHead !== context?.head) {
+    throw new Error('Git HEAD changed after authority was loaded');
+  }
+  const currentGitDir = path.resolve(
+    repoRoot,
+    execFileSync('git', ['rev-parse', '--git-dir'], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+    }).trim(),
+  );
+  if (currentGitDir !== context?.gitDir) {
+    throw new Error('Git worktree changed after authority was loaded');
+  }
+}
+
+function assertStableInputsUnchanged(loadedAuthority, transactionWorktree) {
+  assertGitContext(loadedAuthority);
+  for (const expected of loadedAuthority.stableFiles) {
+    if (!existsSync(fromRoot(expected.path)) || readText(expected.path) !== expected.content) {
+      throw new Error(`authority input changed after it was loaded: ${expected.path}`);
+    }
+  }
+  for (const expected of loadedAuthority.evidenceFiles) {
+    const inspection = inspectEvidence(expected.path);
+    if (
+      inspection.sha256 !== expected.sha256 ||
+      !inspection.headContained ||
+      !inspection.contentMatchesHead
+    ) {
+      throw new Error(`authority evidence changed after it was loaded: ${expected.path}`);
+    }
+  }
+  if (
+    transactionWorktree &&
+    gitWorktreeFingerprint(repoRoot, {
+      excludePaths: transactionWorktree.writePaths,
+    }) !== transactionWorktree.fingerprint
+  ) {
+    throw new Error('non-authority worktree content changed during the authority transition');
+  }
+}
+
+function assertInitialInputsUnchanged(loadedAuthority) {
+  assertStableInputsUnchanged(loadedAuthority);
+  const currentChanges = gitChangedPaths(repoRoot);
+  if (JSON.stringify(currentChanges) !== JSON.stringify(loadedAuthority.changedPaths)) {
+    throw new Error('Git worktree changed after authority was loaded');
+  }
+  if (gitWorktreeFingerprint(repoRoot) !== loadedAuthority.worktreeFingerprint) {
+    throw new Error('Git worktree content changed after authority was loaded');
+  }
+}
+
+function persistAuthority({ writes, loadedAuthority, validate = ensureCurrentAuthorityValid }) {
+  const transactionWorktree = {
+    writePaths: writes.map((write) => write.path),
+    fingerprint: gitWorktreeFingerprint(repoRoot, {
+      excludePaths: writes.map((write) => write.path),
+    }),
+  };
   runAuthorityTransaction({
     root: repoRoot,
     writes,
     allowedPath: isAuthorityTransitionPath,
     validate,
+    assertInitialContext: () => {
+      assertInitialInputsUnchanged(loadedAuthority);
+      ensureCurrentAuthorityValid();
+    },
+    assertExpectedContext: () => assertStableInputsUnchanged(loadedAuthority, transactionWorktree),
+    assertRecoveryContext: () => assertGitContext(loadedAuthority),
+    lockContext: {
+      operation: process.argv[2],
+      branch: loadedAuthority.branch,
+      head: loadedAuthority.head,
+      gitDir: loadedAuthority.gitDir,
+    },
   });
 }
 
@@ -90,7 +206,7 @@ function validateProspectiveAuthority({ state, packet, manifest }) {
 }
 
 function start() {
-  const { state, packet, manifest } = load();
+  const { state, packet, manifest, loadedAuthority } = load();
   if (packet.status !== 'ready') throw new Error(`packet must be ready, found ${packet.status}`);
   if (state.decisions_pending.length || state.blockers.length) {
     throw new Error('project has unresolved decisions or blockers');
@@ -109,27 +225,59 @@ function start() {
   nextState.next_action = first.title;
   validateProspectiveAuthority({ state: nextState, packet: nextPacket, manifest });
 
-  persistAuthority([
-    { path: PACKET_PATH, content: yaml(nextPacket) },
-    { path: STATE_PATH, content: yaml(nextState) },
-  ]);
+  persistAuthority({
+    loadedAuthority,
+    writes: [
+      {
+        path: PACKET_PATH,
+        content: yaml(nextPacket),
+        expected: expectedExisting(loadedAuthority.packetText),
+      },
+      {
+        path: STATE_PATH,
+        content: yaml(nextState),
+        expected: expectedExisting(loadedAuthority.stateText),
+      },
+    ],
+  });
   console.log(`Started ${packet.id}: ${first.id}`);
   return true;
 }
 
 function verify() {
-  const { packet } = load();
+  const snapshot = runAuthorityRead({
+    root: repoRoot,
+    lockContext: { operation: 'verify-snapshot' },
+    read: load,
+  });
+  const { packet } = snapshot;
   for (const gate of packet.quality_gates) {
     if (gate.command === 'pnpm agent:verify') continue;
     const [executable, ...args] = gate.command.split(' ');
     const result = command(executable, args);
     if (result.status !== 0) process.exit(result.status);
   }
+  runAuthorityRead({
+    root: repoRoot,
+    lockContext: { operation: 'verify-confirmation' },
+    read: () => {
+      if (
+        readText(STATE_PATH) !== snapshot.loadedAuthority.stateText ||
+        readText(PACKET_PATH) !== snapshot.loadedAuthority.packetText ||
+        gitWorktreeFingerprint(repoRoot) !== snapshot.loadedAuthority.worktreeFingerprint
+      ) {
+        throw new Error('authority changed while packet verification was running');
+      }
+      assertGitContext(snapshot.loadedAuthority);
+      ensureCurrentAuthorityValid();
+    },
+  });
   console.log(`Verification commands completed for ${packet.id}.`);
+  return true;
 }
 
 function handoff() {
-  const { state, packet, manifest } = load();
+  const { state, packet, manifest, loadedAuthority } = load();
   const nextAction = argument('--next-action');
   if (!nextAction) throw new Error('handoff requires --next-action "..."');
   const nextPacket = JSON.parse(JSON.stringify(packet));
@@ -147,10 +295,21 @@ function handoff() {
   }
   validateProspectiveAuthority({ state: nextState, packet: nextPacket, manifest });
 
-  persistAuthority([
-    { path: PACKET_PATH, content: yaml(nextPacket) },
-    { path: STATE_PATH, content: yaml(nextState) },
-  ]);
+  persistAuthority({
+    loadedAuthority,
+    writes: [
+      {
+        path: PACKET_PATH,
+        content: yaml(nextPacket),
+        expected: expectedExisting(loadedAuthority.packetText),
+      },
+      {
+        path: STATE_PATH,
+        content: yaml(nextState),
+        expected: expectedExisting(loadedAuthority.stateText),
+      },
+    ],
+  });
   console.log(`Handoff updated for ${packet.id}.`);
   return true;
 }
@@ -158,11 +317,21 @@ function handoff() {
 function finish() {
   const successorPath = argument('--successor');
   if (!successorPath) throw new Error('finish requires --successor <relative-yaml-path>');
-  const { state, packet, manifest } = load();
+  const { state, packet, manifest, loadedAuthority } = load();
+  if (
+    /^[A-Za-z]:[\\/]/.test(successorPath) ||
+    successorPath.startsWith('/') ||
+    successorPath.startsWith('\\\\') ||
+    successorPath.split(/[\\/]/).includes('..')
+  ) {
+    throw new Error('successor packet path must stay inside the repository');
+  }
   const absoluteSuccessor = fromRoot(successorPath);
   if (!existsSync(absoluteSuccessor)) throw new Error('successor packet file does not exist');
-  const successor = YAML.parse(readText(successorPath));
-  const dirtyPaths = gitChangedPaths(repoRoot);
+  const successorText = readText(successorPath);
+  loadedAuthority.stableFiles.push({ path: successorPath, content: successorText });
+  const successor = YAML.parse(successorText);
+  const dirtyPaths = loadedAuthority.changedPaths;
   const errors = collectSuccessorTransitionErrors({
     state,
     packet,
@@ -197,12 +366,10 @@ function finish() {
 
   const transitionedAt = new Date().toISOString();
   const closedPacket = closePredecessorPacket({ packet, completedAt: transitionedAt });
-  const predecessorHead = execFileSync('git', ['rev-parse', 'HEAD'], {
-    cwd: repoRoot,
-    encoding: 'utf8',
-  }).trim();
+  const predecessorHead = loadedAuthority.head;
   const evidenceEntries = evidencePathsForPacket(packet).map((evidencePath) => {
     const inspection = inspectEvidence(evidencePath);
+    loadedAuthority.evidenceFiles.push({ path: evidencePath, sha256: inspection.sha256 });
     return {
       path: evidencePath,
       sha256: inspection.sha256,
@@ -229,19 +396,27 @@ function finish() {
     transitionedAt,
   });
 
-  persistAuthority(
-    [
-      { path: closedPacketPath, content: yaml(closedPacket) },
-      { path: receiptPath, content: yaml(receipt) },
-      { path: PACKET_PATH, content: yaml(successor) },
-      { path: STATE_PATH, content: yaml(successorState) },
+  persistAuthority({
+    loadedAuthority,
+    writes: [
+      {
+        path: closedPacketPath,
+        content: yaml(closedPacket),
+        expected: expectedAbsent(),
+      },
+      { path: receiptPath, content: yaml(receipt), expected: expectedAbsent() },
+      {
+        path: PACKET_PATH,
+        content: yaml(successor),
+        expected: expectedExisting(loadedAuthority.packetText),
+      },
+      {
+        path: STATE_PATH,
+        content: yaml(successorState),
+        expected: expectedExisting(loadedAuthority.stateText),
+      },
     ],
-    () => {
-      ensureCurrentAuthorityValid();
-      const receiptValidationErrors = validateTransitionReceipts();
-      if (receiptValidationErrors.length) throw new Error(receiptValidationErrors.join('\n'));
-    },
-  );
+  });
   console.log(`Completed ${packet.id}; activated ${successor.id}.`);
   return true;
 }
@@ -251,6 +426,13 @@ function recover() {
     root: repoRoot,
     allowedPath: isAuthorityTransitionPath,
     validate: ensureCurrentAuthorityValid,
+    assertRecoveryContext: (context) => {
+      if (context?.read_only === true) return;
+      if (!context?.branch || !context?.head || !context?.gitDir) {
+        throw new Error('authority transition lacks recoverable Git context');
+      }
+      assertGitContext(context);
+    },
   });
   console.log('Interrupted authority transition rolled back; rerun preflight.');
   return true;

@@ -10,7 +10,11 @@ import micromatch from 'micromatch';
 import YAML from 'yaml';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const repoRoot = path.resolve(here, '../..');
+const testRepoRoot = process.env.MUSTBEVIRAL_TEST_REPO_ROOT;
+if (testRepoRoot && process.env.NODE_ENV !== 'test') {
+  throw new Error('MUSTBEVIRAL_TEST_REPO_ROOT is allowed only when NODE_ENV=test');
+}
+export const repoRoot = testRepoRoot ? path.resolve(testRepoRoot) : path.resolve(here, '../..');
 
 export const toPosix = (value) => value.replaceAll('\\', '/');
 export const fromRoot = (...parts) => path.join(repoRoot, ...parts);

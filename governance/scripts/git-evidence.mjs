@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, lstatSync, readFileSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync, readlinkSync } from 'node:fs';
 import path from 'node:path';
 
 function sha256(content) {
@@ -81,6 +81,54 @@ export function gitChangedPaths(root) {
         }),
     ),
   ].sort();
+}
+
+export function gitWorktreeFingerprint(root, { excludePaths = [] } = {}) {
+  const fingerprint = createHash('sha256');
+  const excluded = new Set(
+    excludePaths.map((relativePath) => {
+      safePath(root, relativePath);
+      return relativePath.replaceAll('\\', '/');
+    }),
+  );
+  const pathspecs = [
+    '.',
+    ...[...excluded].sort().map((relativePath) => `:(top,exclude,literal)${relativePath}`),
+  ];
+  const diff = execFileSync(
+    'git',
+    ['diff', '--binary', '--full-index', 'HEAD', '--', ...pathspecs],
+    {
+      cwd: root,
+      encoding: 'buffer',
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    },
+  );
+  fingerprint.update('tracked-diff\0').update(diff);
+
+  const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '-z'], {
+    cwd: root,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'ignore'],
+  })
+    .split('\0')
+    .filter(Boolean)
+    .filter((relativePath) => !excluded.has(relativePath.replaceAll('\\', '/')))
+    .sort();
+  for (const relativePath of untracked) {
+    const absolutePath = safePath(root, relativePath);
+    const file = lstatSync(absolutePath);
+    fingerprint.update('untracked\0').update(relativePath).update('\0');
+    if (file.isSymbolicLink()) {
+      fingerprint.update('symlink\0').update(readlinkSync(absolutePath)).update('\0');
+    } else if (file.isFile()) {
+      fingerprint.update('file\0').update(readFileSync(absolutePath)).update('\0');
+    } else {
+      fingerprint.update(`other:${file.mode}\0`);
+    }
+  }
+  return fingerprint.digest('hex');
 }
 
 export function sha256FileContent(content) {
