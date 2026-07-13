@@ -87,6 +87,30 @@ export function collectWorkspaceScriptErrors(
   return errors;
 }
 
+export function collectRootTestLaneErrors(manifest) {
+  const errors = [];
+  for (const task of ['test', 'test:integration']) {
+    const command = manifest.scripts?.[task] ?? '';
+    const sharedLane = `turbo run ${task}`;
+    const excludedCore = '--filter=!@mustbeviral/core';
+    const isolatedCore = '--filter=@mustbeviral/core';
+    const separator = command.indexOf('&&');
+    if (
+      !command.startsWith(sharedLane) ||
+      !command.includes(excludedCore) ||
+      separator < 0 ||
+      !command.slice(separator + 2).includes(sharedLane) ||
+      !command.slice(separator + 2).includes(isolatedCore) ||
+      !command.slice(separator + 2).includes('--concurrency=1')
+    ) {
+      errors.push(
+        `root ${task} must run non-Core work first and isolate @mustbeviral/core at concurrency 1`,
+      );
+    }
+  }
+  return errors;
+}
+
 export function readTurboPlan() {
   const pnpmEntrypoint = process.env.npm_execpath;
   if (!pnpmEntrypoint) throw new Error('npm_execpath is unavailable; run this check through pnpm');
@@ -115,7 +139,11 @@ export function readTurboPlan() {
 export function validateTaskGraph() {
   let errors = [];
   try {
-    errors = [...collectTaskGraphErrors(readTurboPlan()), ...collectWorkspaceScriptErrors()];
+    errors = [
+      ...collectTaskGraphErrors(readTurboPlan()),
+      ...collectWorkspaceScriptErrors(),
+      ...collectRootTestLaneErrors(readJson('package.json')),
+    ];
   } catch (error) {
     errors = [error instanceof Error ? error.message : String(error)];
   }

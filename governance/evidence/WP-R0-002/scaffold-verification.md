@@ -16,7 +16,7 @@ Verified on 2026-07-12 with Node 24.18.0 and pnpm 11.12.0.
 - `pnpm peers check`
 - `pnpm agent:preflight`
 - `pnpm governance:check`
-- `pnpm governance:test` — 48 tests passed
+- `pnpm governance:test` — 49 tests passed
 - `pnpm transition:check` — completed-packet receipt registry passed
 - `pnpm task-graph:check` — 13 workspaces and 55 required tasks scheduled
 - `pnpm lint:governance` — repository control-plane scripts and tests passed ESLint
@@ -27,6 +27,10 @@ Verified on 2026-07-12 with Node 24.18.0 and pnpm 11.12.0.
 - Core Worker integration suite — 2 tests passed in the Workers runtime
 - Core Worker integration timeout allows a 15-second Windows/OneDrive runtime cold start without
   changing assertions; two consecutive targeted runs passed after a full-suite cold-start flake.
+- Root unit and integration scripts run the Cloudflare runtime after all non-Core packages in a
+  dedicated concurrency-one lane. Vitest 4.1.10 hardcodes pool startup to 90 seconds, so this avoids
+  resource-starving `workerd` during a fully uncached Windows checkout without hiding unhandled
+  errors, weakening assertions, or replacing the Workers runtime with Node.
 - Web/Supabase integration — 1 test passed
 - Zod/OpenAPI integration — 1 test passed
 - Worker build completed with `--dry-run`, automatic provisioning disabled, and no remote mutation.
@@ -48,7 +52,7 @@ Verified on 2026-07-12 with Node 24.18.0 and pnpm 11.12.0.
 - Manual recovery uses a separately claimed lock, rejects live owners and wrong worktrees, cleans
   nonce-addressed crash temporaries, rechecks files immediately before and after restoration, and
   preserves the journal whenever safe recovery cannot be proven.
-- Forty-eight governance tests cover valid handoff; fabricated, dirty, staged-new, empty, and
+- Forty-nine governance tests cover valid handoff; fabricated, dirty, staged-new, empty, and
   out-of-packet evidence; blocked or stale writers; expected-absent history; receipt tampering,
   ancestry, and complete chain integrity; validator mutation; unrelated same-path edits; linked
   worktree exclusion and wrong-worktree recovery; two-process recovery contention; interrupted

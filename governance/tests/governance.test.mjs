@@ -3,7 +3,10 @@ import test from 'node:test';
 
 import { collectDocumentErrors } from '../scripts/validate-docs.mjs';
 import { collectPacketErrors } from '../scripts/validate-work-packet.mjs';
-import { collectTaskGraphErrors } from '../scripts/validate-task-graph.mjs';
+import {
+  collectRootTestLaneErrors,
+  collectTaskGraphErrors,
+} from '../scripts/validate-task-graph.mjs';
 import { hasAbsolutePath, pathMatches } from '../scripts/lib.mjs';
 
 const baseManifest = () => ({
@@ -193,4 +196,22 @@ test('accepts a complete Turbo task plan', () => {
     ),
     [],
   );
+});
+
+test('requires Cloudflare runtime tests to run in an isolated serial lane', () => {
+  const valid = {
+    scripts: {
+      test: 'turbo run test --concurrency=50% --filter=!@mustbeviral/core && turbo run test --concurrency=1 --filter=@mustbeviral/core',
+      'test:integration':
+        'turbo run test:integration --filter=!@mustbeviral/core && turbo run test:integration --concurrency=1 --filter=@mustbeviral/core',
+    },
+  };
+  assert.deepEqual(collectRootTestLaneErrors(valid), []);
+  const unsafe = {
+    scripts: {
+      test: 'turbo run test --concurrency=50%',
+      'test:integration': 'turbo run test:integration',
+    },
+  };
+  assert.equal(collectRootTestLaneErrors(unsafe).length, 2);
 });
