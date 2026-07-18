@@ -4,17 +4,16 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
-project_state: blocked
+project_state: active
 phase:
   id: R0
   title: Pinned monorepo and platform scaffold
-  state: blocked
+  state: in_progress
 release_target: P0
 active_work_packet: WP-R0-002
-next_action: Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually.
+next_action: Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
 decisions_pending: []
-blockers:
-  - 'github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path'
+blockers: []
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21

@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: R0
 active_packet: WP-R0-002
 current_step: r0-008-d0-handoff
-next_action: Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually
+next_action: Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -26,6 +26,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `adr-0003-fal-first` | [decisions/ADR-0003-FAL-FIRST.md](./decisions/ADR-0003-FAL-FIRST.md) | decision | accepted | execution |
 | `adr-0004-immutable-graph-revisions` | [decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md](./decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md) | decision | accepted | architecture |
 | `adr-0005-document-governance` | [decisions/ADR-0005-DOCUMENT-GOVERNANCE.md](./decisions/ADR-0005-DOCUMENT-GOVERNANCE.md) | decision | accepted | product-architecture |
+| `adr-0006-agent-publication-credentials` | [decisions/ADR-0006-AGENT-PUBLICATION-CREDENTIALS.md](./decisions/ADR-0006-AGENT-PUBLICATION-CREDENTIALS.md) | decision | accepted | operations-security |
 | `roadmap` | [delivery/ROADMAP.md](./delivery/ROADMAP.md) | delivery | accepted | delivery |
 | `quality-gates` | [delivery/QUALITY_GATES.md](./delivery/QUALITY_GATES.md) | quality | accepted | quality |
 | `active-work-packet` | [delivery/ACTIVE_WORK_PACKET.yaml](./delivery/ACTIVE_WORK_PACKET.yaml) | work_packet | accepted | delivery |

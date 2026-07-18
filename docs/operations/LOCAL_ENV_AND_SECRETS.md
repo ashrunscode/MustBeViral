@@ -35,7 +35,7 @@ No database, bucket, webhook signing secret, provider key, auth redirect, email 
 - Authenticate through provider CLI/browser flows or ignored local files. A secret pasted into chat is not assumed to exist in the shell.
 - Validate environment variables through typed schemas at process start; missing or malformed values fail closed.
 - Use least-privilege scoped identities, short lifetimes where possible, and separate machine/user roles.
-- GitHub agents cannot receive repository-admin, workflow-admin, production-deploy, or delete-repository credentials.
+- GitHub agents may use the operator-provisioned GitHub CLI credential to publish, push, administer branch protection, and manage GitHub Actions workflows for this repository (see `adr-0006-agent-publication-credentials`). Repository deletion and organization-level destructive actions still require an explicit, per-action operator authorization naming the exact resource; project-infrastructure destructive actions remain gated by `PROJECT_STATE.yaml` and the active packet.
 - Production secret reads and rotations require an audited operator action. Rotation updates staging first, verifies dual-key overlap when supported, promotes production, and revokes the old value.
 - Error reporting and traces redact authorization, cookies, signed URLs, prompts with sensitive customer data, provider payloads, and user-supplied personal data.
 

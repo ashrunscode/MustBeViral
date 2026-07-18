@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-R0-002` (blocked). Current step: `r0-008-d0-handoff`.
+Current packet: `WP-R0-002` (in_progress). Current step: `r0-008-d0-handoff`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -52,6 +52,7 @@ Current packet: `WP-R0-002` (blocked). Current step: `r0-008-d0-handoff`.
 | `decision.0003` | `adr-0003-fal-first` | docs/decisions/ADR-0003-FAL-FIRST.md |
 | `decision.0004` | `adr-0004-immutable-graph-revisions` | docs/decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md |
 | `decision.0005` | `adr-0005-document-governance` | docs/decisions/ADR-0005-DOCUMENT-GOVERNANCE.md |
+| `decision.0006` | `adr-0006-agent-publication-credentials` | docs/decisions/ADR-0006-AGENT-PUBLICATION-CREDENTIALS.md |
 | `delivery.roadmap` | `roadmap` | docs/delivery/ROADMAP.md |
 | `delivery.phase_exits` | `roadmap` | docs/delivery/ROADMAP.md |
 | `delivery.sequence` | `roadmap` | docs/delivery/ROADMAP.md |

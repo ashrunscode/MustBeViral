@@ -9,7 +9,7 @@ import {
   rmSync,
   writeFileSync,
 } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { hostname, tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
@@ -91,7 +91,7 @@ test('actual agent recovery clears a stale read-only lock and validates authorit
       schema_version: 1,
       nonce: 'stale-preflight-integration',
       pid: 2_147_483_647,
-      hostname: process.env.COMPUTERNAME,
+      hostname: hostname(),
       created_at: new Date().toISOString(),
       context: { operation: 'preflight', read_only: true },
     }),

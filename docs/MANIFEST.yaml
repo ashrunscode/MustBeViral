@@ -226,6 +226,15 @@ documents:
     review_triggers: [authority_model_change_requested, external_document_system_proposed]
     supersedes: []
 
+  - id: adr-0006-agent-publication-credentials
+    path: docs/decisions/ADR-0006-AGENT-PUBLICATION-CREDENTIALS.md
+    kind: decision
+    status: accepted
+    owner: operations-security
+    authority_topics: [decision.0006]
+    review_triggers: [credential_incident, publication_policy_change_requested]
+    supersedes: []
+
   - id: roadmap
     path: docs/delivery/ROADMAP.md
     kind: delivery

@@ -3,7 +3,7 @@ id: WP-R0-002
 spec_revision: 1
 title: Pinned monorepo and platform scaffold
 phase: R0
-status: blocked
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Create the clean, pinned, production-shaped monorepo scaffold for the Vercel web
@@ -145,13 +145,12 @@ rollback:
   strategy: Revert the scaffold commit while preserving the cleanroom authority commit.
   remote_actions_required: false
 external_effects:
-  remote_mutation: none
+  remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
   current_step: r0-008-d0-handoff
-  next_action: Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually
-  blockers:
-    - 'github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path'
+  next_action: Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
+  blockers: []
   changed_paths:
     - apps/**
     - packages/**
