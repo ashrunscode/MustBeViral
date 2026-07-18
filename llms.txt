@@ -4,10 +4,10 @@ project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
-phase: R0
-active_packet: WP-R0-002
-current_step: r0-008-d0-handoff
-next_action: Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
+phase: D0
+active_packet: WP-D0-001
+current_step: d0-001-initialize
+next_action: Run pnpm agent:start, then verify SuperDesign authentication and create the clean repository analysis.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

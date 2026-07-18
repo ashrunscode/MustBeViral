@@ -1,177 +1,143 @@
 schema_version: 1
-id: WP-R0-002
+id: WP-D0-001
 spec_revision: 1
-title: Pinned monorepo and platform scaffold
-phase: R0
-status: in_progress
+title: Precision Creative Studio direction exploration
+phase: D0
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Create the clean, pinned, production-shaped monorepo scaffold for the Vercel web
-  application, Cloudflare Core Worker, shared packages, Supabase migrations, and phase-appropriate
-  tests without implementing unapproved production UI.
+objective: Initialize the clean SuperDesign authority from accepted MustBeViral product and UX
+  contracts, render three explicit dark-studio direction branches, and obtain the user's recorded
+  selection without changing production application UI.
 authority_refs:
+  - product-contract
   - release-scope
   - experience-contract
-  - system-overview
-  - data-auth-tenancy
-  - execution-providers-billing
-  - api-mcp-cli
+  - canvas-screen-states
   - roadmap
   - quality-gates
   - toolchain-template-provenance
 required_skills:
-  - architect-prime
-  - data-architect
-  - auth-fortress
-  - api-craft
-  - cloudflare
-  - wrangler
-  - workers-best-practices
-  - test-mastery
+  - superdesign
+  - frontend-master
 depends_on:
-  - WP-R0-001
+  - WP-R0-002
 scope:
   allowed_paths:
+    - .superdesign/**
+    - governance/evidence/WP-D0-001/**
+    - governance/evidence/WP-R0-002/transition-receipt.yaml
+    - governance/evidence/WP-R0-002/completed-work-packet.yaml
+    - governance/schemas/design-direction-evidence.schema.json
+    - governance/scripts/validate-design-direction.mjs
+    - governance/tests/design-direction/**
+    - package.json
+    - PROJECT_STATE.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/STATUS.md
+    - docs/generated/**
+    - llms.txt
+  forbidden_paths:
     - apps/**
     - packages/**
     - supabase/**
-    - .superdesign/**
-    - .vscode/**
-    - docs/**
-    - governance/**
-    - PROJECT_STATE.yaml
-    - README.md
-    - llms.txt
-    - package.json
-    - pnpm-lock.yaml
-    - pnpm-workspace.yaml
-    - turbo.json
-    - tsconfig.json
-    - tsconfig.base.json
-    - eslint.config.mjs
-    - vitest.config.ts
-    - playwright.config.ts
-    - .env.example
-    - .dev.vars.example
-    - .gitignore
-    - .prettierignore
-  forbidden_paths:
-    - app/**
-    - src/server/**
-    - workers/**
     - docs/archive/**
-    - audit/**
-    - codex-audit/**
-    - final-strategy/**
+    - docs/research/**
+    - pnpm-lock.yaml
   required_doc_ids:
+    - product-contract
     - release-scope
     - experience-contract
-    - system-overview
-    - data-auth-tenancy
-    - execution-providers-billing
-    - api-mcp-cli
+    - canvas-screen-states
+    - roadmap
+    - quality-gates
     - toolchain-template-provenance
 deliverables:
-  - Pinned Turborepo with strict shared TypeScript, lint, formatting, test, and build configuration
-  - Next.js App Router web scaffold with Supabase SSR boundary and no legacy or unapproved
-    production UI
-  - Hono Cloudflare Core Worker with health endpoint, typed bindings, private R2 and Hyperdrive
-    placeholders, and Worker tests
-  - Shared package boundaries for contracts, domain, graph, database, providers, billing, artifacts,
-    AI, UI, configuration, and telemetry
-  - Supabase local configuration, ordered raw SQL migration directory, seed, and database test layout
-  - Exact official-template provenance and clean-scaffold evidence
-public_interfaces:
-  - name: core-health
-    kind: HTTP
-    contract: GET /health returns service generation, status, and request ID without secrets
+  - Clean SuperDesign repository analysis under .superdesign/init with no imported legacy UI
+  - Precision Creative Studio design system derived from the accepted palette, typography, spacing,
+    interaction, accessibility, and responsive contracts
+  - One initial studio draft and three explicit branches focused on calm density, canvas legibility,
+    and review and approval confidence
+  - Rendered artifact references and named desktop captures for every branch using the same
+    representative canvas and output-review content
+  - Machine-readable direction evidence plus a fail-closed validator and fixtures
+  - Explicit user selection of one branch, or a recorded blocking decision with no production UI
+    implementation
+public_interfaces: []
 steps:
-  - id: r0-005-template-provenance
-    title: Generate official templates outside the repository and record selected provenance
-    status: completed
-  - id: r0-006-scaffold
-    title: Integrate the clean monorepo, web, Worker, packages, and Supabase skeleton
-    status: completed
-  - id: r0-007-scaffold-verification
-    title: Pass lint, types, unit, integration, build, and cleanroom checks with real package tasks
-    status: completed
-  - id: r0-008-d0-handoff
-    title: Prepare and validate the D0 product-contract and design successor packet
-    status: current
+  - id: d0-001-initialize
+    title: Verify SuperDesign authentication and create the clean repository analysis
+    status: pending
+  - id: d0-002-design-system
+    title: Create the Precision Creative Studio design system from accepted contracts
+    status: pending
+  - id: d0-003-direction-branches
+    title: Render the initial draft and three controlled dark-studio branches
+    status: pending
+  - id: d0-004-direction-review
+    title: Record accessibility, density, legibility, and responsive-direction review evidence
+    status: pending
+  - id: d0-005-user-selection
+    title: Present named renders and record the user's explicit branch selection
+    status: pending
+  - id: d0-006-successor-handoff
+    title: Validate evidence and prepare the chosen-direction high-fidelity successor packet
+    status: pending
 acceptance:
   automated:
-    - id: real-package-lanes
-      criterion: Lint, typecheck, unit, integration, and build execute real tasks for web, core, and
-        shared packages.
-      status: passed
-      evidence:
-        - governance/evidence/WP-R0-002/scaffold-verification.md
-    - id: core-health-contract
-      criterion: Core Worker tests prove the versioned health response and safe error envelope.
-      status: passed
-      evidence:
-        - governance/evidence/WP-R0-002/scaffold-verification.md
-    - id: cleanroom-scaffold
-      criterion: No legacy path, fingerprint, nested agent contract, alternate package manager, or
-        unregistered documentation appears.
-      status: passed
-      evidence:
-        - governance/evidence/WP-R0-002/scaffold-verification.md
-    - id: frozen-install
-      criterion: A clean clone installs from the frozen lockfile and passes preflight and verify.
-      status: passed
-      evidence:
-        - governance/evidence/WP-R0-002/scaffold-verification.md
+    - id: design-direction-evidence
+      criterion: The design-direction validator proves one initial draft and exactly three named branches,
+        rendered artifact references, named desktop captures, shared representative content,
+        required review findings, and an explicit approval state.
+      status: pending
+      evidence: []
+    - id: production-ui-unchanged
+      criterion: The packet changes no application, shared package, database, runtime dependency, or
+        production UI path.
+      status: pending
+      evidence: []
+    - id: clean-superdesign-intake
+      criterion: SuperDesign analysis identifies only ViralGraph cleanroom V2 and contains no legacy V1
+        route, React Router, D1-auth, marketing-autopilot, or System DNA instruction.
+      status: pending
+      evidence: []
   manual:
-    - id: provenance-review
-      criterion:
-        Template provenance names the exact command, version, source, license, selected patterns,
-        rejected patterns, and modifications.
-      status: passed
-      evidence:
-        - governance/evidence/WP-R0-002/scaffold-verification.md
+    - id: direction-approval
+      criterion: The user explicitly selects one named branch after reviewing its rendered artifact and
+        desktop capture; silence, an agent preference, or a tool default cannot count as approval.
+      status: pending
+      evidence: []
 quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-R0-002/scaffold-verification.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-R0-002/scaffold-verification.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert the scaffold commit while preserving the cleanroom authority commit.
+  strategy: Revert the packet's SuperDesign artifacts, evidence validator, evidence files, and root
+    script; the production web scaffold remains unchanged.
   remote_actions_required: false
 external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: r0-008-d0-handoff
-  next_action: Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
+  current_step: d0-001-initialize
+  next_action: Run pnpm agent:start, then verify SuperDesign authentication and create the clean
+    repository analysis.
   blockers: []
-  changed_paths:
-    - apps/**
-    - packages/**
-    - supabase/**
-    - governance/**
-    - docs/**
-    - root toolchain and environment configuration
+  changed_paths: []
   last_green_checks:
     - pnpm agent:preflight
     - pnpm governance:check
-    - pnpm governance:test
-    - pnpm task-graph:check
-    - pnpm test
-    - pnpm test:integration
-    - pnpm --filter @mustbeviral/core typecheck
-    - pnpm --filter @mustbeviral/web typecheck
-    - pnpm --filter @mustbeviral/web build
     - pnpm verify
-    - clean clone frozen install, preflight, verify, and clean tracked tree
 completion:
-  successor_packet_id: WP-D0-001
-  evidence_paths:
-    - governance/evidence/WP-R0-002/scaffold-verification.md
+  successor_packet_id: WP-D0-002
+  evidence_paths: []
   completed_at: null

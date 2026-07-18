@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | R0 — Pinned monorepo and platform scaffold (in_progress) |
-| Active packet | `WP-R0-002` |
-| Current step | `r0-008-d0-handoff` |
+| Phase | D0 — Precision Creative Studio direction exploration (planned) |
+| Active packet | `WP-D0-001` |
+| Current step | `d0-001-initialize` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
+Run pnpm agent:start, then verify SuperDesign authentication and create the clean repository analysis.

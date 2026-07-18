@@ -6,12 +6,13 @@ internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
-  id: R0
-  title: Pinned monorepo and platform scaffold
-  state: in_progress
+  id: D0
+  title: Precision Creative Studio direction exploration
+  state: planned
 release_target: P0
-active_work_packet: WP-R0-002
-next_action: Finish WP-R0-002 to activate the D0 design-direction packet WP-D0-001.
+active_work_packet: WP-D0-001
+next_action: Run pnpm agent:start, then verify SuperDesign authentication and create the clean
+  repository analysis.
 decisions_pending: []
 blockers: []
 legacy:
@@ -31,6 +32,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-07-12T00:00:00Z
-  by: user-approved-reset
-  evidence: clean orphan branch created after legacy active-tree deletion
+  at: 2026-07-18T05:05:54.924Z
+  by: pnpm agent:finish
+  evidence:
+    - governance/evidence/WP-R0-002/scaffold-verification.md
