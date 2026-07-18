@@ -3,7 +3,7 @@ id: WP-D0-001
 spec_revision: 1
 title: Precision Creative Studio direction exploration
 phase: D0
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Initialize the clean SuperDesign authority from accepted MustBeViral product and UX
@@ -67,7 +67,7 @@ public_interfaces: []
 steps:
   - id: d0-001-initialize
     title: Verify SuperDesign authentication and create the clean repository analysis
-    status: pending
+    status: current
   - id: d0-002-design-system
     title: Create the Precision Creative Studio design system from accepted contracts
     status: pending
@@ -129,8 +129,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: d0-001-initialize
-  next_action: Run pnpm agent:start, then verify SuperDesign authentication and create the clean
-    repository analysis.
+  next_action: Verify SuperDesign authentication and create the clean repository analysis
   blockers: []
   changed_paths: []
   last_green_checks:

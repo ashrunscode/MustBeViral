@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: D0
 active_packet: WP-D0-001
 current_step: d0-001-initialize
-next_action: Run pnpm agent:start, then verify SuperDesign authentication and create the clean repository analysis.
+next_action: Verify SuperDesign authentication and create the clean repository analysis
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

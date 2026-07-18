@@ -8,11 +8,10 @@ project_state: active
 phase:
   id: D0
   title: Precision Creative Studio direction exploration
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-D0-001
-next_action: Run pnpm agent:start, then verify SuperDesign authentication and create the clean
-  repository analysis.
+next_action: Verify SuperDesign authentication and create the clean repository analysis
 decisions_pending: []
 blockers: []
 legacy:
