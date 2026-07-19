@@ -118,56 +118,66 @@ acceptance:
         The design-direction validator proves rendered campaign brief, canvas, quote/run, output
         comparison, receipt, tablet review, and mobile review artifacts with named captures,
         recorded watch-item resolutions, and explicit approval state.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-002/design-direction.yaml
     - id: lightfield-contract-and-docs
       criterion: The accepted experience-contract amendment defines the Lightfield identity, remains
         registered in the documentation manifest, regenerates affected references, and passes pnpm
         docs:check.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-002/contract-approval.md
     - id: enabled-model-catalog-evidence
       criterion:
         Generated model-catalog evidence is complete and current for price, license, retention,
         moderation, capability, and evaluation fields for every enabled model, with no enabled model
         surviving missing or stale evidence.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-002/d0-exit-evidence.md
     - id: remaining-d0-exit-evidence
       criterion:
         Registered evidence proves the platform-algorithm playbooks, 20 representative golden
         briefs, five-to-eight-user qualification and recruitment definition, and a Data API/RPC
         versus Hyperdrive benchmark plan covering cold and warm p50/p95/p99, concurrency, conflicts,
         errors, and pooled-identity isolation.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-002/d0-exit-evidence.md
   manual:
     - id: high-fidelity-golden-approval
       criterion:
         The operator explicitly approves the named high-fidelity desktop, tablet, and mobile
         golden set after reviewing the rendered flow artifacts; silence or agent preference cannot
         count as approval.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-002/design-direction.yaml
+        - governance/evidence/WP-D0-002/contract-approval.md
     - id: amended-experience-contract-approval
       criterion:
         The operator explicitly approves the amended Lightfield experience contract before D0 is
         closed or production UI implementation begins.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-002/contract-approval.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-002/d0-exit-evidence.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-002/d0-exit-evidence.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-002/d0-exit-evidence.md
 rollback:
   strategy:
     Revert the packet's SuperDesign artifacts, approved-golden evidence, validator extensions,
@@ -180,7 +190,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: d1-007-successor-handoff
-  next_action: Amend and register the experience contract with the operator-directed Lightfield identity
+  next_action: Validate the D0 exit evidence and prepare the WP-P0-001 successor transition.
   blockers: []
   changed_paths: []
   last_green_checks:
@@ -189,5 +199,8 @@ handoff:
     - pnpm verify
 completion:
   successor_packet_id: WP-P0-001
-  evidence_paths: []
+  evidence_paths:
+    - governance/evidence/WP-D0-002/design-direction.yaml
+    - governance/evidence/WP-D0-002/contract-approval.md
+    - governance/evidence/WP-D0-002/d0-exit-evidence.md
   completed_at: null

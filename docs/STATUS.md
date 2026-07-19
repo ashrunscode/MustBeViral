@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Amend and register the experience contract with the operator-directed Lightfield identity
+Validate the D0 exit evidence and prepare the WP-P0-001 successor transition.
