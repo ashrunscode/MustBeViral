@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-D0-001
-next_action: Record the operator's explicit branch selection from the round-2 Lightfield set in the
-  design-direction evidence.
+next_action: Validate the ratified Review Approval evidence set and author the WP-D0-002
+  high-fidelity successor packet.
 decisions_pending: []
 blockers: []
 legacy:

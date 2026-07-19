@@ -90,10 +90,10 @@ steps:
     status: completed
   - id: d0-005-user-selection
     title: Present named renders and record the user's explicit branch selection
-    status: current
+    status: completed
   - id: d0-006-successor-handoff
     title: Validate evidence and prepare the chosen-direction high-fidelity successor packet
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: design-direction-evidence
@@ -101,31 +101,36 @@ acceptance:
         The design-direction validator proves one initial draft and exactly three named branches,
         rendered artifact references, named desktop captures, shared representative content,
         required review findings, and an explicit approval state.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/design-direction.yaml
     - id: production-ui-unchanged
       criterion: The packet changes no application, shared package, database, runtime dependency, or
         production UI path.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/scope-integrity.md
     - id: clean-superdesign-intake
       criterion:
         SuperDesign analysis identifies only ViralGraph cleanroom V2 and contains no legacy V1
         route, React Router, D1-auth, marketing-autopilot, or System DNA instruction.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/initialize-evidence.md
   manual:
     - id: direction-approval
       criterion:
         The user explicitly selects one named branch after reviewing its rendered artifact and
         desktop capture; silence, an agent preference, or a tool default cannot count as approval.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/design-direction.yaml
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-001/design-direction.yaml
   - id: governance
     command: pnpm governance:check
     status: pending
@@ -142,9 +147,9 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d0-005-user-selection
-  next_action: Record the operator's explicit branch selection from the round-2 Lightfield set in
-    the design-direction evidence.
+  current_step: d0-006-successor-handoff
+  next_action: Validate the ratified Review Approval evidence set and author the WP-D0-002
+    high-fidelity successor packet.
   blockers: []
   changed_paths:
     - governance/scripts/validate-diff-scope.mjs

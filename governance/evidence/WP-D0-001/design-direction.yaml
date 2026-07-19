@@ -46,4 +46,8 @@ review:
         ratified branch. The Review Approval right panel clips slightly at 1440 and carries an
         overflow-discipline note into high fidelity.
 approval:
-  state: pending
+  state: user_selected
+  selected_branch: Review Approval
+  selected_by: ernijsansons
+  selected_at: 2026-07-19T04:46:22Z
+  selection_source: explicit_user_statement

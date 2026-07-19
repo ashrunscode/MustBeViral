@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: D0
 active_packet: WP-D0-001
-current_step: d0-005-user-selection
-next_action: Record the operator's explicit branch selection from the round-2 Lightfield set in the design-direction evidence.
+current_step: d0-006-successor-handoff
+next_action: Validate the ratified Review Approval evidence set and author the WP-D0-002 high-fidelity successor packet.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
