@@ -327,6 +327,16 @@ documents:
     review_triggers: [platform_algorithm_changed, launch_destination_added, qa_rule_promoted]
     supersedes: []
 
+  - id: model-catalog-evidence
+    path: docs/research/MODEL_CATALOG_EVIDENCE.md
+    kind: research
+    status: informative
+    owner: research
+    authority_topics: [research.model_catalog_evidence]
+    review_triggers:
+      [model_price_changed, model_enabled, provider_terms_changed, retention_policy_changed]
+    supersedes: []
+
   - id: source-register
     path: docs/research/sources.yaml
     kind: research_registry

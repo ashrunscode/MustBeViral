@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-D0-002` (in_progress). Current step: `d1-004-platform-algorithm-playbooks`.
+Current packet: `WP-D0-002` (in_progress). Current step: `d1-001-high-fidelity-flow-renders`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -74,6 +74,7 @@ Current packet: `WP-D0-002` (in_progress). Current step: `d1-004-platform-algori
 | `operations.legacy_inventory` | `legacy-v1-retirement` | docs/operations/LEGACY_V1_RETIREMENT.md |
 | `operations.legacy_retirement` | `legacy-v1-retirement` | docs/operations/LEGACY_V1_RETIREMENT.md |
 | `research.platform_playbooks` | `platform-playbooks` | docs/research/PLATFORM_PLAYBOOKS.md |
+| `research.model_catalog_evidence` | `model-catalog-evidence` | docs/research/MODEL_CATALOG_EVIDENCE.md |
 | `research.source_register` | `source-register` | docs/research/sources.yaml |
 | `generated.open_api` | `generated-openapi` | docs/generated/OPENAPI.md |
 | `generated.database_schema` | `generated-database-schema` | docs/generated/DATABASE_SCHEMA.md |
