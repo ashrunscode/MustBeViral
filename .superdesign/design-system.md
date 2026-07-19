@@ -51,7 +51,23 @@ docked quote strip). Every SuperDesign render must preserve these tokens exactly
 ## Motion
 
 120ms local · 180ms panel · 240ms route; ease `cubic-bezier(0.2,0,0,1)`; respects reduced-motion;
-motion communicates causality only — nothing decorative, nothing looping.
+motion communicates causality only — nothing decorative.
+
+### Work-motion language (operator directive — causality made visible)
+
+- **In-node working animation:** while a node executes, a 2px `attention` progress filament slides
+  along the node card's top edge (indeterminate sweep, 1.6s ease-in-out loop), paired with the mono
+  state label ("generating 2/3"). Calm, thin, paper-appropriate — never a spinner blob, never pulsing
+  fills.
+- **Edge flow animation:** when output moves from node N to node N+1, the connecting bezier carries a
+  flowing motion: small `signal`-tinted dashes (or 3px dots) traveling along the path at ~80px/s,
+  fading in at the source port and out at the target port, for the duration of the transfer; the edge
+  then settles to its static state (active lineage `signal`, idle `line`). This is THE signature
+  micro-interaction: work is visibly flowing through the graph.
+- **Arrival:** the receiving node's border briefly (180ms) warms to `signal` at 0.4 then settles —
+  confirmation of receipt, no bounce, no scale.
+- Reduced-motion: filament and flow become a static directional gradient on the edge plus text state;
+  no travel animation.
 
 ## Composition (research-locked)
 
