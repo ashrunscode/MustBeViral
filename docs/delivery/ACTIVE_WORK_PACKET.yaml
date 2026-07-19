@@ -3,7 +3,7 @@ id: WP-P0-001
 spec_revision: 1
 title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
 phase: P0
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Build and validate the real DTC Meta Campaign Launch Pack vertical slice from a
@@ -138,7 +138,7 @@ steps:
       Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials, webhook
       material, price evidence, and retention/DPA clearance without storing or printing secrets in
       the repository.
-    status: pending
+    status: current
   - id: p0-001-database-rls-migrations
     title: Implement the authoritative Postgres schema, forward-only migrations, generated types,
       hardened RPCs, forced RLS, least-privilege roles, cross-tenant isolation, migration sequence,
@@ -289,7 +289,9 @@ external_effects:
 handoff:
   current_step: p0-000-environment-provisioning
   next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel,
-    Core Worker, private R2, fal, and Moonshot inputs without storing or printing secrets.
+    Core Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials,
+    webhook material, price evidence, and retention/DPA clearance without storing or printing
+    secrets in the repository.
   blockers: []
   changed_paths: []
   last_green_checks: []

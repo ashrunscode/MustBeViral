@@ -8,11 +8,13 @@ project_state: active
 phase:
   id: P0
   title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
 next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel,
-  Core Worker, private R2, fal, and Moonshot inputs without storing or printing secrets.
+  Core Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials,
+  webhook material, price evidence, and retention/DPA clearance without storing or printing secrets
+  in the repository.
 decisions_pending: []
 blockers: []
 legacy:
