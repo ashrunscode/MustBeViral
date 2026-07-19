@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | D0 — Precision Creative Studio direction exploration (in_progress) |
 | Active packet | `WP-D0-001` |
-| Current step | `d0-001-initialize` |
+| Current step | `d0-000-agent-safety-hardening` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify SuperDesign authentication and create the clean repository analysis
+Implement base-anchored diff-scope CI enforcement, extend the secret scanner with canary tests, clarify webhook idempotency in the API contract, and author the design:check gate infrastructure.

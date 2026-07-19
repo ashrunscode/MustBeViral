@@ -1,14 +1,17 @@
 schema_version: 1
 id: WP-D0-001
-spec_revision: 1
+spec_revision: 2
 title: Precision Creative Studio direction exploration
 phase: D0
 status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Initialize the clean SuperDesign authority from accepted MustBeViral product and UX
-  contracts, render three explicit dark-studio direction branches, and obtain the user's recorded
-  selection without changing production application UI.
+objective: Harden the two-agent build guardrails identified by the accepted pre-build audit
+  (base-anchored committed-diff scope enforcement, real-credential secret scanning, webhook
+  idempotency clarification, design gate authoring), then initialize the clean SuperDesign
+  authority from accepted MustBeViral product and UX contracts, render three explicit dark-studio
+  direction branches, and obtain the user's recorded selection without changing production
+  application UI.
 authority_refs:
   - product-contract
   - release-scope
@@ -30,7 +33,11 @@ scope:
     - governance/evidence/WP-R0-002/completed-work-packet.yaml
     - governance/schemas/design-direction-evidence.schema.json
     - governance/scripts/validate-design-direction.mjs
-    - governance/tests/design-direction/**
+    - governance/scripts/validate-diff-scope.mjs
+    - governance/legacy-fingerprints.yaml
+    - governance/tests/**
+    - .github/workflows/governance.yml
+    - docs/architecture/API_MCP_AND_CLI.md
     - package.json
     - PROJECT_STATE.yaml
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
@@ -65,9 +72,13 @@ deliverables:
     implementation
 public_interfaces: []
 steps:
+  - id: d0-000-agent-safety-hardening
+    title: Wire base-anchored diff-scope CI enforcement, real-credential secret scanning with
+      canary tests, webhook idempotency clarification, and the design:check gate infrastructure
+    status: current
   - id: d0-001-initialize
     title: Verify SuperDesign authentication and create the clean repository analysis
-    status: current
+    status: pending
   - id: d0-002-design-system
     title: Create the Precision Creative Studio design system from accepted contracts
     status: pending
@@ -128,8 +139,10 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d0-001-initialize
-  next_action: Verify SuperDesign authentication and create the clean repository analysis
+  current_step: d0-000-agent-safety-hardening
+  next_action: Implement base-anchored diff-scope CI enforcement, extend the secret scanner with
+    canary tests, clarify webhook idempotency in the API contract, and author the design:check
+    gate infrastructure.
   blockers: []
   changed_paths: []
   last_green_checks:

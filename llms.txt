@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: D0
 active_packet: WP-D0-001
-current_step: d0-001-initialize
-next_action: Verify SuperDesign authentication and create the clean repository analysis
+current_step: d0-000-agent-safety-hardening
+next_action: Implement base-anchored diff-scope CI enforcement, extend the secret scanner with canary tests, clarify webhook idempotency in the API contract, and author the design:check gate infrastructure.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
