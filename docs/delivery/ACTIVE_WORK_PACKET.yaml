@@ -75,10 +75,10 @@ steps:
   - id: d0-000-agent-safety-hardening
     title: Wire base-anchored diff-scope CI enforcement, real-credential secret scanning with
       canary tests, webhook idempotency clarification, and the design:check gate infrastructure
-    status: current
+    status: completed
   - id: d0-001-initialize
     title: Verify SuperDesign authentication and create the clean repository analysis
-    status: pending
+    status: current
   - id: d0-002-design-system
     title: Create the Precision Creative Studio design system from accepted contracts
     status: pending
@@ -142,12 +142,19 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d0-000-agent-safety-hardening
-  next_action: Implement base-anchored diff-scope CI enforcement, extend the secret scanner with
-    canary tests, clarify webhook idempotency in the API contract, and author the design:check
-    gate infrastructure.
+  current_step: d0-001-initialize
+  next_action: Verify SuperDesign authentication and create the clean repository analysis under
+    .superdesign/init.
   blockers: []
-  changed_paths: []
+  changed_paths:
+    - governance/scripts/validate-diff-scope.mjs
+    - governance/legacy-fingerprints.yaml
+    - governance/schemas/design-direction-evidence.schema.json
+    - governance/scripts/validate-design-direction.mjs
+    - governance/tests/**
+    - .github/workflows/governance.yml
+    - docs/architecture/API_MCP_AND_CLI.md
+    - package.json
   last_green_checks:
     - pnpm agent:preflight
     - pnpm governance:check

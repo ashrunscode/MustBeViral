@@ -11,9 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-D0-001
-next_action: Implement base-anchored diff-scope CI enforcement, extend the secret scanner with
-  canary tests, clarify webhook idempotency in the API contract, and author the design:check gate
-  infrastructure.
+next_action: Verify SuperDesign authentication and create the clean repository analysis under
+  .superdesign/init.
 decisions_pending: []
 blockers: []
 legacy:
