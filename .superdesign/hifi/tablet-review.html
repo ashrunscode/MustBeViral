@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Skin - Tablet review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap');
+      :root {
+        --paper: #fafafa;
+        --paper-2: #f5f5f5;
+        --card: #ffffff;
+        --wash: rgba(0, 0, 0, 0.04);
+        --wash-faint: rgba(0, 0, 0, 0.02);
+        --ink-strong: rgba(0, 0, 0, 0.85);
+        --ink-head: rgba(0, 0, 0, 0.75);
+        --ink: rgba(0, 0, 0, 0.6);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --ink-faint: rgba(0, 0, 0, 0.25);
+        --line: rgba(0, 0, 0, 0.12);
+        --signal: #3182d4;
+        --signal-soft: #80bfff;
+        --ok: #1f9d63;
+        --attention: #b87e14;
+        --fail: #c4404d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Geist', sans-serif;
+        background-color: var(--paper);
+        color: var(--ink);
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        font: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid #3182d4;
+        outline-offset: 2px;
+      }
+      .focus-demo {
+        outline: 2px solid #3182d4;
+        outline-offset: 2px;
+      }
+      .mono {
+        font-family: 'DM+Mono', monospace;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .node-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        transition: all 120ms cubic-bezier(0.2, 0, 0, 1);
+      }
+      .node-card:hover {
+        border-color: var(--ink-faint);
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 22px;
+        padding: 4px 7px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--card);
+        font-family: 'DM+Mono', monospace;
+        font-size: 9px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .app {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .app-header {
+        height: 56px;
+        flex: 0 0 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--card);
+        z-index: 50;
+      }
+      .brand {
+        color: var(--ink-strong);
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .header-context {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .quote-strip {
+        height: 44px;
+        flex: 0 0 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper-2);
+        color: var(--ink-strong);
+        z-index: 40;
+      }
+      main {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        background: var(--paper-2);
+      }
+      .review-list {
+        height: 100%;
+        overflow: hidden;
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      .list-head {
+        margin-bottom: 14px;
+      }
+      .list-head h1 {
+        margin-bottom: 5px;
+        color: var(--ink-head);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+      }
+      .list-head p {
+        margin: 0;
+        color: var(--ink-muted);
+        font-size: 12px;
+      }
+      .cards {
+        display: grid;
+        gap: 12px;
+      }
+      .review-card {
+        width: calc(100% - 92px);
+        min-height: 192px;
+        padding: 14px;
+      }
+      .card-head,
+      .card-foot,
+      .card-actions,
+      .drawer-head,
+      .confirm-route,
+      .footer-meta {
+        display: flex;
+        align-items: center;
+      }
+      .card-head,
+      .card-foot,
+      .drawer-head {
+        justify-content: space-between;
+      }
+      .card-head h2 {
+        margin: 0;
+        color: var(--ink-head);
+        font-size: 13px;
+        font-weight: 400;
+      }
+      .chip.approved {
+        color: var(--ok);
+        border-color: rgba(31, 157, 99, 0.28);
+      }
+      .chip.pending {
+        color: var(--attention);
+        border-color: rgba(184, 126, 20, 0.28);
+      }
+      .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .thumb {
+        height: 92px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #e8e8e8;
+        color: var(--ink-muted);
+      }
+      .thumb.prior {
+        background: #eeeeee;
+      }
+      .caption {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        color: var(--ink-muted);
+      }
+      .card-foot {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--wash);
+      }
+      .card-actions {
+        gap: 8px;
+      }
+      .quiet-button,
+      .drawer-close {
+        min-width: 82px;
+        min-height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--card);
+        color: var(--ink-strong);
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .drawer-scrim {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.08);
+        pointer-events: none;
+      }
+      .qa-drawer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60%;
+        height: 100%;
+        padding: 20px;
+        border-left: 1px solid var(--line);
+        border-radius: 10px 0 0 10px;
+        background: var(--card);
+        box-shadow: -8px 0 18px rgba(0, 0, 0, 0.08);
+        z-index: 10;
+      }
+      .drawer-head {
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .drawer-head h2 {
+        margin: 0;
+        color: var(--ink-head);
+        font-size: 19px;
+        font-weight: 400;
+      }
+      .drawer-close {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 16px;
+      }
+      .finding-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .finding {
+        padding: 13px;
+        border-left: 2px solid var(--attention);
+        border-radius: 0 6px 6px 0;
+        background: var(--wash-faint);
+      }
+      .finding p {
+        margin: 7px 0 10px;
+        color: var(--ink-head);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .jump-link {
+        color: var(--ink-strong);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .drawer-summary {
+        margin-top: 18px;
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--ink-muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .confirm-bar {
+        min-height: 80px;
+        flex: 0 0 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0 20px;
+        border-top: 1px solid var(--line);
+        background: var(--card);
+        z-index: 50;
+      }
+      .confirm-route {
+        gap: 22px;
+      }
+      .confirm-route > div {
+        display: grid;
+        gap: 4px;
+      }
+      .primary {
+        min-height: 44px;
+        border: 1px solid var(--signal);
+        border-radius: 6px;
+        padding: 0 22px;
+        background: var(--signal);
+        color: white;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .app-footer {
+        height: 32px;
+        flex: 0 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        border-top: 1px solid var(--line);
+        background: var(--wash-faint);
+        color: var(--ink-faint);
+      }
+      .footer-meta {
+        gap: 18px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <span class="brand">MustBeViral Studio</span>
+        <div class="header-context">
+          <span class="mono">Lumen Skin</span
+          ><span class="chip pending"><span aria-hidden="true">◷</span> Review</span>
+        </div>
+      </header>
+      <div class="quote-strip mono">
+        <span>QUOTE $4.20 · REV 7f3a</span><span>KIMI-2.6 + FLUX-2-KLEIN + SEEDANCE-1.0</span>
+      </div>
+
+      <main id="main-content">
+        <section class="review-list" aria-labelledby="tablet-title">
+          <div class="list-head">
+            <h1 id="tablet-title">Review outputs</h1>
+            <p>Single-column review · 4 / 12 approved</p>
+          </div>
+          <div class="cards">
+            <article class="node-card review-card">
+              <div class="card-head">
+                <h2>Asset 01 - Hero 4:5</h2>
+                <span class="chip approved"><span aria-hidden="true">✓</span> Approved</span>
+              </div>
+              <div class="comparison">
+                <div>
+                  <div class="thumb"><span class="mono">Neutral preview</span></div>
+                  <div class="caption mono"><span>Current (v2)</span><span>4:5</span></div>
+                </div>
+                <div>
+                  <div class="thumb prior"><span class="mono">Prior preview</span></div>
+                  <div class="caption mono"><span>Prior (v1)</span><span>4:5</span></div>
+                </div>
+              </div>
+              <div class="card-foot">
+                <div class="card-actions">
+                  <button class="quiet-button">Approve</button
+                  ><button class="quiet-button">Reject</button>
+                </div>
+                <span class="mono">By SC</span>
+              </div>
+            </article>
+            <article class="node-card review-card">
+              <div class="card-head">
+                <h2>Asset 03 - Texture 9:16</h2>
+                <span class="chip pending"><span aria-hidden="true">◷</span> Pending</span>
+              </div>
+              <div class="comparison">
+                <div>
+                  <div class="thumb"><span class="mono">Neutral preview</span></div>
+                  <div class="caption mono"><span>Current (v2)</span><span>9:16</span></div>
+                </div>
+                <div>
+                  <div class="thumb prior"><span class="mono">Prior preview</span></div>
+                  <div class="caption mono"><span>Prior (v1)</span><span>9:16</span></div>
+                </div>
+              </div>
+              <div class="card-foot">
+                <div class="card-actions">
+                  <button class="quiet-button">Approve</button
+                  ><button class="quiet-button">Reject</button>
+                </div>
+                <span class="mono">Alt text needed</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="drawer-scrim" aria-hidden="true"></div>
+        <aside class="qa-drawer" aria-labelledby="drawer-title">
+          <div class="drawer-head">
+            <div>
+              <div class="mono" style="color: var(--ink-muted); margin-bottom: 6px">
+                Drawer · 60% width
+              </div>
+              <h2 id="drawer-title">QA findings</h2>
+            </div>
+            <button class="drawer-close focus-demo" aria-label="Close QA findings">×</button>
+          </div>
+          <div class="finding-list">
+            <article class="finding">
+              <div class="mono" style="color: var(--attention)">Contrast issue</div>
+              <p>Logo visibility on Asset 02 is below the 4.5:1 target.</p>
+              <a class="jump-link mono" href="#main-content">JUMP_TO ASSET 02</a>
+            </article>
+            <article class="finding">
+              <div class="mono" style="color: var(--attention)">Legal disclaimer</div>
+              <p>Required “Results vary” line is missing from Asset 03.</p>
+              <a class="jump-link mono" href="#main-content">JUMP_TO ASSET 03</a>
+            </article>
+          </div>
+          <div class="drawer-summary">
+            <span class="mono">Partial value retained</span><br />11 static artifacts remain
+            verified while the motion branch is pending review.
+          </div>
+        </aside>
+      </main>
+
+      <div class="confirm-bar">
+        <div class="confirm-route">
+          <div>
+            <span class="mono" style="color: var(--ink-muted)">Pinned</span
+            ><span class="mono">7f3a</span>
+          </div>
+          <div>
+            <span class="mono" style="color: var(--ink-muted)">Expires</span
+            ><span class="mono">04:59</span>
+          </div>
+          <div>
+            <span class="mono" style="color: var(--ink-muted)">Used today</span
+            ><span class="mono">$18.42 / $100.00</span>
+          </div>
+        </div>
+        <button class="primary">Confirm $4.20 run</button>
+      </div>
+      <footer class="app-footer">
+        <div class="footer-meta mono"><span>Artifacts: 12</span><span>QA notes: 2</span></div>
+        <span class="mono">tablet · 768</span>
+      </footer>
+    </div>
+  </body>
+</html>

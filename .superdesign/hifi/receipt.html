@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Skin - Immutable receipt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap');
+      :root {
+        --paper: #fafafa;
+        --paper-2: #f5f5f5;
+        --card: #ffffff;
+        --wash: rgba(0, 0, 0, 0.04);
+        --wash-faint: rgba(0, 0, 0, 0.02);
+        --ink-strong: rgba(0, 0, 0, 0.85);
+        --ink-head: rgba(0, 0, 0, 0.75);
+        --ink: rgba(0, 0, 0, 0.6);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --ink-faint: rgba(0, 0, 0, 0.25);
+        --line: rgba(0, 0, 0, 0.12);
+        --signal: #3182d4;
+        --signal-soft: #80bfff;
+        --ok: #1f9d63;
+        --attention: #b87e14;
+        --fail: #c4404d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Geist', sans-serif;
+        background-color: var(--paper);
+        color: var(--ink);
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        font: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid #3182d4;
+        outline-offset: 2px;
+      }
+      .focus-demo {
+        outline: 2px solid #3182d4;
+        outline-offset: 2px;
+      }
+      .mono {
+        font-family: 'DM+Mono', monospace;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .node-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        transition: all 120ms cubic-bezier(0.2, 0, 0, 1);
+      }
+      .node-card:hover {
+        border-color: var(--ink-faint);
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 22px;
+        padding: 4px 7px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--card);
+        font-family: 'DM+Mono', monospace;
+        font-size: 9px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .app {
+        width: 100vw;
+        height: 100vh;
+        min-width: 1180px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .app-header {
+        height: 60px;
+        flex: 0 0 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-bottom: 1px solid var(--line);
+        background: var(--card);
+        z-index: 50;
+      }
+      .brand-row,
+      .system-row,
+      .footer-meta,
+      .manifest-list,
+      .receipt-seal {
+        display: flex;
+        align-items: center;
+      }
+      .brand-row {
+        gap: 32px;
+      }
+      .brand {
+        color: var(--ink-strong);
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .breadcrumb {
+        color: var(--ink-muted);
+        font-size: 13px;
+      }
+      .breadcrumb strong {
+        color: var(--ink-strong);
+        font-weight: 400;
+      }
+      .system-row {
+        gap: 10px;
+      }
+      .receipt-seal {
+        gap: 7px;
+        color: var(--ok);
+      }
+      main {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        place-items: center;
+        padding: 22px 40px;
+        overflow: hidden;
+        background: var(--paper-2);
+      }
+      .receipt-card {
+        width: min(980px, 100%);
+        height: 100%;
+        padding: 24px 30px 20px;
+        display: flex;
+        flex-direction: column;
+        font-family: 'DM+Mono', monospace;
+      }
+      .document-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+      h1 {
+        margin-bottom: 6px;
+        color: var(--ink-strong);
+        font-family: 'DM+Mono', monospace;
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 1.4;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .document-subtitle {
+        margin: 0;
+        color: var(--ink-muted);
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .receipt-number {
+        text-align: right;
+        color: var(--ink-muted);
+      }
+      .receipt-number strong {
+        display: block;
+        margin-top: 6px;
+        color: var(--ink-strong);
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .document-body {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(270px, 0.75fr);
+        gap: 24px;
+        padding-top: 16px;
+      }
+      .ledger {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9px;
+        line-height: 1;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .ledger th,
+      .ledger td {
+        height: 34px;
+        padding: 0 8px;
+        border-bottom: 1px solid var(--wash);
+        color: var(--ink);
+        text-align: left;
+        white-space: nowrap;
+      }
+      .ledger th {
+        color: var(--ink-faint);
+        font-weight: 500;
+      }
+      .ledger th:last-child,
+      .ledger td:last-child {
+        text-align: right;
+      }
+      .ledger tr.fail td {
+        color: var(--fail);
+      }
+      .ledger tr.free td {
+        color: var(--ok);
+      }
+      .ledger tr.total td {
+        height: 40px;
+        border-top: 1px solid var(--line);
+        border-bottom: 0;
+        color: var(--ink-strong);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .evidence-column {
+        min-width: 0;
+        display: grid;
+        align-content: start;
+        gap: 13px;
+      }
+      .evidence-block {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 12px;
+        background: var(--wash-faint);
+      }
+      .evidence-block h2 {
+        margin-bottom: 10px;
+        color: var(--ink-muted);
+        font-family: 'DM+Mono', monospace;
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .evidence-row {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr);
+        gap: 8px;
+        padding: 5px 0;
+        border-top: 1px solid var(--wash);
+        color: var(--ink-muted);
+        font-size: 9px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      .evidence-row:first-of-type {
+        border-top: 0;
+      }
+      .evidence-row strong {
+        min-width: 0;
+        overflow: hidden;
+        color: var(--ink-strong);
+        font-weight: 500;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .manifest-list {
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      .manifest-list .chip {
+        color: var(--ink-strong);
+        background: var(--card);
+      }
+      .document-foot {
+        min-height: 40px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        color: var(--ink-strong);
+      }
+      .confirm-bar {
+        height: 72px;
+        flex: 0 0 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        border-top: 1px solid var(--line);
+        background: var(--card);
+        z-index: 50;
+      }
+      .confirm-bar-note {
+        display: grid;
+        gap: 5px;
+      }
+      .ghost {
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 20px;
+        background: var(--card);
+        color: var(--ink-strong);
+        font-size: 13px;
+      }
+      .app-footer {
+        height: 32px;
+        flex: 0 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-top: 1px solid var(--line);
+        background: var(--wash-faint);
+        color: var(--ink-faint);
+      }
+      .footer-meta {
+        gap: 24px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand-row">
+          <span class="brand">MustBeViral Studio</span>
+          <span class="breadcrumb">Lumen Skin / Receipts / <strong>Entry 0042</strong></span>
+        </div>
+        <div class="system-row">
+          <span class="receipt-seal mono"><span aria-hidden="true">◆</span> Receipt verified</span>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <article class="node-card receipt-card" aria-labelledby="receipt-title">
+          <header class="document-head">
+            <div>
+              <h1 id="receipt-title">RECEIPT - REV 7F3A - 2026-07-19</h1>
+              <p class="document-subtitle">
+                Lumen Skin / Meta Campaign Launch Pack / Finalized 14:38:11 CDT
+              </p>
+            </div>
+            <div class="receipt-number mono">Statement<strong>MBV-0042-7F3A</strong></div>
+          </header>
+
+          <div class="document-body">
+            <section aria-label="Event ledger">
+              <table class="ledger">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Node</th>
+                    <th>Event</th>
+                    <th>Cost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>14:32:08.119</td>
+                    <td>n-02</td>
+                    <td>Concept logic / accepted</td>
+                    <td>$1.20</td>
+                  </tr>
+                  <tr>
+                    <td>14:32:11.442</td>
+                    <td>n-05</td>
+                    <td>Asset gen 01 / verified</td>
+                    <td>$0.80</td>
+                  </tr>
+                  <tr>
+                    <td>14:32:12.706</td>
+                    <td>n-06</td>
+                    <td>Asset gen 02 / verified</td>
+                    <td>$0.80</td>
+                  </tr>
+                  <tr class="fail">
+                    <td>14:32:13.090</td>
+                    <td>n-07</td>
+                    <td>Fail / artifact rejected</td>
+                    <td>$0.00</td>
+                  </tr>
+                  <tr class="free">
+                    <td>14:33:02.901</td>
+                    <td>n-07</td>
+                    <td>Re_run free / retained 2</td>
+                    <td>FREE</td>
+                  </tr>
+                  <tr>
+                    <td>14:33:04.125</td>
+                    <td>n-07</td>
+                    <td>Asset gen 03 / verified</td>
+                    <td>$0.80</td>
+                  </tr>
+                  <tr>
+                    <td>14:33:09.342</td>
+                    <td>n-09</td>
+                    <td>Copy set / 3 verified</td>
+                    <td>$0.24</td>
+                  </tr>
+                  <tr>
+                    <td>14:33:16.611</td>
+                    <td>n-10</td>
+                    <td>Motion / seedance 6s</td>
+                    <td>$0.36</td>
+                  </tr>
+                  <tr class="total">
+                    <td>14:38:11.004</td>
+                    <td>run-0042</td>
+                    <td>Total / settled</td>
+                    <td>$4.20</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <aside class="evidence-column" aria-label="Receipt evidence">
+              <section class="evidence-block">
+                <h2>Model route</h2>
+                <div class="evidence-row"><span>Logic</span><strong>kimi-2.6</strong></div>
+                <div class="evidence-row"><span>Image</span><strong>flux-2-klein</strong></div>
+                <div class="evidence-row">
+                  <span>Motion</span><strong>seedance-1.0 / 6s</strong>
+                </div>
+              </section>
+              <section class="evidence-block">
+                <h2>Lineage hashes</h2>
+                <div class="evidence-row">
+                  <span>Brief</span><strong>sha256:3d9b8f17…ab21</strong>
+                </div>
+                <div class="evidence-row">
+                  <span>Graph</span><strong>sha256:7f3a09ce…90de</strong>
+                </div>
+                <div class="evidence-row">
+                  <span>Bundle</span><strong>sha256:e492c6aa…118f</strong>
+                </div>
+              </section>
+              <section class="evidence-block">
+                <h2>Export record / Meta-ready bundle</h2>
+                <div class="manifest-list">
+                  <span class="chip"><span aria-hidden="true">□</span> 12 assets</span>
+                  <span class="chip"><span aria-hidden="true">≡</span> 3 copy sets</span>
+                  <span class="chip"><span aria-hidden="true">▷</span> 1 motion</span>
+                </div>
+                <div class="evidence-row" style="margin-top: 8px">
+                  <span>Manifest</span><strong>lumen-7f3a-manifest.json</strong>
+                </div>
+                <div class="evidence-row">
+                  <span>Status</span><strong>verified private export</strong>
+                </div>
+              </section>
+            </aside>
+          </div>
+
+          <footer class="document-foot mono">
+            <span>IMMUTABLE - LEDGER ENTRY 0042</span><span>Signer: mbv-ledger-v2 / us-east-1</span>
+          </footer>
+        </article>
+      </main>
+
+      <div class="confirm-bar">
+        <div class="confirm-bar-note">
+          <span class="mono" style="color: var(--ink-muted)">Immutable record</span
+          ><span class="mono">Revision 7f3a · Settled $4.20 · Export verified</span>
+        </div>
+        <button type="button" class="ghost focus-demo">Download PDF</button>
+      </div>
+
+      <footer class="app-footer">
+        <div class="footer-meta mono">
+          <span>Ledger read: 22ms</span><span>Entry: 0042</span><span>Region: us-east-1</span>
+        </div>
+        <div class="mono">v2.0.4-studio</div>
+      </footer>
+    </div>
+  </body>
+</html>
