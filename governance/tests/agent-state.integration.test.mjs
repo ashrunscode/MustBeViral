@@ -35,6 +35,16 @@ function fixture(t) {
   cpSync(path.join(sourceRoot, 'governance', 'schemas'), path.join(root, 'governance', 'schemas'), {
     recursive: true,
   });
+  const statePath = path.join(root, 'PROJECT_STATE.yaml');
+  const packetPath = path.join(root, 'docs', 'delivery', 'ACTIVE_WORK_PACKET.yaml');
+  const state = YAML.parse(readFileSync(statePath, 'utf8'));
+  const packet = YAML.parse(readFileSync(packetPath, 'utf8'));
+  // Keep the isolated fixture at receipt-chain genesis as repository authority advances.
+  state.active_work_packet = 'WP-R0-002';
+  packet.id = 'WP-R0-002';
+  packet.depends_on = [];
+  writeFileSync(statePath, YAML.stringify(state, { lineWidth: 100 }), 'utf8');
+  writeFileSync(packetPath, YAML.stringify(packet, { lineWidth: 100 }), 'utf8');
   writeFileSync(path.join(root, 'source.txt'), 'before verification\n', 'utf8');
   writeFileSync(
     path.join(root, 'mutate.mjs'),

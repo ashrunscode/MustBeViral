@@ -17,6 +17,7 @@
     "agent:finish": "node governance/scripts/agent-state.mjs finish",
     "agent:recover": "node governance/scripts/agent-state.mjs recover",
     "packet:verify": "node governance/scripts/validate-work-packet.mjs",
+    "diff-scope:check": "node governance/scripts/validate-diff-scope.mjs",
     "transition:check": "node governance/scripts/validate-transition-receipts.mjs",
     "docs:generate": "node governance/scripts/generate-docs.mjs",
     "docs:check": "node governance/scripts/validate-docs.mjs",
