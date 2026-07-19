@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: D0
 active_packet: WP-D0-001
-current_step: d0-003-direction-branches
-next_action: Render the round-2 Lightfield-identity draft and branches per the operator brand pivot, then re-present for explicit ratification.
+current_step: d0-005-user-selection
+next_action: Record the operator's explicit branch selection from the round-2 Lightfield set in the design-direction evidence.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

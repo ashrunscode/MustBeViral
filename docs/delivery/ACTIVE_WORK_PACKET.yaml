@@ -84,13 +84,13 @@ steps:
     status: completed
   - id: d0-003-direction-branches
     title: Render the initial draft and three controlled dark-studio branches
-    status: current
+    status: completed
   - id: d0-004-direction-review
     title: Record accessibility, density, legibility, and responsive-direction review evidence
     status: completed
   - id: d0-005-user-selection
     title: Present named renders and record the user's explicit branch selection
-    status: pending
+    status: current
   - id: d0-006-successor-handoff
     title: Validate evidence and prepare the chosen-direction high-fidelity successor packet
     status: pending
@@ -142,9 +142,9 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d0-003-direction-branches
-  next_action: Render the round-2 Lightfield-identity draft and branches per the operator brand
-    pivot, then re-present for explicit ratification.
+  current_step: d0-005-user-selection
+  next_action: Record the operator's explicit branch selection from the round-2 Lightfield set in
+    the design-direction evidence.
   blockers: []
   changed_paths:
     - governance/scripts/validate-diff-scope.mjs

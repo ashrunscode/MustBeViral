@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-D0-001
-next_action: Render the round-2 Lightfield-identity draft and branches per the operator brand pivot,
-  then re-present for explicit ratification.
+next_action: Record the operator's explicit branch selection from the round-2 Lightfield set in the
+  design-direction evidence.
 decisions_pending: []
 blockers: []
 legacy:

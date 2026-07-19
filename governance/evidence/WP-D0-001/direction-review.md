@@ -59,3 +59,22 @@ The initial draft and two branches display placeholder model names (`GPT-4o`, `C
 quote contract. These are render-content drifts, not direction properties; the high-fidelity packet
 must pin all model labels and money figures to contract values (as the Review Approval Confidence
 branch already does).
+
+## Round 2 — Lightfield identity (2026-07-19, supersedes round-1 branch review)
+
+Operator directed the Lightfield pivot; round-2 foundation and three branches render the exact
+measured tokens (paper #fafafa, ink-alpha ladder, weight-400 type, monocaps evidence, #3182d4
+confirm / #80bfff selection). Both work-motion animations (top-edge filament sweep; flowing dashed
+edge with stroke-dashoffset) are structurally verified in the generated HTML and visually present.
+
+- Calm Density: six-row Immutable Ledger (TOKEN_REMAP/GRAPH_VAL rows), compact meta, full graph and
+  money story in one screen.
+- Canvas Legibility: 17px node titles, monocaps labels, rail drawers (LEDGER/CONFIG), clearest
+  directional flow edge; the calmest of the three.
+- Review Approval: CURRENT-vs-PRIOR comparison inside the working node, per-finding REJECT/APPROVE
+  with realistic QA copy, Retry Batch (No Charge), ledger rows FREE and APPROVED $4.20, batch
+  progress 4/12, and EXPIRING IN 02:45 on the confirm bar - the research-winning trust surfaces at
+  full strength. Watch: right-panel clipping at 1440px.
+
+All three: correct wordmark, quote pill, kimi-2.6 + flux-2-klein routes, every figure within the
+$8/run cap story, zero banned jargon, one blue action per screen.

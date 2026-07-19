@@ -1,46 +1,49 @@
 schema_version: 1
 packet_id: WP-D0-001
 initial_draft:
-  name: Precision Creative Studio - initial draft
-  rendered_artifact: https://p.superdesign.dev/draft/b83df177-448f-48c2-b32e-55aaa3038e24
-  desktop_capture: governance/evidence/WP-D0-001/captures/initial-draft-desktop.png
-  shared_content_id: lumen-skin-launch-pack-v1
+  name: Paper Studio - final foundation
+  rendered_artifact: https://p.superdesign.dev/draft/43a44895-11b1-492a-9fcd-7b4cc1702f00
+  desktop_capture: governance/evidence/WP-D0-001/captures/paper-studio-foundation-desktop.png
+  shared_content_id: lumen-skin-launch-pack-v2
 branches:
-  - name: Calm-Density Console
+  - name: Calm Density
     focus: calm-density
-    rendered_artifact: https://p.superdesign.dev/draft/3e033c0c-7d6d-4aa8-8663-e8e7a9151bd4
-    desktop_capture: governance/evidence/WP-D0-001/captures/calm-density-desktop.png
-    shared_content_id: lumen-skin-launch-pack-v1
+    rendered_artifact: https://p.superdesign.dev/draft/c065a95c-ee20-4b21-b720-b7b62ddf5bbb
+    desktop_capture: governance/evidence/WP-D0-001/captures/r2-calm-density-desktop.png
+    shared_content_id: lumen-skin-launch-pack-v2
   - name: Canvas Legibility
     focus: canvas-legibility
-    rendered_artifact: https://p.superdesign.dev/draft/040be303-a5cc-4d14-856f-ab49913a34f7
-    desktop_capture: governance/evidence/WP-D0-001/captures/canvas-legibility-desktop.png
-    shared_content_id: lumen-skin-launch-pack-v1
-  - name: Review Approval Confidence
+    rendered_artifact: https://p.superdesign.dev/draft/7ca1f21f-b196-427a-b866-e770677fd100
+    desktop_capture: governance/evidence/WP-D0-001/captures/r2-canvas-legibility-desktop.png
+    shared_content_id: lumen-skin-launch-pack-v2
+  - name: Review Approval
     focus: review-approval-confidence
-    rendered_artifact: https://p.superdesign.dev/draft/09a33e31-919e-4e2a-b448-86557228352a
-    desktop_capture: governance/evidence/WP-D0-001/captures/review-approval-confidence-desktop.png
-    shared_content_id: lumen-skin-launch-pack-v1
+    rendered_artifact: https://p.superdesign.dev/draft/7fc1605e-8ee9-452f-b6be-81d612afe483
+    desktop_capture: governance/evidence/WP-D0-001/captures/r2-review-approval-desktop.png
+    shared_content_id: lumen-skin-launch-pack-v2
 review:
   findings:
     - dimension: accessibility
       status: noted
       note:
-        All branches pair status color with icon and text and hold dark-token contrast; focus-visible
-        rings and reduced-motion behavior are not verifiable from static captures and carry into
-        high-fidelity review as required checks.
+        Ink-alpha body text on paper meets the contrast bar in all renders; status always icon+text;
+        the Review Approval QA copy even models a 4.5:1 contrast finding. Focus-visible and
+        reduced-motion remain high-fidelity verification items (static captures cannot prove them).
     - dimension: density
       status: pass
-      note: Calm-Density delivers the ledger-style activity table and docked quote strip; the other
-        branches keep compact control sizing without crowding.
+      note:
+        Calm Density carries a six-row immutable ledger and compact node meta without breaking the
+        paper calm; no branch crowds below the 4px grid.
     - dimension: legibility
       status: pass
       note:
-        Canvas Legibility renders the largest node typography with directional lineage; all branches
-        keep Geist Mono for identifiers, prices, and model labels.
+        Canvas Legibility renders 17px node titles with Lightfield monocaps metadata, recessed rail
+        drawers, and a clearly directional animated flow edge.
     - dimension: responsive
       status: noted
-      note: Desktop captures only at this gate by design; tablet drawer and mobile review flows are
-        extended from the chosen branch per the experience contract.
+      note:
+        Desktop captures at this gate by design; tablet drawers and mobile review extend from the
+        ratified branch. The Review Approval right panel clips slightly at 1440 and carries an
+        overflow-discipline note into high fidelity.
 approval:
   state: pending
