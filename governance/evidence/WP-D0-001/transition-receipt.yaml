@@ -1,0 +1,41 @@
+schema_version: 1
+packet_id: WP-D0-001
+spec_revision: 2
+phase: D0
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-07-19T13:10:17.057Z
+successor_packet_id: WP-D0-002
+predecessor_head: 7e752e0e37f69a53d0b24602ff24945f69c25ffc
+closed_packet_path: governance/evidence/WP-D0-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-D0-001/design-direction.yaml
+  - governance/evidence/WP-D0-001/direction-review.md
+  - governance/evidence/WP-D0-001/initialize-evidence.md
+  - governance/evidence/WP-D0-001/scope-integrity.md
+  - governance/evidence/WP-D0-001/final-gates.md
+evidence_entries:
+  - path: governance/evidence/WP-D0-001/design-direction.yaml
+    sha256: ce20014101d1b3fdc44ed9aa31d99d0adcd9e667d6aaa6fbc34f115cd8eecdf6
+    git_blob_oid: 171b4a5182c51f5ab17c7d0b152024dc6af0980d
+  - path: governance/evidence/WP-D0-001/direction-review.md
+    sha256: 1801ab849d58497400cd54c0ca1a844298097127ee99e7ab88225a3960f6b200
+    git_blob_oid: bbbef9f186936268ab5d66fdd3d5d7590543df9b
+  - path: governance/evidence/WP-D0-001/final-gates.md
+    sha256: 4d53ea66fa224bb835699f630a08696a7082fe3e691f2a5972670303c995c5e9
+    git_blob_oid: 5e05afca437b28612f45bb5fcb2b6f9d02d64b09
+  - path: governance/evidence/WP-D0-001/initialize-evidence.md
+    sha256: eb79abfbbf09294074b879b8d8ac030c52dd3c99e2038d0e8377f88ae416bd13
+    git_blob_oid: a2b55a1f30744192f1b96059e364cbae73baae74
+  - path: governance/evidence/WP-D0-001/scope-integrity.md
+    sha256: fb0eadff8bcc099fb24057348c3a0181dd76217ecf12aacf3f88ea2f02911496
+    git_blob_oid: d3c0ed020ec084574b484ed2bba0fa26e7ef5232
+completed_step_ids:
+  - d0-000-agent-safety-hardening
+  - d0-001-initialize
+  - d0-002-design-system
+  - d0-003-direction-branches
+  - d0-004-direction-review
+  - d0-005-user-selection
+  - d0-006-successor-handoff
+closed_packet_sha256: ab13efee49284f3a4ad8a7a50f84660d5efc97f46fa2462953c7dc7460d96b1d

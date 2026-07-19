@@ -7,12 +7,12 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: D0
-  title: Precision Creative Studio direction exploration
-  state: in_progress
+  title: Review Approval high-fidelity D0 exit closure
+  state: planned
 release_target: P0
-active_work_packet: WP-D0-001
-next_action: Validate the ratified Review Approval evidence set and author the WP-D0-002
-  high-fidelity successor packet.
+active_work_packet: WP-D0-002
+next_action: Run pnpm agent:start, then amend the accepted experience contract to the
+  operator-directed Lightfield identity and register every affected documentation reference.
 decisions_pending: []
 blockers: []
 legacy:
@@ -32,7 +32,11 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-07-18T05:05:54.924Z
+  at: 2026-07-19T13:10:17.057Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-R0-002/scaffold-verification.md
+    - governance/evidence/WP-D0-001/design-direction.yaml
+    - governance/evidence/WP-D0-001/direction-review.md
+    - governance/evidence/WP-D0-001/initialize-evidence.md
+    - governance/evidence/WP-D0-001/scope-integrity.md
+    - governance/evidence/WP-D0-001/final-gates.md

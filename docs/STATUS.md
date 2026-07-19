@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | D0 — Precision Creative Studio direction exploration (in_progress) |
-| Active packet | `WP-D0-001` |
-| Current step | `d0-006-successor-handoff` |
+| Phase | D0 — Review Approval high-fidelity D0 exit closure (planned) |
+| Active packet | `WP-D0-002` |
+| Current step | `d1-000-experience-contract-lightfield` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Validate the ratified Review Approval evidence set and author the WP-D0-002 high-fidelity successor packet.
+Run pnpm agent:start, then amend the accepted experience contract to the operator-directed Lightfield identity and register every affected documentation reference.

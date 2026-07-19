@@ -1,0 +1,173 @@
+schema_version: 1
+id: WP-D0-001
+spec_revision: 2
+title: Precision Creative Studio direction exploration
+phase: D0
+status: complete
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Harden the two-agent build guardrails identified by the accepted pre-build audit
+  (base-anchored committed-diff scope enforcement, real-credential secret scanning, webhook
+  idempotency clarification, design gate authoring), then initialize the clean SuperDesign authority
+  from accepted MustBeViral product and UX contracts, render three explicit dark-studio direction
+  branches, and obtain the user's recorded selection without changing production application UI.
+authority_refs:
+  - product-contract
+  - release-scope
+  - experience-contract
+  - canvas-screen-states
+  - roadmap
+  - quality-gates
+  - toolchain-template-provenance
+required_skills:
+  - superdesign
+  - frontend-master
+depends_on:
+  - WP-R0-002
+scope:
+  allowed_paths:
+    - .superdesign/**
+    - governance/evidence/WP-D0-001/**
+    - governance/evidence/WP-R0-002/transition-receipt.yaml
+    - governance/evidence/WP-R0-002/completed-work-packet.yaml
+    - governance/schemas/design-direction-evidence.schema.json
+    - governance/scripts/validate-design-direction.mjs
+    - governance/scripts/validate-diff-scope.mjs
+    - governance/legacy-fingerprints.yaml
+    - governance/tests/**
+    - .github/workflows/governance.yml
+    - docs/architecture/API_MCP_AND_CLI.md
+    - package.json
+    - PROJECT_STATE.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/STATUS.md
+    - docs/generated/**
+    - llms.txt
+  forbidden_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - docs/archive/**
+    - docs/research/**
+    - pnpm-lock.yaml
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - experience-contract
+    - canvas-screen-states
+    - roadmap
+    - quality-gates
+    - toolchain-template-provenance
+deliverables:
+  - Clean SuperDesign repository analysis under .superdesign/init with no imported legacy UI
+  - Precision Creative Studio design system derived from the accepted palette, typography, spacing,
+    interaction, accessibility, and responsive contracts
+  - One initial studio draft and three explicit branches focused on calm density, canvas legibility,
+    and review and approval confidence
+  - Rendered artifact references and named desktop captures for every branch using the same
+    representative canvas and output-review content
+  - Machine-readable direction evidence plus a fail-closed validator and fixtures
+  - Explicit user selection of one branch, or a recorded blocking decision with no production UI
+    implementation
+public_interfaces: []
+steps:
+  - id: d0-000-agent-safety-hardening
+    title: Wire base-anchored diff-scope CI enforcement, real-credential secret scanning with canary
+      tests, webhook idempotency clarification, and the design:check gate infrastructure
+    status: completed
+  - id: d0-001-initialize
+    title: Verify SuperDesign authentication and create the clean repository analysis
+    status: completed
+  - id: d0-002-design-system
+    title: Create the Precision Creative Studio design system from accepted contracts
+    status: completed
+  - id: d0-003-direction-branches
+    title: Render the initial draft and three controlled dark-studio branches
+    status: completed
+  - id: d0-004-direction-review
+    title: Record accessibility, density, legibility, and responsive-direction review evidence
+    status: completed
+  - id: d0-005-user-selection
+    title: Present named renders and record the user's explicit branch selection
+    status: completed
+  - id: d0-006-successor-handoff
+    title: Validate evidence and prepare the chosen-direction high-fidelity successor packet
+    status: completed
+acceptance:
+  automated:
+    - id: design-direction-evidence
+      criterion: The design-direction validator proves one initial draft and exactly three named branches,
+        rendered artifact references, named desktop captures, shared representative content,
+        required review findings, and an explicit approval state.
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/design-direction.yaml
+    - id: production-ui-unchanged
+      criterion: The packet changes no application, shared package, database, runtime dependency, or
+        production UI path.
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/scope-integrity.md
+    - id: clean-superdesign-intake
+      criterion: SuperDesign analysis identifies only ViralGraph cleanroom V2 and contains no legacy V1
+        route, React Router, D1-auth, marketing-autopilot, or System DNA instruction.
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/initialize-evidence.md
+  manual:
+    - id: direction-approval
+      criterion: The user explicitly selects one named branch after reviewing its rendered artifact and
+        desktop capture; silence, an agent preference, or a tool default cannot count as approval.
+      status: passed
+      evidence:
+        - governance/evidence/WP-D0-001/design-direction.yaml
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-001/design-direction.yaml
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-001/final-gates.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-D0-001/final-gates.md
+rollback:
+  strategy: Revert the packet's SuperDesign artifacts, evidence validator, evidence files, and root
+    script; the production web scaffold remains unchanged.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: authorized
+  destructive_remote_actions: false
+handoff:
+  current_step: d0-006-successor-handoff
+  next_action: Validate the ratified Review Approval evidence set and author the WP-D0-002
+    high-fidelity successor packet.
+  blockers: []
+  changed_paths:
+    - governance/scripts/validate-diff-scope.mjs
+    - governance/legacy-fingerprints.yaml
+    - governance/schemas/design-direction-evidence.schema.json
+    - governance/scripts/validate-design-direction.mjs
+    - governance/tests/**
+    - .github/workflows/governance.yml
+    - docs/architecture/API_MCP_AND_CLI.md
+    - package.json
+  last_green_checks:
+    - pnpm agent:preflight
+    - pnpm governance:check
+    - pnpm verify
+completion:
+  successor_packet_id: WP-D0-002
+  evidence_paths:
+    - governance/evidence/WP-D0-001/design-direction.yaml
+    - governance/evidence/WP-D0-001/direction-review.md
+    - governance/evidence/WP-D0-001/initialize-evidence.md
+    - governance/evidence/WP-D0-001/scope-integrity.md
+    - governance/evidence/WP-D0-001/final-gates.md
+  completed_at: 2026-07-19T13:10:17.057Z

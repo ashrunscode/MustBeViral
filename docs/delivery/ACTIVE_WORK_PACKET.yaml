@@ -1,177 +1,187 @@
 schema_version: 1
-id: WP-D0-001
-spec_revision: 2
-title: Precision Creative Studio direction exploration
+id: WP-D0-002
+spec_revision: 1
+title: Review Approval high-fidelity D0 exit closure
 phase: D0
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Harden the two-agent build guardrails identified by the accepted pre-build audit
-  (base-anchored committed-diff scope enforcement, real-credential secret scanning, webhook
-  idempotency clarification, design gate authoring), then initialize the clean SuperDesign
-  authority from accepted MustBeViral product and UX contracts, render three explicit dark-studio
-  direction branches, and obtain the user's recorded selection without changing production
-  application UI.
+objective: Extend the operator-ratified Review Approval direction to high fidelity across campaign
+  brief, canvas, quote/run, output comparison, receipt, and responsive review flows; amend the
+  accepted experience contract to the Lightfield identity; and close the remaining D0 exit evidence
+  for enabled-model price, license, retention, moderation, and capability coverage including
+  economy-tier candidates such as kimi-class text and Seedance/fal video, platform-algorithm
+  research playbooks, golden briefs and qualified-user recruitment, and the RLS/Hyperdrive benchmark
+  plan.
 authority_refs:
   - product-contract
   - release-scope
   - experience-contract
   - canvas-screen-states
+  - data-auth-tenancy
+  - execution-providers-billing
   - roadmap
   - quality-gates
-  - toolchain-template-provenance
+  - source-register
+  - generated-model-catalog
 required_skills:
   - superdesign
   - frontend-master
 depends_on:
-  - WP-R0-002
+  - WP-D0-001
 scope:
   allowed_paths:
     - .superdesign/**
-    - governance/evidence/WP-D0-001/**
-    - governance/evidence/WP-R0-002/transition-receipt.yaml
-    - governance/evidence/WP-R0-002/completed-work-packet.yaml
+    - governance/evidence/WP-D0-002/**
+    - governance/evidence/WP-D0-001/transition-receipt.yaml
+    - governance/evidence/WP-D0-001/completed-work-packet.yaml
     - governance/schemas/design-direction-evidence.schema.json
     - governance/scripts/validate-design-direction.mjs
-    - governance/scripts/validate-diff-scope.mjs
-    - governance/legacy-fingerprints.yaml
     - governance/tests/**
-    - .github/workflows/governance.yml
-    - docs/architecture/API_MCP_AND_CLI.md
+    - docs/ux/**
+    - docs/research/**
+    - docs/MANIFEST.yaml
+    - docs/INDEX.md
+    - docs/STATUS.md
+    - docs/generated/**
     - package.json
     - PROJECT_STATE.yaml
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/STATUS.md
-    - docs/generated/**
     - llms.txt
   forbidden_paths:
     - apps/**
     - packages/**
     - supabase/**
     - docs/archive/**
-    - docs/research/**
     - pnpm-lock.yaml
   required_doc_ids:
     - product-contract
     - release-scope
     - experience-contract
     - canvas-screen-states
+    - data-auth-tenancy
+    - execution-providers-billing
     - roadmap
     - quality-gates
-    - toolchain-template-provenance
+    - source-register
+    - generated-model-catalog
 deliverables:
-  - Clean SuperDesign repository analysis under .superdesign/init with no imported legacy UI
-  - Precision Creative Studio design system derived from the accepted palette, typography, spacing,
-    interaction, accessibility, and responsive contracts
-  - One initial studio draft and three explicit branches focused on calm density, canvas legibility,
-    and review and approval confidence
-  - Rendered artifact references and named desktop captures for every branch using the same
-    representative canvas and output-review content
-  - Machine-readable direction evidence plus a fail-closed validator and fixtures
-  - Explicit user selection of one branch, or a recorded blocking decision with no production UI
-    implementation
+  - Accepted experience-contract amendment replacing the exploration-only dark-studio direction with
+    the operator-directed Lightfield identity and its accessible responsive rules
+  - Review Approval high-fidelity campaign brief, canvas, quote/run, output comparison, receipt,
+    tablet review, and mobile review renders with named captures
+  - Approved-golden evidence extending the design-direction contract with full-flow and responsive
+    artifact references, captures, review findings, and explicit operator approval
+  - Current source-backed price, license, retention, moderation, capability, and evaluation evidence
+    for every enabled launch model and evaluated economy-tier candidates
+  - Source-backed platform-algorithm creative playbooks for the launch-pack destinations
+  - A 20-brief representative golden corpus and a definition and recruitment record for five to
+    eight qualified DTC/e-commerce evaluators
+  - Data API/RPC baseline and Hyperdrive candidate benchmark plan covering cold and warm
+    p50/p95/p99, concurrency, conflicts, errors, and pooled-identity isolation
+  - Transition-ready WP-P0-001 successor draft and complete WP-D0-002 handoff evidence
 public_interfaces: []
 steps:
-  - id: d0-000-agent-safety-hardening
-    title: Wire base-anchored diff-scope CI enforcement, real-credential secret scanning with
-      canary tests, webhook idempotency clarification, and the design:check gate infrastructure
-    status: completed
-  - id: d0-001-initialize
-    title: Verify SuperDesign authentication and create the clean repository analysis
-    status: completed
-  - id: d0-002-design-system
-    title: Create the Precision Creative Studio design system from accepted contracts
-    status: completed
-  - id: d0-003-direction-branches
-    title: Render the initial draft and three controlled dark-studio branches
-    status: completed
-  - id: d0-004-direction-review
-    title: Record accessibility, density, legibility, and responsive-direction review evidence
-    status: completed
-  - id: d0-005-user-selection
-    title: Present named renders and record the user's explicit branch selection
-    status: completed
-  - id: d0-006-successor-handoff
-    title: Validate evidence and prepare the chosen-direction high-fidelity successor packet
-    status: current
+  - id: d1-000-experience-contract-lightfield
+    title: Amend and register the experience contract with the operator-directed Lightfield identity
+    status: pending
+  - id: d1-001-high-fidelity-flow-renders
+    title: Render the full Review Approval desktop, tablet, and mobile flow set while correcting 1440px
+      inspector overflow, proving full 12-node density, quieting retry styling, and specifying
+      focus-visible and reduced-motion behavior
+    status: pending
+  - id: d1-002-approved-golden-evidence
+    title: Capture the named full-flow golden set and extend validated design-direction evidence
+    status: pending
+  - id: d1-003-model-catalog-evidence
+    title: Register current source-backed price, license, retention, moderation, capability, and
+      evaluation evidence for every enabled model and evaluated economy-tier candidate
+    status: pending
+  - id: d1-004-platform-algorithm-playbooks
+    title: Author source-backed platform-algorithm creative playbooks for launch-pack destinations
+    status: pending
+  - id: d1-005-golden-briefs-and-recruitment
+    title: Define the 20 representative golden briefs and recruit or qualify five to eight evaluators
+    status: pending
+  - id: d1-006-rls-hyperdrive-benchmark-plan
+    title: Specify the Data API/RPC baseline and Hyperdrive candidate benchmark plan with latency,
+      concurrency, conflict, error, and pooled-identity cases
+    status: pending
+  - id: d1-007-successor-handoff
+    title: Validate D0 exit evidence and prepare the WP-P0-001 successor transition
+    status: pending
 acceptance:
   automated:
-    - id: design-direction-evidence
-      criterion:
-        The design-direction validator proves one initial draft and exactly three named branches,
-        rendered artifact references, named desktop captures, shared representative content,
-        required review findings, and an explicit approval state.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-001/design-direction.yaml
-    - id: production-ui-unchanged
-      criterion: The packet changes no application, shared package, database, runtime dependency, or
-        production UI path.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-001/scope-integrity.md
-    - id: clean-superdesign-intake
-      criterion:
-        SuperDesign analysis identifies only ViralGraph cleanroom V2 and contains no legacy V1
-        route, React Router, D1-auth, marketing-autopilot, or System DNA instruction.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-001/initialize-evidence.md
+    - id: high-fidelity-design-direction-evidence
+      criterion: The design-direction validator proves rendered campaign brief, canvas, quote/run, output
+        comparison, receipt, tablet review, and mobile review artifacts with named captures,
+        recorded watch-item resolutions, and explicit approval state.
+      status: pending
+      evidence: []
+    - id: lightfield-contract-and-docs
+      criterion: The accepted experience-contract amendment defines the Lightfield identity, remains
+        registered in the documentation manifest, regenerates affected references, and passes pnpm
+        docs:check.
+      status: pending
+      evidence: []
+    - id: enabled-model-catalog-evidence
+      criterion: Generated model-catalog evidence is complete and current for price, license, retention,
+        moderation, capability, and evaluation fields for every enabled model, with no enabled model
+        surviving missing or stale evidence.
+      status: pending
+      evidence: []
+    - id: remaining-d0-exit-evidence
+      criterion: Registered evidence proves the platform-algorithm playbooks, 20 representative golden
+        briefs, five-to-eight-user qualification and recruitment definition, and a Data API/RPC
+        versus Hyperdrive benchmark plan covering cold and warm p50/p95/p99, concurrency, conflicts,
+        errors, and pooled-identity isolation.
+      status: pending
+      evidence: []
   manual:
-    - id: direction-approval
-      criterion:
-        The user explicitly selects one named branch after reviewing its rendered artifact and
-        desktop capture; silence, an agent preference, or a tool default cannot count as approval.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-001/design-direction.yaml
+    - id: high-fidelity-golden-approval
+      criterion: The operator explicitly approves the named high-fidelity desktop, tablet, and mobile
+        golden set after reviewing the rendered flow artifacts; silence or agent preference cannot
+        count as approval.
+      status: pending
+      evidence: []
+    - id: amended-experience-contract-approval
+      criterion: The operator explicitly approves the amended Lightfield experience contract before D0 is
+        closed or production UI implementation begins.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-D0-001/design-direction.yaml
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-D0-001/final-gates.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-D0-001/final-gates.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert the packet's SuperDesign artifacts, evidence validator, evidence files, and root
-    script; the production web scaffold remains unchanged.
+  strategy: Revert the packet's SuperDesign artifacts, approved-golden evidence, validator extensions,
+    experience-contract amendment, research and model-catalog evidence, generated references, and
+    root scripts; the production application, shared packages, database, and Supabase paths remain
+    unchanged.
   remote_actions_required: false
 external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d0-006-successor-handoff
-  next_action: Validate the ratified Review Approval evidence set and author the WP-D0-002
-    high-fidelity successor packet.
+  current_step: d1-000-experience-contract-lightfield
+  next_action: Run pnpm agent:start, then amend the accepted experience contract to the
+    operator-directed Lightfield identity and register every affected documentation reference.
   blockers: []
-  changed_paths:
-    - governance/scripts/validate-diff-scope.mjs
-    - governance/legacy-fingerprints.yaml
-    - governance/schemas/design-direction-evidence.schema.json
-    - governance/scripts/validate-design-direction.mjs
-    - governance/tests/**
-    - .github/workflows/governance.yml
-    - docs/architecture/API_MCP_AND_CLI.md
-    - package.json
+  changed_paths: []
   last_green_checks:
     - pnpm agent:preflight
     - pnpm governance:check
     - pnpm verify
 completion:
-  successor_packet_id: WP-D0-002
-  evidence_paths:
-    - governance/evidence/WP-D0-001/design-direction.yaml
-    - governance/evidence/WP-D0-001/direction-review.md
-    - governance/evidence/WP-D0-001/initialize-evidence.md
-    - governance/evidence/WP-D0-001/scope-integrity.md
-    - governance/evidence/WP-D0-001/final-gates.md
+  successor_packet_id: WP-P0-001
+  evidence_paths: []
   completed_at: null
