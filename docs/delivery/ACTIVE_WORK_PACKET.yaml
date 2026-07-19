@@ -3,7 +3,7 @@ id: WP-D0-002
 spec_revision: 1
 title: Review Approval high-fidelity D0 exit closure
 phase: D0
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Extend the operator-ratified Review Approval direction to high fidelity across campaign
@@ -84,7 +84,7 @@ public_interfaces: []
 steps:
   - id: d1-000-experience-contract-lightfield
     title: Amend and register the experience contract with the operator-directed Lightfield identity
-    status: pending
+    status: current
   - id: d1-001-high-fidelity-flow-renders
     title: Render the full Review Approval desktop, tablet, and mobile flow set while correcting 1440px
       inspector overflow, proving full 12-node density, quieting retry styling, and specifying
@@ -173,8 +173,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: d1-000-experience-contract-lightfield
-  next_action: Run pnpm agent:start, then amend the accepted experience contract to the
-    operator-directed Lightfield identity and register every affected documentation reference.
+  next_action: Amend and register the experience contract with the operator-directed Lightfield identity
   blockers: []
   changed_paths: []
   last_green_checks:

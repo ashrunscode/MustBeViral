@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-D0-002` (ready). Current step: `d1-000-experience-contract-lightfield`.
+Current packet: `WP-D0-002` (in_progress). Current step: `d1-000-experience-contract-lightfield`.
 
 | Authority topic | Document | Path |
 |---|---|---|

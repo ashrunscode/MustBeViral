@@ -12,7 +12,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | D0 — Review Approval high-fidelity D0 exit closure (planned) |
+| Phase | D0 — Review Approval high-fidelity D0 exit closure (in_progress) |
 | Active packet | `WP-D0-002` |
 | Current step | `d1-000-experience-contract-lightfield` |
 | Release target | `P0` |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Run pnpm agent:start, then amend the accepted experience contract to the operator-directed Lightfield identity and register every affected documentation reference.
+Amend and register the experience contract with the operator-directed Lightfield identity
