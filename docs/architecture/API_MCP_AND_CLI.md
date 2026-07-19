@@ -15,7 +15,7 @@ Zod schemas are the source for TypeScript types and OpenAPI 3.1. Breaking wire c
 - Base URL: `https://api.mustbeviral.com/v1`; staging uses `https://api-staging.mustbeviral.com/v1`.
 - Authentication: `Authorization: Bearer <Supabase JWT>` in P0/P1a; scoped OAuth/API keys begin P1b.
 - Every request receives `X-Request-Id`; a safe caller-supplied ID may be accepted but never trusted for authorization.
-- Every state-changing request requires `Idempotency-Key`. Same key and canonical input returns the stored result; changed input returns `409 IDEMPOTENCY_CONFLICT`.
+- Every state-changing request from an authenticated client (browser, REST, MCP, CLI) requires `Idempotency-Key`. Same key and canonical input returns the stored result; changed input returns `409 IDEMPOTENCY_CONFLICT`. Signed provider webhooks are exempt from this header: they authenticate through raw-body signature verification and deduplicate through the verified provider event identity recorded under a durable unique key before acknowledgement.
 - JSON success shape: `{ "data": ..., "meta": { "request_id": "..." } }`.
 - JSON error shape: `{ "error": { "code": "...", "message": "...", "request_id": "...", "retryable": false, "details": ... } }`.
 - Errors never contain secrets, SQL, provider headers, internal stack traces, or another tenant’s identifiers.
