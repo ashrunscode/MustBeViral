@@ -11,10 +11,9 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel,
-  Core Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials,
-  webhook material, price evidence, and retention/DPA clearance without storing or printing secrets
-  in the repository.
+next_action:
+  Implement the authoritative Postgres schema, migrations, generated types, forced RLS, hardened
+  RPCs, and the required database test suites.
 decisions_pending: []
 blockers: []
 legacy:

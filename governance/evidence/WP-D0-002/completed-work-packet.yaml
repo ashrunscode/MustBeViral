@@ -86,7 +86,8 @@ steps:
     title: Amend and register the experience contract with the operator-directed Lightfield identity
     status: completed
   - id: d1-001-high-fidelity-flow-renders
-    title: Render the full Review Approval desktop, tablet, and mobile flow set while correcting 1440px
+    title:
+      Render the full Review Approval desktop, tablet, and mobile flow set while correcting 1440px
       inspector overflow, proving full 12-node density, quieting retry styling, and specifying
       focus-visible and reduced-motion behavior
     status: completed
@@ -113,7 +114,8 @@ steps:
 acceptance:
   automated:
     - id: high-fidelity-design-direction-evidence
-      criterion: The design-direction validator proves rendered campaign brief, canvas, quote/run, output
+      criterion:
+        The design-direction validator proves rendered campaign brief, canvas, quote/run, output
         comparison, receipt, tablet review, and mobile review artifacts with named captures,
         recorded watch-item resolutions, and explicit approval state.
       status: passed
@@ -127,14 +129,16 @@ acceptance:
       evidence:
         - governance/evidence/WP-D0-002/contract-approval.md
     - id: enabled-model-catalog-evidence
-      criterion: Generated model-catalog evidence is complete and current for price, license, retention,
+      criterion:
+        Generated model-catalog evidence is complete and current for price, license, retention,
         moderation, capability, and evaluation fields for every enabled model, with no enabled model
         surviving missing or stale evidence.
       status: passed
       evidence:
         - governance/evidence/WP-D0-002/d0-exit-evidence.md
     - id: remaining-d0-exit-evidence
-      criterion: Registered evidence proves the platform-algorithm playbooks, 20 representative golden
+      criterion:
+        Registered evidence proves the platform-algorithm playbooks, 20 representative golden
         briefs, five-to-eight-user qualification and recruitment definition, and a Data API/RPC
         versus Hyperdrive benchmark plan covering cold and warm p50/p95/p99, concurrency, conflicts,
         errors, and pooled-identity isolation.
@@ -143,7 +147,8 @@ acceptance:
         - governance/evidence/WP-D0-002/d0-exit-evidence.md
   manual:
     - id: high-fidelity-golden-approval
-      criterion: The operator explicitly approves the named high-fidelity desktop, tablet, and mobile
+      criterion:
+        The operator explicitly approves the named high-fidelity desktop, tablet, and mobile
         golden set after reviewing the rendered flow artifacts; silence or agent preference cannot
         count as approval.
       status: passed
@@ -151,7 +156,8 @@ acceptance:
         - governance/evidence/WP-D0-002/design-direction.yaml
         - governance/evidence/WP-D0-002/contract-approval.md
     - id: amended-experience-contract-approval
-      criterion: The operator explicitly approves the amended Lightfield experience contract before D0 is
+      criterion:
+        The operator explicitly approves the amended Lightfield experience contract before D0 is
         closed or production UI implementation begins.
       status: passed
       evidence:
@@ -173,7 +179,8 @@ quality_gates:
     evidence:
       - governance/evidence/WP-D0-002/d0-exit-evidence.md
 rollback:
-  strategy: Revert the packet's SuperDesign artifacts, approved-golden evidence, validator extensions,
+  strategy:
+    Revert the packet's SuperDesign artifacts, approved-golden evidence, validator extensions,
     experience-contract amendment, research and model-catalog evidence, generated references, and
     root scripts; the production application, shared packages, database, and Supabase paths remain
     unchanged.

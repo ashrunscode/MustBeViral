@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
-current_step: p0-000-environment-provisioning
-next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials, webhook material, price evidence, and retention/DPA clearance without storing or printing secrets in the repository.
+current_step: p0-001-database-rls-migrations
+next_action: Implement the authoritative Postgres schema, migrations, generated types, forced RLS, hardened RPCs, and the required database test suites.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

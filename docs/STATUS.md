@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P0 — Real Meta Campaign Launch Pack vertical slice and private MCP proof (in_progress) |
 | Active packet | `WP-P0-001` |
-| Current step | `p0-000-environment-provisioning` |
+| Current step | `p0-001-database-rls-migrations` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials, webhook material, price evidence, and retention/DPA clearance without storing or printing secrets in the repository.
+Implement the authoritative Postgres schema, migrations, generated types, forced RLS, hardened RPCs, and the required database test suites.

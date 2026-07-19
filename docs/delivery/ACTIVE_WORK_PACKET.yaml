@@ -106,11 +106,11 @@ deliverables:
     legal state machines, typed DAG validation, canonical hashing, expected-revision conflicts,
     affected-descendant invalidation, immutable 15-minute quotes, transactional spend caps, and
     balanced append-only semantic-ledger behavior without automated customer charging.
-  - "Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
+  - 'Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
     copy plus the curated fal launch trio for FLUX.2 [pro] masters, FLUX Kontext [pro] adaptations,
     and Seedance 1.0 Lite motion; every route is versioned, price-pinned, retention/license-cleared,
     fail-closed when evidence or credentials are absent, and exercised through outbox dispatch,
-    signed webhook verification, reconciliation, and idempotent handling."
+    signed webhook verification, reconciliation, and idempotent handling.'
   - Verified server-side copy of accepted provider output into private R2, private-by-default
     metadata and access, artifact verification and quarantine, deterministic exports, and immutable
     provider/model/cost/lineage receipts with no fal delivery URL exposed as a product artifact.
@@ -130,21 +130,21 @@ public_interfaces:
   - P0 authenticated REST /v1 surface for workspace, project, canvas, patch, validation, quote,
     explicitly confirmed run, run status/cancel, private artifact upload/access, export, model
     explanation, receipt, and signed fal webhook operations defined by api-mcp-cli.
-  - "Private P0 MCP operations only: get_canvas_context, apply_canvas_patch, quote_run, start_run,
-    and get_run; no public discovery, production OAuth, broader tools, or CLI surface in P0."
+  - 'Private P0 MCP operations only: get_canvas_context, apply_canvas_patch, quote_run, start_run,
+    and get_run; no public discovery, production OAuth, broader tools, or CLI surface in P0.'
 steps:
   - id: p0-000-environment-provisioning
     title: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core
       Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials, webhook
       material, price evidence, and retention/DPA clearance without storing or printing secrets in
       the repository.
-    status: current
+    status: completed
   - id: p0-001-database-rls-migrations
     title: Implement the authoritative Postgres schema, forward-only migrations, generated types,
       hardened RPCs, forced RLS, least-privilege roles, cross-tenant isolation, migration sequence,
       rollback/idempotency, pooled-identity, and ledger-invariant tests; retain Data API/RPC unless
       the accepted Hyperdrive benchmark proves every G1-G6 enablement condition.
-    status: pending
+    status: current
   - id: p0-002-domain-command-layer
     title: Implement shared domain, graph, command/query, quote, reservation, artifact, and
       integer-micros ledger contracts with deterministic legal state machines, canonical graph
@@ -152,7 +152,8 @@ steps:
       confirmation, idempotency, auditability, and unit and contract tests.
     status: pending
   - id: p0-003-real-provider-adapters
-    title: Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
+    title:
+      Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
       through versioned drivers, a transactional outbox, immediate post-commit dispatch, signed
       webhook verification, safe ambiguous-submit reconciliation, duplicate-proof idempotency,
       private R2 verification/copy, catalog and kill-switch enforcement, and boundary integration
@@ -172,26 +173,30 @@ steps:
       enforcing per-run, workspace-day, and global-day caps and measuring first-reviewable latency.
     status: pending
   - id: p0-006-private-mcp-proof
-    title: Prove the exact five private MCP operations in MCP Inspector and two real clients against the
+    title:
+      Prove the exact five private MCP operations in MCP Inspector and two real clients against the
       shared REST handlers and contract vectors for success, validation, authorization, conflict,
       expiry, explicit confirmation, idempotent replay, rate limit, provider ambiguity, and safe
       error semantics.
     status: pending
   - id: p0-007-p0-gate-evaluation
-    title: Evaluate all P0 technical, usability, output-quality, latency, privacy, trust, performance,
+    title:
+      Evaluate all P0 technical, usability, output-quality, latency, privacy, trust, performance,
       economic, and paid-demand gates across the 20 briefs and five-to-eight qualified evaluator
       sessions; record an operator go/no-go and a pivot/stop decision whenever a required value,
       cost, or paid-demand gate fails.
     status: pending
   - id: p0-008-p1a-successor-handoff
-    title: Assemble complete immutable P0 evidence and prepare the WP-P1A-001 successor transition only
+    title:
+      Assemble complete immutable P0 evidence and prepare the WP-P1A-001 successor transition only
       when every required gate passes, with one exact next action and no unresolved blocker or
       decision.
     status: pending
 acceptance:
   automated:
     - id: representative-run-completion-and-latency
-      criterion: Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
+      criterion:
+        Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
         launch-pack runs technically complete with real enabled providers, while median time to the
         first reviewable static pack is at most 10 minutes and p90 is at most 15 minutes.
       status: pending
@@ -205,7 +210,8 @@ acceptance:
       status: pending
       evidence: []
     - id: private-artifact-trust-and-lineage
-      criterion: Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
+      criterion:
+        Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
         is verified and private by default, no public bucket or provider-delivery URL is exposed,
         every access URL is exact-key and short-lived, and no completed output contains a hidden
         mock, silent fallback, missing artifact lineage, or missing immutable provider/model/cost
@@ -213,20 +219,23 @@ acceptance:
       status: pending
       evidence: []
     - id: canvas-and-web-performance
-      criterion: Measured browser evidence proves ordinary pan and zoom maintains at least 55 FPS with 100
+      criterion:
+        Measured browser evidence proves ordinary pan and zoom maintains at least 55 FPS with 100
         visible nodes, the 500-node stress graph remains navigable through level-of-detail rendering
         and virtualization, and the agreed production segment meets p75 LCP at most 2.5 seconds, INP
         at most 200 milliseconds, and CLS at most 0.1.
       status: pending
       evidence: []
     - id: private-mcp-rest-semantic-parity
-      criterion: Contract vectors pass for the exact five private MCP operations through MCP Inspector and
+      criterion:
+        Contract vectors pass for the exact five private MCP operations through MCP Inspector and
         two real clients, proving the same revision, validation, authorization, quote, confirmation,
         run, idempotency, recovery, and safe-error semantics as REST with no broader P0 MCP surface.
       status: pending
       evidence: []
     - id: usable-pack-landed-cost
-      criterion: Reconciled immutable provider, storage, execution, and artifact evidence computes landed
+      criterion:
+        Reconciled immutable provider, storage, execution, and artifact evidence computes landed
         cost in integer USD micros and proves landed cost is at most $5 for every launch pack
         counted as usable, with no unexplained receipt or catalog-price difference.
       status: pending
@@ -239,24 +248,28 @@ acceptance:
       status: pending
       evidence: []
     - id: usable-concept-rate
-      criterion: Qualified evaluators applying the registered rubric determine that at least 70% of the 20
+      criterion:
+        Qualified evaluators applying the registered rubric determine that at least 70% of the 20
         launch-pack jobs produce one or more usable concepts without relaxing supplied claim,
         rights, brand, or QA constraints.
       status: pending
       evidence: []
     - id: evaluator-workflow-preference
-      criterion: At least three of five qualified evaluators explicitly prefer the launch-pack workflow to
+      criterion:
+        At least three of five qualified evaluators explicitly prefer the launch-pack workflow to
         their current process in recorded evaluation evidence.
       status: pending
       evidence: []
     - id: qualified-paid-pilot-proof
-      criterion: At least one qualified customer pays for the validation engagement or signs a paid pilot,
+      criterion:
+        At least one qualified customer pays for the validation engagement or signs a paid pilot,
         with sanitized durable evidence sufficient to prove the commitment without exposing customer
         data or payment secrets.
       status: pending
       evidence: []
     - id: operator-p0-exit-decision
-      criterion: The operator reviews the complete technical, usability, output-quality, latency, trust,
+      criterion:
+        The operator reviews the complete technical, usability, output-quality, latency, trust,
         privacy, performance, economic, and paid-demand evidence and records an explicit P0 exit
         go/no-go; silence cannot count as approval, and any failed usable-output, economics, or
         paid-demand gate records a pivot/stop decision and blocks P1 expansion.
@@ -276,7 +289,8 @@ quality_gates:
     status: pending
     evidence: []
 rollback:
-  strategy: Revert the packet's implementation paths and generated/evidence changes through auditable
+  strategy:
+    Revert the packet's implementation paths and generated/evidence changes through auditable
     Git history while preserving immutable transition receipts. Record every provisioned cloud
     target, exact resource ID, binding, dependency, and teardown procedure in sanitized evidence
     before use; do not perform destructive remote teardown without exact target IDs,
@@ -287,11 +301,9 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p0-000-environment-provisioning
-  next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel,
-    Core Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials,
-    webhook material, price evidence, and retention/DPA clearance without storing or printing
-    secrets in the repository.
+  current_step: p0-001-database-rls-migrations
+  next_action: Implement the authoritative Postgres schema, migrations, generated types, forced RLS,
+    hardened RPCs, and the required database test suites.
   blockers: []
   changed_paths: []
   last_green_checks: []
