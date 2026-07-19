@@ -10,16 +10,27 @@ MustBeViral Studio should make a small growth team feel in control of a complex 
 
 The user must always be able to answer five questions: Where am I? What is ready? What is blocked? What will this action change or cost? How do I recover?
 
-## Precision Creative Studio direction
+## Lightfield paper-and-ink identity
 
-- Near-black neutral canvas and panels with restrained violet/blue emphasis; avoid decorative glass, noisy gradients, and ornamental glow.
-- Geist Sans for product text and Geist Mono for identifiers, prices, timings, model labels, and execution evidence.
-- Dense but calm layout: left tool rail, central infinite canvas, right inspector, top project/run controls, and collapsible bottom activity/output panel.
-- Semantic colors: violet/blue active, green verified success, amber attention or reconciliation, red destructive or failed. Color is never the only status cue.
-- Base palette for prototype exploration: background `#090A0D`, surface `#111318`, elevated `#171A21`, border `#292E39`, primary text `#F5F7FB`, secondary text `#A7AFBF`, violet `#806BFF`, blue `#5A96FF`, green `#35D08A`, amber `#F2B84B`, red `#F06B7A`. Final tokens must preserve contrast when approved through SuperDesign.
-- Four-pixel spacing base; common gaps 8/12/16/24/32; compact controls 32–36px tall; primary controls at least 40px; touch targets at least 44×44px.
-- Radius scale 6/8/12px. Use borders and surface hierarchy before shadow; reserve a soft shadow for transient overlays.
-- Motion durations 120ms for local feedback, 180ms for panel state, and 240ms for route/major layout transition. Motion communicates causality and never delays input.
+- Surfaces use paper `#fafafa` (`z0`) for the primary field, paper `#f5f5f5` (`z1`) for secondary fields and wells, and white `#ffffff` for cards and raised panels.
+- The black ink-alpha ladder is the neutral system: `t0 .02`, `t1 .04`, `t2 .06`, `t3 .08`, `t4 .12`, `t5 .16`, `t6 .25`, `t7 .35`, `t8 .50`, `t9 .60`, `t10 .75`, and `t11 .85`. Semantic mapping is primary `.85`, headings `.75`, body `.60`, captions `.50`, disabled `.25`, moderate borders `.12`, and subtle borders `.06`.
+- The single blue accent family is content-brand `#80bfff` and brand-strong `#3182d4`. Brand-strong marks the one primary action per screen. Selection uses a content-brand border with a 12% content-brand wash (`#80bfff1f`). Blue never becomes a section fill or a second competing action.
+- Status colors are success `#49bf4c`, error `#f55434`, and amber attention. They appear only as small icon-and-text chips; color is never the only status cue and status color never fills a large surface.
+- The primary face is Untitled Sans (licensed target) with Geist Sans as the interim implementation face; the evidence face is DM Mono. Untitled Sans uses weight 400 throughout the product scale: h1 `28px/1.2` at `-.03em`, h2 `24px/1.25` at `-.02em`, h3 `21px/1.25` at `-.015em`, h4 `19px/1.3` at `-.01em`, large `17px/1.5`, body `15px/1.5`, small `13px/1.5`, xs `12px/1.45`, and xxs `11px/1.45`.
+- DM Mono monocaps carry all evidence, including identifiers, prices, timings, revisions, model routes, seeds, hashes, receipts, timestamps, counts, labels, and table headers. The two monocaps sizes are `10px/1em` and `9px/1em`, both with `+1px` tracking and weight 500.
+- Four pixels is the spacing base; common gaps are 8/12/16/24/32px. Compact controls are 32–36px tall, primary controls are at least 40px, and touch targets are at least 44×44px.
+- Radii are 4px for controls, 6px for inputs, 8px for cards, and 10px for floating panels, with pill geometry reserved for status dots. Use borders and surface hierarchy before shadows; reserve a soft, tight shadow for floating or transient layers.
+
+### Work-motion language
+
+- While a node executes, a 2px indeterminate filament travels along its top edge on a `1.6s ease-in-out` loop and remains paired with a text state.
+- While output moves between nodes, the connecting edge uses flowing brand-colored dashes animated through `stroke-dashoffset` travel. The edge settles to its static lineage state when transfer finishes.
+- On arrival, the receiving node's border warms for 180ms and then settles without bounce or scale.
+- Reduced motion replaces filament and edge travel with a static directional gradient plus a text state. Motion communicates causality only and never decorates or delays input.
+
+### Ratified Review Approval composition
+
+Review Approval is the approved direction. It requires a named-amount confirm bar with pinned revision, model route, and expiry; QA findings with per-note jump links and approve/reject controls; a free-retry affordance that names retained work; an immutable receipt ledger; version comparison; and batch approvals. The recorded watch items—1440px inspector overflow discipline, full 12-node graph density proof, and quiet retry styling—are high-fidelity obligations, not optional polish.
 
 ## Interaction principles
 
@@ -38,19 +49,19 @@ Every interactive component defines default, hover when applicable, focus-visibl
 Production UI implementation is blocked until the clean Next scaffold exists and `.superdesign/init/` contains the required repository analysis. For this new product:
 
 1. Capture requirements from the accepted product and UX contracts.
-2. Search SuperDesign style prompts once, select the closest dark-studio foundation, and write `.superdesign/design-system.md` using the approved product constraints.
-3. Create the MustBeViral Studio project and one initial Precision Creative Studio draft.
-4. Create three explicit dark-studio branch variations focused on: calm density, canvas legibility, and review/approval confidence. All branches must preserve the design-system fonts, palette, spacing, and component rules.
-5. Extend the chosen branch into campaign brief, canvas, quote/run, output comparison, receipt, and responsive review flows.
+2. Direction exploration is complete: the Lightfield paper-and-ink foundation and exact product constraints are recorded in `.superdesign/design-system.md`.
+3. The MustBeViral Studio project and initial paper-studio foundation are complete.
+4. Branch exploration is complete across calm density, canvas legibility, and review/approval confidence; the operator ratified Review Approval as the approved direction.
+5. Extend Review Approval into campaign brief, canvas, quote/run, output comparison, receipt, and responsive review flows while resolving its recorded high-fidelity obligations.
 6. Present rendered URLs and named desktop/tablet/mobile captures to the user.
-7. Record explicit user approval before production components or pages are implemented.
+7. Record explicit user approval of the high-fidelity goldens before production components or pages are implemented.
 
 Approved visual goldens become test fixtures. Later changes branch from the approved draft; a replacement is reserved for a single small approved correction.
 
 ## Accessibility contract
 
 - Meet WCAG 2.2 AA for every shipped flow; target 7:1 text contrast where practical.
-- Provide a skip link, logical headings and landmarks, persistent focus visibility, predictable tab order, and focus recovery after dialogs, node deletion, route changes, and errors.
+- Provide a skip link, logical headings and landmarks, a persistent 2px brand-strong `#3182d4` focus-visible outline with a 2px offset, predictable tab order, and focus recovery after dialogs, node deletion, route changes, and errors.
 - All essential canvas actions—select, inspect, connect, reorder, configure, validate, and delete—must be possible through the semantic outline/table without pointer gestures.
 - Announce agent patches, quote changes, run transitions, progress, partial results, and failures through appropriately scoped live regions without repeated noise.
 - Respect reduced motion, forced colors/high contrast, 200% zoom, browser text resizing, and screen magnification.
