@@ -1,206 +1,299 @@
 schema_version: 1
-id: WP-D0-002
+id: WP-P0-001
 spec_revision: 1
-title: Review Approval high-fidelity D0 exit closure
-phase: D0
-status: in_progress
+title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
+phase: P0
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Extend the operator-ratified Review Approval direction to high fidelity across campaign
-  brief, canvas, quote/run, output comparison, receipt, and responsive review flows; amend the
-  accepted experience contract to the Lightfield identity; and close the remaining D0 exit evidence
-  for enabled-model price, license, retention, moderation, and capability coverage including
-  economy-tier candidates such as kimi-class text and Seedance/fal video, platform-algorithm
-  research playbooks, golden briefs and qualified-user recruitment, and the RLS/Hyperdrive benchmark
-  plan.
+objective: Build and validate the real DTC Meta Campaign Launch Pack vertical slice from a
+  trustworthy structured brief through constrained planning, editable immutable graph revisions,
+  transparent quote and explicit confirmation, real fal and Moonshot provider execution, verified
+  private artifacts, review and approval, deterministic export and immutable cost/lineage receipt,
+  while proving the exact private five-operation MCP surface has REST-semantic parity and every P0
+  technical, usability, quality, economic, and paid-demand gate passes.
 authority_refs:
   - product-contract
   - release-scope
   - experience-contract
   - canvas-screen-states
+  - system-overview
   - data-auth-tenancy
   - execution-providers-billing
+  - api-mcp-cli
   - roadmap
   - quality-gates
-  - source-register
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - platform-playbooks
+  - model-catalog-evidence
+  - golden-briefs
+  - evaluator-recruitment
+  - rls-hyperdrive-benchmark-plan
   - generated-model-catalog
 required_skills:
+  - data-architect
+  - auth-fortress
+  - api-craft
+  - cloudflare
+  - wrangler
+  - workers-best-practices
+  - billing-engine
+  - test-mastery
   - superdesign
   - frontend-master
 depends_on:
-  - WP-D0-001
+  - WP-D0-002
 scope:
   allowed_paths:
-    - .superdesign/**
-    - governance/evidence/WP-D0-002/**
-    - governance/evidence/WP-D0-001/transition-receipt.yaml
-    - governance/evidence/WP-D0-001/completed-work-packet.yaml
-    - governance/schemas/design-direction-evidence.schema.json
-    - governance/scripts/validate-design-direction.mjs
-    - governance/tests/**
-    - docs/ux/**
-    - docs/research/**
-    - docs/MANIFEST.yaml
-    - docs/INDEX.md
-    - docs/STATUS.md
-    - docs/generated/**
-    - package.json
-    - PROJECT_STATE.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - llms.txt
-  forbidden_paths:
     - apps/**
     - packages/**
     - supabase/**
-    - docs/archive/**
+    - .superdesign/**
+    - governance/evidence/WP-P0-001/**
+    - governance/tests/**
+    - governance/schemas/**
+    - governance/scripts/**
+    - docs/**
+    - package.json
     - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - playwright.config.ts
+    - .env.example
+    - .dev.vars.example
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - governance/evidence/WP-D0-002/transition-receipt.yaml
+    - governance/evidence/WP-D0-002/completed-work-packet.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
   required_doc_ids:
     - product-contract
     - release-scope
     - experience-contract
     - canvas-screen-states
+    - system-overview
     - data-auth-tenancy
     - execution-providers-billing
+    - api-mcp-cli
     - roadmap
     - quality-gates
-    - source-register
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - platform-playbooks
+    - model-catalog-evidence
+    - golden-briefs
+    - evaluator-recruitment
+    - rls-hyperdrive-benchmark-plan
     - generated-model-catalog
 deliverables:
-  - Accepted experience-contract amendment replacing the exploration-only dark-studio direction with
-    the operator-directed Lightfield identity and its accessible responsive rules
-  - Review Approval high-fidelity campaign brief, canvas, quote/run, output comparison, receipt,
-    tablet review, and mobile review renders with named captures
-  - Approved-golden evidence extending the design-direction contract with full-flow and responsive
-    artifact references, captures, review findings, and explicit operator approval
-  - Current source-backed price, license, retention, moderation, capability, and evaluation evidence
-    for every enabled launch model and evaluated economy-tier candidates
-  - Source-backed platform-algorithm creative playbooks for the launch-pack destinations
-  - A 20-brief representative golden corpus and a definition and recruitment record for five to
-    eight qualified DTC/e-commerce evaluators
-  - Data API/RPC baseline and Hyperdrive candidate benchmark plan covering cold and warm
-    p50/p95/p99, concurrency, conflicts, errors, and pooled-identity isolation
-  - Transition-ready WP-P0-001 successor draft and complete WP-D0-002 handoff evidence
-public_interfaces: []
+  - Fail-closed environment-provisioning evidence for isolated staging Supabase, Vercel, Core
+    Worker, and private R2 targets plus sanitized fal and Moonshot credential and webhook inputs;
+    evidence records only target identifiers, readiness, provenance, and operator-owned missing
+    inputs, never secret values.
+  - Forward-only Supabase migrations, generated types, tenant-safe repositories, forced RLS and
+    hardened RPC contracts for workspaces, briefs, brand kits, projects, immutable canvas revisions,
+    runs, attempts, providers, private artifacts and lineage, quotes, reservations, integer-micros
+    ledger entries, idempotency records, audit events, and transactional outbox events.
+  - Shared typed domain, graph, command/query, billing, artifact, and API contracts implementing
+    legal state machines, typed DAG validation, canonical hashing, expected-revision conflicts,
+    affected-descendant invalidation, immutable 15-minute quotes, transactional spend caps, and
+    balanced append-only semantic-ledger behavior without automated customer charging.
+  - "Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
+    copy plus the curated fal launch trio for FLUX.2 [pro] masters, FLUX Kontext [pro] adaptations,
+    and Seedance 1.0 Lite motion; every route is versioned, price-pinned, retention/license-cleared,
+    fail-closed when evidence or credentials are absent, and exercised through outbox dispatch,
+    signed webhook verification, reconciliation, and idempotent handling."
+  - Verified server-side copy of accepted provider output into private R2, private-by-default
+    metadata and access, artifact verification and quarantine, deterministic exports, and immutable
+    provider/model/cost/lineage receipts with no fal delivery URL exposed as a product artifact.
+  - Production UI matching the approved Review Approval Lightfield goldens for campaign brief,
+    canvas, quote/confirm, run progress, output comparison, review/approval, export, and receipt,
+    including work-motion and reduced-motion behavior, full component and screen states, semantic
+    outline parity, responsive review, WCAG 2.2 AA behavior, and measured performance budgets.
+  - Real end-to-end evidence across all 20 representative golden briefs, five-to-eight qualified
+    evaluator sessions, transactional cost caps, technical/latency/quality/economic metrics, and a
+    signed paid-pilot record or qualified payment evidence.
+  - Private Core Worker MCP evidence for exactly get_canvas_context, apply_canvas_patch, quote_run,
+    start_run, and get_run through MCP Inspector and two real clients using the same handlers,
+    contracts, authorization, validation, idempotency, confirmation, and safe errors as REST.
+  - P0 gate decision evidence, operator go/no-go, pivot/stop record on any required-gate failure,
+    and transition-ready WP-P1A-001 successor handoff.
+public_interfaces:
+  - P0 authenticated REST /v1 surface for workspace, project, canvas, patch, validation, quote,
+    explicitly confirmed run, run status/cancel, private artifact upload/access, export, model
+    explanation, receipt, and signed fal webhook operations defined by api-mcp-cli.
+  - "Private P0 MCP operations only: get_canvas_context, apply_canvas_patch, quote_run, start_run,
+    and get_run; no public discovery, production OAuth, broader tools, or CLI surface in P0."
 steps:
-  - id: d1-000-experience-contract-lightfield
-    title: Amend and register the experience contract with the operator-directed Lightfield identity
-    status: completed
-  - id: d1-001-high-fidelity-flow-renders
-    title:
-      Render the full Review Approval desktop, tablet, and mobile flow set while correcting 1440px
-      inspector overflow, proving full 12-node density, quieting retry styling, and specifying
-      focus-visible and reduced-motion behavior
-    status: completed
-  - id: d1-002-approved-golden-evidence
-    title: Capture the named full-flow golden set and extend validated design-direction evidence
-    status: completed
-  - id: d1-003-model-catalog-evidence
-    title: Register current source-backed price, license, retention, moderation, capability, and
-      evaluation evidence for every enabled model and evaluated economy-tier candidate
-    status: completed
-  - id: d1-004-platform-algorithm-playbooks
-    title: Author source-backed platform-algorithm creative playbooks for launch-pack destinations
-    status: completed
-  - id: d1-005-golden-briefs-and-recruitment
-    title: Define the 20 representative golden briefs and recruit or qualify five to eight evaluators
-    status: completed
-  - id: d1-006-rls-hyperdrive-benchmark-plan
-    title: Specify the Data API/RPC baseline and Hyperdrive candidate benchmark plan with latency,
-      concurrency, conflict, error, and pooled-identity cases
-    status: completed
-  - id: d1-007-successor-handoff
-    title: Validate D0 exit evidence and prepare the WP-P0-001 successor transition
-    status: current
+  - id: p0-000-environment-provisioning
+    title: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core
+      Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials, webhook
+      material, price evidence, and retention/DPA clearance without storing or printing secrets in
+      the repository.
+    status: pending
+  - id: p0-001-database-rls-migrations
+    title: Implement the authoritative Postgres schema, forward-only migrations, generated types,
+      hardened RPCs, forced RLS, least-privilege roles, cross-tenant isolation, migration sequence,
+      rollback/idempotency, pooled-identity, and ledger-invariant tests; retain Data API/RPC unless
+      the accepted Hyperdrive benchmark proves every G1-G6 enablement condition.
+    status: pending
+  - id: p0-002-domain-command-layer
+    title: Implement shared domain, graph, command/query, quote, reservation, artifact, and
+      integer-micros ledger contracts with deterministic legal state machines, canonical graph
+      hashes, immutable revisions, affected-descendant calculation, transparent quotes, explicit
+      confirmation, idempotency, auditability, and unit and contract tests.
+    status: pending
+  - id: p0-003-real-provider-adapters
+    title: Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
+      through versioned drivers, a transactional outbox, immediate post-commit dispatch, signed
+      webhook verification, safe ambiguous-submit reconciliation, duplicate-proof idempotency,
+      private R2 verification/copy, catalog and kill-switch enforcement, and boundary integration
+      tests with no hidden mock or silent fallback.
+    status: pending
+  - id: p0-004-golden-locked-ui
+    title: Implement the campaign brief, 100-node canvas and semantic outline, work-motion, graph
+      validation and conflict recovery, named-price quote/confirm, partial run progress, output
+      comparison, review/approval, export, and receipt flows against the approved Review Approval
+      goldens with complete component/screen states, responsive behavior, accessibility, reduced
+      motion, and visual and performance tests.
+    status: pending
+  - id: p0-005-golden-launch-pack-runs
+    title: Execute real end-to-end launch-pack runs for the 20 golden briefs, producing the required
+      three master statics, nine approved adaptations, three copy sets, one 6-10 second 9:16 motion
+      branch, QA, private review/export artifacts, and immutable receipts while transactionally
+      enforcing per-run, workspace-day, and global-day caps and measuring first-reviewable latency.
+    status: pending
+  - id: p0-006-private-mcp-proof
+    title: Prove the exact five private MCP operations in MCP Inspector and two real clients against the
+      shared REST handlers and contract vectors for success, validation, authorization, conflict,
+      expiry, explicit confirmation, idempotent replay, rate limit, provider ambiguity, and safe
+      error semantics.
+    status: pending
+  - id: p0-007-p0-gate-evaluation
+    title: Evaluate all P0 technical, usability, output-quality, latency, privacy, trust, performance,
+      economic, and paid-demand gates across the 20 briefs and five-to-eight qualified evaluator
+      sessions; record an operator go/no-go and a pivot/stop decision whenever a required value,
+      cost, or paid-demand gate fails.
+    status: pending
+  - id: p0-008-p1a-successor-handoff
+    title: Assemble complete immutable P0 evidence and prepare the WP-P1A-001 successor transition only
+      when every required gate passes, with one exact next action and no unresolved blocker or
+      decision.
+    status: pending
 acceptance:
   automated:
-    - id: high-fidelity-design-direction-evidence
-      criterion:
-        The design-direction validator proves rendered campaign brief, canvas, quote/run, output
-        comparison, receipt, tablet review, and mobile review artifacts with named captures,
-        recorded watch-item resolutions, and explicit approval state.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-002/design-direction.yaml
-    - id: lightfield-contract-and-docs
-      criterion: The accepted experience-contract amendment defines the Lightfield identity, remains
-        registered in the documentation manifest, regenerates affected references, and passes pnpm
-        docs:check.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-002/contract-approval.md
-    - id: enabled-model-catalog-evidence
-      criterion:
-        Generated model-catalog evidence is complete and current for price, license, retention,
-        moderation, capability, and evaluation fields for every enabled model, with no enabled model
-        surviving missing or stale evidence.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-002/d0-exit-evidence.md
-    - id: remaining-d0-exit-evidence
-      criterion:
-        Registered evidence proves the platform-algorithm playbooks, 20 representative golden
-        briefs, five-to-eight-user qualification and recruitment definition, and a Data API/RPC
-        versus Hyperdrive benchmark plan covering cold and warm p50/p95/p99, concurrency, conflicts,
-        errors, and pooled-identity isolation.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-002/d0-exit-evidence.md
+    - id: representative-run-completion-and-latency
+      criterion: Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
+        launch-pack runs technically complete with real enabled providers, while median time to the
+        first reviewable static pack is at most 10 minutes and p90 is at most 15 minutes.
+      status: pending
+      evidence: []
+    - id: transactional-spend-dedup-and-ledger
+      criterion: Concurrency, replay, webhook, polling, timeout, ambiguous-submit, retry, and
+        reconciliation tests prove the default $8/run, $25/workspace/day, and $100/global/day caps
+        are enforced in authoritative transactions and produce zero duplicate provider submissions,
+        duplicate charges, duplicate money movement, negative/cap-breaching reservations, or
+        unexplained ledger differences.
+      status: pending
+      evidence: []
+    - id: private-artifact-trust-and-lineage
+      criterion: Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
+        is verified and private by default, no public bucket or provider-delivery URL is exposed,
+        every access URL is exact-key and short-lived, and no completed output contains a hidden
+        mock, silent fallback, missing artifact lineage, or missing immutable provider/model/cost
+        receipt.
+      status: pending
+      evidence: []
+    - id: canvas-and-web-performance
+      criterion: Measured browser evidence proves ordinary pan and zoom maintains at least 55 FPS with 100
+        visible nodes, the 500-node stress graph remains navigable through level-of-detail rendering
+        and virtualization, and the agreed production segment meets p75 LCP at most 2.5 seconds, INP
+        at most 200 milliseconds, and CLS at most 0.1.
+      status: pending
+      evidence: []
+    - id: private-mcp-rest-semantic-parity
+      criterion: Contract vectors pass for the exact five private MCP operations through MCP Inspector and
+        two real clients, proving the same revision, validation, authorization, quote, confirmation,
+        run, idempotency, recovery, and safe-error semantics as REST with no broader P0 MCP surface.
+      status: pending
+      evidence: []
+    - id: usable-pack-landed-cost
+      criterion: Reconciled immutable provider, storage, execution, and artifact evidence computes landed
+        cost in integer USD micros and proves landed cost is at most $5 for every launch pack
+        counted as usable, with no unexplained receipt or catalog-price difference.
+      status: pending
+      evidence: []
   manual:
-    - id: high-fidelity-golden-approval
-      criterion:
-        The operator explicitly approves the named high-fidelity desktop, tablet, and mobile
-        golden set after reviewing the rendered flow artifacts; silence or agent preference cannot
-        count as approval.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-002/design-direction.yaml
-        - governance/evidence/WP-D0-002/contract-approval.md
-    - id: amended-experience-contract-approval
-      criterion:
-        The operator explicitly approves the amended Lightfield experience contract before D0 is
-        closed or production UI implementation begins.
-      status: passed
-      evidence:
-        - governance/evidence/WP-D0-002/contract-approval.md
+    - id: unassisted-workflow-completion
+      criterion: Across the qualified-user evaluation sessions, at least 80% of users complete brief
+        through quote, explicit confirmation, run, and review without assistance under the
+        registered protocol.
+      status: pending
+      evidence: []
+    - id: usable-concept-rate
+      criterion: Qualified evaluators applying the registered rubric determine that at least 70% of the 20
+        launch-pack jobs produce one or more usable concepts without relaxing supplied claim,
+        rights, brand, or QA constraints.
+      status: pending
+      evidence: []
+    - id: evaluator-workflow-preference
+      criterion: At least three of five qualified evaluators explicitly prefer the launch-pack workflow to
+        their current process in recorded evaluation evidence.
+      status: pending
+      evidence: []
+    - id: qualified-paid-pilot-proof
+      criterion: At least one qualified customer pays for the validation engagement or signs a paid pilot,
+        with sanitized durable evidence sufficient to prove the commitment without exposing customer
+        data or payment secrets.
+      status: pending
+      evidence: []
+    - id: operator-p0-exit-decision
+      criterion: The operator reviews the complete technical, usability, output-quality, latency, trust,
+        privacy, performance, economic, and paid-demand evidence and records an explicit P0 exit
+        go/no-go; silence cannot count as approval, and any failed usable-output, economics, or
+        paid-demand gate records a pivot/stop decision and blocks P1 expansion.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-D0-002/d0-exit-evidence.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-D0-002/d0-exit-evidence.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-D0-002/d0-exit-evidence.md
+    status: pending
+    evidence: []
 rollback:
-  strategy:
-    Revert the packet's SuperDesign artifacts, approved-golden evidence, validator extensions,
-    experience-contract amendment, research and model-catalog evidence, generated references, and
-    root scripts; the production application, shared packages, database, and Supabase paths remain
-    unchanged.
+  strategy: Revert the packet's implementation paths and generated/evidence changes through auditable
+    Git history while preserving immutable transition receipts. Record every provisioned cloud
+    target, exact resource ID, binding, dependency, and teardown procedure in sanitized evidence
+    before use; do not perform destructive remote teardown without exact target IDs,
+    rollback/recovery evidence, and separate authorization permitted by repository policy. Missing
+    teardown authority leaves the isolated resource disabled and documented rather than destroyed.
   remote_actions_required: false
 external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d1-007-successor-handoff
-  next_action: Validate the D0 exit evidence and prepare the WP-P0-001 successor transition.
+  current_step: p0-000-environment-provisioning
+  next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel,
+    Core Worker, private R2, fal, and Moonshot inputs without storing or printing secrets.
   blockers: []
   changed_paths: []
-  last_green_checks:
-    - pnpm agent:preflight
-    - pnpm governance:check
-    - pnpm verify
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P0-001
-  evidence_paths:
-    - governance/evidence/WP-D0-002/design-direction.yaml
-    - governance/evidence/WP-D0-002/contract-approval.md
-    - governance/evidence/WP-D0-002/d0-exit-evidence.md
+  successor_packet_id: WP-P1A-001
+  evidence_paths: []
   completed_at: null

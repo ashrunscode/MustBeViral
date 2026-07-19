@@ -1,0 +1,34 @@
+schema_version: 1
+packet_id: WP-D0-002
+spec_revision: 1
+phase: D0
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-07-19T20:24:02.326Z
+successor_packet_id: WP-P0-001
+predecessor_head: 39186489f354209fd5d937b320a59bee1022a9f4
+closed_packet_path: governance/evidence/WP-D0-002/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-D0-002/design-direction.yaml
+  - governance/evidence/WP-D0-002/contract-approval.md
+  - governance/evidence/WP-D0-002/d0-exit-evidence.md
+evidence_entries:
+  - path: governance/evidence/WP-D0-002/contract-approval.md
+    sha256: 54ba1d5cf585a4f872fe7a0da4aaa43a352c4a91691b4f0789b323e2246c1bd9
+    git_blob_oid: 17b2e2a7d0446aa83ae6c944269f257564916853
+  - path: governance/evidence/WP-D0-002/d0-exit-evidence.md
+    sha256: 8579b0145af3b74a509983d4fa7737b3913ae1b5df262b1473504779a22843df
+    git_blob_oid: fb687af2db61eca2dfaeb91bfbcdfc34cc5913ce
+  - path: governance/evidence/WP-D0-002/design-direction.yaml
+    sha256: 6fdf29f069d4b559bc7a4bd95f9069b52d39a069985e60f071c905c916a9ea78
+    git_blob_oid: 2a96ea3d49f4d23e3a474748d744c0ae133bb576
+completed_step_ids:
+  - d1-000-experience-contract-lightfield
+  - d1-001-high-fidelity-flow-renders
+  - d1-002-approved-golden-evidence
+  - d1-003-model-catalog-evidence
+  - d1-004-platform-algorithm-playbooks
+  - d1-005-golden-briefs-and-recruitment
+  - d1-006-rls-hyperdrive-benchmark-plan
+  - d1-007-successor-handoff
+closed_packet_sha256: a2130d90f725198341a7c242574dcdc808da5f668aaa413360d60447b25ec025

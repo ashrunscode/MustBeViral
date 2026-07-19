@@ -4,10 +4,10 @@ project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
-phase: D0
-active_packet: WP-D0-002
-current_step: d1-007-successor-handoff
-next_action: Validate the D0 exit evidence and prepare the WP-P0-001 successor transition.
+phase: P0
+active_packet: WP-P0-001
+current_step: p0-000-environment-provisioning
+next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core Worker, private R2, fal, and Moonshot inputs without storing or printing secrets.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

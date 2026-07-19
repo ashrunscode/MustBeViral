@@ -6,12 +6,13 @@ internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
-  id: D0
-  title: Review Approval high-fidelity D0 exit closure
-  state: in_progress
+  id: P0
+  title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
+  state: planned
 release_target: P0
-active_work_packet: WP-D0-002
-next_action: Amend and register the experience contract with the operator-directed Lightfield identity
+active_work_packet: WP-P0-001
+next_action: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel,
+  Core Worker, private R2, fal, and Moonshot inputs without storing or printing secrets.
 decisions_pending: []
 blockers: []
 legacy:
@@ -31,11 +32,9 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-07-19T13:10:17.057Z
+  at: 2026-07-19T20:24:02.326Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-D0-001/design-direction.yaml
-    - governance/evidence/WP-D0-001/direction-review.md
-    - governance/evidence/WP-D0-001/initialize-evidence.md
-    - governance/evidence/WP-D0-001/scope-integrity.md
-    - governance/evidence/WP-D0-001/final-gates.md
+    - governance/evidence/WP-D0-002/design-direction.yaml
+    - governance/evidence/WP-D0-002/contract-approval.md
+    - governance/evidence/WP-D0-002/d0-exit-evidence.md
