@@ -5,15 +5,16 @@ Authority chain: operator brand directive (lightfield.app north star) → `brand
 **Review-Approval-Confidence** direction with grafts (ledger receipts, large-node canvas grammar,
 docked quote strip). Every SuperDesign render must preserve these tokens exactly.
 
-## Surfaces (paper, not theme)
+## Surfaces (paper, not theme — EXACT Lightfield tokens, see reference/lightfield-teardown.md)
 
-| Token        | Value                                    | Use                                         |
-| ------------ | ---------------------------------------- | ------------------------------------------- |
-| `paper`      | `#F4F4F2`                                | application field                           |
-| `card`       | `#FFFFFF`                                | raised cards, panels                        |
-| `wash`       | `rgba(0,0,0,0.04)`                       | hover fills, quiet wells, input backgrounds |
-| `wash-faint` | `rgba(0,0,0,0.02)`                       | alternate rows, canvas field                |
-| `hero-wash`  | subtle cool gradient `#E9EBEF → #F4F4F2` | large empty states only                     |
+| Token        | Value               | Use                                       |
+| ------------ | ------------------- | ----------------------------------------- |
+| `paper`      | `#fafafa` (z0)      | primary application background            |
+| `paper-2`    | `#f5f5f5` (z1)      | secondary background, wells               |
+| `card`       | `#FFFFFF`           | raised cards, panels (bg-tertiary)        |
+| `wash`       | `rgba(0,0,0,0.04)`  | t1 — hover fills, quiet wells             |
+| `wash-faint` | `rgba(0,0,0,0.02)`  | t0 — alternate rows, canvas field         |
+| `hero-wash`  | `#E9EBEF → #fafafa` | subtle cool wash, large empty states only |
 
 ## Ink (one ink, many pressures — never gray hexes)
 
@@ -28,18 +29,24 @@ docked quote strip). Every SuperDesign render must preserve these tokens exactly
 
 ## Accent and status
 
-- `signal` `#2E6BE6` — THE accent. Exactly one signal element per screen: the current primary action
-  (Confirm run, Approve, Export). Selected states use `signal` at 0.12 wash + 1px `signal` border.
+- `signal` `#3182d4` (Lightfield blue-z8 brand-strong) — THE action accent: exactly one signal
+  element per screen (Confirm run, Approve, Export). `signal-soft` `#80bfff` (blue-z5
+  content-brand) for selected borders, active lineage, links. Selected states: `#80bfff1f` wash
+  (blue-t2) + 1px `signal-soft` border.
 - Status (small, always icon+text, mono labels): `ok` `#1F9D63` · `attention` `#B87E14` · `fail` `#C4404D`.
   Status colors never fill large areas; they mark chips, dots, and left-edges only.
 - White text only ever sits on `signal` or status fills.
 
-## Type
+## Type (EXACT Lightfield scale — headings NEVER bold)
 
-- **Untitled Sans** (license; interim: Geist Sans) — UI/product text. Weights 400/500 only.
-- **DM Mono** — all evidence: prices, timestamps, revisions, model routes, seeds, hashes, receipts, counts.
-- Scale: 12 mono-caption · 13 label · 15 body (lh 1.5) · 18 section · 22 panel-title ·
-  28 page-title (w400, tracking −0.03em). Product never exceeds 28px.
+- **Untitled Sans** (license; interim: Geist Sans) — UI/product text, weight 400 everywhere
+  (500 only for the wordmark and monocaps).
+- **DM Mono** — all evidence: prices, timestamps, revisions, model routes, seeds, hashes, receipts,
+  counts. Monocaps labels: 10px/1em, letter-spacing 1px, weight 500, uppercase (eyebrows, chips,
+  table headers).
+- Scale (fixed px, no fluid clamp): xxs 11 · xs 12/1.45 · sm 13/1.5 · base 15/1.5 · lg 17/1.5 ·
+  h4 19/1.3/−.01em · h3 21/1.25/−.015em · h2 24/1.25/−.02em · h1 28/1.2/−.03em · d4 32/1.15/−.035em.
+  All weight 400. Product UI never exceeds 28px; h1 stays 28px at every breakpoint.
 
 ## Geometry
 
