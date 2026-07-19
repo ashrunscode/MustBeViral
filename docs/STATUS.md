@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | D0 — Precision Creative Studio direction exploration (in_progress) |
 | Active packet | `WP-D0-001` |
-| Current step | `d0-002-design-system` |
+| Current step | `d0-003-direction-branches` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Write .superdesign/design-system.md from the accepted Experience Contract tokens over the selected neural-noir structural foundation.
+Create the SuperDesign project, render the initial Precision Creative Studio draft, and iterate the three named direction branches.

@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: D0
 active_packet: WP-D0-001
-current_step: d0-002-design-system
-next_action: Write .superdesign/design-system.md from the accepted Experience Contract tokens over the selected neural-noir structural foundation.
+current_step: d0-003-direction-branches
+next_action: Create the SuperDesign project, render the initial Precision Creative Studio draft, and iterate the three named direction branches.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

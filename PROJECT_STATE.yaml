@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-D0-001
-next_action: Write .superdesign/design-system.md from the accepted Experience Contract tokens over
-  the selected neural-noir structural foundation.
+next_action: Create the SuperDesign project, render the initial Precision Creative Studio draft, and
+  iterate the three named direction branches.
 decisions_pending: []
 blockers: []
 legacy:

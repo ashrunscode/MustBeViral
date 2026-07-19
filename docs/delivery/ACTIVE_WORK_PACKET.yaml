@@ -81,10 +81,10 @@ steps:
     status: completed
   - id: d0-002-design-system
     title: Create the Precision Creative Studio design system from accepted contracts
-    status: current
+    status: completed
   - id: d0-003-direction-branches
     title: Render the initial draft and three controlled dark-studio branches
-    status: pending
+    status: current
   - id: d0-004-direction-review
     title: Record accessibility, density, legibility, and responsive-direction review evidence
     status: pending
@@ -142,9 +142,9 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d0-002-design-system
-  next_action: Write .superdesign/design-system.md from the accepted Experience Contract tokens
-    over the selected neural-noir structural foundation.
+  current_step: d0-003-direction-branches
+  next_action: Create the SuperDesign project, render the initial Precision Creative Studio draft,
+    and iterate the three named direction branches.
   blockers: []
   changed_paths:
     - governance/scripts/validate-diff-scope.mjs
