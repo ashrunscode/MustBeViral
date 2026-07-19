@@ -6,7 +6,7 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: D0
 active_packet: WP-D0-002
-current_step: d1-001-high-fidelity-flow-renders
+current_step: d1-005-golden-briefs-and-recruitment
 next_action: Amend and register the experience contract with the operator-directed Lightfield identity
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml

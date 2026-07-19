@@ -1,0 +1,55 @@
+schema_version: 1
+packet_id: WP-D0-002
+ratified_direction: Review Approval
+flows:
+  - name: canvas-desktop
+    artifact: .superdesign/hifi/canvas-desktop.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-canvas-12node-desktop-final.png
+    viewport: 1440x900
+  - name: campaign-brief
+    artifact: .superdesign/hifi/campaign-brief.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-campaign-brief.png
+    viewport: 1440x900
+  - name: quote-run
+    artifact: .superdesign/hifi/quote-run.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-quote-run.png
+    viewport: 1440x900
+  - name: output-comparison
+    artifact: .superdesign/hifi/output-comparison.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-output-comparison.png
+    viewport: 1440x900
+  - name: receipt
+    artifact: .superdesign/hifi/receipt.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-receipt.png
+    viewport: 1440x900
+  - name: tablet-review
+    artifact: .superdesign/hifi/tablet-review.html
+    capture: governance/evidence/WP-D0-002/captures/hifi-tablet-review.png
+    viewport: 768x1024
+  - name: mobile-review
+    artifact: .superdesign/hifi/mobile-review.html
+    capture: governance/evidence/WP-D0-002/captures/hifi-mobile-review.png
+    viewport: 375x812
+watch_item_resolutions:
+  - watch_item: 1440px inspector overflow
+    resolution: The deterministic desktop layout honors the fixed inspector width.
+  - watch_item: 12-node density proof
+    resolution: All 12 nodes remain visible in the desktop canvas capture.
+  - watch_item: quiet retry styling
+    resolution: Free retry is rendered as a quiet underlined action.
+review:
+  findings:
+    - dimension: accessibility
+      status: noted
+      note: Focus-visible and reduced-motion behavior are represented in every artifact.
+    - dimension: density
+      status: pass
+      note: The desktop canvas proves the required 12-node density.
+    - dimension: legibility
+      status: pass
+      note: Flow labels and review evidence remain legible at every named viewport.
+    - dimension: responsive
+      status: pass
+      note: Tablet drawer and mobile review-only layouts are represented.
+approval:
+  state: pending

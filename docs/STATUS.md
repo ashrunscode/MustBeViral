@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | D0 — Review Approval high-fidelity D0 exit closure (in_progress) |
 | Active packet | `WP-D0-002` |
-| Current step | `d1-001-high-fidelity-flow-renders` |
+| Current step | `d1-005-golden-briefs-and-recruitment` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |

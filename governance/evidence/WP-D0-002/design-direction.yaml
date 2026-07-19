@@ -1,0 +1,66 @@
+schema_version: 1
+packet_id: WP-D0-002
+ratified_direction: Review Approval
+flows:
+  - name: canvas-desktop
+    artifact: .superdesign/hifi/canvas-desktop.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-canvas-12node-desktop-final.png
+    viewport: 1440x900
+  - name: campaign-brief
+    artifact: .superdesign/hifi/campaign-brief.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-campaign-brief.png
+    viewport: 1440x900
+  - name: quote-run
+    artifact: .superdesign/hifi/quote-run.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-quote-run.png
+    viewport: 1440x900
+  - name: output-comparison
+    artifact: .superdesign/hifi/output-comparison.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-output-comparison.png
+    viewport: 1440x900
+  - name: receipt
+    artifact: .superdesign/hifi/receipt.html
+    desktop_capture: governance/evidence/WP-D0-002/captures/hifi-receipt.png
+    viewport: 1440x900
+  - name: tablet-review
+    artifact: .superdesign/hifi/tablet-review.html
+    capture: governance/evidence/WP-D0-002/captures/hifi-tablet-review.png
+    viewport: 768x1024
+  - name: mobile-review
+    artifact: .superdesign/hifi/mobile-review.html
+    capture: governance/evidence/WP-D0-002/captures/hifi-mobile-review.png
+    viewport: 375x812
+watch_item_resolutions:
+  - watch_item: 1440px inspector overflow
+    resolution:
+      Overflow was eliminated through a deterministic 1440px desktop layout that honors the 320px
+      inspector aside.
+  - watch_item: 12-node density proof
+    resolution:
+      The final desktop canvas keeps all 12 nodes fully visible, with the maximum card edge at
+      1064px.
+  - watch_item: quiet retry styling
+    resolution: The free-retry affordance is a quiet underlined action that names the retained verified work.
+review:
+  findings:
+    - dimension: accessibility
+      status: noted
+      note: Focus-visible is demonstrated per artifact, contrast tokens remain contract-exact, and
+        reduced-motion fallbacks are present.
+    - dimension: density
+      status: pass
+      note:
+        The final 1440px canvas capture proves a full-visibility 12-node layout without clipped cards
+        or inspector overlap.
+    - dimension: legibility
+      status: pass
+      note:
+        Campaign, quote, comparison, receipt, and canvas evidence preserve clear hierarchy, labels,
+        amounts, statuses, and review actions at their named viewports.
+    - dimension: responsive
+      status: pass
+      note:
+        The 768px tablet drawer and 375px mobile review-only layouts prove the ratified responsive
+        behavior.
+approval:
+  state: pending

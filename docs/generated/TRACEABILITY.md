@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-D0-002` (in_progress). Current step: `d1-001-high-fidelity-flow-renders`.
+Current packet: `WP-D0-002` (in_progress). Current step: `d1-005-golden-briefs-and-recruitment`.
 
 | Authority topic | Document | Path |
 |---|---|---|

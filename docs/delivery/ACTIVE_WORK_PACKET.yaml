@@ -90,10 +90,10 @@ steps:
       Render the full Review Approval desktop, tablet, and mobile flow set while correcting 1440px
       inspector overflow, proving full 12-node density, quieting retry styling, and specifying
       focus-visible and reduced-motion behavior
-    status: current
+    status: completed
   - id: d1-002-approved-golden-evidence
     title: Capture the named full-flow golden set and extend validated design-direction evidence
-    status: pending
+    status: completed
   - id: d1-003-model-catalog-evidence
     title: Register current source-backed price, license, retention, moderation, capability, and
       evaluation evidence for every enabled model and evaluated economy-tier candidate
@@ -103,7 +103,7 @@ steps:
     status: completed
   - id: d1-005-golden-briefs-and-recruitment
     title: Define the 20 representative golden briefs and recruit or qualify five to eight evaluators
-    status: pending
+    status: current
   - id: d1-006-rls-hyperdrive-benchmark-plan
     title: Specify the Data API/RPC baseline and Hyperdrive candidate benchmark plan with latency,
       concurrency, conflict, error, and pooled-identity cases
@@ -179,7 +179,7 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d1-001-high-fidelity-flow-renders
+  current_step: d1-005-golden-briefs-and-recruitment
   next_action: Amend and register the experience contract with the operator-directed Lightfield identity
   blockers: []
   changed_paths: []
