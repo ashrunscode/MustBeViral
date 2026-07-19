@@ -75,6 +75,11 @@ Current packet: `WP-D0-002` (in_progress). Current step: `d1-005-golden-briefs-a
 | `operations.legacy_retirement` | `legacy-v1-retirement` | docs/operations/LEGACY_V1_RETIREMENT.md |
 | `research.platform_playbooks` | `platform-playbooks` | docs/research/PLATFORM_PLAYBOOKS.md |
 | `research.model_catalog_evidence` | `model-catalog-evidence` | docs/research/MODEL_CATALOG_EVIDENCE.md |
+| `research.golden_briefs` | `golden-briefs` | docs/research/GOLDEN_BRIEFS.md |
+| `research.brief_corpus_coverage` | `golden-briefs` | docs/research/GOLDEN_BRIEFS.md |
+| `research.evaluator_qualification` | `evaluator-recruitment` | docs/research/EVALUATOR_RECRUITMENT.md |
+| `research.evaluator_recruitment` | `evaluator-recruitment` | docs/research/EVALUATOR_RECRUITMENT.md |
+| `research.evaluation_protocol` | `evaluator-recruitment` | docs/research/EVALUATOR_RECRUITMENT.md |
 | `research.source_register` | `source-register` | docs/research/sources.yaml |
 | `generated.open_api` | `generated-openapi` | docs/generated/OPENAPI.md |
 | `generated.database_schema` | `generated-database-schema` | docs/generated/DATABASE_SCHEMA.md |

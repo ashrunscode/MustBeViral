@@ -337,6 +337,30 @@ documents:
       [model_price_changed, model_enabled, provider_terms_changed, retention_policy_changed]
     supersedes: []
 
+  - id: golden-briefs
+    path: docs/research/GOLDEN_BRIEFS.md
+    kind: research
+    status: informative
+    owner: research
+    authority_topics: [research.golden_briefs, research.brief_corpus_coverage]
+    review_triggers: [product_brief_schema_changed, launch_icp_changed, p0_evidence_reviewed]
+    supersedes: []
+
+  - id: evaluator-recruitment
+    path: docs/research/EVALUATOR_RECRUITMENT.md
+    kind: research
+    status: informative
+    owner: research
+    authority_topics:
+      [
+        research.evaluator_qualification,
+        research.evaluator_recruitment,
+        research.evaluation_protocol,
+      ]
+    review_triggers:
+      [qualification_threshold_changed, evaluator_status_changed, p0_evidence_reviewed]
+    supersedes: []
+
   - id: source-register
     path: docs/research/sources.yaml
     kind: research_registry

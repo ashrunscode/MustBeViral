@@ -36,6 +36,8 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `legacy-v1-retirement` | [operations/LEGACY_V1_RETIREMENT.md](./operations/LEGACY_V1_RETIREMENT.md) | temporary_runbook | accepted | operations |
 | `platform-playbooks` | [research/PLATFORM_PLAYBOOKS.md](./research/PLATFORM_PLAYBOOKS.md) | research | informative | research |
 | `model-catalog-evidence` | [research/MODEL_CATALOG_EVIDENCE.md](./research/MODEL_CATALOG_EVIDENCE.md) | research | informative | research |
+| `golden-briefs` | [research/GOLDEN_BRIEFS.md](./research/GOLDEN_BRIEFS.md) | research | informative | research |
+| `evaluator-recruitment` | [research/EVALUATOR_RECRUITMENT.md](./research/EVALUATOR_RECRUITMENT.md) | research | informative | research |
 | `source-register` | [research/sources.yaml](./research/sources.yaml) | research_registry | informative | research |
 | `generated-openapi` | [generated/OPENAPI.md](./generated/OPENAPI.md) | generated | generated | api |
 | `generated-database-schema` | [generated/DATABASE_SCHEMA.md](./generated/DATABASE_SCHEMA.md) | generated | generated | security-data |

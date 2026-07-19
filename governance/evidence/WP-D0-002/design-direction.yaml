@@ -63,4 +63,8 @@ review:
         The 768px tablet drawer and 375px mobile review-only layouts prove the ratified responsive
         behavior.
 approval:
-  state: pending
+  state: user_selected
+  approved_set: high-fidelity-golden-set
+  selected_by: ernijsansons
+  selected_at: 2026-07-19T17:52:00Z
+  selection_source: explicit_user_statement
