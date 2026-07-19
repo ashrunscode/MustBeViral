@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-D0-001` (in_progress). Current step: `d0-005-user-selection`.
+Current packet: `WP-D0-001` (in_progress). Current step: `d0-003-direction-branches`.
 
 | Authority topic | Document | Path |
 |---|---|---|

@@ -1,77 +1,86 @@
-# MustBeViral Studio — Precision Creative Studio design system
+# MustBeViral Studio — Design System (Lightfield-derived, v2)
 
-Authority: derived from `docs/ux/EXPERIENCE_CONTRACT.md` (accepted) and `docs/ux/CANVAS_AND_SCREEN_STATES.md` (accepted). Structural foundation: `neural-noir-interface-style` dark-interface discipline, with **every** visual token below overriding that foundation. Every design branch must preserve these fonts, palette, spacing, and component rules; branches vary composition and emphasis only.
+Authority chain: operator brand directive (lightfield.app north star) → `brand-id.md` + `brand-detail.md`
+→ this executable system. Composition authority: the unanimous 9/9/9 research verdict for the
+**Review-Approval-Confidence** direction with grafts (ledger receipts, large-node canvas grammar,
+docked quote strip). Every SuperDesign render must preserve these tokens exactly.
 
-## Identity
+## Surfaces (paper, not theme)
 
-A professional creative-operations studio for DTC growth teams: dense but calm, evidence-forward, quiet confidence. The interface answers at all times: Where am I? What is ready? What is blocked? What will this action change or cost? How do I recover?
+| Token        | Value                                    | Use                                         |
+| ------------ | ---------------------------------------- | ------------------------------------------- |
+| `paper`      | `#F4F4F2`                                | application field                           |
+| `card`       | `#FFFFFF`                                | raised cards, panels                        |
+| `wash`       | `rgba(0,0,0,0.04)`                       | hover fills, quiet wells, input backgrounds |
+| `wash-faint` | `rgba(0,0,0,0.02)`                       | alternate rows, canvas field                |
+| `hero-wash`  | subtle cool gradient `#E9EBEF → #F4F4F2` | large empty states only                     |
 
-**Prohibited:** decorative glassmorphism, noisy gradients, ornamental glow, gold/bronze luxury accents, theatrical 3D, fake progress. Motion communicates causality only.
+## Ink (one ink, many pressures — never gray hexes)
 
-## Color tokens (dark studio)
+| Token        | Value              | Use                        |
+| ------------ | ------------------ | -------------------------- |
+| `ink-strong` | `rgba(0,0,0,0.85)` | titles, emphasized values  |
+| `ink-head`   | `rgba(0,0,0,0.75)` | page/panel headings        |
+| `ink`        | `rgba(0,0,0,0.60)` | body, labels               |
+| `ink-muted`  | `rgba(0,0,0,0.50)` | captions, secondary meta   |
+| `ink-faint`  | `rgba(0,0,0,0.25)` | placeholders, disabled     |
+| `line`       | `rgba(0,0,0,0.12)` | hairline borders, dividers |
 
-| Token        | Value     | Use                                |
-| ------------ | --------- | ---------------------------------- |
-| `bg`         | `#090A0D` | app background                     |
-| `surface`    | `#111318` | panels, cards                      |
-| `elevated`   | `#171A21` | popovers, raised surfaces          |
-| `border`     | `#292E39` | hairline borders, dividers         |
-| `text`       | `#F5F7FB` | primary text                       |
-| `text-muted` | `#A7AFBF` | secondary text, captions           |
-| `violet`     | `#806BFF` | active/selected, primary actions   |
-| `blue`       | `#5A96FF` | links, secondary active            |
-| `green`      | `#35D08A` | verified success only              |
-| `amber`      | `#F2B84B` | attention, reconciliation, partial |
-| `red`        | `#F06B7A` | destructive, failed                |
+## Accent and status
 
-Color is never the only status cue — pair with icon/shape/text. Contrast: WCAG 2.2 AA minimum, 7:1 for text where practical.
+- `signal` `#2E6BE6` — THE accent. Exactly one signal element per screen: the current primary action
+  (Confirm run, Approve, Export). Selected states use `signal` at 0.12 wash + 1px `signal` border.
+- Status (small, always icon+text, mono labels): `ok` `#1F9D63` · `attention` `#B87E14` · `fail` `#C4404D`.
+  Status colors never fill large areas; they mark chips, dots, and left-edges only.
+- White text only ever sits on `signal` or status fills.
 
-## Typography
+## Type
 
-- **Geist Sans** — all product text. Weights 400/500/600; headings tight (-0.01em), UI labels 12–13px, body 14px, section titles 16–18px.
-- **Geist Mono** — identifiers, prices, timings, model labels, hashes, execution evidence. Never for prose.
-- No serif, no italic display faces.
+- **Untitled Sans** (license; interim: Geist Sans) — UI/product text. Weights 400/500 only.
+- **DM Mono** — all evidence: prices, timestamps, revisions, model routes, seeds, hashes, receipts, counts.
+- Scale: 12 mono-caption · 13 label · 15 body (lh 1.5) · 18 section · 22 panel-title ·
+  28 page-title (w400, tracking −0.03em). Product never exceeds 28px.
 
-## Spacing, sizing, radius
+## Geometry
 
-- 4px base grid; common gaps 8/12/16/24/32.
-- Controls: compact 32–36px tall; primary ≥40px; touch targets ≥44×44px on touch surfaces.
-- Radius: 6px (inputs, chips), 8px (cards, buttons), 12px (panels, dialogs). No pill shapes except status dots/badges.
-- Depth: borders and surface hierarchy first; one soft shadow reserved for transient overlays only.
+- Radius: 4 controls · 6 inputs · 8 cards · 10 floating; pill for status dots only.
+- Grid 4px; gaps 8/12/16/24/32; controls 36px, primary 40px, touch 44px.
+- Hairlines everywhere; shadow (soft, tight, single) only on floating/transient layers.
+- Signature (marketing/empty states only): 6–8° tilted paper-card compositions of the real UI.
 
 ## Motion
 
-- 120ms local feedback · 180ms panel state · 240ms route/major layout. Easing `cubic-bezier(0.2, 0, 0, 1)`.
-- Motion never delays input; respect `prefers-reduced-motion`.
+120ms local · 180ms panel · 240ms route; ease `cubic-bezier(0.2,0,0,1)`; respects reduced-motion;
+motion communicates causality only — nothing decorative, nothing looping.
 
-## Application shell
+## Composition (research-locked)
 
-Left tool rail (icon column, 48–56px) · central infinite canvas · right inspector (320–360px, collapsible) · top project/run controls bar · collapsible bottom activity/output panel. Tablet: drawers instead of simultaneous side panels. Mobile: review/approve/receipt/export only, with visible "continue on desktop" affordances for authoring actions.
+- **Confirm bar** (hero of the run moment): full-width, `card` on `line` hairline, containing —
+  pinned revision (mono), model route (mono), price basis, expiry countdown (mono), and the single
+  `signal` button naming the amount: "Confirm $4.20 run". Never styled with urgency.
+- **Docked quote strip** (graft A): slim persistent strip showing live `QUOTE $4.20 · REV 7f3a`
+  whenever the confirm bar is off-screen.
+- **Canvas** (graft B): `wash-faint` field; nodes = `card` hairline cards, 8px radius, 15px titles,
+  12px mono meta; selected = `signal` border + focus ring; running = animated `attention` top edge +
+  label; verified = `ok` chip; failed = `fail` chip + local "Retry (no charge) — retains N verified"
+  affordance. Edges 1.5px `line` bezier with directional arrowheads; active lineage in `signal`.
+- **QA panel:** `attention`-edged card listing findings with per-note mono JUMP_TO_ASSET links.
+- **Receipt drawer** (graft A): immutable ledger table — TIMESTAMP / NODE / EVENT / COST — DM Mono,
+  right-aligned amounts, per-event costs, full-statement link. Reads notarized.
+- **Version comparison:** side-by-side `card` thumbnails, CURRENT vs PRIOR, mono captions.
+- **Approvals:** per-artifact approve/reject with recorded identity ("APPROVED · BY SC" mono chips);
+  batch approval affordance with progress "4 / 12".
+- **Focus-visible:** 2px `signal` outline offset 2px — including canvas nodes. WCAG 2.2 AA minimum,
+  7:1 target for body ink on paper.
 
-## Component state rules
+## Shared representative content (unchanged)
 
-Every interactive component defines: default, hover (pointer only), focus-visible (2px violet outline offset 2px — including canvas nodes), pressed, disabled, loading, error, success. Optimistic UI only where rollback is deterministic and no money/provider action is implied.
+Lumen Skin campaign · 12-node launch-pack graph · quote $4.20 pinned rev 7f3a · one partial static
+failure with free retry · QA report with 2 notes · immutable receipt. Model labels always
+`kimi-2.6 + flux-2-klein`. No `$1,240` figures anywhere — every money figure obeys the $8/run cap story.
 
-## Canvas language
+## Elevation bar ("wow" defined)
 
-- Nodes: `surface` cards, 8px radius, 1px `border`; selected = violet border + focus ring; running = animated amber top edge (plus label); verified output = green check chip; failed = red chip + local recovery affordance.
-- Edges: 1.5px `border`-colored bezier; active lineage highlighted violet.
-- Status chips always icon + text. Costs and model labels in Geist Mono.
-- Level-of-detail rendering ≥55 FPS at 100 visible nodes; 500-node stress stays navigable.
-
-## Trust surfaces
-
-- Quote before spend: quote panels show pinned revision, model route, price basis, expiry; the confirm control names the amount.
-- Receipts: immutable, mono-typography evidence blocks.
-- Partial value visible: completed static branches reviewable while motion/failed branches continue; global progress never hides branch state.
-- Destructive confirmations name the affected revision, artifacts, spend, or descendants — never generic warnings.
-
-## Screen inventory for direction exploration
-
-Shared representative content across all branches: one DTC skincare brand ("Lumen Skin"), one campaign brief, a 12-node launch-pack graph (brief → 3 angles → selected direction → statics/copy/motion → QA → export), one quote ($4.20), one partial-failure state, one receipt.
-
-Branch focus definitions:
-
-1. **calm-density** — maximum information density without noise: tighter rail, compact inspector rows, data-table bias.
-2. **canvas-legibility** — graph readability first: larger node typography, stronger lineage emphasis, quieter chrome.
-3. **review-approval-confidence** — the trust moments amplified: quote/confirm, comparison, approval, and receipt surfaces given prominence.
+Premium is achieved by: perfect paper/ink discipline, one signal moment per screen, notarized mono
+evidence, vast calm in empty states, tilted-paper product storytelling, and flawless 1440px overflow
+behavior. Never by: gradients, glass, glow, dark drama, density for its own sake, or decoration.
