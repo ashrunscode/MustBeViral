@@ -124,7 +124,8 @@ acceptance:
         - governance/evidence/WP-R0-002/scaffold-verification.md
   manual:
     - id: provenance-review
-      criterion: Template provenance names the exact command, version, source, license, selected patterns,
+      criterion:
+        Template provenance names the exact command, version, source, license, selected patterns,
         rejected patterns, and modifications.
       status: passed
       evidence:

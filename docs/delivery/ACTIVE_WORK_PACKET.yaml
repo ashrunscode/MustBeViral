@@ -97,7 +97,8 @@ steps:
 acceptance:
   automated:
     - id: design-direction-evidence
-      criterion: The design-direction validator proves one initial draft and exactly three named branches,
+      criterion:
+        The design-direction validator proves one initial draft and exactly three named branches,
         rendered artifact references, named desktop captures, shared representative content,
         required review findings, and an explicit approval state.
       status: pending
@@ -108,13 +109,15 @@ acceptance:
       status: pending
       evidence: []
     - id: clean-superdesign-intake
-      criterion: SuperDesign analysis identifies only ViralGraph cleanroom V2 and contains no legacy V1
+      criterion:
+        SuperDesign analysis identifies only ViralGraph cleanroom V2 and contains no legacy V1
         route, React Router, D1-auth, marketing-autopilot, or System DNA instruction.
       status: pending
       evidence: []
   manual:
     - id: direction-approval
-      criterion: The user explicitly selects one named branch after reviewing its rendered artifact and
+      criterion:
+        The user explicitly selects one named branch after reviewing its rendered artifact and
         desktop capture; silence, an agent preference, or a tool default cannot count as approval.
       status: pending
       evidence: []
