@@ -39,6 +39,7 @@
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:test": "supabase test db",
+    "db:types": "pnpm --filter @mustbeviral/db generate:types",
     "verify": "pnpm format:check && pnpm governance:check && pnpm governance:test && pnpm security:check && pnpm task-graph:check && pnpm lint:governance && pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration && pnpm build"
   },
   "devDependencies": {

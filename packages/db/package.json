@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "generate:types": "node scripts/generate-types.mjs",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
     "test": "vitest run"
