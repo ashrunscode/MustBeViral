@@ -150,7 +150,7 @@ steps:
       integer-micros ledger contracts with deterministic legal state machines, canonical graph
       hashes, immutable revisions, affected-descendant calculation, transparent quotes, explicit
       confirmation, idempotency, auditability, and unit and contract tests.
-    status: pending
+    status: current
   - id: p0-003-real-provider-adapters
     title:
       Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
