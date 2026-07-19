@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-D0-002` (in_progress). Current step: `d1-000-experience-contract-lightfield`.
+Current packet: `WP-D0-002` (in_progress). Current step: `d1-004-platform-algorithm-playbooks`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -73,6 +73,7 @@ Current packet: `WP-D0-002` (in_progress). Current step: `d1-000-experience-cont
 | `operations.observability` | `deploy-rollback-incidents` | docs/operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md |
 | `operations.legacy_inventory` | `legacy-v1-retirement` | docs/operations/LEGACY_V1_RETIREMENT.md |
 | `operations.legacy_retirement` | `legacy-v1-retirement` | docs/operations/LEGACY_V1_RETIREMENT.md |
+| `research.platform_playbooks` | `platform-playbooks` | docs/research/PLATFORM_PLAYBOOKS.md |
 | `research.source_register` | `source-register` | docs/research/sources.yaml |
 | `generated.open_api` | `generated-openapi` | docs/generated/OPENAPI.md |
 | `generated.database_schema` | `generated-database-schema` | docs/generated/DATABASE_SCHEMA.md |

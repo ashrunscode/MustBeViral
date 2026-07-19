@@ -318,6 +318,15 @@ documents:
       ]
     supersedes: []
 
+  - id: platform-playbooks
+    path: docs/research/PLATFORM_PLAYBOOKS.md
+    kind: research
+    status: informative
+    owner: research
+    authority_topics: [research.platform_playbooks]
+    review_triggers: [platform_algorithm_changed, launch_destination_added, qa_rule_promoted]
+    supersedes: []
+
   - id: source-register
     path: docs/research/sources.yaml
     kind: research_registry

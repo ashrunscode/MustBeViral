@@ -100,7 +100,7 @@ steps:
     status: pending
   - id: d1-004-platform-algorithm-playbooks
     title: Author source-backed platform-algorithm creative playbooks for launch-pack destinations
-    status: pending
+    status: current
   - id: d1-005-golden-briefs-and-recruitment
     title: Define the 20 representative golden briefs and recruit or qualify five to eight evaluators
     status: pending
@@ -179,7 +179,7 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: d1-000-experience-contract-lightfield
+  current_step: d1-004-platform-algorithm-playbooks
   next_action: Amend and register the experience contract with the operator-directed Lightfield identity
   blockers: []
   changed_paths: []

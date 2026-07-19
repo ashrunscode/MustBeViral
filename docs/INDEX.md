@@ -34,6 +34,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `toolchain-template-provenance` | [operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md](./operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md) | runbook | accepted | developer-experience |
 | `deploy-rollback-incidents` | [operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md](./operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md) | runbook | accepted | operations |
 | `legacy-v1-retirement` | [operations/LEGACY_V1_RETIREMENT.md](./operations/LEGACY_V1_RETIREMENT.md) | temporary_runbook | accepted | operations |
+| `platform-playbooks` | [research/PLATFORM_PLAYBOOKS.md](./research/PLATFORM_PLAYBOOKS.md) | research | informative | research |
 | `source-register` | [research/sources.yaml](./research/sources.yaml) | research_registry | informative | research |
 | `generated-openapi` | [generated/OPENAPI.md](./generated/OPENAPI.md) | generated | generated | api |
 | `generated-database-schema` | [generated/DATABASE_SCHEMA.md](./generated/DATABASE_SCHEMA.md) | generated | generated | security-data |
