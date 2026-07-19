@@ -1,14 +1,14 @@
 schema_version: 1
 scan:
   ignored_paths:
-    - .git/**
-    - node_modules/**
-    - .next/**
-    - .turbo/**
-    - .wrangler/**
-    - coverage/**
-    - test-results/**
-    - playwright-report/**
+    - '**/.git/**'
+    - '**/node_modules/**'
+    - '**/.next/**'
+    - '**/.turbo/**'
+    - '**/.wrangler/**'
+    - '**/coverage/**'
+    - '**/test-results/**'
+    - '**/playwright-report/**'
     - governance/tests/**
   content_allowlist:
     - AGENTS.md
@@ -55,12 +55,39 @@ legacy_content_patterns:
     pattern: '\\b(?:Vista Social|Buffer)\\b'
 secret_patterns:
   - id: aws-access-key
-    pattern: '\\bAKIA[0-9A-Z]{16}\\b'
+    pattern: '\bAKIA[0-9A-Z]{16}\b'
   - id: stripe-live-secret
-    pattern: '\\bsk_live_[A-Za-z0-9]{16,}\\b'
+    pattern: '\bsk_live_[A-Za-z0-9]{16,}\b'
+  - id: stripe-test-secret
+    pattern: '\bsk_test_[A-Za-z0-9]{16,}\b'
+  - id: stripe-live-restricted
+    pattern: '\brk_live_[A-Za-z0-9]{16,}\b'
+  - id: stripe-webhook-secret
+    pattern: '\bwhsec_[A-Za-z0-9]{16,}\b'
   - id: github-token
-    pattern: '\\b(?:ghp|github_pat)_[A-Za-z0-9_]{20,}\\b'
+    pattern: '\b(?:ghp|github_pat)_[A-Za-z0-9_]{20,}\b'
   - id: generic-private-key
     pattern: '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'
+  # fal has issued both UUID-pair credentials and prefixed API-key forms.
+  - id: fal-uuid-key
+    pattern: '\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b'
+  - id: fal-prefixed-key
+    pattern: '\b(?:fal|key)_[A-Za-z0-9_-]{16,}(?![A-Za-z0-9_-])'
+  - id: resend-api-key
+    pattern: '\bre_[A-Za-z0-9_-]{16,}(?![A-Za-z0-9_-])'
   - id: supabase-service-key
-    pattern: '\\bSUPABASE_SERVICE_ROLE_KEY\\s*[:=]\\s*[^$<{\\s][^\\s]{12,}'
+    pattern: '\bSUPABASE_SERVICE_ROLE_KEY\s*[:=]\s*[^$<{\s][^\s]{12,}'
+  - id: supabase-secret-key
+    pattern: '\bsb_secret_[A-Za-z0-9_-]{16,}(?![A-Za-z0-9_-])'
+  # Regex approximation: matches JWT payload base64url fragments for `"role":"service_role"`
+  # at each possible byte alignment. It does not decode JWTs or validate their signatures.
+  - id: supabase-service-role-jwt
+    pattern: '\beyJ[A-Za-z0-9_-]{5,}\.(?=[A-Za-z0-9_-]{20,}\.)(?:[A-Za-z0-9_-]*)(?:InJvbGUiOiJzZXJ2aWNlX3JvbGU|Jyb2xlIjoic2VydmljZV9yb2xl|icm9sZSI6InNlcnZpY2Vfcm9sZS)[A-Za-z0-9_-]*\.[A-Za-z0-9_-]{8,}\b'
+  # USER:PASSWORD is the neutral placeholder convention. The exact local Supabase test DSN using
+  # postgres:postgres at 127.0.0.1:54322/postgres is also exempt; other non-empty passwords flag.
+  - id: postgres-connection-credentials
+    pattern: '\bpostgres(?:ql)?://(?!(?:USER:PASSWORD@|postgres:postgres@127\.0\.0\.1:54322/postgres\b))[^\s/:@]+:(?!PASSWORD@)[^\s/@]+@[^\s/?#]+'
+  # Conservative fallback: uppercase secret-like variable names plus a 48+ character hex or
+  # mixed-case alphanumeric/base64url literal. It excludes interpolation and ordinary hashes.
+  - id: high-entropy-secret-assignment
+    pattern: '\b[A-Z][A-Z0-9_]*(?:_KEY|_SECRET|_TOKEN)\s*[:=]\s*["'']?(?:[A-Fa-f0-9]{48,}|(?=[A-Za-z0-9+/_=-]{48,}["'']?(?:\s|[,;}#]|$))(?=[A-Za-z0-9+/_=-]*[A-Z])(?=[A-Za-z0-9+/_=-]*[a-z])(?=[A-Za-z0-9+/_=-]*[0-9])[A-Za-z0-9+/_=-]{48,})["'']?'
