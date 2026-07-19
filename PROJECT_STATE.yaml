@@ -12,8 +12,8 @@ phase:
 release_target: P0
 active_work_packet: WP-P0-001
 next_action:
-  Implement the authoritative Postgres schema, migrations, generated types, forced RLS, hardened
-  RPCs, and the required database test suites.
+  Implement the shared domain, graph, command/query, quote, reservation, and integer-micros
+  ledger contracts with their unit and contract tests.
 decisions_pending: []
 blockers: []
 legacy:

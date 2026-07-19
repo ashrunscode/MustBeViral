@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P0-001` (in_progress). Current step: `p0-001-database-rls-migrations`.
+Current packet: `WP-P0-001` (in_progress). Current step: `p0-002-domain-command-layer`.
 
 | Authority topic | Document | Path |
 |---|---|---|

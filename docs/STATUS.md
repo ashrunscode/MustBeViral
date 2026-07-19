@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P0 — Real Meta Campaign Launch Pack vertical slice and private MCP proof (in_progress) |
 | Active packet | `WP-P0-001` |
-| Current step | `p0-001-database-rls-migrations` |
+| Current step | `p0-002-domain-command-layer` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement the authoritative Postgres schema, migrations, generated types, forced RLS, hardened RPCs, and the required database test suites.
+Implement the shared domain, graph, command/query, quote, reservation, and integer-micros ledger contracts with their unit and contract tests.

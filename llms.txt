@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
-current_step: p0-001-database-rls-migrations
-next_action: Implement the authoritative Postgres schema, migrations, generated types, forced RLS, hardened RPCs, and the required database test suites.
+current_step: p0-002-domain-command-layer
+next_action: Implement the shared domain, graph, command/query, quote, reservation, and integer-micros ledger contracts with their unit and contract tests.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

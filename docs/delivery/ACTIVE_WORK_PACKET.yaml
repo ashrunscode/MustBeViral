@@ -144,7 +144,7 @@ steps:
       hardened RPCs, forced RLS, least-privilege roles, cross-tenant isolation, migration sequence,
       rollback/idempotency, pooled-identity, and ledger-invariant tests; retain Data API/RPC unless
       the accepted Hyperdrive benchmark proves every G1-G6 enablement condition.
-    status: current
+    status: completed
   - id: p0-002-domain-command-layer
     title: Implement shared domain, graph, command/query, quote, reservation, artifact, and
       integer-micros ledger contracts with deterministic legal state machines, canonical graph
@@ -301,9 +301,9 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p0-001-database-rls-migrations
-  next_action: Implement the authoritative Postgres schema, migrations, generated types, forced RLS,
-    hardened RPCs, and the required database test suites.
+  current_step: p0-002-domain-command-layer
+  next_action: Implement the shared domain, graph, command/query, quote, reservation, and
+    integer-micros ledger contracts with their unit and contract tests.
   blockers: []
   changed_paths: []
   last_green_checks: []
