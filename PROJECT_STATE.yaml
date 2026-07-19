@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-D0-001
-next_action: Create the SuperDesign project, render the initial Precision Creative Studio draft, and
-  iterate the three named direction branches.
+next_action: Present the three named branch renders and record the user's explicit selection in the
+  design-direction evidence.
 decisions_pending: []
 blockers: []
 legacy:
