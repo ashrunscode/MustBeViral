@@ -38,6 +38,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `model-catalog-evidence` | [research/MODEL_CATALOG_EVIDENCE.md](./research/MODEL_CATALOG_EVIDENCE.md) | research | informative | research |
 | `golden-briefs` | [research/GOLDEN_BRIEFS.md](./research/GOLDEN_BRIEFS.md) | research | informative | research |
 | `evaluator-recruitment` | [research/EVALUATOR_RECRUITMENT.md](./research/EVALUATOR_RECRUITMENT.md) | research | informative | research |
+| `rls-hyperdrive-benchmark-plan` | [research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md](./research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md) | research | informative | architecture |
 | `source-register` | [research/sources.yaml](./research/sources.yaml) | research_registry | informative | research |
 | `generated-openapi` | [generated/OPENAPI.md](./generated/OPENAPI.md) | generated | generated | api |
 | `generated-database-schema` | [generated/DATABASE_SCHEMA.md](./generated/DATABASE_SCHEMA.md) | generated | generated | security-data |

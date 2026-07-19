@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | D0 — Review Approval high-fidelity D0 exit closure (in_progress) |
 | Active packet | `WP-D0-002` |
-| Current step | `d1-006-rls-hyperdrive-benchmark-plan` |
+| Current step | `d1-007-successor-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |

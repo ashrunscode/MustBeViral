@@ -361,6 +361,15 @@ documents:
       [qualification_threshold_changed, evaluator_status_changed, p0_evidence_reviewed]
     supersedes: []
 
+  - id: rls-hyperdrive-benchmark-plan
+    path: docs/research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md
+    kind: research
+    status: informative
+    owner: architecture
+    authority_topics: [research.rls_hyperdrive_benchmark]
+    review_triggers: [hyperdrive_gate_evaluated, benchmark_completed]
+    supersedes: []
+
   - id: source-register
     path: docs/research/sources.yaml
     kind: research_registry

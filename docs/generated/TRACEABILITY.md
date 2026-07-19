@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-D0-002` (in_progress). Current step: `d1-006-rls-hyperdrive-benchmark-plan`.
+Current packet: `WP-D0-002` (in_progress). Current step: `d1-007-successor-handoff`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -80,6 +80,7 @@ Current packet: `WP-D0-002` (in_progress). Current step: `d1-006-rls-hyperdrive-
 | `research.evaluator_qualification` | `evaluator-recruitment` | docs/research/EVALUATOR_RECRUITMENT.md |
 | `research.evaluator_recruitment` | `evaluator-recruitment` | docs/research/EVALUATOR_RECRUITMENT.md |
 | `research.evaluation_protocol` | `evaluator-recruitment` | docs/research/EVALUATOR_RECRUITMENT.md |
+| `research.rls_hyperdrive_benchmark` | `rls-hyperdrive-benchmark-plan` | docs/research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md |
 | `research.source_register` | `source-register` | docs/research/sources.yaml |
 | `generated.open_api` | `generated-openapi` | docs/generated/OPENAPI.md |
 | `generated.database_schema` | `generated-database-schema` | docs/generated/DATABASE_SCHEMA.md |
