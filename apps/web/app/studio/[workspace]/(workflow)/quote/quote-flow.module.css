@@ -1,0 +1,333 @@
+.quotePage {
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template: minmax(0, 1fr) 72px 32px / minmax(0, 1fr) 320px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.quoteStage {
+  min-width: 0;
+  overflow-y: auto;
+  display: grid;
+  place-items: center;
+  padding: 28px 40px;
+  background: var(--paper-2);
+}
+
+.quoteCard {
+  width: min(720px, 100%);
+  padding: 28px 32px 24px;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink-muted);
+}
+
+.quoteCard h1 {
+  margin: 0 0 8px;
+  color: var(--ink-head);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 0 0 22px;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.revisionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: var(--wash-faint);
+}
+
+.ledger {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ledger th,
+.ledger td {
+  height: 43px;
+  padding: 0 10px;
+  border-bottom-color: var(--wash);
+}
+
+.ledger th {
+  height: 32px;
+  color: var(--ink-faint);
+}
+
+.totalRow td {
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+  color: var(--ink-strong);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.impact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  border-left: 2px solid var(--attention);
+  padding: 11px 12px;
+  background: var(--wash-faint);
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.countdown :global(.mbv-monocaps) {
+  color: var(--ink-strong);
+  font-size: 17px;
+}
+
+.capsRow {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  color: var(--ink-strong);
+}
+
+.acknowledgment {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: var(--card);
+  color: var(--ink-head);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.acknowledgment input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--signal);
+}
+
+.quietBack {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 12px;
+  text-underline-offset: 3px;
+}
+
+.notice {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-left-width: 2px;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: var(--wash-faint);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.notice :global(.mbv-button),
+.notice :global(.mbv-button--ghost) {
+  min-height: 32px;
+  width: fit-content;
+}
+
+.noticeSuccess {
+  border-left-color: var(--ok);
+  color: var(--ok);
+}
+.noticeExpired,
+.noticeConflict {
+  border-left-color: var(--attention);
+  color: var(--ink-head);
+}
+.noticeError {
+  border-left-color: var(--fail);
+  color: var(--fail);
+}
+
+.sidePanel {
+  min-height: 0;
+  grid-column: 2;
+  grid-row: 1;
+  overflow-y: auto;
+  border-left: 1px solid var(--line);
+  padding: 28px 24px;
+  background: var(--card);
+}
+
+.sidePanel h2 {
+  margin: 0 0 18px;
+  color: var(--ink-head);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.miniGraph {
+  position: relative;
+  height: 174px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-2);
+}
+
+.miniLine {
+  position: absolute;
+  top: 85px;
+  left: 51px;
+  width: 168px;
+  height: 1px;
+  background: var(--line);
+}
+
+.miniNode {
+  position: absolute;
+  top: 61px;
+  width: 54px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink-muted);
+}
+
+.miniNode:nth-of-type(2) {
+  left: 24px;
+}
+.miniNode:nth-of-type(3) {
+  left: 108px;
+}
+.miniNode:nth-of-type(4) {
+  right: 24px;
+}
+
+.miniAffected {
+  border-color: var(--signal-soft);
+  background: var(--selection-wash);
+}
+
+.legend {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 26px;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.legend > span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.legendSwatch {
+  width: 18px;
+  height: 10px;
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--card);
+}
+
+.prechecks {
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+
+.prechecks h3 {
+  margin: 0 0 12px;
+  color: var(--ink-head);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.checkList {
+  display: grid;
+  gap: 10px;
+}
+
+.checkList > span {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 6px;
+  padding: 0 10px;
+  background: var(--wash-faint);
+  font-size: 12px;
+}
+
+.confirmBar {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  padding: 0 32px;
+  background: var(--card);
+}
+
+.barRoute {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.barRoute > div {
+  display: grid;
+  gap: 5px;
+}
+
+.barRoute > div > :first-child {
+  color: var(--ink-muted);
+}
+
+.footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 0 24px;
+  background: var(--wash-faint);
+  color: var(--ink-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quotePage *,
+  .quotePage *::before,
+  .quotePage *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

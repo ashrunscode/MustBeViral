@@ -1,0 +1,158 @@
+export interface QuoteLineItem {
+  readonly id: string;
+  readonly node: string;
+  readonly basis: string;
+  readonly amountMicros: bigint;
+}
+
+export interface RunQuote {
+  readonly id: string;
+  readonly revision: string;
+  readonly route: string;
+  readonly createdAtMs: number;
+  readonly expiresAtMs: number;
+  readonly lineItems: readonly QuoteLineItem[];
+  readonly totalMicros: bigint;
+  readonly runCapMicros: bigint;
+  readonly workspaceDayCapMicros: bigint;
+  readonly workspaceDayUsedMicros: bigint;
+}
+
+export type QuoteConfirmResult =
+  | { readonly type: 'ok'; readonly runId: string; readonly acceptedMaximumMicros: bigint }
+  | { readonly type: 'expired_quote'; readonly expiredAtMs: number }
+  | {
+      readonly type: 'cap_exceeded';
+      readonly capMicros: bigint;
+      readonly attemptedMicros: bigint;
+      readonly explanation: string;
+    }
+  | {
+      readonly type: 'conflict';
+      readonly expected_revision_id: string;
+      readonly actual_revision_id: string;
+    };
+
+export interface QuotePort {
+  read(nowMs?: number): RunQuote;
+  confirm(
+    input: Readonly<{ quote: RunQuote; acknowledged: boolean; nowMs: number }>,
+  ): Promise<QuoteConfirmResult>;
+  requote(nowMs?: number): Promise<RunQuote>;
+}
+
+export type QuotePortScenario = QuoteConfirmResult['type'];
+
+const FIFTEEN_MINUTES_MS = 15 * 60 * 1000;
+
+const goldenLineItems: readonly QuoteLineItem[] = [
+  { id: 'concept', node: 'Concept logic', basis: 'kimi-2.6', amountMicros: 1_200_000n },
+  { id: 'assets', node: 'Asset gen x3', basis: 'flux-2-klein', amountMicros: 2_400_000n },
+  { id: 'copy', node: 'Copy', basis: '3 sets', amountMicros: 240_000n },
+  {
+    id: 'motion',
+    node: 'Motion seedance-1.0 6s',
+    basis: '9:16',
+    amountMicros: 360_000n,
+  },
+];
+
+export function createGoldenQuote(nowMs = Date.now()): RunQuote {
+  const totalMicros = goldenLineItems.reduce((total, item) => total + item.amountMicros, 0n);
+  return {
+    id: `quote-7f3a-${String(nowMs)}`,
+    revision: '7f3a',
+    route: 'kimi-2.6 + flux-2-klein + seedance-1.0',
+    createdAtMs: nowMs,
+    expiresAtMs: nowMs + FIFTEEN_MINUTES_MS,
+    lineItems: goldenLineItems,
+    totalMicros,
+    runCapMicros: 8_000_000n,
+    workspaceDayCapMicros: 100_000_000n,
+    workspaceDayUsedMicros: 18_420_000n,
+  };
+}
+
+export function quoteSecondsRemaining(expiresAtMs: number, nowMs: number): number {
+  return Math.max(0, Math.ceil((expiresAtMs - nowMs) / 1000));
+}
+
+export function quoteIsExpired(expiresAtMs: number, nowMs: number): boolean {
+  return quoteSecondsRemaining(expiresAtMs, nowMs) === 0;
+}
+
+export function formatQuoteCountdown(seconds: number): string {
+  const safeSeconds = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(safeSeconds / 60);
+  const remainder = safeSeconds % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`;
+}
+
+export function canConfirmQuote(
+  input: Readonly<{
+    acknowledged: boolean;
+    expiresAtMs: number;
+    nowMs: number;
+    pending: boolean;
+  }>,
+): boolean {
+  return input.acknowledged && !input.pending && !quoteIsExpired(input.expiresAtMs, input.nowMs);
+}
+
+export class InMemoryQuotePort implements QuotePort {
+  readonly #scenario: QuotePortScenario;
+  #quote: RunQuote;
+
+  constructor(options: Readonly<{ nowMs?: number; scenario?: QuotePortScenario }> = {}) {
+    this.#scenario = options.scenario ?? 'ok';
+    this.#quote = createGoldenQuote(options.nowMs);
+  }
+
+  read(): RunQuote {
+    return this.#quote;
+  }
+
+  async confirm(
+    input: Readonly<{
+      quote: RunQuote;
+      acknowledged: boolean;
+      nowMs: number;
+    }>,
+  ): Promise<QuoteConfirmResult> {
+    if (!input.acknowledged) {
+      throw new Error('Explicit quote acknowledgment is required.');
+    }
+    if (
+      this.#scenario === 'expired_quote' ||
+      quoteIsExpired(input.quote.expiresAtMs, input.nowMs)
+    ) {
+      return { type: 'expired_quote', expiredAtMs: input.quote.expiresAtMs };
+    }
+    if (this.#scenario === 'cap_exceeded') {
+      return {
+        type: 'cap_exceeded',
+        capMicros: input.quote.runCapMicros,
+        attemptedMicros: input.quote.totalMicros,
+        explanation:
+          'The workspace-day reservation changed after this quote. No provider work was submitted and no spend was accepted.',
+      };
+    }
+    if (this.#scenario === 'conflict') {
+      return {
+        type: 'conflict',
+        expected_revision_id: input.quote.revision,
+        actual_revision_id: '81c2',
+      };
+    }
+    return {
+      type: 'ok',
+      runId: 'run-lumen-0007',
+      acceptedMaximumMicros: input.quote.totalMicros,
+    };
+  }
+
+  async requote(nowMs = Date.now()): Promise<RunQuote> {
+    this.#quote = createGoldenQuote(nowMs);
+    return this.#quote;
+  }
+}

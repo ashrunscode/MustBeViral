@@ -58,7 +58,7 @@ export function listRepositoryFiles(patterns = ['**/*']) {
     onlyFiles: true,
     dot: true,
     followSymbolicLinks: false,
-    ignore: ['.git/**', 'node_modules/**'],
+    ignore: ['.git/**', 'node_modules/**', '.pnpm-store/**'],
   });
 }
 

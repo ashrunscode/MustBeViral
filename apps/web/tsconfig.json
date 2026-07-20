@@ -5,9 +5,12 @@
     "incremental": true,
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2024"],
+    "paths": {
+      "@mustbeviral/graph": ["../../packages/graph/src/index.ts"]
+    },
     "plugins": [{ "name": "next" }],
     "types": ["node", "react", "react-dom"]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
