@@ -165,13 +165,13 @@ steps:
       comparison, review/approval, export, and receipt flows against the approved Review Approval
       goldens with complete component/screen states, responsive behavior, accessibility, reduced
       motion, and visual and performance tests.
-    status: current
+    status: completed
   - id: p0-005-golden-launch-pack-runs
     title: Execute real end-to-end launch-pack runs for the 20 golden briefs, producing the required
       three master statics, nine approved adaptations, three copy sets, one 6-10 second 9:16 motion
       branch, QA, private review/export artifacts, and immutable receipts while transactionally
       enforcing per-run, workspace-day, and global-day caps and measuring first-reviewable latency.
-    status: pending
+    status: current
   - id: p0-006-private-mcp-proof
     title:
       Prove the exact five private MCP operations in MCP Inspector and two real clients against the
@@ -301,11 +301,16 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p0-004-golden-locked-ui
-  next_action: Continue the golden-locked UI with the canvas, semantic outline, work-motion,
-    quote/confirm, run progress, comparison, review/approval, export, and receipt flows plus
-    responsive, accessibility, visual, and performance evidence.
-  blockers: []
+  current_step: p0-005-golden-launch-pack-runs
+  next_action: Execute real end-to-end launch-pack runs for the 20 golden briefs with enabled
+    providers, immutable receipts, transactional cap enforcement, and first-reviewable latency
+    measurement once the operator supplies the provisioning inputs.
+  blockers:
+    - Real provider runs are blocked on the eleven operator-owned provisioning inputs recorded in
+      governance/evidence/WP-P0-001/environment-provisioning.md (staging Supabase project and keys,
+      Vercel target, scoped Core Worker and private R2, fal credentials with webhook secret and
+      price confirmations, Moonshot credentials with retention/DPA clearance); the environment
+      remains NOT READY and no real spend path may be enabled until they arrive.
   changed_paths: []
   last_green_checks: []
 completion:

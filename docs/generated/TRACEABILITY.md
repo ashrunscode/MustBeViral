@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P0-001` (in_progress). Current step: `p0-004-golden-locked-ui`.
+Current packet: `WP-P0-001` (in_progress). Current step: `p0-005-golden-launch-pack-runs`.
 
 | Authority topic | Document | Path |
 |---|---|---|

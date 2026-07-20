@@ -11,11 +11,14 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Continue the golden-locked UI with the canvas, semantic outline, work-motion,
-  quote/confirm, run progress, comparison, review/approval, export, and receipt flows plus
-  responsive, accessibility, visual, and performance evidence.
+next_action: Execute real end-to-end launch-pack runs for the 20 golden briefs with enabled
+  providers, immutable receipts, transactional cap enforcement, and first-reviewable latency
+  measurement once the operator supplies the provisioning inputs.
 decisions_pending: []
-blockers: []
+blockers:
+  - Real provider runs are blocked on the eleven operator-owned provisioning inputs recorded in
+    governance/evidence/WP-P0-001/environment-provisioning.md; the staging environment remains NOT
+    READY and no real spend path may be enabled until they arrive.
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
