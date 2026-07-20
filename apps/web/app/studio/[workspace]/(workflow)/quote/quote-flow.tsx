@@ -23,6 +23,7 @@ import {
   type QuotePortScenario,
 } from '../../../../../src/features/quote/quote-port';
 import styles from './quote-flow.module.css';
+import { RunProgress } from './run-progress';
 
 export function QuoteResultNotice({
   onRequote,
@@ -99,11 +100,15 @@ export function QuoteResultNotice({
 export function QuoteFlow({
   initialNowMs,
   port: suppliedPort,
+  runScenario = 'normal',
+  startInRunStage = false,
   scenario = 'ok',
   workspace,
 }: Readonly<{
   initialNowMs?: number;
   port?: QuotePort;
+  runScenario?: 'normal' | 'failed';
+  startInRunStage?: boolean;
   scenario?: QuotePortScenario;
   workspace: string;
 }>) {
@@ -122,7 +127,7 @@ export function QuoteFlow({
   const [result, setResult] = useState<QuoteConfirmResult | null>(null);
 
   useEffect(() => {
-    if (suppliedPort !== undefined || initialNowMs !== undefined) return;
+    if (startInRunStage || suppliedPort !== undefined || initialNowMs !== undefined) return;
     let active = true;
     void port.requote(Date.now()).then((next) => {
       if (!active) return;
@@ -132,12 +137,17 @@ export function QuoteFlow({
     return () => {
       active = false;
     };
-  }, [initialNowMs, port, suppliedPort]);
+  }, [initialNowMs, port, startInRunStage, suppliedPort]);
 
   useEffect(() => {
+    if (startInRunStage) return;
     const timer = window.setInterval(() => setNowMs(Date.now()), 1000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [startInRunStage]);
+
+  if (startInRunStage) {
+    return <RunProgress workspace={workspace} scenario={runScenario} />;
+  }
 
   const secondsRemaining = quoteSecondsRemaining(quote.expiresAtMs, nowMs);
   const expired = quoteIsExpired(quote.expiresAtMs, nowMs) || result?.type === 'expired_quote';
@@ -151,6 +161,10 @@ export function QuoteFlow({
       : result === null
         ? 'default'
         : 'error';
+
+  if (result?.type === 'ok') {
+    return <RunProgress workspace={workspace} runId={result.runId} scenario={runScenario} />;
+  }
 
   async function confirmRun() {
     if (!confirmEnabled) return;
@@ -197,7 +211,7 @@ export function QuoteFlow({
             <QuotePill
               amount={total}
               revision={quote.revision}
-              feedback={expired ? 'error' : result?.type === 'ok' ? 'success' : 'default'}
+              feedback={expired ? 'error' : 'default'}
             />
             <MonoCaps>
               {expired ? 'Expired' : `Expires ${formatQuoteCountdown(secondsRemaining)}`}
@@ -250,7 +264,7 @@ export function QuoteFlow({
               id="quote-acknowledgment"
               type="checkbox"
               checked={acknowledged}
-              disabled={expired || pending || result?.type === 'ok'}
+              disabled={expired || pending}
               onChange={(event) => setAcknowledged(event.target.checked)}
             />
             <span>

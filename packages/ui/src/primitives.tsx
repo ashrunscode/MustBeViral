@@ -98,20 +98,19 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   readonly interactive?: boolean;
 }
 
-export function Card({
-  className,
-  feedback = 'default',
-  interactive = false,
-  ...props
-}: CardProps) {
+export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
+  { className, feedback = 'default', interactive = false, ...props },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       className={classes('mbv-card', interactive && 'mbv-card--interactive', className)}
       data-state={feedback}
       {...props}
     />
   );
-}
+});
 
 export function HairlineDivider({ className, ...props }: HTMLAttributes<HTMLHRElement>) {
   return <hr className={classes('mbv-hairline', className)} {...props} />;

@@ -1,4 +1,8 @@
-import { WorkflowPlaceholder } from '../placeholder';
-export default function ReviewPage() {
-  return <WorkflowPlaceholder name="Review & approval" />;
+import { ReviewFlow } from './review-flow';
+
+export default async function ReviewPage({
+  params,
+}: Readonly<{ params: Promise<{ workspace: string }> }>) {
+  const { workspace } = await params;
+  return <ReviewFlow workspace={workspace} />;
 }

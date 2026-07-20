@@ -9,6 +9,7 @@ import {
   useState,
   type KeyboardEvent,
   type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
 } from 'react';
 
 import {
@@ -146,7 +147,7 @@ function NodeCard({
         <Chip status={chip.status}>{chip.label}</Chip>
       </span>
       <span className={styles.nodeTitle}>{node.label}</span>
-      <span className={styles.nodeEvidence}>
+      <span className={styles.nodeEvidence} data-node-evidence>
         <MonoCaps>{node.model}</MonoCaps>
         <MonoCaps>{node.statusDetail}</MonoCaps>
       </span>
@@ -176,6 +177,9 @@ export function CanvasFlow({
   const [viewport, setViewport] = useState({ width: 1120, height: 620 });
   const [arrivalNodeId, setArrivalNodeId] = useState<string | null>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
+  const graphPlaneRef = useRef<HTMLDivElement>(null);
+  const livePanRef = useRef(pan);
+  const zoomRef = useRef(zoom);
   const pointerRef = useRef<{
     id: number;
     x: number;
@@ -232,6 +236,10 @@ export function CanvasFlow({
 
   const setZoomClamped = (next: number) => setZoom(Math.min(1.4, Math.max(0.45, next)));
 
+  useEffect(() => {
+    zoomRef.current = zoom;
+  }, [zoom]);
+
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.button !== 0 || (event.target as Element).closest('button, a')) return;
     pointerRef.current = {
@@ -241,20 +249,37 @@ export function CanvasFlow({
       panX: pan.x,
       panY: pan.y,
     };
+    livePanRef.current = pan;
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
     const pointer = pointerRef.current;
     if (pointer === null || pointer.id !== event.pointerId) return;
-    setPan({
+    const nextPan = {
       x: pointer.panX + event.clientX - pointer.x,
       y: pointer.panY + event.clientY - pointer.y,
-    });
+    };
+    livePanRef.current = nextPan;
+    if (graphPlaneRef.current !== null) {
+      graphPlaneRef.current.style.transform = `translate3d(${String(nextPan.x)}px, ${String(nextPan.y)}px, 0) scale(${String(zoomRef.current)})`;
+    }
   }
 
   function handlePointerUp(event: ReactPointerEvent<HTMLDivElement>) {
-    if (pointerRef.current?.id === event.pointerId) pointerRef.current = null;
+    if (pointerRef.current?.id === event.pointerId) {
+      pointerRef.current = null;
+      setPan(livePanRef.current);
+    }
+  }
+
+  function handleWheel(event: ReactWheelEvent<HTMLDivElement>) {
+    event.preventDefault();
+    setZoom((current) => {
+      const next = Math.min(1.4, Math.max(0.45, current - event.deltaY * 0.001));
+      zoomRef.current = next;
+      return next;
+    });
   }
 
   async function validateCanvas() {
@@ -326,13 +351,17 @@ export function CanvasFlow({
         <div
           ref={surfaceRef}
           className={styles.canvasSurface}
+          data-testid="canvas-surface"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
+          onWheel={handleWheel}
         >
           <div
+            ref={graphPlaneRef}
             className={styles.graphPlane}
+            data-testid="graph-plane"
             data-lod={simplified ? 'simplified' : 'full'}
             style={{
               width: model.width,

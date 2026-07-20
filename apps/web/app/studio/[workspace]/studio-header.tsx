@@ -8,6 +8,7 @@ const routeLabels: Readonly<Record<string, string>> = {
   canvas: 'Canvas',
   quote: 'Quote',
   review: 'Review',
+  compare: 'Compare',
   receipt: 'Receipt',
 };
 

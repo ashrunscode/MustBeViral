@@ -1,0 +1,226 @@
+.runPage {
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template: minmax(0, 1fr) 72px 32px / minmax(0, 1fr) 320px;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.quoteStage {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 28px 36px;
+}
+
+.runHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+.runHead h1 {
+  margin: 7px 0 5px;
+  color: var(--ink-head);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.runHead p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.reviewableMoment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(31, 157, 99, 0.28);
+  border-radius: 8px;
+  padding: 11px 13px;
+  background: rgba(31, 157, 99, 0.06);
+  color: var(--ok);
+  font-size: 12px;
+}
+.reviewableMoment span:nth-child(2) {
+  flex: 1;
+  color: var(--ink-head);
+}
+.reviewableMoment a {
+  color: var(--ink-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.runError {
+  margin-bottom: 12px;
+  border: 1px solid rgba(196, 64, 77, 0.3);
+  border-radius: 6px;
+  padding: 10px;
+  color: var(--fail);
+  font-size: 12px;
+}
+
+.attemptList {
+  display: grid;
+  gap: 11px;
+}
+.attemptTrack {
+  position: relative;
+  padding-left: 18px;
+}
+.runTransfer {
+  position: absolute;
+  left: 4px;
+  top: -14px;
+  bottom: calc(100% - 10px);
+  width: 1px;
+  border-left: 1px solid var(--line);
+}
+.attemptCard {
+  position: relative;
+  min-height: 88px;
+  display: grid;
+  gap: 7px;
+  overflow: hidden;
+  padding: 12px 14px;
+}
+.attemptCard strong {
+  color: var(--ink-head);
+  font-size: 14px;
+  font-weight: 400;
+}
+.attemptCard > span:last-child {
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+.attemptTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.runAside {
+  min-height: 0;
+  grid-column: 2;
+  grid-row: 1;
+  border-left: 1px solid var(--line);
+  padding: 28px 24px;
+  background: var(--card);
+}
+.runAside h2 {
+  margin: 9px 0 14px;
+  color: var(--ink-head);
+  font-size: 19px;
+  font-weight: 400;
+}
+.progressTrack {
+  height: 5px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper-2);
+}
+.progressTrack span {
+  display: block;
+  height: 100%;
+  background: var(--ink-head);
+  transition: width 180ms ease;
+}
+.runAside dl {
+  display: grid;
+  gap: 0;
+  margin: 22px 0 0;
+}
+.runAside dl div {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--wash);
+  padding: 10px 0;
+  font-size: 11px;
+}
+.runAside dt {
+  color: var(--ink-muted);
+}
+.runAside dd {
+  margin: 0;
+  color: var(--ink-strong);
+  font-family: var(--font-mono);
+}
+
+.runBar {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 0 32px;
+  background: var(--card);
+}
+.runBar > div {
+  display: grid;
+  gap: 4px;
+}
+.runBar strong {
+  color: var(--ink-head);
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.cancelledCopy {
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+.footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 0 20px;
+  background: var(--wash-faint);
+  color: var(--ink-faint);
+}
+
+:global(.flow-transfer).runTransfer {
+  border-left: 1px dashed var(--signal);
+  animation: run-dash-flow 2s linear infinite;
+}
+@keyframes run-dash-flow {
+  to {
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressTrack span {
+    transition: none;
+  }
+  :global(.flow-transfer).runTransfer {
+    animation: none;
+    border-left-style: solid;
+  }
+  :global(.filament-sweep) {
+    left: 0;
+    width: 100%;
+    animation: none;
+    background: linear-gradient(90deg, var(--attention), var(--signal-soft));
+  }
+}
+
+@media (max-width: 800px) {
+  .runPage {
+    grid-template: minmax(0, 1fr) 72px 32px / 1fr;
+  }
+  .quoteStage {
+    padding: 18px 14px;
+  }
+  .runAside {
+    display: none;
+  }
+}

@@ -1,0 +1,438 @@
+.reviewPage {
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template: minmax(0, 1fr) 72px 32px / minmax(0, 1fr) 300px;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.reviewStage {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px 28px;
+}
+.desktopBanner {
+  display: none;
+}
+.sectionHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+.sectionHeading h1 {
+  margin: 6px 0 4px;
+  color: var(--ink-head);
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.sectionHeading p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+.qaToggle {
+  display: none;
+}
+.reviewError {
+  margin-bottom: 12px;
+  border: 1px solid rgba(196, 64, 77, 0.3);
+  border-radius: 6px;
+  padding: 10px;
+  color: var(--fail);
+  font-size: 12px;
+}
+.groupSection {
+  margin-top: 18px;
+}
+.groupHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.groupHead h2 {
+  margin: 0 0 4px;
+  color: var(--ink-head);
+  font-size: 15px;
+  font-weight: 400;
+}
+.groupApproval {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.groupApproval :global(.mbv-button) {
+  min-height: 32px;
+  padding: 0 11px;
+  font-size: 10px;
+}
+.artifactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.artifactCard {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  padding: 13px;
+  outline: none;
+}
+.artifactCard:focus-visible {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 2px var(--signal-soft);
+}
+.artifactHead,
+.cardFoot,
+.cardActions,
+.versionCaption,
+.exportRow {
+  display: flex;
+  align-items: center;
+}
+.artifactHead,
+.cardFoot,
+.versionCaption,
+.exportRow {
+  justify-content: space-between;
+}
+.artifactHead h2 {
+  margin: 0;
+  color: var(--ink-head);
+  font-size: 13px;
+  font-weight: 400;
+}
+.comparePair {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+.version {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.thumb {
+  flex: 1;
+  min-height: 88px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #e7e7e7;
+  color: var(--ink-muted);
+}
+.prior {
+  background: #eee;
+}
+.versionCaption {
+  gap: 5px;
+  color: var(--ink-muted);
+}
+.mobileThumb {
+  min-height: 90px;
+  display: grid;
+  place-items: center;
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #e8e8e8;
+  color: var(--ink-muted);
+}
+.cardFoot {
+  gap: 10px;
+  margin-top: 10px;
+  border-top: 1px solid var(--wash);
+  padding-top: 10px;
+}
+.cardActions {
+  gap: 6px;
+}
+.cardActions :global(.mbv-button) {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.rejectionField {
+  display: grid;
+  gap: 5px;
+  margin-top: 9px;
+  color: var(--fail);
+  font-size: 10px;
+}
+.rejectionField textarea {
+  min-height: 58px;
+  resize: vertical;
+  border: 1px solid rgba(196, 64, 77, 0.3);
+  border-radius: 5px;
+  padding: 8px;
+  background: var(--card);
+  color: var(--ink-head);
+  font: inherit;
+}
+.qaPanel {
+  min-height: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--line);
+  padding: 26px 22px;
+  background: var(--card);
+}
+.qaPanel h2 {
+  margin: 0 0 6px;
+  color: var(--ink-head);
+  font-size: 19px;
+  font-weight: 400;
+}
+.qaPanel > p {
+  margin: 0 0 18px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.findingList {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+.finding {
+  border-left: 2px solid var(--attention);
+  border-radius: 0 6px 6px 0;
+  padding: 12px;
+  background: var(--wash-faint);
+}
+.finding p {
+  margin: 7px 0 9px;
+  color: var(--ink-head);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.finding a {
+  color: var(--ink-strong);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.drawerSummary {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.tabletDrawer {
+  display: none;
+}
+.confirmBar {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 0 30px;
+  background: var(--card);
+}
+.confirmBar > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+.confirmBar strong {
+  color: var(--ink-head);
+  font-size: 13px;
+  font-weight: 400;
+}
+.confirmActions {
+  display: flex;
+  gap: 10px;
+}
+.footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 0 20px;
+  background: var(--wash-faint);
+  color: var(--ink-faint);
+}
+.receiptSummary,
+.exportStatus {
+  display: none;
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .reviewPage {
+    grid-template-columns: 1fr;
+  }
+  .reviewStage {
+    padding: 20px;
+  }
+  .qaPanel {
+    display: none;
+  }
+  .qaToggle {
+    display: inline-flex;
+  }
+  .artifactGrid {
+    grid-template-columns: 1fr;
+  }
+  .artifactCard {
+    width: calc(100% - 92px);
+    min-height: 192px;
+  }
+  .tabletDrawer {
+    display: block;
+    top: 60px;
+    width: 60%;
+    height: calc(100% - 164px);
+    border-radius: 10px 0 0 10px;
+  }
+  .confirmBar {
+    min-height: 80px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .reviewPage {
+    grid-template: minmax(0, 1fr) 72px 32px / 1fr;
+  }
+  .reviewStage {
+    padding: 10px;
+  }
+  .sectionHeading {
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .sectionHeading h1 {
+    font-size: 19px;
+  }
+  .sectionHeading p,
+  .sectionHeading > div > :first-child,
+  .qaToggle,
+  .qaPanel,
+  .tabletDrawer,
+  .groupHead .groupApproval :global(.mbv-button) {
+    display: none;
+  }
+  .groupSection {
+    margin-top: 8px;
+  }
+  .groupHead {
+    margin-bottom: 7px;
+  }
+  .groupHead h2 {
+    font-size: 12px;
+  }
+  .artifactGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .artifactCard {
+    min-height: auto;
+    padding: 8px;
+  }
+  .comparePair {
+    grid-template-columns: 1fr;
+  }
+  .comparePair .version:nth-child(2) {
+    display: none;
+  }
+  .thumb,
+  .mobileThumb {
+    min-height: 48px;
+    height: 48px;
+  }
+  .cardFoot {
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+  .cardActions :global(.mbv-button) {
+    min-width: 72px;
+    min-height: 30px;
+    padding: 0 7px;
+    font-size: 9px;
+  }
+  .approvalMode [data-variant-id='hero-a'],
+  .approvalMode [data-variant-id='hero-b'] {
+    display: none;
+  }
+  .desktopBanner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -10px -10px 10px;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 10px;
+    background: var(--wash-faint);
+    color: var(--ink-muted);
+    font-size: 10px;
+  }
+  .receiptSummary,
+  .exportStatus {
+    display: block;
+    margin-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px;
+    background: var(--card);
+  }
+  .receiptSummary h2,
+  .exportStatus h2 {
+    margin: 0 0 7px;
+    color: var(--ink-head);
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .receiptSummary > div {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--wash);
+    padding: 2px 0;
+    font-size: 9px;
+  }
+  .receiptSummary strong {
+    color: var(--ink-strong);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+  .exportRow {
+    font-size: 10px;
+  }
+  .confirmBar {
+    padding: 0 12px;
+  }
+  .confirmActions :global(.mbv-button) {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 11px;
+  }
+  .footer {
+    padding: 0 12px;
+  }
+  .footer > :last-child {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artifactCard,
+  .tabletDrawer {
+    animation: none;
+    transition: none;
+  }
+}
