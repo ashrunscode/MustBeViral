@@ -126,6 +126,15 @@ importers:
 
   packages/contracts:
     dependencies:
+      '@mustbeviral/billing':
+        specifier: workspace:*
+        version: link:../billing
+      '@mustbeviral/domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@mustbeviral/graph':
+        specifier: workspace:*
+        version: link:../graph
       zod:
         specifier: 4.4.3
         version: 4.4.3
