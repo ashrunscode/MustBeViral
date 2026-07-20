@@ -158,14 +158,14 @@ steps:
       webhook verification, safe ambiguous-submit reconciliation, duplicate-proof idempotency,
       private R2 verification/copy, catalog and kill-switch enforcement, and boundary integration
       tests with no hidden mock or silent fallback.
-    status: current
+    status: completed
   - id: p0-004-golden-locked-ui
     title: Implement the campaign brief, 100-node canvas and semantic outline, work-motion, graph
       validation and conflict recovery, named-price quote/confirm, partial run progress, output
       comparison, review/approval, export, and receipt flows against the approved Review Approval
       goldens with complete component/screen states, responsive behavior, accessibility, reduced
       motion, and visual and performance tests.
-    status: pending
+    status: current
   - id: p0-005-golden-launch-pack-runs
     title: Execute real end-to-end launch-pack runs for the 20 golden briefs, producing the required
       three master statics, nine approved adaptations, three copy sets, one 6-10 second 9:16 motion
@@ -301,7 +301,7 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p0-003-real-provider-adapters
+  current_step: p0-004-golden-locked-ui
   next_action: Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox,
     signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.
   blockers: []
