@@ -5,9 +5,9 @@
     "height": 900
   },
   "thresholdFps": 55,
-  "measuredFps": 57.16,
-  "frames": 172,
+  "measuredFps": 60.16,
+  "frames": 181,
   "durationMs": 3009,
-  "maxFrameDeltaMs": 50,
+  "maxFrameDeltaMs": 16.8,
   "passed": true
 }

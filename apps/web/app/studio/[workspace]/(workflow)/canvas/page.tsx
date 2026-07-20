@@ -13,7 +13,7 @@ export default async function CanvasPage({
   return (
     <CanvasFlow
       workspace={workspace}
-      fixtureNodeCount={query.fixture === '100' ? 100 : 12}
+      fixtureNodeCount={query.fixture === '500' ? 500 : query.fixture === '100' ? 100 : 12}
       scenario={scenario}
     />
   );

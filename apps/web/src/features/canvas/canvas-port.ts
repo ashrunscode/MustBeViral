@@ -58,6 +58,7 @@ export interface CanvasPort {
 }
 
 export type CanvasPortScenario = CanvasPortResult['type'];
+export type CanvasFixtureNodeCount = 12 | 100 | 500;
 
 const GOLDEN_NODE_WIDTH = 184;
 export const CANVAS_LOD_THRESHOLD = 0.7;
@@ -260,45 +261,103 @@ const goldenEdges: readonly CanvasEdge[] = [
   state,
 })) as readonly CanvasEdge[];
 
-export function createCanvasFixture(nodeCount: 12 | 100 = 12): CanvasModel {
+const stressKinds: readonly Readonly<{
+  kind: GraphNodeKind;
+  kindLabel: string;
+  model: string;
+}>[] = [
+  { kind: 'planner_text', kindLabel: 'Concept logic', model: 'kimi-2.6' },
+  { kind: 'image_generation', kindLabel: 'Visual gen', model: 'flux-2-klein' },
+  { kind: 'image_edit', kindLabel: 'Adaptation', model: 'flux-kontext-pro' },
+  { kind: 'video_generation', kindLabel: 'Motion gen', model: 'seedance-1.0' },
+  { kind: 'qa', kindLabel: 'Review gate', model: 'policy-v2' },
+  { kind: 'output_export', kindLabel: 'Output pack', model: 'rev 7f3a' },
+];
+const stressStatuses: readonly CanvasNodeStatus[] = [
+  'verified',
+  'queued',
+  'running',
+  'queued',
+  'notes',
+  'failed',
+];
+
+function seededGridOffset(index: number, salt: number): number {
+  return (((index * 1103515245 + salt * 12345) >>> 16) % 3) * 4;
+}
+
+function createFixtureExtension(nodeCount: 100 | 500): Readonly<{
+  nodes: readonly CanvasNode[];
+  edges: readonly CanvasEdge[];
+  width: number;
+  height: number;
+}> {
+  const generatedNodes: CanvasNode[] = [];
+  const generatedEdges: CanvasEdge[] = [];
+  const rowsPerColumn = nodeCount === 500 ? 24 : 11;
+  for (let index = 13; index <= nodeCount; index += 1) {
+    const position = index - 13;
+    const column = Math.floor(position / rowsPerColumn);
+    const row = position % rowsPerColumn;
+    const id = String(index);
+    const stressKind = stressKinds[position % stressKinds.length];
+    const status =
+      nodeCount === 100
+        ? index % 9 === 0
+          ? 'running'
+          : 'queued'
+        : stressStatuses[position % stressStatuses.length];
+    if (stressKind === undefined || status === undefined) continue;
+    const running = status === 'running';
+    generatedNodes.push(
+      node(
+        id,
+        nodeCount === 100 ? 'image_edit' : stressKind.kind,
+        nodeCount === 100 ? 'Adaptation' : stressKind.kindLabel,
+        `${nodeCount === 100 ? 'Placement' : 'Stress node'} ${String(position + 1).padStart(3, '0')}`,
+        status,
+        running ? 'Rendering' : status === 'failed' ? 'Retry available' : status,
+        nodeCount === 100 ? 'flux-kontext-pro' : stressKind.model,
+        1120 + column * 216 + seededGridOffset(position, 3),
+        16 + row * 108 + seededGridOffset(position, 7),
+      ),
+    );
+    const sourceNodeId =
+      nodeCount === 100
+        ? '8'
+        : stressKind.kind === 'qa'
+          ? '2'
+          : stressKind.kind === 'output_export'
+            ? '11'
+            : '1';
+    generatedEdges.push({
+      id: `${sourceNodeId}-${id}`,
+      kind: 'dependency',
+      source_node_id: sourceNodeId,
+      target_node_id: id,
+      state: running ? 'transfer' : status === 'verified' ? 'active' : 'default',
+    });
+  }
+  const columns = Math.ceil(generatedNodes.length / rowsPerColumn);
+  return {
+    nodes: generatedNodes,
+    edges: generatedEdges,
+    width: 1120 + columns * 216,
+    height: Math.max(1160, 32 + rowsPerColumn * 108),
+  };
+}
+
+export function createCanvasFixture(nodeCount: CanvasFixtureNodeCount = 12): CanvasModel {
   if (nodeCount === 12) {
     return { revision: '7f3a', nodes: goldenNodes, edges: goldenEdges, width: 1080, height: 680 };
   }
-
-  const extraNodes: CanvasNode[] = [];
-  const extraEdges: CanvasEdge[] = [];
-  for (let index = 13; index <= 100; index += 1) {
-    const position = index - 13;
-    const column = Math.floor(position / 11);
-    const row = position % 11;
-    const id = String(index);
-    extraNodes.push(
-      node(
-        id,
-        'image_edit',
-        'Adaptation',
-        `Placement ${String(position + 1).padStart(2, '0')}`,
-        index % 9 === 0 ? 'running' : 'queued',
-        index % 9 === 0 ? 'Rendering' : 'Queued',
-        'flux-kontext-pro',
-        1120 + column * 216,
-        16 + row * 104,
-      ),
-    );
-    extraEdges.push({
-      id: `8-${id}`,
-      kind: 'dependency',
-      source_node_id: '8',
-      target_node_id: id,
-      state: index % 9 === 0 ? 'transfer' : 'default',
-    });
-  }
+  const generated = createFixtureExtension(nodeCount);
   return {
     revision: '7f3a',
-    nodes: [...goldenNodes, ...extraNodes],
-    edges: [...goldenEdges, ...extraEdges],
-    width: 1120 + Math.ceil(extraNodes.length / 11) * 216,
-    height: 1160,
+    nodes: [...goldenNodes, ...generated.nodes],
+    edges: [...goldenEdges, ...generated.edges],
+    width: generated.width,
+    height: generated.height,
   };
 }
 
@@ -310,7 +369,9 @@ export class InMemoryCanvasPort implements CanvasPort {
   readonly #model: CanvasModel;
   readonly #scenario: CanvasPortScenario;
 
-  constructor(options: Readonly<{ nodeCount?: 12 | 100; scenario?: CanvasPortScenario }> = {}) {
+  constructor(
+    options: Readonly<{ nodeCount?: CanvasFixtureNodeCount; scenario?: CanvasPortScenario }> = {},
+  ) {
     this.#model = createCanvasFixture(options.nodeCount ?? 12);
     this.#scenario = options.scenario ?? 'ok';
   }

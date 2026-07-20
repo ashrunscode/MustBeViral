@@ -42,6 +42,21 @@ describe('canvas presentation mappings', () => {
       issues: [],
     });
   });
+
+  it('provides a deterministic valid 500-node mixed stress fixture', () => {
+    const first = createCanvasFixture(500);
+    const second = createCanvasFixture(500);
+    expect(first).toEqual(second);
+    expect(first.nodes).toHaveLength(500);
+    expect(new Set(first.nodes.map(({ kind }) => kind)).size).toBeGreaterThanOrEqual(5);
+    expect(new Set(first.nodes.map(({ status }) => status))).toEqual(
+      new Set(['verified', 'running', 'queued', 'failed', 'notes']),
+    );
+    expect(validateGraph({ nodes: first.nodes, edges: first.edges })).toEqual({
+      valid: true,
+      issues: [],
+    });
+  });
 });
 
 describe('InMemoryCanvasPort result union', () => {

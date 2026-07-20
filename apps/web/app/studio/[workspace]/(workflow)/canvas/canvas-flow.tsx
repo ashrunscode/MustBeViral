@@ -4,9 +4,11 @@ import { Button, Chip, MonoCaps } from '@mustbeviral/ui';
 import Link from 'next/link';
 import {
   useEffect,
+  useCallback,
   useMemo,
   useRef,
   useState,
+  memo,
   type KeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type WheelEvent as ReactWheelEvent,
@@ -19,8 +21,10 @@ import {
   mapCanvasNodesToOutline,
   mapCanvasStatusToChip,
   type CanvasEdge,
+  type CanvasFixtureNodeCount,
   type CanvasModel,
   type CanvasNode,
+  type CanvasOutlineRow,
   type CanvasPortResult,
   type CanvasPortScenario,
 } from '../../../../../src/features/canvas/canvas-port';
@@ -28,6 +32,88 @@ import styles from './canvas-flow.module.css';
 
 const NODE_HEIGHT = 94;
 const VIRTUALIZATION_MARGIN = 240;
+
+const OutlineRow = memo(function OutlineRow({
+  index,
+  onNavigate,
+  onRegister,
+  onSelect,
+  row,
+  selected,
+}: Readonly<{
+  index: number;
+  onNavigate: (event: KeyboardEvent<HTMLButtonElement>, index: number) => void;
+  onRegister: (index: number, element: HTMLButtonElement | null) => void;
+  onSelect: (id: string) => void;
+  row: CanvasOutlineRow;
+  selected: boolean;
+}>) {
+  const chip = mapCanvasStatusToChip(row.status);
+  return (
+    <li>
+      <button
+        ref={(element) => {
+          onRegister(index, element);
+        }}
+        type="button"
+        className={styles.outlineRow}
+        data-outline-id={row.id}
+        data-outline-status={row.status}
+        aria-current={selected ? 'true' : undefined}
+        onClick={() => onSelect(row.id)}
+        onKeyDown={(event) => onNavigate(event, index)}
+      >
+        <span>
+          <MonoCaps>{row.kindLabel}</MonoCaps>
+          <strong>{row.label}</strong>
+        </span>
+        <Chip status={chip.status}>{chip.label}</Chip>
+      </button>
+    </li>
+  );
+});
+
+const CanvasOutlinePanel = memo(function CanvasOutlinePanel({
+  nodeCount,
+  onNavigate,
+  onRegister,
+  onSelect,
+  outline,
+  selectedId,
+}: Readonly<{
+  nodeCount: number;
+  onNavigate: (event: KeyboardEvent<HTMLButtonElement>, index: number) => void;
+  onRegister: (index: number, element: HTMLButtonElement | null) => void;
+  onSelect: (id: string) => void;
+  outline: readonly CanvasOutlineRow[];
+  selectedId: string;
+}>) {
+  return (
+    <aside className={styles.outlinePanel} aria-labelledby="outline-title">
+      <div className={styles.outlineHeader}>
+        <div>
+          <MonoCaps>Semantic parity</MonoCaps>
+          <h2 id="outline-title">Graph outline</h2>
+        </div>
+        <Chip status="notes">{nodeCount} nodes</Chip>
+      </div>
+      <p className={styles.outlineHelp}>Topological order. Use ↑ and ↓ to move between nodes.</p>
+      <ol className={styles.outlineList}>
+        {outline.map((row, index) => (
+          <OutlineRow
+            key={row.id}
+            row={row}
+            index={index}
+            selected={selectedId === row.id}
+            onSelect={onSelect}
+            onNavigate={onNavigate}
+            onRegister={onRegister}
+          />
+        ))}
+      </ol>
+    </aside>
+  );
+});
 
 function edgePath(edge: CanvasEdge, nodes: ReadonlyMap<string, CanvasNode>): string {
   const source = nodes.get(edge.source_node_id);
@@ -163,7 +249,7 @@ export function CanvasFlow({
   scenario = 'ok',
   workspace,
 }: Readonly<{
-  fixtureNodeCount?: 12 | 100;
+  fixtureNodeCount?: CanvasFixtureNodeCount;
   scenario?: CanvasPortScenario;
   workspace: string;
 }>) {
@@ -233,8 +319,29 @@ export function CanvasFlow({
         node.y <= bottom,
     );
   }, [model.nodes, pan.x, pan.y, viewport.height, viewport.width, zoom]);
+  const visibleEdges = useMemo(() => {
+    const visibleNodeIds = new Set(visibleNodes.map(({ id }) => id));
+    return model.edges.filter(
+      (edge) => visibleNodeIds.has(edge.source_node_id) && visibleNodeIds.has(edge.target_node_id),
+    );
+  }, [model.edges, visibleNodes]);
 
-  const setZoomClamped = (next: number) => setZoom(Math.min(1.4, Math.max(0.45, next)));
+  const setZoomClamped = (next: number) => setZoom(Math.min(1.4, Math.max(0.12, next)));
+
+  function fitToView() {
+    const nextZoom = Math.min(
+      1,
+      Math.max(
+        0.12,
+        Math.min((viewport.width - 32) / model.width, (viewport.height - 32) / model.height),
+      ),
+    );
+    setZoom(nextZoom);
+    setPan({
+      x: Math.max(0, (viewport.width - model.width * nextZoom) / 2),
+      y: Math.max(0, (viewport.height - model.height * nextZoom) / 2),
+    });
+  }
 
   useEffect(() => {
     zoomRef.current = zoom;
@@ -276,7 +383,7 @@ export function CanvasFlow({
   function handleWheel(event: ReactWheelEvent<HTMLDivElement>) {
     event.preventDefault();
     setZoom((current) => {
-      const next = Math.min(1.4, Math.max(0.45, current - event.deltaY * 0.001));
+      const next = Math.min(1.4, Math.max(0.12, current - event.deltaY * 0.001));
       zoomRef.current = next;
       return next;
     });
@@ -295,13 +402,22 @@ export function CanvasFlow({
     setResult(next);
   }
 
-  function handleOutlineKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
-    event.preventDefault();
-    const direction = event.key === 'ArrowDown' ? 1 : -1;
-    const nextIndex = (index + direction + outline.length) % outline.length;
-    outlineRefs.current[nextIndex]?.focus();
-  }
+  const selectNode = useCallback((id: string) => setSelectedId(id), []);
+
+  const registerOutlineRef = useCallback((index: number, element: HTMLButtonElement | null) => {
+    outlineRefs.current[index] = element;
+  }, []);
+
+  const handleOutlineKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowDown' ? 1 : -1;
+      const nextIndex = (index + direction + outline.length) % outline.length;
+      outlineRefs.current[nextIndex]?.focus();
+    },
+    [outline.length],
+  );
 
   return (
     <main id="main-content" className={styles.canvasPage}>
@@ -322,14 +438,7 @@ export function CanvasFlow({
             <Button aria-label="Zoom in" onClick={() => setZoomClamped(zoom + 0.1)}>
               +
             </Button>
-            <Button
-              onClick={() => {
-                setPan({ x: 0, y: 0 });
-                setZoom(1);
-              }}
-            >
-              Fit
-            </Button>
+            <Button onClick={fitToView}>Fit</Button>
             <Button
               feedback={
                 validating
@@ -399,7 +508,7 @@ export function CanvasFlow({
                   <path d="M0 0 L5 2.5 L0 5 Z" fill="#3182d4" />
                 </marker>
               </defs>
-              {model.edges.map((edge) => (
+              {visibleEdges.map((edge) => (
                 <path
                   key={edge.id}
                   data-edge={edge.id}
@@ -421,7 +530,7 @@ export function CanvasFlow({
                 dimmed={!lineage.has(node.id)}
                 simplified={simplified}
                 arrival={arrivalNodeId === node.id}
-                onSelect={() => setSelectedId(node.id)}
+                onSelect={() => selectNode(node.id)}
               />
             ))}
           </div>
@@ -444,43 +553,14 @@ export function CanvasFlow({
           </Link>
         </div>
       </section>
-      <aside className={styles.outlinePanel} aria-labelledby="outline-title">
-        <div className={styles.outlineHeader}>
-          <div>
-            <MonoCaps>Semantic parity</MonoCaps>
-            <h2 id="outline-title">Graph outline</h2>
-          </div>
-          <Chip status="notes">{model.nodes.length} nodes</Chip>
-        </div>
-        <p className={styles.outlineHelp}>Topological order. Use ↑ and ↓ to move between nodes.</p>
-        <ol className={styles.outlineList}>
-          {outline.map((row, index) => {
-            const chip = mapCanvasStatusToChip(row.status);
-            return (
-              <li key={row.id}>
-                <button
-                  ref={(element) => {
-                    outlineRefs.current[index] = element;
-                  }}
-                  type="button"
-                  className={styles.outlineRow}
-                  data-outline-id={row.id}
-                  data-outline-status={row.status}
-                  aria-current={selectedId === row.id ? 'true' : undefined}
-                  onClick={() => setSelectedId(row.id)}
-                  onKeyDown={(event) => handleOutlineKeyDown(event, index)}
-                >
-                  <span>
-                    <MonoCaps>{row.kindLabel}</MonoCaps>
-                    <strong>{row.label}</strong>
-                  </span>
-                  <Chip status={chip.status}>{chip.label}</Chip>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-      </aside>
+      <CanvasOutlinePanel
+        nodeCount={model.nodes.length}
+        outline={outline}
+        selectedId={selectedId}
+        onSelect={selectNode}
+        onNavigate={handleOutlineKeyDown}
+        onRegister={registerOutlineRef}
+      />
       <footer className={styles.footer}>
         <MonoCaps>Latency: 142ms · Node count: {model.nodes.length} · Region: us-east-1</MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
