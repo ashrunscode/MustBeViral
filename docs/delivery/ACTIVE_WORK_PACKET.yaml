@@ -306,11 +306,11 @@ handoff:
     providers, immutable receipts, transactional cap enforcement, and first-reviewable latency
     measurement once the operator supplies the provisioning inputs.
   blockers:
-    - Real provider runs are blocked on the eleven operator-owned provisioning inputs recorded in
-      governance/evidence/WP-P0-001/environment-provisioning.md (staging Supabase project and keys,
-      Vercel target, scoped Core Worker and private R2, fal credentials with webhook secret and
-      price confirmations, Moonshot credentials with retention/DPA clearance); the environment
-      remains NOT READY and no real spend path may be enabled until they arrive.
+    - Real provider runs are blocked on the remaining operator-owned enable inputs in
+      governance/evidence/WP-P0-001/environment-provisioning.md section 6 (fal key, webhook
+      secret, and live price confirmations; Moonshot key with retention/DPA clearance; staging
+      service-role Worker secret). The staging infrastructure targets are provisioned and
+      verified; every provider route stays disabled and fail-closed until these inputs arrive.
   changed_paths: []
   last_green_checks: []
 completion:

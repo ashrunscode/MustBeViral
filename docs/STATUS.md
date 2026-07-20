@@ -17,7 +17,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Current step | `p0-005-golden-launch-pack-runs` |
 | Release target | `P0` |
 | Pending decisions | None |
-| Blockers | Real provider runs are blocked on the eleven operator-owned provisioning inputs recorded in governance/evidence/WP-P0-001/environment-provisioning.md; the staging environment remains NOT READY and no real spend path may be enabled until they arrive. |
+| Blockers | Real provider runs are blocked on the remaining operator-owned enable inputs in governance/evidence/WP-P0-001/environment-provisioning.md section 6 (fal key, webhook secret, and live price confirmations; Moonshot key with retention/DPA clearance; staging service-role Worker secret). The staging infrastructure targets are provisioned and verified; every provider route stays disabled and fail-closed until these inputs arrive. |
 | Remote destructive action | `forbidden` |
 
 ## One next action
