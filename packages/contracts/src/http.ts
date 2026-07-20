@@ -29,9 +29,31 @@ export const ApiErrorSchema = z
   })
   .strict();
 
+export const ApiErrorEnvelopeSchema = z
+  .object({
+    error: ApiErrorSchema,
+  })
+  .strict();
+
+export const ApiSuccessEnvelopeSchema = z
+  .object({
+    data: z.unknown(),
+    meta: z
+      .object({
+        request_id: RequestIdSchema,
+      })
+      .strict(),
+  })
+  .strict();
+
 export type HealthResponse = z.infer<typeof HealthResponseSchema>;
 export type ApiError = z.infer<typeof ApiErrorSchema>;
+export type ApiErrorEnvelope = z.infer<typeof ApiErrorEnvelopeSchema>;
 
 export function createApiError(input: ApiError): ApiError {
   return ApiErrorSchema.parse(input);
+}
+
+export function createApiErrorEnvelope(input: ApiError): ApiErrorEnvelope {
+  return ApiErrorEnvelopeSchema.parse({ error: input });
 }

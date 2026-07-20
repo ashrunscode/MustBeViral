@@ -1,15 +1,32 @@
 import { Hono } from 'hono';
+import { P0_REST_OPERATIONS, type P0RestHandlers } from '@mustbeviral/contracts';
 
+import { supabaseJwtVerifier } from './auth/supabase-jwt';
 import type { CoreHonoEnvironment } from './bindings';
 import { requestIdMiddleware } from './http/request-id';
 import { safeError } from './http/responses';
 import { healthRoute } from './routes/health';
+import { createV1Route, type V1Dependencies } from './routes/v1';
 
-export function createCoreApp() {
+const unavailableHandlers = Object.fromEntries(
+  P0_REST_OPERATIONS.map((operation) => [
+    operation,
+    async () => ({ status: 'provider_unavailable' as const }),
+  ]),
+) as unknown as P0RestHandlers;
+
+const defaultV1Dependencies: V1Dependencies = {
+  handlers: unavailableHandlers,
+  jwt: supabaseJwtVerifier,
+  workspaces: { resolve: async () => null },
+};
+
+export function createCoreApp(v1Dependencies: V1Dependencies = defaultV1Dependencies) {
   const app = new Hono<CoreHonoEnvironment>();
 
   app.use('*', requestIdMiddleware);
   app.route('/health', healthRoute);
+  app.route('/v1', createV1Route(v1Dependencies));
 
   app.notFound((context) =>
     context.json(safeError(context, 'NOT_FOUND', 'The requested resource was not found.'), 404),
@@ -25,7 +42,9 @@ export function createCoreApp() {
       }),
     );
     return context.json(
-      safeError(context, 'INTERNAL_ERROR', 'The request could not be completed.', true),
+      safeError(context, 'INTERNAL_ERROR', 'The request could not be completed.', true, {
+        error_id: context.get('requestId'),
+      }),
       500,
     );
   });
