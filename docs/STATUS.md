@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox, signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.
+Continue the golden-locked UI with the canvas, semantic outline, work-motion, quote/confirm, run progress, comparison, review/approval, export, and receipt flows plus responsive, accessibility, visual, and performance evidence.

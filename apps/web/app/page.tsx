@@ -1,12 +1,9 @@
-export default function CleanroomPage() {
+export default function HomePage() {
   return (
-    <main>
+    <main className="signed-out-page">
       <p>MustBeViral Studio</p>
-      <h1>Cleanroom application scaffold</h1>
-      <p>
-        Production interface work remains gated on the approved Precision Creative Studio design
-        artifact.
-      </p>
+      <h1>Sign in to open your studio</h1>
+      <p>The authenticated workspace shell requires a valid Supabase session.</p>
     </main>
   );
 }

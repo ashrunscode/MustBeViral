@@ -1,0 +1,61 @@
+export const lightfieldTokens = {
+  color: {
+    paper: '#fafafa',
+    paper2: '#f5f5f5',
+    card: '#ffffff',
+    wash: 'rgba(0, 0, 0, 0.04)',
+    washFaint: 'rgba(0, 0, 0, 0.02)',
+    inkStrong: 'rgba(0, 0, 0, 0.85)',
+    inkHead: 'rgba(0, 0, 0, 0.75)',
+    ink: 'rgba(0, 0, 0, 0.60)',
+    inkMuted: 'rgba(0, 0, 0, 0.50)',
+    inkFaint: 'rgba(0, 0, 0, 0.25)',
+    line: 'rgba(0, 0, 0, 0.12)',
+    signal: '#3182d4',
+    signalSoft: '#80bfff',
+    selectionWash: '#80bfff1f',
+    ok: '#1F9D63',
+    attention: '#B87E14',
+    fail: '#C4404D',
+  },
+  radius: { control: 4, input: 6, card: 8, floating: 10 },
+  space: { 1: 4, 2: 8, 3: 12, 4: 16, 6: 24, 8: 32 },
+  motion: {
+    local: 120,
+    panel: 180,
+    route: 240,
+    ease: 'cubic-bezier(0.2, 0, 0, 1)',
+  },
+} as const;
+
+export type LightfieldTokens = typeof lightfieldTokens;
+export type LightfieldColorToken = keyof LightfieldTokens['color'];
+export type LightfieldMotionToken = keyof Omit<LightfieldTokens['motion'], 'ease'>;
+
+export const lightfieldCssVariables = {
+  '--paper': lightfieldTokens.color.paper,
+  '--paper-2': lightfieldTokens.color.paper2,
+  '--card': lightfieldTokens.color.card,
+  '--wash': lightfieldTokens.color.wash,
+  '--wash-faint': lightfieldTokens.color.washFaint,
+  '--ink-strong': lightfieldTokens.color.inkStrong,
+  '--ink-head': lightfieldTokens.color.inkHead,
+  '--ink': lightfieldTokens.color.ink,
+  '--ink-muted': lightfieldTokens.color.inkMuted,
+  '--ink-faint': lightfieldTokens.color.inkFaint,
+  '--line': lightfieldTokens.color.line,
+  '--signal': lightfieldTokens.color.signal,
+  '--signal-soft': lightfieldTokens.color.signalSoft,
+  '--selection-wash': lightfieldTokens.color.selectionWash,
+  '--ok': lightfieldTokens.color.ok,
+  '--attention': lightfieldTokens.color.attention,
+  '--fail': lightfieldTokens.color.fail,
+  '--radius-control': `${lightfieldTokens.radius.control}px`,
+  '--radius-input': `${lightfieldTokens.radius.input}px`,
+  '--radius-card': `${lightfieldTokens.radius.card}px`,
+  '--radius-floating': `${lightfieldTokens.radius.floating}px`,
+  '--motion-local': `${lightfieldTokens.motion.local}ms`,
+  '--motion-panel': `${lightfieldTokens.motion.panel}ms`,
+  '--motion-route': `${lightfieldTokens.motion.route}ms`,
+  '--motion-ease': lightfieldTokens.motion.ease,
+} as const;

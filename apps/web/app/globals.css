@@ -1,32 +1,141 @@
-:root {
-  color-scheme: dark;
-  font-family: system-ui, sans-serif;
-  background: #09090b;
-  color: #f4f4f5;
-}
-
 * {
   box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 15px;
+  font-weight: 400;
 }
 
-main {
-  width: min(42rem, calc(100% - 3rem));
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-160%);
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+  background: var(--signal);
+  color: #fff;
+  transition: transform var(--motion-local) var(--motion-ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.studio-app {
+  width: 100vw;
+  height: 100vh;
+  min-width: 1180px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.studio-header {
+  z-index: 50;
+  height: 60px;
+  flex: 0 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding: 0 24px;
+  background: var(--card);
+}
+
+.studio-brand-row,
+.studio-system-row {
+  display: flex;
+  align-items: center;
+}
+
+.studio-brand-row {
+  gap: 32px;
+}
+.studio-system-row {
+  gap: 10px;
+  color: var(--ink-muted);
+}
+.studio-wordmark {
+  color: var(--ink-strong);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.studio-breadcrumb {
+  color: var(--ink-muted);
+}
+.studio-breadcrumb strong {
+  color: var(--ink-strong);
+  font-weight: 500;
+}
+.studio-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--ok);
+}
+
+.workflow-placeholder {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: var(--paper);
+}
+.workflow-placeholder__card {
+  width: min(560px, 100%);
+  display: grid;
+  gap: 16px;
+  padding: 32px;
+}
+.workflow-placeholder__card h1 {
+  margin: 0;
+  color: var(--ink-head);
+  font-size: 28px;
+  font-weight: 400;
+}
+.workflow-placeholder__card p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.signed-out-page {
+  width: min(560px, calc(100% - 48px));
   margin: 20vh auto 0;
 }
-
-h1 {
-  margin-block: 0.5rem 1rem;
-  font-size: clamp(2rem, 7vw, 4rem);
-  line-height: 1;
+.signed-out-page h1 {
+  margin: 8px 0 12px;
+  color: var(--ink-head);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
 }
-
-p {
-  max-width: 65ch;
-  color: #a1a1aa;
-  line-height: 1.6;
+.signed-out-page p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.5;
 }

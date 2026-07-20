@@ -4,6 +4,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { readWebPublicEnvironment } from '../../config/public-environment';
 
 export async function refreshSupabaseSession(request: NextRequest): Promise<NextResponse> {
+  if (process.env.NODE_ENV !== 'production' && process.env.MBV_LOCAL_GOLDEN_PREVIEW === '1') {
+    return NextResponse.next({ request });
+  }
+
   const environment = readWebPublicEnvironment();
   let response = NextResponse.next({ request });
   const supabase = createServerClient(

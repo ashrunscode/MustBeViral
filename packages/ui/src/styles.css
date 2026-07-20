@@ -1,0 +1,325 @@
+:root {
+  --paper: #fafafa;
+  --paper-2: #f5f5f5;
+  --card: #ffffff;
+  --wash: rgba(0, 0, 0, 0.04);
+  --wash-faint: rgba(0, 0, 0, 0.02);
+  --ink-strong: rgba(0, 0, 0, 0.85);
+  --ink-head: rgba(0, 0, 0, 0.75);
+  --ink: rgba(0, 0, 0, 0.6);
+  --ink-muted: rgba(0, 0, 0, 0.5);
+  --ink-faint: rgba(0, 0, 0, 0.25);
+  --line: rgba(0, 0, 0, 0.12);
+  --signal: #3182d4;
+  --signal-soft: #80bfff;
+  --selection-wash: #80bfff1f;
+  --ok: #1f9d63;
+  --attention: #b87e14;
+  --fail: #c4404d;
+  --radius-control: 4px;
+  --radius-input: 6px;
+  --radius-card: 8px;
+  --radius-floating: 10px;
+  --motion-local: 120ms;
+  --motion-panel: 180ms;
+  --motion-route: 240ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:where(button, a, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.mbv-button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-input);
+  padding: 0 20px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-local) var(--motion-ease),
+    border-color var(--motion-local) var(--motion-ease),
+    color var(--motion-local) var(--motion-ease),
+    transform var(--motion-local) var(--motion-ease);
+}
+
+.mbv-button:hover:not(:disabled) {
+  background: var(--wash);
+}
+.mbv-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.mbv-button:disabled {
+  cursor: not-allowed;
+  color: var(--ink-faint);
+}
+.mbv-button--primary {
+  background: var(--signal);
+  color: #fff;
+}
+.mbv-button--primary:hover:not(:disabled) {
+  background: #2875c2;
+}
+.mbv-button--primary:active:not(:disabled) {
+  background: #226bb3;
+}
+.mbv-button--primary:disabled {
+  background: var(--ink-faint);
+  color: rgba(255, 255, 255, 0.92);
+}
+.mbv-button--ghost {
+  border-color: var(--line);
+  background: var(--card);
+  color: var(--ink-strong);
+}
+.mbv-button--quiet-link {
+  min-height: 32px;
+  padding: 0 4px;
+  background: transparent;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+}
+.mbv-button--quiet-link:hover:not(:disabled) {
+  background: transparent;
+  color: var(--ink-strong);
+  text-decoration-color: currentColor;
+}
+.mbv-button[data-state='loading'] .mbv-state-mark {
+  animation: mbv-spin 1s linear infinite;
+}
+.mbv-button[data-state='error'] {
+  border-color: var(--fail);
+  color: var(--fail);
+}
+.mbv-button[data-state='success'] {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+.mbv-button--primary[data-state='error'] {
+  background: var(--fail);
+  color: #fff;
+}
+.mbv-button--primary[data-state='success'] {
+  background: var(--ok);
+  color: #fff;
+}
+
+.mbv-chip {
+  min-height: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  padding: 4px 7px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.mbv-chip--verified {
+  color: var(--ok);
+}
+.mbv-chip--running {
+  color: var(--attention);
+}
+.mbv-chip--queued {
+  color: var(--ink-muted);
+}
+.mbv-chip--failed {
+  color: var(--fail);
+}
+.mbv-chip--notes {
+  color: var(--ink);
+}
+
+.mbv-monocaps {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mbv-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  transition:
+    border-color var(--motion-local) var(--motion-ease),
+    background-color var(--motion-local) var(--motion-ease);
+}
+.mbv-card--interactive:hover {
+  border-color: var(--ink-faint);
+}
+.mbv-card--interactive:active {
+  background: var(--wash-faint);
+}
+.mbv-card[data-state='loading'] {
+  border-top: 2px solid var(--attention);
+}
+.mbv-card[data-state='error'] {
+  border-left: 2px solid var(--fail);
+}
+.mbv-card[data-state='success'] {
+  border-left: 2px solid var(--ok);
+}
+
+.mbv-hairline {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--line);
+}
+.mbv-ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+}
+.mbv-ledger th,
+.mbv-ledger td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 8px;
+  text-align: left;
+}
+.mbv-ledger th {
+  color: var(--ink-muted);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.mbv-ledger td:last-child,
+.mbv-ledger th:last-child {
+  text-align: right;
+}
+
+.mbv-quote-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  padding: 0 10px;
+  background: var(--card);
+  color: var(--ink-head);
+}
+.mbv-quote-pill[data-state='loading'] {
+  border-color: var(--attention);
+}
+.mbv-quote-pill[data-state='error'] {
+  border-color: var(--fail);
+  color: var(--fail);
+}
+.mbv-quote-pill[data-state='success'] {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.mbv-drawer {
+  position: fixed;
+  z-index: 80;
+  inset: 60px 0 0 auto;
+  width: min(420px, 100vw);
+  padding: 24px;
+  border-left: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.06);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--motion-panel) var(--motion-ease),
+    visibility 0s linear var(--motion-panel);
+}
+.mbv-drawer[data-state='open'] {
+  transform: translateX(0);
+  visibility: visible;
+  transition-delay: 0s;
+}
+.mbv-drawer__header,
+.mbv-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.mbv-drawer h2,
+.mbv-dialog h2 {
+  margin: 0;
+  color: var(--ink-head);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.mbv-dialog-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.16);
+}
+.mbv-dialog {
+  width: min(520px, 100%);
+  max-height: min(720px, calc(100vh - 48px));
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-floating);
+  padding: 24px;
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  animation: mbv-dialog-in var(--motion-panel) var(--motion-ease);
+}
+
+@keyframes mbv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mbv-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (forced-colors: active) {
+  :where(button, a, input, textarea, select, [tabindex]):focus-visible {
+    outline-color: Highlight;
+  }
+  .mbv-chip,
+  .mbv-card,
+  .mbv-button,
+  .mbv-quote-pill {
+    border-color: CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

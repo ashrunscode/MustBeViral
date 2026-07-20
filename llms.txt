@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-004-golden-locked-ui
-next_action: Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox, signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.
+next_action: Continue the golden-locked UI with the canvas, semantic outline, work-motion, quote/confirm, run progress, comparison, review/approval, export, and receipt flows plus responsive, accessibility, visual, and performance evidence.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
