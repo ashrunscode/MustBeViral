@@ -84,7 +84,12 @@ export interface CanvasPort {
       idempotencyKey: string;
     }>,
   ): Promise<
-    { readonly status: 'ok' } | { readonly status: 'conflict'; readonly actualHead: string }
+    | {
+        readonly status: 'ok';
+        readonly revisionId?: string;
+        readonly canonicalHash?: string;
+      }
+    | { readonly status: 'conflict'; readonly actualHead: string }
   >;
 }
 

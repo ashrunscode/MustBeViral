@@ -16,7 +16,7 @@ const unavailableHandlers = Object.fromEntries(
   ]),
 ) as unknown as P0RestHandlers;
 
-const defaultV1Dependencies: V1Dependencies = {
+export const defaultV1Dependencies: V1Dependencies = {
   handlers: unavailableHandlers,
   jwt: supabaseJwtVerifier,
   workspaces: { resolve: async () => null },

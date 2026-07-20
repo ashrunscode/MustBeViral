@@ -304,17 +304,27 @@ export function createCommandHandlers(ports: HandlerPorts) {
           if (persisted.status === 'conflict') {
             return { status: 'conflict', reason: 'revision', actual: persisted.actualHead };
           }
+          const persistedRevisionId = persisted.revisionId ?? revisionId;
+          const persistedCanonicalHash = persisted.canonicalHash ?? canonicalHash;
           const result = {
             status: 'ok' as const,
             canvasId: command.canvas_id,
-            revisionId,
-            canonicalHash,
+            revisionId: persistedRevisionId,
+            canonicalHash: persistedCanonicalHash,
             affectedDescendants: descendants,
           };
-          await audit(ports, context, 'apply_canvas_patch', 'ok', 'canvas_revision', revisionId, {
-            canvas_id: command.canvas_id,
-            affected_descendants: descendants,
-          });
+          await audit(
+            ports,
+            context,
+            'apply_canvas_patch',
+            'ok',
+            'canvas_revision',
+            persistedRevisionId,
+            {
+              canvas_id: command.canvas_id,
+              affected_descendants: descendants,
+            },
+          );
           return result;
         },
       );

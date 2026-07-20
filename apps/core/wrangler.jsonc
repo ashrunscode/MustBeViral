@@ -44,6 +44,7 @@
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
         "APP_ENV": "staging",
         "SUPABASE_URL": "https://lqvigvzqumpwfjikcvws.supabase.co",
+        "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_L06t0Y52MPKmhWtAHXm3FQ_2_b0-lMb",
         "SUPABASE_JWT_AUDIENCE": "authenticated",
       },
       "r2_buckets": [

@@ -55,6 +55,22 @@ export interface V1Dependencies {
   readonly jwt: SupabaseJwtVerifier;
   readonly workspaces: WorkspaceResolutionPort;
   readonly falWebhook?: FalWebhookVerifierPort;
+  readonly requestFactory?: RequestDependencyFactory;
+}
+
+export interface RequestScopedDependencies {
+  readonly handlers: P0RestHandlers;
+  readonly workspaces: WorkspaceResolutionPort;
+}
+
+export interface RequestDependencyFactory {
+  create(
+    input: Readonly<{
+      actor: AuthenticatedActor;
+      bindings: CoreBindings;
+      callerJwt: string;
+    }>,
+  ): Promise<RequestScopedDependencies | null>;
 }
 
 interface ProviderBoundaryError extends Error {
@@ -290,10 +306,16 @@ async function handleClientRoute(
     );
   }
   try {
+    const scopedDependencies =
+      (await dependencies.requestFactory?.create({
+        actor,
+        bindings: context.env,
+        callerJwt: token,
+      })) ?? dependencies;
     const body = route.method === 'POST' ? await readJsonObject(context) : {};
     const idempotencyKey = requireIdempotencyKey(context, route);
     const pathId = context.req.param('id');
-    const workspaceId = await dependencies.workspaces.resolve({
+    const workspaceId = await scopedDependencies.workspaces.resolve({
       actor,
       operation: route.operation,
       pathId,
@@ -317,7 +339,7 @@ async function handleClientRoute(
       request_id: context.get('requestId'),
     };
     const input = parseClientInput(route.operation, handlerContext, pathId, body, idempotencyKey);
-    const result = await dependencies.handlers[route.operation](input);
+    const result = await scopedDependencies.handlers[route.operation](input);
     return mapResult(context, route, result);
   } catch (error) {
     if (

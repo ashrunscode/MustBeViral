@@ -1,13 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   assertBalancedLedgerEntries,
   assertQuoteWindow,
+  createDatabaseRepositories,
   integerMicros,
   isAllowedUserDatabasePath,
   isBalancedLedgerEntries,
   tenantContext,
 } from './index';
+import type { DatabaseExecutor } from './index';
 
 describe('database access boundary', () => {
   it('does not treat service or Hyperdrive paths as default user authority', () => {
@@ -71,6 +73,36 @@ describe('tenant-safe repository invariants', () => {
     expect(() => assertQuoteWindow(createdAt, new Date('2026-07-19T12:15:00.000Z'))).not.toThrow();
     expect(() => assertQuoteWindow(createdAt, new Date('2026-07-19T12:14:59.999Z'))).toThrow(
       RangeError,
+    );
+  });
+
+  it('paginates the complete wallet ledger before calculating available balance', async () => {
+    const firstPage = Array.from({ length: 100 }, () => ({
+      direction: 'credit' as const,
+      amount_micros: 1,
+    }));
+    const select = vi
+      .fn()
+      .mockResolvedValueOnce(firstPage)
+      .mockResolvedValueOnce([
+        {
+          direction: 'credit' as const,
+          amount_micros: 2,
+        },
+      ]);
+    const executor = { select } as unknown as DatabaseExecutor;
+    const repositories = createDatabaseRepositories(executor);
+    const context = tenantContext({
+      workspaceId: '10000000-0000-4000-8000-000000000001',
+      actorId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
+      requestId: 'request-ledger',
+    });
+
+    await expect(repositories.billing.availableBalance(context)).resolves.toBe(102);
+    expect(select).toHaveBeenNthCalledWith(
+      2,
+      'ledger_transactions',
+      expect.objectContaining({ limit: '100', offset: '100' }),
     );
   });
 });

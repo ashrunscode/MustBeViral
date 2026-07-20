@@ -1,4 +1,13 @@
 export type { Database, Json } from './database.generated';
+export type {
+  DatabaseExecutor,
+  DatabaseFunctionArgs,
+  DatabaseFunctionName,
+  DatabaseInsert,
+  DatabaseRow,
+  DatabaseTableName,
+  DatabaseUpdate,
+} from './executor';
 export {
   assertBalancedLedgerEntries,
   assertQuoteWindow,
@@ -17,6 +26,7 @@ export type {
   RunRepository,
   WorkspaceRepository,
 } from './repositories';
+export { createDatabaseRepositories } from './repositories';
 
 export const userScopedDatabasePath = 'supabase-data-api-rpc' as const;
 export const backgroundDatabasePath = 'least-privilege-machine-rpc' as const;

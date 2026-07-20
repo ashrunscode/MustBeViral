@@ -14,6 +14,7 @@ import type { CoreHonoEnvironment } from '../bindings';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
 import { p0ResultSemantics } from '../transport/semantics';
 import type { WorkspaceResolutionPort } from './v1';
+import type { RequestDependencyFactory, RequestScopedDependencies } from './v1';
 import { providerRunsEnabled } from './v1';
 
 export const MCP_PROTOCOL_VERSION = '2025-11-25' as const;
@@ -23,6 +24,7 @@ export interface McpDependencies {
   readonly handlers: P0RestHandlers;
   readonly jwt: SupabaseJwtVerifier;
   readonly workspaces: WorkspaceResolutionPort;
+  readonly requestFactory?: RequestDependencyFactory;
 }
 
 type JsonRpcId = string | number;
@@ -62,11 +64,11 @@ function bearerToken(context: Context<CoreHonoEnvironment>): string | null {
 async function authenticate(
   context: Context<CoreHonoEnvironment>,
   dependencies: McpDependencies,
-): Promise<AuthenticatedActor | null> {
+): Promise<Readonly<{ actor: AuthenticatedActor; callerJwt: string }> | null> {
   const token = bearerToken(context);
   if (token === null) return null;
   try {
-    return await dependencies.jwt.verify(token, context.env);
+    return { actor: await dependencies.jwt.verify(token, context.env), callerJwt: token };
   } catch {
     return null;
   }
@@ -126,7 +128,7 @@ async function callTool(
   context: Context<CoreHonoEnvironment>,
   actor: AuthenticatedActor,
   request: JsonRpcRequest,
-  dependencies: McpDependencies,
+  dependencies: RequestScopedDependencies,
 ): Promise<Response> {
   const id = request.id;
   if (id === undefined) return context.body(null, 202);
@@ -226,13 +228,19 @@ async function handlePost(
       400,
     );
   }
-  const actor = await authenticate(context, dependencies);
-  if (actor === null) {
+  const authentication = await authenticate(context, dependencies);
+  if (authentication === null) {
     return context.json(
       safeError(context, 'UNAUTHENTICATED', 'A valid bearer token is required.'),
       401,
     );
   }
+  const scopedDependencies =
+    (await dependencies.requestFactory?.create({
+      actor: authentication.actor,
+      bindings: context.env,
+      callerJwt: authentication.callerJwt,
+    })) ?? dependencies;
   let request: JsonRpcRequest;
   try {
     request = parseRequest(await context.req.json());
@@ -266,7 +274,7 @@ async function handlePost(
     return context.json(rpcResult(request.id, { tools: p0McpToolCatalog() }), 200);
   }
   if (request.method === 'tools/call') {
-    return callTool(context, actor, request, dependencies);
+    return callTool(context, authentication.actor, request, scopedDependencies);
   }
   return context.json(rpcError(request.id, -32601, 'Method not found.'), 200);
 }
