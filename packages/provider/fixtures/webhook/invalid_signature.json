@@ -1,0 +1,6 @@
+{
+  "timestamp": 1784451600,
+  "eventId": "fal-event-fixture-002",
+  "signature": "sha256=0000000000000000000000000000000000000000000000000000000000000000",
+  "rawBody": "{\"request_id\":\"fal-job-fixture-001\",\"status\":\"COMPLETED\",\"payload\":{\"images\":[{\"url\":\"https://delivery.invalid/output.png\"}]}}"
+}

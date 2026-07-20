@@ -1,0 +1,5 @@
+{
+  "status": 500,
+  "headers": {},
+  "body": { "error": { "message": "fixture provider failure" } }
+}

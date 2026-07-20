@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "headers": {},
+  "body": {
+    "choices": [{ "message": { "content_drift": "unexpected" } }],
+    "usage": { "prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2 }
+  }
+}

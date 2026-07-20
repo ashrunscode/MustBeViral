@@ -1,0 +1,5 @@
+{
+  "status": 429,
+  "headers": { "retry-after": "3" },
+  "body": { "detail": "fixture rate limit" }
+}

@@ -149,6 +149,8 @@ importers:
 
   packages/graph: {}
 
+  packages/provider: {}
+
   packages/providers: {}
 
   packages/telemetry: {}

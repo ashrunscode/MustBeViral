@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "headers": {},
+  "body": {
+    "status": "COMPLETED",
+    "response": { "images": [{ "url": "https://delivery.invalid/output.png" }] }
+  }
+}
