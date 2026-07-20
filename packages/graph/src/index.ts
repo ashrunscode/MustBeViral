@@ -521,10 +521,11 @@ function toHex(bytes: ArrayBuffer): string {
 
 export async function sha256PostgresJsonb(value: JsonValue): Promise<string> {
   const serialized = serializePostgresJsonb(value);
-  const digest = await globalThis.crypto.subtle.digest(
-    'SHA-256',
-    new TextEncoder().encode(serialized),
-  );
+  const webCrypto = (globalThis as { crypto?: Crypto }).crypto;
+  if (!webCrypto?.subtle) {
+    throw new Error('Web Crypto API is unavailable in this runtime.');
+  }
+  const digest = await webCrypto.subtle.digest('SHA-256', new TextEncoder().encode(serialized));
   return toHex(digest);
 }
 
