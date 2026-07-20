@@ -6,6 +6,7 @@ import type { CoreHonoEnvironment } from './bindings';
 import { requestIdMiddleware } from './http/request-id';
 import { safeError } from './http/responses';
 import { healthRoute } from './routes/health';
+import { createMcpRoute } from './routes/mcp';
 import { createV1Route, type V1Dependencies } from './routes/v1';
 
 const unavailableHandlers = Object.fromEntries(
@@ -27,6 +28,7 @@ export function createCoreApp(v1Dependencies: V1Dependencies = defaultV1Dependen
   app.use('*', requestIdMiddleware);
   app.route('/health', healthRoute);
   app.route('/v1', createV1Route(v1Dependencies));
+  app.route('/mcp', createMcpRoute(v1Dependencies));
 
   app.notFound((context) =>
     context.json(safeError(context, 'NOT_FOUND', 'The requested resource was not found.'), 404),

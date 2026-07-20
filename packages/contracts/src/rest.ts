@@ -59,9 +59,13 @@ export type P0HandlerResult = Readonly<{
     | 'expired_quote'
     | 'cap_exceeded'
     | 'graph_invalid'
-    | 'provider_unavailable';
+    | 'provider_unavailable'
+    | 'rate_limited'
+    | 'provider_ambiguous';
   reason?: 'revision' | 'run_state' | 'quote_stale' | 'idempotency';
   tier?: string;
+  retry_after_seconds?: number;
+  reconcile_state?: string;
 }>;
 
 export type P0RestHandler = (input: unknown) => Promise<P0HandlerResult>;

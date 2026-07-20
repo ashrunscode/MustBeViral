@@ -327,7 +327,10 @@ describe('command handler flows', () => {
       idempotency_key: 'replay-key',
     };
     const first = await handlers.startRun(input);
-    const second = await handlers.startRun(input);
+    const second = await handlers.startRun({
+      ...input,
+      context: { ...context, request_id: 'request-from-second-transport' },
+    });
     expect(second).toEqual(first);
     expect(memory.runsById).toHaveLength(1);
     expect(memory.audits.some((event) => event.outcome === 'idempotent_replay')).toBe(true);

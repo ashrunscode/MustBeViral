@@ -132,6 +132,18 @@ function canonical(value: unknown): string {
     .join(',')}}`;
 }
 
+function idempotencyFingerprintInput(input: unknown): unknown {
+  if (typeof input !== 'object' || input === null || Array.isArray(input)) return input;
+  const record = input as Readonly<Record<string, unknown>>;
+  const context = record.context;
+  if (typeof context !== 'object' || context === null || Array.isArray(context)) return input;
+  const contextRecord = context as Readonly<Record<string, unknown>>;
+  const stableContext = Object.fromEntries(
+    Object.entries(contextRecord).filter(([key]) => key !== 'request_id'),
+  );
+  return { ...record, context: stableContext };
+}
+
 function applyPatch(
   current: GraphSnapshot,
   patch: {
@@ -228,7 +240,7 @@ async function idempotent<Result extends { readonly status: string }>(
 ): Promise<Result | ConflictResult> {
   const executed = await ports.idempotency.execute<Result>(
     idempotencyIdentity(context, operation, idempotencyKey),
-    canonical(input),
+    canonical(idempotencyFingerprintInput(input)),
     work,
   );
   if (executed.status === 'conflict') {

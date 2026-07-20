@@ -20,6 +20,7 @@ import { Hono, type Context } from 'hono';
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
+import { p0ResultSemantics } from '../transport/semantics';
 import { V1_ROUTE_TABLE, type V1Operation, type V1RouteDefinition } from './v1-table';
 
 export interface WorkspaceResolutionPort {
@@ -82,17 +83,6 @@ function bearerToken(context: Context<CoreHonoEnvironment>): string | null {
   return match?.[1] ?? null;
 }
 
-function resultData(result: P0HandlerResult): unknown {
-  return Object.fromEntries(Object.entries(result).filter(([key]) => key !== 'status'));
-}
-
-function conflictCode(result: P0HandlerResult): string {
-  if (result.reason === 'idempotency') return 'IDEMPOTENCY_CONFLICT';
-  if (result.reason === 'quote_stale') return 'QUOTE_STALE';
-  if (result.reason === 'run_state') return 'RUN_NOT_CANCELABLE';
-  return 'REVISION_CONFLICT';
-}
-
 function successStatus(route: V1RouteDefinition): 200 | 201 | 202 {
   if (route.auth === 'fal_signature') return 202;
   if (
@@ -113,54 +103,19 @@ function mapResult(
   route: V1RouteDefinition,
   result: P0HandlerResult,
 ): Response {
-  if (result.status === 'ok') {
-    return context.json(safeSuccess(context, jsonSafe(resultData(result))), successStatus(route));
-  }
-  if (result.status === 'forbidden') {
-    return context.json(
-      safeError(context, 'FORBIDDEN', 'Access to this resource is forbidden.'),
-      403,
-    );
-  }
-  if (result.status === 'not_found') {
-    return context.json(
-      safeError(context, 'NOT_FOUND', 'The requested resource was not found.'),
-      404,
-    );
-  }
-  if (result.status === 'conflict') {
-    return context.json(
-      safeError(
-        context,
-        conflictCode(result),
-        'The requested state change conflicts with current state.',
-      ),
-      409,
-    );
-  }
-  if (result.status === 'expired_quote') {
-    return context.json(
-      safeError(context, 'QUOTE_EXPIRED', 'The referenced quote has expired.'),
-      409,
-    );
-  }
-  if (result.status === 'cap_exceeded') {
-    const balance = result.tier === 'available_balance';
-    return context.json(
-      safeError(
-        context,
-        balance ? 'INSUFFICIENT_BALANCE' : 'BUDGET_EXCEEDED',
-        balance ? 'Available balance is insufficient.' : 'The configured budget cap was exceeded.',
-      ),
-      balance ? 402 : 409,
-    );
-  }
-  if (result.status === 'graph_invalid') {
-    return context.json(safeError(context, 'GRAPH_INVALID', 'The canvas graph is invalid.'), 422);
+  const semantic = p0ResultSemantics(result);
+  if (semantic.ok) {
+    return context.json(safeSuccess(context, jsonSafe(semantic.data)), successStatus(route));
   }
   return context.json(
-    safeError(context, 'MODEL_UNAVAILABLE', 'Provider-backed execution is not enabled.', false),
-    503,
+    safeError(
+      context,
+      semantic.error.code,
+      semantic.error.message,
+      semantic.error.retryable,
+      semantic.error.details,
+    ),
+    semantic.error.httpStatus,
   );
 }
 
