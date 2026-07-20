@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.package.json",
-  "compilerOptions": { "rootDir": "src" },
+  "compilerOptions": { "lib": ["DOM", "ES2023"], "rootDir": "src" },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"]
 }
