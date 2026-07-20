@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P0 — Real Meta Campaign Launch Pack vertical slice and private MCP proof (in_progress) |
 | Active packet | `WP-P0-001` |
-| Current step | `p0-002-domain-command-layer` |
+| Current step | `p0-003-real-provider-adapters` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement the shared domain, graph, command/query, quote, reservation, and integer-micros ledger contracts with their unit and contract tests.
+Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox, signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.

@@ -150,7 +150,7 @@ steps:
       integer-micros ledger contracts with deterministic legal state machines, canonical graph
       hashes, immutable revisions, affected-descendant calculation, transparent quotes, explicit
       confirmation, idempotency, auditability, and unit and contract tests.
-    status: current
+    status: completed
   - id: p0-003-real-provider-adapters
     title:
       Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
@@ -158,7 +158,7 @@ steps:
       webhook verification, safe ambiguous-submit reconciliation, duplicate-proof idempotency,
       private R2 verification/copy, catalog and kill-switch enforcement, and boundary integration
       tests with no hidden mock or silent fallback.
-    status: pending
+    status: current
   - id: p0-004-golden-locked-ui
     title: Implement the campaign brief, 100-node canvas and semantic outline, work-motion, graph
       validation and conflict recovery, named-price quote/confirm, partial run progress, output
@@ -301,9 +301,9 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p0-002-domain-command-layer
-  next_action: Implement the shared domain, graph, command/query, quote, reservation, and
-    integer-micros ledger contracts with their unit and contract tests.
+  current_step: p0-003-real-provider-adapters
+  next_action: Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox,
+    signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.
   blockers: []
   changed_paths: []
   last_green_checks: []

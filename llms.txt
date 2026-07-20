@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
-current_step: p0-002-domain-command-layer
-next_action: Implement the shared domain, graph, command/query, quote, reservation, and integer-micros ledger contracts with their unit and contract tests.
+current_step: p0-003-real-provider-adapters
+next_action: Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox, signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -11,9 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action:
-  Implement the shared domain, graph, command/query, quote, reservation, and integer-micros
-  ledger contracts with their unit and contract tests.
+next_action: Integrate the fail-closed Moonshot and fal launch-trio provider drivers with outbox,
+  signed-webhook, reconciliation, and idempotency contracts against recorded fixtures.
 decisions_pending: []
 blockers: []
 legacy:
