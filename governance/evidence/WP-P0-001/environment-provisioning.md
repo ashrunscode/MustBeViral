@@ -99,9 +99,9 @@ enable disables new quotes until reviewed.
 
 ## 5. READINESS VERDICT
 
-**NOT READY.** The checklist accurately completes packet step
-`p0-000-environment-provisioning`, but it does not claim provisioning completion. Later commits
-must replace missing states only with sanitized proof from the actual isolated targets.
+**PARTIALLY READY as of 2026-07-20 — infrastructure targets provisioned; provider credentials and
+enable gates remain `MISSING (operator input)`/`OPEN`.** Section 6 records the sanitized execution
+evidence. Ordered items 2, 7, 8, 9, 10, and 11 remain open; no real spend path is enabled.
 
 Exact ordered operator-input list:
 
@@ -140,3 +140,28 @@ Cloudflare deploy authentication is not on the missing-input list because it is 
 later mutation. No destructive teardown is authorized by this evidence. If an isolated resource
 cannot be safely removed with exact identifiers and rollback evidence, leave it disabled and
 documented.
+
+## 6. PROVISIONING EXECUTION RECORD (2026-07-20)
+
+Operator authorized provisioning in-session (explicit $10/month Supabase cost confirmation
+recorded through the management-API confirmation flow). All values below are public identifiers;
+no credential value was read, printed, or stored by the agent.
+
+| Target                                | Actual identifier                                                                                                                                                                            | State            | Sanitized proof                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Staging Supabase project              | `mustbeviral-staging`, project ref `lqvigvzqumpwfjikcvws`, region `us-east-1`, Postgres 17.6                                                                                                 | `ACTIVE_HEALTHY` | All four repository migrations applied via the management API in order (`cleanroom_bootstrap`, `p0_authoritative_schema`, `p0_invariants_rls_and_grants`, `p0_hardened_rpcs`). Catalog verification: 5 hardened RPCs present, 23 public tables, forced RLS on all 19 tenant tables, 29 policies, 37 triggers. A transcription defect in `start_run_barrier` (`p_expexpected_revision_id`) was detected by post-apply catalog inspection and corrected with the exact repository text; zero occurrences remain.                                                                                                                                                           |
+| Vercel project for `apps/web`         | Project `mustbeviral-web-staging` (`prj_SVRV9Oh6J3lAi3muIbK9Mrtkvv6V`), team `ernijsansons-projects` (`team_A11dbY2xnTWzGL63IRBTWmLo`)                                                       | Deployed         | `vercel whoami` verified identity `ernijsansons`. Production deployment `Ready` at `https://mustbeviral-web-staging.vercel.app`; live smoke returned 200 with the signed-out gate ("Sign in to open your studio") rendered against the staging Supabase target. Monorepo deploys use the CLI with a local ignored builds config (`@vercel/next` on `apps/web`, corepack-enabled pnpm 10) because the local Windows prebuilt path cannot create symlinks; rollback target is the previous `Ready` deployment. Public browser configuration is versioned in `apps/web/.env.production` (Supabase URL, `sb_publishable_*` key, Core API URL — all client-public by design). |
+| Cloudflare Core Worker staging target | `mustbeviral-v2-staging-core` in account `d2897bdebfa128919bd89b265e6a712e`; version `612c321d-8950-4685-984f-0c00cf41f6b8`; `https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev` | Deployed         | Deployed through the repository-pinned Wrangler from `apps/core` with `--env staging`. Name reconciliation resolved in favor of the scaffold name declared in `apps/core/wrangler.jsonc` (this section supersedes the earlier proposed `mustbeviral-core-staging`). Live smoke: `/health` 200 with service identity; unauthenticated and invalid-bearer requests to `/v1` and `/mcp` return safe `UNAUTHENTICATED` 401 envelopes; unknown routes return the safe `NOT_FOUND` envelope. Only new `mustbeviral-*` resources were touched in the shared account.                                                                                                            |
+| Private R2 artifact bucket            | `mustbeviral-v2-staging-media`, bound as `MEDIA_BUCKET`                                                                                                                                      | Created, private | Created via Wrangler (default private access; no public development URL enabled, no custom domain attached). Name reconciliation as above (supersedes proposed `mustbeviral-core-staging-artifacts`).                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+
+Configuration reconciliation in the same change: the staging Wrangler environment drops the
+placeholder Hyperdrive binding (Data API/RPC remains the accepted baseline until the G1–G6
+benchmark passes), enables the `workers.dev` subdomain until the product zone lands in the
+account, and pins the public `SUPABASE_URL`/`SUPABASE_JWT_AUDIENCE`/`APP_ENV` vars. The
+`api-staging.mustbeviral.com` webhook endpoint shape in section 3 will follow the zone; until
+then the deployed `workers.dev` hostname is the staging endpoint.
+
+Remaining operator inputs (unchanged from the ordered list): staging Supabase service-role key
+installed as a Worker secret (item 2); live-page price confirmations for the three fal routes
+(item 7); fal API key and webhook signing secret (items 8–9); `kimi-k2.6` price/retention/DPA
+clearance and Moonshot key (items 10–11). Every provider route stays disabled and fail-closed.

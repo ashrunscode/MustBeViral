@@ -38,15 +38,13 @@
   "env": {
     "staging": {
       "name": "mustbeviral-v2-staging-core",
-      "routes": [
-        {
-          "pattern": "api-staging.mustbeviral.com",
-          "custom_domain": true,
-        },
-      ],
+      "workers_dev": true,
       "vars": {
         "SERVICE_NAME": "mustbeviral-core",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+        "APP_ENV": "staging",
+        "SUPABASE_URL": "https://lqvigvzqumpwfjikcvws.supabase.co",
+        "SUPABASE_JWT_AUDIENCE": "authenticated",
       },
       "r2_buckets": [
         {
@@ -54,12 +52,9 @@
           "bucket_name": "mustbeviral-v2-staging-media",
         },
       ],
-      "hyperdrive": [
-        {
-          "binding": "HYPERDRIVE",
-          "id": "00000000000000000000000000000001",
-        },
-      ],
+      // Hyperdrive binding intentionally absent in staging: P0 uses the Supabase Data API
+      // unless the accepted G1-G6 Hyperdrive benchmark passes (rls-hyperdrive-benchmark-plan).
+      // The api-staging.mustbeviral.com custom domain attaches once the zone lands in this account.
     },
     "production": {
       "name": "mustbeviral-v2-production-core",
