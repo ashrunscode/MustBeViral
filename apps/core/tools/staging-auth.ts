@@ -43,7 +43,7 @@ export async function loadStagingAuthConfiguration(): Promise<StagingAuthConfigu
 export function createDisposableIdentity(now: () => number = Date.now): DisposableIdentity {
   const suffix = randomBytes(12).toString('hex');
   return {
-    email: `launch-pack-${String(now())}-${suffix}@staging.mustbeviral.invalid`,
+    email: `ernijs.ansons+launch-pack-${String(now())}-${suffix}@gmail.com`,
     password: `Lp!9-${randomBytes(32).toString('base64url')}`,
   };
 }
@@ -82,19 +82,35 @@ export async function authenticateDisposableStagingUser(options: {
   const sleep =
     options.sleep ??
     ((milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds)));
-  const identity = createDisposableIdentity();
-  const signup = await authRequest(fetchImplementation, options.configuration, 'signup', identity);
-  const signupBody = (await signup.json()) as unknown;
-  if (!signup.ok) {
-    throw new HarnessFlowError({
-      code: 'AUTH_SIGNUP_FAILED',
-      message: 'Disposable staging signup failed.',
-    });
-  }
-  const immediateToken = accessToken(signupBody);
-  if (immediateToken !== null) return { email: identity.email, accessToken: immediateToken };
+  const injectedEmail = process.env['STAGING_TEST_EMAIL'];
+  const injectedPassword = process.env['STAGING_TEST_PASSWORD'];
+  const injected =
+    injectedEmail !== undefined &&
+    injectedEmail.length > 0 &&
+    injectedPassword !== undefined &&
+    injectedPassword.length > 0;
+  const identity: DisposableIdentity = injected
+    ? { email: injectedEmail, password: injectedPassword }
+    : createDisposableIdentity();
+  if (!injected) {
+    const signup = await authRequest(
+      fetchImplementation,
+      options.configuration,
+      'signup',
+      identity,
+    );
+    const signupBody = (await signup.json()) as unknown;
+    if (!signup.ok) {
+      throw new HarnessFlowError({
+        code: 'AUTH_SIGNUP_FAILED',
+        message: 'Disposable staging signup failed.',
+      });
+    }
+    const immediateToken = accessToken(signupBody);
+    if (immediateToken !== null) return { email: identity.email, accessToken: immediateToken };
 
-  log(`PAUSED awaiting out-of-band email confirmation: ${identity.email}`);
+    log(`PAUSED awaiting out-of-band email confirmation: ${identity.email}`);
+  }
   const pollMilliseconds = options.pollMilliseconds ?? 5_000;
   while (true) {
     const signin = await authRequest(

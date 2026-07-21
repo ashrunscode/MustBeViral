@@ -2,12 +2,22 @@ import {
   ApplyCanvasPatchInputSchema,
   CancelRunInputSchema,
   CreateArtifactUploadBodySchema,
+  CreateArtifactUploadResourceInputSchema,
   CreateCanvasBodySchema,
+  CreateCanvasResourceInputSchema,
   CreateExportBodySchema,
+  CreateExportResourceInputSchema,
   CreateProjectBodySchema,
+  CreateProjectResourceInputSchema,
   CreateWorkspaceBodySchema,
+  CreateWorkspaceResourceInputSchema,
+  ExplainModelResourceInputSchema,
+  GetArtifactResourceInputSchema,
   GetCanvasContextInputSchema,
   GetRunInputSchema,
+  GetProjectResourceInputSchema,
+  GetReceiptResourceInputSchema,
+  GetWorkspaceResourceInputSchema,
   QuoteRunInputSchema,
   StartRunInputSchema,
   ValidateGraphInputSchema,
@@ -157,25 +167,29 @@ function parseClientInput(
   const id = pathId ?? '';
   switch (operation) {
     case 'create_workspace':
-      return { context, ...CreateWorkspaceBodySchema.parse(body), idempotency_key: idempotencyKey };
+      return CreateWorkspaceResourceInputSchema.parse({
+        context,
+        ...CreateWorkspaceBodySchema.parse(body),
+        idempotency_key: idempotencyKey,
+      });
     case 'get_workspace':
-      return { context, workspace_id: id };
+      return GetWorkspaceResourceInputSchema.parse({ context, workspace_id: id });
     case 'create_project':
-      return {
+      return CreateProjectResourceInputSchema.parse({
         context,
         workspace_id: id,
         ...CreateProjectBodySchema.parse(body),
         idempotency_key: idempotencyKey,
-      };
+      });
     case 'get_project':
-      return { context, project_id: id };
+      return GetProjectResourceInputSchema.parse({ context, project_id: id });
     case 'create_canvas':
-      return {
+      return CreateCanvasResourceInputSchema.parse({
         context,
         project_id: id,
         ...CreateCanvasBodySchema.parse(body),
         idempotency_key: idempotencyKey,
-      };
+      });
     case 'get_canvas_context':
       return GetCanvasContextInputSchema.parse({ context, canvas_id: id });
     case 'apply_canvas_patch':
@@ -211,24 +225,24 @@ function parseClientInput(
         idempotency_key: idempotencyKey,
       });
     case 'create_artifact_upload':
-      return {
+      return CreateArtifactUploadResourceInputSchema.parse({
         context,
         ...CreateArtifactUploadBodySchema.parse(body),
         idempotency_key: idempotencyKey,
-      };
+      });
     case 'get_artifact':
-      return { context, artifact_id: id };
+      return GetArtifactResourceInputSchema.parse({ context, artifact_id: id });
     case 'create_export':
-      return {
+      return CreateExportResourceInputSchema.parse({
         context,
         run_id: id,
         ...CreateExportBodySchema.parse(body),
         idempotency_key: idempotencyKey,
-      };
+      });
     case 'explain_model':
-      return { context, model_id: id };
+      return ExplainModelResourceInputSchema.parse({ context, model_id: id });
     case 'get_receipt':
-      return { context, run_id: id };
+      return GetReceiptResourceInputSchema.parse({ context, run_id: id });
     case 'ingest_fal_webhook':
       throw new TypeError('Webhook input uses signed provider identity');
   }

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { HandlerContextSchema, IdempotencyKeySchema, IdentifierSchema } from './commands';
 import type { CommandHandlers } from './handlers';
 import type { HandlerPorts } from './ports';
 
@@ -50,6 +51,98 @@ export const CreateExportBodySchema = z
   })
   .strict();
 
+const ContextInputSchema = z.object({ context: HandlerContextSchema }).strict();
+
+export const CreateWorkspaceResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    name: CreateWorkspaceBodySchema.shape.name,
+    idempotency_key: IdempotencyKeySchema,
+  })
+  .strict();
+
+export const GetWorkspaceResourceInputSchema = ContextInputSchema.extend({
+  workspace_id: IdentifierSchema,
+}).strict();
+
+export const CreateProjectResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    workspace_id: IdentifierSchema,
+    name: CreateProjectBodySchema.shape.name,
+    idempotency_key: IdempotencyKeySchema,
+  })
+  .strict();
+
+export const GetProjectResourceInputSchema = ContextInputSchema.extend({
+  project_id: IdentifierSchema,
+}).strict();
+
+export const CreateCanvasResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    project_id: IdentifierSchema,
+    name: CreateCanvasBodySchema.shape.name,
+    idempotency_key: IdempotencyKeySchema,
+  })
+  .strict();
+
+export const CreateArtifactUploadResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    ...CreateArtifactUploadBodySchema.shape,
+    idempotency_key: IdempotencyKeySchema,
+  })
+  .strict();
+
+export const GetArtifactResourceInputSchema = ContextInputSchema.extend({
+  artifact_id: IdentifierSchema,
+}).strict();
+
+export const CreateExportResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    run_id: IdentifierSchema,
+    ...CreateExportBodySchema.shape,
+    idempotency_key: IdempotencyKeySchema,
+  })
+  .strict();
+
+export const ExplainModelResourceInputSchema = ContextInputSchema.extend({
+  model_id: IdentifierSchema,
+}).strict();
+
+export const GetReceiptResourceInputSchema = ContextInputSchema.extend({
+  run_id: IdentifierSchema,
+}).strict();
+
+export const IngestFalWebhookResourceInputSchema = z
+  .object({
+    identity: z
+      .object({
+        provider: z.literal('fal'),
+        event_id: IdentifierSchema,
+        dedup_key: IdentifierSchema,
+      })
+      .strict(),
+    event: z.unknown(),
+  })
+  .strict();
+
+export type CreateWorkspaceResourceInput = z.infer<typeof CreateWorkspaceResourceInputSchema>;
+export type GetWorkspaceResourceInput = z.infer<typeof GetWorkspaceResourceInputSchema>;
+export type CreateProjectResourceInput = z.infer<typeof CreateProjectResourceInputSchema>;
+export type GetProjectResourceInput = z.infer<typeof GetProjectResourceInputSchema>;
+export type CreateCanvasResourceInput = z.infer<typeof CreateCanvasResourceInputSchema>;
+export type CreateArtifactUploadResourceInput = z.infer<
+  typeof CreateArtifactUploadResourceInputSchema
+>;
+export type GetArtifactResourceInput = z.infer<typeof GetArtifactResourceInputSchema>;
+export type CreateExportResourceInput = z.infer<typeof CreateExportResourceInputSchema>;
+export type ExplainModelResourceInput = z.infer<typeof ExplainModelResourceInputSchema>;
+export type GetReceiptResourceInput = z.infer<typeof GetReceiptResourceInputSchema>;
+export type IngestFalWebhookResourceInput = z.infer<typeof IngestFalWebhookResourceInputSchema>;
+
 export type P0HandlerResult = Readonly<{
   status:
     | 'ok'
@@ -70,6 +163,8 @@ export type P0HandlerResult = Readonly<{
 
 export type P0RestHandler = (input: unknown) => Promise<P0HandlerResult>;
 
+export type P0ResourceHandler<Input> = (input: Input) => Promise<P0HandlerResult>;
+
 export type P0RestHandlers = Readonly<Record<P0RestOperation, P0RestHandler>>;
 
 export interface P0ResourceHandlers {
@@ -87,7 +182,19 @@ export interface P0ResourceHandlers {
 }
 
 /** The thirteenth P0 handler port, covering resource operations outside graph execution. */
-export type P0ResourcePort = P0ResourceHandlers;
+export interface P0ResourcePort {
+  readonly createWorkspace: P0ResourceHandler<CreateWorkspaceResourceInput>;
+  readonly getWorkspace: P0ResourceHandler<GetWorkspaceResourceInput>;
+  readonly createProject: P0ResourceHandler<CreateProjectResourceInput>;
+  readonly getProject: P0ResourceHandler<GetProjectResourceInput>;
+  readonly createCanvas: P0ResourceHandler<CreateCanvasResourceInput>;
+  readonly createArtifactUpload: P0ResourceHandler<CreateArtifactUploadResourceInput>;
+  readonly getArtifact: P0ResourceHandler<GetArtifactResourceInput>;
+  readonly createExport: P0ResourceHandler<CreateExportResourceInput>;
+  readonly explainModel: P0ResourceHandler<ExplainModelResourceInput>;
+  readonly getReceipt: P0ResourceHandler<GetReceiptResourceInput>;
+  readonly ingestFalWebhook: P0ResourceHandler<IngestFalWebhookResourceInput>;
+}
 
 export interface P0HandlerPorts extends HandlerPorts {
   readonly resources: P0ResourcePort;
@@ -95,17 +202,20 @@ export interface P0HandlerPorts extends HandlerPorts {
 
 export function createP0ResourceHandlers(port: P0ResourcePort): P0ResourceHandlers {
   return {
-    createWorkspace: (input) => port.createWorkspace(input),
-    getWorkspace: (input) => port.getWorkspace(input),
-    createProject: (input) => port.createProject(input),
-    getProject: (input) => port.getProject(input),
-    createCanvas: (input) => port.createCanvas(input),
-    createArtifactUpload: (input) => port.createArtifactUpload(input),
-    getArtifact: (input) => port.getArtifact(input),
-    createExport: (input) => port.createExport(input),
-    explainModel: (input) => port.explainModel(input),
-    getReceipt: (input) => port.getReceipt(input),
-    ingestFalWebhook: (input) => port.ingestFalWebhook(input),
+    createWorkspace: (input) =>
+      port.createWorkspace(CreateWorkspaceResourceInputSchema.parse(input)),
+    getWorkspace: (input) => port.getWorkspace(GetWorkspaceResourceInputSchema.parse(input)),
+    createProject: (input) => port.createProject(CreateProjectResourceInputSchema.parse(input)),
+    getProject: (input) => port.getProject(GetProjectResourceInputSchema.parse(input)),
+    createCanvas: (input) => port.createCanvas(CreateCanvasResourceInputSchema.parse(input)),
+    createArtifactUpload: (input) =>
+      port.createArtifactUpload(CreateArtifactUploadResourceInputSchema.parse(input)),
+    getArtifact: (input) => port.getArtifact(GetArtifactResourceInputSchema.parse(input)),
+    createExport: (input) => port.createExport(CreateExportResourceInputSchema.parse(input)),
+    explainModel: (input) => port.explainModel(ExplainModelResourceInputSchema.parse(input)),
+    getReceipt: (input) => port.getReceipt(GetReceiptResourceInputSchema.parse(input)),
+    ingestFalWebhook: (input) =>
+      port.ingestFalWebhook(IngestFalWebhookResourceInputSchema.parse(input)),
   };
 }
 

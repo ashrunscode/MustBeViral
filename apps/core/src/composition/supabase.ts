@@ -61,16 +61,6 @@ function requiredString(value: unknown, field: string): string {
   return value;
 }
 
-function handlerContext(value: unknown): HandlerContext {
-  if (!isRecord(value) || !isRecord(value.context))
-    throw new TypeError('Handler context is required');
-  return {
-    workspace_id: requiredString(value.context.workspace_id, 'workspace_id'),
-    actor_id: requiredString(value.context.actor_id, 'actor_id'),
-    request_id: requiredString(value.context.request_id, 'request_id'),
-  };
-}
-
 function asTenantContext(context: HandlerContext): TenantContext {
   return tenantContext({
     workspaceId: context.workspace_id,
@@ -275,36 +265,30 @@ function createResourcePort(
   repositories: DatabaseRepositories,
 ): P0ResourcePort {
   return {
-    async createWorkspace(value) {
-      const input = requestInput(value);
-      const context = handlerContext(input);
-      const name = requiredString(input.name, 'name');
+    async createWorkspace(input) {
       const result = await executor.rpc('create_workspace', {
-        p_name: name,
-        p_slug: slugify(name),
-        p_idempotency_key: requiredString(input.idempotency_key, 'idempotency_key'),
-        p_request_id: context.request_id,
+        p_name: input.name,
+        p_slug: slugify(input.name),
+        p_idempotency_key: input.idempotency_key,
+        p_request_id: input.context.request_id,
       });
       return { status: 'ok', ...requestInput(result) };
     },
-    async getWorkspace(value) {
-      const input = requestInput(value);
-      const context = asTenantContext(handlerContext(input));
+    async getWorkspace(input) {
+      const context = asTenantContext(input.context);
       const row = await repositories.workspaces.get(context);
       return row === null ? { status: 'not_found' } : { status: 'ok', workspace: row };
     },
-    async createProject(value) {
-      const input = requestInput(value);
-      const context = asTenantContext(handlerContext(input));
-      const name = requiredString(input.name, 'name');
-      const idempotencyKey = requiredString(input.idempotency_key, 'idempotency_key');
+    async createProject(input) {
+      const context = asTenantContext(input.context);
+      const idempotencyKey = input.idempotency_key;
       const projectId = await deterministicUuid(
         `create_project\u0000${context.actorId}\u0000${context.workspaceId}\u0000${idempotencyKey}`,
       );
       try {
         const project = await repositories.projects.create(context, {
           id: projectId,
-          name,
+          name: input.name,
           briefId: null,
           brandKitId: null,
         });
@@ -312,61 +296,50 @@ function createResourcePort(
       } catch (error) {
         if (!(error instanceof SupabaseDataApiError) || error.kind !== 'conflict') throw error;
         const existing = await repositories.projects.get(context, projectId);
-        if (existing === null || existing.name !== name) {
+        if (existing === null || existing.name !== input.name) {
           return { status: 'conflict', reason: 'idempotency' };
         }
         return { status: 'ok', project: existing };
       }
     },
-    async getProject(value) {
-      const input = requestInput(value);
-      const context = asTenantContext(handlerContext(input));
-      const project = await repositories.projects.get(
-        context,
-        requiredString(input.project_id, 'project_id'),
-      );
+    async getProject(input) {
+      const context = asTenantContext(input.context);
+      const project = await repositories.projects.get(context, input.project_id);
       return project === null ? { status: 'not_found' } : { status: 'ok', project };
     },
-    async createCanvas(value) {
-      const input = requestInput(value);
-      const context = asTenantContext(handlerContext(input));
+    async createCanvas(input) {
+      const context = asTenantContext(input.context);
       const canvas = await repositories.canvases.createWithRevision(context, {
-        projectId: requiredString(input.project_id, 'project_id'),
-        name: typeof input.name === 'string' ? input.name : 'Untitled canvas',
+        projectId: input.project_id,
+        name: input.name ?? 'Untitled canvas',
         graphSchemaVersion: 1,
         graphSnapshot: initialGraph(),
         reason: 'Initial canvas revision',
-        idempotencyKey: requiredString(input.idempotency_key, 'idempotency_key'),
+        idempotencyKey: input.idempotency_key,
       });
       return { status: 'ok', ...canvas };
     },
     async createArtifactUpload() {
       throw new ProviderUnavailableError('Private upload signing is not configured');
     },
-    async getArtifact(value) {
-      const input = requestInput(value);
-      const context = asTenantContext(handlerContext(input));
-      const artifact = await repositories.artifacts.get(
-        context,
-        requiredString(input.artifact_id, 'artifact_id'),
-      );
+    async getArtifact(input) {
+      const context = asTenantContext(input.context);
+      const artifact = await repositories.artifacts.get(context, input.artifact_id);
       return artifact === null ? { status: 'not_found' } : { status: 'ok', artifact };
     },
     async createExport() {
       throw new ProviderUnavailableError('Export generation is not configured');
     },
-    async explainModel(value) {
-      const input = requestInput(value);
+    async explainModel(input) {
       const model = await executor.selectOne('model_routes', {
-        id: `eq.${requiredString(input.model_id, 'model_id')}`,
+        id: `eq.${input.model_id}`,
         select: '*',
       });
       return model === null ? { status: 'not_found' } : { status: 'ok', model };
     },
-    async getReceipt(value) {
-      const input = requestInput(value);
-      const context = asTenantContext(handlerContext(input));
-      const runId = requiredString(input.run_id, 'run_id');
+    async getReceipt(input) {
+      const context = asTenantContext(input.context);
+      const runId = input.run_id;
       const run = await repositories.runs.get(context, runId);
       if (run === null) return { status: 'not_found' };
       const [reservation, ledger, artifacts] = await Promise.all([

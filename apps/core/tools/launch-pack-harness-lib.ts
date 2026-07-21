@@ -36,6 +36,8 @@ export type HarnessResult =
 export interface SafeHarnessError {
   readonly code: string;
   readonly message: string;
+  readonly operation?: HarnessOperation;
+  readonly http_status?: number;
 }
 
 export interface HarnessTransport {
@@ -402,28 +404,26 @@ export function createInMemoryHarnessTransport(): HarnessTransport {
     ids: { next },
   };
   const resources = createP0ResourceHandlers({
-    async createWorkspace(inputValue) {
-      const input = record(inputValue, 'create_workspace input');
-      text(input.name, 'name');
+    async createWorkspace(input) {
+      void input.context;
+      void input.idempotency_key;
       return { status: 'ok', workspace_id: next('workspace') };
     },
     async getWorkspace() {
       return { status: 'not_found' };
     },
-    async createProject(inputValue) {
-      const input = record(inputValue, 'create_project input');
+    async createProject(input) {
       return { status: 'ok', project: { id: next('project'), name: input.name } };
     },
     async getProject() {
       return { status: 'not_found' };
     },
-    async createCanvas(inputValue) {
-      const input = record(inputValue, 'create_canvas input');
+    async createCanvas(input) {
       const canvasId = next('canvas');
       const revisionId = next('revision');
       const initial: CanvasContextRecord = {
         canvasId,
-        projectId: text(input.project_id, 'project_id'),
+        projectId: input.project_id,
         headRevisionId: revisionId,
         graphSchemaVersion: 1,
         graphSnapshot: {
@@ -469,7 +469,15 @@ export class DirectHandlerTransport implements HarnessTransport {
       const semantic = p0ResultSemantics(await this.handlers[operation](input));
       return semantic.ok
         ? semantic
-        : { ok: false, error: { code: semantic.error.code, message: semantic.error.message } };
+        : {
+            ok: false,
+            error: {
+              code: semantic.error.code,
+              message: semantic.error.message,
+              operation,
+              http_status: semantic.error.httpStatus,
+            },
+          };
     } catch (error) {
       if (error instanceof ProviderUnavailableError) {
         return {
@@ -477,6 +485,8 @@ export class DirectHandlerTransport implements HarnessTransport {
           error: {
             code: 'MODEL_UNAVAILABLE',
             message: 'Provider-backed execution is not enabled.',
+            operation,
+            http_status: 503,
           },
         };
       }
@@ -485,45 +495,90 @@ export class DirectHandlerTransport implements HarnessTransport {
   }
 }
 
-function stagingRequest(operation: HarnessOperation, input: Readonly<Record<string, unknown>>) {
+export interface StagingWireRequest {
+  readonly method: 'POST';
+  readonly path: string;
+  readonly headers: Readonly<Record<string, string>>;
+  readonly body: Readonly<Record<string, unknown>>;
+}
+
+const MUTATING_HARNESS_OPERATIONS = new Set<HarnessOperation>([
+  'create_workspace',
+  'create_project',
+  'create_canvas',
+  'apply_canvas_patch',
+  'quote_run',
+  'start_run',
+]);
+
+export function buildStagingWireRequest(
+  operation: HarnessOperation,
+  input: Readonly<Record<string, unknown>>,
+  accessToken: string,
+): StagingWireRequest {
   const id = (field: string): string => text(input[field], field);
+  const context = record(input.context, 'context');
+  const headers: Record<string, string> = {
+    accept: 'application/json',
+    authorization: `Bearer ${accessToken}`,
+    'content-type': 'application/json',
+    'x-request-id': text(context.request_id, 'context.request_id'),
+  };
+  if (MUTATING_HARNESS_OPERATIONS.has(operation)) {
+    headers['idempotency-key'] = text(input.idempotency_key, 'idempotency_key');
+  }
   if (operation === 'create_workspace')
-    return { method: 'POST', path: '/v1/workspaces', body: { name: input.name } } as const;
+    return {
+      method: 'POST',
+      path: '/v1/workspaces',
+      headers,
+      body: { name: input.name },
+    };
   if (operation === 'create_project')
     return {
       method: 'POST',
       path: `/v1/workspaces/${id('workspace_id')}/projects`,
+      headers,
       body: { name: input.name },
-    } as const;
+    };
   if (operation === 'create_canvas')
     return {
       method: 'POST',
       path: `/v1/projects/${id('project_id')}/canvases`,
+      headers,
       body: { name: input.name },
-    } as const;
+    };
   if (operation === 'apply_canvas_patch')
     return {
       method: 'POST',
       path: `/v1/canvases/${id('canvas_id')}/patches`,
+      headers,
       body: {
         expected_revision_id: input.expected_revision_id,
         reason: input.reason,
         patch: input.patch,
       },
-    } as const;
+    };
   if (operation === 'validate_graph')
-    return { method: 'POST', path: `/v1/canvases/${id('canvas_id')}/validate`, body: {} } as const;
+    return {
+      method: 'POST',
+      path: `/v1/canvases/${id('canvas_id')}/validate`,
+      headers,
+      body: {},
+    };
   if (operation === 'quote_run')
     return {
       method: 'POST',
       path: `/v1/canvases/${id('canvas_id')}/quotes`,
+      headers,
       body: { expected_revision_id: input.expected_revision_id },
-    } as const;
+    };
   return {
     method: 'POST',
     path: `/v1/quotes/${id('quote_id')}/runs`,
+    headers,
     body: { confirmed: input.confirmed, confirmation_token: input.confirmation_token },
-  } as const;
+  };
 }
 
 export class StagingLaunchPackTransport implements HarnessTransport {
@@ -537,14 +592,10 @@ export class StagingLaunchPackTransport implements HarnessTransport {
     operation: HarnessOperation,
     input: Readonly<Record<string, unknown>>,
   ): Promise<HarnessResult> {
-    const request = stagingRequest(operation, input);
+    const request = buildStagingWireRequest(operation, input, this.accessToken);
     const response = await this.fetchImplementation(`${this.baseUrl}${request.path}`, {
       method: request.method,
-      headers: {
-        authorization: `Bearer ${this.accessToken}`,
-        'content-type': 'application/json',
-        'idempotency-key': text(input.idempotency_key ?? `query-${operation}`, 'idempotency_key'),
-      },
+      headers: request.headers,
       body: JSON.stringify(request.body),
     });
     let body: unknown;
@@ -554,6 +605,8 @@ export class StagingLaunchPackTransport implements HarnessTransport {
       throw new HarnessFlowError({
         code: 'TRANSPORT_ERROR',
         message: 'Staging returned invalid JSON.',
+        operation,
+        http_status: response.status,
       });
     }
     const envelope = record(body, 'response');
@@ -564,6 +617,8 @@ export class StagingLaunchPackTransport implements HarnessTransport {
       error: {
         code: text(error.code, 'error.code'),
         message: text(error.message, 'error.message'),
+        operation,
+        http_status: response.status,
       },
     };
   }

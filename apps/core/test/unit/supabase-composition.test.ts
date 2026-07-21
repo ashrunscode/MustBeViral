@@ -114,6 +114,50 @@ describe('production Supabase composition', () => {
     ]);
   });
 
+  it('normalizes create-workspace input before the composed port calls the RPC', async () => {
+    const fetchImplementation = vi.fn(
+      async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
+        expect(String(request)).toBe('https://project.supabase.co/rest/v1/rpc/create_workspace');
+        expect(new Headers(init?.headers).get('authorization')).toBe('Bearer verified-caller-jwt');
+        expect(JSON.parse(String(init?.body))).toEqual({
+          p_name: 'GB-01 Vanilla Oat Cold Brew',
+          p_slug: 'gb-01-vanilla-oat-cold-brew',
+          p_idempotency_key: 'launch-pack-gb-01-create-workspace',
+          p_request_id: 'request-composition-1',
+        });
+        return Response.json({ role: 'owner', workspace_id: workspaceId });
+      },
+    );
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) =>
+        createSupabaseRequestDependencies(bindings, callerJwt, verifiedActor, fetchImplementation),
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+
+    const response = await app.request(
+      '/v1/workspaces',
+      {
+        method: 'POST',
+        headers: {
+          ...headers(),
+          'idempotency-key': 'launch-pack-gb-01-create-workspace',
+        },
+        body: JSON.stringify({ name: 'GB-01 Vanilla Oat Cold Brew' }),
+      },
+      configuredBindings,
+    );
+
+    expect(response.status).toBe(201);
+    expect(fetchImplementation).toHaveBeenCalledTimes(1);
+    expect(await response.json()).toMatchObject({
+      data: { role: 'owner', workspace_id: workspaceId },
+    });
+  });
+
   it('replays direct project creation and rejects changed-body key reuse', async () => {
     let storedProject: Readonly<Record<string, unknown>> | null = null;
     const fetchImplementation = vi.fn(

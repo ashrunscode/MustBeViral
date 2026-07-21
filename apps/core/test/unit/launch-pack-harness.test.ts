@@ -18,6 +18,8 @@ import { authenticateDisposableStagingUser } from '../../tools/staging-auth';
 
 describe('golden launch-pack harness', () => {
   beforeEach(() => {
+    vi.stubEnv('STAGING_TEST_EMAIL', '');
+    vi.stubEnv('STAGING_TEST_PASSWORD', '');
     vi.stubGlobal(
       'fetch',
       vi.fn(() => {
@@ -26,7 +28,10 @@ describe('golden launch-pack harness', () => {
     );
   });
 
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
 
   it('parses exactly the 20 registered briefs and preserves launch-pack shape invariants', async () => {
     const briefs = parseGoldenBriefRegistry(goldenBriefMarkdown);
@@ -57,6 +62,35 @@ describe('golden launch-pack harness', () => {
     expect(records.every((record) => record.confirm_result === 'provider_unavailable')).toBe(true);
   });
 
+  it('rejects resource input that the composed Supabase port would reject', async () => {
+    const transport = createInMemoryHarnessTransport();
+    const validContext = {
+      workspace_id: '00000000-0000-4000-8000-000000000000',
+      actor_id: 'golden-brief-harness',
+      request_id: 'request-strictness-1',
+    };
+
+    await expect(
+      transport.call('create_workspace', {
+        name: 'Missing context',
+        idempotency_key: 'strictness-1',
+      }),
+    ).rejects.toMatchObject({ name: 'ZodError' });
+    await expect(
+      transport.call('create_workspace', {
+        context: validContext,
+        name: 'Missing idempotency',
+      }),
+    ).rejects.toMatchObject({ name: 'ZodError' });
+    await expect(
+      transport.call('create_workspace', {
+        context: { workspace_id: validContext.workspace_id, actor_id: validContext.actor_id },
+        name: 'Missing request id',
+        idempotency_key: 'strictness-3',
+      }),
+    ).rejects.toMatchObject({ name: 'ZodError' });
+  });
+
   it('keeps the staging transport behind an injected fetch seam', async () => {
     const fetchImplementation = vi.fn(async () =>
       Response.json({
@@ -72,6 +106,7 @@ describe('golden launch-pack harness', () => {
 
     await expect(
       transport.call('quote_run', {
+        context: { request_id: 'request-quote-1' },
         canvas_id: 'canvas-1',
         expected_revision_id: 'revision-1',
         idempotency_key: 'quote-key',
@@ -107,10 +142,39 @@ describe('golden launch-pack harness', () => {
     });
 
     expect(authenticated.accessToken).toBe('caller-token');
-    expect(authenticated.email).toMatch(/@staging\.mustbeviral\.invalid$/u);
+    expect(authenticated.email).toContain('+launch-pack-');
     expect(log).toHaveBeenCalledWith(expect.stringContaining(`PAUSED`));
     const signupBody = String(fetchImplementation.mock.calls[0]?.[1]?.body);
     const password = (JSON.parse(signupBody) as { password: string }).password;
     expect(JSON.stringify(log.mock.calls)).not.toContain(password);
+  });
+
+  it('uses injected staging credentials without attempting signup', async () => {
+    vi.stubEnv('STAGING_TEST_EMAIL', 'confirmed@example.com');
+    vi.stubEnv('STAGING_TEST_PASSWORD', 'injected-password');
+    const fetchImplementation = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(Response.json({ access_token: 'injected-caller-token' }));
+    const log = vi.fn<(message: string) => void>();
+
+    const authenticated = await authenticateDisposableStagingUser({
+      configuration: {
+        supabaseUrl: 'https://project.supabase.co',
+        publishableKey: 'public-key',
+      },
+      fetchImplementation,
+      log,
+      sleep: async () => undefined,
+    });
+
+    expect(authenticated).toEqual({
+      email: 'confirmed@example.com',
+      accessToken: 'injected-caller-token',
+    });
+    expect(fetchImplementation).toHaveBeenCalledTimes(1);
+    expect(fetchImplementation.mock.calls[0]?.[0]).toBe(
+      'https://project.supabase.co/auth/v1/token?grant_type=password',
+    );
+    expect(log).not.toHaveBeenCalled();
   });
 });

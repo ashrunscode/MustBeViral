@@ -76,7 +76,15 @@ export async function runLaunchPackHarness(
         })();
   await mkdir(options.outDirectory, { recursive: true });
   const records: BriefRunRecord[] = [];
-  const failures: Array<Readonly<{ brief_id: string; code: string; message: string }>> = [];
+  const failures: Array<
+    Readonly<{
+      brief_id: string;
+      code: string;
+      message: string;
+      operation?: string;
+      http_status?: number;
+    }>
+  > = [];
   for (const brief of briefs) {
     try {
       const result = await executeGoldenBrief(brief, transport, options.expectProviderUnavailable);
