@@ -16,11 +16,23 @@ next_action: Execute real end-to-end launch-pack runs for the 20 golden briefs w
   measurement once the operator supplies the provisioning inputs.
 decisions_pending: []
 blockers:
+  - Quote persistence has no caller-reachable write path, and the closing design is operator-owned.
+    public.quotes grants authenticated SELECT only, carries a SELECT-only RLS policy, and no
+    create_quote function exists among the five hardened RPCs, so a quote cannot be persisted by a
+    caller JWT. Closing this requires an accepted forward-only migration adding a hardened
+    SECURITY DEFINER RPC that derives or validates the amount server-side from the pinned catalog
+    version, because a caller must never be able to name its own price.
   - Real provider runs are blocked on the remaining operator-owned enable inputs in
     governance/evidence/WP-P0-001/environment-provisioning.md section 6 (fal key, webhook secret,
-    and live price confirmations; Moonshot key with retention/DPA clearance; staging service-role
-    Worker secret). The staging infrastructure targets are provisioned and verified; every
-    provider route stays disabled and fail-closed until these inputs arrive.
+    and live price confirmations; Moonshot key with retention/DPA clearance). The staging
+    infrastructure targets are provisioned and verified; every provider route stays disabled and
+    fail-closed until these inputs arrive.
+  - Staging quote issuance is blocked because the price catalog is unseeded. Live evidence shows
+    price_catalog_versions, model_routes, model_route_prices, and provider_registrations all empty,
+    no migration seeds them, and every launch route declares enableGates.priceConfirmed false.
+    Refusing to quote is correct behavior under execution-providers-billing, which requires price
+    drift to disable new quotes until reviewed, so the catalog may only be seeded from
+    operator-confirmed prices and never from placeholder values.
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
