@@ -13,6 +13,10 @@ import {
 } from '@mustbeviral/contracts';
 
 import { p0ResultSemantics } from '../src/transport/semantics';
+import {
+  buildLaunchCatalogQuotePlan,
+  fixtureLaunchCatalogRecords,
+} from '../src/composition/launch-catalog';
 
 const RUN_CAP_MICROS = 8_000_000n;
 export const USABLE_PACK_GATE_MICROS = 5_000_000n;
@@ -251,13 +255,7 @@ export async function executeGoldenBrief(
   };
 }
 
-type CatalogPlan = Awaited<ReturnType<HandlerPorts['catalog']['quotePlan']>>;
-type PriceMicros = CatalogPlan['prices'][number]['unitPriceMicros'];
 type BillingExposure = Awaited<ReturnType<HandlerPorts['billing']['get']>>;
-
-function priceMicros(value: bigint): PriceMicros {
-  return value as PriceMicros;
-}
 
 export function createInMemoryHarnessTransport(): HarnessTransport {
   const canvases = new Map<string, CanvasContextRecord>();
@@ -289,80 +287,14 @@ export function createInMemoryHarnessTransport(): HarnessTransport {
       },
     },
     catalog: {
-      quotePlan: async (_context, snapshot) => ({
-        priceCatalogVersionId: 'golden-launch-pack-v1',
-        prices: [
-          {
-            priceCatalogVersionId: 'golden-launch-pack-v1',
-            modelRouteId: 'copy-route',
-            providerModelId: 'fixture/copy',
-            unit: 'request',
-            unitPriceMicros: priceMicros(100_000n),
-          },
-          {
-            priceCatalogVersionId: 'golden-launch-pack-v1',
-            modelRouteId: 'master-route',
-            providerModelId: 'fixture/master',
-            unit: 'image',
-            unitPriceMicros: priceMicros(45_000n),
-          },
-          {
-            priceCatalogVersionId: 'golden-launch-pack-v1',
-            modelRouteId: 'adaptation-route',
-            providerModelId: 'fixture/adaptation',
-            unit: 'image',
-            unitPriceMicros: priceMicros(40_000n),
-          },
-          {
-            priceCatalogVersionId: 'golden-launch-pack-v1',
-            modelRouteId: 'motion-route',
-            providerModelId: 'fixture/motion',
-            unit: 'video_second',
-            unitPriceMicros: priceMicros(100_000n),
-          },
-        ],
-        nodes: snapshot.nodes.flatMap<CatalogPlan['nodes'][number]>((candidate) => {
-          const role = candidate.parameters.asset_role;
-          if (role === 'copy_set')
-            return [
-              {
-                nodeId: candidate.id,
-                modelRouteId: 'copy-route',
-                pricingUnits: [{ unit: 'request', quantity: 1n }],
-              },
-            ];
-          if (role === 'master_static')
-            return [
-              {
-                nodeId: candidate.id,
-                modelRouteId: 'master-route',
-                pricingUnits: [{ unit: 'image', quantity: 1n }],
-              },
-            ];
-          if (role === 'adaptation')
-            return [
-              {
-                nodeId: candidate.id,
-                modelRouteId: 'adaptation-route',
-                pricingUnits: [{ unit: 'image', quantity: 1n }],
-              },
-            ];
-          if (role === 'motion_branch')
-            return [
-              {
-                nodeId: candidate.id,
-                modelRouteId: 'motion-route',
-                pricingUnits: [{ unit: 'video_second', quantity: 8n }],
-              },
-            ];
-          return [];
-        }),
-      }),
+      quotePlan: async (_context, snapshot) =>
+        buildLaunchCatalogQuotePlan(snapshot, fixtureLaunchCatalogRecords()),
     },
     quotes: {
       get: async (_context, quoteId) => quotes.get(quoteId) ?? null,
       save: async (_context, quote) => {
         quotes.set(quote.quote.quoteId, quote);
+        return quote;
       },
     },
     billing: {

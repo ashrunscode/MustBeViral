@@ -20,6 +20,7 @@ export type {
   ArtifactRepository,
   BillingRepository,
   BriefRepository,
+  CatalogRepository,
   CanvasRepository,
   DatabaseRepositories,
   ProjectRepository,

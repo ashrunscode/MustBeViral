@@ -383,7 +383,7 @@ export function createCommandHandlers(ports: HandlerPorts) {
           if (!validation.valid) return { status: 'graph_invalid', issues: validation.issues };
           const snapshot = freezeGraphSnapshot(canvas.graphSnapshot);
           const plan = await ports.catalog.quotePlan(command.context, snapshot);
-          const quote = assembleQuote({
+          const assembledQuote = assembleQuote({
             quoteId: ports.ids.next('quote'),
             workspaceId: command.context.workspace_id,
             canvasRevisionId: canvas.headRevisionId,
@@ -392,11 +392,16 @@ export function createCommandHandlers(ports: HandlerPorts) {
             catalogPrices: plan.prices,
             nodes: plan.nodes,
           });
-          await ports.quotes.save(command.context, {
-            canvasId: command.canvas_id,
-            quote,
-            snapshot,
-          });
+          const storedQuote = await ports.quotes.save(
+            command.context,
+            {
+              canvasId: command.canvas_id,
+              quote: assembledQuote,
+              snapshot,
+            },
+            command.idempotency_key,
+          );
+          const { quote } = storedQuote;
           await audit(ports, command.context, 'quote_run', 'ok', 'quote', quote.quoteId, {
             canvas_revision_id: quote.canvasRevisionId,
             price_catalog_version_id: quote.priceCatalogVersionId,

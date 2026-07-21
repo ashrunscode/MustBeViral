@@ -97,6 +97,21 @@ export interface ArtifactRepository {
 
 export interface BillingRepository {
   getQuote(context: TenantContext, quoteId: string): Promise<Readonly<Row<'quotes'>> | null>;
+  saveQuote(
+    context: TenantContext,
+    input: Readonly<{
+      id: string;
+      projectId: string;
+      canvasId: string;
+      canvasRevisionId: string;
+      priceCatalogVersionId: string;
+      executionPlan: Json;
+      quoteHash: string;
+      maximumChargeMicros: IntegerMicros;
+      createdAt: string;
+      expiresAt: string;
+    }>,
+  ): Promise<Readonly<Row<'quotes'>>>;
   getReservationForRun(
     context: TenantContext,
     runId: string,
@@ -106,6 +121,13 @@ export interface BillingRepository {
     limit: number,
   ): Promise<readonly Readonly<Row<'ledger_transactions'>>[]>;
   availableBalance(context: TenantContext): Promise<IntegerMicros>;
+  dailyExposure(context: TenantContext, dayStart: string, dayEnd: string): Promise<IntegerMicros>;
+}
+
+export interface CatalogRepository {
+  listActiveVersions(): Promise<readonly Readonly<Row<'price_catalog_versions'>>[]>;
+  listRoutes(): Promise<readonly Readonly<Row<'model_routes'>>[]>;
+  listPrices(): Promise<readonly Readonly<Row<'model_route_prices'>>[]>;
 }
 
 export interface DatabaseRepositories {
@@ -116,6 +138,7 @@ export interface DatabaseRepositories {
   readonly runs: RunRepository;
   readonly artifacts: ArtifactRepository;
   readonly billing: BillingRepository;
+  readonly catalog: CatalogRepository;
 }
 
 function equals(value: string): string {
@@ -311,6 +334,22 @@ export function createDatabaseRepositories(executor: DatabaseExecutor): Database
           workspace_id: equals(context.workspaceId),
           select: '*',
         }),
+      saveQuote: (context, input) =>
+        executor.insert('quotes', {
+          id: input.id,
+          workspace_id: context.workspaceId,
+          project_id: input.projectId,
+          canvas_id: input.canvasId,
+          canvas_revision_id: input.canvasRevisionId,
+          price_catalog_version_id: input.priceCatalogVersionId,
+          execution_plan: input.executionPlan,
+          quote_hash: input.quoteHash,
+          maximum_charge_micros: input.maximumChargeMicros,
+          currency: 'USD',
+          created_by: context.actorId,
+          created_at: input.createdAt,
+          expires_at: input.expiresAt,
+        }),
       getReservationForRun: (context, runId) =>
         executor.selectOne('cost_reservations', {
           run_id: equals(runId),
@@ -347,6 +386,56 @@ export function createDatabaseRepositories(executor: DatabaseExecutor): Database
         }
         return integerMicros(balance);
       },
+      async dailyExposure(context, dayStart, dayEnd) {
+        const pageSize = 100;
+        let offset = 0;
+        let exposure = 0;
+        while (true) {
+          const rows = await executor.select('cost_reservations', {
+            workspace_id: equals(context.workspaceId),
+            created_at: `gte.${dayStart}`,
+            and: `(created_at.lt.${dayEnd})`,
+            select: 'amount_micros,captured_micros,released_micros,refunded_micros',
+            order: 'created_at.asc,id.asc',
+            limit: String(pageSize),
+            offset: String(offset),
+          });
+          exposure += rows.reduce(
+            (total, row) =>
+              total +
+              Math.max(
+                row.amount_micros - row.released_micros,
+                row.captured_micros - row.refunded_micros,
+              ),
+            0,
+          );
+          if (rows.length < pageSize) break;
+          offset += rows.length;
+        }
+        return integerMicros(exposure);
+      },
+    },
+    catalog: {
+      listActiveVersions: () =>
+        executor.select('price_catalog_versions', {
+          status: equals('active'),
+          currency: equals('USD'),
+          select: '*',
+          order: 'effective_at.desc,id.desc',
+          limit: '100',
+        }),
+      listRoutes: () =>
+        executor.select('model_routes', {
+          select: '*',
+          order: 'created_at.asc,id.asc',
+          limit: '100',
+        }),
+      listPrices: () =>
+        executor.select('model_route_prices', {
+          select: '*',
+          order: 'created_at.asc,id.asc',
+          limit: '100',
+        }),
     },
   };
 }

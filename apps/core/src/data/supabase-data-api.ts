@@ -122,7 +122,8 @@ export class SupabaseDataApiExecutor implements DatabaseExecutor {
     this.#baseUrl = options.baseUrl.replace(/\/$/u, '');
     this.#publishableKey = options.publishableKey;
     this.#callerJwt = options.callerJwt;
-    this.#fetch = options.fetch ?? fetch;
+    // Bind the global: workerd rejects fetch invoked with a foreign `this` (Illegal invocation).
+    this.#fetch = options.fetch ?? ((input, init) => fetch(input, init));
   }
 
   async request<Result>(input: DataApiRequest): Promise<Result> {

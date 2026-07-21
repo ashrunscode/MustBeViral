@@ -103,6 +103,7 @@ class MemoryPorts {
         get: async (_context, quoteId) => this.quotesById.get(quoteId) ?? null,
         save: async (_context, stored) => {
           this.quotesById.set(stored.quote.quoteId, stored);
+          return stored;
         },
       },
       billing: {

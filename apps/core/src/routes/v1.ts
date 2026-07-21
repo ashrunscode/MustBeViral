@@ -361,6 +361,16 @@ async function handleClientRoute(
       error instanceof TypeError ||
       (error as Error).name === 'ZodError'
     ) {
+      console.error(
+        JSON.stringify({
+          level: 'warn',
+          event: 'core.request.validation_failed',
+          request_id: context.get('requestId'),
+          operation: route.operation,
+          error_name: (error as Error).name,
+          error_message: (error as Error).message,
+        }),
+      );
       return context.json(safeError(context, 'VALIDATION_FAILED', 'The request is invalid.'), 400);
     }
     throw error;

@@ -111,7 +111,7 @@ export interface StoredQuote {
 
 export interface QuotePort {
   get(context: HandlerContext, quoteId: string): Promise<StoredQuote | null>;
-  save(context: HandlerContext, input: StoredQuote): Promise<void>;
+  save(context: HandlerContext, input: StoredQuote, idempotencyKey: string): Promise<StoredQuote>;
 }
 
 export interface BillingExposurePort {

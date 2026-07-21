@@ -12,10 +12,23 @@ import {
   type P0RestHandlers,
   type P0ResourcePort,
   type RunRecord,
+  type StoredQuote,
 } from '@mustbeviral/contracts';
 import {
+  DEFAULT_GLOBAL_DAY_CAP_MICROS,
+  modelPriceUnits,
+  quoteExpiryState,
+  usdMicros,
+  usdMicrosToSafeInteger,
+  type ImmutableRunQuote,
+  type ModelPriceUnit,
+  type QuoteNodeLine,
+} from '../../../../packages/billing/src/index';
+import {
   createDatabaseRepositories,
+  integerMicros,
   tenantContext,
+  type DatabaseRow,
   type DatabaseRepositories,
   type Json,
   type TenantContext,
@@ -34,6 +47,7 @@ import type {
   WorkspaceResolutionPort,
 } from '../routes/v1';
 import type { V1Operation } from '../routes/v1-table';
+import { buildLaunchCatalogQuotePlan } from './launch-catalog';
 
 const BOOTSTRAP_WORKSPACE_ID = '00000000-0000-4000-8000-000000000000';
 const RUN_STATES = new Set([
@@ -157,6 +171,133 @@ function databaseJson(value: unknown): Json {
     );
   }
   throw new TypeError('Value is not JSON serializable');
+}
+
+function canonical(value: unknown): string {
+  if (typeof value === 'bigint') return JSON.stringify(value.toString(10));
+  if (value === null || typeof value !== 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
+  return `{${Object.entries(value)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`)
+    .join(',')}}`;
+}
+
+async function sha256Hex(value: unknown): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonical(value)));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function quoteExecutionPlan(quote: ImmutableRunQuote): Json {
+  return quote.nodeLines.map((line) => ({
+    ready: true,
+    node_id: line.nodeId,
+    model_route_id: line.modelRouteId,
+    provider_model_id: line.providerModelId,
+    price_components: line.priceComponents.map((component) => ({
+      unit: component.unit,
+      quantity: component.quantity.toString(10),
+      unit_price_micros: component.unitPriceMicros.toString(10),
+      total_micros: component.totalMicros.toString(10),
+    })),
+    total_micros: line.totalMicros.toString(10),
+  }));
+}
+
+function jsonMicros(value: unknown, field: string): ReturnType<typeof usdMicros> {
+  if (typeof value === 'number' && Number.isSafeInteger(value) && value >= 0) {
+    return usdMicros(BigInt(value));
+  }
+  if (typeof value === 'string' && /^\d+$/u.test(value)) return usdMicros(BigInt(value));
+  throw new TypeError(`${field} must be an integer-micros value`);
+}
+
+function priceUnit(value: unknown): ModelPriceUnit {
+  if (typeof value !== 'string' || !modelPriceUnits.includes(value as ModelPriceUnit)) {
+    throw new TypeError('Quote plan has an invalid price unit');
+  }
+  return value as ModelPriceUnit;
+}
+
+function quoteNodeLine(value: unknown): QuoteNodeLine {
+  const line = requestInput(value);
+  if (!Array.isArray(line.price_components) || line.price_components.length === 0) {
+    throw new TypeError('Quote plan line requires price components');
+  }
+  return {
+    nodeId: requiredString(line.node_id, 'quote.node_id'),
+    modelRouteId: requiredString(line.model_route_id, 'quote.model_route_id'),
+    providerModelId: requiredString(line.provider_model_id, 'quote.provider_model_id'),
+    priceComponents: line.price_components.map((value) => {
+      const component = requestInput(value);
+      const quantity = requiredString(component.quantity, 'quote.quantity');
+      if (!/^\d+$/u.test(quantity)) throw new TypeError('quote.quantity must be an integer');
+      return {
+        unit: priceUnit(component.unit),
+        quantity: BigInt(quantity),
+        unitPriceMicros: jsonMicros(component.unit_price_micros, 'quote.unit_price_micros'),
+        totalMicros: jsonMicros(component.total_micros, 'quote.total_micros'),
+      };
+    }),
+    totalMicros: jsonMicros(line.total_micros, 'quote.line_total_micros'),
+  };
+}
+
+function quoteFromRow(row: Readonly<DatabaseRow<'quotes'>>): ImmutableRunQuote {
+  if (row.currency !== 'USD' || !Array.isArray(row.execution_plan)) {
+    throw new TypeError('Database returned an invalid quote');
+  }
+  return {
+    quoteId: row.id,
+    workspaceId: row.workspace_id,
+    canvasRevisionId: row.canvas_revision_id,
+    priceCatalogVersionId: row.price_catalog_version_id,
+    currency: 'USD',
+    nodeLines: row.execution_plan.map(quoteNodeLine),
+    maximumChargeMicros: usdMicros(BigInt(row.maximum_charge_micros)),
+    createdAt: row.created_at,
+    expiresAt: row.expires_at,
+  };
+}
+
+async function storedQuoteFromRow(
+  repositories: DatabaseRepositories,
+  context: TenantContext,
+  row: Readonly<DatabaseRow<'quotes'>>,
+): Promise<StoredQuote> {
+  const revision = await repositories.canvases.getRevision(context, row.canvas_revision_id);
+  if (revision === null || revision.canvas_id !== row.canvas_id) {
+    throw new SupabaseDataApiError('not_found');
+  }
+  return {
+    canvasId: row.canvas_id,
+    quote: quoteFromRow(row),
+    snapshot: graphSnapshot(revision.graph_snapshot),
+  };
+}
+
+async function quoteContentHash(canvasId: string, quote: ImmutableRunQuote): Promise<string> {
+  return sha256Hex({
+    workspaceId: quote.workspaceId,
+    canvasId,
+    canvasRevisionId: quote.canvasRevisionId,
+    priceCatalogVersionId: quote.priceCatalogVersionId,
+    currency: quote.currency,
+    nodeLines: quote.nodeLines,
+    maximumChargeMicros: quote.maximumChargeMicros,
+  });
+}
+
+function utcDayWindow(now: string): Readonly<{ start: string; end: string }> {
+  const instant = new Date(now);
+  if (!Number.isFinite(instant.getTime())) throw new TypeError('Clock returned an invalid time');
+  const start = new Date(
+    Date.UTC(instant.getUTCFullYear(), instant.getUTCMonth(), instant.getUTCDate()),
+  );
+  return {
+    start: start.toISOString(),
+    end: new Date(start.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+  };
 }
 
 function runRecord(row: Readonly<Record<string, unknown>>, reservationId = ''): RunRecord {
@@ -369,7 +510,7 @@ function createResourcePort(
   };
 }
 
-function createHandlerPorts(
+export function createSupabaseHandlerPorts(
   executor: SupabaseDataApiExecutor,
   repositories: DatabaseRepositories,
 ): HandlerPorts {
@@ -430,24 +571,99 @@ function createHandlerPorts(
       },
     },
     catalog: {
-      async quotePlan() {
-        throw new ProviderUnavailableError('Provider-backed quoting is not configured');
+      async quotePlan(_context, snapshot) {
+        const [versions, routes, prices] = await Promise.all([
+          repositories.catalog.listActiveVersions(),
+          repositories.catalog.listRoutes(),
+          repositories.catalog.listPrices(),
+        ]);
+        return buildLaunchCatalogQuotePlan(snapshot, { versions, routes, prices });
       },
     },
     quotes: {
-      async get() {
-        throw new ProviderUnavailableError('Provider-backed quoting is not configured');
+      async get(context, quoteId) {
+        const tenant = asTenantContext(context);
+        const row = await repositories.billing.getQuote(tenant, quoteId);
+        return row === null ? null : storedQuoteFromRow(repositories, tenant, row);
       },
-      async save() {
-        throw new ProviderUnavailableError('Provider-backed quoting is not configured');
+      async save(context, input, idempotencyKey) {
+        const tenant = asTenantContext(context);
+        if (input.quote.workspaceId !== context.workspace_id) {
+          throw new SupabaseDataApiError('forbidden');
+        }
+        const quoteId = await deterministicUuid(
+          `quote_run\u0000${context.actor_id}\u0000${context.workspace_id}\u0000${idempotencyKey}`,
+        );
+        const quote: ImmutableRunQuote = { ...input.quote, quoteId };
+        const quoteHash = await quoteContentHash(input.canvasId, quote);
+        const replay = await repositories.billing.getQuote(tenant, quoteId);
+        if (replay !== null) {
+          if (replay.quote_hash !== quoteHash) throw new SupabaseDataApiError('conflict');
+          return storedQuoteFromRow(repositories, tenant, replay);
+        }
+        const canvas = await repositories.canvases.get(tenant, input.canvasId);
+        if (canvas === null || canvas.head_revision_id !== quote.canvasRevisionId) {
+          throw new SupabaseDataApiError('conflict');
+        }
+        try {
+          const row = await repositories.billing.saveQuote(tenant, {
+            id: quoteId,
+            projectId: canvas.project_id,
+            canvasId: input.canvasId,
+            canvasRevisionId: quote.canvasRevisionId,
+            priceCatalogVersionId: quote.priceCatalogVersionId,
+            executionPlan: quoteExecutionPlan(quote),
+            quoteHash,
+            maximumChargeMicros: integerMicros(usdMicrosToSafeInteger(quote.maximumChargeMicros)),
+            createdAt: quote.createdAt,
+            expiresAt: quote.expiresAt,
+          });
+          return storedQuoteFromRow(repositories, tenant, row);
+        } catch (error) {
+          if (!(error instanceof SupabaseDataApiError) || error.kind !== 'conflict') throw error;
+          const concurrentReplay = await repositories.billing.getQuote(tenant, quoteId);
+          if (concurrentReplay === null || concurrentReplay.quote_hash !== quoteHash) throw error;
+          return storedQuoteFromRow(repositories, tenant, concurrentReplay);
+        }
       },
     },
     billing: {
-      async get() {
-        throw new ProviderUnavailableError('Provider-backed billing is not configured');
+      async get(context) {
+        const tenant = asTenantContext(context);
+        const workspace = await repositories.workspaces.get(tenant);
+        if (workspace === null) throw new SupabaseDataApiError('not_found');
+        const day = utcDayWindow(new Date().toISOString());
+        const [availableBalance, workspaceDayExposure] = await Promise.all([
+          repositories.billing.availableBalance(tenant),
+          repositories.billing.dailyExposure(tenant, day.start, day.end),
+        ]);
+        return {
+          availableBalanceMicros: usdMicros(BigInt(availableBalance)),
+          workspaceDayExposureMicros: usdMicros(BigInt(workspaceDayExposure)),
+          // Caller-scoped RLS cannot observe other tenants; start_run_barrier remains global authority.
+          globalDayExposureMicros: usdMicros(BigInt(workspaceDayExposure)),
+          caps: {
+            run: usdMicros(BigInt(workspace.per_run_spend_cap_micros)),
+            workspaceDay: usdMicros(BigInt(workspace.daily_spend_cap_micros)),
+            globalDay: DEFAULT_GLOBAL_DAY_CAP_MICROS,
+          },
+        };
       },
     },
-    confirmations: { verify: async () => false },
+    confirmations: {
+      async verify(context, input) {
+        if (input.token.length < 16) return false;
+        const row = await repositories.billing.getQuote(asTenantContext(context), input.quoteId);
+        if (row === null) return false;
+        const quote = quoteFromRow(row);
+        return (
+          quote.quoteId === input.quoteId &&
+          quote.workspaceId === context.workspace_id &&
+          quote.maximumChargeMicros === input.maximumChargeMicros &&
+          quoteExpiryState(quote, new Date().toISOString()) === 'active'
+        );
+      },
+    },
     runs: {
       async get(context, runId) {
         const tenant = asTenantContext(context);
@@ -501,7 +717,7 @@ export function createSupabaseRequestDependencies(
     ...(fetchImplementation === undefined ? {} : { fetch: fetchImplementation }),
   });
   const repositories = createDatabaseRepositories(executor);
-  const commands = createCommandHandlers(createHandlerPorts(executor, repositories));
+  const commands = createCommandHandlers(createSupabaseHandlerPorts(executor, repositories));
   const resources = createP0ResourceHandlers(createResourcePort(executor, repositories));
   return {
     handlers: withDatabaseFailures(createP0RestHandlers(commands, resources)),
