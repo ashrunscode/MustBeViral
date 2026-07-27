@@ -65,6 +65,6 @@ review:
 approval:
   state: user_selected
   approved_set: high-fidelity-golden-set
-  selected_by: ernijsansons
+  selected_by: ashrunscode
   selected_at: 2026-07-19T17:52:00Z
   selection_source: explicit_user_statement
