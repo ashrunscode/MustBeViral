@@ -29,6 +29,7 @@ import { Hono, type Context } from 'hono';
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
+import { createFalWebhookVerifierPort } from '../composition/fal-webhook';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
 import { p0ResultSemantics } from '../transport/semantics';
 import { V1_ROUTE_TABLE, type V1Operation, type V1RouteDefinition } from './v1-table';
@@ -253,15 +254,11 @@ async function handleFalWebhook(
   route: V1RouteDefinition,
   dependencies: V1Dependencies,
 ): Promise<Response> {
-  if (dependencies.falWebhook === undefined) {
-    return context.json(
-      safeError(context, 'UNAUTHENTICATED', 'Webhook authentication is unavailable.'),
-      401,
-    );
-  }
+  const falWebhook =
+    dependencies.falWebhook ?? createFalWebhookVerifierPort(context.env, context.get('requestId'));
   const rawBody = new Uint8Array(await context.req.arrayBuffer());
   try {
-    const identity = await dependencies.falWebhook.verifyAndMap({
+    const identity = await falWebhook.verifyAndMap({
       rawBody,
       headers: Object.fromEntries(context.req.raw.headers.entries()),
     });
@@ -283,6 +280,20 @@ async function handleFalWebhook(
       return context.json(
         safeError(context, 'PROVIDER_REJECTED', 'The provider event was already processed.'),
         409,
+      );
+    }
+    if (
+      providerError.code === 'provider_error' &&
+      providerError.details?.reason === 'webhook_dedup_unavailable'
+    ) {
+      return context.json(
+        safeError(
+          context,
+          'INTERNAL_ERROR',
+          'Webhook replay protection is temporarily unavailable.',
+          true,
+        ),
+        503,
       );
     }
     if (providerError.code === 'payload_invalid') {

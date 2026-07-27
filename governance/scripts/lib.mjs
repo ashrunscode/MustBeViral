@@ -62,6 +62,21 @@ export function listRepositoryFiles(patterns = ['**/*']) {
   });
 }
 
+export function listTrackedFiles() {
+  try {
+    return execFileSync('git', ['ls-files'], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+    })
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 export function currentBranch() {
   try {
     return execFileSync('git', ['branch', '--show-current'], {

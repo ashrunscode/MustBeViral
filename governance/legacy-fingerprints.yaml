@@ -9,6 +9,12 @@ scan:
     - '**/coverage/**'
     - '**/test-results/**'
     - '**/playwright-report/**'
+    # Local, git-ignored developer secret stores. They are skipped so a real .dev.vars does not
+    # break the scan; scan-cleanroom.mjs enforces the invariant that makes the skip safe by failing
+    # hard if any such file is ever tracked (see secret-canary.test.mjs).
+    - '**/.dev.vars'
+    - '**/.env'
+    - '**/.env.local'
     - governance/tests/**
   content_allowlist:
     - AGENTS.md

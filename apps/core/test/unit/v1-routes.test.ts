@@ -321,6 +321,36 @@ describe('P0 /v1 route boundary', () => {
     );
   });
 
+  it('returns a retryable error when durable webhook replay protection is unavailable', async () => {
+    const app = createCoreApp(
+      dependencies({
+        falWebhook: {
+          verifyAndMap: async () => {
+            throw Object.assign(new Error('dedup unavailable'), {
+              code: 'provider_error',
+              details: { reason: 'webhook_dedup_unavailable' },
+            });
+          },
+        },
+      }),
+    );
+    const response = await app.request(
+      '/v1/webhooks/fal',
+      {
+        method: 'POST',
+        headers: { 'x-request-id': 'request-v1-dedup-unavailable' },
+        body: '{}',
+      },
+      workerBindings,
+    );
+
+    expect(response.status).toBe(503);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error).toMatchObject({
+      code: 'INTERNAL_ERROR',
+      retryable: true,
+    });
+  });
+
   it('returns only an opaque error id on unhandled failures', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const failing = handlersWith();

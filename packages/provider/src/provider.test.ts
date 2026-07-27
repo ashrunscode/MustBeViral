@@ -25,7 +25,11 @@ import type {
   ProviderTransportResponse,
   VersionedProviderDriver,
 } from './types';
-import { FalWebhookVerifier, type WebhookEventDedupPort } from './webhook';
+import {
+  FalWebhookVerifier,
+  clearFalJwksCacheForTests,
+  type WebhookEventDedupPort,
+} from './webhook';
 
 interface HttpFixture {
   readonly status: number;
@@ -413,6 +417,89 @@ describe('fal signed webhook verifier', () => {
     await expect(missing.verifyAndMap(requestFrom(recorded))).rejects.toMatchObject({
       code: 'auth_missing',
     });
+  });
+
+  it('verifies official fal JWKS headers with receiver-safe injected and default fetches', async () => {
+    clearFalJwksCacheForTests();
+    const { generateKeyPairSync, createHash, sign } = await import('node:crypto');
+    const { publicKey, privateKey } = generateKeyPairSync('ed25519');
+    const jwk = publicKey.export({ format: 'jwk' }) as { x?: string };
+    expect(typeof jwk.x).toBe('string');
+    const rawBody = Buffer.from(
+      JSON.stringify({
+        request_id: 'fal-jwks-job-001',
+        status: 'OK',
+        payload: { images: [{ url: 'https://delivery.invalid/jwks.png' }] },
+      }),
+    );
+    const requestId = 'fal-jwks-event-001';
+    const userId = 'fal-user-fixture';
+    const timestamp = '1784451600';
+    const bodyHash = createHash('sha256').update(rawBody).digest('hex');
+    const message = `${requestId}\n${userId}\n${timestamp}\n${bodyHash}`;
+    const signatureHex = sign(null, Buffer.from(message, 'utf8'), privateKey).toString('hex');
+    const jwksResponse = () =>
+      new Response(JSON.stringify({ keys: [{ kty: 'OKP', crv: 'Ed25519', x: jwk.x }] }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    const fetchImplementation = vi.fn(function (this: unknown) {
+      if (this !== undefined) throw new TypeError('Illegal invocation');
+      return Promise.resolve(jwksResponse());
+    }) as unknown as typeof fetch;
+    const dedup: WebhookEventDedupPort = { claim: vi.fn().mockResolvedValue('claimed') };
+    const verifier = new FalWebhookVerifier(
+      {
+        fetchImplementation,
+        jwksUrl: 'https://jwks.test/keys',
+      },
+      dedup,
+      { nowEpochSeconds: () => 1_784_451_600 },
+    );
+    await expect(
+      verifier.verifyAndMap({
+        rawBody,
+        headers: {
+          'x-fal-webhook-request-id': requestId,
+          'x-fal-webhook-user-id': userId,
+          'x-fal-webhook-timestamp': timestamp,
+          'x-fal-webhook-signature': signatureHex,
+        },
+      }),
+    ).resolves.toMatchObject({
+      provider: 'fal',
+      eventId: requestId,
+      attempt: {
+        providerJobId: 'fal-jwks-job-001',
+        status: { state: 'succeeded' },
+      },
+    });
+    expect(fetchImplementation).toHaveBeenCalled();
+    expect(dedup.claim).toHaveBeenCalledWith('fal', requestId);
+
+    clearFalJwksCacheForTests();
+    const defaultFetch = vi.fn(function (this: unknown) {
+      if (this !== undefined) throw new TypeError('Illegal invocation');
+      return Promise.resolve(jwksResponse());
+    }) as unknown as typeof fetch;
+    vi.stubGlobal('fetch', defaultFetch);
+    const defaultVerifier = new FalWebhookVerifier(
+      { jwksUrl: 'https://jwks.test/keys' },
+      { claim: vi.fn().mockResolvedValue('claimed') },
+      { nowEpochSeconds: () => 1_784_451_600 },
+    );
+    await expect(
+      defaultVerifier.verifyAndMap({
+        rawBody,
+        headers: {
+          'x-fal-webhook-request-id': requestId,
+          'x-fal-webhook-user-id': userId,
+          'x-fal-webhook-timestamp': timestamp,
+          'x-fal-webhook-signature': signatureHex,
+        },
+      }),
+    ).resolves.toMatchObject({ eventId: requestId });
+    expect(defaultFetch).toHaveBeenCalledOnce();
   });
 });
 

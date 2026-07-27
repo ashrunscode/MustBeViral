@@ -201,3 +201,56 @@ test('current repository tree passes the cleanroom scanner', () => {
   assert.equal(result.status, 0, output(result));
   assert.match(result.stdout, /Cleanroom scan valid:/);
 });
+
+// `scan.ignored_paths` skips local secret files so a developer's real `.dev.vars` does not break
+// the scan. These cases pin the invariant that keeps that skip safe: the file may exist untracked,
+// but committing one must fail loudly instead of silently escaping every secret pattern.
+const DUMMY_SECRET = 'SUPABASE_SERVICE_ROLE_KEY=FAKE_CANARY_VALUE_0000';
+
+function gitFixture(t, files) {
+  const root = mkdtempSync(path.join(tmpdir(), 'mustbeviral-tracked-secret-'));
+  cpSync(policyPath, path.join(root, 'governance', 'legacy-fingerprints.yaml'), {
+    recursive: true,
+  });
+  spawnSync('git', ['init', '-q'], { cwd: root, encoding: 'utf8' });
+  for (const [name, content] of Object.entries(files)) {
+    writeFileSync(path.join(root, name), `${content}\n`, 'utf8');
+  }
+  t.after(() => {
+    const resolved = path.resolve(root);
+    assert.ok(resolved.startsWith(path.resolve(tmpdir())));
+    rmSync(resolved, { recursive: true, force: true });
+  });
+  return root;
+}
+
+function track(root, name) {
+  spawnSync('git', ['add', '-f', name], { cwd: root, encoding: 'utf8' });
+}
+
+test('an untracked local secret file leaves the scan green', (t) => {
+  const root = gitFixture(t, { '.dev.vars': DUMMY_SECRET });
+
+  const result = runScanner(root);
+
+  assert.equal(result.status, 0, output(result));
+});
+
+test('a tracked secret-bearing file fails the scan', (t) => {
+  const root = gitFixture(t, { '.env': DUMMY_SECRET });
+  track(root, '.env');
+
+  const result = runScanner(root);
+
+  assert.notEqual(result.status, 0, output(result));
+  assert.match(result.stderr, /scanner-skipped secret file must never be tracked: \.env/);
+});
+
+test('a tracked credential template stays allowed', (t) => {
+  const root = gitFixture(t, { '.env.example': 'SUPABASE_SERVICE_ROLE_KEY=' });
+  track(root, '.env.example');
+
+  const result = runScanner(root);
+
+  assert.equal(result.status, 0, output(result));
+});

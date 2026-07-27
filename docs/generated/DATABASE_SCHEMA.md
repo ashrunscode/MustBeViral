@@ -33,3 +33,4 @@ Sources: ordered raw SQL under `supabase/migrations`. Generated Supabase types b
 | `supabase/migrations/20260719010000_p0_authoritative_schema.sql` | table `public.audit_events` |
 | `supabase/migrations/20260719010000_p0_authoritative_schema.sql` | table `public.outbox_events` |
 | `supabase/migrations/20260719010000_p0_authoritative_schema.sql` | table `app_private.platform_billing_settings` |
+| `supabase/migrations/20260727000000_p0_webhook_event_dedup.sql` | table `public.provider_webhook_events` |

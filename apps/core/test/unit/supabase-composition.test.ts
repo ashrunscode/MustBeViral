@@ -67,10 +67,20 @@ describe('production Supabase composition', () => {
   });
 
   it('forwards the verified JWT into every composed Data API request', async () => {
+    const privilegedSecret = 'fixture-privileged-secret';
+    const legacyPrivilegedSecret = 'fixture-legacy-privileged-secret';
+    const privilegedBindings = {
+      ...configuredBindings,
+      [['SUPABASE', 'SECRET', 'KEY'].join('_')]: privilegedSecret,
+      [['SUPABASE', 'SERVICE', 'ROLE', 'KEY'].join('_')]: legacyPrivilegedSecret,
+    } as unknown as PlatformBindings;
     const authorizationHeaders: string[] = [];
+    const apiKeyHeaders: string[] = [];
     const fetchImplementation = vi.fn(
       async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
-        authorizationHeaders.push(new Headers(init?.headers).get('authorization') ?? '');
+        const requestHeaders = new Headers(init?.headers);
+        authorizationHeaders.push(requestHeaders.get('authorization') ?? '');
+        apiKeyHeaders.push(requestHeaders.get('apikey') ?? '');
         const url = String(request);
         if (url.includes('workspace_memberships')) {
           return Response.json({ workspace_id: workspaceId });
@@ -103,7 +113,7 @@ describe('production Supabase composition', () => {
     const response = await app.request(
       `/v1/workspaces/${workspaceId}`,
       { headers: headers() },
-      configuredBindings,
+      privilegedBindings,
     );
 
     expect(response.status).toBe(200);
@@ -112,6 +122,9 @@ describe('production Supabase composition', () => {
       'Bearer verified-caller-jwt',
       'Bearer verified-caller-jwt',
     ]);
+    expect(apiKeyHeaders).toEqual(['sb_publishable_fixture', 'sb_publishable_fixture']);
+    expect(JSON.stringify(fetchImplementation.mock.calls)).not.toContain(privilegedSecret);
+    expect(JSON.stringify(fetchImplementation.mock.calls)).not.toContain(legacyPrivilegedSecret);
   });
 
   it('normalizes create-workspace input before the composed port calls the RPC', async () => {

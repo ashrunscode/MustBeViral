@@ -1,12 +1,40 @@
 import path from 'node:path';
 
-import { fail, listRepositoryFiles, pathMatches, readText, readYaml } from './lib.mjs';
+import {
+  fail,
+  listRepositoryFiles,
+  listTrackedFiles,
+  pathMatches,
+  readText,
+  readYaml,
+} from './lib.mjs';
+
+/**
+ * Local secret files are skipped by `scan.ignored_paths` so a developer's real `.dev.vars` does not
+ * break the scan. That skip is only safe while such a file is never committed: a tracked one would
+ * be silently exempt from every secret pattern below. A file is therefore dangerous to track
+ * precisely because the scanner skips it, so this guard is derived from the ignore list itself and
+ * stays in lockstep with it. Env files that are NOT ignored (for example the deliberately tracked,
+ * client-public `apps/web/.env.production`) keep receiving full content scanning and need no guard.
+ * Template files carry no live credentials.
+ */
+const SECRET_BEARING_FILE = /(^|\/)\.(?:dev\.vars|env)(?:\.[^/]+)?$/u;
+const TEMPLATE_SUFFIX = /\.(?:example|sample|template)$/u;
+
+function trackedSecretFileErrors(ignored) {
+  return listTrackedFiles()
+    .filter(
+      (file) =>
+        SECRET_BEARING_FILE.test(file) && !TEMPLATE_SUFFIX.test(file) && pathMatches(file, ignored),
+    )
+    .map((file) => `scanner-skipped secret file must never be tracked: ${file}`);
+}
 
 export function scanCleanroom() {
   const policy = readYaml('governance/legacy-fingerprints.yaml');
-  const errors = [];
   const files = listRepositoryFiles();
   const ignored = policy.scan.ignored_paths;
+  const errors = trackedSecretFileErrors(ignored);
   const allowlisted = policy.scan.content_allowlist;
   const binary = new Set(policy.scan.binary_extensions.map((extension) => extension.toLowerCase()));
 
