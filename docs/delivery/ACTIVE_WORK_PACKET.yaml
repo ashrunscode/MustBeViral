@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-P0-001
-spec_revision: 1
+spec_revision: 2
 title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
 phase: P0
 status: in_progress
@@ -71,6 +71,9 @@ scope:
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
     - governance/evidence/WP-D0-002/transition-receipt.yaml
     - governance/evidence/WP-D0-002/completed-work-packet.yaml
+    - governance/legacy-fingerprints.yaml
+    - governance/evidence/WP-D0-001/design-direction.yaml
+    - governance/evidence/WP-D0-002/design-direction.yaml
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
