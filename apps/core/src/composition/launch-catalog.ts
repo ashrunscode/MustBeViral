@@ -39,23 +39,21 @@ const routeDefinitions = [
     routeKey: moonshotKimiK26Descriptor.routeId,
     unit: 'request',
     quantity: () => 1n,
-    fixturePriceMicros: 100_000,
+    fixturePriceMicros: 150_000,
   },
   {
     role: 'master_static',
     routeKey: falFlux2ProDescriptor.routeId,
     unit: 'image',
     quantity: () => 1n,
-    fixturePriceMicros:
-      falFlux2ProDescriptor.price.firstMegapixelMicros +
-      falFlux2ProDescriptor.price.additionalMegapixelMicros,
+    fixturePriceMicros: 500_000,
   },
   {
     role: 'adaptation',
     routeKey: falFluxKontextProDescriptor.routeId,
     unit: 'image',
     quantity: () => 1n,
-    fixturePriceMicros: falFluxKontextProDescriptor.price.perImageMicros,
+    fixturePriceMicros: 200_000,
   },
   {
     role: 'motion_branch',

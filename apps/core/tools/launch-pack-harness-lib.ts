@@ -123,14 +123,19 @@ export async function executeGoldenBrief(
   transport: HarnessTransport,
   expectProviderUnavailable = true,
   now: () => number = Date.now,
+  runId = 'local',
 ): Promise<BriefRunRecord> {
   const startedAt = now();
+  // A per-invocation runId keeps every run independent: it makes the derived
+  // workspace slug globally unique and scopes idempotency keys so a re-run never
+  // collides with or replays a prior run's state.
+  const key = (operation: string): string => idempotency(`${runId}:${brief.briefId}`, operation);
   const bootstrapContext = handlerContext('00000000-0000-4000-8000-000000000000', brief.briefId);
   const workspace = requireOk(
     await transport.call('create_workspace', {
       context: bootstrapContext,
-      name: `${brief.briefId} ${brief.product}`,
-      idempotency_key: idempotency(brief.briefId, 'workspace'),
+      name: `${brief.briefId} ${brief.product} ${runId}`,
+      idempotency_key: key('workspace'),
     }),
     brief.briefId,
   );
@@ -141,7 +146,7 @@ export async function executeGoldenBrief(
       context,
       workspace_id: workspaceId,
       name: `${brief.briefId} launch pack`,
-      idempotency_key: idempotency(brief.briefId, 'project'),
+      idempotency_key: key('project'),
     }),
     brief.briefId,
   );
@@ -151,7 +156,7 @@ export async function executeGoldenBrief(
       context,
       project_id: projectId,
       name: `${brief.briefId} launch pack`,
-      idempotency_key: idempotency(brief.briefId, 'canvas'),
+      idempotency_key: key('canvas'),
     }),
     brief.briefId,
   );
@@ -170,7 +175,7 @@ export async function executeGoldenBrief(
         upsert_edges: graph.edges,
         remove_edge_ids: [],
       },
-      idempotency_key: idempotency(brief.briefId, 'patch'),
+      idempotency_key: key('patch'),
     }),
     brief.briefId,
   );
@@ -191,7 +196,7 @@ export async function executeGoldenBrief(
       context,
       canvas_id: canvasId,
       expected_revision_id: revisionId,
-      idempotency_key: idempotency(brief.briefId, 'quote'),
+      idempotency_key: key('quote'),
     }),
     brief.briefId,
   );
@@ -219,7 +224,7 @@ export async function executeGoldenBrief(
     quote_id: quoteId,
     confirmed: true,
     confirmation_token: `golden-brief-confirmation-${brief.briefId}`,
-    idempotency_key: idempotency(brief.briefId, 'start'),
+    idempotency_key: key('start'),
   });
   let confirmResult: BriefRunRecord['confirm_result'];
   if (confirmed.ok) {

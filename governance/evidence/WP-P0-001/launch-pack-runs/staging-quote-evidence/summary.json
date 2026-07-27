@@ -1,0 +1,14 @@
+{
+  "mode": "staging",
+  "briefs_attempted": 20,
+  "succeeded_to_quote": 20,
+  "quote_stats": {
+    "minimum_micros": "4550000",
+    "maximum_micros": "4550000",
+    "average_micros": "4550000",
+    "aggregate_micros": "91000000",
+    "usable_pack_gate_micros": "5000000",
+    "at_or_below_usable_pack_gate": 20
+  },
+  "failures": []
+}

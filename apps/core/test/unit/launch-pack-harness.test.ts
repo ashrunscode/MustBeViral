@@ -57,7 +57,7 @@ describe('golden launch-pack harness', () => {
     expect(records).toHaveLength(20);
     expect(new Set(records.map((record) => record.workspace_id)).size).toBe(20);
     expect(records.map((record) => record.quote.total_micros)).toEqual(
-      Array.from({ length: 20 }, () => '1595000'),
+      Array.from({ length: 20 }, () => '4550000'),
     );
     expect(records.every((record) => record.confirm_result === 'provider_unavailable')).toBe(true);
   });

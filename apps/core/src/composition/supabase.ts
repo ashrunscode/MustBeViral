@@ -19,14 +19,12 @@ import {
   modelPriceUnits,
   quoteExpiryState,
   usdMicros,
-  usdMicrosToSafeInteger,
   type ImmutableRunQuote,
   type ModelPriceUnit,
   type QuoteNodeLine,
 } from '../../../../packages/billing/src/index';
 import {
   createDatabaseRepositories,
-  integerMicros,
   tenantContext,
   type DatabaseRow,
   type DatabaseRepositories,
@@ -36,11 +34,7 @@ import {
 
 import type { AuthenticatedActor } from '../auth/supabase-jwt';
 import type { CoreBindings } from '../bindings';
-import {
-  SupabaseDataApiError,
-  SupabaseDataApiExecutor,
-  type SupabaseFailureKind,
-} from '../data/supabase-data-api';
+import { SupabaseDataApiError, SupabaseDataApiExecutor } from '../data/supabase-data-api';
 import type {
   RequestDependencyFactory,
   RequestScopedDependencies,
@@ -173,37 +167,6 @@ function databaseJson(value: unknown): Json {
   throw new TypeError('Value is not JSON serializable');
 }
 
-function canonical(value: unknown): string {
-  if (typeof value === 'bigint') return JSON.stringify(value.toString(10));
-  if (value === null || typeof value !== 'object') return JSON.stringify(value);
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  return `{${Object.entries(value)
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`)
-    .join(',')}}`;
-}
-
-async function sha256Hex(value: unknown): Promise<string> {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonical(value)));
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-function quoteExecutionPlan(quote: ImmutableRunQuote): Json {
-  return quote.nodeLines.map((line) => ({
-    ready: true,
-    node_id: line.nodeId,
-    model_route_id: line.modelRouteId,
-    provider_model_id: line.providerModelId,
-    price_components: line.priceComponents.map((component) => ({
-      unit: component.unit,
-      quantity: component.quantity.toString(10),
-      unit_price_micros: component.unitPriceMicros.toString(10),
-      total_micros: component.totalMicros.toString(10),
-    })),
-    total_micros: line.totalMicros.toString(10),
-  }));
-}
-
 function jsonMicros(value: unknown, field: string): ReturnType<typeof usdMicros> {
   if (typeof value === 'number' && Number.isSafeInteger(value) && value >= 0) {
     return usdMicros(BigInt(value));
@@ -276,18 +239,6 @@ async function storedQuoteFromRow(
   };
 }
 
-async function quoteContentHash(canvasId: string, quote: ImmutableRunQuote): Promise<string> {
-  return sha256Hex({
-    workspaceId: quote.workspaceId,
-    canvasId,
-    canvasRevisionId: quote.canvasRevisionId,
-    priceCatalogVersionId: quote.priceCatalogVersionId,
-    currency: quote.currency,
-    nodeLines: quote.nodeLines,
-    maximumChargeMicros: quote.maximumChargeMicros,
-  });
-}
-
 function utcDayWindow(now: string): Readonly<{ start: string; end: string }> {
   const instant = new Date(now);
   if (!Number.isFinite(instant.getTime())) throw new TypeError('Clock returned an invalid time');
@@ -313,13 +264,24 @@ function runRecord(row: Readonly<Record<string, unknown>>, reservationId = ''): 
   };
 }
 
-function failureResult(kind: SupabaseFailureKind): P0HandlerResult | null {
-  if (kind === 'forbidden') return { status: 'forbidden' };
-  if (kind === 'not_found') return { status: 'not_found' };
-  if (kind === 'conflict') return { status: 'conflict', reason: 'idempotency' };
-  if (kind === 'expired_quote') return { status: 'expired_quote' };
-  if (kind === 'cap_exceeded') return { status: 'cap_exceeded' };
-  if (kind === 'graph_invalid') return { status: 'graph_invalid' };
+function failureResult(error: SupabaseDataApiError): P0HandlerResult | null {
+  if (error.kind === 'forbidden') return { status: 'forbidden' };
+  if (error.kind === 'not_found') return { status: 'not_found' };
+  if (error.kind === 'conflict') {
+    const reason =
+      error.safeDetails.conflictReason === 'quote_stale'
+        ? 'quote_stale'
+        : error.safeDetails.conflictReason === 'revision'
+          ? 'revision'
+          : 'idempotency';
+    return {
+      status: 'conflict',
+      reason,
+    };
+  }
+  if (error.kind === 'expired_quote') return { status: 'expired_quote' };
+  if (error.kind === 'cap_exceeded') return { status: 'cap_exceeded' };
+  if (error.kind === 'graph_invalid') return { status: 'graph_invalid' };
   return null;
 }
 
@@ -333,7 +295,7 @@ function withDatabaseFailures(handlers: P0RestHandlers): P0RestHandlers {
         } catch (error) {
           if (error instanceof ProviderUnavailableError) return { status: 'provider_unavailable' };
           if (error instanceof SupabaseDataApiError) {
-            const result = failureResult(error.kind);
+            const result = failureResult(error);
             if (result !== null) return result;
             if (error.kind === 'validation') throw new TypeError('Database rejected the request');
           }
@@ -577,7 +539,14 @@ export function createSupabaseHandlerPorts(
           repositories.catalog.listRoutes(),
           repositories.catalog.listPrices(),
         ]);
-        return buildLaunchCatalogQuotePlan(snapshot, { versions, routes, prices });
+        try {
+          return buildLaunchCatalogQuotePlan(snapshot, { versions, routes, prices });
+        } catch (error) {
+          if (error instanceof RangeError) {
+            throw new SupabaseDataApiError('conflict', { conflictReason: 'quote_stale' });
+          }
+          throw error;
+        }
       },
     },
     quotes: {
@@ -591,40 +560,24 @@ export function createSupabaseHandlerPorts(
         if (input.quote.workspaceId !== context.workspace_id) {
           throw new SupabaseDataApiError('forbidden');
         }
-        const quoteId = await deterministicUuid(
-          `quote_run\u0000${context.actor_id}\u0000${context.workspace_id}\u0000${idempotencyKey}`,
-        );
-        const quote: ImmutableRunQuote = { ...input.quote, quoteId };
-        const quoteHash = await quoteContentHash(input.canvasId, quote);
-        const replay = await repositories.billing.getQuote(tenant, quoteId);
-        if (replay !== null) {
-          if (replay.quote_hash !== quoteHash) throw new SupabaseDataApiError('conflict');
-          return storedQuoteFromRow(repositories, tenant, replay);
-        }
         const canvas = await repositories.canvases.get(tenant, input.canvasId);
-        if (canvas === null || canvas.head_revision_id !== quote.canvasRevisionId) {
+        if (canvas === null) throw new SupabaseDataApiError('not_found');
+        if (canvas.head_revision_id !== input.quote.canvasRevisionId) {
           throw new SupabaseDataApiError('conflict');
         }
-        try {
-          const row = await repositories.billing.saveQuote(tenant, {
-            id: quoteId,
-            projectId: canvas.project_id,
-            canvasId: input.canvasId,
-            canvasRevisionId: quote.canvasRevisionId,
-            priceCatalogVersionId: quote.priceCatalogVersionId,
-            executionPlan: quoteExecutionPlan(quote),
-            quoteHash,
-            maximumChargeMicros: integerMicros(usdMicrosToSafeInteger(quote.maximumChargeMicros)),
-            createdAt: quote.createdAt,
-            expiresAt: quote.expiresAt,
-          });
-          return storedQuoteFromRow(repositories, tenant, row);
-        } catch (error) {
-          if (!(error instanceof SupabaseDataApiError) || error.kind !== 'conflict') throw error;
-          const concurrentReplay = await repositories.billing.getQuote(tenant, quoteId);
-          if (concurrentReplay === null || concurrentReplay.quote_hash !== quoteHash) throw error;
-          return storedQuoteFromRow(repositories, tenant, concurrentReplay);
-        }
+        const result = requestInput(
+          await executor.rpc('create_quote', {
+            p_workspace_id: context.workspace_id,
+            p_canvas_id: input.canvasId,
+            p_expected_revision_id: input.quote.canvasRevisionId,
+            p_idempotency_key: idempotencyKey,
+            p_request_id: context.request_id,
+          }),
+        );
+        const quoteId = requiredString(result.quote_id, 'quote_id');
+        const row = await repositories.billing.getQuote(tenant, quoteId);
+        if (row === null) throw new SupabaseDataApiError('not_found');
+        return storedQuoteFromRow(repositories, tenant, row);
       },
     },
     billing: {

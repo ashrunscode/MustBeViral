@@ -51,9 +51,9 @@ const brief = Object.fromEntries(
 const launchGraph = buildGoldenLaunchPackGraph({ ...brief, briefId: 'GB-01' });
 
 const routeFixtures = [
-  [moonshotKimiK26Descriptor, '60000000-0000-4000-8000-000000000001', 'request', 100_000],
-  [falFlux2ProDescriptor, '60000000-0000-4000-8000-000000000002', 'image', 45_000],
-  [falFluxKontextProDescriptor, '60000000-0000-4000-8000-000000000003', 'image', 40_000],
+  [moonshotKimiK26Descriptor, '60000000-0000-4000-8000-000000000001', 'request', 150_000],
+  [falFlux2ProDescriptor, '60000000-0000-4000-8000-000000000002', 'image', 500_000],
+  [falFluxKontextProDescriptor, '60000000-0000-4000-8000-000000000003', 'image', 200_000],
   [falSeedanceLiteDescriptor, '60000000-0000-4000-8000-000000000004', 'video_second', 100_000],
 ] as const;
 
@@ -66,6 +66,69 @@ function quoteFixtureFetch(state: QuoteFixtureState): typeof fetch {
   return vi.fn(async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
     const url = String(request);
     const method = init?.method ?? 'GET';
+    if (url.includes('/rpc/create_quote') && method === 'POST') {
+      if (state.quote === null) {
+        const createdAt = new Date().toISOString();
+        const executionPlan = launchGraph.nodes.flatMap((node) => {
+          const role = node.parameters.asset_role;
+          const routeIndex: number =
+            role === 'copy_set'
+              ? 0
+              : role === 'master_static'
+                ? 1
+                : role === 'adaptation'
+                  ? 2
+                  : role === 'motion_branch'
+                    ? 3
+                    : -1;
+          if (routeIndex < 0) return [];
+          const route = routeFixtures[routeIndex];
+          if (route === undefined) throw new Error(`Missing route fixture for ${String(role)}`);
+          const [, modelRouteId, unit, unitPriceMicros] = route;
+          const quantity = role === 'motion_branch' ? 8 : 1;
+          const lineTotal = quantity * unitPriceMicros;
+          return [
+            {
+              ready: true,
+              node_id: node.id,
+              model_route_id: modelRouteId,
+              provider_model_id: route[0].modelId,
+              price_components: [
+                {
+                  unit,
+                  quantity: String(quantity),
+                  unit_price_micros: String(unitPriceMicros),
+                  total_micros: String(lineTotal),
+                },
+              ],
+              total_micros: String(lineTotal),
+            },
+          ];
+        });
+        state.quoteInserts += 1;
+        state.quote = {
+          id: '70000000-0000-4000-8000-000000000001',
+          workspace_id: workspaceId,
+          project_id: projectId,
+          canvas_id: canvasId,
+          canvas_revision_id: revisionId,
+          price_catalog_version_id: catalogId,
+          execution_plan: executionPlan,
+          quote_hash: 'b'.repeat(64),
+          maximum_charge_micros: 4_550_000,
+          currency: 'USD',
+          created_by: actorId,
+          created_at: createdAt,
+          expires_at: new Date(Date.parse(createdAt) + 15 * 60 * 1000).toISOString(),
+        };
+      }
+      return Response.json({
+        quote_id: state.quote.id,
+        maximum_charge_micros: String(state.quote.maximum_charge_micros),
+        price_catalog_version_id: state.quote.price_catalog_version_id,
+        expires_at: state.quote.expires_at,
+      });
+    }
     if (url.includes('/workspace_memberships?')) return Response.json({ id: 'membership-1' });
     if (url.includes('/canvases?')) {
       return Response.json({
@@ -119,11 +182,6 @@ function quoteFixtureFetch(state: QuoteFixtureState): typeof fetch {
         return Response.json({ code: 'PGRST116', message: 'not found' }, { status: 406 });
       }
       return Response.json(state.quote);
-    }
-    if (url.includes('/quotes?select=*') && method === 'POST') {
-      state.quoteInserts += 1;
-      state.quote = JSON.parse(String(init?.body)) as Readonly<Record<string, unknown>>;
-      return Response.json([state.quote]);
     }
     if (url.includes('/workspaces?')) {
       return Response.json({
@@ -197,7 +255,7 @@ describe('composed quote and billing ports', () => {
 
     expect(result.status).toBe('ok');
     if (result.status !== 'ok') throw new Error('Expected quote success');
-    expect(result.quote.maximumChargeMicros).toBe(1_595_000n);
+    expect(result.quote.maximumChargeMicros).toBe(4_550_000n);
     expect(Date.parse(result.quote.expiresAt) - Date.parse(result.quote.createdAt)).toBe(
       15 * 60 * 1000,
     );

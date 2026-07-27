@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -62,6 +63,9 @@ export async function runLaunchPackHarness(
   log: (message: string) => void = console.log,
 ): Promise<number> {
   const options = argumentsFrom(argv);
+  // Unique per invocation: makes every workspace slug globally unique and scopes
+  // idempotency keys so a re-run never collides with prior-run state on staging.
+  const runId = randomBytes(4).toString('hex');
   const briefs = await loadGoldenBriefRegistry();
   const transport =
     options.mode === 'dry-run'
@@ -87,7 +91,13 @@ export async function runLaunchPackHarness(
   > = [];
   for (const brief of briefs) {
     try {
-      const result = await executeGoldenBrief(brief, transport, options.expectProviderUnavailable);
+      const result = await executeGoldenBrief(
+        brief,
+        transport,
+        options.expectProviderUnavailable,
+        Date.now,
+        runId,
+      );
       records.push(result);
       await writeFile(
         `${options.outDirectory}/${brief.briefId}.json`,

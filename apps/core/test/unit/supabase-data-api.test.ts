@@ -94,7 +94,13 @@ describe('Supabase Data API executor', () => {
     expect(error).toBeInstanceOf(SupabaseDataApiError);
     expect(error.kind).toBe(expected);
     expect(error.message).not.toContain(fixture.message);
-    expect(error.safeDetails).toEqual({});
+    const conflictReason =
+      fixture.message === 'QUOTE_STALE'
+        ? 'quote_stale'
+        : fixture.message === 'REVISION_CONFLICT'
+          ? 'revision'
+          : null;
+    expect(error.safeDetails).toEqual(conflictReason === null ? {} : { conflictReason });
   });
 
   it('returns null only for the recorded PostgREST singular not-found response', async () => {

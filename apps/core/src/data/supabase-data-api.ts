@@ -107,6 +107,13 @@ export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataA
   if (status === 401 || status === 403) return new SupabaseDataApiError('forbidden');
   if (error.code === 'PGRST116') return new SupabaseDataApiError('not_found');
   if (error.code === '23505') return new SupabaseDataApiError('conflict');
+  const message = `${error.message ?? ''} ${error.details ?? ''}`.toUpperCase();
+  if (message.includes('QUOTE_STALE')) {
+    return new SupabaseDataApiError('conflict', { conflictReason: 'quote_stale' });
+  }
+  if (message.includes('REVISION_CONFLICT')) {
+    return new SupabaseDataApiError('conflict', { conflictReason: 'revision' });
+  }
   const rpcKind = rpcFailureKind(error);
   if (rpcKind !== null) return new SupabaseDataApiError(rpcKind);
   return new SupabaseDataApiError(status >= 500 ? 'internal' : 'validation');

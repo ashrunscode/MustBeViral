@@ -1290,6 +1290,16 @@ export type Database = {
         };
         Returns: Json;
       };
+      create_quote: {
+        Args: {
+          p_canvas_id: string;
+          p_expected_revision_id: string;
+          p_idempotency_key: string;
+          p_request_id: string;
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
       create_workspace: {
         Args: {
           p_idempotency_key: string;

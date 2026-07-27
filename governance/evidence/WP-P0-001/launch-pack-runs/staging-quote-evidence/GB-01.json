@@ -1,0 +1,11 @@
+{
+  "brief_id": "GB-01",
+  "workspace_id": "0d543d79-f2ce-4e7f-8242-0e07fa9bcc32",
+  "revision_hash": "773add0f163d02ce4a0010f93d450a46b58008349f92f9e807a1cd976785c520",
+  "quote": {
+    "total_micros": "4550000",
+    "expires_at": "2026-07-27T02:01:58.274619+00:00"
+  },
+  "confirm_result": "provider_unavailable",
+  "latency_ms": 3646
+}

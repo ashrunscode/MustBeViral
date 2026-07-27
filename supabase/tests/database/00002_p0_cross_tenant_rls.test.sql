@@ -102,7 +102,7 @@ insert into public.price_catalog_versions (
   'fixture-v1',
   repeat('a', 64),
   'governance/evidence/test-price',
-  'active',
+  'draft',
   statement_timestamp()
 );
 
