@@ -302,28 +302,28 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action: Execute real end-to-end launch-pack runs for the 20 golden briefs with enabled
-    providers, immutable receipts, transactional cap enforcement, and first-reviewable latency
-    measurement once the operator supplies the provisioning inputs.
+  next_action: Enable real provider generation for the 20 golden briefs (wire start_run to the
+    start_run_barrier RPC plus provider dispatch, private-R2 artifact copy, and immutable receipts)
+    once the operator supplies the fal and Moonshot enable inputs; the quote path is already proven
+    20/20 on staging at 4,550,000 micros.
   blockers:
-    - Real provider runs are blocked on the remaining operator-owned enable inputs in
+    - Real provider generation is blocked on the operator-owned enable inputs in
       governance/evidence/WP-P0-001/environment-provisioning.md section 6 (fal key, webhook
       secret, and live price confirmations; Moonshot key with retention/DPA clearance). The
-      staging infrastructure targets are provisioned and verified; every provider route stays
-      disabled and fail-closed until these inputs arrive.
-    - Staging quote issuance is blocked because the price catalog is unseeded. Live evidence
-      shows price_catalog_versions, model_routes, model_route_prices, and provider_registrations
-      all empty, no migration seeds them, and every launch route declares
-      enableGates.priceConfirmed false. Refusing to quote is correct behavior under
-      execution-providers-billing, which requires price drift to disable new quotes until
-      reviewed, so the catalog may only be seeded from operator-confirmed prices.
-    - Quote persistence has no caller-reachable write path. public.quotes grants authenticated
-      SELECT only, carries a SELECT-only RLS policy, and no create_quote function exists among
-      the five hardened RPCs. Closing this requires an accepted forward-only migration adding a
-      hardened SECURITY DEFINER RPC that derives or validates the amount server-side from the
-      pinned catalog version, because a caller must never be able to name its own price.
-  changed_paths: []
-  last_green_checks: []
+      staging infrastructure, the seeded launch price catalog, and the server-authoritative
+      create_quote RPC are provisioned and proven (20/20 real staging quotes at $4.55, evidence
+      in governance/evidence/WP-P0-001/launch-pack-runs/staging-quote-evidence and pricing in
+      governance/evidence/WP-P0-001/pricing-decision.md); every provider route stays disabled and
+      fail-closed until these inputs arrive. P1a charging must enforce the fully-landed margin
+      guardrail (<= $1.82/pack for 60% margin), not the looser $5 gate.
+  changed_paths:
+    - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
+    - apps/core/src/composition
+    - governance/evidence/WP-P0-001/pricing-decision.md
+    - governance/evidence/WP-P0-001/launch-pack-runs
+  last_green_checks:
+    - pnpm packet:verify
+    - 20/20 staging launch-pack quotes at 4,550,000 micros
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []

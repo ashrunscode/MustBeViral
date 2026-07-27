@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Execute real end-to-end launch-pack runs for the 20 golden briefs with enabled providers, immutable receipts, transactional cap enforcement, and first-reviewable latency measurement once the operator supplies the provisioning inputs.
+next_action: Enable real provider generation for the 20 golden briefs (wire start_run to the start_run_barrier RPC plus provider dispatch, private-R2 artifact copy, and immutable receipts) once the operator supplies the fal and Moonshot enable inputs; the quote path is already proven 20/20 on staging at 4,550,000 micros.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
