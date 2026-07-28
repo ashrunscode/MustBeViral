@@ -66,6 +66,7 @@ scope:
     - playwright.config.ts
     - .env.example
     - .dev.vars.example
+    - .github/workflows/quality.yml
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
@@ -111,9 +112,10 @@ deliverables:
     balanced append-only semantic-ledger behavior without automated customer charging.
   - 'Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
     copy plus the curated fal launch trio for FLUX.2 [pro] masters, FLUX Kontext [pro] adaptations,
-    and Seedance 1.0 Lite motion; every route is versioned, price-pinned, retention/license-cleared,
-    fail-closed when evidence or credentials are absent, and exercised through outbox dispatch,
-    signed webhook verification, reconciliation, and idempotent handling.'
+    and Seedance 1.0 Pro Fast motion (Lite retired on fal; historical route key retained); every
+    route is versioned, price-pinned, retention/license-cleared, fail-closed when evidence or
+    credentials are absent, and exercised through outbox dispatch, signed webhook verification,
+    reconciliation, and idempotent handling.'
   - Verified server-side copy of accepted provider output into private R2, private-by-default
     metadata and access, artifact verification and quarantine, deterministic exports, and immutable
     provider/model/cost/lineage receipts with no fal delivery URL exposed as a product artifact.
