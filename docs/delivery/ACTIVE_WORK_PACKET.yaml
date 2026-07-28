@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-P0-001
-spec_revision: 2
+spec_revision: 3
 title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
 phase: P0
 status: in_progress
@@ -66,6 +66,7 @@ scope:
     - playwright.config.ts
     - .env.example
     - .dev.vars.example
+    - .prettierignore
     - .github/workflows/quality.yml
     - PROJECT_STATE.yaml
     - llms.txt
