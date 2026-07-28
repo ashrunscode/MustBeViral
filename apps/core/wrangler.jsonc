@@ -47,6 +47,7 @@
         "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_L06t0Y52MPKmhWtAHXm3FQ_2_b0-lMb",
         "SUPABASE_JWT_AUDIENCE": "authenticated",
         "FAL_WEBHOOK_URL": "https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev/v1/webhooks/fal",
+        "PROVIDER_RUNS_ENABLED": "true",
       },
       "triggers": {
         "crons": ["* * * * *"],

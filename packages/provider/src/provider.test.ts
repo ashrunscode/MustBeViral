@@ -35,6 +35,11 @@ import {
   type WebhookEventDedupPort,
 } from './webhook';
 
+const CLOSED_GATES = {
+  priceConfirmed: false,
+  retentionCleared: false,
+} as const;
+
 interface HttpFixture {
   readonly status: number;
   readonly headers: Readonly<Record<string, string>>;
@@ -102,7 +107,7 @@ beforeEach(() => {
 });
 
 describe('versioned launch catalog', () => {
-  it('pins exact launch routes, model ids, prices, versions, and closed gates', () => {
+  it('pins exact launch routes, model ids, prices, versions, and evidence gates', () => {
     expect(launchDriverDescriptors).toHaveLength(4);
     expect(launchDriverDescriptors.map((entry) => entry.modelId)).toEqual([
       'kimi-k2.6',
@@ -131,11 +136,30 @@ describe('versioned launch catalog', () => {
     });
     for (const descriptor of launchDriverDescriptors) {
       expect(descriptor.driverVersion).toBe('1.0.0');
-      expect(descriptor.enableGates).toEqual({
-        priceConfirmed: false,
-        retentionCleared: false,
-      });
     }
+    expect(
+      launchDriverDescriptors.map(({ routeId, enableGates }) => ({ routeId, enableGates })),
+    ).toEqual([
+      {
+        routeId: moonshotKimiK26Descriptor.routeId,
+        enableGates: CLOSED_GATES,
+      },
+      {
+        routeId: falFlux2ProDescriptor.routeId,
+        enableGates: {
+          priceConfirmed: true,
+          retentionCleared: true,
+        },
+      },
+      {
+        routeId: falFluxKontextProDescriptor.routeId,
+        enableGates: CLOSED_GATES,
+      },
+      {
+        routeId: falSeedanceLiteDescriptor.routeId,
+        enableGates: CLOSED_GATES,
+      },
+    ]);
   });
 });
 

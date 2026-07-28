@@ -13,7 +13,8 @@ Status meanings:
 - `PRESENT-VIA-OPERATOR-CLI` means repository history records an established operator CLI
   authentication path. It does not prove that a target resource exists or authorize mutations
   outside this packet.
-- `OPEN` means an enable gate is unresolved, not approved.
+- `CLOSED` means an enable gate is unresolved or unapproved; the dependent route stays disabled.
+- `OPEN` means the route's price and retention gates are evidence-cleared for the stated scope.
 
 Authority basis:
 
@@ -52,9 +53,9 @@ verification command may prove identity or secret-name presence, never reveal a 
 
 | Credential or auth path                                                   | Readiness                                                                                                                                                                                                                                                                                           | Authorized storage location                                                                                                                                                               | Rotation owner               | Value-free verification                                                                                                                                     |
 | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| fal API key for `flux-2-pro`, `flux-kontext-pro`, and `seedance-1.0-lite` | `PRESENT-VIA-OPERATOR-CLI` on staging Worker secret `FAL_KEY` and ignored local `apps/core/.dev.vars` (2026-07-27); routes remain disabled until price gates close and `PROVIDER_RUNS_ENABLED` is set intentionally                                                                                 | Local only: ignored `apps/core/.dev.vars`. Staging: Wrangler secret on `mustbeviral-v2-staging-core`. Never Vercel browser environment or Git.                                            | Provider operations owner    | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm name `FAL_KEY` only.                                              |
+| fal API key for `flux-2-pro`, `flux-kontext-pro`, and `seedance-1.0-lite` | `PRESENT-VIA-OPERATOR-CLI` on staging Worker secret `FAL_KEY` and ignored local `apps/core/.dev.vars` (2026-07-27); `flux-2-pro` is enabled for one staging canary, while the other fal routes remain disabled behind their catalog gates                                                           | Local only: ignored `apps/core/.dev.vars`. Staging: Wrangler secret on `mustbeviral-v2-staging-core`. Never Vercel browser environment or Git.                                            | Provider operations owner    | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm name `FAL_KEY` only.                                              |
 | fal webhook signing secret                                                | `PRESENT-VIA-JWKS` (2026-07-27) — live fal uses public JWKS at `https://rest.fal.ai/.well-known/jwks.json` (no shareable HMAC secret). Core verifier accepts official `x-fal-webhook-*` headers via Ed25519 JWKS and keeps optional legacy HMAC only when `FAL_WEBHOOK_SECRET` is set for fixtures. | Staging Worker code path; no Wrangler secret required for live fal. Optional `FAL_WEBHOOK_SECRET` is fixture-only.                                                                        | Provider operations owner    | Unsigned `POST /v1/webhooks/fal` returns 401; JWKS endpoint reachable; unit tests cover JWKS + legacy HMAC.                                                 |
-| Moonshot API key for `kimi-k2.6`                                          | `PRESENT-VIA-OPERATOR-CLI` on staging Worker secret `MOONSHOT_API_KEY` and ignored local `apps/core/.dev.vars` (2026-07-27); retention/DPA gate remains `OPEN` and the route stays disabled                                                                                                         | Local only: ignored `apps/core/.dev.vars`. Staging: Wrangler secret on `mustbeviral-v2-staging-core`. Never Vercel browser environment or Git.                                            | AI provider governance owner | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm name `MOONSHOT_API_KEY` only.                                     |
+| Moonshot API key for `kimi-k2.6`                                          | `PRESENT-VIA-OPERATOR-CLI` on staging Worker secret `MOONSHOT_API_KEY` and ignored local `apps/core/.dev.vars` (2026-07-27); retention/DPA gate remains `CLOSED` and the route stays disabled                                                                                                       | Local only: ignored `apps/core/.dev.vars`. Staging: Wrangler secret on `mustbeviral-v2-staging-core`. Never Vercel browser environment or Git.                                            | AI provider governance owner | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm name `MOONSHOT_API_KEY` only.                                     |
 | Supabase service-role key, staging                                        | `PRESENT-VIA-OPERATOR-CLI` (2026-07-27): staging Worker secrets `SUPABASE_SERVICE_ROLE_KEY` (legacy JWT) and `SUPABASE_SECRET_KEY` (`sb_secret_*`) installed from `supabase projects api-keys --reveal`; also written to ignored `apps/core/.dev.vars`                                              | Staging server-only: Wrangler secrets on `mustbeviral-v2-staging-core`. Local: ignored `apps/core/.dev.vars`. Prohibited from `apps/web`, browser bundles, and public Vercel environment. | Data/platform operator       | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm names `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_SECRET_KEY` only. |
 | Supabase publishable key, preview and staging                             | `PRESENT` as public Worker var `SUPABASE_PUBLISHABLE_KEY` on staging Wrangler config and in ignored local Core `.dev.vars` (2026-07-27); web staging already used the same public publishable value                                                                                                 | Local web: ignored `apps/web/.env.local` as needed. Staging Worker: `apps/core/wrangler.jsonc` `env.staging.vars` (client-public by design). Never substitute a production-project value. | Data/platform operator       | Confirm `SUPABASE_PUBLISHABLE_KEY` in staging Wrangler vars and `pnpm exec vercel env ls` for web scopes.                                                   |
 | Vercel deploy authentication                                              | `PRESENT-VIA-OPERATOR-CLI` from established repository history; revalidation required before mutation                                                                                                                                                                                               | Operator CLI/browser credential store only. Do not copy deploy authentication into application runtime variables, Markdown, shell history, or Git.                                        | Web platform operator        | `pnpm exec vercel whoami`; record only the operator-approved identity/team result.                                                                          |
@@ -83,19 +84,21 @@ must never be replaced with another account, an unrelated project, or a mock rep
 
 ## 4. PRICE + RETENTION ENABLE GATES
 
-No route below is enabled for real spend. A catalog label, previously observed price, credential,
-or successful sandbox call cannot close an enable gate.
+Only `flux-2-pro` is enabled for real spend, and only for one staging canary. A catalog label,
+credential, or successful sandbox call cannot close an enable gate without accepted price and
+retention evidence.
 
-| Launch route        | Intended use                           | Live-page price confirmation                                                                                                                        | Retention/DPA clearance                                                                                                             | Gate state | Real spend |
-| ------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- |
-| `flux-2-pro`        | Three master statics                   | `MISSING (operator input)` — record current official live-page price, source URL, retrieval time, billable unit, and exact pinned provider endpoint | Catalog fal retention rules remain binding; accepted output must be copied server-side to private R2                                | `OPEN`     | `BLOCKED`  |
-| `flux-kontext-pro`  | Nine adaptations/reframes              | `MISSING (operator input)` — record current official live-page price, source URL, retrieval time, billable unit, and exact pinned provider endpoint | Catalog fal retention rules remain binding; accepted output must be copied server-side to private R2                                | `OPEN`     | `BLOCKED`  |
-| `seedance-1.0-lite` | Default 6–10 second 9:16 motion branch | `MISSING (operator input)` — record current official live-page price, source URL, retrieval time, billable unit, and exact pinned provider endpoint | Use Seedance 1.0 Lite only; catalog fal retention rules remain binding and accepted output must be copied server-side to private R2 | `OPEN`     | `BLOCKED`  |
-| `kimi-k2.6`         | Planning and ad copy                   | `MISSING (operator input)` — resolve the official-price discrepancy and record the exact pinned model ID and current official price                 | `MISSING (operator input)` — no-train retention/DPA clearance for client brand data is required                                     | `OPEN`     | `BLOCKED`  |
+| Launch route        | Intended use                           | Live-page price confirmation                                                                                                                                                | Retention/DPA clearance                                                                                                                                        | Gate state | Real spend             |
+| ------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------------------- |
+| `flux-2-pro`        | Three master statics                   | **CONFIRMED 2026-07-26** — $0.03 first MP + $0.015/additional MP at `fal-ai/flux-2-pro`; the accepted pricing decision's SHA-256 is the seeded launch catalog `source_hash` | **CLEARED 2026-07-28, REDUCED-EXPOSURE** — one-hour unguessable delivery object, immediate private-R2 canonical copy, and no provider URL persisted or exposed | `OPEN`     | **ONE STAGING CANARY** |
+| `flux-kontext-pro`  | Nine adaptations/reframes              | `MISSING (operator input)` — record current official live-page price, source URL, retrieval time, billable unit, and exact pinned provider endpoint                         | Catalog fal retention rules remain binding; accepted output must be copied server-side to private R2                                                           | `CLOSED`   | `BLOCKED`              |
+| `seedance-1.0-lite` | Default 6–10 second 9:16 motion branch | `MISSING (operator input)` — record current official live-page price, source URL, retrieval time, billable unit, and exact pinned provider endpoint                         | Use Seedance 1.0 Lite only; catalog fal retention rules remain binding and accepted output must be copied server-side to private R2                            | `CLOSED`   | `BLOCKED`              |
+| `kimi-k2.6`         | Planning and ad copy                   | `MISSING (operator input)` — resolve the official-price discrepancy and record the exact pinned model ID and current official price                                         | `MISSING (operator input)` — no-train retention/DPA clearance for client brand data is required                                                                | `CLOSED`   | `BLOCKED`              |
 
-Price confirmation closes only the price portion of a route's gate. Moonshot remains disabled until
-both exact official price and retention/DPA evidence are accepted. Provider/model/price drift after
-enable disables new quotes until reviewed.
+The spend gate is open for the FLUX.2 [pro] master-static route only. FLUX Kontext [pro], Seedance
+1.0 Lite, and Moonshot Kimi K2.6 remain closed. Moonshot stays disabled pending exact official
+price/model evidence and accepted no-train retention/DPA clearance. Provider/model/price drift
+after enable disables new quotes until reviewed.
 
 ### fal output-retention experiment (2026-07-28)
 
@@ -121,13 +124,34 @@ deferred until its effect is re-tested after a full generation-to-private-R2 rou
 This is a **REDUCED-EXPOSURE** posture, not a "never public" guarantee: during the expiry window,
 anyone holding the unguessable fal delivery URL can retrieve the object.
 
+### fal unrecognized-ACL experiment (second measured finding, 2026-07-28)
+
+fal silently ignored three `initial_acl` allow-rule shapes it did not recognize and left each
+uploaded object public. The results were identical to sending no ACL:
+
+| Unrecognized `initial_acl` allow-rule variant | Anonymous GET | Account-authenticated GET |
+| --------------------------------------------- | ------------- | ------------------------- |
+| Rule keyed by `user_id`                       | 200           | 200                       |
+| Rule keyed by `principal`                     | 200           | 200                       |
+| Rule with `user_id: "self"`                   | 200           | 200                       |
+
+This behavior fails open. An ACL setting cannot be trusted from configuration alone, so any future
+privacy claim about provider storage must be verified by a measured anonymous/authenticated probe,
+not by reading the configured rule shape. It does not change the evidence-backed lifecycle
+preference: send one-hour expiry with no `initial_acl`, copy immediately to private R2, and never
+persist or expose the provider URL.
+
+On this measured reduced-exposure basis, the operator opened the catalog and staging spend gates
+for the FLUX.2 [pro] master-static route only, for one approximately $0.03 image canary. FLUX
+Kontext [pro], Seedance 1.0 Lite, and Moonshot Kimi K2.6 remain closed.
+
 ## 5. READINESS VERDICT
 
-**PARTIALLY READY as of 2026-07-27 — infrastructure targets provisioned; staging provider and
-Supabase server credentials are installed; enable gates and fal webhook JWKS alignment remain
-open.** Section 6 records infrastructure evidence; section 2 records credential name-presence.
-Ordered items 7, 9, and 10 remain open for real spend; no real spend path is enabled
-(`PROVIDER_RUNS_ENABLED` remains false/absent).
+**PARTIALLY READY as of 2026-07-28 — infrastructure targets are provisioned; staging provider and
+Supabase server credentials are installed; the FLUX.2 [pro] route is repository-enabled for one
+staging canary on the measured reduced-exposure basis.** The other three provider routes remain
+closed. Section 6 records infrastructure evidence; section 2 records credential name-presence.
+This configuration change does not itself prove a staging deployment or provider submission.
 
 Exact ordered operator-input list:
 
@@ -154,9 +178,9 @@ Exact ordered operator-input list:
 6. In the same account, create only the new private
    `mustbeviral-core-staging-artifacts` R2 bucket; record the exact binding, private-access proof,
    inventory/recovery procedure, and config reconciliation needed before use.
-7. Confirm on official live pages the current price, billable unit, and exact pinned endpoint for
-   `flux-2-pro`, `flux-kontext-pro`, and `seedance-1.0-lite`; attach retrieval timestamps and keep
-   every route disabled until accepted.
+7. **PARTIAL 2026-07-28** — `flux-2-pro` price, billable unit, and exact pinned endpoint are accepted
+   and hashed into the seeded launch catalog evidence. Confirm the same live-page inputs for
+   `flux-kontext-pro` and `seedance-1.0-lite`; both remain disabled until accepted.
 8. ~~Supply the fal API key through the authorized operator channel and install it only in ignored
    local Core storage and the isolated staging Worker secret store.~~ **DONE 2026-07-27** —
    staging secret `FAL_KEY` + ignored `apps/core/.dev.vars` (names only).
@@ -165,7 +189,7 @@ Exact ordered operator-input list:
    `https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev/v1/webhooks/fal` only after
    provider dispatch is enabled; full durable ingest still fail-closed until start_run wiring.
 10. Confirm the exact official `kimi-k2.6` price/model ID and obtain accepted no-train
-    retention/DPA clearance for client brand data; the retention gate remains `OPEN` until both are
+    retention/DPA clearance for client brand data; the retention gate remains `CLOSED` until both are
     recorded.
 11. ~~Supply the Moonshot API key through the authorized operator channel and install it only in
     ignored local Core storage and the isolated staging Worker secret store after the enable gates
@@ -198,11 +222,11 @@ account, and pins the public `SUPABASE_URL`/`SUPABASE_JWT_AUDIENCE`/`APP_ENV` va
 `api-staging.mustbeviral.com` webhook endpoint shape in section 3 will follow the zone; until
 then the deployed `workers.dev` hostname is the staging endpoint.
 
-Remaining operator inputs after 2026-07-27 credential install: live-page price confirmations for
-the three fal routes (item 7); fal webhook material / Core JWKS verifier alignment (item 9 —
-fal no longer ships a shareable HMAC secret); `kimi-k2.6` price/retention/DPA clearance
-(item 10). Items 2, 8, and 11 (Supabase service/secret keys, fal API key, Moonshot API key) are
-installed on staging Worker `mustbeviral-v2-staging-core` and ignored local `apps/core/.dev.vars`
-as names-only evidence. Every provider route stays disabled and fail-closed
-(`PROVIDER_RUNS_ENABLED` is not set true). Production Worker
-`mustbeviral-v2-production-core` does not exist yet; no production Supabase project exists.
+Remaining operator inputs after 2026-07-28 gate review: live-page price confirmations for
+`flux-kontext-pro` and `seedance-1.0-lite` (item 7), plus `kimi-k2.6`
+price/retention/DPA clearance (item 10). Items 2, 8, 9, and 11 (Supabase service/secret keys, fal
+API key, fal JWKS verification, and Moonshot API key) are installed or aligned as recorded above.
+The versioned staging configuration sets `PROVIDER_RUNS_ENABLED` true, and the catalog opens only
+`flux-2-pro`; the other three routes remain closed. The default and production configurations do
+not set the flag. Production Worker `mustbeviral-v2-production-core` does not exist yet; no
+production Supabase project exists.

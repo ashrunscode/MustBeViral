@@ -5,6 +5,15 @@ const CLOSED_GATES = {
   retentionCleared: false,
 } as const;
 
+const FLUX_2_PRO_REDUCED_EXPOSURE_GATES = {
+  // Price was confirmed and hashed into the seeded launch-catalog evidence.
+  priceConfirmed: true,
+  // Retention was cleared on the measured reduced-exposure basis: the delivery object is
+  // short-lived and unguessable, the canonical copy is private in R2, and no provider URL
+  // is persisted or exposed.
+  retentionCleared: true,
+} as const;
+
 export const moonshotKimiK26Descriptor = {
   descriptorVersion: '2026-07-19.1',
   driverVersion: '1.0.0',
@@ -45,7 +54,7 @@ export const falFlux2ProDescriptor = {
     inputSchemaVersion: 'fal.flux-2-pro.input.v1',
     outputSchemaVersion: 'fal.image.output.v1',
   },
-  enableGates: CLOSED_GATES,
+  enableGates: FLUX_2_PRO_REDUCED_EXPOSURE_GATES,
   idempotencyPolicy: 'reconcile_ambiguous',
 } as const satisfies DriverDescriptor;
 
