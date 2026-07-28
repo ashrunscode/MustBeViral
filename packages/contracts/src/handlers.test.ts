@@ -120,10 +120,25 @@ class MemoryPorts {
       runs: {
         get: async (_context, runId) => this.runsById.get(runId) ?? null,
         startBarrier: async (_context, input) => {
-          expect(input.ledgerMovement.entryType).toBe('reserve');
-          expect(input.ledgerMovement.entries).toHaveLength(2);
-          expect(input.outbox.topic).toBe('run.dispatch_requested');
-          this.runsById.set(input.run.runId, input.run);
+          expect(input).toMatchObject({
+            canvasId: 'canvas-1',
+            quoteId: 'quote-1',
+            confirmed: true,
+          });
+          const run: RunRecord = {
+            runId: 'server-run-1',
+            canvasId: input.canvasId,
+            canvasRevisionId: input.expectedRevisionId,
+            quoteId: input.quoteId,
+            status: 'queued',
+            reservationId: 'server-reservation-1',
+          };
+          this.runsById.set(run.runId, run);
+          return {
+            runId: run.runId,
+            reservationId: run.reservationId,
+            status: 'queued' as const,
+          };
         },
         requestCancellation: async (_context, input) => {
           const run = this.runsById.get(input.runId);
@@ -231,6 +246,14 @@ describe('command handler flows', () => {
     });
     expect(started.status).toBe('ok');
     if (started.status !== 'ok') throw new Error('run setup failed');
+    expect(started.run).toMatchObject({
+      runId: 'server-run-1',
+      reservationId: 'server-reservation-1',
+      status: 'queued',
+    });
+    expect(memory.counters.has('run')).toBe(false);
+    expect(memory.counters.has('reservation')).toBe(false);
+    expect(memory.counters.has('outbox')).toBe(false);
     expect(await handlers.getRun({ context, run_id: started.run.runId })).toEqual({
       status: 'ok',
       run: started.run,

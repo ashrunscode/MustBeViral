@@ -79,6 +79,7 @@ describe('Supabase Data API executor', () => {
     [400, { code: 'P0001', message: 'REVISION_CONFLICT' }, 'conflict'],
     [400, { code: 'P0001', message: 'QUOTE_STALE' }, 'conflict'],
     [400, { code: 'P0001', message: 'QUOTE_ALREADY_USED' }, 'conflict'],
+    [400, { code: '22023', message: 'QUOTE_PLAN_HAS_NO_READY_ATTEMPT' }, 'conflict'],
     [400, { code: 'P0001', message: 'QUOTE_EXPIRED' }, 'expired_quote'],
     [400, { code: 'P0001', message: 'BUDGET_EXCEEDED' }, 'cap_exceeded'],
     [400, { code: 'P0001', message: 'INSUFFICIENT_BALANCE' }, 'cap_exceeded'],
@@ -86,6 +87,7 @@ describe('Supabase Data API executor', () => {
     [400, { code: 'P0002', message: 'NOT_FOUND' }, 'not_found'],
     [400, { code: 'P0002', message: 'RESERVATION_NOT_FOUND' }, 'not_found'],
     [400, { code: '42501', message: 'FORBIDDEN' }, 'forbidden'],
+    [400, { code: '28000', message: 'UNAUTHENTICATED' }, 'forbidden'],
     [400, { code: '42501', message: 'WORKSPACE_UNAVAILABLE' }, 'forbidden'],
     [400, { code: '22023', message: 'VALIDATION_FAILED' }, 'validation'],
     [503, { code: 'PGRSTX00', message: 'pool unavailable' }, 'internal'],
@@ -95,7 +97,9 @@ describe('Supabase Data API executor', () => {
     expect(error.kind).toBe(expected);
     expect(error.message).not.toContain(fixture.message);
     const conflictReason =
-      fixture.message === 'QUOTE_STALE'
+      fixture.message === 'QUOTE_STALE' ||
+      fixture.message === 'QUOTE_ALREADY_USED' ||
+      fixture.message === 'QUOTE_PLAN_HAS_NO_READY_ATTEMPT'
         ? 'quote_stale'
         : fixture.message === 'REVISION_CONFLICT'
           ? 'revision'

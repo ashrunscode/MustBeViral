@@ -131,8 +131,12 @@ function constantTimeEqual(left: Uint8Array, right: Uint8Array): boolean {
   return difference === 0;
 }
 
+function ownedBuffer(bytes: Uint8Array): ArrayBuffer {
+  return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
+}
+
 async function sha256Hex(body: Uint8Array): Promise<string> {
-  return encodeHex(new Uint8Array(await crypto.subtle.digest('SHA-256', body)));
+  return encodeHex(new Uint8Array(await crypto.subtle.digest('SHA-256', ownedBuffer(body))));
 }
 
 async function hmacSha256(secret: string, body: Uint8Array): Promise<Uint8Array> {
@@ -143,7 +147,7 @@ async function hmacSha256(secret: string, body: Uint8Array): Promise<Uint8Array>
     false,
     ['sign'],
   );
-  return new Uint8Array(await crypto.subtle.sign('HMAC', key, body));
+  return new Uint8Array(await crypto.subtle.sign('HMAC', key, ownedBuffer(body)));
 }
 
 let jwksCache: { readonly fetchedAtMs: number; readonly keys: readonly FalJwksKey[] } | undefined;
@@ -187,16 +191,25 @@ async function verifyEd25519(
   messageBytes: Uint8Array,
 ): Promise<boolean> {
   try {
-    const key = await crypto.subtle.importKey('raw', publicKeyBytes, { name: 'Ed25519' }, false, [
-      'verify',
-    ]);
-    return crypto.subtle.verify('Ed25519', key, signatureBytes, messageBytes);
+    const key = await crypto.subtle.importKey(
+      'raw',
+      ownedBuffer(publicKeyBytes),
+      { name: 'Ed25519' },
+      false,
+      ['verify'],
+    );
+    return crypto.subtle.verify(
+      'Ed25519',
+      key,
+      ownedBuffer(signatureBytes),
+      ownedBuffer(messageBytes),
+    );
   } catch {
     try {
       // Legacy Cloudflare NODE-ED25519 path for environments that still require it.
       const key = await crypto.subtle.importKey(
         'raw',
-        publicKeyBytes,
+        ownedBuffer(publicKeyBytes),
         { name: 'NODE-ED25519', namedCurve: 'NODE-ED25519' } as never,
         false,
         ['verify'],
@@ -204,8 +217,8 @@ async function verifyEd25519(
       return crypto.subtle.verify(
         { name: 'NODE-ED25519' } as never,
         key,
-        signatureBytes,
-        messageBytes,
+        ownedBuffer(signatureBytes),
+        ownedBuffer(messageBytes),
       );
     } catch {
       return false;

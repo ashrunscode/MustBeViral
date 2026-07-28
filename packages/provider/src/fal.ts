@@ -18,6 +18,16 @@ import {
   type VersionedProviderDriver,
 } from './types';
 
+export const FAL_OUTPUT_LIFECYCLE_SECONDS = 3_600;
+
+export const FAL_PRIVATE_OUTPUT_HEADERS = {
+  'x-fal-object-lifecycle-preference': JSON.stringify({
+    expiration_duration_seconds: FAL_OUTPUT_LIFECYCLE_SECONDS,
+    initial_acl: { default: 'hide', rules: [] },
+  }),
+  'x-fal-store-io': '0',
+} as const;
+
 function requirePayloadObject(value: unknown): Readonly<Record<string, unknown>> {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     throw new ProviderError('payload_invalid', 'fal input must be an object', false);
@@ -83,13 +93,49 @@ function findDeliveryUrl(payload: Readonly<Record<string, unknown>>): unknown {
   return undefined;
 }
 
-function parseStatus(body: string, providerJobId: string): ProviderJobStatus {
+function configuredWebhookUrl(value: string | undefined): string {
+  if (value === undefined) {
+    throw new ProviderError('provider_error', 'fal webhook URL is not configured', false, {
+      reason: 'webhook_url_missing',
+    });
+  }
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new ProviderError('provider_error', 'fal webhook URL is invalid', false, {
+      reason: 'webhook_url_invalid',
+    });
+  }
+  if (parsed.protocol !== 'https:') {
+    throw new ProviderError('provider_error', 'fal webhook URL must use HTTPS', false, {
+      reason: 'webhook_url_invalid',
+    });
+  }
+  return parsed.toString();
+}
+
+type ParsedQueueStatus =
+  ProviderJobStatus | Readonly<{ state: 'completed'; providerJobId: string }>;
+
+function parseStatus(body: string, providerJobId: string): ParsedQueueStatus {
   const payload = parseJsonObject(body, 'fal');
   const status = payload.status;
   if (status === 'IN_QUEUE') return { state: 'queued', providerJobId };
   if (status === 'IN_PROGRESS') return { state: 'running', providerJobId };
   if (status === 'COMPLETED') {
+    if (typeof payload.error === 'string' && payload.error.length > 0) {
+      return {
+        state: 'failed',
+        providerJobId,
+        error: new ProviderError('provider_error', 'fal job failed', false, {
+          providerJobId,
+          providerMessage: payload.error,
+        }),
+      };
+    }
     const deliveryUrl = findDeliveryUrl(payload);
+    if (deliveryUrl === undefined) return { state: 'completed', providerJobId };
     return {
       state: 'succeeded',
       providerJobId,
@@ -114,27 +160,45 @@ function parseStatus(body: string, providerJobId: string): ProviderJobStatus {
   });
 }
 
+function parseResult(body: string, providerJobId: string): ProviderJobStatus {
+  const payload = parseJsonObject(body, 'fal');
+  const deliveryUrl = findDeliveryUrl(payload);
+  return {
+    state: 'succeeded',
+    providerJobId,
+    delivery: {
+      kind: 'transient_delivery_url',
+      transientDeliveryUrl: toTransientDeliveryUrl(deliveryUrl),
+    },
+  };
+}
+
 export class FalQueueDriver implements VersionedProviderDriver {
   constructor(
     readonly descriptor: DriverDescriptor,
     private readonly transport: ProviderTransport,
     private readonly credential: string | undefined,
+    private readonly webhookUrl?: string,
     private readonly enablement: ProviderEnablementPort = descriptorGateEnablement,
   ) {}
 
   async submit(input: ProviderSubmitInput): Promise<ProviderSubmission> {
     const credential = requireCredential(this.credential, 'fal');
     assertRouteEnabled(this.descriptor, this.enablement);
+    const webhookUrl = configuredWebhookUrl(this.webhookUrl);
     const payload = validateModelInput(this.descriptor, input.payload);
+    const submitUrl = new URL(this.descriptor.endpoint);
+    submitUrl.searchParams.set('fal_webhook', webhookUrl);
     let response;
     try {
       response = await this.transport.request({
         method: 'POST',
-        url: this.descriptor.endpoint,
+        url: submitUrl.toString(),
         headers: {
           authorization: `Key ${credential}`,
           'content-type': 'application/json',
           'x-fal-idempotency-key': input.billingIdempotencyKey,
+          ...FAL_PRIVATE_OUTPUT_HEADERS,
         },
         body: JSON.stringify(payload),
         timeoutMs: 30_000,
@@ -198,6 +262,26 @@ export class FalQueueDriver implements VersionedProviderDriver {
     if (response.status < 200 || response.status >= 300) {
       throw errorFromHttpStatus('fal', response.status, response.body);
     }
-    return parseStatus(response.body, providerJobId);
+    const status = parseStatus(response.body, providerJobId);
+    if (status.state !== 'completed') return status;
+
+    let resultResponse;
+    try {
+      resultResponse = await this.transport.request({
+        method: 'GET',
+        url: `${this.descriptor.endpoint}/requests/${encodeURIComponent(providerJobId)}`,
+        headers: { authorization: `Key ${credential}` },
+        timeoutMs: 15_000,
+      });
+    } catch (cause) {
+      if (cause instanceof ProviderTransportFailure && cause.kind === 'timeout') {
+        throw new ProviderError('timeout', 'fal result request timed out', true, {}, { cause });
+      }
+      throw new ProviderError('provider_error', 'fal result transport failed', true, {}, { cause });
+    }
+    if (resultResponse.status < 200 || resultResponse.status >= 300) {
+      throw errorFromHttpStatus('fal', resultResponse.status, resultResponse.body);
+    }
+    return parseResult(resultResponse.body, providerJobId);
   }
 }

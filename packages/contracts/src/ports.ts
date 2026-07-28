@@ -1,6 +1,5 @@
 import type {
   ImmutableRunQuote,
-  LedgerMovementDraft,
   ModelCatalogPrice,
   QuoteNodeRequest,
   SpendCaps,
@@ -133,21 +132,25 @@ export interface ConfirmationPort {
 }
 
 export interface StartRunBarrierInput {
-  readonly run: RunRecord;
-  readonly quote: ImmutableRunQuote;
-  readonly reservation: Readonly<{ reservationId: string; amountMicros: UsdMicros }>;
-  readonly ledgerMovement: LedgerMovementDraft;
-  readonly outbox: Readonly<{
-    eventId: string;
-    topic: 'run.dispatch_requested';
-    causativeKey: string;
-  }>;
+  readonly canvasId: string;
+  readonly expectedRevisionId: string;
+  readonly quoteId: string;
+  readonly confirmed: true;
   readonly idempotencyKey: string;
+}
+
+export interface StartRunBarrierResult {
+  readonly runId: string;
+  readonly reservationId: string;
+  readonly status: 'queued';
 }
 
 export interface RunPort {
   get(context: HandlerContext, runId: string): Promise<RunRecord | null>;
-  startBarrier(context: HandlerContext, input: StartRunBarrierInput): Promise<void>;
+  startBarrier(
+    context: HandlerContext,
+    input: StartRunBarrierInput,
+  ): Promise<StartRunBarrierResult>;
   requestCancellation(
     context: HandlerContext,
     input: Readonly<{

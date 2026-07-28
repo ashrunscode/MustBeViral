@@ -625,8 +625,14 @@ export function createSupabaseHandlerPorts(
         const reservation = await repositories.billing.getReservationForRun(tenant, runId);
         return runRecord(row, reservation?.id);
       },
-      async startBarrier() {
-        throw new ProviderUnavailableError('Provider-backed run start is not configured');
+      async startBarrier(context, input) {
+        return repositories.runs.startBarrier(asTenantContext(context), {
+          canvasId: input.canvasId,
+          expectedRevisionId: input.expectedRevisionId,
+          quoteId: input.quoteId,
+          confirmed: input.confirmed,
+          idempotencyKey: input.idempotencyKey,
+        });
       },
       async requestCancellation(context, input) {
         const row = await repositories.runs.get(asTenantContext(context), input.runId);

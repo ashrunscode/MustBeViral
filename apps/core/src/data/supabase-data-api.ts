@@ -111,6 +111,12 @@ export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataA
   if (message.includes('QUOTE_STALE')) {
     return new SupabaseDataApiError('conflict', { conflictReason: 'quote_stale' });
   }
+  if (
+    message.includes('QUOTE_ALREADY_USED') ||
+    message.includes('QUOTE_PLAN_HAS_NO_READY_ATTEMPT')
+  ) {
+    return new SupabaseDataApiError('conflict', { conflictReason: 'quote_stale' });
+  }
   if (message.includes('REVISION_CONFLICT')) {
     return new SupabaseDataApiError('conflict', { conflictReason: 'revision' });
   }

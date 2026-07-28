@@ -105,4 +105,42 @@ describe('tenant-safe repository invariants', () => {
       expect.objectContaining({ limit: '100', offset: '100' }),
     );
   });
+
+  it('returns the server-authoritative run identity from the start barrier RPC', async () => {
+    const rpc = vi.fn().mockResolvedValue({
+      run_id: '20000000-0000-4000-8000-000000000001',
+      reservation_id: '30000000-0000-4000-8000-000000000001',
+      status: 'queued',
+    });
+    const executor = { rpc } as unknown as DatabaseExecutor;
+    const repositories = createDatabaseRepositories(executor);
+    const context = tenantContext({
+      workspaceId: '10000000-0000-4000-8000-000000000001',
+      actorId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
+      requestId: 'request-start',
+    });
+
+    await expect(
+      repositories.runs.startBarrier(context, {
+        canvasId: '40000000-0000-4000-8000-000000000001',
+        expectedRevisionId: '50000000-0000-4000-8000-000000000001',
+        quoteId: '60000000-0000-4000-8000-000000000001',
+        confirmed: true,
+        idempotencyKey: 'start-idempotency-1',
+      }),
+    ).resolves.toEqual({
+      runId: '20000000-0000-4000-8000-000000000001',
+      reservationId: '30000000-0000-4000-8000-000000000001',
+      status: 'queued',
+    });
+    expect(rpc).toHaveBeenCalledWith('start_run_barrier', {
+      p_workspace_id: '10000000-0000-4000-8000-000000000001',
+      p_canvas_id: '40000000-0000-4000-8000-000000000001',
+      p_expected_revision_id: '50000000-0000-4000-8000-000000000001',
+      p_quote_id: '60000000-0000-4000-8000-000000000001',
+      p_confirmed: true,
+      p_idempotency_key: 'start-idempotency-1',
+      p_request_id: 'request-start',
+    });
+  });
 });

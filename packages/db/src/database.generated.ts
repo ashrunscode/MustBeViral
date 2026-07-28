@@ -1304,6 +1304,30 @@ export type Database = {
         };
         Returns: Json;
       };
+      claim_outbox_events: {
+        Args: {
+          p_lease_owner: string;
+          p_lease_seconds: number;
+          p_limit: number;
+        };
+        Returns: {
+          aggregate_id: string;
+          aggregate_type: string;
+          available_at: string;
+          created_at: string;
+          dedupe_key: string;
+          event_type: string;
+          id: string;
+          lease_expires_at: string | null;
+          lease_owner: string | null;
+          payload: Json;
+          publish_attempts: number;
+          published_at: string | null;
+          status: string;
+          updated_at: string;
+          workspace_id: string;
+        }[];
+      };
       create_canvas_with_revision: {
         Args: {
           p_graph_schema_version: number;
@@ -1344,10 +1368,87 @@ export type Database = {
         };
         Returns: Json;
       };
+      fail_outbox_event: {
+        Args: {
+          p_event_id: string;
+          p_max_attempts: number;
+          p_retry_after_seconds: number;
+        };
+        Returns: Json;
+      };
+      find_provider_submission_by_billing_key: {
+        Args: {
+          p_billing_idempotency_key: string;
+        };
+        Returns: Json;
+      };
+      get_outbox_dispatch_attempts: {
+        Args: {
+          p_event_id: string;
+          p_lease_owner: string;
+        };
+        Returns: {
+          attempt_id: string;
+          billing_idempotency_key: string;
+          event_id: string;
+          execution_plan_line: Json;
+          node_parameters: Json;
+          provider_registration_id: string;
+          route_id: string;
+          run_id: string;
+          workspace_id: string;
+        }[];
+      };
+      list_provider_jobs_for_reconciliation: {
+        Args: {
+          p_limit: number;
+        };
+        Returns: {
+          provider: string;
+          provider_job_id: string;
+          provider_request_id: string;
+          route_id: string;
+          status: string;
+        }[];
+      };
       mark_provider_webhook_event_processed: {
         Args: {
           p_event_id: string;
           p_provider: string;
+        };
+        Returns: Json;
+      };
+      publish_outbox_event: {
+        Args: {
+          p_event_id: string;
+        };
+        Returns: Json;
+      };
+      record_provider_ambiguity: {
+        Args: {
+          p_attempt_id: string;
+          p_billing_idempotency_key: string;
+          p_event_id: string;
+          p_route_id: string;
+        };
+        Returns: Json;
+      };
+      record_provider_job_reconciliation: {
+        Args: {
+          p_evidence: Json;
+          p_provider_job_id: string;
+          p_status: string;
+        };
+        Returns: Json;
+      };
+      record_provider_submission: {
+        Args: {
+          p_attempt_id: string;
+          p_billing_idempotency_key: string;
+          p_event_id: string;
+          p_provider_request_id: string;
+          p_route_id: string;
+          p_status: string;
         };
         Returns: Json;
       };

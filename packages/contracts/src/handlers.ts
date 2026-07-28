@@ -2,7 +2,6 @@ import {
   checkReservationCaps,
   deriveIdempotencyKey,
   quoteExpiryState,
-  reserveLedgerMovement,
   assembleQuote,
   type ImmutableRunQuote,
   type ReservationCapExceeded,
@@ -460,39 +459,24 @@ export function createCommandHandlers(ports: HandlerPorts) {
             caps: exposure.caps,
           });
           if (caps.status === 'cap_exceeded') return caps;
-          const runId = ports.ids.next('run');
-          const reservationId = ports.ids.next('reservation');
-          const causativeKey = `start_run:${command.idempotency_key}`;
+          const barrier = await ports.runs.startBarrier(command.context, {
+            canvasId: storedQuote.canvasId,
+            expectedRevisionId: quote.canvasRevisionId,
+            quoteId: quote.quoteId,
+            confirmed: true,
+            idempotencyKey: command.idempotency_key,
+          });
           const run: RunRecord = {
-            runId,
+            runId: barrier.runId,
             canvasId: storedQuote.canvasId,
             canvasRevisionId: quote.canvasRevisionId,
             quoteId: quote.quoteId,
-            status: 'queued',
-            reservationId,
+            status: barrier.status,
+            reservationId: barrier.reservationId,
           };
-          await ports.runs.startBarrier(command.context, {
-            run,
-            quote,
-            reservation: { reservationId, amountMicros: quote.maximumChargeMicros },
-            ledgerMovement: reserveLedgerMovement({
-              amountMicros: quote.maximumChargeMicros,
-              causativeKey,
-              requestId: command.context.request_id,
-              reservationId,
-              runId,
-              metadata: { quote_id: quote.quoteId },
-            }),
-            outbox: {
-              eventId: ports.ids.next('outbox'),
-              topic: 'run.dispatch_requested',
-              causativeKey,
-            },
-            idempotencyKey: command.idempotency_key,
-          });
-          await audit(ports, command.context, 'start_run', 'ok', 'run', runId, {
+          await audit(ports, command.context, 'start_run', 'ok', 'run', barrier.runId, {
             quote_id: quote.quoteId,
-            reservation_id: reservationId,
+            reservation_id: barrier.reservationId,
           });
           return { status: 'ok', run };
         },

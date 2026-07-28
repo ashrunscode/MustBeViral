@@ -1,6 +1,6 @@
 begin;
 
-select plan(37);
+select plan(38);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -299,6 +299,25 @@ select is(
   (select count(*)::integer from public.runs where quote_id = '44000000-0000-4000-8000-000000000001'),
   1,
   'barrier creates exactly one run'
+);
+select is(
+  (
+    public.start_run_barrier(
+      '40000000-0000-4000-8000-000000000001',
+      '42000000-0000-4000-8000-000000000001',
+      '42100000-0000-4000-8000-000000000001',
+      '44000000-0000-4000-8000-000000000001',
+      true,
+      'start-run-key',
+      'start-run-replay-request'
+    ) ->> 'run_id'
+  )::uuid,
+  (
+    select id
+    from public.runs
+    where quote_id = '44000000-0000-4000-8000-000000000001'
+  ),
+  'barrier returns the exact server-authoritative run row identifier'
 );
 select is(
   (select count(*)::integer from public.cost_reservations where quote_id = '44000000-0000-4000-8000-000000000001'),

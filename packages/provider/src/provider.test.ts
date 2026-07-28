@@ -11,14 +11,18 @@ import {
 } from './catalog';
 import {
   OutboxDispatcher,
+  ProviderReconciler,
   type PendingProviderOutboxEvent,
+  type PendingProviderReconciliationJob,
   type ProviderOutboxPort,
+  type ProviderReconciliationPort,
 } from './dispatcher';
 import { ProviderError, ProviderTransportFailure } from './errors';
 import { FalQueueDriver } from './fal';
 import { MoonshotKimiK26Driver } from './moonshot';
 import type {
   DriverDescriptor,
+  ProviderJobStatus,
   ProviderSubmission,
   ProviderTransport,
   ProviderTransportRequest,
@@ -86,6 +90,7 @@ const enabled = (descriptor: DriverDescriptor): DriverDescriptor => ({
 
 const fixtureCredential = 'fixture-credential-value';
 const webhookFixtureMaterial = 'webhook-signing-fixture-value';
+const fixtureFalWebhookUrl = 'https://core.fixture.invalid/v1/webhooks/fal';
 
 beforeEach(() => {
   vi.stubGlobal(
@@ -257,6 +262,7 @@ describe('fal queue launch drivers', () => {
       enabled(falFlux2ProDescriptor),
       transport,
       fixtureCredential,
+      fixtureFalWebhookUrl,
       { evaluate: () => ({ allowed: false, reason: 'global_kill_switch' }) },
     );
     await expect(
@@ -272,7 +278,12 @@ describe('fal queue launch drivers', () => {
     'submits %s as a queued job with billing idempotency',
     async (descriptor, payload) => {
       const transport = new FixtureTransport([fixture<HttpFixture>('fal/submit_success.json')]);
-      const driver = new FalQueueDriver(enabled(descriptor), transport, fixtureCredential);
+      const driver = new FalQueueDriver(
+        enabled(descriptor),
+        transport,
+        fixtureCredential,
+        fixtureFalWebhookUrl,
+      );
       const result = await driver.submit({ billingIdempotencyKey: 'billing-fal-success', payload });
       expect(result).toMatchObject({
         provider: 'fal',
@@ -281,8 +292,32 @@ describe('fal queue launch drivers', () => {
         state: 'queued',
       });
       expect(transport.requests[0]?.headers['x-fal-idempotency-key']).toBe('billing-fal-success');
+      const submitUrl = new URL(transport.requests[0]?.url ?? '');
+      expect(submitUrl.searchParams.get('fal_webhook')).toBe(fixtureFalWebhookUrl);
+      expect(transport.requests[0]?.headers).toMatchObject({
+        'x-fal-store-io': '0',
+        'x-fal-object-lifecycle-preference': JSON.stringify({
+          expiration_duration_seconds: 3_600,
+          initial_acl: { default: 'hide', rules: [] },
+        }),
+      });
     },
   );
+
+  it('fails closed before transport when the callback URL is absent', async () => {
+    const transport = new FixtureTransport([]);
+    const driver = new FalQueueDriver(enabled(falFlux2ProDescriptor), transport, fixtureCredential);
+    await expect(
+      driver.submit({
+        billingIdempotencyKey: 'billing-fal-webhook-missing',
+        payload: { prompt: 'Fixture.' },
+      }),
+    ).rejects.toMatchObject({
+      code: 'provider_error',
+      details: { reason: 'webhook_url_missing' },
+    });
+    expect(transport.requests).toHaveLength(0);
+  });
 
   it.each([
     ['provider_error', 'fal/provider_error.json', 'provider_error'],
@@ -291,7 +326,12 @@ describe('fal queue launch drivers', () => {
     ['ambiguous', 'fal/ambiguous.json', 'ambiguous_submit'],
   ] as const)('maps %s submit fixture to %s', async (_label, path, expectedCode) => {
     const transport = new FixtureTransport([fixture<HttpFixture | FailureFixture>(path)]);
-    const driver = new FalQueueDriver(enabled(falFlux2ProDescriptor), transport, fixtureCredential);
+    const driver = new FalQueueDriver(
+      enabled(falFlux2ProDescriptor),
+      transport,
+      fixtureCredential,
+      fixtureFalWebhookUrl,
+    );
     await expect(
       driver.submit({
         billingIdempotencyKey: 'billing-fal-errors',
@@ -329,11 +369,39 @@ describe('fal queue launch drivers', () => {
     });
   });
 
+  it('fetches the result after an official-shape COMPLETED status omits output', async () => {
+    const transport = new FixtureTransport([
+      {
+        status: 200,
+        headers: {},
+        body: {
+          status: 'COMPLETED',
+          request_id: 'fal-job-fixture-001',
+          response_url: 'https://queue.fal.run/fixture/response',
+        },
+      },
+      fixture<HttpFixture>('fal/status_image_completed.json'),
+    ]);
+    const driver = new FalQueueDriver(enabled(falFlux2ProDescriptor), transport, fixtureCredential);
+    await expect(driver.status('fal-job-fixture-001')).resolves.toMatchObject({
+      state: 'succeeded',
+      delivery: { kind: 'transient_delivery_url' },
+    });
+    expect(transport.requests[1]?.url).toBe(
+      `${falFlux2ProDescriptor.endpoint}/requests/fal-job-fixture-001`,
+    );
+  });
+
   it.each(falCases)(
     'marks ambiguous submit for every fal route family %s',
     async (descriptor, payload) => {
       const transport = new FixtureTransport([fixture<FailureFixture>('fal/ambiguous.json')]);
-      const driver = new FalQueueDriver(enabled(descriptor), transport, fixtureCredential);
+      const driver = new FalQueueDriver(
+        enabled(descriptor),
+        transport,
+        fixtureCredential,
+        fixtureFalWebhookUrl,
+      );
       await expect(
         driver.submit({ billingIdempotencyKey: 'billing-fal-ambiguous', payload }),
       ).rejects.toMatchObject({ code: 'ambiguous_submit' });
@@ -562,10 +630,14 @@ class RecordingOutbox implements ProviderOutboxPort {
 
 const outboxEvent: PendingProviderOutboxEvent = {
   eventId: 'outbox-fixture-001',
+  workspaceId: 'workspace-fixture-001',
+  runId: 'run-fixture-001',
   attemptId: 'attempt-fixture-001',
+  providerRegistrationId: 'provider-registration-fixture-001',
   routeId: falFlux2ProDescriptor.routeId,
   billingIdempotencyKey: 'billing-outbox-fixture-001',
   payload: { prompt: 'Fixture master.' },
+  executionPlanLine: { node_id: 'master-1' },
 };
 
 const successfulSubmission: ProviderSubmission = {
@@ -632,5 +704,61 @@ describe('outbox dispatcher', () => {
     const unknown = await new OutboxDispatcher([], unknownOutbox).dispatchPending(10);
     expect(unknown.failed).toBe(1);
     expect(unknownOutbox.failures[0]).toMatchObject({ code: 'provider_error' });
+  });
+});
+
+describe('provider status reconciliation', () => {
+  it('polls submitted and resolvable unknown jobs without submitting again', async () => {
+    const jobs: readonly PendingProviderReconciliationJob[] = [
+      {
+        providerJobId: 'job-row-1',
+        provider: 'fal',
+        routeId: falFlux2ProDescriptor.routeId,
+        providerRequestId: 'fal-request-queued',
+        status: 'submitted',
+      },
+      {
+        providerJobId: 'job-row-2',
+        provider: 'fal',
+        routeId: falFlux2ProDescriptor.routeId,
+        providerRequestId: 'fal-request-unknown',
+        status: 'unknown',
+      },
+    ];
+    const statuses: ProviderJobStatus[] = [];
+    const failures: ProviderError[] = [];
+    const reconciliation: ProviderReconciliationPort = {
+      listPending: async () => jobs,
+      recordStatus: async (_job, status) => {
+        statuses.push(status);
+      },
+      recordFailure: async (_job, error) => {
+        failures.push(error);
+      },
+    };
+    const status = vi
+      .fn<(providerJobId: string) => Promise<ProviderJobStatus>>()
+      .mockResolvedValueOnce({
+        state: 'queued',
+        providerJobId: 'fal-request-queued',
+      })
+      .mockResolvedValueOnce({
+        state: 'running',
+        providerJobId: 'fal-request-unknown',
+      });
+    const submit = vi.fn();
+    const driver: VersionedProviderDriver = {
+      descriptor: enabled(falFlux2ProDescriptor),
+      submit,
+      status,
+    };
+
+    await expect(
+      new ProviderReconciler([driver], reconciliation).reconcilePending(10),
+    ).resolves.toEqual({ checked: 2, updated: 2, failed: 0 });
+    expect(status).toHaveBeenCalledTimes(2);
+    expect(statuses.map((entry) => entry.state)).toEqual(['queued', 'running']);
+    expect(failures).toHaveLength(0);
+    expect(submit).not.toHaveBeenCalled();
   });
 });
