@@ -76,27 +76,39 @@ export const falFluxKontextProDescriptor = {
   idempotencyPolicy: 'reconcile_ambiguous',
 } as const satisfies DriverDescriptor;
 
-export const falSeedanceLiteDescriptor = {
-  descriptorVersion: '2026-07-19.1',
+/**
+ * Default economy motion route.
+ *
+ * fal deprecated Seedance 1.0 Lite; live traffic must call Seedance 1.0 Pro Fast.
+ * The catalog `routeId` stays `fal/seedance-1.0-lite/motion` so existing seeded
+ * quotes/create_quote plans keep resolving; only the provider model/endpoint move.
+ * Provider unit cost is pinned at 720p ($1.00 / 1M video tokens ≈ $0.022/s).
+ * Retrieved 2026-07-28 from fal model page.
+ */
+export const falSeedanceProFastDescriptor = {
+  descriptorVersion: '2026-07-28.1',
   driverVersion: '1.0.0',
   provider: 'fal',
   routeId: 'fal/seedance-1.0-lite/motion',
-  modelId: 'fal-ai/bytedance/seedance/v1/lite/image-to-video',
-  endpoint: 'https://queue.fal.run/fal-ai/bytedance/seedance/v1/lite/image-to-video',
-  price: { kind: 'video_second', perSecondMicros: 39_000, resolution: '720p' },
+  modelId: 'fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
+  endpoint: 'https://queue.fal.run/fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
+  price: { kind: 'video_second', perSecondMicros: 22_000, resolution: '720p' },
   capabilities: {
     family: 'video',
     tasks: ['image_to_video', 'motion_clip_9_16'],
-    inputSchemaVersion: 'fal.seedance-1-lite.input.v1',
+    inputSchemaVersion: 'fal.seedance-1-pro-fast.input.v1',
     outputSchemaVersion: 'fal.video.output.v1',
   },
   enableGates: CLOSED_GATES,
   idempotencyPolicy: 'reconcile_ambiguous',
 } as const satisfies DriverDescriptor;
 
+/** @deprecated Lite is retired on fal; alias kept for call-site compatibility. */
+export const falSeedanceLiteDescriptor = falSeedanceProFastDescriptor;
+
 export const launchDriverDescriptors = [
   moonshotKimiK26Descriptor,
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
-  falSeedanceLiteDescriptor,
+  falSeedanceProFastDescriptor,
 ] as const;

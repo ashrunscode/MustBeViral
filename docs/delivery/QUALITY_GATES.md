@@ -26,6 +26,11 @@ doc_id: quality-gates
 
 Tests favor behavior and invariants over raw coverage percentages. Unit tests cover pure domain/graph/billing logic; integration tests cover database, HTTP, provider, and storage boundaries; end-to-end tests cover the golden launch-pack flow and critical recovery paths.
 
+Database RLS/RPC suites live under `supabase/tests/database` (pgTAP). CI runs them in the
+`database-pgtap` job of `.github/workflows/quality.yml` (`pnpm supabase:start` →
+`pnpm supabase:test`) on the ashrunscode GitHub account. Local operators need Docker Desktop
+running before `pnpm supabase:test`.
+
 ## D0 exit gates
 
 - Three SuperDesign branches rendered from the accepted design system; one direction explicitly approved by the user.

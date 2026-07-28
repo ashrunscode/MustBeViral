@@ -9,7 +9,7 @@ import { createDatabaseRepositories } from '../../../../packages/db/src/index';
 import {
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
-  falSeedanceLiteDescriptor,
+  falSeedanceProFastDescriptor,
   moonshotKimiK26Descriptor,
 } from '../../../../packages/provider/src/catalog';
 import {
@@ -54,7 +54,7 @@ const routeFixtures = [
   [moonshotKimiK26Descriptor, '60000000-0000-4000-8000-000000000001', 'request', 150_000],
   [falFlux2ProDescriptor, '60000000-0000-4000-8000-000000000002', 'image', 500_000],
   [falFluxKontextProDescriptor, '60000000-0000-4000-8000-000000000003', 'image', 200_000],
-  [falSeedanceLiteDescriptor, '60000000-0000-4000-8000-000000000004', 'video_second', 100_000],
+  [falSeedanceProFastDescriptor, '60000000-0000-4000-8000-000000000004', 'video_second', 100_000],
 ] as const;
 
 interface QuoteFixtureState {

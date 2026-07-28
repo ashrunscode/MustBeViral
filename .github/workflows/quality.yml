@@ -49,3 +49,44 @@ jobs:
 
       - name: Run the complete quality gate
         run: pnpm verify
+
+  # pgTAP was previously never exercised in CI (legacy account billing block + missing job).
+  # ashrunscode Pro Actions is live; run the database suite on every push/PR.
+  database-pgtap:
+    name: database-pgtap
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+      TURBO_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
+
+      - name: Activate pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.12.0 --activate
+          pnpm --version
+
+      - name: Install exact dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Start local Supabase (Postgres 17 + migrations)
+        run: pnpm supabase:start
+
+      - name: Run pgTAP database suite
+        run: pnpm supabase:test
+
+      - name: Stop local Supabase
+        if: always()
+        run: pnpm supabase:stop

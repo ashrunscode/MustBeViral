@@ -74,6 +74,17 @@ function validateModelInput(
         false,
       );
     }
+    // Seedance Pro Fast (and siblings) advertise duration as a string enum on the
+    // OpenAPI schema; keep number validation above, then coerce for the wire.
+    const normalized: Record<string, unknown> = {
+      ...payload,
+      duration: String(payload.duration),
+    };
+    // Pin the catalog-priced resolution so a silent 1080p default cannot blow unit cost.
+    if (descriptor.price.kind === 'video_second' && normalized.resolution === undefined) {
+      normalized.resolution = descriptor.price.resolution;
+    }
+    return normalized;
   }
   return payload;
 }

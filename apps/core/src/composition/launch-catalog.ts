@@ -2,7 +2,7 @@ import { usdMicros, type ModelPriceUnit } from '../../../../packages/billing/src
 import {
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
-  falSeedanceLiteDescriptor,
+  falSeedanceProFastDescriptor,
   moonshotKimiK26Descriptor,
 } from '../../../../packages/provider/src/catalog';
 import type { CatalogQuotePlan } from '../../../../packages/contracts/src/index';
@@ -57,7 +57,7 @@ const routeDefinitions = [
   },
   {
     role: 'motion_branch',
-    routeKey: falSeedanceLiteDescriptor.routeId,
+    routeKey: falSeedanceProFastDescriptor.routeId,
     unit: 'video_second',
     quantity: (parameters: GraphSnapshot['nodes'][number]['parameters']) => {
       const seconds = parameters.duration_seconds;
@@ -142,7 +142,7 @@ export function fixtureLaunchCatalogRecords(): LaunchCatalogRecords {
       moonshotKimiK26Descriptor,
       falFlux2ProDescriptor,
       falFluxKontextProDescriptor,
-      falSeedanceLiteDescriptor,
+      falSeedanceProFastDescriptor,
     ].find((candidate) => candidate.routeId === definition.routeKey);
     if (descriptor === undefined) throw new RangeError(`Missing descriptor ${definition.routeKey}`);
     return {

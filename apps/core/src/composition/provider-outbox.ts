@@ -6,7 +6,7 @@ import {
   ProviderReconciler,
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
-  falSeedanceLiteDescriptor,
+  falSeedanceProFastDescriptor,
   moonshotKimiK26Descriptor,
   type PendingProviderOutboxEvent,
   type PendingProviderReconciliationJob,
@@ -338,7 +338,7 @@ export function createProviderScheduledLifecycle(
       bindings.FAL_WEBHOOK_URL,
     ),
     new FalQueueDriver(
-      falSeedanceLiteDescriptor,
+      falSeedanceProFastDescriptor,
       transport,
       bindings.FAL_KEY,
       bindings.FAL_WEBHOOK_URL,

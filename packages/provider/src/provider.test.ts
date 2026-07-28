@@ -6,6 +6,7 @@ import {
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
   falSeedanceLiteDescriptor,
+  falSeedanceProFastDescriptor,
   launchDriverDescriptors,
   moonshotKimiK26Descriptor,
 } from './catalog';
@@ -113,8 +114,14 @@ describe('versioned launch catalog', () => {
       'kimi-k2.6',
       'fal-ai/flux-2-pro',
       'fal-ai/flux-kontext/pro',
-      'fal-ai/bytedance/seedance/v1/lite/image-to-video',
+      'fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
     ]);
+    expect(falSeedanceProFastDescriptor.endpoint).toBe(
+      'https://queue.fal.run/fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
+    );
+    // Historical quote catalog key stays stable; Lite was retired on fal.
+    expect(falSeedanceProFastDescriptor.routeId).toBe('fal/seedance-1.0-lite/motion');
+    expect(falSeedanceLiteDescriptor).toBe(falSeedanceProFastDescriptor);
     expect(moonshotKimiK26Descriptor.price).toEqual({
       kind: 'text_tokens',
       inputPerMillionMicros: 950_000,
@@ -129,9 +136,9 @@ describe('versioned launch catalog', () => {
       kind: 'image_flat',
       perImageMicros: 40_000,
     });
-    expect(falSeedanceLiteDescriptor.price).toEqual({
+    expect(falSeedanceProFastDescriptor.price).toEqual({
       kind: 'video_second',
-      perSecondMicros: 39_000,
+      perSecondMicros: 22_000,
       resolution: '720p',
     });
     for (const descriptor of launchDriverDescriptors) {
@@ -156,7 +163,7 @@ describe('versioned launch catalog', () => {
         enableGates: CLOSED_GATES,
       },
       {
-        routeId: falSeedanceLiteDescriptor.routeId,
+        routeId: falSeedanceProFastDescriptor.routeId,
         enableGates: CLOSED_GATES,
       },
     ]);
@@ -265,7 +272,7 @@ const falCases = [
     { prompt: 'Fixture adaptation.', image_url: 'https://input.invalid/master.png' },
   ],
   [
-    falSeedanceLiteDescriptor,
+    falSeedanceProFastDescriptor,
     { prompt: 'Fixture motion.', image_url: 'https://input.invalid/master.png', duration: 6 },
   ],
 ] as const;
@@ -322,6 +329,12 @@ describe('fal queue launch drivers', () => {
         '{"expiration_duration_seconds":3600}',
       );
       expect(transport.requests[0]?.headers).not.toHaveProperty('x-fal-store-io');
+      expect(submitUrl.origin + submitUrl.pathname).toBe(descriptor.endpoint);
+      if (descriptor.capabilities.family === 'video') {
+        const body = JSON.parse(transport.requests[0]?.body ?? '{}') as Record<string, unknown>;
+        expect(body.duration).toBe('6');
+        expect(body.resolution).toBe('720p');
+      }
     },
   );
 
@@ -377,7 +390,7 @@ describe('fal queue launch drivers', () => {
       fixture<HttpFixture>('fal/status_video_completed.json'),
     ]);
     const driver = new FalQueueDriver(
-      enabled(falSeedanceLiteDescriptor),
+      enabled(falSeedanceProFastDescriptor),
       transport,
       fixtureCredential,
     );

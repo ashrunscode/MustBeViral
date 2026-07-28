@@ -28,9 +28,9 @@ const catalog: readonly ModelCatalogPrice[] = [
   {
     priceCatalogVersionId: 'catalog-v1',
     modelRouteId: 'route-video',
-    providerModelId: 'fal-ai/seedance/v1/lite',
+    providerModelId: 'fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
     unit: 'video_second',
-    unitPriceMicros: usdMicros(39_000n),
+    unitPriceMicros: usdMicros(22_000n),
   },
 ];
 
@@ -71,9 +71,9 @@ describe('quote assembly', () => {
     expect(result.nodeLines.map((line) => line.totalMicros)).toEqual([
       100_000n,
       135_000n,
-      234_000n,
+      132_000n,
     ]);
-    expect(result.maximumChargeMicros).toBe(469_000n);
+    expect(result.maximumChargeMicros).toBe(367_000n);
     expect(typeof result.maximumChargeMicros).toBe('bigint');
   });
 

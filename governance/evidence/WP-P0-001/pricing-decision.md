@@ -31,13 +31,17 @@ generation stays fail-closed (separate provider credentials + retention clearanc
 | motion_branch       | fal Seedance (720p, 8s)  | see correction below                                   | ~$0.17                 |
 | **Inference total** |                          |                                                        | **~$0.64–0.71 / pack** |
 
-**Correction (Codex research, audited):** Seedance 1.0 Lite is **deprecated** and reroutes to
-Seedance 1.0 Pro Fast (about $0.022/sec, roughly $0.17 for 8s), so one-pass provider cost is roughly
-**$0.64–0.71**, not the earlier $0.86 estimate. This is _inference_ cost, not fully-landed cost — retries, billable 422s,
-private-R2 storage, moderation, rejected variants, and operator QA belong in landed cost. The
-motion route is seeded with the current descriptor identity (`fal/seedance-1.0-lite/motion`) so the
-quote reader resolves it; **the endpoint must be repointed to the Seedance successor before real
-generation** (real-generation milestone, out of scope here).
+**Correction (Codex research, audited; code fix 2026-07-28):** Seedance 1.0 Lite is **deprecated**.
+The motion driver and DB `provider_model_id` now target Seedance 1.0 Pro Fast
+(`fal-ai/bytedance/seedance/v1/pro/fast/image-to-video`, queue endpoint on
+`queue.fal.run`). Live fal pricing (retrieved 2026-07-28): **$1.00 / 1M video tokens**; at 720p
+24fps that is about **$0.022/s** (~$0.17 for 8s). One-pass provider cost is roughly
+**$0.64–0.71**, not the earlier $0.86 estimate. This is _inference_ cost, not fully-landed cost —
+retries, billable 422s, private-R2 storage, moderation, rejected variants, and operator QA belong
+in landed cost. The catalog `route_key` remains `fal/seedance-1.0-lite/motion` so seeded
+`create_quote` plans keep resolving; only the provider model/endpoint were repointed (migration
+`20260728030000_p0_seedance_pro_fast_repoint.sql`). Submit path pins `resolution=720p` and
+stringifies duration to match the Pro Fast OpenAPI enum.
 
 ### Margin guardrail (key finding)
 
