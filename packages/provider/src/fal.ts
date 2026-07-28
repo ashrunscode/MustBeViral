@@ -19,11 +19,12 @@ import {
 } from './types';
 
 export const FAL_OUTPUT_LIFECYCLE_SECONDS = 3_600;
+export const FAL_PRIVATE_OUTPUT_INITIAL_ACL = 'hide' as const;
 
 export const FAL_PRIVATE_OUTPUT_HEADERS = {
   'x-fal-object-lifecycle-preference': JSON.stringify({
     expiration_duration_seconds: FAL_OUTPUT_LIFECYCLE_SECONDS,
-    initial_acl: { default: 'hide', rules: [] },
+    initial_acl: { default: FAL_PRIVATE_OUTPUT_INITIAL_ACL, rules: [] },
   }),
   'x-fal-store-io': '0',
 } as const;

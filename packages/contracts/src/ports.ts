@@ -31,6 +31,7 @@ export interface CanvasContextRecord {
 
 export interface RunRecord {
   readonly runId: string;
+  readonly projectId: string;
   readonly canvasId: string;
   readonly canvasRevisionId: string;
   readonly quoteId: string;
@@ -40,13 +41,16 @@ export interface RunRecord {
 
 export interface ArtifactRecord {
   readonly artifactId: string;
+  readonly projectId: string;
   readonly runId: string;
   readonly runNodeId: string | null;
-  readonly kind: string;
+  readonly canvasRevisionId: string;
+  readonly artifactKind: 'input' | 'provider_output' | 'approved_output' | 'export';
+  readonly status: 'available' | 'quarantined';
   readonly objectKey: string;
-  readonly contentType: string;
+  readonly mimeType: string;
   readonly byteSize: number;
-  readonly sha256: string;
+  readonly contentHash: string;
 }
 
 export interface AuditEvent {
@@ -104,6 +108,7 @@ export interface CatalogPort {
 
 export interface StoredQuote {
   readonly canvasId: string;
+  readonly projectId: string;
   readonly quote: ImmutableRunQuote;
   readonly snapshot: GraphSnapshot;
 }
@@ -178,7 +183,8 @@ export interface ArtifactPort {
       lineageId: string;
       parentArtifactId: string;
       childArtifactId: string;
-      relation: string;
+      relationship:
+        'input_to_output' | 'adaptation' | 'motion_source' | 'export_member' | 'revision_source';
     }>,
     idempotencyKey: string,
   ): Promise<void>;

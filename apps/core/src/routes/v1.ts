@@ -26,6 +26,7 @@ import {
   type P0RestHandlers,
 } from '@mustbeviral/contracts';
 import { Hono, type Context } from 'hono';
+import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
@@ -45,12 +46,7 @@ export interface WorkspaceResolutionPort {
   ): Promise<string | null>;
 }
 
-export interface VerifiedFalWebhookIdentity {
-  readonly provider: 'fal';
-  readonly eventId: string;
-  readonly receivedAtEpochSeconds: number;
-  readonly attempt: Readonly<{ providerJobId: string; status: unknown }>;
-}
+export type VerifiedFalWebhookIdentity = VerifiedFalWebhook;
 
 export interface FalWebhookVerifierPort {
   verifyAndMap(
@@ -68,6 +64,11 @@ export interface V1Dependencies {
   readonly jwt: SupabaseJwtVerifier;
   readonly workspaces: WorkspaceResolutionPort;
   readonly falWebhook?: FalWebhookVerifierPort;
+  readonly falWebhookIngest?: (
+    event: VerifiedFalWebhookIdentity,
+    bindings: CoreBindings,
+    requestId: string,
+  ) => Promise<P0HandlerResult>;
   readonly requestFactory?: RequestDependencyFactory;
 }
 
@@ -315,14 +316,17 @@ async function handleFalWebhook(
 
   let result: P0HandlerResult;
   try {
-    result = await dependencies.handlers.ingest_fal_webhook({
-      identity: {
-        provider: identity.provider,
-        event_id: identity.eventId,
-        dedup_key: identity.eventId,
-      },
-      event: identity,
-    });
+    result =
+      dependencies.falWebhookIngest === undefined
+        ? await dependencies.handlers.ingest_fal_webhook({
+            identity: {
+              provider: identity.provider,
+              event_id: identity.eventId,
+              dedup_key: identity.eventId,
+            },
+            event: identity,
+          })
+        : await dependencies.falWebhookIngest(identity, context.env, context.get('requestId'));
   } catch {
     try {
       await falWebhook.release(identity.provider, identity.eventId);

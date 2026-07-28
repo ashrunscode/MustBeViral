@@ -395,6 +395,7 @@ export function createCommandHandlers(ports: HandlerPorts) {
             command.context,
             {
               canvasId: command.canvas_id,
+              projectId: canvas.projectId,
               quote: assembledQuote,
               snapshot,
             },
@@ -468,6 +469,7 @@ export function createCommandHandlers(ports: HandlerPorts) {
           });
           const run: RunRecord = {
             runId: barrier.runId,
+            projectId: storedQuote.projectId,
             canvasId: storedQuote.canvasId,
             canvasRevisionId: quote.canvasRevisionId,
             quoteId: quote.quoteId,
@@ -594,13 +596,16 @@ export function createCommandHandlers(ports: HandlerPorts) {
           if (run === null) return { status: 'not_found' };
           const artifact: ArtifactRecord = {
             artifactId: command.artifact_id,
+            projectId: run.projectId,
             runId: command.run_id,
             runNodeId: command.run_node_id,
-            kind: command.kind,
+            canvasRevisionId: run.canvasRevisionId,
+            artifactKind: command.artifact_kind,
+            status: 'available',
             objectKey: command.object_key,
-            contentType: command.content_type,
+            mimeType: command.mime_type,
             byteSize: command.byte_size,
-            sha256: command.sha256,
+            contentHash: command.content_hash,
           };
           await ports.artifacts.register(command.context, artifact, command.idempotency_key);
           await audit(
@@ -652,7 +657,7 @@ export function createCommandHandlers(ports: HandlerPorts) {
               lineageId,
               parentArtifactId: command.parent_artifact_id,
               childArtifactId: command.child_artifact_id,
-              relation: command.relation,
+              relationship: command.relationship,
             },
             command.idempotency_key,
           );

@@ -121,11 +121,11 @@ export const RegisterArtifactInputSchema = z
     run_id: IdentifierSchema,
     run_node_id: IdentifierSchema.nullable(),
     artifact_id: IdentifierSchema,
-    kind: z.string().min(1).max(100),
+    artifact_kind: z.enum(['input', 'provider_output', 'approved_output', 'export']),
     object_key: z.string().min(1).max(1024),
-    content_type: z.string().min(1).max(200),
+    mime_type: z.string().min(1).max(160),
     byte_size: z.number().int().nonnegative(),
-    sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    content_hash: z.string().regex(/^[a-f0-9]{64}$/),
     idempotency_key: IdempotencyKeySchema,
   })
   .strict();
@@ -135,7 +135,13 @@ export const RegisterArtifactLineageInputSchema = z
     context: HandlerContextSchema,
     parent_artifact_id: IdentifierSchema,
     child_artifact_id: IdentifierSchema,
-    relation: z.string().min(1).max(100),
+    relationship: z.enum([
+      'input_to_output',
+      'adaptation',
+      'motion_source',
+      'export_member',
+      'revision_source',
+    ]),
     idempotency_key: IdempotencyKeySchema,
   })
   .strict();

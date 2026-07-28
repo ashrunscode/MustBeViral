@@ -127,6 +127,7 @@ class MemoryPorts {
           });
           const run: RunRecord = {
             runId: 'server-run-1',
+            projectId: 'project-1',
             canvasId: input.canvasId,
             canvasRevisionId: input.expectedRevisionId,
             quoteId: input.quoteId,
@@ -263,11 +264,11 @@ describe('command handler flows', () => {
       run_id: started.run.runId,
       run_node_id: null,
       artifact_id: 'artifact-1',
-      kind: 'image',
+      artifact_kind: 'provider_output',
       object_key: 'private/workspace-1/image.png',
-      content_type: 'image/png',
+      mime_type: 'image/png',
       byte_size: 42,
-      sha256: 'a'.repeat(64),
+      content_hash: 'a'.repeat(64),
       idempotency_key: 'artifact-key',
     });
     expect(artifact.status).toBe('ok');
@@ -276,7 +277,7 @@ describe('command handler flows', () => {
         context,
         parent_artifact_id: 'artifact-input',
         child_artifact_id: 'artifact-1',
-        relation: 'generated_from',
+        relationship: 'input_to_output',
         idempotency_key: 'lineage-key',
       }),
     ).toMatchObject({ status: 'ok' });

@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
 import { usdMicros } from './money';
-import { attemptRefundCausativeKey, deriveFalCaptureAmount, planRunSettlement } from './settlement';
+import {
+  attemptRefundCausativeKey,
+  attemptReleaseCausativeKey,
+  deriveFalCaptureAmount,
+  planRunSettlement,
+} from './settlement';
 
 describe('fal capture derivation', () => {
   it('uses pinned per-image price times verified artifact count', () => {
@@ -76,6 +81,9 @@ describe('per-attempt run settlement plan', () => {
     expect(plan.captureTotalMicros + plan.releaseRemainderMicros).toBe(1_000_000n);
     expect(attemptRefundCausativeKey('run-1', 'attempt-a')).toBe(
       'run:run-1:attempt:attempt-a:refund',
+    );
+    expect(attemptReleaseCausativeKey('run-1', 'attempt-b')).toBe(
+      'run:run-1:attempt:attempt-b:release',
     );
   });
 

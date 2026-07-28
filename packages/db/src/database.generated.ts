@@ -65,6 +65,7 @@ export type Database = {
           project_id: string;
           rights_attestation: Json;
           run_id: string | null;
+          run_node_id: string | null;
           status: string;
           updated_at: string;
           workspace_id: string;
@@ -81,6 +82,7 @@ export type Database = {
           project_id: string;
           rights_attestation?: Json;
           run_id?: string | null;
+          run_node_id?: string | null;
           status?: string;
           updated_at?: string;
           workspace_id: string;
@@ -97,6 +99,7 @@ export type Database = {
           project_id?: string;
           rights_attestation?: Json;
           run_id?: string | null;
+          run_node_id?: string | null;
           status?: string;
           updated_at?: string;
           workspace_id?: string;
@@ -128,6 +131,13 @@ export type Database = {
             columns: ['workspace_id', 'run_id'];
             isOneToOne: false;
             referencedRelation: 'runs';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'artifacts_workspace_id_run_node_id_fkey';
+            columns: ['workspace_id', 'run_node_id'];
+            isOneToOne: false;
+            referencedRelation: 'run_nodes';
             referencedColumns: ['workspace_id', 'id'];
           },
         ];
@@ -1360,6 +1370,16 @@ export type Database = {
         };
         Returns: Json;
       };
+      advance_fal_provider_attempt: {
+        Args: {
+          p_artifact_id?: string | null;
+          p_capture_micros?: number | null;
+          p_event_id: string;
+          p_provider_request_id: string;
+          p_status: string;
+        };
+        Returns: Json;
+      };
       claim_provider_webhook_event: {
         Args: {
           p_event_id: string;
@@ -1398,6 +1418,19 @@ export type Database = {
           run_id: string;
           workspace_id: string;
         }[];
+      };
+      get_export_context: {
+        Args: {
+          p_artifact_ids: string[];
+          p_run_id: string;
+        };
+        Returns: Json;
+      };
+      get_fal_artifact_context: {
+        Args: {
+          p_provider_request_id: string;
+        };
+        Returns: Json;
       };
       list_provider_jobs_for_reconciliation: {
         Args: {
@@ -1462,6 +1495,21 @@ export type Database = {
           p_reservation_id: string;
           p_run_id: string;
           p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      register_artifact: {
+        Args: {
+          p_artifact_kind: string;
+          p_byte_size: number;
+          p_content_hash: string;
+          p_mime_type: string;
+          p_object_key: string;
+          p_parent_artifact_ids?: string[];
+          p_relationship?: string | null;
+          p_run_id: string;
+          p_run_node_id: string | null;
+          p_status: string;
         };
         Returns: Json;
       };

@@ -10,6 +10,7 @@ export interface CoreBindings extends Omit<
   | 'FAL_WEBHOOK_URL'
   | 'FAL_WEBHOOK_SECRET'
   | 'MOONSHOT_API_KEY'
+  | 'MEDIA_BUCKET'
   | 'SUPABASE_SECRET_KEY'
   | 'SUPABASE_SERVICE_ROLE_KEY'
 > {
@@ -24,6 +25,7 @@ export interface CoreBindings extends Omit<
   /** Optional legacy HMAC fixture material. Live fal webhooks verify via public JWKS. */
   readonly FAL_WEBHOOK_SECRET?: string;
   readonly MOONSHOT_API_KEY?: string;
+  readonly MEDIA_BUCKET: R2Bucket;
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;
 }

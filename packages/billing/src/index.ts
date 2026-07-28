@@ -72,6 +72,7 @@ export type {
 } from './quote';
 export {
   attemptCaptureCausativeKey,
+  attemptReleaseCausativeKey,
   attemptRefundCausativeKey,
   deriveFalCaptureAmount,
   planRunSettlement,

@@ -42,6 +42,9 @@ import type {
 } from '../routes/v1';
 import type { V1Operation } from '../routes/v1-table';
 import { buildLaunchCatalogQuotePlan } from './launch-catalog';
+import { createPrivateRunExport } from './export';
+import { createFalWebhookIngestHandler } from './fal-ingest';
+import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
 
 const BOOTSTRAP_WORKSPACE_ID = '00000000-0000-4000-8000-000000000000';
 const RUN_STATES = new Set([
@@ -234,6 +237,7 @@ async function storedQuoteFromRow(
   }
   return {
     canvasId: row.canvas_id,
+    projectId: row.project_id,
     quote: quoteFromRow(row),
     snapshot: graphSnapshot(revision.graph_snapshot),
   };
@@ -256,6 +260,7 @@ function runRecord(row: Readonly<Record<string, unknown>>, reservationId = ''): 
   if (!RUN_STATES.has(status)) throw new TypeError('Database returned an unsupported run state');
   return {
     runId: requiredString(row.id, 'run.id'),
+    projectId: requiredString(row.project_id, 'run.project_id'),
     canvasId: requiredString(row.canvas_id, 'run.canvas_id'),
     canvasRevisionId: requiredString(row.canvas_revision_id, 'run.canvas_revision_id'),
     quoteId: requiredString(row.quote_id, 'run.quote_id'),
@@ -366,6 +371,8 @@ function createWorkspaceResolver(
 function createResourcePort(
   executor: SupabaseDataApiExecutor,
   repositories: DatabaseRepositories,
+  bindings: CoreBindings,
+  fetchImplementation?: typeof fetch,
 ): P0ResourcePort {
   return {
     async createWorkspace(input) {
@@ -430,8 +437,16 @@ function createResourcePort(
       const artifact = await repositories.artifacts.get(context, input.artifact_id);
       return artifact === null ? { status: 'not_found' } : { status: 'ok', artifact };
     },
-    async createExport() {
-      throw new ProviderUnavailableError('Export generation is not configured');
+    async createExport(input) {
+      return await createPrivateRunExport(
+        bindings,
+        {
+          runId: input.run_id,
+          artifactIds: input.artifact_ids,
+          format: input.format,
+        },
+        fetchImplementation,
+      );
     },
     async explainModel(input) {
       const model = await executor.selectOne('model_routes', {
@@ -466,8 +481,12 @@ function createResourcePort(
         },
       };
     },
-    async ingestFalWebhook() {
-      throw new ProviderUnavailableError('Provider webhook processing is not configured');
+    async ingestFalWebhook(input) {
+      return await createFalWebhookIngestHandler(
+        bindings,
+        requiredString(input.identity.event_id, 'identity.event_id'),
+        fetchImplementation,
+      )(input.event as VerifiedFalWebhook);
     },
   };
 }
@@ -677,7 +696,9 @@ export function createSupabaseRequestDependencies(
   });
   const repositories = createDatabaseRepositories(executor);
   const commands = createCommandHandlers(createSupabaseHandlerPorts(executor, repositories));
-  const resources = createP0ResourceHandlers(createResourcePort(executor, repositories));
+  const resources = createP0ResourceHandlers(
+    createResourcePort(executor, repositories, bindings, fetchImplementation),
+  );
   return {
     handlers: withDatabaseFailures(createP0RestHandlers(commands, resources)),
     workspaces: createWorkspaceResolver(executor, actor),

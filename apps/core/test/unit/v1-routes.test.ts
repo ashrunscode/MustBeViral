@@ -388,7 +388,10 @@ describe('P0 /v1 route boundary', () => {
               provider: 'fal',
               eventId: 'fal-event-release-order',
               receivedAtEpochSeconds: 2_000,
-              attempt: { providerJobId: 'fal-job-release-order', status: { state: 'running' } },
+              attempt: {
+                providerJobId: 'fal-job-release-order',
+                status: { state: 'running', providerJobId: 'fal-job-release-order' },
+              },
             };
           },
           markProcessed: async () => {

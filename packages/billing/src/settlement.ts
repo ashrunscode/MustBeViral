@@ -100,6 +100,12 @@ export function attemptCaptureCausativeKey(runId: string, attemptId: string): st
   return causativeKey(`run:${runId}:attempt:${attemptId}:capture`);
 }
 
+export function attemptReleaseCausativeKey(runId: string, attemptId: string): string {
+  requireBoundedIdentifier(runId, 'runId');
+  requireBoundedIdentifier(attemptId, 'attemptId');
+  return causativeKey(`run:${runId}:attempt:${attemptId}:release`);
+}
+
 export function attemptRefundCausativeKey(runId: string, attemptId: string): string {
   requireBoundedIdentifier(runId, 'runId');
   requireBoundedIdentifier(attemptId, 'attemptId');
