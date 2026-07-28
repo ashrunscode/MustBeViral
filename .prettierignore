@@ -14,3 +14,6 @@ docs/generated/
 docs/INDEX.md
 docs/STATUS.md
 llms.txt
+# Verbatim model output captured as evaluation evidence. Reformatting would rewrite the
+# artifact being judged, so these are recorded exactly as the provider returned them.
+governance/evidence/WP-P0-001/openrouter-blind-eval/

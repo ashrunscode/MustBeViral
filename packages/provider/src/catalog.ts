@@ -5,6 +5,76 @@ const CLOSED_GATES = {
   retentionCleared: false,
 } as const;
 
+export interface OpenRouterCopyModelConfig {
+  readonly modelId: string;
+  readonly inputPerMillionMicros: number;
+  readonly outputPerMillionMicros: number;
+}
+
+/** Default candidates for the blind OpenRouter copy evaluation, in documented review order. */
+export const OPENROUTER_COPY_MODEL_CONFIGS = [
+  {
+    modelId: 'google/gemini-3.5-flash-lite',
+    inputPerMillionMicros: 300_000,
+    outputPerMillionMicros: 2_500_000,
+  },
+  {
+    modelId: 'openai/gpt-5.6-luna',
+    inputPerMillionMicros: 500_000,
+    outputPerMillionMicros: 3_000_000,
+  },
+  {
+    modelId: 'anthropic/claude-sonnet-5',
+    inputPerMillionMicros: 2_000_000,
+    outputPerMillionMicros: 10_000_000,
+  },
+  {
+    modelId: 'openai/gpt-5.4',
+    inputPerMillionMicros: 2_500_000,
+    outputPerMillionMicros: 15_000_000,
+  },
+] as const satisfies readonly OpenRouterCopyModelConfig[];
+
+/**
+ * Disqualified default candidate: google/gemini-3.6-flash.
+ *
+ * A live max_tokens=700 probe spent 668 of 696 completion tokens on reasoning, truncated the copy,
+ * and cost roughly 10x the viable candidates. It then rejected reasoning.enabled=false by
+ * returning no choices array. Keep it out until that behavior is fixed and requalified.
+ */
+
+/**
+ * Builds the closed descriptor for whichever candidate wins the blind copy evaluation.
+ * No candidate is selected as the launch default until that evidence is reviewed.
+ */
+export function createOpenRouterCopyDescriptor(model: OpenRouterCopyModelConfig): DriverDescriptor {
+  return {
+    descriptorVersion: '2026-07-28.1',
+    driverVersion: '1.0.0',
+    provider: 'openrouter',
+    routeId: 'openrouter/chat-completions/copy',
+    modelId: model.modelId,
+    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    price: {
+      kind: 'text_tokens',
+      inputPerMillionMicros: model.inputPerMillionMicros,
+      outputPerMillionMicros: model.outputPerMillionMicros,
+    },
+    capabilities: {
+      family: 'text',
+      tasks: ['copy'],
+      inputSchemaVersion: 'openrouter.chat-completions.input.v1',
+      outputSchemaVersion: 'openrouter.chat-completions.output.v1',
+    },
+    enableGates: CLOSED_GATES,
+    idempotencyPolicy: 'billing_key_header',
+  };
+}
+
+export const openRouterCopyCandidateDescriptors = OPENROUTER_COPY_MODEL_CONFIGS.map(
+  createOpenRouterCopyDescriptor,
+);
+
 const FLUX_2_PRO_REDUCED_EXPOSURE_GATES = {
   // Price was confirmed and hashed into the seeded launch-catalog evidence.
   priceConfirmed: true,

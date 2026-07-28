@@ -19,7 +19,7 @@ export interface ProviderTransport {
   request(request: ProviderTransportRequest): Promise<ProviderTransportResponse>;
 }
 
-export type ProviderName = 'moonshot' | 'fal';
+export type ProviderName = 'moonshot' | 'openrouter' | 'fal';
 export type DriverFamily = 'text' | 'image' | 'video';
 
 export type PriceShape =

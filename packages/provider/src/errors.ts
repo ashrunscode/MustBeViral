@@ -11,7 +11,7 @@ export const providerErrorCodes = [
 export type ProviderErrorCode = (typeof providerErrorCodes)[number];
 
 export class ProviderError extends Error {
-  override readonly name = 'ProviderError';
+  override readonly name: string = 'ProviderError';
 
   constructor(
     readonly code: ProviderErrorCode,
