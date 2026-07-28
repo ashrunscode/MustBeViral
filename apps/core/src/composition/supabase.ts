@@ -311,32 +311,54 @@ function withDatabaseFailures(handlers: P0RestHandlers): P0RestHandlers {
   ) as P0RestHandlers;
 }
 
-function resourceWorkspaceTable(operation: V1Operation): string | null {
-  if (operation === 'get_project' || operation === 'create_canvas') return 'projects';
-  if (
-    operation === 'get_canvas_context' ||
-    operation === 'apply_canvas_patch' ||
-    operation === 'validate_graph' ||
-    operation === 'quote_run'
-  ) {
-    return 'canvases';
-  }
-  if (operation === 'start_run') return 'quotes';
-  if (operation === 'get_run' || operation === 'cancel_run' || operation === 'create_export') {
-    return 'runs';
-  }
-  if (operation === 'get_artifact') return 'artifacts';
-  return null;
-}
+type WorkspaceResourceTable = 'projects' | 'canvases' | 'quotes' | 'runs' | 'artifacts';
+
+type WorkspaceResolutionStrategy =
+  | Readonly<{ kind: 'bootstrap' }>
+  | Readonly<{ kind: 'path_membership' }>
+  | Readonly<{ kind: 'path_resource'; table: WorkspaceResourceTable }>
+  | Readonly<{
+      kind: 'body_resource';
+      table: WorkspaceResourceTable;
+      bodyField: 'project_id';
+    }>
+  | Readonly<{ kind: 'actor_membership' }>
+  | Readonly<{ kind: 'webhook' }>;
+
+const WORKSPACE_RESOLUTION_BY_OPERATION = {
+  create_workspace: { kind: 'bootstrap' },
+  get_workspace: { kind: 'path_membership' },
+  create_project: { kind: 'path_membership' },
+  get_project: { kind: 'path_resource', table: 'projects' },
+  create_canvas: { kind: 'path_resource', table: 'projects' },
+  get_canvas_context: { kind: 'path_resource', table: 'canvases' },
+  apply_canvas_patch: { kind: 'path_resource', table: 'canvases' },
+  validate_graph: { kind: 'path_resource', table: 'canvases' },
+  quote_run: { kind: 'path_resource', table: 'canvases' },
+  start_run: { kind: 'path_resource', table: 'quotes' },
+  get_run: { kind: 'path_resource', table: 'runs' },
+  cancel_run: { kind: 'path_resource', table: 'runs' },
+  create_artifact_upload: {
+    kind: 'body_resource',
+    table: 'projects',
+    bodyField: 'project_id',
+  },
+  get_artifact: { kind: 'path_resource', table: 'artifacts' },
+  create_export: { kind: 'path_resource', table: 'runs' },
+  explain_model: { kind: 'actor_membership' },
+  get_receipt: { kind: 'path_resource', table: 'runs' },
+  ingest_fal_webhook: { kind: 'webhook' },
+} as const satisfies Readonly<Record<V1Operation, WorkspaceResolutionStrategy>>;
 
 function createWorkspaceResolver(
   executor: SupabaseDataApiExecutor,
   actor: AuthenticatedActor,
 ): WorkspaceResolutionPort {
   return {
-    async resolve({ operation, pathId }) {
-      if (operation === 'create_workspace') return BOOTSTRAP_WORKSPACE_ID;
-      if (operation === 'get_workspace' || operation === 'create_project') {
+    async resolve({ operation, pathId, body }) {
+      const strategy = WORKSPACE_RESOLUTION_BY_OPERATION[operation];
+      if (strategy.kind === 'bootstrap') return BOOTSTRAP_WORKSPACE_ID;
+      if (strategy.kind === 'path_membership') {
         if (pathId === undefined) return null;
         const membership = await executor.selectOne('workspace_memberships', {
           workspace_id: `eq.${pathId}`,
@@ -347,11 +369,23 @@ function createWorkspaceResolver(
         });
         return membership?.workspace_id ?? null;
       }
-      const table = resourceWorkspaceTable(operation);
-      if (table === null || pathId === undefined) return null;
+      if (strategy.kind === 'actor_membership') {
+        const membership = await executor.selectOne('workspace_memberships', {
+          user_id: `eq.${actor.actorId}`,
+          status: 'eq.active',
+          revoked_at: 'is.null',
+          select: 'workspace_id',
+          order: 'created_at.asc',
+          limit: '1',
+        });
+        return membership?.workspace_id ?? null;
+      }
+      if (strategy.kind === 'webhook') return null;
+      const resourceId = strategy.kind === 'path_resource' ? pathId : body[strategy.bodyField];
+      if (typeof resourceId !== 'string' || resourceId.length === 0) return null;
       try {
         const row = await executor.request<Readonly<{ workspace_id: string }>>({
-          path: `${table}?id=eq.${encodeURIComponent(pathId)}&select=workspace_id`,
+          path: `${strategy.table}?id=eq.${encodeURIComponent(resourceId)}&select=workspace_id`,
           single: true,
         });
         return row.workspace_id;

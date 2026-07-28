@@ -38,6 +38,7 @@ export const CreateCanvasBodySchema = z
   .strict();
 export const CreateArtifactUploadBodySchema = z
   .object({
+    project_id: IdentifierSchema,
     content_type: z.string().min(1).max(200),
     byte_size: z.number().int().positive(),
     sha256: z.string().regex(/^[a-f0-9]{64}$/u),

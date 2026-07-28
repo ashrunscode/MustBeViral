@@ -58,6 +58,7 @@ const minimalInputs = {
   },
   create_artifact_upload: {
     context,
+    project_id: 'project-1',
     content_type: 'image/png',
     byte_size: 1,
     sha256: 'a'.repeat(64),

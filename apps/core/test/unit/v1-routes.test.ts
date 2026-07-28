@@ -56,6 +56,7 @@ const requestBodies: Partial<Record<keyof P0RestHandlers, Readonly<Record<string
   start_run: { confirmed: true, confirmation_token: 'confirmation-token-1' },
   cancel_run: { reason: 'Operator requested cancellation' },
   create_artifact_upload: {
+    project_id: 'project-1',
     content_type: 'image/png',
     byte_size: 2048,
     sha256: 'a'.repeat(64),

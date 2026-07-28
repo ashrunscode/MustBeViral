@@ -1,11 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { P0RestHandlers } from '@mustbeviral/contracts';
+import { ApiErrorEnvelopeSchema, type P0RestHandlers } from '@mustbeviral/contracts';
 
 import { createCoreApp, defaultV1Dependencies } from '../../src/app';
 import type { CoreBindings } from '../../src/bindings';
 import { createSupabaseRequestDependencies } from '../../src/composition/supabase';
 import type { RequestDependencyFactory } from '../../src/routes/v1';
+import { V1_ROUTE_TABLE, type V1Operation } from '../../src/routes/v1-table';
 
 const actor = {
   actorId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
@@ -18,6 +19,10 @@ const configuredBindings = {
   SUPABASE_JWT_AUDIENCE: 'authenticated',
   PROVIDER_RUNS_ENABLED: 'false',
 } as unknown as PlatformBindings;
+
+// No authenticated V1 operation is intentionally denied workspace resolution today. If a future
+// route must be denied before its handler, add it here with a non-empty security/product reason.
+const WORKSPACE_RESOLUTION_DENY_LIST: Readonly<Partial<Record<V1Operation, string>>> = {};
 
 function headers(): Readonly<Record<string, string>> {
   return {
@@ -64,6 +69,257 @@ describe('production Supabase composition', () => {
       {} as PlatformBindings,
     );
     expect(response.status).toBe(403);
+  });
+
+  it('resolves every non-webhook V1 route or requires a documented denial reason', async () => {
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (
+        url.includes('/workspace_memberships?') ||
+        ['/projects?', '/canvases?', '/quotes?', '/runs?', '/artifacts?'].some((path) =>
+          url.includes(path),
+        )
+      ) {
+        return Response.json({ workspace_id: workspaceId });
+      }
+      throw new Error(`Unexpected workspace-resolution request: ${url}`);
+    });
+    const scoped = createSupabaseRequestDependencies(
+      configuredBindings,
+      'verified-caller-jwt',
+      actor,
+      fetchImplementation,
+    );
+    expect(scoped).not.toBeNull();
+    if (scoped === null) throw new Error('Expected configured Supabase dependencies');
+
+    for (const [operation, reason] of Object.entries(WORKSPACE_RESOLUTION_DENY_LIST)) {
+      expect(reason.trim(), `${operation} deny-list reason`).not.toBe('');
+      expect(
+        V1_ROUTE_TABLE.some(
+          (route) => route.operation === operation && route.auth === 'supabase_jwt',
+        ),
+        `${operation} deny-list entry`,
+      ).toBe(true);
+    }
+
+    for (const route of V1_ROUTE_TABLE) {
+      if (route.auth === 'fal_signature') continue;
+      const resolved = await scoped.workspaces.resolve({
+        actor,
+        operation: route.operation,
+        pathId: route.path.includes(':id') ? `${route.operation}-resource` : undefined,
+        body:
+          route.operation === 'create_artifact_upload'
+            ? { project_id: 'artifact-upload-project' }
+            : {},
+      });
+      const denialReason = WORKSPACE_RESOLUTION_DENY_LIST[route.operation];
+      if (denialReason === undefined) {
+        expect(resolved, route.operation).not.toBeNull();
+      } else {
+        expect(resolved, `${route.operation}: ${denialReason}`).toBeNull();
+      }
+    }
+  });
+
+  it('lets an authorized member reach get_receipt through run-scoped resolution', async () => {
+    const getReceipt = vi.fn(async () => ({ status: 'ok' as const, receipt: 'fixture' }));
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (url.includes('/runs?id=eq.run-member&select=workspace_id')) {
+        return Response.json({ workspace_id: workspaceId });
+      }
+      throw new Error(`Unexpected fixture request: ${url}`);
+    });
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) => {
+        const scoped = createSupabaseRequestDependencies(
+          bindings,
+          callerJwt,
+          verifiedActor,
+          fetchImplementation,
+        );
+        if (scoped === null) return null;
+        return {
+          ...scoped,
+          handlers: { ...scoped.handlers, get_receipt: getReceipt },
+        };
+      },
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+
+    const response = await app.request(
+      '/v1/runs/run-member/receipt',
+      { headers: headers() },
+      configuredBindings,
+    );
+
+    expect(response.status).toBe(200);
+    expect(getReceipt).toHaveBeenCalledOnce();
+    expect(getReceipt).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: expect.objectContaining({
+          actor_id: actor.actorId,
+          workspace_id: workspaceId,
+        }),
+        run_id: 'run-member',
+      }),
+    );
+  });
+
+  it('refuses get_receipt for a caller outside the run workspace', async () => {
+    const getReceipt = vi.fn(async () => ({ status: 'ok' as const }));
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (url.includes('/runs?id=eq.run-other-workspace&select=workspace_id')) {
+        return Response.json(
+          { code: 'PGRST116', message: 'JSON object requested, multiple (or no) rows returned' },
+          { status: 406 },
+        );
+      }
+      throw new Error(`Unexpected fixture request: ${url}`);
+    });
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) => {
+        const scoped = createSupabaseRequestDependencies(
+          bindings,
+          callerJwt,
+          verifiedActor,
+          fetchImplementation,
+        );
+        if (scoped === null) return null;
+        return {
+          ...scoped,
+          handlers: { ...scoped.handlers, get_receipt: getReceipt },
+        };
+      },
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+
+    const response = await app.request(
+      '/v1/runs/run-other-workspace/receipt',
+      { headers: headers() },
+      configuredBindings,
+    );
+
+    expect(response.status).toBe(403);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error.code).toBe('FORBIDDEN');
+    expect(getReceipt).not.toHaveBeenCalled();
+  });
+
+  it('reaches the artifact-upload stub through project scope and reports model unavailable', async () => {
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (url.includes('/projects?id=eq.project-upload&select=workspace_id')) {
+        return Response.json({ workspace_id: workspaceId });
+      }
+      throw new Error(`Unexpected fixture request: ${url}`);
+    });
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) =>
+        createSupabaseRequestDependencies(bindings, callerJwt, verifiedActor, fetchImplementation),
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+
+    const response = await app.request(
+      '/v1/artifacts/uploads',
+      {
+        method: 'POST',
+        headers: { ...headers(), 'idempotency-key': 'artifact-upload-1' },
+        body: JSON.stringify({
+          project_id: 'project-upload',
+          content_type: 'image/png',
+          byte_size: 2_048,
+          sha256: 'a'.repeat(64),
+          purpose: 'reference',
+        }),
+      },
+      configuredBindings,
+    );
+
+    expect(response.status).toBe(503);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error.code).toBe(
+      'MODEL_UNAVAILABLE',
+    );
+  });
+
+  it('allows a member to explain a global model route without treating the model id as a tenant id', async () => {
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (url.includes('/workspace_memberships?')) {
+        return Response.json({ workspace_id: workspaceId });
+      }
+      if (url.includes('/model_routes?')) {
+        return Response.json({ id: 'fal-image-route', capability: 'image_generation' });
+      }
+      throw new Error(`Unexpected fixture request: ${url}`);
+    });
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) =>
+        createSupabaseRequestDependencies(bindings, callerJwt, verifiedActor, fetchImplementation),
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+
+    const response = await app.request(
+      '/v1/models/fal-image-route',
+      { headers: headers() },
+      configuredBindings,
+    );
+
+    expect(response.status).toBe(200);
+    expect(fetchImplementation.mock.calls.map(([request]) => String(request))).toEqual([
+      expect.stringContaining('/workspace_memberships?'),
+      expect.stringContaining('/model_routes?'),
+    ]);
+  });
+
+  it('requires active workspace membership before reading the global model catalog', async () => {
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (url.includes('/workspace_memberships?')) {
+        return Response.json(
+          { code: 'PGRST116', message: 'JSON object requested, multiple (or no) rows returned' },
+          { status: 406 },
+        );
+      }
+      throw new Error(`A non-member must not reach the model catalog: ${url}`);
+    });
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) =>
+        createSupabaseRequestDependencies(bindings, callerJwt, verifiedActor, fetchImplementation),
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+
+    const response = await app.request(
+      '/v1/models/fal-image-route',
+      { headers: headers() },
+      configuredBindings,
+    );
+
+    expect(response.status).toBe(403);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error.code).toBe('FORBIDDEN');
+    expect(fetchImplementation).toHaveBeenCalledOnce();
   });
 
   it('forwards the verified JWT into every composed Data API request', async () => {
