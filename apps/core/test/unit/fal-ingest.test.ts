@@ -337,7 +337,7 @@ describe('durable private fal ingest', () => {
     expect(result.contentHash).toMatch(/^[0-9a-f]{64}$/u);
   });
 
-  it('names the private fal ACL as the suspected cause of an authenticated 403', async () => {
+  it('treats an authenticated fal delivery denial as expiry or provider access drift', async () => {
     const bucket = { put: vi.fn() } as unknown as R2Bucket;
     await expect(
       copyFalDeliveryToPrivateR2({
@@ -355,7 +355,7 @@ describe('durable private fal ingest', () => {
     ).rejects.toMatchObject({
       reason: 'delivery_acl_suspected',
       retryable: true,
-      message: expect.stringContaining('hide'),
+      message: expect.stringMatching(/expired|access behavior/u),
     });
     expect(bucket.put).not.toHaveBeenCalled();
   });

@@ -5,7 +5,6 @@ import {
   verifyProviderArtifactBytes,
   type VerifiedProviderArtifact,
 } from '../../../../packages/artifacts/src/index';
-import { FAL_PRIVATE_OUTPUT_INITIAL_ACL } from '../../../../packages/provider/src/fal';
 import type { TransientDeliveryUrl } from '../../../../packages/provider/src/types';
 
 import type { CoreBindings } from '../bindings';
@@ -40,7 +39,7 @@ function fetchFailure(status: number): ArtifactStorageError {
     status === 401 || status === 403 ? 'delivery_acl_suspected' : 'delivery_fetch_failed',
     true,
     status === 401 || status === 403
-      ? `Authenticated fal delivery fetch failed; initial ACL "${FAL_PRIVATE_OUTPUT_INITIAL_ACL}" may prevent account-authenticated download`
+      ? 'Authenticated fal delivery fetch was denied; the short-lived object may have expired or fal delivery access behavior may have changed'
       : 'Authenticated fal delivery fetch failed',
   );
 }

@@ -18,15 +18,20 @@ import {
   type VersionedProviderDriver,
 } from './types';
 
-export const FAL_OUTPUT_LIFECYCLE_SECONDS = 3_600;
-export const FAL_PRIVATE_OUTPUT_INITIAL_ACL = 'hide' as const;
+/**
+ * A 2026-07-28 live probe measured that restrictive fal `initial_acl` values also block
+ * account-authenticated delivery fetches. One hour intentionally leaves recovery headroom for
+ * webhook delay plus an ingest failure, provider redelivery, and the five-minute stale-claim
+ * reclaim window; 300 seconds could expire a paid output before that recovery completes.
+ */
+export const FAL_OUTPUT_LIFECYCLE_PREFERENCE = {
+  expiration_duration_seconds: 3_600,
+} as const;
 
-export const FAL_PRIVATE_OUTPUT_HEADERS = {
-  'x-fal-object-lifecycle-preference': JSON.stringify({
-    expiration_duration_seconds: FAL_OUTPUT_LIFECYCLE_SECONDS,
-    initial_acl: { default: FAL_PRIVATE_OUTPUT_INITIAL_ACL, rules: [] },
-  }),
-  'x-fal-store-io': '0',
+// Deliberately omit `x-fal-store-io` until a full generation-to-private-R2 round trip proves and
+// re-tests whether it suppresses the delivery object required for canonical ingest.
+const FAL_OUTPUT_HEADERS = {
+  'x-fal-object-lifecycle-preference': JSON.stringify(FAL_OUTPUT_LIFECYCLE_PREFERENCE),
 } as const;
 
 function requirePayloadObject(value: unknown): Readonly<Record<string, unknown>> {
@@ -199,7 +204,7 @@ export class FalQueueDriver implements VersionedProviderDriver {
           authorization: `Key ${credential}`,
           'content-type': 'application/json',
           'x-fal-idempotency-key': input.billingIdempotencyKey,
-          ...FAL_PRIVATE_OUTPUT_HEADERS,
+          ...FAL_OUTPUT_HEADERS,
         },
         body: JSON.stringify(payload),
         timeoutMs: 30_000,

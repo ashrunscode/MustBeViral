@@ -97,6 +97,30 @@ Price confirmation closes only the price portion of a route's gate. Moonshot rem
 both exact official price and retention/DPA evidence are accepted. Provider/model/price drift after
 enable disables new quotes until reviewed.
 
+### fal output-retention experiment (2026-07-28)
+
+One tiny object was uploaded for each lifecycle preference with account authentication. The returned
+`file_url` was then fetched both anonymously and with account-key authentication. Only HTTP status
+codes were recorded; no key values are present in this evidence.
+
+| `X-Fal-Object-Lifecycle-Preference`                                                  | Anonymous GET | Account-authenticated GET |
+| ------------------------------------------------------------------------------------ | ------------- | ------------------------- |
+| Header absent (control)                                                              | 200           | 200                       |
+| `{"expiration_duration_seconds":3600,"initial_acl":{"default":"hide","rules":[]}}`   | 404           | 404                       |
+| `{"expiration_duration_seconds":3600,"initial_acl":{"default":"forbid","rules":[]}}` | 403           | 403                       |
+| `{"expiration_duration_seconds":300}` (no `initial_acl`)                             | 200           | 200                       |
+
+A restrictive `initial_acl` is unusable for the paid ingest path because it also blocks our own
+account from downloading the output for canonical private-R2 storage. The resulting posture sends
+only `{"expiration_duration_seconds":3600}`: fal delivery objects are unguessable and short-lived,
+the canonical copy is private in R2, and no provider URL is persisted or exposed as a product
+artifact. The one-hour expiry preserves recovery time for webhook delay plus ingest failure,
+provider redelivery, and the five-minute stale-claim reclaim window. `x-fal-store-io` is deliberately
+deferred until its effect is re-tested after a full generation-to-private-R2 round trip is proven.
+
+This is a **REDUCED-EXPOSURE** posture, not a "never public" guarantee: during the expiry window,
+anyone holding the unguessable fal delivery URL can retrieve the object.
+
 ## 5. READINESS VERDICT
 
 **PARTIALLY READY as of 2026-07-27 — infrastructure targets provisioned; staging provider and

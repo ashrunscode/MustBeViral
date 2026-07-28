@@ -294,13 +294,10 @@ describe('fal queue launch drivers', () => {
       expect(transport.requests[0]?.headers['x-fal-idempotency-key']).toBe('billing-fal-success');
       const submitUrl = new URL(transport.requests[0]?.url ?? '');
       expect(submitUrl.searchParams.get('fal_webhook')).toBe(fixtureFalWebhookUrl);
-      expect(transport.requests[0]?.headers).toMatchObject({
-        'x-fal-store-io': '0',
-        'x-fal-object-lifecycle-preference': JSON.stringify({
-          expiration_duration_seconds: 3_600,
-          initial_acl: { default: 'hide', rules: [] },
-        }),
-      });
+      expect(transport.requests[0]?.headers['x-fal-object-lifecycle-preference']).toBe(
+        '{"expiration_duration_seconds":3600}',
+      );
+      expect(transport.requests[0]?.headers).not.toHaveProperty('x-fal-store-io');
     },
   );
 
