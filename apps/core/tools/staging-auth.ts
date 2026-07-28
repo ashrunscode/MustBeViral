@@ -54,6 +54,22 @@ function accessToken(value: unknown): string | null {
   return typeof token === 'string' && token.length > 0 ? token : null;
 }
 
+async function responseBody(
+  response: Response,
+  observeResponseBody?: (rawResponseText: string) => void,
+): Promise<unknown> {
+  const rawResponseText = await response.text();
+  observeResponseBody?.(rawResponseText);
+  try {
+    return JSON.parse(rawResponseText) as unknown;
+  } catch {
+    throw new HarnessFlowError({
+      code: 'AUTH_RESPONSE_INVALID',
+      message: 'Staging authentication returned invalid JSON.',
+    });
+  }
+}
+
 async function authRequest(
   fetchImplementation: typeof fetch,
   configuration: StagingAuthConfiguration,
@@ -76,6 +92,7 @@ export async function authenticateDisposableStagingUser(options: {
   readonly log?: (message: string) => void;
   readonly sleep?: (milliseconds: number) => Promise<void>;
   readonly pollMilliseconds?: number;
+  readonly observeResponseBody?: (rawResponseText: string) => void;
 }): Promise<Readonly<{ email: string; accessToken: string }>> {
   const fetchImplementation = options.fetchImplementation ?? fetch;
   const log = options.log ?? console.log;
@@ -99,7 +116,7 @@ export async function authenticateDisposableStagingUser(options: {
       'signup',
       identity,
     );
-    const signupBody = (await signup.json()) as unknown;
+    const signupBody = await responseBody(signup, options.observeResponseBody);
     if (!signup.ok) {
       throw new HarnessFlowError({
         code: 'AUTH_SIGNUP_FAILED',
@@ -119,7 +136,7 @@ export async function authenticateDisposableStagingUser(options: {
       'token?grant_type=password',
       identity,
     );
-    const signinBody = (await signin.json()) as unknown;
+    const signinBody = await responseBody(signin, options.observeResponseBody);
     const token = accessToken(signinBody);
     if (signin.ok && token !== null) return { email: identity.email, accessToken: token };
     if (signin.status !== 400 && signin.status !== 401 && signin.status !== 429) {

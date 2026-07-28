@@ -9,6 +9,7 @@ import {
   type HandlerPorts,
   type P0RestHandlers,
   type P0RestOperation,
+  type RunRecord,
   type StoredQuote,
 } from '@mustbeviral/contracts';
 
@@ -31,7 +32,14 @@ export const HARNESS_OPERATIONS = [
   'start_run',
 ] as const satisfies readonly P0RestOperation[];
 
+export const CANARY_OBSERVATION_OPERATIONS = [
+  'get_run',
+  'get_receipt',
+] as const satisfies readonly P0RestOperation[];
+
 export type HarnessOperation = (typeof HARNESS_OPERATIONS)[number];
+export type HarnessTransportOperation =
+  HarnessOperation | (typeof CANARY_OBSERVATION_OPERATIONS)[number];
 
 export type HarnessResult =
   | Readonly<{ ok: true; data: Readonly<Record<string, unknown>> }>
@@ -40,13 +48,13 @@ export type HarnessResult =
 export interface SafeHarnessError {
   readonly code: string;
   readonly message: string;
-  readonly operation?: HarnessOperation;
+  readonly operation?: HarnessTransportOperation;
   readonly http_status?: number;
 }
 
 export interface HarnessTransport {
   call(
-    operation: HarnessOperation,
+    operation: HarnessTransportOperation,
     input: Readonly<Record<string, unknown>>,
   ): Promise<HarnessResult>;
 }
@@ -262,9 +270,17 @@ export async function executeGoldenBrief(
 
 type BillingExposure = Awaited<ReturnType<HandlerPorts['billing']['get']>>;
 
-export function createInMemoryHarnessTransport(): HarnessTransport {
+export interface InMemoryHarnessOptions {
+  readonly providerResult?: 'unavailable' | 'succeeded';
+}
+
+export function createInMemoryHarnessTransport(
+  options: InMemoryHarnessOptions = {},
+): HarnessTransport {
   const canvases = new Map<string, CanvasContextRecord>();
   const quotes = new Map<string, StoredQuote>();
+  const runs = new Map<string, RunRecord>();
+  const receipts = new Map<string, Readonly<Record<string, unknown>>>();
   const idempotencyResults = new Map<string, { fingerprint: string; result: unknown }>();
   const counters = new Map<string, number>();
   const next = (kind: string): string => {
@@ -313,9 +329,133 @@ export function createInMemoryHarnessTransport(): HarnessTransport {
     },
     confirmations: { verify: async () => true },
     runs: {
-      get: async () => null,
-      startBarrier: async () => {
-        throw new ProviderUnavailableError('Provider-backed execution is not enabled');
+      get: async (_context, runId) => runs.get(runId) ?? null,
+      startBarrier: async (context, input) => {
+        if (options.providerResult !== 'succeeded') {
+          throw new ProviderUnavailableError('Provider-backed execution is not enabled');
+        }
+        const storedQuote = quotes.get(input.quoteId);
+        if (storedQuote === undefined) throw new TypeError('In-memory quote was unavailable');
+        const line = storedQuote.quote.nodeLines[0];
+        if (line === undefined)
+          throw new TypeError('In-memory quote did not contain a priced node');
+        const runId = next('run');
+        const reservationId = next('reservation');
+        const run: RunRecord = {
+          runId,
+          projectId: storedQuote.projectId,
+          canvasId: storedQuote.canvasId,
+          canvasRevisionId: storedQuote.quote.canvasRevisionId,
+          quoteId: input.quoteId,
+          status: 'succeeded',
+          reservationId,
+        };
+        runs.set(runId, run);
+        const attemptId = next('attempt');
+        const providerJobId = next('provider-job');
+        const runNodeId = next('run-node');
+        const artifactId = next('artifact');
+        const providerRegistrationId = 'provider-fal';
+        const captureMicros = storedQuote.quote.maximumChargeMicros.toString(10);
+        const captureCausativeKey = `run:${runId}:attempt:${attemptId}:capture`;
+        const contentHash = 'a'.repeat(64);
+        const artifact = {
+          id: artifactId,
+          workspace_id: context.workspace_id,
+          project_id: storedQuote.projectId,
+          run_id: runId,
+          canvas_revision_id: storedQuote.quote.canvasRevisionId,
+          artifact_kind: 'provider_output',
+          status: 'available',
+          object_key: `workspaces/${context.workspace_id}/runs/${runId}/artifacts/${artifactId}.png`,
+          content_hash: contentHash,
+          mime_type: 'image/png',
+          byte_size: 1024,
+        };
+        receipts.set(runId, {
+          run: {
+            id: runId,
+            workspace_id: context.workspace_id,
+            project_id: storedQuote.projectId,
+            canvas_id: storedQuote.canvasId,
+            canvas_revision_id: storedQuote.quote.canvasRevisionId,
+            quote_id: input.quoteId,
+            status: 'succeeded',
+          },
+          reservation: {
+            id: reservationId,
+            workspace_id: context.workspace_id,
+            run_id: runId,
+            amount_micros: captureMicros,
+            captured_micros: captureMicros,
+            released_micros: '0',
+          },
+          ledger: [
+            {
+              id: 'ledger-capture-debit',
+              transaction_id: 'capture-transaction',
+              entry_type: 'capture',
+              account_code: 'wallet_reserved',
+              direction: 'debit',
+              amount_micros: captureMicros,
+              causative_key: captureCausativeKey,
+              run_id: runId,
+            },
+            {
+              id: 'ledger-capture-credit',
+              transaction_id: 'capture-transaction',
+              entry_type: 'capture',
+              account_code: 'usage_expense',
+              direction: 'credit',
+              amount_micros: captureMicros,
+              causative_key: captureCausativeKey,
+              run_id: runId,
+            },
+          ],
+          artifacts: [artifact],
+          lineage: [],
+          attempts: [
+            {
+              id: attemptId,
+              run_id: runId,
+              run_node_id: runNodeId,
+              provider_registration_id: providerRegistrationId,
+              attempt_number: 1,
+              status: 'succeeded',
+            },
+          ],
+          provider_jobs: [
+            {
+              id: providerJobId,
+              run_id: runId,
+              attempt_id: attemptId,
+              provider_registration_id: providerRegistrationId,
+              status: 'succeeded',
+            },
+          ],
+          run_nodes: [
+            {
+              id: runNodeId,
+              run_id: runId,
+              node_key: line.nodeId,
+              model_route_id: line.modelRouteId,
+              status: 'succeeded',
+            },
+          ],
+          model_routes: [
+            {
+              id: line.modelRouteId,
+              provider_registration_id: providerRegistrationId,
+              route_key: 'fal/flux-2-pro/masters',
+              provider_model_id: line.providerModelId,
+              status: 'enabled',
+            },
+          ],
+          provider_registrations: [
+            { id: providerRegistrationId, provider_key: 'fal', status: 'enabled' },
+          ],
+        });
+        return { runId, reservationId, status: 'queued' };
       },
       requestCancellation: async () => ({ status: 'conflict', actualState: 'failed' }),
     },
@@ -384,8 +524,9 @@ export function createInMemoryHarnessTransport(): HarnessTransport {
     async explainModel() {
       return { status: 'not_found' };
     },
-    async getReceipt() {
-      return { status: 'not_found' };
+    async getReceipt(input) {
+      const receipt = receipts.get(input.run_id);
+      return receipt === undefined ? { status: 'not_found' } : { status: 'ok', receipt };
     },
     async ingestFalWebhook() {
       return { status: 'provider_unavailable' };
@@ -399,7 +540,7 @@ export class DirectHandlerTransport implements HarnessTransport {
   constructor(private readonly handlers: P0RestHandlers) {}
 
   async call(
-    operation: HarnessOperation,
+    operation: HarnessTransportOperation,
     input: Readonly<Record<string, unknown>>,
   ): Promise<HarnessResult> {
     try {
@@ -433,13 +574,13 @@ export class DirectHandlerTransport implements HarnessTransport {
 }
 
 export interface StagingWireRequest {
-  readonly method: 'POST';
+  readonly method: 'GET' | 'POST';
   readonly path: string;
   readonly headers: Readonly<Record<string, string>>;
-  readonly body: Readonly<Record<string, unknown>>;
+  readonly body?: Readonly<Record<string, unknown>>;
 }
 
-const MUTATING_HARNESS_OPERATIONS = new Set<HarnessOperation>([
+const MUTATING_HARNESS_OPERATIONS = new Set<HarnessTransportOperation>([
   'create_workspace',
   'create_project',
   'create_canvas',
@@ -449,7 +590,7 @@ const MUTATING_HARNESS_OPERATIONS = new Set<HarnessOperation>([
 ]);
 
 export function buildStagingWireRequest(
-  operation: HarnessOperation,
+  operation: HarnessTransportOperation,
   input: Readonly<Record<string, unknown>>,
   accessToken: string,
 ): StagingWireRequest {
@@ -510,12 +651,15 @@ export function buildStagingWireRequest(
       headers,
       body: { expected_revision_id: input.expected_revision_id },
     };
-  return {
-    method: 'POST',
-    path: `/v1/quotes/${id('quote_id')}/runs`,
-    headers,
-    body: { confirmed: input.confirmed, confirmation_token: input.confirmation_token },
-  };
+  if (operation === 'start_run')
+    return {
+      method: 'POST',
+      path: `/v1/quotes/${id('quote_id')}/runs`,
+      headers,
+      body: { confirmed: input.confirmed, confirmation_token: input.confirmation_token },
+    };
+  if (operation === 'get_run') return { method: 'GET', path: `/v1/runs/${id('run_id')}`, headers };
+  return { method: 'GET', path: `/v1/runs/${id('run_id')}/receipt`, headers };
 }
 
 export class StagingLaunchPackTransport implements HarnessTransport {
@@ -523,21 +667,24 @@ export class StagingLaunchPackTransport implements HarnessTransport {
     private readonly baseUrl: string,
     private readonly accessToken: string,
     private readonly fetchImplementation: typeof fetch = fetch,
+    private readonly observeResponseBody?: (rawResponseText: string) => void,
   ) {}
 
   async call(
-    operation: HarnessOperation,
+    operation: HarnessTransportOperation,
     input: Readonly<Record<string, unknown>>,
   ): Promise<HarnessResult> {
     const request = buildStagingWireRequest(operation, input, this.accessToken);
     const response = await this.fetchImplementation(`${this.baseUrl}${request.path}`, {
       method: request.method,
       headers: request.headers,
-      body: JSON.stringify(request.body),
+      ...(request.body === undefined ? {} : { body: JSON.stringify(request.body) }),
     });
+    const rawResponseText = await response.text();
+    this.observeResponseBody?.(rawResponseText);
     let body: unknown;
     try {
-      body = (await response.json()) as unknown;
+      body = JSON.parse(rawResponseText) as unknown;
     } catch {
       throw new HarnessFlowError({
         code: 'TRANSPORT_ERROR',

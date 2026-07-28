@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "build": "wrangler deploy --dry-run --env staging --outdir dist --x-provision=false --x-auto-create=false",
+    "canary:single-image": "tsx tools/single-image-canary.ts",
     "launch-pack:harness": "tsx tools/launch-pack-harness.ts",
     "lint": "eslint . --max-warnings 0",
     "types:generate": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings",
