@@ -61,8 +61,8 @@ select is(
 select is(
   public.claim_provider_webhook_event('fal', 'fal-event-durable-001', 'request-claim-002')
     ->> 'claim',
-  'duplicate',
-  'a second claim for the same provider event is detected durably'
+  'in_progress',
+  'a second fresh claim for the same provider event is detected durably'
 );
 
 reset role;
@@ -74,7 +74,7 @@ select is(
     where provider = 'fal' and event_id = 'fal-event-durable-001'
   ),
   1,
-  'duplicate claims create exactly one durable row'
+  'concurrent claims create exactly one durable row'
 );
 
 select is(
@@ -84,7 +84,7 @@ select is(
     where provider = 'fal' and event_id = 'fal-event-durable-001'
   ),
   'request-claim-001',
-  'a duplicate cannot overwrite the original claim evidence'
+  'an in-progress claim cannot overwrite the original claim evidence'
 );
 
 select * from finish();

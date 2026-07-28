@@ -17,14 +17,25 @@ function withProcessLocalFastPath(durable: WebhookEventDedupPort): WebhookEventD
       const key = `${provider}:${eventId}`;
       if (processLocalClaims.has(key)) return 'duplicate';
 
-      const claim = await durable.claim(provider, eventId);
+      return durable.claim(provider, eventId);
+    },
+    async markProcessed(provider, eventId) {
+      const marked = await durable.markProcessed(provider, eventId);
+      if (!marked) return false;
+
+      const key = `${provider}:${eventId}`;
       processLocalClaims.set(key, Date.now());
       // Bound memory for long-lived isolates. PostgreSQL remains the durable authority.
       if (processLocalClaims.size > 10_000) {
         const oldest = processLocalClaims.keys().next().value;
         if (oldest !== undefined) processLocalClaims.delete(oldest);
       }
-      return claim;
+      return true;
+    },
+    async release(provider, eventId) {
+      const released = await durable.release(provider, eventId);
+      if (released) processLocalClaims.delete(`${provider}:${eventId}`);
+      return released;
     },
   };
 }
@@ -38,16 +49,19 @@ export function createFalWebhookVerifierPort(
   requestId: string,
 ): FalWebhookVerifierPort {
   const durableDedup = createFalWebhookPrivilegedClaimPort(bindings, requestId);
+  const lifecycleDedup = withProcessLocalFastPath(durableDedup);
   const hmacSecret = bindings.FAL_WEBHOOK_SECRET;
   const verifier = new FalWebhookVerifier(
     {
       ...(hmacSecret === undefined ? {} : { hmacSecret }),
       fetchImplementation: (input, init) => fetch(input, init),
     },
-    withProcessLocalFastPath(durableDedup),
+    lifecycleDedup,
     systemClock,
   );
   return {
     verifyAndMap: (request: FalWebhookRequest) => verifier.verifyAndMap(request),
+    markProcessed: (provider, eventId) => lifecycleDedup.markProcessed(provider, eventId),
+    release: (provider, eventId) => lifecycleDedup.release(provider, eventId),
   };
 }

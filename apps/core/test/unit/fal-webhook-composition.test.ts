@@ -12,7 +12,7 @@ describe('fal webhook composition', () => {
     vi.unstubAllGlobals();
   });
 
-  it('binds workerd global fetch and durably claims before accepting a signed event', async () => {
+  it('binds workerd fetch and drives the privileged claim lifecycle RPCs', async () => {
     clearFalJwksCacheForTests();
     const { publicKey, privateKey } = generateKeyPairSync('ed25519');
     const jwk = publicKey.export({ format: 'jwk' }) as { x?: string };
@@ -50,6 +50,12 @@ describe('fal webhook composition', () => {
       if (url === 'https://project.supabase.co/rest/v1/rpc/claim_provider_webhook_event') {
         return Promise.resolve(Response.json({ claim: 'claimed' }));
       }
+      if (url === 'https://project.supabase.co/rest/v1/rpc/mark_provider_webhook_event_processed') {
+        return Promise.resolve(Response.json({ marked: true }));
+      }
+      if (url === 'https://project.supabase.co/rest/v1/rpc/release_provider_webhook_event') {
+        return Promise.resolve(Response.json({ released: true }));
+      }
       throw new Error(`Unexpected fixture request: ${url}`);
     }) as unknown as typeof fetch;
     vi.stubGlobal('fetch', receiverSensitiveFetch);
@@ -73,12 +79,18 @@ describe('fal webhook composition', () => {
       provider: 'fal',
       eventId: providerEventId,
     });
+    await expect(verifier.markProcessed('fal', providerEventId)).resolves.toBe(true);
     await expect(verifier.verifyAndMap(request)).rejects.toMatchObject({
       details: { reason: 'webhook_replayed' },
     });
+    await expect(verifier.release('fal', `${providerEventId}-failed`)).resolves.toBe(true);
 
-    expect(receiverSensitiveFetch).toHaveBeenCalledTimes(2);
+    expect(receiverSensitiveFetch).toHaveBeenCalledTimes(4);
     const claimCall = calls.find((call) => call.url.includes('claim_provider_webhook_event'));
+    const markCall = calls.find((call) =>
+      call.url.includes('mark_provider_webhook_event_processed'),
+    );
+    const releaseCall = calls.find((call) => call.url.includes('release_provider_webhook_event'));
     expect(claimCall).toBeDefined();
     expect(claimCall?.headers.get('apikey')).toBe(privilegedKey);
     expect(claimCall?.headers.get('authorization')).toBeNull();
@@ -86,6 +98,14 @@ describe('fal webhook composition', () => {
       p_provider: 'fal',
       p_event_id: providerEventId,
       p_request_id: requestId,
+    });
+    expect(JSON.parse(markCall?.body ?? '{}')).toEqual({
+      p_provider: 'fal',
+      p_event_id: providerEventId,
+    });
+    expect(JSON.parse(releaseCall?.body ?? '{}')).toEqual({
+      p_provider: 'fal',
+      p_event_id: `${providerEventId}-failed`,
     });
   });
 

@@ -70,3 +70,18 @@ export type {
   QuoteNodeRequest,
   QuotePriceComponent,
 } from './quote';
+export {
+  attemptCaptureCausativeKey,
+  attemptRefundCausativeKey,
+  deriveFalCaptureAmount,
+  planRunSettlement,
+  runReleaseCausativeKey,
+} from './settlement';
+export type {
+  AttemptCapturePlan,
+  AttemptSettlementOutcome,
+  FalCaptureDerivation,
+  FalCatalogCapturePrice,
+  RunSettlementPlan,
+  VerifiedFalOutputMeasurement,
+} from './settlement';

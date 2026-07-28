@@ -12,7 +12,9 @@ export interface FalWebhookRequest {
 }
 
 export interface WebhookEventDedupPort {
-  claim(provider: 'fal', eventId: string): Promise<'claimed' | 'duplicate'>;
+  claim(provider: 'fal', eventId: string): Promise<'claimed' | 'duplicate' | 'in_progress'>;
+  markProcessed(provider: 'fal', eventId: string): Promise<boolean>;
+  release(provider: 'fal', eventId: string): Promise<boolean>;
 }
 
 export interface EpochClockPort {
@@ -369,11 +371,23 @@ export class FalWebhookVerifier {
     eventId: string,
     now: number,
   ): Promise<VerifiedFalWebhook> {
-    if ((await this.dedup.claim('fal', eventId)) === 'duplicate') {
+    const claim = await this.dedup.claim('fal', eventId);
+    if (claim === 'duplicate') {
       throw new ProviderError('provider_error', 'fal webhook event was already processed', false, {
         reason: 'webhook_replayed',
         eventId,
       });
+    }
+    if (claim === 'in_progress') {
+      throw new ProviderError(
+        'provider_error',
+        'fal webhook event is already being processed',
+        true,
+        {
+          reason: 'webhook_in_progress',
+          eventId,
+        },
+      );
     }
     const payload = parseJsonObject(new TextDecoder().decode(rawBody), 'fal');
     const providerJobId = payload.request_id;

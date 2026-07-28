@@ -59,6 +59,8 @@ export interface FalWebhookVerifierPort {
       headers: Readonly<Record<string, string | undefined>>;
     }>,
   ): Promise<VerifiedFalWebhookIdentity>;
+  markProcessed(provider: 'fal', eventId: string): Promise<boolean>;
+  release(provider: 'fal', eventId: string): Promise<boolean>;
 }
 
 export interface V1Dependencies {
@@ -257,29 +259,32 @@ async function handleFalWebhook(
   const falWebhook =
     dependencies.falWebhook ?? createFalWebhookVerifierPort(context.env, context.get('requestId'));
   const rawBody = new Uint8Array(await context.req.arrayBuffer());
+  let identity: VerifiedFalWebhookIdentity;
   try {
-    const identity = await falWebhook.verifyAndMap({
+    identity = await falWebhook.verifyAndMap({
       rawBody,
       headers: Object.fromEntries(context.req.raw.headers.entries()),
     });
-    const result = await dependencies.handlers.ingest_fal_webhook({
-      identity: {
-        provider: identity.provider,
-        event_id: identity.eventId,
-        dedup_key: identity.eventId,
-      },
-      event: identity,
-    });
-    return mapResult(context, route, result);
   } catch (error) {
     const providerError = error as ProviderBoundaryError;
     if (
       providerError.code === 'provider_error' &&
       providerError.details?.reason === 'webhook_replayed'
     ) {
+      return context.json(safeSuccess(context, { accepted: true, idempotent: true }), 200);
+    }
+    if (
+      providerError.code === 'provider_error' &&
+      providerError.details?.reason === 'webhook_in_progress'
+    ) {
       return context.json(
-        safeError(context, 'PROVIDER_REJECTED', 'The provider event was already processed.'),
-        409,
+        safeError(
+          context,
+          'PROVIDER_REJECTED',
+          'The provider event is already being processed.',
+          true,
+        ),
+        503,
       );
     }
     if (
@@ -307,6 +312,65 @@ async function handleFalWebhook(
       401,
     );
   }
+
+  let result: P0HandlerResult;
+  try {
+    result = await dependencies.handlers.ingest_fal_webhook({
+      identity: {
+        provider: identity.provider,
+        event_id: identity.eventId,
+        dedup_key: identity.eventId,
+      },
+      event: identity,
+    });
+  } catch {
+    try {
+      await falWebhook.release(identity.provider, identity.eventId);
+    } catch {
+      // Preserve the original ingest failure. The five-minute stale window remains a recovery path
+      // when the best-effort release RPC itself is unavailable.
+    }
+    return context.json(
+      safeError(context, 'INTERNAL_ERROR', 'Webhook processing is temporarily unavailable.', true),
+      503,
+    );
+  }
+
+  if (result.status !== 'ok') {
+    try {
+      await falWebhook.release(identity.provider, identity.eventId);
+    } catch {
+      // The original handler result remains authoritative for this response.
+    }
+    return mapResult(context, route, result);
+  }
+
+  try {
+    const marked = await falWebhook.markProcessed(identity.provider, identity.eventId);
+    if (!marked) {
+      return context.json(
+        safeError(
+          context,
+          'INTERNAL_ERROR',
+          'Webhook processing could not be durably acknowledged.',
+          true,
+        ),
+        503,
+      );
+    }
+  } catch {
+    return context.json(
+      safeError(
+        context,
+        'INTERNAL_ERROR',
+        'Webhook processing could not be durably acknowledged.',
+        true,
+      ),
+      503,
+    );
+  }
+
+  return mapResult(context, route, result);
 }
 
 async function handleClientRoute(

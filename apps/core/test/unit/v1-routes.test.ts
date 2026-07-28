@@ -254,22 +254,34 @@ describe('P0 /v1 route boundary', () => {
   it('mounts fal raw-body signature verification and durable event dedup', async () => {
     const secret = 'fixture-webhook-secret';
     const claimed = new Set<string>();
-    const verifier = new FalWebhookVerifier(
-      secret,
-      {
-        claim: async (_provider, eventId) => {
-          if (claimed.has(eventId)) return 'duplicate';
-          claimed.add(eventId);
-          return 'claimed';
-        },
+    const processed = new Set<string>();
+    const dedup = {
+      claim: async (_provider: 'fal', eventId: string) => {
+        if (processed.has(eventId)) return 'duplicate' as const;
+        if (claimed.has(eventId)) return 'in_progress' as const;
+        claimed.add(eventId);
+        return 'claimed' as const;
       },
-      { nowEpochSeconds: () => 2_000 },
-    );
+      markProcessed: async (_provider: 'fal', eventId: string) => {
+        if (!claimed.has(eventId)) return false;
+        processed.add(eventId);
+        return true;
+      },
+      release: async (_provider: 'fal', eventId: string) => {
+        if (processed.has(eventId)) return false;
+        return claimed.delete(eventId);
+      },
+    };
+    const verifier = new FalWebhookVerifier(secret, dedup, { nowEpochSeconds: () => 2_000 });
     const webhookHandler = vi.fn(async () => ({ status: 'ok' as const, accepted: true }));
     const app = createCoreApp(
       dependencies({
         handlers: { ...handlersWith(), ingest_fal_webhook: webhookHandler },
-        falWebhook: verifier,
+        falWebhook: {
+          verifyAndMap: (request) => verifier.verifyAndMap(request),
+          markProcessed: dedup.markProcessed,
+          release: dedup.release,
+        },
       }),
     );
     const payload = JSON.stringify({ request_id: 'fal-job-1', status: 'IN_PROGRESS' });
@@ -299,8 +311,11 @@ describe('P0 /v1 route boundary', () => {
       { method: 'POST', headers, body: payload },
       workerBindings,
     );
-    expect(replay.status).toBe(409);
-    expect(ApiErrorEnvelopeSchema.parse(await replay.json()).error.code).toBe('PROVIDER_REJECTED');
+    expect(replay.status).toBe(200);
+    expect(ApiSuccessEnvelopeSchema.parse(await replay.json()).data).toEqual({
+      accepted: true,
+      idempotent: true,
+    });
 
     const badSignature = await app.request(
       '/v1/webhooks/fal',
@@ -321,6 +336,91 @@ describe('P0 /v1 route boundary', () => {
     );
   });
 
+  it('returns retryable 503 for an event whose claim is in progress', async () => {
+    const app = createCoreApp(
+      dependencies({
+        falWebhook: {
+          verifyAndMap: async () => {
+            throw Object.assign(new Error('claim in progress'), {
+              code: 'provider_error',
+              retryable: true,
+              details: { reason: 'webhook_in_progress' },
+            });
+          },
+          markProcessed: async () => true,
+          release: async () => true,
+        },
+      }),
+    );
+
+    const response = await app.request(
+      '/v1/webhooks/fal',
+      {
+        method: 'POST',
+        headers: { 'x-request-id': 'request-v1-in-progress' },
+        body: '{}',
+      },
+      workerBindings,
+    );
+
+    expect(response.status).toBe(503);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error).toMatchObject({
+      code: 'PROVIDER_REJECTED',
+      retryable: true,
+    });
+  });
+
+  it('releases the claim after thrown ingest failure before returning retryable 503', async () => {
+    const ordering: string[] = [];
+    const app = createCoreApp(
+      dependencies({
+        handlers: {
+          ...handlersWith(),
+          ingest_fal_webhook: async () => {
+            ordering.push('ingest');
+            throw new Error('fixture ingest failure');
+          },
+        },
+        falWebhook: {
+          verifyAndMap: async () => {
+            ordering.push('claim');
+            return {
+              provider: 'fal',
+              eventId: 'fal-event-release-order',
+              receivedAtEpochSeconds: 2_000,
+              attempt: { providerJobId: 'fal-job-release-order', status: { state: 'running' } },
+            };
+          },
+          markProcessed: async () => {
+            ordering.push('mark');
+            return true;
+          },
+          release: async () => {
+            ordering.push('release');
+            return true;
+          },
+        },
+      }),
+    );
+
+    const response = await app.request(
+      '/v1/webhooks/fal',
+      {
+        method: 'POST',
+        headers: { 'x-request-id': 'request-v1-release-order' },
+        body: '{}',
+      },
+      workerBindings,
+    );
+
+    expect(response.status).toBe(503);
+    expect(ordering).toEqual(['claim', 'ingest', 'release']);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error).toMatchObject({
+      code: 'INTERNAL_ERROR',
+      retryable: true,
+    });
+  });
+
   it('returns a retryable error when durable webhook replay protection is unavailable', async () => {
     const app = createCoreApp(
       dependencies({
@@ -331,6 +431,8 @@ describe('P0 /v1 route boundary', () => {
               details: { reason: 'webhook_dedup_unavailable' },
             });
           },
+          markProcessed: async () => true,
+          release: async () => true,
         },
       }),
     );

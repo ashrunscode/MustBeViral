@@ -946,6 +946,33 @@ export type Database = {
           },
         ];
       };
+      provider_webhook_events: {
+        Row: {
+          claimed_at: string;
+          event_id: string;
+          processed_at: string | null;
+          provider: string;
+          request_id: string;
+          status: string;
+        };
+        Insert: {
+          claimed_at?: string;
+          event_id: string;
+          processed_at?: string | null;
+          provider: string;
+          request_id: string;
+          status?: string;
+        };
+        Update: {
+          claimed_at?: string;
+          event_id?: string;
+          processed_at?: string | null;
+          provider?: string;
+          request_id?: string;
+          status?: string;
+        };
+        Relationships: [];
+      };
       provider_registrations: {
         Row: {
           created_at: string;
@@ -1309,6 +1336,21 @@ export type Database = {
         };
         Returns: Json;
       };
+      claim_provider_webhook_event: {
+        Args: {
+          p_event_id: string;
+          p_provider: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      mark_provider_webhook_event_processed: {
+        Args: {
+          p_event_id: string;
+          p_provider: string;
+        };
+        Returns: Json;
+      };
       record_ledger_movement: {
         Args: {
           p_amount_micros: number;
@@ -1319,6 +1361,13 @@ export type Database = {
           p_reservation_id: string;
           p_run_id: string;
           p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      release_provider_webhook_event: {
+        Args: {
+          p_event_id: string;
+          p_provider: string;
         };
         Returns: Json;
       };

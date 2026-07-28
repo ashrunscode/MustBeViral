@@ -342,8 +342,16 @@ describe('fal queue launch drivers', () => {
 });
 
 describe('fal signed webhook verifier', () => {
-  const createVerifier = (dedupResult: 'claimed' | 'duplicate' = 'claimed') => {
-    const dedup: WebhookEventDedupPort = { claim: vi.fn().mockResolvedValue(dedupResult) };
+  const createDedup = (
+    dedupResult: 'claimed' | 'duplicate' | 'in_progress' = 'claimed',
+  ): WebhookEventDedupPort => ({
+    claim: vi.fn().mockResolvedValue(dedupResult),
+    markProcessed: vi.fn().mockResolvedValue(true),
+    release: vi.fn().mockResolvedValue(true),
+  });
+
+  const createVerifier = (dedupResult: 'claimed' | 'duplicate' | 'in_progress' = 'claimed') => {
+    const dedup = createDedup(dedupResult);
     return {
       dedup,
       verifier: new FalWebhookVerifier(
@@ -399,9 +407,19 @@ describe('fal signed webhook verifier', () => {
     });
   });
 
+  it('reports a fresh concurrent claim as retryable in progress', async () => {
+    const recorded = fixture<WebhookFixture>('webhook/replayed.json');
+    const { verifier } = createVerifier('in_progress');
+    await expect(verifier.verifyAndMap(requestFrom(recorded))).rejects.toMatchObject({
+      code: 'provider_error',
+      retryable: true,
+      details: { reason: 'webhook_in_progress' },
+    });
+  });
+
   it('rejects stale timestamps and missing webhook credentials', async () => {
     const recorded = fixture<WebhookFixture>('webhook/valid.json');
-    const dedup: WebhookEventDedupPort = { claim: vi.fn().mockResolvedValue('claimed') };
+    const dedup = createDedup();
     const stale = new FalWebhookVerifier(
       webhookFixtureMaterial,
       dedup,
@@ -447,7 +465,7 @@ describe('fal signed webhook verifier', () => {
       if (this !== undefined) throw new TypeError('Illegal invocation');
       return Promise.resolve(jwksResponse());
     }) as unknown as typeof fetch;
-    const dedup: WebhookEventDedupPort = { claim: vi.fn().mockResolvedValue('claimed') };
+    const dedup = createDedup();
     const verifier = new FalWebhookVerifier(
       {
         fetchImplementation,
@@ -485,7 +503,7 @@ describe('fal signed webhook verifier', () => {
     vi.stubGlobal('fetch', defaultFetch);
     const defaultVerifier = new FalWebhookVerifier(
       { jwksUrl: 'https://jwks.test/keys' },
-      { claim: vi.fn().mockResolvedValue('claimed') },
+      createDedup(),
       { nowEpochSeconds: () => 1_784_451_600 },
     );
     await expect(
