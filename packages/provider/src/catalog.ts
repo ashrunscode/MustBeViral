@@ -5,6 +5,31 @@ const CLOSED_GATES = {
   retentionCleared: false,
 } as const;
 
+/**
+ * Retention for OpenRouter is enforced per request rather than promised in a contract, which is
+ * why this gate could open without a DPA. Measured 2026-07-29:
+ *
+ * - `zdr: true` plus `data_collection: 'deny'` restricts routing to zero-retention endpoints.
+ * - `provider.only` pins the serving host, because ZDR governs *retention* and not *jurisdiction*:
+ *   without the allowlist the selected model routed to StreamLake on 2 of 3 probes.
+ * - The control fails closed. An unsatisfiable allowlist returns HTTP 404 rather than falling back
+ *   to an uncleared host, and `assertOpenRouterServingProviderAllowed` re-checks the host that
+ *   actually served each completion.
+ *
+ * Price is confirmed against measured live cost rather than a published rate card: OpenRouter
+ * reports `usage.cost` per request, and every live call in the trial matched the catalog rate.
+ *
+ * Declared above `createOpenRouterCopyDescriptor` on purpose - `openRouterCopyDescriptor` calls
+ * that factory at module scope, so a later `const` would be in its temporal dead zone.
+ *
+ * Evidence: governance/evidence/WP-P0-001/openrouter-blind-eval/washbodega-trial/decision.md
+ * and .../price-accuracy-retest/findings.md
+ */
+const OPENROUTER_COPY_GATES = {
+  priceConfirmed: true,
+  retentionCleared: true,
+} as const;
+
 export interface OpenRouterCopyModelConfig {
   readonly modelId: string;
   readonly inputPerMillionMicros: number;
@@ -72,7 +97,7 @@ export function createOpenRouterCopyDescriptor(model: OpenRouterCopyModelConfig)
       inputSchemaVersion: 'openrouter.chat-completions.input.v1',
       outputSchemaVersion: 'openrouter.chat-completions.output.v1',
     },
-    enableGates: CLOSED_GATES,
+    enableGates: OPENROUTER_COPY_GATES,
     idempotencyPolicy: 'billing_key_header',
   };
 }
@@ -159,7 +184,10 @@ export const falFluxKontextProDescriptor = {
     inputSchemaVersion: 'fal.flux-kontext-pro.input.v1',
     outputSchemaVersion: 'fal.image.output.v1',
   },
-  enableGates: CLOSED_GATES,
+  // Same fal delivery mechanics as Flux 2 Pro, whose reduced-exposure basis was proven end to end
+  // by a real generation: authenticated download, canonical copy into private R2, content hash,
+  // capture, zero residual reservation, and no provider URL persisted or exposed as an artifact.
+  enableGates: FLUX_2_PRO_REDUCED_EXPOSURE_GATES,
   idempotencyPolicy: 'reconcile_ambiguous',
 } as const satisfies DriverDescriptor;
 
@@ -186,7 +214,10 @@ export const falSeedanceProFastDescriptor = {
     inputSchemaVersion: 'fal.seedance-1-pro-fast.input.v1',
     outputSchemaVersion: 'fal.video.output.v1',
   },
-  enableGates: CLOSED_GATES,
+  // Same reduced-exposure basis as the fal image routes. Note this is the only route whose price
+  // is per second rather than per call, so a wrong duration multiplies spend instead of adding to
+  // it; create_quote validates duration_seconds as a positive integer before pricing it.
+  enableGates: FLUX_2_PRO_REDUCED_EXPOSURE_GATES,
   idempotencyPolicy: 'reconcile_ambiguous',
 } as const satisfies DriverDescriptor;
 

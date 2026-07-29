@@ -152,28 +152,16 @@ describe('versioned launch catalog', () => {
     for (const descriptor of launchDriverDescriptors) {
       expect(descriptor.driverVersion).toBe('1.0.0');
     }
+    // Every launch route is now open for spend. This assertion is the tripwire on that: any
+    // route added or reopened without deliberate review fails here rather than silently billing.
+    const OPEN_GATES = { priceConfirmed: true, retentionCleared: true };
     expect(
       launchDriverDescriptors.map(({ routeId, enableGates }) => ({ routeId, enableGates })),
     ).toEqual([
-      {
-        routeId: openRouterCopyDescriptor.routeId,
-        enableGates: CLOSED_GATES,
-      },
-      {
-        routeId: falFlux2ProDescriptor.routeId,
-        enableGates: {
-          priceConfirmed: true,
-          retentionCleared: true,
-        },
-      },
-      {
-        routeId: falFluxKontextProDescriptor.routeId,
-        enableGates: CLOSED_GATES,
-      },
-      {
-        routeId: falSeedanceProFastDescriptor.routeId,
-        enableGates: CLOSED_GATES,
-      },
+      { routeId: openRouterCopyDescriptor.routeId, enableGates: OPEN_GATES },
+      { routeId: falFlux2ProDescriptor.routeId, enableGates: OPEN_GATES },
+      { routeId: falFluxKontextProDescriptor.routeId, enableGates: OPEN_GATES },
+      { routeId: falSeedanceProFastDescriptor.routeId, enableGates: OPEN_GATES },
     ]);
   });
 });
@@ -292,6 +280,30 @@ describe('fal queue launch drivers', () => {
     await expect(
       driver.submit({ billingIdempotencyKey: 'billing-fal-auth', payload: { prompt: 'Fixture.' } }),
     ).rejects.toMatchObject({ code: 'auth_missing' });
+    expect(transport.requests).toHaveLength(0);
+  });
+
+  it('refuses a fal route whose price is not confirmed, before touching transport', async () => {
+    // Every launch fal route now ships with open gates, so nothing else in this suite still
+    // exercises the price gate on the fal path. Constructed closed on purpose: the guarantee is
+    // that an unconfirmed price cannot spend, independent of which routes happen to be open.
+    const transport = new FixtureTransport([]);
+    const driver = new FalQueueDriver(
+      { ...falFlux2ProDescriptor, enableGates: CLOSED_GATES },
+      transport,
+      fixtureCredential,
+      fixtureFalWebhookUrl,
+    );
+    await expect(
+      driver.submit({
+        billingIdempotencyKey: 'billing-fal-closed',
+        payload: { prompt: 'Fixture.' },
+      }),
+    ).rejects.toMatchObject({
+      code: 'provider_error',
+      retryable: false,
+      details: { reason: 'price_not_confirmed' },
+    });
     expect(transport.requests).toHaveLength(0);
   });
 

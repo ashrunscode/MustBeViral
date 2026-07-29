@@ -114,7 +114,9 @@ describe('OpenRouter copy catalog', () => {
         driverVersion: '1.0.0',
         provider: 'openrouter',
         endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-        enableGates: { priceConfirmed: false, retentionCleared: false },
+        // Opened on measured evidence: per-request ZDR plus a jurisdiction allowlist that fails
+        // closed, and live usage.cost matching the catalog rate.
+        enableGates: { priceConfirmed: true, retentionCleared: true },
       });
     }
   });
@@ -371,9 +373,16 @@ describe('OpenRouter copy driver', () => {
     ).rejects.toMatchObject({ code: 'payload_invalid', retryable: false });
   });
 
-  it('blocks the closed catalog route before any HTTP call', async () => {
+  it('blocks a closed catalog route before any HTTP call', async () => {
+    // The live copy route's gates are open, so this constructs a closed descriptor explicitly.
+    // The guarantee under test is that an unconfirmed price stops a request before it can spend,
+    // and it must keep holding no matter which routes happen to be open in the catalog.
+    const closedDescriptor: DriverDescriptor = {
+      ...fixtureDescriptor,
+      enableGates: { priceConfirmed: false, retentionCleared: false },
+    };
     const transport = new RecordingTransport([]);
-    const driver = new OpenRouterCopyDriver(fixtureDescriptor, transport, fixtureCredential);
+    const driver = new OpenRouterCopyDriver(closedDescriptor, transport, fixtureCredential);
 
     await expect(
       driver.submit({ billingIdempotencyKey: 'billing-openrouter-closed', payload: validInput }),
