@@ -109,6 +109,57 @@ describe('findCopyClaimsViolations', () => {
   });
 });
 
+describe('conditional requirements', () => {
+  // Both cases below are real defects measured in trial output against WashBodega's published
+  // pricing, where the statement is true in isolation and misleading without its condition.
+  const POLICY: CopyClaimsPolicy = {
+    prohibited: [],
+    conditional: [
+      {
+        id: 'per_pound_price_without_minimum',
+        when: /\$1\.29\s*(per pound|\/\s?lb)/iu,
+        require: /15\s?lb/iu,
+        description: 'a per-pound price must carry its stated minimum',
+      },
+      {
+        id: 'late_hours_without_both_days',
+        when: /1:00\s?AM/iu,
+        require: /friday/iu,
+        description: 'late closing applies to Friday and Saturday, not Saturday alone',
+      },
+    ],
+  };
+
+  it('flags a per-pound price quoted without its minimum', () => {
+    const violations = findCopyClaimsViolations(
+      '**Primary text:** Wash, Dry & Fold is $1.29 per pound. Drop it off today.',
+      POLICY,
+    );
+    expect(violations.map((v) => v.ruleId)).toEqual(['per_pound_price_without_minimum']);
+  });
+
+  it('accepts the same price when the minimum travels with it', () => {
+    expect(
+      findCopyClaimsViolations(
+        '**Primary text:** Wash, Dry & Fold is $1.29 per pound with a 15 lb minimum.',
+        POLICY,
+      ),
+    ).toEqual([]);
+  });
+
+  it('flags late hours attributed to Saturday alone', () => {
+    const violations = findCopyClaimsViolations(
+      '**Primary text:** Open daily 7:00 AM to 11:00 PM, Saturday until 1:00 AM.',
+      POLICY,
+    );
+    expect(violations.map((v) => v.ruleId)).toEqual(['late_hours_without_both_days']);
+  });
+
+  it('stays silent when the triggering fact is absent', () => {
+    expect(findCopyClaimsViolations('**Primary text:** Drop it off. We fold.', POLICY)).toEqual([]);
+  });
+});
+
 describe('assertCopyClaimsPolicyHonored', () => {
   it('returns silently for compliant copy', () => {
     expect(() => {

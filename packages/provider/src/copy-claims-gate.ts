@@ -17,11 +17,31 @@ export interface ProhibitedClaimRule {
   readonly description: string;
 }
 
+/**
+ * "If this appears, that must appear too."
+ *
+ * Earned from measured output rather than imagined: a real published price is only true with the
+ * condition attached to it. The trial produced copy quoting $1.29/lb without its 15 lb minimum,
+ * and copy promising late hours on "Saturday" when the store is open late Friday *and* Saturday.
+ * Neither is a false statement in isolation, which is precisely why a prohibition list cannot
+ * catch them.
+ */
+export interface ConditionalRequirement {
+  readonly id: string;
+  /** When this matches the copy... */
+  readonly when: RegExp;
+  /** ...this must also match, or the copy is incomplete. */
+  readonly require: RegExp;
+  readonly description: string;
+}
+
 export interface CopyClaimsPolicy {
   /** Brief-derived prohibitions, e.g. "no price may appear in this campaign". */
   readonly prohibited: readonly ProhibitedClaimRule[];
   /** Strings a brief locks to exact wording, e.g. a registered tagline. Compared verbatim. */
   readonly requiredVerbatim?: readonly string[];
+  /** Facts that may not travel without their qualifying condition. */
+  readonly conditional?: readonly ConditionalRequirement[];
 }
 
 export interface CopyClaimsViolation {
@@ -66,6 +86,11 @@ export function stripModelAuthoredComplianceNotes(markdown: string): string {
   );
 }
 
+/** Rules may be authored with /g, whose lastIndex would otherwise persist between calls. */
+function stateless(pattern: RegExp): RegExp {
+  return new RegExp(pattern.source, pattern.flags.replace(/g/gu, ''));
+}
+
 export function findCopyClaimsViolations(
   markdown: string,
   policy: CopyClaimsPolicy,
@@ -74,10 +99,7 @@ export function findCopyClaimsViolations(
   const violations: CopyClaimsViolation[] = [];
 
   for (const rule of [...COPY_DELIVERABILITY_RULES, ...policy.prohibited]) {
-    // Rules may be authored with /g, whose lastIndex would otherwise persist between calls.
-    const match = copy.match(
-      new RegExp(rule.pattern.source, rule.pattern.flags.replace(/g/gu, '')),
-    );
+    const match = copy.match(stateless(rule.pattern));
     if (match !== null) {
       violations.push({
         ruleId: rule.id,
@@ -95,6 +117,17 @@ export function findCopyClaimsViolations(
         evidence: required,
       });
     }
+  }
+
+  for (const rule of policy.conditional ?? []) {
+    const trigger = copy.match(stateless(rule.when));
+    if (trigger === null) continue;
+    if (stateless(rule.require).test(copy)) continue;
+    violations.push({
+      ruleId: rule.id,
+      description: rule.description,
+      evidence: trigger[0].trim().slice(0, 120),
+    });
   }
 
   return violations;

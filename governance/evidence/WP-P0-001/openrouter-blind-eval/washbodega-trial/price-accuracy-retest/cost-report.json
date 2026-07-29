@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "zdrEnforced": true,
+  "providerAllowlist": [
+    "deepinfra",
+    "together",
+    "fireworks",
+    "nebius",
+    "parasail",
+    "coreweave",
+    "cloudflare"
+  ],
+  "rows": [
+    {
+      "modelId": "qwen/qwen3-30b-a3b-instruct-2507",
+      "tag": "selected",
+      "briefId": "WB-01",
+      "http": 200,
+      "servedBy": "CoreWeave",
+      "finish": "stop",
+      "cost": 0.0004383,
+      "error": null
+    },
+    {
+      "modelId": "qwen/qwen3-30b-a3b-instruct-2507",
+      "tag": "selected",
+      "briefId": "WB-02",
+      "http": 200,
+      "servedBy": "Nebius",
+      "finish": "stop",
+      "cost": 0.0004493,
+      "error": null
+    },
+    {
+      "modelId": "qwen/qwen3-30b-a3b-instruct-2507",
+      "tag": "selected",
+      "briefId": "WB-03",
+      "http": 200,
+      "servedBy": "Nebius",
+      "finish": "stop",
+      "cost": 0.0002828,
+      "error": null
+    },
+    {
+      "modelId": "deepseek/deepseek-v3.2",
+      "tag": "fallback",
+      "briefId": "WB-01",
+      "http": 200,
+      "servedBy": "DeepInfra",
+      "finish": "stop",
+      "cost": 0.00067168,
+      "error": null
+    },
+    {
+      "modelId": "deepseek/deepseek-v3.2",
+      "tag": "fallback",
+      "briefId": "WB-02",
+      "http": 200,
+      "servedBy": "DeepInfra",
+      "finish": "stop",
+      "cost": 0.00061916,
+      "error": null
+    },
+    {
+      "modelId": "deepseek/deepseek-v3.2",
+      "tag": "fallback",
+      "briefId": "WB-03",
+      "http": 200,
+      "servedBy": "DeepInfra",
+      "finish": "stop",
+      "cost": 0.00049886,
+      "error": null
+    },
+    {
+      "modelId": "openai/gpt-5.4",
+      "tag": "anchor",
+      "briefId": "WB-01",
+      "http": 404,
+      "servedBy": null,
+      "finish": null,
+      "cost": null,
+      "error": "No allowed providers are available for the selected model."
+    },
+    {
+      "modelId": "openai/gpt-5.4",
+      "tag": "anchor",
+      "briefId": "WB-02",
+      "http": 404,
+      "servedBy": null,
+      "finish": null,
+      "cost": null,
+      "error": "No allowed providers are available for the selected model."
+    },
+    {
+      "modelId": "openai/gpt-5.4",
+      "tag": "anchor",
+      "briefId": "WB-03",
+      "http": 404,
+      "servedBy": null,
+      "finish": null,
+      "cost": null,
+      "error": "No allowed providers are available for the selected model."
+    }
+  ]
+}
