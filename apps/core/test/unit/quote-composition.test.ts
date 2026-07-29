@@ -10,7 +10,7 @@ import {
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
   falSeedanceProFastDescriptor,
-  moonshotKimiK26Descriptor,
+  openRouterCopyDescriptor,
 } from '../../../../packages/provider/src/catalog';
 import {
   createSupabaseHandlerPorts,
@@ -51,7 +51,7 @@ const brief = Object.fromEntries(
 const launchGraph = buildGoldenLaunchPackGraph({ ...brief, briefId: 'GB-01' });
 
 const routeFixtures = [
-  [moonshotKimiK26Descriptor, '60000000-0000-4000-8000-000000000001', 'request', 150_000],
+  [openRouterCopyDescriptor, '60000000-0000-4000-8000-000000000001', 'request', 150_000],
   [falFlux2ProDescriptor, '60000000-0000-4000-8000-000000000002', 'image', 500_000],
   [falFluxKontextProDescriptor, '60000000-0000-4000-8000-000000000003', 'image', 200_000],
   [falSeedanceProFastDescriptor, '60000000-0000-4000-8000-000000000004', 'video_second', 100_000],

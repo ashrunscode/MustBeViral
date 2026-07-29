@@ -9,6 +9,7 @@ import {
   falSeedanceProFastDescriptor,
   launchDriverDescriptors,
   moonshotKimiK26Descriptor,
+  openRouterCopyDescriptor,
 } from './catalog';
 import {
   OutboxDispatcher,
@@ -111,7 +112,8 @@ describe('versioned launch catalog', () => {
   it('pins exact launch routes, model ids, prices, versions, and evidence gates', () => {
     expect(launchDriverDescriptors).toHaveLength(4);
     expect(launchDriverDescriptors.map((entry) => entry.modelId)).toEqual([
-      'kimi-k2.6',
+      // Copy moved off the Moonshot direct route to the OpenRouter gateway.
+      'qwen/qwen3-30b-a3b-instruct-2507',
       'fal-ai/flux-2-pro',
       'fal-ai/flux-kontext/pro',
       'fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
@@ -122,6 +124,12 @@ describe('versioned launch catalog', () => {
     // Historical quote catalog key stays stable; Lite was retired on fal.
     expect(falSeedanceProFastDescriptor.routeId).toBe('fal/seedance-1.0-lite/motion');
     expect(falSeedanceLiteDescriptor).toBe(falSeedanceProFastDescriptor);
+    expect(openRouterCopyDescriptor.price).toEqual({
+      kind: 'text_tokens',
+      inputPerMillionMicros: 48_000,
+      outputPerMillionMicros: 193_000,
+    });
+    // The retired Moonshot descriptor keeps its pinned price so historical quotes stay auditable.
     expect(moonshotKimiK26Descriptor.price).toEqual({
       kind: 'text_tokens',
       inputPerMillionMicros: 950_000,
@@ -148,7 +156,7 @@ describe('versioned launch catalog', () => {
       launchDriverDescriptors.map(({ routeId, enableGates }) => ({ routeId, enableGates })),
     ).toEqual([
       {
-        routeId: moonshotKimiK26Descriptor.routeId,
+        routeId: openRouterCopyDescriptor.routeId,
         enableGates: CLOSED_GATES,
       },
       {

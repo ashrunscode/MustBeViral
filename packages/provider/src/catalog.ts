@@ -11,36 +11,42 @@ export interface OpenRouterCopyModelConfig {
   readonly outputPerMillionMicros: number;
 }
 
-/** Default candidates for the blind OpenRouter copy evaluation, in documented review order. */
+/**
+ * Copy models cleared by the WashBodega trial, in documented preference order. Evidence:
+ * governance/evidence/WP-P0-001/openrouter-blind-eval/washbodega-trial/decision.md
+ *
+ * The selected model is 55x cheaper than the openai/gpt-5.4 anchor it replaces, but cost is not
+ * why it won: copy is roughly 0.04% of pack cost, so the switch saves about $0.0126 per pack. It
+ * was selected as the best of the cheap slate on craft, not the cheapest of it - qwen3.7-flash was
+ * 35% cheaper again and was disqualified for shipping copy sets with no hook field.
+ */
 export const OPENROUTER_COPY_MODEL_CONFIGS = [
   {
-    modelId: 'google/gemini-3.5-flash-lite',
-    inputPerMillionMicros: 300_000,
-    outputPerMillionMicros: 2_500_000,
+    modelId: 'qwen/qwen3-30b-a3b-instruct-2507',
+    inputPerMillionMicros: 48_000,
+    outputPerMillionMicros: 193_000,
   },
   {
-    modelId: 'openai/gpt-5.6-luna',
-    inputPerMillionMicros: 500_000,
-    outputPerMillionMicros: 3_000_000,
-  },
-  {
-    modelId: 'anthropic/claude-sonnet-5',
-    inputPerMillionMicros: 2_000_000,
-    outputPerMillionMicros: 10_000_000,
-  },
-  {
-    modelId: 'openai/gpt-5.4',
-    inputPerMillionMicros: 2_500_000,
-    outputPerMillionMicros: 15_000_000,
+    modelId: 'deepseek/deepseek-v3.2',
+    inputPerMillionMicros: 269_000,
+    outputPerMillionMicros: 400_000,
   },
 ] as const satisfies readonly OpenRouterCopyModelConfig[];
 
 /**
- * Disqualified default candidate: google/gemini-3.6-flash.
+ * Disqualified candidates, kept as a record so a future slate does not re-test them blind.
  *
- * A live max_tokens=700 probe spent 668 of 696 completion tokens on reasoning, truncated the copy,
- * and cost roughly 10x the viable candidates. It then rejected reasoning.enabled=false by
- * returning no choices array. Keep it out until that behavior is fixed and requalified.
+ * - google/gemini-3.6-flash: a max_tokens=700 probe spent 668 of 696 completion tokens on
+ *   reasoning, truncated the copy, and cost roughly 10x the viable candidates. It then rejected
+ *   reasoning.enabled=false by returning no choices array.
+ * - qwen/qwen3.7-flash: cheapest measured candidate, but omitted the required Hook field from
+ *   three copy sets and attested in its compliance notes to an edit it never made.
+ * - z-ai/glm-4.7-flash: invented an unsupported turnaround claim and misplaced the store in
+ *   "West Houston" when it is Southwest Houston - a claims-discipline failure, not a style one.
+ * - mistralai/mistral-small-3.2-24b-instruct: produced three near-identical angles and wrapped
+ *   output in a code fence.
+ * - openai/gpt-5.4 and anthropic/claude-sonnet-5: cleanest output, excluded by the vendor-tier
+ *   mandate. gpt-5.4 is retained in evidence as the quality anchor for future slates.
  */
 
 /**
@@ -73,6 +79,17 @@ export function createOpenRouterCopyDescriptor(model: OpenRouterCopyModelConfig)
 
 export const openRouterCopyCandidateDescriptors = OPENROUTER_COPY_MODEL_CONFIGS.map(
   createOpenRouterCopyDescriptor,
+);
+
+/**
+ * The launch copy route, pinned to the model the WashBodega trial selected.
+ *
+ * `routeId` is deliberately model-agnostic, so swapping the copy model later repoints
+ * `provider_model_id` on the existing route rather than minting a new route key - the same shape
+ * the Seedance repoint used. Moving *provider* is what forced a new key here; moving model does not.
+ */
+export const openRouterCopyDescriptor = createOpenRouterCopyDescriptor(
+  OPENROUTER_COPY_MODEL_CONFIGS[0],
 );
 
 const FLUX_2_PRO_REDUCED_EXPOSURE_GATES = {
@@ -177,7 +194,7 @@ export const falSeedanceProFastDescriptor = {
 export const falSeedanceLiteDescriptor = falSeedanceProFastDescriptor;
 
 export const launchDriverDescriptors = [
-  moonshotKimiK26Descriptor,
+  openRouterCopyDescriptor,
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
   falSeedanceProFastDescriptor,

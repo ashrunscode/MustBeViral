@@ -3,7 +3,7 @@ import {
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
   falSeedanceProFastDescriptor,
-  moonshotKimiK26Descriptor,
+  openRouterCopyDescriptor,
 } from '../../../../packages/provider/src/catalog';
 import type { CatalogQuotePlan } from '../../../../packages/contracts/src/index';
 import type { GraphSnapshot } from '../../../../packages/graph/src/index';
@@ -36,7 +36,10 @@ export interface LaunchCatalogRecords {
 const routeDefinitions = [
   {
     role: 'copy_set',
-    routeKey: moonshotKimiK26Descriptor.routeId,
+    // Repointed off the retired Moonshot direct route. Catalog v1 carries no price for this route
+    // key, so selectedCatalog skips v1 as incomplete and resolves v2 - no immutable row is edited,
+    // and quotes already issued against v1 keep resolving through their pinned version id.
+    routeKey: openRouterCopyDescriptor.routeId,
     unit: 'request',
     quantity: () => 1n,
     fixturePriceMicros: 150_000,
@@ -139,7 +142,7 @@ export function fixtureLaunchCatalogRecords(): LaunchCatalogRecords {
   const versionId = 'golden-launch-pack-v1';
   const routes = routeDefinitions.map((definition) => {
     const descriptor = [
-      moonshotKimiK26Descriptor,
+      openRouterCopyDescriptor,
       falFlux2ProDescriptor,
       falFluxKontextProDescriptor,
       falSeedanceProFastDescriptor,

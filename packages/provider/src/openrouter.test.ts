@@ -5,8 +5,10 @@ import {
   OPENROUTER_COPY_MODEL_CONFIGS,
   openRouterCopyCandidateDescriptors,
 } from './catalog';
-import { ProviderTransportFailure } from './errors';
+import { ProviderError, ProviderTransportFailure } from './errors';
 import {
+  assertOpenRouterServingProviderAllowed,
+  OPENROUTER_PROVIDER_ALLOWLIST,
   OPENROUTER_REASONING_DISABLED,
   OPENROUTER_RETENTION_CONTROL,
   OpenRouterCompletionTruncatedError,
@@ -85,34 +87,25 @@ beforeEach(() => {
 });
 
 describe('OpenRouter copy catalog', () => {
-  it('records every verified candidate without choosing a default and keeps all gates closed', () => {
-    expect(openRouterCopyCandidateDescriptors).toHaveLength(4);
+  it('records the cleared candidates in preference order and keeps all gates closed', () => {
+    // Slate replaced by the WashBodega trial: cheaper than the openai/gpt-5.4 anchor and off the
+    // OpenAI/Anthropic vendor tier. Evidence:
+    // governance/evidence/WP-P0-001/openrouter-blind-eval/washbodega-trial/decision.md
+    expect(openRouterCopyCandidateDescriptors).toHaveLength(2);
     expect(openRouterCopyCandidateDescriptors.map((descriptor) => descriptor.modelId)).toEqual([
-      'google/gemini-3.5-flash-lite',
-      'openai/gpt-5.6-luna',
-      'anthropic/claude-sonnet-5',
-      'openai/gpt-5.4',
+      'qwen/qwen3-30b-a3b-instruct-2507',
+      'deepseek/deepseek-v3.2',
     ]);
     expect(openRouterCopyCandidateDescriptors.map((descriptor) => descriptor.price)).toEqual([
       {
         kind: 'text_tokens',
-        inputPerMillionMicros: 300_000,
-        outputPerMillionMicros: 2_500_000,
+        inputPerMillionMicros: 48_000,
+        outputPerMillionMicros: 193_000,
       },
       {
         kind: 'text_tokens',
-        inputPerMillionMicros: 500_000,
-        outputPerMillionMicros: 3_000_000,
-      },
-      {
-        kind: 'text_tokens',
-        inputPerMillionMicros: 2_000_000,
-        outputPerMillionMicros: 10_000_000,
-      },
-      {
-        kind: 'text_tokens',
-        inputPerMillionMicros: 2_500_000,
-        outputPerMillionMicros: 15_000_000,
+        inputPerMillionMicros: 269_000,
+        outputPerMillionMicros: 400_000,
       },
     ]);
     for (const descriptor of openRouterCopyCandidateDescriptors) {
@@ -124,6 +117,46 @@ describe('OpenRouter copy catalog', () => {
         enableGates: { priceConfirmed: false, retentionCleared: false },
       });
     }
+  });
+});
+
+describe('OpenRouter jurisdiction control', () => {
+  it('pins routing to the cleared host set on every request', () => {
+    // ZDR governs retention, not jurisdiction: a live probe measured that without this allowlist
+    // the selected model routed to StreamLake on 2 of 3 requests.
+    expect(OPENROUTER_RETENTION_CONTROL.provider.only).toBe(OPENROUTER_PROVIDER_ALLOWLIST);
+    expect(OPENROUTER_RETENTION_CONTROL).toMatchObject({
+      zdr: true,
+      provider: { data_collection: 'deny' },
+    });
+  });
+
+  it('accepts a serving host from the allowlist regardless of casing or separators', () => {
+    for (const host of ['DeepInfra', 'coreweave', 'Cloud-Flare', 'Nebius']) {
+      expect(() => {
+        assertOpenRouterServingProviderAllowed(host);
+      }).not.toThrow();
+    }
+  });
+
+  it('rejects a completion served from an uncleared host', () => {
+    let thrown: unknown;
+    try {
+      assertOpenRouterServingProviderAllowed('StreamLake');
+    } catch (error) {
+      thrown = error;
+    }
+    expect(thrown).toBeInstanceOf(ProviderError);
+    const error = thrown as ProviderError;
+    expect(error.retryable).toBe(false);
+    expect(error.details).toMatchObject({ reason: 'serving_provider_not_allowed' });
+  });
+
+  it('tolerates a response that omits the provider field', () => {
+    // Absence is not evidence of a bad host; the request-side allowlist remains the primary gate.
+    expect(() => {
+      assertOpenRouterServingProviderAllowed(undefined);
+    }).not.toThrow();
   });
 });
 

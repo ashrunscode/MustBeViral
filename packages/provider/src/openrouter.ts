@@ -17,12 +17,33 @@ import {
 } from './types';
 
 /**
- * Mandatory retention control, not a routing preference. Every OpenRouter request must include
- * this complete object so an upstream that cannot deny data collection fails closed.
+ * Inference hosts cleared to serve copy. Zero-data-retention constrains whether an upstream
+ * *keeps* the payload; it says nothing about *where* inference runs. A 2026-07-28 live probe
+ * measured that with `zdr: true` and `data_collection: 'deny'` and no allowlist, routing landed
+ * on StreamLake for 2 of 3 requests, so jurisdiction has to be pinned separately.
+ *
+ * The same probe confirmed the control fails closed: an unsatisfiable allowlist returns HTTP 404
+ * ("No allowed providers are available for the selected model.") rather than quietly falling back
+ * to an uncleared host. Adding a host here is a governance decision, not a performance tweak.
+ */
+export const OPENROUTER_PROVIDER_ALLOWLIST = [
+  'deepinfra',
+  'together',
+  'fireworks',
+  'nebius',
+  'parasail',
+  'coreweave',
+  'cloudflare',
+] as const;
+
+/**
+ * Mandatory retention and jurisdiction control, not a routing preference. Every OpenRouter request
+ * must include this complete object so an upstream that cannot deny data collection, or that sits
+ * outside the cleared host set, fails closed.
  */
 export const OPENROUTER_RETENTION_CONTROL = {
   zdr: true,
-  provider: { data_collection: 'deny' },
+  provider: { data_collection: 'deny', only: OPENROUTER_PROVIDER_ALLOWLIST },
 } as const;
 
 /**
@@ -300,6 +321,30 @@ export function assertOpenRouterRetentionConstraintsHonored(status: number, body
   );
 }
 
+/**
+ * Defence in depth behind the request-side allowlist. The request already pins `provider.only`,
+ * so this should never fire; it exists because the allowlist is a routing *instruction* and the
+ * serving host is the only *evidence* of where the payload actually went. A silent widening
+ * upstream would otherwise be indistinguishable from the control working.
+ */
+export function assertOpenRouterServingProviderAllowed(servedBy: unknown): void {
+  if (servedBy === undefined || servedBy === null) return;
+  if (typeof servedBy !== 'string' || servedBy.length === 0) {
+    throw new ProviderError('payload_invalid', 'OpenRouter provider shape drifted', false);
+  }
+  const normalized = servedBy.toLowerCase().replaceAll(/[\s_-]/gu, '');
+  const allowed = OPENROUTER_PROVIDER_ALLOWLIST.some(
+    (candidate) => candidate.replaceAll(/[\s_-]/gu, '') === normalized,
+  );
+  if (allowed) return;
+  throw new ProviderError(
+    'provider_error',
+    `OpenRouter served the request from an uncleared host: ${servedBy}`,
+    false,
+    { reason: 'serving_provider_not_allowed', servedBy },
+  );
+}
+
 function parseOpenRouterUsage(usage: unknown): ParsedOpenRouterUsage {
   if (typeof usage !== 'object' || usage === null || Array.isArray(usage)) {
     throw new ProviderError('payload_invalid', 'OpenRouter usage shape drifted', false);
@@ -357,6 +402,7 @@ export function parseOpenRouterCompletion(
   context: OpenRouterCompletionContext,
 ): ParsedOpenRouterCompletion {
   const payload = parseJsonObject(body, 'openrouter');
+  assertOpenRouterServingProviderAllowed(payload.provider);
   const choices = payload.choices;
   if (!Array.isArray(choices)) {
     throw new OpenRouterUnsupportedReasoningParameterError(context);

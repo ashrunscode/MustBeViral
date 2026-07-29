@@ -10,6 +10,7 @@ export interface CoreBindings extends Omit<
   | 'FAL_WEBHOOK_URL'
   | 'FAL_WEBHOOK_SECRET'
   | 'MOONSHOT_API_KEY'
+  | 'OPENROUTER_API_KEY'
   | 'MEDIA_BUCKET'
   | 'SUPABASE_SECRET_KEY'
   | 'SUPABASE_SERVICE_ROLE_KEY'
@@ -25,6 +26,14 @@ export interface CoreBindings extends Omit<
   /** Optional legacy HMAC fixture material. Live fal webhooks verify via public JWKS. */
   readonly FAL_WEBHOOK_SECRET?: string;
   readonly MOONSHOT_API_KEY?: string;
+  /**
+   * Optional like every other provider secret. `wrangler types` derives this as required from the
+   * declared environment, but a Worker can be deployed before the secret is set, so the type must
+   * not assert a value the runtime may not have. No consumer composes it yet - the copy route is
+   * still gated closed - and whichever one does must treat absence as fail-closed rather than
+   * trusting the binding to exist.
+   */
+  readonly OPENROUTER_API_KEY?: string;
   readonly MEDIA_BUCKET: R2Bucket;
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;

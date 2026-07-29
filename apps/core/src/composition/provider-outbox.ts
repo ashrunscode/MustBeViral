@@ -1,13 +1,13 @@
 import {
   FalQueueDriver,
-  MoonshotKimiK26Driver,
+  OpenRouterCopyDriver,
   OutboxDispatcher,
   ProviderError,
   ProviderReconciler,
   falFlux2ProDescriptor,
   falFluxKontextProDescriptor,
   falSeedanceProFastDescriptor,
-  moonshotKimiK26Descriptor,
+  openRouterCopyDescriptor,
   type PendingProviderOutboxEvent,
   type PendingProviderReconciliationJob,
   type ProviderJobStatus,
@@ -324,7 +324,11 @@ export function createProviderScheduledLifecycle(
   if (bindings.PROVIDER_RUNS_ENABLED !== 'true') return null;
   const transport = new FetchProviderTransport(fetchImplementation);
   const drivers = [
-    new MoonshotKimiK26Driver(moonshotKimiK26Descriptor, transport, bindings.MOONSHOT_API_KEY),
+    // Copy routes through the OpenRouter gateway, retiring the Moonshot direct route: retention is
+    // enforced programmatically per request (ZDR plus a provider allowlist) instead of resting on a
+    // DPA negotiation. The descriptor's gates are still closed, so composing it here does not make
+    // it dispatchable - the driver also refuses at submit time when the credential is absent.
+    new OpenRouterCopyDriver(openRouterCopyDescriptor, transport, bindings.OPENROUTER_API_KEY),
     new FalQueueDriver(
       falFlux2ProDescriptor,
       transport,
