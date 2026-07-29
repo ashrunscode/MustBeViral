@@ -13,143 +13,143 @@
   "failures": [
     {
       "brief_id": "GB-01",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-02",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-03",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-04",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-05",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-06",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-07",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-08",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-09",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-10",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-11",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-12",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-13",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-14",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-15",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-16",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-17",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-18",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-19",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     },
     {
       "brief_id": "GB-20",
-      "code": "QUOTE_STALE",
-      "message": "The requested state change conflicts with current state.",
-      "operation": "quote_run",
-      "http_status": 409
+      "code": "INSUFFICIENT_BALANCE",
+      "message": "Available balance is insufficient.",
+      "operation": "start_run",
+      "http_status": 402
     }
   ]
 }
