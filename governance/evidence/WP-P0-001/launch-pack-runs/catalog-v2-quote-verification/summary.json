@@ -1,0 +1,155 @@
+{
+  "mode": "staging",
+  "briefs_attempted": 20,
+  "succeeded_to_quote": 0,
+  "quote_stats": {
+    "minimum_micros": "0",
+    "maximum_micros": "0",
+    "average_micros": "0",
+    "aggregate_micros": "0",
+    "usable_pack_gate_micros": "5000000",
+    "at_or_below_usable_pack_gate": 0
+  },
+  "failures": [
+    {
+      "brief_id": "GB-01",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-02",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-03",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-04",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-05",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-06",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-07",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-08",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-09",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-10",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-11",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-12",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-13",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-14",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-15",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-16",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-17",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-18",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-19",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    },
+    {
+      "brief_id": "GB-20",
+      "code": "QUOTE_STALE",
+      "message": "The requested state change conflicts with current state.",
+      "operation": "quote_run",
+      "http_status": 409
+    }
+  ]
+}
