@@ -395,6 +395,17 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     return result;
   }
 
+  /**
+   * Terminalizes runs parked at cancel_requested once their in-flight attempts drain. The
+   * attempt-advance tail deliberately never overwrites a cancelling run, so without this sweep a
+   * cancel issued while work was with the provider would hold its reservation forever.
+   */
+  async finalizeCancelRequested(limit: number): Promise<Readonly<Record<string, unknown>>> {
+    const result = await this.#rpc('finalize_cancel_requested_runs', { p_limit: limit });
+    if (!isRecord(result)) throw unavailable();
+    return result;
+  }
+
   async listPending(limit: number): Promise<readonly PendingProviderReconciliationJob[]> {
     const result = await this.#rpc('list_provider_jobs_for_reconciliation', {
       p_limit: limit,
@@ -491,6 +502,7 @@ export interface ProviderScheduledLifecycle {
   dispatchPending(limit: number): ReturnType<OutboxDispatcher['dispatchPending']>;
   reconcilePending(limit: number): ReturnType<ProviderReconciler['reconcilePending']>;
   reapDeadDispatch(limit: number): Promise<Readonly<Record<string, unknown>>>;
+  finalizeCancelRequested(limit: number): Promise<Readonly<Record<string, unknown>>>;
 }
 
 export function createProviderScheduledLifecycle(
@@ -535,6 +547,7 @@ export function createProviderScheduledLifecycle(
     dispatchPending: (limit) => dispatcher.dispatchPending(limit),
     reconcilePending: (limit) => reconciler.reconcilePending(limit),
     reapDeadDispatch: (limit) => port.reapDeadDispatch(limit),
+    finalizeCancelRequested: (limit) => port.finalizeCancelRequested(limit),
   };
 }
 
@@ -548,6 +561,7 @@ export async function runProviderScheduled(
       dispatch: Awaited<ReturnType<ProviderScheduledLifecycle['dispatchPending']>>;
       reconciliation: Awaited<ReturnType<ProviderScheduledLifecycle['reconcilePending']>>;
       reaped: Readonly<Record<string, unknown>>;
+      finalized: Readonly<Record<string, unknown>>;
     }>
 > {
   if (lifecycle === null) return { status: 'disabled' };
@@ -556,5 +570,6 @@ export async function runProviderScheduled(
   // After dispatch and reconciliation, so a run is only reaped once nothing this cycle could still
   // move it forward.
   const reaped = await lifecycle.reapDeadDispatch(10);
-  return { status: 'ok', dispatch, reconciliation, reaped };
+  const finalized = await lifecycle.finalizeCancelRequested(10);
+  return { status: 'ok', dispatch, reconciliation, reaped, finalized };
 }

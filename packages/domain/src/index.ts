@@ -114,11 +114,23 @@ export const runTransitionTable = {
   cancel_requested: {
     cancel: 'canceled',
     fail: 'failed',
+    // A canceled run that already produced captured successes reports partial_succeeded: the
+    // customer paid for and received that work, and the billing aggregation says so.
+    mark_partial_succeeded: 'partial_succeeded',
     require_reconciliation: 'reconciliation_required',
   },
   canceled: {},
   failed: {},
-  reconciliation_required: {},
+  // Reconciliation is a holding state, not a grave. Without exits, a run parked here held its
+  // reservation forever with no code path out - an unrecoverable fund trap. The reconciler and
+  // operator paths resolve it in every direction the evidence supports.
+  reconciliation_required: {
+    start: 'running',
+    succeed: 'succeeded',
+    mark_partial_succeeded: 'partial_succeeded',
+    fail: 'failed',
+    cancel: 'canceled',
+  },
 } as const satisfies TransitionTable<RunState, RunEvent>;
 
 export const runNodeTransitionTable = {
@@ -152,7 +164,12 @@ export const runNodeTransitionTable = {
   failed: {},
   canceled: {},
   skipped: {},
-  reconciliation_required: {},
+  reconciliation_required: {
+    succeed: 'succeeded',
+    fail: 'failed',
+    cancel: 'canceled',
+    skip: 'skipped',
+  },
 } as const satisfies TransitionTable<RunNodeState, RunNodeEvent>;
 
 export const attemptTransitionTable = {
@@ -191,7 +208,14 @@ export const attemptTransitionTable = {
     mark_ambiguous: 'ambiguous',
   },
   canceled: {},
-  ambiguous: {},
+  // An ambiguous attempt is one whose submission outcome is unknown, not one that is finished.
+  // The reconciler resolves it once the provider answers; without these exits it was terminal in
+  // name only and trapped its run in reconciliation_required.
+  ambiguous: {
+    succeed: 'succeeded',
+    fail: 'failed',
+    cancel: 'canceled',
+  },
 } as const satisfies TransitionTable<AttemptState, AttemptEvent>;
 
 export type TransitionEntity = 'run' | 'run_node' | 'attempt';

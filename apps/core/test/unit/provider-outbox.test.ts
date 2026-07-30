@@ -193,6 +193,7 @@ describe('provider outbox composition', () => {
       dispatchPending: (limit: number) => dispatcher.dispatchPending(limit),
       reconcilePending: async () => ({ checked: 0, updated: 0, failed: 0 }),
       reapDeadDispatch: async () => ({ runs_examined: 0 }),
+      finalizeCancelRequested: async () => ({ examined: 0, finalized: 0 }),
     };
 
     const [first, second] = await Promise.all([

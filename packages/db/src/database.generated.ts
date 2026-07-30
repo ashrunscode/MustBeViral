@@ -1406,6 +1406,10 @@ export type Database = {
         };
         Returns: Json;
       };
+      finalize_cancel_requested_runs: {
+        Args: { p_limit: number };
+        Returns: Json;
+      };
       find_app_idempotency: {
         Args: {
           p_idempotency_key: string;
@@ -1504,6 +1508,15 @@ export type Database = {
         };
         Returns: Json;
       };
+      refund_run_capture: {
+        Args: {
+          p_amount_micros: number;
+          p_reason: string;
+          p_request_id: string;
+          p_run_id: string;
+        };
+        Returns: Json;
+      };
       register_artifact: {
         Args: {
           p_artifact_kind: string;
@@ -1521,6 +1534,10 @@ export type Database = {
       };
       release_provider_webhook_event: {
         Args: { p_event_id: string; p_provider: string };
+        Returns: Json;
+      };
+      request_run_cancellation: {
+        Args: { p_reason: string; p_request_id: string; p_run_id: string };
         Returns: Json;
       };
       start_run_barrier: {

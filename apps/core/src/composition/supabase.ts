@@ -309,6 +309,12 @@ function utcDayWindow(now: string): Readonly<{ start: string; end: string }> {
   };
 }
 
+function runStateFrom(value: unknown): RunRecord['status'] {
+  const state = requiredString(value, 'run.status');
+  if (!RUN_STATES.has(state)) throw new TypeError('Database returned an unsupported run state');
+  return state as RunRecord['status'];
+}
+
 function runRecord(row: Readonly<Record<string, unknown>>, reservationId = ''): RunRecord {
   const status = requiredString(row.status, 'run.status');
   if (!RUN_STATES.has(status)) throw new TypeError('Database returned an unsupported run state');
@@ -764,9 +770,26 @@ export function createSupabaseHandlerPorts(
         });
       },
       async requestCancellation(context, input) {
-        const row = await repositories.runs.get(asTenantContext(context), input.runId);
-        if (row === null) return { status: 'conflict', actualState: 'failed' };
-        return { status: 'conflict', actualState: runRecord(row).status };
+        // The RPC re-checks state under a row lock, cancels attempts that never reached a
+        // provider, leaves in-flight work to the webhook/reconciler, and either terminalizes the
+        // run with a remainder release or parks it at cancel_requested for the finalizer. The
+        // handler's expectedState is not forwarded: the lock-time check is authoritative, and an
+        // equality check against a stale read would conflict legitimate cancels whose runs moved
+        // queued -> dispatching in between.
+        const result = requestInput(
+          await executor.rpc('request_run_cancellation', {
+            p_run_id: input.runId,
+            p_reason: input.reason,
+            p_request_id: context.request_id,
+          }),
+        );
+        if (result.status === 'conflict') {
+          return {
+            status: 'conflict',
+            actualState: runStateFrom(result.actual_state),
+          };
+        }
+        return { status: 'ok' };
       },
     },
     artifacts: {
