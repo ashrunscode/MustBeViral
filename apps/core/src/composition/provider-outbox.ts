@@ -22,6 +22,13 @@ import {
 
 import type { CoreBindings } from '../bindings';
 import { mintArtifactAccessUrl } from './artifact-access';
+import { PrivilegedArtifactMachinePort } from './artifact-machine';
+import {
+  createCopyBytesWriter,
+  ingestCopyCompletion,
+  type CopyIngestDependencies,
+} from './copy-ingest';
+import { createPrivilegedSettlementPort } from './settlement';
 
 const OUTBOX_LEASE_SECONDS = 90;
 const OUTBOX_MAX_ATTEMPTS = 5;
@@ -358,8 +365,10 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
   readonly #leaseOwner: string;
   readonly #fetch: typeof fetch;
   readonly #mintImageUrl: ((image: UpstreamImage) => Promise<string>) | undefined;
+  readonly #bindings: CoreBindings;
 
   constructor(options: PrivilegedRpcOptions) {
+    this.#bindings = options.bindings;
     this.#baseUrl = options.bindings.SUPABASE_URL?.replace(/\/$/u, '');
     this.#privilegedKey =
       options.bindings.SUPABASE_SECRET_KEY ?? options.bindings.SUPABASE_SERVICE_ROLE_KEY;
@@ -381,6 +390,26 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
               mimeType: image.mimeType,
               nowEpochSeconds: Math.floor(Date.now() / 1000),
             });
+  }
+
+  #copyIngestDependencies(): CopyIngestDependencies {
+    const machine = new PrivilegedArtifactMachinePort(this.#bindings, this.#fetch);
+    const settlement = createPrivilegedSettlementPort(this.#bindings, this.#fetch);
+    return {
+      getContext: (providerRequestId) => machine.getCopyContext(providerRequestId),
+      storeBytes: createCopyBytesWriter(this.#bindings),
+      registerArtifact: async (input) => {
+        const registered = await machine.registerArtifact({
+          ...input,
+          artifactKind: 'provider_output',
+          status: 'available',
+        });
+        return { artifactId: registered.artifact.id, replayed: registered.replayed };
+      },
+      advanceAttempt: (input) => machine.advanceCopyAttempt(input),
+      settlement,
+      requestId: this.#leaseOwner,
+    };
   }
 
   async #rpc(functionName: string, body: Readonly<Record<string, unknown>>): Promise<unknown> {
@@ -501,6 +530,33 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
       p_provider_request_id: result.providerJobId,
       p_status: 'queued',
     });
+  }
+
+  /**
+   * Settles a submission that was already complete when submit returned - today only the OpenRouter
+   * copy route. This is the seam that previously did not exist: recordSubmission above deliberately
+   * refuses to forward the driver's 'succeeded' state (a success with no artifact and no capture
+   * breaks the outcomes envelope), and nothing else could ever finish the attempt, so the copy text
+   * was discarded and the run stalled holding its reservation.
+   */
+  async settleSynchronousSubmission(
+    event: PendingProviderOutboxEvent,
+    result: ProviderSubmission,
+  ): Promise<void> {
+    if (result.output === undefined) return;
+    const output = isRecord(result.output) ? result.output : { output: result.output };
+    const cost = output.costMicros;
+    await ingestCopyCompletion(
+      {
+        providerRequestId: result.providerJobId,
+        // The dispatch event is the causal record for a synchronous settlement: there is no provider
+        // webhook id to key idempotency on.
+        eventId: `outbox:${event.eventId}:attempt:${event.attemptId}`,
+        output: result.output,
+        ...(typeof cost === 'bigint' ? { providerCostMicros: cost } : {}),
+      },
+      this.#copyIngestDependencies(),
+    );
   }
 
   async recordAmbiguity(event: PendingProviderOutboxEvent, _error: ProviderError): Promise<void> {

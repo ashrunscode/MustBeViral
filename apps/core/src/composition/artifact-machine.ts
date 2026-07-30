@@ -29,7 +29,13 @@ export interface FalArtifactContext {
   readonly attemptStatus: string;
   readonly providerJobStatus: string;
   readonly assetRole: string;
-  readonly priceUnit: 'image' | 'video_second';
+  /**
+   * `request` is the copy route's unit. It is in this union because the ingest context is shared:
+   * the SQL side also carried a fal-only `unit in ('image','video_second')` filter, shaped like
+   * validation, which meant relaxing only the obvious provider_key check still returned NOT_FOUND
+   * for every copy job.
+   */
+  readonly priceUnit: 'image' | 'video_second' | 'request';
   readonly unitPriceMicros: UsdMicros;
   readonly quotedTotalMicros: UsdMicros;
   readonly reservation: MachineReservation;
@@ -222,13 +228,33 @@ export class PrivilegedArtifactMachinePort {
   }
 
   async getFalContext(providerRequestId: string): Promise<FalArtifactContext> {
+    return await this.#getProviderContext(providerRequestId, 'fal', ['image', 'video_second']);
+  }
+
+  /** Copy's unit is `request`; nothing else is billable on this route. */
+  async getCopyContext(providerRequestId: string): Promise<FalArtifactContext> {
+    return await this.#getProviderContext(providerRequestId, 'openrouter', ['request']);
+  }
+
+  async #getProviderContext(
+    providerRequestId: string,
+    providerKey: string,
+    allowedUnits: readonly FalArtifactContext['priceUnit'][],
+  ): Promise<FalArtifactContext> {
     const raw = record(
-      await this.#rpc('get_fal_artifact_context', {
+      await this.#rpc('get_provider_artifact_context', {
         p_provider_request_id: providerRequestId,
+        p_provider_key: providerKey,
       }),
     );
-    const priceUnit = string(raw.price_unit);
-    if (priceUnit !== 'image' && priceUnit !== 'video_second') throw unavailable();
+    const rawPriceUnit = string(raw.price_unit);
+    // Pin the unit per route rather than accepting the whole union. A copy context arriving with an
+    // image price, or the reverse, means the plan line and the route disagree - which is a pricing
+    // fault, not something to charge for.
+    const priceUnit = allowedUnits.find(
+      (unit): unit is FalArtifactContext['priceUnit'] => unit === rawPriceUnit,
+    );
+    if (priceUnit === undefined) throw unavailable();
     return {
       workspaceId: string(raw.workspace_id),
       projectId: string(raw.project_id),
@@ -302,6 +328,24 @@ export class PrivilegedArtifactMachinePort {
     };
   }
 
+  /**
+   * Sibling of advanceFalAttempt for the synchronous copy route. Both RPCs share
+   * app_private.settle_attempt_transition, so copy settles through exactly the code the fal route
+   * proved - including the wave promotion, which was previously reachable only through the fal-only
+   * entry point and therefore never fired for a launch pack whose wave 1 is all copy.
+   */
+  async advanceCopyAttempt(
+    input: Readonly<{
+      providerRequestId: string;
+      status: 'succeeded' | 'failed';
+      eventId: string;
+      artifactId?: string;
+      captureMicros?: UsdMicros;
+    }>,
+  ): Promise<FalAttemptAdvance> {
+    return await this.#advanceAttempt('advance_copy_provider_attempt', input);
+  }
+
   async advanceFalAttempt(
     input: Readonly<{
       providerRequestId: string;
@@ -311,8 +355,21 @@ export class PrivilegedArtifactMachinePort {
       captureMicros?: UsdMicros;
     }>,
   ): Promise<FalAttemptAdvance> {
+    return await this.#advanceAttempt('advance_fal_provider_attempt', input);
+  }
+
+  async #advanceAttempt(
+    functionName: 'advance_fal_provider_attempt' | 'advance_copy_provider_attempt',
+    input: Readonly<{
+      providerRequestId: string;
+      status: 'running' | 'succeeded' | 'failed';
+      eventId: string;
+      artifactId?: string;
+      captureMicros?: UsdMicros;
+    }>,
+  ): Promise<FalAttemptAdvance> {
     const raw = record(
-      await this.#rpc('advance_fal_provider_attempt', {
+      await this.#rpc(functionName, {
         p_provider_request_id: input.providerRequestId,
         p_status: input.status,
         p_event_id: input.eventId,

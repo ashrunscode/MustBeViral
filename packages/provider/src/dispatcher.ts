@@ -32,6 +32,23 @@ export interface ProviderOutboxPort {
     event: PendingProviderOutboxEvent,
     result: ProviderSubmission | Readonly<{ reconciliationRequired: true }>,
   ): Promise<void>;
+  /**
+   * Settles a submission that was ALREADY complete when submit returned.
+   *
+   * A queued provider (fal) delivers its result later by webhook, and that webhook drives ingest.
+   * A synchronous provider (OpenRouter copy) has no webhook and is deliberately excluded from the
+   * polling reconciler, because its driver has no status() to poll - polling would flip the attempt
+   * to 'ambiguous' and the run to 'reconciliation_required', a state with no exit. That left the
+   * copy attempt with zero routes to a terminal state: it sat at 'submitted' forever holding its
+   * reservation, and because wave promotion runs inside the settlement tail, the whole run stalled.
+   *
+   * Optional so a port that only serves queued providers need not implement it; when absent, a
+   * synchronous submission is left to whatever recovery path the caller has, exactly as before.
+   */
+  settleSynchronousSubmission?(
+    event: PendingProviderOutboxEvent,
+    result: ProviderSubmission,
+  ): Promise<void>;
 }
 
 export interface OutboxDispatchSummary {
@@ -123,6 +140,15 @@ export class OutboxDispatcher {
             payload: event.payload,
           });
           await this.outbox.recordSubmission(event, result);
+          // Order matters: submission is recorded first so the provider_jobs row exists before
+          // settlement looks it up, and so a crash between the two leaves a recoverable
+          // 'submitted' row rather than a capture with no job behind it.
+          if (
+            result.state === 'succeeded' &&
+            this.outbox.settleSynchronousSubmission !== undefined
+          ) {
+            await this.outbox.settleSynchronousSubmission(event, result);
+          }
           publishedResult = result;
           submitted += 1;
         } catch (cause) {
