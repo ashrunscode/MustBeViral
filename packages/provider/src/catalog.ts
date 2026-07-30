@@ -170,13 +170,28 @@ export const falFlux2ProDescriptor = {
   idempotencyPolicy: 'reconcile_ambiguous',
 } as const satisfies DriverDescriptor;
 
+/**
+ * Default adaptation/reframe route.
+ *
+ * `fal-ai/flux-kontext/pro` is not a fal application: its result reads back
+ * `404 {"detail":"Path /pro not found"}`. fal's queue accepts any submit body with `200 IN_QUEUE`
+ * and validates only at execution, so the wrong id looked healthy at submit and surfaced as a
+ * terminal `COMPLETED` carrying no `images` array. The live app is `fal-ai/flux-pro/kontext`, whose
+ * result names the documented required fields (`422` on `prompt` + `image_url`). Probed 2026-07-30
+ * against the live queue with empty bodies, so establishing this cost nothing.
+ *
+ * Mirrors the Seedance repoint: `routeId` stays historical so seeded create_quote plans and issued
+ * quotes keep resolving, and only the provider model/endpoint move. Published price is unchanged at
+ * $0.04 flat per image, so the launch pack still quotes 4,550,000 micros. DB side:
+ * `20260730050000_p0_flux_kontext_pro_repoint`.
+ */
 export const falFluxKontextProDescriptor = {
-  descriptorVersion: '2026-07-19.1',
+  descriptorVersion: '2026-07-30.1',
   driverVersion: '1.0.0',
   provider: 'fal',
   routeId: 'fal/flux-kontext-pro/adaptations',
-  modelId: 'fal-ai/flux-kontext/pro',
-  endpoint: 'https://queue.fal.run/fal-ai/flux-kontext/pro',
+  modelId: 'fal-ai/flux-pro/kontext',
+  endpoint: 'https://queue.fal.run/fal-ai/flux-pro/kontext',
   price: { kind: 'image_flat', perImageMicros: 40_000 },
   capabilities: {
     family: 'image',

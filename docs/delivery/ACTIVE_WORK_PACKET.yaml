@@ -316,9 +316,8 @@ handoff:
     governance/evidence/WP-P0-001/environment-provisioning.md section 4 (operator inputs are listed
     in section 5; the previous pointer to section 6, the 2026-07-20 execution record, was wrong).
   blockers:
-    - A launch pack cannot complete, for six independent reasons and none of them operator inputs.
-      No signed-URL path exists for private R2, so the 10 image-to-image and image-to-video nodes
-      have no fetchable input and all customer artifact delivery is also blocked. Adaptation and
+    - A launch pack cannot complete, for five remaining reasons and none of them operator inputs.
+      Adaptation and
       motion nodes carry no prompt material at all. create_quote hardcodes ready=true, so the graph
       edges that are validated are never translated into scheduling and all 16 attempts are created
       at once. The OpenRouter copy route has no terminal advance, no artifact and no capture, so its
@@ -326,6 +325,24 @@ handoff:
       envelope, making every later fal webhook in that run fail on NaN and 503-loop indefinitely
       after money has been captured. Nothing ever produces approved_output, so create_export can
       never succeed and receipts are unretrievable.
+    - The sixth reason is closed. Signed artifact-access capabilities give the 10 image-to-image and
+      image-to-video nodes a fetchable private-R2 input without putting a bucket-wide R2 credential
+      in the Worker, and they unblock customer artifact delivery. Proven live on staging, where the
+      full negative gate passes against the deployed secret (valid 200 with served bytes hashing to the
+      registered content_hash, expired 410, wrong-object 401, tampered 401, absent 401, 5/5 stable),
+      and fal itself fetched one capability URL and returned a real 1184x880 edit. Evidence in
+      governance/evidence/WP-P0-001/signed-artifact-access.md.
+    - Live probing found two provider defects that no code review would have surfaced, both now fixed
+      and pinned by tests. The pinned Kontext application fal-ai/flux-kontext/pro does not exist on
+      fal - its result reads back 404 "Path /pro not found" - so all 9 adaptation nodes would have
+      failed after the 3 masters they depend on were paid for; it is repointed to
+      fal-ai/flux-pro/kontext in code and in supabase/migrations/20260730050000, keeping the
+      historical route_key and the unchanged $0.04 price so the pack still quotes 4,550,000 micros.
+      Separately the driver built queue status/result URLs by appending to the full submit endpoint,
+      which 405s for every route except flux-2-pro, so the reconciler could never observe a paid
+      Kontext or Seedance artifact. The standing lesson is that fal's queue returns 200 IN_QUEUE for
+      any submit body and validates only at execution, so submit-time success never proves a route is
+      callable.
     - Two settlement holes must close before further spend. The paid-run human-consent gate does not
       verify its token (any string of 16 or more characters passes), which contradicts the MCP
       requirement that tool descriptions cannot imply autonomous spending. And

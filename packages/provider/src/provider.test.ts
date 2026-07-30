@@ -115,9 +115,20 @@ describe('versioned launch catalog', () => {
       // Copy moved off the Moonshot direct route to the OpenRouter gateway.
       'qwen/qwen3-30b-a3b-instruct-2507',
       'fal-ai/flux-2-pro',
-      'fal-ai/flux-kontext/pro',
+      // `fal-ai/flux-kontext/pro` does not exist on fal - its result reads back
+      // `404 Path /pro not found`. The live application is `fal-ai/flux-pro/kontext`.
+      'fal-ai/flux-pro/kontext',
       'fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
     ]);
+    expect(falFluxKontextProDescriptor.endpoint).toBe(
+      'https://queue.fal.run/fal-ai/flux-pro/kontext',
+    );
+    // Historical quote catalog key stays stable across the model repoint, exactly like Seedance.
+    expect(falFluxKontextProDescriptor.routeId).toBe('fal/flux-kontext-pro/adaptations');
+    expect(falFluxKontextProDescriptor.price).toEqual({
+      kind: 'image_flat',
+      perImageMicros: 40_000,
+    });
     expect(falSeedanceProFastDescriptor.endpoint).toBe(
       'https://queue.fal.run/fal-ai/bytedance/seedance/v1/pro/fast/image-to-video',
     );
@@ -442,9 +453,30 @@ describe('fal queue launch drivers', () => {
       delivery: { kind: 'transient_delivery_url' },
     });
     expect(transport.requests[1]?.url).toBe(
-      `${falFlux2ProDescriptor.endpoint}/requests/fal-job-fixture-001`,
+      'https://queue.fal.run/fal-ai/flux-2-pro/requests/fal-job-fixture-001',
     );
   });
+
+  // fal namespaces status/result under the application (the first two path segments) and 405s on a
+  // deeper path. flux-2-pro is the only route where the application and the submit path coincide, so
+  // appending to the submit endpoint looked correct while silently breaking the other two - and the
+  // reconciliation poller is the only caller, so nothing would surface it until a paid artifact was
+  // already stranded. These literals are the live-verified paths, not a restatement of the helper.
+  it.each([
+    [falFlux2ProDescriptor, 'https://queue.fal.run/fal-ai/flux-2-pro/requests/job-1'],
+    [falFluxKontextProDescriptor, 'https://queue.fal.run/fal-ai/flux-pro/requests/job-1'],
+    [falSeedanceProFastDescriptor, 'https://queue.fal.run/fal-ai/bytedance/requests/job-1'],
+  ] as const)(
+    'polls fal status under the application namespace for %#',
+    async (descriptor, url) => {
+      const transport = new FixtureTransport([
+        { status: 200, headers: {}, body: { status: 'IN_QUEUE', request_id: 'job-1' } },
+      ]);
+      const driver = new FalQueueDriver(enabled(descriptor), transport, fixtureCredential);
+      await driver.status('job-1');
+      expect(transport.requests[0]?.url).toBe(`${url}/status`);
+    },
+  );
 
   it.each(falCases)(
     'marks ambiguous submit for every fal route family %s',

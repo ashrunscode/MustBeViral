@@ -10,7 +10,7 @@ Supabase Auth issues user sessions and JWTs. The web application uses supported 
 
 Workspace is the tenant, billing, spend-cap, and deletion boundary. Every tenant-owned row includes `workspace_id` directly or is reachable through a constrained parent with tested RLS. P0 enables one owner per workspace; later roles are additive and cannot weaken existing policies.
 
-Unauthenticated access is limited to health, signed provider webhooks, and explicit public marketing routes. Webhook identity comes from provider signature verification, not a user claim.
+Unauthenticated access is limited to health, signed provider webhooks, explicit public marketing routes, and signed artifact-access capabilities. Webhook identity comes from provider signature verification, not a user claim. An artifact-access capability is a server-minted HMAC token naming exactly one object with its content hash, byte size, mime type, and expiry pinned inside the signed payload; it exists because provider image fetchers send no headers, it is short-lived, and the bucket itself keeps zero external readers - the Worker remains the only reader and serves bytes only against a valid capability.
 
 ## Core relational model
 

@@ -132,6 +132,32 @@ function configuredWebhookUrl(value: string | undefined): string {
   return parsed.toString();
 }
 
+/**
+ * fal namespaces queue status/result under the application - the first two path segments of the
+ * submit URL - and treats anything deeper as a path *within* that application. Submitting to a
+ * deeper path and then polling it returns `405`, so the base must be derived rather than assumed
+ * equal to the submit endpoint. Confirmed live 2026-07-30 across every route we call:
+ *
+ *   POST /fal-ai/flux-2-pro                                   -> GET /fal-ai/flux-2-pro/requests/{id}
+ *   POST /fal-ai/flux-pro/kontext                             -> GET /fal-ai/flux-pro/requests/{id}
+ *   POST /fal-ai/bytedance/seedance/v1/pro/fast/image-to-video -> GET /fal-ai/bytedance/requests/{id}
+ *
+ * Only flux-2-pro is two segments, which is why appending to the submit endpoint appeared to work:
+ * it is the sole route where the application and the submit path coincide. Kontext and Seedance both
+ * `405`, so the reconciliation poller could never observe either one - it would retry until the job
+ * aged out while the paid artifact sat un-ingested.
+ */
+function falQueueRequestsBase(endpoint: string): string {
+  const parsed = new URL(endpoint);
+  const segments = parsed.pathname.split('/').filter((segment) => segment.length > 0);
+  if (segments.length < 2) {
+    throw new ProviderError('provider_error', 'fal endpoint is not an owner/app path', false, {
+      reason: 'endpoint_invalid',
+    });
+  }
+  return `${parsed.origin}/${segments[0]}/${segments[1]}`;
+}
+
 type ParsedQueueStatus =
   ProviderJobStatus | Readonly<{ state: 'completed'; providerJobId: string }>;
 
@@ -266,7 +292,7 @@ export class FalQueueDriver implements VersionedProviderDriver {
     try {
       response = await this.transport.request({
         method: 'GET',
-        url: `${this.descriptor.endpoint}/requests/${encodeURIComponent(providerJobId)}/status`,
+        url: `${falQueueRequestsBase(this.descriptor.endpoint)}/requests/${encodeURIComponent(providerJobId)}/status`,
         headers: { authorization: `Key ${credential}` },
         timeoutMs: 15_000,
       });
@@ -286,7 +312,7 @@ export class FalQueueDriver implements VersionedProviderDriver {
     try {
       resultResponse = await this.transport.request({
         method: 'GET',
-        url: `${this.descriptor.endpoint}/requests/${encodeURIComponent(providerJobId)}`,
+        url: `${falQueueRequestsBase(this.descriptor.endpoint)}/requests/${encodeURIComponent(providerJobId)}`,
         headers: { authorization: `Key ${credential}` },
         timeoutMs: 15_000,
       });

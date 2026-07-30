@@ -484,3 +484,5 @@ export async function exportArtifactObjectKey(
   const contentHash = await sha256Hex(input.bytes);
   return `workspaces/${input.workspaceId}/runs/${input.runId}/exports/${contentHash}.${input.format}`;
 }
+
+export * from './access-token';

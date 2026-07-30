@@ -30,6 +30,7 @@ import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webho
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
+import { artifactContentHeaders, serveArtifactContent } from '../composition/artifact-access';
 import { ArtifactMachineError } from '../composition/artifact-machine';
 import { createFalWebhookVerifierPort } from '../composition/fal-webhook';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
@@ -501,6 +502,61 @@ export function createV1Route(dependencies: V1Dependencies): Hono<CoreHonoEnviro
         : handleClientRoute(context, route, dependencies),
     );
   }
+  // Deliberately outside V1_ROUTE_TABLE and not a V1Operation: authentication is the signed
+  // capability token itself, so this route must never enter the JWT, workspace-resolution or
+  // idempotency machinery. fal's image fetcher sends no headers, which is why the capability
+  // rides in the query string.
+  router.get('/artifacts/:id/content', async (context) => {
+    const token = context.req.query('token');
+    if (token === undefined || token.length === 0) {
+      return context.json(
+        safeError(context, 'UNAUTHENTICATED', 'An artifact access token is required.'),
+        401,
+      );
+    }
+    const result = await serveArtifactContent(
+      context.env,
+      context.req.param('id'),
+      token,
+      Math.floor(Date.now() / 1000),
+    );
+    if (result.status !== 200) {
+      // Structured log line, never the token: this is the observable evidence of who fetched what.
+      console.log(
+        JSON.stringify({
+          level: 'warn',
+          event: 'core.artifact_access.refused',
+          request_id: context.get('requestId'),
+          artifact_id: context.req.param('id'),
+          status: result.status,
+        }),
+      );
+      const message =
+        result.status === 410
+          ? 'The artifact access token has expired.'
+          : result.status === 404
+            ? 'The artifact bytes are not available.'
+            : 'The artifact access token is invalid.';
+      const code =
+        result.status === 404 ? 'NOT_FOUND' : result.status === 410 ? 'EXPIRED' : 'UNAUTHENTICATED';
+      return context.json(safeError(context, code, message), result.status);
+    }
+    console.log(
+      JSON.stringify({
+        level: 'info',
+        event: 'core.artifact_access.served',
+        request_id: context.get('requestId'),
+        artifact_id: result.claims.artifactId,
+        purpose: result.claims.purpose,
+        byte_size: result.claims.byteSize,
+        expires_at_epoch_seconds: result.claims.expiresAtEpochSeconds,
+      }),
+    );
+    return new Response(result.body, {
+      status: 200,
+      headers: artifactContentHeaders(result.claims),
+    });
+  });
   return router;
 }
 

@@ -12,6 +12,7 @@ export interface CoreBindings extends Omit<
   | 'MOONSHOT_API_KEY'
   | 'OPENROUTER_API_KEY'
   | 'CONFIRMATION_SIGNING_KEY'
+  | 'ARTIFACT_ACCESS_SIGNING_KEY'
   | 'MEDIA_BUCKET'
   | 'SUPABASE_SECRET_KEY'
   | 'SUPABASE_SERVICE_ROLE_KEY'
@@ -41,6 +42,12 @@ export interface CoreBindings extends Omit<
    * consent. Never in wrangler.jsonc; installed via `wrangler secret put`.
    */
   readonly CONFIRMATION_SIGNING_KEY?: string;
+  /**
+   * Signs artifact access capability tokens. Optional and fail-closed: without it no token can be
+   * minted or verified, so no artifact bytes can leave the bucket. Installed via
+   * `wrangler secret put`, never in wrangler.jsonc.
+   */
+  readonly ARTIFACT_ACCESS_SIGNING_KEY?: string;
   readonly MEDIA_BUCKET: R2Bucket;
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;
