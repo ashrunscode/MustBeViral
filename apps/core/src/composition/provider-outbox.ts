@@ -200,6 +200,37 @@ export function buildProviderAttemptPayload(
   throw new ProviderError('payload_invalid', `no payload adapter for task ${String(task)}`, false);
 }
 
+/**
+ * Wraps payload construction so a per-attempt problem travels with that attempt instead of
+ * throwing out of the whole claim. `buildProviderAttemptPayload` stays throwing because it is the
+ * unit under test and callers elsewhere want the error; only the expansion needs it captured.
+ */
+function buildAttemptRequest(
+  nodeParameters: unknown,
+  executionPlanLine: unknown,
+  task: string | undefined,
+): Readonly<{ payload: unknown; payloadError?: ProviderError }> {
+  try {
+    return { payload: buildProviderAttemptPayload(nodeParameters, executionPlanLine, task) };
+  } catch (cause) {
+    return {
+      payload: null,
+      payloadError:
+        cause instanceof ProviderError
+          ? cause
+          : new ProviderError(
+              'payload_invalid',
+              'provider payload could not be built',
+              false,
+              {},
+              {
+                cause,
+              },
+            ),
+    };
+  }
+}
+
 interface PrivilegedRpcOptions {
   readonly bindings: CoreBindings;
   readonly leaseOwner: string;
@@ -279,7 +310,9 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
               rawAttempt.billing_idempotency_key,
               'billing idempotency key',
             ),
-            payload: buildProviderAttemptPayload(
+            // Never throws here. A run event covers every attempt of the run, so one unbuildable
+            // node must not abort the claim and strand the attempts that are ready to submit.
+            ...buildAttemptRequest(
               nodeParameters,
               executionPlanLine,
               taskForRoute(requiredString(rawAttempt.route_id, 'route id')),

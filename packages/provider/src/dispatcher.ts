@@ -11,6 +11,15 @@ export interface PendingProviderOutboxEvent {
   readonly billingIdempotencyKey: string;
   readonly payload: unknown;
   readonly executionPlanLine: unknown;
+  /**
+   * Set when this attempt's provider request could not be built.
+   *
+   * Carried per attempt rather than thrown during expansion because a run event covers every
+   * attempt of a run: a single unbuildable node used to abort the whole claim, so a pack submitted
+   * nothing instead of the attempts that were ready. Dispatch treats this exactly like a submit
+   * failure for this attempt and leaves the others alone.
+   */
+  readonly payloadError?: ProviderError;
 }
 
 export interface ProviderOutboxPort {
@@ -65,8 +74,17 @@ export class OutboxDispatcher {
     }
 
     for (const runEvents of eventsByRunEvent.values()) {
-      let failure: Readonly<{ event: PendingProviderOutboxEvent; error: ProviderError }> | null =
-        null;
+      const failures: Readonly<{ event: PendingProviderOutboxEvent; error: ProviderError }>[] = [];
+      /**
+       * A terminal failure outranks a retryable one. If any attempt in the run can never succeed
+       * the pack can never complete, so the event should die now rather than burn its retry budget
+       * waiting on an upstream that will never arrive. Previously the *first* failure won, which
+       * let a retryable "upstream pending" hide a genuinely broken node and vice versa.
+       */
+      const recordableFailure = (): Readonly<{
+        event: PendingProviderOutboxEvent;
+        error: ProviderError;
+      }> | null => failures.find((entry) => !entry.error.retryable) ?? failures[0] ?? null;
       let publishedResult: ProviderSubmission | Readonly<{ reconciliationRequired: true }> | null =
         null;
 
@@ -75,6 +93,14 @@ export class OutboxDispatcher {
         if (existing !== null) {
           publishedResult = existing;
           replayed += 1;
+          continue;
+        }
+        if (event.payloadError !== undefined) {
+          // This attempt has no request to send. Recorded as a failure for the run event so a
+          // retryable cause (an upstream artifact still generating) keeps the event alive for a
+          // later pass, while the attempts that were ready have already submitted above.
+          failures.push({ event, error: event.payloadError });
+          failed += 1;
           continue;
         }
         const driver = this.driversByRoute.get(event.routeId);
@@ -87,7 +113,7 @@ export class OutboxDispatcher {
               routeId: event.routeId,
             },
           );
-          failure ??= { event, error };
+          failures.push({ event, error });
           failed += 1;
           continue;
         }
@@ -117,12 +143,13 @@ export class OutboxDispatcher {
             publishedResult = { reconciliationRequired: true };
             reconciliationRequired += 1;
           } else {
-            failure ??= { event, error };
+            failures.push({ event, error });
             failed += 1;
           }
         }
       }
 
+      const failure = recordableFailure();
       if (failure !== null) {
         await this.outbox.recordFailure(failure.event, failure.error);
       } else {

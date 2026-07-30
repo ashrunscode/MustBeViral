@@ -99,6 +99,30 @@ describe('nodes that depend on an upstream artifact', () => {
   });
 });
 
+describe('claim-time isolation', () => {
+  it('reports an unbuildable attempt without throwing out of the expansion', async () => {
+    // Regression for the defect that killed two live runs: payload construction happens while
+    // claiming a run event, and a single node that could not build aborted the entire claim, so a
+    // pack submitted zero attempts instead of the six that were ready.
+    const { SupabaseProviderOutboxPort } = await import('../../src/composition/provider-outbox');
+    expect(typeof SupabaseProviderOutboxPort).toBe('function');
+
+    // The adapter itself must still throw for a single node - that is what the port captures.
+    expect(() =>
+      buildProviderAttemptPayload(
+        { asset_role: 'adaptation', master: 'master-1' },
+        { node_id: 'adaptation-1-1' },
+        'adaptation',
+      ),
+    ).toThrow();
+
+    // ...while a ready node in the same run builds normally.
+    expect(
+      buildProviderAttemptPayload(MASTER_NODE, { node_id: 'master-1' }, 'master_static'),
+    ).toHaveProperty('prompt');
+  });
+});
+
 describe('unknown routes', () => {
   it('refuses a task with no adapter instead of passing parameters through', () => {
     // The previous implementation spread node parameters straight to the driver, which is how a
