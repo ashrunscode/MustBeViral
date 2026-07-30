@@ -35,7 +35,9 @@ insert into public.canvas_revisions (
 ) values (
   'ab230000-0000-4000-8000-000000000001', 'ab200000-0000-4000-8000-000000000001',
   'ab220000-0000-4000-8000-000000000001', 1, '{"nodes":[],"edges":[]}'::jsonb,
-  repeat('a', 64), 'user', 'reaper fixture'
+  -- canvas_revisions_check1 requires actor_id alongside actor_type 'user'; this is a machine
+  -- fixture with no acting user, so 'system' is both correct and constraint-satisfying.
+  repeat('a', 64), 'system', 'reaper fixture'
 );
 
 insert into public.quotes (

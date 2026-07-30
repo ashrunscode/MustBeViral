@@ -292,7 +292,7 @@ select ok(
   'artifacts retain no direct insert grant'
 );
 
-select like(
+select alike(
   pg_temp.error_of($sql$
     insert into public.artifacts (
       workspace_id, project_id, run_id, run_node_id, canvas_revision_id,
@@ -385,7 +385,7 @@ select is(
   'graph-derived provider lineage uses the accepted adaptation relationship'
 );
 
-select like(
+select alike(
   pg_temp.error_of($sql$
     insert into public.artifact_lineage (
       workspace_id, parent_artifact_id, child_artifact_id, relationship

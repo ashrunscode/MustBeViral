@@ -1,6 +1,6 @@
 begin;
 
-select plan(81);
+select plan(80);
 
 create or replace function pg_temp.sqlstate_of(p_sql text)
 returns text
@@ -482,8 +482,13 @@ from (values
   ('cost_reservations'),
   ('ledger_transactions'),
   ('idempotency_records'),
-  ('audit_events'),
-  ('outbox_events')
+  ('audit_events')
+  -- outbox_events is deliberately absent from this SELECT probe. The probe asserts "a member of
+  -- tenant B sees zero rows of tenant A", which presumes the role may select the table at all.
+  -- outbox_events is machine-owned and carries no SELECT grant to authenticated or anon, so the
+  -- probe errored with permission denied instead of returning 0 and aborted the whole suite. That
+  -- stronger guarantee is asserted directly in 00010_p0_provider_outbox_dispatch. The INSERT and
+  -- UPDATE probes below still cover outbox_events, because denial is exactly what they expect.
 ) as probe(table_name);
 
 select ok(

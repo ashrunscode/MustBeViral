@@ -275,7 +275,7 @@ select is(
   2,
   'skip-locked claimers own disjoint row sets'
 );
-select like(
+select alike(
   upper(pg_get_functiondef(
     'public.claim_outbox_events(integer,text,integer)'::regprocedure
   )),

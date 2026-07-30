@@ -218,7 +218,9 @@ insert into public.quotes (
     '41000000-0000-4000-8000-000000000001',
     '42000000-0000-4000-8000-000000000001',
     '42100000-0000-4000-8000-000000000001',
-    '0c000000-0000-4000-8000-000000000001',
+    -- Resolve the active catalog version rather than pinning one: start_run_barrier requires
+    -- status='active', and every catalog rotation retires the previously pinned id.
+    (select id from public.price_catalog_versions where status = 'active'),
     '[{"node_id":"node-1","model_route_id":"43200000-0000-4000-8000-000000000001","ready":true}]'::jsonb,
     repeat('5', 64),
     2000000,
@@ -232,7 +234,9 @@ insert into public.quotes (
     '41000000-0000-4000-8000-000000000001',
     '42000000-0000-4000-8000-000000000001',
     '42100000-0000-4000-8000-000000000001',
-    '0c000000-0000-4000-8000-000000000001',
+    -- Resolve the active catalog version rather than pinning one: start_run_barrier requires
+    -- status='active', and every catalog rotation retires the previously pinned id.
+    (select id from public.price_catalog_versions where status = 'active'),
     '[{"node_id":"node-1","model_route_id":"43200000-0000-4000-8000-000000000001","ready":true}]'::jsonb,
     repeat('6', 64),
     1000000,
