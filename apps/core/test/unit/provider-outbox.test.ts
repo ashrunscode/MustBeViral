@@ -34,7 +34,16 @@ function expandedAttempt(index: number) {
     provider_registration_id: 'provider-registration-1',
     route_id: falFlux2ProDescriptor.routeId,
     billing_idempotency_key: `run-1:master-${suffix}:1`,
-    node_parameters: { prompt: `Fixture master ${suffix}.` },
+    // Shaped like a real pinned graph node, which carries semantic brief fragments and no prompt.
+    // This fixture previously supplied `prompt` directly, which encoded the passthrough assumption
+    // and is why the missing payload adapter went unnoticed until a live run failed on it.
+    node_parameters: {
+      asset_role: 'master_static',
+      master: index,
+      product: `Fixture product ${suffix}`,
+      packshots: `Fixture packshot direction ${suffix}`,
+      creative_constraints_rights: 'Fixture rights constraint',
+    },
     execution_plan_line: {
       ready: true,
       node_id: `master-${suffix}`,
@@ -98,10 +107,14 @@ describe('provider outbox composition', () => {
     expect(expanded.map((event) => event.billingIdempotencyKey)).toEqual(
       attempts.map((attempt) => attempt.billing_idempotency_key),
     );
-    expect(expanded[0]).toMatchObject({
-      payload: { prompt: 'Fixture master 01.' },
-      executionPlanLine: { node_id: 'master-01' },
-    });
+    // The adapter must compose a provider prompt from the node's brief fragments, not pass them
+    // through: fal validates a non-empty `prompt` and would reject the raw parameters.
+    expect(expanded[0]?.executionPlanLine).toMatchObject({ node_id: 'master-01' });
+    const firstPayload = expanded[0]?.payload as { prompt?: unknown };
+    expect(typeof firstPayload.prompt).toBe('string');
+    expect(firstPayload.prompt).toContain('Fixture packshot direction 01');
+    expect(firstPayload.prompt).toContain('Fixture rights constraint');
+    expect(firstPayload).not.toHaveProperty('asset_role');
   });
 
   it('persists ambiguous submission as unknown without another provider call', async () => {

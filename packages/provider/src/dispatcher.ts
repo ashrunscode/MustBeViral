@@ -142,9 +142,12 @@ export class OutboxDispatcher {
   }
 }
 
+/** Providers whose jobs can be reconciled. OpenRouter joined when copy moved off Moonshot. */
+export type SettleableProvider = 'fal' | 'openrouter' | 'moonshot';
+
 export interface PendingProviderReconciliationJob {
   readonly providerJobId: string;
-  readonly provider: 'moonshot' | 'fal';
+  readonly provider: SettleableProvider;
   readonly routeId: string;
   readonly providerRequestId: string;
   readonly status: 'submitted' | 'unknown';

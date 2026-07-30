@@ -14,6 +14,7 @@ import {
   type ProviderOutboxPort,
   type ProviderReconciliationPort,
   type ProviderSubmission,
+  type SettleableProvider,
   type ProviderTransport,
   type ProviderTransportRequest,
   type ProviderTransportResponse,
@@ -27,6 +28,30 @@ const OUTBOX_RETRY_SECONDS = 30;
 
 function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Providers whose submissions this consumer can account for. Adding a driver without adding it
+ * here would let a real, paid submission be rejected as unreadable on the way back - which is how
+ * the Moonshot-to-OpenRouter swap first went unnoticed on the return path.
+ */
+const SETTLEABLE_PROVIDERS = ['fal', 'openrouter', 'moonshot'] as const;
+
+function isSettleableProvider(value: string): value is SettleableProvider {
+  return SETTLEABLE_PROVIDERS.some((candidate) => candidate === value);
+}
+
+/** Resolves a route key to the descriptor task that decides its payload shape. */
+function taskForRoute(routeId: string): string | undefined {
+  for (const descriptor of [
+    openRouterCopyDescriptor,
+    falFlux2ProDescriptor,
+    falFluxKontextProDescriptor,
+    falSeedanceProFastDescriptor,
+  ]) {
+    if (descriptor.routeId === routeId) return descriptor.capabilities.tasks[0];
+  }
+  return undefined;
 }
 
 function requiredString(value: unknown, field: string): string {
@@ -55,9 +80,48 @@ function misconfigured(): ProviderError {
   );
 }
 
+/**
+ * Raised when a node's inputs exist only after an upstream node produces an artifact.
+ *
+ * Retryable on purpose. Adaptations and motion clips are image-to-image and image-to-video: they
+ * need `image_url` from the master they derive from, which does not exist while that master is
+ * still generating. The dispatch expansion returns every attempt of a run at once with no
+ * readiness ordering, so the only honest answer at this point is "not yet" rather than a request
+ * built from a placeholder.
+ */
+function upstreamArtifactPending(nodeKey: string, dependsOn: string): ProviderError {
+  return new ProviderError(
+    'provider_error',
+    `attempt for ${nodeKey} needs the artifact from ${dependsOn}, which has not been produced yet`,
+    true,
+    { reason: 'upstream_artifact_pending', nodeKey, dependsOn },
+  );
+}
+
+/** Joins the brief fragments a node carries into one prompt, dropping absent ones. */
+function composePrompt(parts: readonly unknown[]): string {
+  return parts
+    .filter((part): part is string => typeof part === 'string' && part.trim().length > 0)
+    .map((part) => part.trim())
+    .join('\n\n');
+}
+
+/**
+ * Translates a pinned graph node into a provider-shaped request.
+ *
+ * This is the seam the drivers were always written against and nothing filled: node parameters are
+ * semantic brief fragments (`product`, `packshots`, `stress_vector`), while every driver validates
+ * a provider request (`prompt`, or `{task, messages}`). The previous implementation spread the
+ * parameters through unchanged, so the first graph-driven dispatch of any route failed
+ * `payload_invalid` - non-retryable, which killed the whole run event on its first attempt.
+ *
+ * Keyed off the descriptor's task rather than the route key so a model repoint cannot silently
+ * change which payload shape is built.
+ */
 export function buildProviderAttemptPayload(
   nodeParameters: unknown,
   executionPlanLine: unknown,
+  task?: string,
 ): Readonly<Record<string, unknown>> {
   if (!isRecord(nodeParameters) || !isRecord(executionPlanLine)) {
     throw new ProviderError(
@@ -66,11 +130,74 @@ export function buildProviderAttemptPayload(
       false,
     );
   }
-  const payload: Record<string, unknown> = { ...nodeParameters };
-  if (payload.duration === undefined && typeof payload.duration_seconds === 'number') {
-    payload.duration = payload.duration_seconds;
+  // Prefer the plan line's node_id: it names the actual node ("copy-1"), which is what an operator
+  // needs to locate a failure. asset_role only says which kind of node it was.
+  const nodeKey =
+    typeof executionPlanLine.node_id === 'string' && executionPlanLine.node_id.length > 0
+      ? executionPlanLine.node_id
+      : typeof nodeParameters.asset_role === 'string'
+        ? nodeParameters.asset_role
+        : 'node';
+
+  if (task === 'copy') {
+    const brief = composePrompt([
+      nodeParameters.product,
+      nodeParameters.offer,
+      nodeParameters.price_presentation,
+      nodeParameters.urgency,
+      nodeParameters.approved_facts,
+      nodeParameters.required_claims_legal,
+      nodeParameters.prohibited_claims,
+      nodeParameters.stress_vector,
+    ]);
+    if (brief.length === 0) {
+      throw new ProviderError('payload_invalid', `copy node ${nodeKey} carries no brief`, false);
+    }
+    return {
+      task: 'copy',
+      messages: [
+        {
+          role: 'system',
+          content: [
+            'You are a senior direct-response copywriter producing ad copy for paid social.',
+            'Use ONLY facts supplied in the brief. Never invent prices, rates, ratings, guarantees, or amenities.',
+            'Reproduce any price verbatim, attached to the correct service, with every condition the brief ties to it.',
+            'Honour every prohibited claim and banned tone. The prohibited list is a hard constraint.',
+          ].join('\n'),
+        },
+        { role: 'user', content: `Campaign brief:\n\n${brief}` },
+      ],
+      maxTokens: 2000,
+    };
   }
-  return payload;
+
+  if (task === 'master_static') {
+    const prompt = composePrompt([
+      nodeParameters.product,
+      nodeParameters.packshots,
+      nodeParameters.creative_constraints_rights,
+    ]);
+    if (prompt.length === 0) {
+      throw new ProviderError(
+        'payload_invalid',
+        `master node ${nodeKey} carries no prompt material`,
+        false,
+      );
+    }
+    return { prompt };
+  }
+
+  if (task === 'adaptation' || task === 'reframe') {
+    const master = typeof nodeParameters.master === 'string' ? nodeParameters.master : 'its master';
+    throw upstreamArtifactPending(nodeKey, master);
+  }
+
+  if (task === 'image_to_video' || task === 'motion_clip_9_16') {
+    const master = typeof nodeParameters.master === 'string' ? nodeParameters.master : 'its master';
+    throw upstreamArtifactPending(nodeKey, master);
+  }
+
+  throw new ProviderError('payload_invalid', `no payload adapter for task ${String(task)}`, false);
 }
 
 interface PrivilegedRpcOptions {
@@ -152,7 +279,11 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
               rawAttempt.billing_idempotency_key,
               'billing idempotency key',
             ),
-            payload: buildProviderAttemptPayload(nodeParameters, executionPlanLine),
+            payload: buildProviderAttemptPayload(
+              nodeParameters,
+              executionPlanLine,
+              taskForRoute(requiredString(rawAttempt.route_id, 'route id')),
+            ),
             executionPlanLine,
           };
         });
@@ -171,10 +302,7 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     if (!isRecord(result)) throw unavailable();
     const provider = requiredString(result.provider, 'provider');
     const state = requiredString(result.state, 'submission state');
-    if (
-      (provider !== 'fal' && provider !== 'moonshot') ||
-      (state !== 'queued' && state !== 'succeeded')
-    ) {
+    if (!isSettleableProvider(provider) || (state !== 'queued' && state !== 'succeeded')) {
       throw unavailable();
     }
     return {
@@ -226,10 +354,7 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
       if (!isRecord(raw)) throw unavailable();
       const provider = requiredString(raw.provider, 'provider');
       const status = requiredString(raw.status, 'provider job status');
-      if (
-        (provider !== 'fal' && provider !== 'moonshot') ||
-        (status !== 'submitted' && status !== 'unknown')
-      ) {
+      if (!isSettleableProvider(provider) || (status !== 'submitted' && status !== 'unknown')) {
         throw unavailable();
       }
       return {
