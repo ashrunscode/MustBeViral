@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Enable real provider generation for the 20 golden briefs (wire start_run to the start_run_barrier RPC plus provider dispatch, private-R2 artifact copy, and immutable receipts) once the operator supplies the fal and Moonshot enable inputs; the quote path is already proven 20/20 on staging at 4,550,000 micros.
+next_action: Fix the six execution-engine defects that prevent a launch pack from completing, in money-safety-first order, then climb the metered spend ladder ($0.04 signed-URL probe, $0.0004 copy-only money-path proof, $0.075 approval/export, $0.67 one full pack, ~$13 for 20 briefs). The quote path is proven 20/20 on staging at 4,550,000 micros and all four launch routes are gate-open per the 2026-07-29 amendment to governance/evidence/WP-P0-001/environment-provisioning.md section 4 (operator inputs are listed in section 5; the previous pointer to section 6, the 2026-07-20 execution record, was wrong).
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

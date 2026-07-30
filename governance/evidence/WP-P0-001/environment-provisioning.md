@@ -45,6 +45,25 @@ No target row may become ready from a proposed name, local placeholder, configur
 or successful CLI login alone. A later commit must attach sanitized provider receipts and
 value-free verification evidence for the actual isolated resource.
 
+### AMENDMENT 2026-07-29 — §1 readiness states are STALE
+
+The four rows above still read `MISSING (operator input)`, but later evidence in this packet names
+live, exercised targets. Retained unedited for history; the operative state is:
+
+| P0 target                      | Actual identifier                                                           | Readiness                 | Proof                                                                                                                                                                    |
+| ------------------------------ | --------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Staging Supabase project       | `lqvigvzqumpwfjikcvws`                                                      | Provisioned and exercised | 22 migrations applied forward-only; 20/20 live quotes at 4,550,000 micros; RLS-scoped RPCs proven to refuse unauthenticated callers (`28000 UNAUTHENTICATED`)            |
+| Vercel project for `apps/web`  | `mustbeviral-web-staging` (team `team_A11dbY2xnTWzGL63IRBTWmLo`)            | Staging only              | `apps/web/.vercel/project.json`. **No production project exists**                                                                                                        |
+| Cloudflare Core Worker staging | `mustbeviral-v2-staging-core` in account `d2897bdebfa128919bd89b265e6a712e` | Deployed                  | Version `51f6acf0-f616-4590-b7ff-a73b455e009e`; cron `* * * * *` drives the provider outbox                                                                              |
+| Private R2 artifact bucket     | `mustbeviral-v2-staging-media`                                              | Provisioned, private      | One real generation copied server-side to private R2 with a verified content hash; no public bucket, no `r2.dev`, no custom domain; zero artifacts stored with a URL key |
+
+Two notes kept explicit rather than smoothed over. First, the operator-created names differ from the
+`mustbeviral-core-staging*` names §1 proposed; the deployed `mustbeviral-v2-*` names are the real
+ones and the reconciliation §1 anticipated is what actually happened. Second, none of this makes the
+**production** targets ready — production Supabase does not exist, the production Vercel project does
+not exist, and `apps/core/wrangler.jsonc` `env.production` is missing every Supabase variable and the
+cron trigger, so it would not function if deployed. Live production still serves the legacy v1 stack.
+
 ## 2. CREDENTIALS
 
 All runtime credentials are external operator inputs. Local files named below are ignored
@@ -100,6 +119,35 @@ motion (Pro Fast successor under the historical `seedance-1.0-lite` route key), 
 K2.6 remain closed. Moonshot stays disabled pending exact official
 price/model evidence and accepted no-train retention/DPA clearance. Provider/model/price drift
 after enable disables new quotes until reviewed.
+
+### AMENDMENT 2026-07-29 — gate states above are SUPERSEDED
+
+**The table and paragraph above are the 2026-07-28 record and are retained unedited for history.
+They no longer describe the authorized state.** Operator ratified the wider spend scope on
+2026-07-29 after being shown that commit `9992209` had already opened these gates in code ahead of
+this evidence. That sequencing was wrong — the code led the authority instead of following it — and
+is recorded here rather than quietly corrected.
+
+| Launch route                                                            | Gate state | Real spend                           | Basis                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------- | ---------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `flux-2-pro` (masters)                                                  | `OPEN`     | Metered ladder, no longer one canary | Unchanged price/retention basis above; scope widened by operator 2026-07-29                                                                                                                                                                                                                |
+| `flux-kontext-pro` (adaptations)                                        | `OPEN`     | Metered ladder                       | Price $0.04 flat/image recorded in `pricing-decision.md` (hash-pinned as the catalog `source_hash`); fal catalog retention rules binding; reduced-exposure basis identical to `flux-2-pro`                                                                                                 |
+| `seedance-1.0-lite` route key → Pro Fast                                | `OPEN`     | Metered ladder                       | $1.00/1M video tokens ≈ $0.022/s at 720p 24fps, retrieved 2026-07-28, recorded in `pricing-decision.md`; endpoint pinned `fal-ai/bytedance/seedance/v1/pro/fast/image-to-video`                                                                                                            |
+| `openrouter/chat-completions/copy` → `qwen/qwen3-30b-a3b-instruct-2507` | `OPEN`     | Metered ladder                       | Retention enforced per request, not contracted: `zdr: true` + `data_collection: deny` + a jurisdiction allowlist proven to fail closed (HTTP 404, not silent fallback). Price confirmed against measured live `usage.cost`. Evidence: `openrouter-blind-eval/washbodega-trial/decision.md` |
+| `kimi-k2.6` (Moonshot)                                                  | `CLOSED`   | `BLOCKED`                            | Route retired by price catalog v2; superseded by the OpenRouter copy route above. Item 10 below is therefore moot rather than satisfied                                                                                                                                                    |
+
+**Metered ladder** bounds real spend for every route opened here: $0.04 (one Kontext probe) →
+$0.0004 (copy-only money-path proof) → $0.075 (master + adaptation + approval + export) → $0.67 (one
+full pack) → ~$13 (20 golden briefs). No rung may be climbed while a known money-path defect is open.
+
+**Residual gap, not closed by this amendment.** The Kontext $0.04 figure in `pricing-decision.md`
+carries no source URL and no retrieval timestamp — unlike the Seedance figure, which has both. fal's
+model pages were unreachable on 2026-07-29 (HTTP 429 behind a Vercel security checkpoint), so a live
+re-confirmation could not be obtained and has **not** been invented here. Recording the exact source
+URL and retrieval time for `flux-kontext-pro` remains an open operator input. The gate is open on the
+operator's ratification, not on a complete price record, and that distinction is deliberate.
+
+Provider/model/price drift after enable still disables new quotes until reviewed.
 
 ### fal output-retention experiment (2026-07-28)
 
@@ -182,6 +230,10 @@ Exact ordered operator-input list:
 7. **PARTIAL 2026-07-28** — `flux-2-pro` price, billable unit, and exact pinned endpoint are accepted
    and hashed into the seeded launch catalog evidence. Confirm the same live-page inputs for
    `flux-kontext-pro` and `seedance-1.0-lite`; both remain disabled until accepted.
+   **RESOLVED-IN-PART 2026-07-29** — see the §4 amendment. Seedance Pro Fast has a price, unit and
+   retrieval date recorded in `pricing-decision.md`; Kontext has a price and unit but **no source URL
+   or retrieval timestamp**, which stays open. Both routes are nonetheless `OPEN` on the operator's
+   explicit 2026-07-29 ratification rather than on a complete price record.
 8. ~~Supply the fal API key through the authorized operator channel and install it only in ignored
    local Core storage and the isolated staging Worker secret store.~~ **DONE 2026-07-27** —
    staging secret `FAL_KEY` + ignored `apps/core/.dev.vars` (names only).
@@ -192,6 +244,11 @@ Exact ordered operator-input list:
 10. Confirm the exact official `kimi-k2.6` price/model ID and obtain accepted no-train
     retention/DPA clearance for client brand data; the retention gate remains `CLOSED` until both are
     recorded.
+    **MOOT 2026-07-29** — the Moonshot direct copy route was retired by price catalog v2. Copy now
+    routes through OpenRouter, where retention is enforced per request (ZDR + `data_collection: deny`
+    - a fail-closed jurisdiction allowlist) instead of resting on a DPA negotiation, which removed
+      this item from the critical path rather than satisfying it. The Moonshot gate stays `CLOSED` and
+      its descriptor keeps its pinned price so historical quotes remain auditable.
 11. ~~Supply the Moonshot API key through the authorized operator channel and install it only in
     ignored local Core storage and the isolated staging Worker secret store after the enable gates
     close.~~ **DONE 2026-07-27 for material install** — staging secret `MOONSHOT_API_KEY` + ignored
