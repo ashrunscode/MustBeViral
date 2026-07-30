@@ -1,0 +1,29 @@
+# Declares the Core Worker's local binding surface. NOT a secret file: every value here is an obvious
+# placeholder, and only the NAMES matter.
+#
+# This file is load-bearing for CI, not just documentation. `wrangler types --check` derives the
+# generated `worker-configuration.d.ts` partly from `.dev.vars`, which is gitignored. That meant the
+# committed types reflected whichever keys happened to sit in one developer's local file, and CI -
+# which has no `.dev.vars` at all - regenerated a smaller file and failed `types:check` on every
+# single commit. `pnpm verify` could never pass there.
+#
+# CI now copies this file to `.dev.vars` before typechecking, so the generated types are reproducible
+# and this file is the declared name surface. Adding a binding means adding it here too; forgetting
+# shows up as a normal, fixable CI failure instead of a permanent one.
+#
+# Real values live in your own untracked `apps/core/.dev.vars`, and in Cloudflare via
+# `wrangler secret put` for deployed environments.
+
+APP_ENV=development
+CORS_ALLOWED_ORIGINS=http://localhost:3000
+SUPABASE_URL=https://replace-me.supabase.co
+SUPABASE_JWT_AUDIENCE=authenticated
+SUPABASE_PUBLISHABLE_KEY=replace-me
+SUPABASE_SECRET_KEY=replace-me
+SUPABASE_SERVICE_ROLE_KEY=replace-me
+PROVIDER_RUNS_ENABLED=false
+FAL_KEY=replace-me
+MOONSHOT_API_KEY=replace-me
+OPENROUTER_API_KEY=replace-me
+CONFIRMATION_SIGNING_KEY=replace-me-with-32-or-more-random-bytes
+ARTIFACT_ACCESS_SIGNING_KEY=replace-me-with-32-or-more-random-bytes

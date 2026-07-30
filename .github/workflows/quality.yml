@@ -47,6 +47,14 @@ jobs:
       - name: Install exact dependencies
         run: pnpm install --frozen-lockfile
 
+      # `wrangler types --check` derives worker-configuration.d.ts partly from apps/core/.dev.vars,
+      # which is gitignored and therefore absent here. Without this, CI regenerated a file missing
+      # every secret binding, reported the committed types as out of date, and failed typecheck on
+      # every single commit - `pnpm verify` could never pass. The example carries only placeholder
+      # values; the NAMES are what the generated types need, and it is the declared name surface.
+      - name: Materialise the declared Worker binding surface
+        run: cp apps/core/.dev.vars.example apps/core/.dev.vars
+
       - name: Run the complete quality gate
         run: pnpm verify
 

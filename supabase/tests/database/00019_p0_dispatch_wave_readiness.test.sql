@@ -1,6 +1,6 @@
 begin;
 
-select plan(14);
+select plan(15);
 
 -- create_quote hardcoded 'ready', true on every plan line, so start_run_barrier marked all 16
 -- launch-pack nodes ready and handed them to providers simultaneously. The graph carried real edges
