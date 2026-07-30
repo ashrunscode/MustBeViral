@@ -11,6 +11,7 @@ export interface CoreBindings extends Omit<
   | 'FAL_WEBHOOK_SECRET'
   | 'MOONSHOT_API_KEY'
   | 'OPENROUTER_API_KEY'
+  | 'CONFIRMATION_SIGNING_KEY'
   | 'MEDIA_BUCKET'
   | 'SUPABASE_SECRET_KEY'
   | 'SUPABASE_SERVICE_ROLE_KEY'
@@ -34,6 +35,12 @@ export interface CoreBindings extends Omit<
    * trusting the binding to exist.
    */
   readonly OPENROUTER_API_KEY?: string;
+  /**
+   * Signs paid-run confirmation tokens. Optional so a deploy without the secret fails closed:
+   * mint throws and verify returns false, which blocks spend rather than permitting unproven
+   * consent. Never in wrangler.jsonc; installed via `wrangler secret put`.
+   */
+  readonly CONFIRMATION_SIGNING_KEY?: string;
   readonly MEDIA_BUCKET: R2Bucket;
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;

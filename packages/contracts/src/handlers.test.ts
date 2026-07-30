@@ -115,6 +115,7 @@ class MemoryPorts {
         }),
       },
       confirmations: {
+        mint: async () => 'fixture-confirmation-token',
         verify: async () => this.confirmationValid,
       },
       runs: {

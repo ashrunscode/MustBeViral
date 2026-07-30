@@ -90,7 +90,7 @@ export type ValidateGraphResult =
   | AccessFailure;
 
 export type QuoteRunResult =
-  | Readonly<{ status: 'ok'; quote: ImmutableRunQuote }>
+  | Readonly<{ status: 'ok'; quote: ImmutableRunQuote; confirmationToken: string }>
   | ForbiddenResult
   | NotFoundResult
   | ConflictResult
@@ -402,12 +402,18 @@ export function createCommandHandlers(ports: HandlerPorts) {
             command.idempotency_key,
           );
           const { quote } = storedQuote;
+          // Minted with the quote so the token can only exist for a quote this actor was shown.
+          // start_run's confirmations.verify recomputes it; a caller cannot fabricate consent.
+          const confirmationToken = await ports.confirmations.mint(command.context, {
+            quoteId: quote.quoteId,
+            maximumChargeMicros: quote.maximumChargeMicros,
+          });
           await audit(ports, command.context, 'quote_run', 'ok', 'quote', quote.quoteId, {
             canvas_revision_id: quote.canvasRevisionId,
             price_catalog_version_id: quote.priceCatalogVersionId,
             maximum_charge_micros: quote.maximumChargeMicros,
           });
-          return { status: 'ok', quote };
+          return { status: 'ok', quote, confirmationToken };
         },
       );
     },

@@ -220,9 +220,17 @@ export async function ingestVerifiedFalWebhook(
     objectKey,
   });
   const capture = captureFor(context, stored);
-  if (capture.amountMicros > context.quotedTotalMicros) {
-    throw new RangeError('Verified provider output exceeds the pinned attempt quote');
-  }
+  // Clamp to the quote instead of throwing. A video provider that returns 8.04 seconds against an
+  // 8-second request ceilings to 9 billable units, and the derived amount then exceeds the pinned
+  // quote by one unit. Throwing here turned that rounding into a permanent trap: the artifact was
+  // already stored and paid for, the throw produced a retryable 503, fal redelivered, and the same
+  // throw repeated forever while the reservation never settled. The customer is never charged above
+  // what they confirmed; the measured overage is recorded as evidence for margin telemetry instead.
+  const captureMicros =
+    capture.amountMicros > context.quotedTotalMicros
+      ? context.quotedTotalMicros
+      : capture.amountMicros;
+  const clampedVarianceMicros = capture.amountMicros - captureMicros;
   const singleAttemptPlan = planRunSettlement({
     runId: context.runId,
     reservationMicros: context.reservation.amountMicros,
@@ -230,7 +238,7 @@ export async function ingestVerifiedFalWebhook(
       {
         attemptId: context.attemptId,
         status: 'succeeded',
-        captureMicros: capture.amountMicros,
+        captureMicros,
       },
     ],
   });
@@ -250,7 +258,7 @@ export async function ingestVerifiedFalWebhook(
     workspaceId: context.workspaceId,
     runId: context.runId,
     reservationId: context.reservation.id,
-    amountMicros: capture.amountMicros,
+    amountMicros: captureMicros,
     reservationRemainingMicros: remainingReservation(context),
     causativeKey: captureMovement.causativeKey,
     requestId: dependencies.requestId,
@@ -258,6 +266,11 @@ export async function ingestVerifiedFalWebhook(
       attempt_id: context.attemptId,
       artifact_id: registered.artifactId,
       measured_units: capture.measuredUnits.toString(),
+      // Non-zero only when the measured output exceeded the quote and the charge was clamped.
+      // This is the margin-telemetry record of what the provider delivered versus what was billed.
+      ...(clampedVarianceMicros > 0n
+        ? { clamped_variance_micros: clampedVarianceMicros.toString() }
+        : {}),
     },
   });
   const advance = await dependencies.advanceAttempt({
@@ -265,7 +278,7 @@ export async function ingestVerifiedFalWebhook(
     status: 'succeeded',
     eventId: event.eventId,
     artifactId: registered.artifactId,
-    captureMicros: capture.amountMicros,
+    captureMicros,
   });
   await finishTerminalSettlement(advance, context, dependencies);
   return {

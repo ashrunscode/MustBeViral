@@ -93,6 +93,7 @@ interface PreparedSession {
   readonly canvasId: string;
   readonly revisionId: string;
   readonly quoteId: string;
+  readonly confirmationToken: string;
   readonly totalMicros: string;
   readonly quoteExpiresAt: string;
 }
@@ -204,6 +205,8 @@ async function prepare(sessionPath: string, log: (m: string) => void): Promise<v
     canvasId,
     revisionId,
     quoteId: text(quote['quoteId'], 'quote.quoteId'),
+    // Server-minted consent token; start_run refuses anything else.
+    confirmationToken: text(quoted['confirmationToken'], 'confirmationToken'),
     totalMicros: String(quote['maximumChargeMicros']),
     quoteExpiresAt: text(quote['expiresAt'], 'quote.expiresAt'),
   };
@@ -235,7 +238,7 @@ async function start(
     context: ctx(),
     quote_id: session.quoteId,
     confirmed: true,
-    confirmation_token: `washbodega-confirmation-${session.runId}`,
+    confirmation_token: session.confirmationToken,
     idempotency_key: `washbodega-${session.runId}-start`,
   });
   const startData = requireOk(started, 'start_run');

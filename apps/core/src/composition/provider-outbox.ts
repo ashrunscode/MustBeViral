@@ -383,6 +383,18 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     await this.#rpc('publish_outbox_event', { p_event_id: event.eventId });
   }
 
+  /**
+   * Terminalizes runs whose dispatch event died with attempts still at 'created'. Without this,
+   * such a run holds its full reservation forever: nothing dispatches the attempts, so the
+   * terminal predicate never fires and the remainder is never released. Two live reservations
+   * were stranded exactly this way before the reaper existed.
+   */
+  async reapDeadDispatch(limit: number): Promise<Readonly<Record<string, unknown>>> {
+    const result = await this.#rpc('reap_dead_dispatch', { p_limit: limit });
+    if (!isRecord(result)) throw unavailable();
+    return result;
+  }
+
   async listPending(limit: number): Promise<readonly PendingProviderReconciliationJob[]> {
     const result = await this.#rpc('list_provider_jobs_for_reconciliation', {
       p_limit: limit,
@@ -478,6 +490,7 @@ export class FetchProviderTransport implements ProviderTransport {
 export interface ProviderScheduledLifecycle {
   dispatchPending(limit: number): ReturnType<OutboxDispatcher['dispatchPending']>;
   reconcilePending(limit: number): ReturnType<ProviderReconciler['reconcilePending']>;
+  reapDeadDispatch(limit: number): Promise<Readonly<Record<string, unknown>>>;
 }
 
 export function createProviderScheduledLifecycle(
@@ -521,6 +534,7 @@ export function createProviderScheduledLifecycle(
   return {
     dispatchPending: (limit) => dispatcher.dispatchPending(limit),
     reconcilePending: (limit) => reconciler.reconcilePending(limit),
+    reapDeadDispatch: (limit) => port.reapDeadDispatch(limit),
   };
 }
 
@@ -533,10 +547,14 @@ export async function runProviderScheduled(
       status: 'ok';
       dispatch: Awaited<ReturnType<ProviderScheduledLifecycle['dispatchPending']>>;
       reconciliation: Awaited<ReturnType<ProviderScheduledLifecycle['reconcilePending']>>;
+      reaped: Readonly<Record<string, unknown>>;
     }>
 > {
   if (lifecycle === null) return { status: 'disabled' };
   const dispatch = await lifecycle.dispatchPending(10);
   const reconciliation = await lifecycle.reconcilePending(25);
-  return { status: 'ok', dispatch, reconciliation };
+  // After dispatch and reconciliation, so a run is only reaped once nothing this cycle could still
+  // move it forward.
+  const reaped = await lifecycle.reapDeadDispatch(10);
+  return { status: 'ok', dispatch, reconciliation, reaped };
 }

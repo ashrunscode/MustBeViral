@@ -42,6 +42,7 @@ import type {
 } from '../routes/v1';
 import type { V1Operation } from '../routes/v1-table';
 import { buildLaunchCatalogQuotePlan } from './launch-catalog';
+import { mintConfirmationToken, verifyConfirmationToken } from './confirmation-token';
 import { createPrivateRunExport } from './export';
 import { createFalWebhookIngestHandler } from './fal-ingest';
 import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
@@ -528,6 +529,9 @@ function createResourcePort(
 export function createSupabaseHandlerPorts(
   executor: SupabaseDataApiExecutor,
   repositories: DatabaseRepositories,
+  // Only the signing key, not the whole binding set: the handler ports must not grow ambient
+  // access to provider credentials through this seam.
+  bindings: Pick<CoreBindings, 'CONFIRMATION_SIGNING_KEY'>,
 ): HandlerPorts {
   return {
     authorization: {
@@ -657,8 +661,27 @@ export function createSupabaseHandlerPorts(
       },
     },
     confirmations: {
+      async mint(context, input) {
+        return mintConfirmationToken(bindings, {
+          quoteId: input.quoteId,
+          workspaceId: context.workspace_id,
+          actorId: context.actor_id,
+          maximumChargeMicros: input.maximumChargeMicros,
+        });
+      },
       async verify(context, input) {
-        if (input.token.length < 16) return false;
+        // The cryptographic check is the consent proof: only the server can mint a token, and it
+        // binds the quote, workspace, actor and exact amount. The previous check accepted any
+        // string of 16+ characters, which let an agent holding a quote id self-confirm real spend.
+        const tokenValid = await verifyConfirmationToken(bindings, input.token, {
+          quoteId: input.quoteId,
+          workspaceId: context.workspace_id,
+          actorId: context.actor_id,
+          maximumChargeMicros: input.maximumChargeMicros,
+        });
+        if (!tokenValid) return false;
+        // The database checks stay: the token proves consent was granted, the row proves the quote
+        // is still the active, unexpired one for this workspace at this amount.
         const row = await repositories.billing.getQuote(asTenantContext(context), input.quoteId);
         if (row === null) return false;
         const quote = quoteFromRow(row);
@@ -729,7 +752,9 @@ export function createSupabaseRequestDependencies(
     ...(fetchImplementation === undefined ? {} : { fetch: fetchImplementation }),
   });
   const repositories = createDatabaseRepositories(executor);
-  const commands = createCommandHandlers(createSupabaseHandlerPorts(executor, repositories));
+  const commands = createCommandHandlers(
+    createSupabaseHandlerPorts(executor, repositories, bindings),
+  );
   const resources = createP0ResourceHandlers(
     createResourcePort(executor, repositories, bindings, fetchImplementation),
   );

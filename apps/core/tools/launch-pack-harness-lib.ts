@@ -227,11 +227,14 @@ export async function executeGoldenBrief(
       brief.briefId,
     );
   }
+  // The server-minted token from the quote response. Inventing one no longer passes: consent must
+  // be proven with the token minted for this actor, quote and amount.
+  const confirmationToken = text(quoted.confirmationToken, 'confirmationToken');
   const confirmed = await transport.call('start_run', {
     context,
     quote_id: quoteId,
     confirmed: true,
-    confirmation_token: `golden-brief-confirmation-${brief.briefId}`,
+    confirmation_token: confirmationToken,
     idempotency_key: key('start'),
   });
   let confirmResult: BriefRunRecord['confirm_result'];
@@ -327,7 +330,10 @@ export function createInMemoryHarnessTransport(
           caps: { run: RUN_CAP_MICROS, workspaceDay: 25_000_000n, globalDay: 100_000_000n },
         }) as BillingExposure,
     },
-    confirmations: { verify: async () => true },
+    confirmations: {
+      mint: async () => 'in-memory-confirmation-token-fixture',
+      verify: async () => true,
+    },
     runs: {
       get: async (_context, runId) => runs.get(runId) ?? null,
       startBarrier: async (context, input) => {

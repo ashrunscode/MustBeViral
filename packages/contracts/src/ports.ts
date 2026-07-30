@@ -130,6 +130,16 @@ export interface BillingExposurePort {
 }
 
 export interface ConfirmationPort {
+  /**
+   * Mints the token a caller must present to start_run. The token is proof the server showed this
+   * actor this quote - not a formality: without it, any client holding a quote id could satisfy
+   * the human-consent gate on real money by inventing a string, which is exactly what the previous
+   * length-only check permitted.
+   */
+  mint(
+    context: HandlerContext,
+    input: Readonly<{ quoteId: string; maximumChargeMicros: UsdMicros }>,
+  ): Promise<string>;
   verify(
     context: HandlerContext,
     input: Readonly<{ token: string; quoteId: string; maximumChargeMicros: UsdMicros }>,

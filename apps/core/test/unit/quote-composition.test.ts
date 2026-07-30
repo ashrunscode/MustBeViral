@@ -210,6 +210,7 @@ function dependencies(state: QuoteFixtureState) {
     {
       SUPABASE_URL: 'https://project.supabase.co',
       SUPABASE_PUBLISHABLE_KEY: 'public-fixture-key',
+      CONFIRMATION_SIGNING_KEY: 'quote-composition-fixture-signing-key-32ch',
     } as unknown as PlatformBindings,
     'verified-caller-jwt',
     { actorId, authenticationMethod: 'supabase_jwt' },
@@ -226,7 +227,9 @@ function ports(state: QuoteFixtureState) {
     callerJwt: 'verified-caller-jwt',
     fetch: quoteFixtureFetch(state),
   });
-  return createSupabaseHandlerPorts(executor, createDatabaseRepositories(executor));
+  return createSupabaseHandlerPorts(executor, createDatabaseRepositories(executor), {
+    CONFIRMATION_SIGNING_KEY: 'quote-composition-fixture-signing-key-32ch',
+  });
 }
 
 async function quote(state: QuoteFixtureState): Promise<QuoteRunResult> {
@@ -280,18 +283,22 @@ describe('composed quote and billing ports', () => {
     expect(state.quoteInserts).toBe(1);
   });
 
-  it('accepts persisted confirmation, rejects expiry, and hides a tenant mismatch', async () => {
+  it('accepts only the minted confirmation, rejects expiry, and hides a tenant mismatch', async () => {
     const state: QuoteFixtureState = { quote: null, quoteInserts: 0 };
     const quoted = await quote(state);
     if (quoted.status !== 'ok') throw new Error('Expected quote success');
-    const confirmation = (workspace_id = workspaceId) =>
+    const confirmation = (token: string, workspace_id = workspaceId) =>
       ports(state).confirmations.verify(context(workspace_id), {
-        token: 'explicit-confirmation-token',
+        token,
         quoteId: quoted.quote.quoteId,
         maximumChargeMicros: quoted.quote.maximumChargeMicros,
       });
 
-    await expect(confirmation()).resolves.toBe(true);
+    // The token minted with the quote is the only acceptable consent proof. An invented string -
+    // which the previous length-only check accepted - must be refused: that was the hole that let
+    // a caller holding a quote id self-confirm real spend.
+    await expect(confirmation(quoted.confirmationToken)).resolves.toBe(true);
+    await expect(confirmation('explicit-confirmation-token')).resolves.toBe(false);
 
     const expiresAt = new Date(Date.now() - 1_000).toISOString();
     state.quote = {
@@ -299,7 +306,7 @@ describe('composed quote and billing ports', () => {
       created_at: new Date(Date.parse(expiresAt) - 15 * 60 * 1000).toISOString(),
       expires_at: expiresAt,
     };
-    await expect(confirmation()).resolves.toBe(false);
-    await expect(confirmation(otherWorkspaceId)).resolves.toBe(false);
+    await expect(confirmation(quoted.confirmationToken)).resolves.toBe(false);
+    await expect(confirmation(quoted.confirmationToken, otherWorkspaceId)).resolves.toBe(false);
   });
 });

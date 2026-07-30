@@ -168,6 +168,73 @@ describe('durable private fal ingest', () => {
     );
   });
 
+  it('clamps a measured overage to the quote instead of trapping the run', async () => {
+    // An 8.04-second clip against an 8-second quote ceilings to 9 billable seconds, so the derived
+    // amount (900,000u) exceeds the pinned quote (800,000u) by one unit of ordinary provider
+    // rounding. This used to throw after the artifact was stored and paid for, producing a
+    // retryable 503 against a webhook that redelivers forever: a permanent trap on real spend.
+    // The charge is clamped to what the customer confirmed; the overage is recorded as evidence.
+    const registration = vi.fn(async () => ({ artifactId: 'artifact-video-1', replayed: false }));
+    const storage = vi.fn(async () => ({
+      byteSize: 2_048,
+      contentHash: 'b'.repeat(64),
+      mimeType: 'video/mp4',
+      measurement: { kind: 'video' as const, durationMilliseconds: 8_040 },
+    }));
+    const money = settlementSpies();
+    const advance = vi.fn(
+      async () =>
+        ({
+          effectiveAttemptStatus: 'succeeded',
+          runStatus: 'succeeded',
+          runTerminal: true,
+          reservation: {
+            id: 'reservation-1',
+            amountMicros: usdMicros(800_000n),
+            capturedMicros: usdMicros(800_000n),
+            releasedMicros: usdMicros(0n),
+          },
+          outcomes: [
+            { attemptId: 'attempt-1', status: 'succeeded', captureMicros: usdMicros(800_000n) },
+          ],
+        }) satisfies FalAttemptAdvance,
+    );
+    const dependencies: FalIngestDependencies = {
+      getContext: async () =>
+        context({
+          assetRole: 'motion_branch',
+          priceUnit: 'video_second',
+          unitPriceMicros: usdMicros(100_000n),
+          quotedTotalMicros: usdMicros(800_000n),
+          reservation: {
+            id: 'reservation-1',
+            amountMicros: usdMicros(800_000n),
+            capturedMicros: usdMicros(0n),
+            releasedMicros: usdMicros(0n),
+          },
+        }),
+      storeDelivery: storage,
+      registerArtifact: registration,
+      advanceAttempt: advance,
+      settlement: money.port,
+      requestId: 'request-ingest-clamp',
+    };
+
+    const result = await ingestVerifiedFalWebhook(successEvent('event-clamp-1'), dependencies);
+
+    expect(result).toMatchObject({ status: 'ok' });
+    expect(money.capture).toHaveBeenCalledTimes(1);
+    expect(money.capture).toHaveBeenCalledWith(
+      expect.objectContaining({
+        amountMicros: 800_000n,
+        metadata: expect.objectContaining({ clamped_variance_micros: '100000' }),
+      }),
+    );
+    expect(advance).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'succeeded', captureMicros: 800_000n }),
+    );
+  });
+
   it('releases only a failed attempt share and reaches partial_succeeded for a mixed run', async () => {
     const money = settlementSpies();
     const storage = vi.fn();

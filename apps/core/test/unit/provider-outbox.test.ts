@@ -192,6 +192,7 @@ describe('provider outbox composition', () => {
     const lifecycle = {
       dispatchPending: (limit: number) => dispatcher.dispatchPending(limit),
       reconcilePending: async () => ({ checked: 0, updated: 0, failed: 0 }),
+      reapDeadDispatch: async () => ({ runs_examined: 0 }),
     };
 
     const [first, second] = await Promise.all([
