@@ -100,14 +100,18 @@ export class ArtifactMachineError extends Error {
   override readonly name = 'ArtifactMachineError';
 
   constructor(
-    readonly reason: 'artifact_machine_unavailable' | 'artifact_machine_forbidden',
+    readonly reason:
+      'artifact_machine_unavailable' | 'artifact_machine_forbidden' | 'artifact_machine_invariant',
     readonly retryable: boolean,
     options?: ErrorOptions,
+    readonly detail?: string,
   ) {
     super(
       reason === 'artifact_machine_forbidden'
         ? 'Artifact persistence rejected the privileged credential'
-        : 'Artifact persistence is unavailable',
+        : reason === 'artifact_machine_invariant'
+          ? `Artifact persistence returned an impossible result: ${detail ?? 'unspecified'}`
+          : 'Artifact persistence is unavailable',
       options,
     );
   }
@@ -119,6 +123,20 @@ function unavailable(cause?: unknown): ArtifactMachineError {
     true,
     cause === undefined ? undefined : { cause },
   );
+}
+
+/**
+ * A structurally impossible result, not a transient one.
+ *
+ * Retrying cannot fix a malformed money envelope, and the caller is a provider webhook that
+ * redelivers indefinitely — so classifying this as retryable produced an unbounded 503 loop *after*
+ * money had already been captured. A succeeded attempt with no `capture_micros` is the specific case
+ * that bit: `advance_fal_provider_attempt` stripped nulls from its outcomes array, so a succeeded
+ * OpenRouter copy attempt in the same run left the field absent and every later fal webhook in that
+ * run failed here forever.
+ */
+function invariantViolated(detail: string): ArtifactMachineError {
+  return new ArtifactMachineError('artifact_machine_invariant', false, undefined, detail);
 }
 
 function record(value: unknown): Readonly<Record<string, unknown>> {
@@ -314,6 +332,14 @@ export class PrivilegedArtifactMachinePort {
         const status = string(outcome.status);
         const attemptId = string(outcome.attempt_id);
         if (status === 'succeeded') {
+          // A succeeded attempt without a capture amount is an invariant violation, not a blip:
+          // nothing may be marked succeeded without artifact-and-capture proof. Fail closed and
+          // non-retryable so the webhook stops redelivering instead of looping on captured money.
+          if (outcome.capture_micros === undefined || outcome.capture_micros === null) {
+            throw invariantViolated(
+              `attempt ${attemptId} reported succeeded with no capture_micros`,
+            );
+          }
           return { attemptId, status, captureMicros: micros(outcome.capture_micros) };
         }
         if (status === 'failed' || status === 'canceled') return { attemptId, status };

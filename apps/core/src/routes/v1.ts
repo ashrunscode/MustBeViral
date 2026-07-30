@@ -30,6 +30,7 @@ import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webho
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
+import { ArtifactMachineError } from '../composition/artifact-machine';
 import { createFalWebhookVerifierPort } from '../composition/fal-webhook';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
 import { p0ResultSemantics } from '../transport/semantics';
@@ -314,6 +315,13 @@ async function handleFalWebhook(
     );
   }
 
+  // Terminal means "retrying this exact event can never succeed". Deliberately narrow: anything
+  // unrecognised is treated as retryable, because wrongly calling a transient failure terminal
+  // silently discards an event fal has already charged for, while wrongly retrying a terminal one
+  // only costs log noise until the stale-claim window or the reaper intervenes.
+  const isTerminalIngestFailure = (cause: unknown): boolean =>
+    cause instanceof ArtifactMachineError && !cause.retryable;
+
   let result: P0HandlerResult;
   try {
     result =
@@ -327,7 +335,35 @@ async function handleFalWebhook(
             event: identity,
           })
         : await dependencies.falWebhookIngest(identity, context.env, context.get('requestId'));
-  } catch {
+  } catch (cause) {
+    // Retryable and terminal ingest failures need opposite handling, and conflating them produced
+    // an unbounded redelivery loop. fal redelivers on any non-2xx, so returning a retryable 503 for
+    // a cause that can never succeed means the same event is reprocessed forever - and because
+    // ingest captures money before advancing the attempt, that loop sat on top of captured funds.
+    if (isTerminalIngestFailure(cause)) {
+      // Stop redelivery: the claim is marked processed rather than released, so fal is answered once
+      // and the poisoned event is not handed back. The failure is durable in the Worker log with the
+      // request id, and the run's reservation is left for the reaper rather than silently released.
+      try {
+        await falWebhook.markProcessed(identity.provider, identity.eventId);
+      } catch {
+        // Best effort. If this fails the event stays claimed and the stale-claim window applies,
+        // which is strictly better than releasing it back into the loop.
+      }
+      console.log(
+        JSON.stringify({
+          level: 'error',
+          event: 'core.webhook.terminal_ingest_failure',
+          request_id: context.get('requestId'),
+          provider: identity.provider,
+          provider_event_id: identity.eventId,
+          reason: cause instanceof ArtifactMachineError ? cause.reason : 'unknown',
+          detail: cause instanceof Error ? cause.message : String(cause),
+        }),
+      );
+      // 202: the event was accepted and will not be retried. It is not a success.
+      return context.json(safeSuccess(context, { accepted: true, processed: false }), 202);
+    }
     try {
       await falWebhook.release(identity.provider, identity.eventId);
     } catch {
