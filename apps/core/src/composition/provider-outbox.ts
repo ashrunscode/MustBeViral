@@ -21,6 +21,7 @@ import {
 } from '../../../../packages/provider/src/index';
 
 import type { CoreBindings } from '../bindings';
+import { mintArtifactAccessUrl } from './artifact-access';
 
 const OUTBOX_LEASE_SECONDS = 90;
 const OUTBOX_MAX_ATTEMPTS = 5;
@@ -118,11 +119,78 @@ function composePrompt(parts: readonly unknown[]): string {
  * Keyed off the descriptor's task rather than the route key so a model repoint cannot silently
  * change which payload shape is built.
  */
-export function buildProviderAttemptPayload(
-  nodeParameters: unknown,
-  executionPlanLine: unknown,
-  task?: string,
-): Readonly<Record<string, unknown>> {
+export interface UpstreamImage {
+  readonly artifactId: string;
+  readonly objectKey: string;
+  readonly contentHash: string;
+  readonly byteSize: number;
+  readonly mimeType: string;
+}
+
+export interface BuildProviderAttemptPayloadInput {
+  readonly nodeParameters: unknown;
+  readonly executionPlanLine: unknown;
+  readonly task?: string;
+  /** Run-wide `{ brief, brand_context }` from the dispatch expansion. */
+  readonly briefContext?: unknown;
+  /** Image artifacts produced by this node's graph parents, already mime-filtered in SQL. */
+  readonly upstreamImages?: readonly UpstreamImage[];
+  /** Mints a short-lived capability URL a provider can fetch. Absent means image nodes cannot run. */
+  readonly mintImageUrl?: (image: UpstreamImage) => Promise<string>;
+}
+
+/**
+ * Reads the dispatch expansion's `upstream_images` array. SQL already filtered to available image
+ * artifacts of this node's graph parents, so anything malformed here is a contract breach rather
+ * than a normal absence: drop it and let the exactly-one check report the shortfall by count.
+ */
+function parseUpstreamImages(value: unknown): readonly UpstreamImage[] {
+  if (!Array.isArray(value)) return [];
+  const images: UpstreamImage[] = [];
+  for (const entry of value) {
+    if (!isRecord(entry)) continue;
+    const { artifact_id, object_key, content_hash, byte_size, mime_type } = entry;
+    if (
+      typeof artifact_id !== 'string' ||
+      typeof object_key !== 'string' ||
+      typeof content_hash !== 'string' ||
+      typeof mime_type !== 'string' ||
+      typeof byte_size !== 'number'
+    ) {
+      continue;
+    }
+    images.push({
+      artifactId: artifact_id,
+      objectKey: object_key,
+      contentHash: content_hash,
+      byteSize: byte_size,
+      mimeType: mime_type,
+    });
+  }
+  return images;
+}
+
+/** Pulls the shared brief and brand fragments every image node needs but none of them carry. */
+function contextParts(briefContext: unknown): readonly unknown[] {
+  if (!isRecord(briefContext)) return [];
+  const brief = isRecord(briefContext.brief) ? briefContext.brief : {};
+  const brand = isRecord(briefContext.brand_context) ? briefContext.brand_context : {};
+  return [
+    brief.product,
+    brief.offer,
+    brief.approved_facts,
+    brief.creative_constraints_rights,
+    brand.brand_voice,
+    brand.palette,
+    brand.typography,
+    brand.logo_usage,
+  ];
+}
+
+export async function buildProviderAttemptPayload(
+  input: BuildProviderAttemptPayloadInput,
+): Promise<Readonly<Record<string, unknown>>> {
+  const { nodeParameters, executionPlanLine, task } = input;
   if (!isRecord(nodeParameters) || !isRecord(executionPlanLine)) {
     throw new ProviderError(
       'payload_invalid',
@@ -187,14 +255,63 @@ export function buildProviderAttemptPayload(
     return { prompt };
   }
 
-  if (task === 'adaptation' || task === 'reframe') {
-    const master = typeof nodeParameters.master === 'string' ? nodeParameters.master : 'its master';
-    throw upstreamArtifactPending(nodeKey, master);
-  }
+  if (
+    task === 'adaptation' ||
+    task === 'reframe' ||
+    task === 'image_to_video' ||
+    task === 'motion_clip_9_16'
+  ) {
+    // These nodes carry no prompt material of their own - only an asset_role and, for motion, a
+    // duration. The brief and brand context come from the run, not the node.
+    const prompt = composePrompt([
+      ...contextParts(input.briefContext),
+      nodeParameters.asset_role,
+      nodeParameters.aspect_ratio,
+      nodeParameters.creative_constraints_rights,
+    ]);
+    if (prompt.length === 0) {
+      throw new ProviderError(
+        'payload_invalid',
+        `node ${nodeKey} has no brief or brand context to build a prompt from`,
+        false,
+      );
+    }
 
-  if (task === 'image_to_video' || task === 'motion_clip_9_16') {
-    const master = typeof nodeParameters.master === 'string' ? nodeParameters.master : 'its master';
-    throw upstreamArtifactPending(nodeKey, master);
+    const images = input.upstreamImages ?? [];
+    // Exactly one. Zero means the parent artifact is not registered yet, which for a wave-gated
+    // dispatch is a scheduling bug rather than something to wait on; more than one means the graph
+    // shape is wrong. Neither is retryable, and picking the first would silently adapt the wrong
+    // image after real money was spent producing both.
+    if (images.length !== 1) {
+      throw new ProviderError(
+        'payload_invalid',
+        `node ${nodeKey} requires exactly one upstream image, found ${images.length}`,
+        false,
+      );
+    }
+    const [image] = images;
+    if (image === undefined) throw upstreamArtifactPending(nodeKey, 'its master');
+    if (input.mintImageUrl === undefined) {
+      throw new ProviderError(
+        'payload_invalid',
+        `node ${nodeKey} cannot be dispatched without artifact access signing`,
+        false,
+      );
+    }
+    const imageUrl = await input.mintImageUrl(image);
+
+    if (task === 'adaptation' || task === 'reframe') {
+      return { prompt, image_url: imageUrl };
+    }
+    const duration = Number(nodeParameters.duration_seconds);
+    if (!Number.isInteger(duration) || duration < 2 || duration > 12) {
+      throw new ProviderError(
+        'payload_invalid',
+        `motion node ${nodeKey} has no valid duration_seconds`,
+        false,
+      );
+    }
+    return { prompt, image_url: imageUrl, duration };
   }
 
   throw new ProviderError('payload_invalid', `no payload adapter for task ${String(task)}`, false);
@@ -205,13 +322,11 @@ export function buildProviderAttemptPayload(
  * throwing out of the whole claim. `buildProviderAttemptPayload` stays throwing because it is the
  * unit under test and callers elsewhere want the error; only the expansion needs it captured.
  */
-function buildAttemptRequest(
-  nodeParameters: unknown,
-  executionPlanLine: unknown,
-  task: string | undefined,
-): Readonly<{ payload: unknown; payloadError?: ProviderError }> {
+async function buildAttemptRequest(
+  input: BuildProviderAttemptPayloadInput,
+): Promise<Readonly<{ payload: unknown; payloadError?: ProviderError }>> {
   try {
-    return { payload: buildProviderAttemptPayload(nodeParameters, executionPlanLine, task) };
+    return { payload: await buildProviderAttemptPayload(input) };
   } catch (cause) {
     return {
       payload: null,
@@ -242,6 +357,7 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
   readonly #privilegedKey: string | undefined;
   readonly #leaseOwner: string;
   readonly #fetch: typeof fetch;
+  readonly #mintImageUrl: ((image: UpstreamImage) => Promise<string>) | undefined;
 
   constructor(options: PrivilegedRpcOptions) {
     this.#baseUrl = options.bindings.SUPABASE_URL?.replace(/\/$/u, '');
@@ -249,6 +365,22 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
       options.bindings.SUPABASE_SECRET_KEY ?? options.bindings.SUPABASE_SERVICE_ROLE_KEY;
     this.#leaseOwner = options.leaseOwner;
     this.#fetch = options.fetch ?? ((input, init) => fetch(input, init));
+    // Mints the provider-facing capability URL for an upstream image. Absent signing material means
+    // image nodes fail payload_invalid rather than dispatching with an unfetchable input - the same
+    // fail-closed discipline the signing key itself follows.
+    this.#mintImageUrl =
+      options.bindings.ARTIFACT_ACCESS_SIGNING_KEY === undefined
+        ? undefined
+        : async (image) =>
+            await mintArtifactAccessUrl(options.bindings, {
+              purpose: 'provider_input',
+              artifactId: image.artifactId,
+              objectKey: image.objectKey,
+              contentHash: image.contentHash,
+              byteSize: image.byteSize,
+              mimeType: image.mimeType,
+              nowEpochSeconds: Math.floor(Date.now() / 1000),
+            });
   }
 
   async #rpc(functionName: string, body: Readonly<Record<string, unknown>>): Promise<unknown> {
@@ -292,34 +424,40 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
           p_lease_owner: this.#leaseOwner,
         });
         if (!Array.isArray(attempts)) throw unavailable();
-        return attempts.map((rawAttempt): PendingProviderOutboxEvent => {
-          if (!isRecord(rawAttempt)) throw unavailable();
-          const nodeParameters = rawAttempt.node_parameters;
-          const executionPlanLine = rawAttempt.execution_plan_line;
-          return {
-            eventId: requiredString(rawAttempt.event_id, 'event id'),
-            workspaceId: requiredString(rawAttempt.workspace_id, 'workspace id'),
-            runId: requiredString(rawAttempt.run_id, 'run id'),
-            attemptId: requiredString(rawAttempt.attempt_id, 'attempt id'),
-            providerRegistrationId: requiredString(
-              rawAttempt.provider_registration_id,
-              'provider registration id',
-            ),
-            routeId: requiredString(rawAttempt.route_id, 'route id'),
-            billingIdempotencyKey: requiredString(
-              rawAttempt.billing_idempotency_key,
-              'billing idempotency key',
-            ),
-            // Never throws here. A run event covers every attempt of the run, so one unbuildable
-            // node must not abort the claim and strand the attempts that are ready to submit.
-            ...buildAttemptRequest(
-              nodeParameters,
+        return await Promise.all(
+          attempts.map(async (rawAttempt): Promise<PendingProviderOutboxEvent> => {
+            if (!isRecord(rawAttempt)) throw unavailable();
+            const nodeParameters = rawAttempt.node_parameters;
+            const executionPlanLine = rawAttempt.execution_plan_line;
+            const resolvedTask = taskForRoute(requiredString(rawAttempt.route_id, 'route id'));
+            return {
+              eventId: requiredString(rawAttempt.event_id, 'event id'),
+              workspaceId: requiredString(rawAttempt.workspace_id, 'workspace id'),
+              runId: requiredString(rawAttempt.run_id, 'run id'),
+              attemptId: requiredString(rawAttempt.attempt_id, 'attempt id'),
+              providerRegistrationId: requiredString(
+                rawAttempt.provider_registration_id,
+                'provider registration id',
+              ),
+              routeId: requiredString(rawAttempt.route_id, 'route id'),
+              billingIdempotencyKey: requiredString(
+                rawAttempt.billing_idempotency_key,
+                'billing idempotency key',
+              ),
+              // Never throws here. A run event covers every attempt of the run, so one unbuildable
+              // node must not abort the claim and strand the attempts that are ready to submit.
+              ...(await buildAttemptRequest({
+                nodeParameters,
+                executionPlanLine,
+                briefContext: rawAttempt.brief_context,
+                upstreamImages: parseUpstreamImages(rawAttempt.upstream_images),
+                ...(resolvedTask === undefined ? {} : { task: resolvedTask }),
+                ...(this.#mintImageUrl === undefined ? {} : { mintImageUrl: this.#mintImageUrl }),
+              })),
               executionPlanLine,
-              taskForRoute(requiredString(rawAttempt.route_id, 'route id')),
-            ),
-            executionPlanLine,
-          };
-        });
+            };
+          }),
+        );
       }),
     );
     return expanded.flat();

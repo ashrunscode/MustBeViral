@@ -33,6 +33,7 @@ import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
 import { artifactContentHeaders, serveArtifactContent } from '../composition/artifact-access';
 import { ArtifactMachineError } from '../composition/artifact-machine';
 import { createFalWebhookVerifierPort } from '../composition/fal-webhook';
+import { createProviderScheduledLifecycle } from '../composition/provider-outbox';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
 import { p0ResultSemantics } from '../transport/semantics';
 import { V1_ROUTE_TABLE, type V1Operation, type V1RouteDefinition } from './v1-table';
@@ -410,6 +411,34 @@ async function handleFalWebhook(
       503,
     );
   }
+
+  // A successful ingest may have unlocked the next wave. The dispatch cron is `* * * * *`, so
+  // waiting for it puts a ~1 minute floor under every wave boundary - four waves would spend four
+  // minutes purely on scheduling, against a median-<=10-minute P0 completion gate. Kick dispatch
+  // immediately and let the cron remain the safety net. Deliberately fire-and-forget: this is a
+  // latency optimisation, and a failure here must never turn a durably acknowledged webhook into an
+  // error the provider would redeliver.
+  // Hono's executionCtx getter throws when there is no ExecutionContext (the unit-test harness has
+  // none), so probe for it rather than assuming. Without one, the cron stays the only dispatch path,
+  // which is correct but slower.
+  // Typed by the one method used, because Hono's ExecutionContext and the Workers global one have
+  // drifted apart and this code needs neither's extra surface.
+  let scheduler: { waitUntil: (promise: Promise<unknown>) => void } | undefined;
+  try {
+    scheduler = context.executionCtx;
+  } catch {
+    scheduler = undefined;
+  }
+  scheduler?.waitUntil(
+    (async () => {
+      try {
+        // Dispatch only. The reconciler is the cron's job and has no reason to run on this path.
+        await createProviderScheduledLifecycle(context.env)?.dispatchPending(1);
+      } catch {
+        // The cron will pick the wave up on its next tick.
+      }
+    })(),
+  );
 
   return mapResult(context, route, result);
 }
