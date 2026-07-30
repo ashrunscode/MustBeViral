@@ -86,6 +86,59 @@ function requestInput(value: unknown): Readonly<Record<string, unknown>> {
   return value;
 }
 
+/**
+ * Operations recorded durably by the app-tier idempotency port. Exactly the operations whose RPCs
+ * do NOT write their own idempotency_records row - the RPC-owned five insert into the same unique
+ * tuple with their own request-hash format, so recording them here would collide or mask.
+ */
+const APP_TIER_IDEMPOTENT_OPERATIONS: ReadonlySet<string> = new Set([
+  'create_project',
+  'cancel_run',
+  'create_export',
+  'create_artifact_upload',
+  'approve_artifacts',
+]);
+
+async function sha256HexOf(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+/**
+ * Reversible result storage. Handler results can carry bigint money values, and plain JSON
+ * stringification would silently turn them into strings - a replayed response would then differ in
+ * type from the original, which is exactly the kind of drift idempotency exists to prevent.
+ */
+const BIGINT_MARKER = '$mbv_bigint';
+
+function serializeStoredResult(result: unknown): Json {
+  // Round-tripped through JSON.stringify, so the value is JSON-safe by construction.
+  return JSON.parse(
+    JSON.stringify({ result: result ?? null }, (_key, value: unknown) =>
+      typeof value === 'bigint' ? { [BIGINT_MARKER]: value.toString(10) } : value,
+    ),
+  ) as Json;
+}
+
+function reviveBigints(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(reviveBigints);
+  if (typeof value === 'object' && value !== null) {
+    const entries = Object.entries(value as Record<string, unknown>);
+    const [first] = entries;
+    if (entries.length === 1 && first !== undefined && first[0] === BIGINT_MARKER) {
+      const digits = first[1];
+      if (typeof digits === 'string' && /^-?\d+$/u.test(digits)) return BigInt(digits);
+    }
+    return Object.fromEntries(entries.map(([key, entry]) => [key, reviveBigints(entry)]));
+  }
+  return value;
+}
+
+function reviveStoredResult<Result>(payload: unknown): Result {
+  const record = requestInput(payload);
+  return reviveBigints(record.result) as Result;
+}
+
 function slugify(value: string): string {
   const slug = value
     .normalize('NFKD')
@@ -727,8 +780,45 @@ export function createSupabaseHandlerPorts(
     },
     audit: { emit: async () => undefined },
     idempotency: {
-      async execute(_identityKey, _inputFingerprint, work) {
-        return { status: 'created', result: await work() };
+      async execute(identity, inputFingerprint, work) {
+        // Only the operations whose RPCs do NOT record their own idempotency. The five RPC-owned
+        // operations insert into the same unique tuple with their own request-hash format; an
+        // app-tier record for one of them would collide with or mask the RPC's record. The SQL
+        // side enforces the same allowlist, so drift here fails loudly rather than silently.
+        if (
+          !APP_TIER_IDEMPOTENT_OPERATIONS.has(identity.operation) ||
+          identity.workspaceId === null
+        ) {
+          return { status: 'created', result: await work() };
+        }
+        const requestHash = await sha256HexOf(inputFingerprint);
+        const rpcInput = {
+          p_workspace_id: identity.workspaceId,
+          p_operation: identity.operation,
+          p_idempotency_key: identity.idempotencyKey,
+          p_request_hash: requestHash,
+        };
+        const existing = requestInput(await executor.rpc('find_app_idempotency', rpcInput));
+        if (existing.status === 'replay') {
+          return { status: 'replay', result: reviveStoredResult(existing.response) };
+        }
+        if (existing.status === 'conflict') return { status: 'conflict' };
+        const result = await work();
+        // Record after the work: a crash in between means the retry re-runs the work, which every
+        // operation on the allowlist tolerates (deterministic ids, state-machine guards,
+        // content-addressed keys). Recording before would replay a response that never happened.
+        const recorded = requestInput(
+          await executor.rpc('record_app_idempotency', {
+            ...rpcInput,
+            p_response: serializeStoredResult(result),
+          }),
+        );
+        if (recorded.status === 'replay') {
+          // Lost a concurrent race; the stored row is the authoritative outcome.
+          return { status: 'replay', result: reviveStoredResult(recorded.response) };
+        }
+        if (recorded.status === 'conflict') return { status: 'conflict' };
+        return { status: 'created', result };
       },
     },
     clock: { now: () => new Date().toISOString() },

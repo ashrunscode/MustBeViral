@@ -471,7 +471,22 @@ export function createInMemoryHarnessTransport(
     },
     audit: { emit: async () => undefined },
     idempotency: {
-      async execute<Result>(identityKey: string, fingerprint: string, work: () => Promise<Result>) {
+      async execute<Result>(
+        identity: Readonly<{
+          actorId: string;
+          workspaceId: string | null;
+          operation: string;
+          idempotencyKey: string;
+        }>,
+        fingerprint: string,
+        work: () => Promise<Result>,
+      ) {
+        const identityKey = JSON.stringify([
+          identity.actorId,
+          identity.workspaceId,
+          identity.operation,
+          identity.idempotencyKey,
+        ]);
         const existing = idempotencyResults.get(identityKey);
         if (existing !== undefined) {
           return existing.fingerprint === fingerprint

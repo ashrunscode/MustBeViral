@@ -166,18 +166,29 @@ class MemoryPorts {
       },
       idempotency: {
         execute: async <Result>(
-          identity: string,
+          identity: Readonly<{
+            actorId: string;
+            workspaceId: string | null;
+            operation: string;
+            idempotencyKey: string;
+          }>,
           fingerprint: string,
           work: () => Promise<Result>,
         ) => {
-          const existing = this.idempotencyRecords.get(identity);
+          const identityKey = JSON.stringify([
+            identity.actorId,
+            identity.workspaceId,
+            identity.operation,
+            identity.idempotencyKey,
+          ]);
+          const existing = this.idempotencyRecords.get(identityKey);
           if (existing !== undefined) {
             return existing.fingerprint === fingerprint
               ? { status: 'replay' as const, result: existing.result as Result }
               : { status: 'conflict' as const };
           }
           const result = await work();
-          this.idempotencyRecords.set(identity, { fingerprint, result });
+          this.idempotencyRecords.set(identityKey, { fingerprint, result });
           return { status: 'created' as const, result };
         },
       },

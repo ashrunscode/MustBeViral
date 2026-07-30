@@ -1,6 +1,11 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: '14.5';
+  };
   public: {
     Tables: {
       artifact_lineage: {
@@ -956,6 +961,42 @@ export type Database = {
           },
         ];
       };
+      provider_registrations: {
+        Row: {
+          created_at: string;
+          display_name: string;
+          evidence_ref: string;
+          id: string;
+          provider_key: string;
+          reconciliation_mode: string;
+          status: string;
+          transport_version: string;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          display_name: string;
+          evidence_ref: string;
+          id?: string;
+          provider_key: string;
+          reconciliation_mode?: string;
+          status?: string;
+          transport_version: string;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          display_name?: string;
+          evidence_ref?: string;
+          id?: string;
+          provider_key?: string;
+          reconciliation_mode?: string;
+          status?: string;
+          transport_version?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       provider_webhook_events: {
         Row: {
           claimed_at: string;
@@ -980,39 +1021,6 @@ export type Database = {
           provider?: string;
           request_id?: string;
           status?: string;
-        };
-        Relationships: [];
-      };
-      provider_registrations: {
-        Row: {
-          created_at: string;
-          display_name: string;
-          evidence_ref: string;
-          id: string;
-          provider_key: string;
-          status: string;
-          transport_version: string;
-          updated_at: string;
-        };
-        Insert: {
-          created_at?: string;
-          display_name: string;
-          evidence_ref: string;
-          id?: string;
-          provider_key: string;
-          status?: string;
-          transport_version: string;
-          updated_at?: string;
-        };
-        Update: {
-          created_at?: string;
-          display_name?: string;
-          evidence_ref?: string;
-          id?: string;
-          provider_key?: string;
-          status?: string;
-          transport_version?: string;
-          updated_at?: string;
         };
         Relationships: [];
       };
@@ -1301,6 +1309,16 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      advance_fal_provider_attempt: {
+        Args: {
+          p_artifact_id?: string;
+          p_capture_micros?: number;
+          p_event_id: string;
+          p_provider_request_id: string;
+          p_status: string;
+        };
+        Returns: Json;
+      };
       apply_canvas_revision: {
         Args: {
           p_canvas_id: string;
@@ -1337,6 +1355,16 @@ export type Database = {
           updated_at: string;
           workspace_id: string;
         }[];
+        SetofOptions: {
+          from: '*';
+          to: 'outbox_events';
+          isOneToOne: false;
+          isSetofReturn: true;
+        };
+      };
+      claim_provider_webhook_event: {
+        Args: { p_event_id: string; p_provider: string; p_request_id: string };
+        Returns: Json;
       };
       create_canvas_with_revision: {
         Args: {
@@ -1370,24 +1398,6 @@ export type Database = {
         };
         Returns: Json;
       };
-      advance_fal_provider_attempt: {
-        Args: {
-          p_artifact_id?: string | null;
-          p_capture_micros?: number | null;
-          p_event_id: string;
-          p_provider_request_id: string;
-          p_status: string;
-        };
-        Returns: Json;
-      };
-      claim_provider_webhook_event: {
-        Args: {
-          p_event_id: string;
-          p_provider: string;
-          p_request_id: string;
-        };
-        Returns: Json;
-      };
       fail_outbox_event: {
         Args: {
           p_event_id: string;
@@ -1396,17 +1406,29 @@ export type Database = {
         };
         Returns: Json;
       };
-      find_provider_submission_by_billing_key: {
+      find_app_idempotency: {
         Args: {
-          p_billing_idempotency_key: string;
+          p_idempotency_key: string;
+          p_operation: string;
+          p_request_hash: string;
+          p_workspace_id: string;
         };
         Returns: Json;
       };
+      find_provider_submission_by_billing_key: {
+        Args: { p_billing_idempotency_key: string };
+        Returns: Json;
+      };
+      get_export_context: {
+        Args: { p_artifact_ids: string[]; p_run_id: string };
+        Returns: Json;
+      };
+      get_fal_artifact_context: {
+        Args: { p_provider_request_id: string };
+        Returns: Json;
+      };
       get_outbox_dispatch_attempts: {
-        Args: {
-          p_event_id: string;
-          p_lease_owner: string;
-        };
+        Args: { p_event_id: string; p_lease_owner: string };
         Returns: {
           attempt_id: string;
           billing_idempotency_key: string;
@@ -1419,23 +1441,8 @@ export type Database = {
           workspace_id: string;
         }[];
       };
-      get_export_context: {
-        Args: {
-          p_artifact_ids: string[];
-          p_run_id: string;
-        };
-        Returns: Json;
-      };
-      get_fal_artifact_context: {
-        Args: {
-          p_provider_request_id: string;
-        };
-        Returns: Json;
-      };
       list_provider_jobs_for_reconciliation: {
-        Args: {
-          p_limit: number;
-        };
+        Args: { p_limit: number };
         Returns: {
           provider: string;
           provider_job_id: string;
@@ -1445,43 +1452,18 @@ export type Database = {
         }[];
       };
       mark_provider_webhook_event_processed: {
-        Args: {
-          p_event_id: string;
-          p_provider: string;
-        };
+        Args: { p_event_id: string; p_provider: string };
         Returns: Json;
       };
-      publish_outbox_event: {
+      publish_outbox_event: { Args: { p_event_id: string }; Returns: Json };
+      reap_dead_dispatch: { Args: { p_limit: number }; Returns: Json };
+      record_app_idempotency: {
         Args: {
-          p_event_id: string;
-        };
-        Returns: Json;
-      };
-      record_provider_ambiguity: {
-        Args: {
-          p_attempt_id: string;
-          p_billing_idempotency_key: string;
-          p_event_id: string;
-          p_route_id: string;
-        };
-        Returns: Json;
-      };
-      record_provider_job_reconciliation: {
-        Args: {
-          p_evidence: Json;
-          p_provider_job_id: string;
-          p_status: string;
-        };
-        Returns: Json;
-      };
-      record_provider_submission: {
-        Args: {
-          p_attempt_id: string;
-          p_billing_idempotency_key: string;
-          p_event_id: string;
-          p_provider_request_id: string;
-          p_route_id: string;
-          p_status: string;
+          p_idempotency_key: string;
+          p_operation: string;
+          p_request_hash: string;
+          p_response: Json;
+          p_workspace_id: string;
         };
         Returns: Json;
       };
@@ -1498,6 +1480,30 @@ export type Database = {
         };
         Returns: Json;
       };
+      record_provider_ambiguity: {
+        Args: {
+          p_attempt_id: string;
+          p_billing_idempotency_key: string;
+          p_event_id: string;
+          p_route_id: string;
+        };
+        Returns: Json;
+      };
+      record_provider_job_reconciliation: {
+        Args: { p_evidence: Json; p_provider_job_id: string; p_status: string };
+        Returns: Json;
+      };
+      record_provider_submission: {
+        Args: {
+          p_attempt_id: string;
+          p_billing_idempotency_key: string;
+          p_event_id: string;
+          p_provider_request_id: string;
+          p_route_id: string;
+          p_status: string;
+        };
+        Returns: Json;
+      };
       register_artifact: {
         Args: {
           p_artifact_kind: string;
@@ -1506,18 +1512,15 @@ export type Database = {
           p_mime_type: string;
           p_object_key: string;
           p_parent_artifact_ids?: string[];
-          p_relationship?: string | null;
+          p_relationship?: string;
           p_run_id: string;
-          p_run_node_id: string | null;
+          p_run_node_id: string;
           p_status: string;
         };
         Returns: Json;
       };
       release_provider_webhook_event: {
-        Args: {
-          p_event_id: string;
-          p_provider: string;
-        };
+        Args: { p_event_id: string; p_provider: string };
         Returns: Json;
       };
       start_run_barrier: {

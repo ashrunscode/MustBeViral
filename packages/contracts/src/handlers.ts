@@ -218,13 +218,13 @@ function idempotencyIdentity(
   context: HandlerContext,
   operation: OperationName,
   idempotencyKey: string,
-): string {
+): ReturnType<typeof deriveIdempotencyKey>['identity'] {
   return deriveIdempotencyKey({
     actorId: context.actor_id,
     workspaceId: context.workspace_id,
     operation,
     idempotencyKey,
-  }).advisoryLockKey;
+  }).identity;
 }
 
 async function idempotent<Result extends { readonly status: string }>(

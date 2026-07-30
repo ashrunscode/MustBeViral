@@ -1,4 +1,5 @@
 import type {
+  IdempotencyIdentity,
   ImmutableRunQuote,
   ModelCatalogPrice,
   QuoteNodeRequest,
@@ -205,8 +206,13 @@ export interface AuditPort {
 }
 
 export interface IdempotencyPort {
+  /**
+   * Structured identity rather than a flat key: a durable implementation must store workspace,
+   * actor, operation and key as separate columns, and the flat advisory-lock string cannot be
+   * split apart safely because the idempotency key itself may contain the delimiter.
+   */
   execute<Result>(
-    identityKey: string,
+    identity: IdempotencyIdentity,
     inputFingerprint: string,
     work: () => Promise<Result>,
   ): Promise<
