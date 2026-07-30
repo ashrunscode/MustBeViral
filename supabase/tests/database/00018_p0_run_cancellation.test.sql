@@ -59,6 +59,22 @@ insert into public.quotes (
   statement_timestamp() + interval '15 minutes'
 );
 
+-- runs enforces a unique (workspace_id, quote_id), so Run B needs its own quote rather than
+-- sharing Run A's. Same shape, same amount; only the identity differs.
+insert into public.quotes (
+  id, workspace_id, project_id, canvas_id, canvas_revision_id, price_catalog_version_id,
+  execution_plan, quote_hash, maximum_charge_micros, created_by, expires_at
+) values (
+  'ad240000-0000-4000-8000-000000000002', 'ad200000-0000-4000-8000-000000000001',
+  'ad210000-0000-4000-8000-000000000001', 'ad220000-0000-4000-8000-000000000001',
+  'ad230000-0000-4000-8000-000000000001', '0c000000-0000-4000-8000-000000000002',
+  -- quotes_execution_plan_check requires a non-empty array. One line matching the run_node this
+  -- suite creates, so the fixture stays coherent rather than merely constraint-satisfying.
+  '[{"ready":true,"node_id":"master-1","model_route_id":"0b000000-0000-4000-8000-000000000002"}]'::jsonb,
+  repeat('f', 64), 1000000, 'ad100000-0000-4000-8000-000000000001',
+  statement_timestamp() + interval '15 minutes'
+);
+
 -- Run A: all attempts still created; cancel should terminalize immediately.
 insert into public.runs (
   id, workspace_id, project_id, canvas_id, canvas_revision_id, canvas_revision_hash,
@@ -103,7 +119,7 @@ insert into public.runs (
   'ad400000-0000-4000-8000-000000000002', 'ad200000-0000-4000-8000-000000000001',
   'ad210000-0000-4000-8000-000000000001', 'ad220000-0000-4000-8000-000000000001',
   'ad230000-0000-4000-8000-000000000001', repeat('c', 64),
-  'ad240000-0000-4000-8000-000000000001', 'ad100000-0000-4000-8000-000000000001', 'running'
+  'ad240000-0000-4000-8000-000000000002', 'ad100000-0000-4000-8000-000000000001', 'running'
 );
 
 insert into public.run_nodes (id, workspace_id, run_id, node_key, model_route_id, status)

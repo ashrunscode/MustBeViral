@@ -54,6 +54,22 @@ insert into public.quotes (
   statement_timestamp() + interval '15 minutes'
 );
 
+-- runs enforces a unique (workspace_id, quote_id), so Run B needs its own quote rather than
+-- sharing Run A's. Same shape, same amount; only the identity differs.
+insert into public.quotes (
+  id, workspace_id, project_id, canvas_id, canvas_revision_id, price_catalog_version_id,
+  execution_plan, quote_hash, maximum_charge_micros, created_by, expires_at
+) values (
+  'ab240000-0000-4000-8000-000000000002', 'ab200000-0000-4000-8000-000000000001',
+  'ab210000-0000-4000-8000-000000000001', 'ab220000-0000-4000-8000-000000000001',
+  'ab230000-0000-4000-8000-000000000001', '0c000000-0000-4000-8000-000000000002',
+  -- quotes_execution_plan_check requires a non-empty array. One line matching the run_node this
+  -- suite creates, so the fixture stays coherent rather than merely constraint-satisfying.
+  '[{"ready":true,"node_id":"master-1","model_route_id":"0b000000-0000-4000-8000-000000000002"}]'::jsonb,
+  repeat('e', 64), 1000000, 'ab100000-0000-4000-8000-000000000001',
+  statement_timestamp() + interval '15 minutes'
+);
+
 -- Run A: every attempt still 'created' when its dispatch event dies. The reap target.
 insert into public.runs (
   id, workspace_id, project_id, canvas_id, canvas_revision_id, canvas_revision_hash,
@@ -118,7 +134,7 @@ insert into public.runs (
   'ab400000-0000-4000-8000-000000000002', 'ab200000-0000-4000-8000-000000000001',
   'ab210000-0000-4000-8000-000000000001', 'ab220000-0000-4000-8000-000000000001',
   'ab230000-0000-4000-8000-000000000001', repeat('a', 64),
-  'ab240000-0000-4000-8000-000000000001', 'ab100000-0000-4000-8000-000000000001', 'running'
+  'ab240000-0000-4000-8000-000000000002', 'ab100000-0000-4000-8000-000000000001', 'running'
 );
 
 insert into public.run_nodes (id, workspace_id, run_id, node_key, model_route_id, status)
@@ -225,7 +241,9 @@ select is(
 );
 
 select is(
-  (select coalesce(sum(case when direction = 'credit' then amount_micros else -amount_micros end), 0)
+  -- sum() over bigint returns numeric, and pgTAP's is() has no numeric/bigint overload. Cast the
+  -- aggregate rather than the expectation so the comparison stays in exact arithmetic.
+  (select coalesce(sum(case when direction = 'credit' then amount_micros else -amount_micros end), 0)::bigint
    from public.ledger_transactions
    where workspace_id = 'ab200000-0000-4000-8000-000000000001'),
   0::bigint,
