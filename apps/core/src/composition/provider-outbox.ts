@@ -350,13 +350,18 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     event: PendingProviderOutboxEvent,
     result: ProviderSubmission,
   ): Promise<void> {
+    // Always 'queued', never the driver's state. Submission records intent; only the advance_*
+    // functions may record success, and only once the artifact and the ledger capture exist. A
+    // synchronous driver such as OpenRouter returns state 'succeeded' from submit, and forwarding
+    // that used to mark the attempt succeeded with no artifact and no capture - which broke the
+    // outcomes envelope and 503-looped every later fal webhook in the same run.
     await this.#rpc('record_provider_submission', {
       p_event_id: event.eventId,
       p_attempt_id: event.attemptId,
       p_route_id: event.routeId,
       p_billing_idempotency_key: event.billingIdempotencyKey,
       p_provider_request_id: result.providerJobId,
-      p_status: result.state,
+      p_status: 'queued',
     });
   }
 
