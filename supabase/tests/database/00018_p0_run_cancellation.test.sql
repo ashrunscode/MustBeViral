@@ -52,7 +52,10 @@ insert into public.quotes (
   'ad240000-0000-4000-8000-000000000001', 'ad200000-0000-4000-8000-000000000001',
   'ad210000-0000-4000-8000-000000000001', 'ad220000-0000-4000-8000-000000000001',
   'ad230000-0000-4000-8000-000000000001', '0c000000-0000-4000-8000-000000000002',
-  '[]'::jsonb, repeat('d', 64), 1000000, 'ad100000-0000-4000-8000-000000000001',
+  -- quotes_execution_plan_check requires a non-empty array. One line matching the run_node this
+  -- suite creates, so the fixture stays coherent rather than merely constraint-satisfying.
+  '[{"ready":true,"node_id":"master-1","model_route_id":"0b000000-0000-4000-8000-000000000002"}]'::jsonb,
+  repeat('d', 64), 1000000, 'ad100000-0000-4000-8000-000000000001',
   statement_timestamp() + interval '15 minutes'
 );
 

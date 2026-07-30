@@ -335,6 +335,10 @@ select is(
   1,
   'barrier creates the initial ready attempt'
 );
+-- outbox_events is machine-owned and grants no SELECT to `authenticated`, which is the role in force
+-- for this whole section. Read this assertion about machine-owned state as the privileged role, then
+-- hand the seat straight back so the surrounding tenant assertions keep their intended identity.
+reset role;
 select is(
   (select count(*)::integer from public.outbox_events where aggregate_id = (
     select id from public.runs where quote_id = '44000000-0000-4000-8000-000000000001'
@@ -342,6 +346,7 @@ select is(
   1,
   'barrier creates one unique outbox event'
 );
+set local role authenticated;
 select is(
   (select count(*)::integer from public.ledger_transactions where entry_type = 'reserve'),
   2,
@@ -417,11 +422,13 @@ select is(
   0,
   'expired barrier rolls back its idempotency result'
 );
+reset role;
 select is(
   (select count(*)::integer from public.outbox_events where dedupe_key like '%expired-run-key%'),
   0,
   'expired barrier leaves no outbox effect'
 );
+set local role authenticated;
 
 select ok(
   (public.apply_canvas_revision(
