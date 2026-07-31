@@ -19,15 +19,32 @@ next_action: Fix the six execution-engine defects that prevent a launch pack fro
   governance/evidence/WP-P0-001/environment-provisioning.md section 4.
 decisions_pending: []
 blockers:
-  - A launch pack cannot complete. Five remaining execution-engine defects, none of them operator
-    inputs. Adaptation and motion nodes carry no prompt material; create_quote hardcodes ready=true
-    so graph edges are validated but never scheduled; the OpenRouter copy route has no terminal
-    advance, no artifact and no capture; a succeeded copy attempt makes every later fal webhook in
-    the same run fail on a NaN capture and 503-loop; and nothing ever produces approved_output, so
-    create_export can never succeed. Tracked as Tracks C-F of the completion plan. The sixth defect
-    is closed - signed artifact-access capabilities now give the 10 image-to-image and
-    image-to-video nodes a fetchable private-R2 input, proven live by fal fetching one and returning
-    a real edit; evidence in governance/evidence/WP-P0-001/signed-artifact-access.md.
+  - A launch pack cannot complete. One remaining execution-engine defect, and it is not an operator
+    input - nothing ever produces approved_output, so create_export can never succeed and receipts
+    stay unretrievable. Tracked as Track E of the completion plan.
+  - Five of the six original execution-engine defects are closed and each is proven on live staging.
+    Signed artifact-access capabilities give the 10 image-to-image and image-to-video nodes a
+    fetchable private-R2 input, proven by fal itself fetching one and returning a real edit.
+    create_quote now derives dispatch waves from the pinned graph's edges and marks only wave 1
+    ready, while start_run_barrier creates every attempt eagerly and the gate moved to dispatch.
+    Adaptation and motion nodes receive the run's brief and brand context plus exactly one upstream
+    image. The OpenRouter copy route has a terminal path, an artifact and a capture. And the NaN
+    capture that 503-looped every later fal webhook is gone. Evidence in
+    governance/evidence/WP-P0-001/signed-artifact-access.md and staging-sync-tracks-c-and-d.md.
+  - A wave-1 deadlock was found by adversarial review before it could cost anything, and is fixed.
+    app_private.advance_run_readiness was reachable from exactly one place - inside
+    advance_fal_provider_attempt, behind a provider_key='fal' join - while wave 1 of the launch pack
+    is all three copy nodes on OpenRouter. The whole DAG would have stalled at wave 1 after copy was
+    paid for. The shared settlement tail now lives in app_private.settle_attempt_transition and both
+    provider entry points call it. Two further fal-only gates were shaped like validation and would
+    each have looked already-fixed - a unit in ('image','video_second') filter in the ingest context
+    lookup, and the same restriction again in TypeScript.
+  - Staging is synced for Tracks C and D and the transfer was proven byte-exact - all nine changed
+    functions match md5(pg_get_functiondef) against a local Postgres 17 with the migration files
+    applied - but the staging migration HISTORY table still diverges from the repo's filenames. It
+    carries 18 auto-named rows from earlier MCP applies with no local counterpart, which is why
+    supabase db push refuses. Reconciling it means rewriting a record of what actually happened, so
+    it is left as an explicit operator decision rather than quietly repaired.
   - Provider route identity and queue polling were both wrong and only live probing found either.
     The pinned Kontext application fal-ai/flux-kontext/pro does not exist on fal (its result reads
     back 404 "Path /pro not found"), which would have failed all 9 adaptation nodes after the 3
