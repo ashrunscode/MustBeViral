@@ -1,5 +1,7 @@
 import {
   ApplyCanvasPatchInputSchema,
+  ApproveArtifactsBodySchema,
+  ApproveArtifactsResourceInputSchema,
   CancelRunInputSchema,
   CreateArtifactUploadBodySchema,
   CreateArtifactUploadResourceInputSchema,
@@ -239,6 +241,13 @@ function parseClientInput(
       });
     case 'get_artifact':
       return GetArtifactResourceInputSchema.parse({ context, artifact_id: id });
+    case 'approve_artifacts':
+      return ApproveArtifactsResourceInputSchema.parse({
+        context,
+        run_id: id,
+        ...ApproveArtifactsBodySchema.parse(body),
+        idempotency_key: idempotencyKey,
+      });
     case 'create_export':
       return CreateExportResourceInputSchema.parse({
         context,

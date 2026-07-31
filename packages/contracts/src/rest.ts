@@ -19,6 +19,7 @@ export const P0_REST_OPERATIONS = [
   'cancel_run',
   'create_artifact_upload',
   'get_artifact',
+  'approve_artifacts',
   'create_export',
   'explain_model',
   'get_receipt',
@@ -49,6 +50,23 @@ export const CreateExportBodySchema = z
   .object({
     artifact_ids: z.array(z.string().min(1).max(200)).min(1).max(100),
     format: z.enum(['zip', 'json']),
+  })
+  .strict();
+export const ApproveArtifactsBodySchema = z
+  .object({
+    approvals: z
+      .array(
+        z
+          .object({
+            artifact_id: IdentifierSchema,
+            // Required, not optional: the WCAG gate demands user-editable descriptive text at the
+            // approval boundary, and the RPC refuses an empty one.
+            accessibility_description: z.string().trim().min(1).max(2000),
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(100),
   })
   .strict();
 
@@ -109,6 +127,15 @@ export const CreateExportResourceInputSchema = z
   })
   .strict();
 
+export const ApproveArtifactsResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    run_id: IdentifierSchema,
+    ...ApproveArtifactsBodySchema.shape,
+    idempotency_key: IdempotencyKeySchema,
+  })
+  .strict();
+
 export const ExplainModelResourceInputSchema = ContextInputSchema.extend({
   model_id: IdentifierSchema,
 }).strict();
@@ -140,6 +167,7 @@ export type CreateArtifactUploadResourceInput = z.infer<
 >;
 export type GetArtifactResourceInput = z.infer<typeof GetArtifactResourceInputSchema>;
 export type CreateExportResourceInput = z.infer<typeof CreateExportResourceInputSchema>;
+export type ApproveArtifactsResourceInput = z.infer<typeof ApproveArtifactsResourceInputSchema>;
 export type ExplainModelResourceInput = z.infer<typeof ExplainModelResourceInputSchema>;
 export type GetReceiptResourceInput = z.infer<typeof GetReceiptResourceInputSchema>;
 export type IngestFalWebhookResourceInput = z.infer<typeof IngestFalWebhookResourceInputSchema>;
@@ -156,7 +184,7 @@ export type P0HandlerResult = Readonly<{
     | 'provider_unavailable'
     | 'rate_limited'
     | 'provider_ambiguous';
-  reason?: 'revision' | 'run_state' | 'quote_stale' | 'idempotency';
+  reason?: 'revision' | 'run_state' | 'quote_stale' | 'idempotency' | 'approval';
   tier?: string;
   retry_after_seconds?: number;
   reconcile_state?: string;
@@ -176,6 +204,7 @@ export interface P0ResourceHandlers {
   readonly createCanvas: P0RestHandler;
   readonly createArtifactUpload: P0RestHandler;
   readonly getArtifact: P0RestHandler;
+  readonly approveArtifacts: P0RestHandler;
   readonly createExport: P0RestHandler;
   readonly explainModel: P0RestHandler;
   readonly getReceipt: P0RestHandler;
@@ -191,6 +220,7 @@ export interface P0ResourcePort {
   readonly createCanvas: P0ResourceHandler<CreateCanvasResourceInput>;
   readonly createArtifactUpload: P0ResourceHandler<CreateArtifactUploadResourceInput>;
   readonly getArtifact: P0ResourceHandler<GetArtifactResourceInput>;
+  readonly approveArtifacts: P0ResourceHandler<ApproveArtifactsResourceInput>;
   readonly createExport: P0ResourceHandler<CreateExportResourceInput>;
   readonly explainModel: P0ResourceHandler<ExplainModelResourceInput>;
   readonly getReceipt: P0ResourceHandler<GetReceiptResourceInput>;
@@ -212,6 +242,8 @@ export function createP0ResourceHandlers(port: P0ResourcePort): P0ResourceHandle
     createArtifactUpload: (input) =>
       port.createArtifactUpload(CreateArtifactUploadResourceInputSchema.parse(input)),
     getArtifact: (input) => port.getArtifact(GetArtifactResourceInputSchema.parse(input)),
+    approveArtifacts: (input) =>
+      port.approveArtifacts(ApproveArtifactsResourceInputSchema.parse(input)),
     createExport: (input) => port.createExport(CreateExportResourceInputSchema.parse(input)),
     explainModel: (input) => port.explainModel(ExplainModelResourceInputSchema.parse(input)),
     getReceipt: (input) => port.getReceipt(GetReceiptResourceInputSchema.parse(input)),
@@ -243,6 +275,7 @@ export function createP0RestHandlers(
     cancel_run: commands.cancelRun,
     create_artifact_upload: resources.createArtifactUpload,
     get_artifact: resources.getArtifact,
+    approve_artifacts: resources.approveArtifacts,
     create_export: resources.createExport,
     explain_model: resources.explainModel,
     get_receipt: resources.getReceipt,

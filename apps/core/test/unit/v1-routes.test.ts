@@ -62,6 +62,9 @@ const requestBodies: Partial<Record<keyof P0RestHandlers, Readonly<Record<string
     sha256: 'a'.repeat(64),
     purpose: 'reference',
   },
+  approve_artifacts: {
+    approvals: [{ artifact_id: 'artifact-1', accessibility_description: 'Fixture description.' }],
+  },
   create_export: { artifact_ids: ['artifact-1'], format: 'zip' },
 };
 
@@ -103,7 +106,7 @@ describe('P0 /v1 route boundary', () => {
 
   afterEach(() => vi.unstubAllGlobals());
 
-  it('maps all 17 authenticated operations through the shared handler table', async () => {
+  it('maps all 18 authenticated operations through the shared handler table', async () => {
     const calls: string[] = [];
     const handlers = Object.fromEntries(
       P0_REST_OPERATIONS.map((operation) => [

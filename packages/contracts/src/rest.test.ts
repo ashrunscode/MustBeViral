@@ -66,6 +66,12 @@ const minimalInputs = {
     idempotency_key: 'idem-upload',
   },
   get_artifact: { context, artifact_id: 'artifact-1' },
+  approve_artifacts: {
+    context,
+    run_id: 'run-1',
+    approvals: [{ artifact_id: 'artifact-1', accessibility_description: 'Fixture description.' }],
+    idempotency_key: 'idem-approve',
+  },
   create_export: {
     context,
     run_id: 'run-1',
@@ -113,6 +119,7 @@ describe('P0 REST handler binding', () => {
       createCanvas: resource('create_canvas'),
       createArtifactUpload: resource('create_artifact_upload'),
       getArtifact: resource('get_artifact'),
+      approveArtifacts: resource('approve_artifacts'),
       createExport: resource('create_export'),
       explainModel: resource('explain_model'),
       getReceipt: resource('get_receipt'),

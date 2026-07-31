@@ -59,6 +59,9 @@ export type Database = {
       };
       artifacts: {
         Row: {
+          accessibility_description: string | null;
+          approved_at: string | null;
+          approved_by: string | null;
           artifact_kind: string;
           byte_size: number;
           canvas_revision_id: string | null;
@@ -76,6 +79,9 @@ export type Database = {
           workspace_id: string;
         };
         Insert: {
+          accessibility_description?: string | null;
+          approved_at?: string | null;
+          approved_by?: string | null;
           artifact_kind: string;
           byte_size: number;
           canvas_revision_id?: string | null;
@@ -93,6 +99,9 @@ export type Database = {
           workspace_id: string;
         };
         Update: {
+          accessibility_description?: string | null;
+          approved_at?: string | null;
+          approved_by?: string | null;
           artifact_kind?: string;
           byte_size?: number;
           canvas_revision_id?: string | null;
@@ -1104,6 +1113,7 @@ export type Database = {
       run_nodes: {
         Row: {
           created_at: string;
+          dispatch_wave: number;
           id: string;
           model_route_id: string | null;
           node_key: string;
@@ -1114,6 +1124,7 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
+          dispatch_wave?: number;
           id?: string;
           model_route_id?: string | null;
           node_key: string;
@@ -1124,6 +1135,7 @@ export type Database = {
         };
         Update: {
           created_at?: string;
+          dispatch_wave?: number;
           id?: string;
           model_route_id?: string | null;
           node_key?: string;
@@ -1164,6 +1176,7 @@ export type Database = {
           confirmed_at: string;
           confirmed_by: string;
           created_at: string;
+          dispatch_wave: number;
           id: string;
           project_id: string;
           quote_id: string;
@@ -1178,6 +1191,7 @@ export type Database = {
           confirmed_at?: string;
           confirmed_by: string;
           created_at?: string;
+          dispatch_wave?: number;
           id?: string;
           project_id: string;
           quote_id: string;
@@ -1192,6 +1206,7 @@ export type Database = {
           confirmed_at?: string;
           confirmed_by?: string;
           created_at?: string;
+          dispatch_wave?: number;
           id?: string;
           project_id?: string;
           quote_id?: string;
@@ -1309,6 +1324,16 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      advance_copy_provider_attempt: {
+        Args: {
+          p_artifact_id?: string;
+          p_capture_micros?: number;
+          p_event_id: string;
+          p_provider_request_id: string;
+          p_status: string;
+        };
+        Returns: Json;
+      };
       advance_fal_provider_attempt: {
         Args: {
           p_artifact_id?: string;
@@ -1330,6 +1355,10 @@ export type Database = {
           p_request_id: string;
           p_workspace_id: string;
         };
+        Returns: Json;
+      };
+      approve_run_artifacts: {
+        Args: { p_approvals: Json; p_request_id: string; p_run_id: string };
         Returns: Json;
       };
       claim_outbox_events: {
@@ -1436,14 +1465,20 @@ export type Database = {
         Returns: {
           attempt_id: string;
           billing_idempotency_key: string;
+          brief_context: Json;
           event_id: string;
           execution_plan_line: Json;
           node_parameters: Json;
           provider_registration_id: string;
           route_id: string;
           run_id: string;
+          upstream_images: Json;
           workspace_id: string;
         }[];
+      };
+      get_provider_artifact_context: {
+        Args: { p_provider_key: string; p_provider_request_id: string };
+        Returns: Json;
       };
       list_provider_jobs_for_reconciliation: {
         Args: { p_limit: number };

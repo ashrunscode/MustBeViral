@@ -84,7 +84,11 @@ function rpcFailureKind(error: SupabasePostgrestError): SupabaseFailureKind | nu
     message.includes('IDEMPOTENCY_CONFLICT') ||
     message.includes('QUOTE_STALE') ||
     message.includes('QUOTE_ALREADY_USED') ||
-    message.includes('RUN_STATE_CONFLICT')
+    message.includes('RUN_STATE_CONFLICT') ||
+    // Approval state conflicts: the run's money is still moving, or the artifact is not an
+    // available provider_output. State, not validation - a retry after settlement can succeed.
+    message.includes('RUN_NOT_APPROVABLE') ||
+    message.includes('ARTIFACT_NOT_APPROVABLE')
   ) {
     return 'conflict';
   }

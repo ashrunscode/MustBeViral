@@ -404,6 +404,7 @@ const WORKSPACE_RESOLUTION_BY_OPERATION = {
     bodyField: 'project_id',
   },
   get_artifact: { kind: 'path_resource', table: 'artifacts' },
+  approve_artifacts: { kind: 'path_resource', table: 'runs' },
   create_export: { kind: 'path_resource', table: 'runs' },
   explain_model: { kind: 'actor_membership' },
   get_receipt: { kind: 'path_resource', table: 'runs' },
@@ -530,6 +531,29 @@ function createResourcePort(
       const context = asTenantContext(input.context);
       const artifact = await repositories.artifacts.get(context, input.artifact_id);
       return artifact === null ? { status: 'not_found' } : { status: 'ok', artifact };
+    },
+    async approveArtifacts(input) {
+      // Caller-scoped on purpose: the RPC runs as the authenticated user through PostgREST, so
+      // auth.uid() and the workspace-owner check inside approve_run_artifacts are the authority.
+      // The machine never approves on a customer's behalf, and register_artifact refuses to mint
+      // approved_output directly - promotion through this RPC is the only path.
+      try {
+        const result = requestInput(
+          await executor.rpc('approve_run_artifacts', {
+            p_run_id: input.run_id,
+            p_approvals: input.approvals,
+            p_request_id: input.context.request_id,
+          }),
+        );
+        return { status: 'ok', ...result };
+      } catch (error) {
+        if (error instanceof SupabaseDataApiError && error.kind === 'conflict') {
+          // RUN_NOT_APPROVABLE / ARTIFACT_NOT_APPROVABLE: the run's money is still moving, or the
+          // artifact is not an available provider_output. A state conflict, not a validation fault.
+          return { status: 'conflict', reason: 'approval' };
+        }
+        throw error;
+      }
     },
     async createExport(input) {
       return await createPrivateRunExport(

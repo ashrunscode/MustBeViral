@@ -1,6 +1,6 @@
 begin;
 
-select plan(14);
+select plan(15);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -356,18 +356,46 @@ select is(
   'the unique deterministic object key holds one artifact row'
 );
 
+-- The machine may no longer fabricate an approval: approve_run_artifacts is the only path to
+-- approved_output, and it promotes the provider_output row in place. This fixture therefore
+-- registers a provider_output and promotes it the same way approval does, with the provenance the
+-- artifacts_approval_provenance constraint now requires.
+select alike(
+  pg_temp.error_of($sql$
+    select public.register_artifact(
+      'b7000000-0000-4000-8000-000000000001',
+      'b8000000-0000-4000-8000-000000000002',
+      'approved_output',
+      'available',
+      'workspaces/b2000000-0000-4000-8000-000000000001/runs/b7000000-0000-4000-8000-000000000001/approved/rejected',
+      repeat('d', 64),
+      'image/png',
+      24
+    )
+  $sql$),
+  '22023:%',
+  'register_artifact refuses to mint approved_output directly - approval is the only path'
+);
+
 do $$
 begin
   perform public.register_artifact(
     'b7000000-0000-4000-8000-000000000001',
     'b8000000-0000-4000-8000-000000000002',
-    'approved_output',
+    'provider_output',
     'available',
     'workspaces/b2000000-0000-4000-8000-000000000001/runs/b7000000-0000-4000-8000-000000000001/approved/adaptation',
     repeat('e', 64),
     'image/png',
     24
   );
+  update public.artifacts
+  set artifact_kind = 'approved_output',
+      approved_by = 'b1000000-0000-4000-8000-000000000001',
+      approved_at = statement_timestamp(),
+      accessibility_description = 'Adaptation fixture for export testing.'
+  where object_key =
+    'workspaces/b2000000-0000-4000-8000-000000000001/runs/b7000000-0000-4000-8000-000000000001/approved/adaptation';
 end;
 $$;
 

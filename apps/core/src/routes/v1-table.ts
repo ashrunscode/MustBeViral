@@ -15,6 +15,7 @@ export type V1Operation =
   | 'cancel_run'
   | 'create_artifact_upload'
   | 'get_artifact'
+  | 'approve_artifacts'
   | 'create_export'
   | 'explain_model'
   | 'get_receipt'
@@ -140,6 +141,14 @@ export const V1_ROUTE_TABLE = [
     operation: 'get_artifact',
     auth: 'supabase_jwt',
     mutation: false,
+    providerTouching: false,
+  },
+  {
+    method: 'POST',
+    path: '/runs/:id/approvals',
+    operation: 'approve_artifacts',
+    auth: 'supabase_jwt',
+    mutation: true,
     providerTouching: false,
   },
   {

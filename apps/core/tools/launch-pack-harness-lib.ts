@@ -539,6 +539,10 @@ export function createInMemoryHarnessTransport(
     async getArtifact() {
       return { status: 'not_found' };
     },
+    async approveArtifacts() {
+      // The in-memory harness never settles a run, so nothing is ever approvable here.
+      return { status: 'conflict', reason: 'approval' };
+    },
     async createExport() {
       return { status: 'provider_unavailable' };
     },

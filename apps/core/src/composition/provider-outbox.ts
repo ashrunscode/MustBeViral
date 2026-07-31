@@ -600,6 +600,21 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     return result;
   }
 
+  /**
+   * Recovers synchronous provider jobs stranded at 'submitted'. Once an attempt leaves 'created',
+   * the dispatch gate never selects it again; the synchronous registration is excluded from the
+   * polling reconciler; and no webhook exists - so a copy attempt whose settlement failed after
+   * submission had zero automatic paths out. Proven live during the Track D money-path proof, where
+   * three captured attempts sat 'submitted' for twenty minutes until manual SQL settled them. The
+   * RPC finishes an interrupted settlement when the capture exists, and releases-then-fails when
+   * the output was lost before capture.
+   */
+  async reapStrandedSynchronousJobs(limit: number): Promise<Readonly<Record<string, unknown>>> {
+    const result = await this.#rpc('reap_stranded_synchronous_jobs', { p_limit: limit });
+    if (!isRecord(result)) throw unavailable();
+    return result;
+  }
+
   async listPending(limit: number): Promise<readonly PendingProviderReconciliationJob[]> {
     const result = await this.#rpc('list_provider_jobs_for_reconciliation', {
       p_limit: limit,
@@ -697,6 +712,7 @@ export interface ProviderScheduledLifecycle {
   reconcilePending(limit: number): ReturnType<ProviderReconciler['reconcilePending']>;
   reapDeadDispatch(limit: number): Promise<Readonly<Record<string, unknown>>>;
   finalizeCancelRequested(limit: number): Promise<Readonly<Record<string, unknown>>>;
+  reapStrandedSynchronousJobs(limit: number): Promise<Readonly<Record<string, unknown>>>;
 }
 
 export function createProviderScheduledLifecycle(
@@ -742,6 +758,7 @@ export function createProviderScheduledLifecycle(
     reconcilePending: (limit) => reconciler.reconcilePending(limit),
     reapDeadDispatch: (limit) => port.reapDeadDispatch(limit),
     finalizeCancelRequested: (limit) => port.finalizeCancelRequested(limit),
+    reapStrandedSynchronousJobs: (limit) => port.reapStrandedSynchronousJobs(limit),
   };
 }
 
@@ -756,6 +773,7 @@ export async function runProviderScheduled(
       reconciliation: Awaited<ReturnType<ProviderScheduledLifecycle['reconcilePending']>>;
       reaped: Readonly<Record<string, unknown>>;
       finalized: Readonly<Record<string, unknown>>;
+      strandedSynchronous: Readonly<Record<string, unknown>>;
     }>
 > {
   if (lifecycle === null) return { status: 'disabled' };
@@ -765,5 +783,6 @@ export async function runProviderScheduled(
   // move it forward.
   const reaped = await lifecycle.reapDeadDispatch(10);
   const finalized = await lifecycle.finalizeCancelRequested(10);
-  return { status: 'ok', dispatch, reconciliation, reaped, finalized };
+  const strandedSynchronous = await lifecycle.reapStrandedSynchronousJobs(10);
+  return { status: 'ok', dispatch, reconciliation, reaped, finalized, strandedSynchronous };
 }

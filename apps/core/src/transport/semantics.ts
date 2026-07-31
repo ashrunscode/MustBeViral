@@ -20,6 +20,7 @@ function conflictCode(result: P0HandlerResult): string {
   if (result.reason === 'idempotency') return 'IDEMPOTENCY_CONFLICT';
   if (result.reason === 'quote_stale') return 'QUOTE_STALE';
   if (result.reason === 'run_state') return 'RUN_NOT_CANCELABLE';
+  if (result.reason === 'approval') return 'RUN_NOT_APPROVABLE';
   return 'REVISION_CONFLICT';
 }
 
