@@ -22,6 +22,19 @@ blockers:
   - A launch pack cannot complete. One remaining execution-engine defect, and it is not an operator
     input - nothing ever produces approved_output, so create_export can never succeed and receipts
     stay unretrievable. Tracked as Track E of the completion plan.
+  - The $0.0004 copy-only money-path proof passed on live staging. Quoted 450,000 micros, captured
+    exactly 450,000, zero residual, three JSON artifacts, run terminal succeeded, read back through
+    the real GET /v1/runs/:id/receipt a customer would call. Getting there found and fixed FIVE
+    missing service_role grants on privileged RPCs - three from today's Track C/D work
+    (DROP FUNCTION clears grants; the migrations re-issued the revoke but not the matching grant) and
+    two pre-existing from Track A (reap_dead_dispatch, finalize_cancel_requested_runs - both likely
+    unreachable by the actual cron since they were introduced, because their own evidence validated
+    them by calling the RPC directly as postgres, which bypasses grants). A new pgTAP suite
+    (00021_p0_privileged_rpc_grants) asserts service_role execute on the full known privileged RPC
+    surface so this class of defect fails loudly instead of shipping silently. A copy attempt whose
+    synchronous settlement fails after submission has no automatic retry path once it leaves
+    'created' - folded into Track E's reconciler work rather than left open. Evidence in
+    governance/evidence/WP-P0-001/copy-only-money-path-proof.md.
   - Five of the six original execution-engine defects are closed and each is proven on live staging.
     Signed artifact-access capabilities give the 10 image-to-image and image-to-video nodes a
     fetchable private-R2 input, proven by fal itself fetching one and returning a real edit.
@@ -54,11 +67,10 @@ blockers:
     tests; see governance/evidence/WP-P0-001/signed-artifact-access.md section 4. The remaining
     lesson is that fal's queue returns 200 IN_QUEUE for any submit body and validates only at
     execution, so no submit-time success proves a route is callable.
-  - Two settlement holes that must close before further spend. Confirmation tokens are not verified
-    (any string of 16 or more characters satisfies the paid-run human-consent gate, which
-    contradicts the MCP rule that tool descriptions cannot imply autonomous spending), and
-    reconciliation_required has no exit transitions while refund is implemented with zero callers,
-    so customer funds can be held with no recovery path.
+  - One settlement hole remains open. reconciliation_required has no exit transitions while refund
+    is implemented with zero callers, so customer funds can be held with no recovery path.
+    Confirmation-token verification, the other half of this blocker, closed in Track A - tokens are
+    now real HMAC, minted server-side and constant-time verified.
   - The web product does not exist yet. apps/web makes zero HTTP requests to the Worker; all seven
     screens run on in-memory fixtures; there is no sign-in surface; and packages/contracts declares
     no response schemas, so no typed client can be built until that contract is closed.

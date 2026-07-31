@@ -155,6 +155,14 @@ begin
 end;
 $fn$;
 
-revoke all on function public.reap_dead_dispatch(integer) from public;
+-- Missing on first write, found 2026-07-31 while proving the Track D copy money path: the
+-- default-privileges bootstrap (20260719010000, line 9) revokes execute from every role including
+-- service_role for every future function, so a revoke with no matching grant leaves the function
+-- uncallable by the privileged Worker composition that is its only real caller. The reaper's own
+-- evidence record validated it by calling this RPC directly as postgres, which bypasses grants
+-- entirely - so the validation never actually exercised the path the cron uses at runtime. Unknown
+-- how long the reaper's cron invocation has been failing closed in practice.
+revoke all on function public.reap_dead_dispatch(integer) from public, anon, authenticated, service_role;
+grant execute on function public.reap_dead_dispatch(integer) to service_role;
 
 commit;

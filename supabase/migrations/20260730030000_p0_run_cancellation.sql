@@ -210,7 +210,13 @@ begin
 end;
 $fn$;
 
-revoke all on function public.finalize_cancel_requested_runs(integer) from public;
+-- Missing on first write, found 2026-07-31 alongside the identical gap on reap_dead_dispatch: a
+-- revoke with no matching grant leaves this uncallable by the privileged Worker composition, its
+-- only real caller. Same blind spot - direct-SQL validation as postgres bypasses grants and never
+-- exercises the path the cron uses at runtime.
+revoke all on function public.finalize_cancel_requested_runs(integer)
+  from public, anon, authenticated, service_role;
+grant execute on function public.finalize_cancel_requested_runs(integer) to service_role;
 
 -- Cancelling runs must stop receiving new submissions even while a dispatch event is mid-lease:
 -- the expansion is the gate every dispatched attempt passes through.

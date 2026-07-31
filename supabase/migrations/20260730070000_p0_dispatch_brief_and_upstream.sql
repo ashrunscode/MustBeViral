@@ -144,6 +144,14 @@ begin
 end;
 $fn$;
 
-revoke all on function public.get_outbox_dispatch_attempts(uuid, text) from public;
+-- DROP FUNCTION above clears every grant on the object - `create or replace` cannot change a row
+-- type, but it also cannot lose grants the way a drop-then-create does. The default-privileges
+-- bootstrap (20260719010000, line 9) revokes execute from every role including service_role for
+-- every future function, so the explicit re-grant below is load-bearing, not defensive: without it
+-- every dispatch cron tick fails closed with "provider outbox persistence rejected the privileged
+-- credential" and no attempt is ever submitted. Discovered live on staging after this migration
+-- shipped without it - the reason to grep for `drop function` before every deploy from now on.
+revoke all on function public.get_outbox_dispatch_attempts(uuid, text) from public, anon, authenticated, service_role;
+grant execute on function public.get_outbox_dispatch_attempts(uuid, text) to service_role;
 
 commit;

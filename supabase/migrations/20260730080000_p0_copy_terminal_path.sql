@@ -102,8 +102,14 @@ as $fn$
   select public.get_provider_artifact_context(p_provider_request_id, 'fal');
 $fn$;
 
-revoke all on function public.get_provider_artifact_context(text, text) from public;
-
+-- get_provider_artifact_context is called DIRECTLY by the privileged Worker composition
+-- (artifact-machine.ts's getCopyContext), not only through the get_fal_artifact_context wrapper
+-- above - a nested call from within a security definer function executes as the function's owner
+-- and needs no grant of its own, but this direct RPC call from service_role does. Missing on the
+-- first deploy of this migration; the copy ingest path failed closed until this landed.
+revoke all on function public.get_provider_artifact_context(text, text)
+  from public, anon, authenticated, service_role;
+grant execute on function public.get_provider_artifact_context(text, text) to service_role;
 
 -- The provider-agnostic settlement tail, moved out of advance_fal_provider_attempt WITHOUT edits.
 -- It owns the capture/release proof, the idempotent terminal short-circuit, the readiness advance,
@@ -392,6 +398,8 @@ revoke all on function app_private.settle_attempt_transition(
   public.provider_jobs, text, text, uuid, bigint
 ) from public;
 revoke all on function public.advance_copy_provider_attempt(text, text, text, uuid, bigint)
-  from public;
+  from public, anon, authenticated, service_role;
+grant execute on function public.advance_copy_provider_attempt(text, text, text, uuid, bigint)
+  to service_role;
 
 commit;
