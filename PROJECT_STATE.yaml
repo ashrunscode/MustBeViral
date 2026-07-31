@@ -19,9 +19,24 @@ next_action: Fix the six execution-engine defects that prevent a launch pack fro
   governance/evidence/WP-P0-001/environment-provisioning.md section 4.
 decisions_pending: []
 blockers:
-  - A launch pack cannot complete. One remaining execution-engine defect, and it is not an operator
-    input - nothing ever produces approved_output, so create_export can never succeed and receipts
-    stay unretrievable. Tracked as Track E of the completion plan.
+  - All six original execution-engine defects are now closed and proven live. The last one -
+    nothing ever produced approved_output, so create_export could never succeed - closed with the
+    $0.075 approval-and-export proof. One master plus one adaptation ran through real waves (the
+    first live wave promotion), the adaptation was built from run-level brief context with a minted
+    capability URL, POST /runs/:id/approvals promoted both artifacts in place (HTTP 200, idempotent
+    replay), and POST /runs/:id/exports returned HTTP 201 with a byte-identical ZIP on re-export -
+    the first successful export in the system's history. Captured exactly 700,000 micros, zero
+    residual. Evidence in governance/evidence/WP-P0-001/approval-export-proof.md.
+  - The TRUE root cause of every stranded settlement is found, fixed, and proven on the real path.
+    Supabase loads pg_safeupdate on API connections only, and advance_run_readiness cleared its
+    scratch table with a bare DELETE - so every Worker-side terminal advance failed with SQLSTATE
+    21000 while every direct-SQL validation passed. This, not the five missing grants, is what
+    stranded both the copy incident and the fal master; the run in the proof above completed the
+    rest of its lifecycle fully autonomously after the one-line fix
+    (20260731020000_p0_readiness_safeupdate_fix), the first multi-wave settlement ever to do so
+    without manual SQL. Standing verification doctrine - anything the privileged Worker calls must
+    be verified through the PostgREST path (REST /rpc, apikey, service_role); pgTAP as postgres,
+    direct SQL, and function fingerprints all passed while production was broken.
   - The $0.0004 copy-only money-path proof passed on live staging. Quoted 450,000 micros, captured
     exactly 450,000, zero residual, three JSON artifacts, run terminal succeeded, read back through
     the real GET /v1/runs/:id/receipt a customer would call. Getting there found and fixed FIVE
