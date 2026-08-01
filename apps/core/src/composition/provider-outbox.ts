@@ -108,10 +108,18 @@ function upstreamArtifactPending(nodeKey: string, dependsOn: string): ProviderEr
 
 /** Joins the brief fragments a node carries into one prompt, dropping absent ones. */
 function composePrompt(parts: readonly unknown[]): string {
-  return parts
-    .filter((part): part is string => typeof part === 'string' && part.trim().length > 0)
-    .map((part) => part.trim())
-    .join('\n\n');
+  const seen = new Set<string>();
+  const kept: string[] = [];
+  for (const part of parts) {
+    if (typeof part !== 'string') continue;
+    const trimmed = part.trim();
+    // Run-level context and node parameters legitimately carry the same fragment (a copy node
+    // repeats the brief's offer). Emitting it twice wastes prompt budget and reads as emphasis.
+    if (trimmed.length === 0 || seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    kept.push(trimmed);
+  }
+  return kept.join('\n\n');
 }
 
 /**
@@ -177,20 +185,73 @@ function parseUpstreamImages(value: unknown): readonly UpstreamImage[] {
   return images;
 }
 
-/** Pulls the shared brief and brand fragments every image node needs but none of them carry. */
-function contextParts(briefContext: unknown): readonly unknown[] {
-  if (!isRecord(briefContext)) return [];
-  const brief = isRecord(briefContext.brief) ? briefContext.brief : {};
-  const brand = isRecord(briefContext.brand_context) ? briefContext.brand_context : {};
+/**
+ * Splits the dispatch expansion's `{ brief, brand_context }` into the two parameter bags.
+ *
+ * The key names here must match what `buildGoldenLaunchPackGraph` writes onto the `brief` and
+ * `brand_context` nodes (`packages/contracts/src/launch-pack.ts`). An earlier version read
+ * `brand.palette` / `brand.typography` / `brand.brand_voice` / `brand.logo_usage`, none of which the
+ * builder ever emitted, so every adaptation and motion prompt silently lost the entire brand kit and
+ * generated unbranded output at full price. Anything read here has a test in
+ * `provider-attempt-payload.test.ts` pinning it to a graph the builder actually produces.
+ */
+function splitBriefContext(briefContext: unknown): {
+  readonly brief: Record<string, unknown>;
+  readonly brand: Record<string, unknown>;
+} {
+  if (!isRecord(briefContext)) return { brief: {}, brand: {} };
+  return {
+    brief: isRecord(briefContext.brief) ? briefContext.brief : {},
+    brand: isRecord(briefContext.brand_context) ? briefContext.brand_context : {},
+  };
+}
+
+/**
+ * Brief and brand fragments an image node needs but does not carry.
+ *
+ * Deliberately narrower than the copy selection: an image model follows a description, not a legal
+ * argument. `brand_kit` (palette, type, motifs) and `creative_constraints_rights` (no identifiable
+ * child faces, logo is never restyled) are exactly what makes the frame look like the brand.
+ *
+ * `approved_facts` is excluded on purpose even though it is the richest field available. It is a
+ * dense paragraph of addresses, phone numbers and unit prices; an image model given it renders
+ * garbled text, and worse, can print a price that belongs to a different service than the one being
+ * advertised. The offer line already carries whatever the frame is allowed to say. Copy gets the
+ * full facts because a language model can be told which price attaches to which service.
+ */
+function imageContextParts(briefContext: unknown): readonly unknown[] {
+  const { brief, brand } = splitBriefContext(briefContext);
   return [
     brief.product,
     brief.offer,
-    brief.approved_facts,
+    brief.audience_and_awareness,
     brief.creative_constraints_rights,
-    brand.brand_voice,
-    brand.palette,
-    brand.typography,
-    brand.logo_usage,
+    brand.brand_kit,
+  ];
+}
+
+/**
+ * The whole brief, for the copy model.
+ *
+ * `required_claims_legal` and `prohibited_claims` are hard constraints, not flavour - they are the
+ * only thing standing between a language model and an invented price. They were previously read off
+ * the copy node, which `buildGoldenLaunchPackGraph` never populates, so the guardrail was absent
+ * from every copy prompt the system has ever sent.
+ */
+function copyContextParts(briefContext: unknown): readonly unknown[] {
+  const { brief, brand } = splitBriefContext(briefContext);
+  return [
+    brief.product,
+    brief.category,
+    brief.offer,
+    brief.price_presentation,
+    brief.audience_and_awareness,
+    brand.brand_kit,
+    brand.approved_facts,
+    brand.evidence,
+    brief.required_claims_legal,
+    brief.prohibited_claims,
+    brief.creative_constraints_rights,
   ];
 }
 
@@ -215,14 +276,19 @@ export async function buildProviderAttemptPayload(
         : 'node';
 
   if (task === 'copy') {
+    // Run-level context first, then the node's own variation (urgency, stress vector, and the
+    // copy-set index that makes the three copy nodes ask for different angles). Node parameters are
+    // still read for canvases authored outside buildGoldenLaunchPackGraph; composePrompt drops the
+    // duplicates when both carry the same fragment.
     const brief = composePrompt([
+      ...copyContextParts(input.briefContext),
       nodeParameters.product,
       nodeParameters.offer,
       nodeParameters.price_presentation,
-      nodeParameters.urgency,
       nodeParameters.approved_facts,
       nodeParameters.required_claims_legal,
       nodeParameters.prohibited_claims,
+      nodeParameters.urgency,
       nodeParameters.stress_vector,
     ]);
     if (brief.length === 0) {
@@ -247,9 +313,13 @@ export async function buildProviderAttemptPayload(
   }
 
   if (task === 'master_static') {
+    // The master is the hero frame every adaptation inherits, so it carries the brand kit too.
+    // Without it the three masters are generic stock imagery and the nine adaptations faithfully
+    // reproduce that.
     const prompt = composePrompt([
       nodeParameters.product,
       nodeParameters.packshots,
+      ...imageContextParts(input.briefContext),
       nodeParameters.creative_constraints_rights,
     ]);
     if (prompt.length === 0) {
@@ -271,7 +341,7 @@ export async function buildProviderAttemptPayload(
     // These nodes carry no prompt material of their own - only an asset_role and, for motion, a
     // duration. The brief and brand context come from the run, not the node.
     const prompt = composePrompt([
-      ...contextParts(input.briefContext),
+      ...imageContextParts(input.briefContext),
       nodeParameters.asset_role,
       nodeParameters.aspect_ratio,
       nodeParameters.creative_constraints_rights,

@@ -1,5 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import {
@@ -24,10 +25,18 @@ import { authenticateDisposableStagingUser, loadStagingAuthConfiguration } from 
  */
 
 const STAGING_CORE_URL = 'https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev';
-const BRIEF_SOURCE = new URL(
+const DEFAULT_BRIEF_SOURCE = new URL(
   '../../../governance/evidence/WP-P0-001/openrouter-blind-eval/washbodega-trial/briefs.md',
   import.meta.url,
 );
+const DEFAULT_BRIEF_SECTION = 'WB-01';
+/** Must match RunStatus in packages/domain: 'canceled' (one l), 'partial_succeeded' (not -ly). */
+const TERMINAL_RUN_STATUSES: readonly string[] = [
+  'succeeded',
+  'partial_succeeded',
+  'failed',
+  'canceled',
+];
 
 const FIELD_LABELS = {
   product: 'Product',
@@ -59,13 +68,18 @@ function nativePath(source: URL): string {
  * `briefId` is a registry label, not a claim that this is a golden brief. The contract type only
  * admits GB-01..GB-20, so the first slot is borrowed while every field carries WashBodega content.
  */
-async function loadWashBodegaBrief(sectionId: string): Promise<GoldenCampaignBrief> {
-  const markdown = await readFile(nativePath(BRIEF_SOURCE), 'utf8');
+async function loadWashBodegaBrief(
+  sectionId: string,
+  source: URL = DEFAULT_BRIEF_SOURCE,
+): Promise<GoldenCampaignBrief> {
+  const markdown = await readFile(nativePath(source), 'utf8');
   const section = new RegExp(`^## ${sectionId}\\n([\\s\\S]*?)(?=^## |$(?![\\s\\S]))`, 'mu').exec(
     markdown,
   );
   const body = section?.[1];
-  if (body === undefined) throw new TypeError(`Brief ${sectionId} is missing from briefs.md`);
+  if (body === undefined) {
+    throw new TypeError(`Brief ${sectionId} is missing from ${nativePath(source)}`);
+  }
   const fields = new Map<string, string>();
   for (const match of body.matchAll(/^- ([^:]+): (.+)$/gmu)) {
     const [, label, value] = match;
@@ -96,6 +110,13 @@ interface PreparedSession {
   readonly confirmationToken: string;
   readonly totalMicros: string;
   readonly quoteExpiresAt: string;
+  readonly briefSource: string;
+  readonly briefSection: string;
+  /**
+   * Written back the instant `start_run` returns, before anything can throw. Without it a crash
+   * during the 20-minute poll leaves a paid reservation live with nothing on disk naming the run.
+   */
+  readonly startedRunId?: string;
 }
 
 const text = (value: unknown, field: string): string => {
@@ -114,8 +135,14 @@ function requireOk(result: HarnessResult, operation: string): Readonly<Record<st
   return result.data;
 }
 
-async function prepare(sessionPath: string, log: (m: string) => void): Promise<void> {
-  const brief = await loadWashBodegaBrief('WB-01');
+async function prepare(
+  sessionPath: string,
+  briefSource: URL,
+  briefSection: string,
+  log: (m: string) => void,
+): Promise<void> {
+  const brief = await loadWashBodegaBrief(briefSection, briefSource);
+  log(`BRIEF ${briefSection} from ${nativePath(briefSource)}`);
   const runId = randomBytes(4).toString('hex');
   const auth = await authenticateDisposableStagingUser({
     configuration: await loadStagingAuthConfiguration(),
@@ -209,6 +236,8 @@ async function prepare(sessionPath: string, log: (m: string) => void): Promise<v
     confirmationToken: text(quoted['confirmationToken'], 'confirmationToken'),
     totalMicros: String(quote['maximumChargeMicros']),
     quoteExpiresAt: text(quote['expiresAt'], 'quote.expiresAt'),
+    briefSource: nativePath(briefSource),
+    briefSection,
   };
   await writeFile(sessionPath, `${JSON.stringify(session, null, 2)}\n`, 'utf8');
   log(`QUOTED ${session.totalMicros} micros, quote ${session.quoteId}`);
@@ -223,43 +252,60 @@ async function start(
   log: (m: string) => void,
 ): Promise<void> {
   const session = JSON.parse(await readFile(sessionPath, 'utf8')) as PreparedSession;
-  if (Date.parse(session.quoteExpiresAt) <= Date.now()) {
-    throw new Error(
-      `Quote ${session.quoteId} expired at ${session.quoteExpiresAt}; re-run --prepare`,
-    );
-  }
   const transport = new StagingLaunchPackTransport(STAGING_CORE_URL, session.accessToken);
   const ctx = (): Record<string, unknown> => ({
     workspace_id: session.workspaceId,
     request_id: `washbodega-${session.runId}-${Math.random().toString(36).slice(2, 10)}`,
   });
 
-  const started = await transport.call('start_run', {
-    context: ctx(),
-    quote_id: session.quoteId,
-    confirmed: true,
-    confirmation_token: session.confirmationToken,
-    idempotency_key: `washbodega-${session.runId}-start`,
-  });
-  const startData = requireOk(started, 'start_run');
-  // start_run answers { status: 'ok', run }, and the run record uses camelCase like every other
-  // wire record. An earlier version guessed only snake_case and threw "run_id missing" *after*
-  // the reservation was already taken, stranding a live run with no poller. Fail with the real
-  // shape instead, so a future mismatch is diagnosable without going to the database.
-  const runRecord = record(startData['run'] ?? startData, 'run');
-  const runIdValue = runRecord['runId'] ?? runRecord['id'] ?? startData['run_id'];
-  if (typeof runIdValue !== 'string' || runIdValue.length === 0) {
-    throw new Error(
-      `start_run succeeded but no run id was found. Reservation is live. Response: ${JSON.stringify(startData)}`,
+  let runId: string;
+  if (session.startedRunId !== undefined && session.startedRunId.length > 0) {
+    // Resuming an already-paid run. The quote is spent, so its expiry is irrelevant here - checking
+    // it would refuse to poll a live reservation, which is the opposite of what a resume is for.
+    runId = session.startedRunId;
+    log(`RESUMING run ${runId} (reservation already taken)`);
+  } else {
+    if (Date.parse(session.quoteExpiresAt) <= Date.now()) {
+      throw new Error(
+        `Quote ${session.quoteId} expired at ${session.quoteExpiresAt}; re-run --prepare`,
+      );
+    }
+    const started = await transport.call('start_run', {
+      context: ctx(),
+      quote_id: session.quoteId,
+      confirmed: true,
+      confirmation_token: session.confirmationToken,
+      idempotency_key: `washbodega-${session.runId}-start`,
+    });
+    const startData = requireOk(started, 'start_run');
+    // start_run answers { status: 'ok', run }, and the run record uses camelCase like every other
+    // wire record. An earlier version guessed only snake_case and threw "run_id missing" *after*
+    // the reservation was already taken, stranding a live run with no poller. Fail with the real
+    // shape instead, so a future mismatch is diagnosable without going to the database.
+    const runRecord = record(startData['run'] ?? startData, 'run');
+    const runIdValue = runRecord['runId'] ?? runRecord['id'] ?? startData['run_id'];
+    if (typeof runIdValue !== 'string' || runIdValue.length === 0) {
+      throw new Error(
+        `start_run succeeded but no run id was found. Reservation is live. Response: ${JSON.stringify(startData)}`,
+      );
+    }
+    runId = runIdValue;
+    // Persist before anything else can throw: from here on the money is committed, and a crash
+    // during the poll must still leave the run findable.
+    await writeFile(
+      sessionPath,
+      `${JSON.stringify({ ...session, startedRunId: runId }, null, 2)}\n`,
+      'utf8',
     );
+    log(`STARTED run ${runId}`);
   }
-  const runId = runIdValue;
-  log(`STARTED run ${runId}`);
 
   await mkdir(outDirectory, { recursive: true });
   // A pack is 16 provider calls behind a queue and a webhook, so this polls rather than assuming.
-  const deadline = Date.now() + 20 * 60 * 1000;
+  // Four dispatch waves on a one-minute cron put a hard floor of several minutes under this.
+  const deadline = Date.now() + 45 * 60 * 1000;
   let last = '';
+  let lastError = '';
   while (Date.now() < deadline) {
     const receipt = await transport.call('get_receipt', { context: ctx(), run_id: runId });
     if (receipt.ok) {
@@ -269,19 +315,35 @@ async function start(
         log(`STATUS ${status} @ ${new Date().toISOString()}`);
         last = status;
       }
-      if (['succeeded', 'failed', 'cancelled', 'partially_succeeded'].includes(status)) {
+      // Spellings must match packages/domain RunStatus exactly: 'canceled' has one l and the
+      // partial state is 'partial_succeeded'. Getting these wrong makes a terminal run look like a
+      // hang until the deadline.
+      if (TERMINAL_RUN_STATUSES.includes(status)) {
         await writeFile(
           `${outDirectory}/receipt.json`,
-          `${JSON.stringify({ session, receipt: body }, null, 2)}\n`,
+          `${JSON.stringify(
+            { session: { ...session, accessToken: '[redacted]' }, receipt: body },
+            null,
+            2,
+          )}\n`,
           'utf8',
         );
         log(`TERMINAL ${status}`);
         return;
       }
+    } else {
+      // A persistent 403/404 previously looked identical to "still running" for the whole deadline.
+      const error = JSON.stringify(receipt.error);
+      if (error !== lastError) {
+        log(`RECEIPT_ERROR ${error}`);
+        lastError = error;
+      }
     }
     await new Promise((resolve) => setTimeout(resolve, 10_000));
   }
-  throw new Error(`Run ${runId} did not reach a terminal state within 20 minutes`);
+  throw new Error(
+    `Run ${runId} did not reach a terminal state within 45 minutes (last status: ${last || 'none'})`,
+  );
 }
 
 export async function runWashBodegaPack(
@@ -298,9 +360,19 @@ export async function runWashBodegaPack(
     outIndex >= 0 && argv[outIndex + 1] !== undefined
       ? (argv[outIndex + 1] as string)
       : fileURLToPath(new URL('../../../.scratch/washbodega-pack/', import.meta.url));
+  const briefFileIndex = argv.indexOf('--brief-file');
+  const briefSource =
+    briefFileIndex >= 0 && argv[briefFileIndex + 1] !== undefined
+      ? pathToFileURL(resolve(argv[briefFileIndex + 1] as string))
+      : DEFAULT_BRIEF_SOURCE;
+  const briefIndex = argv.indexOf('--brief');
+  const briefSection =
+    briefIndex >= 0 && argv[briefIndex + 1] !== undefined
+      ? (argv[briefIndex + 1] as string)
+      : DEFAULT_BRIEF_SECTION;
 
   if (argv.includes('--prepare')) {
-    await prepare(sessionPath, log);
+    await prepare(sessionPath, briefSource, briefSection, log);
     return 0;
   }
   if (argv.includes('--start')) {
@@ -308,6 +380,7 @@ export async function runWashBodegaPack(
     return 0;
   }
   log('Select exactly one mode: --prepare or --start.');
+  log('Options: --session <path> --out <dir> --brief-file <path> --brief <section-id>');
   return 1;
 }
 

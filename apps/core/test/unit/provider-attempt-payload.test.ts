@@ -1,3 +1,4 @@
+import { buildGoldenLaunchPackGraph, type GoldenCampaignBrief } from '@mustbeviral/contracts';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -34,16 +35,46 @@ const MASTER_NODE = {
  * Adaptation and motion nodes carry no prompt material of their own - only an asset_role and, for
  * motion, a duration. Everything they say to the provider comes from the run-wide brief and brand
  * context, which is why the dispatch expansion returns it alongside the node.
+ *
+ * This fixture is DERIVED from the real graph builder rather than hand-written. A hand-written one
+ * previously invented `brand_context.brand_voice` and `brand_context.palette`, which the builder has
+ * never emitted; the payload builder read those same invented keys, so the tests agreed with the
+ * code and both were wrong about production. Every adaptation and motion prompt silently shipped
+ * without a brand kit. Deriving the fixture makes that class of drift impossible.
  */
+const SAMPLE_BRIEF: GoldenCampaignBrief = {
+  briefId: 'GB-01',
+  product: 'WashBodega Wash & Fold drop-off laundry',
+  category: 'Neighbourhood laundromat, Southwest Houston',
+  packshots: 'Folded-laundry counter photography, golden-hour warmth.',
+  features: '46 washers and 44 dryers, attended, bilingual staff.',
+  benefits: 'A weekend day back.',
+  evidence: 'WashBodega Inc, TX SOS 806341752.',
+  approvedFacts: 'Two per-pound tiers, both published on washbodega.com.',
+  offer: 'No promotional offer.',
+  pricePresentation: 'Reproduce prices exactly; never round or infer them.',
+  urgency: 'None.',
+  destination: 'washbodega.com',
+  brandKit: 'Bodega Red #E11D2A, Sunshine Gold #F5B321, Soft Cream #FFF8EC. Sora and Inter.',
+  audienceAndAwareness: 'Southwest Houston families, solution-aware, bilingual.',
+  painsDesiresObjections: 'Laundry eats a weekend day.',
+  requiredClaimsLegal: 'Tagline must read exactly "Your Neighborhood Laundry."',
+  prohibitedClaims: 'Do not invent a discount, coupon, or percentage saved.',
+  creativeConstraintsRights: 'Real store only. No identifiable child faces.',
+  stressVector: 'Two per-pound tiers that are easy to confuse.',
+} as GoldenCampaignBrief;
+
+const SAMPLE_GRAPH = buildGoldenLaunchPackGraph(SAMPLE_BRIEF);
+const nodeParametersOf = (id: string): Record<string, unknown> => {
+  const found = SAMPLE_GRAPH.nodes.find((candidate) => candidate.id === id);
+  if (found === undefined) throw new Error(`graph has no node ${id}`);
+  return found.parameters as Record<string, unknown>;
+};
+
+/** Exactly what `get_outbox_dispatch_attempts` builds: the two context nodes' parameters. */
 const BRIEF_CONTEXT = {
-  brief: {
-    product: 'WashBodega Wash & Fold drop-off laundry',
-    approved_facts: 'Two per-pound tiers, both published on washbodega.com.',
-  },
-  brand_context: {
-    brand_voice: 'Plain-spoken, neighbourhood, never hypey.',
-    palette: 'Warm neutrals with a single teal accent.',
-  },
+  brief: nodeParametersOf('brief'),
+  brand_context: nodeParametersOf('brand-context'),
 };
 
 const UPSTREAM_IMAGE: UpstreamImage = {
@@ -94,6 +125,38 @@ describe('copy payload', () => {
     expect(system).toMatch(/verbatim/iu);
   });
 
+  it('carries the claims guardrails from run context, which the copy node does not hold', async () => {
+    // buildGoldenLaunchPackGraph gives a copy node only asset_role, copy_set, offer, urgency and
+    // stress_vector. The prohibited-claims list - the only thing standing between a language model
+    // and an invented price - lives on the brief node, and used to be read off the copy node, where
+    // it is undefined. Every copy prompt the system ever sent was missing its guardrail.
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: nodeParametersOf('copy-1'),
+      executionPlanLine: { node_id: 'copy-1' },
+      task: 'copy',
+      briefContext: BRIEF_CONTEXT,
+    });
+    const user = (payload.messages as { content: string }[])[1]?.content ?? '';
+    expect(user).toContain(SAMPLE_BRIEF.prohibitedClaims);
+    expect(user).toContain(SAMPLE_BRIEF.requiredClaimsLegal);
+    expect(user).toContain(SAMPLE_BRIEF.pricePresentation);
+    expect(user).toContain(SAMPLE_BRIEF.approvedFacts);
+    expect(user).toContain(SAMPLE_BRIEF.product);
+    // And the node's own variation still arrives.
+    expect(user).toContain(SAMPLE_BRIEF.stressVector);
+  });
+
+  it('states a fragment once when the node and the run context both carry it', async () => {
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: nodeParametersOf('copy-1'),
+      executionPlanLine: { node_id: 'copy-1' },
+      task: 'copy',
+      briefContext: BRIEF_CONTEXT,
+    });
+    const user = (payload.messages as { content: string }[])[1]?.content ?? '';
+    expect(user.split(SAMPLE_BRIEF.offer).length - 1).toBe(1);
+  });
+
   it('refuses a copy node with no brief material rather than prompting an empty brief', async () => {
     await expect(
       buildProviderAttemptPayload({
@@ -120,6 +183,19 @@ describe('master payload', () => {
     expect(prompt.length).toBeGreaterThan(0);
   });
 
+  it('carries the brand kit into the hero frame every adaptation inherits', async () => {
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: nodeParametersOf('master-1'),
+      executionPlanLine: { node_id: 'master-1' },
+      task: 'master_static',
+      briefContext: BRIEF_CONTEXT,
+    });
+    const prompt = payload.prompt as string;
+    expect(prompt).toContain(SAMPLE_BRIEF.packshots);
+    expect(prompt).toContain(SAMPLE_BRIEF.brandKit);
+    expect(prompt).toContain(SAMPLE_BRIEF.creativeConstraintsRights);
+  });
+
   it('refuses a master node with no prompt material', async () => {
     await expect(
       buildProviderAttemptPayload({
@@ -142,10 +218,32 @@ describe('nodes that depend on an upstream artifact', () => {
       mintImageUrl: mintUrl,
     });
     // The prompt exists only because the run context reached the node; the node itself has none.
-    expect(payload.prompt).toContain(BRIEF_CONTEXT.brief.product);
-    expect(payload.prompt).toContain(BRIEF_CONTEXT.brand_context.brand_voice);
+    expect(payload.prompt).toContain(SAMPLE_BRIEF.product);
+    expect(payload.prompt).toContain(SAMPLE_BRIEF.brandKit);
     expect(payload.image_url).toContain(UPSTREAM_IMAGE.artifactId);
     expect(payload.image_url).toContain('token=');
+  });
+
+  it('carries the brand kit and rights constraints, which are what make it look like the brand', async () => {
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: nodeParametersOf('adaptation-1-1'),
+      executionPlanLine: { node_id: 'adaptation-1-1' },
+      task: 'adaptation',
+      briefContext: BRIEF_CONTEXT,
+      upstreamImages: [UPSTREAM_IMAGE],
+      mintImageUrl: mintUrl,
+    });
+    const prompt = payload.prompt as string;
+    // Regression: each of these was silently absent while the builder emitted brand_kit and the
+    // payload read brand_context.palette. An unbranded adaptation costs the same as a branded one.
+    expect(prompt).toContain(SAMPLE_BRIEF.brandKit);
+    expect(prompt).toContain(SAMPLE_BRIEF.creativeConstraintsRights);
+    expect(prompt).toContain(SAMPLE_BRIEF.audienceAndAwareness);
+    expect(prompt).toContain('4:5');
+    // Facts and prices stay out of image prompts: a diffusion model renders them as garbled text,
+    // and can attach a price to the wrong service. Copy carries them instead.
+    expect(prompt).not.toContain(SAMPLE_BRIEF.approvedFacts);
+    expect(prompt).not.toContain(SAMPLE_BRIEF.prohibitedClaims);
   });
 
   it('carries the validated duration for motion, which fal prices per second', async () => {
