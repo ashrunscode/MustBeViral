@@ -685,6 +685,22 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     return result;
   }
 
+  /**
+   * Arms a dispatch event for any live run holding ready work with nothing queued to pick it up.
+   *
+   * The known cause was advance_run_readiness keying its event on the wave alone, so a wave whose
+   * nodes became ready at different times kept only its first promotion - seven of sixteen nodes in
+   * the WashBodega pack were left with a 'created' attempt and no event. reap_dead_dispatch could
+   * not help, because it only rescues runs holding a 'dead' event and these had published normally.
+   * The epoch in the dedupe key fixes that cause; this sweep covers the category, and is what
+   * recovers runs already stranded by the old keying.
+   */
+  async armStrandedDispatch(limit: number): Promise<Readonly<Record<string, unknown>>> {
+    const result = await this.#rpc('arm_stranded_dispatch', { p_limit: limit });
+    if (!isRecord(result)) throw unavailable();
+    return result;
+  }
+
   async listPending(limit: number): Promise<readonly PendingProviderReconciliationJob[]> {
     const result = await this.#rpc('list_provider_jobs_for_reconciliation', {
       p_limit: limit,
@@ -783,6 +799,7 @@ export interface ProviderScheduledLifecycle {
   reapDeadDispatch(limit: number): Promise<Readonly<Record<string, unknown>>>;
   finalizeCancelRequested(limit: number): Promise<Readonly<Record<string, unknown>>>;
   reapStrandedSynchronousJobs(limit: number): Promise<Readonly<Record<string, unknown>>>;
+  armStrandedDispatch(limit: number): Promise<Readonly<Record<string, unknown>>>;
 }
 
 export function createProviderScheduledLifecycle(
@@ -829,6 +846,7 @@ export function createProviderScheduledLifecycle(
     reapDeadDispatch: (limit) => port.reapDeadDispatch(limit),
     finalizeCancelRequested: (limit) => port.finalizeCancelRequested(limit),
     reapStrandedSynchronousJobs: (limit) => port.reapStrandedSynchronousJobs(limit),
+    armStrandedDispatch: (limit) => port.armStrandedDispatch(limit),
   };
 }
 
@@ -844,9 +862,13 @@ export async function runProviderScheduled(
       reaped: Readonly<Record<string, unknown>>;
       finalized: Readonly<Record<string, unknown>>;
       strandedSynchronous: Readonly<Record<string, unknown>>;
+      armedStranded: Readonly<Record<string, unknown>>;
     }>
 > {
   if (lifecycle === null) return { status: 'disabled' };
+  // Before dispatch, so work rescued this cycle is picked up in the same cycle rather than waiting
+  // another minute - and, more importantly, before reapDeadDispatch can consider the run finished.
+  const armedStranded = await lifecycle.armStrandedDispatch(10);
   const dispatch = await lifecycle.dispatchPending(10);
   const reconciliation = await lifecycle.reconcilePending(25);
   // After dispatch and reconciliation, so a run is only reaped once nothing this cycle could still
@@ -854,5 +876,13 @@ export async function runProviderScheduled(
   const reaped = await lifecycle.reapDeadDispatch(10);
   const finalized = await lifecycle.finalizeCancelRequested(10);
   const strandedSynchronous = await lifecycle.reapStrandedSynchronousJobs(10);
-  return { status: 'ok', dispatch, reconciliation, reaped, finalized, strandedSynchronous };
+  return {
+    status: 'ok',
+    dispatch,
+    reconciliation,
+    reaped,
+    finalized,
+    strandedSynchronous,
+    armedStranded,
+  };
 }

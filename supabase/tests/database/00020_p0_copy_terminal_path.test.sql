@@ -240,7 +240,7 @@ select is(
 select is(
   (select count(*)::integer from public.outbox_events
    where aggregate_id = 'af400000-0000-4000-8000-000000000001'
-     and dedupe_key like '%:dispatch:2'),
+     and dedupe_key like '%:dispatch:2:%'),
   1,
   'completing the copy wave arms exactly one dispatch event for wave 2'
 );

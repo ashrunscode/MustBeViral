@@ -1,6 +1,6 @@
 begin;
 
-select plan(18);
+select plan(19);
 
 -- Discovered live: DROP FUNCTION (required to add OUT columns, which create-or-replace cannot do)
 -- clears every grant on the object. The default-privileges bootstrap
@@ -67,6 +67,11 @@ select ok(
   has_function_privilege('service_role',
     'public.reap_dead_dispatch(integer)'::regprocedure, 'execute'),
   'service_role can execute reap_dead_dispatch'
+);
+select ok(
+  has_function_privilege('service_role',
+    'public.arm_stranded_dispatch(integer)'::regprocedure, 'execute'),
+  'service_role can execute arm_stranded_dispatch'
 );
 select ok(
   has_function_privilege('service_role',

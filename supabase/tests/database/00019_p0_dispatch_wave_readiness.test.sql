@@ -294,7 +294,7 @@ select is(
 select is(
   (select count(*)::integer from public.outbox_events
    where aggregate_id = (select (payload ->> 'run_id')::uuid from run_result)
-     and dedupe_key like '%:dispatch:2'),
+     and dedupe_key like '%:dispatch:2:%'),
   1,
   'exactly one new dispatch event is armed for wave 2'
 );
@@ -308,7 +308,7 @@ select app_private.advance_run_readiness(
 select is(
   (select count(*)::integer from public.outbox_events
    where aggregate_id = (select (payload ->> 'run_id')::uuid from run_result)
-     and dedupe_key like '%:dispatch:2'),
+     and dedupe_key like '%:dispatch:2:%'),
   1,
   'advancing readiness twice arms no duplicate event for the same wave'
 );
