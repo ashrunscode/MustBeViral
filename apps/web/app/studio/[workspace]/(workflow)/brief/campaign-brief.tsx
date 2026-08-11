@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Chip, MonoCaps } from '@mustbeviral/ui';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
 import {
@@ -9,6 +10,12 @@ import {
   lumenSkinDraft,
   type BriefDraft,
 } from '../../../../../src/features/brief/brief-schema';
+import {
+  WorkerBriefBootstrapPort,
+  type BriefBootstrapPort,
+  type BriefBootstrapResult,
+} from '../../../../../src/features/brief/brief-bootstrap';
+import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import styles from './campaign-brief.module.css';
 
 type SectionId = 'productTruth' | 'brandKit' | 'audience' | 'offer' | 'claimsLegal' | 'assets';
@@ -385,11 +392,27 @@ function SectionFields({
   );
 }
 
-export function CampaignBrief({ workspace }: Readonly<{ workspace: string }>) {
+export function CampaignBrief({
+  bootstrapPort: suppliedBootstrapPort,
+  dataMode = 'preview',
+  workspace,
+}: Readonly<{
+  bootstrapPort?: BriefBootstrapPort;
+  dataMode?: 'preview' | 'worker';
+  workspace: string;
+}>) {
+  const router = useRouter();
+  const [bootstrapPort] = useState<BriefBootstrapPort | null>(() =>
+    dataMode === 'worker'
+      ? (suppliedBootstrapPort ?? new WorkerBriefBootstrapPort(createBrowserCoreClient()))
+      : null,
+  );
   const [draft, setDraftState] = useState<BriefDraft>(lumenSkinDraft);
   const [activeSection, setActiveSection] = useState<SectionId>('claimsLegal');
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
   const [validated, setValidated] = useState(false);
+  const [bootstrapResult, setBootstrapResult] = useState<BriefBootstrapResult | null>(null);
+  const [bootstrapping, setBootstrapping] = useState(false);
   const validation = useMemo(() => BriefDraftSchema.safeParse(draft), [draft]);
   const checks = getCompletionChecks(draft);
   const completed = checks.filter(Boolean).length;
@@ -413,6 +436,34 @@ export function CampaignBrief({ workspace }: Readonly<{ workspace: string }>) {
     await draftPort.save(workspace, draft);
     setSaveState('saved');
   }
+
+  async function validateBrief() {
+    if (!validation.success) return;
+    if (bootstrapPort === null) {
+      setValidated(true);
+      return;
+    }
+    setBootstrapping(true);
+    setBootstrapResult(null);
+    const next = await bootstrapPort.bootstrap({
+      workspaceRef: workspace,
+      campaignName: `${draft.productTruth.productName} launch pack`,
+    });
+    setBootstrapResult(next);
+    setBootstrapping(false);
+    if (next.type !== 'ok') return;
+    setValidated(true);
+    router.push(
+      `/studio/${encodeURIComponent(next.workspaceId)}/canvas?canvas=${encodeURIComponent(next.canvasId)}`,
+    );
+  }
+
+  const bootstrapMessage =
+    bootstrapResult === null || bootstrapResult.type === 'ok'
+      ? null
+      : bootstrapResult.type === 'forbidden'
+        ? 'Your session is not permitted to bootstrap this workspace.'
+        : bootstrapResult.message;
 
   return (
     <>
@@ -501,6 +552,12 @@ export function CampaignBrief({ workspace }: Readonly<{ workspace: string }>) {
               ? 'The brief meets the required field, rights, and asset gates.'
               : 'Validation and planning remain unavailable until all required fields and rights attestations pass.'}
           </div>
+          {bootstrapMessage === null ? null : (
+            <div className={styles.errorMessage} role="alert" data-result={bootstrapResult?.type}>
+              <span aria-hidden="true">!</span>
+              <span>{bootstrapMessage}</span>
+            </div>
+          )}
         </aside>
       </main>
 
@@ -533,9 +590,18 @@ export function CampaignBrief({ workspace }: Readonly<{ workspace: string }>) {
           </Button>
           <Button
             variant="primary"
-            disabled={!validation.success}
-            feedback={validated ? 'success' : 'default'}
-            onClick={() => setValidated(true)}
+            disabled={!validation.success || bootstrapping}
+            feedback={
+              bootstrapping
+                ? 'loading'
+                : validated
+                  ? 'success'
+                  : bootstrapMessage === null
+                    ? 'default'
+                    : 'error'
+            }
+            loadingLabel="Opening canvas"
+            onClick={() => void validateBrief()}
           >
             Validate brief
           </Button>
