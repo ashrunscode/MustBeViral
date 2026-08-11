@@ -129,12 +129,24 @@ export function pathMatches(value, patterns) {
   return micromatch.isMatch(toPosix(value), patterns, { dot: true });
 }
 
+const WINDOWS_NPM_SHIMS = new Set(['corepack', 'npm', 'npx', 'pnpm']);
+
+export function resolveCommandName(commandName, platform = process.platform) {
+  return platform === 'win32' && WINDOWS_NPM_SHIMS.has(commandName.toLowerCase())
+    ? `${commandName}.cmd`
+    : commandName;
+}
+
+export function commandUsesShell(commandName, platform = process.platform) {
+  return platform === 'win32' && resolveCommandName(commandName, platform).endsWith('.cmd');
+}
+
 export function command(commandName, args, options = {}) {
-  const result = spawnSync(commandName, args, {
+  const result = spawnSync(resolveCommandName(commandName), args, {
     cwd: repoRoot,
     encoding: 'utf8',
     stdio: options.capture ? 'pipe' : 'inherit',
-    shell: false,
+    shell: commandUsesShell(commandName),
     env: { ...process.env, ...options.env },
   });
   return {

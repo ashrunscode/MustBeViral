@@ -7,7 +7,12 @@ import {
   collectRootTestLaneErrors,
   collectTaskGraphErrors,
 } from '../scripts/validate-task-graph.mjs';
-import { hasAbsolutePath, pathMatches } from '../scripts/lib.mjs';
+import {
+  commandUsesShell,
+  hasAbsolutePath,
+  pathMatches,
+  resolveCommandName,
+} from '../scripts/lib.mjs';
 
 const baseManifest = () => ({
   documents: [
@@ -60,6 +65,17 @@ const basePacket = () => ({
 
 test('accepts one authority owner per topic', () => {
   assert.deepEqual(collectDocumentErrors({ manifest: baseManifest(), sources: baseSources() }), []);
+});
+
+test('uses cmd shims for npm-family tools only on Windows', () => {
+  assert.equal(resolveCommandName('pnpm', 'win32'), 'pnpm.cmd');
+  assert.equal(resolveCommandName('corepack', 'win32'), 'corepack.cmd');
+  assert.equal(resolveCommandName('git', 'win32'), 'git');
+  assert.equal(resolveCommandName('pnpm', 'linux'), 'pnpm');
+  assert.equal(resolveCommandName('pnpm.cmd', 'win32'), 'pnpm.cmd');
+  assert.equal(commandUsesShell('pnpm', 'win32'), true);
+  assert.equal(commandUsesShell('git', 'win32'), false);
+  assert.equal(commandUsesShell('pnpm', 'linux'), false);
 });
 
 test('rejects duplicate authority ownership', () => {
