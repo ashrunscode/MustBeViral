@@ -8,8 +8,10 @@ Recorded 2026-08-11
 The governed staging rung produced 14 technically complete registered briefs, one genuine partial
 provider failure (`GB-02`), and five cap-deferred briefs (`GB-16` through `GB-20`). The completed-run
 latency thresholds passed, but the packet requires at least 16 of 20 completed briefs. A separate
-duplicate `GB-05` run was also discovered and reconciled. The representative completion/latency
-criterion and the spend-dedup criterion therefore remain pending.
+`GB-05` harness double-run was also discovered and reconciled. The 2026-08-11 row-level RCA in
+`golden-20-defect-analysis.md` proves that it was two distinct harness invocations, not a duplicate
+provider submission inside one run; the spend-dedup criterion is therefore reclassified pass. The
+representative completion/latency criterion remains pending.
 
 All paid work ran on staging with the configured transactional caps unchanged. No production or
 legacy-v1 resource was read or mutated. Every registered brief used a disposable workspace, and
@@ -112,8 +114,9 @@ reserved and captured another 4,550,000 micros.
 The final cross-run audit found 246 provider jobs, 246 unique attempt IDs, and 246 unique
 provider-registration/request-ID pairs. It found 243 unique capture causative keys in 243
 `usage_expense` credit rows totaling 68,700,000 micros. Thus there was no duplicated provider
-request ID or duplicated ledger causative key inside a run; the failure is the separately confirmed
-second full `GB-05` pack.
+request ID or duplicated ledger causative key inside a run. The separately confirmed second full
+`GB-05` pack remains visible in gross spend but is classified as a harness double-run, not an engine
+duplicate-submission or ledger failure.
 
 Catalog capture is the landed customer charge: 4,550,000 integer micros for each completed full
 pack, 450,000 for the partial `GB-02`, and 4,550,000 for the duplicate pack. External provider
@@ -149,7 +152,9 @@ and boolean proof results.
 `reconciliation_required`. Its three OpenRouter copy jobs succeeded and captured 450,000 micros.
 All three fal `fal-ai/flux-2-pro` master jobs reached terminal `failed`; nine adaptations and the
 motion branch were then canceled or skipped. The normalized provider evidence preserves terminal
-state and route but no provider error reason, so a more specific upstream cause cannot be claimed.
+state and route but not the provider result detail. The subsequent bounded RCA read all three fal
+result bodies: each returned HTTP 422 `content_policy_violation` at `body.prompt`. The cause is
+therefore classified as prompt material, not provider availability or route/pinning.
 
 The run had no stranded money: 4,100,000 micros released, zero residual, and no non-terminal node.
 Its three available copy artifacts were technically approved, replayed, exported twice with the
@@ -158,16 +163,24 @@ full pack because no reviewable static, adaptation, or motion was produced. It w
 
 ## 7. Duplicate run finding and harness repairs
 
-Run `d6db5d0f-ec18-4cde-98c2-7dc61a6de4b4` was a second paid `GB-05` pack in workspace
+Run `d6db5d0f-ec18-4cde-98c2-7dc61a6de4b4` was the first paid `GB-05` pack in workspace
 `0b8ce93a-7abf-4307-9621-25c69e2e70bd`. A confirmed run existed when the local harness process was
-interrupted, but the harness persisted evidence only after terminal reconciliation. A later resume
-could not discover that run and started `GB-05` again in a new workspace. The duplicate run itself
-completed with 16 unique requests, 4,550,000 captured micros, deterministic export, complete
-receipt/lineage, and zero residual, but it is still a duplicate submission and charge.
+interrupted, but the harness persisted evidence only after terminal reconciliation. A separate
+harness invocation could not discover that run and confirmed registered run
+`512eaee5-4f26-4b5d-b1b2-f4060eb7a649` in a new workspace 3.207630 seconds before the first run
+terminalized. Both completed with 16 unique requests, 4,550,000 captured micros, deterministic
+export, complete receipt/lineage, and zero residual.
+
+The RCA found no cross-run overlap in workspaces, quotes, attempt IDs, request IDs, provider billing
+keys, outbox IDs/dedupe keys, idempotency contract keys, or ledger causative keys. Each start used a
+different invocation-scoped idempotency key. This is therefore a harness double-run: an extra paid
+pack, but not a duplicate provider submission inside one engine run and not a duplicate money
+movement. `golden-20-defect-analysis.md` supersedes the earlier unclassified finding.
 
 The harness now writes a safe `RUN_IN_PROGRESS_CHECKPOINT` containing run and reservation IDs
 immediately after confirmed start and before polling. Resume consumes that checkpoint and never
-calls `start_run` for the brief again. The rung also exposed and repaired three non-money defects:
+calls `start_run` for the brief again. The explicit ordering helper now has a regression test that
+fails on poll-before-persist ordering. The rung also exposed and repaired three non-money defects:
 
 - the strict receipt contract omitted the live `dispatch_epoch`; the Zod schema, parity fixture, and
   generated OpenAPI now include it;
@@ -186,14 +199,15 @@ the recorded paid run. No stranded-dispatch or reconciliation sweeper was needed
 | At least 16 of 20 registered briefs technically complete                  | **Fail** | 14 completed, 1 failed, 5 cap-deferred                                                                |
 | Median first reviewable at most 10 minutes                                | Pass     | 101.641 seconds                                                                                       |
 | p90 first reviewable at most 15 minutes                                   | Pass     | 122.314 seconds                                                                                       |
-| Zero duplicate provider submissions, duplicate charges, or ledger gaps    | **Fail** | One duplicate full GB-05 pack; all individual request IDs and ledger keys remained unique             |
+| Zero duplicate provider submissions, duplicate charges, or ledger gaps    | Pass     | GB-05 was two harness invocations; all in-run provider and ledger keys were unique                    |
 | Transactional caps enforced                                               | Pass     | PostgREST audit before every start; final global exposure 73,250,000 with zero unsettled reservations |
 | Every completed run has private artifacts, lineage, and immutable receipt | Pass     | 14/14 completed registered runs passed every stored assertion                                         |
 | Landed cost and external provider cost kept separate                      | Pass     | Integer catalog captures recorded; external invoice cost explicitly unavailable                       |
 
 Because the combined completion-and-latency criterion requires both the count and the latency
 thresholds, `representative-run-completion-and-latency` remains `pending` in the active packet. The
-dedup/ledger criterion also remains pending because a reconciled duplicate is still a duplicate.
+transactional spend/dedup/ledger criterion is reclassified `passed` by the bounded row-level RCA;
+the harness incident remains recorded in the money totals and does not disappear.
 
 ## 9. Verification and remote-mutation record
 
@@ -214,7 +228,7 @@ dedup/ledger criterion also remains pending because a reconciled duplicate is st
 - Five registered briefs (`GB-16` through `GB-20`) remain cap-deferred until a fresh UTC-day budget
   window and must not be represented as attempted failures.
 - The 16/20 representative completion gate remains pending at 14/20.
-- The duplicate-submission/charge gate remains pending because of the second `GB-05` run, even
-  though both reservations settled with zero residual.
-- `GB-02` has no normalized fal failure reason; any paid re-execution requires an explicit recorded
-  recovery decision and must not be retried blind.
+- `GB-02` requires one governed remediation run to validate the narrowed supplement image prompt;
+  the live RCA identified the prior provider result but this no-spend fix does not claim provider
+  acceptance.
+- `GB-16` remains the first recommended cap-deferred run needed alongside `GB-02` to reach 16 of 20.

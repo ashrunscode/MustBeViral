@@ -1,6 +1,7 @@
 {
   "brief_id": "GB-05",
   "outcome": "duplicate_run_finding",
+  "classification": "harness_double_run",
   "workspace_id": "0b8ce93a-7abf-4307-9621-25c69e2e70bd",
   "project_id": "c9879115-03a2-5d20-805d-a569914219f6",
   "canvas_id": "916230b5-1ec8-459d-b6f7-02d03cbf1c75",
@@ -62,7 +63,7 @@
     "residual_micros": "0"
   },
   "finding": {
-    "code": "DUPLICATE_BRIEF_RUN",
-    "message": "A confirmed GB-05 run was not checkpointed before the local harness process was interrupted. The later resume could not see it and started a second GB-05 pack in a new disposable workspace. Both provider request sets were internally unique, but this was a duplicate pack submission and a second 4550000-micro capture."
+    "code": "HARNESS_DOUBLE_RUN",
+    "message": "A confirmed GB-05 run was not checkpointed before the local harness process was interrupted. A separate harness invocation used a new disposable workspace and idempotency scope while the first run was still advancing. Both runs had internally unique provider requests and ledger keys. This is a harness double-run, not a duplicate provider submission inside one run; the extra 4550000-micro capture remains included in gross money totals."
   }
 }

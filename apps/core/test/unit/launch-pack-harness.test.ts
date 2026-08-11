@@ -10,6 +10,7 @@ import {
 import goldenBriefMarkdown from '../../../../docs/research/GOLDEN_BRIEFS.md?raw';
 import { parseGoldenBriefRegistry } from '../../tools/golden-brief-registry';
 import {
+  pollAfterPersistingConfirmedRun,
   percentileNearestRank,
   safeGoldenPackCount,
   summarizeGolden20Records,
@@ -178,19 +179,72 @@ describe('golden launch-pack harness', () => {
       throw new Error('completed summary fixture missing');
     }
     const duplicateSummary = summarizeGolden20Records(records, [
-      { brief_id: 'GB-01', quote: first.quote, money: first.money, run: first.run },
+      {
+        brief_id: 'GB-01',
+        classification: 'harness_double_run',
+        quote: first.quote,
+        money: first.money,
+        run: first.run,
+      },
     ]);
     expect(duplicateSummary['paid_attempts']).toBe(16);
+    expect(duplicateSummary['harness_double_run_findings']).toBe(1);
+    expect(duplicateSummary['engine_duplicate_submission_findings']).toBe(0);
     expect(
       (duplicateSummary['acceptance'] as Record<string, unknown>)[
         'zero_duplicate_submissions_or_unexplained_ledger_differences'
       ],
-    ).toBe(false);
+    ).toBe(true);
     expect(
       (duplicateSummary['acceptance'] as Record<string, unknown>)[
         'completed_runs_have_private_artifacts_lineage_and_receipts'
       ],
     ).toBe(true);
+    const engineDuplicateSummary = summarizeGolden20Records(records, [
+      {
+        brief_id: 'GB-01',
+        classification: 'engine_duplicate_submission',
+        quote: first.quote,
+        money: first.money,
+        run: first.run,
+      },
+    ]);
+    expect(engineDuplicateSummary['engine_duplicate_submission_findings']).toBe(1);
+    expect(
+      (engineDuplicateSummary['acceptance'] as Record<string, unknown>)[
+        'zero_duplicate_submissions_or_unexplained_ledger_differences'
+      ],
+    ).toBe(false);
+    const unexplainedMoneySummary = summarizeGolden20Records(records, [
+      {
+        brief_id: 'GB-01',
+        classification: 'harness_double_run',
+        quote: first.quote,
+        money: { ...first.money, residual_micros: '1' },
+        run: first.run,
+      },
+    ]);
+    expect(
+      (unexplainedMoneySummary['acceptance'] as Record<string, unknown>)[
+        'zero_duplicate_submissions_or_unexplained_ledger_differences'
+      ],
+    ).toBe(false);
+  });
+
+  it('durably checkpoints a confirmed run before polling can be interrupted', async () => {
+    const order: string[] = [];
+    await expect(
+      pollAfterPersistingConfirmedRun(
+        async () => {
+          order.push('checkpoint');
+        },
+        async () => {
+          order.push('poll');
+          throw new Error('local process interrupted');
+        },
+      ),
+    ).rejects.toThrowError(/local process interrupted/u);
+    expect(order).toEqual(['checkpoint', 'poll']);
   });
 
   it('rejects resource input that the composed Supabase port would reject', async () => {

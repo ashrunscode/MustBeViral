@@ -221,10 +221,16 @@ function splitBriefContext(briefContext: unknown): {
  */
 function imageContextParts(briefContext: unknown): readonly unknown[] {
   const { brief, brand } = splitBriefContext(briefContext);
+  const category = typeof brief.category === 'string' ? brief.category.trim().toLowerCase() : '';
+  // fal validates image safety only when the queued job executes. The T5 GB-02 masters proved that
+  // forwarding a supplement offer and health-adjacent audience description can make an otherwise
+  // visual product request fail there with content_policy_violation. Those fragments are inputs to
+  // copy, not required image material. Keep supplement image prompts to the product, supplied visual
+  // assets/rights constraints, and brand direction; the copy prompt still receives the full brief.
+  const isSupplement = category === 'supplements' || category.startsWith('supplements;');
   return [
     brief.product,
-    brief.offer,
-    brief.audience_and_awareness,
+    ...(isSupplement ? [] : [brief.offer, brief.audience_and_awareness]),
     brief.creative_constraints_rights,
     brand.brand_kit,
   ];

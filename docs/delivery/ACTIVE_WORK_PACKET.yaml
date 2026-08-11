@@ -213,8 +213,10 @@ acceptance:
         are enforced in authoritative transactions and produce zero duplicate provider submissions,
         duplicate charges, duplicate money movement, negative/cap-breaching reservations, or
         unexplained ledger differences.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/golden-20-run-proof.md
+        - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
     - id: private-artifact-trust-and-lineage
       criterion:
         Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
@@ -308,18 +310,15 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action:
-    Operator reviews the T5 failed-gate findings and authorizes a fresh-UTC-day remediation
-    plan before any further paid run.
+  next_action: Operator authorizes one fresh-UTC-day, two-brief remediation run for GB-02 and GB-16,
+    reserving at most 9,100,000 micros, before any further paid run.
   blockers:
     - 'T5 representative-run-completion-and-latency remains pending: 14 of 20 registered briefs
-      completed, GB-02 partial-succeeded, and GB-16 through GB-20 were cap-deferred. Median and p90
-      latency passed. Evidence: governance/evidence/WP-P0-001/golden-20-run-proof.md.'
-    - 'T5 transactional spend dedup remains pending: an interrupted local harness failed to persist
-      the first confirmed GB-05 run before polling, and a later resume started a second full GB-05
-      pack. Both reservations reconciled to zero residual, but the duplicate submission and capture
-      remain a failed acceptance finding. Evidence:
-      governance/evidence/WP-P0-001/launch-pack-runs/golden-20/GB-05-duplicate.json.'
+      completed. GB-02 partial-succeeded after all three master result bodies returned HTTP 422
+      content_policy_violation at body.prompt; its no-spend prompt fix needs one governed rerun.
+      GB-16 through GB-20 were cap-deferred. Median and p90 latency passed. The minimal remediation
+      is GB-02 plus GB-16, at most 9,100,000 micros. Evidence:
+      governance/evidence/WP-P0-001/golden-20-defect-analysis.md.'
     - 'Scheduling note (operator decision 2026-08-11): the P0 exit go/no-go review occurs after the
       qualified evaluator sessions complete, and a recorded decision - go, or pivot/stop - is
       required either way. Operator self-sessions precede recruitment and never count toward the

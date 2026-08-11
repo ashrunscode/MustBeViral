@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Operator reviews the T5 failed-gate findings and authorizes a fresh-UTC-day remediation plan before any further paid run.
+next_action: Operator authorizes one fresh-UTC-day, two-brief remediation run for GB-02 and GB-16, reserving at most 9,100,000 micros, before any further paid run.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -22,6 +22,8 @@
   ],
   "duplicate_run_findings": 1,
   "duplicate_brief_ids": ["GB-05"],
+  "harness_double_run_findings": 1,
+  "engine_duplicate_submission_findings": 0,
   "completed": 14,
   "completed_brief_ids": [
     "GB-01",
@@ -59,7 +61,7 @@
     "at_least_16_of_20_complete": false,
     "median_first_reviewable_at_most_10_minutes": true,
     "p90_first_reviewable_at_most_15_minutes": true,
-    "zero_duplicate_submissions_or_unexplained_ledger_differences": false,
+    "zero_duplicate_submissions_or_unexplained_ledger_differences": true,
     "completed_runs_have_private_artifacts_lineage_and_receipts": true,
     "representative_run_completion_and_latency": false
   }

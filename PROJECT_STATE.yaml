@@ -11,10 +11,21 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator reviews the T5 failed-gate findings and authorizes a fresh-UTC-day remediation
-  plan before any further paid run.
+next_action: Operator authorizes one fresh-UTC-day, two-brief remediation run for GB-02 and GB-16,
+  reserving at most 9,100,000 micros, before any further paid run.
 decisions_pending: []
 blockers:
+  - 'The no-spend T5 RCA reclassifies GB-05 as a harness double-run, not a duplicate provider
+    submission inside one run. Two overlapping harness invocations used different workspaces,
+    quotes, start idempotency scopes, runs, outbox keys, provider requests, and ledger causative
+    keys; both reconciled to zero residual. The transactional spend/dedup/ledger gate therefore
+    passes, while the checkpoint-before-poll boundary now has a regression test. GB-02 was a
+    prompt-material failure: all three fal master result bodies returned HTTP 422
+    content_policy_violation at body.prompt. Supplement image prompts now omit promotional offer and
+    audience health context while the copy/legal prompt remains complete. The fix has no paid
+    provider proof. Representative completion remains pending at 14 of 20; the minimal remediation
+    is one GB-02 rerun plus first-deferred GB-16, at most 9,100,000 micros. Evidence is
+    governance/evidence/WP-P0-001/golden-20-defect-analysis.md.'
   - T4 replaced every golden-screen fixture port with the authenticated typed Worker client in
     money-safety order while preserving the locked visuals and explicit maximum-price confirmation.
     Browser traffic uses a fixed same-origin Core proxy because the Worker does not expose browser

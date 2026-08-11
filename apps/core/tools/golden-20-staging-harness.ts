@@ -126,6 +126,7 @@ export interface Golden20BriefRecord {
 
 export interface DuplicateGoldenRunFinding {
   readonly brief_id: string;
+  readonly classification: 'harness_double_run' | 'engine_duplicate_submission';
   readonly quote: NonNullable<Golden20BriefRecord['quote']>;
   readonly money: NonNullable<Golden20BriefRecord['money']>;
   readonly run: NonNullable<Golden20BriefRecord['run']>;
@@ -665,6 +666,19 @@ export function percentileNearestRank(
   return sorted[rank - 1] ?? null;
 }
 
+/**
+ * The confirmed run identifier must reach durable evidence before the first poll. A local process
+ * interruption after confirmation is otherwise indistinguishable from an unstarted brief, and a
+ * later harness invocation can legitimately confirm a second paid run in a new workspace.
+ */
+export async function pollAfterPersistingConfirmedRun<T>(
+  persistCheckpoint: () => Promise<void>,
+  poll: () => Promise<T>,
+): Promise<T> {
+  await persistCheckpoint();
+  return await poll();
+}
+
 export function summarizeGolden20Records(
   records: readonly Golden20BriefRecord[],
   duplicateRuns: readonly DuplicateGoldenRunFinding[] = [],
@@ -673,6 +687,23 @@ export function summarizeGolden20Records(
   const failed = records.filter((entry) => entry.outcome === 'failed');
   const deferred = records.filter((entry) => entry.outcome === 'cap_deferred');
   const paidAttempts = records.filter((entry) => entry.run !== undefined);
+  const harnessDoubleRuns = duplicateRuns.filter(
+    (entry) => entry.classification === 'harness_double_run',
+  );
+  const engineDuplicateSubmissions = duplicateRuns.filter(
+    (entry) => entry.classification === 'engine_duplicate_submission',
+  );
+  const duplicateRunMoneyIntegrityPass = duplicateRuns.every((entry) => {
+    const money = entry.money;
+    return (
+      money.residual_micros === '0' &&
+      money.capture_ledger_micros === money.captured_micros &&
+      BigInt(money.reserved_micros) ===
+        BigInt(money.captured_micros) +
+          BigInt(money.released_micros) +
+          BigInt(money.refunded_micros)
+    );
+  });
   const moneyRecords = [...records, ...duplicateRuns];
   const latency = completed
     .map((entry) => entry.run?.time_to_first_reviewable_ms)
@@ -703,6 +734,8 @@ export function summarizeGolden20Records(
     ],
     duplicate_run_findings: duplicateRuns.length,
     duplicate_brief_ids: duplicateRuns.map((entry) => entry.brief_id),
+    harness_double_run_findings: harnessDoubleRuns.length,
+    engine_duplicate_submission_findings: engineDuplicateSubmissions.length,
     completed: completed.length,
     completed_brief_ids: completed.map((entry) => entry.brief_id),
     failed: failed.length,
@@ -730,7 +763,9 @@ export function summarizeGolden20Records(
       median_first_reviewable_at_most_10_minutes: median !== null && median <= 600_000,
       p90_first_reviewable_at_most_15_minutes: p90 !== null && p90 <= 900_000,
       zero_duplicate_submissions_or_unexplained_ledger_differences:
-        duplicateRuns.length === 0 && completedIntegrityPass,
+        engineDuplicateSubmissions.length === 0 &&
+        duplicateRunMoneyIntegrityPass &&
+        completedIntegrityPass,
       completed_runs_have_private_artifacts_lineage_and_receipts: completedIntegrityPass,
       representative_run_completion_and_latency:
         completed.length >= 16 &&
@@ -935,9 +970,22 @@ export async function runGolden20StagingHarness(options: {
         },
       };
       results.push(checkpoint);
-      await persist(options.outDirectory, checkpoint, results);
-      results.pop();
-      const polled = await pollWithRecovery(transport, prepared, runId, postgrest, options.log);
+      const confirmedPrepared = prepared;
+      const confirmedRunId = runId;
+      const polled = await pollAfterPersistingConfirmedRun(
+        async () => {
+          await persist(options.outDirectory, checkpoint, results);
+          results.pop();
+        },
+        async () =>
+          await pollWithRecovery(
+            transport,
+            confirmedPrepared,
+            confirmedRunId,
+            postgrest,
+            options.log,
+          ),
+      );
       const completed = await approveExportAndReconcile({
         brief,
         prepared,

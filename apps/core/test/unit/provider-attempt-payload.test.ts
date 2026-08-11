@@ -77,6 +77,32 @@ const BRIEF_CONTEXT = {
   brand_context: nodeParametersOf('brand-context'),
 };
 
+const SUPPLEMENT_BRIEF: GoldenCampaignBrief = {
+  ...SAMPLE_BRIEF,
+  briefId: 'GB-02',
+  product: 'Northstar Magnesium Glycinate Night Capsules',
+  category: 'Supplements; 60-capsule magnesium glycinate dietary supplement.',
+  packshots:
+    'Amber bottle with front/back Supplement Facts, two capsules beside the closed bottle, tamper seal, and carton; no lifestyle talent.',
+  offer: 'Subscribe-and-save launch, one bottle every 30 days with cancel-anytime terms.',
+  audienceAndAwareness:
+    'Active adults 30–55 who feel their nighttime routine is inconsistent; problem-aware.',
+  brandKit:
+    'Navy and mineral gray, compact grotesk type, clinical and precise voice, diagram-led visuals, no moon-and-cloud fantasy scenes.',
+  creativeConstraintsRights:
+    'Supplement Facts must remain readable and unaltered; no doctor imagery, white coats, body transformation, or unsupported testimonial.',
+} as GoldenCampaignBrief;
+const SUPPLEMENT_GRAPH = buildGoldenLaunchPackGraph(SUPPLEMENT_BRIEF);
+const supplementNodeParametersOf = (id: string): Record<string, unknown> => {
+  const found = SUPPLEMENT_GRAPH.nodes.find((candidate) => candidate.id === id);
+  if (found === undefined) throw new Error(`supplement graph has no node ${id}`);
+  return found.parameters as Record<string, unknown>;
+};
+const SUPPLEMENT_BRIEF_CONTEXT = {
+  brief: supplementNodeParametersOf('brief'),
+  brand_context: supplementNodeParametersOf('brand-context'),
+};
+
 const UPSTREAM_IMAGE: UpstreamImage = {
   artifactId: '472bf385-02c8-4abd-a33c-dc6df69f5232',
   objectKey: 'workspaces/w/runs/r/attempts/a/provider-output',
@@ -196,6 +222,22 @@ describe('master payload', () => {
     expect(prompt).toContain(SAMPLE_BRIEF.creativeConstraintsRights);
   });
 
+  it('keeps supplement image prompts visual instead of forwarding promotional health context', async () => {
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: supplementNodeParametersOf('master-1'),
+      executionPlanLine: { node_id: 'master-1' },
+      task: 'master_static',
+      briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+    });
+    const prompt = payload.prompt as string;
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.product);
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.packshots);
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
+  });
+
   it('refuses a master node with no prompt material', async () => {
     await expect(
       buildProviderAttemptPayload({
@@ -244,6 +286,23 @@ describe('nodes that depend on an upstream artifact', () => {
     // and can attach a price to the wrong service. Copy carries them instead.
     expect(prompt).not.toContain(SAMPLE_BRIEF.approvedFacts);
     expect(prompt).not.toContain(SAMPLE_BRIEF.prohibitedClaims);
+  });
+
+  it('keeps supplement adaptation prompts on the same visual-only policy as their master', async () => {
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: supplementNodeParametersOf('adaptation-1-1'),
+      executionPlanLine: { node_id: 'adaptation-1-1' },
+      task: 'adaptation',
+      briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+      upstreamImages: [UPSTREAM_IMAGE],
+      mintImageUrl: mintUrl,
+    });
+    const prompt = payload.prompt as string;
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.product);
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
+    expect(prompt).toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
   });
 
   it('carries the validated duration for motion, which fal prices per second', async () => {
