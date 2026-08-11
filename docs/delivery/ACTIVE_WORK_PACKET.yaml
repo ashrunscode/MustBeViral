@@ -309,9 +309,8 @@ external_effects:
 handoff:
   current_step: p0-005-golden-launch-pack-runs
   next_action:
-    'Execute T4: replace the seven golden-screen fixture ports with the typed authenticated
-    Worker client in money-safety order, preserving every locked visual state and keeping provider
-    spend disabled until the quote/run boundary.'
+    'Execute T5: run the 20 registered golden briefs against staging and record completion,
+    latency, cap, ledger, lineage, and immutable-receipt evidence.'
   blockers: []
   changed_paths:
     - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
@@ -324,11 +323,23 @@ handoff:
     - apps/web/app/login
     - apps/web/src/lib/core
     - governance/evidence/WP-P0-001/response-contracts-sign-in-and-client.md
+    - apps/core/tools/staging-auth.ts
+    - apps/web/app/studio
+    - apps/web/src/features
+    - apps/web/e2e
+    - playwright.config.ts
+    - governance/evidence/WP-P0-001/real-web-client-wiring.md
   last_green_checks:
     - pnpm packet:verify
     - 20/20 staging launch-pack quotes at 4,550,000 micros
     - T3 tracked candidate formatting, governance, security, lint, typecheck, unit, integration, and
       build lanes
+    - T4 repository verify including formatting, governance, security, lint, typecheck, unit,
+      integration, and production build lanes
+    - T4 Playwright 32 passed and 4 skipped, including the locked 100-node and 500-node performance
+      thresholds
+    - T4 staging-authenticated Playwright read proof passed with no run submitted and no provider
+      spend
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []

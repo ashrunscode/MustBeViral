@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Execute T4: replace the seven golden-screen fixture ports with the typed authenticated Worker client in money-safety order, preserving every locked visual state and keeping provider spend disabled until the quote/run boundary.
+next_action: Execute T5: run the 20 registered golden briefs against staging and record completion, latency, cap, ledger, lineage, and immutable-receipt evidence.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

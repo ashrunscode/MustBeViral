@@ -11,11 +11,21 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: 'Execute T4: replace the seven golden-screen fixture ports with the typed authenticated
-  Worker client in money-safety order, preserving every locked visual state and keeping provider
-  spend disabled until the quote/run boundary.'
+next_action: 'Execute T5: run the 20 registered golden briefs against staging and record completion,
+  latency, cap, ledger, lineage, and immutable-receipt evidence.'
 decisions_pending: []
 blockers:
+  - T4 replaced every golden-screen fixture port with the authenticated typed Worker client in
+    money-safety order while preserving the locked visuals and explicit maximum-price confirmation.
+    Browser traffic uses a fixed same-origin Core proxy because the Worker does not expose browser
+    CORS; server traffic remains direct. A disposable staging identity proved sign-in and the real
+    canvas read path for workspace 50f0b0c4-9302-4aab-8a03-d1953e71d8f7, project
+    314c25b4-a046-5d91-b715-f9bc2eebe24c, canvas
+    6690335b-517f-4590-a2ba-c2033014da81 and revision
+    97fd65c8-8765-4488-8400-2a06a8534e1a without submitting a run or spending provider money. The
+    review rejection control remains a local draft because P0 has no rejection operation, and an
+    export records the immutable export descriptor because P0 has no artifact-bytes endpoint.
+    Evidence is governance/evidence/WP-P0-001/real-web-client-wiring.md.
   - The $0.67 rung is closed on staging. The single T2 run 8e724e99-1921-4096-ada8-71f93fe3a54f
     completed all 16 provider nodes through three waves and six dispatch epochs, captured exactly
     4,550,000 reserved micros with zero release or residual, produced its first reviewable static in
@@ -100,9 +110,9 @@ blockers:
     unions; generated OpenAPI covers health plus the complete 19-route Worker surface. The
     production Supabase SSR sign-in surface handles redirect-back, password errors, verification,
     rate limiting, expired-link notices, and local-session sign-out. The shared fetch client adds
-    bearer JWT, Idempotency-Key on mutations, and X-Request-Id, then parses every response. The
-    seven golden screens intentionally remain on fixture ports until T4 wires them in money-safety
-    order. Evidence is governance/evidence/WP-P0-001/response-contracts-sign-in-and-client.md.
+    bearer JWT, Idempotency-Key on mutations, and X-Request-Id, then parses every response. Those
+    prerequisites are now consumed by the seven T4 screen ports described above. Evidence is
+    governance/evidence/WP-P0-001/response-contracts-sign-in-and-client.md.
   - P0 exit is gated on people rather than code. It needs 5-8 paid evaluator sessions (all eight
     slots still PENDING) and one signed paid pilot. Recruitment runs in parallel; sessions must not
     be held against fixtures.
