@@ -19,12 +19,22 @@ describe('ReviewFlow', () => {
     expect(html).toContain('receipt-summary');
     expect(html).toContain('export-status');
     expect(html).toContain('export-row');
+    expect(html).toContain('$18.42 / $100.00');
   });
 
   it.each([
     [{ type: 'reason_required', variant_id: 'story-a' } as const, 'data-result="reason_required"'],
     [{ type: 'conflict', actual_revision_id: '81c2' } as const, 'data-result="conflict"'],
     [{ type: 'not_found', artifact_id: 'missing' } as const, 'data-result="not_found"'],
+    [
+      { type: 'description_required', artifact_id: 'missing' } as const,
+      'data-result="description_required"',
+    ],
+    [{ type: 'forbidden' } as const, 'data-result="forbidden"'],
+    [
+      { type: 'error', message: 'Core unavailable', retryable: true } as const,
+      'data-result="error"',
+    ],
   ])('renders review result branch', (result, marker) => {
     expect(renderToStaticMarkup(<ReviewResultNotice result={result} />)).toContain(marker);
   });

@@ -1,17 +1,22 @@
 'use client';
 
-import { Button, Card, Chip, Drawer, MonoCaps } from '@mustbeviral/ui';
+import { Button, Card, Chip, Drawer, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
 import Link from 'next/link';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
 import {
   InMemoryReviewPort,
+  WorkerReviewPort,
   type ArtifactGroupReview,
   type ReviewDecision,
   type ReviewPort,
+  type ReviewReadPort,
   type ReviewPortResult,
+  type ReviewSummary,
   type ReviewVariant,
 } from '../../../../../src/features/review/review-port';
+import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
+import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './review-flow.module.css';
 
 const decisionChip = {
@@ -39,9 +44,17 @@ export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResu
       </div>
     );
   }
+  const message =
+    result.type === 'not_found'
+      ? `Artifact ${result.artifact_id} was not found.`
+      : result.type === 'description_required'
+        ? `Artifact ${result.artifact_id} needs an accessibility description before approval.`
+        : result.type === 'forbidden'
+          ? 'Your session is not permitted to review this run.'
+          : result.message;
   return (
-    <div className={styles.reviewError} role="alert" data-result="not_found">
-      Artifact {result.artifact_id} was not found.
+    <div className={styles.reviewError} role="alert" data-result={result.type}>
+      {message}
     </div>
   );
 }
@@ -100,7 +113,9 @@ function VariantCard({
           </div>
           <div className={styles.version}>
             <div className={`${styles.thumb} ${styles.prior}`}>
-              <MonoCaps>Prior pinned · v1</MonoCaps>
+              <MonoCaps>
+                {variant.hasPrior ? 'Prior pinned · v1' : 'No prior pinned output'}
+              </MonoCaps>
             </div>
             <div className={styles.versionCaption}>
               <MonoCaps>Prior</MonoCaps>
@@ -136,7 +151,18 @@ function VariantCard({
   );
 }
 
-function QaFindings() {
+function QaFindings({ preview }: Readonly<{ preview: boolean }>) {
+  if (!preview) {
+    return (
+      <div className={styles.findingList}>
+        <div className={styles.drawerSummary}>
+          <MonoCaps>No structured QA findings</MonoCaps>
+          <br />
+          This receipt does not expose a separate QA-note feed.
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={styles.findingList}>
       <article className={styles.finding}>
@@ -159,30 +185,94 @@ function QaFindings() {
 }
 
 export function ReviewFlow({
+  dataMode = 'preview',
   mode = 'approval',
   port: suppliedPort,
+  readPort: suppliedReadPort,
+  reviewer = 'Maya Chen',
+  runId,
   workspace,
-}: Readonly<{ mode?: 'compare' | 'approval'; port?: ReviewPort; workspace: string }>) {
-  const [port] = useState(() => suppliedPort ?? new InMemoryReviewPort());
-  const [groups, setGroups] = useState<readonly ArtifactGroupReview[]>(() => port.read());
-  const [result, setResult] = useState<ReviewPortResult | null>(null);
+}: Readonly<{
+  dataMode?: 'preview' | 'worker';
+  mode?: 'compare' | 'approval';
+  port?: ReviewPort;
+  readPort?: ReviewReadPort;
+  reviewer?: string;
+  runId?: string;
+  workspace: string;
+}>) {
+  const [previewPort] = useState<ReviewPort | null>(() =>
+    dataMode === 'preview' ? (suppliedPort ?? new InMemoryReviewPort()) : null,
+  );
+  const [readPort] = useState<ReviewReadPort | null>(() => {
+    if (dataMode === 'preview') return null;
+    if (suppliedReadPort !== undefined) return suppliedReadPort;
+    if (runId === undefined || runId.length === 0) return null;
+    return new WorkerReviewPort(createBrowserCoreClient(), runId, reviewer, () =>
+      createMutationIdempotencyKey('approve-artifacts'),
+    );
+  });
+  const [groups, setGroups] = useState<readonly ArtifactGroupReview[]>(
+    () => previewPort?.read() ?? [],
+  );
+  const [summary, setSummary] = useState<ReviewSummary>(() => ({
+    quotedMicros: 4_200_000n,
+    capturedMicros: 4_200_000n,
+    budgetUsedMicros: 18_420_000n,
+    budgetCapMicros: 100_000_000n,
+    exportReady: true,
+    qaNoteCount: 2,
+    route: 'kimi + flux + seedance',
+  }));
+  const [result, setResult] = useState<ReviewPortResult | null>(() =>
+    dataMode === 'worker' && readPort === null
+      ? {
+          type: 'error',
+          message: 'Open review from a run so Core can load its artifacts.',
+          retryable: false,
+        }
+      : null,
+  );
+  const [loading, setLoading] = useState(dataMode === 'worker' && readPort !== null);
   const [rejectingId, setRejectingId] = useState<string | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(true);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const variants = groups.flatMap((group) => group.variants);
 
-  function decide(variant: ReviewVariant, decision: 'approved' | 'rejected') {
+  useEffect(() => {
+    if (readPort === null) return;
+    let active = true;
+    void readPort.read().then((next) => {
+      if (!active) return;
+      if (next.type === 'ok') {
+        setGroups(next.groups);
+        setSummary(next.summary);
+        setResult(null);
+      } else {
+        setResult(next);
+      }
+      setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, [readPort]);
+
+  async function decide(variant: ReviewVariant, decision: 'approved' | 'rejected') {
     if (decision === 'rejected' && rejectingId !== variant.id) {
       setRejectingId(variant.id);
       setRejectionReason('');
       return;
     }
-    const next = port.decideVariant({
+    const target = readPort ?? previewPort;
+    if (target === null) return;
+    const next = await target.decideVariant({
       variantId: variant.id,
       decision,
       reason: rejectionReason,
-      expectedRevisionId: '7f3a',
+      expectedRevisionId:
+        groups.find((group) => group.id === variant.groupId)?.revision ?? 'current revision',
     });
     setResult(next);
     if (next.type === 'ok') {
@@ -192,11 +282,13 @@ export function ReviewFlow({
     }
   }
 
-  function approveGroup(group: ArtifactGroupReview) {
-    const next = port.approveGroup({
+  async function approveGroup(group: ArtifactGroupReview) {
+    const target = readPort ?? previewPort;
+    if (target === null) return;
+    const next = await target.approveGroup({
       groupId: group.id,
-      reviewer: 'Maya Chen',
-      expectedRevisionId: '7f3a',
+      reviewer,
+      expectedRevisionId: group.revision,
     });
     setResult(next);
     if (next.type === 'ok') setGroups(next.groups);
@@ -223,7 +315,9 @@ export function ReviewFlow({
         </div>
         <div className={styles.sectionHeading}>
           <div>
-            <MonoCaps>Rev 7f3a · Reviewer Maya Chen</MonoCaps>
+            <MonoCaps>
+              Rev {groups[0]?.revision ?? 'pending'} · Reviewer {reviewer}
+            </MonoCaps>
             <h1 id="review-title">{mode === 'compare' ? 'Output comparison' : 'Review outputs'}</h1>
             <p>
               {mode === 'compare'
@@ -236,6 +330,16 @@ export function ReviewFlow({
           </Button>
         </div>
         <ReviewResultNotice result={result} />
+        {loading ? (
+          <div className={styles.reviewError} role="status" data-result="loading">
+            Reading authoritative artifacts and approvals from Core.
+          </div>
+        ) : null}
+        {!loading && result === null && groups.length === 0 ? (
+          <div className={styles.reviewError} role="status" data-result="empty">
+            This run has no reviewable provider outputs yet.
+          </div>
+        ) : null}
         {groups.map((group) => (
           <section
             className={styles.groupSection}
@@ -251,8 +355,8 @@ export function ReviewFlow({
                 <Chip status={decisionChip[group.decision].status}>
                   {decisionChip[group.decision].label}
                 </Chip>
-                <Button variant="primary" onClick={() => approveGroup(group)}>
-                  Approve group as Maya Chen
+                <Button variant="primary" onClick={() => void approveGroup(group)}>
+                  {dataMode === 'preview' ? 'Approve group as Maya Chen' : 'Approve group'}
                 </Button>
               </div>
             </div>
@@ -268,7 +372,7 @@ export function ReviewFlow({
                     rejecting={rejectingId === variant.id}
                     rejectionReason={rejectionReason}
                     setRejectionReason={setRejectionReason}
-                    onDecide={decide}
+                    onDecide={(variant, decision) => void decide(variant, decision)}
                     onNavigate={handleCardKey}
                     register={(element, refIndex) => {
                       cardRefs.current[refIndex] = element;
@@ -288,15 +392,18 @@ export function ReviewFlow({
               <h2 id="receipt-summary-title">Receipt summary</h2>
               <div>
                 <MonoCaps>Run total</MonoCaps>
-                <strong>$4.20</strong>
+                <strong>{formatUsdMicros(summary.capturedMicros)}</strong>
               </div>
               <div>
                 <MonoCaps>Route</MonoCaps>
-                <strong>kimi + flux + seedance</strong>
+                <strong>{summary.route}</strong>
               </div>
               <div>
-                <MonoCaps>Budget used</MonoCaps>
-                <strong>$18.42 / $100.00</strong>
+                <MonoCaps>{dataMode === 'preview' ? 'Budget used' : 'Captured / quoted'}</MonoCaps>
+                <strong>
+                  {formatUsdMicros(summary.budgetUsedMicros)} /{' '}
+                  {formatUsdMicros(summary.budgetCapMicros)}
+                </strong>
               </div>
             </section>
             <section
@@ -306,7 +413,9 @@ export function ReviewFlow({
               <h2 id="mobile-export-title">Export status</h2>
               <div className={`${styles.exportRow} export-row`}>
                 <span>Meta-ready bundle</span>
-                <Chip status="verified">Ready</Chip>
+                <Chip status={summary.exportReady ? 'verified' : 'queued'}>
+                  {summary.exportReady ? 'Ready' : 'Pending'}
+                </Chip>
               </div>
             </section>
           </>
@@ -314,8 +423,12 @@ export function ReviewFlow({
       </section>
       <aside className={styles.qaPanel} aria-labelledby="qa-title">
         <h2 id="qa-title">QA findings</h2>
-        <p>Two notes require review. Verified work remains isolated from pending branches.</p>
-        <QaFindings />
+        <p>
+          {dataMode === 'preview'
+            ? 'Two notes require review. Verified work remains isolated from pending branches.'
+            : 'Receipt-backed artifacts remain isolated from local review drafts.'}
+        </p>
+        <QaFindings preview={dataMode === 'preview'} />
       </aside>
       <Drawer
         className={styles.tabletDrawer}
@@ -323,7 +436,7 @@ export function ReviewFlow({
         title="QA findings"
         onClose={() => setDrawerOpen(false)}
       >
-        <QaFindings />
+        <QaFindings preview={dataMode === 'preview'} />
       </Drawer>
       <div className={styles.confirmBar}>
         <div>
@@ -334,18 +447,35 @@ export function ReviewFlow({
         </div>
         <div className={styles.confirmActions}>
           {mode === 'compare' ? (
-            <Link className="mbv-button mbv-button--primary" href={`/studio/${workspace}/review`}>
+            <Link
+              className="mbv-button mbv-button--primary"
+              href={
+                runId === undefined
+                  ? `/studio/${workspace}/review`
+                  : `/studio/${workspace}/review?run=${encodeURIComponent(runId)}`
+              }
+            >
               Continue named review
             </Link>
           ) : (
-            <Link className="mbv-button mbv-button--primary" href={`/studio/${workspace}/receipt`}>
+            <Link
+              className="mbv-button mbv-button--primary"
+              href={
+                runId === undefined
+                  ? `/studio/${workspace}/receipt`
+                  : `/studio/${workspace}/receipt?run=${encodeURIComponent(runId)}`
+              }
+            >
               Export approved
             </Link>
           )}
         </div>
       </div>
       <footer className={styles.footer}>
-        <MonoCaps>Artifacts: {variants.length} · QA notes: 2 · Quote: $4.20</MonoCaps>
+        <MonoCaps>
+          Artifacts: {variants.length} · QA notes: {summary.qaNoteCount} · Quote:{' '}
+          {formatUsdMicros(summary.quotedMicros)}
+        </MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
     </main>
