@@ -1,0 +1,1112 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-11T14:49:50.845Z",
+  "task": "T6 private MCP REST-semantic parity",
+  "no_spend": {
+    "wallet_credit_micros": "0",
+    "provider_submissions": 0,
+    "valid_confirmed_staging_start_run_calls": 0,
+    "staging_start_run_refusal_calls": 12,
+    "staging_run_rows_created": 0
+  },
+  "staging": {
+    "endpoint": "https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev/mcp",
+    "health": {
+      "service": "mustbeviral-core",
+      "generation": "viralgraph-cleanroom-v2",
+      "status": "ok"
+    },
+    "disposable_user_id": "2f6bfbd9-9b6c-410f-beaa-28ba32e07cf1",
+    "workspace_id": "3b57132f-8f06-4e2c-89e3-a82338b1d639",
+    "project_id": "a423d4f1-0415-5c5f-90a0-fc6d6a9e5da6",
+    "canvas_id": "dd75aedc-430e-418b-bc10-22b100a5672e",
+    "initial_revision_id": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+    "patched_revision_id": "fcfb1c6f-922b-4949-ae44-12f83edfdba6",
+    "quote_id": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+    "prior_run_owner_user_id": "8c11dc31-356b-4d57-afd6-70d2361baf99",
+    "prior_run_id": "44b3197f-7119-4724-954a-ce9308090ef8",
+    "prior_workspace_id": "69353b4f-3e82-4679-b2c2-0e18cc3650e9",
+    "prior_quote_id": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+    "privileged_audit_observed_at": "2026-08-11T14:49:27.847788+00:00"
+  },
+  "clients": {
+    "mcp_inspector": {
+      "package": "@modelcontextprotocol/inspector",
+      "version": "2.1.0"
+    },
+    "typescript_sdk": {
+      "package": "@modelcontextprotocol/sdk",
+      "version": "1.30.0"
+    },
+    "python_sdk": {
+      "package": "mcp",
+      "version": "1.29.0"
+    }
+  },
+  "surface": {
+    "authenticated_tools_list": {
+      "mcp_inspector": [
+        "get_canvas_context",
+        "apply_canvas_patch",
+        "quote_run",
+        "start_run",
+        "get_run"
+      ],
+      "typescript_sdk": [
+        "get_canvas_context",
+        "apply_canvas_patch",
+        "quote_run",
+        "start_run",
+        "get_run"
+      ],
+      "python_sdk": [
+        "get_canvas_context",
+        "apply_canvas_patch",
+        "quote_run",
+        "start_run",
+        "get_run"
+      ]
+    },
+    "exact_count": 5,
+    "unauthenticated_discovery": {
+      "direct_http_status": 401,
+      "direct_response": {
+        "error": {
+          "code": "UNAUTHENTICATED",
+          "message": "A valid bearer token is required.",
+          "request_id": "<request-id>",
+          "retryable": false
+        }
+      },
+      "mcp_inspector": {
+        "refused": true,
+        "safe_401_observed": false
+      },
+      "typescript_sdk": {
+        "refused": true,
+        "safe_401_observed": true
+      },
+      "python_sdk": {
+        "refused": true,
+        "safe_401_observed": false
+      }
+    }
+  },
+  "vectors": [
+    {
+      "id": "success-get-canvas-context",
+      "environment": "staging",
+      "operation": "get_canvas_context",
+      "note": "Read-only success against the disposable staging canvas.",
+      "request": {
+        "canvas_id": "dd75aedc-430e-418b-bc10-22b100a5672e"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 200,
+        "semantic_fingerprint": "6543c90e47cab1c1c5f28881fc68d4f2ed2bfcdaad15cf12163c4d7d498f16d3",
+        "response": {
+          "data": {
+            "canvas": {
+              "canvasId": "dd75aedc-430e-418b-bc10-22b100a5672e",
+              "projectId": "a423d4f1-0415-5c5f-90a0-fc6d6a9e5da6",
+              "headRevisionId": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+              "canonicalHash": "3d0575641d8aa52b91f087ba44246c972a33806cc5649081537c10052f67ae3c"
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "6543c90e47cab1c1c5f28881fc68d4f2ed2bfcdaad15cf12163c4d7d498f16d3",
+        "response": {
+          "data": {
+            "canvas": {
+              "canvasId": "dd75aedc-430e-418b-bc10-22b100a5672e",
+              "projectId": "a423d4f1-0415-5c5f-90a0-fc6d6a9e5da6",
+              "headRevisionId": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+              "canonicalHash": "3d0575641d8aa52b91f087ba44246c972a33806cc5649081537c10052f67ae3c"
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "6543c90e47cab1c1c5f28881fc68d4f2ed2bfcdaad15cf12163c4d7d498f16d3",
+        "response": {
+          "data": {
+            "canvas": {
+              "canvasId": "dd75aedc-430e-418b-bc10-22b100a5672e",
+              "projectId": "a423d4f1-0415-5c5f-90a0-fc6d6a9e5da6",
+              "headRevisionId": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+              "canonicalHash": "3d0575641d8aa52b91f087ba44246c972a33806cc5649081537c10052f67ae3c"
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "6543c90e47cab1c1c5f28881fc68d4f2ed2bfcdaad15cf12163c4d7d498f16d3",
+        "response": {
+          "data": {
+            "canvas": {
+              "canvasId": "dd75aedc-430e-418b-bc10-22b100a5672e",
+              "projectId": "a423d4f1-0415-5c5f-90a0-fc6d6a9e5da6",
+              "headRevisionId": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+              "canonicalHash": "3d0575641d8aa52b91f087ba44246c972a33806cc5649081537c10052f67ae3c"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "success-apply-patch",
+      "environment": "staging",
+      "operation": "apply_canvas_patch",
+      "note": "REST, Inspector, and both SDKs each apply the same graph once to an equivalent fresh disposable canvas.",
+      "requests": {
+        "rest": {
+          "canvas_id": "dd75aedc-430e-418b-bc10-22b100a5672e",
+          "expected_revision_id": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+          "reason": "Build the registered GB-01 graph for the no-spend T6 parity proof",
+          "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:patch:rest",
+          "patch_counts": {
+            "upsert_nodes": 20,
+            "remove_node_ids": 0,
+            "upsert_edges": 38,
+            "remove_edge_ids": 0
+          }
+        },
+        "inspector": {
+          "canvas_id": "9f1596d3-2c51-4dfb-b65a-aa644277ff5b",
+          "expected_revision_id": "666d4147-2e35-4c96-a298-bff3cf5afae5",
+          "reason": "Build the registered GB-01 graph for the no-spend T6 parity proof",
+          "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:patch:inspector",
+          "patch_counts": {
+            "upsert_nodes": 20,
+            "remove_node_ids": 0,
+            "upsert_edges": 38,
+            "remove_edge_ids": 0
+          }
+        },
+        "typescript": {
+          "canvas_id": "824337c8-474b-48fd-a7d7-958a52721c91",
+          "expected_revision_id": "4125b3d4-a1eb-4036-b580-b8a96227a53f",
+          "reason": "Build the registered GB-01 graph for the no-spend T6 parity proof",
+          "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:patch:typescript",
+          "patch_counts": {
+            "upsert_nodes": 20,
+            "remove_node_ids": 0,
+            "upsert_edges": 38,
+            "remove_edge_ids": 0
+          }
+        },
+        "python": {
+          "canvas_id": "3335badd-582b-4748-9b30-9f9622c5ad6c",
+          "expected_revision_id": "0d02987a-52c9-430e-ac4e-665c9d7f3352",
+          "reason": "Build the registered GB-01 graph for the no-spend T6 parity proof",
+          "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:patch:python",
+          "patch_counts": {
+            "upsert_nodes": 20,
+            "remove_node_ids": 0,
+            "upsert_edges": 38,
+            "remove_edge_ids": 0
+          }
+        }
+      },
+      "parity": "passed",
+      "comparison": "Exact success-envelope shape, canonical hash, and affected-descendant set; disposable canvas and revision identifiers are expected to differ.",
+      "rest": {
+        "transport_status": 200,
+        "semantic_fingerprint": "bfdb3a1ebeda10dda5ef132b46b788ec232e739e351b151a9952abd4d7bb31d5",
+        "response": {
+          "data": {
+            "canvasId": "dd75aedc-430e-418b-bc10-22b100a5672e",
+            "revisionId": "fcfb1c6f-922b-4949-ae44-12f83edfdba6",
+            "canonicalHash": "773add0f163d02ce4a0010f93d450a46b58008349f92f9e807a1cd976785c520",
+            "affectedDescendants": []
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "67d6d3a6a2957e8f611c5132bb378ad7ea27728adf049cbd2c87f5956c4b7151",
+        "response": {
+          "data": {
+            "canvasId": "9f1596d3-2c51-4dfb-b65a-aa644277ff5b",
+            "revisionId": "08176136-3373-4718-954b-503df54cb802",
+            "canonicalHash": "773add0f163d02ce4a0010f93d450a46b58008349f92f9e807a1cd976785c520",
+            "affectedDescendants": []
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "00a1c4022f860b85626448c214824e0be1a668ba03d859ba0500ef6abd3c505d",
+        "response": {
+          "data": {
+            "canvasId": "824337c8-474b-48fd-a7d7-958a52721c91",
+            "revisionId": "50e7c31a-bd74-43f9-b619-31fe623673a1",
+            "canonicalHash": "773add0f163d02ce4a0010f93d450a46b58008349f92f9e807a1cd976785c520",
+            "affectedDescendants": []
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "ab7ae7b9a91bd7f358dccad843ddd8bc825ae552914595024b4eead3dcb90f93",
+        "response": {
+          "data": {
+            "canvasId": "3335badd-582b-4748-9b30-9f9622c5ad6c",
+            "revisionId": "f34d9e3c-6dba-4282-a93c-e2da3167e06b",
+            "canonicalHash": "773add0f163d02ce4a0010f93d450a46b58008349f92f9e807a1cd976785c520",
+            "affectedDescendants": []
+          }
+        }
+      }
+    },
+    {
+      "id": "success-quote-and-idempotent-replay",
+      "environment": "staging",
+      "operation": "quote_run",
+      "note": "REST creates one free quote; Inspector and both SDKs replay the same quote and redacted token.",
+      "request": {
+        "canvas_id": "dd75aedc-430e-418b-bc10-22b100a5672e",
+        "expected_revision_id": "fcfb1c6f-922b-4949-ae44-12f83edfdba6",
+        "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:quote-replay"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 200,
+        "semantic_fingerprint": "62c19c722c7239d5a8dd41046a582319a0303cca16913a21a16b3162b449683a",
+        "response": {
+          "data": {
+            "quote": {
+              "quoteId": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+              "maximumChargeMicros": "4550000",
+              "expiresAt": "2026-08-11T15:04:08.72493+00:00"
+            },
+            "confirmationToken": "<redacted>"
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "62c19c722c7239d5a8dd41046a582319a0303cca16913a21a16b3162b449683a",
+        "response": {
+          "data": {
+            "quote": {
+              "quoteId": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+              "maximumChargeMicros": "4550000",
+              "expiresAt": "2026-08-11T15:04:08.72493+00:00"
+            },
+            "confirmationToken": "<redacted>"
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "62c19c722c7239d5a8dd41046a582319a0303cca16913a21a16b3162b449683a",
+        "response": {
+          "data": {
+            "quote": {
+              "quoteId": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+              "maximumChargeMicros": "4550000",
+              "expiresAt": "2026-08-11T15:04:08.72493+00:00"
+            },
+            "confirmationToken": "<redacted>"
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "62c19c722c7239d5a8dd41046a582319a0303cca16913a21a16b3162b449683a",
+        "response": {
+          "data": {
+            "quote": {
+              "quoteId": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+              "maximumChargeMicros": "4550000",
+              "expiresAt": "2026-08-11T15:04:08.72493+00:00"
+            },
+            "confirmationToken": "<redacted>"
+          }
+        }
+      }
+    },
+    {
+      "id": "validation-failure",
+      "environment": "staging",
+      "operation": "apply_canvas_patch",
+      "note": "Both adapters reject the same missing required fields with VALIDATION_FAILED.",
+      "request": {
+        "canvas_id": "dd75aedc-430e-418b-bc10-22b100a5672e",
+        "expected_revision_id": "<omitted>",
+        "reason": "<omitted>",
+        "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:invalid-patch",
+        "patch_counts": {
+          "upsert_nodes": 0,
+          "remove_node_ids": 0,
+          "upsert_edges": 0,
+          "remove_edge_ids": 0
+        }
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 400,
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      }
+    },
+    {
+      "id": "revision-conflict",
+      "environment": "staging",
+      "operation": "apply_canvas_patch",
+      "note": "The stale expected revision returns the same REVISION_CONFLICT and actual head.",
+      "request": {
+        "canvas_id": "dd75aedc-430e-418b-bc10-22b100a5672e",
+        "expected_revision_id": "7ea6eca0-af80-4a76-9ca8-9d5ce97b94ee",
+        "reason": "Build the registered GB-01 graph for the no-spend T6 parity proof",
+        "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:revision-conflict",
+        "patch_counts": {
+          "upsert_nodes": 20,
+          "remove_node_ids": 0,
+          "upsert_edges": 38,
+          "remove_edge_ids": 0
+        }
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 409,
+        "semantic_fingerprint": "7a47ac5c0404f85ec5271d52f56af7fde1b4ccea918916c12f0dc07f550559d0",
+        "response": {
+          "error": {
+            "code": "REVISION_CONFLICT",
+            "message": "The requested state change conflicts with current state.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reason": "revision",
+              "actual": "fcfb1c6f-922b-4949-ae44-12f83edfdba6"
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "7a47ac5c0404f85ec5271d52f56af7fde1b4ccea918916c12f0dc07f550559d0",
+        "response": {
+          "error": {
+            "code": "REVISION_CONFLICT",
+            "message": "The requested state change conflicts with current state.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reason": "revision",
+              "actual": "fcfb1c6f-922b-4949-ae44-12f83edfdba6"
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "7a47ac5c0404f85ec5271d52f56af7fde1b4ccea918916c12f0dc07f550559d0",
+        "response": {
+          "error": {
+            "code": "REVISION_CONFLICT",
+            "message": "The requested state change conflicts with current state.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reason": "revision",
+              "actual": "fcfb1c6f-922b-4949-ae44-12f83edfdba6"
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "7a47ac5c0404f85ec5271d52f56af7fde1b4ccea918916c12f0dc07f550559d0",
+        "response": {
+          "error": {
+            "code": "REVISION_CONFLICT",
+            "message": "The requested state change conflicts with current state.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reason": "revision",
+              "actual": "fcfb1c6f-922b-4949-ae44-12f83edfdba6"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "explicit-confirmation-required",
+      "environment": "staging",
+      "operation": "start_run",
+      "note": "confirmed is omitted; every live adapter refuses before handler or provider execution.",
+      "request": {
+        "quote_id": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+        "confirmed": "<omitted>",
+        "confirmation_token": "<redacted>",
+        "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:missing-confirmed"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 400,
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "858a9b31463e7ffa422b43bfff5e0a187afde1f923e7d1d4982c4ce44aace4c9",
+        "response": {
+          "error": {
+            "code": "VALIDATION_FAILED",
+            "message": "The request is invalid.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      }
+    },
+    {
+      "id": "invalid-confirmation-token",
+      "environment": "staging",
+      "operation": "start_run",
+      "note": "confirmed is true but the token is invalid; every live adapter refuses before reservation or provider execution.",
+      "request": {
+        "quote_id": "4099656b-b3e0-428b-9c3d-eb2ded902c4c",
+        "confirmed": true,
+        "confirmation_token": "<redacted>",
+        "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:invalid-confirmation-token"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 403,
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      }
+    },
+    {
+      "id": "authorization-failure",
+      "environment": "staging",
+      "operation": "get_run",
+      "note": "The unrelated disposable identity receives the same tenant-safe FORBIDDEN envelope.",
+      "request": {
+        "run_id": "44b3197f-7119-4724-954a-ce9308090ef8"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 403,
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8350ed4f28887335872e8d1fb66626fac5c7027abf49da0879cdf84422f7c47e",
+        "response": {
+          "error": {
+            "code": "FORBIDDEN",
+            "message": "Access to this resource is forbidden.",
+            "request_id": "<request-id>",
+            "retryable": false
+          }
+        }
+      }
+    },
+    {
+      "id": "success-get-run",
+      "environment": "staging",
+      "operation": "get_run",
+      "note": "The prior golden-run disposable owner reads the terminal run through all transports.",
+      "request": {
+        "run_id": "44b3197f-7119-4724-954a-ce9308090ef8"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 200,
+        "semantic_fingerprint": "6014eec1596ad585a23b55d0b49af57401a98cce2faa33fb88ed3e8ff7a9e4da",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "44b3197f-7119-4724-954a-ce9308090ef8",
+              "quoteId": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "status": "succeeded",
+              "reservationId": "793831d4-72cb-4efb-9572-2ad0c3fbde09"
+            },
+            "node_status_counts": {
+              "succeeded": 16
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "6014eec1596ad585a23b55d0b49af57401a98cce2faa33fb88ed3e8ff7a9e4da",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "44b3197f-7119-4724-954a-ce9308090ef8",
+              "quoteId": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "status": "succeeded",
+              "reservationId": "793831d4-72cb-4efb-9572-2ad0c3fbde09"
+            },
+            "node_status_counts": {
+              "succeeded": 16
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "6014eec1596ad585a23b55d0b49af57401a98cce2faa33fb88ed3e8ff7a9e4da",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "44b3197f-7119-4724-954a-ce9308090ef8",
+              "quoteId": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "status": "succeeded",
+              "reservationId": "793831d4-72cb-4efb-9572-2ad0c3fbde09"
+            },
+            "node_status_counts": {
+              "succeeded": 16
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "6014eec1596ad585a23b55d0b49af57401a98cce2faa33fb88ed3e8ff7a9e4da",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "44b3197f-7119-4724-954a-ce9308090ef8",
+              "quoteId": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "status": "succeeded",
+              "reservationId": "793831d4-72cb-4efb-9572-2ad0c3fbde09"
+            },
+            "node_status_counts": {
+              "succeeded": 16
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "quote-expiry",
+      "environment": "staging",
+      "operation": "start_run",
+      "note": "The expired quote is rejected before confirmation-token verification or provider execution.",
+      "request": {
+        "quote_id": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+        "confirmed": true,
+        "confirmation_token": "<redacted>",
+        "idempotency_key": "t6:8e331b4e-cae2-450b-afc1-901b21383b49:expired-quote"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 409,
+        "semantic_fingerprint": "d3dc611791f84a0f147aa7a0811b53a0f02ccf29d440af7b2e39050dcdc0cfa7",
+        "response": {
+          "error": {
+            "code": "QUOTE_EXPIRED",
+            "message": "The referenced quote has expired.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "quote_id": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "expired_at": "2026-08-11T12:26:55.738083+00:00"
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "d3dc611791f84a0f147aa7a0811b53a0f02ccf29d440af7b2e39050dcdc0cfa7",
+        "response": {
+          "error": {
+            "code": "QUOTE_EXPIRED",
+            "message": "The referenced quote has expired.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "quote_id": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "expired_at": "2026-08-11T12:26:55.738083+00:00"
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "d3dc611791f84a0f147aa7a0811b53a0f02ccf29d440af7b2e39050dcdc0cfa7",
+        "response": {
+          "error": {
+            "code": "QUOTE_EXPIRED",
+            "message": "The referenced quote has expired.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "quote_id": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "expired_at": "2026-08-11T12:26:55.738083+00:00"
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "d3dc611791f84a0f147aa7a0811b53a0f02ccf29d440af7b2e39050dcdc0cfa7",
+        "response": {
+          "error": {
+            "code": "QUOTE_EXPIRED",
+            "message": "The referenced quote has expired.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "quote_id": "ffe19349-1f3a-49b7-8720-f536e96862ce",
+              "expired_at": "2026-08-11T12:26:55.738083+00:00"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rate-limit-safe-envelope",
+      "environment": "local_fixture",
+      "operation": "get_run",
+      "note": "Exact Worker routes with a deterministic handler result prove RATE_LIMITED parity without flooding staging.",
+      "request": {
+        "run_id": "fixture-rate-limit"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 429,
+        "semantic_fingerprint": "8c869556b359cb504406885dcaf7a89959a3c71d62a2f8d83b01889f5d8da188",
+        "response": {
+          "error": {
+            "code": "RATE_LIMITED",
+            "message": "The request rate limit was exceeded.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "retry_after_seconds": 30
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8c869556b359cb504406885dcaf7a89959a3c71d62a2f8d83b01889f5d8da188",
+        "response": {
+          "error": {
+            "code": "RATE_LIMITED",
+            "message": "The request rate limit was exceeded.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "retry_after_seconds": 30
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8c869556b359cb504406885dcaf7a89959a3c71d62a2f8d83b01889f5d8da188",
+        "response": {
+          "error": {
+            "code": "RATE_LIMITED",
+            "message": "The request rate limit was exceeded.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "retry_after_seconds": 30
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8c869556b359cb504406885dcaf7a89959a3c71d62a2f8d83b01889f5d8da188",
+        "response": {
+          "error": {
+            "code": "RATE_LIMITED",
+            "message": "The request rate limit was exceeded.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "retry_after_seconds": 30
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "provider-ambiguity-safe-envelope",
+      "environment": "local_fixture",
+      "operation": "start_run",
+      "note": "Exact Worker routes prove PROVIDER_AMBIGUOUS parity without creating a live ambiguous submission.",
+      "request": {
+        "quote_id": "fixture-quote",
+        "confirmed": true,
+        "confirmation_token": "<redacted>",
+        "idempotency_key": "fixture-ambiguity"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 409,
+        "semantic_fingerprint": "eaff522185b53eabe6ac19ad4b1e0eefbddb5c488bf5d917b1f813db1bd90479",
+        "response": {
+          "error": {
+            "code": "PROVIDER_AMBIGUOUS",
+            "message": "Provider acceptance is ambiguous and requires reconciliation.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reconcile_state": "reconcile_pending"
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "eaff522185b53eabe6ac19ad4b1e0eefbddb5c488bf5d917b1f813db1bd90479",
+        "response": {
+          "error": {
+            "code": "PROVIDER_AMBIGUOUS",
+            "message": "Provider acceptance is ambiguous and requires reconciliation.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reconcile_state": "reconcile_pending"
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "eaff522185b53eabe6ac19ad4b1e0eefbddb5c488bf5d917b1f813db1bd90479",
+        "response": {
+          "error": {
+            "code": "PROVIDER_AMBIGUOUS",
+            "message": "Provider acceptance is ambiguous and requires reconciliation.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reconcile_state": "reconcile_pending"
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "eaff522185b53eabe6ac19ad4b1e0eefbddb5c488bf5d917b1f813db1bd90479",
+        "response": {
+          "error": {
+            "code": "PROVIDER_AMBIGUOUS",
+            "message": "Provider acceptance is ambiguous and requires reconciliation.",
+            "request_id": "<request-id>",
+            "retryable": false,
+            "details": {
+              "reconcile_state": "reconcile_pending"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "internal-error-opacity",
+      "environment": "local_fixture",
+      "operation": "get_run",
+      "note": "A thrown secret-bearing fixture error becomes the same opaque INTERNAL_ERROR envelope.",
+      "request": {
+        "run_id": "fixture-internal"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 500,
+        "semantic_fingerprint": "8d70f34ab290e642e2c696f75b9c5967102f93df79b27b7d849a03a076024caf",
+        "response": {
+          "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "The request could not be completed.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "error_id": "<request-id>"
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8d70f34ab290e642e2c696f75b9c5967102f93df79b27b7d849a03a076024caf",
+        "response": {
+          "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "The request could not be completed.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "error_id": "<request-id>"
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8d70f34ab290e642e2c696f75b9c5967102f93df79b27b7d849a03a076024caf",
+        "response": {
+          "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "The request could not be completed.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "error_id": "<request-id>"
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "8d70f34ab290e642e2c696f75b9c5967102f93df79b27b7d849a03a076024caf",
+        "response": {
+          "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "The request could not be completed.",
+            "request_id": "<request-id>",
+            "retryable": true,
+            "details": {
+              "error_id": "<request-id>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "valid-confirmation-dry-run",
+      "environment": "local_fixture",
+      "operation": "start_run",
+      "note": "The valid-token success shape is fixture-only; no staging confirmation token was submitted.",
+      "request": {
+        "quote_id": "fixture-quote",
+        "confirmed": true,
+        "confirmation_token": "<redacted>",
+        "idempotency_key": "fixture-valid-token"
+      },
+      "parity": "passed",
+      "rest": {
+        "transport_status": 201,
+        "semantic_fingerprint": "9125d4d2bba75fcbf8b99962deddd60472422c923019e153e69b75bfdd979484",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "fixture-run",
+              "quoteId": "fixture-quote",
+              "status": "queued",
+              "reservationId": "fixture-reservation"
+            }
+          }
+        }
+      },
+      "mcp_inspector": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "9125d4d2bba75fcbf8b99962deddd60472422c923019e153e69b75bfdd979484",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "fixture-run",
+              "quoteId": "fixture-quote",
+              "status": "queued",
+              "reservationId": "fixture-reservation"
+            }
+          }
+        }
+      },
+      "typescript_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "9125d4d2bba75fcbf8b99962deddd60472422c923019e153e69b75bfdd979484",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "fixture-run",
+              "quoteId": "fixture-quote",
+              "status": "queued",
+              "reservationId": "fixture-reservation"
+            }
+          }
+        }
+      },
+      "python_sdk": {
+        "transport_status": "MCP tools/call result",
+        "semantic_fingerprint": "9125d4d2bba75fcbf8b99962deddd60472422c923019e153e69b75bfdd979484",
+        "response": {
+          "data": {
+            "run": {
+              "runId": "fixture-run",
+              "quoteId": "fixture-quote",
+              "status": "queued",
+              "reservationId": "fixture-reservation"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "boundaries": {
+    "live_valid_confirmation_token_observed_in_quote_response": true,
+    "live_valid_confirmation_token_recorded": false,
+    "live_valid_confirmation_token_submitted": false,
+    "valid_confirmation_success_fixture_only": true,
+    "rate_limit_fixture_reason": "The staging Worker has no deterministic safe rate-limit trigger.",
+    "provider_ambiguity_fixture_reason": "Creating a live ambiguous provider acceptance would violate the no-spend and no-confirmed-run task boundary."
+  }
+}

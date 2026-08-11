@@ -44,6 +44,8 @@
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
+    "@modelcontextprotocol/inspector": "2.1.0",
+    "@modelcontextprotocol/sdk": "1.30.0",
     "@playwright/test": "1.61.1",
     "@superdesign/cli": "0.4.0",
     "@types/node": "26.1.1",

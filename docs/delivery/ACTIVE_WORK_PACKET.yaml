@@ -239,8 +239,10 @@ acceptance:
         Contract vectors pass for the exact five private MCP operations through MCP Inspector and
         two real clients, proving the same revision, validation, authorization, quote, confirmation,
         run, idempotency, recovery, and safe-error semantics as REST with no broader P0 MCP surface.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/mcp-parity-proof.md
+        - governance/evidence/WP-P0-001/mcp-parity-vectors.json
     - id: usable-pack-landed-cost
       criterion:
         Reconciled immutable provider, storage, execution, and artifact evidence computes landed
@@ -345,6 +347,18 @@ handoff:
     - apps/core/tools/golden-20-staging-harness.ts
     - governance/evidence/WP-P0-001/launch-pack-runs/golden-20
     - governance/evidence/WP-P0-001/golden-20-run-proof.md
+    - apps/core/tools/mcp-parity-lib.ts
+    - apps/core/tools/mcp-parity-python.py
+    - apps/core/tools/mcp-parity-staging.ts
+    - apps/core/tools/worker-tool-globals.d.ts
+    - apps/core/test/unit/mcp-parity-staging.test.ts
+    - apps/core/package.json
+    - apps/core/tsconfig.tools.json
+    - governance/evidence/WP-P0-001/mcp-parity-proof.md
+    - governance/evidence/WP-P0-001/mcp-parity-vectors.json
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
   last_green_checks:
     - pnpm packet:verify
     - 20/20 staging launch-pack quotes at 4,550,000 micros

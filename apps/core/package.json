@@ -8,6 +8,7 @@
     "build": "wrangler deploy --dry-run --env staging --outdir dist --x-provision=false --x-auto-create=false",
     "canary:single-image": "tsx tools/single-image-canary.ts",
     "launch-pack:harness": "tsx tools/launch-pack-harness.ts",
+    "mcp:parity:staging": "tsx tools/mcp-parity-staging.ts --staging",
     "openrouter:blind-eval": "tsx tools/openrouter-blind-eval.ts",
     "self-session:provision": "tsx tools/self-session-kit.ts",
     "lint": "eslint . --max-warnings 0",
