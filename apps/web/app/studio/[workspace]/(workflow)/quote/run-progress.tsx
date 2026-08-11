@@ -1,16 +1,20 @@
 'use client';
 
-import { Button, Card, Chip, MonoCaps } from '@mustbeviral/ui';
+import { Button, Card, Chip, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import {
   InMemoryRunPort,
+  WorkerRunPort,
   type RunAttemptState,
   type RunPort,
+  type RunReadPort,
   type RunPortResult,
   type RunSnapshot,
 } from '../../../../../src/features/run/run-port';
+import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
+import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './run-progress.module.css';
 
 const stateChip = {
@@ -19,6 +23,8 @@ const stateChip = {
   complete: { status: 'verified', label: 'Complete' },
   failed: { status: 'failed', label: 'Failed' },
   cancelled: { status: 'notes', label: 'Cancelled' },
+  skipped: { status: 'notes', label: 'Skipped' },
+  reconciliation: { status: 'failed', label: 'Reconciliation' },
 } as const satisfies Record<
   RunAttemptState,
   { status: 'queued' | 'running' | 'verified' | 'failed' | 'notes'; label: string }
@@ -33,6 +39,20 @@ export function RunResultNotice({ result }: Readonly<{ result: RunPortResult | n
       </div>
     );
   }
+  if (result.type === 'forbidden') {
+    return (
+      <div className={styles.runError} role="alert" data-result="forbidden">
+        Your session is not permitted to read or change this run.
+      </div>
+    );
+  }
+  if (result.type === 'error') {
+    return (
+      <div className={styles.runError} role="alert" data-result="error">
+        {result.message}
+      </div>
+    );
+  }
   return (
     <div className={styles.runError} role="alert" data-result="conflict">
       Run state changed to {result.actual_state}. Reload before issuing another command.
@@ -41,46 +61,89 @@ export function RunResultNotice({ result }: Readonly<{ result: RunPortResult | n
 }
 
 export function RunProgress({
+  dataMode = 'preview',
+  maximumChargeMicros,
   port: suppliedPort,
+  readPort: suppliedReadPort,
   runId = 'run-lumen-0007',
   scenario = 'normal',
   workspace,
 }: Readonly<{
   port?: RunPort;
+  readPort?: RunReadPort;
+  dataMode?: 'preview' | 'worker';
+  maximumChargeMicros?: bigint;
   runId?: string;
   scenario?: 'normal' | 'failed';
   workspace: string;
 }>) {
-  const [port] = useState(() => suppliedPort ?? new InMemoryRunPort(scenario));
-  const initial = port.read(runId);
+  const [previewPort] = useState<RunPort | null>(() =>
+    dataMode === 'preview' ? (suppliedPort ?? new InMemoryRunPort(scenario)) : null,
+  );
+  const [readPort] = useState<RunReadPort | null>(() => {
+    if (dataMode === 'preview') return null;
+    return (
+      suppliedReadPort ??
+      new WorkerRunPort(createBrowserCoreClient(), () => createMutationIdempotencyKey('cancel-run'))
+    );
+  });
+  const initial = previewPort?.read(runId) ?? null;
   const [snapshot, setSnapshot] = useState<RunSnapshot | null>(
-    initial.type === 'ok' ? initial.snapshot : null,
+    initial?.type === 'ok' ? initial.snapshot : null,
   );
   const [result, setResult] = useState<RunPortResult | null>(
-    initial.type === 'ok' ? null : initial,
+    initial === null || initial.type === 'ok' ? null : initial,
   );
 
-  useEffect(() => port.subscribe(setSnapshot), [port]);
+  useEffect(() => previewPort?.subscribe(setSnapshot), [previewPort]);
 
   useEffect(() => {
     if (
       snapshot === null ||
       snapshot.state === 'complete' ||
       snapshot.state === 'failed' ||
-      snapshot.state === 'cancelled'
+      snapshot.state === 'cancelled' ||
+      previewPort === null
     )
       return;
     const timer = window.setTimeout(() => {
-      const next = port.advance(snapshot.runId, snapshot.sequence);
+      const next = previewPort.advance(snapshot.runId, snapshot.sequence);
       setResult(next.type === 'ok' ? null : next);
       if (next.type === 'ok') setSnapshot(next.snapshot);
     }, 900);
     return () => window.clearTimeout(timer);
-  }, [port, snapshot]);
+  }, [previewPort, snapshot]);
 
-  function cancel() {
+  useEffect(() => {
+    if (
+      readPort === null ||
+      snapshot?.state === 'complete' ||
+      snapshot?.state === 'failed' ||
+      snapshot?.state === 'cancelled'
+    )
+      return;
+    let active = true;
+    async function poll() {
+      const next = await readPort?.read(runId);
+      if (!active || next === undefined) return;
+      setResult(next.type === 'ok' ? null : next);
+      if (next.type === 'ok') setSnapshot(next.snapshot);
+    }
+    void poll();
+    const timer = window.setInterval(() => void poll(), 1_000);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+    };
+  }, [readPort, runId, snapshot?.state]);
+
+  async function cancel() {
     if (snapshot === null) return;
-    const next = port.cancel(snapshot.runId, snapshot.sequence);
+    const next =
+      readPort === null
+        ? previewPort?.cancel(snapshot.runId, snapshot.sequence)
+        : await readPort.cancel(snapshot.runId);
+    if (next === undefined) return;
     setResult(next.type === 'ok' ? null : next);
     if (next.type === 'ok') setSnapshot(next.snapshot);
   }
@@ -89,6 +152,11 @@ export function RunProgress({
     return (
       <main id="main-content" className={styles.runPage}>
         <RunResultNotice result={result} />
+        {result === null ? (
+          <div className={styles.runError} role="status" data-result="loading">
+            Reading authoritative run progress from Core.
+          </div>
+        ) : null}
       </main>
     );
   }
@@ -115,7 +183,9 @@ export function RunProgress({
                   ? 'failed'
                   : snapshot.state === 'cancelled'
                     ? 'notes'
-                    : 'running'
+                    : snapshot.state === 'reconciliation_required'
+                      ? 'failed'
+                      : 'running'
             }
           >
             {snapshot.state === 'reviewable' ? 'Partial completion' : snapshot.state}
@@ -128,11 +198,22 @@ export function RunProgress({
               <strong>First reviewable output is ready.</strong> Review can begin without waiting
               for every branch.
             </span>
-            <Link href={`/studio/${workspace}/review/compare`}>Review available outputs</Link>
+            <Link
+              href={`/studio/${workspace}/review/compare?run=${encodeURIComponent(snapshot.runId)}`}
+            >
+              Review available outputs
+            </Link>
           </div>
         ) : null}
         <RunResultNotice result={result} />
         <div className={styles.attemptList}>
+          {snapshot.attempts.length === 0 ? (
+            <Card className={styles.attemptCard}>
+              <MonoCaps>Run queued</MonoCaps>
+              <strong>Waiting for the first dispatch wave</strong>
+              <span>Core has not exposed a runnable node yet.</span>
+            </Card>
+          ) : null}
           {snapshot.attempts.map((attempt, index) => {
             const chip = stateChip[attempt.state];
             return (
@@ -174,12 +255,20 @@ export function RunProgress({
           {completeCount} of {snapshot.attempts.length} branches complete
         </h2>
         <div className={styles.progressTrack}>
-          <span style={{ width: `${String((completeCount / snapshot.attempts.length) * 100)}%` }} />
+          <span
+            style={{
+              width: `${String(snapshot.attempts.length === 0 ? 0 : (completeCount / snapshot.attempts.length) * 100)}%`,
+            }}
+          />
         </div>
         <dl>
           <div>
             <dt>Reserved maximum</dt>
-            <dd>$4.20</dd>
+            <dd>
+              {maximumChargeMicros === undefined && dataMode === 'worker'
+                ? 'Pinned quote'
+                : formatUsdMicros(maximumChargeMicros ?? 4_200_000n)}
+            </dd>
           </div>
           <div>
             <dt>Partial value</dt>
@@ -199,7 +288,7 @@ export function RunProgress({
         {snapshot.state === 'complete' || snapshot.state === 'failed' ? (
           <Link
             className="mbv-button mbv-button--primary"
-            href={`/studio/${workspace}/review/compare`}
+            href={`/studio/${workspace}/review/compare?run=${encodeURIComponent(snapshot.runId)}`}
           >
             Open output review
           </Link>
@@ -208,13 +297,16 @@ export function RunProgress({
             Run cancelled. Completed outputs were retained.
           </span>
         ) : (
-          <Button variant="ghost" onClick={cancel}>
+          <Button variant="ghost" onClick={() => void cancel()}>
             Cancel run
           </Button>
         )}
       </div>
       <footer className={styles.footer}>
-        <MonoCaps>Attempt stream · deterministic fixture · us-east-1</MonoCaps>
+        <MonoCaps>
+          Attempt stream ·{' '}
+          {dataMode === 'preview' ? 'deterministic fixture' : 'authenticated Worker'} · us-east-1
+        </MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
     </main>

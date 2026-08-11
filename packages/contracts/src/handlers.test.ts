@@ -120,6 +120,18 @@ class MemoryPorts {
       },
       runs: {
         get: async (_context, runId) => this.runsById.get(runId) ?? null,
+        listNodes: async (_context, runId) =>
+          this.runsById.has(runId)
+            ? [
+                {
+                  runNodeId: 'run-node-1',
+                  nodeKey: 'image-1',
+                  modelRouteId: 'fal-image-route',
+                  status: 'succeeded',
+                  dispatchWave: 0,
+                },
+              ]
+            : [],
         startBarrier: async (_context, input) => {
           expect(input).toMatchObject({
             canvasId: 'canvas-1',
@@ -275,6 +287,15 @@ describe('command handler flows', () => {
     expect(await handlers.getRun({ context, run_id: started.run.runId })).toEqual({
       status: 'ok',
       run: started.run,
+      nodes: [
+        {
+          runNodeId: 'run-node-1',
+          nodeKey: 'image-1',
+          modelRouteId: 'fal-image-route',
+          status: 'succeeded',
+          dispatchWave: 0,
+        },
+      ],
     });
     const artifact = await handlers.registerArtifact({
       context,

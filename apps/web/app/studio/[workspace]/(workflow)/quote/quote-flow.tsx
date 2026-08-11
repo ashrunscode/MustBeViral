@@ -28,6 +28,7 @@ import {
 } from '../../../../../src/features/quote/quote-port';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
+import { WorkerRunStartPort, type RunStartPort } from '../../../../../src/features/run/run-port';
 import styles from './quote-flow.module.css';
 import { RunProgress } from './run-progress';
 
@@ -85,26 +86,44 @@ export function QuoteResultNotice({
       </div>
     );
   }
+  if (result.type === 'conflict') {
+    return (
+      <div
+        className={`${styles.notice} ${styles.noticeConflict}`}
+        role="alert"
+        data-result="conflict"
+      >
+        <span>
+          <strong>Canvas revision changed.</strong> Expected {result.expected_revision_id}; current
+          is {result.actual_revision_id}.
+        </span>
+        <Link
+          className="mbv-button mbv-button--ghost"
+          href={
+            canvasId === undefined
+              ? `/studio/${workspace}/canvas?state=conflict`
+              : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+          }
+        >
+          Open canvas recovery
+        </Link>
+      </div>
+    );
+  }
+  const message =
+    result.type === 'forbidden'
+      ? 'Your session is not permitted to start this run.'
+      : result.type === 'not_found'
+        ? `Quote ${result.quote_id} was not found.`
+        : result.message;
   return (
     <div
-      className={`${styles.notice} ${styles.noticeConflict}`}
+      className={`${styles.notice} ${styles.noticeError}`}
       role="alert"
-      data-result="conflict"
+      data-result={result.type}
     >
-      <span>
-        <strong>Canvas revision changed.</strong> Expected {result.expected_revision_id}; current is{' '}
-        {result.actual_revision_id}.
-      </span>
-      <Link
-        className="mbv-button mbv-button--ghost"
-        href={
-          canvasId === undefined
-            ? `/studio/${workspace}/canvas?state=conflict`
-            : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
-        }
-      >
-        Open canvas recovery
-      </Link>
+      <strong>Run was not started</strong>
+      <span>{message}</span>
     </div>
   );
 }
@@ -165,9 +184,11 @@ function QuoteLoadState({
 export function QuoteFlow({
   canvasId,
   dataMode = 'preview',
+  existingRunId,
   initialNowMs,
   port: suppliedPort,
   quotePort: suppliedQuotePort,
+  runStartPort: suppliedRunStartPort,
   revisionId,
   runScenario = 'normal',
   startInRunStage = false,
@@ -177,8 +198,10 @@ export function QuoteFlow({
   initialNowMs?: number;
   canvasId?: string;
   dataMode?: 'preview' | 'worker';
+  existingRunId?: string;
   port?: QuotePort;
   quotePort?: QuoteReadPort;
+  runStartPort?: RunStartPort;
   revisionId?: string;
   runScenario?: 'normal' | 'failed';
   startInRunStage?: boolean;
@@ -196,6 +219,15 @@ export function QuoteFlow({
     if (canvasId === undefined || canvasId.length === 0) return null;
     return new WorkerQuotePort(createBrowserCoreClient(), canvasId, revisionId, () =>
       createMutationIdempotencyKey('quote-run'),
+    );
+  });
+  const [runStartPort] = useState<RunStartPort | null>(() => {
+    if (dataMode === 'preview') return previewPort;
+    return (
+      suppliedRunStartPort ??
+      new WorkerRunStartPort(createBrowserCoreClient(), () =>
+        createMutationIdempotencyKey('start-run'),
+      )
     );
   });
   const [quote, setQuote] = useState<RunQuote | null>(
@@ -249,7 +281,14 @@ export function QuoteFlow({
   }, [startInRunStage]);
 
   if (startInRunStage) {
-    return <RunProgress workspace={workspace} scenario={runScenario} />;
+    return (
+      <RunProgress
+        dataMode={dataMode}
+        workspace={workspace}
+        runId={existingRunId ?? 'run-lumen-0007'}
+        scenario={runScenario}
+      />
+    );
   }
 
   if (quote === null) {
@@ -267,7 +306,7 @@ export function QuoteFlow({
   const confirmEnabled =
     canConfirmQuote({ acknowledged, expiresAtMs: quote.expiresAtMs, nowMs, pending }) &&
     !expired &&
-    previewPort !== null;
+    runStartPort !== null;
   const total = formatUsdMicros(quote.totalMicros);
   const feedback = pending
     ? 'loading'
@@ -278,14 +317,22 @@ export function QuoteFlow({
         : 'error';
 
   if (result?.type === 'ok') {
-    return <RunProgress workspace={workspace} runId={result.runId} scenario={runScenario} />;
+    return (
+      <RunProgress
+        dataMode={dataMode}
+        workspace={workspace}
+        runId={result.runId}
+        scenario={runScenario}
+        maximumChargeMicros={result.acceptedMaximumMicros}
+      />
+    );
   }
 
   async function confirmRun() {
     if (!confirmEnabled || quote === null) return;
     setPending(true);
-    if (previewPort === null) return;
-    const next = await previewPort.confirm({ quote, acknowledged, nowMs });
+    if (runStartPort === null) return;
+    const next = await runStartPort.confirm({ quote, acknowledged, nowMs });
     setResult(next);
     setPending(false);
   }

@@ -231,6 +231,44 @@ describe('P0 /v1 route boundary', () => {
     });
   });
 
+  it('preserves exact quote-expiry and cap micros required by the consent screen', async () => {
+    const expiredApp = createCoreApp(
+      dependencies({
+        handlers: handlersWith('start_run', {
+          status: 'expired_quote',
+          quoteId: 'quote-expired',
+          expiredAt: '2026-08-11T12:15:00.000Z',
+        }),
+      }),
+    );
+    const expiredResponse = await requestRoute(expiredApp, 'start_run');
+    expect(ApiErrorEnvelopeSchema.parse(await expiredResponse.json()).error.details).toEqual({
+      quote_id: 'quote-expired',
+      expired_at: '2026-08-11T12:15:00.000Z',
+    });
+
+    const capApp = createCoreApp(
+      dependencies({
+        handlers: handlersWith('start_run', {
+          status: 'cap_exceeded',
+          tier: 'workspace_day',
+          capMicros: 25_000_000n,
+          currentExposureMicros: 24_000_000n,
+          requestedMicros: 4_550_000n,
+          projectedMicros: 28_550_000n,
+        }),
+      }),
+    );
+    const capResponse = await requestRoute(capApp, 'start_run');
+    expect(ApiErrorEnvelopeSchema.parse(await capResponse.json()).error.details).toEqual({
+      tier: 'workspace_day',
+      cap_micros: '25000000',
+      current_exposure_micros: '24000000',
+      requested_micros: '4550000',
+      projected_micros: '28550000',
+    });
+  });
+
   it('passes canonical inputs and idempotency keys for replay and mismatch detection', async () => {
     let executions = 0;
     const records = new Map<string, { fingerprint: string; result: P0HandlerResult }>();

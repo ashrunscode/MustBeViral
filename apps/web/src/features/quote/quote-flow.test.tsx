@@ -34,6 +34,17 @@ describe('QuoteResultNotice result-union rendering', () => {
       'data-result="conflict"',
       'Open canvas recovery',
     ],
+    [{ type: 'forbidden' }, 'data-result="forbidden"', 'Run was not started'],
+    [
+      { type: 'not_found', quote_id: 'quote-missing' },
+      'data-result="not_found"',
+      'Quote quote-missing was not found',
+    ],
+    [
+      { type: 'error', message: 'Core unavailable', retryable: true },
+      'data-result="error"',
+      'Core unavailable',
+    ],
   ] satisfies ReadonlyArray<readonly [QuoteConfirmResult, string, string]>)(
     'renders the $result.type branch',
     (result, marker, text) => {

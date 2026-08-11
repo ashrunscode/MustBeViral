@@ -21,6 +21,11 @@ describe('RunProgress', () => {
   it.each([
     [{ type: 'conflict', actual_state: 'reviewable' } as const, 'data-result="conflict"'],
     [{ type: 'not_found', run_id: 'missing' } as const, 'data-result="not_found"'],
+    [{ type: 'forbidden' } as const, 'data-result="forbidden"'],
+    [
+      { type: 'error', message: 'Core unavailable', retryable: true } as const,
+      'data-result="error"',
+    ],
   ])('renders result branch', (result, marker) => {
     expect(renderToStaticMarkup(<RunResultNotice result={result} />)).toContain(marker);
   });

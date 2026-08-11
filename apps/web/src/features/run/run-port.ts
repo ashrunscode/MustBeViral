@@ -1,4 +1,9 @@
-export type RunAttemptState = 'queued' | 'running' | 'complete' | 'failed' | 'cancelled';
+import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
+
+import { quoteIsExpired, type QuoteConfirmResult, type RunQuote } from '../quote/quote-port';
+
+export type RunAttemptState =
+  'queued' | 'running' | 'complete' | 'failed' | 'cancelled' | 'skipped' | 'reconciliation';
 
 export interface RunAttempt {
   readonly id: string;
@@ -8,7 +13,8 @@ export interface RunAttempt {
   readonly detail: string;
 }
 
-export type RunState = 'running' | 'reviewable' | 'complete' | 'failed' | 'cancelled';
+export type RunState =
+  'running' | 'reviewable' | 'complete' | 'failed' | 'cancelled' | 'reconciliation_required';
 
 export interface RunSnapshot {
   readonly runId: string;
@@ -22,13 +28,253 @@ export interface RunSnapshot {
 export type RunPortResult =
   | { readonly type: 'ok'; readonly snapshot: RunSnapshot }
   | { readonly type: 'conflict'; readonly actual_state: RunState }
-  | { readonly type: 'not_found'; readonly run_id: string };
+  | { readonly type: 'not_found'; readonly run_id: string }
+  | { readonly type: 'forbidden' }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
+    };
+
+export interface RunStartPort {
+  confirm(
+    input: Readonly<{ quote: RunQuote; acknowledged: boolean; nowMs: number }>,
+  ): Promise<QuoteConfirmResult>;
+}
+
+export interface RunReadPort {
+  read(runId: string): Promise<RunPortResult>;
+  cancel(runId: string): Promise<RunPortResult>;
+}
 
 export interface RunPort {
   read(runId: string): RunPortResult;
   advance(runId: string, expectedSequence: number): RunPortResult;
   cancel(runId: string, expectedSequence: number): RunPortResult;
   subscribe(listener: (snapshot: RunSnapshot) => void): () => void;
+}
+
+function detailString(details: Readonly<Record<string, unknown>> | undefined, key: string) {
+  const value = details?.[key];
+  return typeof value === 'string' && value.length > 0 ? value : undefined;
+}
+
+function detailMicros(
+  details: Readonly<Record<string, unknown>> | undefined,
+  key: string,
+  fallback: bigint,
+) {
+  const value = detailString(details, key);
+  return value !== undefined && /^\d+$/u.test(value) ? BigInt(value) : fallback;
+}
+
+export class WorkerRunStartPort implements RunStartPort {
+  readonly #idempotencyKeys = new Map<string, string>();
+
+  constructor(
+    private readonly client: MustBeViralRestClient,
+    private readonly createIdempotencyKey: () => string,
+  ) {}
+
+  async confirm(
+    input: Readonly<{ quote: RunQuote; acknowledged: boolean; nowMs: number }>,
+  ): Promise<QuoteConfirmResult> {
+    if (!input.acknowledged) throw new Error('Explicit quote acknowledgment is required.');
+    if (quoteIsExpired(input.quote.expiresAtMs, input.nowMs)) {
+      return { type: 'expired_quote', expiredAtMs: input.quote.expiresAtMs };
+    }
+    try {
+      const result = await this.client.request('start_run', {
+        id: input.quote.id,
+        idempotencyKey: this.#idempotencyKey(input.quote.id),
+        body: { confirmed: true, confirmation_token: input.quote.confirmationToken },
+      });
+      if ('error' in result) {
+        const { error } = result;
+        if (error.code === 'QUOTE_EXPIRED') {
+          const expiredAt = detailString(error.details, 'expired_at');
+          return {
+            type: 'expired_quote',
+            expiredAtMs: expiredAt === undefined ? input.quote.expiresAtMs : Date.parse(expiredAt),
+          };
+        }
+        if (error.code === 'BUDGET_EXCEEDED' || error.code === 'INSUFFICIENT_BALANCE') {
+          return {
+            type: 'cap_exceeded',
+            capMicros: detailMicros(
+              error.details,
+              error.code === 'INSUFFICIENT_BALANCE' ? 'available_micros' : 'cap_micros',
+              input.quote.runCapMicros,
+            ),
+            attemptedMicros: detailMicros(
+              error.details,
+              'requested_micros',
+              input.quote.totalMicros,
+            ),
+            explanation:
+              'The authoritative reservation caps changed after this quote. No provider work was submitted and no spend was accepted.',
+          };
+        }
+        if (
+          error.code === 'QUOTE_STALE' ||
+          error.code === 'REVISION_CONFLICT' ||
+          error.code === 'IDEMPOTENCY_CONFLICT'
+        ) {
+          return {
+            type: 'conflict',
+            expected_revision_id: input.quote.revision,
+            actual_revision_id: detailString(error.details, 'actual') ?? 'current revision',
+          };
+        }
+        if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
+        if (error.code === 'NOT_FOUND') return { type: 'not_found', quote_id: input.quote.id };
+        return {
+          type: 'error',
+          message: error.message,
+          retryable: error.retryable,
+          request_id: error.request_id,
+        };
+      }
+      return {
+        type: 'ok',
+        runId: result.data.run.runId,
+        acceptedMaximumMicros: input.quote.totalMicros,
+      };
+    } catch {
+      return {
+        type: 'error',
+        message: 'Core could not start this run.',
+        retryable: true,
+      };
+    }
+  }
+
+  #idempotencyKey(quoteId: string): string {
+    const existing = this.#idempotencyKeys.get(quoteId);
+    if (existing !== undefined) return existing;
+    const created = this.createIdempotencyKey();
+    this.#idempotencyKeys.set(quoteId, created);
+    return created;
+  }
+}
+
+function runAttemptState(status: P0OperationData<'get_run'>['nodes'][number]['status']) {
+  if (status === 'succeeded') return 'complete' as const;
+  if (status === 'failed') return 'failed' as const;
+  if (status === 'canceled') return 'cancelled' as const;
+  if (status === 'skipped') return 'skipped' as const;
+  if (status === 'reconciliation_required') return 'reconciliation' as const;
+  if (status === 'running') return 'running' as const;
+  return 'queued' as const;
+}
+
+function runState(data: P0OperationData<'get_run'>): RunState {
+  if (data.run.status === 'succeeded') return 'complete';
+  if (data.run.status === 'failed') return 'failed';
+  if (data.run.status === 'canceled') return 'cancelled';
+  if (data.run.status === 'reconciliation_required') return 'reconciliation_required';
+  if (
+    data.run.status === 'partial_succeeded' ||
+    data.nodes.some((node) => node.status === 'succeeded')
+  ) {
+    return 'reviewable';
+  }
+  return 'running';
+}
+
+function visibleRunState(status: string): RunState {
+  if (status === 'succeeded') return 'complete';
+  if (status === 'failed') return 'failed';
+  if (status === 'canceled') return 'cancelled';
+  if (status === 'partial_succeeded') return 'reviewable';
+  if (status === 'reconciliation_required') return 'reconciliation_required';
+  return 'running';
+}
+
+function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {
+  const attempts = data.nodes.map((node) => ({
+    id: node.runNodeId,
+    node: node.nodeKey,
+    provider: node.modelRouteId ?? 'Core route',
+    state: runAttemptState(node.status),
+    detail: `Dispatch wave ${String(node.dispatchWave)} · ${node.status.replaceAll('_', ' ')}`,
+  }));
+  return {
+    runId: data.run.runId,
+    revision: data.run.canvasRevisionId,
+    sequence: 0,
+    state: runState(data),
+    firstReviewable: attempts.some((attempt) => attempt.state === 'complete'),
+    attempts,
+  };
+}
+
+export class WorkerRunPort implements RunReadPort {
+  readonly #cancelIdempotencyKeys = new Map<string, string>();
+
+  constructor(
+    private readonly client: MustBeViralRestClient,
+    private readonly createIdempotencyKey: () => string,
+  ) {}
+
+  async read(runId: string): Promise<RunPortResult> {
+    try {
+      const result = await this.client.request('get_run', { id: runId });
+      if ('error' in result) return this.#mapError(result.error, runId);
+      return { type: 'ok', snapshot: runSnapshot(result.data) };
+    } catch {
+      return { type: 'error', message: 'Core could not read this run.', retryable: true };
+    }
+  }
+
+  async cancel(runId: string): Promise<RunPortResult> {
+    try {
+      const result = await this.client.request('cancel_run', {
+        id: runId,
+        idempotencyKey: this.#cancelIdempotencyKey(runId),
+        body: { reason: 'Canceled from Studio run progress' },
+      });
+      if ('error' in result) return this.#mapError(result.error, runId);
+      return this.read(runId);
+    } catch {
+      return { type: 'error', message: 'Core could not cancel this run.', retryable: true };
+    }
+  }
+
+  #mapError(
+    error: Readonly<{
+      code: string;
+      message: string;
+      request_id: string;
+      retryable: boolean;
+      details?: Readonly<Record<string, unknown>> | undefined;
+    }>,
+    runId: string,
+  ): RunPortResult {
+    if (error.code === 'NOT_FOUND') return { type: 'not_found', run_id: runId };
+    if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
+    if (error.code === 'RUN_NOT_CANCELABLE') {
+      return {
+        type: 'conflict',
+        actual_state: visibleRunState(detailString(error.details, 'actual') ?? 'running'),
+      };
+    }
+    return {
+      type: 'error',
+      message: error.message,
+      retryable: error.retryable,
+      request_id: error.request_id,
+    };
+  }
+
+  #cancelIdempotencyKey(runId: string): string {
+    const existing = this.#cancelIdempotencyKeys.get(runId);
+    if (existing !== undefined) return existing;
+    const created = this.createIdempotencyKey();
+    this.#cancelIdempotencyKeys.set(runId, created);
+    return created;
+  }
 }
 
 const fixtureFrames = [

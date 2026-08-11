@@ -31,6 +31,13 @@ const run = {
   status: 'succeeded' as const,
   reservationId: 'reservation-1',
 };
+const runNode = {
+  runNodeId: 'run-node-1',
+  nodeKey: 'node-1',
+  modelRouteId: 'route-1',
+  status: 'succeeded' as const,
+  dispatchWave: 0,
+};
 const project = {
   brand_kit_id: null,
   brief_id: null,
@@ -143,7 +150,7 @@ const successData = {
     },
   },
   start_run: { run },
-  get_run: { run },
+  get_run: { run, nodes: [runNode] },
   cancel_run: { runId: 'run-1', cancellation: 'accepted' },
   create_artifact_upload: {
     artifact_id: 'artifact-1',

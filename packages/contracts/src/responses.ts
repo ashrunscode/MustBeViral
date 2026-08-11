@@ -1,5 +1,5 @@
 import { modelPriceUnits } from '@mustbeviral/billing';
-import { runStates } from '@mustbeviral/domain';
+import { runNodeStates, runStates } from '@mustbeviral/domain';
 import type { GraphSnapshot } from '@mustbeviral/graph';
 import { z } from 'zod';
 
@@ -71,6 +71,16 @@ export const RunRecordSchema = z
     quoteId: IdentifierSchema,
     status: z.enum(runStates),
     reservationId: IdentifierSchema,
+  })
+  .strict();
+
+export const RunNodeRecordSchema = z
+  .object({
+    runNodeId: IdentifierSchema,
+    nodeKey: IdentifierSchema,
+    modelRouteId: IdentifierSchema.nullable(),
+    status: z.enum(runNodeStates),
+    dispatchWave: z.number().int().nonnegative(),
   })
   .strict();
 
@@ -236,7 +246,9 @@ export const StartRunResultSchema = z.union([
 ]);
 
 export const GetRunResultSchema = z.union([
-  z.object({ status: z.literal('ok'), run: RunRecordSchema }).strict(),
+  z
+    .object({ status: z.literal('ok'), run: RunRecordSchema, nodes: z.array(RunNodeRecordSchema) })
+    .strict(),
   ForbiddenResultSchema,
   NotFoundResultSchema,
 ]);

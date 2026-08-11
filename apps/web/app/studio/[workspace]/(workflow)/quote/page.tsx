@@ -30,11 +30,12 @@ export default async function QuotePage({
   return (
     <QuoteFlow
       {...(query.canvas === undefined ? {} : { canvasId: query.canvas })}
+      {...(!preview && query.run !== undefined ? { existingRunId: query.run } : {})}
       {...(query.revision === undefined ? {} : { revisionId: query.revision })}
       dataMode={preview ? 'preview' : 'worker'}
       workspace={workspace}
       scenario={scenario}
-      startInRunStage={preview && query.stage === 'run'}
+      startInRunStage={preview ? query.stage === 'run' : query.run !== undefined}
       runScenario={preview && query.run === 'failed' ? 'failed' : 'normal'}
     />
   );

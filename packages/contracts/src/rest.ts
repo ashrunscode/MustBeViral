@@ -240,7 +240,14 @@ export type P0HandlerResult = Readonly<{
   reason?: 'revision' | 'run_state' | 'quote_stale' | 'idempotency' | 'approval';
   actual?: string;
   issues?: readonly GraphValidationIssue[];
+  quoteId?: string;
+  expiredAt?: string;
   tier?: string;
+  capMicros?: bigint;
+  currentExposureMicros?: bigint;
+  requestedMicros?: bigint;
+  projectedMicros?: bigint;
+  availableMicros?: bigint;
   retry_after_seconds?: number;
   reconcile_state?: string;
 }>;

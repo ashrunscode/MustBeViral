@@ -336,6 +336,7 @@ export function createInMemoryHarnessTransport(
     },
     runs: {
       get: async (_context, runId) => runs.get(runId) ?? null,
+      listNodes: async () => [],
       startBarrier: async (context, input) => {
         if (options.providerResult !== 'succeeded') {
           throw new ProviderUnavailableError('Provider-backed execution is not enabled');

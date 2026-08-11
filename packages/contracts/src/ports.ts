@@ -6,7 +6,7 @@ import type {
   SpendCaps,
   UsdMicros,
 } from '@mustbeviral/billing';
-import type { RunState } from '@mustbeviral/domain';
+import type { RunNodeState, RunState } from '@mustbeviral/domain';
 import type { GraphSnapshot, GraphValidationIssue } from '@mustbeviral/graph';
 import type { HandlerContext } from './commands';
 
@@ -38,6 +38,14 @@ export interface RunRecord {
   readonly quoteId: string;
   readonly status: RunState;
   readonly reservationId: string;
+}
+
+export interface RunNodeRecord {
+  readonly runNodeId: string;
+  readonly nodeKey: string;
+  readonly modelRouteId: string | null;
+  readonly status: RunNodeState;
+  readonly dispatchWave: number;
 }
 
 export interface ArtifactRecord {
@@ -163,6 +171,7 @@ export interface StartRunBarrierResult {
 
 export interface RunPort {
   get(context: HandlerContext, runId: string): Promise<RunRecord | null>;
+  listNodes(context: HandlerContext, runId: string): Promise<readonly RunNodeRecord[]>;
   startBarrier(
     context: HandlerContext,
     input: StartRunBarrierInput,

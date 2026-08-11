@@ -56,6 +56,14 @@ export type QuoteConfirmResult =
       readonly type: 'conflict';
       readonly expected_revision_id: string;
       readonly actual_revision_id: string;
+    }
+  | { readonly type: 'forbidden' }
+  | { readonly type: 'not_found'; readonly quote_id: string }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
     };
 
 export interface QuotePort {
@@ -66,7 +74,7 @@ export interface QuotePort {
   requote(nowMs?: number): Promise<RunQuote>;
 }
 
-export type QuotePortScenario = QuoteConfirmResult['type'];
+export type QuotePortScenario = 'ok' | 'expired_quote' | 'cap_exceeded' | 'conflict';
 
 const FIFTEEN_MINUTES_MS = 15 * 60 * 1000;
 

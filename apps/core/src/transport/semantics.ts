@@ -71,11 +71,34 @@ export function p0ResultSemantics(result: P0HandlerResult): P0SemanticResult {
         message: 'The referenced quote has expired.',
         retryable: false,
         httpStatus: 409,
+        ...(result.quoteId === undefined || result.expiredAt === undefined
+          ? {}
+          : { details: { quote_id: result.quoteId, expired_at: result.expiredAt } }),
       },
     };
   }
   if (result.status === 'cap_exceeded') {
     const balance = result.tier === 'available_balance';
+    const details = balance
+      ? result.availableMicros === undefined || result.requestedMicros === undefined
+        ? undefined
+        : {
+            tier: result.tier,
+            available_micros: result.availableMicros.toString(10),
+            requested_micros: result.requestedMicros.toString(10),
+          }
+      : result.capMicros === undefined ||
+          result.currentExposureMicros === undefined ||
+          result.requestedMicros === undefined ||
+          result.projectedMicros === undefined
+        ? undefined
+        : {
+            tier: result.tier,
+            cap_micros: result.capMicros.toString(10),
+            current_exposure_micros: result.currentExposureMicros.toString(10),
+            requested_micros: result.requestedMicros.toString(10),
+            projected_micros: result.projectedMicros.toString(10),
+          };
     return {
       ok: false,
       error: {
@@ -85,6 +108,7 @@ export function p0ResultSemantics(result: P0HandlerResult): P0SemanticResult {
           : 'The configured budget cap was exceeded.',
         retryable: false,
         httpStatus: balance ? 402 : 409,
+        ...(details === undefined ? {} : { details }),
       },
     };
   }

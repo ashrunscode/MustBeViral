@@ -12,6 +12,7 @@ import {
   type P0RestHandlers,
   type P0ResourcePort,
   type RunRecord,
+  type RunNodeRecord,
   type StoredQuote,
 } from '@mustbeviral/contracts';
 import {
@@ -326,6 +327,32 @@ function runRecord(row: Readonly<Record<string, unknown>>, reservationId = ''): 
     quoteId: requiredString(row.quote_id, 'run.quote_id'),
     status: status as RunRecord['status'],
     reservationId,
+  };
+}
+
+const RUN_NODE_STATES = new Set([
+  'pending',
+  'ready',
+  'queued',
+  'running',
+  'succeeded',
+  'failed',
+  'canceled',
+  'skipped',
+  'reconciliation_required',
+]);
+
+function runNodeRecord(row: Readonly<DatabaseRow<'run_nodes'>>): RunNodeRecord {
+  const status = requiredString(row.status, 'run_node.status');
+  if (!RUN_NODE_STATES.has(status)) {
+    throw new TypeError('Database returned an unsupported run-node state');
+  }
+  return {
+    runNodeId: row.id,
+    nodeKey: row.node_key,
+    modelRouteId: row.model_route_id,
+    status: status as RunNodeRecord['status'],
+    dispatchWave: row.dispatch_wave,
   };
 }
 
@@ -783,6 +810,11 @@ export function createSupabaseHandlerPorts(
         if (row === null) return null;
         const reservation = await repositories.billing.getReservationForRun(tenant, runId);
         return runRecord(row, reservation?.id);
+      },
+      async listNodes(context, runId) {
+        return (await repositories.runs.listNodes(asTenantContext(context), runId)).map(
+          runNodeRecord,
+        );
       },
       async startBarrier(context, input) {
         return repositories.runs.startBarrier(asTenantContext(context), {

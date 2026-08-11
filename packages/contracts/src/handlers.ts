@@ -32,6 +32,7 @@ import type {
   HandlerPorts,
   OperationName,
   RunRecord,
+  RunNodeRecord,
 } from './ports';
 
 export interface ForbiddenResult {
@@ -116,7 +117,8 @@ export type StartRunResult =
   | CapExceededResult
   | InsufficientBalanceResult;
 
-export type GetRunResult = Readonly<{ status: 'ok'; run: RunRecord }> | AccessFailure;
+export type GetRunResult =
+  Readonly<{ status: 'ok'; run: RunRecord; nodes: readonly RunNodeRecord[] }> | AccessFailure;
 export type GetCanvasContextResult =
   Readonly<{ status: 'ok'; canvas: CanvasContextRecord }> | AccessFailure;
 export type CancelRunResult =
@@ -523,8 +525,9 @@ export function createCommandHandlers(ports: HandlerPorts) {
         await audit(ports, query.context, 'get_run', 'not_found', 'run', query.run_id);
         return { status: 'not_found' };
       }
+      const nodes = await ports.runs.listNodes(query.context, query.run_id);
       await audit(ports, query.context, 'get_run', 'ok', 'run', query.run_id);
-      return { status: 'ok', run };
+      return { status: 'ok', run, nodes };
     },
 
     async getCanvasContext(input: unknown): Promise<GetCanvasContextResult> {
