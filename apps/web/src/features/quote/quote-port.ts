@@ -1,3 +1,5 @@
+import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
+
 export interface QuoteLineItem {
   readonly id: string;
   readonly node: string;
@@ -16,6 +18,29 @@ export interface RunQuote {
   readonly runCapMicros: bigint;
   readonly workspaceDayCapMicros: bigint;
   readonly workspaceDayUsedMicros: bigint;
+  readonly confirmationToken: string;
+}
+
+export type QuoteReadResult =
+  | { readonly type: 'ok'; readonly quote: RunQuote }
+  | {
+      readonly type: 'conflict';
+      readonly expected_revision_id: string;
+      readonly actual_revision_id: string;
+    }
+  | { readonly type: 'graph_invalid'; readonly message: string }
+  | { readonly type: 'forbidden' }
+  | { readonly type: 'not_found'; readonly canvas_id: string }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
+    };
+
+export interface QuoteReadPort {
+  read(): Promise<QuoteReadResult>;
+  requote(): Promise<QuoteReadResult>;
 }
 
 export type QuoteConfirmResult =
@@ -70,7 +95,114 @@ export function createGoldenQuote(nowMs = Date.now()): RunQuote {
     runCapMicros: 8_000_000n,
     workspaceDayCapMicros: 100_000_000n,
     workspaceDayUsedMicros: 18_420_000n,
+    confirmationToken: 'fixture-confirmation-token',
   };
+}
+
+function detailString(details: Readonly<Record<string, unknown>> | undefined, key: string) {
+  const value = details?.[key];
+  return typeof value === 'string' && value.length > 0 ? value : undefined;
+}
+
+function quoteFromData(data: P0OperationData<'quote_run'>): RunQuote {
+  const route = [
+    ...new Set(data.quote.nodeLines.map(({ providerModelId }) => providerModelId)),
+  ].join(' + ');
+  return {
+    id: data.quote.quoteId,
+    revision: data.quote.canvasRevisionId,
+    route,
+    createdAtMs: Date.parse(data.quote.createdAt),
+    expiresAtMs: Date.parse(data.quote.expiresAt),
+    lineItems: data.quote.nodeLines.map((line) => ({
+      id: line.nodeId,
+      node: line.nodeId,
+      basis: line.priceComponents
+        .map((component) => `${component.quantity} ${component.unit.replaceAll('_', ' ')}`)
+        .join(' + '),
+      amountMicros: BigInt(line.totalMicros),
+    })),
+    totalMicros: BigInt(data.quote.maximumChargeMicros),
+    runCapMicros: BigInt(data.spend.runCapMicros),
+    workspaceDayCapMicros: BigInt(data.spend.workspaceDayCapMicros),
+    workspaceDayUsedMicros: BigInt(data.spend.workspaceDayExposureMicros),
+    confirmationToken: data.confirmationToken,
+  };
+}
+
+export class WorkerQuotePort implements QuoteReadPort {
+  #pending: Promise<QuoteReadResult> | null = null;
+
+  constructor(
+    private readonly client: MustBeViralRestClient,
+    private readonly canvasId: string,
+    private readonly expectedRevisionId: string | undefined,
+    private readonly createIdempotencyKey: () => string,
+  ) {}
+
+  read(): Promise<QuoteReadResult> {
+    this.#pending ??= this.#createQuote();
+    return this.#pending;
+  }
+
+  requote(): Promise<QuoteReadResult> {
+    this.#pending = this.#createQuote();
+    return this.#pending;
+  }
+
+  async #createQuote(): Promise<QuoteReadResult> {
+    try {
+      let revision = this.expectedRevisionId;
+      if (revision === undefined) {
+        const context = await this.client.request('get_canvas_context', { id: this.canvasId });
+        if ('error' in context) return this.#mapError(context.error, 'unknown revision');
+        revision = context.data.canvas.headRevisionId;
+      }
+      const result = await this.client.request('quote_run', {
+        id: this.canvasId,
+        idempotencyKey: this.createIdempotencyKey(),
+        body: { expected_revision_id: revision },
+      });
+      if ('error' in result) return this.#mapError(result.error, revision);
+      return { type: 'ok', quote: quoteFromData(result.data) };
+    } catch {
+      return {
+        type: 'error',
+        message: 'Core could not create a quote for this canvas.',
+        retryable: true,
+      };
+    }
+  }
+
+  #mapError(
+    error: Readonly<{
+      code: string;
+      message: string;
+      request_id: string;
+      retryable: boolean;
+      details?: Readonly<Record<string, unknown>> | undefined;
+    }>,
+    expectedRevisionId: string,
+  ): QuoteReadResult {
+    if (error.code === 'REVISION_CONFLICT') {
+      return {
+        type: 'conflict',
+        expected_revision_id: expectedRevisionId,
+        actual_revision_id: detailString(error.details, 'actual') ?? 'current revision',
+      };
+    }
+    if (error.code === 'GRAPH_INVALID') {
+      return { type: 'graph_invalid', message: error.message };
+    }
+    if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
+    if (error.code === 'NOT_FOUND') return { type: 'not_found', canvas_id: this.canvasId };
+    return {
+      type: 'error',
+      message: error.message,
+      retryable: error.retryable,
+      request_id: error.request_id,
+    };
+  }
 }
 
 export function quoteSecondsRemaining(expiresAtMs: number, nowMs: number): number {

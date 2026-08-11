@@ -14,23 +14,31 @@ import { useEffect, useState } from 'react';
 
 import {
   InMemoryQuotePort,
+  WorkerQuotePort,
   canConfirmQuote,
   formatQuoteCountdown,
   quoteIsExpired,
   quoteSecondsRemaining,
   type QuoteConfirmResult,
   type QuotePort,
+  type QuoteReadPort,
+  type QuoteReadResult,
   type QuotePortScenario,
+  type RunQuote,
 } from '../../../../../src/features/quote/quote-port';
+import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
+import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './quote-flow.module.css';
 import { RunProgress } from './run-progress';
 
 export function QuoteResultNotice({
+  canvasId,
   onRequote,
   result,
   workspace,
 }: Readonly<{
   onRequote?: () => void;
+  canvasId?: string;
   result: QuoteConfirmResult | null;
   workspace: string;
 }>) {
@@ -89,7 +97,11 @@ export function QuoteResultNotice({
       </span>
       <Link
         className="mbv-button mbv-button--ghost"
-        href={`/studio/${workspace}/canvas?state=conflict`}
+        href={
+          canvasId === undefined
+            ? `/studio/${workspace}/canvas?state=conflict`
+            : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+        }
       >
         Open canvas recovery
       </Link>
@@ -97,47 +109,138 @@ export function QuoteResultNotice({
   );
 }
 
+function QuoteLoadState({
+  canvasId,
+  result,
+  workspace,
+}: Readonly<{
+  canvasId?: string;
+  result: Exclude<QuoteReadResult, { type: 'ok' }> | null;
+  workspace: string;
+}>) {
+  const message =
+    result === null
+      ? 'Reading the pinned canvas revision and calculating its named maximum price.'
+      : result.type === 'conflict'
+        ? `Expected ${result.expected_revision_id}; current is ${result.actual_revision_id}.`
+        : result.type === 'graph_invalid'
+          ? result.message
+          : result.type === 'forbidden'
+            ? 'You do not have permission to quote this canvas.'
+            : result.type === 'not_found'
+              ? `Canvas ${result.canvas_id} was not found.`
+              : result.message;
+  return (
+    <main id="main-content" className={styles.quotePage}>
+      <section className={styles.quoteStage} aria-labelledby="quote-title">
+        <Card className={styles.quoteCard} feedback={result === null ? 'loading' : 'error'}>
+          <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
+          <h1 id="quote-title">Review this run before spending</h1>
+          <div
+            className={`${styles.notice} ${result === null ? '' : styles.noticeError}`}
+            role={result === null ? 'status' : 'alert'}
+            data-result={result?.type ?? 'loading'}
+          >
+            <strong>{result === null ? 'Calculating quote' : 'Quote unavailable'}</strong>
+            <span>{message}</span>
+            {result?.type === 'conflict' ? (
+              <Link
+                className="mbv-button mbv-button--ghost"
+                href={
+                  canvasId === undefined
+                    ? `/studio/${workspace}/canvas`
+                    : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+                }
+              >
+                Open canvas recovery
+              </Link>
+            ) : null}
+          </div>
+        </Card>
+      </section>
+    </main>
+  );
+}
+
 export function QuoteFlow({
+  canvasId,
+  dataMode = 'preview',
   initialNowMs,
   port: suppliedPort,
+  quotePort: suppliedQuotePort,
+  revisionId,
   runScenario = 'normal',
   startInRunStage = false,
   scenario = 'ok',
   workspace,
 }: Readonly<{
   initialNowMs?: number;
+  canvasId?: string;
+  dataMode?: 'preview' | 'worker';
   port?: QuotePort;
+  quotePort?: QuoteReadPort;
+  revisionId?: string;
   runScenario?: 'normal' | 'failed';
   startInRunStage?: boolean;
   scenario?: QuotePortScenario;
   workspace: string;
 }>) {
-  const [port] = useState(
-    () =>
-      suppliedPort ??
-      new InMemoryQuotePort({
-        scenario,
-        nowMs: initialNowMs ?? 0,
-      }),
+  const [previewPort] = useState<QuotePort | null>(() =>
+    dataMode === 'preview'
+      ? (suppliedPort ?? new InMemoryQuotePort({ scenario, nowMs: initialNowMs ?? 0 }))
+      : null,
   );
-  const [quote, setQuote] = useState(() => port.read(initialNowMs));
-  const [nowMs, setNowMs] = useState(initialNowMs ?? quote.createdAtMs);
+  const [quotePort] = useState<QuoteReadPort | null>(() => {
+    if (dataMode === 'preview') return null;
+    if (suppliedQuotePort !== undefined) return suppliedQuotePort;
+    if (canvasId === undefined || canvasId.length === 0) return null;
+    return new WorkerQuotePort(createBrowserCoreClient(), canvasId, revisionId, () =>
+      createMutationIdempotencyKey('quote-run'),
+    );
+  });
+  const [quote, setQuote] = useState<RunQuote | null>(
+    () => previewPort?.read(initialNowMs) ?? null,
+  );
+  const [loadResult, setLoadResult] = useState<Exclude<QuoteReadResult, { type: 'ok' }> | null>(
+    () =>
+      dataMode === 'worker' && quotePort === null
+        ? {
+            type: 'error',
+            message: 'Open this quote from a canvas so Core can pin the expected revision.',
+            retryable: false,
+          }
+        : null,
+  );
+  const [nowMs, setNowMs] = useState(initialNowMs ?? quote?.createdAtMs ?? 0);
   const [acknowledged, setAcknowledged] = useState(false);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<QuoteConfirmResult | null>(null);
 
   useEffect(() => {
-    if (startInRunStage || suppliedPort !== undefined || initialNowMs !== undefined) return;
+    if (startInRunStage) return;
     let active = true;
-    void port.requote(Date.now()).then((next) => {
-      if (!active) return;
-      setQuote(next);
-      setNowMs(next.createdAtMs);
-    });
+    if (quotePort !== null) {
+      void quotePort.read().then((next) => {
+        if (!active) return;
+        if (next.type === 'ok') {
+          setQuote(next.quote);
+          setNowMs(next.quote.createdAtMs);
+          setLoadResult(null);
+        } else {
+          setLoadResult(next);
+        }
+      });
+    } else if (previewPort !== null && suppliedPort === undefined && initialNowMs === undefined) {
+      void previewPort.requote(Date.now()).then((next) => {
+        if (!active) return;
+        setQuote(next);
+        setNowMs(next.createdAtMs);
+      });
+    }
     return () => {
       active = false;
     };
-  }, [initialNowMs, port, startInRunStage, suppliedPort]);
+  }, [initialNowMs, previewPort, quotePort, startInRunStage, suppliedPort]);
 
   useEffect(() => {
     if (startInRunStage) return;
@@ -149,10 +252,22 @@ export function QuoteFlow({
     return <RunProgress workspace={workspace} scenario={runScenario} />;
   }
 
+  if (quote === null) {
+    return (
+      <QuoteLoadState
+        {...(canvasId === undefined ? {} : { canvasId })}
+        result={loadResult}
+        workspace={workspace}
+      />
+    );
+  }
+
   const secondsRemaining = quoteSecondsRemaining(quote.expiresAtMs, nowMs);
   const expired = quoteIsExpired(quote.expiresAtMs, nowMs) || result?.type === 'expired_quote';
   const confirmEnabled =
-    canConfirmQuote({ acknowledged, expiresAtMs: quote.expiresAtMs, nowMs, pending }) && !expired;
+    canConfirmQuote({ acknowledged, expiresAtMs: quote.expiresAtMs, nowMs, pending }) &&
+    !expired &&
+    previewPort !== null;
   const total = formatUsdMicros(quote.totalMicros);
   const feedback = pending
     ? 'loading'
@@ -167,18 +282,35 @@ export function QuoteFlow({
   }
 
   async function confirmRun() {
-    if (!confirmEnabled) return;
+    if (!confirmEnabled || quote === null) return;
     setPending(true);
-    const next = await port.confirm({ quote, acknowledged, nowMs });
+    if (previewPort === null) return;
+    const next = await previewPort.confirm({ quote, acknowledged, nowMs });
     setResult(next);
     setPending(false);
   }
 
   async function requote() {
     setPending(true);
-    const next = await port.requote(Date.now());
-    setQuote(next);
-    setNowMs(next.createdAtMs);
+    const next =
+      quotePort === null ? await previewPort?.requote(Date.now()) : await quotePort.requote();
+    if (next === undefined) {
+      setPending(false);
+      return;
+    }
+    if ('type' in next) {
+      if (next.type === 'ok') {
+        setQuote(next.quote);
+        setNowMs(next.quote.createdAtMs);
+        setLoadResult(null);
+      } else {
+        setQuote(null);
+        setLoadResult(next);
+      }
+    } else {
+      setQuote(next);
+      setNowMs(next.createdAtMs);
+    }
     setAcknowledged(false);
     setResult(null);
     setPending(false);
@@ -195,12 +327,14 @@ export function QuoteFlow({
           </p>
 
           <QuoteResultNotice
+            {...(canvasId === undefined ? {} : { canvasId })}
             result={result}
             workspace={workspace}
             onRequote={() => void requote()}
           />
           {expired && result?.type !== 'expired_quote' ? (
             <QuoteResultNotice
+              {...(canvasId === undefined ? {} : { canvasId })}
               result={{ type: 'expired_quote', expiredAtMs: quote.expiresAtMs }}
               workspace={workspace}
               onRequote={() => void requote()}
@@ -272,7 +406,14 @@ export function QuoteFlow({
               starts.
             </span>
           </label>
-          <Link className={styles.quietBack} href={`/studio/${workspace}/canvas`}>
+          <Link
+            className={styles.quietBack}
+            href={
+              canvasId === undefined
+                ? `/studio/${workspace}/canvas`
+                : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+            }
+          >
             Back to canvas
           </Link>
         </Card>

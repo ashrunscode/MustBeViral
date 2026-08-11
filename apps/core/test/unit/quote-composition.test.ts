@@ -259,6 +259,11 @@ describe('composed quote and billing ports', () => {
     expect(result.status).toBe('ok');
     if (result.status !== 'ok') throw new Error('Expected quote success');
     expect(result.quote.maximumChargeMicros).toBe(4_550_000n);
+    expect(result.spend).toEqual({
+      runCapMicros: 8_000_000n,
+      workspaceDayCapMicros: 25_000_000n,
+      workspaceDayExposureMicros: 0n,
+    });
     expect(Date.parse(result.quote.expiresAt) - Date.parse(result.quote.createdAt)).toBe(
       15 * 60 * 1000,
     );

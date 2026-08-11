@@ -1587,9 +1587,19 @@
                 ],
                 "additionalProperties": false
               },
-              "confirmationToken": { "type": "string", "minLength": 16, "maxLength": 500 }
+              "confirmationToken": { "type": "string", "minLength": 16, "maxLength": 500 },
+              "spend": {
+                "type": "object",
+                "properties": {
+                  "runCapMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "workspaceDayCapMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "workspaceDayExposureMicros": { "type": "string", "pattern": "^\\d+$" }
+                },
+                "required": ["runCapMicros", "workspaceDayCapMicros", "workspaceDayExposureMicros"],
+                "additionalProperties": false
+              }
             },
-            "required": ["quote", "confirmationToken"],
+            "required": ["quote", "confirmationToken", "spend"],
             "additionalProperties": false
           },
           "meta": {

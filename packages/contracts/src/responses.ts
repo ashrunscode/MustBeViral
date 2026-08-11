@@ -210,6 +210,13 @@ export const QuoteRunResultSchema = z.union([
       status: z.literal('ok'),
       quote: ImmutableRunQuoteSchema,
       confirmationToken: z.string().min(16).max(500),
+      spend: z
+        .object({
+          runCapMicros: z.bigint().nonnegative(),
+          workspaceDayCapMicros: z.bigint().nonnegative(),
+          workspaceDayExposureMicros: z.bigint().nonnegative(),
+        })
+        .strict(),
     })
     .strict(),
   ForbiddenResultSchema,
@@ -455,7 +462,16 @@ const operationDataSchemas = {
   validate_graph: ValidateGraphResultSchema.options[0].omit({ status: true }),
   quote_run: QuoteRunResultSchema.options[0]
     .omit({ status: true })
-    .extend({ quote: WireImmutableRunQuoteSchema })
+    .extend({
+      quote: WireImmutableRunQuoteSchema,
+      spend: z
+        .object({
+          runCapMicros: WireMicrosSchema,
+          workspaceDayCapMicros: WireMicrosSchema,
+          workspaceDayExposureMicros: WireMicrosSchema,
+        })
+        .strict(),
+    })
     .strict(),
   start_run: StartRunResultSchema.options[0].omit({ status: true }),
   get_run: GetRunResultSchema.options[0].omit({ status: true }),

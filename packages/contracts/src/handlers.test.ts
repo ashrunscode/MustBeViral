@@ -242,6 +242,11 @@ async function buildQuotedFlow(memory: MemoryPorts) {
   });
   expect(quote.status).toBe('ok');
   if (quote.status !== 'ok') throw new Error('quote setup failed');
+  expect(quote.spend).toEqual({
+    runCapMicros: 8_000_000n,
+    workspaceDayCapMicros: 25_000_000n,
+    workspaceDayExposureMicros: 0n,
+  });
   return { handlers, quote: quote.quote };
 }
 

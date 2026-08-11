@@ -83,6 +83,20 @@ const quote = {
   createdAt: timestamp,
   expiresAt: timestamp,
 };
+const handlerQuote = {
+  ...quote,
+  nodeLines: quote.nodeLines.map((line) => ({
+    ...line,
+    priceComponents: line.priceComponents.map((component) => ({
+      ...component,
+      quantity: BigInt(component.quantity),
+      unitPriceMicros: BigInt(component.unitPriceMicros),
+      totalMicros: BigInt(component.totalMicros),
+    })),
+    totalMicros: BigInt(line.totalMicros),
+  })),
+  maximumChargeMicros: BigInt(quote.maximumChargeMicros),
+};
 
 const successData = {
   create_workspace: { workspace_id: 'workspace-1', role: 'owner' },
@@ -119,7 +133,15 @@ const successData = {
     affectedDescendants: ['node-1'],
   },
   validate_graph: { canvasId: 'canvas-1', revisionId: 'revision-1', valid: true, issues: [] },
-  quote_run: { quote, confirmationToken: 'confirmation-token-1' },
+  quote_run: {
+    quote,
+    confirmationToken: 'confirmation-token-1',
+    spend: {
+      runCapMicros: '8000000',
+      workspaceDayCapMicros: '25000000',
+      workspaceDayExposureMicros: '18420000',
+    },
+  },
   start_run: { run },
   get_run: { run },
   cancel_run: { runId: 'run-1', cancellation: 'accepted' },
@@ -277,6 +299,18 @@ describe('P0 REST response contracts', () => {
       QuoteRunResultSchema.parse({
         status: 'graph_invalid',
         issues: [{ code: 'CYCLE', message: 'The graph contains a cycle.' }],
+      }),
+    ).toBeDefined();
+    expect(
+      QuoteRunResultSchema.parse({
+        status: 'ok',
+        quote: handlerQuote,
+        confirmationToken: 'confirmation-token-1',
+        spend: {
+          runCapMicros: 8_000_000n,
+          workspaceDayCapMicros: 25_000_000n,
+          workspaceDayExposureMicros: 18_420_000n,
+        },
       }),
     ).toBeDefined();
     expect(

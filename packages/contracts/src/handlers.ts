@@ -64,6 +64,12 @@ export interface GraphInvalidResult {
   readonly issues: ReturnType<typeof validateGraphSnapshot>['issues'];
 }
 
+export interface QuoteSpendSnapshot {
+  readonly runCapMicros: bigint;
+  readonly workspaceDayCapMicros: bigint;
+  readonly workspaceDayExposureMicros: bigint;
+}
+
 export type AccessFailure = ForbiddenResult | NotFoundResult;
 
 export type ApplyCanvasPatchResult =
@@ -90,7 +96,12 @@ export type ValidateGraphResult =
   | AccessFailure;
 
 export type QuoteRunResult =
-  | Readonly<{ status: 'ok'; quote: ImmutableRunQuote; confirmationToken: string }>
+  | Readonly<{
+      status: 'ok';
+      quote: ImmutableRunQuote;
+      confirmationToken: string;
+      spend: QuoteSpendSnapshot;
+    }>
   | ForbiddenResult
   | NotFoundResult
   | ConflictResult
@@ -408,12 +419,22 @@ export function createCommandHandlers(ports: HandlerPorts) {
             quoteId: quote.quoteId,
             maximumChargeMicros: quote.maximumChargeMicros,
           });
+          const exposure = await ports.billing.get(command.context);
           await audit(ports, command.context, 'quote_run', 'ok', 'quote', quote.quoteId, {
             canvas_revision_id: quote.canvasRevisionId,
             price_catalog_version_id: quote.priceCatalogVersionId,
             maximum_charge_micros: quote.maximumChargeMicros,
           });
-          return { status: 'ok', quote, confirmationToken };
+          return {
+            status: 'ok',
+            quote,
+            confirmationToken,
+            spend: {
+              runCapMicros: exposure.caps.run,
+              workspaceDayCapMicros: exposure.caps.workspaceDay,
+              workspaceDayExposureMicros: exposure.workspaceDayExposureMicros,
+            },
+          };
         },
       );
     },

@@ -685,7 +685,14 @@ export function CanvasFlow({
             <MonoCaps>Quote basis</MonoCaps>
             <MonoCaps>$4.20 total run</MonoCaps>
           </div>
-          <Link className="mbv-button mbv-button--primary" href={`/studio/${workspace}/quote`}>
+          <Link
+            className="mbv-button mbv-button--primary"
+            href={
+              canvasId === undefined
+                ? `/studio/${workspace}/quote`
+                : `/studio/${workspace}/quote?canvas=${encodeURIComponent(canvasId)}&revision=${encodeURIComponent(model.revision)}`
+            }
+          >
             Review $4.20 quote
           </Link>
         </div>
