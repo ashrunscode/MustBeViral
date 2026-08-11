@@ -11,8 +11,10 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator authorizes one fresh-UTC-day, two-brief remediation run for GB-02 and GB-16,
-  reserving at most 9,100,000 micros, before any further paid run.
+next_action: Operator executes evaluator-zero self-sessions; then, on a fresh UTC day, authorizes
+  the GB-02 and GB-16 remediation at no more than 9,100,000 reserved micros; then recruits and
+  completes five-to-eight qualified evaluator sessions, secures one signed paid pilot, and records
+  the P0 go/no-go or pivot/stop decision.
 decisions_pending: []
 blockers:
   - 'The no-spend T5 RCA reclassifies GB-05 as a harness double-run, not a duplicate provider

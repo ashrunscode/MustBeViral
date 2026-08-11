@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Operator authorizes one fresh-UTC-day, two-brief remediation run for GB-02 and GB-16, reserving at most 9,100,000 micros, before any further paid run.
+Operator executes evaluator-zero self-sessions; then, on a fresh UTC day, authorizes the GB-02 and GB-16 remediation at no more than 9,100,000 reserved micros; then recruits and completes five-to-eight qualified evaluator sessions, secures one signed paid pilot, and records the P0 go/no-go or pivot/stop decision.
