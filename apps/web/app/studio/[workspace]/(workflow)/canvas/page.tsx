@@ -1,19 +1,29 @@
 import { CanvasFlow } from './canvas-flow';
+import { requireStudioSession } from '../../../../../src/lib/supabase/session-boundary';
 
 export default async function CanvasPage({
   params,
   searchParams,
 }: Readonly<{
   params: Promise<{ workspace: string }>;
-  searchParams: Promise<{ fixture?: string; state?: string }>;
+  searchParams: Promise<{ canvas?: string; fixture?: string; state?: string }>;
 }>) {
-  const [{ workspace }, query] = await Promise.all([params, searchParams]);
+  const [{ workspace }, query, session] = await Promise.all([
+    params,
+    searchParams,
+    requireStudioSession(),
+  ]);
+  const preview = session.mode === 'local-preview';
   const scenario =
-    query.state === 'conflict' || query.state === 'graph_invalid' ? query.state : 'ok';
+    preview && (query.state === 'conflict' || query.state === 'graph_invalid') ? query.state : 'ok';
   return (
     <CanvasFlow
+      {...(query.canvas === undefined ? {} : { canvasId: query.canvas })}
+      dataMode={preview ? 'preview' : 'worker'}
       workspace={workspace}
-      fixtureNodeCount={query.fixture === '500' ? 500 : query.fixture === '100' ? 100 : 12}
+      fixtureNodeCount={
+        preview && query.fixture === '500' ? 500 : preview && query.fixture === '100' ? 100 : 12
+      }
       scenario={scenario}
     />
   );

@@ -36,7 +36,7 @@ describe('CanvasResultBanner result-union rendering', () => {
 describe('CanvasFlow semantic outline component parity', () => {
   it('renders outline rows in the same order and with the same statuses as graph data', () => {
     const graph = createCanvasFixture();
-    const html = renderToStaticMarkup(<CanvasFlow workspace="lumen-skin" />);
+    const html = renderToStaticMarkup(<CanvasFlow dataMode="preview" workspace="lumen-skin" />);
     const ids = [...html.matchAll(/data-outline-id="([^"]+)"/gu)].map((match) => match[1]);
     const statuses = [...html.matchAll(/data-outline-status="([^"]+)"/gu)].map((match) => match[1]);
     expect(ids).toEqual(graph.nodes.map(({ id }) => id));
@@ -45,7 +45,9 @@ describe('CanvasFlow semantic outline component parity', () => {
   });
 
   it('virtualizes the 100-node fixture while keeping every outline row available', () => {
-    const html = renderToStaticMarkup(<CanvasFlow workspace="lumen-skin" fixtureNodeCount={100} />);
+    const html = renderToStaticMarkup(
+      <CanvasFlow dataMode="preview" workspace="lumen-skin" fixtureNodeCount={100} />,
+    );
     const visualNodes = [...html.matchAll(/data-node-id="([^"]+)"/gu)];
     const outlineRows = [...html.matchAll(/data-outline-id="([^"]+)"/gu)];
     expect(visualNodes.length).toBeGreaterThan(0);

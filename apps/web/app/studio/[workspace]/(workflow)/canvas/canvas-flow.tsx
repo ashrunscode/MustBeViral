@@ -17,6 +17,8 @@ import {
 import {
   GOLDEN_NODE_WIDTH,
   InMemoryCanvasPort,
+  WorkerCanvasReadPort,
+  createCanvasFixture,
   isSimplifiedCanvasLod,
   mapCanvasNodesToOutline,
   mapCanvasStatusToChip,
@@ -25,9 +27,12 @@ import {
   type CanvasModel,
   type CanvasNode,
   type CanvasOutlineRow,
+  type CanvasReadPort,
+  type CanvasReadResult,
   type CanvasPortResult,
   type CanvasPortScenario,
 } from '../../../../../src/features/canvas/canvas-port';
+import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import styles from './canvas-flow.module.css';
 
 const NODE_HEIGHT = 94;
@@ -200,6 +205,34 @@ export function CanvasResultBanner({
   );
 }
 
+export function CanvasLoadNotice({
+  result,
+}: Readonly<{ result: Exclude<CanvasReadResult, { type: 'ok' }> | null }>) {
+  if (result === null) {
+    return (
+      <div className={styles.resultBanner} role="status" data-result="loading">
+        Loading canvas from Core…
+      </div>
+    );
+  }
+  const message =
+    result.type === 'forbidden'
+      ? 'You do not have access to this canvas.'
+      : result.type === 'not_found'
+        ? `Canvas ${result.canvas_id} was not found.`
+        : result.message;
+  return (
+    <div
+      className={`${styles.resultBanner} ${styles.resultInvalid}`}
+      role="alert"
+      data-result={result.type}
+    >
+      <strong>Canvas unavailable</strong>
+      <span>{message}</span>
+    </div>
+  );
+}
+
 function NodeCard({
   arrival,
   dimmed,
@@ -245,16 +278,46 @@ function NodeCard({
 }
 
 export function CanvasFlow({
+  canvasId,
+  dataMode = 'worker',
   fixtureNodeCount = 12,
+  readPort: suppliedReadPort,
   scenario = 'ok',
   workspace,
 }: Readonly<{
+  canvasId?: string;
+  dataMode?: 'preview' | 'worker';
   fixtureNodeCount?: CanvasFixtureNodeCount;
+  readPort?: CanvasReadPort;
   scenario?: CanvasPortScenario;
   workspace: string;
 }>) {
-  const [port] = useState(() => new InMemoryCanvasPort({ nodeCount: fixtureNodeCount, scenario }));
-  const [model, setModel] = useState(() => port.read());
+  const [previewPort] = useState(() =>
+    dataMode === 'preview'
+      ? new InMemoryCanvasPort({ nodeCount: fixtureNodeCount, scenario })
+      : null,
+  );
+  const [readPort] = useState<CanvasReadPort | null>(() => {
+    if (suppliedReadPort !== undefined) return suppliedReadPort;
+    if (previewPort !== null) return previewPort;
+    if (canvasId === undefined || canvasId.length === 0) return null;
+    return new WorkerCanvasReadPort(createBrowserCoreClient(), canvasId);
+  });
+  const [model, setModel] = useState<CanvasModel | null>(() =>
+    dataMode === 'preview' ? createCanvasFixture(fixtureNodeCount) : null,
+  );
+  const [loadResult, setLoadResult] = useState<Exclude<CanvasReadResult, { type: 'ok' }> | null>(
+    () =>
+      dataMode === 'worker' &&
+      suppliedReadPort === undefined &&
+      (canvasId === undefined || canvasId.length === 0)
+        ? {
+            type: 'error',
+            message: 'Open this screen from a project with a canvas selected.',
+            retryable: false,
+          }
+        : null,
+  );
   const [selectedId, setSelectedId] = useState('2');
   const [result, setResult] = useState<CanvasPortResult | null>(null);
   const [validating, setValidating] = useState(false);
@@ -274,6 +337,23 @@ export function CanvasFlow({
     panY: number;
   } | null>(null);
   const outlineRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  useEffect(() => {
+    if (dataMode === 'preview' || readPort === null) return;
+    let active = true;
+    void readPort.read().then((next) => {
+      if (!active) return;
+      if (next.type === 'ok') {
+        setModel(next.model);
+        setLoadResult(null);
+      } else {
+        setLoadResult(next);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [dataMode, readPort]);
 
   useEffect(() => {
     const element = surfaceRef.current;
@@ -300,35 +380,39 @@ export function CanvasFlow({
   }, []);
 
   const nodesById = useMemo(
-    () => new Map(model.nodes.map((node) => [node.id, node])),
-    [model.nodes],
+    () => new Map((model?.nodes ?? []).map((node) => [node.id, node])),
+    [model?.nodes],
   );
-  const outline = useMemo(() => mapCanvasNodesToOutline(model.nodes), [model.nodes]);
-  const lineage = useMemo(() => lineageFor(model, selectedId), [model, selectedId]);
+  const outline = useMemo(() => mapCanvasNodesToOutline(model?.nodes ?? []), [model?.nodes]);
+  const lineage = useMemo(
+    () => (model === null ? new Set<string>() : lineageFor(model, selectedId)),
+    [model, selectedId],
+  );
   const simplified = isSimplifiedCanvasLod(zoom);
   const visibleNodes = useMemo(() => {
     const left = -pan.x / zoom - VIRTUALIZATION_MARGIN;
     const top = -pan.y / zoom - VIRTUALIZATION_MARGIN;
     const right = left + viewport.width / zoom + VIRTUALIZATION_MARGIN * 2;
     const bottom = top + viewport.height / zoom + VIRTUALIZATION_MARGIN * 2;
-    return model.nodes.filter(
+    return (model?.nodes ?? []).filter(
       (node) =>
         node.x + GOLDEN_NODE_WIDTH >= left &&
         node.x <= right &&
         node.y + NODE_HEIGHT >= top &&
         node.y <= bottom,
     );
-  }, [model.nodes, pan.x, pan.y, viewport.height, viewport.width, zoom]);
+  }, [model?.nodes, pan.x, pan.y, viewport.height, viewport.width, zoom]);
   const visibleEdges = useMemo(() => {
     const visibleNodeIds = new Set(visibleNodes.map(({ id }) => id));
-    return model.edges.filter(
+    return (model?.edges ?? []).filter(
       (edge) => visibleNodeIds.has(edge.source_node_id) && visibleNodeIds.has(edge.target_node_id),
     );
-  }, [model.edges, visibleNodes]);
+  }, [model?.edges, visibleNodes]);
 
   const setZoomClamped = (next: number) => setZoom(Math.min(1.4, Math.max(0.12, next)));
 
   function fitToView() {
+    if (model === null) return;
     const nextZoom = Math.min(
       1,
       Math.max(
@@ -390,16 +474,29 @@ export function CanvasFlow({
   }
 
   async function validateCanvas() {
+    if (previewPort === null || model === null) return;
     setValidating(true);
-    const nextResult = await port.validate(model.revision);
+    const nextResult = await previewPort.validate(model.revision);
     setResult(nextResult);
     setValidating(false);
   }
 
   async function reloadLatest() {
-    const next = await port.reloadLatest();
-    setModel(next.model);
-    setResult(next);
+    if (previewPort !== null) {
+      const next = await previewPort.reloadLatest();
+      setModel(next.model);
+      setResult(next);
+      return;
+    }
+    if (readPort === null) return;
+    const next = await readPort.read();
+    if (next.type === 'ok') {
+      setModel(next.model);
+      setResult(next);
+      setLoadResult(null);
+    } else {
+      setLoadResult(next);
+    }
   }
 
   const selectNode = useCallback((id: string) => setSelectedId(id), []);
@@ -418,6 +515,16 @@ export function CanvasFlow({
     },
     [outline.length],
   );
+
+  if (model === null) {
+    return (
+      <main id="main-content" className={styles.canvasPage}>
+        <section className={styles.workspace} aria-label="ViralGraph canvas">
+          <CanvasLoadNotice result={loadResult} />
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main id="main-content" className={styles.canvasPage}>
@@ -450,6 +557,7 @@ export function CanvasFlow({
                       : 'error'
               }
               loadingLabel="Validating"
+              disabled={previewPort === null}
               onClick={() => void validateCanvas()}
             >
               Validate graph

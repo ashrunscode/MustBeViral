@@ -6,6 +6,7 @@ import {
   type GraphSnapshot,
   type GraphValidationIssue,
 } from '@mustbeviral/graph';
+import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
 import type { ChipStatus } from '@mustbeviral/ui';
 
 export type CanvasNodeStatus = 'verified' | 'running' | 'queued' | 'failed' | 'notes';
@@ -51,8 +52,22 @@ export type CanvasPortResult =
     }
   | { readonly type: 'graph_invalid'; readonly issues: readonly GraphValidationIssue[] };
 
-export interface CanvasPort {
-  read(): CanvasModel;
+export type CanvasReadResult =
+  | Extract<CanvasPortResult, { type: 'ok' }>
+  | { readonly type: 'forbidden' }
+  | { readonly type: 'not_found'; readonly canvas_id: string }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
+    };
+
+export interface CanvasReadPort {
+  read(): Promise<CanvasReadResult>;
+}
+
+export interface CanvasPort extends CanvasReadPort {
   validate(expectedRevisionId: string): Promise<CanvasPortResult>;
   reloadLatest(): Promise<Extract<CanvasPortResult, { type: 'ok' }>>;
 }
@@ -361,6 +376,113 @@ export function createCanvasFixture(nodeCount: CanvasFixtureNodeCount = 12): Can
   };
 }
 
+const workerKindLabels: Readonly<Record<GraphNodeKind, string>> = {
+  brief: 'Input node',
+  brand_context: 'Brand context',
+  planner_text: 'Concept logic',
+  image_generation: 'Visual gen',
+  image_edit: 'Adaptation',
+  video_generation: 'Motion gen',
+  qa: 'Review gate',
+  output_export: 'Output pack',
+  group: 'Group',
+};
+
+const workerModelLabels: Readonly<Record<GraphNodeKind, string>> = {
+  brief: 'revision input',
+  brand_context: 'brand input',
+  planner_text: 'text route',
+  image_generation: 'image route',
+  image_edit: 'edit route',
+  video_generation: 'motion route',
+  qa: 'policy route',
+  output_export: 'export route',
+  group: 'non-executable',
+};
+
+function parameterText(
+  parameters: Readonly<Record<string, unknown>>,
+  keys: readonly string[],
+): string | undefined {
+  for (const key of keys) {
+    const value = parameters[key];
+    if (typeof value === 'string' && value.trim().length > 0) return value.trim();
+  }
+  return undefined;
+}
+
+export function canvasModelFromContext(
+  canvas: P0OperationData<'get_canvas_context'>['canvas'],
+): CanvasModel {
+  const columns = Math.max(1, Math.ceil(Math.sqrt(canvas.graphSnapshot.nodes.length)));
+  const rows = Math.max(1, Math.ceil(canvas.graphSnapshot.nodes.length / columns));
+  const nodes = canvas.graphSnapshot.nodes.map((graphNode, index): CanvasNode => {
+    const column = index % columns;
+    const row = Math.floor(index / columns);
+    return {
+      ...graphNode,
+      kindLabel: workerKindLabels[graphNode.kind],
+      label:
+        parameterText(graphNode.parameters, ['label', 'name', 'title', 'prompt']) ??
+        `${workerKindLabels[graphNode.kind]} ${String(index + 1)}`,
+      status: graphNode.kind === 'group' ? 'notes' : 'verified',
+      statusDetail: graphNode.kind === 'group' ? 'Non-executable' : 'Revision pinned',
+      model:
+        parameterText(graphNode.parameters, [
+          'model_route_key',
+          'model_route_id',
+          'model',
+          'provider_model_id',
+        ]) ?? workerModelLabels[graphNode.kind],
+      x: 16 + column * 216,
+      y: 18 + row * 126,
+    };
+  });
+  const edges = canvas.graphSnapshot.edges.map((edge): CanvasEdge => ({
+    ...edge,
+    state: 'default',
+  }));
+  return {
+    revision: canvas.headRevisionId,
+    nodes,
+    edges,
+    width: Math.max(1080, 32 + columns * 216),
+    height: Math.max(680, 36 + rows * 126),
+  };
+}
+
+export class WorkerCanvasReadPort implements CanvasReadPort {
+  constructor(
+    private readonly client: MustBeViralRestClient,
+    private readonly canvasId: string,
+  ) {}
+
+  async read(): Promise<CanvasReadResult> {
+    try {
+      const response = await this.client.request('get_canvas_context', { id: this.canvasId });
+      if ('data' in response) {
+        return { type: 'ok', model: canvasModelFromContext(response.data.canvas) };
+      }
+      if (response.error.code === 'FORBIDDEN') return { type: 'forbidden' };
+      if (response.error.code === 'NOT_FOUND') {
+        return { type: 'not_found', canvas_id: this.canvasId };
+      }
+      return {
+        type: 'error',
+        message: response.error.message,
+        retryable: response.error.retryable,
+        request_id: response.error.request_id,
+      };
+    } catch {
+      return {
+        type: 'error',
+        message: 'The canvas could not be loaded from Core.',
+        retryable: true,
+      };
+    }
+  }
+}
+
 function asSnapshot(model: CanvasModel): GraphSnapshot {
   return { nodes: model.nodes, edges: model.edges };
 }
@@ -376,8 +498,8 @@ export class InMemoryCanvasPort implements CanvasPort {
     this.#scenario = options.scenario ?? 'ok';
   }
 
-  read(): CanvasModel {
-    return this.#model;
+  async read(): Promise<CanvasReadResult> {
+    return { type: 'ok', model: this.#model };
   }
 
   async validate(expectedRevisionId: string): Promise<CanvasPortResult> {

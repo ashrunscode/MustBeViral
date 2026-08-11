@@ -1,9 +1,12 @@
 import { validateGraph } from '@mustbeviral/graph';
+import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 import { describe, expect, it } from 'vitest';
 
 import {
   CANVAS_LOD_THRESHOLD,
   InMemoryCanvasPort,
+  WorkerCanvasReadPort,
+  canvasModelFromContext,
   createCanvasFixture,
   isSimplifiedCanvasLod,
   mapCanvasNodesToOutline,
@@ -67,4 +70,71 @@ describe('InMemoryCanvasPort result union', () => {
       expect(result.type).toBe(scenario);
     },
   );
+});
+
+describe('WorkerCanvasReadPort', () => {
+  const context = {
+    canvasId: 'canvas-live',
+    projectId: 'project-live',
+    headRevisionId: 'revision-live',
+    graphSchemaVersion: 1,
+    canonicalHash: 'a'.repeat(64),
+    graphSnapshot: {
+      nodes: [
+        {
+          id: 'brief-live',
+          kind: 'brief' as const,
+          parameter_schema_version: 1,
+          parameters: { label: 'Live campaign brief' },
+        },
+      ],
+      edges: [],
+    },
+  };
+
+  it('maps the authenticated Core response into the existing canvas presentation model', async () => {
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-live-0001',
+      fetch: async () =>
+        new Response(
+          JSON.stringify({
+            data: { canvas: context },
+            meta: { request_id: 'request-live-0001' },
+          }),
+          { status: 200, headers: { 'content-type': 'application/json' } },
+        ),
+    });
+
+    await expect(new WorkerCanvasReadPort(client, context.canvasId).read()).resolves.toEqual({
+      type: 'ok',
+      model: canvasModelFromContext(context),
+    });
+  });
+
+  it('preserves a not-found result instead of falling back to fixture data', async () => {
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-live-0002',
+      fetch: async () =>
+        new Response(
+          JSON.stringify({
+            error: {
+              code: 'NOT_FOUND',
+              message: 'Canvas not found.',
+              request_id: 'request-live-0002',
+              retryable: false,
+            },
+          }),
+          { status: 404, headers: { 'content-type': 'application/json' } },
+        ),
+    });
+
+    await expect(new WorkerCanvasReadPort(client, 'missing-canvas').read()).resolves.toEqual({
+      type: 'not_found',
+      canvas_id: 'missing-canvas',
+    });
+  });
 });
