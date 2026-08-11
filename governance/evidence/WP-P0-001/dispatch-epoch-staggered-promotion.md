@@ -30,11 +30,11 @@ Readiness inside a wave is **not** simultaneous. Each child is promoted when its
 so wave 3 - nine adaptations plus one motion node, fed by three different masters - is promoted in
 three separate batches:
 
-| time (UTC) | event | result |
-|---|---|---|
-| 01:04:13 | master-2 settles, promotes adaptation-2-1/2/3 | arms `...:dispatch:3` |
-| later | master-1 settles, promotes adaptation-1-1/2/3 | key collides, **dropped** |
-| later | master-3 settles, promotes adaptation-3-1/2/3 and motion-1 | key collides, **dropped** |
+| time (UTC) | event                                                      | result                    |
+| ---------- | ---------------------------------------------------------- | ------------------------- |
+| 01:04:13   | master-2 settles, promotes adaptation-2-1/2/3              | arms `...:dispatch:3`     |
+| later      | master-1 settles, promotes adaptation-1-1/2/3              | key collides, **dropped** |
+| later      | master-3 settles, promotes adaptation-3-1/2/3 and motion-1 | key collides, **dropped** |
 
 Seven nodes were left dispatchable with nothing queued to dispatch them.
 
