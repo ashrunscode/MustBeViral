@@ -11,18 +11,18 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: 'Execute T3: add Zod response schemas for all 18 P0 REST operations, align them with
-  the handler result unions, regenerate OpenAPI, build the Supabase sign-in surface, and generate
-  the typed client with bearer JWT, Idempotency-Key, and X-Request-Id.'
+next_action: 'Execute T4: replace the seven golden-screen fixture ports with the typed authenticated
+  Worker client in money-safety order, preserving every locked visual state and keeping provider
+  spend disabled until the quote/run boundary.'
 decisions_pending: []
 blockers:
-  - The $0.67 rung is closed on staging. The single T2 run
-    8e724e99-1921-4096-ada8-71f93fe3a54f completed all 16 provider nodes through three waves and six
-    dispatch epochs, captured exactly 4,550,000 reserved micros with zero release or residual,
-    produced its first reviewable static in 128.375 seconds, approved all 16 outputs with an
-    idempotent 16-artifact replay, returned a byte-identical ZIP on re-export, and exposed the
-    immutable customer receipt with complete provider, model, cost and lineage reconciliation.
-    Evidence is governance/evidence/WP-P0-001/full-pack-proof.md.
+  - The $0.67 rung is closed on staging. The single T2 run 8e724e99-1921-4096-ada8-71f93fe3a54f
+    completed all 16 provider nodes through three waves and six dispatch epochs, captured exactly
+    4,550,000 reserved micros with zero release or residual, produced its first reviewable static in
+    128.375 seconds, approved all 16 outputs with an idempotent 16-artifact replay, returned a
+    byte-identical ZIP on re-export, and exposed the immutable customer receipt with complete
+    provider, model, cost and lineage reconciliation. Evidence is
+    governance/evidence/WP-P0-001/full-pack-proof.md.
   - All six original execution-engine defects are now closed and proven live. The last one - nothing
     ever produced approved_output, so create_export could never succeed - closed with the $0.075
     approval-and-export proof. One master plus one adaptation ran through real waves (the first live
@@ -94,9 +94,15 @@ blockers:
     operator-SQL-only P0 recovery tool until the human refund-authorization policy is accepted; it
     has no product or unattended Worker caller by design. Confirmation-token verification already
     closed in Track A with server-minted HMAC and constant-time verification.
-  - The web product does not exist yet. apps/web makes zero HTTP requests to the Worker; all seven
-    screens run on in-memory fixtures; there is no sign-in surface; and packages/contracts declares
-    no response schemas, so no typed client can be built until that contract is closed.
+  - T3 closed the response, authentication, and transport prerequisites for the web product. All 18
+    authenticated P0 REST operations now have operation-specific Zod success envelopes and a shared
+    typed error envelope; compile-time and runtime parity checks pin the hand-written handler
+    unions; generated OpenAPI covers health plus the complete 19-route Worker surface. The
+    production Supabase SSR sign-in surface handles redirect-back, password errors, verification,
+    rate limiting, expired-link notices, and local-session sign-out. The shared fetch client adds
+    bearer JWT, Idempotency-Key on mutations, and X-Request-Id, then parses every response. The
+    seven golden screens intentionally remain on fixture ports until T4 wires them in money-safety
+    order. Evidence is governance/evidence/WP-P0-001/response-contracts-sign-in-and-client.md.
   - P0 exit is gated on people rather than code. It needs 5-8 paid evaluator sessions (all eight
     slots still PENDING) and one signed paid pilot. Recruitment runs in parallel; sessions must not
     be held against fixtures.

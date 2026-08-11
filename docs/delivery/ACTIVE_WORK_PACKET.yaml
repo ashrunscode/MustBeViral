@@ -308,18 +308,27 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action: 'Execute T3: add Zod response schemas for all 18 P0 REST operations, align them with
-    the handler result unions, regenerate OpenAPI, build the Supabase sign-in surface, and generate
-    the typed client with bearer JWT, Idempotency-Key, and X-Request-Id.'
+  next_action:
+    'Execute T4: replace the seven golden-screen fixture ports with the typed authenticated
+    Worker client in money-safety order, preserving every locked visual state and keeping provider
+    spend disabled until the quote/run boundary.'
   blockers: []
   changed_paths:
     - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
     - apps/core/src/composition
     - governance/evidence/WP-P0-001/pricing-decision.md
     - governance/evidence/WP-P0-001/launch-pack-runs
+    - packages/contracts/src/responses.ts
+    - packages/contracts/src/client.ts
+    - packages/contracts/openapi/core.v1.json
+    - apps/web/app/login
+    - apps/web/src/lib/core
+    - governance/evidence/WP-P0-001/response-contracts-sign-in-and-client.md
   last_green_checks:
     - pnpm packet:verify
     - 20/20 staging launch-pack quotes at 4,550,000 micros
+    - T3 tracked candidate formatting, governance, security, lint, typecheck, unit, integration, and
+      build lanes
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []
