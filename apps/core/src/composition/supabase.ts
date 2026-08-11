@@ -140,13 +140,14 @@ function reviveStoredResult<Result>(payload: unknown): Result {
   return reviveBigints(record.result) as Result;
 }
 
-function slugify(value: string): string {
+export function slugify(value: string): string {
   const slug = value
     .normalize('NFKD')
     .toLowerCase()
     .replace(/[^a-z0-9]+/gu, '-')
     .replace(/^-+|-+$/gu, '')
-    .slice(0, 80);
+    .slice(0, 80)
+    .replace(/-+$/gu, '');
   return slug.length > 0 ? slug : 'workspace';
 }
 

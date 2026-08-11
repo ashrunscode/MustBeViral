@@ -68,6 +68,22 @@ export interface BriefRunRecord {
   readonly latency_ms: number;
 }
 
+export interface PreparedGoldenBrief {
+  readonly briefId: string;
+  readonly workspaceId: string;
+  readonly projectId: string;
+  readonly canvasId: string;
+  readonly revisionId: string;
+  readonly revisionHash: string;
+  readonly quoteId: string;
+  readonly confirmationToken: string;
+  readonly totalMicros: bigint;
+  readonly expiresAt: string;
+  readonly startedAt: number;
+  readonly context: HandlerContext;
+  readonly startIdempotencyKey: string;
+}
+
 export class HarnessFlowError extends Error {
   override readonly name = 'HarnessFlowError';
 
@@ -126,13 +142,12 @@ function handlerContext(workspaceId: string, briefId: string): HandlerContext {
   };
 }
 
-export async function executeGoldenBrief(
+export async function prepareGoldenBrief(
   brief: GoldenCampaignBrief,
   transport: HarnessTransport,
-  expectProviderUnavailable = true,
   now: () => number = Date.now,
   runId = 'local',
-): Promise<BriefRunRecord> {
+): Promise<PreparedGoldenBrief> {
   const startedAt = now();
   // A per-invocation runId keeps every run independent: it makes the derived
   // workspace slug globally unique and scopes idempotency keys so a re-run never
@@ -142,7 +157,7 @@ export async function executeGoldenBrief(
   const workspace = requireOk(
     await transport.call('create_workspace', {
       context: bootstrapContext,
-      name: `${brief.briefId} ${brief.product} ${runId}`,
+      name: `Golden ${brief.briefId} ${runId}`,
       idempotency_key: key('workspace'),
     }),
     brief.briefId,
@@ -230,13 +245,53 @@ export async function executeGoldenBrief(
   // The server-minted token from the quote response. Inventing one no longer passes: consent must
   // be proven with the token minted for this actor, quote and amount.
   const confirmationToken = text(quoted.confirmationToken, 'confirmationToken');
-  const confirmed = await transport.call('start_run', {
+  return {
+    briefId: brief.briefId,
+    workspaceId,
+    projectId,
+    canvasId,
+    revisionId,
+    revisionHash,
+    quoteId,
+    confirmationToken,
+    totalMicros,
+    expiresAt,
+    startedAt,
     context,
-    quote_id: quoteId,
+    startIdempotencyKey: key('start'),
+  };
+}
+
+export async function startPreparedGoldenBrief(
+  prepared: PreparedGoldenBrief,
+  transport: HarnessTransport,
+  expectProviderUnavailable = true,
+  now: () => number = Date.now,
+): Promise<
+  BriefRunRecord &
+    Readonly<{
+      run_id?: string;
+      reservation_id?: string;
+      initial_status?: string;
+    }>
+> {
+  const confirmed = await transport.call('start_run', {
+    context: prepared.context,
+    quote_id: prepared.quoteId,
     confirmed: true,
-    confirmation_token: confirmationToken,
-    idempotency_key: key('start'),
+    confirmation_token: prepared.confirmationToken,
+    idempotency_key: prepared.startIdempotencyKey,
   });
+  let startedIdentifiers:
+    Readonly<{ run_id: string; reservation_id: string; initial_status: string }> | undefined;
+  if (confirmed.ok) {
+    const run = record(confirmed.data.run ?? confirmed.data, 'run');
+    startedIdentifiers = {
+      run_id: text(run.runId, 'run.runId'),
+      reservation_id: text(run.reservationId, 'run.reservationId'),
+      initial_status: text(run.status, 'run.status'),
+    };
+  }
   let confirmResult: BriefRunRecord['confirm_result'];
   if (confirmed.ok) {
     if (expectProviderUnavailable) {
@@ -245,30 +300,42 @@ export async function executeGoldenBrief(
           code: 'MOCK_PROVIDER_SUCCESS',
           message: 'Run start succeeded while fail-closed was required.',
         },
-        brief.briefId,
+        prepared.briefId,
       );
     }
     confirmResult = 'started';
   } else {
     if (confirmed.error.code !== 'MODEL_UNAVAILABLE') {
-      throw new HarnessFlowError(confirmed.error, brief.briefId);
+      throw new HarnessFlowError(confirmed.error, prepared.briefId);
     }
     if (!expectProviderUnavailable) {
       throw new HarnessFlowError(
         { code: 'PROVIDER_NOT_ENABLED', message: 'Provider-backed execution is still disabled.' },
-        brief.briefId,
+        prepared.briefId,
       );
     }
     confirmResult = 'provider_unavailable';
   }
   return {
-    brief_id: brief.briefId,
-    workspace_id: workspaceId,
-    revision_hash: revisionHash,
-    quote: { total_micros: totalMicros.toString(10), expires_at: expiresAt },
+    brief_id: prepared.briefId,
+    workspace_id: prepared.workspaceId,
+    revision_hash: prepared.revisionHash,
+    quote: { total_micros: prepared.totalMicros.toString(10), expires_at: prepared.expiresAt },
     confirm_result: confirmResult,
-    latency_ms: Math.max(0, now() - startedAt),
+    latency_ms: Math.max(0, now() - prepared.startedAt),
+    ...startedIdentifiers,
   };
+}
+
+export async function executeGoldenBrief(
+  brief: GoldenCampaignBrief,
+  transport: HarnessTransport,
+  expectProviderUnavailable = true,
+  now: () => number = Date.now,
+  runId = 'local',
+): Promise<BriefRunRecord> {
+  const prepared = await prepareGoldenBrief(brief, transport, now, runId);
+  return startPreparedGoldenBrief(prepared, transport, expectProviderUnavailable, now);
 }
 
 type BillingExposure = Awaited<ReturnType<HandlerPorts['billing']['get']>>;

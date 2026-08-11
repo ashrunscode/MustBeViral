@@ -103,6 +103,7 @@ describe('WorkerReviewPort', () => {
           confirmed_at: timestamp,
           confirmed_by: 'user-live',
           created_at: timestamp,
+          dispatch_epoch: 0,
           dispatch_wave: 1,
           id: 'run-live',
           project_id: 'project-live',

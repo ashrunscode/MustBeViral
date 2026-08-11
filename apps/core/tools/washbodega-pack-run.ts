@@ -158,7 +158,7 @@ interface PollRunOptions {
   readonly stderr?: (message: string) => void;
 }
 
-interface TerminalRunProgress {
+export interface TerminalRunProgress {
   readonly status: string;
   readonly receipt: Readonly<Record<string, unknown>>;
 }

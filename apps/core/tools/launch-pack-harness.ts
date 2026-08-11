@@ -3,18 +3,23 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { loadGoldenBriefRegistry } from './golden-brief-registry';
+import { runGolden20StagingHarness } from './golden-20-staging-harness';
 import {
   HarnessFlowError,
-  StagingLaunchPackTransport,
   USABLE_PACK_GATE_MICROS,
   createInMemoryHarnessTransport,
   executeGoldenBrief,
   type BriefRunRecord,
   type SafeHarnessError,
 } from './launch-pack-harness-lib';
-import { authenticateDisposableStagingUser, loadStagingAuthConfiguration } from './staging-auth';
+import {
+  authenticateDisposableStagingUser,
+  createConfirmedDisposableStagingUser,
+  createDisposableIdentity,
+  loadStagingAdminConfiguration,
+  recoverConfirmedDisposableStagingUser,
+} from './staging-auth';
 
-const STAGING_CORE_URL = 'https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev';
 const DEFAULT_OUT_DIRECTORY = fileURLToPath(
   new URL('../../../.scratch/launch-pack-harness/', import.meta.url),
 );
@@ -67,18 +72,28 @@ export async function runLaunchPackHarness(
   // idempotency keys so a re-run never collides with prior-run state on staging.
   const runId = randomBytes(4).toString('hex');
   const briefs = await loadGoldenBriefRegistry();
-  const transport =
-    options.mode === 'dry-run'
-      ? createInMemoryHarnessTransport()
-      : await (async () => {
-          const authentication = await authenticateDisposableStagingUser({
-            configuration: await loadStagingAuthConfiguration(),
-            log,
-          });
-          log(`AUTHENTICATED disposable staging user: ${authentication.email}`);
-          return new StagingLaunchPackTransport(STAGING_CORE_URL, authentication.accessToken);
-        })();
   await mkdir(options.outDirectory, { recursive: true });
+  if (options.mode === 'staging') {
+    const configuration = await loadStagingAdminConfiguration();
+    const resumeEmailIndex = argv.indexOf('--resume-email');
+    const resumeEmail = resumeEmailIndex < 0 ? undefined : argv[resumeEmailIndex + 1];
+    const authentication =
+      resumeEmail === undefined
+        ? await (async () => {
+            const identity = createDisposableIdentity();
+            await createConfirmedDisposableStagingUser({ configuration, identity });
+            return authenticateDisposableStagingUser({ configuration, identity, log });
+          })()
+        : await recoverConfirmedDisposableStagingUser({ configuration, email: resumeEmail });
+    log(`AUTHENTICATED disposable staging user: ${authentication.email}`);
+    return runGolden20StagingHarness({
+      briefs,
+      outDirectory: options.outDirectory,
+      accessToken: authentication.accessToken,
+      log,
+    });
+  }
+  const transport = createInMemoryHarnessTransport();
   const records: BriefRunRecord[] = [];
   const failures: Array<
     Readonly<{

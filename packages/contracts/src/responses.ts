@@ -372,6 +372,7 @@ const RunRowSchema = z
     confirmed_at: TimestampSchema,
     confirmed_by: IdentifierSchema,
     created_at: TimestampSchema,
+    dispatch_epoch: z.number().int().nonnegative(),
     dispatch_wave: z.number().int().positive(),
     id: IdentifierSchema,
     project_id: IdentifierSchema,

@@ -1,0 +1,106 @@
+{
+  "brief_id": "GB-10",
+  "outcome": "completed",
+  "workspace_id": "c8fef6f0-a99a-4f46-a676-be8259b64fab",
+  "project_id": "0010a283-2b7e-5762-92f1-f23c00460be3",
+  "canvas_id": "c22bbc66-dfa6-43eb-ac21-9df5319cde3f",
+  "revision_id": "848fc2e7-21cd-4408-ba82-70a1b52981b2",
+  "revision_hash": "e2d10d14150718baa134c75f67eec65c7127dc38447ae070dce493586024c52a",
+  "quote": {
+    "quote_id": "6146a120-f7c6-4028-b9a0-c866df1a439a",
+    "quoted_micros": "4550000",
+    "expires_at": "2026-08-11T12:56:05.451762+00:00"
+  },
+  "wallet_credit": {
+    "transaction_id": "94c1783c-cad8-4960-b6d4-5e0b4e45b593",
+    "amount_micros": "4550000",
+    "replayed": false
+  },
+  "run": {
+    "run_id": "2bb3c774-1384-4d49-a29f-12a492b902be",
+    "reservation_id": "f6d4f06f-e8ce-4360-9652-4353dea751da",
+    "status": "succeeded",
+    "confirmed_at": "2026-08-11T12:41:06.226771+00:00",
+    "terminal_at": "2026-08-11T12:44:08.159111+00:00",
+    "first_reviewable_at": "2026-08-11T12:43:15.806823+00:00",
+    "time_to_first_reviewable_ms": 129580,
+    "time_to_terminal_ms": 181933
+  },
+  "money": {
+    "reserved_micros": "4550000",
+    "captured_micros": "4550000",
+    "released_micros": "0",
+    "refunded_micros": "0",
+    "residual_micros": "0",
+    "capture_ledger_micros": "4550000",
+    "catalog_landed_cost_micros": "4550000",
+    "external_provider_cost_micros": null,
+    "external_provider_cost_observability": "not_observable"
+  },
+  "providers": {
+    "jobs": 16,
+    "unique_attempts": 16,
+    "duplicate_attempts": 0,
+    "all_terminal_succeeded": true,
+    "routes": [
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/flux-2-pro",
+        "route_id": "fal/flux-2-pro/masters",
+        "attempts": 3,
+        "captured_micros": "1500000"
+      },
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/flux-pro/kontext",
+        "route_id": "fal/flux-kontext-pro/adaptations",
+        "attempts": 9,
+        "captured_micros": "1800000"
+      },
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/bytedance/seedance/v1/pro/fast/image-to-video",
+        "route_id": "fal/seedance-1.0-lite/motion",
+        "attempts": 1,
+        "captured_micros": "800000"
+      },
+      {
+        "provider": "openrouter",
+        "provider_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
+        "route_id": "openrouter/chat-completions/copy",
+        "attempts": 3,
+        "captured_micros": "450000"
+      }
+    ]
+  },
+  "artifacts": {
+    "customer_reads": 17,
+    "approved_outputs": 16,
+    "exports": 1,
+    "all_available": true,
+    "all_private_exact_key": true,
+    "all_content_addressed": true,
+    "export_content_hash": "985e7d0a7d644509120da41880d55a282b9ef155afcff66046cd5f0ceca53ab9",
+    "export_byte_size": 9303975
+  },
+  "approval": {
+    "approved": 16,
+    "replayed": 16
+  },
+  "export": {
+    "deterministic": true,
+    "first_content_hash": "985e7d0a7d644509120da41880d55a282b9ef155afcff66046cd5f0ceca53ab9",
+    "second_content_hash": "985e7d0a7d644509120da41880d55a282b9ef155afcff66046cd5f0ceca53ab9"
+  },
+  "receipt": {
+    "customer_path_read": true,
+    "ledger_capture_rows": 16,
+    "ledger_artifact_links_complete": true,
+    "lineage_rows": 30,
+    "export_member_rows": 16,
+    "provider_model_cost_complete": true
+  },
+  "recovery": {
+    "exercised": false
+  }
+}

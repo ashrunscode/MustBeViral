@@ -11,7 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator runs the first evaluator-zero self-session with GB-02 and records it from TEMPLATE.md.
+next_action: Operator reviews the T5 failed-gate findings and authorizes a fresh-UTC-day remediation
+  plan before any further paid run.
 decisions_pending: []
 blockers:
   - T4 replaced every golden-screen fixture port with the authenticated typed Worker client in

@@ -10,9 +10,17 @@ import {
 import goldenBriefMarkdown from '../../../../docs/research/GOLDEN_BRIEFS.md?raw';
 import { parseGoldenBriefRegistry } from '../../tools/golden-brief-registry';
 import {
+  percentileNearestRank,
+  safeGoldenPackCount,
+  summarizeGolden20Records,
+  type Golden20BriefRecord,
+} from '../../tools/golden-20-staging-harness';
+import {
   StagingLaunchPackTransport,
   createInMemoryHarnessTransport,
   executeGoldenBrief,
+  prepareGoldenBrief,
+  startPreparedGoldenBrief,
 } from '../../tools/launch-pack-harness-lib';
 import {
   authenticateDisposableStagingUser,
@@ -72,6 +80,117 @@ describe('golden launch-pack harness', () => {
       Array.from({ length: 20 }, () => '4550000'),
     );
     expect(records.every((record) => record.confirm_result === 'provider_unavailable')).toBe(true);
+  });
+
+  it('preserves the authoritative run and reservation identifiers after confirmed start', async () => {
+    const brief = parseGoldenBriefRegistry(goldenBriefMarkdown)[0];
+    if (brief === undefined) throw new Error('golden brief fixture missing');
+    const transport = createInMemoryHarnessTransport({ providerResult: 'succeeded' });
+    const prepared = await prepareGoldenBrief(brief, transport);
+
+    await expect(startPreparedGoldenBrief(prepared, transport, false)).resolves.toMatchObject({
+      confirm_result: 'started',
+      run_id: 'run-1',
+      reservation_id: 'reservation-1',
+      initial_status: 'queued',
+    });
+  });
+
+  it('reserves operator headroom and computes nearest-rank acceptance latency honestly', () => {
+    expect(
+      safeGoldenPackCount({
+        observed_at: '2026-08-11T12:00:00Z',
+        utc_day_start: '2026-08-11T00:00:00Z',
+        global_daily_cap_micros: '100000000',
+        global_exposure_micros: '4550000',
+        global_remaining_micros: '95450000',
+        reservation_count: 1,
+        unsettled_reservation_count: 0,
+        status_counts: { captured: 1 },
+      }),
+    ).toBe(15);
+    expect(percentileNearestRank([100, 200, 300, 400], 0.5)).toBe(200);
+    expect(percentileNearestRank([100, 200, 300, 400], 0.9)).toBe(400);
+
+    const records: Golden20BriefRecord[] = Array.from({ length: 20 }, (_, index) => {
+      const completed = index < 15;
+      return completed
+        ? {
+            brief_id: `GB-${String(index + 1).padStart(2, '0')}`,
+            outcome: 'completed',
+            quote: {
+              quote_id: `quote-${String(index)}`,
+              quoted_micros: '4550000',
+              expires_at: 'x',
+            },
+            run: {
+              run_id: `run-${String(index)}`,
+              reservation_id: `reservation-${String(index)}`,
+              status: 'succeeded',
+              time_to_first_reviewable_ms: 300_000,
+            },
+            money: {
+              reserved_micros: '4550000',
+              captured_micros: '4550000',
+              released_micros: '0',
+              refunded_micros: '0',
+              residual_micros: '0',
+              capture_ledger_micros: '4550000',
+              catalog_landed_cost_micros: '4550000',
+              external_provider_cost_micros: null,
+              external_provider_cost_observability: 'not_observable',
+            },
+            providers: {
+              jobs: 16,
+              unique_attempts: 16,
+              duplicate_attempts: 0,
+              all_terminal_succeeded: true,
+              routes: [],
+            },
+            artifacts: {
+              customer_reads: 17,
+              approved_outputs: 16,
+              exports: 1,
+              all_available: true,
+              all_private_exact_key: true,
+              all_content_addressed: true,
+              export_content_hash: 'a'.repeat(64),
+              export_byte_size: 1,
+            },
+            receipt: {
+              customer_path_read: true,
+              ledger_capture_rows: 16,
+              ledger_artifact_links_complete: true,
+              lineage_rows: 30,
+              export_member_rows: 16,
+              provider_model_cost_complete: true,
+            },
+          }
+        : { brief_id: `GB-${String(index + 1).padStart(2, '0')}`, outcome: 'cap_deferred' };
+    });
+    const summary = summarizeGolden20Records(records);
+    expect(summary['completed']).toBe(15);
+    expect((summary['acceptance'] as Record<string, unknown>)['at_least_16_of_20_complete']).toBe(
+      false,
+    );
+    const first = records[0];
+    if (first?.quote === undefined || first.money === undefined || first.run === undefined) {
+      throw new Error('completed summary fixture missing');
+    }
+    const duplicateSummary = summarizeGolden20Records(records, [
+      { brief_id: 'GB-01', quote: first.quote, money: first.money, run: first.run },
+    ]);
+    expect(duplicateSummary['paid_attempts']).toBe(16);
+    expect(
+      (duplicateSummary['acceptance'] as Record<string, unknown>)[
+        'zero_duplicate_submissions_or_unexplained_ledger_differences'
+      ],
+    ).toBe(false);
+    expect(
+      (duplicateSummary['acceptance'] as Record<string, unknown>)[
+        'completed_runs_have_private_artifacts_lineage_and_receipts'
+      ],
+    ).toBe(true);
   });
 
   it('rejects resource input that the composed Supabase port would reject', async () => {

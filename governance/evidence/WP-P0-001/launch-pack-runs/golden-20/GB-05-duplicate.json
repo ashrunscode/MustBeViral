@@ -1,0 +1,68 @@
+{
+  "brief_id": "GB-05",
+  "outcome": "duplicate_run_finding",
+  "workspace_id": "0b8ce93a-7abf-4307-9621-25c69e2e70bd",
+  "project_id": "c9879115-03a2-5d20-805d-a569914219f6",
+  "canvas_id": "916230b5-1ec8-459d-b6f7-02d03cbf1c75",
+  "revision_id": "d013416e-bda1-473c-ad27-7fd95f23596b",
+  "revision_hash": "c541a1a083b81824b106df27b86a86b376db4c82f3cddaff5525cd68038c8cc7",
+  "quote": {
+    "quote_id": "cd0f261f-3c28-4ded-ab9e-451fac6e761d",
+    "quoted_micros": "4550000",
+    "expires_at": "2026-08-11T12:39:29.155716+00:00"
+  },
+  "wallet_credit": {
+    "transaction_id": "91fbb30f-6112-41b6-82c0-061781a7e253",
+    "amount_micros": "4550000",
+    "replayed": false
+  },
+  "run": {
+    "run_id": "d6db5d0f-ec18-4cde-98c2-7dc61a6de4b4",
+    "reservation_id": "3a839ff0-04b3-4008-bc59-5066c09cb96d",
+    "status": "succeeded",
+    "confirmed_at": "2026-08-11T12:24:30.048947+00:00",
+    "terminal_at": "2026-08-11T12:27:24.291473+00:00",
+    "first_reviewable_at": "2026-08-11T12:26:19.287148+00:00",
+    "time_to_first_reviewable_ms": 109238,
+    "time_to_terminal_ms": 174243
+  },
+  "money": {
+    "reserved_micros": "4550000",
+    "captured_micros": "4550000",
+    "released_micros": "0",
+    "refunded_micros": "0",
+    "residual_micros": "0",
+    "capture_ledger_micros": "4550000",
+    "catalog_landed_cost_micros": "4550000",
+    "external_provider_cost_micros": null,
+    "external_provider_cost_observability": "not_observable"
+  },
+  "providers": {
+    "jobs": 16,
+    "unique_attempts": 16,
+    "unique_provider_requests": 16,
+    "all_terminal_succeeded": true,
+    "captured_micros": "4550000"
+  },
+  "approval": {
+    "approved_outputs": 16,
+    "idempotent_replay": 16
+  },
+  "export": {
+    "deterministic": true,
+    "content_hash": "5f8479919ea0d68c3ca67e75a5306f2c11116034a2f06ad73b6c3e94fe951aa0",
+    "byte_size": 15079964
+  },
+  "receipt": {
+    "customer_path_read": true,
+    "postgrest_context_read": true,
+    "ledger_capture_rows": 16,
+    "lineage_rows": 30,
+    "export_member_rows": 16,
+    "residual_micros": "0"
+  },
+  "finding": {
+    "code": "DUPLICATE_BRIEF_RUN",
+    "message": "A confirmed GB-05 run was not checkpointed before the local harness process was interrupted. The later resume could not see it and started a second GB-05 pack in a new disposable workspace. Both provider request sets were internally unique, but this was a duplicate pack submission and a second 4550000-micro capture."
+  }
+}

@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Operator runs the first evaluator-zero self-session with GB-02 and records it from TEMPLATE.md.
+Operator reviews the T5 failed-gate findings and authorizes a fresh-UTC-day remediation plan before any further paid run.

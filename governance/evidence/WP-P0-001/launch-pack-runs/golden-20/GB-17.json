@@ -1,0 +1,21 @@
+{
+  "brief_id": "GB-17",
+  "outcome": "cap_deferred",
+  "cap_observation": {
+    "observed_at": "2026-08-11T13:00:14.319977+00:00",
+    "utc_day_start": "2026-08-11T00:00:00+00:00",
+    "global_daily_cap_micros": "100000000",
+    "global_exposure_micros": "73250000",
+    "global_remaining_micros": "26750000",
+    "reservation_count": 17,
+    "unsettled_reservation_count": 0,
+    "status_counts": {
+      "captured": 16,
+      "partially_captured": 1
+    }
+  },
+  "failure": {
+    "code": "GLOBAL_CAP_HEADROOM_RESERVED",
+    "message": "Deferred to preserve the required operator self-session headroom."
+  }
+}

@@ -4,7 +4,7 @@ import { ApiErrorEnvelopeSchema, type P0RestHandlers } from '@mustbeviral/contra
 
 import { createCoreApp, defaultV1Dependencies } from '../../src/app';
 import type { CoreBindings } from '../../src/bindings';
-import { createSupabaseRequestDependencies } from '../../src/composition/supabase';
+import { createSupabaseRequestDependencies, slugify } from '../../src/composition/supabase';
 import type { RequestDependencyFactory } from '../../src/routes/v1';
 import { V1_ROUTE_TABLE, type V1Operation } from '../../src/routes/v1-table';
 
@@ -45,6 +45,16 @@ describe('production Supabase composition', () => {
   });
 
   afterEach(() => vi.unstubAllGlobals());
+
+  it('keeps a truncated 80-character workspace slug valid at a separator boundary', () => {
+    const slug = slugify(
+      'GB-11 Daymark Mineral Face Lotion Broad Spectrum SPF 40. 00000000-0000-0000-0000-000000000000',
+    );
+
+    expect(slug.length).toBeLessThanOrEqual(80);
+    expect(slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
+    expect(slug.endsWith('-')).toBe(false);
+  });
 
   it('keeps the existing fail-closed fallback when required bindings are missing', async () => {
     const missingBindings: CoreBindings = {

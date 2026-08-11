@@ -138,6 +138,81 @@ export async function createConfirmedDisposableStagingUser(options: {
   return userId;
 }
 
+export async function recoverConfirmedDisposableStagingUser(options: {
+  readonly configuration: StagingAdminConfiguration;
+  readonly email: string;
+  readonly fetchImplementation?: typeof fetch;
+}): Promise<Readonly<{ email: string; accessToken: string }>> {
+  const fetchImplementation = options.fetchImplementation ?? fetch;
+  const response = await fetchImplementation(
+    `${options.configuration.supabaseUrl}/auth/v1/admin/users?page=1&per_page=1000`,
+    {
+      headers: {
+        apikey: options.configuration.serviceRoleKey,
+        authorization: `Bearer ${options.configuration.serviceRoleKey}`,
+      },
+    },
+  );
+  if (!response.ok) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RECOVERY_FAILED',
+      message: 'The disposable staging user lookup failed closed.',
+    });
+  }
+  const body = await responseBody(response);
+  if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RECOVERY_FAILED',
+      message: 'The disposable staging user lookup returned an invalid response.',
+    });
+  }
+  const users = (body as Readonly<Record<string, unknown>>)['users'];
+  if (!Array.isArray(users)) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RECOVERY_FAILED',
+      message: 'The disposable staging user lookup omitted its user list.',
+    });
+  }
+  const user = users.find(
+    (entry) =>
+      typeof entry === 'object' &&
+      entry !== null &&
+      !Array.isArray(entry) &&
+      (entry as Readonly<Record<string, unknown>>)['email'] === options.email,
+  ) as Readonly<Record<string, unknown>> | undefined;
+  const userId = user?.['id'];
+  if (typeof userId !== 'string' || userId.length === 0) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RECOVERY_FAILED',
+      message: 'The disposable staging user was not found.',
+    });
+  }
+  const identity = { email: options.email, password: createDisposableIdentity().password };
+  const updated = await fetchImplementation(
+    `${options.configuration.supabaseUrl}/auth/v1/admin/users/${encodeURIComponent(userId)}`,
+    {
+      method: 'PUT',
+      headers: {
+        apikey: options.configuration.serviceRoleKey,
+        authorization: `Bearer ${options.configuration.serviceRoleKey}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ password: identity.password }),
+    },
+  );
+  if (!updated.ok) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RECOVERY_FAILED',
+      message: 'The disposable staging user credential rotation failed closed.',
+    });
+  }
+  return authenticateDisposableStagingUser({
+    configuration: options.configuration,
+    identity,
+    fetchImplementation,
+  });
+}
+
 export function createDisposableIdentity(now: () => number = Date.now): DisposableIdentity {
   const suffix = randomBytes(12).toString('hex');
   return {
