@@ -17,7 +17,16 @@ import {
 import {
   authenticateDisposableStagingUser,
   createConfirmedDisposableStagingUser,
+  selectStagingPrivilegedKey,
 } from '../../tools/staging-auth';
+import {
+  PACK_QUOTE_MICROS,
+  SELF_SESSION_BRIEF_IDS,
+  WALLET_CREDIT_MICROS,
+  briefBootstrapKey,
+  credentialsDocument,
+  stableBriefSegment,
+} from '../../tools/self-session-kit';
 
 describe('golden launch-pack harness', () => {
   beforeEach(() => {
@@ -185,15 +194,17 @@ describe('golden launch-pack harness', () => {
     const fetchImplementation = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ id: 'u' }));
     const identity = { email: 'disposable@example.test', password: 'transient-password' };
 
-    await createConfirmedDisposableStagingUser({
-      configuration: {
-        supabaseUrl: 'https://project.supabase.co',
-        publishableKey: 'public-key',
-        serviceRoleKey: 'service-role-key',
-      },
-      identity,
-      fetchImplementation,
-    });
+    await expect(
+      createConfirmedDisposableStagingUser({
+        configuration: {
+          supabaseUrl: 'https://project.supabase.co',
+          publishableKey: 'public-key',
+          serviceRoleKey: 'service-role-key',
+        },
+        identity,
+        fetchImplementation,
+      }),
+    ).resolves.toBe('u');
 
     const request = fetchImplementation.mock.calls[0];
     expect(request?.[0]).toBe('https://project.supabase.co/auth/v1/admin/users');
@@ -202,5 +213,56 @@ describe('golden launch-pack harness', () => {
       password: identity.password,
       email_confirm: true,
     });
+  });
+
+  it('prefers the modern staging secret while retaining the legacy service-role fallback', () => {
+    const assignment = (name: string, value: string) => `${name}=${value}\n`;
+    const source =
+      assignment('SUPABASE_SECRET_KEY', 'file-modern') +
+      assignment('SUPABASE_SERVICE_ROLE_KEY', 'file-legacy');
+
+    expect(selectStagingPrivilegedKey(source, { SUPABASE_SECRET_KEY: 'env-modern' })).toBe(
+      'env-modern',
+    );
+    expect(selectStagingPrivilegedKey(source, { SUPABASE_SERVICE_ROLE_KEY: 'env-legacy' })).toBe(
+      'env-legacy',
+    );
+    expect(selectStagingPrivilegedKey(source, {})).toBe('file-modern');
+    expect(
+      selectStagingPrivilegedKey(assignment('SUPABASE_SERVICE_ROLE_KEY', 'file-legacy'), {}),
+    ).toBe('file-legacy');
+  });
+
+  it('pins the ignored operator kit to five exact packs and the Brief screen idempotency scheme', () => {
+    expect(WALLET_CREDIT_MICROS).toBe(PACK_QUOTE_MICROS * 5n);
+    expect(SELF_SESSION_BRIEF_IDS).toEqual(['GB-02', 'GB-04', 'GB-10']);
+    expect(stableBriefSegment('Northstar Magnesium launch pack')).toBe(
+      'northstar-magnesium-launch-pack',
+    );
+    expect(briefBootstrapKey('project', 'workspace-Northstar Magnesium launch pack')).toBe(
+      'web-brief-project-workspace-northstar-magnesium-launch-pack',
+    );
+
+    const document = credentialsDocument(
+      { email: 'operator@example.test', password: 'local-secret' },
+      {
+        userId: 'user-1',
+        workspaceId: 'workspace-1',
+        seededBriefs: [
+          {
+            briefId: 'GB-02',
+            product: 'Northstar Magnesium',
+            projectId: 'project-1',
+            canvasId: 'canvas-1',
+            revisionId: 'revision-1',
+          },
+        ],
+      },
+    );
+    expect(document).toContain('operator@example.test');
+    expect(document).toContain('local-secret');
+    expect(document).toContain('22,750,000 micros');
+    expect(document).toContain('Two packs per day');
+    expect(document).toContain('/studio/workspace-1/canvas?canvas=canvas-1');
   });
 });

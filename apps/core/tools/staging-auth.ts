@@ -37,6 +37,18 @@ export interface DisposableIdentity {
   readonly password: string;
 }
 
+export function selectStagingPrivilegedKey(
+  source: string,
+  environment: Readonly<Record<string, string | undefined>> = process.env,
+): string | undefined {
+  return (
+    environment['SUPABASE_SECRET_KEY'] ??
+    environment['SUPABASE_SERVICE_ROLE_KEY'] ??
+    environmentFileValue(source, 'SUPABASE_SECRET_KEY') ??
+    environmentFileValue(source, 'SUPABASE_SERVICE_ROLE_KEY')
+  );
+}
+
 function configuredValue(source: string, name: string): string {
   const match = new RegExp(`"${name}"\\s*:\\s*"([^"]+)"`, 'u').exec(source);
   const value = match?.[1];
@@ -72,9 +84,7 @@ export async function loadStagingAdminConfiguration(): Promise<StagingAdminConfi
     loadStagingAuthConfiguration(),
     readCoreFile('.dev.vars'),
   ]);
-  const serviceRoleKey =
-    process.env['SUPABASE_SERVICE_ROLE_KEY'] ??
-    environmentFileValue(localSource, 'SUPABASE_SERVICE_ROLE_KEY');
+  const serviceRoleKey = selectStagingPrivilegedKey(localSource);
   if (serviceRoleKey === undefined || serviceRoleKey.length === 0) {
     throw new HarnessFlowError({
       code: 'STAGING_CONFIG_MISSING',
@@ -88,7 +98,7 @@ export async function createConfirmedDisposableStagingUser(options: {
   readonly configuration: StagingAdminConfiguration;
   readonly identity: DisposableIdentity;
   readonly fetchImplementation?: typeof fetch;
-}): Promise<void> {
+}): Promise<string> {
   const response = await (options.fetchImplementation ?? fetch)(
     `${options.configuration.supabaseUrl}/auth/v1/admin/users`,
     {
@@ -111,6 +121,21 @@ export async function createConfirmedDisposableStagingUser(options: {
       message: 'Disposable staging user confirmation failed.',
     });
   }
+  const body = (await response.json()) as unknown;
+  if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RESPONSE_INVALID',
+      message: 'Staging user confirmation returned an invalid response.',
+    });
+  }
+  const userId = (body as Readonly<Record<string, unknown>>)['id'];
+  if (typeof userId !== 'string' || userId.length === 0) {
+    throw new HarnessFlowError({
+      code: 'AUTH_RESPONSE_INVALID',
+      message: 'Staging user confirmation did not return a user identifier.',
+    });
+  }
+  return userId;
 }
 
 export function createDisposableIdentity(now: () => number = Date.now): DisposableIdentity {
