@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Execute T5: run the 20 registered golden briefs against staging and record completion, latency, cap, ledger, lineage, and immutable-receipt evidence.
+next_action: Operator runs the first evaluator-zero self-session with GB-02 and records it from TEMPLATE.md.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

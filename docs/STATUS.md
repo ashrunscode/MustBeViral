@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Execute T5: run the 20 registered golden briefs against staging and record completion, latency, cap, ledger, lineage, and immutable-receipt evidence.
+Operator runs the first evaluator-zero self-session with GB-02 and records it from TEMPLATE.md.
