@@ -308,12 +308,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action: 'Run T2: re-run the $0.67 WashBodega August full pack with the repaired engine, then
-    capture the uninterrupted approval, export, and immutable customer-path receipt. The 2026-08-02
-    Track F attempt (run 143e6229-cd55-4e10-b98b-290916589ae6) reached 9 of 16 nodes before a
-    40-minute stall stranded 2,000,000 of 4,550,000 reserved micros; migration
-    20260802020000_p0_dispatch_epoch_and_stranded_sweeper and regression suite 00023 close the
-    wave-only dedupe cause.'
+  next_action: 'Execute T3: add Zod response schemas for all 18 P0 REST operations, align them with
+    the handler result unions, regenerate OpenAPI, build the Supabase sign-in surface, and generate
+    the typed client with bearer JWT, Idempotency-Key, and X-Request-Id.'
   blockers: []
   changed_paths:
     - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
