@@ -2,14 +2,18 @@
 
 import { Button, Card, Chip, LedgerTable, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   InMemoryExportPort,
+  WorkerExportPort,
   type ExportPort,
+  type ExportReadPort,
   type ExportPortResult,
   type ExportRowState,
 } from '../../../../../src/features/export/export-port';
+import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
+import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './receipt-flow.module.css';
 
 const exportChip = {
@@ -23,8 +27,9 @@ const exportChip = {
 
 export function ExportResultNotice({
   result,
+  runId,
   workspace,
-}: Readonly<{ result: ExportPortResult; workspace: string }>) {
+}: Readonly<{ result: ExportPortResult; runId?: string; workspace: string }>) {
   if (result.type === 'ok') return null;
   if (result.type === 'review_incomplete') {
     return (
@@ -38,46 +43,123 @@ export function ExportResultNotice({
         <span>
           Approve groups: {result.pending_group_ids.join(', ')} before creating an export.
         </span>
-        <Link href={`/studio/${workspace}/review`}>Return to named review</Link>
+        <Link
+          href={
+            runId === undefined
+              ? `/studio/${workspace}/review`
+              : `/studio/${workspace}/review?run=${encodeURIComponent(runId)}`
+          }
+        >
+          Return to named review
+        </Link>
       </Card>
     );
   }
+  if (result.type === 'conflict') {
+    return (
+      <Card className={styles.resultCard} feedback="error" role="alert" data-result="conflict">
+        <strong>Revision conflict</strong>
+        <span>
+          The immutable receipt cannot be issued against stale revision{' '}
+          {result.expected_revision_id}. Current revision is {result.actual_revision_id}.
+        </span>
+        <Link href={`/studio/${workspace}/canvas?state=conflict`}>Open canvas recovery</Link>
+      </Card>
+    );
+  }
+  const message =
+    result.type === 'forbidden'
+      ? 'Your session is not permitted to export this run.'
+      : result.type === 'not_found'
+        ? `Run ${result.run_id} was not found.`
+        : result.message;
   return (
-    <Card className={styles.resultCard} feedback="error" role="alert" data-result="conflict">
-      <strong>Revision conflict</strong>
-      <span>
-        The immutable receipt cannot be issued against stale revision 7f3a. Current revision is{' '}
-        {result.actual_revision_id}.
-      </span>
-      <Link href={`/studio/${workspace}/canvas?state=conflict`}>Open canvas recovery</Link>
+    <Card className={styles.resultCard} feedback="error" role="alert" data-result={result.type}>
+      <strong>Export unavailable</strong>
+      <span>{message}</span>
     </Card>
   );
 }
 
 export function ReceiptFlow({
+  dataMode = 'preview',
   port: suppliedPort,
+  readPort: suppliedReadPort,
+  runId,
   scenario = 'ok',
   workspace,
 }: Readonly<{
+  dataMode?: 'preview' | 'worker';
   port?: ExportPort;
-  scenario?: ExportPortResult['type'];
+  readPort?: ExportReadPort;
+  runId?: string;
+  scenario?: 'ok' | 'review_incomplete' | 'conflict';
   workspace: string;
 }>) {
-  const [port] = useState(() => suppliedPort ?? new InMemoryExportPort(scenario));
-  const [result] = useState(() =>
-    port.create({ expectedRevisionId: '7f3a', approvedGroupIds: ['visuals', 'copy'] }),
+  const [previewPort] = useState<ExportPort | null>(() =>
+    dataMode === 'preview' ? (suppliedPort ?? new InMemoryExportPort(scenario)) : null,
   );
+  const [readPort] = useState<ExportReadPort | null>(() => {
+    if (dataMode === 'preview') return null;
+    if (suppliedReadPort !== undefined) return suppliedReadPort;
+    if (runId === undefined || runId.length === 0) return null;
+    return new WorkerExportPort(createBrowserCoreClient(), runId, () =>
+      createMutationIdempotencyKey('create-export'),
+    );
+  });
+  const [result, setResult] = useState<ExportPortResult | null>(
+    () =>
+      previewPort?.create({
+        expectedRevisionId: '7f3a',
+        approvedGroupIds: ['visuals', 'copy'],
+      }) ??
+      (readPort === null
+        ? {
+            type: 'error',
+            message: 'Open receipt from a run so Core can create its export.',
+            retryable: false,
+          }
+        : null),
+  );
+
+  useEffect(() => {
+    if (readPort === null) return;
+    let active = true;
+    void readPort.create().then((next) => {
+      if (active) setResult(next);
+    });
+    return () => {
+      active = false;
+    };
+  }, [readPort]);
+
+  if (result === null) {
+    return (
+      <main id="main-content" className={styles.receiptPage}>
+        <Card className={styles.resultCard} feedback="loading" role="status" data-result="loading">
+          <strong>Creating immutable export</strong>
+          <span>Core is assembling approved artifacts and reading the authoritative receipt.</span>
+        </Card>
+      </main>
+    );
+  }
 
   if (result.type !== 'ok') {
     return (
       <main id="main-content" className={styles.receiptPage}>
-        <ExportResultNotice result={result} workspace={workspace} />
+        <ExportResultNotice
+          {...(runId === undefined ? {} : { runId })}
+          result={result}
+          workspace={workspace}
+        />
       </main>
     );
   }
 
   const { receipt, rows } = result;
-  const varianceMicros = receipt.quoteMicros - receipt.actualMicros;
+  const varianceMicros =
+    receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros - receipt.actualMicros : 0n;
+  const issuedDate = receipt.issuedAt.slice(0, 10);
   return (
     <main id="main-content" className={styles.receiptPage}>
       <div className={styles.sealRow}>
@@ -89,8 +171,14 @@ export function ReceiptFlow({
       <article className={`${styles.receiptCard} receipt-card`} aria-labelledby="receipt-title">
         <header className={styles.documentHead}>
           <div>
-            <h1 id="receipt-title">Receipt · Rev {receipt.revision} · 2026-07-20</h1>
-            <p>Lumen Skin / Meta Campaign Launch Pack / Immutable settlement record</p>
+            <h1 id="receipt-title">
+              Receipt · Rev {receipt.revision} · {issuedDate}
+            </h1>
+            <p>
+              {dataMode === 'preview'
+                ? 'Lumen Skin / Meta Campaign Launch Pack / Immutable settlement record'
+                : `Run ${receipt.receiptNumber} / Immutable settlement record`}
+            </p>
           </div>
           <div className={`${styles.receiptNumber} receipt-number`}>
             <MonoCaps>Statement</MonoCaps>
@@ -112,6 +200,11 @@ export function ReceiptFlow({
                 </tr>
               </thead>
               <tbody>
+                {receipt.lineage.length === 0 ? (
+                  <tr>
+                    <td colSpan={4}>No capture-lineage rows were returned for this receipt.</td>
+                  </tr>
+                ) : null}
                 {receipt.lineage.map((row) => (
                   <tr key={row.id} data-lineage-id={row.id}>
                     <td>{row.artifact}</td>
@@ -157,7 +250,7 @@ export function ReceiptFlow({
               </div>
               <div>
                 <span>Region</span>
-                <strong>us-east-1</strong>
+                <strong>{dataMode === 'preview' ? 'us-east-1' : 'Core receipt'}</strong>
               </div>
             </section>
           </aside>
@@ -184,8 +277,16 @@ export function ReceiptFlow({
           </div>
         </section>
         <footer className={styles.documentFoot}>
-          <MonoCaps>Immutable · Ledger entry 0042</MonoCaps>
-          <MonoCaps>Signer: mbv-ledger-v2 / us-east-1</MonoCaps>
+          <MonoCaps>
+            {dataMode === 'preview'
+              ? 'Immutable · Ledger entry 0042'
+              : `Immutable · Run ${receipt.receiptNumber}`}
+          </MonoCaps>
+          <MonoCaps>
+            {dataMode === 'preview'
+              ? 'Signer: mbv-ledger-v2 / us-east-1'
+              : 'Authority: Supabase ledger / Core Worker'}
+          </MonoCaps>
         </footer>
       </article>
       <div className={styles.confirmBar}>
@@ -196,10 +297,16 @@ export function ReceiptFlow({
             {formatUsdMicros(receipt.actualMicros)} · {formatUsdMicros(varianceMicros)} retained
           </span>
         </div>
-        <Button>Download PDF</Button>
+        <Button disabled={dataMode === 'worker'}>
+          {dataMode === 'preview' ? 'Download PDF' : 'Export recorded'}
+        </Button>
       </div>
       <footer className={styles.footer}>
-        <MonoCaps>Ledger read: 22ms · Entry: 0042</MonoCaps>
+        <MonoCaps>
+          {dataMode === 'preview'
+            ? 'Ledger read: 22ms · Entry: 0042'
+            : `Ledger read · Capture rows: ${String(receipt.lineage.length)}`}
+        </MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
     </main>

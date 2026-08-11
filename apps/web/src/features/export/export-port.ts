@@ -27,7 +27,23 @@ export interface ImmutableReceipt {
 export type ExportPortResult =
   | { readonly type: 'ok'; readonly rows: readonly ExportRow[]; readonly receipt: ImmutableReceipt }
   | { readonly type: 'review_incomplete'; readonly pending_group_ids: readonly string[] }
-  | { readonly type: 'conflict'; readonly actual_revision_id: string };
+  | {
+      readonly type: 'conflict';
+      readonly expected_revision_id: string;
+      readonly actual_revision_id: string;
+    }
+  | { readonly type: 'forbidden' }
+  | { readonly type: 'not_found'; readonly run_id: string }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
+    };
+
+export interface ExportReadPort {
+  create(): Promise<ExportPortResult>;
+}
 
 export interface ExportPort {
   create(
@@ -36,9 +52,9 @@ export interface ExportPort {
 }
 
 export class InMemoryExportPort implements ExportPort {
-  readonly #scenario: ExportPortResult['type'];
+  readonly #scenario: 'ok' | 'review_incomplete' | 'conflict';
 
-  constructor(scenario: ExportPortResult['type'] = 'ok') {
+  constructor(scenario: 'ok' | 'review_incomplete' | 'conflict' = 'ok') {
     this.#scenario = scenario;
   }
 
@@ -46,7 +62,11 @@ export class InMemoryExportPort implements ExportPort {
     input: Readonly<{ expectedRevisionId: string; approvedGroupIds: readonly string[] }>,
   ): ExportPortResult {
     if (this.#scenario === 'conflict' || input.expectedRevisionId !== '7f3a')
-      return { type: 'conflict', actual_revision_id: '81c2' };
+      return {
+        type: 'conflict',
+        expected_revision_id: input.expectedRevisionId,
+        actual_revision_id: '81c2',
+      };
     if (this.#scenario === 'review_incomplete' || !input.approvedGroupIds.includes('visuals'))
       return { type: 'review_incomplete', pending_group_ids: ['visuals'] };
     return {
@@ -97,3 +117,141 @@ export class InMemoryExportPort implements ExportPort {
     };
   }
 }
+
+function metadataString(value: unknown, keys: readonly string[]): string | undefined {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return undefined;
+  const record = value as Readonly<Record<string, unknown>>;
+  for (const key of keys) {
+    const candidate = record[key];
+    if (typeof candidate === 'string' && candidate.length > 0) return candidate;
+  }
+  return undefined;
+}
+
+function immutableReceipt(receipt: P0OperationData<'get_receipt'>['receipt']): ImmutableReceipt {
+  const reservation = receipt.reservation;
+  const capturedMicros = BigInt(reservation?.captured_micros ?? 0);
+  const refundedMicros = BigInt(reservation?.refunded_micros ?? 0);
+  return {
+    receiptNumber: receipt.run.id,
+    quoteMicros: BigInt(reservation?.amount_micros ?? 0),
+    actualMicros: capturedMicros >= refundedMicros ? capturedMicros - refundedMicros : 0n,
+    revision: receipt.run.canvas_revision_id,
+    issuedAt: receipt.run.updated_at,
+    lineage: receipt.ledger
+      .filter((entry) => entry.entry_type === 'capture' && entry.direction === 'debit')
+      .map((entry) => ({
+        id: entry.id,
+        artifact:
+          metadataString(entry.metadata, ['artifact_label', 'artifact_id']) ?? 'Captured output',
+        provider:
+          metadataString(entry.metadata, ['provider', 'provider_registration_id']) ??
+          'Ledger metadata unavailable',
+        model:
+          metadataString(entry.metadata, ['provider_model_id', 'model_route_id', 'model']) ??
+          'Ledger metadata unavailable',
+        costMicros: BigInt(entry.amount_micros),
+      })),
+  };
+}
+
+function exportRows(receipt: P0OperationData<'get_receipt'>['receipt']): readonly ExportRow[] {
+  return receipt.artifacts.map((artifact, index) => ({
+    id: artifact.id,
+    label:
+      artifact.artifact_kind === 'export'
+        ? 'Immutable export bundle'
+        : `Approved artifact ${String(index + 1).padStart(2, '0')}`,
+    format: artifact.mime_type,
+    state: artifact.status === 'available' ? ('ready' as const) : ('failed' as const),
+  }));
+}
+
+export class WorkerExportPort implements ExportReadPort {
+  #idempotencyKey: string | null = null;
+  #revision = 'current immutable revision';
+
+  constructor(
+    private readonly client: MustBeViralRestClient,
+    private readonly runId: string,
+    private readonly createIdempotencyKey: () => string,
+  ) {}
+
+  async create(): Promise<ExportPortResult> {
+    try {
+      const before = await this.client.request('get_receipt', { id: this.runId });
+      if ('error' in before) return this.#mapError(before.error);
+      this.#revision = before.data.receipt.run.canvas_revision_id;
+      const pending = before.data.receipt.artifacts.filter(
+        (artifact) => artifact.artifact_kind === 'provider_output',
+      );
+      if (pending.length > 0) {
+        return {
+          type: 'review_incomplete',
+          pending_group_ids: pending.map(({ id }) => id),
+        };
+      }
+      const approved = before.data.receipt.artifacts.filter(
+        (artifact) => artifact.artifact_kind === 'approved_output',
+      );
+      if (approved.length === 0) {
+        return { type: 'review_incomplete', pending_group_ids: ['approved artifacts'] };
+      }
+      this.#idempotencyKey ??= this.createIdempotencyKey();
+      const created = await this.client.request('create_export', {
+        id: this.runId,
+        idempotencyKey: this.#idempotencyKey,
+        body: { artifact_ids: approved.map(({ id }) => id), format: 'zip' },
+      });
+      if ('error' in created) return this.#mapError(created.error);
+      const after = await this.client.request('get_receipt', { id: this.runId });
+      if ('error' in after) return this.#mapError(after.error);
+      const rows = exportRows(after.data.receipt);
+      return {
+        type: 'ok',
+        rows: rows.some(({ id }) => id === created.data.artifact.artifact_id)
+          ? rows
+          : [
+              ...rows,
+              {
+                id: created.data.artifact.artifact_id,
+                label: 'Immutable export bundle',
+                format: created.data.artifact.mime_type,
+                state: 'ready',
+              },
+            ],
+        receipt: immutableReceipt(after.data.receipt),
+      };
+    } catch {
+      return { type: 'error', message: 'Core could not create this export.', retryable: true };
+    }
+  }
+
+  #mapError(
+    error: Readonly<{
+      code: string;
+      message: string;
+      request_id: string;
+      retryable: boolean;
+      details?: Readonly<Record<string, unknown>> | undefined;
+    }>,
+  ): Exclude<ExportPortResult, { type: 'ok' | 'review_incomplete' }> {
+    if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
+    if (error.code === 'NOT_FOUND') return { type: 'not_found', run_id: this.runId };
+    if (error.code === 'REVISION_CONFLICT' || error.code === 'IDEMPOTENCY_CONFLICT') {
+      return {
+        type: 'conflict',
+        expected_revision_id: this.#revision,
+        actual_revision_id:
+          metadataString(error.details, ['actual']) ?? 'current immutable revision',
+      };
+    }
+    return {
+      type: 'error',
+      message: error.message,
+      retryable: error.retryable,
+      request_id: error.request_id,
+    };
+  }
+}
+import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
