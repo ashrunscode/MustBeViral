@@ -62,3 +62,11 @@ verification is expected to run fully green from this point.
   remain pending operator actions; self-sessions do not substitute.
 - The broader-scoped read access needed to finish the legacy inventory's enumeration gaps
   (Pages, routes, Durable Objects, traffic) remains an operator-provisioning decision.
+
+### AMENDMENT 2026-08-11: remediation run authorized
+
+At 16:45 UTC the operator explicitly authorized the golden-20 remediation run: exactly GB-02 and
+GB-16, at most 9,100,000 reserved micros total, executing at or after the 2026-08-12 00:00 UTC
+rollover so the global-day cap window is fresh. No other paid run is authorized by this
+amendment; GB-05 is not rerun. The supervising agent queues the run to launch automatically at
+the rollover and reports the outcome against the representative-run-completion criterion.
