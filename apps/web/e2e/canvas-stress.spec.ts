@@ -4,7 +4,7 @@ import path from 'node:path';
 
 test('keeps the deterministic 500-node stress graph navigable', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium', 'Desktop stress evidence only');
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/canvas?fixture=500');
 

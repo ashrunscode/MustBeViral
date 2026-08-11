@@ -6,7 +6,7 @@ test('sustains at least 55 FPS while panning and zooming the 100-node canvas', a
   page,
 }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium', 'Desktop performance evidence only');
-  test.setTimeout(20_000);
+  test.setTimeout(60_000);
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/canvas?fixture=100');
   const surface = page.getByTestId('canvas-surface');

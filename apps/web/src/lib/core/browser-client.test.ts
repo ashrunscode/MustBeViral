@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { createBrowserCoreClient } from './browser-client';
+import { createBrowserCoreClient, resolveBrowserCoreBaseUrl } from './browser-client';
 
 describe('browser Core client boundary', () => {
   it('constructs the typed client from public configuration without making a request', () => {
@@ -10,5 +10,14 @@ describe('browser Core client boundary', () => {
       NEXT_PUBLIC_CORE_API_URL: 'http://127.0.0.1:8787',
     });
     expect(client.request).toBeTypeOf('function');
+  });
+
+  it('uses a same-origin Core rewrite in the browser and the configured URL on the server', () => {
+    expect(resolveBrowserCoreBaseUrl('https://core.example.test')).toBe(
+      'https://core.example.test',
+    );
+    expect(
+      resolveBrowserCoreBaseUrl('https://core.example.test', 'https://studio.example.test'),
+    ).toBe('https://studio.example.test/api/core');
   });
 });

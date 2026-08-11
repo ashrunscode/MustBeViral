@@ -14,7 +14,10 @@ import {
   createInMemoryHarnessTransport,
   executeGoldenBrief,
 } from '../../tools/launch-pack-harness-lib';
-import { authenticateDisposableStagingUser } from '../../tools/staging-auth';
+import {
+  authenticateDisposableStagingUser,
+  createConfirmedDisposableStagingUser,
+} from '../../tools/staging-auth';
 
 describe('golden launch-pack harness', () => {
   beforeEach(() => {
@@ -176,5 +179,28 @@ describe('golden launch-pack harness', () => {
       'https://project.supabase.co/auth/v1/token?grant_type=password',
     );
     expect(log).not.toHaveBeenCalled();
+  });
+
+  it('confirms a caller-held disposable identity without logging either credential', async () => {
+    const fetchImplementation = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ id: 'u' }));
+    const identity = { email: 'disposable@example.test', password: 'transient-password' };
+
+    await createConfirmedDisposableStagingUser({
+      configuration: {
+        supabaseUrl: 'https://project.supabase.co',
+        publishableKey: 'public-key',
+        serviceRoleKey: 'service-role-key',
+      },
+      identity,
+      fetchImplementation,
+    });
+
+    const request = fetchImplementation.mock.calls[0];
+    expect(request?.[0]).toBe('https://project.supabase.co/auth/v1/admin/users');
+    expect(JSON.parse(String(request?.[1]?.body))).toEqual({
+      email: identity.email,
+      password: identity.password,
+      email_confirm: true,
+    });
   });
 });
