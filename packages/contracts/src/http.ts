@@ -46,9 +46,28 @@ export const ApiSuccessEnvelopeSchema = z
   })
   .strict();
 
+export function createApiSuccessEnvelopeSchema<DataSchema extends z.ZodType>(
+  dataSchema: DataSchema,
+) {
+  return z
+    .object({
+      data: dataSchema,
+      meta: z
+        .object({
+          request_id: RequestIdSchema,
+        })
+        .strict(),
+    })
+    .strict();
+}
+
 export type HealthResponse = z.infer<typeof HealthResponseSchema>;
 export type ApiError = z.infer<typeof ApiErrorSchema>;
 export type ApiErrorEnvelope = z.infer<typeof ApiErrorEnvelopeSchema>;
+export type ApiSuccessEnvelope<Data = unknown> = Readonly<{
+  data: Data;
+  meta: Readonly<{ request_id: string }>;
+}>;
 
 export function createApiError(input: ApiError): ApiError {
   return ApiErrorSchema.parse(input);

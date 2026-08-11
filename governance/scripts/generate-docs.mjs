@@ -1,4 +1,16 @@
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+
 import { listRepositoryFiles, readJson, readText, readYaml, writeAtomic } from './lib.mjs';
+
+function generateOpenApi(check) {
+  const args = [
+    path.resolve('node_modules/tsx/dist/cli.mjs'),
+    path.resolve('governance/scripts/generate-openapi.ts'),
+  ];
+  if (check) args.push('--check');
+  execFileSync(process.execPath, args, { stdio: 'inherit' });
+}
 
 function markdownDocument(id, heading, body) {
   return `---\ndoc_id: ${id}\n---\n\n# ${heading}\n\n${body.trim()}\n`;
@@ -129,6 +141,7 @@ export function generatedOutputs() {
 }
 
 export function generateDocs({ check = false } = {}) {
+  generateOpenApi(check);
   const outputs = generatedOutputs();
   const drift = [];
   for (const [relativePath, content] of Object.entries(outputs)) {

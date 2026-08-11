@@ -1,6 +1,14 @@
 import { z } from 'zod';
 
-import { HandlerContextSchema, IdempotencyKeySchema, IdentifierSchema } from './commands';
+import {
+  ApplyCanvasPatchInputSchema,
+  CancelRunInputSchema,
+  HandlerContextSchema,
+  IdempotencyKeySchema,
+  IdentifierSchema,
+  QuoteRunInputSchema,
+  StartRunInputSchema,
+} from './commands';
 import type { CommandHandlers } from './handlers';
 import type { HandlerPorts } from './ports';
 
@@ -27,6 +35,30 @@ export const P0_REST_OPERATIONS = [
 ] as const;
 
 export type P0RestOperation = (typeof P0_REST_OPERATIONS)[number];
+
+export const P0_AUTHENTICATED_REST_OPERATIONS = [
+  'create_workspace',
+  'get_workspace',
+  'create_project',
+  'get_project',
+  'create_canvas',
+  'get_canvas_context',
+  'apply_canvas_patch',
+  'validate_graph',
+  'quote_run',
+  'start_run',
+  'get_run',
+  'cancel_run',
+  'create_artifact_upload',
+  'get_artifact',
+  'approve_artifacts',
+  'create_export',
+  'explain_model',
+  'get_receipt',
+] as const satisfies readonly P0RestOperation[];
+export type P0AuthenticatedRestOperation = (typeof P0_AUTHENTICATED_REST_OPERATIONS)[number];
+
+export const EmptyBodySchema = z.object({}).strict();
 
 export const CreateWorkspaceBodySchema = z
   .object({ name: z.string().trim().min(1).max(120) })
@@ -69,6 +101,26 @@ export const ApproveArtifactsBodySchema = z
       .max(100),
   })
   .strict();
+export const ApplyCanvasPatchBodySchema = ApplyCanvasPatchInputSchema.omit({
+  context: true,
+  canvas_id: true,
+  idempotency_key: true,
+});
+export const QuoteRunBodySchema = QuoteRunInputSchema.omit({
+  context: true,
+  canvas_id: true,
+  idempotency_key: true,
+});
+export const StartRunBodySchema = StartRunInputSchema.omit({
+  context: true,
+  quote_id: true,
+  idempotency_key: true,
+});
+export const CancelRunBodySchema = CancelRunInputSchema.omit({
+  context: true,
+  run_id: true,
+  idempotency_key: true,
+});
 
 const ContextInputSchema = z.object({ context: HandlerContextSchema }).strict();
 

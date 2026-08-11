@@ -2,20 +2,18 @@
   "openapi": "3.1.0",
   "info": {
     "title": "MustBeViral Core API",
-    "version": "0.0.0-cleanroom"
+    "version": "2026-07-12",
+    "description": "Typed P0 REST contract for the ViralGraph cleanroom Core Worker."
   },
-  "servers": [
-    { "url": "https://api-staging.mustbeviral.com", "description": "Staging" },
-    { "url": "https://api.mustbeviral.com", "description": "Production" }
-  ],
+  "servers": [{ "url": "/" }],
   "paths": {
     "/health": {
       "get": {
-        "operationId": "getHealth",
-        "summary": "Report Core Worker liveness without probing durable dependencies",
+        "operationId": "get_health",
+        "summary": "Get service health",
         "responses": {
           "200": {
-            "description": "Core is accepting requests",
+            "description": "The Core Worker is healthy.",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/HealthResponse" },
@@ -24,9 +22,828 @@
                   "service": "mustbeviral-core",
                   "generation": "viralgraph-cleanroom-v2",
                   "status": "ok",
-                  "request_id": "request-1234"
+                  "request_id": "health-request-0001"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces": {
+      "post": {
+        "operationId": "create_workspace",
+        "summary": "Create workspace",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateWorkspaceRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateWorkspaceSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{id}": {
+      "get": {
+        "operationId": "get_workspace",
+        "summary": "Get workspace",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetWorkspaceSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{id}/projects": {
+      "post": {
+        "operationId": "create_project",
+        "summary": "Create project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateProjectRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateProjectSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/projects/{id}": {
+      "get": {
+        "operationId": "get_project",
+        "summary": "Get project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/GetProjectSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/projects/{id}/canvases": {
+      "post": {
+        "operationId": "create_canvas",
+        "summary": "Create canvas",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateCanvasRequest" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateCanvasSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/canvases/{id}": {
+      "get": {
+        "operationId": "get_canvas_context",
+        "summary": "Get canvas context",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetCanvasContextSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/canvases/{id}/patches": {
+      "post": {
+        "operationId": "apply_canvas_patch",
+        "summary": "Apply canvas patch",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplyCanvasPatchRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplyCanvasPatchSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/canvases/{id}/validate": {
+      "post": {
+        "operationId": "validate_graph",
+        "summary": "Validate graph",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ValidateGraphRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ValidateGraphSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/canvases/{id}/quotes": {
+      "post": {
+        "operationId": "quote_run",
+        "summary": "Quote run",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/QuoteRunRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/QuoteRunSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/quotes/{id}/runs": {
+      "post": {
+        "operationId": "start_run",
+        "summary": "Start run",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/StartRunRequest" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/StartRunSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{id}": {
+      "get": {
+        "operationId": "get_run",
+        "summary": "Get run",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/GetRunSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{id}/cancel": {
+      "post": {
+        "operationId": "cancel_run",
+        "summary": "Cancel run",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CancelRunRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CancelRunSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/artifacts/uploads": {
+      "post": {
+        "operationId": "create_artifact_upload",
+        "summary": "Create artifact upload",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateArtifactUploadRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateArtifactUploadSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/artifacts/{id}": {
+      "get": {
+        "operationId": "get_artifact",
+        "summary": "Get artifact",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetArtifactSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{id}/approvals": {
+      "post": {
+        "operationId": "approve_artifacts",
+        "summary": "Approve artifacts",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApproveArtifactsRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApproveArtifactsSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{id}/exports": {
+      "post": {
+        "operationId": "create_export",
+        "summary": "Create export",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateExportRequest" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateExportSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/models/{id}": {
+      "get": {
+        "operationId": "explain_model",
+        "summary": "Explain model",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ExplainModelSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/runs/{id}/receipt": {
+      "get": {
+        "operationId": "get_receipt",
+        "summary": "Get receipt",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/GetReceiptSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/webhooks/fal": {
+      "post": {
+        "operationId": "ingest_fal_webhook",
+        "summary": "Ingest fal webhook",
+        "security": [{ "falSignature": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IngestFalWebhookRequest" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/IngestFalWebhookSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
             }
           }
         }
@@ -34,31 +851,1754 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" },
+      "falSignature": { "type": "apiKey", "in": "header", "name": "X-Fal-Signature" }
+    },
     "schemas": {
       "HealthResponse": {
         "type": "object",
-        "additionalProperties": false,
-        "required": ["schema_version", "service", "generation", "status", "request_id"],
         "properties": {
-          "schema_version": { "const": "2026-07-12" },
-          "service": { "const": "mustbeviral-core" },
-          "generation": { "const": "viralgraph-cleanroom-v2" },
-          "status": { "const": "ok" },
-          "request_id": { "type": "string", "minLength": 8, "maxLength": 128 }
+          "schema_version": { "type": "string", "const": "2026-07-12" },
+          "service": { "type": "string", "const": "mustbeviral-core" },
+          "generation": { "type": "string", "const": "viralgraph-cleanroom-v2" },
+          "status": { "type": "string", "const": "ok" },
+          "request_id": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          }
+        },
+        "required": ["schema_version", "service", "generation", "status", "request_id"],
+        "additionalProperties": false
+      },
+      "ApiErrorEnvelope": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": { "type": "string", "minLength": 1 },
+              "message": { "type": "string", "minLength": 1 },
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "retryable": { "type": "boolean" },
+              "details": {
+                "type": "object",
+                "propertyNames": { "type": "string" },
+                "additionalProperties": {}
+              }
+            },
+            "required": ["code", "message", "request_id", "retryable"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "CreateWorkspaceSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "role": { "type": "string", "const": "owner" }
+            },
+            "required": ["workspace_id", "role"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateWorkspaceRequest": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "minLength": 1, "maxLength": 120 } },
+        "required": ["name"],
+        "additionalProperties": false
+      },
+      "GetWorkspaceSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "workspace": {
+                "type": "object",
+                "properties": {
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "created_by": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "daily_spend_cap_micros": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "name": { "type": "string", "minLength": 1 },
+                  "per_run_spend_cap_micros": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "slug": { "type": "string", "minLength": 1 },
+                  "status": { "type": "string", "minLength": 1 },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  }
+                },
+                "required": [
+                  "created_at",
+                  "created_by",
+                  "daily_spend_cap_micros",
+                  "id",
+                  "name",
+                  "per_run_spend_cap_micros",
+                  "slug",
+                  "status",
+                  "updated_at"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["workspace"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateProjectSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "object",
+                "properties": {
+                  "brand_kit_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "brief_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "created_by": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "name": { "type": "string", "minLength": 1 },
+                  "status": { "type": "string", "minLength": 1 },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                },
+                "required": [
+                  "brand_kit_id",
+                  "brief_id",
+                  "created_at",
+                  "created_by",
+                  "id",
+                  "name",
+                  "status",
+                  "updated_at",
+                  "workspace_id"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["project"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateProjectRequest": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "minLength": 1, "maxLength": 160 } },
+        "required": ["name"],
+        "additionalProperties": false
+      },
+      "GetProjectSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "object",
+                "properties": {
+                  "brand_kit_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "brief_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "created_by": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "name": { "type": "string", "minLength": 1 },
+                  "status": { "type": "string", "minLength": 1 },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                },
+                "required": [
+                  "brand_kit_id",
+                  "brief_id",
+                  "created_at",
+                  "created_by",
+                  "id",
+                  "name",
+                  "status",
+                  "updated_at",
+                  "workspace_id"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["project"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateCanvasSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "canvasId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "revisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "canonicalHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+            },
+            "required": ["canvasId", "revisionId", "canonicalHash"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateCanvasRequest": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "minLength": 1, "maxLength": 160 } },
+        "additionalProperties": false
+      },
+      "GetCanvasContextSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "canvas": {
+                "type": "object",
+                "properties": {
+                  "canvasId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "projectId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "headRevisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "graphSchemaVersion": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "graphSnapshot": {
+                    "type": "object",
+                    "properties": {
+                      "nodes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "brief",
+                                "brand_context",
+                                "planner_text",
+                                "image_generation",
+                                "image_edit",
+                                "video_generation",
+                                "qa",
+                                "output_export",
+                                "group"
+                              ]
+                            },
+                            "parameter_schema_version": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "parameters": {
+                              "type": "object",
+                              "propertyNames": { "type": "string" },
+                              "additionalProperties": { "$ref": "#/$defs/__schema0" }
+                            }
+                          },
+                          "required": ["id", "kind", "parameter_schema_version", "parameters"],
+                          "additionalProperties": false
+                        }
+                      },
+                      "edges": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                            "kind": { "type": "string", "const": "dependency" },
+                            "source_node_id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "target_node_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                          },
+                          "required": ["id", "kind", "source_node_id", "target_node_id"],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": ["nodes", "edges"],
+                    "additionalProperties": false
+                  },
+                  "canonicalHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+                },
+                "required": [
+                  "canvasId",
+                  "projectId",
+                  "headRevisionId",
+                  "graphSchemaVersion",
+                  "graphSnapshot",
+                  "canonicalHash"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["canvas"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "null" },
+              { "type": "array", "items": { "$ref": "#/$defs/__schema0" } },
+              {
+                "type": "object",
+                "propertyNames": { "type": "string" },
+                "additionalProperties": { "$ref": "#/$defs/__schema0" }
+              }
+            ]
+          }
         }
       },
-      "ApiError": {
+      "ApplyCanvasPatchSuccess": {
         "type": "object",
-        "additionalProperties": false,
-        "required": ["code", "message", "request_id", "retryable"],
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "request_id": { "type": "string" },
-          "retryable": { "type": "boolean" },
-          "details": { "type": "object", "additionalProperties": true }
+          "data": {
+            "type": "object",
+            "properties": {
+              "canvasId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "revisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "canonicalHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+              "affectedDescendants": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+              }
+            },
+            "required": ["canvasId", "revisionId", "canonicalHash", "affectedDescendants"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "ApplyCanvasPatchRequest": {
+        "type": "object",
+        "properties": {
+          "expected_revision_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "patch": {
+            "type": "object",
+            "properties": {
+              "upsert_nodes": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "brief",
+                        "brand_context",
+                        "planner_text",
+                        "image_generation",
+                        "image_edit",
+                        "video_generation",
+                        "qa",
+                        "output_export",
+                        "group"
+                      ]
+                    },
+                    "parameter_schema_version": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "parameters": {
+                      "type": "object",
+                      "propertyNames": { "type": "string" },
+                      "additionalProperties": { "$ref": "#/$defs/__schema0" }
+                    }
+                  },
+                  "required": ["id", "kind", "parameter_schema_version", "parameters"],
+                  "additionalProperties": false
+                }
+              },
+              "remove_node_ids": {
+                "default": [],
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+              },
+              "upsert_edges": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "kind": { "type": "string", "const": "dependency" },
+                    "source_node_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "target_node_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                  },
+                  "required": ["id", "kind", "source_node_id", "target_node_id"],
+                  "additionalProperties": false
+                }
+              },
+              "remove_edge_ids": {
+                "default": [],
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+              }
+            },
+            "required": ["upsert_nodes", "remove_node_ids", "upsert_edges", "remove_edge_ids"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["expected_revision_id", "reason", "patch"],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "null" },
+              { "type": "array", "items": { "$ref": "#/$defs/__schema0" } },
+              {
+                "type": "object",
+                "propertyNames": { "type": "string" },
+                "additionalProperties": { "$ref": "#/$defs/__schema0" }
+              }
+            ]
+          }
         }
-      }
+      },
+      "ValidateGraphSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "canvasId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "revisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "valid": { "type": "boolean" },
+              "issues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "INVALID_SNAPSHOT",
+                        "INVALID_NODE",
+                        "INVALID_NODE_KIND",
+                        "INVALID_EDGE",
+                        "INVALID_EDGE_KIND",
+                        "DUPLICATE_NODE_ID",
+                        "DUPLICATE_EDGE_ID",
+                        "EDGE_ENDPOINT_NOT_FOUND",
+                        "SELF_EDGE",
+                        "ILLEGAL_EDGE",
+                        "CYCLE",
+                        "BRIEF_ROOT_REQUIRED",
+                        "MULTIPLE_BRIEF_ROOTS",
+                        "NON_BRIEF_ROOT",
+                        "UNREACHABLE_NODE"
+                      ]
+                    },
+                    "message": { "type": "string", "minLength": 1 },
+                    "node_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "edge_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                  },
+                  "required": ["code", "message"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["canvasId", "revisionId", "valid", "issues"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "ValidateGraphRequest": { "type": "object", "properties": {}, "additionalProperties": false },
+      "QuoteRunSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "quote": {
+                "type": "object",
+                "properties": {
+                  "quoteId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "workspaceId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "canvasRevisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "priceCatalogVersionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "currency": { "type": "string", "const": "USD" },
+                  "nodeLines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "nodeId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "modelRouteId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "providerModelId": { "type": "string", "minLength": 1 },
+                        "priceComponents": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "unit": {
+                                "type": "string",
+                                "enum": [
+                                  "request",
+                                  "image",
+                                  "video_second",
+                                  "input_token",
+                                  "output_token"
+                                ]
+                              },
+                              "quantity": { "type": "string", "pattern": "^\\d+$" },
+                              "unitPriceMicros": { "type": "string", "pattern": "^\\d+$" },
+                              "totalMicros": { "type": "string", "pattern": "^\\d+$" }
+                            },
+                            "required": ["unit", "quantity", "unitPriceMicros", "totalMicros"],
+                            "additionalProperties": false
+                          }
+                        },
+                        "totalMicros": { "type": "string", "pattern": "^\\d+$" }
+                      },
+                      "required": [
+                        "nodeId",
+                        "modelRouteId",
+                        "providerModelId",
+                        "priceComponents",
+                        "totalMicros"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "maximumChargeMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "expiresAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  }
+                },
+                "required": [
+                  "quoteId",
+                  "workspaceId",
+                  "canvasRevisionId",
+                  "priceCatalogVersionId",
+                  "currency",
+                  "nodeLines",
+                  "maximumChargeMicros",
+                  "createdAt",
+                  "expiresAt"
+                ],
+                "additionalProperties": false
+              },
+              "confirmationToken": { "type": "string", "minLength": 16, "maxLength": 500 }
+            },
+            "required": ["quote", "confirmationToken"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "QuoteRunRequest": {
+        "type": "object",
+        "properties": {
+          "expected_revision_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+        },
+        "required": ["expected_revision_id"],
+        "additionalProperties": false
+      },
+      "StartRunSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "run": {
+                "type": "object",
+                "properties": {
+                  "runId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "projectId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "canvasId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "canvasRevisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "quoteId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "queued",
+                      "dispatching",
+                      "running",
+                      "partial_succeeded",
+                      "succeeded",
+                      "cancel_requested",
+                      "canceled",
+                      "failed",
+                      "reconciliation_required"
+                    ]
+                  },
+                  "reservationId": { "type": "string", "minLength": 1, "maxLength": 200 }
+                },
+                "required": [
+                  "runId",
+                  "projectId",
+                  "canvasId",
+                  "canvasRevisionId",
+                  "quoteId",
+                  "status",
+                  "reservationId"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["run"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "StartRunRequest": {
+        "type": "object",
+        "properties": {
+          "confirmed": { "type": "boolean", "const": true },
+          "confirmation_token": { "type": "string", "minLength": 16, "maxLength": 500 }
+        },
+        "required": ["confirmed", "confirmation_token"],
+        "additionalProperties": false
+      },
+      "GetRunSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "run": {
+                "type": "object",
+                "properties": {
+                  "runId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "projectId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "canvasId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "canvasRevisionId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "quoteId": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "queued",
+                      "dispatching",
+                      "running",
+                      "partial_succeeded",
+                      "succeeded",
+                      "cancel_requested",
+                      "canceled",
+                      "failed",
+                      "reconciliation_required"
+                    ]
+                  },
+                  "reservationId": { "type": "string", "minLength": 1, "maxLength": 200 }
+                },
+                "required": [
+                  "runId",
+                  "projectId",
+                  "canvasId",
+                  "canvasRevisionId",
+                  "quoteId",
+                  "status",
+                  "reservationId"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["run"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CancelRunSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "runId": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "cancellation": { "type": "string", "const": "accepted" }
+            },
+            "required": ["runId", "cancellation"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CancelRunRequest": {
+        "type": "object",
+        "properties": { "reason": { "type": "string", "minLength": 1, "maxLength": 500 } },
+        "required": ["reason"],
+        "additionalProperties": false
+      },
+      "CreateArtifactUploadSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "artifact_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "upload_url": { "type": "string", "format": "uri" },
+              "expires_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              }
+            },
+            "required": ["artifact_id", "upload_url", "expires_at"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateArtifactUploadRequest": {
+        "type": "object",
+        "properties": {
+          "project_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "content_type": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "byte_size": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "purpose": { "type": "string", "minLength": 1, "maxLength": 100 }
+        },
+        "required": ["project_id", "content_type", "byte_size", "sha256", "purpose"],
+        "additionalProperties": false
+      },
+      "GetArtifactSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "artifact": {
+                "type": "object",
+                "properties": {
+                  "accessibility_description": {
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
+                  },
+                  "approved_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      },
+                      { "type": "null" }
+                    ]
+                  },
+                  "approved_by": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "artifact_kind": { "type": "string", "minLength": 1 },
+                  "byte_size": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                  "canvas_revision_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "content_hash": {
+                    "anyOf": [{ "type": "string", "pattern": "^[a-f0-9]{64}$" }, { "type": "null" }]
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "mime_type": { "type": "string", "minLength": 1 },
+                  "object_key": { "type": "string", "minLength": 1 },
+                  "project_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "rights_attestation": { "$ref": "#/$defs/__schema0" },
+                  "run_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "run_node_id": {
+                    "anyOf": [
+                      { "type": "string", "minLength": 1, "maxLength": 200 },
+                      { "type": "null" }
+                    ]
+                  },
+                  "status": { "type": "string", "minLength": 1 },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                },
+                "required": [
+                  "accessibility_description",
+                  "approved_at",
+                  "approved_by",
+                  "artifact_kind",
+                  "byte_size",
+                  "canvas_revision_id",
+                  "content_hash",
+                  "created_at",
+                  "id",
+                  "mime_type",
+                  "object_key",
+                  "project_id",
+                  "rights_attestation",
+                  "run_id",
+                  "run_node_id",
+                  "status",
+                  "updated_at",
+                  "workspace_id"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["artifact"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "null" },
+              { "type": "array", "items": { "$ref": "#/$defs/__schema0" } },
+              {
+                "type": "object",
+                "propertyNames": { "type": "string" },
+                "additionalProperties": { "$ref": "#/$defs/__schema0" }
+              }
+            ]
+          }
+        }
+      },
+      "ApproveArtifactsSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "approved": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+              "replayed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+              "artifacts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "artifact_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "artifact_kind": { "type": "string", "const": "approved_output" }
+                  },
+                  "required": ["artifact_id", "artifact_kind"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["run_id", "approved", "replayed", "artifacts"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "ApproveArtifactsRequest": {
+        "type": "object",
+        "properties": {
+          "approvals": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "artifact_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                "accessibility_description": { "type": "string", "minLength": 1, "maxLength": 2000 }
+              },
+              "required": ["artifact_id", "accessibility_description"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["approvals"],
+        "additionalProperties": false
+      },
+      "CreateExportSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "artifact": {
+                "type": "object",
+                "properties": {
+                  "artifact_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "project_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "run_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "canvas_revision_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "artifact_kind": { "type": "string", "const": "export" },
+                  "status": { "type": "string", "const": "available" },
+                  "object_key": { "type": "string", "minLength": 1 },
+                  "content_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                  "mime_type": { "type": "string", "minLength": 1 },
+                  "byte_size": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+                },
+                "required": [
+                  "artifact_id",
+                  "project_id",
+                  "run_id",
+                  "canvas_revision_id",
+                  "artifact_kind",
+                  "status",
+                  "object_key",
+                  "content_hash",
+                  "mime_type",
+                  "byte_size"
+                ],
+                "additionalProperties": false
+              },
+              "replayed": { "type": "boolean" }
+            },
+            "required": ["artifact", "replayed"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateExportRequest": {
+        "type": "object",
+        "properties": {
+          "artifact_ids": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          "format": { "type": "string", "enum": ["zip", "json"] }
+        },
+        "required": ["artifact_ids", "format"],
+        "additionalProperties": false
+      },
+      "ExplainModelSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "object",
+                "properties": {
+                  "capability": { "type": "string", "minLength": 1 },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "driver_version": { "type": "string", "minLength": 1 },
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "input_schema_version": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "output_schema_version": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "provider_model_id": { "type": "string", "minLength": 1 },
+                  "provider_registration_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "route_key": { "type": "string", "minLength": 1 },
+                  "status": { "type": "string", "minLength": 1 },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  }
+                },
+                "required": [
+                  "capability",
+                  "created_at",
+                  "driver_version",
+                  "id",
+                  "input_schema_version",
+                  "output_schema_version",
+                  "provider_model_id",
+                  "provider_registration_id",
+                  "route_key",
+                  "status",
+                  "updated_at"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": ["model"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "GetReceiptSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "receipt": {
+                "type": "object",
+                "properties": {
+                  "run": {
+                    "type": "object",
+                    "properties": {
+                      "canvas_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                      "canvas_revision_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                      "canvas_revision_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                      "confirmed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      },
+                      "confirmed_by": { "type": "string", "minLength": 1, "maxLength": 200 },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      },
+                      "dispatch_wave": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                      "project_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                      "quote_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "queued",
+                          "dispatching",
+                          "running",
+                          "partial_succeeded",
+                          "succeeded",
+                          "cancel_requested",
+                          "canceled",
+                          "failed",
+                          "reconciliation_required"
+                        ]
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      },
+                      "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                    },
+                    "required": [
+                      "canvas_id",
+                      "canvas_revision_hash",
+                      "canvas_revision_id",
+                      "confirmed_at",
+                      "confirmed_by",
+                      "created_at",
+                      "dispatch_wave",
+                      "id",
+                      "project_id",
+                      "quote_id",
+                      "status",
+                      "updated_at",
+                      "workspace_id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "reservation": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "amount_micros": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "captured_micros": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                          },
+                          "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                          "quote_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                          "refunded_micros": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "released_micros": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "run_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                          "status": { "type": "string", "minLength": 1 },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                          },
+                          "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                        },
+                        "required": [
+                          "amount_micros",
+                          "captured_micros",
+                          "created_at",
+                          "id",
+                          "quote_id",
+                          "refunded_micros",
+                          "released_micros",
+                          "run_id",
+                          "status",
+                          "updated_at",
+                          "workspace_id"
+                        ],
+                        "additionalProperties": false
+                      },
+                      { "type": "null" }
+                    ]
+                  },
+                  "ledger": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "account_code": { "type": "string", "minLength": 1 },
+                        "amount_micros": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "causative_key": { "type": "string", "minLength": 1 },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        "direction": { "type": "string", "minLength": 1 },
+                        "entry_type": { "type": "string", "minLength": 1 },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "metadata": { "$ref": "#/$defs/__schema0" },
+                        "reservation_id": {
+                          "anyOf": [
+                            { "type": "string", "minLength": 1, "maxLength": 200 },
+                            { "type": "null" }
+                          ]
+                        },
+                        "run_id": {
+                          "anyOf": [
+                            { "type": "string", "minLength": 1, "maxLength": 200 },
+                            { "type": "null" }
+                          ]
+                        },
+                        "transaction_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                      },
+                      "required": [
+                        "account_code",
+                        "amount_micros",
+                        "causative_key",
+                        "created_at",
+                        "direction",
+                        "entry_type",
+                        "id",
+                        "metadata",
+                        "reservation_id",
+                        "run_id",
+                        "transaction_id",
+                        "workspace_id"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "artifacts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accessibility_description": {
+                          "anyOf": [{ "type": "string" }, { "type": "null" }]
+                        },
+                        "approved_at": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                            },
+                            { "type": "null" }
+                          ]
+                        },
+                        "approved_by": {
+                          "anyOf": [
+                            { "type": "string", "minLength": 1, "maxLength": 200 },
+                            { "type": "null" }
+                          ]
+                        },
+                        "artifact_kind": { "type": "string", "minLength": 1 },
+                        "byte_size": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "canvas_revision_id": {
+                          "anyOf": [
+                            { "type": "string", "minLength": 1, "maxLength": 200 },
+                            { "type": "null" }
+                          ]
+                        },
+                        "content_hash": {
+                          "anyOf": [
+                            { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                            { "type": "null" }
+                          ]
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "mime_type": { "type": "string", "minLength": 1 },
+                        "object_key": { "type": "string", "minLength": 1 },
+                        "project_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "rights_attestation": { "$ref": "#/$defs/__schema0" },
+                        "run_id": {
+                          "anyOf": [
+                            { "type": "string", "minLength": 1, "maxLength": 200 },
+                            { "type": "null" }
+                          ]
+                        },
+                        "run_node_id": {
+                          "anyOf": [
+                            { "type": "string", "minLength": 1, "maxLength": 200 },
+                            { "type": "null" }
+                          ]
+                        },
+                        "status": { "type": "string", "minLength": 1 },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                      },
+                      "required": [
+                        "accessibility_description",
+                        "approved_at",
+                        "approved_by",
+                        "artifact_kind",
+                        "byte_size",
+                        "canvas_revision_id",
+                        "content_hash",
+                        "created_at",
+                        "id",
+                        "mime_type",
+                        "object_key",
+                        "project_id",
+                        "rights_attestation",
+                        "run_id",
+                        "run_node_id",
+                        "status",
+                        "updated_at",
+                        "workspace_id"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "lineage": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "child_artifact_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "parent_artifact_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        },
+                        "relationship": { "type": "string", "minLength": 1 },
+                        "workspace_id": { "type": "string", "minLength": 1, "maxLength": 200 }
+                      },
+                      "required": [
+                        "child_artifact_id",
+                        "created_at",
+                        "id",
+                        "parent_artifact_id",
+                        "relationship",
+                        "workspace_id"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["run", "reservation", "ledger", "artifacts", "lineage"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["receipt"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "null" },
+              { "type": "array", "items": { "$ref": "#/$defs/__schema0" } },
+              {
+                "type": "object",
+                "propertyNames": { "type": "string" },
+                "additionalProperties": { "$ref": "#/$defs/__schema0" }
+              }
+            ]
+          }
+        }
+      },
+      "IngestFalWebhookSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "accepted": { "type": "boolean", "const": true },
+                  "idempotent": { "type": "boolean", "const": true },
+                  "run_status": {
+                    "type": "string",
+                    "enum": [
+                      "queued",
+                      "dispatching",
+                      "running",
+                      "partial_succeeded",
+                      "succeeded",
+                      "cancel_requested",
+                      "canceled",
+                      "failed",
+                      "reconciliation_required"
+                    ]
+                  }
+                },
+                "required": ["accepted", "idempotent", "run_status"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "accepted": { "type": "boolean", "const": true },
+                  "idempotent": { "type": "boolean" },
+                  "artifact_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "run_status": {
+                    "type": "string",
+                    "enum": [
+                      "queued",
+                      "dispatching",
+                      "running",
+                      "partial_succeeded",
+                      "succeeded",
+                      "cancel_requested",
+                      "canceled",
+                      "failed",
+                      "reconciliation_required"
+                    ]
+                  },
+                  "capture_micros": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+                },
+                "required": [
+                  "accepted",
+                  "idempotent",
+                  "artifact_id",
+                  "run_status",
+                  "capture_micros"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "IngestFalWebhookRequest": {}
     }
   }
 }

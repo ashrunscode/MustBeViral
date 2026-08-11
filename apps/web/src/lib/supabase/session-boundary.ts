@@ -19,13 +19,13 @@ export async function requireStudioSession(): Promise<StudioSession> {
   }
 
   if (!hasSupabasePublicEnvironment()) {
-    if (process.env.NODE_ENV === 'production') redirect('/');
+    if (process.env.NODE_ENV === 'production') redirect('/login');
     return { subject: 'local-golden-preview', mode: 'local-preview' };
   }
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.auth.getClaims();
   const subject = data?.claims?.sub;
-  if (error || typeof subject !== 'string' || subject.length === 0) redirect('/');
+  if (error || typeof subject !== 'string' || subject.length === 0) redirect('/login');
   return { subject, mode: 'authenticated' };
 }

@@ -96,6 +96,9 @@ importers:
       '@mustbeviral/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@mustbeviral/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@mustbeviral/ui':
         specifier: workspace:*
         version: link:../../packages/ui

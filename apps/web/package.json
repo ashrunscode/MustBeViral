@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@mustbeviral/config": "workspace:*",
+    "@mustbeviral/contracts": "workspace:*",
     "@mustbeviral/ui": "workspace:*",
     "@supabase/ssr": "0.12.0",
     "@supabase/supabase-js": "2.110.2",
