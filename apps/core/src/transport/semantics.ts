@@ -56,6 +56,10 @@ export function p0ResultSemantics(result: P0HandlerResult): P0SemanticResult {
         message: 'The requested state change conflicts with current state.',
         retryable: false,
         httpStatus: 409,
+        details: {
+          ...(result.reason === undefined ? {} : { reason: result.reason }),
+          ...(result.actual === undefined ? {} : { actual: result.actual }),
+        },
       },
     };
   }
@@ -92,6 +96,7 @@ export function p0ResultSemantics(result: P0HandlerResult): P0SemanticResult {
         message: 'The canvas graph is invalid.',
         retryable: false,
         httpStatus: 422,
+        ...(result.issues === undefined ? {} : { details: { issues: result.issues } }),
       },
     };
   }

@@ -6,6 +6,7 @@ import {
   CANVAS_LOD_THRESHOLD,
   InMemoryCanvasPort,
   WorkerCanvasReadPort,
+  WorkerCanvasMutationPort,
   canvasModelFromContext,
   createCanvasFixture,
   isSimplifiedCanvasLod,
@@ -66,10 +67,116 @@ describe('InMemoryCanvasPort result union', () => {
   it.each(['ok', 'conflict', 'graph_invalid'] as const)(
     'returns the %s branch',
     async (scenario) => {
-      const result = await new InMemoryCanvasPort({ scenario }).validate('7f3a');
+      const result = await new InMemoryCanvasPort({ scenario }).validateAndApply(
+        createCanvasFixture(),
+      );
       expect(result.type).toBe(scenario);
     },
   );
+});
+
+describe('WorkerCanvasMutationPort', () => {
+  it('validates first, then applies the current snapshot with expected revision and idempotency', async () => {
+    const calls: Array<Readonly<{ body: unknown; headers: Headers; url: string }>> = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-mutation-0001',
+      fetch: async (input, init) => {
+        const url = String(input);
+        calls.push({ body: init?.body, headers: new Headers(init?.headers), url });
+        const payload = url.endsWith('/validate')
+          ? {
+              data: {
+                canvasId: 'canvas-live',
+                revisionId: 'revision-live',
+                valid: true,
+                issues: [],
+              },
+              meta: { request_id: 'request-mutation-0001' },
+            }
+          : {
+              data: {
+                canvasId: 'canvas-live',
+                revisionId: 'revision-next',
+                canonicalHash: 'b'.repeat(64),
+                affectedDescendants: [],
+              },
+              meta: { request_id: 'request-mutation-0001' },
+            };
+        return new Response(JSON.stringify(payload), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+    const model = { ...createCanvasFixture(), revision: 'revision-live' };
+
+    await expect(
+      new WorkerCanvasMutationPort(
+        client,
+        'canvas-live',
+        () => 'canvas-idem-0001',
+      ).validateAndApply(model),
+    ).resolves.toMatchObject({ type: 'ok', model: { revision: 'revision-next' } });
+    expect(calls.map(({ url }) => url)).toEqual([
+      'https://api.example.test/v1/canvases/canvas-live/validate',
+      'https://api.example.test/v1/canvases/canvas-live/patches',
+    ]);
+    expect(calls[0]?.headers.get('idempotency-key')).toBeNull();
+    expect(calls[1]?.headers.get('idempotency-key')).toBe('canvas-idem-0001');
+    expect(JSON.parse(String(calls[1]?.body))).toMatchObject({
+      expected_revision_id: 'revision-live',
+      reason: 'Validated canvas draft',
+    });
+  });
+
+  it('maps the live revision-conflict detail into the locked recovery state', async () => {
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-mutation-0002',
+      fetch: async (input) => {
+        const url = String(input);
+        return new Response(
+          JSON.stringify(
+            url.endsWith('/validate')
+              ? {
+                  data: {
+                    canvasId: 'canvas-live',
+                    revisionId: 'revision-live',
+                    valid: true,
+                    issues: [],
+                  },
+                  meta: { request_id: 'request-mutation-0002' },
+                }
+              : {
+                  error: {
+                    code: 'REVISION_CONFLICT',
+                    message: 'The requested state change conflicts with current state.',
+                    request_id: 'request-mutation-0002',
+                    retryable: false,
+                    details: { reason: 'revision', actual: 'revision-current' },
+                  },
+                },
+          ),
+          { status: url.endsWith('/validate') ? 200 : 409 },
+        );
+      },
+    });
+
+    await expect(
+      new WorkerCanvasMutationPort(
+        client,
+        'canvas-live',
+        () => 'canvas-idem-0002',
+      ).validateAndApply({ ...createCanvasFixture(), revision: 'revision-live' }),
+    ).resolves.toEqual({
+      type: 'conflict',
+      expected_revision_id: 'revision-live',
+      actual_revision_id: 'revision-current',
+    });
+  });
 });
 
 describe('WorkerCanvasReadPort', () => {

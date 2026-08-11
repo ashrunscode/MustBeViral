@@ -6,7 +6,11 @@ import {
   type GraphSnapshot,
   type GraphValidationIssue,
 } from '@mustbeviral/graph';
-import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
+import {
+  GraphValidationIssueSchema,
+  type MustBeViralRestClient,
+  type P0OperationData,
+} from '@mustbeviral/contracts';
 import type { ChipStatus } from '@mustbeviral/ui';
 
 export type CanvasNodeStatus = 'verified' | 'running' | 'queued' | 'failed' | 'notes';
@@ -50,7 +54,15 @@ export type CanvasPortResult =
       readonly expected_revision_id: string;
       readonly actual_revision_id: string;
     }
-  | { readonly type: 'graph_invalid'; readonly issues: readonly GraphValidationIssue[] };
+  | { readonly type: 'graph_invalid'; readonly issues: readonly GraphValidationIssue[] }
+  | { readonly type: 'forbidden' }
+  | { readonly type: 'not_found'; readonly canvas_id: string }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
+    };
 
 export type CanvasReadResult =
   | Extract<CanvasPortResult, { type: 'ok' }>
@@ -67,8 +79,11 @@ export interface CanvasReadPort {
   read(): Promise<CanvasReadResult>;
 }
 
-export interface CanvasPort extends CanvasReadPort {
-  validate(expectedRevisionId: string): Promise<CanvasPortResult>;
+export interface CanvasMutationPort {
+  validateAndApply(model: CanvasModel): Promise<CanvasPortResult>;
+}
+
+export interface CanvasPort extends CanvasReadPort, CanvasMutationPort {
   reloadLatest(): Promise<Extract<CanvasPortResult, { type: 'ok' }>>;
 }
 
@@ -483,6 +498,123 @@ export class WorkerCanvasReadPort implements CanvasReadPort {
   }
 }
 
+function errorDetailString(details: Readonly<Record<string, unknown>> | undefined, key: string) {
+  const value = details?.[key];
+  return typeof value === 'string' && value.length > 0 ? value : undefined;
+}
+
+function parsedGraphIssues(value: unknown): readonly GraphValidationIssue[] | undefined {
+  const parsed = GraphValidationIssueSchema.array().safeParse(value);
+  if (!parsed.success) return undefined;
+  return parsed.data.map(({ code, message, node_id, edge_id }) => ({
+    code,
+    message,
+    ...(node_id === undefined ? {} : { node_id }),
+    ...(edge_id === undefined ? {} : { edge_id }),
+  }));
+}
+
+function errorDetailIssues(
+  details: Readonly<Record<string, unknown>> | undefined,
+): readonly GraphValidationIssue[] {
+  return (
+    parsedGraphIssues(details?.issues) ?? [
+      { code: 'INVALID_SNAPSHOT', message: 'Repair the graph before requesting a quote.' },
+    ]
+  );
+}
+
+function graphPatchFromModel(model: CanvasModel) {
+  return {
+    upsert_nodes: model.nodes.map(({ id, kind, parameter_schema_version, parameters }) => ({
+      id,
+      kind,
+      parameter_schema_version,
+      parameters,
+    })),
+    remove_node_ids: [],
+    upsert_edges: model.edges.map(({ id, kind, source_node_id, target_node_id }) => ({
+      id,
+      kind,
+      source_node_id,
+      target_node_id,
+    })),
+    remove_edge_ids: [],
+  };
+}
+
+export class WorkerCanvasMutationPort implements CanvasMutationPort {
+  constructor(
+    private readonly client: MustBeViralRestClient,
+    private readonly canvasId: string,
+    private readonly createIdempotencyKey: () => string,
+  ) {}
+
+  async validateAndApply(model: CanvasModel): Promise<CanvasPortResult> {
+    try {
+      const validation = await this.client.request('validate_graph', {
+        id: this.canvasId,
+        body: {},
+      });
+      if ('error' in validation) return this.#mapError(validation.error, model.revision);
+      if (!validation.data.valid) {
+        return {
+          type: 'graph_invalid',
+          issues: parsedGraphIssues(validation.data.issues) ?? errorDetailIssues(undefined),
+        };
+      }
+
+      const applied = await this.client.request('apply_canvas_patch', {
+        id: this.canvasId,
+        idempotencyKey: this.createIdempotencyKey(),
+        body: {
+          expected_revision_id: model.revision,
+          reason: 'Validated canvas draft',
+          patch: graphPatchFromModel(model),
+        },
+      });
+      if ('error' in applied) return this.#mapError(applied.error, model.revision);
+      return { type: 'ok', model: { ...model, revision: applied.data.revisionId } };
+    } catch {
+      return {
+        type: 'error',
+        message: 'The canvas could not be validated by Core.',
+        retryable: true,
+      };
+    }
+  }
+
+  #mapError(
+    error: Readonly<{
+      code: string;
+      message: string;
+      request_id: string;
+      retryable: boolean;
+      details?: Readonly<Record<string, unknown>> | undefined;
+    }>,
+    expectedRevisionId: string,
+  ): CanvasPortResult {
+    if (error.code === 'REVISION_CONFLICT') {
+      return {
+        type: 'conflict',
+        expected_revision_id: expectedRevisionId,
+        actual_revision_id: errorDetailString(error.details, 'actual') ?? 'current revision',
+      };
+    }
+    if (error.code === 'GRAPH_INVALID') {
+      return { type: 'graph_invalid', issues: errorDetailIssues(error.details) };
+    }
+    if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
+    if (error.code === 'NOT_FOUND') return { type: 'not_found', canvas_id: this.canvasId };
+    return {
+      type: 'error',
+      message: error.message,
+      retryable: error.retryable,
+      request_id: error.request_id,
+    };
+  }
+}
+
 function asSnapshot(model: CanvasModel): GraphSnapshot {
   return { nodes: model.nodes, edges: model.edges };
 }
@@ -502,7 +634,8 @@ export class InMemoryCanvasPort implements CanvasPort {
     return { type: 'ok', model: this.#model };
   }
 
-  async validate(expectedRevisionId: string): Promise<CanvasPortResult> {
+  async validateAndApply(model: CanvasModel): Promise<CanvasPortResult> {
+    const expectedRevisionId = model.revision;
     if (this.#scenario === 'conflict') {
       return {
         type: 'conflict',

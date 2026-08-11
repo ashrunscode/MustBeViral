@@ -194,7 +194,41 @@ describe('P0 /v1 route boundary', () => {
     expect(response.status).toBe(status);
     const error = ApiErrorEnvelopeSchema.parse(await response.json()).error;
     expect(error.code).toBe(code);
-    expect(error.details).toBeUndefined();
+    if (result.status === 'conflict') {
+      expect(error.details).toEqual({ reason: result.reason });
+    } else {
+      expect(error.details).toBeUndefined();
+    }
+  });
+
+  it('preserves safe revision and graph details required by client recovery states', async () => {
+    const conflictApp = createCoreApp(
+      dependencies({
+        handlers: handlersWith('apply_canvas_patch', {
+          status: 'conflict',
+          reason: 'revision',
+          actual: 'revision-current',
+        }),
+      }),
+    );
+    const conflictResponse = await requestRoute(conflictApp, 'apply_canvas_patch');
+    expect(ApiErrorEnvelopeSchema.parse(await conflictResponse.json()).error.details).toEqual({
+      reason: 'revision',
+      actual: 'revision-current',
+    });
+
+    const graphApp = createCoreApp(
+      dependencies({
+        handlers: handlersWith('apply_canvas_patch', {
+          status: 'graph_invalid',
+          issues: [{ code: 'CYCLE', message: 'The canvas contains a cycle.' }],
+        }),
+      }),
+    );
+    const graphResponse = await requestRoute(graphApp, 'apply_canvas_patch');
+    expect(ApiErrorEnvelopeSchema.parse(await graphResponse.json()).error.details).toEqual({
+      issues: [{ code: 'CYCLE', message: 'The canvas contains a cycle.' }],
+    });
   });
 
   it('passes canonical inputs and idempotency keys for replay and mismatch detection', async () => {

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { GraphValidationIssue } from '@mustbeviral/graph';
 
 import {
   ApplyCanvasPatchInputSchema,
@@ -237,6 +238,8 @@ export type P0HandlerResult = Readonly<{
     | 'rate_limited'
     | 'provider_ambiguous';
   reason?: 'revision' | 'run_state' | 'quote_stale' | 'idempotency' | 'approval';
+  actual?: string;
+  issues?: readonly GraphValidationIssue[];
   tier?: string;
   retry_after_seconds?: number;
   reconcile_state?: string;

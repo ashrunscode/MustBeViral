@@ -17,6 +17,7 @@ import {
 import {
   GOLDEN_NODE_WIDTH,
   InMemoryCanvasPort,
+  WorkerCanvasMutationPort,
   WorkerCanvasReadPort,
   createCanvasFixture,
   isSimplifiedCanvasLod,
@@ -25,6 +26,7 @@ import {
   type CanvasEdge,
   type CanvasFixtureNodeCount,
   type CanvasModel,
+  type CanvasMutationPort,
   type CanvasNode,
   type CanvasOutlineRow,
   type CanvasReadPort,
@@ -33,6 +35,7 @@ import {
   type CanvasPortScenario,
 } from '../../../../../src/features/canvas/canvas-port';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
+import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './canvas-flow.module.css';
 
 const NODE_HEIGHT = 94;
@@ -193,6 +196,24 @@ export function CanvasResultBanner({
       </div>
     );
   }
+  if (result.type === 'forbidden' || result.type === 'not_found' || result.type === 'error') {
+    const message =
+      result.type === 'forbidden'
+        ? 'You do not have permission to update this canvas.'
+        : result.type === 'not_found'
+          ? `Canvas ${result.canvas_id} was not found.`
+          : result.message;
+    return (
+      <div
+        className={`${styles.resultBanner} ${styles.resultInvalid}`}
+        role="alert"
+        data-result={result.type}
+      >
+        <strong>Canvas update failed</strong>
+        <span>{message}</span>
+      </div>
+    );
+  }
   return (
     <div
       className={`${styles.resultBanner} ${styles.resultInvalid}`}
@@ -302,6 +323,13 @@ export function CanvasFlow({
     if (previewPort !== null) return previewPort;
     if (canvasId === undefined || canvasId.length === 0) return null;
     return new WorkerCanvasReadPort(createBrowserCoreClient(), canvasId);
+  });
+  const [mutationPort] = useState<CanvasMutationPort | null>(() => {
+    if (previewPort !== null) return previewPort;
+    if (canvasId === undefined || canvasId.length === 0) return null;
+    return new WorkerCanvasMutationPort(createBrowserCoreClient(), canvasId, () =>
+      createMutationIdempotencyKey('canvas-patch'),
+    );
   });
   const [model, setModel] = useState<CanvasModel | null>(() =>
     dataMode === 'preview' ? createCanvasFixture(fixtureNodeCount) : null,
@@ -474,10 +502,11 @@ export function CanvasFlow({
   }
 
   async function validateCanvas() {
-    if (previewPort === null || model === null) return;
+    if (mutationPort === null || model === null) return;
     setValidating(true);
-    const nextResult = await previewPort.validate(model.revision);
+    const nextResult = await mutationPort.validateAndApply(model);
     setResult(nextResult);
+    if (nextResult.type === 'ok') setModel(nextResult.model);
     setValidating(false);
   }
 
@@ -557,7 +586,7 @@ export function CanvasFlow({
                       : 'error'
               }
               loadingLabel="Validating"
-              disabled={previewPort === null}
+              disabled={mutationPort === null}
               onClick={() => void validateCanvas()}
             >
               Validate graph
