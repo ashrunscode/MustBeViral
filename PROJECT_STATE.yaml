@@ -11,14 +11,12 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Re-run the $0.67 WashBodega August full pack under T2 with the repaired engine and
-  runner, then prove all 16 nodes terminal, exact capture with zero residual, approval, export, and
-  the immutable customer-path receipt. The first Track F attempt on 2026-08-02 (run
-  143e6229-cd55-4e10-b98b-290916589ae6) settled 9 of 16 nodes before a 40-minute stall stranded
-  2,000,000 of 4,550,000 reserved micros. Its wave-only dispatch dedupe key dropped later promotion
-  batches; migration 20260802020000_p0_dispatch_epoch_and_stranded_sweeper and regression suite
-  00023 shipped the dispatch epoch plus live stranded-work sweeper, and T1 closed the remaining
-  truth, reconciliation-exit, operator-refund, runner-observability, and staging-residue gates.
+next_action: 'Run T2: re-run the $0.67 WashBodega August full pack with the repaired engine, then
+  capture the uninterrupted approval, export, and immutable customer-path receipt. The 2026-08-02
+  Track F attempt (run 143e6229-cd55-4e10-b98b-290916589ae6) reached 9 of 16 nodes before a
+  40-minute stall stranded 2,000,000 of 4,550,000 reserved micros; migration
+  20260802020000_p0_dispatch_epoch_and_stranded_sweeper and regression suite 00023 close the
+  wave-only dedupe cause.'
 decisions_pending: []
 blockers:
   - The $0.67 rung was attempted on 2026-08-02, not left unattempted. Track F run
@@ -26,19 +24,19 @@ blockers:
     2,000,000 of 4,550,000 reserved micros stranded. Readiness inside one dispatch wave arrived in
     separate parent-completion batches, but the old wave-only dedupe key accepted the first event
     and silently dropped the rest. Migration 20260802020000_p0_dispatch_epoch_and_stranded_sweeper
-    adds a monotonic dispatch epoch and arm_stranded_dispatch recovery cycle; regression suite
-    00023 proves staggered same-wave promotion. The sweeper recovered the run to succeeded with all
+    adds a monotonic dispatch epoch and arm_stranded_dispatch recovery cycle; regression suite 00023
+    proves staggered same-wave promotion. The sweeper recovered the run to succeeded with all
     4,550,000 micros captured and zero outstanding reservation, but the broken runner exited at
     STATUS unknown and the attempt did not close the full approval/export/receipt acceptance record.
     T2 therefore reruns the rung rather than narrating it as never attempted.
-  - All six original execution-engine defects are now closed and proven live. The last one -
-    nothing ever produced approved_output, so create_export could never succeed - closed with the
-    $0.075 approval-and-export proof. One master plus one adaptation ran through real waves (the
-    first live wave promotion), the adaptation was built from run-level brief context with a minted
-    capability URL, POST /runs/:id/approvals promoted both artifacts in place (HTTP 200, idempotent
-    replay), and POST /runs/:id/exports returned HTTP 201 with a byte-identical ZIP on re-export -
-    the first successful export in the system's history. Captured exactly 700,000 micros, zero
-    residual. Evidence in governance/evidence/WP-P0-001/approval-export-proof.md.
+  - All six original execution-engine defects are now closed and proven live. The last one - nothing
+    ever produced approved_output, so create_export could never succeed - closed with the $0.075
+    approval-and-export proof. One master plus one adaptation ran through real waves (the first live
+    wave promotion), the adaptation was built from run-level brief context with a minted capability
+    URL, POST /runs/:id/approvals promoted both artifacts in place (HTTP 200, idempotent replay),
+    and POST /runs/:id/exports returned HTTP 201 with a byte-identical ZIP on re-export - the first
+    successful export in the system's history. Captured exactly 700,000 micros, zero residual.
+    Evidence in governance/evidence/WP-P0-001/approval-export-proof.md.
   - The TRUE root cause of every stranded settlement is found, fixed, and proven on the real path.
     Supabase loads pg_safeupdate on API connections only, and advance_run_readiness cleared its
     scratch table with a bare DELETE - so every Worker-side terminal advance failed with SQLSTATE
@@ -52,9 +50,9 @@ blockers:
   - The $0.0004 copy-only money-path proof passed on live staging. Quoted 450,000 micros, captured
     exactly 450,000, zero residual, three JSON artifacts, run terminal succeeded, read back through
     the real GET /v1/runs/:id/receipt a customer would call. Getting there found and fixed FIVE
-    missing service_role grants on privileged RPCs - three from today's Track C/D work
-    (DROP FUNCTION clears grants; the migrations re-issued the revoke but not the matching grant) and
-    two pre-existing from Track A (reap_dead_dispatch, finalize_cancel_requested_runs - both likely
+    missing service_role grants on privileged RPCs - three from today's Track C/D work (DROP
+    FUNCTION clears grants; the migrations re-issued the revoke but not the matching grant) and two
+    pre-existing from Track A (reap_dead_dispatch, finalize_cancel_requested_runs - both likely
     unreachable by the actual cron since they were introduced, because their own evidence validated
     them by calling the RPC directly as postgres, which bypasses grants). A new pgTAP suite
     (00021_p0_privileged_rpc_grants) asserts service_role execute on the full known privileged RPC

@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Fix the six execution-engine defects that prevent a launch pack from completing, in money-safety-first order, then climb the metered spend ladder ($0.04 signed-URL probe, $0.0004 copy-only money-path proof, $0.075 approval/export, $0.67 one full pack, ~$13 for 20 briefs). The quote path is proven 20/20 on staging at 4,550,000 micros and all four launch routes are gate-open per the 2026-07-29 amendment to governance/evidence/WP-P0-001/environment-provisioning.md section 4 (operator inputs are listed in section 5; the previous pointer to section 6, the 2026-07-20 execution record, was wrong).
+Run T2: re-run the $0.67 WashBodega August full pack with the repaired engine, then capture the uninterrupted approval, export, and immutable customer-path receipt. The 2026-08-02 Track F attempt (run 143e6229-cd55-4e10-b98b-290916589ae6) reached 9 of 16 nodes before a 40-minute stall stranded 2,000,000 of 4,550,000 reserved micros; migration 20260802020000_p0_dispatch_epoch_and_stranded_sweeper and regression suite 00023 close the wave-only dedupe cause.
