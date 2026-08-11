@@ -11,14 +11,26 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Fix the six execution-engine defects that prevent a launch pack from completing, in the
-  money-safety-first order recorded in the completion plan, then climb the metered spend ladder
-  ($0.04 signed-URL probe, $0.0004 copy-only money-path proof, $0.075 approval/export, $0.67 one
-  full pack, ~$13 for 20 briefs). The quote path is proven 20/20 on staging at 4,550,000 micros and
-  all four launch routes are gate-open per the 2026-07-29 amendment to
-  governance/evidence/WP-P0-001/environment-provisioning.md section 4.
+next_action: Re-run the $0.67 WashBodega August full pack under T2 with the repaired engine and
+  runner, then prove all 16 nodes terminal, exact capture with zero residual, approval, export, and
+  the immutable customer-path receipt. The first Track F attempt on 2026-08-02 (run
+  143e6229-cd55-4e10-b98b-290916589ae6) settled 9 of 16 nodes before a 40-minute stall stranded
+  2,000,000 of 4,550,000 reserved micros. Its wave-only dispatch dedupe key dropped later promotion
+  batches; migration 20260802020000_p0_dispatch_epoch_and_stranded_sweeper and regression suite
+  00023 shipped the dispatch epoch plus live stranded-work sweeper, and T1 closed the remaining
+  truth, reconciliation-exit, operator-refund, runner-observability, and staging-residue gates.
 decisions_pending: []
 blockers:
+  - The $0.67 rung was attempted on 2026-08-02, not left unattempted. Track F run
+    143e6229-cd55-4e10-b98b-290916589ae6 settled 9 of 16 nodes, then stalled for forty minutes with
+    2,000,000 of 4,550,000 reserved micros stranded. Readiness inside one dispatch wave arrived in
+    separate parent-completion batches, but the old wave-only dedupe key accepted the first event
+    and silently dropped the rest. Migration 20260802020000_p0_dispatch_epoch_and_stranded_sweeper
+    adds a monotonic dispatch epoch and arm_stranded_dispatch recovery cycle; regression suite
+    00023 proves staggered same-wave promotion. The sweeper recovered the run to succeeded with all
+    4,550,000 micros captured and zero outstanding reservation, but the broken runner exited at
+    STATUS unknown and the attempt did not close the full approval/export/receipt acceptance record.
+    T2 therefore reruns the rung rather than narrating it as never attempted.
   - All six original execution-engine defects are now closed and proven live. The last one -
     nothing ever produced approved_output, so create_export could never succeed - closed with the
     $0.075 approval-and-export proof. One master plus one adaptation ran through real waves (the
@@ -82,10 +94,14 @@ blockers:
     tests; see governance/evidence/WP-P0-001/signed-artifact-access.md section 4. The remaining
     lesson is that fal's queue returns 200 IN_QUEUE for any submit body and validates only at
     execution, so no submit-time success proves a route is callable.
-  - One settlement hole remains open. reconciliation_required has no exit transitions while refund
-    is implemented with zero callers, so customer funds can be held with no recovery path.
-    Confirmation-token verification, the other half of this blocker, closed in Track A - tokens are
-    now real HMAC, minted server-side and constant-time verified.
+  - The last known settlement-transition hole is closed. Forward migration
+    20260811000000_p0_poll_reconciliation_run_exit makes a poll-provider run leave
+    reconciliation_required only after every attempt is terminal, with the established
+    succeeded/partial_succeeded/failed/canceled aggregation and a WHERE guard that leaves unresolved
+    runs parked; pgTAP suite 00024 covers both sides. refund_run_capture intentionally remains an
+    operator-SQL-only P0 recovery tool until the human refund-authorization policy is accepted; it
+    has no product or unattended Worker caller by design. Confirmation-token verification already
+    closed in Track A with server-minted HMAC and constant-time verification.
   - The web product does not exist yet. apps/web makes zero HTTP requests to the Worker; all seven
     screens run on in-memory fixtures; there is no sign-in surface; and packages/contracts declares
     no response schemas, so no typed client can be built until that contract is closed.

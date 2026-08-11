@@ -211,6 +211,55 @@ describe('provider outbox composition', () => {
     ).toHaveLength(1);
   });
 
+  it('arms stranded work before dispatch in every scheduled cycle', async () => {
+    const callOrder: string[] = [];
+    const lifecycle = {
+      armStrandedDispatch: async () => {
+        callOrder.push('arm_stranded_dispatch');
+        return { events_armed: 0 };
+      },
+      dispatchPending: async () => {
+        callOrder.push('dispatch_pending');
+        return {
+          claimed: 0,
+          submitted: 0,
+          replayed: 0,
+          reconciliationRequired: 0,
+          ambiguous: 0,
+          failed: 0,
+        };
+      },
+      reconcilePending: async () => {
+        callOrder.push('reconcile_pending');
+        return { checked: 0, updated: 0, failed: 0 };
+      },
+      reapDeadDispatch: async () => {
+        callOrder.push('reap_dead_dispatch');
+        return { runs_examined: 0 };
+      },
+      finalizeCancelRequested: async () => {
+        callOrder.push('finalize_cancel_requested');
+        return { examined: 0, finalized: 0 };
+      },
+      reapStrandedSynchronousJobs: async () => {
+        callOrder.push('reap_stranded_synchronous');
+        return { examined: 0, settled: 0, failed: 0 };
+      },
+    };
+
+    await expect(runProviderScheduled({} as CoreBindings, lifecycle)).resolves.toMatchObject({
+      status: 'ok',
+    });
+    expect(callOrder).toEqual([
+      'arm_stranded_dispatch',
+      'dispatch_pending',
+      'reconcile_pending',
+      'reap_dead_dispatch',
+      'finalize_cancel_requested',
+      'reap_stranded_synchronous',
+    ]);
+  });
+
   it('maps a rejected privileged key to a non-retryable deployment fault', async () => {
     const port = new SupabaseProviderOutboxPort({
       bindings,

@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { URL, fileURLToPath, pathToFileURL } from 'node:url';
 
 import {
   GOLDEN_BRIEF_IDS,
@@ -9,7 +9,11 @@ import {
   type GoldenCampaignBrief,
 } from '@mustbeviral/contracts';
 
-import { StagingLaunchPackTransport, type HarnessResult } from './launch-pack-harness-lib';
+import {
+  StagingLaunchPackTransport,
+  type HarnessResult,
+  type HarnessTransport,
+} from './launch-pack-harness-lib';
 import { authenticateDisposableStagingUser, loadStagingAuthConfiguration } from './staging-auth';
 
 /**
@@ -37,6 +41,9 @@ const TERMINAL_RUN_STATUSES: readonly string[] = [
   'failed',
   'canceled',
 ];
+const DEFAULT_TIMEOUT_MINUTES = 45;
+const POLL_INTERVAL_MS = 10_000;
+const PROGRESS_HEARTBEAT_MS = 60_000;
 
 const FIELD_LABELS = {
   product: 'Product',
@@ -133,6 +140,164 @@ const record = (value: unknown, field: string): Record<string, unknown> => {
 function requireOk(result: HarnessResult, operation: string): Readonly<Record<string, unknown>> {
   if (!result.ok) throw new Error(`${operation} failed: ${JSON.stringify(result.error)}`);
   return result.data;
+}
+
+interface RunProgress {
+  readonly status: string;
+  readonly artifactCount: number;
+  readonly capturedMicros: string;
+  readonly releasedMicros: string;
+}
+
+interface PollRunOptions {
+  readonly timeoutMs: number;
+  readonly pollIntervalMs?: number;
+  readonly heartbeatMs?: number;
+  readonly now?: () => number;
+  readonly sleep?: (milliseconds: number) => Promise<void>;
+  readonly stderr?: (message: string) => void;
+}
+
+interface TerminalRunProgress {
+  readonly status: string;
+  readonly receipt: Readonly<Record<string, unknown>>;
+}
+
+function progressFrom(
+  status: string,
+  receipt: Readonly<Record<string, unknown>> | null,
+): RunProgress {
+  const reservationValue = receipt?.['reservation'];
+  const reservation =
+    typeof reservationValue === 'object' &&
+    reservationValue !== null &&
+    !Array.isArray(reservationValue)
+      ? (reservationValue as Readonly<Record<string, unknown>>)
+      : null;
+  const artifacts = receipt?.['artifacts'];
+  return {
+    status,
+    artifactCount: Array.isArray(artifacts) ? artifacts.length : 0,
+    capturedMicros: String(
+      reservation?.['captured_micros'] ?? reservation?.['capturedMicros'] ?? 'unavailable',
+    ),
+    releasedMicros: String(
+      reservation?.['released_micros'] ?? reservation?.['releasedMicros'] ?? 'unavailable',
+    ),
+  };
+}
+
+function progressLine(progress: RunProgress, elapsedMs: number, observedAt: number): string {
+  return [
+    'PROGRESS',
+    `status=${progress.status}`,
+    `artifacts=${progress.artifactCount}`,
+    `captured_micros=${progress.capturedMicros}`,
+    `released_micros=${progress.releasedMicros}`,
+    `elapsed_seconds=${Math.floor(elapsedMs / 1000)}`,
+    `observed_at=${new Date(observedAt).toISOString()}`,
+  ].join(' ');
+}
+
+/**
+ * Polls the authoritative run resource for state and the receipt resource for observable money and
+ * artifact progress. A heartbeat is emitted even when nothing changes, so an unattended stall is
+ * visible instead of looking like a successful early exit.
+ */
+export async function pollRunUntilTerminal(
+  transport: HarnessTransport,
+  context: () => Readonly<Record<string, unknown>>,
+  runId: string,
+  options: PollRunOptions,
+): Promise<TerminalRunProgress> {
+  if (!Number.isFinite(options.timeoutMs) || options.timeoutMs <= 0) {
+    throw new TypeError('poll timeout must be a positive number of milliseconds');
+  }
+  const now = options.now ?? Date.now;
+  const sleep =
+    options.sleep ??
+    ((milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds)));
+  const stderr = options.stderr ?? console.error;
+  const pollIntervalMs = options.pollIntervalMs ?? POLL_INTERVAL_MS;
+  const heartbeatMs = options.heartbeatMs ?? PROGRESS_HEARTBEAT_MS;
+  const startedAt = now();
+  const deadline = startedAt + options.timeoutMs;
+  let lastProgressSignature = '';
+  let lastProgressAt = Number.NEGATIVE_INFINITY;
+  let lastErrorSignature = '';
+  let lastProgress: RunProgress | null = null;
+
+  while (now() < deadline) {
+    const observedAt = now();
+    const polled = await transport.call('get_run', { context: context(), run_id: runId });
+    if (!polled.ok) {
+      const signature = JSON.stringify(polled.error);
+      if (signature !== lastErrorSignature || observedAt - lastProgressAt >= heartbeatMs) {
+        stderr(
+          `POLL_ERROR operation=get_run code=${polled.error.code} http_status=${polled.error.http_status ?? 'unavailable'} observed_at=${new Date(observedAt).toISOString()}`,
+        );
+        lastErrorSignature = signature;
+        lastProgressAt = observedAt;
+      }
+      await sleep(pollIntervalMs);
+      continue;
+    }
+
+    const run = record(polled.data['run'], 'run');
+    const status = text(run['status'], 'run.status');
+    const receiptResult = await transport.call('get_receipt', {
+      context: context(),
+      run_id: runId,
+    });
+    let receipt: Readonly<Record<string, unknown>> | null = null;
+    if (receiptResult.ok) {
+      receipt = record(receiptResult.data['receipt'], 'receipt');
+    } else {
+      const signature = JSON.stringify(receiptResult.error);
+      if (signature !== lastErrorSignature) {
+        stderr(
+          `POLL_ERROR operation=get_receipt code=${receiptResult.error.code} http_status=${receiptResult.error.http_status ?? 'unavailable'} observed_at=${new Date(observedAt).toISOString()}`,
+        );
+        lastErrorSignature = signature;
+      }
+    }
+
+    const progress = progressFrom(status, receipt);
+    const signature = JSON.stringify(progress);
+    if (signature !== lastProgressSignature || observedAt - lastProgressAt >= heartbeatMs) {
+      stderr(progressLine(progress, observedAt - startedAt, observedAt));
+      lastProgressSignature = signature;
+      lastProgressAt = observedAt;
+    }
+    lastProgress = progress;
+
+    if (TERMINAL_RUN_STATUSES.includes(status)) {
+      if (receipt === null) {
+        throw new Error(
+          `Run ${runId} reached terminal status ${status}, but its receipt is unavailable`,
+        );
+      }
+      return { status, receipt };
+    }
+    await sleep(pollIntervalMs);
+  }
+
+  const finalProgress = lastProgress ?? progressFrom('unobserved', null);
+  throw new Error(
+    `Run ${runId} reached the explicit ${Math.floor(options.timeoutMs / 1000)}-second timeout ` +
+      `(last status: ${finalProgress.status}, artifacts: ${finalProgress.artifactCount}, ` +
+      `captured_micros: ${finalProgress.capturedMicros}, released_micros: ${finalProgress.releasedMicros})`,
+  );
+}
+
+function positiveNumberOption(argv: readonly string[], flag: string, defaultValue: number): number {
+  const index = argv.indexOf(flag);
+  if (index < 0) return defaultValue;
+  const parsed = Number(argv[index + 1]);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    throw new TypeError(`${flag} must be followed by a positive number`);
+  }
+  return parsed;
 }
 
 async function prepare(
@@ -249,6 +414,7 @@ async function prepare(
 async function start(
   sessionPath: string,
   outDirectory: string,
+  timeoutMinutes: number,
   log: (m: string) => void,
 ): Promise<void> {
   const session = JSON.parse(await readFile(sessionPath, 'utf8')) as PreparedSession;
@@ -303,52 +469,29 @@ async function start(
   await mkdir(outDirectory, { recursive: true });
   // A pack is 16 provider calls behind a queue and a webhook, so this polls rather than assuming.
   // Four dispatch waves on a one-minute cron put a hard floor of several minutes under this.
-  const deadline = Date.now() + 45 * 60 * 1000;
-  let last = '';
-  let lastError = '';
-  while (Date.now() < deadline) {
-    const receipt = await transport.call('get_receipt', { context: ctx(), run_id: runId });
-    if (receipt.ok) {
-      const body = record(receipt.data['receipt'] ?? receipt.data, 'receipt');
-      const status = String(body['status'] ?? body['runStatus'] ?? 'unknown');
-      if (status !== last) {
-        log(`STATUS ${status} @ ${new Date().toISOString()}`);
-        last = status;
-      }
-      // Spellings must match packages/domain RunStatus exactly: 'canceled' has one l and the
-      // partial state is 'partial_succeeded'. Getting these wrong makes a terminal run look like a
-      // hang until the deadline.
-      if (TERMINAL_RUN_STATUSES.includes(status)) {
-        await writeFile(
-          `${outDirectory}/receipt.json`,
-          `${JSON.stringify(
-            { session: { ...session, accessToken: '[redacted]' }, receipt: body },
-            null,
-            2,
-          )}\n`,
-          'utf8',
-        );
-        log(`TERMINAL ${status}`);
-        return;
-      }
-    } else {
-      // A persistent 403/404 previously looked identical to "still running" for the whole deadline.
-      const error = JSON.stringify(receipt.error);
-      if (error !== lastError) {
-        log(`RECEIPT_ERROR ${error}`);
-        lastError = error;
-      }
-    }
-    await new Promise((resolve) => setTimeout(resolve, 10_000));
-  }
-  throw new Error(
-    `Run ${runId} did not reach a terminal state within 45 minutes (last status: ${last || 'none'})`,
+  const terminal = await pollRunUntilTerminal(transport, ctx, runId, {
+    timeoutMs: timeoutMinutes * 60 * 1000,
+    stderr: log,
+  });
+  await writeFile(
+    `${outDirectory}/receipt.json`,
+    `${JSON.stringify(
+      {
+        session: { ...session, accessToken: '[redacted]' },
+        terminal_status: terminal.status,
+        receipt: terminal.receipt,
+      },
+      null,
+      2,
+    )}\n`,
+    'utf8',
   );
+  log(`TERMINAL status=${terminal.status} run_id=${runId}`);
 }
 
 export async function runWashBodegaPack(
   argv: readonly string[],
-  log: (message: string) => void = console.log,
+  log: (message: string) => void = console.error,
 ): Promise<number> {
   const sessionIndex = argv.indexOf('--session');
   const sessionPath =
@@ -370,17 +513,20 @@ export async function runWashBodegaPack(
     briefIndex >= 0 && argv[briefIndex + 1] !== undefined
       ? (argv[briefIndex + 1] as string)
       : DEFAULT_BRIEF_SECTION;
+  const timeoutMinutes = positiveNumberOption(argv, '--timeout-minutes', DEFAULT_TIMEOUT_MINUTES);
 
   if (argv.includes('--prepare')) {
     await prepare(sessionPath, briefSource, briefSection, log);
     return 0;
   }
   if (argv.includes('--start')) {
-    await start(sessionPath, outDirectory, log);
+    await start(sessionPath, outDirectory, timeoutMinutes, log);
     return 0;
   }
   log('Select exactly one mode: --prepare or --start.');
-  log('Options: --session <path> --out <dir> --brief-file <path> --brief <section-id>');
+  log(
+    'Options: --session <path> --out <dir> --brief-file <path> --brief <section-id> --timeout-minutes <number>',
+  );
   return 1;
 }
 
