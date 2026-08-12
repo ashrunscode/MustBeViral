@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Operator reviews the failed GB-02 remediation evidence and decides whether to authorize a revised prompt strategy and future GB-02 plus GB-16 attempts; after the technical gate resolves, the remaining sequence is evaluator-zero self-sessions, recruitment, five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop decision.
+next_action: Operator completes evaluator-zero self-sessions, then proceeds through recruitment, five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop decision.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -205,7 +205,7 @@ acceptance:
         Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
         launch-pack runs technically complete with real enabled providers, while median time to the
         first reviewable static pack is at most 10 minutes and p90 is at most 15 minutes.
-      status: pending
+      status: passed
       evidence:
         - governance/evidence/WP-P0-001/golden-20-run-proof.md
         - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
@@ -345,22 +345,18 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action: Operator reviews the failed GB-02 remediation evidence and decides whether to
-    authorize a revised prompt strategy and future GB-02 plus GB-16 attempts; after the technical
-    gate resolves, the remaining sequence is evaluator-zero self-sessions, recruitment,
+  next_action: Operator completes evaluator-zero self-sessions, then proceeds through recruitment,
     five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop
     decision.
   blockers:
-    - 'Representative-run-completion-and-latency remains pending at 14 of 20. The authorized
-      2026-08-12 GB-02 remediation reached partial_succeeded after two of three FLUX.2 master result
-      bodies returned HTTP 422 content_policy_violation at body.prompt; one master and its three
-      adaptations succeeded. The reservation reconciled as 1,550,000 captured plus 3,000,000
-      released with zero residual and zero unsettled reservations. The safety stop prevented GB-16
-      from starting, so GB-16 has no workspace, quote, reservation, or provider submission from the
-      remediation. Completed-run median 101.641 seconds and p90 122.314 seconds still pass. No
-      further paid attempt is authorized. Evidence:
-      governance/evidence/WP-P0-001/golden-20-run-proof.md section 10 and the 2026-08-12 remediation
-      JSON records.'
+    - 'Representative-run-completion-and-latency is passed at 16 of 20 after the second authorized
+      remediation completed GB-16 and GB-17. Median first-reviewable latency is 101.631 seconds and
+      p90 is 122.314 seconds. Both runs had 16 unique succeeded provider jobs, complete private
+      artifact/approval/export/receipt proof, exact 4,550,000-micro captures, and zero residual.
+      GB-18 was not run because the contingency condition was false. The second authorization used
+      9,100,000 of 13,650,000 permitted reserved micros, and final PostgREST audit reported zero
+      unsettled reservations. Evidence: governance/evidence/WP-P0-001/golden-20-run-proof.md section
+      11 and the GB-16, GB-17, and summary JSON records.'
     - 'Scheduling note (operator decision 2026-08-11): the P0 exit go/no-go review occurs after the
       qualified evaluator sessions complete, and a recorded decision - go, or pivot/stop - is
       required either way. Operator self-sessions precede recruitment and never count toward the

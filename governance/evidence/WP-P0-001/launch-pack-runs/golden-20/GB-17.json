@@ -1,21 +1,106 @@
 {
   "brief_id": "GB-17",
-  "outcome": "cap_deferred",
-  "cap_observation": {
-    "observed_at": "2026-08-11T13:00:14.319977+00:00",
-    "utc_day_start": "2026-08-11T00:00:00+00:00",
-    "global_daily_cap_micros": "100000000",
-    "global_exposure_micros": "73250000",
-    "global_remaining_micros": "26750000",
-    "reservation_count": 17,
-    "unsettled_reservation_count": 0,
-    "status_counts": {
-      "captured": 16,
-      "partially_captured": 1
-    }
+  "outcome": "completed",
+  "workspace_id": "f10fc54d-db12-4c47-bd8d-c14f0e641eab",
+  "project_id": "475d31ed-913c-5ad4-ae85-8699f3c1a253",
+  "canvas_id": "869ab6b2-fd4e-46cf-b32c-5a6620f50e45",
+  "revision_id": "c7c305c4-3ed5-4601-bf79-d5c0be094f3f",
+  "revision_hash": "262d569554dcf2a9f16b20e4d3b2900e1512311d087e5c08d4b28a70c7032486",
+  "quote": {
+    "quote_id": "28876ea3-341a-49aa-a994-69559f692b94",
+    "quoted_micros": "4550000",
+    "expires_at": "2026-08-12T00:58:44.759797+00:00"
   },
-  "failure": {
-    "code": "GLOBAL_CAP_HEADROOM_RESERVED",
-    "message": "Deferred to preserve the required operator self-session headroom."
+  "wallet_credit": {
+    "transaction_id": "3636bf91-ba11-4db9-a749-90939f39f0a7",
+    "amount_micros": "4550000",
+    "replayed": false
+  },
+  "run": {
+    "run_id": "c7513bb0-8156-4cb9-b32c-ead0a50f1848",
+    "reservation_id": "fec96fa6-37a7-4aa5-b3fb-a88e7cf6a1ec",
+    "status": "succeeded",
+    "confirmed_at": "2026-08-12T00:43:45.853523+00:00",
+    "terminal_at": "2026-08-12T00:45:57.97215+00:00",
+    "first_reviewable_at": "2026-08-12T00:45:08.880676+00:00",
+    "time_to_first_reviewable_ms": 83027,
+    "time_to_terminal_ms": 132119
+  },
+  "money": {
+    "reserved_micros": "4550000",
+    "captured_micros": "4550000",
+    "released_micros": "0",
+    "refunded_micros": "0",
+    "residual_micros": "0",
+    "capture_ledger_micros": "4550000",
+    "catalog_landed_cost_micros": "4550000",
+    "external_provider_cost_micros": null,
+    "external_provider_cost_observability": "not_observable"
+  },
+  "providers": {
+    "jobs": 16,
+    "unique_attempts": 16,
+    "duplicate_attempts": 0,
+    "all_terminal_succeeded": true,
+    "routes": [
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/flux-2-pro",
+        "route_id": "fal/flux-2-pro/masters",
+        "attempts": 3,
+        "captured_micros": "1500000"
+      },
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/flux-pro/kontext",
+        "route_id": "fal/flux-kontext-pro/adaptations",
+        "attempts": 9,
+        "captured_micros": "1800000"
+      },
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/bytedance/seedance/v1/pro/fast/image-to-video",
+        "route_id": "fal/seedance-1.0-lite/motion",
+        "attempts": 1,
+        "captured_micros": "800000"
+      },
+      {
+        "provider": "openrouter",
+        "provider_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
+        "route_id": "openrouter/chat-completions/copy",
+        "attempts": 3,
+        "captured_micros": "450000"
+      }
+    ]
+  },
+  "artifacts": {
+    "customer_reads": 17,
+    "approved_outputs": 16,
+    "exports": 1,
+    "all_available": true,
+    "all_private_exact_key": true,
+    "all_content_addressed": true,
+    "export_content_hash": "fc0ce4e46875e19cf71568fbbceaff914628dc1c1289c3628ac0e525ad7d19f1",
+    "export_byte_size": 8228357
+  },
+  "approval": {
+    "approved": 16,
+    "replayed": 16
+  },
+  "export": {
+    "deterministic": true,
+    "first_content_hash": "fc0ce4e46875e19cf71568fbbceaff914628dc1c1289c3628ac0e525ad7d19f1",
+    "second_content_hash": "fc0ce4e46875e19cf71568fbbceaff914628dc1c1289c3628ac0e525ad7d19f1"
+  },
+  "receipt": {
+    "customer_path_read": true,
+    "ledger_capture_rows": 16,
+    "ledger_artifact_links_complete": true,
+    "lineage_rows": 30,
+    "export_member_rows": 16,
+    "provider_model_cost_complete": true
+  },
+  "recovery": {
+    "exercised": false
   }
 }

@@ -427,11 +427,41 @@ The next technical spend decision returns to the operator. No further prompt fix
 five-to-eight qualified sessions, paid pilot, and go/no-go after the operator resolves whether the
 technical representative gate receives another remediation authorization.
 
-## 18. Left open
+## 18. Amendment 2026-08-12: representative completion and latency proven
 
-- Representative completion remains 14/20. The authorized `GB-02` attempt failed full-pack
-  completion, and the safety stop prevented `GB-16` from starting. No further paid attempt is
-  authorized.
+This amendment supersedes only the current verdict and figures in Gate 1 and the money appendix; it
+does not erase the failed first remediation recorded in section 17. The second operator
+authorization completed `GB-16` and `GB-17` through real enabled providers. Both runs contained 16
+unique succeeded attempts and provider jobs, complete private artifact/lineage/receipt assertions,
+and exact 4,550,000-micro captures with zero release or residual. Since neither primary failed, the
+authorized `GB-18` contingency was not exercised.
+
+**Gate 1 amended verdict: proven.** The registered corpus now contains 16 completed briefs, one
+failed brief (`GB-02`), and three cap-deferred briefs (`GB-18` through `GB-20`). Across the 16
+completed runs, median time to first reviewable static is 101.631 seconds and nearest-rank p90 is
+122.314 seconds. This proves the 16/20 floor and both latency ceilings. Evidence is
+`governance/evidence/WP-P0-001/golden-20-run-proof.md` section 11,
+`governance/evidence/WP-P0-001/launch-pack-runs/golden-20/GB-16.json`, `GB-17.json`, and the amended
+`summary.json`.
+
+The money appendix is amended, not rewritten:
+
+| Amendment money field                          |         Quoted |       Reserved |       Captured |      Released | Refunded | Residual |
+| ---------------------------------------------- | -------------: | -------------: | -------------: | ------------: | -------: | -------: |
+| Second remediation: GB-16 plus GB-17           |      9,100,000 |      9,100,000 |      9,100,000 |             0 |        0 |        0 |
+| **Golden-20 total after both remediations**    | **86,450,000** | **86,450,000** | **79,350,000** | **7,100,000** |    **0** |    **0** |
+| **Spend-ladder total after both remediations** | **96,700,000** | **96,700,000** | **89,600,000** | **7,100,000** |    **0** |    **0** |
+
+The direct provider-only Track B probe remains outside ledger totals, and external provider invoice
+cost remains unobservable. The technical representative gate is now closed; the current operator
+sequence is evaluator-zero self-sessions, recruitment, five-to-eight qualified sessions, one signed
+paid pilot, and the P0 go/no-go or pivot/stop decision.
+
+## 19. Left open
+
+- Representative completion and latency are proven at 16/20, median 101.631 seconds, and p90
+  122.314 seconds. `GB-18` through `GB-20` remain cap-deferred but are not required to exceed the
+  registered acceptance floor.
 - Production-segment p75 LCP, INP, and CLS evidence does not exist; canvas FPS and stress
   navigability alone do not pass the combined performance gate.
 - External provider invoice and complete fully landed cost are not observable, and no pack has a

@@ -1,17 +1,20 @@
-# The golden-20 acceptance rung remains pending after 14 completed briefs
+# The golden-20 acceptance rung passes after 16 completed briefs
 
 Work packet: WP-P0-001, step p0-005-golden-launch-pack-runs
 Recorded 2026-08-11
 
 ## 1. Verdict and execution boundary
 
-The governed staging rung produced 14 technically complete registered briefs, one genuine partial
-provider failure (`GB-02`), and five cap-deferred briefs (`GB-16` through `GB-20`). The completed-run
-latency thresholds passed, but the packet requires at least 16 of 20 completed briefs. A separate
-`GB-05` harness double-run was also discovered and reconciled. The 2026-08-11 row-level RCA in
-`golden-20-defect-analysis.md` proves that it was two distinct harness invocations, not a duplicate
-provider submission inside one run; the spend-dedup criterion is therefore reclassified pass. The
-representative completion/latency criterion remains pending.
+The governed staging rung now contains 16 technically complete registered briefs, one genuine
+partial provider failure (`GB-02`), and three cap-deferred briefs (`GB-18` through `GB-20`). The
+second 2026-08-12 authorization completed `GB-16` and `GB-17`; its `GB-18` contingency was not
+eligible because neither primary failed. Across all 16 completed runs, median time to first
+reviewable static is 101.631 seconds and p90 is 122.314 seconds. The combined representative
+completion-and-latency criterion therefore passes. Section 11 records the superseding amendment.
+
+A separate `GB-05` harness double-run was discovered and reconciled. The 2026-08-11 row-level RCA
+in `golden-20-defect-analysis.md` proves that it was two distinct harness invocations, not a
+duplicate provider submission inside one run; the spend-dedup criterion remains passed.
 
 All paid work ran on staging with the configured transactional caps unchanged. No production or
 legacy-v1 resource was read or mutated. Every registered brief used a disposable workspace, and
@@ -204,10 +207,11 @@ the recorded paid run. No stranded-dispatch or reconciliation sweeper was needed
 | Every completed run has private artifacts, lineage, and immutable receipt | Pass     | 14/14 completed registered runs passed every stored assertion                                         |
 | Landed cost and external provider cost kept separate                      | Pass     | Integer catalog captures recorded; external invoice cost explicitly unavailable                       |
 
-Because the combined completion-and-latency criterion requires both the count and the latency
-thresholds, `representative-run-completion-and-latency` remains `pending` in the active packet. The
-transactional spend/dedup/ledger criterion is reclassified `passed` by the bounded row-level RCA;
-the harness incident remains recorded in the money totals and does not disappear.
+At the original T5 close, the combined completion-and-latency criterion remained `pending` because
+only 14 briefs had completed. The transactional spend/dedup/ledger criterion was reclassified
+`passed` by the bounded row-level RCA; the harness incident remains recorded in the money totals
+and does not disappear. Section 11 supersedes only the representative criterion with the later
+authorized remediation result.
 
 ## 9. Verification and remote-mutation record
 
@@ -277,14 +281,53 @@ completion remains **14/20**; the completed-run median remains 101.641 seconds a
 Machine records are `GB-02-remediation-2026-08-12.json`,
 `GB-16-remediation-2026-08-12.json`, and the amended `summary.json` beside this evidence.
 
-## 11. Left open
+## 11. Amendment 2026-08-12: second remediation closes the representative gate
 
-- Five registered briefs (`GB-16` through `GB-20`) remain incomplete. `GB-16` was selected for the
-  authorized remediation but the safety stop prevented any workspace, quote, reservation, or
-  submission; `GB-17` through `GB-20` remain cap-deferred.
-- The 16/20 representative completion gate remains pending at 14/20.
-- `GB-02` has now failed two governed attempts with prompt-policy errors. The first failed all three
-  masters; the narrowed prompt let one master and its three descendants succeed but two masters
-  still failed. The provider response does not identify the triggering token.
-- Any further prompt change, `GB-02` attempt, or first `GB-16` attempt requires a new operator
-  decision and fresh spend authorization. No retry is queued.
+The operator amendment recorded at 00:40 UTC authorized `GB-16` followed by `GB-17`, with `GB-18`
+only as a contingency after one clean provider-layer failure and an absolute 13,650,000-micro
+reservation ceiling. `GB-02` was expressly set aside. Immediately before confirmation, privileged
+PostgREST reported 1,550,000 micros of current-day exposure, 98,450,000 micros remaining, and zero
+unsettled reservations at 00:40:19.325616 UTC. Staging health remained HTTP 200 on Worker version
+`ab6ee55f-0029-445a-b5ab-8edf5777aaea`; no Worker-runtime path changed between deployed commit
+`818b6e0` and the authorized branch HEAD.
+
+Each primary ran through the exact-selector harness in a fresh disposable workspace with the UTC
+day pinned and a one-pack 4,550,000-micro invocation ceiling:
+
+| Brief | Outcome     | Workspace                              | Run                                    | First reviewable |  Terminal | Provider jobs |  Reserved |  Captured | Released | Residual |
+| ----- | ----------- | -------------------------------------- | -------------------------------------- | ---------------: | --------: | ------------: | --------: | --------: | -------: | -------: |
+| GB-16 | `succeeded` | `50cbb89c-4d12-4f12-a7c0-8dd8a6ca33de` | `d374581b-c5fc-44ab-ac32-744a52e21dde` |         89.832 s | 145.811 s |            16 | 4,550,000 | 4,550,000 |        0 |        0 |
+| GB-17 | `succeeded` | `f10fc54d-db12-4c47-bd8d-c14f0e641eab` | `c7513bb0-8156-4cb9-b32c-ead0a50f1848` |         83.027 s | 132.119 s |            16 | 4,550,000 | 4,550,000 |        0 |        0 |
+
+For each run, the harness read 17 customer artifacts, approved all 16 outputs, proved a 16-output
+idempotent approval replay, produced one deterministic byte-identical re-export, and read the
+immutable receipt through `GET /v1/runs/:id/receipt`. Each receipt contains 16 capture rows, 30
+lineage rows, 16 export members, and complete provider/model/catalog-cost attribution. All artifacts
+were available, content-addressed, and accessible only through the exact-key private path.
+
+At 00:47:33.311470 UTC, bounded `POST /rest/v1/rpc/get_run_execution_audit` returned 16 succeeded
+attempts, 16 succeeded provider jobs, and 16 unique provider request IDs for each run. At
+00:47:33.475597 UTC, `POST /rest/v1/rpc/get_global_spend_exposure` returned 10,650,000 micros of
+current-day exposure, 89,350,000 micros remaining, three settled reservations, and zero unsettled
+reservations. No recovery path was needed. Both primary runs succeeded, so the contingency
+condition was false and `GB-18` received no workspace, quote, reservation, or provider submission.
+The authorization used 9,100,000 of its permitted 13,650,000 reserved micros.
+
+The superseding golden-20 totals are 86,450,000 quoted/reserved, 79,350,000 captured, 7,100,000
+released, zero refunded, and zero residual across 19 paid attempts. Registered completion is now
+**16/20**. The completed-run sample is 16, with median first-reviewable latency **101.631 seconds**
+and nearest-rank p90 **122.314 seconds**. The machine summary therefore records
+`representative_run_completion_and_latency=true`, while retaining the `GB-02` failure and the
+historical `GB-05` harness double-run.
+
+## 12. Left open
+
+- `GB-18` through `GB-20` remain cap-deferred, but the registered 16/20 technical-completion floor
+  and both latency thresholds are proven. No additional golden brief is required for this gate.
+- `GB-02` remains an honestly recorded prompt-policy failure after two governed attempts. It is set
+  aside and no additional paid retry is authorized.
+- External provider invoice and complete fully landed cost remain unobservable; technical approval
+  is not a qualified-evaluator usable-concept judgment.
+- Production-segment Core Web Vitals, evaluator-zero self-sessions, recruitment, five-to-eight
+  qualified sessions, one signed paid pilot, and the operator go/no-go or pivot/stop decision remain
+  open.

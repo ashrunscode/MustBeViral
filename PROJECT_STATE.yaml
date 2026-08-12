@@ -11,26 +11,22 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator reviews the failed GB-02 remediation evidence and decides whether to
-  authorize a revised prompt strategy and future GB-02 plus GB-16 attempts; after the technical
-  gate resolves, the remaining sequence is evaluator-zero self-sessions, recruitment,
+next_action: Operator completes evaluator-zero self-sessions, then proceeds through recruitment,
   five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop
   decision.
 decisions_pending: []
 blockers:
-  - 'The authorized 2026-08-12 golden-20 remediation failed closed. Current HEAD was deployed to
-    staging Worker version ab6ee55f-0029-445a-b5ab-8edf5777aaea, and privileged PostgREST proved a
-    fresh UTC-day window with zero initial exposure. GB-02 run
-    8d37f4f8-ee3f-4ccd-82c7-30732c2beef5 reached partial_succeeded in 87.448 seconds: three copy
-    jobs, one FLUX.2 master, and its three adaptations succeeded, while the other two master result
-    bodies again returned HTTP 422 content_policy_violation at body.prompt. The narrowed supplement
-    prompt was therefore insufficient, but route, wave/epoch, ingest, and settlement paths worked.
-    The reservation reconciled exactly as 4,550,000 reserved, 1,550,000 captured, 3,000,000
-    released, and zero residual; global unsettled reservations were zero. The stop-on-first-failure
-    guard prevented any GB-16 workspace, quote, reservation, or provider submission. Representative
-    completion remains pending at 14 of 20, and no further paid attempt is authorized. Evidence is
-    governance/evidence/WP-P0-001/golden-20-run-proof.md section 10 and the 2026-08-12 remediation
-    JSON records.'
+  - The representative-run-completion-and-latency gate is closed at 16 of 20 after the second
+    authorized remediation completed GB-16 and GB-17. Median first-reviewable latency is 101.631
+    seconds and p90 is 122.314 seconds. Each run contained 16 unique succeeded provider jobs,
+    complete private artifact/approval/export/receipt proof, an exact 4,550,000-micro capture, and
+    zero residual. Both primaries succeeded, so GB-18 contingency was not run. Privileged PostgREST
+    reported 10,650,000 micros current-day exposure, 89,350,000 remaining, and zero unsettled
+    reservations after the runs. Golden-20 gross money is 86,450,000 quoted/reserved, 79,350,000
+    captured, 7,100,000 released, and zero residual. Remaining P0 blockers are production-segment
+    Web Vitals, fully landed usable-pack cost, qualified evaluator outcomes, a paid pilot, and the
+    operator decision. Evidence is governance/evidence/WP-P0-001/golden-20-run-proof.md section 11
+    and the GB-16, GB-17, and summary JSON records.
   - T4 replaced every golden-screen fixture port with the authenticated typed Worker client in
     money-safety order while preserving the locked visuals and explicit maximum-price confirmation.
     Browser traffic uses a fixed same-origin Core proxy because the Worker does not expose browser
