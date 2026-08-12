@@ -70,3 +70,11 @@ GB-16, at most 9,100,000 reserved micros total, executing at or after the 2026-0
 rollover so the global-day cap window is fresh. No other paid run is authorized by this
 amendment; GB-05 is not rerun. The supervising agent queues the run to launch automatically at
 the rollover and reports the outcome against the representative-run-completion criterion.
+
+### AMENDMENT 2026-08-12: second remediation authorization — GB-16 and GB-17, GB-02 set aside
+
+At 00:40 UTC on 2026-08-12 the operator authorized the second remediation: run GB-16 and GB-17,
+with GB-18 as contingency only if one of the two fails cleanly at the provider layer, at most
+13,650,000 reserved micros total. GB-02 is set aside — the representative gate needs any 16 of
+the 20 registered briefs, and further prompt iteration against the opaque content-policy filter
+is deferred until after the gate resolves. No other paid run is authorized by this amendment.
