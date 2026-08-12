@@ -401,10 +401,37 @@ P0 exit does not itself deploy production. A recorded go decision unlocks the go
   30-day traffic, webhooks, Stripe, Vercel, ownership, and dependency evidence remain open. The
   inventory authorizes no deletion.
 
-## 17. Left open
+## 17. Amendment 2026-08-12: remediation failed closed
 
-- Representative completion remains 14/20 pending the operator-authorized `GB-02` and `GB-16`
-  remediation, capped at 9,100,000 reserved micros on a fresh UTC day.
+The authorized remediation did not change the representative gate verdict. `GB-02` reached
+`partial_succeeded` after two of three FLUX.2 master result bodies again returned HTTP 422
+`content_policy_violation` at `body.prompt`. The third master and its three adaptations succeeded.
+The harness stopped before `GB-16`, so registered completion remains 14/20 and the completed-run
+latency sample remains median 101.641 seconds and p90 122.314 seconds.
+
+PostgREST reconciled the new 4,550,000-micro reservation as 1,550,000 captured plus 3,000,000
+released, with zero refund, zero residual, and zero unsettled reservations. The money appendix is
+therefore amended, not rewritten:
+
+| Amendment money field                    |         Quoted |       Reserved |       Captured |      Released | Refunded | Residual |
+| ---------------------------------------- | -------------: | -------------: | -------------: | ------------: | -------: | -------: |
+| 2026-08-12 GB-02 remediation             |      4,550,000 |      4,550,000 |      1,550,000 |     3,000,000 |        0 |        0 |
+| **Spend-ladder total after remediation** | **87,600,000** | **87,600,000** | **80,500,000** | **7,100,000** |    **0** |    **0** |
+
+The direct provider-only Track B probe remains excluded from ledger totals. External provider
+invoice cost remains unobservable. Evidence is `golden-20-run-proof.md` section 10 and the two
+2026-08-12 remediation JSON records under `launch-pack-runs/golden-20/`.
+
+The next technical spend decision returns to the operator. No further prompt fix, `GB-02` retry, or
+`GB-16` attempt is implied by this dossier. The human runway remains self-sessions, recruitment,
+five-to-eight qualified sessions, paid pilot, and go/no-go after the operator resolves whether the
+technical representative gate receives another remediation authorization.
+
+## 18. Left open
+
+- Representative completion remains 14/20. The authorized `GB-02` attempt failed full-pack
+  completion, and the safety stop prevented `GB-16` from starting. No further paid attempt is
+  authorized.
 - Production-segment p75 LCP, INP, and CLS evidence does not exist; canvas FPS and stress
   navigability alone do not pass the combined performance gate.
 - External provider invoice and complete fully landed cost are not observable, and no pack has a

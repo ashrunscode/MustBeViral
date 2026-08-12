@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { URL, fileURLToPath, pathToFileURL } from 'node:url';
 
 import { loadGoldenBriefRegistry } from './golden-brief-registry';
 import { runGolden20StagingHarness } from './golden-20-staging-harness';
@@ -23,14 +23,46 @@ import {
 const DEFAULT_OUT_DIRECTORY = fileURLToPath(
   new URL('../../../.scratch/launch-pack-harness/', import.meta.url),
 );
+type RegisteredGoldenBrief = Awaited<ReturnType<typeof loadGoldenBriefRegistry>>[number];
 
 interface HarnessArguments {
   readonly mode: 'dry-run' | 'staging';
   readonly outDirectory: string;
   readonly expectProviderUnavailable: boolean;
+  readonly briefIds: readonly string[];
+  readonly expectedUtcDay?: string;
+  readonly maximumReservationMicros?: bigint;
+  readonly stopOnFailure: boolean;
 }
 
-function argumentsFrom(argv: readonly string[]): HarnessArguments {
+function valuesFor(argv: readonly string[], flag: string): readonly string[] {
+  const values: string[] = [];
+  for (let index = 0; index < argv.length; index += 1) {
+    if (argv[index] !== flag) continue;
+    const value = argv[index + 1];
+    if (value === undefined || value.length === 0 || value.startsWith('--')) {
+      throw new HarnessFlowError({
+        code: 'INVALID_ARGUMENTS',
+        message: `${flag} requires a value.`,
+      });
+    }
+    values.push(value);
+  }
+  return values;
+}
+
+function optionalValueFor(argv: readonly string[], flag: string): string | undefined {
+  const values = valuesFor(argv, flag);
+  if (values.length > 1) {
+    throw new HarnessFlowError({
+      code: 'INVALID_ARGUMENTS',
+      message: `${flag} may be supplied at most once.`,
+    });
+  }
+  return values[0];
+}
+
+export function harnessArgumentsFrom(argv: readonly string[]): HarnessArguments {
   const dryRun = argv.includes('--dry-run');
   const staging = argv.includes('--staging');
   if (dryRun === staging) {
@@ -39,19 +71,58 @@ function argumentsFrom(argv: readonly string[]): HarnessArguments {
       message: 'Select exactly one mode: --dry-run or --staging.',
     });
   }
-  const outIndex = argv.indexOf('--out');
-  const outDirectory = outIndex < 0 ? DEFAULT_OUT_DIRECTORY : argv[outIndex + 1];
-  if (outDirectory === undefined || outDirectory.length === 0 || outDirectory.startsWith('--')) {
+  const outDirectory = optionalValueFor(argv, '--out') ?? DEFAULT_OUT_DIRECTORY;
+  const expectedUtcDay = optionalValueFor(argv, '--expected-utc-day');
+  if (expectedUtcDay !== undefined && !/^\d{4}-\d{2}-\d{2}$/u.test(expectedUtcDay)) {
     throw new HarnessFlowError({
       code: 'INVALID_ARGUMENTS',
-      message: '--out requires a directory path.',
+      message: '--expected-utc-day requires YYYY-MM-DD.',
+    });
+  }
+  const maximumReservationValue = optionalValueFor(argv, '--max-reserved-micros');
+  if (maximumReservationValue !== undefined && !/^[1-9]\d*$/u.test(maximumReservationValue)) {
+    throw new HarnessFlowError({
+      code: 'INVALID_ARGUMENTS',
+      message: '--max-reserved-micros requires positive integer micros.',
     });
   }
   return {
     mode: dryRun ? 'dry-run' : 'staging',
     outDirectory,
     expectProviderUnavailable: !argv.includes('--expect-provider-run'),
+    briefIds: valuesFor(argv, '--brief'),
+    ...(expectedUtcDay === undefined ? {} : { expectedUtcDay }),
+    ...(maximumReservationValue === undefined
+      ? {}
+      : { maximumReservationMicros: BigInt(maximumReservationValue) }),
+    stopOnFailure: argv.includes('--stop-on-failure'),
   };
+}
+
+export function selectGoldenBriefs(
+  briefs: readonly RegisteredGoldenBrief[],
+  briefIds: readonly string[],
+): readonly RegisteredGoldenBrief[] {
+  if (briefIds.length === 0) return briefs;
+  if (new Set(briefIds).size !== briefIds.length) {
+    throw new HarnessFlowError({
+      code: 'INVALID_ARGUMENTS',
+      message: '--brief values must be unique.',
+    });
+  }
+  const byId = new Map<string, RegisteredGoldenBrief>(
+    briefs.map((brief) => [brief.briefId, brief]),
+  );
+  return briefIds.map((briefId) => {
+    const brief = byId.get(briefId);
+    if (brief === undefined) {
+      throw new HarnessFlowError({
+        code: 'INVALID_ARGUMENTS',
+        message: `Unknown registered brief ${briefId}.`,
+      });
+    }
+    return brief;
+  });
 }
 
 function safeFailure(error: unknown): SafeHarnessError {
@@ -67,11 +138,11 @@ export async function runLaunchPackHarness(
   argv: readonly string[],
   log: (message: string) => void = console.log,
 ): Promise<number> {
-  const options = argumentsFrom(argv);
+  const options = harnessArgumentsFrom(argv);
   // Unique per invocation: makes every workspace slug globally unique and scopes
   // idempotency keys so a re-run never collides with prior-run state on staging.
   const runId = randomBytes(4).toString('hex');
-  const briefs = await loadGoldenBriefRegistry();
+  const briefs = selectGoldenBriefs(await loadGoldenBriefRegistry(), options.briefIds);
   await mkdir(options.outDirectory, { recursive: true });
   if (options.mode === 'staging') {
     const configuration = await loadStagingAdminConfiguration();
@@ -85,12 +156,17 @@ export async function runLaunchPackHarness(
             return authenticateDisposableStagingUser({ configuration, identity, log });
           })()
         : await recoverConfirmedDisposableStagingUser({ configuration, email: resumeEmail });
-    log(`AUTHENTICATED disposable staging user: ${authentication.email}`);
+    log('AUTHENTICATED disposable staging user');
     return runGolden20StagingHarness({
       briefs,
       outDirectory: options.outDirectory,
       accessToken: authentication.accessToken,
       log,
+      ...(options.expectedUtcDay === undefined ? {} : { expectedUtcDay: options.expectedUtcDay }),
+      ...(options.maximumReservationMicros === undefined
+        ? {}
+        : { maximumReservationMicros: options.maximumReservationMicros }),
+      stopOnFailure: options.stopOnFailure,
     });
   }
   const transport = createInMemoryHarnessTransport();

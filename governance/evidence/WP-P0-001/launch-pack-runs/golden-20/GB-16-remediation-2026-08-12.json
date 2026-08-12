@@ -1,0 +1,14 @@
+{
+  "brief_id": "GB-16",
+  "attempt_kind": "operator_authorized_remediation",
+  "outcome": "not_run_safety_stop",
+  "recorded_at": "2026-08-12T00:13:16.458000+00:00",
+  "selected": true,
+  "workspace_created": false,
+  "quote_created": false,
+  "reservation_micros": "0",
+  "captured_micros": "0",
+  "released_micros": "0",
+  "provider_submissions": 0,
+  "reason": "The stop-on-first-failure guard ended the authorized invocation after GB-02 reached partial_succeeded. No second paid run is permitted in this turn."
+}

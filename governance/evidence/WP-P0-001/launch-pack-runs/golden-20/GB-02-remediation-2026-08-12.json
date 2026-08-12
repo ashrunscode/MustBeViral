@@ -1,0 +1,133 @@
+{
+  "brief_id": "GB-02",
+  "attempt_kind": "operator_authorized_remediation",
+  "outcome": "failed",
+  "recorded_at": "2026-08-12T00:14:39.232350+00:00",
+  "authorization": {
+    "source": "governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md",
+    "authorized_at": "2026-08-11T16:45:00+00:00",
+    "expected_utc_day": "2026-08-12",
+    "selected_brief_ids": ["GB-02", "GB-16"],
+    "maximum_reserved_micros": "9100000"
+  },
+  "deployment": {
+    "commit": "818b6e01681f717843a8436a7eed2e8333ff48e1",
+    "version_id": "ab6ee55f-0029-445a-b5ab-8edf5777aaea",
+    "rollback_version_id": "66b8da78-f001-4077-a268-da6c7063c6ab",
+    "health_http_status": 200,
+    "health_status": "ok",
+    "health_observed_at": "2026-08-12T00:08:14.3082608Z"
+  },
+  "precondition": {
+    "audit_path": "POST /rest/v1/rpc/get_global_spend_exposure",
+    "observed_at": "2026-08-12T00:11:46.039834+00:00",
+    "utc_day_start": "2026-08-12T00:00:00+00:00",
+    "global_daily_cap_micros": "100000000",
+    "global_exposure_micros": "0",
+    "global_remaining_micros": "100000000",
+    "required_reservation_micros": "9100000",
+    "unsettled_reservation_count": 0
+  },
+  "workspace_id": "383a2b02-d872-4c79-a2fc-b095899b422a",
+  "project_id": "8e9824ef-55dc-5401-b883-9846175e56dd",
+  "canvas_id": "12730e9e-e07f-4483-8f0f-368d8e2bd693",
+  "revision_id": "913ee3f2-8218-452e-9574-b9a6525cbe5c",
+  "revision_hash": "d811c0518691f58ce168ab35f6004ae46283538fba09f7afad5daf1364d897ec",
+  "quote": {
+    "quote_id": "01b7c321-b50f-428c-b78e-83f8d79a0f31",
+    "quoted_micros": "4550000",
+    "expires_at": "2026-08-12T00:26:48.854326+00:00"
+  },
+  "run": {
+    "run_id": "8d37f4f8-ee3f-4ccd-82c7-30732c2beef5",
+    "reservation_id": "b648f26b-0007-402c-ada6-dc448c935d15",
+    "status": "partial_succeeded",
+    "confirmed_at": "2026-08-12T00:11:50.060051+00:00",
+    "terminal_at": "2026-08-12T00:13:17.507817+00:00",
+    "time_to_terminal_ms": 87448,
+    "first_succeeded_static_attempt_at": "2026-08-12T00:13:06.160000+00:00",
+    "time_to_first_succeeded_static_attempt_ms": 76100,
+    "first_reviewable_static_pack_ms": null,
+    "dispatch_wave": 3,
+    "dispatch_epoch": 4
+  },
+  "money": {
+    "reserved_micros": "4550000",
+    "captured_micros": "1550000",
+    "released_micros": "3000000",
+    "refunded_micros": "0",
+    "residual_micros": "0",
+    "capture_ledger_rows": 7,
+    "unique_capture_causative_keys": 7,
+    "capture_ledger_micros": "1550000",
+    "external_provider_cost_micros": null,
+    "external_provider_cost_observability": "not_observable"
+  },
+  "providers": {
+    "attempts": 16,
+    "jobs": 9,
+    "succeeded_jobs": 7,
+    "failed_jobs": 2,
+    "canceled_attempts": 7,
+    "routes": [
+      {
+        "route_id": "openrouter/chat-completions/copy",
+        "jobs": 3,
+        "succeeded": 3,
+        "failed": 0,
+        "captured_micros": "450000"
+      },
+      {
+        "route_id": "fal/flux-2-pro/masters",
+        "jobs": 3,
+        "succeeded": 1,
+        "failed": 2,
+        "captured_micros": "500000"
+      },
+      {
+        "route_id": "fal/flux-kontext-pro/adaptations",
+        "jobs": 3,
+        "succeeded": 3,
+        "failed": 0,
+        "captured_micros": "600000"
+      }
+    ]
+  },
+  "provider_failures": [
+    {
+      "node_key": "master-1",
+      "attempt_id": "151a15e4-799b-4fb5-b7b6-95332f33c0be",
+      "provider_request_id": "019ff350-93c8-78c0-91fb-791fbd420721",
+      "result_http_status": 422,
+      "error_type": "content_policy_violation",
+      "location": ["body", "prompt"]
+    },
+    {
+      "node_key": "master-2",
+      "attempt_id": "bea85f5f-f19b-4885-b704-83895f107c09",
+      "provider_request_id": "019ff350-96ea-70e2-89c1-ce29b3f96046",
+      "result_http_status": 422,
+      "error_type": "content_policy_violation",
+      "location": ["body", "prompt"]
+    }
+  ],
+  "workflow": {
+    "available_provider_outputs": 7,
+    "approval_attempted": false,
+    "export_attempted": false,
+    "customer_receipt_read": false,
+    "reason": "The full pack did not reach succeeded; the harness stopped before approval, export, or customer receipt read-back."
+  },
+  "recovery": {
+    "required": false,
+    "exercised": false,
+    "postgrest_observed_at": "2026-08-12T00:14:39.232350+00:00",
+    "unsettled_reservation_count": 0,
+    "reason": "The terminal reservation already reconciled to zero residual; invoking a global sweeper or refund would have been unnecessary and could affect unrelated staging work."
+  },
+  "classification": {
+    "cause_class": "prompt_material_defect",
+    "verdict": "The first narrowing was insufficient: two master prompts still failed execution-time fal policy validation while the third master and its descendants proved the route, engine, dispatch, and settlement paths operational.",
+    "remaining_trigger": "not_identified_by_provider_response"
+  }
+}

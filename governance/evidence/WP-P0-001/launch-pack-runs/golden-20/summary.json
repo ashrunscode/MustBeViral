@@ -1,7 +1,7 @@
 {
-  "recorded_at": "2026-08-11T13:08:12.473Z",
+  "recorded_at": "2026-08-12T00:14:39.232Z",
   "registered_briefs": 20,
-  "paid_attempts": 16,
+  "paid_attempts": 17,
   "paid_attempt_brief_ids": [
     "GB-01",
     "GB-02",
@@ -18,7 +18,8 @@
     "GB-13",
     "GB-14",
     "GB-15",
-    "GB-05"
+    "GB-05",
+    "GB-02"
   ],
   "duplicate_run_findings": 1,
   "duplicate_brief_ids": ["GB-05"],
@@ -45,16 +46,22 @@
   "failed_brief_ids": ["GB-02"],
   "cap_deferred": 5,
   "cap_deferred_brief_ids": ["GB-16", "GB-17", "GB-18", "GB-19", "GB-20"],
+  "remediation": {
+    "attempts": 1,
+    "attempt_brief_ids": ["GB-02"],
+    "stopped_before_brief_ids": ["GB-16"],
+    "outcome": "failed_safety_stop"
+  },
   "latency": {
     "sample_size": 14,
     "median_first_reviewable_ms": 101641,
     "p90_first_reviewable_ms": 122314
   },
   "money": {
-    "quoted_micros": "72800000",
-    "reserved_micros": "72800000",
-    "captured_micros": "68700000",
-    "released_micros": "4100000",
+    "quoted_micros": "77350000",
+    "reserved_micros": "77350000",
+    "captured_micros": "70250000",
+    "released_micros": "7100000",
     "residual_micros": "0"
   },
   "acceptance": {

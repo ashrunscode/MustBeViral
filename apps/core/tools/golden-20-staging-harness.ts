@@ -24,7 +24,7 @@ const EXPECTED_PROVIDER_OUTPUTS = 16;
 const POLL_BEFORE_RECOVERY_MINUTES = 25;
 const POLL_AFTER_RECOVERY_MINUTES = 20;
 
-interface SpendExposure {
+export interface SpendExposure {
   readonly observed_at: string;
   readonly utc_day_start: string;
   readonly global_daily_cap_micros: string;
@@ -254,6 +254,40 @@ export function safeGoldenPackCount(exposure: SpendExposure): number {
   return Number(count > 20n ? 20n : count);
 }
 
+export function assertStagingReservationPreconditions(input: {
+  readonly exposure: SpendExposure;
+  readonly briefCount: number;
+  readonly expectedUtcDay?: string;
+  readonly maximumReservationMicros?: bigint;
+}): bigint {
+  const requiredReservationMicros = BigInt(input.briefCount) * PACK_MICROS;
+  if (
+    input.maximumReservationMicros !== undefined &&
+    requiredReservationMicros > input.maximumReservationMicros
+  ) {
+    throw new HarnessFlowError({
+      code: 'RESERVATION_AUTHORIZATION_EXCEEDED',
+      message: 'The selected briefs exceed the operator-authorized reservation maximum.',
+    });
+  }
+  if (
+    input.expectedUtcDay !== undefined &&
+    input.exposure.utc_day_start !== `${input.expectedUtcDay}T00:00:00+00:00`
+  ) {
+    throw new HarnessFlowError({
+      code: 'UTC_DAY_WINDOW_MISMATCH',
+      message: 'The global-day exposure window has not reset to the authorized UTC day.',
+    });
+  }
+  if (BigInt(input.exposure.global_remaining_micros) < requiredReservationMicros) {
+    throw new HarnessFlowError({
+      code: 'GLOBAL_CAP_HEADROOM_INSUFFICIENT',
+      message: 'Global-day headroom does not cover every selected reservation.',
+    });
+  }
+  return requiredReservationMicros;
+}
+
 async function creditWorkspace(
   postgrest: PostgrestClient,
   prepared: PreparedGoldenBrief,
@@ -395,6 +429,68 @@ function earliestReviewable(artifacts: readonly SafeRecord[]): string {
   const first = candidates[0];
   if (first === undefined) throw new Error('No reviewable static artifact was produced');
   return first;
+}
+
+export function terminalFailureRecordFields(terminal: TerminalRunProgress): Readonly<{
+  run: NonNullable<Golden20BriefRecord['run']>;
+  money: NonNullable<Golden20BriefRecord['money']>;
+}> {
+  const receipt = terminal.receipt;
+  const run = record(receipt['run'], 'terminal receipt run');
+  const reservation = record(receipt['reservation'], 'terminal receipt reservation');
+  const ledger = records(receipt['ledger'], 'terminal receipt ledger');
+  const artifacts = records(receipt['artifacts'], 'terminal receipt artifacts');
+  const reservedMicros = integer(reservation['amount_micros'], 'amount_micros');
+  const capturedMicros = integer(reservation['captured_micros'], 'captured_micros');
+  const releasedMicros = integer(reservation['released_micros'], 'released_micros');
+  const refundedMicros = integer(reservation['refunded_micros'], 'refunded_micros');
+  const residual = reservedMicros - capturedMicros - releasedMicros - refundedMicros;
+  const captureLedgerMicros = ledger
+    .filter(
+      (entry) =>
+        entry['entry_type'] === 'capture' &&
+        entry['account_code'] === 'usage_expense' &&
+        entry['direction'] === 'credit',
+    )
+    .reduce((sum, entry) => sum + integer(entry['amount_micros'], 'ledger amount'), 0n);
+  const confirmedAt = text(run['confirmed_at'], 'run.confirmed_at');
+  const terminalAt = text(run['updated_at'], 'run.updated_at');
+  const firstReviewable = artifacts
+    .filter(
+      (artifact) =>
+        artifact['status'] === 'available' &&
+        typeof artifact['mime_type'] === 'string' &&
+        (artifact['mime_type'] as string).startsWith('image/'),
+    )
+    .map((artifact) => text(artifact['created_at'], 'artifact.created_at'))
+    .sort((left, right) => Date.parse(left) - Date.parse(right))[0];
+  return {
+    run: {
+      run_id: text(run['id'], 'run.id'),
+      reservation_id: text(reservation['id'], 'reservation.id'),
+      status: terminal.status,
+      confirmed_at: confirmedAt,
+      terminal_at: terminalAt,
+      ...(firstReviewable === undefined
+        ? {}
+        : {
+            first_reviewable_at: firstReviewable,
+            time_to_first_reviewable_ms: Date.parse(firstReviewable) - Date.parse(confirmedAt),
+          }),
+      time_to_terminal_ms: Date.parse(terminalAt) - Date.parse(confirmedAt),
+    },
+    money: {
+      reserved_micros: reservedMicros.toString(10),
+      captured_micros: capturedMicros.toString(10),
+      released_micros: releasedMicros.toString(10),
+      refunded_micros: refundedMicros.toString(10),
+      residual_micros: residual.toString(10),
+      capture_ledger_micros: captureLedgerMicros.toString(10),
+      catalog_landed_cost_micros: capturedMicros.toString(10),
+      external_provider_cost_micros: null,
+      external_provider_cost_observability: 'not_observable',
+    },
+  };
 }
 
 async function approveExportAndReconcile(input: {
@@ -846,6 +942,9 @@ export async function runGolden20StagingHarness(options: {
   readonly outDirectory: string;
   readonly accessToken: string;
   readonly log: (message: string) => void;
+  readonly expectedUtcDay?: string;
+  readonly maximumReservationMicros?: bigint;
+  readonly stopOnFailure?: boolean;
 }): Promise<number> {
   const configuration = await loadStagingAdminConfiguration();
   const postgrest = createPostgrestClient(configuration);
@@ -857,6 +956,18 @@ export async function runGolden20StagingHarness(options: {
   const invocationId = randomUUID();
   const results: Golden20BriefRecord[] = [];
   await mkdir(options.outDirectory, { recursive: true });
+  const initialExposure = await getSpendExposure(postgrest);
+  const requiredReservationMicros = assertStagingReservationPreconditions({
+    exposure: initialExposure,
+    briefCount: options.briefs.length,
+    ...(options.expectedUtcDay === undefined ? {} : { expectedUtcDay: options.expectedUtcDay }),
+    ...(options.maximumReservationMicros === undefined
+      ? {}
+      : { maximumReservationMicros: options.maximumReservationMicros }),
+  });
+  options.log(
+    `PRECONDITION utc_day_start=${initialExposure.utc_day_start} exposure_micros=${initialExposure.global_exposure_micros} remaining_micros=${initialExposure.global_remaining_micros} required_reservation_micros=${requiredReservationMicros.toString(10)} unsettled_reservations=${String(initialExposure.unsettled_reservation_count)} observed_at=${initialExposure.observed_at}`,
+  );
   for (const brief of options.briefs) {
     const prior = await existingRecord(options.outDirectory, brief.briefId);
     if (prior?.outcome === 'completed' || prior?.outcome === 'cap_deferred') {
@@ -904,6 +1015,7 @@ export async function runGolden20StagingHarness(options: {
         options.log(
           `RECOVERY_FAILED brief=${brief.briefId} code=${failed.failure.code} observed_at=${new Date().toISOString()}`,
         );
+        if (options.stopOnFailure === true) break;
         continue;
       }
     }
@@ -930,6 +1042,7 @@ export async function runGolden20StagingHarness(options: {
     let walletCredit: NonNullable<Golden20BriefRecord['wallet_credit']> | undefined;
     let runId: string | undefined;
     let reservationId: string | undefined;
+    let terminal: TerminalRunProgress | undefined;
     try {
       prepared = await prepareGoldenBrief(brief, transport, Date.now, invocationId);
       if (prepared.totalMicros !== PACK_MICROS) {
@@ -986,6 +1099,7 @@ export async function runGolden20StagingHarness(options: {
             options.log,
           ),
       );
+      terminal = polled.terminal;
       const completed = await approveExportAndReconcile({
         brief,
         prepared,
@@ -1003,6 +1117,8 @@ export async function runGolden20StagingHarness(options: {
         `COMPLETED brief=${brief.briefId} run_id=${runId} captured_micros=${completed.money?.captured_micros ?? 'unknown'} observed_at=${new Date().toISOString()}`,
       );
     } catch (error) {
+      const terminalFields =
+        terminal === undefined ? undefined : terminalFailureRecordFields(terminal);
       const failure: Golden20BriefRecord = {
         brief_id: brief.briefId,
         outcome: 'failed',
@@ -1024,12 +1140,13 @@ export async function runGolden20StagingHarness(options: {
         ...(runId === undefined || reservationId === undefined
           ? {}
           : {
-              run: {
+              run: terminalFields?.run ?? {
                 run_id: runId,
                 reservation_id: reservationId,
                 status: 'finding',
               },
             }),
+        ...(terminalFields === undefined ? {} : { money: terminalFields.money }),
         cap_observation: exposure,
         failure: safeFailure(error),
       };
@@ -1038,6 +1155,7 @@ export async function runGolden20StagingHarness(options: {
       options.log(
         `FAILED brief=${brief.briefId} code=${failure.failure?.code ?? 'unknown'} observed_at=${new Date().toISOString()}`,
       );
+      if (options.stopOnFailure === true) break;
     }
   }
   const summary = summarizeGolden20Records(results);

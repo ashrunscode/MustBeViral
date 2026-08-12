@@ -223,12 +223,68 @@ the harness incident remains recorded in the money totals and does not disappear
 - No credentials were committed or written to evidence. The local scratch directory remained
   ignored.
 
-## 10. Left open
+## 10. Amendment 2026-08-12: authorized remediation stopped after GB-02
 
-- Five registered briefs (`GB-16` through `GB-20`) remain cap-deferred until a fresh UTC-day budget
-  window and must not be represented as attempted failures.
+The operator amendment recorded at 2026-08-11 16:45 UTC authorized exactly `GB-02` and `GB-16`
+after the UTC rollover, with an absolute 9,100,000-micro reservation ceiling. The live staging
+Worker still predated prompt-fix commit `3315794`, so committed HEAD `818b6e0` was deployed first.
+Cloudflare version `ab6ee55f-0029-445a-b5ab-8edf5777aaea` now holds 100% of staging traffic;
+version `66b8da78-f001-4077-a268-da6c7063c6ab` is the rollback target. `GET /health` returned HTTP
+200, generation `viralgraph-cleanroom-v2`, and status `ok` at 00:08:14.308 UTC.
+
+The harness added and exercised fail-closed selection controls: repeated `--brief` values selected
+only `GB-02` and `GB-16`, `--expected-utc-day 2026-08-12` pinned the cap window,
+`--max-reserved-micros 9100000` bounded aggregate reservation, and `--stop-on-failure` prevented a
+second confirmation after a failed first run. The privileged PostgREST precondition at
+00:11:46.039834 UTC reported the 2026-08-12 UTC window, zero exposure, 100,000,000 micros remaining,
+and zero unsettled reservations.
+
+| Brief | Remediation outcome | Run                                    | First succeeded static attempt | Terminal |  Reserved |  Captured |  Released | Residual |
+| ----- | ------------------- | -------------------------------------- | -----------------------------: | -------: | --------: | --------: | --------: | -------: |
+| GB-02 | `partial_succeeded` | `8d37f4f8-ee3f-4ccd-82c7-30732c2beef5` |                       76.100 s | 87.448 s | 4,550,000 | 1,550,000 | 3,000,000 |        0 |
+| GB-16 | not run             | —                                      |                              — |        — |         0 |         0 |         0 |        0 |
+
+`GB-02` produced all three copy outputs, one of three FLUX.2 masters, and all three adaptations
+descending from that successful master. The other two master result bodies were read from fal's
+result endpoints and both returned HTTP 422 `content_policy_violation` at `body.prompt`. Because one
+master and its descendants succeeded on the same route, dispatch epoch, Worker, and graph, the
+failure remains a prompt-material defect: the first narrowing removed offer and audience context
+but did not make every master prompt policy-safe. fal did not identify the triggering token, so no
+second speculative prompt change or paid retry was made.
+
+At 00:14:39.086192 UTC, bounded service-role PostgREST audit
+`get_run_execution_audit` reported 16 attempts, nine provider jobs, seven unique capture causative
+keys, and terminal `partial_succeeded`. At 00:14:39.232350 UTC,
+`get_global_spend_exposure` reported 1,550,000 micros exposure and zero unsettled reservations. The
+reservation reconciled exactly:
+
+| Remediation money field |    Micros |
+| ----------------------- | --------: |
+| Quoted / reserved       | 4,550,000 |
+| Captured                | 1,550,000 |
+| Released                | 3,000,000 |
+| Refunded                |         0 |
+| Residual                |     **0** |
+
+No recovery RPC or refund was appropriate because no money was held. Approval, export, and the
+customer receipt read were not attempted after the full pack failed. The stop guard ended the
+invocation before creating a `GB-16` workspace, quote, reservation, or provider submission.
+
+Including this remediation attempt, golden-20 gross money is 77,350,000 quoted/reserved,
+70,250,000 captured, 7,100,000 released, and zero residual across 17 paid attempts. Registered
+completion remains **14/20**; the completed-run median remains 101.641 seconds and p90 remains
+122.314 seconds. Therefore `representative-run-completion-and-latency` honestly remains pending.
+Machine records are `GB-02-remediation-2026-08-12.json`,
+`GB-16-remediation-2026-08-12.json`, and the amended `summary.json` beside this evidence.
+
+## 11. Left open
+
+- Five registered briefs (`GB-16` through `GB-20`) remain incomplete. `GB-16` was selected for the
+  authorized remediation but the safety stop prevented any workspace, quote, reservation, or
+  submission; `GB-17` through `GB-20` remain cap-deferred.
 - The 16/20 representative completion gate remains pending at 14/20.
-- `GB-02` requires one governed remediation run to validate the narrowed supplement image prompt;
-  the live RCA identified the prior provider result but this no-spend fix does not claim provider
-  acceptance.
-- `GB-16` remains the first recommended cap-deferred run needed alongside `GB-02` to reach 16 of 20.
+- `GB-02` has now failed two governed attempts with prompt-policy errors. The first failed all three
+  masters; the narrowed prompt let one master and its three descendants succeed but two masters
+  still failed. The provider response does not identify the triggering token.
+- Any further prompt change, `GB-02` attempt, or first `GB-16` attempt requires a new operator
+  decision and fresh spend authorization. No retry is queued.

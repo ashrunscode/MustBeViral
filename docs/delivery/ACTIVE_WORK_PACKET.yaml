@@ -345,19 +345,22 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action: Operator executes evaluator-zero self-sessions; then, on a fresh UTC day, authorizes
-    the GB-02 and GB-16 remediation at no more than 9,100,000 reserved micros; then recruits and
-    completes five-to-eight qualified evaluator sessions, secures one signed paid pilot, and records
-    the P0 go/no-go or pivot/stop decision.
+  next_action: Operator reviews the failed GB-02 remediation evidence and decides whether to
+    authorize a revised prompt strategy and future GB-02 plus GB-16 attempts; after the technical
+    gate resolves, the remaining sequence is evaluator-zero self-sessions, recruitment,
+    five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop
+    decision.
   blockers:
-    - 'T5 representative-run-completion-and-latency remains pending: 14 of 20 registered briefs
-      completed. GB-02 partial-succeeded after all three master result bodies returned HTTP 422
-      content_policy_violation at body.prompt; its no-spend prompt fix needs one governed rerun.
-      GB-16 through GB-20 were cap-deferred. Median and p90 latency passed. The minimal remediation
-      is GB-02 plus GB-16, at most 9,100,000 micros. Evidence:
-      governance/evidence/WP-P0-001/golden-20-defect-analysis.md. AUTHORIZED 2026-08-11 16:45 UTC
-      by operator amendment in governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md;
-      queued to execute at the 2026-08-12 00:00 UTC rollover.'
+    - 'Representative-run-completion-and-latency remains pending at 14 of 20. The authorized
+      2026-08-12 GB-02 remediation reached partial_succeeded after two of three FLUX.2 master result
+      bodies returned HTTP 422 content_policy_violation at body.prompt; one master and its three
+      adaptations succeeded. The reservation reconciled as 1,550,000 captured plus 3,000,000
+      released with zero residual and zero unsettled reservations. The safety stop prevented GB-16
+      from starting, so GB-16 has no workspace, quote, reservation, or provider submission from the
+      remediation. Completed-run median 101.641 seconds and p90 122.314 seconds still pass. No
+      further paid attempt is authorized. Evidence:
+      governance/evidence/WP-P0-001/golden-20-run-proof.md section 10 and the 2026-08-12 remediation
+      JSON records.'
     - 'Scheduling note (operator decision 2026-08-11): the P0 exit go/no-go review occurs after the
       qualified evaluator sessions complete, and a recorded decision - go, or pivot/stop - is
       required either way. Operator self-sessions precede recruitment and never count toward the
@@ -384,6 +387,8 @@ handoff:
     - apps/core/tools/golden-20-staging-harness.ts
     - governance/evidence/WP-P0-001/launch-pack-runs/golden-20
     - governance/evidence/WP-P0-001/golden-20-run-proof.md
+    - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
+    - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - apps/core/tools/mcp-parity-lib.ts
     - apps/core/tools/mcp-parity-python.py
     - apps/core/tools/mcp-parity-staging.ts

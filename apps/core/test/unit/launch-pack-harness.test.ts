@@ -10,12 +10,15 @@ import {
 import goldenBriefMarkdown from '../../../../docs/research/GOLDEN_BRIEFS.md?raw';
 import { parseGoldenBriefRegistry } from '../../tools/golden-brief-registry';
 import {
+  assertStagingReservationPreconditions,
   pollAfterPersistingConfirmedRun,
   percentileNearestRank,
   safeGoldenPackCount,
   summarizeGolden20Records,
+  terminalFailureRecordFields,
   type Golden20BriefRecord,
 } from '../../tools/golden-20-staging-harness';
+import { harnessArgumentsFrom, selectGoldenBriefs } from '../../tools/launch-pack-harness';
 import {
   StagingLaunchPackTransport,
   createInMemoryHarnessTransport,
@@ -66,6 +69,66 @@ describe('golden launch-pack harness', () => {
       expect(new Set(graph.nodes.map((node) => node.id)).size).toBe(graph.nodes.length);
       expect(new Set(graph.edges.map((edge) => edge.id)).size).toBe(graph.edges.length);
     }
+  });
+
+  it('selects only authorized briefs and pins the aggregate reservation and UTC day', () => {
+    const briefs = parseGoldenBriefRegistry(goldenBriefMarkdown);
+    const arguments_ = harnessArgumentsFrom([
+      '--staging',
+      '--brief',
+      'GB-02',
+      '--brief',
+      'GB-16',
+      '--expected-utc-day',
+      '2026-08-12',
+      '--max-reserved-micros',
+      '9100000',
+      '--stop-on-failure',
+    ]);
+    expect(selectGoldenBriefs(briefs, arguments_.briefIds).map((brief) => brief.briefId)).toEqual([
+      'GB-02',
+      'GB-16',
+    ]);
+    expect(arguments_.maximumReservationMicros).toBe(9_100_000n);
+    expect(arguments_.expectedUtcDay).toBe('2026-08-12');
+    expect(arguments_.stopOnFailure).toBe(true);
+    expect(
+      assertStagingReservationPreconditions({
+        exposure: {
+          observed_at: '2026-08-12T00:08:43Z',
+          utc_day_start: '2026-08-12T00:00:00+00:00',
+          global_daily_cap_micros: '100000000',
+          global_exposure_micros: '0',
+          global_remaining_micros: '100000000',
+          reservation_count: 0,
+          unsettled_reservation_count: 0,
+          status_counts: {},
+        },
+        briefCount: 2,
+        expectedUtcDay: arguments_.expectedUtcDay!,
+        maximumReservationMicros: arguments_.maximumReservationMicros!,
+      }),
+    ).toBe(9_100_000n);
+
+    expect(() =>
+      assertStagingReservationPreconditions({
+        exposure: {
+          observed_at: '2026-08-11T23:59:59Z',
+          utc_day_start: '2026-08-11T00:00:00+00:00',
+          global_daily_cap_micros: '100000000',
+          global_exposure_micros: '95450000',
+          global_remaining_micros: '4550000',
+          reservation_count: 21,
+          unsettled_reservation_count: 0,
+          status_counts: { captured: 21 },
+        },
+        briefCount: 2,
+        expectedUtcDay: '2026-08-12',
+        maximumReservationMicros: 9_100_000n,
+      }),
+    ).toThrowError(/UTC day/u);
+    expect(() => selectGoldenBriefs(briefs, ['GB-02', 'GB-02'])).toThrowError(/unique/u);
+    expect(() => selectGoldenBriefs(briefs, ['GB-21'])).toThrowError(/Unknown registered brief/u);
   });
 
   it('drives all briefs through shared handlers to named quotes and fail-closed confirmation', async () => {
@@ -245,6 +308,56 @@ describe('golden launch-pack harness', () => {
       ),
     ).rejects.toThrowError(/local process interrupted/u);
     expect(order).toEqual(['checkpoint', 'poll']);
+  });
+
+  it('persists terminal partial-run money instead of reverting evidence to finding and zero', () => {
+    const fields = terminalFailureRecordFields({
+      status: 'partial_succeeded',
+      receipt: {
+        run: {
+          id: 'run-partial',
+          confirmed_at: '2026-08-12T00:11:50.000Z',
+          updated_at: '2026-08-12T00:13:17.000Z',
+        },
+        reservation: {
+          id: 'reservation-partial',
+          amount_micros: '4550000',
+          captured_micros: '1550000',
+          released_micros: '3000000',
+          refunded_micros: '0',
+        },
+        ledger: [
+          {
+            entry_type: 'capture',
+            account_code: 'usage_expense',
+            direction: 'credit',
+            amount_micros: '1550000',
+          },
+        ],
+        artifacts: [
+          {
+            status: 'available',
+            mime_type: 'image/png',
+            created_at: '2026-08-12T00:13:06.000Z',
+          },
+        ],
+      },
+    });
+
+    expect(fields.run).toMatchObject({
+      run_id: 'run-partial',
+      reservation_id: 'reservation-partial',
+      status: 'partial_succeeded',
+      time_to_first_reviewable_ms: 76_000,
+      time_to_terminal_ms: 87_000,
+    });
+    expect(fields.money).toMatchObject({
+      reserved_micros: '4550000',
+      captured_micros: '1550000',
+      released_micros: '3000000',
+      residual_micros: '0',
+      capture_ledger_micros: '1550000',
+    });
   });
 
   it('rejects resource input that the composed Supabase port would reject', async () => {

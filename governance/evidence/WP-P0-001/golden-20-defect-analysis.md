@@ -182,12 +182,35 @@ zero residual.
   unit and integration suites, and production/dry-run builds. The focused Core unit lane passed 181
   tests, including the new harness and provider-payload regressions.
 
-## 9. Left open
+## 9. Amendment 2026-08-12: the narrowed GB-02 prompt remained insufficient
 
-- `GB-02` requires the one governed paid remediation attempt above; no provider acceptance claim is
-  made from a local prompt test.
+The operator-authorized remediation deployed committed HEAD `818b6e0` to staging Worker version
+`ab6ee55f-0029-445a-b5ab-8edf5777aaea`, then selected exactly `GB-02` and `GB-16` under a
+9,100,000-micro aggregate reservation guard. The fresh-day PostgREST precondition showed zero
+exposure and 100,000,000 micros remaining.
+
+`GB-02` remediation run `8d37f4f8-ee3f-4ccd-82c7-30732c2beef5` reached
+`partial_succeeded`. All three copy nodes succeeded. FLUX.2 `master-3` succeeded and its three
+Kontext descendants succeeded, proving the deployed route, prompt transport, wave/epoch engine,
+artifact ingest, and settlement paths. `master-1` and `master-2` instead returned HTTP 422
+`content_policy_violation` at `body.prompt` from their fal result endpoints. Seven jobs captured
+1,550,000 micros; 3,000,000 was released; residual and unsettled reservations were both zero.
+
+The defect classification remains **prompt material**, but the original remediation is now proven
+incomplete. Removing the promotional offer and audience health context was not sufficient to make
+all three master prompt variants policy-safe. fal returned no offending substring, and one of the
+three variants passed, so the evidence does not support naming a more precise trigger or landing a
+speculative second fix. The stop-on-first-failure guard prevented any `GB-16` workspace, quote,
+reservation, or provider submission. Machine evidence is
+`launch-pack-runs/golden-20/GB-02-remediation-2026-08-12.json` and
+`GB-16-remediation-2026-08-12.json` in the same directory.
+
+## 10. Left open
+
+- `GB-02` still needs a policy-safe prompt strategy, but the provider result does not expose the
+  triggering token. No further paid attempt is authorized or queued.
 - The representative completion/latency criterion remains pending at 14 of 20 until two additional
   registered briefs technically complete.
-- `GB-17` through `GB-20` remain cap-deferred, not failed.
+- `GB-16` was not run after the safety stop; `GB-17` through `GB-20` remain cap-deferred, not failed.
 - External provider invoice cost remains unobservable and must not be conflated with catalog capture
   micros.

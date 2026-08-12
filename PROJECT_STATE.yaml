@@ -11,23 +11,26 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator executes evaluator-zero self-sessions; then, on a fresh UTC day, authorizes
-  the GB-02 and GB-16 remediation at no more than 9,100,000 reserved micros; then recruits and
-  completes five-to-eight qualified evaluator sessions, secures one signed paid pilot, and records
-  the P0 go/no-go or pivot/stop decision.
+next_action: Operator reviews the failed GB-02 remediation evidence and decides whether to
+  authorize a revised prompt strategy and future GB-02 plus GB-16 attempts; after the technical
+  gate resolves, the remaining sequence is evaluator-zero self-sessions, recruitment,
+  five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop
+  decision.
 decisions_pending: []
 blockers:
-  - 'The no-spend T5 RCA reclassifies GB-05 as a harness double-run, not a duplicate provider
-    submission inside one run. Two overlapping harness invocations used different workspaces,
-    quotes, start idempotency scopes, runs, outbox keys, provider requests, and ledger causative
-    keys; both reconciled to zero residual. The transactional spend/dedup/ledger gate therefore
-    passes, while the checkpoint-before-poll boundary now has a regression test. GB-02 was a
-    prompt-material failure: all three fal master result bodies returned HTTP 422
-    content_policy_violation at body.prompt. Supplement image prompts now omit promotional offer and
-    audience health context while the copy/legal prompt remains complete. The fix has no paid
-    provider proof. Representative completion remains pending at 14 of 20; the minimal remediation
-    is one GB-02 rerun plus first-deferred GB-16, at most 9,100,000 micros. Evidence is
-    governance/evidence/WP-P0-001/golden-20-defect-analysis.md.'
+  - 'The authorized 2026-08-12 golden-20 remediation failed closed. Current HEAD was deployed to
+    staging Worker version ab6ee55f-0029-445a-b5ab-8edf5777aaea, and privileged PostgREST proved a
+    fresh UTC-day window with zero initial exposure. GB-02 run
+    8d37f4f8-ee3f-4ccd-82c7-30732c2beef5 reached partial_succeeded in 87.448 seconds: three copy
+    jobs, one FLUX.2 master, and its three adaptations succeeded, while the other two master result
+    bodies again returned HTTP 422 content_policy_violation at body.prompt. The narrowed supplement
+    prompt was therefore insufficient, but route, wave/epoch, ingest, and settlement paths worked.
+    The reservation reconciled exactly as 4,550,000 reserved, 1,550,000 captured, 3,000,000
+    released, and zero residual; global unsettled reservations were zero. The stop-on-first-failure
+    guard prevented any GB-16 workspace, quote, reservation, or provider submission. Representative
+    completion remains pending at 14 of 20, and no further paid attempt is authorized. Evidence is
+    governance/evidence/WP-P0-001/golden-20-run-proof.md section 10 and the 2026-08-12 remediation
+    JSON records.'
   - T4 replaced every golden-screen fixture port with the authenticated typed Worker client in
     money-safety order while preserving the locked visuals and explicit maximum-price confirmation.
     Browser traffic uses a fixed same-origin Core proxy because the Worker does not expose browser
