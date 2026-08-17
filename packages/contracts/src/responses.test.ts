@@ -157,7 +157,14 @@ const successData = {
     upload_url: 'https://uploads.example.test/exact-key',
     expires_at: timestamp,
   },
-  get_artifact: { artifact },
+  get_artifact: {
+    artifact,
+    access: {
+      url: 'https://core.example.test/v1/artifacts/artifact-1/content?token=review',
+      expires_at: timestamp,
+      purpose: 'review_preview',
+    },
+  },
   approve_artifacts: {
     run_id: 'run-1',
     approved: 1,

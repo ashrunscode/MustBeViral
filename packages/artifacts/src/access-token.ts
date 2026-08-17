@@ -43,17 +43,23 @@ declare function atob(data: string): string;
  * the content hash, byte size and mime type are pinned so a swapped object is detectable and the
  * response cannot be sniffed into another type.
  *
- * Two purposes with different verification strengths:
+ * Purposes with different verification strengths:
  * - `provider_input`: crypto + expiry only, no database round trip. fal fetches the URL when the
  *   job executes, and a storage-side database blip during that fetch must not waste the paid
  *   master that produced the input.
+ * - `review_preview`: short-lived inline review in the Studio UI. Served without attachment so
+ *   `<img>` / `<video>` can render. Interactive TTL; remint from GET /artifacts/:id.
  * - `customer_download`: the route additionally checks artifact availability and run state before
  *   serving, giving revocability where latency does not matter.
  */
 
 const TOKEN_VERSION = 'v1';
 
-export const ARTIFACT_ACCESS_PURPOSES = ['provider_input', 'customer_download'] as const;
+export const ARTIFACT_ACCESS_PURPOSES = [
+  'provider_input',
+  'review_preview',
+  'customer_download',
+] as const;
 export type ArtifactAccessPurpose = (typeof ARTIFACT_ACCESS_PURPOSES)[number];
 
 /** fal fetches when the job executes and queue depth is not ours to control; expiring mid-queue
@@ -61,6 +67,8 @@ export type ArtifactAccessPurpose = (typeof ARTIFACT_ACCESS_PURPOSES)[number];
 export const PROVIDER_INPUT_TTL_SECONDS = 3_600;
 /** Customer downloads are interactive; a short window plus re-minting is the right trade. */
 export const CUSTOMER_DOWNLOAD_TTL_SECONDS = 300;
+/** Review thumbs remint when the operator reloads the receipt. */
+export const REVIEW_PREVIEW_TTL_SECONDS = 300;
 
 export interface ArtifactAccessClaims {
   readonly purpose: ArtifactAccessPurpose;

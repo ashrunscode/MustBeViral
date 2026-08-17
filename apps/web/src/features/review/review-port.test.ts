@@ -156,15 +156,27 @@ describe('WorkerReviewPort', () => {
         });
         const payload = url.endsWith('/receipt')
           ? receiptResponse()
-          : {
-              data: {
-                run_id: 'run-live',
-                approved: 1,
-                replayed: 0,
-                artifacts: [{ artifact_id: 'artifact-live', artifact_kind: 'approved_output' }],
-              },
-              meta: { request_id: 'request-review-0001' },
-            };
+          : url.includes('/artifacts/artifact-live')
+            ? {
+                data: {
+                  artifact,
+                  access: {
+                    url: 'https://core.example.test/v1/artifacts/artifact-live/content?token=review',
+                    expires_at: timestamp,
+                    purpose: 'review_preview',
+                  },
+                },
+                meta: { request_id: 'request-review-0001' },
+              }
+            : {
+                data: {
+                  run_id: 'run-live',
+                  approved: 1,
+                  replayed: 0,
+                  artifacts: [{ artifact_id: 'artifact-live', artifact_kind: 'approved_output' }],
+                },
+                meta: { request_id: 'request-review-0001' },
+              };
         return new Response(JSON.stringify(payload), {
           status: 200,
           headers: { 'content-type': 'application/json' },
@@ -175,7 +187,19 @@ describe('WorkerReviewPort', () => {
     const read = await port.read();
     expect(read).toMatchObject({
       type: 'ok',
-      groups: [{ id: 'visuals', revision: 'revision-live' }],
+      groups: [
+        {
+          id: 'visuals',
+          revision: 'revision-live',
+          variants: [
+            {
+              label: 'Visual 1',
+              previewUrl:
+                'https://core.example.test/v1/artifacts/artifact-live/content?token=review',
+            },
+          ],
+        },
+      ],
       summary: { quotedMicros: 4_550_000n, capturedMicros: 672_574n },
     });
     const input = {

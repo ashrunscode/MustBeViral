@@ -108,9 +108,36 @@ function VariantCard({
         <div className={`${styles.comparePair} compare-pair`}>
           <div className={styles.version}>
             <div className={styles.thumb}>
-              <MonoCaps>
-                {dataMode === 'preview' ? 'Current output · v2' : 'Artifact · private preview'}
-              </MonoCaps>
+              {dataMode === 'worker' && variant.previewUrl && variant.groupId !== 'copy' ? (
+                variant.groupId === 'motion' ? (
+                  <video
+                    className={styles.media}
+                    src={variant.previewUrl}
+                    controls
+                    playsInline
+                    muted
+                  />
+                ) : (
+                  <>
+                    {/* Private capability URLs expire; next/image cannot cache or optimize them. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      className={styles.media}
+                      src={variant.previewUrl}
+                      alt={variant.accessibilityDescription ?? variant.label}
+                    />
+                  </>
+                )
+              ) : dataMode === 'worker' && variant.copy ? (
+                <div className={styles.copyPreview}>
+                  <strong>{variant.copy.headline}</strong>
+                  <p>{variant.copy.primaryText}</p>
+                </div>
+              ) : (
+                <MonoCaps>
+                  {dataMode === 'preview' ? 'Current output · v2' : 'Artifact · private preview'}
+                </MonoCaps>
+              )}
             </div>
             <div className={styles.versionCaption}>
               <MonoCaps>{variant.model}</MonoCaps>
@@ -131,12 +158,33 @@ function VariantCard({
         </div>
       ) : (
         <div className={styles.mobileThumb}>
-          <MonoCaps>Current v2 · {variant.model}</MonoCaps>
+          {dataMode === 'worker' && variant.previewUrl && variant.groupId !== 'copy' ? (
+            variant.groupId === 'motion' ? (
+              <video className={styles.media} src={variant.previewUrl} controls playsInline muted />
+            ) : (
+              <>
+                {/* Private capability URLs expire; next/image cannot cache or optimize them. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className={styles.media}
+                  src={variant.previewUrl}
+                  alt={variant.accessibilityDescription ?? variant.label}
+                />
+              </>
+            )
+          ) : dataMode === 'worker' && variant.copy ? (
+            <div className={styles.copyPreview}>
+              <strong>{variant.copy.headline}</strong>
+              <p>{variant.copy.primaryText}</p>
+            </div>
+          ) : (
+            <MonoCaps>Current v2 · {variant.model}</MonoCaps>
+          )}
         </div>
       )}
-      {dataMode === 'worker' ? (
+      {dataMode === 'worker' && variant.decision !== 'approved' ? (
         <label className={styles.descriptionField}>
-          <span>Accessibility description</span>
+          <span>Accessibility description required before approval</span>
           <textarea
             value={variant.accessibilityDescription ?? ''}
             onChange={(event) => onDescribe(variant.id, event.target.value)}
@@ -156,7 +204,11 @@ function VariantCard({
       ) : null}
       <div className={styles.cardFoot}>
         <div className={styles.cardActions}>
-          <Button onClick={() => onDecide(variant, 'approved')}>Approve</Button>
+          {variant.decision === 'approved' ? (
+            <MonoCaps>Already approved</MonoCaps>
+          ) : (
+            <Button onClick={() => onDecide(variant, 'approved')}>Approve</Button>
+          )}
           <Button onClick={() => onDecide(variant, 'rejected')}>
             {rejecting
               ? dataMode === 'preview'
@@ -392,9 +444,11 @@ export function ReviewFlow({
                 <Chip status={decisionChip[group.decision].status}>
                   {decisionChip[group.decision].label}
                 </Chip>
-                <Button variant="primary" onClick={() => void approveGroup(group)}>
-                  {dataMode === 'preview' ? 'Approve group as Maya Chen' : 'Approve group'}
-                </Button>
+                {group.decision === 'approved' ? null : (
+                  <Button variant="primary" onClick={() => void approveGroup(group)}>
+                    {dataMode === 'preview' ? 'Approve group as Maya Chen' : 'Approve group'}
+                  </Button>
+                )}
               </div>
             </div>
             <div className={styles.artifactGrid}>

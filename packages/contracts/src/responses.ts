@@ -497,7 +497,18 @@ const operationDataSchemas = {
       expires_at: TimestampSchema,
     })
     .strict(),
-  get_artifact: z.object({ artifact: ArtifactSchema }).strict(),
+  get_artifact: z
+    .object({
+      artifact: ArtifactSchema,
+      access: z
+        .object({
+          url: z.url({ protocol: /^https?$/u }),
+          expires_at: TimestampSchema,
+          purpose: z.literal('review_preview'),
+        })
+        .nullable(),
+    })
+    .strict(),
   approve_artifacts: z
     .object({
       run_id: IdentifierSchema,

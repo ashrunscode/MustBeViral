@@ -34,6 +34,9 @@ import {
 } from '../../../../packages/db/src/index';
 
 import type { AuthenticatedActor } from '../auth/supabase-jwt';
+import { REVIEW_PREVIEW_TTL_SECONDS } from '../../../../packages/artifacts/src/index';
+
+import { mintArtifactAccessUrl } from './artifact-access';
 import type { CoreBindings } from '../bindings';
 import { SupabaseDataApiError, SupabaseDataApiExecutor } from '../data/supabase-data-api';
 import type {
@@ -558,7 +561,35 @@ function createResourcePort(
     async getArtifact(input) {
       const context = asTenantContext(input.context);
       const artifact = await repositories.artifacts.get(context, input.artifact_id);
-      return artifact === null ? { status: 'not_found' } : { status: 'ok', artifact };
+      if (artifact === null) return { status: 'not_found' };
+      if (artifact.content_hash === null || artifact.status !== 'available') {
+        return { status: 'ok', artifact, access: null };
+      }
+      try {
+        const nowEpochSeconds = Math.floor(Date.now() / 1000);
+        const url = await mintArtifactAccessUrl(bindings, {
+          purpose: 'review_preview',
+          artifactId: artifact.id,
+          objectKey: artifact.object_key,
+          contentHash: artifact.content_hash,
+          byteSize: artifact.byte_size,
+          mimeType: artifact.mime_type,
+          nowEpochSeconds,
+        });
+        return {
+          status: 'ok',
+          artifact,
+          access: {
+            url,
+            expires_at: new Date(
+              (nowEpochSeconds + REVIEW_PREVIEW_TTL_SECONDS) * 1000,
+            ).toISOString(),
+            purpose: 'review_preview' as const,
+          },
+        };
+      } catch {
+        return { status: 'ok', artifact, access: null };
+      }
     },
     async approveArtifacts(input) {
       // Caller-scoped on purpose: the RPC runs as the authenticated user through PostgREST, so

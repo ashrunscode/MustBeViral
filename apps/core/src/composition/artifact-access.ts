@@ -1,6 +1,7 @@
 import {
   CUSTOMER_DOWNLOAD_TTL_SECONDS,
   PROVIDER_INPUT_TTL_SECONDS,
+  REVIEW_PREVIEW_TTL_SECONDS,
   mintArtifactAccessToken,
   verifyArtifactAccessToken,
   type ArtifactAccessClaims,
@@ -50,7 +51,11 @@ export async function mintArtifactAccessUrl(
     throw new Error('No public origin is available to mint an artifact access URL');
   }
   const ttl =
-    input.purpose === 'provider_input' ? PROVIDER_INPUT_TTL_SECONDS : CUSTOMER_DOWNLOAD_TTL_SECONDS;
+    input.purpose === 'provider_input'
+      ? PROVIDER_INPUT_TTL_SECONDS
+      : input.purpose === 'review_preview'
+        ? REVIEW_PREVIEW_TTL_SECONDS
+        : CUSTOMER_DOWNLOAD_TTL_SECONDS;
   const token = await mintArtifactAccessToken(bindings.ARTIFACT_ACCESS_SIGNING_KEY, {
     purpose: input.purpose,
     artifactId: input.artifactId,

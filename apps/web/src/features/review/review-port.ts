@@ -1,6 +1,13 @@
 import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
+import { parseLaunchPackCopy } from '@mustbeviral/contracts';
 
 export type ReviewDecision = 'pending' | 'approved' | 'rejected';
+
+export interface ReviewCopyPreview {
+  readonly primaryText: string;
+  readonly headline: string;
+  readonly description: string;
+}
 
 export interface ReviewVariant {
   readonly id: string;
@@ -12,6 +19,8 @@ export interface ReviewVariant {
   readonly accessibilityDescription: string | null;
   readonly hasPrior: boolean;
   readonly rejectionReason?: string;
+  readonly previewUrl?: string | null;
+  readonly copy?: ReviewCopyPreview | null;
 }
 
 export interface ArtifactGroupReview {
@@ -239,6 +248,63 @@ function applyAccessibilityDescription(
   }));
 }
 
+export function reviewContentUrl(accessUrl: string): string {
+  try {
+    const url = new URL(accessUrl);
+    if (typeof window === 'undefined') return accessUrl;
+    return `${window.location.origin}/api/core${url.pathname}${url.search}`;
+  } catch {
+    return accessUrl;
+  }
+}
+
+async function loadReviewExtras(
+  client: MustBeViralRestClient,
+  artifacts: P0OperationData<'get_receipt'>['receipt']['artifacts'],
+): Promise<
+  Record<string, Readonly<{ previewUrl?: string | null; copy?: ReviewCopyPreview | null }>>
+> {
+  const extras: Record<string, { previewUrl?: string | null; copy?: ReviewCopyPreview | null }> =
+    {};
+  for (const artifact of artifacts) {
+    if (
+      artifact.artifact_kind !== 'provider_output' &&
+      artifact.artifact_kind !== 'approved_output'
+    ) {
+      continue;
+    }
+    let detail: Awaited<ReturnType<MustBeViralRestClient['request']>>;
+    try {
+      detail = await client.request('get_artifact', { id: artifact.id });
+    } catch {
+      continue;
+    }
+    if ('error' in detail || !('access' in detail.data) || detail.data.access === null) continue;
+    const previewUrl = reviewContentUrl(detail.data.access.url);
+    if (artifact.mime_type.startsWith('image/') || artifact.mime_type.startsWith('video/')) {
+      extras[artifact.id] = { previewUrl };
+      continue;
+    }
+    if (!artifact.mime_type.includes('json')) continue;
+    try {
+      const response = await fetch(previewUrl);
+      if (!response.ok) continue;
+      const parsed = parseLaunchPackCopy(await response.text());
+      if (parsed === null) continue;
+      extras[artifact.id] = {
+        copy: {
+          primaryText: parsed.primary_text,
+          headline: parsed.headline,
+          description: parsed.description,
+        },
+      };
+    } catch {
+      continue;
+    }
+  }
+  return extras;
+}
+
 function groupKind(mimeType: string) {
   if (mimeType.startsWith('image/')) return { id: 'visuals', name: 'Visual system' };
   if (mimeType.startsWith('video/')) return { id: 'motion', name: 'Motion system' };
@@ -255,27 +321,46 @@ function metadataRoute(value: unknown): string | undefined {
   return undefined;
 }
 
+function reviewLabel(kindId: string, indexInGroup: number): string {
+  if (kindId === 'copy') return `Copy set ${String(indexInGroup + 1)}`;
+  if (kindId === 'motion') return `Motion ${String(indexInGroup + 1)}`;
+  return `Visual ${String(indexInGroup + 1)}`;
+}
+
 function reviewFromReceipt(
   receipt: P0OperationData<'get_receipt'>['receipt'],
   reviewer: string,
+  extras: Readonly<
+    Record<string, Readonly<{ previewUrl?: string | null; copy?: ReviewCopyPreview | null }>>
+  > = {},
 ): Readonly<{ groups: readonly ArtifactGroupReview[]; summary: ReviewSummary }> {
   const reviewable = receipt.artifacts.filter(
     (artifact) =>
       artifact.artifact_kind === 'provider_output' || artifact.artifact_kind === 'approved_output',
   );
   const groups = new Map<string, ArtifactGroupReview>();
-  for (const [index, artifact] of reviewable.entries()) {
+  const groupCounts = new Map<string, number>();
+  for (const artifact of reviewable) {
     const kind = groupKind(artifact.mime_type);
+    const indexInGroup = groupCounts.get(kind.id) ?? 0;
+    groupCounts.set(kind.id, indexInGroup + 1);
+    const extra = extras[artifact.id];
     const current = groups.get(kind.id);
     const variant: ReviewVariant = {
       id: artifact.id,
       groupId: kind.id,
-      label: `Artifact ${String(index + 1).padStart(2, '0')}`,
-      format: `${artifact.mime_type} · ${String(artifact.byte_size)} bytes`,
-      model: metadataRoute(artifact.rights_attestation) ?? 'Receipt lineage',
+      label: reviewLabel(kind.id, indexInGroup),
+      format: extra?.copy
+        ? extra.copy.headline || extra.copy.primaryText
+        : kind.id === 'copy'
+          ? 'Copy set'
+          : `${artifact.mime_type}`,
+      model: metadataRoute(artifact.rights_attestation) ?? 'Pinned catalog route',
       decision: artifact.artifact_kind === 'approved_output' ? 'approved' : 'pending',
       accessibilityDescription: artifact.accessibility_description,
       hasPrior: receipt.lineage.some(({ child_artifact_id }) => child_artifact_id === artifact.id),
+      previewUrl: extra?.previewUrl ?? null,
+      copy: extra?.copy ?? null,
     };
     const variants = [...(current?.variants ?? []), variant];
     groups.set(kind.id, {
@@ -325,7 +410,8 @@ export class WorkerReviewPort implements ReviewReadPort {
     try {
       const result = await this.client.request('get_receipt', { id: this.runId });
       if ('error' in result) return this.#mapError(result.error, this.runId);
-      const mapped = reviewFromReceipt(result.data.receipt, this.reviewer);
+      const extras = await loadReviewExtras(this.client, result.data.receipt.artifacts);
+      const mapped = reviewFromReceipt(result.data.receipt, this.reviewer, extras);
       this.#groups = mapped.groups;
       return { type: 'ok', ...mapped };
     } catch {
