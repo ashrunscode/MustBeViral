@@ -28,6 +28,9 @@ function stripMarkdownDecor(value: string): string {
     .trim();
 }
 
+const MARKDOWN_SPEC_STOP =
+  /^(dimensions|material|filter life|odor|care|visual|pricing|key messaging|prohibited|available in|typographic|product proof|construction|no compostable)/iu;
+
 function fromMarkdownCopy(raw: string): LaunchPackCopyFields | null {
   const lines = raw
     .split(/\r?\n/u)
@@ -36,7 +39,13 @@ function fromMarkdownCopy(raw: string): LaunchPackCopyFields | null {
   if (lines.length === 0) return null;
   const headline = lines[0] ?? '';
   const primary = lines[1] ?? headline;
-  const description = lines.slice(2).join(' ').trim();
+  const offer: string[] = [];
+  for (const line of lines.slice(2)) {
+    if (MARKDOWN_SPEC_STOP.test(line)) break;
+    offer.push(line);
+    if (offer.join(' ').length >= 220) break;
+  }
+  const description = offer.join(' ').trim().slice(0, 240);
   if (headline.length === 0 || primary.length === 0) return null;
   return { headline, primary_text: primary, description };
 }
