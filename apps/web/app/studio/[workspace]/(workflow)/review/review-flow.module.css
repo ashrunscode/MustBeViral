@@ -220,6 +220,148 @@
   object-fit: contain;
   background: var(--paper-2);
 }
+.composed {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+}
+.conceptRail {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+.conceptTab {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--card);
+  color: var(--ink-head);
+  text-align: left;
+  cursor: pointer;
+}
+.conceptTab[aria-selected='true'] {
+  border-color: var(--signal-soft);
+  background: #80bfff1f;
+}
+.conceptTab span {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+.stageWrap {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+.placementRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.placementTab {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 6px 8px;
+  background: var(--card);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.placementTab[aria-selected='true'] {
+  border-color: var(--signal-soft);
+}
+.safeToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+.phone {
+  width: min(360px, 100%);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+}
+.phoneSquare .adStill {
+  height: 320px;
+}
+.phoneStory .adStill {
+  height: 520px;
+}
+.phoneFeed .adStill {
+  height: 400px;
+}
+.adHead,
+.adFoot,
+.adPrimary {
+  padding: 10px 12px;
+}
+.adHead {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-strong);
+  font-size: 13px;
+}
+.adPrimary {
+  margin: 0;
+  color: var(--ink-head);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.adStill {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: var(--paper-2);
+}
+.adMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+.safeZone {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-top: 14% solid rgba(184, 126, 20, 0.18);
+  border-bottom: 20% solid rgba(184, 126, 20, 0.18);
+  border-left: 6% solid rgba(184, 126, 20, 0.12);
+  border-right: 6% solid rgba(184, 126, 20, 0.12);
+}
+.adFoot strong {
+  display: block;
+  color: var(--ink-strong);
+  font-size: 15px;
+  font-weight: 400;
+}
+.adFoot p {
+  margin: 4px 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+.adCta {
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 8px 10px;
+  background: var(--signal);
+  color: #fff;
+  font-size: 12px;
+}
+.conceptActions {
+  display: grid;
+  justify-items: stretch;
+  gap: 10px;
+  width: min(360px, 100%);
+}
 .thumbCopy,
 .workerThumb.thumbCopy {
   background: var(--card);
@@ -409,6 +551,9 @@
     display: inline-flex;
   }
   .artifactGrid {
+    grid-template-columns: 1fr;
+  }
+  .composed {
     grid-template-columns: 1fr;
   }
   .artifactCard {

@@ -2,10 +2,12 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
 import {
+  ComposedReview,
   ReviewCopyPreview,
   ReviewFlow,
   ReviewResultNotice,
 } from '../../../app/studio/[workspace]/(workflow)/review/review-flow';
+import type { ReviewConcept } from './review-port';
 
 describe('ReviewFlow', () => {
   it('renders comparison pairs, named reviewer, and approval controls', () => {
@@ -28,6 +30,61 @@ describe('ReviewFlow', () => {
     const html = renderToStaticMarkup(<ReviewFlow workspace="lumen-skin" />);
     expect(html).toContain('$18.42 / $100.00');
     expect(html).toContain('Review outputs');
+  });
+
+  it('keeps preview review on artifact cards instead of composed ads', () => {
+    const html = renderToStaticMarkup(<ReviewFlow workspace="lumen-skin" />);
+    expect(html).toContain('Visual system');
+    expect(html).toContain('Approve group as Maya Chen');
+    expect(html).not.toContain('Composed review');
+  });
+
+  it('renders worker composed review as a phone ad with placements', () => {
+    const variant = {
+      id: 'a11',
+      groupId: 'adaptations',
+      label: 'Feed 4:5',
+      format: '4:5 placement',
+      model: 'flux-kontext',
+      decision: 'pending' as const,
+      accessibilityDescription: 'Stillroom compost caddy on a sand counter.',
+      hasPrior: false,
+      previewUrl: 'https://example.test/preview.jpg',
+      nodeKey: 'adaptation-1-1',
+    };
+    const concept: ReviewConcept = {
+      id: 'concept-1',
+      index: 1,
+      title: 'Packshot',
+      angle: 'Problem-recognition',
+      copy: {
+        headline: 'Keep nights simple',
+        primaryText: 'Countertop compost without the smell.',
+        description: '',
+      },
+      copyVariant: null,
+      master: null,
+      placements: { '4:5': variant, '1:1': null, '9:16': null },
+      motion: null,
+      decision: 'pending',
+      members: [variant],
+    };
+    const html = renderToStaticMarkup(
+      <ComposedReview
+        campaignName="Stillroom pack"
+        concepts={[concept]}
+        onApprove={() => undefined}
+        onDescribe={() => undefined}
+        onInspect={() => undefined}
+      />,
+    );
+    expect(html).toContain('Composed review');
+    expect(html).toContain('Stillroom pack · Sponsored');
+    expect(html).toContain('Feed 4:5');
+    expect(html).toContain('Keep nights simple');
+    expect(html).toContain('Countertop compost without the smell.');
+    expect(html).toContain('Approve this concept');
+    expect(html).toContain('Accessibility description required before approval');
   });
 
   it('renders worker copy as headline, primary text, and description', () => {

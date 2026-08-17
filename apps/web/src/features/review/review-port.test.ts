@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 
-import { InMemoryReviewPort, WorkerReviewPort } from './review-port';
+import { composeReviewConcepts, InMemoryReviewPort, WorkerReviewPort } from './review-port';
 
 describe('InMemoryReviewPort', () => {
   it('persists approve and reject transitions', () => {
@@ -237,6 +237,7 @@ describe('WorkerReviewPort', () => {
             {
               label: 'Master · Packshot',
               format: 'Master still',
+              nodeKey: 'master-1',
               previewUrl:
                 'https://core.example.test/v1/artifacts/artifact-live/content?token=review',
             },
@@ -360,6 +361,131 @@ describe('WorkerReviewPort', () => {
     });
   });
 
+  it('approves every selected concept member through the existing approval operation', async () => {
+    const second = {
+      ...artifact,
+      id: 'artifact-live-2',
+      run_node_id: 'run-node-adaptation',
+    };
+    const bodies: string[] = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-review-0006',
+      fetch: async (input, init) => {
+        const url = String(input);
+        let payload: unknown = {
+          data: {
+            run: {
+              runId: 'run-live',
+              projectId: 'project-live',
+              canvasId: 'canvas-live',
+              canvasRevisionId: 'revision-live',
+              quoteId: 'quote-live',
+              status: 'succeeded',
+              reservationId: 'reservation-live',
+            },
+            nodes: [
+              {
+                runNodeId: 'run-node-live',
+                nodeKey: 'master-1',
+                modelRouteId: 'provider/model-live',
+                status: 'succeeded',
+                dispatchWave: 2,
+              },
+              {
+                runNodeId: 'run-node-adaptation',
+                nodeKey: 'adaptation-1-1',
+                modelRouteId: 'provider/model-live',
+                status: 'succeeded',
+                dispatchWave: 3,
+              },
+            ],
+          },
+          meta: { request_id: 'request-review-0006' },
+        };
+        if (url.endsWith('/approvals')) {
+          bodies.push(String(init?.body ?? ''));
+          payload = {
+            data: {
+              run_id: 'run-live',
+              approved: 2,
+              replayed: 0,
+              artifacts: [
+                { artifact_id: 'artifact-live', artifact_kind: 'approved_output' },
+                { artifact_id: 'artifact-live-2', artifact_kind: 'approved_output' },
+              ],
+            },
+            meta: { request_id: 'request-review-0006' },
+          };
+        } else if (url.endsWith('/receipt')) {
+          payload = {
+            data: {
+              receipt: {
+                ...receiptResponse().data.receipt,
+                artifacts: [artifact, second],
+              },
+            },
+            meta: { request_id: 'request-review-0006' },
+          };
+        } else if (url.includes('/projects/')) {
+          payload = {
+            data: {
+              project: {
+                brand_kit_id: null,
+                brief_id: null,
+                created_at: timestamp,
+                created_by: 'user-live',
+                id: 'project-live',
+                name: 'Stillroom compost caddy launch pack',
+                status: 'active',
+                updated_at: timestamp,
+                workspace_id: 'workspace-live',
+              },
+            },
+            meta: { request_id: 'request-review-0006' },
+          };
+        } else if (url.includes('/artifacts/')) {
+          payload = {
+            data: {
+              artifact: url.includes('artifact-live-2') ? second : artifact,
+              access: null,
+              copy: null,
+            },
+            meta: { request_id: 'request-review-0006' },
+          };
+        }
+        return new Response(JSON.stringify(payload), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+    const port = new WorkerReviewPort(client, 'run-live', 'user-live', () => 'approval-idem-6');
+    await port.read();
+    await expect(
+      port.approveMembers({
+        variantIds: ['artifact-live', 'artifact-live-2'],
+        expectedRevisionId: 'revision-live',
+      }),
+    ).resolves.toMatchObject({
+      type: 'ok',
+      groups: [{ variants: [{ decision: 'approved' }] }, { variants: [{ decision: 'approved' }] }],
+    });
+    expect(JSON.parse(bodies[0] ?? '{}')).toEqual({
+      approvals: [
+        {
+          artifact_id: 'artifact-live',
+          accessibility_description: artifact.accessibility_description,
+        },
+        {
+          artifact_id: 'artifact-live-2',
+          accessibility_description: second.accessibility_description,
+        },
+      ],
+    });
+  });
+
   it('maps JSON copy artifacts to headline and primary text instead of a private well', async () => {
     const copyArtifact = {
       ...artifact,
@@ -439,6 +565,7 @@ describe('WorkerReviewPort', () => {
             {
               label: 'Copy · Problem-recognition',
               format: 'Copy set',
+              nodeKey: 'copy-1',
               copy: {
                 headline: 'Keep nights simple',
                 primaryText: '200 mg glycinate. Take one capsule.',
@@ -525,6 +652,75 @@ describe('WorkerReviewPort', () => {
       summary: {
         qaNoteCount: 1,
         qaFindings: [{ code: 'COPY_PRIMARY_TOO_LONG', variantId: 'artifact-copy-long' }],
+      },
+    });
+  });
+});
+
+describe('composeReviewConcepts', () => {
+  it('pairs copy, master, and placements into three concepts', () => {
+    const variant = (
+      id: string,
+      nodeKey: string,
+      extras: Partial<import('./review-port').ReviewVariant> = {},
+    ) => ({
+      id,
+      groupId: 'visuals',
+      label: nodeKey,
+      format: 'Still',
+      model: 'route',
+      decision: 'approved' as const,
+      accessibilityDescription: 'desc',
+      hasPrior: false,
+      nodeKey,
+      ...extras,
+    });
+    const concepts = composeReviewConcepts([
+      {
+        id: 'copy',
+        name: 'Copy system',
+        reviewer: 'You',
+        decision: 'approved',
+        revision: 'rev',
+        variants: [
+          variant('c1', 'copy-1', {
+            groupId: 'copy',
+            copy: { headline: 'Keep nights simple', primaryText: '200 mg.', description: '' },
+          }),
+        ],
+      },
+      {
+        id: 'masters',
+        name: 'Masters',
+        reviewer: 'You',
+        decision: 'approved',
+        revision: 'rev',
+        variants: [variant('m1', 'master-1')],
+      },
+      {
+        id: 'adaptations',
+        name: 'Adaptations',
+        reviewer: 'You',
+        decision: 'approved',
+        revision: 'rev',
+        variants: [
+          variant('a11', 'adaptation-1-1'),
+          variant('a12', 'adaptation-1-2'),
+          variant('a13', 'adaptation-1-3'),
+        ],
+      },
+    ]);
+    expect(concepts).toHaveLength(1);
+    expect(concepts[0]).toMatchObject({
+      id: 'concept-1',
+      angle: 'Problem-recognition',
+      title: 'Packshot',
+      copy: { headline: 'Keep nights simple' },
+      master: { id: 'm1' },
+      placements: {
+        '4:5': { id: 'a11' },
+        '1:1': { id: 'a12' },
+        '9:16': { id: 'a13' },
       },
     });
   });

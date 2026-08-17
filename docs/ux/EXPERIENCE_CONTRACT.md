@@ -53,7 +53,7 @@ Lightfield tokens in `.superdesign/design-system.md` are the system. The SuperDe
 1. Preview fixture goldens (Review Approval / Lumen) stay locked for local-preview Playwright.
 2. Live product screens may diverge from those fixtures. They use Lightfield tokens and worker data.
 3. A new live surface needs named HTML frames, desktop and mobile captures, and explicit operator approval before its production components ship.
-4. Composed Review frames live at `.superdesign/hifi/composed-review-desktop.html` and `composed-review-mobile.html` until the operator approves them. Implementation of that layout waits on that approval.
+4. Composed Review frames at `.superdesign/hifi/composed-review-desktop.html` and `composed-review-mobile.html` were operator-approved on 2026-08-17. Live worker Review implements that layout. Preview fixtures stay on Review Approval.
 5. Do not require `.superdesign/init/` freshness as a production block; that analysis is historical.
 
 ## Accessibility contract

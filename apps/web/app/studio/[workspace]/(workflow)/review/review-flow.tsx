@@ -5,10 +5,13 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
 import {
+  composeReviewConcepts,
   InMemoryReviewPort,
   WorkerReviewPort,
   type ArtifactGroupReview,
+  type ReviewConcept,
   type ReviewDecision,
+  type ReviewPlacement,
   type ReviewPort,
   type ReviewReadPort,
   type ReviewPortResult,
@@ -57,6 +60,156 @@ export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResu
     <div className={styles.reviewError} role="alert" data-result={result.type}>
       {message}
     </div>
+  );
+}
+
+function mediaForPlacement(
+  concept: ReviewConcept,
+  placement: ReviewPlacement,
+): ReviewVariant | null {
+  if (placement === 'reels') return concept.motion ?? concept.placements['9:16'] ?? concept.master;
+  return concept.placements[placement] ?? concept.master;
+}
+
+export function ComposedReview({
+  campaignName,
+  concepts,
+  onApprove,
+  onDescribe,
+  onInspect,
+}: Readonly<{
+  campaignName: string;
+  concepts: readonly ReviewConcept[];
+  onApprove: (concept: ReviewConcept) => void;
+  onDescribe: (variantId: string, description: string) => void;
+  onInspect: (variant: ReviewVariant) => void;
+}>) {
+  const [selectedId, setSelectedId] = useState(concepts[0]?.id ?? 'concept-1');
+  const [placement, setPlacement] = useState<ReviewPlacement>('4:5');
+  const [safeZone, setSafeZone] = useState(true);
+  const [descriptionDrafts, setDescriptionDrafts] = useState<Readonly<Record<string, string>>>({});
+  const concept = concepts.find((candidate) => candidate.id === selectedId) ?? concepts[0];
+  if (concept === undefined) return null;
+  const media = mediaForPlacement(concept, placement);
+  const copy = concept.copy;
+  const stageClass =
+    placement === '1:1'
+      ? styles.phoneSquare
+      : placement === '9:16' || placement === 'reels'
+        ? styles.phoneStory
+        : styles.phoneFeed;
+  return (
+    <section className={styles.composed} aria-label="Composed review">
+      <div className={styles.conceptRail} role="tablist" aria-label="Concepts">
+        {concepts.map((candidate) => (
+          <button
+            key={candidate.id}
+            type="button"
+            className={styles.conceptTab}
+            role="tab"
+            aria-selected={candidate.id === concept.id}
+            onClick={() => setSelectedId(candidate.id)}
+          >
+            <MonoCaps>
+              Concept {String(candidate.index)} · {candidate.title}
+            </MonoCaps>
+            <span>{candidate.angle}</span>
+          </button>
+        ))}
+      </div>
+      <div className={styles.stageWrap}>
+        <div className={styles.placementRow} role="tablist" aria-label="Placement">
+          {(['4:5', '1:1', '9:16', 'reels'] as const).map((option) => (
+            <button
+              key={option}
+              type="button"
+              className={styles.placementTab}
+              role="tab"
+              aria-selected={placement === option}
+              onClick={() => setPlacement(option)}
+            >
+              {option === 'reels' ? 'Reels' : `Feed ${option}`}
+            </button>
+          ))}
+          <label className={styles.safeToggle}>
+            <input
+              type="checkbox"
+              checked={safeZone}
+              onChange={(event) => setSafeZone(event.target.checked)}
+            />
+            Safe zone
+          </label>
+        </div>
+        <article className={`${styles.phone} ${stageClass}`} id={concept.id}>
+          <div className={styles.adHead}>
+            <span>{campaignName} · Sponsored</span>
+            <MonoCaps>{placement === 'reels' ? 'Reels 9:16' : placement}</MonoCaps>
+          </div>
+          {copy ? <p className={styles.adPrimary}>{copy.primaryText}</p> : null}
+          <div className={styles.adStill}>
+            {media?.previewUrl ? (
+              media.groupId === 'motion' ? (
+                <video
+                  className={styles.adMedia}
+                  src={media.previewUrl}
+                  controls
+                  playsInline
+                  autoPlay
+                  muted
+                />
+              ) : (
+                // Private capability URLs expire; next/image cannot cache or optimize them.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className={styles.adMedia}
+                  src={media.previewUrl}
+                  alt={media.accessibilityDescription ?? concept.title}
+                  onClick={() => onInspect(media)}
+                />
+              )
+            ) : (
+              <MonoCaps>No private preview for this placement</MonoCaps>
+            )}
+            {safeZone ? <div className={styles.safeZone} aria-hidden="true" /> : null}
+          </div>
+          <div className={styles.adFoot}>
+            <strong>{copy?.headline ?? concept.title}</strong>
+            {copy?.description ? <p>{copy.description}</p> : null}
+            <span className={styles.adCta}>Shop now</span>
+          </div>
+        </article>
+        <div className={styles.conceptActions}>
+          {concept.decision === 'approved' ? (
+            <MonoCaps>Concept approved</MonoCaps>
+          ) : (
+            <>
+              <label className={styles.descriptionField}>
+                <span>Accessibility description required before approval</span>
+                <textarea
+                  value={
+                    descriptionDrafts[concept.id] ??
+                    concept.members.find((member) => member.accessibilityDescription?.trim())
+                      ?.accessibilityDescription ??
+                    ''
+                  }
+                  onChange={(event) => {
+                    const next = event.target.value;
+                    setDescriptionDrafts((current) => ({ ...current, [concept.id]: next }));
+                    for (const member of concept.members) {
+                      onDescribe(member.id, next);
+                    }
+                  }}
+                  placeholder="Describe this concept before approval"
+                />
+              </label>
+              <Button variant="primary" onClick={() => onApprove(concept)}>
+                Approve this concept
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -451,6 +604,19 @@ export function ReviewFlow({
   }
 
   const approvedCount = variants.filter((variant) => variant.decision === 'approved').length;
+  const concepts =
+    dataMode === 'worker' && mode === 'approval' ? composeReviewConcepts(groups) : [];
+  const composed = concepts.length > 0;
+
+  async function approveConcept(concept: ReviewConcept) {
+    if (readPort === null) return;
+    const next = await readPort.approveMembers({
+      variantIds: concept.members.map((member) => member.id),
+      expectedRevisionId: groups[0]?.revision ?? 'current revision',
+    });
+    setResult(next);
+    if (next.type === 'ok') setGroups(next.groups);
+  }
   return (
     <main
       id="main-content"
@@ -517,54 +683,65 @@ export function ReviewFlow({
             This run has no reviewable provider outputs yet.
           </div>
         ) : null}
-        {groups.map((group) => (
-          <section
-            className={styles.groupSection}
-            key={group.id}
-            aria-labelledby={`${group.id}-title`}
-          >
-            <div className={styles.groupHead}>
-              <div>
-                <h2 id={`${group.id}-title`}>{group.name}</h2>
-                <MonoCaps>Reviewer · {group.reviewer}</MonoCaps>
-              </div>
-              <div className={styles.groupApproval}>
-                <Chip status={decisionChip[group.decision].status}>
-                  {decisionChip[group.decision].label}
-                </Chip>
-                {group.decision === 'approved' ? null : (
-                  <Button variant="primary" onClick={() => void approveGroup(group)}>
-                    {dataMode === 'preview' ? 'Approve group as Maya Chen' : 'Approve group'}
-                  </Button>
-                )}
-              </div>
-            </div>
-            <div className={styles.artifactGrid}>
-              {group.variants.map((variant) => {
-                const index = variants.findIndex((candidate) => candidate.id === variant.id);
-                return (
-                  <VariantCard
-                    key={variant.id}
-                    dataMode={dataMode}
-                    index={index}
-                    mode={mode}
-                    variant={variant}
-                    rejecting={rejectingId === variant.id}
-                    rejectionReason={rejectionReason}
-                    setRejectionReason={setRejectionReason}
-                    onDecide={(variant, decision) => void decide(variant, decision)}
-                    onDescribe={describe}
-                    onInspect={setInspected}
-                    onNavigate={handleCardKey}
-                    register={(element, refIndex) => {
-                      cardRefs.current[refIndex] = element;
-                    }}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        ))}
+        {composed ? (
+          <ComposedReview
+            campaignName={summary.campaignName ?? 'Campaign'}
+            concepts={concepts}
+            onApprove={(concept) => void approveConcept(concept)}
+            onDescribe={describe}
+            onInspect={setInspected}
+          />
+        ) : null}
+        {composed
+          ? null
+          : groups.map((group) => (
+              <section
+                className={styles.groupSection}
+                key={group.id}
+                aria-labelledby={`${group.id}-title`}
+              >
+                <div className={styles.groupHead}>
+                  <div>
+                    <h2 id={`${group.id}-title`}>{group.name}</h2>
+                    <MonoCaps>Reviewer · {group.reviewer}</MonoCaps>
+                  </div>
+                  <div className={styles.groupApproval}>
+                    <Chip status={decisionChip[group.decision].status}>
+                      {decisionChip[group.decision].label}
+                    </Chip>
+                    {group.decision === 'approved' ? null : (
+                      <Button variant="primary" onClick={() => void approveGroup(group)}>
+                        {dataMode === 'preview' ? 'Approve group as Maya Chen' : 'Approve group'}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.artifactGrid}>
+                  {group.variants.map((variant) => {
+                    const index = variants.findIndex((candidate) => candidate.id === variant.id);
+                    return (
+                      <VariantCard
+                        key={variant.id}
+                        dataMode={dataMode}
+                        index={index}
+                        mode={mode}
+                        variant={variant}
+                        rejecting={rejectingId === variant.id}
+                        rejectionReason={rejectionReason}
+                        setRejectionReason={setRejectionReason}
+                        onDecide={(variant, decision) => void decide(variant, decision)}
+                        onDescribe={describe}
+                        onInspect={setInspected}
+                        onNavigate={handleCardKey}
+                        register={(element, refIndex) => {
+                          cardRefs.current[refIndex] = element;
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            ))}
         {mode === 'approval' ? (
           <>
             <section

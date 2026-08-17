@@ -24,6 +24,27 @@ export interface ReviewVariant {
   readonly rejectionReason?: string;
   readonly previewUrl?: string | null;
   readonly copy?: ReviewCopyPreview | null;
+  readonly nodeKey?: string;
+}
+
+export type ReviewPlacement = '4:5' | '1:1' | '9:16' | 'reels';
+
+export interface ReviewConcept {
+  readonly id: string;
+  readonly index: number;
+  readonly title: string;
+  readonly angle: string;
+  readonly copy: ReviewCopyPreview | null;
+  readonly copyVariant: ReviewVariant | null;
+  readonly master: ReviewVariant | null;
+  readonly placements: Readonly<{
+    '4:5': ReviewVariant | null;
+    '1:1': ReviewVariant | null;
+    '9:16': ReviewVariant | null;
+  }>;
+  readonly motion: ReviewVariant | null;
+  readonly decision: ReviewDecision;
+  readonly members: readonly ReviewVariant[];
 }
 
 export interface ArtifactGroupReview {
@@ -89,6 +110,9 @@ export interface ReviewReadPort {
   ): Promise<ReviewPortResult>;
   approveGroup(
     input: Readonly<{ groupId: string; reviewer: string; expectedRevisionId: string }>,
+  ): Promise<ReviewPortResult>;
+  approveMembers(
+    input: Readonly<{ variantIds: readonly string[]; expectedRevisionId: string }>,
   ): Promise<ReviewPortResult>;
 }
 
@@ -388,6 +412,58 @@ function reviewFormat(nodeKey: string | undefined, kindId: string, mimeType: str
   return mimeType;
 }
 
+const CONCEPT_ANGLES = ['Problem-recognition', 'Proof-first', 'Offer-clarity'] as const;
+const CONCEPT_TITLES = ['Packshot', 'Material', 'Proof-forward'] as const;
+
+export function composeReviewConcepts(
+  groups: readonly ArtifactGroupReview[],
+): readonly ReviewConcept[] {
+  const variants = groups.flatMap((group) => group.variants);
+  const byKey = new Map(
+    variants.flatMap((variant) =>
+      variant.nodeKey === undefined ? [] : ([[variant.nodeKey, variant]] as const),
+    ),
+  );
+  const concepts: ReviewConcept[] = [];
+  for (let index = 1; index <= 3; index += 1) {
+    const copyVariant = byKey.get(`copy-${String(index)}`) ?? null;
+    const master = byKey.get(`master-${String(index)}`) ?? null;
+    const placements = {
+      '4:5': byKey.get(`adaptation-${String(index)}-1`) ?? null,
+      '1:1': byKey.get(`adaptation-${String(index)}-2`) ?? null,
+      '9:16': byKey.get(`adaptation-${String(index)}-3`) ?? null,
+    };
+    const motion = index === 1 ? (byKey.get('motion-1') ?? null) : null;
+    const members = [
+      copyVariant,
+      master,
+      placements['4:5'],
+      placements['1:1'],
+      placements['9:16'],
+      motion,
+    ].filter((variant): variant is ReviewVariant => variant !== null);
+    if (members.length === 0) continue;
+    concepts.push({
+      id: `concept-${String(index)}`,
+      index,
+      title: CONCEPT_TITLES[index - 1] ?? `Concept ${String(index)}`,
+      angle: CONCEPT_ANGLES[index - 1] ?? `Angle ${String(index)}`,
+      copy: copyVariant?.copy ?? null,
+      copyVariant,
+      master,
+      placements,
+      motion,
+      decision: members.every((variant) => variant.decision === 'approved')
+        ? 'approved'
+        : members.some((variant) => variant.decision === 'rejected')
+          ? 'rejected'
+          : 'pending',
+      members,
+    });
+  }
+  return concepts;
+}
+
 function reviewFromReceipt(
   receipt: P0OperationData<'get_receipt'>['receipt'],
   reviewer: string,
@@ -421,6 +497,7 @@ function reviewFromReceipt(
       hasPrior: receipt.lineage.some(({ child_artifact_id }) => child_artifact_id === artifact.id),
       previewUrl: extra?.previewUrl ?? null,
       copy: extra?.copy ?? null,
+      ...(nodeKey === undefined ? {} : { nodeKey }),
     };
     if (extra?.copy) {
       for (const finding of evaluateLaunchPackCopy({
@@ -530,6 +607,23 @@ export class WorkerReviewPort implements ReviewReadPort {
       return { type: 'conflict', actual_revision_id: group.revision };
     }
     return this.#approve(group.variants.filter((variant) => variant.decision !== 'rejected'));
+  }
+
+  async approveMembers(
+    input: Readonly<{ variantIds: readonly string[]; expectedRevisionId: string }>,
+  ): Promise<ReviewPortResult> {
+    const selected = new Set(input.variantIds);
+    const members = this.#groups
+      .flatMap((group) => group.variants)
+      .filter((variant) => selected.has(variant.id) && variant.decision !== 'rejected');
+    if (members.length === 0) return { type: 'not_found', artifact_id: input.variantIds[0] ?? '' };
+    const revision = this.#groups.find((group) =>
+      group.variants.some((variant) => selected.has(variant.id)),
+    )?.revision;
+    if (revision !== input.expectedRevisionId) {
+      return { type: 'conflict', actual_revision_id: revision ?? 'current revision' };
+    }
+    return this.#approve(members);
   }
 
   async #approve(variants: readonly ReviewVariant[]): Promise<ReviewPortResult> {
