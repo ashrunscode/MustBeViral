@@ -246,8 +246,15 @@ async function seedBrief(
       message: `${brief.briefId} did not validate at the seeded revision.`,
     });
   }
+  const briefId = SELF_SESSION_BRIEF_IDS.find((id) => id === brief.briefId);
+  if (briefId === undefined) {
+    throw new HarnessFlowError({
+      code: 'GRAPH_INVALID',
+      message: `${brief.briefId} is not a self-session brief.`,
+    });
+  }
   return {
-    briefId: brief.briefId,
+    briefId,
     product: brief.product,
     projectId,
     canvasId: canvas.canvasId,

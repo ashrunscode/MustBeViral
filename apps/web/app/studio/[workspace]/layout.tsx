@@ -7,13 +7,16 @@ export default async function StudioWorkspaceLayout({
   children,
   params,
 }: Readonly<{ children: ReactNode; params: Promise<{ workspace: string }> }>) {
-  const [{ workspace }] = await Promise.all([params, requireStudioSession()]);
+  const [{ workspace }, session] = await Promise.all([params, requireStudioSession()]);
   return (
     <div className="studio-app">
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <StudioHeader workspace={workspace} />
+      <StudioHeader
+        presentation={session.mode === 'local-preview' ? 'preview' : 'authenticated'}
+        workspace={workspace}
+      />
       {children}
     </div>
   );

@@ -15,13 +15,14 @@ import type {
 } from './handlers';
 import {
   ApiErrorEnvelopeSchema,
+  WireTimestampSchema,
   createApiSuccessEnvelopeSchema,
   type ApiErrorEnvelope,
   type ApiSuccessEnvelope,
 } from './http';
 import type { P0RestOperation } from './rest';
 
-const TimestampSchema = z.iso.datetime({ offset: true });
+const TimestampSchema = WireTimestampSchema;
 const MicrosSchema = z.number().int().nonnegative();
 const WireMicrosSchema = z.string().regex(/^\d+$/u);
 const Sha256Schema = z.string().regex(/^[a-f0-9]{64}$/u);

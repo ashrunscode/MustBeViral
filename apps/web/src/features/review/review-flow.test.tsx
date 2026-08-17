@@ -12,6 +12,7 @@ describe('ReviewFlow', () => {
     expect(html.match(/compare-pair/gu)?.length).toBe(4);
     expect(html).toContain('Reviewer · Maya Chen');
     expect(html).toContain('Approve group as Maya Chen');
+    expect(html).not.toContain('Accessibility description');
   });
 
   it('renders mobile receipt and export semantic sections from the same review DOM', () => {

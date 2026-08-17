@@ -9,6 +9,14 @@ export const RequestIdSchema = z
   .max(128)
   .regex(/^[A-Za-z0-9][A-Za-z0-9._:-]*$/);
 
+/** Postgres timestamptz on the wire, including microsecond precision and explicit offsets. */
+export const WireTimestampSchema = z
+  .string()
+  .regex(
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})$/u,
+    'Invalid timestamptz',
+  );
+
 export const HealthResponseSchema = z
   .object({
     schema_version: z.literal(API_SCHEMA_VERSION),

@@ -19,7 +19,10 @@ function titleCaseWorkspace(workspace: string) {
     .join(' ');
 }
 
-export function StudioHeader({ workspace }: Readonly<{ workspace: string }>) {
+export function StudioHeader({
+  presentation = 'preview',
+  workspace,
+}: Readonly<{ presentation?: 'preview' | 'authenticated'; workspace: string }>) {
   const pathname = usePathname();
   const segment = pathname.split('/').filter(Boolean).at(-1) ?? 'brief';
   const routeLabel = routeLabels[segment] ?? 'Studio';
@@ -35,9 +38,13 @@ export function StudioHeader({ workspace }: Readonly<{ workspace: string }>) {
         </nav>
       </div>
       <div className="studio-system-row" aria-label="System status">
-        <MonoCaps>Network ready</MonoCaps>
+        <MonoCaps>{presentation === 'preview' ? 'Network ready' : 'Signed in'}</MonoCaps>
         <span className="studio-status-dot" aria-hidden="true" />
-        <MonoCaps>Budget consumed $0.00 / $8.00</MonoCaps>
+        <MonoCaps>
+          {presentation === 'preview'
+            ? 'Budget consumed $0.00 / $8.00'
+            : 'Spend caps appear on the quote'}
+        </MonoCaps>
       </div>
     </header>
   );

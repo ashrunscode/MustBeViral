@@ -8,6 +8,7 @@ import {
   WorkerCanvasReadPort,
   WorkerCanvasMutationPort,
   canvasModelFromContext,
+  canvasQuotePresentation,
   createCanvasFixture,
   isSimplifiedCanvasLod,
   mapCanvasNodesToOutline,
@@ -29,6 +30,12 @@ describe('canvas presentation mappings', () => {
     expect(isSimplifiedCanvasLod(CANVAS_LOD_THRESHOLD - 0.01)).toBe(true);
     expect(isSimplifiedCanvasLod(CANVAS_LOD_THRESHOLD)).toBe(false);
     expect(isSimplifiedCanvasLod(1)).toBe(false);
+  });
+
+  it('keeps the locked $4.20 quote chrome in preview and refuses a fake price in worker mode', () => {
+    expect(canvasQuotePresentation('preview').cta).toBe('Review $4.20 quote');
+    expect(canvasQuotePresentation('worker').cta).toBe('Review named quote');
+    expect(canvasQuotePresentation('worker').basis).not.toMatch(/\$4\.20/u);
   });
 
   it('preserves semantic outline order and statuses from the visual graph source', () => {

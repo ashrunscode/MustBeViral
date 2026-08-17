@@ -33,7 +33,7 @@ export const BriefDraftSchema = z.object({
   }),
   claimsLegal: z.object({
     approvedClaims: requiredText('Add approved factual claims.'),
-    evidenceSource: requiredText('Add a source for “Dermatologist tested”.'),
+    evidenceSource: requiredText('Add a source for every approved claim.'),
     legalCopy: requiredText('Add required legal copy.'),
     prohibitedClaims: z
       .array(z.string().trim().min(1))
@@ -52,6 +52,277 @@ export const BriefDraftSchema = z.object({
 });
 
 export type BriefDraft = z.infer<typeof BriefDraftSchema>;
+
+export type BriefSectionId =
+  'productTruth' | 'brandKit' | 'audience' | 'offer' | 'claimsLegal' | 'assets';
+
+function filled(value: string) {
+  return value.trim().length > 0;
+}
+
+export const STAGING_SYNTHETIC_PACKSHOTS = [
+  'staging-front-packshot.png',
+  'staging-square-packshot.png',
+] as const;
+
+export const STAGING_SYNTHETIC_PACKSHOT_PROMPT =
+  'Square and front product packshots on a clean surface; product-only; no lifestyle talent; label and packaging readable.';
+
+function packshotPromptMaterial(packshots: readonly string[]): string {
+  if (
+    packshots.length > 0 &&
+    packshots.every((packshot) =>
+      (STAGING_SYNTHETIC_PACKSHOTS as readonly string[]).includes(packshot),
+    )
+  ) {
+    return STAGING_SYNTHETIC_PACKSHOT_PROMPT;
+  }
+  return packshots.join('; ');
+}
+
+export function emptyBriefDraft(): BriefDraft {
+  return {
+    productTruth: {
+      productName: '',
+      category: '',
+      features: '',
+      benefits: '',
+      evidence: '',
+      approvedFacts: '',
+    },
+    brandKit: {
+      colors: '',
+      typography: '',
+      tone: '',
+      visualRules: '',
+      examples: '',
+      prohibitedTreatments: '',
+    },
+    audience: {
+      targetAudience: '',
+      awarenessStage: '',
+      painPoints: '',
+      desires: '',
+      objections: '',
+    },
+    offer: {
+      pricePresentation: '',
+      urgencyConstraints: '',
+      destinationUrl: '',
+    },
+    claimsLegal: {
+      approvedClaims: '',
+      evidenceSource: '',
+      legalCopy: '',
+      prohibitedClaims: [],
+      creativeConstraints: '',
+    },
+    assets: {
+      packshots: [],
+      squarePackshotReady: false,
+      rightsAttested: false,
+    },
+  };
+}
+
+/** Worker self-session draft. Synthetic staging assets are selectable; claim chips stay editable. */
+export function stagingWorkerDraft(): BriefDraft {
+  return {
+    ...emptyBriefDraft(),
+    assets: {
+      packshots: [...STAGING_SYNTHETIC_PACKSHOTS],
+      squarePackshotReady: false,
+      rightsAttested: false,
+    },
+  };
+}
+
+export function briefSectionState(
+  section: BriefSectionId,
+  draft: BriefDraft,
+): Readonly<{ complete: boolean; meta: string }> {
+  const missing = missingItemsForSection(section, draft);
+  if (section === 'assets') {
+    const ready = Math.min(
+      5,
+      draft.assets.packshots.length + Number(draft.assets.squarePackshotReady),
+    );
+    return {
+      complete: missing.length === 0,
+      meta: missing.length === 0 ? 'Complete' : `${ready} / 5 ready`,
+    };
+  }
+  return {
+    complete: missing.length === 0,
+    meta: missing.length === 0 ? 'Complete' : `${String(missing.length)} missing`,
+  };
+}
+
+export function briefCompletionFlags(draft: BriefDraft): readonly boolean[] {
+  return [
+    filled(draft.productTruth.productName) && filled(draft.productTruth.category),
+    filled(draft.productTruth.features) && filled(draft.productTruth.benefits),
+    filled(draft.productTruth.evidence) && filled(draft.productTruth.approvedFacts),
+    filled(draft.brandKit.colors) && filled(draft.brandKit.typography),
+    filled(draft.brandKit.tone) && filled(draft.brandKit.visualRules),
+    filled(draft.brandKit.examples) && filled(draft.brandKit.prohibitedTreatments),
+    filled(draft.audience.targetAudience) && filled(draft.audience.awarenessStage),
+    filled(draft.audience.painPoints) && filled(draft.audience.desires),
+    filled(draft.audience.objections),
+    filled(draft.offer.pricePresentation) && filled(draft.offer.urgencyConstraints),
+    /^https?:\/\//u.test(draft.offer.destinationUrl),
+    filled(draft.claimsLegal.approvedClaims),
+    filled(draft.claimsLegal.evidenceSource),
+    filled(draft.claimsLegal.legalCopy) && draft.claimsLegal.prohibitedClaims.length > 0,
+    draft.assets.packshots.length > 0,
+    draft.assets.squarePackshotReady,
+    draft.assets.rightsAttested,
+  ];
+}
+
+export function missingBriefItems(draft: BriefDraft): readonly string[] {
+  return [
+    ...new Set(
+      (
+        [
+          'productTruth',
+          'brandKit',
+          'audience',
+          'offer',
+          'claimsLegal',
+          'assets',
+        ] as const satisfies readonly BriefSectionId[]
+      ).flatMap((section) => missingItemsForSection(section, draft)),
+    ),
+  ];
+}
+
+function missingItemsForSection(section: BriefSectionId, draft: BriefDraft): readonly string[] {
+  if (section === 'productTruth') {
+    return [
+      ...(!filled(draft.productTruth.productName) ? ['Product name'] : []),
+      ...(!filled(draft.productTruth.category) ? ['Category'] : []),
+      ...(!filled(draft.productTruth.features) ? ['Features'] : []),
+      ...(!filled(draft.productTruth.benefits) ? ['Benefits'] : []),
+      ...(!filled(draft.productTruth.evidence) ? ['Product evidence'] : []),
+      ...(!filled(draft.productTruth.approvedFacts) ? ['Approved facts'] : []),
+    ];
+  }
+  if (section === 'brandKit') {
+    return [
+      ...(!filled(draft.brandKit.colors) ? ['Brand colors'] : []),
+      ...(!filled(draft.brandKit.typography) ? ['Typography'] : []),
+      ...(!filled(draft.brandKit.tone) ? ['Tone'] : []),
+      ...(!filled(draft.brandKit.visualRules) ? ['Visual rules'] : []),
+      ...(!filled(draft.brandKit.examples) ? ['Brand examples'] : []),
+      ...(!filled(draft.brandKit.prohibitedTreatments) ? ['Prohibited treatments'] : []),
+    ];
+  }
+  if (section === 'audience') {
+    return [
+      ...(!filled(draft.audience.targetAudience) ? ['Target audience'] : []),
+      ...(!filled(draft.audience.awarenessStage) ? ['Awareness stage'] : []),
+      ...(!filled(draft.audience.painPoints) ? ['Pain points'] : []),
+      ...(!filled(draft.audience.desires) ? ['Desires'] : []),
+      ...(!filled(draft.audience.objections) ? ['Objections'] : []),
+    ];
+  }
+  if (section === 'offer') {
+    return [
+      ...(!filled(draft.offer.pricePresentation) ? ['Price presentation'] : []),
+      ...(!filled(draft.offer.urgencyConstraints) ? ['Urgency constraints'] : []),
+      ...(!/^https?:\/\//u.test(draft.offer.destinationUrl) ? ['Valid destination URL'] : []),
+    ];
+  }
+  if (section === 'claimsLegal') {
+    return [
+      ...(!filled(draft.claimsLegal.approvedClaims) ? ['Approved claims'] : []),
+      ...(!filled(draft.claimsLegal.evidenceSource) ? ['Evidence source for approved claims'] : []),
+      ...(!filled(draft.claimsLegal.legalCopy) ? ['Legal copy'] : []),
+      ...(draft.claimsLegal.prohibitedClaims.length === 0 ? ['At least one prohibited claim'] : []),
+      ...(!filled(draft.claimsLegal.creativeConstraints) ? ['Creative constraints'] : []),
+      ...(!draft.assets.rightsAttested ? ['Asset-rights attestation'] : []),
+    ];
+  }
+  return [
+    ...(draft.assets.packshots.length === 0 ? ['At least one product packshot'] : []),
+    ...(!draft.assets.squarePackshotReady ? ['One square product packshot'] : []),
+    ...(!draft.assets.rightsAttested ? ['Asset-rights attestation'] : []),
+  ];
+}
+
+export function launchPackBriefFromDraft(draft: BriefDraft): {
+  readonly briefId: string;
+  readonly product: string;
+  readonly category: string;
+  readonly packshots: string;
+  readonly features: string;
+  readonly benefits: string;
+  readonly evidence: string;
+  readonly approvedFacts: string;
+  readonly offer: string;
+  readonly pricePresentation: string;
+  readonly urgency: string;
+  readonly destination: string;
+  readonly brandKit: string;
+  readonly audienceAndAwareness: string;
+  readonly painsDesiresObjections: string;
+  readonly requiredClaimsLegal: string;
+  readonly prohibitedClaims: string;
+  readonly creativeConstraintsRights: string;
+  readonly stressVector: string;
+} {
+  return {
+    briefId: `studio-${
+      draft.productTruth.productName
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/gu, '-')
+        .slice(0, 40) || 'campaign'
+    }`,
+    product: draft.productTruth.productName.trim(),
+    category: draft.productTruth.category.trim(),
+    packshots: packshotPromptMaterial(draft.assets.packshots),
+    features: draft.productTruth.features.trim(),
+    benefits: draft.productTruth.benefits.trim(),
+    evidence: draft.productTruth.evidence.trim(),
+    approvedFacts: draft.productTruth.approvedFacts.trim(),
+    offer: draft.offer.pricePresentation.trim(),
+    pricePresentation: draft.offer.pricePresentation.trim(),
+    urgency: draft.offer.urgencyConstraints.trim(),
+    destination: draft.offer.destinationUrl.trim(),
+    brandKit: [
+      draft.brandKit.colors,
+      draft.brandKit.typography,
+      draft.brandKit.tone,
+      draft.brandKit.visualRules,
+      draft.brandKit.examples,
+      draft.brandKit.prohibitedTreatments,
+    ]
+      .map((part) => part.trim())
+      .filter((part) => part.length > 0)
+      .join('; '),
+    audienceAndAwareness: `${draft.audience.targetAudience.trim()}; ${draft.audience.awarenessStage.trim()}`,
+    painsDesiresObjections: [
+      draft.audience.painPoints,
+      draft.audience.desires,
+      draft.audience.objections,
+    ]
+      .map((part) => part.trim())
+      .join('; '),
+    requiredClaimsLegal: [draft.claimsLegal.approvedClaims, draft.claimsLegal.legalCopy]
+      .map((part) => part.trim())
+      .join(' '),
+    prohibitedClaims: draft.claimsLegal.prohibitedClaims.join('; '),
+    creativeConstraintsRights: [
+      draft.claimsLegal.creativeConstraints,
+      draft.assets.rightsAttested
+        ? 'Rights attested for supplied packshots.'
+        : 'Rights not attested.',
+    ].join(' '),
+    stressVector: draft.claimsLegal.creativeConstraints.trim(),
+  };
+}
 
 export const lumenSkinDraft: BriefDraft = {
   productTruth: {

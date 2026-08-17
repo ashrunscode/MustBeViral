@@ -57,6 +57,7 @@ export type ReviewReadResult =
 
 export interface ReviewReadPort {
   read(): Promise<ReviewReadResult>;
+  describeVariant(input: Readonly<{ variantId: string; description: string }>): void;
   decideVariant(
     input: Readonly<{
       variantId: string;
@@ -72,6 +73,7 @@ export interface ReviewReadPort {
 
 export interface ReviewPort {
   read(): readonly ArtifactGroupReview[];
+  describeVariant(input: Readonly<{ variantId: string; description: string }>): void;
   decideVariant(
     input: Readonly<{
       variantId: string;
@@ -147,7 +149,7 @@ const goldenGroups: readonly ArtifactGroupReview[] = [
 ];
 
 export class InMemoryReviewPort implements ReviewPort {
-  #groups = goldenGroups.map((group) => ({
+  #groups: ArtifactGroupReview[] = goldenGroups.map((group) => ({
     ...group,
     variants: group.variants.map((variant) => ({ ...variant })),
   }));
@@ -159,6 +161,10 @@ export class InMemoryReviewPort implements ReviewPort {
 
   read(): readonly ArtifactGroupReview[] {
     return this.#groups;
+  }
+
+  describeVariant(input: Readonly<{ variantId: string; description: string }>): void {
+    this.#groups = applyAccessibilityDescription(this.#groups, input.variantId, input.description);
   }
 
   decideVariant(
@@ -216,6 +222,21 @@ export class InMemoryReviewPort implements ReviewPort {
     );
     return { type: 'ok', groups: this.#groups };
   }
+}
+
+function applyAccessibilityDescription(
+  groups: readonly ArtifactGroupReview[],
+  variantId: string,
+  description: string,
+): ArtifactGroupReview[] {
+  return groups.map((group) => ({
+    ...group,
+    variants: group.variants.map((variant) =>
+      variant.id === variantId
+        ? { ...variant, accessibilityDescription: description.trim() || null }
+        : variant,
+    ),
+  }));
 }
 
 function groupKind(mimeType: string) {
@@ -295,6 +316,10 @@ export class WorkerReviewPort implements ReviewReadPort {
     private readonly reviewer: string,
     private readonly createIdempotencyKey: () => string,
   ) {}
+
+  describeVariant(input: Readonly<{ variantId: string; description: string }>): void {
+    this.#groups = applyAccessibilityDescription(this.#groups, input.variantId, input.description);
+  }
 
   async read(): Promise<ReviewReadResult> {
     try {

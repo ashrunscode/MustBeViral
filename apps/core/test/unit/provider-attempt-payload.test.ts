@@ -149,6 +149,8 @@ describe('copy payload', () => {
     const system = (payload.messages as { content: string }[])[0]?.content ?? '';
     expect(system).toMatch(/never invent prices/iu);
     expect(system).toMatch(/verbatim/iu);
+    expect(system).toMatch(/125/u);
+    expect(system).toMatch(/engagement-bait/iu);
   });
 
   it('carries the claims guardrails from run context, which the copy node does not hold', async () => {
@@ -220,6 +222,7 @@ describe('master payload', () => {
     expect(prompt).toContain(SAMPLE_BRIEF.packshots);
     expect(prompt).toContain(SAMPLE_BRIEF.brandKit);
     expect(prompt).toContain(SAMPLE_BRIEF.creativeConstraintsRights);
+    expect(prompt).toContain('Packshot-as-hero');
   });
 
   it('keeps supplement image prompts visual instead of forwarding promotional health context', async () => {
@@ -234,6 +237,20 @@ describe('master payload', () => {
     expect(prompt).toContain(SUPPLEMENT_BRIEF.packshots);
     expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
     expect(prompt).toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
+  });
+
+  it('keeps the supplement material master on packaging instead of benefit-body language', async () => {
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: supplementNodeParametersOf('master-2'),
+      executionPlanLine: { node_id: 'master-2' },
+      task: 'master_static',
+      briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+    });
+    const prompt = payload.prompt as string;
+    expect(prompt).toMatch(/bottle, capsules, carton/u);
+    expect(prompt).not.toMatch(/benefit still life/u);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
   });
@@ -316,6 +333,15 @@ describe('nodes that depend on an upstream artifact', () => {
     });
     expect(payload.duration).toBe(8);
     expect(payload.image_url).toContain('token=');
+    const motionFromGraph = await buildProviderAttemptPayload({
+      nodeParameters: nodeParametersOf('motion-1'),
+      executionPlanLine: { node_id: 'motion-1' },
+      task: 'image_to_video',
+      briefContext: BRIEF_CONTEXT,
+      upstreamImages: [UPSTREAM_IMAGE],
+      mintImageUrl: mintUrl,
+    });
+    expect(String(motionFromGraph.prompt)).toMatch(/Frame-1 hook/u);
   });
 
   it('refuses motion with no valid duration, because a wrong one multiplies spend', async () => {

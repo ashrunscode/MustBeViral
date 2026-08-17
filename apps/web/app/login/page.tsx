@@ -28,6 +28,9 @@ export default async function LoginPage({
 
   return (
     <main className="auth-page">
+      <a className="skip-link" href="#auth-heading">
+        Skip to sign in
+      </a>
       <section aria-labelledby="auth-heading" className="auth-card">
         <MonoCaps>MustBeViral Studio</MonoCaps>
         <h1 id="auth-heading">{signedIn ? 'Your session is active' : 'Sign in'}</h1>

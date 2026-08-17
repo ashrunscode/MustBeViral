@@ -19,6 +19,7 @@ import {
   InMemoryCanvasPort,
   WorkerCanvasMutationPort,
   WorkerCanvasReadPort,
+  canvasQuotePresentation,
   createCanvasFixture,
   isSimplifiedCanvasLod,
   mapCanvasNodesToOutline,
@@ -133,6 +134,14 @@ function edgePath(edge: CanvasEdge, nodes: ReadonlyMap<string, CanvasNode>): str
   const endY = target.y + NODE_HEIGHT / 2;
   const control = Math.max(16, Math.abs(endX - startX) / 2);
   return `M${String(startX)} ${String(startY)} C${String(startX + control)} ${String(startY)} ${String(endX - control)} ${String(endY)} ${String(endX)} ${String(endY)}`;
+}
+
+function campaignTitleFromModel(model: CanvasModel, dataMode: 'preview' | 'worker'): string {
+  if (dataMode === 'preview') return 'Lumen Skin launch pack';
+  const brief = model.nodes.find((node) => node.id === 'brief');
+  const product =
+    typeof brief?.parameters.product === 'string' ? brief.parameters.product.trim() : '';
+  return product.length > 0 ? `${product} launch pack` : 'Launch pack';
 }
 
 function lineageFor(model: CanvasModel, selectedId: string): ReadonlySet<string> {
@@ -561,7 +570,7 @@ export function CanvasFlow({
         <div className={styles.toolbar}>
           <div>
             <MonoCaps>Canvas revision {model.revision}</MonoCaps>
-            <span className={styles.toolbarTitle}>Lumen Skin launch pack</span>
+            <span className={styles.toolbarTitle}>{campaignTitleFromModel(model, dataMode)}</span>
           </div>
           <div className={styles.toolbarActions}>
             <MonoCaps data-testid="virtualized-count">
@@ -679,11 +688,11 @@ export function CanvasFlow({
           </div>
           <div>
             <MonoCaps>Route</MonoCaps>
-            <MonoCaps>kimi-2.6 + flux-2-klein</MonoCaps>
+            <MonoCaps>{canvasQuotePresentation(dataMode).route}</MonoCaps>
           </div>
           <div>
             <MonoCaps>Quote basis</MonoCaps>
-            <MonoCaps>$4.20 total run</MonoCaps>
+            <MonoCaps>{canvasQuotePresentation(dataMode).basis}</MonoCaps>
           </div>
           <Link
             className="mbv-button mbv-button--primary"
@@ -693,7 +702,7 @@ export function CanvasFlow({
                 : `/studio/${workspace}/quote?canvas=${encodeURIComponent(canvasId)}&revision=${encodeURIComponent(model.revision)}`
             }
           >
-            Review $4.20 quote
+            {canvasQuotePresentation(dataMode).cta}
           </Link>
         </div>
       </section>

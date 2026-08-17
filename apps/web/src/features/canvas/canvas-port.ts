@@ -97,6 +97,28 @@ export function isSimplifiedCanvasLod(zoom: number): boolean {
   return zoom < CANVAS_LOD_THRESHOLD;
 }
 
+export function canvasQuotePresentation(dataMode: 'preview' | 'worker'): Readonly<{
+  title: string;
+  route: string;
+  basis: string;
+  cta: string;
+}> {
+  if (dataMode === 'preview') {
+    return {
+      title: 'Lumen Skin launch pack',
+      route: 'kimi-2.6 + flux-2-klein',
+      basis: '$4.20 total run',
+      cta: 'Review $4.20 quote',
+    };
+  }
+  return {
+    title: 'Launch pack',
+    route: 'Pinned catalog routes',
+    basis: 'Named price on next screen',
+    cta: 'Review named quote',
+  };
+}
+
 export function mapCanvasStatusToChip(status: CanvasNodeStatus): Readonly<{
   status: ChipStatus;
   label: string;

@@ -163,6 +163,23 @@
   font-size: 10px;
   text-transform: uppercase;
 }
+.descriptionField {
+  display: grid;
+  gap: 5px;
+  margin-top: 9px;
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+.descriptionField textarea {
+  min-height: 58px;
+  resize: vertical;
+  border: 1px solid var(--ink-faint);
+  border-radius: 5px;
+  padding: 8px;
+  background: var(--card);
+  color: var(--ink-strong);
+  font: inherit;
+}
 .rejectionField {
   display: grid;
   gap: 5px;

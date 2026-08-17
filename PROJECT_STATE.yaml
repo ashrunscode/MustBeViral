@@ -11,9 +11,9 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator completes evaluator-zero self-sessions, then proceeds through recruitment,
-  five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop
-  decision.
+next_action: Persist fal webhook provider_error_code on FAILED jobs, then deploy the supplement-safe
+  master-2 prompt hardening before any further GB-02 or GB-10 spend. Do not reuse run 9b6e0619 or
+  start a second pack today.
 decisions_pending: []
 blockers:
   - The representative-run-completion-and-latency gate is closed at 16 of 20 after the second

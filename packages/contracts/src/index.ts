@@ -3,6 +3,7 @@ export * from './client';
 export * from './handlers';
 export * from './http';
 export * from './launch-pack';
+export * from './launch-pack-qa';
 export * from './mcp';
 export * from './ports';
 export * from './rest';

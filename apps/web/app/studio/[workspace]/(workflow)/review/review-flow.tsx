@@ -60,9 +60,11 @@ export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResu
 }
 
 function VariantCard({
+  dataMode,
   index,
   mode,
   onDecide,
+  onDescribe,
   onNavigate,
   register,
   rejecting,
@@ -70,9 +72,11 @@ function VariantCard({
   setRejectionReason,
   variant,
 }: Readonly<{
+  dataMode: 'preview' | 'worker';
   index: number;
   mode: 'compare' | 'approval';
   onDecide: (variant: ReviewVariant, decision: 'approved' | 'rejected') => void;
+  onDescribe: (variantId: string, description: string) => void;
   onNavigate: (event: KeyboardEvent<HTMLElement>, index: number) => void;
   register: (element: HTMLElement | null, index: number) => void;
   rejecting: boolean;
@@ -104,7 +108,9 @@ function VariantCard({
         <div className={`${styles.comparePair} compare-pair`}>
           <div className={styles.version}>
             <div className={styles.thumb}>
-              <MonoCaps>Current output · v2</MonoCaps>
+              <MonoCaps>
+                {dataMode === 'preview' ? 'Current output · v2' : 'Artifact · private preview'}
+              </MonoCaps>
             </div>
             <div className={styles.versionCaption}>
               <MonoCaps>{variant.model}</MonoCaps>
@@ -128,6 +134,16 @@ function VariantCard({
           <MonoCaps>Current v2 · {variant.model}</MonoCaps>
         </div>
       )}
+      {dataMode === 'worker' ? (
+        <label className={styles.descriptionField}>
+          <span>Accessibility description</span>
+          <textarea
+            value={variant.accessibilityDescription ?? ''}
+            onChange={(event) => onDescribe(variant.id, event.target.value)}
+            placeholder="Describe this output before approval"
+          />
+        </label>
+      ) : null}
       {rejecting ? (
         <label className={styles.rejectionField}>
           <span>Reason for rejection</span>
@@ -142,7 +158,13 @@ function VariantCard({
         <div className={styles.cardActions}>
           <Button onClick={() => onDecide(variant, 'approved')}>Approve</Button>
           <Button onClick={() => onDecide(variant, 'rejected')}>
-            {rejecting ? 'Submit rejection' : 'Reject'}
+            {rejecting
+              ? dataMode === 'preview'
+                ? 'Submit rejection'
+                : 'Save local rejection note'
+              : dataMode === 'preview'
+                ? 'Reject'
+                : 'Reject locally'}
           </Button>
         </div>
         <MonoCaps>{variant.rejectionReason ?? variant.format}</MonoCaps>
@@ -259,6 +281,21 @@ export function ReviewFlow({
     };
   }, [readPort]);
 
+  function describe(variantId: string, description: string) {
+    setGroups((current) =>
+      current.map((group) => ({
+        ...group,
+        variants: group.variants.map((variant) =>
+          variant.id === variantId
+            ? { ...variant, accessibilityDescription: description.trim() || null }
+            : variant,
+        ),
+      })),
+    );
+    readPort?.describeVariant({ variantId, description });
+    previewPort?.describeVariant({ variantId, description });
+  }
+
   async function decide(variant: ReviewVariant, decision: 'approved' | 'rejected') {
     if (decision === 'rejected' && rejectingId !== variant.id) {
       setRejectingId(variant.id);
@@ -366,6 +403,7 @@ export function ReviewFlow({
                 return (
                   <VariantCard
                     key={variant.id}
+                    dataMode={dataMode}
                     index={index}
                     mode={mode}
                     variant={variant}
@@ -373,6 +411,7 @@ export function ReviewFlow({
                     rejectionReason={rejectionReason}
                     setRejectionReason={setRejectionReason}
                     onDecide={(variant, decision) => void decide(variant, decision)}
+                    onDescribe={describe}
                     onNavigate={handleCardKey}
                     register={(element, refIndex) => {
                       cardRefs.current[refIndex] = element;

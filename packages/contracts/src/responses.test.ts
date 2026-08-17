@@ -264,6 +264,43 @@ const successData = {
 } as const;
 
 describe('P0 REST response contracts', () => {
+  it('parses a live-shaped receipt whose timestamps carry microsecond offsets', () => {
+    const liveTimestamp = '2026-08-15T22:21:34.848859+00:00';
+    const parsed = P0_OPERATION_RESPONSE_SCHEMAS.get_receipt.safeParse({
+      data: {
+        receipt: {
+          ...successData.get_receipt.receipt,
+          run: {
+            ...successData.get_receipt.receipt.run,
+            created_at: liveTimestamp,
+            updated_at: liveTimestamp,
+            confirmed_at: liveTimestamp,
+          },
+          reservation: {
+            ...successData.get_receipt.receipt.reservation,
+            created_at: liveTimestamp,
+            updated_at: liveTimestamp,
+          },
+          ledger: successData.get_receipt.receipt.ledger.map((entry) => ({
+            ...entry,
+            created_at: liveTimestamp,
+          })),
+          artifacts: successData.get_receipt.receipt.artifacts.map((entry) => ({
+            ...entry,
+            created_at: liveTimestamp,
+            updated_at: liveTimestamp,
+          })),
+          lineage: successData.get_receipt.receipt.lineage.map((entry) => ({
+            ...entry,
+            created_at: liveTimestamp,
+          })),
+        },
+      },
+      meta,
+    });
+    expect(parsed.success).toBe(true);
+  });
+
   it('parses a discriminated success envelope for every registered operation', () => {
     expect(Object.keys(P0_OPERATION_RESPONSE_SCHEMAS)).toEqual(P0_REST_OPERATIONS);
     for (const operation of P0_REST_OPERATIONS) {

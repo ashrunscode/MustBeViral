@@ -345,9 +345,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action: Operator completes evaluator-zero self-sessions, then proceeds through recruitment,
-    five-to-eight qualified sessions, one signed paid pilot, and the P0 go/no-go or pivot/stop
-    decision.
+  next_action: Persist fal webhook provider_error_code on FAILED jobs, then deploy the
+    supplement-safe master-2 prompt hardening before any further GB-02 or GB-10 spend. Do not reuse
+    run 9b6e0619 or start a second pack today.
   blockers:
     - 'Representative-run-completion-and-latency is passed at 16 of 20 after the second authorized
       remediation completed GB-16 and GB-17. Median first-reviewable latency is 101.631 seconds and
@@ -389,11 +389,20 @@ handoff:
     - apps/core/tools/mcp-parity-python.py
     - apps/core/tools/mcp-parity-staging.ts
     - apps/core/tools/worker-tool-globals.d.ts
+    - apps/core/tools/self-session-kit.ts
     - apps/core/test/unit/mcp-parity-staging.test.ts
     - apps/core/package.json
     - apps/core/tsconfig.tools.json
     - governance/evidence/WP-P0-001/mcp-parity-proof.md
     - governance/evidence/WP-P0-001/mcp-parity-vectors.json
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-15-GB-04-01.md
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-17-GB-02-01.md
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-17-GB-02-02.md
+    - packages/contracts/src/http.ts
+    - packages/contracts/src/launch-pack.ts
+    - packages/contracts/src/launch-pack-qa.ts
+    - apps/web/app/studio/[workspace]/(workflow)/review/review-flow.tsx
+    - apps/web/src/features/review/review-port.ts
     - package.json
     - pnpm-lock.yaml
     - pnpm-workspace.yaml
@@ -408,6 +417,7 @@ handoff:
       thresholds
     - T4 staging-authenticated Playwright read proof passed with no run submitted and no provider
       spend
+    - pnpm agent:verify after GB-02 retry 9b6e0619 and supplement-safe master-2 prompt hardening
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []

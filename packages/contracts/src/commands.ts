@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
+import { WireTimestampSchema } from './http';
+
 const IdentifierSchema = z.string().min(1).max(200);
 const IdempotencyKeySchema = z.string().min(1).max(200);
-const TimestampSchema = z.iso.datetime({ offset: true });
+const TimestampSchema = WireTimestampSchema;
 
 export const HandlerContextSchema = z
   .object({

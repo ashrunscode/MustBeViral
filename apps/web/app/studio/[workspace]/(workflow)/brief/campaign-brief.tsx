@@ -4,11 +4,19 @@ import { Button, Chip, MonoCaps } from '@mustbeviral/ui';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
+import { buildGoldenLaunchPackGraph } from '@mustbeviral/contracts';
+
 import {
   BriefDraftSchema,
   InMemoryBriefDraftPort,
+  briefCompletionFlags,
+  briefSectionState,
+  stagingWorkerDraft,
+  launchPackBriefFromDraft,
   lumenSkinDraft,
+  missingBriefItems,
   type BriefDraft,
+  type BriefSectionId,
 } from '../../../../../src/features/brief/brief-schema';
 import {
   WorkerBriefBootstrapPort,
@@ -18,7 +26,7 @@ import {
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import styles from './campaign-brief.module.css';
 
-type SectionId = 'productTruth' | 'brandKit' | 'audience' | 'offer' | 'claimsLegal' | 'assets';
+type SectionId = BriefSectionId;
 
 const draftPort = new InMemoryBriefDraftPort();
 
@@ -43,52 +51,6 @@ const sectionDescriptions: Readonly<Record<SectionId, string>> = {
 
 function complete(value: string) {
   return value.trim().length > 0;
-}
-
-function getCompletionChecks(draft: BriefDraft) {
-  return [
-    complete(draft.productTruth.productName) && complete(draft.productTruth.category),
-    complete(draft.productTruth.features) && complete(draft.productTruth.benefits),
-    complete(draft.productTruth.evidence) && complete(draft.productTruth.approvedFacts),
-    complete(draft.brandKit.colors) && complete(draft.brandKit.typography),
-    complete(draft.brandKit.tone) && complete(draft.brandKit.visualRules),
-    complete(draft.brandKit.examples) && complete(draft.brandKit.prohibitedTreatments),
-    complete(draft.audience.targetAudience) && complete(draft.audience.awarenessStage),
-    complete(draft.audience.painPoints) && complete(draft.audience.desires),
-    complete(draft.audience.objections),
-    complete(draft.offer.pricePresentation) && complete(draft.offer.urgencyConstraints),
-    /^https?:\/\//.test(draft.offer.destinationUrl),
-    complete(draft.claimsLegal.approvedClaims),
-    complete(draft.claimsLegal.evidenceSource),
-    complete(draft.claimsLegal.legalCopy) && draft.claimsLegal.prohibitedClaims.length > 0,
-    draft.assets.packshots.length > 0,
-    draft.assets.squarePackshotReady,
-    draft.assets.rightsAttested,
-  ];
-}
-
-function getSectionState(section: SectionId, draft: BriefDraft) {
-  if (section === 'claimsLegal') {
-    const missing =
-      [
-        draft.claimsLegal.approvedClaims,
-        draft.claimsLegal.evidenceSource,
-        draft.claimsLegal.legalCopy,
-      ].filter((value) => !complete(value)).length +
-      (draft.claimsLegal.prohibitedClaims.length === 0 ? 1 : 0) +
-      Number(!draft.assets.rightsAttested);
-    return { complete: missing === 0, meta: missing === 0 ? 'Complete' : `${missing} missing` };
-  }
-
-  if (section === 'assets') {
-    const ready = Math.min(
-      5,
-      draft.assets.packshots.length + Number(draft.assets.squarePackshotReady),
-    );
-    return { complete: ready >= 5, meta: ready >= 5 ? 'Complete' : `${ready} / 5 ready` };
-  }
-
-  return { complete: true, meta: 'Complete' };
 }
 
 function TextField({
@@ -128,10 +90,12 @@ function TextField({
 }
 
 function SectionFields({
+  dataMode,
   draft,
   section,
   setDraft,
 }: Readonly<{
+  dataMode: 'preview' | 'worker';
   draft: BriefDraft;
   section: SectionId;
   setDraft: (updater: (current: BriefDraft) => BriefDraft) => void;
@@ -325,8 +289,9 @@ function SectionFields({
             onChange={(event) => update('assets', 'rightsAttested', event.target.checked)}
           />
           <span>
-            I attest that Lumen Skin owns or is licensed to use all uploaded source assets and
-            evidence. <span className={styles.required}>Required</span>
+            I attest that {dataMode === 'preview' ? 'Lumen Skin' : 'this workspace'} owns or is
+            licensed to use all uploaded source assets and evidence.{' '}
+            <span className={styles.required}>Required</span>
           </span>
         </label>
       </>
@@ -352,7 +317,9 @@ function SectionFields({
         error={
           complete(draft.claimsLegal.evidenceSource)
             ? undefined
-            : 'Add a source for “Dermatologist tested”.'
+            : dataMode === 'preview'
+              ? 'Add a source for “Dermatologist tested”.'
+              : 'Add a source for every approved claim.'
         }
         id="evidence-source"
         label="Evidence source"
@@ -365,16 +332,42 @@ function SectionFields({
         value={draft.claimsLegal.legalCopy}
         onChange={(value) => update('claimsLegal', 'legalCopy', value)}
       />
-      <fieldset className={`${styles.fieldset} ${styles.full}`}>
-        <legend>Prohibited claims</legend>
-        <div className={styles.chipList} aria-label="Prohibited claim list">
-          {draft.claimsLegal.prohibitedClaims.map((claim) => (
-            <Chip key={claim} icon="×" status="failed">
-              {claim}
-            </Chip>
-          ))}
-        </div>
-      </fieldset>
+      {dataMode === 'worker' ? (
+        <>
+          <TextField
+            id="prohibited-claims"
+            label="Prohibited claims"
+            value={draft.claimsLegal.prohibitedClaims.join('\n')}
+            onChange={(value) =>
+              update(
+                'claimsLegal',
+                'prohibitedClaims',
+                value
+                  .split(/\n/u)
+                  .map((line) => line.trim())
+                  .filter((line) => line.length > 0),
+              )
+            }
+          />
+          <TextField
+            id="creative-constraints"
+            label="Creative constraints"
+            value={draft.claimsLegal.creativeConstraints}
+            onChange={(value) => update('claimsLegal', 'creativeConstraints', value)}
+          />
+        </>
+      ) : (
+        <fieldset className={`${styles.fieldset} ${styles.full}`}>
+          <legend>Prohibited claims</legend>
+          <div className={styles.chipList} aria-label="Prohibited claim list">
+            {draft.claimsLegal.prohibitedClaims.map((claim) => (
+              <Chip key={claim} icon="×" status="failed">
+                {claim}
+              </Chip>
+            ))}
+          </div>
+        </fieldset>
+      )}
       <label className={`${styles.attestation} ${styles.full}`} htmlFor="rights-check">
         <input
           id="rights-check"
@@ -383,9 +376,9 @@ function SectionFields({
           onChange={(event) => update('assets', 'rightsAttested', event.target.checked)}
         />
         <span>
-          I attest that Lumen Skin owns or is licensed to use all uploaded packshots, logos,
-          typography, testimonials, and supporting evidence.{' '}
-          <span className={styles.required}>Required</span>
+          I attest that {dataMode === 'preview' ? 'Lumen Skin' : 'this workspace'} owns or is
+          licensed to use all uploaded packshots, logos, typography, testimonials, and supporting
+          evidence. <span className={styles.required}>Required</span>
         </span>
       </label>
     </>
@@ -407,23 +400,18 @@ export function CampaignBrief({
       ? (suppliedBootstrapPort ?? new WorkerBriefBootstrapPort(createBrowserCoreClient()))
       : null,
   );
-  const [draft, setDraftState] = useState<BriefDraft>(lumenSkinDraft);
+  const [draft, setDraftState] = useState<BriefDraft>(
+    dataMode === 'preview' ? lumenSkinDraft : stagingWorkerDraft(),
+  );
   const [activeSection, setActiveSection] = useState<SectionId>('claimsLegal');
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
   const [validated, setValidated] = useState(false);
   const [bootstrapResult, setBootstrapResult] = useState<BriefBootstrapResult | null>(null);
   const [bootstrapping, setBootstrapping] = useState(false);
   const validation = useMemo(() => BriefDraftSchema.safeParse(draft), [draft]);
-  const checks = getCompletionChecks(draft);
-  const completed = checks.filter(Boolean).length;
-  const completeness = Math.round((completed / checks.length) * 100);
-  const missingItems = [
-    !complete(draft.claimsLegal.evidenceSource)
-      ? 'Evidence source for “Dermatologist tested”'
-      : null,
-    !draft.assets.rightsAttested ? 'Asset-rights attestation' : null,
-    !draft.assets.squarePackshotReady ? 'One square product packshot' : null,
-  ].filter((item): item is string => item !== null);
+  const missingItems = missingBriefItems(draft);
+  const flags = briefCompletionFlags(draft);
+  const completeness = Math.round((flags.filter(Boolean).length / flags.length) * 100);
 
   const setDraft = (updater: (current: BriefDraft) => BriefDraft) => {
     setValidated(false);
@@ -448,6 +436,7 @@ export function CampaignBrief({
     const next = await bootstrapPort.bootstrap({
       workspaceRef: workspace,
       campaignName: `${draft.productTruth.productName} launch pack`,
+      graph: buildGoldenLaunchPackGraph(launchPackBriefFromDraft(draft)),
     });
     setBootstrapResult(next);
     setBootstrapping(false);
@@ -473,7 +462,7 @@ export function CampaignBrief({
           <div className={styles.steps}>
             {sectionLabels.map((section, index) => {
               const active = section.id === activeSection;
-              const state = getSectionState(section.id, draft);
+              const state = briefSectionState(section.id, draft);
               const sectionDone = state.complete;
               const meta = state.meta;
               return (
@@ -499,15 +488,22 @@ export function CampaignBrief({
 
         <section className={styles.formField} aria-labelledby="brief-title">
           <MonoCaps className={styles.eyebrow}>
-            Lumen Skin / Step{' '}
-            {sectionLabels.findIndex((section) => section.id === activeSection) + 1} of 6
+            {dataMode === 'preview'
+              ? 'Lumen Skin'
+              : draft.productTruth.productName.trim() || 'Campaign'}{' '}
+            / Step {sectionLabels.findIndex((section) => section.id === activeSection) + 1} of 6
           </MonoCaps>
           <h1 id="brief-title">
             {sectionLabels.find((section) => section.id === activeSection)?.label}
           </h1>
           <p className={styles.lede}>{sectionDescriptions[activeSection]}</p>
           <form className={styles.fieldGrid} onSubmit={(event) => event.preventDefault()}>
-            <SectionFields draft={draft} section={activeSection} setDraft={setDraft} />
+            <SectionFields
+              dataMode={dataMode}
+              draft={draft}
+              section={activeSection}
+              setDraft={setDraft}
+            />
           </form>
         </section>
 
@@ -565,7 +561,11 @@ export function CampaignBrief({
         <div className={styles.barEvidence}>
           <div>
             <MonoCaps>Campaign</MonoCaps>
-            <span>Lumen Skin</span>
+            <span>
+              {dataMode === 'preview'
+                ? 'Lumen Skin'
+                : draft.productTruth.productName.trim() || 'Untitled campaign'}
+            </span>
           </div>
           <div>
             <MonoCaps>Revision</MonoCaps>
@@ -612,7 +612,7 @@ export function CampaignBrief({
         <div>
           <MonoCaps>Autosave: 18ms</MonoCaps>
           <MonoCaps>
-            Fields: {completed + 7} / {checks.length + 7}
+            Fields: {flags.filter(Boolean).length + 7} / {flags.length + 7}
           </MonoCaps>
           <MonoCaps>Region: us-east-1</MonoCaps>
         </div>

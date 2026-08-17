@@ -296,6 +296,7 @@ export async function buildProviderAttemptPayload(
       nodeParameters.prohibited_claims,
       nodeParameters.urgency,
       nodeParameters.stress_vector,
+      nodeParameters.angle,
     ]);
     if (brief.length === 0) {
       throw new ProviderError('payload_invalid', `copy node ${nodeKey} carries no brief`, false);
@@ -310,6 +311,10 @@ export async function buildProviderAttemptPayload(
             'Use ONLY facts supplied in the brief. Never invent prices, rates, ratings, guarantees, or amenities.',
             'Reproduce any price verbatim, attached to the correct service, with every condition the brief ties to it.',
             'Honour every prohibited claim and banned tone. The prohibited list is a hard constraint.',
+            'Return JSON only with keys primary_text, headline, description, angle_name, hook, proof, cta, risk_note.',
+            'Meta lengths: primary_text <= 125 characters with value in the first 40; headline <= 40; description is supporting.',
+            'Do not use engagement-bait (tag a friend, like if, share if, comment to win, vote below, follow for).',
+            'Do not invent urgency or scarcity. Follow the assigned copy-set angle so the three sets are not synonyms.',
           ].join('\n'),
         },
         { role: 'user', content: `Campaign brief:\n\n${brief}` },
@@ -325,6 +330,7 @@ export async function buildProviderAttemptPayload(
     const prompt = composePrompt([
       nodeParameters.product,
       nodeParameters.packshots,
+      nodeParameters.visual_direction,
       ...imageContextParts(input.briefContext),
       nodeParameters.creative_constraints_rights,
     ]);
@@ -335,7 +341,12 @@ export async function buildProviderAttemptPayload(
         false,
       );
     }
-    return { prompt };
+    return {
+      prompt: composePrompt([
+        prompt,
+        'No logo-only open. No watermark. No letterbox. Do not render prices or legal paragraphs as type.',
+      ]),
+    };
   }
 
   if (
@@ -350,6 +361,9 @@ export async function buildProviderAttemptPayload(
       ...imageContextParts(input.briefContext),
       nodeParameters.asset_role,
       nodeParameters.aspect_ratio,
+      nodeParameters.visual_direction,
+      nodeParameters.safe_zone,
+      nodeParameters.motion_direction,
       nodeParameters.creative_constraints_rights,
     ]);
     if (prompt.length === 0) {

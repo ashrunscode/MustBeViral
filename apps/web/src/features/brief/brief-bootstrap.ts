@@ -1,4 +1,5 @@
-import type { MustBeViralRestClient } from '@mustbeviral/contracts';
+import { launchPackGraphPatch, type MustBeViralRestClient } from '@mustbeviral/contracts';
+import type { GraphSnapshot } from '@mustbeviral/graph';
 
 export type BriefBootstrapResult =
   | {
@@ -19,7 +20,11 @@ export type BriefBootstrapResult =
 
 export interface BriefBootstrapPort {
   bootstrap(
-    input: Readonly<{ workspaceRef: string; campaignName: string }>,
+    input: Readonly<{
+      workspaceRef: string;
+      campaignName: string;
+      graph?: GraphSnapshot;
+    }>,
   ): Promise<BriefBootstrapResult>;
 }
 
@@ -40,7 +45,11 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
   constructor(private readonly client: MustBeViralRestClient) {}
 
   async bootstrap(
-    input: Readonly<{ workspaceRef: string; campaignName: string }>,
+    input: Readonly<{
+      workspaceRef: string;
+      campaignName: string;
+      graph?: GraphSnapshot;
+    }>,
   ): Promise<BriefBootstrapResult> {
     try {
       const existing = await this.client.request('get_workspace', { id: input.workspaceRef });
@@ -69,13 +78,22 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
         body: { name: `${input.campaignName} canvas` },
       });
       if ('error' in canvas) return this.#mapError(canvas.error);
-      return {
-        type: 'ok',
+      if (input.graph === undefined) {
+        return {
+          type: 'ok',
+          workspaceId,
+          projectId: project.data.project.id,
+          canvasId: canvas.data.canvasId,
+          revisionId: canvas.data.revisionId,
+        };
+      }
+      return this.#applyLaunchPack({
         workspaceId,
         projectId: project.data.project.id,
         canvasId: canvas.data.canvasId,
-        revisionId: canvas.data.revisionId,
-      };
+        graph: input.graph,
+        campaignName: input.campaignName,
+      });
     } catch {
       return {
         type: 'error',
@@ -83,6 +101,37 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
         retryable: true,
       };
     }
+  }
+
+  async #applyLaunchPack(input: {
+    readonly workspaceId: string;
+    readonly projectId: string;
+    readonly canvasId: string;
+    readonly graph: GraphSnapshot;
+    readonly campaignName: string;
+  }): Promise<BriefBootstrapResult> {
+    const context = await this.client.request('get_canvas_context', { id: input.canvasId });
+    if ('error' in context) return this.#mapError(context.error);
+    const patched = await this.client.request('apply_canvas_patch', {
+      id: input.canvasId,
+      idempotencyKey: stableKey(
+        'graph',
+        `${input.canvasId}-${context.data.canvas.headRevisionId}-${stableSegment(input.campaignName)}`,
+      ),
+      body: {
+        expected_revision_id: context.data.canvas.headRevisionId,
+        reason: `Apply launch-pack graph for ${input.campaignName}`,
+        patch: launchPackGraphPatch(input.graph),
+      },
+    });
+    if ('error' in patched) return this.#mapError(patched.error);
+    return {
+      type: 'ok',
+      workspaceId: input.workspaceId,
+      projectId: input.projectId,
+      canvasId: input.canvasId,
+      revisionId: patched.data.revisionId,
+    };
   }
 
   #mapError(

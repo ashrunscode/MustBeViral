@@ -50,6 +50,14 @@ describe('InMemoryReviewPort', () => {
     expect(port.read()[0]).toMatchObject({ decision: 'approved', reviewer: 'Maya Chen' });
   });
 
+  it('stores operator-authored accessibility descriptions', () => {
+    const port = new InMemoryReviewPort();
+    port.describeVariant({ variantId: 'hero-b', description: '  Alternate hero still life.  ' });
+    expect(port.read()[0]!.variants.find((variant) => variant.id === 'hero-b')).toMatchObject({
+      accessibilityDescription: 'Alternate hero still life.',
+    });
+  });
+
   it('returns conflict and not-found branches', () => {
     expect(
       new InMemoryReviewPort('conflict').approveGroup({
@@ -228,5 +236,56 @@ describe('WorkerReviewPort', () => {
       }),
     ).resolves.toEqual({ type: 'description_required', artifact_id: 'artifact-live' });
     expect(approvalCalls).toBe(0);
+  });
+
+  it('approves after the operator supplies a missing accessibility description', async () => {
+    const bodies: string[] = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-review-0003',
+      fetch: async (input, init) => {
+        if (String(input).endsWith('/approvals')) {
+          bodies.push(String(init?.body ?? ''));
+          return new Response(
+            JSON.stringify({
+              data: {
+                run_id: 'run-live',
+                approved: 1,
+                replayed: 0,
+                artifacts: [{ artifact_id: 'artifact-live', artifact_kind: 'approved_output' }],
+              },
+              meta: { request_id: 'request-review-0003' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        return new Response(JSON.stringify(receiptResponse(null)), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+    const port = new WorkerReviewPort(client, 'run-live', 'user-live', () => 'approval-idem-3');
+    await port.read();
+    port.describeVariant({
+      variantId: 'artifact-live',
+      description: 'Stillroom compost caddy on a sand countertop, product-only.',
+    });
+    await expect(
+      port.decideVariant({
+        variantId: 'artifact-live',
+        decision: 'approved',
+        expectedRevisionId: 'revision-live',
+      }),
+    ).resolves.toMatchObject({ type: 'ok', groups: [{ variants: [{ decision: 'approved' }] }] });
+    expect(JSON.parse(bodies[0] ?? '{}')).toEqual({
+      approvals: [
+        {
+          artifact_id: 'artifact-live',
+          accessibility_description: 'Stillroom compost caddy on a sand countertop, product-only.',
+        },
+      ],
+    });
   });
 });

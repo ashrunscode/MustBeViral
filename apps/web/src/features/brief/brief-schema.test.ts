@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
-import { BriefDraftSchema, InMemoryBriefDraftPort, lumenSkinDraft } from './brief-schema';
+import {
+  BriefDraftSchema,
+  InMemoryBriefDraftPort,
+  STAGING_SYNTHETIC_PACKSHOTS,
+  briefSectionState,
+  launchPackBriefFromDraft,
+  lumenSkinDraft,
+  missingBriefItems,
+  stagingWorkerDraft,
+} from './brief-schema';
 
 describe('campaign brief validation', () => {
   it('blocks the golden draft on evidence, rights, and square-packshot gates', () => {
@@ -50,5 +59,58 @@ describe('campaign brief validation', () => {
     expect((await port.load('lumen-skin'))?.productTruth.productName).toBe(
       'Lumen Skin Barrier Serum',
     );
+  });
+
+  it('does not mark product or offer sections complete when required fields are empty', () => {
+    const emptyOffer = {
+      ...lumenSkinDraft,
+      productTruth: { ...lumenSkinDraft.productTruth, productName: '' },
+      offer: { ...lumenSkinDraft.offer, pricePresentation: '' },
+    };
+    expect(briefSectionState('productTruth', emptyOffer).complete).toBe(false);
+    expect(briefSectionState('offer', emptyOffer).complete).toBe(false);
+    expect(missingBriefItems(emptyOffer)).toEqual(
+      expect.arrayContaining(['Product name', 'Price presentation']),
+    );
+  });
+
+  it('gives the worker draft synthetic staging packshots so Validate is reachable', () => {
+    const draft = stagingWorkerDraft();
+    expect(draft.assets.packshots).toEqual([...STAGING_SYNTHETIC_PACKSHOTS]);
+    expect(missingBriefItems(draft)).not.toContain('At least one product packshot');
+    expect(missingBriefItems(draft)).toEqual(
+      expect.arrayContaining(['At least one prohibited claim', 'Creative constraints']),
+    );
+  });
+
+  it('maps a complete draft onto the launch-pack brief the graph builder consumes', () => {
+    const completeDraft = {
+      ...lumenSkinDraft,
+      claimsLegal: {
+        ...lumenSkinDraft.claimsLegal,
+        evidenceSource: 'Formulation dossier, page 12',
+      },
+      assets: { ...lumenSkinDraft.assets, squarePackshotReady: true, rightsAttested: true },
+    };
+    const mapped = launchPackBriefFromDraft(completeDraft);
+    expect(mapped.product).toBe('Lumen Skin Barrier Serum');
+    expect(mapped.prohibitedClaims).toContain('Cures acne');
+    expect(mapped.packshots).toContain('front-packshot.png');
+    expect(mapped.destination).toBe('https://example.com/products/barrier-serum');
+  });
+
+  it('does not send synthetic staging filenames into the image-prompt packshot field', () => {
+    const mapped = launchPackBriefFromDraft({
+      ...lumenSkinDraft,
+      assets: {
+        packshots: [...STAGING_SYNTHETIC_PACKSHOTS],
+        squarePackshotReady: true,
+        rightsAttested: true,
+      },
+    });
+    expect(mapped.packshots).toBe(
+      'Square and front product packshots on a clean surface; product-only; no lifestyle talent; label and packaging readable.',
+    );
+    expect(mapped.packshots).not.toMatch(/staging-.*\.png/u);
   });
 });

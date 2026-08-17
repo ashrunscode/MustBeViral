@@ -5,6 +5,7 @@ import {
   ApiErrorSchema,
   HealthResponseSchema,
   SERVICE_GENERATION,
+  WireTimestampSchema,
 } from './http';
 
 describe('HTTP contracts', () => {
@@ -29,5 +30,13 @@ describe('HTTP contracts', () => {
         retryable: false,
       }),
     ).toThrow();
+  });
+
+  it('accepts Postgres timestamptz with microsecond precision', () => {
+    expect(WireTimestampSchema.parse('2026-08-15T22:21:34.848859+00:00')).toBe(
+      '2026-08-15T22:21:34.848859+00:00',
+    );
+    expect(WireTimestampSchema.parse('2026-08-15T22:21:34.932Z')).toBe('2026-08-15T22:21:34.932Z');
+    expect(WireTimestampSchema.safeParse('2026-08-15T22:21:34').success).toBe(false);
   });
 });
