@@ -134,6 +134,19 @@
   padding: 10px 12px;
   text-align: left;
 }
+.copyKicker {
+  display: block;
+  margin: 8px 0 2px;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.copyKicker:first-child {
+  margin-top: 0;
+}
 .copyPreview strong {
   display: block;
   margin-bottom: 6px;
@@ -146,6 +159,23 @@
   color: var(--ink-body);
   font-size: 12px;
   line-height: 1.45;
+}
+.workerThumb {
+  min-height: 200px;
+  height: auto;
+  align-items: stretch;
+  justify-items: stretch;
+  background: var(--card);
+}
+.workerThumb .media {
+  height: 220px;
+  object-fit: contain;
+  background: var(--paper-2);
+}
+.thumbCopy,
+.workerThumb.thumbCopy {
+  background: var(--card);
+  place-items: start stretch;
 }
 .thumb {
   flex: 1;

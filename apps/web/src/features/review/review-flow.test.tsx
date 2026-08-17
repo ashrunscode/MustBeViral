@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
 import {
+  ReviewCopyPreview,
   ReviewFlow,
   ReviewResultNotice,
 } from '../../../app/studio/[workspace]/(workflow)/review/review-flow';
@@ -21,6 +22,24 @@ describe('ReviewFlow', () => {
     expect(html).toContain('export-status');
     expect(html).toContain('export-row');
     expect(html).toContain('$18.42 / $100.00');
+  });
+
+  it('renders worker copy as headline, primary text, and description', () => {
+    const html = renderToStaticMarkup(
+      <ReviewCopyPreview
+        copy={{
+          headline: 'Keep nights simple',
+          primaryText: '200 mg glycinate. Take one capsule.',
+          description: 'Dietary supplement. FDA has not evaluated this statement.',
+        }}
+      />,
+    );
+    expect(html).toContain('Headline');
+    expect(html).toContain('Keep nights simple');
+    expect(html).toContain('Primary text');
+    expect(html).toContain('200 mg glycinate. Take one capsule.');
+    expect(html).toContain('Description');
+    expect(html).toContain('Dietary supplement. FDA has not evaluated this statement.');
   });
 
   it.each([

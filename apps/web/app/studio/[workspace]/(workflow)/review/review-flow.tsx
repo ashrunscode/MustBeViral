@@ -59,6 +59,25 @@ export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResu
   );
 }
 
+export function ReviewCopyPreview({
+  copy,
+}: Readonly<{ copy: NonNullable<ReviewVariant['copy']> }>) {
+  return (
+    <div className={styles.copyPreview}>
+      <span className={styles.copyKicker}>Headline</span>
+      <strong>{copy.headline}</strong>
+      <span className={styles.copyKicker}>Primary text</span>
+      <p>{copy.primaryText}</p>
+      {copy.description.length > 0 ? (
+        <>
+          <span className={styles.copyKicker}>Description</span>
+          <p>{copy.description}</p>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
 function VariantCard({
   dataMode,
   index,
@@ -107,7 +126,9 @@ function VariantCard({
       {mode === 'compare' ? (
         <div className={`${styles.comparePair} compare-pair`}>
           <div className={styles.version}>
-            <div className={styles.thumb}>
+            <div
+              className={`${styles.thumb} ${dataMode === 'worker' ? styles.workerThumb : ''} ${variant.copy ? styles.thumbCopy : ''}`}
+            >
               {dataMode === 'worker' && variant.previewUrl && variant.groupId !== 'copy' ? (
                 variant.groupId === 'motion' ? (
                   <video
@@ -129,10 +150,7 @@ function VariantCard({
                   </>
                 )
               ) : dataMode === 'worker' && variant.copy ? (
-                <div className={styles.copyPreview}>
-                  <strong>{variant.copy.headline}</strong>
-                  <p>{variant.copy.primaryText}</p>
-                </div>
+                <ReviewCopyPreview copy={variant.copy} />
               ) : (
                 <MonoCaps>
                   {dataMode === 'preview' ? 'Current output · v2' : 'Artifact · private preview'}
@@ -157,7 +175,9 @@ function VariantCard({
           </div>
         </div>
       ) : (
-        <div className={styles.mobileThumb}>
+        <div
+          className={`${styles.mobileThumb} ${dataMode === 'worker' ? styles.workerThumb : ''} ${variant.copy ? styles.thumbCopy : ''}`}
+        >
           {dataMode === 'worker' && variant.previewUrl && variant.groupId !== 'copy' ? (
             variant.groupId === 'motion' ? (
               <video className={styles.media} src={variant.previewUrl} controls playsInline muted />
@@ -173,10 +193,7 @@ function VariantCard({
               </>
             )
           ) : dataMode === 'worker' && variant.copy ? (
-            <div className={styles.copyPreview}>
-              <strong>{variant.copy.headline}</strong>
-              <p>{variant.copy.primaryText}</p>
-            </div>
+            <ReviewCopyPreview copy={variant.copy} />
           ) : (
             <MonoCaps>Current v2 · {variant.model}</MonoCaps>
           )}
@@ -209,15 +226,17 @@ function VariantCard({
           ) : (
             <Button onClick={() => onDecide(variant, 'approved')}>Approve</Button>
           )}
-          <Button onClick={() => onDecide(variant, 'rejected')}>
-            {rejecting
-              ? dataMode === 'preview'
-                ? 'Submit rejection'
-                : 'Save local rejection note'
-              : dataMode === 'preview'
-                ? 'Reject'
-                : 'Reject locally'}
-          </Button>
+          {variant.decision !== 'approved' || dataMode === 'preview' ? (
+            <Button onClick={() => onDecide(variant, 'rejected')}>
+              {rejecting
+                ? dataMode === 'preview'
+                  ? 'Submit rejection'
+                  : 'Save local rejection note'
+                : dataMode === 'preview'
+                  ? 'Reject'
+                  : 'Reject locally'}
+            </Button>
+          ) : null}
         </div>
         <MonoCaps>{variant.rejectionReason ?? variant.format}</MonoCaps>
       </div>
@@ -411,7 +430,11 @@ export function ReviewFlow({
             <p>
               {mode === 'compare'
                 ? 'Compare current output to its prior pinned version before approval.'
-                : 'Named approval is recorded per artifact group.'}
+                : dataMode === 'worker'
+                  ? approvedCount === variants.length && variants.length > 0
+                    ? `${String(approvedCount)} of ${String(variants.length)} approved. Export the bundle when you are ready.`
+                    : `Read each ad. Approve what you would run. ${String(approvedCount)} of ${String(variants.length)} approved.`
+                  : 'Named approval is recorded per artifact group.'}
             </p>
           </div>
           <Button className={styles.qaToggle} onClick={() => setDrawerOpen(true)}>

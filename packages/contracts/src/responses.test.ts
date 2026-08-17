@@ -164,6 +164,7 @@ const successData = {
       expires_at: timestamp,
       purpose: 'review_preview',
     },
+    copy: null,
   },
   approve_artifacts: {
     run_id: 'run-1',

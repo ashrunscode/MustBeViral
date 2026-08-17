@@ -90,4 +90,29 @@ describe('launch pack copy QA', () => {
       ]),
     );
   });
+
+  it('parses fenced JSON and camelCase aliases used by live copy artifacts', () => {
+    expect(
+      parseLaunchPackCopy(
+        '```json\n{"headline":"Keep nights simple","primary_text":"200 mg glycinate.","description":"FDA disclaimer."}\n```',
+      ),
+    ).toEqual({
+      headline: 'Keep nights simple',
+      primary_text: '200 mg glycinate.',
+      description: 'FDA disclaimer.',
+    });
+    expect(
+      parseLaunchPackCopy(
+        JSON.stringify({
+          title: 'Keep nights simple',
+          primaryText: '200 mg glycinate.',
+          support: 'FDA disclaimer.',
+        }),
+      ),
+    ).toEqual({
+      headline: 'Keep nights simple',
+      primary_text: '200 mg glycinate.',
+      description: 'FDA disclaimer.',
+    });
+  });
 });

@@ -15,27 +15,28 @@ export interface LaunchPackQaFinding {
   readonly message: string;
 }
 
+function stringField(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim().length > 0 ? value.trim() : undefined;
+}
+
 export function parseLaunchPackCopy(raw: string): LaunchPackCopyFields | null {
   const trimmed = raw.trim();
-  if (trimmed.startsWith('{')) {
-    try {
-      const parsed = JSON.parse(trimmed) as Partial<LaunchPackCopyFields>;
-      if (
-        typeof parsed.primary_text === 'string' &&
-        typeof parsed.headline === 'string' &&
-        typeof parsed.description === 'string'
-      ) {
-        return {
-          primary_text: parsed.primary_text.trim(),
-          headline: parsed.headline.trim(),
-          description: parsed.description.trim(),
-        };
-      }
-    } catch {
-      return null;
-    }
+  const start = trimmed.indexOf('{');
+  const end = trimmed.lastIndexOf('}');
+  if (start < 0 || end <= start) return null;
+  try {
+    const parsed = JSON.parse(trimmed.slice(start, end + 1)) as Record<string, unknown>;
+    const primary =
+      stringField(parsed.primary_text) ??
+      stringField(parsed.primaryText) ??
+      stringField(parsed.body);
+    const headline = stringField(parsed.headline) ?? stringField(parsed.title);
+    const description = stringField(parsed.description) ?? stringField(parsed.support) ?? '';
+    if (primary === undefined || headline === undefined) return null;
+    return { primary_text: primary, headline, description };
+  } catch {
+    return null;
   }
-  return null;
 }
 
 export function evaluateLaunchPackCopy(

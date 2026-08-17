@@ -1,5 +1,4 @@
 import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
-import { parseLaunchPackCopy } from '@mustbeviral/contracts';
 
 export type ReviewDecision = 'pending' | 'approved' | 'rejected';
 
@@ -279,27 +278,25 @@ async function loadReviewExtras(
     } catch {
       continue;
     }
-    if ('error' in detail || !('access' in detail.data) || detail.data.access === null) continue;
-    const previewUrl = reviewContentUrl(detail.data.access.url);
-    if (artifact.mime_type.startsWith('image/') || artifact.mime_type.startsWith('video/')) {
-      extras[artifact.id] = { previewUrl };
-      continue;
-    }
-    if (!artifact.mime_type.includes('json')) continue;
-    try {
-      const response = await fetch(previewUrl);
-      if (!response.ok) continue;
-      const parsed = parseLaunchPackCopy(await response.text());
-      if (parsed === null) continue;
+    if ('error' in detail) continue;
+    const payload = detail.data as {
+      access?: { url: string } | null;
+      copy?: { primary_text: string; headline: string; description: string } | null;
+    };
+    if (payload.copy) {
       extras[artifact.id] = {
         copy: {
-          primaryText: parsed.primary_text,
-          headline: parsed.headline,
-          description: parsed.description,
+          primaryText: payload.copy.primary_text,
+          headline: payload.copy.headline,
+          description: payload.copy.description,
         },
       };
-    } catch {
       continue;
+    }
+    if (payload.access === null || payload.access === undefined) continue;
+    const previewUrl = reviewContentUrl(payload.access.url);
+    if (artifact.mime_type.startsWith('image/') || artifact.mime_type.startsWith('video/')) {
+      extras[artifact.id] = { previewUrl };
     }
   }
   return extras;
@@ -307,8 +304,16 @@ async function loadReviewExtras(
 
 function groupKind(mimeType: string) {
   if (mimeType.startsWith('image/')) return { id: 'visuals', name: 'Visual system' };
-  if (mimeType.startsWith('video/')) return { id: 'motion', name: 'Motion system' };
+  if (mimeType.startsWith('video/')) return { id: 'motion', name: 'Motion' };
   return { id: 'copy', name: 'Copy system' };
+}
+
+function reviewKind(nodeKey: string | undefined, mimeType: string) {
+  if (nodeKey?.startsWith('copy-')) return { id: 'copy', name: 'Copy system' };
+  if (nodeKey?.startsWith('master-')) return { id: 'masters', name: 'Masters' };
+  if (nodeKey?.startsWith('adaptation-')) return { id: 'adaptations', name: 'Adaptations' };
+  if (nodeKey?.startsWith('motion-')) return { id: 'motion', name: 'Motion' };
+  return groupKind(mimeType);
 }
 
 function metadataRoute(value: unknown): string | undefined {
@@ -324,7 +329,56 @@ function metadataRoute(value: unknown): string | undefined {
 function reviewLabel(kindId: string, indexInGroup: number): string {
   if (kindId === 'copy') return `Copy set ${String(indexInGroup + 1)}`;
   if (kindId === 'motion') return `Motion ${String(indexInGroup + 1)}`;
+  if (kindId === 'masters') return `Master ${String(indexInGroup + 1)}`;
+  if (kindId === 'adaptations') return `Adaptation ${String(indexInGroup + 1)}`;
   return `Visual ${String(indexInGroup + 1)}`;
+}
+
+const NAMED_NODE_LABELS: Readonly<Record<string, string>> = {
+  'copy-1': 'Copy · Problem-recognition',
+  'copy-2': 'Copy · Proof-first',
+  'copy-3': 'Copy · Offer-clarity',
+  'master-1': 'Master · Packshot',
+  'master-2': 'Master · Material',
+  'master-3': 'Master · Proof-forward',
+  'motion-1': 'Motion · 9:16',
+};
+
+const ADAPTATION_RATIOS = ['4:5', '1:1', '9:16'] as const;
+
+function reviewLabelFromNodeKey(
+  nodeKey: string | undefined,
+  kindId: string,
+  indexInGroup: number,
+): string {
+  if (nodeKey !== undefined && NAMED_NODE_LABELS[nodeKey] !== undefined) {
+    return NAMED_NODE_LABELS[nodeKey];
+  }
+  const adaptation = /^adaptation-(\d+)-(\d+)$/u.exec(nodeKey ?? '');
+  if (adaptation !== null) {
+    const ratio = ADAPTATION_RATIOS[Number(adaptation[2]) - 1] ?? '4:5';
+    return `Adaptation · Master ${adaptation[1]} · ${ratio}`;
+  }
+  return reviewLabel(kindId, indexInGroup);
+}
+
+function reviewFormat(
+  nodeKey: string | undefined,
+  kindId: string,
+  mimeType: string,
+  copy: ReviewCopyPreview | null | undefined,
+): string {
+  if (copy !== undefined && copy !== null) return copy.headline;
+  const adaptation = /^adaptation-\d+-(\d+)$/u.exec(nodeKey ?? '');
+  if (adaptation !== null) {
+    return `${ADAPTATION_RATIOS[Number(adaptation[1]) - 1] ?? '4:5'} placement`;
+  }
+  if (nodeKey?.startsWith('master-')) return 'Master still';
+  if (nodeKey?.startsWith('motion-')) return '9:16 · 8s';
+  if (kindId === 'copy') return 'Copy set';
+  if (mimeType.startsWith('image/')) return 'Still';
+  if (mimeType.startsWith('video/')) return 'Motion';
+  return mimeType;
 }
 
 function reviewFromReceipt(
@@ -333,6 +387,7 @@ function reviewFromReceipt(
   extras: Readonly<
     Record<string, Readonly<{ previewUrl?: string | null; copy?: ReviewCopyPreview | null }>>
   > = {},
+  nodeKeys: Readonly<Record<string, string>> = {},
 ): Readonly<{ groups: readonly ArtifactGroupReview[]; summary: ReviewSummary }> {
   const reviewable = receipt.artifacts.filter(
     (artifact) =>
@@ -341,7 +396,8 @@ function reviewFromReceipt(
   const groups = new Map<string, ArtifactGroupReview>();
   const groupCounts = new Map<string, number>();
   for (const artifact of reviewable) {
-    const kind = groupKind(artifact.mime_type);
+    const nodeKey = artifact.run_node_id === null ? undefined : nodeKeys[artifact.run_node_id];
+    const kind = reviewKind(nodeKey, artifact.mime_type);
     const indexInGroup = groupCounts.get(kind.id) ?? 0;
     groupCounts.set(kind.id, indexInGroup + 1);
     const extra = extras[artifact.id];
@@ -349,12 +405,8 @@ function reviewFromReceipt(
     const variant: ReviewVariant = {
       id: artifact.id,
       groupId: kind.id,
-      label: reviewLabel(kind.id, indexInGroup),
-      format: extra?.copy
-        ? extra.copy.headline || extra.copy.primaryText
-        : kind.id === 'copy'
-          ? 'Copy set'
-          : `${artifact.mime_type}`,
+      label: reviewLabelFromNodeKey(nodeKey, kind.id, indexInGroup),
+      format: reviewFormat(nodeKey, kind.id, artifact.mime_type, extra?.copy),
       model: metadataRoute(artifact.rights_attestation) ?? 'Pinned catalog route',
       decision: artifact.artifact_kind === 'approved_output' ? 'approved' : 'pending',
       accessibilityDescription: artifact.accessibility_description,
@@ -410,8 +462,9 @@ export class WorkerReviewPort implements ReviewReadPort {
     try {
       const result = await this.client.request('get_receipt', { id: this.runId });
       if ('error' in result) return this.#mapError(result.error, this.runId);
+      const nodeKeys = await this.#nodeKeys();
       const extras = await loadReviewExtras(this.client, result.data.receipt.artifacts);
-      const mapped = reviewFromReceipt(result.data.receipt, this.reviewer, extras);
+      const mapped = reviewFromReceipt(result.data.receipt, this.reviewer, extras, nodeKeys);
       this.#groups = mapped.groups;
       return { type: 'ok', ...mapped };
     } catch {
@@ -516,6 +569,16 @@ export class WorkerReviewPort implements ReviewReadPort {
           : 'pending',
       };
     });
+  }
+
+  async #nodeKeys(): Promise<Readonly<Record<string, string>>> {
+    try {
+      const run = await this.client.request('get_run', { id: this.runId });
+      if ('error' in run) return {};
+      return Object.fromEntries(run.data.nodes.map((node) => [node.runNodeId, node.nodeKey]));
+    } catch {
+      return {};
+    }
   }
 
   #idempotencyKey(signature: string): string {

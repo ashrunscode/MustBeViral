@@ -165,18 +165,43 @@ describe('WorkerReviewPort', () => {
                     expires_at: timestamp,
                     purpose: 'review_preview',
                   },
+                  copy: null,
                 },
                 meta: { request_id: 'request-review-0001' },
               }
-            : {
-                data: {
-                  run_id: 'run-live',
-                  approved: 1,
-                  replayed: 0,
-                  artifacts: [{ artifact_id: 'artifact-live', artifact_kind: 'approved_output' }],
-                },
-                meta: { request_id: 'request-review-0001' },
-              };
+            : url.endsWith('/approvals')
+              ? {
+                  data: {
+                    run_id: 'run-live',
+                    approved: 1,
+                    replayed: 0,
+                    artifacts: [{ artifact_id: 'artifact-live', artifact_kind: 'approved_output' }],
+                  },
+                  meta: { request_id: 'request-review-0001' },
+                }
+              : {
+                  data: {
+                    run: {
+                      runId: 'run-live',
+                      projectId: 'project-live',
+                      canvasId: 'canvas-live',
+                      canvasRevisionId: 'revision-live',
+                      quoteId: 'quote-live',
+                      status: 'succeeded',
+                      reservationId: 'reservation-live',
+                    },
+                    nodes: [
+                      {
+                        runNodeId: 'run-node-live',
+                        nodeKey: 'master-1',
+                        modelRouteId: 'provider/model-live',
+                        status: 'succeeded',
+                        dispatchWave: 2,
+                      },
+                    ],
+                  },
+                  meta: { request_id: 'request-review-0001' },
+                };
         return new Response(JSON.stringify(payload), {
           status: 200,
           headers: { 'content-type': 'application/json' },
@@ -189,11 +214,12 @@ describe('WorkerReviewPort', () => {
       type: 'ok',
       groups: [
         {
-          id: 'visuals',
+          id: 'masters',
           revision: 'revision-live',
           variants: [
             {
-              label: 'Visual 1',
+              label: 'Master · Packshot',
+              format: 'Master still',
               previewUrl:
                 'https://core.example.test/v1/artifacts/artifact-live/content?token=review',
             },
@@ -308,6 +334,96 @@ describe('WorkerReviewPort', () => {
         {
           artifact_id: 'artifact-live',
           accessibility_description: 'Stillroom compost caddy on a sand countertop, product-only.',
+        },
+      ],
+    });
+  });
+
+  it('maps JSON copy artifacts to headline and primary text instead of a private well', async () => {
+    const copyArtifact = {
+      ...artifact,
+      id: 'artifact-copy',
+      mime_type: 'application/json',
+      object_key: 'private/artifact-copy.json',
+      run_node_id: 'run-node-copy',
+      accessibility_description: 'Problem-recognition copy set for the launch pack.',
+    };
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-review-0004',
+      fetch: async (input) => {
+        const url = String(input);
+        const payload = url.endsWith('/receipt')
+          ? {
+              data: {
+                receipt: {
+                  ...receiptResponse().data.receipt,
+                  artifacts: [copyArtifact],
+                },
+              },
+              meta: { request_id: 'request-review-0004' },
+            }
+          : url.includes('/artifacts/artifact-copy')
+            ? {
+                data: {
+                  artifact: copyArtifact,
+                  access: null,
+                  copy: {
+                    headline: 'Keep nights simple',
+                    primary_text: '200 mg glycinate. Take one capsule.',
+                    description: 'Dietary supplement. FDA has not evaluated this statement.',
+                  },
+                },
+                meta: { request_id: 'request-review-0004' },
+              }
+            : {
+                data: {
+                  run: {
+                    runId: 'run-live',
+                    projectId: 'project-live',
+                    canvasId: 'canvas-live',
+                    canvasRevisionId: 'revision-live',
+                    quoteId: 'quote-live',
+                    status: 'succeeded',
+                    reservationId: 'reservation-live',
+                  },
+                  nodes: [
+                    {
+                      runNodeId: 'run-node-copy',
+                      nodeKey: 'copy-1',
+                      modelRouteId: 'openrouter/moonshot',
+                      status: 'succeeded',
+                      dispatchWave: 1,
+                    },
+                  ],
+                },
+                meta: { request_id: 'request-review-0004' },
+              };
+        return new Response(JSON.stringify(payload), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+    const port = new WorkerReviewPort(client, 'run-live', 'user-live', () => 'approval-idem-4');
+    await expect(port.read()).resolves.toMatchObject({
+      type: 'ok',
+      groups: [
+        {
+          id: 'copy',
+          name: 'Copy system',
+          variants: [
+            {
+              label: 'Copy · Problem-recognition',
+              format: 'Keep nights simple',
+              copy: {
+                headline: 'Keep nights simple',
+                primaryText: '200 mg glycinate. Take one capsule.',
+                description: 'Dietary supplement. FDA has not evaluated this statement.',
+              },
+            },
+          ],
         },
       ],
     });

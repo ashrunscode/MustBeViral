@@ -507,6 +507,13 @@ const operationDataSchemas = {
           purpose: z.literal('review_preview'),
         })
         .nullable(),
+      copy: z
+        .object({
+          primary_text: z.string(),
+          headline: z.string(),
+          description: z.string(),
+        })
+        .nullable(),
     })
     .strict(),
   approve_artifacts: z

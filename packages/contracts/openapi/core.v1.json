@@ -1970,9 +1970,24 @@
                   },
                   { "type": "null" }
                 ]
+              },
+              "copy": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "primary_text": { "type": "string" },
+                      "headline": { "type": "string" },
+                      "description": { "type": "string" }
+                    },
+                    "required": ["primary_text", "headline", "description"],
+                    "additionalProperties": false
+                  },
+                  { "type": "null" }
+                ]
               }
             },
-            "required": ["artifact", "access"],
+            "required": ["artifact", "access", "copy"],
             "additionalProperties": false
           },
           "meta": {

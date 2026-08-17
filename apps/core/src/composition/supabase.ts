@@ -1,4 +1,5 @@
 import {
+  parseLaunchPackCopy,
   GraphSnapshotSchema,
   P0_REST_OPERATIONS,
   createCommandHandlers,
@@ -494,6 +495,21 @@ function createWorkspaceResolver(
   };
 }
 
+async function readReviewCopy(
+  bindings: CoreBindings,
+  objectKey: string,
+  mimeType: string,
+): Promise<{ primary_text: string; headline: string; description: string } | null> {
+  if (!mimeType.includes('json')) return null;
+  try {
+    const object = await bindings.MEDIA_BUCKET.get(objectKey);
+    if (object === null) return null;
+    return parseLaunchPackCopy(await object.text());
+  } catch {
+    return null;
+  }
+}
+
 function createResourcePort(
   executor: SupabaseDataApiExecutor,
   repositories: DatabaseRepositories,
@@ -562,8 +578,9 @@ function createResourcePort(
       const context = asTenantContext(input.context);
       const artifact = await repositories.artifacts.get(context, input.artifact_id);
       if (artifact === null) return { status: 'not_found' };
+      const copy = await readReviewCopy(bindings, artifact.object_key, artifact.mime_type);
       if (artifact.content_hash === null || artifact.status !== 'available') {
-        return { status: 'ok', artifact, access: null };
+        return { status: 'ok', artifact, access: null, copy };
       }
       try {
         const nowEpochSeconds = Math.floor(Date.now() / 1000);
@@ -586,9 +603,10 @@ function createResourcePort(
             ).toISOString(),
             purpose: 'review_preview' as const,
           },
+          copy,
         };
       } catch {
-        return { status: 'ok', artifact, access: null };
+        return { status: 'ok', artifact, access: null, copy };
       }
     },
     async approveArtifacts(input) {
