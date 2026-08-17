@@ -6,16 +6,18 @@ doc_id: release-scope
 
 ## P0 private validation slice
 
-P0 includes only what is required to prove the Meta Campaign Launch Pack:
+P0 includes only what is required to prove the Meta Campaign Launch Pack for one owner in one workspace:
 
-- Marketing landing, authentication shell, structured onboarding, brand setup, project creation, and campaign brief.
-- Desktop graph canvas plus semantic outline, graph validation, planning-agent patches, revision history, quote, confirmation, execution, partial progress, review, affected-descendant rerun, approval, export, and receipt.
+- Authentication shell and a structured campaign brief (brand, audience, offer, and claims live on that brief, not on a separate settings app).
+- Desktop graph canvas plus semantic outline, graph validation, quote, explicit confirmation, execution, partial progress, composed Review, comparison, approval, export, and receipt.
 - Initial node kinds: brief/input, brand context, planner/text, image generation/edit, video generation, QA, output/export, and non-executable group.
 - DAGs with at most 100 executable nodes and no arbitrary loop construct.
 - Supabase Auth/Postgres/RLS, one Core Worker, private R2, fal-first provider transport, immutable billing semantics without automated customer charging, and private five-operation MCP proof.
-- A curated 3–5 model catalog selected for the launch pack rather than arbitrary access to every provider model.
+- The pinned launch trio plus one copy route, not arbitrary access to every provider model.
 - Internal operator visibility for runs, costs, reconciliation, and kill switches.
-- Desktop authoring; tablet review and limited parameter edits; mobile review, comment, approve, and export.
+- Desktop authoring; tablet and mobile Review, approval, and export.
+
+P0 does **not** ship a marketing landing, project dashboard, settings admin, member invites, comments, or Stripe. Those names stay in later phases. A short signed-out story and a signed-in “continue this campaign” screen may be added as last-mile honesty; they are not a second product.
 
 ## P1a paid single-user product
 

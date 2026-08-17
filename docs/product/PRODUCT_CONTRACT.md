@@ -39,6 +39,18 @@ P0 does not ask the buyer to pick one of three unpaid directions. The Meta Campa
 3. Selection is review: approve the concepts worth exporting after seeing composed ads.
 4. The system validates the graph, produces a transparent quote, and requires explicit confirmation of the maximum charge.
 
+### P0 tenancy and last mile
+
+P0 has one workspace membership role: `owner`. Invites, roles, and agency client portals are out of phase.
+
+A buyer-ready P0 demo still owes these last-mile obligations. They are named here so they cannot be forgotten, and they are implemented in a dedicated successor packet rather than invented as undocumented APIs inside a golden-run step:
+
+- The buyer can attach their own packshot through the existing signed-upload operation.
+- Live Review shows composed ads and records approval through the existing approval operation.
+- Rejection is either a durable reject operation with a reason category or is not offered. A local note is not a recorded rejection.
+- Export yields a private ZIP through the existing `customer_download` capability, not a receipt of a file the buyer cannot take.
+- Copy presented on ads is the offer (headline, primary text, short description), not a spec dump.
+
 ### Required output bundle
 
 The launch pack produces:

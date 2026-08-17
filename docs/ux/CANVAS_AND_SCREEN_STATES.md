@@ -6,24 +6,24 @@ doc_id: canvas-screen-states
 
 ## Information architecture
 
-| Surface                    | Primary outcome                                        | Required states                                                                                   |
-| -------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| Landing                    | Understand launch-pack value and request access        | default, proof, pricing/pilot, policy links                                                       |
-| Authentication             | Enter or recover an account securely                   | sign in, sign up, verification, recovery, expired link, rate limited                              |
-| Onboarding and brand setup | Establish product truth and creative constraints       | new, draft, validation errors, saving, saved, blocked by rights/claims                            |
-| Project dashboard          | Resume the most important campaign work                | first use, active projects, recent runs, empty, loading, recoverable error                        |
-| Campaign brief             | Complete a validated launch-pack request               | guided steps, draft, incomplete, complete, planning, proposed angles                              |
-| Canvas                     | Inspect/edit the plan and affected work                | empty, planned, dirty draft, validating, valid, invalid, revision conflict, read-only             |
-| Quote                      | Understand and confirm spend                           | calculating, valid, expiring, expired, budget blocked, confirmed                                  |
-| Run                        | Monitor execution and recover locally                  | queued, dispatching, running, partial success, cancel requested, canceled, failed, reconciliation |
-| Output comparison          | Compare current vs prior when a prior pin exists       | no output, partial, processing, ready, approved, rejected, superseded                             |
-| Live Review                | Judge composed Meta ads by concept and placement       | no output, partial, processing, ready, approved, rejected, superseded                             |
-| Export and receipt         | Retrieve an immutable, verifiable package              | preparing, ready, expired download, export failed, receipt available                              |
-| Assets                     | Manage private inputs and outputs                      | uploading, processing, ready, quarantined, missing rights, deleted                                |
-| Model catalog              | Understand enabled capability and price                | enabled, degraded, disabled, price changed                                                        |
-| Usage and billing          | Understand wallet, charges, and limits                 | funded, low balance, blocked, receipt detail, refund/release                                      |
-| Settings                   | Manage workspace, brand, safety, and account           | view, edit, saving, saved, validation, destructive confirmation                                   |
-| Internal operations        | Reconcile provider, artifact, outbox, and ledger state | healthy, delayed, ambiguous, blocked, manually resolved                                           |
+| Surface                    | P0 presence              | Primary outcome                                        | Required states                                                                                   |
+| -------------------------- | ------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| Landing                    | Later / last-mile story  | Understand launch-pack value and request access        | default, proof, pricing/pilot, policy links                                                       |
+| Authentication             | Shipped                  | Enter or recover an account securely                   | sign in, sign up, verification, recovery, expired link, rate limited                              |
+| Onboarding and brand setup | Inside the campaign brief | Establish product truth and creative constraints       | new, draft, validation errors, saving, saved, blocked by rights/claims                            |
+| Project dashboard          | Later                    | Resume the most important campaign work                | first use, active projects, recent runs, empty, loading, recoverable error                        |
+| Campaign brief             | Shipped                  | Complete a validated launch-pack request               | guided steps, draft, incomplete, complete, planning                                                |
+| Canvas                     | Shipped                  | Inspect/edit the plan and affected work                | empty, planned, dirty draft, validating, valid, invalid, revision conflict, read-only             |
+| Quote                      | Shipped                  | Understand and confirm spend                           | calculating, valid, expiring, expired, budget blocked, confirmed                                  |
+| Run                        | Shipped                  | Monitor execution and recover locally                  | queued, dispatching, running, partial success, cancel requested, canceled, failed, reconciliation |
+| Output comparison          | Shipped                  | Compare current vs prior when a prior pin exists       | no output, partial, processing, ready, approved, rejected, superseded                             |
+| Live Review                | Shipped                  | Judge composed Meta ads by concept and placement       | no output, partial, processing, ready, approved, rejected, superseded                             |
+| Export and receipt         | Partial (descriptor only) | Retrieve an immutable, verifiable package             | preparing, ready, expired download, export failed, receipt available                              |
+| Assets                     | Last-mile upload         | Attach private packshots                               | uploading, processing, ready, quarantined, missing rights                                         |
+| Model catalog              | Operator/internal        | Understand enabled capability and price                | enabled, degraded, disabled, price changed                                                        |
+| Usage and billing          | Later (P1a)              | Understand wallet, charges, and limits                 | funded, low balance, blocked, receipt detail, refund/release                                      |
+| Settings                   | Later                    | Manage workspace, brand, safety, and account           | view, edit, saving, saved, validation, destructive confirmation                                   |
+| Internal operations        | Operator/internal        | Reconcile provider, artifact, outbox, and ledger state | healthy, delayed, ambiguous, blocked, manually resolved                                           |
 
 Route names are implementation details generated by the web application; screen semantics above are stable across route changes.
 
