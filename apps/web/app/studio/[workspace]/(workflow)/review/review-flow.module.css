@@ -604,6 +604,27 @@
   .groupHead h2 {
     font-size: 12px;
   }
+  .composed {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .conceptRail {
+    display: flex;
+    overflow-x: auto;
+  }
+  .conceptTab {
+    min-width: 168px;
+    flex: 0 0 auto;
+  }
+  .phoneFeed .adStill {
+    height: 280px;
+  }
+  .phoneSquare .adStill {
+    height: 240px;
+  }
+  .phoneStory .adStill {
+    height: 360px;
+  }
   .artifactGrid {
     grid-template-columns: 1fr;
     gap: 8px;
