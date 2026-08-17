@@ -12,7 +12,8 @@ phase:
 release_target: P0
 active_work_packet: WP-P0-001
 next_action: After the 2026-08-18 UTC day reset, run one GB-02 or GB-10 on Worker ab4a988d and web
-  Ao1or7dv to prove live master-2 hardening. Do not reuse run 9b6e0619 or start another pack today.
+  jgifx4c95 to prove live master-2 hardening. Do not reuse run 9b6e0619 or 33f2e40e or start another
+  pack today. Composed Review is live on staging.
 decisions_pending: []
 blockers:
   - The representative-run-completion-and-latency gate is closed at 16 of 20 after the second
