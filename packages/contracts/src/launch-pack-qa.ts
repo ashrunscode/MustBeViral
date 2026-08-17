@@ -19,11 +19,34 @@ function stringField(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim().length > 0 ? value.trim() : undefined;
 }
 
-export function parseLaunchPackCopy(raw: string): LaunchPackCopyFields | null {
+function stripMarkdownDecor(value: string): string {
+  return value
+    .replace(/^#{1,6}\s+/u, '')
+    .replace(/^\*+\s*|\s*\*+$/gu, '')
+    .replace(/\*\*/gu, '')
+    .replace(/^[-*]\s+/u, '')
+    .trim();
+}
+
+function fromMarkdownCopy(raw: string): LaunchPackCopyFields | null {
+  const lines = raw
+    .split(/\r?\n/u)
+    .map((line) => stripMarkdownDecor(line))
+    .filter((line) => line.length > 0 && line !== '---');
+  if (lines.length === 0) return null;
+  const headline = lines[0] ?? '';
+  const primary = lines[1] ?? headline;
+  const description = lines.slice(2).join(' ').trim();
+  if (headline.length === 0 || primary.length === 0) return null;
+  return { headline, primary_text: primary, description };
+}
+
+export function parseLaunchPackCopy(raw: string, depth = 0): LaunchPackCopyFields | null {
   const trimmed = raw.trim();
+  if (trimmed.length === 0 || depth > 3) return null;
   const start = trimmed.indexOf('{');
   const end = trimmed.lastIndexOf('}');
-  if (start < 0 || end <= start) return null;
+  if (start < 0 || end <= start) return fromMarkdownCopy(trimmed);
   try {
     const parsed = JSON.parse(trimmed.slice(start, end + 1)) as Record<string, unknown>;
     const primary =
@@ -31,11 +54,20 @@ export function parseLaunchPackCopy(raw: string): LaunchPackCopyFields | null {
       stringField(parsed.primaryText) ??
       stringField(parsed.body);
     const headline = stringField(parsed.headline) ?? stringField(parsed.title);
-    const description = stringField(parsed.description) ?? stringField(parsed.support) ?? '';
-    if (primary === undefined || headline === undefined) return null;
-    return { primary_text: primary, headline, description };
+    if (primary !== undefined && headline !== undefined) {
+      return {
+        primary_text: primary,
+        headline,
+        description: stringField(parsed.description) ?? stringField(parsed.support) ?? '',
+      };
+    }
+    const nested = stringField(parsed.text);
+    if (nested !== undefined && nested !== trimmed) {
+      return parseLaunchPackCopy(nested, depth + 1) ?? fromMarkdownCopy(nested);
+    }
+    return fromMarkdownCopy(trimmed);
   } catch {
-    return null;
+    return fromMarkdownCopy(trimmed);
   }
 }
 

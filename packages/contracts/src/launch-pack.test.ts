@@ -91,6 +91,33 @@ describe('launch pack copy QA', () => {
     );
   });
 
+  it('unwraps OpenRouter { text, usage } envelopes and markdown completions', () => {
+    expect(
+      parseLaunchPackCopy(
+        JSON.stringify({
+          text: '```json\n{"headline":"Keep nights simple","primary_text":"200 mg glycinate.","description":"FDA disclaimer."}\n```',
+          usage: { total_tokens: 80 },
+        }),
+      ),
+    ).toEqual({
+      headline: 'Keep nights simple',
+      primary_text: '200 mg glycinate.',
+      description: 'FDA disclaimer.',
+    });
+    expect(
+      parseLaunchPackCopy(
+        JSON.stringify({
+          text: '**Stillroom Countertop Compost Caddy**\n*Home • 1.2-gallon kitchen scrap container*\n\n**Kitchen Reset Bundle**\nIncludes the caddy, filters, and a liner sample.',
+          usage: { total_tokens: 120 },
+        }),
+      ),
+    ).toEqual({
+      headline: 'Stillroom Countertop Compost Caddy',
+      primary_text: 'Home • 1.2-gallon kitchen scrap container',
+      description: 'Kitchen Reset Bundle Includes the caddy, filters, and a liner sample.',
+    });
+  });
+
   it('parses fenced JSON and camelCase aliases used by live copy artifacts', () => {
     expect(
       parseLaunchPackCopy(
