@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Apply record_provider_job_error_code on staging Postgres (lqvigvzqumpwfjikcvws only), then deploy the paired Worker and web with supplement-safe master-2 prompts. Do not reuse run 9b6e0619 or start another pack until that pair is live.
+After the 2026-08-18 UTC day reset, run one GB-02 or GB-10 on Worker ab4a988d and web Ao1or7dv to prove live master-2 hardening. Do not reuse run 9b6e0619 or start another pack today.

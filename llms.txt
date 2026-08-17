@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Apply record_provider_job_error_code on staging Postgres (lqvigvzqumpwfjikcvws only), then deploy the paired Worker and web with supplement-safe master-2 prompts. Do not reuse run 9b6e0619 or start another pack until that pair is live.
+next_action: After the 2026-08-18 UTC day reset, run one GB-02 or GB-10 on Worker ab4a988d and web Ao1or7dv to prove live master-2 hardening. Do not reuse run 9b6e0619 or start another pack today.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
