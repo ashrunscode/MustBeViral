@@ -12,6 +12,7 @@ import {
   type ReviewPort,
   type ReviewReadPort,
   type ReviewPortResult,
+  type ReviewQaFinding,
   type ReviewSummary,
   type ReviewVariant,
 } from '../../../../../src/features/review/review-port';
@@ -84,6 +85,7 @@ function VariantCard({
   mode,
   onDecide,
   onDescribe,
+  onInspect,
   onNavigate,
   register,
   rejecting,
@@ -96,6 +98,7 @@ function VariantCard({
   mode: 'compare' | 'approval';
   onDecide: (variant: ReviewVariant, decision: 'approved' | 'rejected') => void;
   onDescribe: (variantId: string, description: string) => void;
+  onInspect: (variant: ReviewVariant) => void;
   onNavigate: (event: KeyboardEvent<HTMLElement>, index: number) => void;
   register: (element: HTMLElement | null, index: number) => void;
   rejecting: boolean;
@@ -118,6 +121,7 @@ function VariantCard({
       ref={(element) => register(element, index)}
       onKeyDown={(event) => onNavigate(event, index)}
       data-variant-id={variant.id}
+      id={`variant-${variant.id}`}
     >
       <div className={styles.artifactHead}>
         <h2>{variant.label}</h2>
@@ -146,6 +150,7 @@ function VariantCard({
                       className={styles.media}
                       src={variant.previewUrl}
                       alt={variant.accessibilityDescription ?? variant.label}
+                      onClick={() => onInspect(variant)}
                     />
                   </>
                 )
@@ -189,6 +194,7 @@ function VariantCard({
                   className={styles.media}
                   src={variant.previewUrl}
                   alt={variant.accessibilityDescription ?? variant.label}
+                  onClick={() => onInspect(variant)}
                 />
               </>
             )
@@ -244,15 +250,32 @@ function VariantCard({
   );
 }
 
-function QaFindings({ preview }: Readonly<{ preview: boolean }>) {
+function QaFindings({
+  preview,
+  findings,
+}: Readonly<{ preview: boolean; findings: readonly ReviewQaFinding[] }>) {
   if (!preview) {
+    if (findings.length === 0) {
+      return (
+        <div className={styles.findingList}>
+          <div className={styles.drawerSummary}>
+            <MonoCaps>No copy QA findings</MonoCaps>
+            <br />
+            Client copy checks run against parsed headline and primary text. Visual QA is not on
+            this receipt.
+          </div>
+        </div>
+      );
+    }
     return (
       <div className={styles.findingList}>
-        <div className={styles.drawerSummary}>
-          <MonoCaps>No structured QA findings</MonoCaps>
-          <br />
-          This receipt does not expose a separate QA-note feed.
-        </div>
+        {findings.map((finding) => (
+          <article className={styles.finding} key={`${finding.variantId}-${finding.code}`}>
+            <MonoCaps>{finding.code.replaceAll('_', ' ')}</MonoCaps>
+            <p>{finding.message}</p>
+            <a href={`#variant-${finding.variantId}`}>Jump to {finding.label}</a>
+          </article>
+        ))}
       </div>
     );
   }
@@ -308,15 +331,31 @@ export function ReviewFlow({
   const [groups, setGroups] = useState<readonly ArtifactGroupReview[]>(
     () => previewPort?.read() ?? [],
   );
-  const [summary, setSummary] = useState<ReviewSummary>(() => ({
-    quotedMicros: 4_200_000n,
-    capturedMicros: 4_200_000n,
-    budgetUsedMicros: 18_420_000n,
-    budgetCapMicros: 100_000_000n,
-    exportReady: true,
-    qaNoteCount: 2,
-    route: 'kimi + flux + seedance',
-  }));
+  const [summary, setSummary] = useState<ReviewSummary>(() =>
+    dataMode === 'worker'
+      ? {
+          quotedMicros: 0n,
+          capturedMicros: 0n,
+          budgetUsedMicros: 0n,
+          budgetCapMicros: 0n,
+          exportReady: false,
+          qaNoteCount: 0,
+          qaFindings: [],
+          route: '',
+          campaignName: null,
+        }
+      : {
+          quotedMicros: 4_200_000n,
+          capturedMicros: 4_200_000n,
+          budgetUsedMicros: 18_420_000n,
+          budgetCapMicros: 100_000_000n,
+          exportReady: true,
+          qaNoteCount: 2,
+          qaFindings: [],
+          route: 'kimi + flux + seedance',
+          campaignName: null,
+        },
+  );
   const [result, setResult] = useState<ReviewPortResult | null>(() =>
     dataMode === 'worker' && readPort === null
       ? {
@@ -330,6 +369,7 @@ export function ReviewFlow({
   const [rejectingId, setRejectingId] = useState<string | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [inspected, setInspected] = useState<ReviewVariant | null>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const variants = groups.flatMap((group) => group.variants);
 
@@ -426,7 +466,11 @@ export function ReviewFlow({
             <MonoCaps>
               Rev {groups[0]?.revision ?? 'pending'} · Reviewer {reviewer}
             </MonoCaps>
-            <h1 id="review-title">{mode === 'compare' ? 'Output comparison' : 'Review outputs'}</h1>
+            <h1 id="review-title">
+              {mode === 'compare'
+                ? 'Output comparison'
+                : (summary.campaignName ?? 'Review outputs')}
+            </h1>
             <p>
               {mode === 'compare'
                 ? 'Compare current output to its prior pinned version before approval.'
@@ -442,6 +486,27 @@ export function ReviewFlow({
           </Button>
         </div>
         <ReviewResultNotice result={result} />
+        {dataMode === 'worker' &&
+        !loading &&
+        variants.length > 0 &&
+        approvedCount === variants.length ? (
+          <div className={styles.exportHero} role="status">
+            <div>
+              <MonoCaps>Pack approved</MonoCaps>
+              <p>Every artifact on this receipt is approved. Export is the next step.</p>
+            </div>
+            <Link
+              className="mbv-button mbv-button--primary"
+              href={
+                runId === undefined
+                  ? `/studio/${workspace}/receipt`
+                  : `/studio/${workspace}/receipt?run=${encodeURIComponent(runId)}`
+              }
+            >
+              Export approved
+            </Link>
+          </div>
+        ) : null}
         {loading ? (
           <div className={styles.reviewError} role="status" data-result="loading">
             Reading authoritative artifacts and approvals from Core.
@@ -489,6 +554,7 @@ export function ReviewFlow({
                     setRejectionReason={setRejectionReason}
                     onDecide={(variant, decision) => void decide(variant, decision)}
                     onDescribe={describe}
+                    onInspect={setInspected}
                     onNavigate={handleCardKey}
                     register={(element, refIndex) => {
                       cardRefs.current[refIndex] = element;
@@ -544,7 +610,7 @@ export function ReviewFlow({
             ? 'Two notes require review. Verified work remains isolated from pending branches.'
             : 'Receipt-backed artifacts remain isolated from local review drafts.'}
         </p>
-        <QaFindings preview={dataMode === 'preview'} />
+        <QaFindings preview={dataMode === 'preview'} findings={summary.qaFindings} />
       </aside>
       <Drawer
         className={styles.tabletDrawer}
@@ -552,7 +618,7 @@ export function ReviewFlow({
         title="QA findings"
         onClose={() => setDrawerOpen(false)}
       >
-        <QaFindings preview={dataMode === 'preview'} />
+        <QaFindings preview={dataMode === 'preview'} findings={summary.qaFindings} />
       </Drawer>
       <div className={styles.confirmBar}>
         <div>
@@ -594,6 +660,48 @@ export function ReviewFlow({
         </MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
+      {inspected !== null && dataMode === 'worker' ? (
+        <div
+          className={styles.inspectOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label={inspected.label}
+          onClick={() => setInspected(null)}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') setInspected(null);
+          }}
+        >
+          <div className={styles.inspectStage} onClick={(event) => event.stopPropagation()}>
+            <div className={styles.inspectHead}>
+              <strong>{inspected.label}</strong>
+              <Button onClick={() => setInspected(null)}>Close</Button>
+            </div>
+            {inspected.previewUrl && inspected.groupId !== 'copy' ? (
+              inspected.groupId === 'motion' ? (
+                <video
+                  className={styles.inspectMedia}
+                  src={inspected.previewUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                // Private capability URLs expire; next/image cannot cache or optimize them.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className={styles.inspectMedia}
+                  src={inspected.previewUrl}
+                  alt={inspected.accessibilityDescription ?? inspected.label}
+                />
+              )
+            ) : inspected.copy ? (
+              <ReviewCopyPreview copy={inspected.copy} />
+            ) : (
+              <MonoCaps>No private preview</MonoCaps>
+            )}
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

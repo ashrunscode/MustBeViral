@@ -179,29 +179,46 @@ describe('WorkerReviewPort', () => {
                   },
                   meta: { request_id: 'request-review-0001' },
                 }
-              : {
-                  data: {
-                    run: {
-                      runId: 'run-live',
-                      projectId: 'project-live',
-                      canvasId: 'canvas-live',
-                      canvasRevisionId: 'revision-live',
-                      quoteId: 'quote-live',
-                      status: 'succeeded',
-                      reservationId: 'reservation-live',
-                    },
-                    nodes: [
-                      {
-                        runNodeId: 'run-node-live',
-                        nodeKey: 'master-1',
-                        modelRouteId: 'provider/model-live',
-                        status: 'succeeded',
-                        dispatchWave: 2,
+              : url.includes('/projects/')
+                ? {
+                    data: {
+                      project: {
+                        brand_kit_id: null,
+                        brief_id: null,
+                        created_at: timestamp,
+                        created_by: 'user-live',
+                        id: 'project-live',
+                        name: 'Stillroom compost caddy launch pack',
+                        status: 'active',
+                        updated_at: timestamp,
+                        workspace_id: 'workspace-live',
                       },
-                    ],
-                  },
-                  meta: { request_id: 'request-review-0001' },
-                };
+                    },
+                    meta: { request_id: 'request-review-0001' },
+                  }
+                : {
+                    data: {
+                      run: {
+                        runId: 'run-live',
+                        projectId: 'project-live',
+                        canvasId: 'canvas-live',
+                        canvasRevisionId: 'revision-live',
+                        quoteId: 'quote-live',
+                        status: 'succeeded',
+                        reservationId: 'reservation-live',
+                      },
+                      nodes: [
+                        {
+                          runNodeId: 'run-node-live',
+                          nodeKey: 'master-1',
+                          modelRouteId: 'provider/model-live',
+                          status: 'succeeded',
+                          dispatchWave: 2,
+                        },
+                      ],
+                    },
+                    meta: { request_id: 'request-review-0001' },
+                  };
         return new Response(JSON.stringify(payload), {
           status: 200,
           headers: { 'content-type': 'application/json' },
@@ -226,7 +243,11 @@ describe('WorkerReviewPort', () => {
           ],
         },
       ],
-      summary: { quotedMicros: 4_550_000n, capturedMicros: 672_574n },
+      summary: {
+        quotedMicros: 4_550_000n,
+        capturedMicros: 672_574n,
+        campaignName: 'Stillroom compost caddy launch pack',
+      },
     });
     const input = {
       variantId: 'artifact-live',
@@ -407,7 +428,8 @@ describe('WorkerReviewPort', () => {
       },
     });
     const port = new WorkerReviewPort(client, 'run-live', 'user-live', () => 'approval-idem-4');
-    await expect(port.read()).resolves.toMatchObject({
+    const read = await port.read();
+    expect(read).toMatchObject({
       type: 'ok',
       groups: [
         {
@@ -416,7 +438,7 @@ describe('WorkerReviewPort', () => {
           variants: [
             {
               label: 'Copy · Problem-recognition',
-              format: 'Keep nights simple',
+              format: 'Copy set',
               copy: {
                 headline: 'Keep nights simple',
                 primaryText: '200 mg glycinate. Take one capsule.',
@@ -426,6 +448,84 @@ describe('WorkerReviewPort', () => {
           ],
         },
       ],
+      summary: { qaNoteCount: 0, qaFindings: [] },
+    });
+  });
+
+  it('surfaces client copy QA when primary text exceeds the Meta visible limit', async () => {
+    const longPrimary = 'A'.repeat(140);
+    const copyArtifact = {
+      ...artifact,
+      id: 'artifact-copy-long',
+      mime_type: 'application/json',
+      object_key: 'private/artifact-copy-long.json',
+      run_node_id: 'run-node-copy',
+    };
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-review-0005',
+      fetch: async (input) => {
+        const url = String(input);
+        const payload = url.endsWith('/receipt')
+          ? {
+              data: {
+                receipt: {
+                  ...receiptResponse().data.receipt,
+                  artifacts: [copyArtifact],
+                },
+              },
+              meta: { request_id: 'request-review-0005' },
+            }
+          : url.includes('/artifacts/')
+            ? {
+                data: {
+                  artifact: copyArtifact,
+                  access: null,
+                  copy: {
+                    headline: 'Keep nights simple',
+                    primary_text: longPrimary,
+                    description: '',
+                  },
+                },
+                meta: { request_id: 'request-review-0005' },
+              }
+            : {
+                data: {
+                  run: {
+                    runId: 'run-live',
+                    projectId: 'project-live',
+                    canvasId: 'canvas-live',
+                    canvasRevisionId: 'revision-live',
+                    quoteId: 'quote-live',
+                    status: 'succeeded',
+                    reservationId: 'reservation-live',
+                  },
+                  nodes: [
+                    {
+                      runNodeId: 'run-node-copy',
+                      nodeKey: 'copy-1',
+                      modelRouteId: 'openrouter/moonshot',
+                      status: 'succeeded',
+                      dispatchWave: 1,
+                    },
+                  ],
+                },
+                meta: { request_id: 'request-review-0005' },
+              };
+        return new Response(JSON.stringify(payload), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+    const port = new WorkerReviewPort(client, 'run-live', 'user-live', () => 'approval-idem-5');
+    await expect(port.read()).resolves.toMatchObject({
+      type: 'ok',
+      summary: {
+        qaNoteCount: 1,
+        qaFindings: [{ code: 'COPY_PRIMARY_TOO_LONG', variantId: 'artifact-copy-long' }],
+      },
     });
   });
 });

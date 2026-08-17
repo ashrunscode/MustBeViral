@@ -13,6 +13,9 @@ const routeLabels: Readonly<Record<string, string>> = {
 };
 
 function titleCaseWorkspace(workspace: string) {
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/iu.test(workspace)) {
+    return 'Campaign';
+  }
   return workspace
     .split('-')
     .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)

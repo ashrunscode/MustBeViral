@@ -24,6 +24,12 @@ describe('ReviewFlow', () => {
     expect(html).toContain('$18.42 / $100.00');
   });
 
+  it('keeps preview review money on the locked receipt summary', () => {
+    const html = renderToStaticMarkup(<ReviewFlow workspace="lumen-skin" />);
+    expect(html).toContain('$18.42 / $100.00');
+    expect(html).toContain('Review outputs');
+  });
+
   it('renders worker copy as headline, primary text, and description', () => {
     const html = renderToStaticMarkup(
       <ReviewCopyPreview

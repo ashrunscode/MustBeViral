@@ -1,4 +1,8 @@
-import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
+import {
+  evaluateLaunchPackCopy,
+  type MustBeViralRestClient,
+  type P0OperationData,
+} from '@mustbeviral/contracts';
 
 export type ReviewDecision = 'pending' | 'approved' | 'rejected';
 
@@ -31,6 +35,13 @@ export interface ArtifactGroupReview {
   readonly revision: string;
 }
 
+export interface ReviewQaFinding {
+  readonly variantId: string;
+  readonly label: string;
+  readonly code: string;
+  readonly message: string;
+}
+
 export interface ReviewSummary {
   readonly quotedMicros: bigint;
   readonly capturedMicros: bigint;
@@ -38,7 +49,9 @@ export interface ReviewSummary {
   readonly budgetCapMicros: bigint;
   readonly exportReady: boolean;
   readonly qaNoteCount: number;
+  readonly qaFindings: readonly ReviewQaFinding[];
   readonly route: string;
+  readonly campaignName: string | null;
 }
 
 export type ReviewPortResult =
@@ -362,13 +375,7 @@ function reviewLabelFromNodeKey(
   return reviewLabel(kindId, indexInGroup);
 }
 
-function reviewFormat(
-  nodeKey: string | undefined,
-  kindId: string,
-  mimeType: string,
-  copy: ReviewCopyPreview | null | undefined,
-): string {
-  if (copy !== undefined && copy !== null) return copy.headline;
+function reviewFormat(nodeKey: string | undefined, kindId: string, mimeType: string): string {
   const adaptation = /^adaptation-\d+-(\d+)$/u.exec(nodeKey ?? '');
   if (adaptation !== null) {
     return `${ADAPTATION_RATIOS[Number(adaptation[1]) - 1] ?? '4:5'} placement`;
@@ -395,6 +402,7 @@ function reviewFromReceipt(
   );
   const groups = new Map<string, ArtifactGroupReview>();
   const groupCounts = new Map<string, number>();
+  const qaFindings: ReviewQaFinding[] = [];
   for (const artifact of reviewable) {
     const nodeKey = artifact.run_node_id === null ? undefined : nodeKeys[artifact.run_node_id];
     const kind = reviewKind(nodeKey, artifact.mime_type);
@@ -406,7 +414,7 @@ function reviewFromReceipt(
       id: artifact.id,
       groupId: kind.id,
       label: reviewLabelFromNodeKey(nodeKey, kind.id, indexInGroup),
-      format: reviewFormat(nodeKey, kind.id, artifact.mime_type, extra?.copy),
+      format: reviewFormat(nodeKey, kind.id, artifact.mime_type),
       model: metadataRoute(artifact.rights_attestation) ?? 'Pinned catalog route',
       decision: artifact.artifact_kind === 'approved_output' ? 'approved' : 'pending',
       accessibilityDescription: artifact.accessibility_description,
@@ -414,11 +422,25 @@ function reviewFromReceipt(
       previewUrl: extra?.previewUrl ?? null,
       copy: extra?.copy ?? null,
     };
+    if (extra?.copy) {
+      for (const finding of evaluateLaunchPackCopy({
+        primary_text: extra.copy.primaryText,
+        headline: extra.copy.headline,
+        description: extra.copy.description,
+      })) {
+        qaFindings.push({
+          variantId: artifact.id,
+          label: variant.label,
+          code: finding.code,
+          message: finding.message,
+        });
+      }
+    }
     const variants = [...(current?.variants ?? []), variant];
     groups.set(kind.id, {
       id: kind.id,
       name: kind.name,
-      reviewer: artifact.approved_by === null ? reviewer : `Approved by ${artifact.approved_by}`,
+      reviewer: artifact.approved_by === null ? reviewer : 'Approved',
       decision: variants.every((candidate) => candidate.decision === 'approved')
         ? 'approved'
         : 'pending',
@@ -437,8 +459,10 @@ function reviewFromReceipt(
       budgetUsedMicros: BigInt(receipt.reservation?.captured_micros ?? 0),
       budgetCapMicros: BigInt(receipt.reservation?.amount_micros ?? 0),
       exportReady: receipt.artifacts.some((artifact) => artifact.artifact_kind === 'export'),
-      qaNoteCount: 0,
+      qaNoteCount: qaFindings.length,
+      qaFindings,
       route: routes.join(' + ') || 'Receipt lineage',
+      campaignName: null,
     },
   };
 }
@@ -465,8 +489,9 @@ export class WorkerReviewPort implements ReviewReadPort {
       const nodeKeys = await this.#nodeKeys();
       const extras = await loadReviewExtras(this.client, result.data.receipt.artifacts);
       const mapped = reviewFromReceipt(result.data.receipt, this.reviewer, extras, nodeKeys);
+      const campaignName = await this.#campaignName(result.data.receipt.run.project_id);
       this.#groups = mapped.groups;
-      return { type: 'ok', ...mapped };
+      return { type: 'ok', ...mapped, summary: { ...mapped.summary, campaignName } };
     } catch {
       return { type: 'error', message: 'Core could not read review artifacts.', retryable: true };
     }
@@ -569,6 +594,16 @@ export class WorkerReviewPort implements ReviewReadPort {
           : 'pending',
       };
     });
+  }
+
+  async #campaignName(projectId: string): Promise<string | null> {
+    try {
+      const project = await this.client.request('get_project', { id: projectId });
+      if ('error' in project) return null;
+      return project.data.project.name;
+    } catch {
+      return null;
+    }
   }
 
   async #nodeKeys(): Promise<Readonly<Record<string, string>>> {
