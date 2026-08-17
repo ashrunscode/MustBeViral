@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Persist fal webhook provider_error_code on FAILED jobs, then deploy the supplement-safe master-2 prompt hardening before any further GB-02 or GB-10 spend. Do not reuse run 9b6e0619 or start a second pack today.
+Apply record_provider_job_error_code on staging Postgres (lqvigvzqumpwfjikcvws only), then deploy the paired Worker and web with supplement-safe master-2 prompts. Do not reuse run 9b6e0619 or start another pack until that pair is live.

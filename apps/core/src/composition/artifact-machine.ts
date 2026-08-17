@@ -346,6 +346,15 @@ export class PrivilegedArtifactMachinePort {
     return await this.#advanceAttempt('advance_copy_provider_attempt', input);
   }
 
+  async recordProviderJobErrorCode(
+    input: Readonly<{ providerRequestId: string; providerErrorCode: string }>,
+  ): Promise<void> {
+    await this.#rpc('record_provider_job_error_code', {
+      p_provider_request_id: input.providerRequestId,
+      p_provider_error_code: input.providerErrorCode,
+    });
+  }
+
   async advanceFalAttempt(
     input: Readonly<{
       providerRequestId: string;

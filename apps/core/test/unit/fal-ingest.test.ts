@@ -258,6 +258,7 @@ describe('durable private fal ingest', () => {
         { attemptId: 'attempt-1', status: 'failed' as const },
       ],
     }));
+    const recordProviderErrorCode = vi.fn(async () => undefined);
     const result = await ingestVerifiedFalWebhook(failedEvent(), {
       getContext: async () =>
         context({
@@ -272,6 +273,7 @@ describe('durable private fal ingest', () => {
       storeDelivery: storage,
       registerArtifact: registration,
       advanceAttempt: advance,
+      recordProviderErrorCode,
       settlement: money.port,
       requestId: 'request-ingest-failed',
     });
@@ -287,6 +289,49 @@ describe('durable private fal ingest', () => {
     expect(money.capture).not.toHaveBeenCalled();
     expect(storage).not.toHaveBeenCalled();
     expect(registration).not.toHaveBeenCalled();
+    expect(recordProviderErrorCode).toHaveBeenCalledWith({
+      providerRequestId: 'fal-job-1',
+      providerErrorCode: 'fal_webhook_failed',
+    });
+  });
+
+  it('still settles a failed attempt when error-code persistence is unavailable', async () => {
+    const money = settlementSpies();
+    const advance = vi.fn(async () => ({
+      effectiveAttemptStatus: 'failed',
+      runStatus: 'failed',
+      runTerminal: true,
+      reservation: {
+        id: 'reservation-1',
+        amountMicros: usdMicros(200_000n),
+        capturedMicros: usdMicros(0n),
+        releasedMicros: usdMicros(200_000n),
+      },
+      outcomes: [{ attemptId: 'attempt-1', status: 'failed' as const }],
+    }));
+    const result = await ingestVerifiedFalWebhook(failedEvent(), {
+      getContext: async () =>
+        context({
+          quotedTotalMicros: usdMicros(200_000n),
+          reservation: {
+            id: 'reservation-1',
+            amountMicros: usdMicros(200_000n),
+            capturedMicros: usdMicros(0n),
+            releasedMicros: usdMicros(0n),
+          },
+        }),
+      storeDelivery: vi.fn(),
+      registerArtifact: vi.fn(),
+      advanceAttempt: advance,
+      recordProviderErrorCode: async () => {
+        throw new Error('rpc missing');
+      },
+      settlement: money.port,
+      requestId: 'request-ingest-failed-evidence',
+    });
+    expect(result).toMatchObject({ status: 'ok', run_status: 'failed' });
+    expect(money.release).toHaveBeenCalledTimes(1);
+    expect(advance).toHaveBeenCalledTimes(1);
   });
 
   it('sends fal auth and releases the webhook claim when private R2 put fails', async () => {

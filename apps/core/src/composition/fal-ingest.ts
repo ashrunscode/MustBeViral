@@ -11,7 +11,10 @@ import {
   type AttemptSettlementOutcome,
   type UsdMicros,
 } from '../../../../packages/billing/src/index';
-import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
+import {
+  providerErrorCodeFromFailure,
+  type VerifiedFalWebhook,
+} from '../../../../packages/provider/src/webhook';
 import type { P0HandlerResult } from '../../../../packages/contracts/src/rest';
 
 import type { CoreBindings } from '../bindings';
@@ -56,6 +59,9 @@ export interface FalIngestDependencies {
   ) => Promise<FalAttemptAdvance>;
   readonly settlement: PrivilegedSettlementPort;
   readonly requestId: string;
+  readonly recordProviderErrorCode?: (
+    input: Readonly<{ providerRequestId: string; providerErrorCode: string }>,
+  ) => Promise<void>;
 }
 
 export type FalIngestResult = P0HandlerResult & Readonly<Record<string, unknown>>;
@@ -191,6 +197,16 @@ export async function ingestVerifiedFalWebhook(
         reason: 'provider_failed',
       },
     });
+    if (dependencies.recordProviderErrorCode) {
+      try {
+        await dependencies.recordProviderErrorCode({
+          providerRequestId: event.attempt.providerJobId,
+          providerErrorCode: providerErrorCodeFromFailure(status.error),
+        });
+      } catch {
+        // Evidence-only. A missing staging RPC must not block release or attempt settlement.
+      }
+    }
     const advance = await dependencies.advanceAttempt({
       providerRequestId: event.attempt.providerJobId,
       status: 'failed',
@@ -319,6 +335,7 @@ export function createFalWebhookIngestHandler(
       return { artifactId: result.artifact.id, replayed: result.replayed };
     },
     advanceAttempt: (input) => machine.advanceFalAttempt(input),
+    recordProviderErrorCode: (input) => machine.recordProviderJobErrorCode(input),
     settlement,
     requestId,
   };

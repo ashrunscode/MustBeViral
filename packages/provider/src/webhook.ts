@@ -60,6 +60,37 @@ function header(
   return found?.[1];
 }
 
+const PROVIDER_ERROR_CODE = /^[A-Za-z0-9_.-]{1,80}$/u;
+
+function machineErrorCode(value: unknown): string | undefined {
+  if (typeof value === 'string' && PROVIDER_ERROR_CODE.test(value)) return value;
+  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    const record = value as Readonly<Record<string, unknown>>;
+    return machineErrorCode(record.type) ?? machineErrorCode(record.code);
+  }
+  return undefined;
+}
+
+export function falWebhookFailureCode(payload: Readonly<Record<string, unknown>>): string {
+  const nested =
+    typeof payload.payload === 'object' &&
+    payload.payload !== null &&
+    !Array.isArray(payload.payload)
+      ? (payload.payload as Readonly<Record<string, unknown>>)
+      : undefined;
+  return (
+    machineErrorCode(payload.error) ??
+    machineErrorCode(nested?.error) ??
+    machineErrorCode(nested?.detail) ??
+    'fal_webhook_failed'
+  );
+}
+
+export function providerErrorCodeFromFailure(error: ProviderError): string {
+  const detailed = machineErrorCode(error.details.provider_error_code);
+  return detailed ?? 'fal_webhook_failed';
+}
+
 function parseWebhookStatus(
   payload: Readonly<Record<string, unknown>>,
   providerJobId: string,
@@ -68,11 +99,13 @@ function parseWebhookStatus(
   if (status === 'IN_QUEUE') return { state: 'queued', providerJobId };
   if (status === 'IN_PROGRESS') return { state: 'running', providerJobId };
   if (status === 'FAILED' || status === 'ERROR') {
+    const providerErrorCode = falWebhookFailureCode(payload);
     return {
       state: 'failed',
       providerJobId,
       error: new ProviderError('provider_error', 'fal webhook reported job failure', false, {
         providerJobId,
+        provider_error_code: providerErrorCode,
       }),
     };
   }
