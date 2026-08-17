@@ -29,7 +29,14 @@ function stripMarkdownDecor(value: string): string {
 }
 
 const MARKDOWN_SPEC_STOP =
-  /^(dimensions|material|filter life|odor|care|visual|pricing|key messaging|prohibited|available in|typographic|product proof|construction|no compostable)/iu;
+  /^(dimensions|design(\s*&| and)?\s*dimensions|material|filter life|odor|care|visual|pricing|key messaging|prohibited|available in|typographic|product proof|construction|no compostable|bundle price|component total|approved savings)/iu;
+
+const SPEC_TAIL =
+  /\s*(Design\s*&\s*Dimensions|Bundle price valid|Component total:|Approved savings:).*$/iu;
+
+export function clipOfferDescription(value: string): string {
+  return value.replace(SPEC_TAIL, '').trim().slice(0, 240);
+}
 
 function fromMarkdownCopy(raw: string): LaunchPackCopyFields | null {
   const lines = raw
@@ -45,7 +52,7 @@ function fromMarkdownCopy(raw: string): LaunchPackCopyFields | null {
     offer.push(line);
     if (offer.join(' ').length >= 220) break;
   }
-  const description = offer.join(' ').trim().slice(0, 240);
+  const description = clipOfferDescription(offer.join(' '));
   if (headline.length === 0 || primary.length === 0) return null;
   return { headline, primary_text: primary, description };
 }
@@ -67,7 +74,9 @@ export function parseLaunchPackCopy(raw: string, depth = 0): LaunchPackCopyField
       return {
         primary_text: primary,
         headline,
-        description: stringField(parsed.description) ?? stringField(parsed.support) ?? '',
+        description: clipOfferDescription(
+          stringField(parsed.description) ?? stringField(parsed.support) ?? '',
+        ),
       };
     }
     const nested = stringField(parsed.text);

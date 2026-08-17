@@ -1963,7 +1963,10 @@
                         "type": "string",
                         "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
                       },
-                      "purpose": { "type": "string", "const": "review_preview" }
+                      "purpose": {
+                        "type": "string",
+                        "enum": ["review_preview", "customer_download"]
+                      }
                     },
                     "required": ["url", "expires_at", "purpose"],
                     "additionalProperties": false

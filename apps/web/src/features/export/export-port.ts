@@ -25,7 +25,12 @@ export interface ImmutableReceipt {
 }
 
 export type ExportPortResult =
-  | { readonly type: 'ok'; readonly rows: readonly ExportRow[]; readonly receipt: ImmutableReceipt }
+  | {
+      readonly type: 'ok';
+      readonly rows: readonly ExportRow[];
+      readonly receipt: ImmutableReceipt;
+      readonly downloadUrl?: string | null;
+    }
   | { readonly type: 'review_incomplete'; readonly pending_group_ids: readonly string[] }
   | {
       readonly type: 'conflict';
@@ -155,6 +160,16 @@ function immutableReceipt(receipt: P0OperationData<'get_receipt'>['receipt']): I
   };
 }
 
+function sameOriginArtifactUrl(accessUrl: string): string {
+  try {
+    const url = new URL(accessUrl);
+    if (typeof window === 'undefined') return accessUrl;
+    return `${window.location.origin}/api/core${url.pathname}${url.search}`;
+  } catch {
+    return accessUrl;
+  }
+}
+
 function exportRows(receipt: P0OperationData<'get_receipt'>['receipt']): readonly ExportRow[] {
   return receipt.artifacts.map((artifact, index) => ({
     id: artifact.id,
@@ -207,20 +222,35 @@ export class WorkerExportPort implements ExportReadPort {
       const after = await this.client.request('get_receipt', { id: this.runId });
       if ('error' in after) return this.#mapError(after.error);
       const rows = exportRows(after.data.receipt);
+      const exportId = created.data.artifact.artifact_id;
+      let downloadUrl: string | null = null;
+      try {
+        const detail = await this.client.request('get_artifact', { id: exportId });
+        if (
+          !('error' in detail) &&
+          detail.data.access?.purpose === 'customer_download' &&
+          detail.data.access.url.length > 0
+        ) {
+          downloadUrl = sameOriginArtifactUrl(detail.data.access.url);
+        }
+      } catch {
+        downloadUrl = null;
+      }
       return {
         type: 'ok',
-        rows: rows.some(({ id }) => id === created.data.artifact.artifact_id)
+        rows: rows.some(({ id }) => id === exportId)
           ? rows
           : [
               ...rows,
               {
-                id: created.data.artifact.artifact_id,
+                id: exportId,
                 label: 'Immutable export bundle',
                 format: created.data.artifact.mime_type,
                 state: 'ready',
               },
             ],
         receipt: immutableReceipt(after.data.receipt),
+        ...(downloadUrl === null ? {} : { downloadUrl }),
       };
     } catch {
       return { type: 'error', message: 'Core could not create this export.', retryable: true };

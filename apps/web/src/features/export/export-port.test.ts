@@ -130,6 +130,23 @@ describe('WorkerExportPort', () => {
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
         }
+        if (url.includes('/artifacts/artifact-export')) {
+          return new Response(
+            JSON.stringify({
+              data: {
+                artifact: artifact('export', 'artifact-export'),
+                access: {
+                  url: 'https://core.example.test/v1/artifacts/artifact-export/content?token=download',
+                  expires_at: timestamp,
+                  purpose: 'customer_download',
+                },
+                copy: null,
+              },
+              meta: { request_id: 'request-export-0001' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
         return new Response(
           JSON.stringify({
             data: {
@@ -156,6 +173,7 @@ describe('WorkerExportPort', () => {
     const port = new WorkerExportPort(client, 'run-live', () => 'export-idem-stable');
     await expect(port.create()).resolves.toMatchObject({
       type: 'ok',
+      downloadUrl: 'https://core.example.test/v1/artifacts/artifact-export/content?token=download',
       rows: expect.arrayContaining([
         expect.objectContaining({ id: 'artifact-export', state: 'ready' }),
       ]),

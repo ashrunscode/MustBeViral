@@ -35,7 +35,10 @@ import {
 } from '../../../../packages/db/src/index';
 
 import type { AuthenticatedActor } from '../auth/supabase-jwt';
-import { REVIEW_PREVIEW_TTL_SECONDS } from '../../../../packages/artifacts/src/index';
+import {
+  CUSTOMER_DOWNLOAD_TTL_SECONDS,
+  REVIEW_PREVIEW_TTL_SECONDS,
+} from '../../../../packages/artifacts/src/index';
 
 import { mintArtifactAccessUrl } from './artifact-access';
 import type { CoreBindings } from '../bindings';
@@ -584,8 +587,14 @@ function createResourcePort(
       }
       try {
         const nowEpochSeconds = Math.floor(Date.now() / 1000);
+        const purpose =
+          artifact.artifact_kind === 'export' ? 'customer_download' : 'review_preview';
+        const ttlSeconds =
+          purpose === 'customer_download'
+            ? CUSTOMER_DOWNLOAD_TTL_SECONDS
+            : REVIEW_PREVIEW_TTL_SECONDS;
         const url = await mintArtifactAccessUrl(bindings, {
-          purpose: 'review_preview',
+          purpose,
           artifactId: artifact.id,
           objectKey: artifact.object_key,
           contentHash: artifact.content_hash,
@@ -598,10 +607,8 @@ function createResourcePort(
           artifact,
           access: {
             url,
-            expires_at: new Date(
-              (nowEpochSeconds + REVIEW_PREVIEW_TTL_SECONDS) * 1000,
-            ).toISOString(),
-            purpose: 'review_preview' as const,
+            expires_at: new Date((nowEpochSeconds + ttlSeconds) * 1000).toISOString(),
+            purpose,
           },
           copy,
         };

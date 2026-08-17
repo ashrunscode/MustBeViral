@@ -504,7 +504,7 @@ const operationDataSchemas = {
         .object({
           url: z.url({ protocol: /^https?$/u }),
           expires_at: TimestampSchema,
-          purpose: z.literal('review_preview'),
+          purpose: z.enum(['review_preview', 'customer_download']),
         })
         .nullable(),
       copy: z

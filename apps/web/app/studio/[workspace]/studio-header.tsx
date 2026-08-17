@@ -2,6 +2,9 @@
 
 import { MonoCaps } from '@mustbeviral/ui';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import { createBrowserCoreClient } from '../../../src/lib/core/browser-client';
 
 const routeLabels: Readonly<Record<string, string>> = {
   brief: 'Brief',
@@ -29,6 +32,22 @@ export function StudioHeader({
   const pathname = usePathname();
   const segment = pathname.split('/').filter(Boolean).at(-1) ?? 'brief';
   const routeLabel = routeLabels[segment] ?? 'Studio';
+  const [workspaceName, setWorkspaceName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (presentation !== 'authenticated') return;
+    let active = true;
+    void createBrowserCoreClient()
+      .request('get_workspace', { id: workspace })
+      .then((result) => {
+        if (!active || 'error' in result) return;
+        setWorkspaceName(result.data.workspace.name);
+      })
+      .catch(() => undefined);
+    return () => {
+      active = false;
+    };
+  }, [presentation, workspace]);
 
   return (
     <header className="studio-header">
@@ -36,7 +55,8 @@ export function StudioHeader({
         <span className="studio-wordmark">MustBeViral Studio</span>
         <nav aria-label="Project breadcrumb" className="studio-breadcrumb">
           <MonoCaps>
-            Campaigns / {titleCaseWorkspace(workspace)} / <strong>{routeLabel}</strong>
+            Campaigns / {workspaceName ?? titleCaseWorkspace(workspace)} /{' '}
+            <strong>{routeLabel}</strong>
           </MonoCaps>
         </nav>
       </div>

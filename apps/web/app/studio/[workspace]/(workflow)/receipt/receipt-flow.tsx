@@ -156,7 +156,7 @@ export function ReceiptFlow({
     );
   }
 
-  const { receipt, rows } = result;
+  const { receipt, rows, downloadUrl } = result;
   const varianceMicros =
     receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros - receipt.actualMicros : 0n;
   const issuedDate = receipt.issuedAt.slice(0, 10);
@@ -297,9 +297,15 @@ export function ReceiptFlow({
             {formatUsdMicros(receipt.actualMicros)} · {formatUsdMicros(varianceMicros)} retained
           </span>
         </div>
-        <Button disabled={dataMode === 'worker'}>
-          {dataMode === 'preview' ? 'Download PDF' : 'Export recorded'}
-        </Button>
+        {dataMode === 'worker' && downloadUrl ? (
+          <a className="mbv-button mbv-button--primary" href={downloadUrl} download>
+            Download pack
+          </a>
+        ) : (
+          <Button disabled={dataMode === 'worker'}>
+            {dataMode === 'preview' ? 'Download PDF' : 'Export recorded'}
+          </Button>
+        )}
       </div>
       <footer className={styles.footer}>
         <MonoCaps>

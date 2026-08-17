@@ -142,4 +142,21 @@ describe('launch pack copy QA', () => {
       description: 'FDA disclaimer.',
     });
   });
+
+  it('stops offer description before spec-section tails', () => {
+    expect(
+      parseLaunchPackCopy(
+        JSON.stringify({
+          headline: 'Stillroom Countertop Compost Caddy',
+          primary_text: 'Home | 1.2-gallon kitchen scrap container',
+          description:
+            'Kitchen Reset Bundle Includes: Countertop Compost Caddy (1.2-gallon) $129 Design & Dimensions 15-in height',
+        }),
+      ),
+    ).toEqual({
+      headline: 'Stillroom Countertop Compost Caddy',
+      primary_text: 'Home | 1.2-gallon kitchen scrap container',
+      description: 'Kitchen Reset Bundle Includes: Countertop Compost Caddy (1.2-gallon) $129',
+    });
+  });
 });
