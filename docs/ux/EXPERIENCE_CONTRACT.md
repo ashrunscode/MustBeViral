@@ -28,9 +28,11 @@ The user must always be able to answer five questions: Where am I? What is ready
 - On arrival, the receiving node's border warms for 180ms and then settles without bounce or scale.
 - Reduced motion replaces filament and edge travel with a static directional gradient plus a text state. Motion communicates causality only and never decorates or delays input.
 
-### Ratified Review Approval composition
+### Ratified directions
 
-Review Approval is the approved direction. It requires a named-amount confirm bar with pinned revision, model route, and expiry; QA findings with per-note jump links and approve/reject controls; a free-retry affordance that names retained work; an immutable receipt ledger; version comparison; and batch approvals. The recorded watch items—1440px inspector overflow discipline, full 12-node graph density proof, and quiet retry styling—are high-fidelity obligations, not optional polish.
+**Preview fixtures** keep Review Approval: named-amount confirm bar; QA jump links; approve/reject; free-retry that names retained work; immutable receipt; version comparison; batch approvals. Watch items (1440px inspector overflow, 12-node density, quiet retry) remain obligations for those Lumen fixtures.
+
+**Live Review** is Composed Review. The buyer unit is one Meta ad, not an artifact card. Default view is three concepts. Each concept is a placement stage (Feed 4:5, Feed 1:1, Stories 9:16, Reels motion) with primary text, still or video, headline, description, and one primary action. Safe-zone overlay is a toggle. Approve applies to the concept’s adaptations and paired copy through the existing approval operation. Selection happens after seeing ads, not before spend.
 
 ## Interaction principles
 
@@ -44,19 +46,15 @@ Review Approval is the approved direction. It requires a named-amount confirm ba
 
 Every interactive component defines default, hover when applicable, focus-visible, pressed, disabled, loading, error, and success states. Optimistic UI is allowed only when rollback is deterministic and no money/provider action is implied.
 
-## SuperDesign approval gate
+## Visual approval gate
 
-Production UI implementation is blocked until the clean Next scaffold exists and `.superdesign/init/` contains the required repository analysis. For this new product:
+Lightfield tokens in `.superdesign/design-system.md` are the system. The SuperDesign CLI is optional tooling, not an authority.
 
-1. Capture requirements from the accepted product and UX contracts.
-2. Direction exploration is complete: the Lightfield paper-and-ink foundation and exact product constraints are recorded in `.superdesign/design-system.md`.
-3. The MustBeViral Studio project and initial paper-studio foundation are complete.
-4. Branch exploration is complete across calm density, canvas legibility, and review/approval confidence; the operator ratified Review Approval as the approved direction.
-5. Extend Review Approval into campaign brief, canvas, quote/run, output comparison, receipt, and responsive review flows while resolving its recorded high-fidelity obligations.
-6. Present rendered URLs and named desktop/tablet/mobile captures to the user.
-7. Record explicit user approval of the high-fidelity goldens before production components or pages are implemented.
-
-Approved visual goldens become test fixtures. Later changes branch from the approved draft; a replacement is reserved for a single small approved correction.
+1. Preview fixture goldens (Review Approval / Lumen) stay locked for local-preview Playwright.
+2. Live product screens may diverge from those fixtures. They use Lightfield tokens and worker data.
+3. A new live surface needs named HTML frames, desktop and mobile captures, and explicit operator approval before its production components ship.
+4. Composed Review frames live at `.superdesign/hifi/composed-review-desktop.html` and `composed-review-mobile.html` until the operator approves them. Implementation of that layout waits on that approval.
+5. Do not require `.superdesign/init/` freshness as a production block; that analysis is historical.
 
 ## Accessibility contract
 

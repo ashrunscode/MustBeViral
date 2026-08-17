@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stillroom — Composed Review</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Geist:wght@400;500&display=swap');
+      :root {
+        --paper: #fafafa;
+        --paper-2: #f5f5f5;
+        --card: #ffffff;
+        --ink-strong: rgba(0, 0, 0, 0.85);
+        --ink-head: rgba(0, 0, 0, 0.75);
+        --ink: rgba(0, 0, 0, 0.6);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --ink-faint: rgba(0, 0, 0, 0.25);
+        --line: rgba(0, 0, 0, 0.12);
+        --signal: #3182d4;
+        --signal-soft: #80bfff;
+        --ok: #1f9d63;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Geist, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--signal);
+        outline-offset: 2px;
+      }
+      .mono {
+        font-family: 'DM Mono', monospace;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: 60px 1fr 72px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-bottom: 1px solid var(--line);
+        background: var(--card);
+      }
+      main {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr) 300px;
+        min-height: 0;
+      }
+      .concepts {
+        padding: 20px 16px;
+        border-right: 1px solid var(--line);
+        background: var(--paper-2);
+      }
+      .concepts h1 {
+        margin: 8px 0 16px;
+        color: var(--ink-head);
+        font-size: 21px;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+      .concept {
+        width: 100%;
+        margin-bottom: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        background: var(--card);
+        color: var(--ink-head);
+        text-align: left;
+        cursor: pointer;
+      }
+      .concept[aria-current='true'] {
+        border-color: var(--signal-soft);
+        background: #80bfff1f;
+      }
+      .stage-wrap {
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .placements {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .placements button {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 6px 8px;
+        background: var(--card);
+        font-family: 'DM Mono', monospace;
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .placements button[aria-current='true'] {
+        border-color: var(--signal-soft);
+        color: var(--ink-strong);
+      }
+      .phone {
+        width: 360px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--card);
+      }
+      .ad-head,
+      .ad-foot {
+        padding: 10px 12px;
+      }
+      .ad-head {
+        display: flex;
+        justify-content: space-between;
+        color: var(--ink-strong);
+        font-size: 13px;
+      }
+      .primary {
+        margin: 0 12px 10px;
+        color: var(--ink-head);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      .still {
+        position: relative;
+        height: 450px;
+        background:
+          radial-gradient(circle at 40% 35%, #ece7df, #cfc6b8 55%, #b7ad9f);
+      }
+      .safe {
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        border-top: 63px solid rgba(184, 126, 20, 0.18);
+        border-bottom: 90px solid rgba(184, 126, 20, 0.18);
+        border-left: 22px solid rgba(184, 126, 20, 0.12);
+        border-right: 22px solid rgba(184, 126, 20, 0.12);
+      }
+      .headline {
+        margin: 0;
+        color: var(--ink-strong);
+        font-size: 15px;
+        font-weight: 400;
+      }
+      .desc {
+        margin: 4px 0 0;
+        color: var(--ink-muted);
+        font-size: 12px;
+      }
+      .cta {
+        margin-top: 10px;
+        border: 0;
+        border-radius: 4px;
+        padding: 8px 10px;
+        background: var(--signal);
+        color: #fff;
+        font-size: 12px;
+      }
+      aside {
+        padding: 22px;
+        border-left: 1px solid var(--line);
+        background: var(--card);
+      }
+      aside h2 {
+        margin: 0 0 8px;
+        color: var(--ink-head);
+        font-size: 19px;
+        font-weight: 400;
+      }
+      .finding {
+        margin-top: 12px;
+        border-left: 2px solid #b87e14;
+        padding: 10px 12px;
+        background: rgba(0, 0, 0, 0.02);
+        font-size: 12px;
+      }
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid var(--line);
+        padding: 0 24px;
+        background: var(--card);
+      }
+      .primary-action {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        border: 0;
+        border-radius: 4px;
+        padding: 0 16px;
+        background: var(--signal);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <span>MustBeViral Studio</span>
+        <span class="mono">Campaigns / Stillroom / Review</span>
+        <span class="mono">Signed in · Run cap $8.00 · Day $4.55 / $25.00</span>
+      </header>
+      <main>
+        <section class="concepts" aria-label="Concepts">
+          <p class="mono">16 of 16 ready</p>
+          <h1>Review the ads</h1>
+          <button class="concept" aria-current="true" type="button">
+            <span class="mono">Concept 1 · Packshot</span><br />
+            Problem-recognition
+          </button>
+          <button class="concept" type="button">
+            <span class="mono">Concept 2 · Material</span><br />
+            Proof-first
+          </button>
+          <button class="concept" type="button">
+            <span class="mono">Concept 3 · Proof-forward</span><br />
+            Offer-clarity
+          </button>
+        </section>
+        <section class="stage-wrap" aria-label="Placement preview">
+          <div>
+            <div class="placements" role="tablist" aria-label="Placement">
+              <button type="button" aria-current="true">Feed 4:5</button>
+              <button type="button">Feed 1:1</button>
+              <button type="button">Stories 9:16</button>
+              <button type="button">Reels</button>
+            </div>
+            <article class="phone">
+              <div class="ad-head">
+                <span>Stillroom · Sponsored</span>
+                <span class="mono">Safe zone on</span>
+              </div>
+              <p class="primary">
+                Kitchen scraps do not need to sit in an open bin. A closed 1.2-gallon caddy keeps
+                the counter honest.
+              </p>
+              <div class="still" role="img" aria-label="Packshot of the Stillroom compost caddy">
+                <div class="safe" aria-hidden="true"></div>
+              </div>
+              <div class="ad-foot">
+                <p class="headline">Keep the counter clear</p>
+                <p class="desc">Kitchen Reset Bundle · $129</p>
+                <button class="cta" type="button">Shop now</button>
+              </div>
+            </article>
+          </div>
+        </section>
+        <aside aria-labelledby="qa-title">
+          <h2 id="qa-title">QA</h2>
+          <p>Copy checks run on this concept. Visual QA is the safe-zone overlay.</p>
+          <article class="finding">
+            <span class="mono">Copy primary length</span>
+            <p>Primary text is inside the 125-character visible limit.</p>
+            <a href="#concept-1">Jump to concept 1</a>
+          </article>
+        </aside>
+      </main>
+      <footer>
+        <div>
+          <span class="mono">Batch</span><br />
+          16 / 16 approved
+        </div>
+        <div>
+          <button type="button">Reject this concept</button>
+          <a class="primary-action" href="#export">Export approved</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

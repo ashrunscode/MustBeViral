@@ -3,7 +3,7 @@
 Authority chain: operator brand directive (lightfield.app north star) → `brand-id.md` + `brand-detail.md`
 → this executable system. Composition authority: the unanimous 9/9/9 research verdict for the
 **Review-Approval-Confidence** direction with grafts (ledger receipts, large-node canvas grammar,
-docked quote strip). Every SuperDesign render must preserve these tokens exactly.
+docked quote strip). Live product frames and SuperDesign preview goldens must preserve these tokens exactly. The SuperDesign CLI is optional.
 
 ## Surfaces (paper, not theme — EXACT Lightfield tokens, see reference/lightfield-teardown.md)
 

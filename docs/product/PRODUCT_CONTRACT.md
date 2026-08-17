@@ -32,15 +32,16 @@ The brief cannot execute until required fields and asset rights attestations pas
 
 ### Planning and selection
 
-1. A constrained planning agent proposes three materially different campaign angles.
-2. Each angle contains a target insight, promise, proof strategy, hook, visual direction, risk note, and three static concepts.
-3. The user can inspect and edit the proposed graph before any provider spend.
-4. The user selects one direction for the launch-pack run; unselected directions remain versioned planning evidence, not paid execution branches.
-5. The system validates the graph, calculates affected descendants, produces a transparent quote, and requires explicit confirmation.
+P0 does not ask the buyer to pick one of three unpaid directions. The Meta Campaign Launch Pack is one quoted graph: three copy angles (problem-recognition, proof-first, offer-clarity), three master stills, nine adaptations, and one motion branch. All of it is priced and run together.
+
+1. The structured brief and brand constraints pin that pack onto an immutable canvas revision.
+2. The buyer can inspect the graph before spend; editing the paid shape is not required to complete P0.
+3. Selection is review: approve the concepts worth exporting after seeing composed ads.
+4. The system validates the graph, produces a transparent quote, and requires explicit confirmation of the maximum charge.
 
 ### Required output bundle
 
-The selected direction produces:
+The launch pack produces:
 
 - Three master static concepts.
 - Approved adaptations in 4:5 at 1080×1350, 1:1 at 1080×1080, and 9:16 at 1080×1920.

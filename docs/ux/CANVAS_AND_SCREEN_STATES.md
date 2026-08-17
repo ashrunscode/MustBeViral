@@ -16,7 +16,8 @@ doc_id: canvas-screen-states
 | Canvas                     | Inspect/edit the plan and affected work                | empty, planned, dirty draft, validating, valid, invalid, revision conflict, read-only             |
 | Quote                      | Understand and confirm spend                           | calculating, valid, expiring, expired, budget blocked, confirmed                                  |
 | Run                        | Monitor execution and recover locally                  | queued, dispatching, running, partial success, cancel requested, canceled, failed, reconciliation |
-| Output comparison          | Select, compare, annotate, approve, or reject          | no output, partial, processing, ready, approved, rejected, superseded                             |
+| Output comparison          | Compare current vs prior when a prior pin exists       | no output, partial, processing, ready, approved, rejected, superseded                             |
+| Live Review                | Judge composed Meta ads by concept and placement       | no output, partial, processing, ready, approved, rejected, superseded                             |
 | Export and receipt         | Retrieve an immutable, verifiable package              | preparing, ready, expired download, export failed, receipt available                              |
 | Assets                     | Manage private inputs and outputs                      | uploading, processing, ready, quarantined, missing rights, deleted                                |
 | Model catalog              | Understand enabled capability and price                | enabled, degraded, disabled, price changed                                                        |
@@ -84,6 +85,10 @@ Quote displays pinned revision, included branches, model routes, maximum charge,
 
 ## Approval and export
 
-Approval pins artifact versions and captures actor, timestamp, optional note, and required accessibility description. Reject requires a reason category plus optional note. Superseding an approved artifact preserves its approval history.
+Live Review presents concepts, not unnamed files. A concept is one master still, its 4:5 / 1:1 / 9:16 adaptations, and the paired copy set. Motion is the 9:16 Reels placement of concept 1.
+
+Approval pins artifact versions and captures actor, timestamp, optional note, and required accessibility description. Concept approve maps onto the existing approval operation for that concept’s artifacts. Reject requires a reason category plus optional note and is not durable until a reject operation exists; the control must not imply a recorded rejection before then.
+
+Superseding an approved artifact preserves its approval history.
 
 Export lists every expected file before creation, reports missing/failed items, and never labels an incomplete bundle complete. Downloads use expiring signed URLs and provide regeneration without changing the underlying receipt.
