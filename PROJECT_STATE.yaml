@@ -11,10 +11,10 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Deploy the packshot-upload Worker/web pair and walk an attach-only
-  JPEG/PNG/WebP upload on staging. Do not confirm a pack on 2026-08-18. GB-02 16/16 waits
-  for 2026-08-19 00:00 UTC after a cap check. Do not reuse f5fa333f, 9b6e0619, a72b78e5, or
-  33f2e40e.
+next_action: After 2026-08-19 00:00 UTC, check global and workspace-day remaining, then
+  confirm one new GB-02 to prove visual-only supplement prompts. In parallel, reconcile
+  landed cost from existing receipts and start evaluator screens. Do not reuse f5fa333f,
+  9b6e0619, a72b78e5, or 33f2e40e.
 decisions_pending: []
 blockers:
   - >-
@@ -23,10 +23,10 @@ blockers:
     deployed on Worker 9fa5c96d. No same-day second pack. Evidence
     governance/evidence/WP-P0-001/fal-webhook-failed-f5fa333f.md.
   - >-
-    Buyer last mile is incomplete. ZIP customer_download, offer-only copy, and named header are
-    live on web qsvhcip1c. Packshot upload is implemented in git and staging SQL but not yet
-    deployed to Worker/web. Live Reject is already not offered. Evidence
-    governance/evidence/WP-P0-001/gb04-receipt-last-mile-walk.md.
+    Buyer last mile ZIP/copy/header/upload is live on web 87jj0310i and Worker 1d909c1f.
+    Masters still consume packshots as visual prompt text, not as image_url references. Live
+    Reject is already not offered. Evidence
+    governance/evidence/WP-P0-001/packshot-upload-staging-walk.md.
   - Production-segment Web Vitals are unmeasured. usable-pack-landed-cost is still pending.
   - >-
     P0 exit is gated on people. Five-to-eight qualified evaluator sessions are PENDING. Operator

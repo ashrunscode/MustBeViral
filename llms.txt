@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: Deploy the packshot-upload Worker/web pair and walk an attach-only JPEG/PNG/WebP upload on staging. Do not confirm a pack on 2026-08-18. GB-02 16/16 waits for 2026-08-19 00:00 UTC after a cap check. Do not reuse f5fa333f, 9b6e0619, a72b78e5, or 33f2e40e.
+next_action: After 2026-08-19 00:00 UTC, check global and workspace-day remaining, then confirm one new GB-02 to prove visual-only supplement prompts. In parallel, reconcile landed cost from existing receipts and start evaluator screens. Do not reuse f5fa333f, 9b6e0619, a72b78e5, or 33f2e40e.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
