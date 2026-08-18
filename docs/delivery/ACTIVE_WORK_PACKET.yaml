@@ -345,13 +345,13 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-005-golden-launch-pack-runs
-  next_action:
-    After the 2026-08-18 UTC day reset, run one GB-02 on Worker 37897d13 and web jgifx4c95
-    to prove live master-2 hardening. Do not reuse run 9b6e0619, a72b78e5, or 33f2e40e, and do not
-    start another pack on 2026-08-17. Then open WP-P0-002 for buyer last mile.
+  next_action: >-
+    Do not start another pack on 2026-08-18. Diagnose fal_webhook_failed on GB-02 run f5fa333f
+    without a new confirm. Then deploy last-mile Worker/web and walk GB-04 receipt.
   blockers:
-    - Live GB-02 master-2 hardening is not yet proven. One pack is authorized after the 2026-08-18
-      UTC day reset. Do not reuse 9b6e0619, a72b78e5, or 33f2e40e.
+    - Live GB-02 master hardening failed on run f5fa333f (8/16, master-2 and master-3
+      fal_webhook_failed, residual 0). No same-day second pack. Evidence
+      governance/evidence/WP-P0-001/self-sessions/2026-08-18-GB-02-01.md.
     - >-
       Buyer last mile (ZIP download, packshot upload, offer-only copy, named header, honest reject)
       is deferred to WP-P0-002 after that run. See
@@ -406,6 +406,7 @@ handoff:
     - governance/evidence/WP-P0-001/composed-review-approval.md
     - governance/evidence/WP-P0-001/composed-review-staging-walk.md
     - governance/evidence/WP-P0-001/operator-decisions-2026-08-17.md
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-18-GB-02-01.md
     - package.json
     - pnpm-lock.yaml
     - pnpm-workspace.yaml

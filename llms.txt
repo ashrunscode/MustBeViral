@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-005-golden-launch-pack-runs
-next_action: After the 2026-08-18 UTC day reset, run one GB-02 on Worker 37897d13 and web jgifx4c95 to prove live master-2 hardening. Do not reuse run 9b6e0619, a72b78e5, or 33f2e40e, and do not start another pack on 2026-08-17. Then open WP-P0-002 for buyer last mile.
+next_action: Do not start another pack on 2026-08-18. Diagnose fal_webhook_failed on GB-02 run f5fa333f without a new confirm. Then deploy last-mile Worker/web and walk GB-04 receipt.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

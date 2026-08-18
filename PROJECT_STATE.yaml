@@ -11,17 +11,16 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: After the 2026-08-18 UTC day reset, run one GB-02 on Worker 37897d13 and web jgifx4c95
-  to prove live master-2 hardening. Do not reuse run 9b6e0619, a72b78e5, or 33f2e40e, and do not
-  start another pack on 2026-08-17. Then open WP-P0-002 for buyer last mile (ZIP download, packshot
-  upload, offer-only copy, named header, honest reject).
+next_action: Do not start another pack on 2026-08-18. Diagnose fal_webhook_failed on GB-02 run
+  f5fa333f without a new confirm. Then deploy last-mile Worker/web (ZIP download, offer-only copy,
+  named header) and walk GB-04 receipt. Do not reuse f5fa333f, 9b6e0619, a72b78e5, or 33f2e40e.
 decisions_pending: []
 blockers:
   - >-
-    Live GB-02 master-2 hardening is not yet proven. One pack is authorized after the 2026-08-18
-    UTC day reset on Worker 37897d13 and web jgifx4c95. Do not reuse 9b6e0619, a72b78e5, or
-    33f2e40e. Evidence of the prior partial is
-    governance/evidence/WP-P0-001/self-sessions/2026-08-17-GB-02-02.md.
+    Live GB-02 master hardening is not proven. Run f5fa333f-df35-4ce8-99f2-90ee9a78b7c7
+    partial_succeeded 8/16 (master-2 and master-3 failed with fal_webhook_failed). Residual 0.
+    No same-day second pack. Evidence
+    governance/evidence/WP-P0-001/self-sessions/2026-08-18-GB-02-01.md.
   - >-
     Buyer last mile is incomplete. Packshot upload signing throws, ZIP bytes are not minted through
     customer_download, some copy descriptions still trail into spec sections, the header still says
