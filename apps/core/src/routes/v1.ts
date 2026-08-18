@@ -32,7 +32,11 @@ import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webho
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
-import { artifactContentHeaders, serveArtifactContent } from '../composition/artifact-access';
+import {
+  artifactContentHeaders,
+  receiveArtifactUpload,
+  serveArtifactContent,
+} from '../composition/artifact-access';
 import { ArtifactMachineError } from '../composition/artifact-machine';
 import { createFalWebhookVerifierPort } from '../composition/fal-webhook';
 import { createProviderScheduledLifecycle } from '../composition/provider-outbox';
@@ -594,6 +598,67 @@ export function createV1Route(dependencies: V1Dependencies): Hono<CoreHonoEnviro
       status: 200,
       headers: artifactContentHeaders(result.claims),
     });
+  });
+  router.put('/artifacts/:id/content', async (context) => {
+    const token = context.req.query('token');
+    if (token === undefined || token.length === 0) {
+      return context.json(
+        safeError(context, 'UNAUTHENTICATED', 'An artifact access token is required.'),
+        401,
+      );
+    }
+    const body = new Uint8Array(await context.req.arrayBuffer());
+    const result = await receiveArtifactUpload(
+      context.env,
+      context.req.param('id'),
+      token,
+      body,
+      Math.floor(Date.now() / 1000),
+    );
+    if (result.status !== 204) {
+      console.log(
+        JSON.stringify({
+          level: 'warn',
+          event: 'core.artifact_upload.refused',
+          request_id: context.get('requestId'),
+          artifact_id: context.req.param('id'),
+          status: result.status,
+        }),
+      );
+      const message =
+        result.status === 410
+          ? 'The artifact access token has expired.'
+          : result.status === 413
+            ? 'The uploaded object is larger than the signed size.'
+            : result.status === 404
+              ? 'The artifact is not available for upload.'
+              : result.status === 409
+                ? 'The uploaded object could not be finalized.'
+                : result.status === 400
+                  ? 'The uploaded object does not match the signed artifact.'
+                  : 'The artifact access token is invalid.';
+      const code =
+        result.status === 410
+          ? 'EXPIRED'
+          : result.status === 413 || result.status === 400
+            ? 'VALIDATION_FAILED'
+            : result.status === 404
+              ? 'NOT_FOUND'
+              : result.status === 409
+                ? 'CONFLICT'
+                : 'UNAUTHENTICATED';
+      return context.json(safeError(context, code, message), result.status);
+    }
+    console.log(
+      JSON.stringify({
+        level: 'info',
+        event: 'core.artifact_upload.accepted',
+        request_id: context.get('requestId'),
+        artifact_id: result.claims.artifactId,
+        byte_size: result.claims.byteSize,
+      }),
+    );
+    return new Response(null, { status: 204 });
   });
   return router;
 }

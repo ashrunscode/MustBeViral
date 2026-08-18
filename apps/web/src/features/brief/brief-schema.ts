@@ -68,7 +68,17 @@ export const STAGING_SYNTHETIC_PACKSHOTS = [
 export const STAGING_SYNTHETIC_PACKSHOT_PROMPT =
   'Square and front product packshots on a clean surface; product-only; no lifestyle talent; label and packaging readable.';
 
+export const UPLOADED_PACKSHOT_PROMPT =
+  'Buyer-uploaded product packshot; product-only; label and packaging readable; no lifestyle talent.';
+
+export function isUploadedPackshotRef(value: string): boolean {
+  return value.startsWith('uploaded:');
+}
+
 function packshotPromptMaterial(packshots: readonly string[]): string {
+  if (packshots.some(isUploadedPackshotRef)) {
+    return UPLOADED_PACKSHOT_PROMPT;
+  }
   if (
     packshots.length > 0 &&
     packshots.every((packshot) =>

@@ -73,10 +73,10 @@ export const CreateCanvasBodySchema = z
 export const CreateArtifactUploadBodySchema = z
   .object({
     project_id: IdentifierSchema,
-    content_type: z.string().min(1).max(200),
-    byte_size: z.number().int().positive(),
+    content_type: z.enum(['image/jpeg', 'image/png', 'image/webp']),
+    byte_size: z.number().int().positive().max(12_582_912),
     sha256: z.string().regex(/^[a-f0-9]{64}$/u),
-    purpose: z.string().min(1).max(100),
+    purpose: z.literal('packshot'),
   })
   .strict();
 export const CreateExportBodySchema = z
@@ -250,6 +250,9 @@ export type P0HandlerResult = Readonly<{
   availableMicros?: bigint;
   retry_after_seconds?: number;
   reconcile_state?: string;
+  artifact_id?: string;
+  upload_url?: string;
+  expires_at?: string;
 }>;
 
 export type P0RestHandler = (input: unknown) => Promise<P0HandlerResult>;

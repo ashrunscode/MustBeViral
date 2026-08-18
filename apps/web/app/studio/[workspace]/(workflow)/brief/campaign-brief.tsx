@@ -11,6 +11,7 @@ import {
   InMemoryBriefDraftPort,
   briefCompletionFlags,
   briefSectionState,
+  isUploadedPackshotRef,
   stagingWorkerDraft,
   launchPackBriefFromDraft,
   lumenSkinDraft,
@@ -23,6 +24,10 @@ import {
   type BriefBootstrapPort,
   type BriefBootstrapResult,
 } from '../../../../../src/features/brief/brief-bootstrap';
+import {
+  PackshotUploadError,
+  uploadPackshot,
+} from '../../../../../src/features/brief/packshot-upload';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import styles from './campaign-brief.module.css';
 
@@ -92,13 +97,19 @@ function TextField({
 function SectionFields({
   dataMode,
   draft,
+  onUploadPackshot,
   section,
   setDraft,
+  uploadBusy,
+  uploadMessage,
 }: Readonly<{
   dataMode: 'preview' | 'worker';
   draft: BriefDraft;
+  onUploadPackshot?: (file: File) => Promise<void>;
   section: SectionId;
   setDraft: (updater: (current: BriefDraft) => BriefDraft) => void;
+  uploadBusy?: boolean;
+  uploadMessage?: string | null;
 }>) {
   const update = <Key extends SectionId, Field extends keyof BriefDraft[Key]>(
     key: Key,
@@ -264,10 +275,31 @@ function SectionFields({
           <div className={styles.chipList}>
             {draft.assets.packshots.map((asset) => (
               <Chip key={asset} status="verified">
-                {asset}
+                {isUploadedPackshotRef(asset) ? 'Uploaded packshot' : asset}
               </Chip>
             ))}
           </div>
+          {dataMode === 'worker' ? (
+            <label className={styles.field} htmlFor="packshot-file">
+              Attach a JPEG, PNG, or WebP packshot
+              <input
+                id="packshot-file"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                disabled={uploadBusy === true}
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  event.target.value = '';
+                  if (file) void onUploadPackshot?.(file);
+                }}
+              />
+              {uploadMessage ? (
+                <div className={styles.errorMessage} role="alert">
+                  <span>{uploadMessage}</span>
+                </div>
+              ) : null}
+            </label>
+          ) : null}
         </div>
         <label className={`${styles.attestation} ${styles.full}`} htmlFor="square-packshot">
           <input
@@ -408,6 +440,8 @@ export function CampaignBrief({
   const [validated, setValidated] = useState(false);
   const [bootstrapResult, setBootstrapResult] = useState<BriefBootstrapResult | null>(null);
   const [bootstrapping, setBootstrapping] = useState(false);
+  const [uploadBusy, setUploadBusy] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const validation = useMemo(() => BriefDraftSchema.safeParse(draft), [draft]);
   const missingItems = missingBriefItems(draft);
   const flags = briefCompletionFlags(draft);
@@ -445,6 +479,47 @@ export function CampaignBrief({
     router.push(
       `/studio/${encodeURIComponent(next.workspaceId)}/canvas?canvas=${encodeURIComponent(next.canvasId)}`,
     );
+  }
+
+  async function handleUploadPackshot(file: File) {
+    if (bootstrapPort === null) return;
+    setUploadBusy(true);
+    setUploadMessage(null);
+    try {
+      let projectId = bootstrapResult?.type === 'ok' ? bootstrapResult.projectId : undefined;
+      if (projectId === undefined) {
+        const ready = await bootstrapPort.bootstrap({
+          workspaceRef: workspace,
+          campaignName: `${draft.productTruth.productName.trim() || 'Campaign'} launch pack`,
+        });
+        setBootstrapResult(ready);
+        if (ready.type !== 'ok') {
+          setUploadMessage('Create the campaign project before attaching a packshot.');
+          return;
+        }
+        projectId = ready.projectId;
+      }
+      const uploaded = await uploadPackshot(createBrowserCoreClient(), projectId, file);
+      setDraft((current) => ({
+        ...current,
+        assets: {
+          ...current.assets,
+          packshots: [
+            ...current.assets.packshots.filter((item) => !isUploadedPackshotRef(item)),
+            `uploaded:${uploaded.artifactId}`,
+          ],
+          squarePackshotReady: true,
+        },
+      }));
+    } catch (error) {
+      setUploadMessage(
+        error instanceof PackshotUploadError
+          ? error.message
+          : 'The packshot could not be stored privately.',
+      );
+    } finally {
+      setUploadBusy(false);
+    }
   }
 
   const bootstrapMessage =
@@ -501,8 +576,11 @@ export function CampaignBrief({
             <SectionFields
               dataMode={dataMode}
               draft={draft}
+              onUploadPackshot={handleUploadPackshot}
               section={activeSection}
               setDraft={setDraft}
+              uploadBusy={uploadBusy}
+              uploadMessage={uploadMessage}
             />
           </form>
         </section>

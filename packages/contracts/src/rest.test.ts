@@ -62,7 +62,7 @@ const minimalInputs = {
     content_type: 'image/png',
     byte_size: 1,
     sha256: 'a'.repeat(64),
-    purpose: 'fixture',
+    purpose: 'packshot',
     idempotency_key: 'idem-upload',
   },
   get_artifact: { context, artifact_id: 'artifact-1' },

@@ -60,7 +60,7 @@ const requestBodies: Partial<Record<keyof P0RestHandlers, Readonly<Record<string
     content_type: 'image/png',
     byte_size: 2048,
     sha256: 'a'.repeat(64),
-    purpose: 'reference',
+    purpose: 'packshot',
   },
   approve_artifacts: {
     approvals: [{ artifact_id: 'artifact-1', accessibility_description: 'Fixture description.' }],

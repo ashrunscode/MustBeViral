@@ -1857,10 +1857,10 @@
         "type": "object",
         "properties": {
           "project_id": { "type": "string", "minLength": 1, "maxLength": 200 },
-          "content_type": { "type": "string", "minLength": 1, "maxLength": 200 },
-          "byte_size": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 },
+          "content_type": { "type": "string", "enum": ["image/jpeg", "image/png", "image/webp"] },
+          "byte_size": { "type": "integer", "exclusiveMinimum": 0, "maximum": 12582912 },
           "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-          "purpose": { "type": "string", "minLength": 1, "maxLength": 100 }
+          "purpose": { "type": "string", "const": "packshot" }
         },
         "required": ["project_id", "content_type", "byte_size", "sha256", "purpose"],
         "additionalProperties": false

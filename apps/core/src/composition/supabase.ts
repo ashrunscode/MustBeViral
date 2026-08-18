@@ -36,7 +36,9 @@ import {
 
 import type { AuthenticatedActor } from '../auth/supabase-jwt';
 import {
+  ArtifactAccessSigningUnavailableError,
   CUSTOMER_DOWNLOAD_TTL_SECONDS,
+  CUSTOMER_UPLOAD_TTL_SECONDS,
   REVIEW_PREVIEW_TTL_SECONDS,
 } from '../../../../packages/artifacts/src/index';
 
@@ -574,8 +576,57 @@ function createResourcePort(
       });
       return { status: 'ok', ...canvas };
     },
-    async createArtifactUpload() {
-      throw new ProviderUnavailableError('Private upload signing is not configured');
+    async createArtifactUpload(input) {
+      try {
+        const created = requestInput(
+          await executor.request({
+            method: 'POST',
+            path: 'rpc/create_pending_input_artifact',
+            body: {
+              p_project_id: input.project_id,
+              p_mime_type: input.content_type,
+              p_byte_size: input.byte_size,
+              p_content_hash: input.sha256,
+              p_purpose: input.purpose,
+              p_request_id: input.context.request_id,
+            },
+          }),
+        );
+        const artifactId = requiredString(created.artifact_id, 'artifact_id');
+        const objectKey = requiredString(created.object_key, 'object_key');
+        const nowEpochSeconds = Math.floor(Date.now() / 1000);
+        const url = await mintArtifactAccessUrl(bindings, {
+          purpose: 'customer_upload',
+          artifactId,
+          objectKey,
+          contentHash: input.sha256,
+          byteSize: input.byte_size,
+          mimeType: input.content_type,
+          nowEpochSeconds,
+        });
+        return {
+          status: 'ok' as const,
+          artifact_id: artifactId,
+          upload_url: url,
+          expires_at: new Date(
+            (nowEpochSeconds + CUSTOMER_UPLOAD_TTL_SECONDS) * 1000,
+          ).toISOString(),
+        };
+      } catch (error) {
+        if (
+          error instanceof ArtifactAccessSigningUnavailableError ||
+          (error instanceof Error && error.message.includes('No public origin'))
+        ) {
+          return { status: 'provider_unavailable' };
+        }
+        if (
+          error instanceof SupabaseDataApiError &&
+          (error.kind === 'not_found' || error.kind === 'forbidden' || error.kind === 'validation')
+        ) {
+          return { status: 'not_found' };
+        }
+        throw error;
+      }
     },
     async getArtifact(input) {
       const context = asTenantContext(input.context);

@@ -59,6 +59,7 @@ export const ARTIFACT_ACCESS_PURPOSES = [
   'provider_input',
   'review_preview',
   'customer_download',
+  'customer_upload',
 ] as const;
 export type ArtifactAccessPurpose = (typeof ARTIFACT_ACCESS_PURPOSES)[number];
 
@@ -69,6 +70,8 @@ export const PROVIDER_INPUT_TTL_SECONDS = 3_600;
 export const CUSTOMER_DOWNLOAD_TTL_SECONDS = 300;
 /** Review thumbs remint when the operator reloads the receipt. */
 export const REVIEW_PREVIEW_TTL_SECONDS = 300;
+/** Packshot PUT is interactive; the client hashes first and uploads immediately. */
+export const CUSTOMER_UPLOAD_TTL_SECONDS = 300;
 
 export interface ArtifactAccessClaims {
   readonly purpose: ArtifactAccessPurpose;

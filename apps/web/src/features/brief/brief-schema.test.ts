@@ -113,4 +113,19 @@ describe('campaign brief validation', () => {
     );
     expect(mapped.packshots).not.toMatch(/staging-.*\.png/u);
   });
+
+  it('does not send uploaded artifact identifiers into the image-prompt packshot field', () => {
+    const mapped = launchPackBriefFromDraft({
+      ...lumenSkinDraft,
+      assets: {
+        packshots: ['uploaded:aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1'],
+        squarePackshotReady: true,
+        rightsAttested: true,
+      },
+    });
+    expect(mapped.packshots).toBe(
+      'Buyer-uploaded product packshot; product-only; label and packaging readable; no lifestyle talent.',
+    );
+    expect(mapped.packshots).not.toContain('uploaded:');
+  });
 });

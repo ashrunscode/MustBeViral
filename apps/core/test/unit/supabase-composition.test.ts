@@ -226,11 +226,30 @@ describe('production Supabase composition', () => {
     expect(getReceipt).not.toHaveBeenCalled();
   });
 
-  it('reaches the artifact-upload stub through project scope and reports model unavailable', async () => {
+  it('mints a private packshot upload through project scope', async () => {
     const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
       const url = String(request);
       if (url.includes('/projects?id=eq.project-upload&select=workspace_id')) {
         return Response.json({ workspace_id: workspaceId });
+      }
+      if (url.includes('/rpc/find_app_idempotency')) {
+        return Response.json({ status: 'absent' });
+      }
+      if (url.includes('/rpc/create_pending_input_artifact')) {
+        return Response.json({
+          artifact_id: 'artifact-upload',
+          workspace_id: workspaceId,
+          project_id: 'project-upload',
+          object_key: 'workspaces/w/projects/project-upload/inputs/artifact-upload',
+          status: 'pending',
+          mime_type: 'image/png',
+          byte_size: 2048,
+          content_hash: 'a'.repeat(64),
+          replayed: false,
+        });
+      }
+      if (url.includes('/rpc/record_app_idempotency')) {
+        return Response.json({ status: 'recorded' });
       }
       throw new Error(`Unexpected fixture request: ${url}`);
     });
@@ -243,6 +262,11 @@ describe('production Supabase composition', () => {
       jwt: { verify: async () => actor },
       requestFactory,
     });
+    const uploadBindings = {
+      ...configuredBindings,
+      FAL_WEBHOOK_URL: 'https://core.example.test/v1/webhooks/fal',
+      ARTIFACT_ACCESS_SIGNING_KEY: 'artifact-access-signing-key-fixture-32ch',
+    } as unknown as PlatformBindings;
 
     const response = await app.request(
       '/v1/artifacts/uploads',
@@ -254,16 +278,18 @@ describe('production Supabase composition', () => {
           content_type: 'image/png',
           byte_size: 2_048,
           sha256: 'a'.repeat(64),
-          purpose: 'reference',
+          purpose: 'packshot',
         }),
       },
-      configuredBindings,
+      uploadBindings,
     );
 
-    expect(response.status).toBe(503);
-    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error.code).toBe(
-      'MODEL_UNAVAILABLE',
-    );
+    expect(response.status).toBe(201);
+    const body = (await response.json()) as {
+      data: { artifact_id: string; upload_url: string };
+    };
+    expect(body.data.artifact_id).toBe('artifact-upload');
+    expect(body.data.upload_url).toContain('/v1/artifacts/artifact-upload/content?token=');
   });
 
   it('allows a member to explain a global model route without treating the model id as a tenant id', async () => {
