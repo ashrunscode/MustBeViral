@@ -68,6 +68,7 @@ describe('launch pack graph', () => {
     expect(masters).toEqual([...SUPPLEMENT_MASTER_VISUAL_DIRECTIONS]);
     expect(String(masters[1])).toMatch(/bottle, capsules, carton/u);
     expect(String(masters[1])).not.toMatch(/benefit still life/u);
+    expect(String(masters[1])).not.toMatch(/\b(doctor|sleep|bedroom|muscle|medical)\b/iu);
   });
 });
 

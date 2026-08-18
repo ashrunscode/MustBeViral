@@ -236,7 +236,8 @@ describe('master payload', () => {
     expect(prompt).toContain(SUPPLEMENT_BRIEF.product);
     expect(prompt).toContain(SUPPLEMENT_BRIEF.packshots);
     expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
-    expect(prompt).toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    expect(prompt).toContain('Product packaging only');
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
   });
@@ -251,6 +252,8 @@ describe('master payload', () => {
     const prompt = payload.prompt as string;
     expect(prompt).toMatch(/bottle, capsules, carton/u);
     expect(prompt).not.toMatch(/benefit still life/u);
+    expect(prompt).not.toMatch(/\b(doctor|sleep|bedroom|muscle|medical)\b/iu);
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
   });
@@ -317,7 +320,8 @@ describe('nodes that depend on an upstream artifact', () => {
     const prompt = payload.prompt as string;
     expect(prompt).toContain(SUPPLEMENT_BRIEF.product);
     expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
-    expect(prompt).toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    expect(prompt).toContain('Product packaging only');
+    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
   });

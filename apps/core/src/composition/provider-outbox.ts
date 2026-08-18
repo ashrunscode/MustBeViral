@@ -219,21 +219,36 @@ function splitBriefContext(briefContext: unknown): {
  * advertised. The offer line already carries whatever the frame is allowed to say. Copy gets the
  * full facts because a language model can be told which price attaches to which service.
  */
+const SUPPLEMENT_VISUAL_RIGHTS =
+  'Product packaging only. Preserve supplied labels unaltered. No lifestyle talent.';
+
+function isSupplementBrief(briefContext: unknown): boolean {
+  const { brief } = splitBriefContext(briefContext);
+  const category = typeof brief.category === 'string' ? brief.category.trim().toLowerCase() : '';
+  return category === 'supplements' || category.startsWith('supplements;');
+}
+
 function imageContextParts(briefContext: unknown): readonly unknown[] {
   const { brief, brand } = splitBriefContext(briefContext);
-  const category = typeof brief.category === 'string' ? brief.category.trim().toLowerCase() : '';
-  // fal validates image safety only when the queued job executes. The T5 GB-02 masters proved that
-  // forwarding a supplement offer and health-adjacent audience description can make an otherwise
-  // visual product request fail there with content_policy_violation. Those fragments are inputs to
-  // copy, not required image material. Keep supplement image prompts to the product, supplied visual
-  // assets/rights constraints, and brand direction; the copy prompt still receives the full brief.
-  const isSupplement = category === 'supplements' || category.startsWith('supplements;');
+  // fal validates image safety only when the queued job executes. Live GB-02 masters on f5fa333f
+  // still returned content_policy_violation after offer/audience stripping because the image prompt
+  // kept naming banned concepts ("doctor", "sleep", "body") in rights text and negative directions.
+  // Those fragments belong to copy. Keep supplement image prompts to the product, a visual-only
+  // rights line, and brand direction.
+  const isSupplement = isSupplementBrief(briefContext);
   return [
     brief.product,
     ...(isSupplement ? [] : [brief.offer, brief.audience_and_awareness]),
-    brief.creative_constraints_rights,
+    isSupplement ? SUPPLEMENT_VISUAL_RIGHTS : brief.creative_constraints_rights,
     brand.brand_kit,
   ];
+}
+
+function imageRightsFromNode(
+  briefContext: unknown,
+  nodeParameters: Readonly<Record<string, unknown>>,
+): unknown {
+  return isSupplementBrief(briefContext) ? undefined : nodeParameters.creative_constraints_rights;
 }
 
 /**
@@ -332,7 +347,7 @@ export async function buildProviderAttemptPayload(
       nodeParameters.packshots,
       nodeParameters.visual_direction,
       ...imageContextParts(input.briefContext),
-      nodeParameters.creative_constraints_rights,
+      imageRightsFromNode(input.briefContext, nodeParameters),
     ]);
     if (prompt.length === 0) {
       throw new ProviderError(
@@ -364,7 +379,7 @@ export async function buildProviderAttemptPayload(
       nodeParameters.visual_direction,
       nodeParameters.safe_zone,
       nodeParameters.motion_direction,
-      nodeParameters.creative_constraints_rights,
+      imageRightsFromNode(input.briefContext, nodeParameters),
     ]);
     if (prompt.length === 0) {
       throw new ProviderError(

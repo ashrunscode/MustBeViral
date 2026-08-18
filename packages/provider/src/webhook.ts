@@ -61,14 +61,33 @@ function header(
 }
 
 const PROVIDER_ERROR_CODE = /^[A-Za-z0-9_.-]{1,80}$/u;
+const HTTP_WRAPPER = /^Invalid status code: (\d{3})$/u;
+const MACHINE_KEYS = ['error_type', 'type', 'code', 'detail', 'error'] as const;
 
 function machineErrorCode(value: unknown): string | undefined {
   if (typeof value === 'string' && PROVIDER_ERROR_CODE.test(value)) return value;
-  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = machineErrorCode(item);
+      if (found !== undefined) return found;
+    }
+    return undefined;
+  }
+  if (typeof value === 'object' && value !== null) {
     const record = value as Readonly<Record<string, unknown>>;
-    return machineErrorCode(record.type) ?? machineErrorCode(record.code);
+    // Walk only machine fields. `msg`, `input`, and `url` can carry prompts or signed URLs.
+    for (const key of MACHINE_KEYS) {
+      const found = machineErrorCode(record[key]);
+      if (found !== undefined) return found;
+    }
   }
   return undefined;
+}
+
+function mappedHttpWrapper(value: unknown): string | undefined {
+  if (typeof value !== 'string') return undefined;
+  const match = HTTP_WRAPPER.exec(value);
+  return match ? `http_${match[1]}` : undefined;
 }
 
 export function falWebhookFailureCode(payload: Readonly<Record<string, unknown>>): string {
@@ -80,8 +99,12 @@ export function falWebhookFailureCode(payload: Readonly<Record<string, unknown>>
       : undefined;
   return (
     machineErrorCode(payload.error) ??
+    machineErrorCode(payload.error_type) ??
+    machineErrorCode(payload.detail) ??
     machineErrorCode(nested?.error) ??
+    machineErrorCode(nested?.error_type) ??
     machineErrorCode(nested?.detail) ??
+    mappedHttpWrapper(payload.error) ??
     'fal_webhook_failed'
   );
 }

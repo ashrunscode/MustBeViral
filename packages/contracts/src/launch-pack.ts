@@ -41,7 +41,7 @@ export const MASTER_VISUAL_DIRECTIONS = [
 
 export const SUPPLEMENT_MASTER_VISUAL_DIRECTIONS = [
   MASTER_VISUAL_DIRECTIONS[0],
-  'Material still life: bottle, capsules, carton, and readable packaging only. No body, sleep, bedroom, muscle, doctor, or medical staging.',
+  'Material still life: bottle, capsules, carton, and readable packaging only. No lifestyle talent.',
   MASTER_VISUAL_DIRECTIONS[2],
 ] as const;
 
