@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Recover the three 2026-08-20 DTC Newsletter / Foxwell Founders / eComFuel permission threads onto Ashley Gmail label MustBeViral/P0 Evaluator Recruitment (label and threads are absent from the connected mailbox), then recheck that label for replies. No GB-02 spend.
+Recheck the restored MustBeViral/P0 Evaluator Recruitment label for a real reply; when one exists, run the registered private qualification screen. Do not send without APPROVE SEND mustbeviral. No GB-02 spend.

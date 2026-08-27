@@ -11,48 +11,53 @@ implementation files or editing. Use Node from `C:\nvm4w\nodejs\node.exe` (`v24.
 
 ## Exactly one next action
 
-Recover the three 2026-08-20 DTC Newsletter / Foxwell Founders / eComFuel permission threads onto
-Ashley Gmail label `MustBeViral/P0 Evaluator Recruitment` (label and threads are absent from the
-connected mailbox), then recheck that label for replies. No GB-02 spend.
+Recheck the restored `MustBeViral/P0 Evaluator Recruitment` label for a real reply; when one exists,
+run the registered private qualification screen. Do not send without `APPROVE SEND mustbeviral` in
+the same turn. No GB-02 spend.
 
-If the operator says those community posts cannot be recovered, switch to the registered
-User Interviews / Respondent fallback in
+The registered User Interviews / Respondent fallback remains dormant while the recovered community
+permission threads are viable. If the operator later determines those sources cannot proceed, use
 `governance/evidence/WP-P0-001/paid-research-fallback-kit-2026-08-26.md`. Same screen, $200 / 90
 minutes, laptop, GB-04 only. Mail send still needs `APPROVE SEND mustbeviral` in the same turn.
 
-## Live snapshot (verify, do not trust this file over preflight)
+## Producing-session snapshot (historical; verify live state with preflight)
 
-| Field | Value |
-|---|---|
-| Checkout | `C:\dev\MustBeViral` |
-| Branch | `codex/viralgraph-cleanroom` |
-| HEAD | `4c8f10d61485d6d47d6437881452383b736a50c8` |
-| Origin | even (`0` ahead / `0` behind) |
-| Working tree | clean |
-| Linked worktrees | 1 |
-| Packet | `WP-P0-001` in progress |
-| Phase | P0 |
-| Pending decisions | none |
-| Remote destructive action | forbidden |
-| Production | legacy V1 live; V2 staging only |
-| Web staging | `https://mustbeviral-web-staging.vercel.app` |
-| Core staging | `https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev` |
-| Worker live version | `2d47b183-ad36-4954-8ca5-dafdb4e4f79f` |
-| Worker rollback | `872ac183-8601-44d9-ba0c-74f46bd6d027` |
+| Field                     | Value                                                           |
+| ------------------------- | --------------------------------------------------------------- |
+| Checkout                  | `C:\dev\MustBeViral`                                            |
+| Branch                    | `codex/viralgraph-cleanroom`                                    |
+| HEAD                      | `4c8f10d61485d6d47d6437881452383b736a50c8`                      |
+| Origin                    | even (`0` ahead / `0` behind)                                   |
+| Working tree              | clean                                                           |
+| Linked worktrees          | 1                                                               |
+| Packet                    | `WP-P0-001` in progress                                         |
+| Phase                     | P0                                                              |
+| Pending decisions         | none                                                            |
+| Remote destructive action | forbidden                                                       |
+| Production                | legacy V1 live; V2 staging only                                 |
+| Web staging               | `https://mustbeviral-web-staging.vercel.app`                    |
+| Core staging              | `https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev` |
+| Worker live version       | `2d47b183-ad36-4954-8ca5-dafdb4e4f79f`                          |
+| Worker rollback           | `872ac183-8601-44d9-ba0c-74f46bd6d027`                          |
 
 Recent commits: `4c8f10d` staging Core deploy evidence; `4627de7` fail-evaluation recovery + gate
 evidence.
 
 ## What the last session finished
 
+- The 2026-08-27 continuation recovered an interrupted authority transition, completed green
+  preflight on `codex/viralgraph-cleanroom`, and verified that the registered Gmail label now holds
+  the three permission threads.
+- Each recovered thread contains one outbound message and no inbound reply. No label mutation, mail
+  send, candidate claim, provider spend, or production mutation occurred in that continuation.
 - Single-worktree recovery: moved Codex `224b` intact to
   `C:\Users\ernij\.codex\worktree-backups\MustBeViral-224b-20260826-173615`, then pruned.
-- Ashley Gmail MCP authenticates. Custom label `MustBeViral/P0 Evaluator Recruitment` is **absent**.
-  Phrase/channel searches for the three 2026-08-20 permission threads return zero.
+- On 2026-08-26, Ashley Gmail MCP authenticated but the custom label and threads were absent. That
+  older mailbox snapshot is superseded by `recruiting-inbox-check-2026-08-27.md`.
 - Playwright against the web alias: disposable sign-in + canvas read, `run_submitted: false`.
 - `pnpm agent:verify` green, then commit/push of recovery UI, provider hardening, and P0 evidence.
 - Staging **Core** deployed (`2d47b183`). Staging **web** alias was **not** replaced: `vercel deploy
-  --cwd apps/web` failed (no monorepo `pnpm-lock.yaml` in that upload).
+--cwd apps/web` failed (no monorepo `pnpm-lock.yaml` in that upload).
 - Cursor Cloud POST returned no agent id. Local `cursor agent` CLI is not wired.
 - Preview goldens still say `$4.20`. Worker canvas CTA is `Review named quote`. Quote authority is
   **$4.55 / 4,550,000 micros**.
@@ -86,18 +91,19 @@ Session artifacts (not Git authority):
 
 ## Evidence index
 
-| Path | Proves | Does not prove |
-|---|---|---|
-| `recruiting-inbox-check-2026-08-21.md` | Zero replies on labeled threads that day | 2026-08-27 inbox |
-| `recruiting-inbox-check-2026-08-26.md` | Ashley mailbox has no label/threads | Community UI state |
-| `session-readiness-staging-walk-2026-08-26.md` | Sign-in + canvas read, no run | Quote $4.55 chrome, failed-run UI on web alias |
-| `staging-recovery-deploy-2026-08-26.md` | Worker `2d47b183` live | Web alias has recovery copy |
-| `production-web-vitals-sequencing-2026-08-26.md` | Vitals measured in P1a, not staging | Gate pass |
-| `paid-research-fallback-kit-2026-08-26.md` | Fallback SOP exists | Account or candidates |
-| `run-failure-recovery-copy.md` | Copy contract | Staging web deploy |
-| `landed-cost-honesty-inventory.md` | $4.55 is customer charge | Fal invoice / usable denominator |
-| `live-gb02-16-16-retired.md` | Do not pay GB-02 | Harness 16/20 is still the technical gate |
-| `owner-first-rollout-plan-2026-08-21.md` | Later owner-first sequence | Does **not** authorize P1a from P0 |
+| Path                                             | Proves                                   | Does not prove                                 |
+| ------------------------------------------------ | ---------------------------------------- | ---------------------------------------------- |
+| `recruiting-inbox-check-2026-08-27.md`           | Three threads restored; zero replies     | Any candidate or qualification                 |
+| `recruiting-inbox-check-2026-08-21.md`           | Zero replies on labeled threads that day | 2026-08-27 inbox                               |
+| `recruiting-inbox-check-2026-08-26.md`           | Ashley mailbox has no label/threads      | Community UI state                             |
+| `session-readiness-staging-walk-2026-08-26.md`   | Sign-in + canvas read, no run            | Quote $4.55 chrome, failed-run UI on web alias |
+| `staging-recovery-deploy-2026-08-26.md`          | Worker `2d47b183` live                   | Web alias has recovery copy                    |
+| `production-web-vitals-sequencing-2026-08-26.md` | Vitals measured in P1a, not staging      | Gate pass                                      |
+| `paid-research-fallback-kit-2026-08-26.md`       | Fallback SOP exists                      | Account or candidates                          |
+| `run-failure-recovery-copy.md`                   | Copy contract                            | Staging web deploy                             |
+| `landed-cost-honesty-inventory.md`               | $4.55 is customer charge                 | Fal invoice / usable denominator               |
+| `live-gb02-16-16-retired.md`                     | Do not pay GB-02                         | Harness 16/20 is still the technical gate      |
+| `owner-first-rollout-plan-2026-08-21.md`         | Later owner-first sequence               | Does **not** authorize P1a from P0             |
 
 Older walks still stand for quote/receipt/review: `gb04-receipt-last-mile-walk.md`,
 `composed-review-staging-walk.md`, `packshot-upload-staging-walk.md`.
@@ -109,7 +115,7 @@ operator `go`. Failed usable-output, economics, or paid-demand is **pivot/stop**
 
 ### P0 now — close `WP-P0-001`
 
-1. Recover or fall back recruiting (current next action).
+1. Recheck the restored recruiting label for a real reply (current next action).
 2. Screen privately (`EVALUATOR_RECRUITMENT.md`). IDs only in Git.
 3. Session-readiness before invite: alias URL (custom DNS does not resolve); dedicated staging
    identity per evaluator (not operator kit workspace `098356b4-…`); GB-04
