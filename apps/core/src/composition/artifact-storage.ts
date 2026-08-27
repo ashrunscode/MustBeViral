@@ -18,6 +18,7 @@ export class ArtifactStorageError extends Error {
     readonly reason:
       | 'delivery_fetch_failed'
       | 'delivery_acl_suspected'
+      | 'delivery_origin_invalid'
       | 'artifact_too_large'
       | 'artifact_verification_failed'
       | 'r2_put_failed'
@@ -28,6 +29,25 @@ export class ArtifactStorageError extends Error {
   ) {
     super(message, options);
   }
+}
+
+function requireFalDeliveryOrigin(deliveryUrl: TransientDeliveryUrl): string {
+  const parsed = new URL(deliveryUrl);
+  const isFalMedia =
+    parsed.hostname === 'fal.media' || parsed.hostname.toLowerCase().endsWith('.fal.media');
+  if (
+    !isFalMedia ||
+    parsed.username.length > 0 ||
+    parsed.password.length > 0 ||
+    parsed.hash.length > 0
+  ) {
+    throw new ArtifactStorageError(
+      'delivery_origin_invalid',
+      false,
+      'fal delivery URL is outside the approved media origin',
+    );
+  }
+  return parsed.toString();
 }
 
 export interface StoredProviderArtifact extends VerifiedProviderArtifact {
@@ -79,11 +99,15 @@ export async function copyFalDeliveryToPrivateR2(
     );
   }
   const boundFetch = input.fetchImplementation ?? ((request, init) => fetch(request, init));
+  const deliveryUrl = requireFalDeliveryOrigin(input.deliveryUrl);
   let response: Response;
   try {
-    response = await boundFetch(input.deliveryUrl, {
+    response = await boundFetch(deliveryUrl, {
       method: 'GET',
       headers: { authorization: `Key ${falKey}` },
+      // Never forward the fal credential across a provider-controlled redirect. Official fal
+      // outputs are direct fal.media objects, so a redirect is drift or an unsafe response.
+      redirect: 'error',
     });
   } catch (cause) {
     throw new ArtifactStorageError(

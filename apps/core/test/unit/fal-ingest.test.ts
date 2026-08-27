@@ -60,7 +60,7 @@ function successEvent(eventId = 'event-1'): VerifiedFalWebhook {
         delivery: {
           kind: 'transient_delivery_url',
           transientDeliveryUrl: toTransientDeliveryUrl(
-            'https://private-delivery.example.test/output.png',
+            'https://v3.fal.media/files/fixture/output.png',
           ),
         },
       },
@@ -163,9 +163,7 @@ describe('durable private fal ingest', () => {
       }),
     );
     expect(money.release).not.toHaveBeenCalled();
-    expect(JSON.stringify([first, replay, registration.mock.calls])).not.toContain(
-      'private-delivery.example.test',
-    );
+    expect(JSON.stringify([first, replay, registration.mock.calls])).not.toContain('v3.fal.media');
   });
 
   it('clamps a measured overage to the quote instead of trapping the run', async () => {
@@ -395,7 +393,8 @@ describe('durable private fal ingest', () => {
 
     expect(response.status).toBe(503);
     expect(deliveryFetchMock).toHaveBeenCalledTimes(1);
-    expect(requestedDeliveryUrl).toBe('https://private-delivery.example.test/output.png');
+    expect(requestedDeliveryUrl).toBe('https://v3.fal.media/files/fixture/output.png');
+    expect(requestedDeliveryInit?.redirect).toBe('error');
     expect(new Headers(requestedDeliveryInit?.headers).get('authorization')).toBe(
       'Key fixture-fal-key',
     );
@@ -425,7 +424,7 @@ describe('durable private fal ingest', () => {
         FAL_KEY: 'fixture-fal-key',
         MEDIA_BUCKET: bucket,
       } as unknown as CoreBindings,
-      deliveryUrl: toTransientDeliveryUrl('https://private-delivery.example.test/output.png'),
+      deliveryUrl: toTransientDeliveryUrl('https://v3.fal.media/files/fixture/output.png'),
       objectKey: 'workspaces/workspace-1/runs/run-1/attempts/attempt-1/provider-output',
       workspaceId: 'workspace-1',
       runId: 'run-1',
@@ -457,7 +456,7 @@ describe('durable private fal ingest', () => {
           FAL_KEY: 'fixture-fal-key',
           MEDIA_BUCKET: bucket,
         } as unknown as CoreBindings,
-        deliveryUrl: toTransientDeliveryUrl('https://private-delivery.example.test/hidden.png'),
+        deliveryUrl: toTransientDeliveryUrl('https://v3b.fal.media/files/fixture/hidden.png'),
         objectKey: 'workspaces/workspace-1/runs/run-1/attempts/attempt-1/provider-output',
         workspaceId: 'workspace-1',
         runId: 'run-1',
@@ -469,6 +468,31 @@ describe('durable private fal ingest', () => {
       retryable: true,
       message: expect.stringMatching(/expired|access behavior/u),
     });
+    expect(bucket.put).not.toHaveBeenCalled();
+  });
+
+  it('rejects non-fal delivery origins before sending the fal credential', async () => {
+    const deliveryFetch = vi.fn(async () => new Response(null, { status: 200 }));
+    const bucket = { put: vi.fn() } as unknown as R2Bucket;
+
+    await expect(
+      copyFalDeliveryToPrivateR2({
+        bindings: {
+          FAL_KEY: 'fixture-fal-key',
+          MEDIA_BUCKET: bucket,
+        } as unknown as CoreBindings,
+        deliveryUrl: toTransientDeliveryUrl('https://attacker.example/output.png'),
+        objectKey: 'workspaces/workspace-1/runs/run-1/attempts/attempt-1/provider-output',
+        workspaceId: 'workspace-1',
+        runId: 'run-1',
+        attemptId: 'attempt-1',
+        fetchImplementation: deliveryFetch,
+      }),
+    ).rejects.toMatchObject({
+      reason: 'delivery_origin_invalid',
+      retryable: false,
+    });
+    expect(deliveryFetch).not.toHaveBeenCalled();
     expect(bucket.put).not.toHaveBeenCalled();
   });
 });

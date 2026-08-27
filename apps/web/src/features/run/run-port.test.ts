@@ -43,6 +43,10 @@ describe('InMemoryRunPort', () => {
     expect(result.snapshot.attempts.find((attempt) => attempt.id === 'motion')?.state).toBe(
       'failed',
     );
+    expect(result.snapshot.recovery?.kind).toBe('content_policy_violation');
+    expect(result.snapshot.attempts.find((attempt) => attempt.id === 'motion')?.detail).toMatch(
+      /content policy/u,
+    );
   });
 
   it('cancels active attempts into a terminal state', () => {
@@ -199,10 +203,57 @@ describe('WorkerRunPort', () => {
       snapshot: {
         state: 'reviewable',
         firstReviewable: true,
+        recovery: null,
         attempts: [
           { id: 'run-node-1', state: 'complete' },
           { id: 'run-node-2', state: 'running' },
         ],
+      },
+    });
+  });
+
+  it('maps a stored content_policy_violation onto customer-safe recovery copy', async () => {
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-run-0002',
+      fetch: async () =>
+        new Response(
+          JSON.stringify({
+            data: {
+              run: {
+                runId: 'run-blocked',
+                projectId: 'project-live',
+                canvasId: 'canvas-live',
+                canvasRevisionId: 'revision-live',
+                quoteId: 'quote-live',
+                status: 'failed',
+                reservationId: 'reservation-live',
+              },
+              nodes: [
+                {
+                  runNodeId: 'run-node-2',
+                  nodeKey: 'master-2',
+                  modelRouteId: 'route-image',
+                  status: 'failed',
+                  dispatchWave: 1,
+                  providerErrorCode: 'content_policy_violation',
+                },
+              ],
+            },
+            meta: { request_id: 'request-run-0002' },
+          }),
+          { status: 200, headers: { 'content-type': 'application/json' } },
+        ),
+    });
+
+    const result = await new WorkerRunPort(client, () => 'cancel-idem-2').read('run-blocked');
+    expect(result).toMatchObject({
+      type: 'ok',
+      snapshot: {
+        state: 'failed',
+        recovery: { kind: 'content_policy_violation' },
+        attempts: [{ detail: 'Image blocked by content policy. No charge accepted.' }],
       },
     });
   });

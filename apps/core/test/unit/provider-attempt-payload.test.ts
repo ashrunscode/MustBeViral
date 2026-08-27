@@ -1,4 +1,8 @@
-import { buildGoldenLaunchPackGraph, type GoldenCampaignBrief } from '@mustbeviral/contracts';
+import {
+  buildFailedImageProbeGraph,
+  buildGoldenLaunchPackGraph,
+  type GoldenCampaignBrief,
+} from '@mustbeviral/contracts';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -235,27 +239,116 @@ describe('master payload', () => {
     const prompt = payload.prompt as string;
     expect(prompt).toContain(SUPPLEMENT_BRIEF.product);
     expect(prompt).toContain(SUPPLEMENT_BRIEF.packshots);
-    expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
+    expect(prompt).toContain('Navy and mineral gray');
+    expect(prompt).not.toMatch(/\bclinical\b/iu);
     expect(prompt).toContain('Product packaging only');
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
   });
 
-  it('keeps the supplement material master on packaging instead of benefit-body language', async () => {
+  it('keeps every supplement master on the policy-proven packshot direction', async () => {
+    for (const id of ['master-1', 'master-2', 'master-3'] as const) {
+      const payload = await buildProviderAttemptPayload({
+        nodeParameters: supplementNodeParametersOf(id),
+        executionPlanLine: { node_id: id },
+        task: 'master_static',
+        briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+      });
+      const prompt = payload.prompt as string;
+      expect(prompt, id).toContain('Packshot-as-hero');
+      expect(prompt, id).not.toMatch(/material still life|proof-forward composition/iu);
+      expect(prompt, id).not.toMatch(/\b(doctor|sleep|bedroom|muscle|medical)\b/iu);
+      expect(prompt, id).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+      expect(prompt, id).not.toContain(SUPPLEMENT_BRIEF.offer);
+      expect(prompt, id).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
+    }
+  });
+
+  it('keeps every GB-02 image node free of the words that already 422ed', async () => {
+    const banned =
+      /\b(doctor|sleep|bedroom|muscle|medical|clinical|white\s*coats?|body\s+transformation|insomnia|anxiety)\b/iu;
+    for (const [id, task] of [
+      ['master-1', 'master_static'],
+      ['master-2', 'master_static'],
+      ['master-3', 'master_static'],
+    ] as const) {
+      const payload = await buildProviderAttemptPayload({
+        nodeParameters: supplementNodeParametersOf(id),
+        executionPlanLine: { node_id: id },
+        task,
+        briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+      });
+      expect(String(payload.prompt), id).not.toMatch(banned);
+      expect(String(payload.prompt), id).not.toContain(SUPPLEMENT_BRIEF.offer);
+      expect(String(payload.prompt), id).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
+      expect(String(payload.prompt), id).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    }
+    const adaptation = await buildProviderAttemptPayload({
+      nodeParameters: supplementNodeParametersOf('adaptation-1-1'),
+      executionPlanLine: { node_id: 'adaptation-1-1' },
+      task: 'adaptation',
+      briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+      upstreamImages: [UPSTREAM_IMAGE],
+      mintImageUrl: mintUrl,
+    });
+    expect(String(adaptation.prompt)).not.toMatch(banned);
+    const motion = await buildProviderAttemptPayload({
+      nodeParameters: supplementNodeParametersOf('motion-1'),
+      executionPlanLine: { node_id: 'motion-1' },
+      task: 'image_to_video',
+      briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+      upstreamImages: [UPSTREAM_IMAGE],
+      mintImageUrl: mintUrl,
+    });
+    expect(String(motion.prompt)).not.toMatch(banned);
+  });
+
+  it('keeps a one-master GB-02 probe on the same sanitized prompt as the launch pack', async () => {
+    const probe = buildFailedImageProbeGraph(SUPPLEMENT_BRIEF, 2);
+    const master = probe.nodes.find((node) => node.id === 'master-2');
+    const briefNode = probe.nodes.find((node) => node.id === 'brief');
+    const brandNode = probe.nodes.find((node) => node.id === 'brand-context');
+    if (master === undefined || briefNode === undefined || brandNode === undefined) {
+      throw new Error('probe graph is missing required nodes');
+    }
     const payload = await buildProviderAttemptPayload({
-      nodeParameters: supplementNodeParametersOf('master-2'),
+      nodeParameters: master.parameters,
       executionPlanLine: { node_id: 'master-2' },
       task: 'master_static',
-      briefContext: SUPPLEMENT_BRIEF_CONTEXT,
+      briefContext: { brief: briefNode.parameters, brand_context: brandNode.parameters },
     });
-    const prompt = payload.prompt as string;
-    expect(prompt).toMatch(/bottle, capsules, carton/u);
-    expect(prompt).not.toMatch(/benefit still life/u);
-    expect(prompt).not.toMatch(/\b(doctor|sleep|bedroom|muscle|medical)\b/iu);
-    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
+    const prompt = String(payload.prompt);
+    expect(prompt).toContain('Packshot-as-hero');
+    expect(prompt).not.toMatch(/material still life|proof-forward composition/iu);
+    expect(prompt).not.toMatch(
+      /\b(doctor|sleep|bedroom|muscle|medical|clinical|white\s*coats?|body\s+transformation)\b/iu,
+    );
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);
-    expect(prompt).not.toContain(SUPPLEMENT_BRIEF.audienceAndAwareness);
+  });
+
+  it('still strips doctor/sleep rights when the live category is not tagged Supplements', async () => {
+    const mistyped = {
+      brief: {
+        ...supplementNodeParametersOf('brief'),
+        category: 'Wellness capsules',
+      },
+      brand_context: supplementNodeParametersOf('brand-context'),
+    };
+    const payload = await buildProviderAttemptPayload({
+      nodeParameters: {
+        ...supplementNodeParametersOf('master-2'),
+        visual_direction:
+          'Benefit still life without sleep, bedroom, muscle, doctor, or medical staging.',
+        creative_constraints_rights: SUPPLEMENT_BRIEF.creativeConstraintsRights,
+      },
+      executionPlanLine: { node_id: 'master-2' },
+      task: 'master_static',
+      briefContext: mistyped,
+    });
+    const prompt = String(payload.prompt);
+    expect(prompt).not.toMatch(/\b(doctor|sleep|bedroom|muscle|medical)\b/iu);
+    expect(prompt).toContain('Product packaging only');
   });
 
   it('refuses a master node with no prompt material', async () => {
@@ -319,7 +412,8 @@ describe('nodes that depend on an upstream artifact', () => {
     });
     const prompt = payload.prompt as string;
     expect(prompt).toContain(SUPPLEMENT_BRIEF.product);
-    expect(prompt).toContain(SUPPLEMENT_BRIEF.brandKit);
+    expect(prompt).toContain('Navy and mineral gray');
+    expect(prompt).not.toMatch(/\bclinical\b/iu);
     expect(prompt).toContain('Product packaging only');
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.creativeConstraintsRights);
     expect(prompt).not.toContain(SUPPLEMENT_BRIEF.offer);

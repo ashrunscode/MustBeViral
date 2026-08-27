@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
-current_step: p0-005-golden-launch-pack-runs
-next_action: After 2026-08-19 00:00 UTC, check global and workspace-day remaining, then confirm one new GB-02 to prove visual-only supplement prompts. In parallel, reconcile landed cost from existing receipts and start evaluator screens. Do not reuse f5fa333f, 9b6e0619, a72b78e5, or 33f2e40e.
+current_step: p0-007-p0-gate-evaluation
+next_action: Recover the three 2026-08-20 DTC Newsletter / Foxwell Founders / eComFuel permission threads onto Ashley Gmail label MustBeViral/P0 Evaluator Recruitment (label and threads are absent from the connected mailbox), then recheck that label for replies. No GB-02 spend.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

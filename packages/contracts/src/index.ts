@@ -2,6 +2,7 @@ export * from './commands';
 export * from './client';
 export * from './handlers';
 export * from './http';
+export * from './fail-evaluation';
 export * from './launch-pack';
 export * from './launch-pack-qa';
 export * from './mcp';

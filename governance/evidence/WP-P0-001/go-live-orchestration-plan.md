@@ -185,3 +185,28 @@ the exit decision without archaeology.
   segment, which may defer final measurement to P1a with an operator-accepted staging proxy.
 - This plan does not decide P1a sequencing beyond naming it the successor; WP-P1A-001 scoping
   happens at p0-008 per the packet.
+
+## 8. Amendment 2026-08-21: owner-first activation window
+
+The operator replaced the previously ambiguous single 72-hour launch observation with two explicit
+audiences and two clocks. The full execution and evidence contract is recorded in
+`owner-first-rollout-plan-2026-08-21.md`.
+
+1. P0 remains staging-only until every accepted P0 gate passes and the operator records an explicit
+   go decision. The operator may use the existing staging product now; this is rehearsal and does
+   not count as qualified-evaluator, paid-pilot, production-performance, or production-launch proof.
+2. After a governed P1a production deployment passes migrations, smoke, rollback, isolation,
+   ledger, artifact, and telemetry checks, production stays closed for one continuous hour of
+   automated and operator-observed canary health.
+3. If that hour is clean, the operator account may begin production use. Self-service signup,
+   invitations, and all non-operator production access remain disabled.
+4. A new 72-hour owner-only stability window begins when the operator first receives production
+   access. Other users may be admitted only after that entire window is clean and an explicit
+   admission decision is recorded.
+5. Any cross-tenant access, public artifact, duplicate provider submission or money movement,
+   ledger imbalance, uncontrolled spend, signature bypass, Sev-1 incident, rollback, or unresolved
+   provider ambiguity resets the active clock after verified remediation.
+
+This amendment does not shorten the separate 72-hour zero-legacy-traffic observation required by
+`docs/operations/LEGACY_V1_RETIREMENT.md` before legacy-resource retirement. It also does not
+authorize P1a production work from the P0 packet.

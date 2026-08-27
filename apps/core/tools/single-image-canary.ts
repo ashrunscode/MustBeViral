@@ -1,7 +1,15 @@
 import { randomBytes } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
-import { pathToFileURL } from 'node:url';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import {
+  GOLDEN_BRIEF_IDS,
+  buildFailedImageProbeGraph,
+  type GoldenBriefId,
+} from '@mustbeviral/contracts';
+
+import { parseGoldenBriefRegistry } from './golden-brief-registry';
 import {
   HarnessFlowError,
   StagingLaunchPackTransport,
@@ -11,7 +19,14 @@ import {
   type HarnessTransportOperation,
   type SafeHarnessError,
 } from './launch-pack-harness-lib';
-import { authenticateDisposableStagingUser, loadStagingAuthConfiguration } from './staging-auth';
+import {
+  authenticateDisposableStagingUser,
+  createConfirmedDisposableStagingUser,
+  createDisposableIdentity,
+  loadStagingAdminConfiguration,
+  loadStagingAuthConfiguration,
+  type StagingAdminConfiguration,
+} from './staging-auth';
 
 const STAGING_CORE_URL = 'https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev';
 const EXPECTED_QUOTE_MICROS = 500_000n;
@@ -78,10 +93,12 @@ export function buildSingleImageCanaryGraph(): SingleImageCanaryGraph {
 
 interface CanaryArguments {
   readonly mode: 'dry-run' | 'staging';
-  readonly workspaceId: string;
+  readonly workspaceId: string | null;
   readonly outDirectory: string;
   readonly timeoutMilliseconds: number;
   readonly pollMilliseconds: number;
+  readonly briefId?: GoldenBriefId;
+  readonly masterIndex?: 1 | 2 | 3;
 }
 
 interface AssertionDefinition {
@@ -309,11 +326,46 @@ export function singleImageCanaryArguments(argv: readonly string[]): CanaryArgum
       message: 'Select exactly one mode: --dry-run or --staging.',
     });
   }
+  const briefRaw = flagValue(argv, '--brief');
+  const masterRaw = flagValue(argv, '--master');
+  let briefId: GoldenBriefId | undefined;
+  let masterIndex: 1 | 2 | 3 | undefined;
+  if (briefRaw !== undefined || masterRaw !== undefined) {
+    if (briefRaw === undefined || !GOLDEN_BRIEF_IDS.some((id) => id === briefRaw)) {
+      throw new HarnessFlowError({
+        code: 'INVALID_ARGUMENTS',
+        message: '--brief requires a registered golden brief id such as GB-02.',
+      });
+    }
+    if (masterRaw !== '1' && masterRaw !== '2' && masterRaw !== '3') {
+      throw new HarnessFlowError({
+        code: 'INVALID_ARGUMENTS',
+        message: '--master requires 1, 2, or 3.',
+      });
+    }
+    const matched = GOLDEN_BRIEF_IDS.find((id) => id === briefRaw);
+    if (matched === undefined) {
+      throw new HarnessFlowError({
+        code: 'INVALID_ARGUMENTS',
+        message: '--brief requires a registered golden brief id such as GB-02.',
+      });
+    }
+    briefId = matched;
+    masterIndex = Number(masterRaw) as 1 | 2 | 3;
+  }
   const workspaceId = flagValue(argv, '--workspace');
-  if (
-    workspaceId === undefined ||
-    !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(workspaceId)
-  ) {
+  if (workspaceId !== undefined) {
+    if (
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(
+        workspaceId,
+      )
+    ) {
+      throw new HarnessFlowError({
+        code: 'INVALID_ARGUMENTS',
+        message: '--workspace requires an existing workspace UUID.',
+      });
+    }
+  } else if (briefId === undefined) {
     throw new HarnessFlowError({
       code: 'INVALID_ARGUMENTS',
       message: '--workspace requires an existing workspace UUID.',
@@ -326,13 +378,17 @@ export function singleImageCanaryArguments(argv: readonly string[]): CanaryArgum
       message: '--out requires a directory path.',
     });
   }
-  return {
+  const base = {
     mode: dryRun ? 'dry-run' : 'staging',
-    workspaceId,
+    workspaceId: workspaceId ?? null,
     outDirectory,
     timeoutMilliseconds: positiveIntegerFlag(argv, '--timeout-ms', DEFAULT_TIMEOUT_MILLISECONDS),
     pollMilliseconds: positiveIntegerFlag(argv, '--poll-ms', DEFAULT_POLL_MILLISECONDS),
-  };
+  } as const;
+  if (briefId === undefined || masterIndex === undefined) {
+    return base;
+  }
+  return { ...base, briefId, masterIndex };
 }
 
 function safeFailure(error: unknown): SafeHarnessError {
@@ -341,6 +397,99 @@ function safeFailure(error: unknown): SafeHarnessError {
     code: 'CANARY_FAILURE',
     message: 'The single-image canary encountered an internal failure.',
   };
+}
+
+async function loadFailedImageProbeGraph(briefId: GoldenBriefId, masterIndex: 1 | 2 | 3) {
+  const markdown = await readFile(
+    resolve(dirname(fileURLToPath(import.meta.url)), '../../../docs/research/GOLDEN_BRIEFS.md'),
+    'utf8',
+  );
+  const brief = parseGoldenBriefRegistry(markdown).find((entry) => entry.briefId === briefId);
+  if (brief === undefined) {
+    throw new HarnessFlowError({
+      code: 'INVALID_ARGUMENTS',
+      message: `${briefId} is not a registered golden brief.`,
+    });
+  }
+  return buildFailedImageProbeGraph(brief, masterIndex);
+}
+
+async function creditProbeWallet(
+  configuration: StagingAdminConfiguration,
+  workspaceId: string,
+): Promise<void> {
+  const response = await fetch(`${configuration.supabaseUrl}/rest/v1/rpc/record_ledger_movement`, {
+    method: 'POST',
+    headers: {
+      apikey: configuration.serviceRoleKey,
+      authorization: `Bearer ${configuration.serviceRoleKey}`,
+      'content-type': 'application/json',
+      'user-agent': 'mustbeviral-image-probe/1',
+    },
+    body: JSON.stringify({
+      p_workspace_id: workspaceId,
+      p_entry_type: 'credit',
+      p_amount_micros: Number(EXPECTED_QUOTE_MICROS),
+      p_causative_key: `image-probe:${workspaceId}:one-master-credit`,
+      p_reservation_id: null,
+      p_run_id: null,
+      p_request_id: `image-probe-credit-${randomBytes(6).toString('hex')}`,
+      p_metadata: {
+        purpose: 'failed_image_probe',
+        pack_quote_micros: Number(EXPECTED_QUOTE_MICROS),
+      },
+    }),
+  });
+  if (!response.ok) {
+    throw new HarnessFlowError({
+      code: 'WALLET_CREDIT_FAILED',
+      message: 'The image-probe wallet credit failed closed through PostgREST.',
+      http_status: response.status,
+    });
+  }
+}
+
+async function assertGlobalCapAllowsProbe(configuration: StagingAdminConfiguration): Promise<void> {
+  const response = await fetch(
+    `${configuration.supabaseUrl}/rest/v1/rpc/get_global_spend_exposure`,
+    {
+      method: 'POST',
+      headers: {
+        apikey: configuration.serviceRoleKey,
+        authorization: `Bearer ${configuration.serviceRoleKey}`,
+        'content-type': 'application/json',
+        'user-agent': 'mustbeviral-image-probe/1',
+      },
+      body: '{}',
+    },
+  );
+  if (!response.ok) {
+    throw new HarnessFlowError({
+      code: 'CAP_CHECK_FAILED',
+      message: 'The global spend-exposure check failed closed.',
+      http_status: response.status,
+    });
+  }
+  const body = (await response.json()) as unknown;
+  if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+    throw new HarnessFlowError({
+      code: 'CAP_CHECK_FAILED',
+      message: 'The global spend-exposure check returned an invalid body.',
+    });
+  }
+  const remaining = (body as Readonly<Record<string, unknown>>)['global_remaining_micros'];
+  const remainingMicros =
+    typeof remaining === 'number'
+      ? BigInt(remaining)
+      : typeof remaining === 'string'
+        ? BigInt(remaining)
+        : null;
+  if (remainingMicros === null || remainingMicros < EXPECTED_QUOTE_MICROS) {
+    throw new HarnessFlowError({
+      code: 'CAP_BLOCKED',
+      message: 'Global remaining micros cannot cover one 500,000-micro image probe.',
+    });
+  }
 }
 
 function requireOk(result: HarnessResult): Readonly<Record<string, unknown>> {
@@ -529,7 +678,10 @@ export async function runSingleImageCanary(
   const options = singleImageCanaryArguments(argv);
   const assertions = new Assertions();
   const scanner = new PrivacyScanner();
-  const graph = buildSingleImageCanaryGraph();
+  const graph =
+    options.briefId === undefined || options.masterIndex === undefined
+      ? buildSingleImageCanaryGraph()
+      : await loadFailedImageProbeGraph(options.briefId, options.masterIndex);
   const pricedNodes = graph.nodes.filter((node) => {
     const parameters = record(node.parameters, 'node.parameters');
     return typeof parameters.asset_role === 'string';
@@ -553,8 +705,11 @@ export async function runSingleImageCanary(
 
   await mkdir(options.outDirectory, { recursive: true });
   const runSuffix = randomBytes(6).toString('hex');
+  let workspaceId =
+    options.workspaceId ??
+    (options.mode === 'dry-run' ? 'a53cc127-1102-4ecf-bc80-3bac45b75e6e' : null);
   const context = {
-    workspace_id: options.workspaceId,
+    workspace_id: workspaceId ?? '00000000-0000-4000-8000-000000000000',
     actor_id: 'single-image-canary',
     request_id: `single-image-canary-${runSuffix}`,
   };
@@ -562,12 +717,17 @@ export async function runSingleImageCanary(
     `single-image-canary:${runSuffix}:${operation}`;
   let transport: HarnessTransport;
   let stagingProbe: StagingPersistenceProbe | null = null;
+  let admin: StagingAdminConfiguration | null = null;
   if (options.mode === 'dry-run') {
     transport = createInMemoryHarnessTransport({ providerResult: 'succeeded' });
   } else {
     const configuration = await loadStagingAuthConfiguration();
+    admin = await loadStagingAdminConfiguration();
+    const identity = createDisposableIdentity();
+    await createConfirmedDisposableStagingUser({ configuration: admin, identity });
     const authentication = await authenticateDisposableStagingUser({
       configuration,
+      identity,
       log,
       observeResponseBody: (body) => scanner.scanResponse('supabase:auth', body),
     });
@@ -613,10 +773,32 @@ export async function runSingleImageCanary(
   let failure: SafeHarnessError | null = null;
 
   try {
+    if (workspaceId === null) {
+      if (admin === null) {
+        throw new HarnessFlowError({
+          code: 'STAGING_CONFIG_MISSING',
+          message: 'A failed-image probe needs staging admin credentials to create a workspace.',
+        });
+      }
+      await assertGlobalCapAllowsProbe(admin);
+      const created = requireOk(
+        await call('create_workspace', {
+          context,
+          name: `Image probe ${options.briefId ?? 'canary'} master-${String(options.masterIndex ?? 1)} ${runSuffix}`,
+          idempotency_key: idempotency('workspace'),
+        }),
+      );
+      workspaceId = text(created.workspace_id, 'workspace_id');
+      context.workspace_id = workspaceId;
+      await creditProbeWallet(admin, workspaceId);
+      log(`CREATED probe workspace ${workspaceId}`);
+    } else if (admin !== null) {
+      await assertGlobalCapAllowsProbe(admin);
+    }
     const projectResult = requireOk(
       await call('create_project', {
         context,
-        workspace_id: options.workspaceId,
+        workspace_id: workspaceId,
         name: `Single-image canary ${runSuffix}`,
         idempotency_key: idempotency('project'),
       }),
@@ -662,6 +844,7 @@ export async function runSingleImageCanary(
       }),
     );
     const quote = record(quoteResult.quote, 'quote');
+    const confirmationToken = text(quoteResult.confirmationToken, 'confirmationToken');
     quoteId = text(quote.quoteId, 'quote.quoteId');
     const quoteLines = records(quote.nodeLines, 'quote.nodeLines');
     quoteMicros = micros(quote.maximumChargeMicros, 'quote.maximumChargeMicros');
@@ -681,7 +864,7 @@ export async function runSingleImageCanary(
       context,
       quote_id: quoteId,
       confirmed: true,
-      confirmation_token: `single-image-canary-confirmation-${runSuffix}`,
+      confirmation_token: confirmationToken,
       idempotency_key: idempotency('start'),
     });
     assertions.require(
@@ -721,7 +904,7 @@ export async function runSingleImageCanary(
     const persistence =
       options.mode === 'dry-run'
         ? dryRunPersistence(receipt)
-        : await (stagingProbe as StagingPersistenceProbe).inspect(options.workspaceId, runId);
+        : await (stagingProbe as StagingPersistenceProbe).inspect(workspaceId as string, runId);
     assertions.require('one_attempt', persistence.attempts.length === 1, {
       count: persistence.attempts.length,
     });
@@ -769,7 +952,7 @@ export async function runSingleImageCanary(
     });
     const byteSize = integer(artifact.byte_size, 'artifact.byte_size');
     assertions.require('artifact_nonempty', byteSize > 0, { byte_size: byteSize });
-    const expectedObjectPrefix = `workspaces/${options.workspaceId}/runs/${runId}/`;
+    const expectedObjectPrefix = `workspaces/${workspaceId as string}/runs/${runId}/`;
     assertions.require(
       'artifact_workspace_run_prefix',
       objectKey.startsWith(expectedObjectPrefix),
@@ -862,7 +1045,7 @@ export async function runSingleImageCanary(
   const evidence: CanaryEvidence = {
     schema_version: 1,
     mode: options.mode,
-    workspace_id: options.workspaceId,
+    workspace_id: workspaceId ?? 'unassigned',
     graph_shape: {
       nodes: graph.nodes.map((node) => text(node.id, 'graph.node.id')),
       edges: graph.edges.map((edge) => text(edge.id, 'graph.edge.id')),

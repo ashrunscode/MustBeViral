@@ -17,6 +17,7 @@ import {
   type ProviderTransport,
   type VersionedProviderDriver,
 } from './types';
+import { falWebhookFailureCode } from './webhook';
 
 /**
  * A 2026-07-28 live probe measured that restrictive fal `initial_acl` values also block
@@ -42,10 +43,18 @@ function requirePayloadObject(value: unknown): Readonly<Record<string, unknown>>
 }
 
 function requireNonEmptyString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.length === 0) {
+  if (typeof value !== 'string' || value.trim().length === 0) {
     throw new ProviderError('payload_invalid', `fal ${field} is missing or invalid`, false);
   }
   return value;
+}
+
+function requireFalOpaqueId(value: unknown, field: string): string {
+  const result = requireNonEmptyString(value, field);
+  if (result.length > 200) {
+    throw new ProviderError('payload_invalid', `fal ${field} is missing or invalid`, false);
+  }
+  return result;
 }
 
 function validateModelInput(
@@ -124,10 +133,20 @@ function configuredWebhookUrl(value: string | undefined): string {
       reason: 'webhook_url_invalid',
     });
   }
-  if (parsed.protocol !== 'https:') {
-    throw new ProviderError('provider_error', 'fal webhook URL must use HTTPS', false, {
-      reason: 'webhook_url_invalid',
-    });
+  if (
+    parsed.protocol !== 'https:' ||
+    parsed.username.length > 0 ||
+    parsed.password.length > 0 ||
+    parsed.hash.length > 0
+  ) {
+    throw new ProviderError(
+      'provider_error',
+      'fal webhook URL must be an HTTPS origin URL',
+      false,
+      {
+        reason: 'webhook_url_invalid',
+      },
+    );
   }
   return parsed.toString();
 }
@@ -167,13 +186,13 @@ function parseStatus(body: string, providerJobId: string): ParsedQueueStatus {
   if (status === 'IN_QUEUE') return { state: 'queued', providerJobId };
   if (status === 'IN_PROGRESS') return { state: 'running', providerJobId };
   if (status === 'COMPLETED') {
-    if (typeof payload.error === 'string' && payload.error.length > 0) {
+    if (payload.error !== undefined && payload.error !== null) {
       return {
         state: 'failed',
         providerJobId,
         error: new ProviderError('provider_error', 'fal job failed', false, {
           providerJobId,
-          providerMessage: payload.error,
+          provider_error_code: falWebhookFailureCode(payload),
         }),
       };
     }
@@ -188,13 +207,13 @@ function parseStatus(body: string, providerJobId: string): ParsedQueueStatus {
       },
     };
   }
-  if (status === 'FAILED') {
+  if (status === 'FAILED' || status === 'ERROR') {
     return {
       state: 'failed',
       providerJobId,
       error: new ProviderError('provider_error', 'fal job failed', false, {
         providerJobId,
-        providerMessage: typeof payload.error === 'string' ? payload.error : 'unspecified',
+        provider_error_code: falWebhookFailureCode(payload),
       }),
     };
   }
@@ -229,6 +248,10 @@ export class FalQueueDriver implements VersionedProviderDriver {
     const credential = requireCredential(this.credential, 'fal');
     assertRouteEnabled(this.descriptor, this.enablement);
     const webhookUrl = configuredWebhookUrl(this.webhookUrl);
+    const billingIdempotencyKey = requireFalOpaqueId(
+      input.billingIdempotencyKey,
+      'billing idempotency key',
+    );
     const payload = validateModelInput(this.descriptor, input.payload);
     const submitUrl = new URL(this.descriptor.endpoint);
     submitUrl.searchParams.set('fal_webhook', webhookUrl);
@@ -240,7 +263,7 @@ export class FalQueueDriver implements VersionedProviderDriver {
         headers: {
           authorization: `Key ${credential}`,
           'content-type': 'application/json',
-          'x-fal-idempotency-key': input.billingIdempotencyKey,
+          'x-fal-idempotency-key': billingIdempotencyKey,
           ...FAL_OUTPUT_HEADERS,
         },
         body: JSON.stringify(payload),
@@ -288,11 +311,12 @@ export class FalQueueDriver implements VersionedProviderDriver {
   async status(providerJobId: string): Promise<ProviderJobStatus> {
     const credential = requireCredential(this.credential, 'fal');
     assertRouteEnabled(this.descriptor, this.enablement);
+    const safeProviderJobId = requireFalOpaqueId(providerJobId, 'request_id');
     let response;
     try {
       response = await this.transport.request({
         method: 'GET',
-        url: `${falQueueRequestsBase(this.descriptor.endpoint)}/requests/${encodeURIComponent(providerJobId)}/status`,
+        url: `${falQueueRequestsBase(this.descriptor.endpoint)}/requests/${encodeURIComponent(safeProviderJobId)}/status`,
         headers: { authorization: `Key ${credential}` },
         timeoutMs: 15_000,
       });

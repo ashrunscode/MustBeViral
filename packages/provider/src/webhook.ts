@@ -1,4 +1,4 @@
-import { parseJsonObject, ProviderError } from './errors';
+import { parseJsonObject, ProviderError, providerMachineErrorCode } from './errors';
 import { toTransientDeliveryUrl, type ProviderJobStatus } from './types';
 
 export const FAL_JWKS_URL = 'https://rest.fal.ai/.well-known/jwks.json';
@@ -60,36 +60,6 @@ function header(
   return found?.[1];
 }
 
-const PROVIDER_ERROR_CODE = /^[A-Za-z0-9_.-]{1,80}$/u;
-const HTTP_WRAPPER = /^Invalid status code: (\d{3})$/u;
-const MACHINE_KEYS = ['error_type', 'type', 'code', 'detail', 'error'] as const;
-
-function machineErrorCode(value: unknown): string | undefined {
-  if (typeof value === 'string' && PROVIDER_ERROR_CODE.test(value)) return value;
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      const found = machineErrorCode(item);
-      if (found !== undefined) return found;
-    }
-    return undefined;
-  }
-  if (typeof value === 'object' && value !== null) {
-    const record = value as Readonly<Record<string, unknown>>;
-    // Walk only machine fields. `msg`, `input`, and `url` can carry prompts or signed URLs.
-    for (const key of MACHINE_KEYS) {
-      const found = machineErrorCode(record[key]);
-      if (found !== undefined) return found;
-    }
-  }
-  return undefined;
-}
-
-function mappedHttpWrapper(value: unknown): string | undefined {
-  if (typeof value !== 'string') return undefined;
-  const match = HTTP_WRAPPER.exec(value);
-  return match ? `http_${match[1]}` : undefined;
-}
-
 export function falWebhookFailureCode(payload: Readonly<Record<string, unknown>>): string {
   const nested =
     typeof payload.payload === 'object' &&
@@ -98,19 +68,20 @@ export function falWebhookFailureCode(payload: Readonly<Record<string, unknown>>
       ? (payload.payload as Readonly<Record<string, unknown>>)
       : undefined;
   return (
-    machineErrorCode(payload.error) ??
-    machineErrorCode(payload.error_type) ??
-    machineErrorCode(payload.detail) ??
-    machineErrorCode(nested?.error) ??
-    machineErrorCode(nested?.error_type) ??
-    machineErrorCode(nested?.detail) ??
-    mappedHttpWrapper(payload.error) ??
+    providerMachineErrorCode(payload.error_type) ??
+    providerMachineErrorCode(payload.detail) ??
+    providerMachineErrorCode(nested?.error_type) ??
+    providerMachineErrorCode(nested?.detail) ??
+    // Wrapper strings such as "Invalid status code: 422" are useful only when neither the outer
+    // nor nested structured fields expose the actual provider machine code.
+    providerMachineErrorCode(payload.error) ??
+    providerMachineErrorCode(nested?.error) ??
     'fal_webhook_failed'
   );
 }
 
 export function providerErrorCodeFromFailure(error: ProviderError): string {
-  const detailed = machineErrorCode(error.details.provider_error_code);
+  const detailed = providerMachineErrorCode(error.details.provider_error_code);
   return detailed ?? 'fal_webhook_failed';
 }
 

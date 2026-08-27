@@ -35,19 +35,59 @@ export const COPY_SET_ANGLES = [
 
 export const MASTER_VISUAL_DIRECTIONS = [
   'Packshot-as-hero: product fills the frame, label readable, no logo-only open, no invented lifestyle talent.',
-  'Material and benefit still life: texture and form communicate the benefit without banned likeness or medical staging.',
+  'Material and benefit still life: texture and form communicate the benefit without invented talent.',
   'Proof-forward composition: packaging and approved visual evidence carry the frame. Do not render prices, phone numbers, or legal paragraphs as type.',
 ] as const;
 
+/**
+ * fal accepted the GB-02 packshot-hero master, but repeatedly rejected the same product when the
+ * only material change was the material-still-life or proof-forward direction (request history
+ * 01a01231-440f-79f1-94d2-91d35f344058 accepted; 01a01231-4750-7f83-91b5-a4b124fdf46c,
+ * 01a01231-40df-7810-9898-dd86500989f1, 01a015b4-318b-7991-a5f0-234afa3f18b1, and
+ * 01a0166a-61a0-7611-9dab-7d4457fe0f9f were content-policy failures). Keep the proven
+ * prompt family for every supplement master. fal generates independent variants when no seed is
+ * supplied, so this preserves the three-master launch shape without reintroducing known failures.
+ */
+export const SUPPLEMENT_PACKSHOT_HERO_DIRECTION = MASTER_VISUAL_DIRECTIONS[0];
+
 export const SUPPLEMENT_MASTER_VISUAL_DIRECTIONS = [
-  MASTER_VISUAL_DIRECTIONS[0],
-  'Material still life: bottle, capsules, carton, and readable packaging only. No lifestyle talent.',
-  MASTER_VISUAL_DIRECTIONS[2],
+  SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
+  SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
+  SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
 ] as const;
 
 export function isSupplementCategory(category: string): boolean {
   const normalized = category.trim().toLowerCase();
   return normalized === 'supplements' || normalized.startsWith('supplements;');
+}
+
+/**
+ * Words that live fal treated as the depicted concept on GB-02 FLUX.2 masters, even when the
+ * brief used them as negatives. Image prompts must not teach the model those subjects.
+ */
+export const IMAGE_PROVIDER_BANNED_CONCEPT =
+  /\b(doctors?|sleep(?:ing|s)?|bedrooms?|muscles?|medical|clinical(?:-calm)?|white[\s-]?coats?|body[\s-]+transformation|insomnia|anxiety)\b/iu;
+
+const NAMED_IMAGE_PROHIBITION =
+  /\b(no|without|never|avoid)\b[\s\S]{0,160}\b(doctors?|sleep(?:ing|s)?|bedrooms?|muscles?|medical|white[\s-]?coats?|body[\s-]+transformation|insomnia|anxiety)\b/iu;
+
+export const PRODUCT_ONLY_VISUAL_RIGHTS =
+  'Product packaging only. Preserve supplied labels unaltered. No lifestyle talent.';
+
+export function imageSafeText(value: unknown): string | undefined {
+  if (typeof value !== 'string') return undefined;
+  const trimmed = value.trim();
+  if (trimmed.length === 0) return undefined;
+  if (NAMED_IMAGE_PROHIBITION.test(trimmed) || /body[\s-]+transformation/iu.test(trimmed)) {
+    return PRODUCT_ONLY_VISUAL_RIGHTS;
+  }
+  if (!IMAGE_PROVIDER_BANNED_CONCEPT.test(trimmed)) return trimmed;
+  const stripped = trimmed
+    .replace(new RegExp(IMAGE_PROVIDER_BANNED_CONCEPT.source, 'giu'), ' ')
+    .replace(/\s+/gu, ' ')
+    .replace(/\s+([,.;:])/gu, '$1')
+    .trim();
+  return stripped.length > 0 ? stripped : undefined;
 }
 
 export function masterVisualDirectionsFor(category: string): readonly [string, string, string] {
@@ -194,6 +234,43 @@ export function buildGoldenLaunchPackGraph(brief: GoldenCampaignBrief): GraphSna
   edges.push(...reviewableIds.map((id) => edge(id, 'qa')), edge('qa', 'export'));
 
   return { nodes, edges };
+}
+
+export function buildFailedImageProbeGraph(
+  brief: GoldenCampaignBrief,
+  masterIndex: 1 | 2 | 3,
+): GraphSnapshot {
+  const masterId = `master-${String(masterIndex)}`;
+  return {
+    nodes: [
+      node('brief', 'brief', {
+        brief_id: brief.briefId,
+        product: brief.product,
+        category: brief.category,
+        offer: brief.offer,
+        price_presentation: brief.pricePresentation,
+        audience_and_awareness: brief.audienceAndAwareness,
+        required_claims_legal: brief.requiredClaimsLegal,
+        prohibited_claims: brief.prohibitedClaims,
+        creative_constraints_rights: brief.creativeConstraintsRights,
+      }),
+      node('brand-context', 'brand_context', {
+        brand_kit: brief.brandKit,
+        approved_facts: brief.approvedFacts,
+        evidence: brief.evidence,
+      }),
+      node(masterId, 'image_generation', {
+        asset_role: 'master_static',
+        master: masterIndex,
+        visual_direction:
+          masterVisualDirectionsFor(brief.category)[masterIndex - 1] ?? MASTER_VISUAL_DIRECTIONS[0],
+        product: brief.product,
+        packshots: brief.packshots,
+        creative_constraints_rights: brief.creativeConstraintsRights,
+      }),
+    ],
+    edges: [edge('brief', 'brand-context'), edge('brand-context', masterId)],
+  };
 }
 
 export function launchPackGraphPatch(snapshot: GraphSnapshot): {

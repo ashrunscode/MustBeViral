@@ -172,8 +172,16 @@ export function RunProgress({
             <MonoCaps>
               Run {snapshot.runId} · Rev {snapshot.revision}
             </MonoCaps>
-            <h1 id="run-title">Generating the launch pack</h1>
-            <p>Completed branches remain reviewable while downstream work continues.</p>
+            <h1 id="run-title">
+              {snapshot.state === 'failed'
+                ? 'This launch pack stopped'
+                : 'Generating the launch pack'}
+            </h1>
+            <p>
+              {snapshot.state === 'failed'
+                ? 'Failed branches name what happened, whether spend was accepted, and the safest next step.'
+                : 'Completed branches remain reviewable while downstream work continues.'}
+            </p>
           </div>
           <Chip
             status={
@@ -203,6 +211,21 @@ export function RunProgress({
             >
               Review available outputs
             </Link>
+          </div>
+        ) : null}
+        {snapshot.recovery !== null ? (
+          <div
+            className={styles.recoveryMoment}
+            role="alert"
+            data-recovery={snapshot.recovery.kind}
+          >
+            <strong>{snapshot.recovery.title}</strong>
+            <p>
+              {snapshot.recovery.whatFailed} {snapshot.recovery.spend}
+            </p>
+            <p>{snapshot.recovery.retained}</p>
+            <p>{snapshot.recovery.nextAction}</p>
+            <Link href={`/studio/${workspace}/brief`}>Edit campaign brief</Link>
           </div>
         ) : null}
         <RunResultNotice result={result} />
@@ -285,7 +308,11 @@ export function RunProgress({
           <MonoCaps>{terminal ? 'Terminal state' : 'Providers active'}</MonoCaps>
           <strong>{snapshot.state}</strong>
         </div>
-        {snapshot.state === 'complete' || snapshot.state === 'failed' ? (
+        {snapshot.state === 'failed' && !snapshot.firstReviewable ? (
+          <Link className="mbv-button mbv-button--primary" href={`/studio/${workspace}/brief`}>
+            Edit campaign brief
+          </Link>
+        ) : snapshot.state === 'complete' || snapshot.state === 'failed' ? (
           <Link
             className="mbv-button mbv-button--primary"
             href={`/studio/${workspace}/review/compare?run=${encodeURIComponent(snapshot.runId)}`}

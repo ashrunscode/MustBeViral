@@ -82,6 +82,10 @@ export const RunNodeRecordSchema = z
     modelRouteId: IdentifierSchema.nullable(),
     status: z.enum(runNodeStates),
     dispatchWave: z.number().int().nonnegative(),
+    providerErrorCode: z
+      .string()
+      .regex(/^[A-Za-z0-9_.-]{1,80}$/u)
+      .optional(),
   })
   .strict();
 

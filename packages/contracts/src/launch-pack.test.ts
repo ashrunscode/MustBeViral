@@ -3,9 +3,13 @@ import { describe, expect, it } from 'vitest';
 import {
   COPY_SET_ANGLES,
   MASTER_VISUAL_DIRECTIONS,
+  PRODUCT_ONLY_VISUAL_RIGHTS,
   SUPPLEMENT_MASTER_VISUAL_DIRECTIONS,
+  SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
+  buildFailedImageProbeGraph,
   buildGoldenLaunchPackGraph,
   graphLooksLikeLaunchPack,
+  imageSafeText,
   launchPackShapeOf,
 } from './launch-pack';
 import { evaluateLaunchPackCopy, parseLaunchPackCopy } from './launch-pack-qa';
@@ -51,11 +55,12 @@ describe('launch pack graph', () => {
     expect(masters).toEqual([...MASTER_VISUAL_DIRECTIONS]);
     expect(new Set(copyAngles).size).toBe(3);
     expect(new Set(masters).size).toBe(3);
+    expect(MASTER_VISUAL_DIRECTIONS[1]).not.toMatch(/\bmedical\b/iu);
     expect(graphLooksLikeLaunchPack(graph, brief.product)).toBe(true);
     expect(graphLooksLikeLaunchPack(graph, 'Other product')).toBe(false);
   });
 
-  it('keeps supplement masters on packaging instead of benefit-body still life', () => {
+  it('keeps every supplement master on the policy-proven packshot direction', () => {
     const graph = buildGoldenLaunchPackGraph({
       ...brief,
       briefId: 'GB-02',
@@ -66,9 +71,62 @@ describe('launch pack graph', () => {
       .filter((node) => node.parameters.asset_role === 'master_static')
       .map((node) => node.parameters.visual_direction);
     expect(masters).toEqual([...SUPPLEMENT_MASTER_VISUAL_DIRECTIONS]);
-    expect(String(masters[1])).toMatch(/bottle, capsules, carton/u);
-    expect(String(masters[1])).not.toMatch(/benefit still life/u);
-    expect(String(masters[1])).not.toMatch(/\b(doctor|sleep|bedroom|muscle|medical)\b/iu);
+    expect(masters).toEqual([
+      SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
+      SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
+      SUPPLEMENT_PACKSHOT_HERO_DIRECTION,
+    ]);
+    expect(masters.join('\n')).not.toMatch(/material still life|proof-forward composition/iu);
+  });
+
+  it('builds a one-master probe with the same visual fields as the launch pack', () => {
+    const supplement = {
+      ...brief,
+      briefId: 'GB-02',
+      product: 'Northstar Magnesium Glycinate Night Capsules.',
+      category: 'Supplements; 60-capsule magnesium glycinate dietary supplement.',
+      packshots: 'Amber bottle with front/back Supplement Facts.',
+      creativeConstraintsRights:
+        'Supplement Facts must remain readable; no doctor imagery, white coats, body transformation.',
+    };
+    const probe = buildFailedImageProbeGraph(supplement, 2);
+    expect(probe.nodes.map((node) => node.id)).toEqual(['brief', 'brand-context', 'master-2']);
+    expect(
+      probe.nodes.filter((node) => node.parameters.asset_role === 'master_static'),
+    ).toHaveLength(1);
+    expect(probe.nodes.find((node) => node.id === 'master-2')?.parameters.visual_direction).toBe(
+      SUPPLEMENT_MASTER_VISUAL_DIRECTIONS[1],
+    );
+    expect(probe.nodes.some((node) => node.parameters.asset_role === 'copy_set')).toBe(false);
+    expect(probe.nodes.some((node) => node.parameters.asset_role === 'adaptation')).toBe(false);
+  });
+});
+
+describe('imageSafeText', () => {
+  it('replaces a named medical prohibition list instead of sending the banned words', () => {
+    expect(
+      imageSafeText(
+        'Supplement Facts must remain readable; no doctor imagery, white coats, body transformation.',
+      ),
+    ).toBe(PRODUCT_ONLY_VISUAL_RIGHTS);
+  });
+
+  it('strips clinical voice from a brand kit without dropping the palette', () => {
+    expect(
+      imageSafeText(
+        'Navy and mineral gray, compact grotesk type, clinical and precise voice, no moon-and-cloud fantasy scenes.',
+      ),
+    ).toBe(
+      'Navy and mineral gray, compact grotesk type, and precise voice, no moon-and-cloud fantasy scenes.',
+    );
+  });
+
+  it('leaves a product-only packshot line unchanged', () => {
+    expect(
+      imageSafeText(
+        'Amber bottle with front/back Supplement Facts, two capsules beside the closed bottle.',
+      ),
+    ).toBe('Amber bottle with front/back Supplement Facts, two capsules beside the closed bottle.');
   });
 });
 

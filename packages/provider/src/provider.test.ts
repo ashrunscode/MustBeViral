@@ -384,6 +384,37 @@ describe('fal queue launch drivers', () => {
     expect(transport.requests).toHaveLength(0);
   });
 
+  it('rejects unsafe callback URLs and invalid provider identifiers before transport', async () => {
+    const transport = new FixtureTransport([]);
+    const unsafeWebhook = new FalQueueDriver(
+      enabled(falFlux2ProDescriptor),
+      transport,
+      fixtureCredential,
+      'https://user:password@core.fixture.invalid/v1/webhooks/fal#secret',
+    );
+    await expect(
+      unsafeWebhook.submit({
+        billingIdempotencyKey: 'billing-fal-unsafe-webhook',
+        payload: { prompt: 'Fixture.' },
+      }),
+    ).rejects.toMatchObject({
+      code: 'provider_error',
+      details: { reason: 'webhook_url_invalid' },
+    });
+
+    const driver = new FalQueueDriver(
+      enabled(falFlux2ProDescriptor),
+      transport,
+      fixtureCredential,
+      fixtureFalWebhookUrl,
+    );
+    await expect(
+      driver.submit({ billingIdempotencyKey: '   ', payload: { prompt: 'Fixture.' } }),
+    ).rejects.toMatchObject({ code: 'payload_invalid' });
+    await expect(driver.status('')).rejects.toMatchObject({ code: 'payload_invalid' });
+    expect(transport.requests).toHaveLength(0);
+  });
+
   it.each([
     ['provider_error', 'fal/provider_error.json', 'provider_error'],
     ['rate_limited', 'fal/rate_limited.json', 'rate_limited'],
@@ -455,6 +486,41 @@ describe('fal queue launch drivers', () => {
     expect(transport.requests[1]?.url).toBe(
       'https://queue.fal.run/fal-ai/flux-2-pro/requests/fal-job-fixture-001',
     );
+  });
+
+  it('keeps only the machine failure code from a polled fal error payload', async () => {
+    const sensitivePrompt = 'private customer prompt that must never enter persisted diagnostics';
+    const transport = new FixtureTransport([
+      {
+        status: 200,
+        headers: {},
+        body: {
+          status: 'ERROR',
+          error: 'Invalid status code: 422',
+          detail: [
+            {
+              type: 'content_policy_violation',
+              msg: 'Provider rejected the supplied prompt.',
+              input: sensitivePrompt,
+            },
+          ],
+        },
+      },
+    ]);
+    const driver = new FalQueueDriver(enabled(falFlux2ProDescriptor), transport, fixtureCredential);
+
+    const result = await driver.status('fal-job-fixture-001');
+
+    expect(result).toMatchObject({
+      state: 'failed',
+      error: {
+        details: {
+          provider_error_code: 'content_policy_violation',
+        },
+      },
+    });
+    expect(JSON.stringify(result)).not.toContain(sensitivePrompt);
+    expect(JSON.stringify(result)).not.toContain('Provider rejected the supplied prompt.');
   });
 
   // fal namespaces status/result under the application (the first two path segments) and 405s on a

@@ -352,7 +352,18 @@ const RUN_NODE_STATES = new Set([
   'reconciliation_required',
 ]);
 
-function runNodeRecord(row: Readonly<DatabaseRow<'run_nodes'>>): RunNodeRecord {
+const PROVIDER_ERROR_CODE = /^[A-Za-z0-9_.-]{1,80}$/u;
+
+function providerErrorCodeFromEvidence(value: Json): string | undefined {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return undefined;
+  const code = value.provider_error_code;
+  return typeof code === 'string' && PROVIDER_ERROR_CODE.test(code) ? code : undefined;
+}
+
+function runNodeRecord(
+  row: Readonly<DatabaseRow<'run_nodes'>>,
+  providerErrorCode?: string,
+): RunNodeRecord {
   const status = requiredString(row.status, 'run_node.status');
   if (!RUN_NODE_STATES.has(status)) {
     throw new TypeError('Database returned an unsupported run-node state');
@@ -363,6 +374,7 @@ function runNodeRecord(row: Readonly<DatabaseRow<'run_nodes'>>): RunNodeRecord {
     modelRouteId: row.model_route_id,
     status: status as RunNodeRecord['status'],
     dispatchWave: row.dispatch_wave,
+    ...(providerErrorCode === undefined ? {} : { providerErrorCode }),
   };
 }
 
@@ -920,9 +932,29 @@ export function createSupabaseHandlerPorts(
         return runRecord(row, reservation?.id);
       },
       async listNodes(context, runId) {
-        return (await repositories.runs.listNodes(asTenantContext(context), runId)).map(
-          runNodeRecord,
-        );
+        const tenant = asTenantContext(context);
+        const [nodes, attempts, jobs] = await Promise.all([
+          repositories.runs.listNodes(tenant, runId),
+          executor.select('attempts', {
+            run_id: `eq.${runId}`,
+            workspace_id: `eq.${context.workspace_id}`,
+            select: 'id,run_node_id',
+          }),
+          executor.select('provider_jobs', {
+            run_id: `eq.${runId}`,
+            workspace_id: `eq.${context.workspace_id}`,
+            select: 'attempt_id,normalized_evidence',
+          }),
+        ]);
+        const attemptToNode = new Map(attempts.map((attempt) => [attempt.id, attempt.run_node_id]));
+        const codes = new Map<string, string>();
+        for (const job of jobs) {
+          const nodeId = attemptToNode.get(job.attempt_id);
+          const code = providerErrorCodeFromEvidence(job.normalized_evidence);
+          if (nodeId === undefined || code === undefined || codes.has(nodeId)) continue;
+          codes.set(nodeId, code);
+        }
+        return nodes.map((row) => runNodeRecord(row, codes.get(row.id)));
       },
       async startBarrier(context, input) {
         return repositories.runs.startBarrier(asTenantContext(context), {

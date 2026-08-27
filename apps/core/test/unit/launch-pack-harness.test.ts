@@ -548,7 +548,7 @@ describe('golden launch-pack harness', () => {
     expect(document).toContain('operator@example.test');
     expect(document).toContain('local-secret');
     expect(document).toContain('22,750,000 micros');
-    expect(document).toContain('Two packs per day');
+    expect(document).toContain('fail-evaluation');
     expect(document).toContain('/studio/workspace-1/canvas?canvas=canvas-1');
   });
 });

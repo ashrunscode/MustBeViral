@@ -1,4 +1,9 @@
-import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
+import {
+  runFailureRecoveryCopy,
+  type MustBeViralRestClient,
+  type P0OperationData,
+  type RunFailureRecoveryCopy,
+} from '@mustbeviral/contracts';
 
 import { quoteIsExpired, type QuoteConfirmResult, type RunQuote } from '../quote/quote-port';
 
@@ -23,6 +28,7 @@ export interface RunSnapshot {
   readonly state: RunState;
   readonly firstReviewable: boolean;
   readonly attempts: readonly RunAttempt[];
+  readonly recovery: RunFailureRecoveryCopy | null;
 }
 
 export type RunPortResult =
@@ -192,13 +198,27 @@ function visibleRunState(status: string): RunState {
   return 'running';
 }
 
+function failedNodeRecovery(data: P0OperationData<'get_run'>): RunFailureRecoveryCopy | null {
+  const failed = data.nodes.filter((node) => node.status === 'failed');
+  if (failed.length === 0) return null;
+  const policy = failed.find((node) => node.providerErrorCode === 'content_policy_violation');
+  return runFailureRecoveryCopy(policy?.providerErrorCode ?? failed[0]?.providerErrorCode);
+}
+
+function nodeDetail(node: P0OperationData<'get_run'>['nodes'][number]): string {
+  if (node.status === 'failed') {
+    return runFailureRecoveryCopy(node.providerErrorCode).attemptDetail;
+  }
+  return `Dispatch wave ${String(node.dispatchWave)} · ${node.status.replaceAll('_', ' ')}`;
+}
+
 function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {
   const attempts = data.nodes.map((node) => ({
     id: node.runNodeId,
     node: node.nodeKey,
     provider: node.modelRouteId ?? 'Core route',
     state: runAttemptState(node.status),
-    detail: `Dispatch wave ${String(node.dispatchWave)} · ${node.status.replaceAll('_', ' ')}`,
+    detail: nodeDetail(node),
   }));
   return {
     runId: data.run.runId,
@@ -207,6 +227,7 @@ function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {
     state: runState(data),
     firstReviewable: attempts.some((attempt) => attempt.state === 'complete'),
     attempts,
+    recovery: failedNodeRecovery(data),
   };
 }
 
@@ -416,6 +437,7 @@ function snapshotFor(sequence: number, attempts: readonly RunAttempt[]): RunSnap
           : 'running',
     firstReviewable: completeCount > 0,
     attempts,
+    recovery: failed ? runFailureRecoveryCopy('content_policy_violation') : null,
   };
 }
 
@@ -449,7 +471,7 @@ export class InMemoryRunPort implements RunPort {
               ? {
                   ...attempt,
                   state: 'failed' as const,
-                  detail: 'Provider output failed; no charge accepted',
+                  detail: runFailureRecoveryCopy('content_policy_violation').attemptDetail,
                 }
               : attempt,
           )

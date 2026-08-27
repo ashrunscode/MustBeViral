@@ -3,6 +3,33 @@
 Work packet: WP-P0-001, step p0-005-golden-launch-pack-runs
 Recorded 2026-08-11
 
+## Current status — 2026-08-20
+
+This current-status block supersedes the opening roll-up and Gate 1 verdict below without erasing
+their historical sequence. Amendment 18 and the machine summary prove 16 of 20 registered runs
+complete, with 101.631-second median and 122.314-second p90 first-reviewable latency. The
+representative completion and latency gate is proven, and `p0-005-golden-launch-pack-runs` is
+complete. The packet is now on `p0-007-p0-gate-evaluation`.
+
+Current roll-up:
+
+| Packet gate                                    | Verdict             | Decisive fact                                                                 |
+| ---------------------------------------------- | ------------------- | ----------------------------------------------------------------------------- |
+| Representative completion and latency          | proven              | 16/20 complete; median 101.631 seconds and p90 122.314 seconds pass           |
+| Transactional spend, deduplication, and ledger | proven              | Caps, replay, settlement, and zero-residual evidence pass                     |
+| Private artifact trust and lineage             | proven              | Completed registered packs pass private artifact/export/receipt assertions    |
+| Canvas and web performance                     | pending-remediation | 100-node and 500-node budgets pass; production-segment Web Vitals are absent  |
+| Private MCP and REST semantic parity           | proven              | Exactly five tools; shared vectors plus Inspector and two SDK clients pass    |
+| Usable-pack landed cost                        | pending-remediation | No qualified usable denominator or complete fully landed provider cost exists |
+| Unassisted workflow completion                 | pending-human       | Zero qualified sessions completed                                             |
+| Usable concept rate                            | pending-human       | Zero qualified usable-concept judgments                                       |
+| Evaluator workflow preference                  | pending-human       | The fixed first-five cohort has not completed                                 |
+| Qualified paid pilot                           | pending-human       | No qualified payment or signed pilot evidence exists                          |
+
+Current canvas evidence is 60.16 FPS for 100 nodes and 60.26 FPS for the 500-node stress fixture,
+with 30 DOM nodes mounted and 29.9 ms selection latency. These values supersede the earlier passing
+samples in Gate 4. See `launch-readiness-verification-2026-08-20.md`.
+
 ## 1. Package boundary and gate mapping
 
 This is the p0-007 evaluation dossier assembled while p0-005 remains current. It makes no step

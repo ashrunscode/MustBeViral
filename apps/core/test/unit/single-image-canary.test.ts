@@ -73,6 +73,25 @@ describe('single-image canary', () => {
     expect(() => singleImageCanaryArguments(['--staging', '--out', 'canary-output'])).toThrow(
       '--workspace requires',
     );
+    expect(
+      singleImageCanaryArguments([
+        '--dry-run',
+        '--brief',
+        'GB-02',
+        '--master',
+        '2',
+        '--out',
+        'canary-output',
+      ]),
+    ).toMatchObject({
+      mode: 'dry-run',
+      workspaceId: null,
+      briefId: 'GB-02',
+      masterIndex: 2,
+    });
+    expect(() =>
+      singleImageCanaryArguments(['--dry-run', '--brief', 'GB-02', '--out', 'canary-output']),
+    ).toThrow('--master requires');
   });
 
   it('recognizes only forbidden provider delivery hosts', () => {

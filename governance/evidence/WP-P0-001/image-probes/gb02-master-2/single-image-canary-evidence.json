@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "mode": "staging",
+  "workspace_id": "3742b698-53e1-4f87-a1f3-a34314cc348e",
+  "graph_shape": {
+    "nodes": ["brief", "brand-context", "master-2"],
+    "edges": ["edge-brief-brand-context", "edge-brand-context-master-2"],
+    "priced_nodes": ["master-2"]
+  },
+  "quote_micros": "500000",
+  "quote_id": "67dfb471-06ae-4810-b895-fdda428ac33c",
+  "run_id": "46d4e12b-dc3b-4e41-8ac1-961057c700f1",
+  "artifact_id": null,
+  "content_hash": null,
+  "object_key": null,
+  "money": {
+    "amount_micros": null,
+    "captured_micros": null,
+    "released_micros": null,
+    "residual_micros": null
+  },
+  "lineage": {
+    "provider": null,
+    "model_id": null,
+    "capture_micros": null
+  },
+  "terminal_latency_ms": 57958,
+  "raw_response_bodies_scanned": 19,
+  "artifact_records_scanned": 0,
+  "assertions": [
+    {
+      "id": "graph_exact_shape",
+      "check": "Graph has exactly three nodes and two legal dependency edges.",
+      "passed": true,
+      "observed": {
+        "nodes": 3,
+        "edges": 2
+      }
+    },
+    {
+      "id": "graph_one_priced_node",
+      "check": "Graph has exactly one priced output and its asset_role is 'master_static'.",
+      "passed": true,
+      "observed": {
+        "priced_node_count": 1,
+        "asset_role": "master_static"
+      }
+    },
+    {
+      "id": "validate_graph",
+      "check": "validate_graph returns valid=true.",
+      "passed": true,
+      "observed": {
+        "valid": true
+      }
+    },
+    {
+      "id": "quote_one_line",
+      "check": "Quote contains exactly one priced node line.",
+      "passed": true,
+      "observed": {
+        "node_line_count": 1
+      }
+    },
+    {
+      "id": "quote_total",
+      "check": "Quote total is exactly 500000 USD micros.",
+      "passed": true,
+      "observed": {
+        "total_micros": "500000"
+      }
+    },
+    {
+      "id": "quote_window",
+      "check": "Quote expiry is exactly 15 minutes after creation.",
+      "passed": true,
+      "observed": {
+        "window_ms": 900000
+      }
+    },
+    {
+      "id": "start_run_accepted",
+      "check": "Explicitly confirmed start_run succeeds; MODEL_UNAVAILABLE is a failure.",
+      "passed": true,
+      "observed": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "terminal_before_timeout",
+      "check": "get_run reaches a terminal state before timeout.",
+      "passed": true,
+      "observed": {
+        "latency_ms": 57958
+      }
+    },
+    {
+      "id": "run_succeeded",
+      "check": "Terminal run status is exactly 'succeeded'.",
+      "passed": false,
+      "observed": {
+        "status": "failed"
+      }
+    },
+    {
+      "id": "one_attempt",
+      "check": "Exactly one persisted attempt exists for the run.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "one_provider_job",
+      "check": "Exactly one persisted provider job exists for the run.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "attempt_provider_job_link",
+      "check": "The provider job links to the sole succeeded attempt and priced run node.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "one_artifact",
+      "check": "Exactly one persisted artifact exists for the run.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "artifact_provider_output",
+      "check": "The artifact artifact_kind is exactly 'provider_output'.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "artifact_available",
+      "check": "The artifact status is exactly 'available'.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "artifact_content_hash",
+      "check": "The artifact content_hash is a lowercase 64-character SHA-256 hex digest.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "artifact_nonempty",
+      "check": "The artifact byte_size is greater than zero.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "artifact_workspace_run_prefix",
+      "check": "The artifact object_key is scoped under the exact workspace and run prefix.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "artifact_key_private",
+      "check": "The artifact object_key contains no '://' sequence.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "reservation_amount",
+      "check": "The reservation amount is exactly 500000 micros.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "capture_total",
+      "check": "The captured amount is exactly 500000 micros.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "reservation_zero_residual",
+      "check": "Reservation amount - captured - released equals zero.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "receipt_provider_model_cost_lineage",
+      "check": "Receipt ledger, persisted provider job, model route, and artifact join to one real fal model and one capture transaction.",
+      "passed": false,
+      "observed": "not_reached"
+    },
+    {
+      "id": "privacy_api_responses",
+      "check": "No forbidden provider delivery host appears in any observed raw API response body.",
+      "passed": true,
+      "observed": {
+        "scanned": 19,
+        "violation_locations": []
+      }
+    },
+    {
+      "id": "privacy_artifact_fields",
+      "check": "No forbidden provider delivery host appears in any observed persisted artifact field.",
+      "passed": true,
+      "observed": {
+        "scanned": 0,
+        "violation_locations": []
+      }
+    }
+  ],
+  "error": {
+    "code": "CANARY_ASSERTION_FAILED",
+    "message": "Canary assertion failed: run_succeeded."
+  }
+}

@@ -141,8 +141,8 @@ Seeded registered-brief canvases:
 ${seeded}
 
 Each confirmed full-pack run captures 4,550,000 micros. The wallet contains five pack credits
-(22,750,000 micros). Two packs per day is the comfortable cadence when same-day cap headroom is
-desired; never bypass or raise the $25/workspace/day transactional cap.
+(22,750,000 micros). Same-UTC-day retry is allowed only after a fail-evaluation record returns
+evaluated_retry; never bypass or raise the $25/workspace/day transactional cap.
 `;
 }
 

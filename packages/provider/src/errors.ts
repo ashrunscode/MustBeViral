@@ -48,8 +48,61 @@ export function requireCredential(credential: string | undefined, provider: stri
   return credential;
 }
 
+const PROVIDER_ERROR_CODE = /^[A-Za-z0-9_.-]{1,80}$/u;
+const HTTP_STATUS_WRAPPER = /^Invalid status code: (\d{3})$/u;
+const PROVIDER_MACHINE_KEYS = ['error_type', 'type', 'code', 'detail', 'error'] as const;
+
+/**
+ * Extracts a provider's bounded machine-readable failure code without retaining prompts, signed
+ * delivery URLs, or free-form response text. Provider error payloads are untrusted and may echo
+ * the complete input, so callers must never persist the raw body merely for diagnostics.
+ */
+export function providerMachineErrorCode(value: unknown): string | undefined {
+  if (typeof value === 'string') {
+    if (PROVIDER_ERROR_CODE.test(value)) return value;
+    const wrapper = HTTP_STATUS_WRAPPER.exec(value);
+    return wrapper ? `http_${wrapper[1]}` : undefined;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = providerMachineErrorCode(item);
+      if (found !== undefined) return found;
+    }
+    return undefined;
+  }
+  if (typeof value === 'object' && value !== null) {
+    const record = value as Readonly<Record<string, unknown>>;
+    // Deliberately ignore `msg`, `input`, and `url`: fal and other providers may place customer
+    // prompts or signed delivery capabilities in those fields.
+    for (const key of PROVIDER_MACHINE_KEYS) {
+      const found = providerMachineErrorCode(record[key]);
+      if (found !== undefined) return found;
+    }
+  }
+  return undefined;
+}
+
+function safeHttpErrorDetails(
+  provider: string,
+  status: number,
+  body: string,
+): Readonly<Record<string, unknown>> {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(body) as unknown;
+  } catch {
+    parsed = undefined;
+  }
+  const providerErrorCode = providerMachineErrorCode(parsed);
+  return {
+    provider,
+    status,
+    ...(providerErrorCode === undefined ? {} : { provider_error_code: providerErrorCode }),
+  };
+}
+
 export function errorFromHttpStatus(provider: string, status: number, body: string): ProviderError {
-  const details = { provider, status, responseBody: body.slice(0, 512) };
+  const details = safeHttpErrorDetails(provider, status, body);
   if (status === 401 || status === 403) {
     return new ProviderError(
       'auth_rejected',

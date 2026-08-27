@@ -48,7 +48,7 @@ describe('RunProgress', () => {
         return port;
       },
       'data-run-state="failed"',
-      'Provider output failed',
+      'Image blocked by content policy',
     ],
     [
       () => {
@@ -74,5 +74,17 @@ describe('RunProgress', () => {
     const html = renderToStaticMarkup(<RunProgress workspace="lumen-skin" port={createPort()} />);
     expect(html).toContain(marker);
     expect(html).toContain(copy);
+  });
+
+  it('names content-policy recovery without exposing provider payloads', () => {
+    const port = new InMemoryRunPort('failed');
+    port.advance('run-lumen-0007', 0);
+    port.advance('run-lumen-0007', 1);
+    const html = renderToStaticMarkup(<RunProgress workspace="lumen-skin" port={port} />);
+    expect(html).toContain('data-recovery="content_policy_violation"');
+    expect(html).toContain('This launch pack stopped');
+    expect(html).toContain('Do not resubmit the same prompt');
+    expect(html).toContain('Edit campaign brief');
+    expect(html).not.toMatch(/fal\.|payload|signed url/iu);
   });
 });

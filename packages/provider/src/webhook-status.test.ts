@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ProviderError } from './errors';
+import { errorFromHttpStatus, ProviderError } from './errors';
 import { falWebhookFailureCode, providerErrorCodeFromFailure } from './webhook';
 
 describe('fal webhook failure codes', () => {
@@ -70,5 +70,29 @@ describe('fal webhook failure codes', () => {
     expect(
       providerErrorCodeFromFailure(new ProviderError('provider_error', 'fixture failure', false)),
     ).toBe('fal_webhook_failed');
+  });
+
+  it('sanitizes HTTP failures instead of retaining provider response bodies', () => {
+    const error = errorFromHttpStatus(
+      'fal',
+      422,
+      JSON.stringify({
+        detail: [
+          {
+            type: 'content_policy_violation',
+            msg: 'Rejected private customer prompt.',
+            input: 'signed-url-or-customer-prompt',
+          },
+        ],
+      }),
+    );
+
+    expect(error.details).toEqual({
+      provider: 'fal',
+      status: 422,
+      provider_error_code: 'content_policy_violation',
+    });
+    expect(JSON.stringify(error.details)).not.toContain('private customer');
+    expect(JSON.stringify(error.details)).not.toContain('signed-url');
   });
 });

@@ -18,11 +18,19 @@ import {
   type ProviderTransport,
   type ProviderTransportRequest,
   type ProviderTransportResponse,
+  type VerifiedFalWebhook,
 } from '../../../../packages/provider/src/index';
+
+import {
+  imageSafeText,
+  isSupplementCategory,
+  PRODUCT_ONLY_VISUAL_RIGHTS,
+} from '@mustbeviral/contracts';
 
 import type { CoreBindings } from '../bindings';
 import { mintArtifactAccessUrl } from './artifact-access';
 import { PrivilegedArtifactMachinePort } from './artifact-machine';
+import { createFalWebhookIngestHandler, type FalIngestResult } from './fal-ingest';
 import {
   createCopyBytesWriter,
   ingestCopyCompletion,
@@ -219,13 +227,9 @@ function splitBriefContext(briefContext: unknown): {
  * advertised. The offer line already carries whatever the frame is allowed to say. Copy gets the
  * full facts because a language model can be told which price attaches to which service.
  */
-const SUPPLEMENT_VISUAL_RIGHTS =
-  'Product packaging only. Preserve supplied labels unaltered. No lifestyle talent.';
-
 function isSupplementBrief(briefContext: unknown): boolean {
   const { brief } = splitBriefContext(briefContext);
-  const category = typeof brief.category === 'string' ? brief.category.trim().toLowerCase() : '';
-  return category === 'supplements' || category.startsWith('supplements;');
+  return typeof brief.category === 'string' && isSupplementCategory(brief.category);
 }
 
 function imageContextParts(briefContext: unknown): readonly unknown[] {
@@ -233,14 +237,16 @@ function imageContextParts(briefContext: unknown): readonly unknown[] {
   // fal validates image safety only when the queued job executes. Live GB-02 masters on f5fa333f
   // still returned content_policy_violation after offer/audience stripping because the image prompt
   // kept naming banned concepts ("doctor", "sleep", "body") in rights text and negative directions.
-  // Those fragments belong to copy. Keep supplement image prompts to the product, a visual-only
-  // rights line, and brand direction.
+  // Category detection can miss a live form typo. Sanitize every image fragment so those words
+  // never reach fal, even when the brief used them as negatives.
   const isSupplement = isSupplementBrief(briefContext);
   return [
-    brief.product,
-    ...(isSupplement ? [] : [brief.offer, brief.audience_and_awareness]),
-    isSupplement ? SUPPLEMENT_VISUAL_RIGHTS : brief.creative_constraints_rights,
-    brand.brand_kit,
+    imageSafeText(brief.product),
+    ...(isSupplement
+      ? []
+      : [imageSafeText(brief.offer), imageSafeText(brief.audience_and_awareness)]),
+    isSupplement ? PRODUCT_ONLY_VISUAL_RIGHTS : imageSafeText(brief.creative_constraints_rights),
+    imageSafeText(brand.brand_kit),
   ];
 }
 
@@ -248,7 +254,8 @@ function imageRightsFromNode(
   briefContext: unknown,
   nodeParameters: Readonly<Record<string, unknown>>,
 ): unknown {
-  return isSupplementBrief(briefContext) ? undefined : nodeParameters.creative_constraints_rights;
+  if (isSupplementBrief(briefContext)) return undefined;
+  return imageSafeText(nodeParameters.creative_constraints_rights);
 }
 
 /**
@@ -343,9 +350,9 @@ export async function buildProviderAttemptPayload(
     // Without it the three masters are generic stock imagery and the nine adaptations faithfully
     // reproduce that.
     const prompt = composePrompt([
-      nodeParameters.product,
-      nodeParameters.packshots,
-      nodeParameters.visual_direction,
+      imageSafeText(nodeParameters.product),
+      imageSafeText(nodeParameters.packshots),
+      imageSafeText(nodeParameters.visual_direction),
       ...imageContextParts(input.briefContext),
       imageRightsFromNode(input.briefContext, nodeParameters),
     ]);
@@ -376,9 +383,9 @@ export async function buildProviderAttemptPayload(
       ...imageContextParts(input.briefContext),
       nodeParameters.asset_role,
       nodeParameters.aspect_ratio,
-      nodeParameters.visual_direction,
-      nodeParameters.safe_zone,
-      nodeParameters.motion_direction,
+      imageSafeText(nodeParameters.visual_direction),
+      imageSafeText(nodeParameters.safe_zone),
+      imageSafeText(nodeParameters.motion_direction),
       imageRightsFromNode(input.briefContext, nodeParameters),
     ]);
     if (prompt.length === 0) {
@@ -462,6 +469,8 @@ interface PrivilegedRpcOptions {
   readonly bindings: CoreBindings;
   readonly leaseOwner: string;
   readonly fetch?: typeof fetch;
+  /** Test seam for the terminal fal settlement machine; production always composes the real one. */
+  readonly falTerminalIngest?: (event: VerifiedFalWebhook) => Promise<FalIngestResult>;
 }
 
 export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderReconciliationPort {
@@ -471,6 +480,7 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
   readonly #fetch: typeof fetch;
   readonly #mintImageUrl: ((image: UpstreamImage) => Promise<string>) | undefined;
   readonly #bindings: CoreBindings;
+  readonly #falTerminalIngest: (event: VerifiedFalWebhook) => Promise<FalIngestResult>;
 
   constructor(options: PrivilegedRpcOptions) {
     this.#bindings = options.bindings;
@@ -479,6 +489,9 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
       options.bindings.SUPABASE_SECRET_KEY ?? options.bindings.SUPABASE_SERVICE_ROLE_KEY;
     this.#leaseOwner = options.leaseOwner;
     this.#fetch = options.fetch ?? ((input, init) => fetch(input, init));
+    this.#falTerminalIngest =
+      options.falTerminalIngest ??
+      createFalWebhookIngestHandler(options.bindings, options.leaseOwner, this.#fetch);
     // Mints the provider-facing capability URL for an upstream image. Absent signing material means
     // image nodes fail payload_invalid rather than dispatching with an unfetchable input - the same
     // fail-closed discipline the signing key itself follows.
@@ -762,13 +775,36 @@ export class SupabaseProviderOutboxPort implements ProviderOutboxPort, ProviderR
     job: PendingProviderReconciliationJob,
     status: ProviderJobStatus,
   ): Promise<void> {
+    // A terminal poll is semantically the same completion signal as a verified webhook. Route it
+    // through the exact same artifact-ingest and billing-settlement machine. The former direct RPC
+    // could mark an attempt succeeded without a private artifact/capture, or failed without
+    // releasing its reservation, whenever fal's webhook was delayed or lost.
+    if (job.provider === 'fal' && (status.state === 'succeeded' || status.state === 'failed')) {
+      await this.#falTerminalIngest({
+        provider: 'fal',
+        eventId: `reconciliation:${job.providerJobId}:${status.state}`,
+        receivedAtEpochSeconds: Math.floor(Date.now() / 1000),
+        attempt: {
+          providerJobId: job.providerRequestId,
+          status,
+        },
+      });
+      return;
+    }
     await this.#rpc('record_provider_job_reconciliation', {
       p_provider_job_id: job.providerJobId,
       p_status: status.state,
       p_evidence: {
         reconciled_state: status.state,
         ...(status.state === 'succeeded' ? { delivery_available: true } : {}),
-        ...(status.state === 'failed' ? { provider_error_code: status.error.code } : {}),
+        ...(status.state === 'failed'
+          ? {
+              provider_error_code:
+                typeof status.error.details.provider_error_code === 'string'
+                  ? status.error.details.provider_error_code
+                  : status.error.code,
+            }
+          : {}),
       },
     });
   }

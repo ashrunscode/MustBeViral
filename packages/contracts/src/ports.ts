@@ -46,6 +46,7 @@ export interface RunNodeRecord {
   readonly modelRouteId: string | null;
   readonly status: RunNodeState;
   readonly dispatchWave: number;
+  readonly providerErrorCode?: string;
 }
 
 export interface ArtifactRecord {

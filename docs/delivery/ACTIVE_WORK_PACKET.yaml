@@ -177,7 +177,7 @@ steps:
       three master statics, nine approved adaptations, three copy sets, one 6-10 second 9:16 motion
       branch, QA, private review/export artifacts, and immutable receipts while transactionally
       enforcing per-run, workspace-day, and global-day caps and measuring first-reviewable latency.
-    status: current
+    status: completed
   - id: p0-006-private-mcp-proof
     title:
       Prove the exact five private MCP operations in MCP Inspector and two real clients against the
@@ -191,7 +191,7 @@ steps:
       economic, and paid-demand gates across the 20 briefs and five-to-eight qualified evaluator
       sessions; record an operator go/no-go and a pivot/stop decision whenever a required value,
       cost, or paid-demand gate fails.
-    status: pending
+    status: current
   - id: p0-008-p1a-successor-handoff
     title:
       Assemble complete immutable P0 evidence and prepare the WP-P1A-001 successor transition only
@@ -267,6 +267,7 @@ acceptance:
         - governance/evidence/WP-P0-001/golden-20-run-proof.md
         - governance/evidence/WP-P0-001/launch-pack-runs/golden-20/summary.json
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+        - governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md
   manual:
     - id: unassisted-workflow-completion
       criterion: Across the qualified-user evaluation sessions, at least 80% of users complete brief
@@ -321,16 +322,19 @@ acceptance:
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
 rollback:
   strategy:
     Revert the packet's implementation paths and generated/evidence changes through auditable
@@ -344,26 +348,27 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p0-005-golden-launch-pack-runs
-  next_action: >-
-    After 2026-08-19 00:00 UTC, check global and workspace-day remaining, then confirm one new
-    GB-02 to prove visual-only supplement prompts. In parallel, reconcile landed cost from
-    existing receipts and start evaluator screens. Do not reuse f5fa333f, 9b6e0619, a72b78e5, or
-    33f2e40e.
+  current_step: p0-007-p0-gate-evaluation
+  next_action: Recover the three 2026-08-20 DTC Newsletter / Foxwell Founders / eComFuel permission
+    threads onto Ashley Gmail label MustBeViral/P0 Evaluator Recruitment (label and threads are
+    absent from the connected mailbox), then recheck that label for replies. No GB-02 spend.
   blockers:
-    - >-
-      Live GB-02 16/16 is not proven. Run f5fa333f was content_policy_violation on master-2 and
-      master-3, stored as fal_webhook_failed. Extractor and visual-only supplement prompts are
-      deployed on Worker 9fa5c96d. No same-day second pack. Evidence
-      governance/evidence/WP-P0-001/fal-webhook-failed-f5fa333f.md.
-    - >-
-      Buyer last mile ZIP/copy/header/upload is live on web 87jj0310i and Worker 1d909c1f.
-      Masters still consume packshots as visual prompt text, not as image_url references. Live
-      Reject is already not offered. Evidence
+    - Live GB-02 16/16 is retired. Probe 17145ccd still content_policy_violation after the
+      closed-packaging master-2 direction on Worker 872ac183. Do not pay GB-02 again. Harness 16/20
+      still stands. Evidence governance/evidence/WP-P0-001/fail-evaluation/17145ccd.md.
+    - Buyer last mile ZIP/copy/header/upload is live on web 87jj0310i and Worker 1d909c1f. Official
+      fal-ai/flux-2-pro input has no image_url; packshot bytes cannot ride the pinned T2I route.
+      Live Reject is already not offered. Evidence
       governance/evidence/WP-P0-001/packshot-upload-staging-walk.md.
-    - P0 exit still needs production-segment Web Vitals, fully landed usable-pack cost, 5-8
-      qualified evaluator sessions, a paid pilot, and an operator go/no-go. Self-sessions do not
-      count. See governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md.
+    - Production-segment Web Vitals are unmeasured, and P0 cannot mark them passed until an accepted
+      measurement/sequencing path preserves the evidence standard without promoting V2 or cutting
+      legacy traffic outside the P1a production packet. usable-pack-landed-cost remains pending.
+      Catalog capture is 4,550,000 micros; that is the customer charge, not a fal invoice. No
+      usable-pack denominator. Evidence
+      governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md.
+    - P0 exit still needs production-segment Web Vitals, 5-8 qualified evaluator sessions, a paid
+      pilot, and an operator go/no-go. Self-sessions do not count. See
+      governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md.
   changed_paths:
     - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
     - apps/core/src/composition
@@ -421,6 +426,22 @@ handoff:
     - apps/core/src/composition/artifact-access.ts
     - apps/web/src/features/brief/packshot-upload.ts
     - governance/evidence/WP-P0-001/packshot-upload-staging-walk.md
+    - governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md
+    - governance/evidence/WP-P0-001/gb02-image-prompt-policy-audit.md
+    - packages/contracts/src/fail-evaluation.ts
+    - governance/evidence/WP-P0-001/fail-evaluation/TEMPLATE.md
+    - governance/evidence/WP-P0-001/fail-evaluation/f5fa333f.md
+    - governance/evidence/WP-P0-001/operator-decisions-2026-08-18.md
+    - apps/core/tools/single-image-canary.ts
+    - apps/core/test/unit/single-image-canary.test.ts
+    - governance/evidence/WP-P0-001/image-probes/gb02-master-2.md
+    - governance/evidence/WP-P0-001/fail-evaluation/46d4e12b.md
+    - governance/evidence/WP-P0-001/fail-evaluation/46d4e12b-postmortem.md
+    - governance/evidence/WP-P0-001/fail-evaluation/17145ccd.md
+    - governance/evidence/WP-P0-001/finish-plan-2026-08-18.md
+    - governance/evidence/WP-P0-001/live-gb02-16-16-retired.md
+    - governance/evidence/WP-P0-001/image-probes/gb02-master-2-closed-packaging.md
+    - governance/evidence/WP-P0-001/image-probes/gb02-master-2-closed-packaging
     - package.json
     - pnpm-lock.yaml
     - pnpm-workspace.yaml
@@ -443,6 +464,13 @@ handoff:
     - Staging GB-04 receipt Download pack on web qsvhcip1c / Worker 9fa5c96d
     - pnpm agent:verify after create_artifact_upload
     - Staging packshot attach-only walk on web 87jj0310i / Worker 1d909c1f
+    - pnpm agent:verify after landed-cost honesty inventory
+    - pnpm agent:verify after GB-02 image-prompt sanitizer
+    - Staging Worker 1c4b0b41 deployed with imageSafeText
+    - pnpm agent:verify after fail-evaluation retry gate
+    - Staging Worker 872ac183 deployed with closed-packaging master-2 direction
+    - Staging GB-02 master-2 probe 17145ccd content_policy_violation; live 16/16 retired
+    - pnpm agent:verify after closed-packaging probe 17145ccd
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []

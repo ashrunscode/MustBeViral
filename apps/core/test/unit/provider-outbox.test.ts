@@ -153,6 +153,50 @@ describe('provider outbox composition', () => {
     ]);
   });
 
+  it('routes terminal fal reconciliation through artifact and ledger settlement', async () => {
+    const fetchImplementation = vi.fn(async () => {
+      throw new Error('terminal fal reconciliation must not use the raw status RPC');
+    });
+    const falTerminalIngest = vi.fn(async () => ({
+      status: 'ok' as const,
+      accepted: true,
+    }));
+    const port = new SupabaseProviderOutboxPort({
+      bindings,
+      leaseOwner: 'fixture-lease-owner',
+      fetch: fetchImplementation,
+      falTerminalIngest,
+    });
+
+    await port.recordStatus(
+      {
+        providerJobId: 'provider-job-row-1',
+        provider: 'fal',
+        routeId: falFlux2ProDescriptor.routeId,
+        providerRequestId: 'fal-request-1',
+        status: 'submitted',
+      },
+      {
+        state: 'failed',
+        providerJobId: 'fal-request-1',
+        error: new ProviderError('provider_error', 'fal job failed', false, {
+          provider_error_code: 'content_policy_violation',
+        }),
+      },
+    );
+
+    expect(falTerminalIngest).toHaveBeenCalledWith({
+      provider: 'fal',
+      eventId: 'reconciliation:provider-job-row-1:failed',
+      receivedAtEpochSeconds: expect.any(Number),
+      attempt: {
+        providerJobId: 'fal-request-1',
+        status: expect.objectContaining({ state: 'failed' }),
+      },
+    });
+    expect(fetchImplementation).not.toHaveBeenCalled();
+  });
+
   it('drains once across overlapping scheduled invocations', async () => {
     let claimed = false;
     const fetchImplementation = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
