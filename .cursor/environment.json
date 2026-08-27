@@ -1,0 +1,24 @@
+{
+  "name": "MustBeViral Studio",
+  "user": "node",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "install": "corepack pnpm install --frozen-lockfile\ncp -n .env.example apps/web/.env.local || true",
+  "terminals": [
+    {
+      "name": "core-worker",
+      "command": "corepack pnpm --filter @mustbeviral/core dev",
+      "description": "Cloudflare Worker (Hono) core API on http://localhost:8787 (see /health)."
+    },
+    {
+      "name": "web-app",
+      "command": "corepack pnpm --filter @mustbeviral/web dev",
+      "description": "Next.js web app on http://localhost:3000."
+    }
+  ],
+  "ports": [
+    { "name": "web-app", "port": 3000 },
+    { "name": "core-worker", "port": 8787 }
+  ]
+}
