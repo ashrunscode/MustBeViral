@@ -12,11 +12,11 @@ Do not create another Git worktree.
 ## Exactly one next action
 
 From an authenticated Ashley-workspace Gmail session, recheck the restored
-`MustBeViral/P0 Evaluator Recruitment` label for a real reply. The 2026-08-29 Cursor Cloud
-automation catalog has no Gmail/inbox MCP, so this run did not read the mailbox. Last sanitized
-label proof remains `recruiting-inbox-check-2026-08-27` (three permission threads, zero inbound
-replies). When a reply exists, run the registered private qualification screen. Do not send
-without `APPROVE SEND mustbeviral` in the same turn. No GB-02 spend.
+`MustBeViral/P0 Evaluator Recruitment` label for a real reply. The 2026-08-29 14:00 UTC Cursor
+Cloud cron catalog still has no Gmail/inbox MCP, so this run did not read the mailbox. Last
+sanitized label proof remains `recruiting-inbox-check-2026-08-27` (three permission threads, zero
+inbound replies). When a reply exists, run the registered private qualification screen. Do not
+send without `APPROVE SEND mustbeviral` in the same turn. No GB-02 spend.
 
 The registered User Interviews / Respondent fallback remains dormant while the recovered community
 permission threads are the last proven inbox state. If the operator later determines those sources
@@ -36,12 +36,13 @@ mustbeviral` in the same turn.
 | Remote destructive action | forbidden                                  |
 | Production                | legacy V1 live; V2 staging only            |
 | Gmail / inbox MCP         | absent from this Cursor Cloud tool catalog |
+| Trigger                   | daily cron `0 14 * * *` at 14:02 UTC       |
 
 ## What this session finished
 
 - Green preflight on `codex/viralgraph-cleanroom` after a frozen-lockfile install.
-- Catalog inspection proved this runner cannot read the recruiting label.
-- Sanitized evidence recorded in `recruiting-inbox-check-2026-08-29.md`.
+- Catalog inspection proved this 14:00 UTC cron runner still cannot read the recruiting label.
+- Sanitized evidence recorded in `recruiting-inbox-check-2026-08-29-1400.md`.
 - No candidate claim, qualification, session, usable-pack vote, Web Vitals pass, paid pilot, or
   operator go/no-go was recorded. Those remain human-only.
 
@@ -55,12 +56,13 @@ End with `docs/delivery/ACTIVE_WORK_PACKET.yaml`. Also: `AGENTS.md`, `PROJECT_ST
 
 ## Evidence index (inbox only)
 
-| Path                                   | Proves                                        | Does not prove               |
-| -------------------------------------- | --------------------------------------------- | ---------------------------- |
-| `recruiting-inbox-check-2026-08-29.md` | This runner has no Gmail MCP; mailbox unread  | Inbox contents on 2026-08-29 |
-| `recruiting-inbox-check-2026-08-27.md` | Three threads restored; zero replies that day | 2026-08-29 inbox             |
-| `recruiting-inbox-check-2026-08-26.md` | Ashley mailbox snapshot had no label/threads  | Community UI state           |
-| `recruiting-inbox-check-2026-08-21.md` | Zero replies on labeled threads that day      | Later inbox                  |
+| Path                                        | Proves                                            | Does not prove               |
+| ------------------------------------------- | ------------------------------------------------- | ---------------------------- |
+| `recruiting-inbox-check-2026-08-29-1400.md` | 14:00 UTC cron has no Gmail MCP; mailbox unread   | Inbox contents after 14:00   |
+| `recruiting-inbox-check-2026-08-29.md`      | 01:47 UTC runner has no Gmail MCP; mailbox unread | Inbox contents on 2026-08-29 |
+| `recruiting-inbox-check-2026-08-27.md`      | Three threads restored; zero replies that day     | 2026-08-29 inbox             |
+| `recruiting-inbox-check-2026-08-26.md`      | Ashley mailbox snapshot had no label/threads      | Community UI state           |
+| `recruiting-inbox-check-2026-08-21.md`      | Zero replies on labeled threads that day          | Later inbox                  |
 
 ## Stop / never
 

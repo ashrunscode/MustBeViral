@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-From an authenticated Ashley-workspace Gmail session, recheck the restored MustBeViral/P0 Evaluator Recruitment label for a real reply. The 2026-08-29 Cursor Cloud automation catalog has no Gmail/inbox MCP, so this run did not read the mailbox. Last sanitized label proof remains recruiting-inbox-check-2026-08-27 (three permission threads, zero inbound replies). When a reply exists, run the registered private qualification screen. Do not send without APPROVE SEND mustbeviral. No GB-02 spend.
+From an authenticated Ashley-workspace Gmail session, recheck the restored MustBeViral/P0 Evaluator Recruitment label for a real reply. The 2026-08-29 14:00 UTC Cursor Cloud cron catalog still has no Gmail/inbox MCP, so this run did not read the mailbox. Last sanitized label proof remains recruiting-inbox-check-2026-08-27 (three permission threads, zero inbound replies). When a reply exists, run the registered private qualification screen. Do not send without APPROVE SEND mustbeviral. No GB-02 spend.
