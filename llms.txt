@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
 current_step: p0-007-p0-gate-evaluation
-next_action: Recheck the restored MustBeViral/P0 Evaluator Recruitment label for a real reply; when one exists, run the registered private qualification screen. Do not send without APPROVE SEND mustbeviral. No GB-02 spend.
+next_action: From an authenticated Ashley-workspace Gmail session, recheck the restored MustBeViral/P0 Evaluator Recruitment label for a real reply. The 2026-08-29 Cursor Cloud automation catalog has no Gmail/inbox MCP, so this run did not read the mailbox. Last sanitized label proof remains recruiting-inbox-check-2026-08-27 (three permission threads, zero inbound replies). When a reply exists, run the registered private qualification screen. Do not send without APPROVE SEND mustbeviral. No GB-02 spend.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

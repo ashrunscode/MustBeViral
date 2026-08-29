@@ -349,10 +349,12 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-007-p0-gate-evaluation
-  next_action:
-    Recheck the restored MustBeViral/P0 Evaluator Recruitment label for a real reply; when
-    one exists, run the registered private qualification screen. Do not send without APPROVE SEND
-    mustbeviral. No GB-02 spend.
+  next_action: From an authenticated Ashley-workspace Gmail session, recheck the restored
+    MustBeViral/P0 Evaluator Recruitment label for a real reply. The 2026-08-29 Cursor Cloud
+    automation catalog has no Gmail/inbox MCP, so this run did not read the mailbox. Last sanitized
+    label proof remains recruiting-inbox-check-2026-08-27 (three permission threads, zero inbound
+    replies). When a reply exists, run the registered private qualification screen. Do not send
+    without APPROVE SEND mustbeviral. No GB-02 spend.
   blockers:
     - Live GB-02 16/16 is retired. Probe 17145ccd still content_policy_violation after the
       closed-packaging master-2 direction on Worker 872ac183. Do not pay GB-02 again. Harness 16/20
@@ -446,6 +448,8 @@ handoff:
     - package.json
     - pnpm-lock.yaml
     - pnpm-workspace.yaml
+    - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-29.md
+    - governance/evidence/WP-P0-001/agent-handoff-2026-08-29.md
   last_green_checks:
     - pnpm packet:verify
     - 20/20 staging launch-pack quotes at 4,550,000 micros
@@ -472,6 +476,10 @@ handoff:
     - Staging Worker 872ac183 deployed with closed-packaging master-2 direction
     - Staging GB-02 master-2 probe 17145ccd content_policy_violation; live 16/16 retired
     - pnpm agent:verify after closed-packaging probe 17145ccd
+    - pnpm agent:verify after 2026-08-29 Cursor Cloud recruiting-inbox connector-absent check
+    - pnpm design:check
+    - pnpm governance:check
+    - pnpm verify with CI=true and apps/core/.dev.vars.example materialised locally
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []
