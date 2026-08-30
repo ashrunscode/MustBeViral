@@ -277,6 +277,82 @@ describe('P0 REST and private MCP contract vectors', () => {
     if (vector.replay) expect(executions.value).toBe(1);
   });
 
+  it('keeps get_run recovery and settlement identical and safe across REST and private MCP', async () => {
+    const result = {
+      status: 'ok' as const,
+      run: {
+        runId: 'run-1',
+        projectId: 'project-1',
+        canvasId: 'canvas-1',
+        canvasRevisionId: 'revision-1',
+        quoteId: 'quote-1',
+        status: 'reconciliation_required',
+        reservationId: 'reservation-1',
+      },
+      nodes: [
+        {
+          runNodeId: 'run-node-kept',
+          nodeKey: 'copy-1',
+          modelRouteId: 'copy-route',
+          status: 'succeeded',
+          dispatchWave: 0,
+        },
+        {
+          runNodeId: 'run-node-unknown',
+          nodeKey: 'master-2',
+          modelRouteId: 'image-route',
+          status: 'reconciliation_required',
+          dispatchWave: 1,
+          providerErrorCode: 'ambiguous_submit',
+        },
+      ],
+      recovery: {
+        kind: 'ambiguous',
+        affectedNodeKeys: ['master-2'],
+        title: 'This branch needs reconciliation',
+        message:
+          'Provider status is unconfirmed. Blind retry is blocked. 1 completed branch was kept and remains reviewable.',
+        nextAction: 'Wait for operator reconciliation. Do not submit the same prompt again.',
+      },
+      spend: {
+        currency: 'USD',
+        authorizedMicros: 4_550_000n,
+        capturedMicros: 150_000n,
+        releasedMicros: 3_000_000n,
+        refundedMicros: 0n,
+        netMicros: 150_000n,
+        settlementStatus: 'partially_captured',
+      },
+    };
+    const vector: ParityVector = {
+      name: 'safe get run recovery',
+      tool: 'get_run',
+      result: result as unknown as P0HandlerResult,
+    };
+    const app = createCoreApp(dependencies(vector, { value: 0 }));
+    const rest = await callRest(app, 'get_run', validArguments.get_run);
+    const mcp = await callMcp(app, 'get_run', validArguments.get_run);
+
+    expect(normalizedEnvelope(mcp.envelope)).toEqual(normalizedEnvelope(rest.envelope));
+    expect(rest.envelope).toMatchObject({
+      data: {
+        recovery: {
+          kind: 'ambiguous',
+          affectedNodeKeys: ['master-2'],
+          nextAction: 'Wait for operator reconciliation. Do not submit the same prompt again.',
+        },
+        spend: {
+          capturedMicros: '150000',
+          netMicros: '150000',
+          settlementStatus: 'partially_captured',
+        },
+      },
+    });
+    expect(`${rest.raw}${mcp.raw}`).not.toMatch(
+      /provider payload|normalized_evidence|signed\.example|token=|customer prompt/iu,
+    );
+  });
+
   it('keeps discovery private and lists exactly five tools after authentication', async () => {
     const vector = vectors[0];
     if (vector === undefined) throw new Error('Missing vector fixture');

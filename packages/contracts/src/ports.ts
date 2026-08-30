@@ -9,6 +9,7 @@ import type {
 import type { RunNodeState, RunState } from '@mustbeviral/domain';
 import type { GraphSnapshot, GraphValidationIssue } from '@mustbeviral/graph';
 import type { HandlerContext } from './commands';
+import type { LaunchPackFailKind } from './fail-evaluation';
 
 export type OperationName =
   | 'apply_canvas_patch'
@@ -47,6 +48,51 @@ export interface RunNodeRecord {
   readonly status: RunNodeState;
   readonly dispatchWave: number;
   readonly providerErrorCode?: string;
+}
+
+export interface RunFailureNodeRecord {
+  readonly runNodeId: string;
+  readonly nodeKey: string;
+  readonly state: 'failed' | 'reconciliation_required';
+  readonly kind: LaunchPackFailKind;
+}
+
+export interface RunRecoveryRecord {
+  /** Safety-first aggregate: reconciliation always wins over a retryable-looking failure. */
+  readonly state: 'failed' | 'reconciliation_required';
+  readonly kind: LaunchPackFailKind;
+  readonly affectedNodes: readonly RunFailureNodeRecord[];
+  readonly retainedRunNodeIds: readonly string[];
+}
+
+export interface RunRecoveryResponseRecord {
+  readonly kind: LaunchPackFailKind;
+  readonly affectedNodeKeys: readonly string[];
+  readonly title: string;
+  readonly message: string;
+  readonly nextAction: string;
+}
+
+export type RunSettlementStatus =
+  'active' | 'partially_captured' | 'captured' | 'released' | 'refunded';
+
+export interface RunSettlementRecord {
+  readonly reservationMicros: UsdMicros;
+  readonly capturedMicros: UsdMicros;
+  readonly releasedMicros: UsdMicros;
+  readonly refundedMicros: UsdMicros;
+  readonly pendingMicros: UsdMicros;
+  readonly settlementStatus: RunSettlementStatus;
+}
+
+export interface RunSpendRecord {
+  readonly currency: 'USD';
+  readonly authorizedMicros: UsdMicros;
+  readonly capturedMicros: UsdMicros;
+  readonly releasedMicros: UsdMicros;
+  readonly refundedMicros: UsdMicros;
+  readonly netMicros: UsdMicros;
+  readonly settlementStatus: RunSettlementStatus;
 }
 
 export interface ArtifactRecord {
@@ -173,6 +219,7 @@ export interface StartRunBarrierResult {
 export interface RunPort {
   get(context: HandlerContext, runId: string): Promise<RunRecord | null>;
   listNodes(context: HandlerContext, runId: string): Promise<readonly RunNodeRecord[]>;
+  getSettlement(context: HandlerContext, runId: string): Promise<RunSettlementRecord | null>;
   startBarrier(
     context: HandlerContext,
     input: StartRunBarrierInput,

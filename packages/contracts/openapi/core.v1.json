@@ -1768,9 +1768,64 @@
                   "required": ["runNodeId", "nodeKey", "modelRouteId", "status", "dispatchWave"],
                   "additionalProperties": false
                 }
+              },
+              "recovery": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "content_policy_violation",
+                          "http_422",
+                          "fal_webhook_failed",
+                          "timeout",
+                          "ambiguous",
+                          "other"
+                        ]
+                      },
+                      "affectedNodeKeys": {
+                        "type": "array",
+                        "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+                      },
+                      "title": { "type": "string", "minLength": 1 },
+                      "message": { "type": "string", "minLength": 1 },
+                      "nextAction": { "type": "string", "minLength": 1 }
+                    },
+                    "required": ["kind", "affectedNodeKeys", "title", "message", "nextAction"],
+                    "additionalProperties": false
+                  },
+                  { "type": "null" }
+                ]
+              },
+              "spend": {
+                "type": "object",
+                "properties": {
+                  "currency": { "type": "string", "const": "USD" },
+                  "authorizedMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "capturedMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "releasedMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "refundedMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "netMicros": { "type": "string", "pattern": "^\\d+$" },
+                  "settlementStatus": {
+                    "type": "string",
+                    "enum": ["active", "partially_captured", "captured", "released", "refunded"]
+                  }
+                },
+                "required": [
+                  "currency",
+                  "authorizedMicros",
+                  "capturedMicros",
+                  "releasedMicros",
+                  "refundedMicros",
+                  "netMicros",
+                  "settlementStatus"
+                ],
+                "additionalProperties": false
               }
             },
-            "required": ["run", "nodes"],
+            "required": ["run", "nodes", "recovery", "spend"],
             "additionalProperties": false
           },
           "meta": {

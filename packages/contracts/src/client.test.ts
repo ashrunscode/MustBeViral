@@ -89,4 +89,74 @@ describe('MustBeViral REST client', () => {
       code: 'INVALID_RESPONSE',
     } satisfies Partial<MustBeViralClientError>);
   });
+
+  it('parses get_run recovery micros and rejects any raw provider field', async () => {
+    const data = {
+      run: {
+        runId: 'run-1',
+        projectId: 'project-1',
+        canvasId: 'canvas-1',
+        canvasRevisionId: 'revision-1',
+        quoteId: 'quote-1',
+        status: 'failed',
+        reservationId: 'reservation-1',
+      },
+      nodes: [
+        {
+          runNodeId: 'run-node-1',
+          nodeKey: 'master-1',
+          modelRouteId: 'image-route',
+          status: 'failed',
+          dispatchWave: 1,
+          providerErrorCode: 'content_policy_violation',
+        },
+      ],
+      recovery: {
+        kind: 'content_policy_violation',
+        affectedNodeKeys: ['master-1'],
+        title: 'Image blocked',
+        message:
+          'The image provider blocked this branch as a content-policy violation. No completed output was available to keep.',
+        nextAction:
+          'Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.',
+      },
+      spend: {
+        currency: 'USD',
+        authorizedMicros: '4550000',
+        capturedMicros: '0',
+        releasedMicros: '4550000',
+        refundedMicros: '0',
+        netMicros: '0',
+        settlementStatus: 'released',
+      },
+    } as const;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://core.example.test',
+      getAccessToken: async () => 'session-jwt',
+      fetch: async () => Response.json({ data, meta: { request_id: 'request-run-safe' } }),
+    });
+    await expect(client.request('get_run', { id: 'run-1' })).resolves.toMatchObject({
+      data: { recovery: { kind: 'content_policy_violation' }, spend: data.spend },
+    });
+
+    const unsafe = createMustBeViralRestClient({
+      baseUrl: 'https://core.example.test',
+      getAccessToken: async () => 'session-jwt',
+      fetch: async () =>
+        Response.json({
+          data: {
+            ...data,
+            provider_payload: {
+              msg: 'raw provider message',
+              url: 'https://signed.example.test/object?token=secret',
+            },
+          },
+          meta: { request_id: 'request-run-unsafe' },
+        }),
+    });
+    await expect(unsafe.request('get_run', { id: 'run-1' })).rejects.toMatchObject({
+      code: 'INVALID_RESPONSE',
+    } satisfies Partial<MustBeViralClientError>);
+  });
+
 });

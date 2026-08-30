@@ -87,6 +87,24 @@ describe('launchPackRetryDecision', () => {
     expect(classifyProviderErrorCode('ambiguous_submit')).toBe('ambiguous');
   });
 
+  it.each([
+    ['content_policy_violation', 'content_policy_violation'],
+    ['http_422', 'http_422'],
+    ['fal_webhook_failed', 'fal_webhook_failed'],
+    ['timeout', 'timeout'],
+    ['provider_timeout', 'timeout'],
+    ['ambiguous', 'ambiguous'],
+    ['ambiguous_submit', 'ambiguous'],
+    ['reconciliation_required', 'ambiguous'],
+    ['unsafe code https://signed.example.test/object?token=secret', 'other'],
+  ] as const)('maps %s to safe %s recovery copy', (code, kind) => {
+    const copy = runFailureRecoveryCopy(code);
+    expect(copy.kind).toBe(kind);
+    expect(copy.title).not.toBe('');
+    expect(copy.whatFailed).not.toMatch(/payload|signed url|token=|secret/iu);
+    expect(copy.nextAction).not.toMatch(/payload|signed url|token=|secret/iu);
+  });
+
   it('refuses an incomplete or stop evaluation', () => {
     expect(launchPackRetryDecision({ ...ready, cause: '   ' })).toEqual({
       allowed: false,

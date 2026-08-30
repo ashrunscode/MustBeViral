@@ -4,6 +4,7 @@ import type { GraphSnapshot } from '@mustbeviral/graph';
 import { z } from 'zod';
 
 import { GraphSnapshotSchema, IdentifierSchema } from './commands';
+import { launchPackFailKinds } from './fail-evaluation';
 import type {
   ApplyCanvasPatchResult,
   CancelRunResult,
@@ -88,6 +89,73 @@ export const RunNodeRecordSchema = z
       .optional(),
   })
   .strict();
+
+export const RunFailureNodeRecordSchema = z
+  .object({
+    runNodeId: IdentifierSchema,
+    nodeKey: IdentifierSchema,
+    state: z.enum(['failed', 'reconciliation_required']),
+    kind: z.enum(launchPackFailKinds),
+  })
+  .strict();
+
+export const RunRecoveryRecordSchema = z
+  .object({
+    state: z.enum(['failed', 'reconciliation_required']),
+    kind: z.enum(launchPackFailKinds),
+    affectedNodes: z.array(RunFailureNodeRecordSchema),
+    retainedRunNodeIds: z.array(IdentifierSchema),
+  })
+  .strict();
+
+export const RunRecoveryResponseRecordSchema = z
+  .object({
+    kind: z.enum(launchPackFailKinds),
+    affectedNodeKeys: z.array(IdentifierSchema),
+    title: z.string().min(1),
+    message: z.string().min(1),
+    nextAction: z.string().min(1),
+  })
+  .strict();
+
+const RunSettlementStatusSchema = z.enum([
+  'active',
+  'partially_captured',
+  'captured',
+  'released',
+  'refunded',
+]);
+
+export const RunSettlementRecordSchema = z
+  .object({
+    reservationMicros: z.bigint().nonnegative(),
+    capturedMicros: z.bigint().nonnegative(),
+    releasedMicros: z.bigint().nonnegative(),
+    refundedMicros: z.bigint().nonnegative(),
+    pendingMicros: z.bigint().nonnegative(),
+    settlementStatus: RunSettlementStatusSchema,
+  })
+  .strict();
+
+export const RunSpendRecordSchema = z
+  .object({
+    currency: z.literal('USD'),
+    authorizedMicros: z.bigint().nonnegative(),
+    capturedMicros: z.bigint().nonnegative(),
+    releasedMicros: z.bigint().nonnegative(),
+    refundedMicros: z.bigint().nonnegative(),
+    netMicros: z.bigint().nonnegative(),
+    settlementStatus: RunSettlementStatusSchema,
+  })
+  .strict();
+
+const WireRunSpendRecordSchema = RunSpendRecordSchema.extend({
+  authorizedMicros: WireMicrosSchema,
+  capturedMicros: WireMicrosSchema,
+  releasedMicros: WireMicrosSchema,
+  refundedMicros: WireMicrosSchema,
+  netMicros: WireMicrosSchema,
+}).strict();
 
 export const CanvasContextRecordSchema = z
   .object({
@@ -252,7 +320,13 @@ export const StartRunResultSchema = z.union([
 
 export const GetRunResultSchema = z.union([
   z
-    .object({ status: z.literal('ok'), run: RunRecordSchema, nodes: z.array(RunNodeRecordSchema) })
+    .object({
+      status: z.literal('ok'),
+      run: RunRecordSchema,
+      nodes: z.array(RunNodeRecordSchema),
+      recovery: RunRecoveryResponseRecordSchema.nullable(),
+      spend: RunSpendRecordSchema,
+    })
     .strict(),
   ForbiddenResultSchema,
   NotFoundResultSchema,
@@ -492,7 +566,10 @@ const operationDataSchemas = {
     })
     .strict(),
   start_run: StartRunResultSchema.options[0].omit({ status: true }),
-  get_run: GetRunResultSchema.options[0].omit({ status: true }),
+  get_run: GetRunResultSchema.options[0]
+    .omit({ status: true })
+    .extend({ spend: WireRunSpendRecordSchema })
+    .strict(),
   cancel_run: CancelRunResultSchema.options[0].omit({ status: true }),
   create_artifact_upload: z
     .object({

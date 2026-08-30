@@ -14,6 +14,8 @@ import {
   type P0ResourcePort,
   type RunRecord,
   type RunNodeRecord,
+  type RunSettlementRecord,
+  type RunSettlementStatus,
   type StoredQuote,
 } from '@mustbeviral/contracts';
 import {
@@ -68,6 +70,13 @@ const RUN_STATES = new Set([
   'canceled',
   'failed',
   'reconciliation_required',
+]);
+const RUN_SETTLEMENT_STATUSES = new Set<RunSettlementStatus>([
+  'active',
+  'partially_captured',
+  'captured',
+  'released',
+  'refunded',
 ]);
 
 class ProviderUnavailableError extends Error {
@@ -354,10 +363,28 @@ const RUN_NODE_STATES = new Set([
 
 const PROVIDER_ERROR_CODE = /^[A-Za-z0-9_.-]{1,80}$/u;
 
-function providerErrorCodeFromEvidence(value: Json): string | undefined {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return undefined;
-  const code = value.provider_error_code;
-  return typeof code === 'string' && PROVIDER_ERROR_CODE.test(code) ? code : undefined;
+function boundedEvidenceCode(value: unknown): string | undefined {
+  return typeof value === 'string' && PROVIDER_ERROR_CODE.test(value) ? value : undefined;
+}
+
+/**
+ * Extracts only bounded machine codes. A reconciliation state takes precedence over a stale
+ * terminal provider code so no caller can mistake an unresolved submit for a safe retry.
+ */
+export function safeRunNodeRecoveryCode(
+  value: Json,
+  status: RunNodeRecord['status'],
+): string | undefined {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return status === 'reconciliation_required' ? 'reconciliation_required' : undefined;
+  }
+  const ambiguity = value.ambiguity === 'submit_acceptance_unknown';
+  const reconciliationCode = boundedEvidenceCode(value.reconciliation_error_code);
+  if (ambiguity) return 'ambiguous_submit';
+  if (status === 'reconciliation_required') {
+    return reconciliationCode ?? 'reconciliation_required';
+  }
+  return boundedEvidenceCode(value.provider_error_code) ?? reconciliationCode;
 }
 
 function runNodeRecord(
@@ -375,6 +402,27 @@ function runNodeRecord(
     status: status as RunNodeRecord['status'],
     dispatchWave: row.dispatch_wave,
     ...(providerErrorCode === undefined ? {} : { providerErrorCode }),
+  };
+}
+
+function runSettlementRecord(row: Readonly<DatabaseRow<'cost_reservations'>>): RunSettlementRecord {
+  const reservationMicros = usdMicros(BigInt(row.amount_micros));
+  const capturedMicros = usdMicros(BigInt(row.captured_micros));
+  const releasedMicros = usdMicros(BigInt(row.released_micros));
+  const refundedMicros = usdMicros(BigInt(row.refunded_micros));
+  const pending = reservationMicros - capturedMicros - releasedMicros;
+  if (pending < 0n) throw new RangeError('Reservation settlement exceeds its maximum');
+  if (refundedMicros > capturedMicros) throw new RangeError('Reservation refunds exceed captures');
+  if (!RUN_SETTLEMENT_STATUSES.has(row.status as RunSettlementStatus)) {
+    throw new TypeError('Database returned an unsupported reservation state');
+  }
+  return {
+    reservationMicros,
+    capturedMicros,
+    releasedMicros,
+    refundedMicros,
+    pendingMicros: usdMicros(pending),
+    settlementStatus: row.status as RunSettlementStatus,
   };
 }
 
@@ -938,7 +986,7 @@ export function createSupabaseHandlerPorts(
           executor.select('attempts', {
             run_id: `eq.${runId}`,
             workspace_id: `eq.${context.workspace_id}`,
-            select: 'id,run_node_id',
+            select: 'id,run_node_id,attempt_number',
           }),
           executor.select('provider_jobs', {
             run_id: `eq.${runId}`,
@@ -946,15 +994,55 @@ export function createSupabaseHandlerPorts(
             select: 'attempt_id,normalized_evidence',
           }),
         ]);
-        const attemptToNode = new Map(attempts.map((attempt) => [attempt.id, attempt.run_node_id]));
-        const codes = new Map<string, string>();
+        const attemptToNode = new Map(
+          attempts.map((attempt) => [
+            attempt.id,
+            { nodeId: attempt.run_node_id, attemptNumber: attempt.attempt_number },
+          ]),
+        );
+        const evidenceByNode = new Map<
+          string,
+          Array<Readonly<{ attemptNumber: number; evidence: Json }>>
+        >();
         for (const job of jobs) {
-          const nodeId = attemptToNode.get(job.attempt_id);
-          const code = providerErrorCodeFromEvidence(job.normalized_evidence);
-          if (nodeId === undefined || code === undefined || codes.has(nodeId)) continue;
-          codes.set(nodeId, code);
+          const attempt = attemptToNode.get(job.attempt_id);
+          if (attempt === undefined) continue;
+          const candidates = evidenceByNode.get(attempt.nodeId) ?? [];
+          candidates.push({
+            attemptNumber: attempt.attemptNumber,
+            evidence: job.normalized_evidence,
+          });
+          evidenceByNode.set(attempt.nodeId, candidates);
         }
-        return nodes.map((row) => runNodeRecord(row, codes.get(row.id)));
+        return nodes.map((row) => {
+          const status = row.status as RunNodeRecord['status'];
+          const candidates = (evidenceByNode.get(row.id) ?? []).sort(
+            (left, right) => right.attemptNumber - left.attemptNumber,
+          );
+          const candidateCodes = candidates
+            .map(({ evidence }) => safeRunNodeRecoveryCode(evidence, status))
+            .filter((code): code is string => code !== undefined);
+          const ambiguousCode = candidateCodes.find(
+            (candidate) =>
+              candidate === 'ambiguous_submit' ||
+              candidate === 'ambiguous' ||
+              candidate === 'reconciliation_required',
+          );
+          const code =
+            status === 'reconciliation_required'
+              ? (ambiguousCode ??
+                candidateCodes.find((candidate) => candidate !== 'reconciliation_required') ??
+                'reconciliation_required')
+              : (ambiguousCode ?? candidateCodes[0]);
+          return runNodeRecord(row, code);
+        });
+      },
+      async getSettlement(context, runId) {
+        const reservation = await repositories.billing.getReservationForRun(
+          asTenantContext(context),
+          runId,
+        );
+        return reservation === null ? null : runSettlementRecord(reservation);
       },
       async startBarrier(context, input) {
         return repositories.runs.startBarrier(asTenantContext(context), {

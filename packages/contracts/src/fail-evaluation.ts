@@ -5,13 +5,16 @@
  *
  * After an image policy fail, the next paid confirm is a one-master probe, not a full launch pack.
  */
-export type LaunchPackFailKind =
-  | 'content_policy_violation'
-  | 'http_422'
-  | 'fal_webhook_failed'
-  | 'timeout'
-  | 'ambiguous'
-  | 'other';
+export const launchPackFailKinds = [
+  'content_policy_violation',
+  'http_422',
+  'fal_webhook_failed',
+  'timeout',
+  'ambiguous',
+  'other',
+] as const;
+
+export type LaunchPackFailKind = (typeof launchPackFailKinds)[number];
 
 export type LaunchPackNextSpend = 'failed_image_probe' | 'full_pack';
 
@@ -75,8 +78,7 @@ export function classifyProviderErrorCode(code: string | undefined): LaunchPackF
   return 'other';
 }
 
-export function runFailureRecoveryCopy(code?: string): RunFailureRecoveryCopy {
-  const kind = classifyProviderErrorCode(code);
+export function runFailureRecoveryCopyForKind(kind: LaunchPackFailKind): RunFailureRecoveryCopy {
   if (kind === 'content_policy_violation') {
     return {
       kind,
@@ -133,6 +135,10 @@ export function runFailureRecoveryCopy(code?: string): RunFailureRecoveryCopy {
       'If the image was blocked, edit the brief or visual direction before quoting again. Do not retry blindly.',
     attemptDetail: 'Provider output failed. Check the receipt for spend.',
   };
+}
+
+export function runFailureRecoveryCopy(code?: string): RunFailureRecoveryCopy {
+  return runFailureRecoveryCopyForKind(classifyProviderErrorCode(code));
 }
 
 export function launchPackRetryDecision(

@@ -12,6 +12,7 @@ import {
   type RunRecord,
   type StoredQuote,
 } from '@mustbeviral/contracts';
+import { usdMicros } from '../../../packages/billing/src/index';
 
 import { p0ResultSemantics } from '../src/transport/semantics';
 import {
@@ -404,6 +405,19 @@ export function createInMemoryHarnessTransport(
     runs: {
       get: async (_context, runId) => runs.get(runId) ?? null,
       listNodes: async () => [],
+      getSettlement: async (_context, runId) => {
+        const run = runs.get(runId);
+        const quote = run === undefined ? undefined : quotes.get(run.quoteId);
+        if (quote === undefined) return null;
+        return {
+          reservationMicros: quote.quote.maximumChargeMicros,
+          capturedMicros: quote.quote.maximumChargeMicros,
+          releasedMicros: usdMicros(0n),
+          refundedMicros: usdMicros(0n),
+          pendingMicros: usdMicros(0n),
+          settlementStatus: 'captured',
+        };
+      },
       startBarrier: async (context, input) => {
         if (options.providerResult !== 'succeeded') {
           throw new ProviderUnavailableError('Provider-backed execution is not enabled');

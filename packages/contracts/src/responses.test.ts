@@ -150,7 +150,20 @@ const successData = {
     },
   },
   start_run: { run },
-  get_run: { run, nodes: [runNode] },
+  get_run: {
+    run,
+    nodes: [runNode],
+    recovery: null,
+    spend: {
+      currency: 'USD',
+      authorizedMicros: '400',
+      capturedMicros: '400',
+      releasedMicros: '0',
+      refundedMicros: '0',
+      netMicros: '400',
+      settlementStatus: 'captured',
+    },
+  },
   cancel_run: { runId: 'run-1', cancellation: 'accepted' },
   create_artifact_upload: {
     artifact_id: 'artifact-1',
@@ -320,6 +333,64 @@ describe('P0 REST response contracts', () => {
         operation,
       ).toBe(true);
     }
+  });
+
+  it('pins safe recovery, integer-micros settlement, and strict raw-data exclusion on get_run', () => {
+    const recovery = {
+      data: {
+        ...successData.get_run,
+        run: { ...run, status: 'failed' as const },
+        nodes: [
+          runNode,
+          {
+            runNodeId: 'run-node-2',
+            nodeKey: 'image-2',
+            modelRouteId: 'route-1',
+            status: 'failed' as const,
+            dispatchWave: 1,
+            providerErrorCode: 'content_policy_violation',
+          },
+        ],
+        recovery: {
+          kind: 'content_policy_violation' as const,
+          affectedNodeKeys: ['image-2'],
+          title: 'Image blocked',
+          message:
+            'The image provider blocked this branch as a content-policy violation. 1 completed branch was kept and remains reviewable.',
+          nextAction:
+            'Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.',
+        },
+        spend: {
+          currency: 'USD',
+          authorizedMicros: '4550000',
+          capturedMicros: '150000',
+          releasedMicros: '4400000',
+          refundedMicros: '0',
+          netMicros: '150000',
+          settlementStatus: 'partially_captured',
+        },
+      },
+      meta,
+    };
+    expect(P0_OPERATION_RESPONSE_SCHEMAS.get_run.safeParse(recovery).success).toBe(true);
+    expect(
+      P0_OPERATION_RESPONSE_SCHEMAS.get_run.safeParse({
+        ...recovery,
+        data: {
+          ...recovery.data,
+          spend: { ...recovery.data.spend, capturedMicros: 150_000 },
+        },
+      }).success,
+    ).toBe(false);
+    expect(
+      P0_OPERATION_RESPONSE_SCHEMAS.get_run.safeParse({
+        ...recovery,
+        data: {
+          ...recovery.data,
+          provider_payload: { msg: 'secret', url: 'https://signed.example.test/object' },
+        },
+      }).success,
+    ).toBe(false);
   });
 
   it('parses the common error envelope and rejects success drift per operation', () => {

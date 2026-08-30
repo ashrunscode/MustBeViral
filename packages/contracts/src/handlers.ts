@@ -3,6 +3,7 @@ import {
   deriveIdempotencyKey,
   quoteExpiryState,
   assembleQuote,
+  usdMicros,
   type ImmutableRunQuote,
   type ReservationCapExceeded,
 } from '@mustbeviral/billing';
@@ -25,6 +26,11 @@ import {
   ValidateGraphInputSchema,
   type HandlerContext,
 } from './commands';
+import {
+  classifyProviderErrorCode,
+  runFailureRecoveryCopyForKind,
+  type LaunchPackFailKind,
+} from './fail-evaluation';
 import type {
   ArtifactRecord,
   AuditEvent,
@@ -32,7 +38,11 @@ import type {
   HandlerPorts,
   OperationName,
   RunRecord,
+  RunRecoveryRecord,
+  RunRecoveryResponseRecord,
   RunNodeRecord,
+  RunSettlementRecord,
+  RunSpendRecord,
 } from './ports';
 
 export interface ForbiddenResult {
@@ -118,7 +128,14 @@ export type StartRunResult =
   | InsufficientBalanceResult;
 
 export type GetRunResult =
-  Readonly<{ status: 'ok'; run: RunRecord; nodes: readonly RunNodeRecord[] }> | AccessFailure;
+  | Readonly<{
+      status: 'ok';
+      run: RunRecord;
+      nodes: readonly RunNodeRecord[];
+      recovery: RunRecoveryResponseRecord | null;
+      spend: RunSpendRecord;
+    }>
+  | AccessFailure;
 export type GetCanvasContextResult =
   Readonly<{ status: 'ok'; canvas: CanvasContextRecord }> | AccessFailure;
 export type CancelRunResult =
@@ -154,6 +171,88 @@ function idempotencyFingerprintInput(input: unknown): unknown {
     Object.entries(contextRecord).filter(([key]) => key !== 'request_id'),
   );
   return { ...record, context: stableContext };
+}
+
+const FAILURE_KIND_PRIORITY: readonly LaunchPackFailKind[] = [
+  'content_policy_violation',
+  'http_422',
+  'fal_webhook_failed',
+  'timeout',
+  'other',
+];
+
+function runRecovery(run: RunRecord, nodes: readonly RunNodeRecord[]): RunRecoveryRecord | null {
+  const affectedNodes = nodes
+    .filter(
+      (node): node is RunNodeRecord & { status: 'failed' | 'reconciliation_required' } =>
+        node.status === 'failed' || node.status === 'reconciliation_required',
+    )
+    .map((node) => ({
+      runNodeId: node.runNodeId,
+      nodeKey: node.nodeKey,
+      state: node.status,
+      kind:
+        node.status === 'reconciliation_required'
+          ? ('ambiguous' as const)
+          : classifyProviderErrorCode(node.providerErrorCode),
+    }));
+  const reconciliationRequired =
+    run.status === 'reconciliation_required' ||
+    affectedNodes.some(
+      (node) => node.state === 'reconciliation_required' || node.kind === 'ambiguous',
+    );
+  const failed = run.status === 'failed' || affectedNodes.some((node) => node.state === 'failed');
+  if (!reconciliationRequired && !failed) return null;
+  const kind = reconciliationRequired
+    ? ('ambiguous' as const)
+    : (FAILURE_KIND_PRIORITY.find((candidate) =>
+        affectedNodes.some((node) => node.kind === candidate),
+      ) ?? 'other');
+  return {
+    state: reconciliationRequired ? 'reconciliation_required' : 'failed',
+    kind,
+    affectedNodes,
+    retainedRunNodeIds: nodes
+      .filter((node) => node.status === 'succeeded')
+      .map((node) => node.runNodeId),
+  };
+}
+
+function runRecoveryResponse(
+  run: RunRecord,
+  nodes: readonly RunNodeRecord[],
+): RunRecoveryResponseRecord | null {
+  const recovery = runRecovery(run, nodes);
+  if (recovery === null) return null;
+  const copy = runFailureRecoveryCopyForKind(recovery.kind);
+  const retainedCount = recovery.retainedRunNodeIds.length;
+  const retainedMessage =
+    retainedCount === 0
+      ? 'No completed output was available to keep.'
+      : retainedCount === 1
+        ? '1 completed branch was kept and remains reviewable.'
+        : `${String(retainedCount)} completed branches were kept and remain reviewable.`;
+  return {
+    kind: recovery.kind,
+    affectedNodeKeys: [...new Set(recovery.affectedNodes.map((node) => node.nodeKey))].sort(),
+    title: copy.title,
+    message: `${copy.whatFailed} ${retainedMessage}`,
+    nextAction: copy.nextAction,
+  };
+}
+
+function runSpend(settlement: RunSettlementRecord): RunSpendRecord {
+  const net = settlement.capturedMicros - settlement.refundedMicros;
+  if (net < 0n) throw new RangeError('Run refunds exceed captured spend');
+  return {
+    currency: 'USD',
+    authorizedMicros: settlement.reservationMicros,
+    capturedMicros: settlement.capturedMicros,
+    releasedMicros: settlement.releasedMicros,
+    refundedMicros: settlement.refundedMicros,
+    netMicros: usdMicros(net),
+    settlementStatus: settlement.settlementStatus,
+  };
 }
 
 function applyPatch(
@@ -525,9 +624,19 @@ export function createCommandHandlers(ports: HandlerPorts) {
         await audit(ports, query.context, 'get_run', 'not_found', 'run', query.run_id);
         return { status: 'not_found' };
       }
-      const nodes = await ports.runs.listNodes(query.context, query.run_id);
+      const [nodes, settlement] = await Promise.all([
+        ports.runs.listNodes(query.context, query.run_id),
+        ports.runs.getSettlement(query.context, query.run_id),
+      ]);
+      if (settlement === null) throw new TypeError('Run settlement facts are unavailable');
       await audit(ports, query.context, 'get_run', 'ok', 'run', query.run_id);
-      return { status: 'ok', run, nodes };
+      return {
+        status: 'ok',
+        run,
+        nodes,
+        recovery: runRecoveryResponse(run, nodes),
+        spend: runSpend(settlement),
+      };
     },
 
     async getCanvasContext(input: unknown): Promise<GetCanvasContextResult> {

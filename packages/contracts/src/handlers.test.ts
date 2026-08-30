@@ -132,6 +132,17 @@ class MemoryPorts {
                 },
               ]
             : [],
+        getSettlement: async (_context, runId) =>
+          this.runsById.has(runId)
+            ? {
+                reservationMicros: usdMicros(750_000n),
+                capturedMicros: usdMicros(750_000n),
+                releasedMicros: usdMicros(0n),
+                refundedMicros: usdMicros(0n),
+                pendingMicros: usdMicros(0n),
+                settlementStatus: 'captured' as const,
+              }
+            : null,
         startBarrier: async (_context, input) => {
           expect(input).toMatchObject({
             canvasId: 'canvas-1',
@@ -296,6 +307,16 @@ describe('command handler flows', () => {
           dispatchWave: 0,
         },
       ],
+      recovery: null,
+      spend: {
+        currency: 'USD',
+        authorizedMicros: 750_000n,
+        capturedMicros: 750_000n,
+        releasedMicros: 0n,
+        refundedMicros: 0n,
+        netMicros: 750_000n,
+        settlementStatus: 'captured',
+      },
     });
     const artifact = await handlers.registerArtifact({
       context,
@@ -343,6 +364,151 @@ describe('command handler flows', () => {
     });
     expect(result).toEqual({ status: 'conflict', reason: 'revision', actual: 'revision-0' });
     expect(memory.canvas.headRevisionId).toBe('revision-0');
+  });
+
+  it('returns every affected branch, retained work, and safety-first reconciliation settlement', async () => {
+    const memory = new MemoryPorts();
+    const run: RunRecord = {
+      runId: 'run-recovery-1',
+      projectId: 'project-1',
+      canvasId: 'canvas-1',
+      canvasRevisionId: 'revision-1',
+      quoteId: 'quote-1',
+      status: 'reconciliation_required',
+      reservationId: 'reservation-1',
+    };
+    memory.runsById.set(run.runId, run);
+    const ports = memory.asPorts();
+    const handlers = createCommandHandlers({
+      ...ports,
+      runs: {
+        ...ports.runs,
+        listNodes: async () => [
+          {
+            runNodeId: 'run-node-kept',
+            nodeKey: 'copy-1',
+            modelRouteId: 'copy-route',
+            status: 'succeeded',
+            dispatchWave: 0,
+          },
+          {
+            runNodeId: 'run-node-blocked',
+            nodeKey: 'master-2',
+            modelRouteId: 'image-route',
+            status: 'failed',
+            dispatchWave: 1,
+            providerErrorCode: 'content_policy_violation',
+          },
+          {
+            runNodeId: 'run-node-unknown',
+            nodeKey: 'motion-1',
+            modelRouteId: 'motion-route',
+            status: 'reconciliation_required',
+            dispatchWave: 2,
+            providerErrorCode: 'ambiguous_submit',
+          },
+        ],
+        getSettlement: async () => ({
+          reservationMicros: usdMicros(4_550_000n),
+          capturedMicros: usdMicros(150_000n),
+          releasedMicros: usdMicros(3_000_000n),
+          refundedMicros: usdMicros(0n),
+          pendingMicros: usdMicros(1_400_000n),
+          settlementStatus: 'partially_captured',
+        }),
+      },
+    });
+
+    await expect(handlers.getRun({ context, run_id: run.runId })).resolves.toMatchObject({
+      status: 'ok',
+      recovery: {
+        kind: 'ambiguous',
+        affectedNodeKeys: ['master-2', 'motion-1'],
+        title: 'This branch needs reconciliation',
+        message:
+          'Provider status is unconfirmed. Blind retry is blocked. 1 completed branch was kept and remains reviewable.',
+        nextAction: 'Wait for operator reconciliation. Do not submit the same prompt again.',
+      },
+      spend: {
+        currency: 'USD',
+        authorizedMicros: 4_550_000n,
+        capturedMicros: 150_000n,
+        releasedMicros: 3_000_000n,
+        refundedMicros: 0n,
+        netMicros: 150_000n,
+        settlementStatus: 'partially_captured',
+      },
+    });
+  });
+
+  it('lets persisted ambiguity outrank downstream provider failures while the run row is failed', async () => {
+    const memory = new MemoryPorts();
+    const run: RunRecord = {
+      runId: 'run-ambiguous-failed',
+      projectId: 'project-1',
+      canvasId: 'canvas-1',
+      canvasRevisionId: 'revision-1',
+      quoteId: 'quote-1',
+      status: 'failed',
+      reservationId: 'reservation-ambiguous',
+    };
+    memory.runsById.set(run.runId, run);
+    const ports = memory.asPorts();
+    const handlers = createCommandHandlers({
+      ...ports,
+      runs: {
+        ...ports.runs,
+        listNodes: async () => [
+          {
+            runNodeId: 'run-node-policy',
+            nodeKey: 'master-policy',
+            modelRouteId: 'image-route',
+            status: 'failed',
+            dispatchWave: 1,
+            providerErrorCode: 'content_policy_violation',
+          },
+          {
+            runNodeId: 'run-node-422',
+            nodeKey: 'master-422',
+            modelRouteId: 'image-route',
+            status: 'failed',
+            dispatchWave: 1,
+            providerErrorCode: 'http_422',
+          },
+          {
+            runNodeId: 'run-node-ambiguous',
+            nodeKey: 'motion-ambiguous',
+            modelRouteId: 'motion-route',
+            status: 'failed',
+            dispatchWave: 2,
+            providerErrorCode: 'ambiguous_submit',
+          },
+        ],
+        getSettlement: async () => ({
+          reservationMicros: usdMicros(4_550_000n),
+          capturedMicros: usdMicros(0n),
+          releasedMicros: usdMicros(3_000_000n),
+          refundedMicros: usdMicros(0n),
+          pendingMicros: usdMicros(1_550_000n),
+          settlementStatus: 'partially_captured',
+        }),
+      },
+    });
+
+    await expect(handlers.getRun({ context, run_id: run.runId })).resolves.toMatchObject({
+      status: 'ok',
+      recovery: {
+        kind: 'ambiguous',
+        affectedNodeKeys: ['master-422', 'master-policy', 'motion-ambiguous'],
+        title: 'This branch needs reconciliation',
+        nextAction: 'Wait for operator reconciliation. Do not submit the same prompt again.',
+      },
+      spend: {
+        capturedMicros: 0n,
+        netMicros: 0n,
+        settlementStatus: 'partially_captured',
+      },
+    });
   });
 
   it('rejects an expired quote before confirmation or reservation', async () => {
