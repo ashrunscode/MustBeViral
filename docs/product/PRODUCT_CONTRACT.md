@@ -77,4 +77,9 @@ Video may complete after the static pack and must appear as a clearly labeled pa
 
 ## Product-validation success
 
-P0 is a go only when 20 representative briefs and 5–8 qualified users prove the technical, usability, quality, economic, and paid-demand gates in `quality-gates`. A technically functioning workflow is insufficient if users reject the outputs, cost exceeds the target, or no qualified customer signs a paid pilot.
+P0 is a go only when 20 representative briefs and 5–8 qualified users prove the technical,
+usability, quality, economic, and paid-demand gates in `quality-gates`. A technically functioning
+workflow is insufficient if users reject the outputs, cost exceeds the target, or no qualified DTC
+customer or design partner has sanitized durable evidence that it will use staging and either
+intends to pay or has agreed commercial terms. Actual payment and Stripe are not required in P0;
+the qualification and commitment evidence is.

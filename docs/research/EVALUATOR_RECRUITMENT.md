@@ -76,7 +76,10 @@ Record answers in the private recruiting system and write only the outcome in th
 4. Record completion, assistance, time to first reviewable static pack, quote comprehension, run-state comprehension, partial/failure handling, and whether lineage/cost evidence can be found.
 5. Ask the evaluator to mark each reviewed job: no usable concept, one usable concept, or multiple usable concepts. “Usable” means the evaluator would advance the concept in the current workflow without rebuilding its core idea.
 6. After hands-on work, compare against the evaluator’s current process on throughput, control, output quality, transparency, and expected cost. Capture a forced choice: prefer this workflow, prefer current workflow, or no preference, plus rationale.
-7. Ask whether the evaluator would run a paid pilot under stated pricing. Interest is not paid proof; only an executed paid pilot or signed pilot counts toward that P0 gate.
+7. Ask whether the evaluator would use staging and whether they intend to pay or have agreed
+   commercial terms. Interest from an unqualified evaluator is not proof; the P0 commitment gate
+   requires sanitized durable evidence from a qualified DTC customer or design partner. Actual
+   payment and Stripe are not required in P0.
 8. Close with an open risk review covering unsupported claims, asset/likeness rights, brand control, hidden work, cost surprises, and reasons not to adopt. Do not sell or rebut.
 
 Report results against the accepted P0 gates without changing denominators after observation:
@@ -85,7 +88,8 @@ Report results against the accepted P0 gates without changing denominators after
 - At least 70% of representative jobs produce one or more evaluator-rated usable concepts.
 - Median first reviewable static pack is at most 10 minutes and p90 is at most 15 minutes.
 - At least three of the predeclared first five qualified completed evaluators prefer the workflow to their current process. Supplementary evaluators cannot replace a core negative result.
-- Technical completion, landed cost, safety/trust failures, and paid-pilot proof are reconciled with system evidence; evaluator opinion cannot override those gates.
+- Technical completion, landed cost, safety/trust failures, and qualified customer-commitment proof
+  are reconciled with system evidence; evaluator opinion cannot override those gates.
 
 ## Recruitment log
 

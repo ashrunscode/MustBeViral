@@ -125,8 +125,9 @@ deliverables:
     including work-motion and reduced-motion behavior, full component and screen states, semantic
     outline parity, responsive review, WCAG 2.2 AA behavior, and measured performance budgets.
   - Real end-to-end evidence across all 20 representative golden briefs, five-to-eight qualified
-    evaluator sessions, transactional cost caps, technical/latency/quality/economic metrics, and a
-    signed paid-pilot record or qualified payment evidence.
+    evaluator sessions, transactional cost caps, technical/latency/quality/economic metrics, and
+    sanitized durable evidence that one qualified DTC customer or design partner will use staging
+    and either intends to pay or has agreed commercial terms.
   - Private Core Worker MCP evidence for exactly get_canvas_context, apply_canvas_patch, quote_run,
     start_run, and get_run through MCP Inspector and two real clients using the same handlers,
     contracts, authorization, validation, idempotency, confirmation, and safe errors as REST.
@@ -301,13 +302,15 @@ acceptance:
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: qualified-paid-pilot-proof
       criterion:
-        At least one qualified customer pays for the validation engagement or signs a paid pilot,
-        with sanitized durable evidence sufficient to prove the commitment without exposing customer
-        data or payment secrets.
+        At least one qualified DTC customer or design partner has sanitized durable evidence that it
+        will use staging and either intends to pay or has agreed commercial terms, without exposing
+        customer data, payment secrets, customer media, tokens, or signed URLs. Actual payment and
+        Stripe are not required in P0.
       status: pending
       evidence:
         - docs/research/EVALUATOR_RECRUITMENT.md
         - governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md
+        - governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: operator-p0-exit-decision
       criterion:
@@ -349,12 +352,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-007-p0-gate-evaluation
-  next_action: From an authenticated Ashley-workspace Gmail session, recheck the restored
-    MustBeViral/P0 Evaluator Recruitment label for a real reply. The 2026-08-29 14:00 UTC Cursor
-    Cloud cron catalog still has no Gmail/inbox MCP, so this run did not read the mailbox. Last
-    sanitized label proof remains recruiting-inbox-check-2026-08-27 (three permission threads, zero
-    inbound replies). When a reply exists, run the registered private qualification screen. Do not
-    send without APPROVE SEND mustbeviral. No GB-02 spend.
+  next_action: Operator enables the ready DTC design partner on GB-04 staging, records sanitized
+    qualification/commitment evidence and explicit authorization for the customer's $4.55 run,
+    then gives the customer access.
   blockers:
     - Live GB-02 16/16 is retired. Probe 17145ccd still content_policy_violation after the
       closed-packaging master-2 direction on Worker 872ac183. Do not pay GB-02 again. Harness 16/20
@@ -369,9 +369,12 @@ handoff:
       Catalog capture is 4,550,000 micros; that is the customer charge, not a fal invoice. No
       usable-pack denominator. Evidence
       governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md.
-    - P0 exit still needs production-segment Web Vitals, 5-8 qualified evaluator sessions, a paid
-      pilot, and an operator go/no-go. Self-sessions do not count. See
-      governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md.
+    - P0 exit still needs production-segment Web Vitals, 5-8 qualified evaluator sessions,
+      sanitized durable proof that one qualified DTC customer/design partner will use staging and
+      either intends to pay or has agreed commercial terms, plus an operator go/no-go. Actual
+      payment and Stripe are not required in P0; the decision alone does not pass the pending gate.
+      Self-sessions do not count. See
+      governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md.
   changed_paths:
     - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
     - apps/core/src/composition

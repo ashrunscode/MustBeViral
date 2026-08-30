@@ -1,6 +1,6 @@
 # The P0 exit is decision-ready but not yet eligible for a go decision
 
-Work packet: WP-P0-001, step p0-005-golden-launch-pack-runs
+Work packet: WP-P0-001, step p0-007-p0-gate-evaluation
 Recorded 2026-08-11
 
 ## Current status — 2026-08-20
@@ -24,7 +24,7 @@ Current roll-up:
 | Unassisted workflow completion                 | pending-human       | Zero qualified sessions completed                                             |
 | Usable concept rate                            | pending-human       | Zero qualified usable-concept judgments                                       |
 | Evaluator workflow preference                  | pending-human       | The fixed first-five cohort has not completed                                 |
-| Qualified paid pilot                           | pending-human       | No qualified payment or signed pilot evidence exists                          |
+| Qualified customer commitment                  | pending-human       | No qualified staging-use and commercial-intent evidence exists                |
 
 Current canvas evidence is 60.16 FPS for 100 nodes and 60.26 FPS for the 500-node stress fixture,
 with 30 DOM nodes mounted and 29.9 ms selection latency. These values supersede the earlier passing
@@ -32,10 +32,10 @@ samples in Gate 4. See `launch-readiness-verification-2026-08-20.md`.
 
 ## 1. Package boundary and gate mapping
 
-This is the p0-007 evaluation dossier assembled while p0-005 remains current. It makes no step
-transition and records no operator exit decision. The representative-run criterion still needs the
-operator-gated `GB-02` and `GB-16` remediation, and the evaluator and paid-pilot gates still require
-human evidence.
+This is the p0-007 evaluation dossier. It makes no step transition and records no operator exit
+decision. The representative-run criterion is proven; `GB-02` remains retired and historical runs
+are not reused as customer proof. The evaluator and customer-commitment gates still require human
+evidence.
 
 `docs/delivery/QUALITY_GATES.md` lines 46–56 contain eleven bullet statements. The active packet
 normalizes them into ten P0 acceptance criteria by combining technical completion with latency and
@@ -56,7 +56,7 @@ Current roll-up:
 | Unassisted workflow completion                 | pending-human       | 0 qualified sessions; all eight recruitment slots remain `PENDING`                                 |
 | Usable concept rate                            | pending-human       | 0/20 jobs have a qualified-evaluator usable-concept judgment                                       |
 | Evaluator workflow preference                  | pending-human       | 0/5 predeclared core evaluators have completed a forced-choice comparison                          |
-| Qualified paid pilot                           | pending-human       | No payment or signed pilot evidence exists                                                         |
+| Qualified customer commitment                  | pending-human       | No qualified staging-use and commercial-intent evidence exists                                     |
 
 ## 2. Gate 1 — representative completion and latency
 
@@ -295,24 +295,28 @@ What remains: recruit the qualified cohort, capture `prefer this workflow`, `pre
 workflow`, or `no preference` after hands-on work, and obtain at least three `prefer this workflow`
 results among the predeclared first five.
 
-## 11. Gate 10 — qualified paid pilot
+## 11. Gate 10 — qualified customer commitment
 
 Verbatim authority text:
 
-> At least one qualified customer pays or signs a pilot.
+> At least one qualified DTC customer or design partner has sanitized durable evidence that it will
+> use staging and either intends to pay or has agreed commercial terms. Actual payment and Stripe
+> are not required in P0.
 
-**Verdict: pending-human.** No committed evidence proves a qualified customer's payment or signed
-pilot. Interest, self-session wallet credit, provider spend, a staging identity, or a verbal intent
-cannot satisfy this gate.
+**Verdict: pending-human.** No committed evidence yet proves both qualification and a durable
+staging-use commitment with commercial intent or agreed terms. Self-session wallet credit,
+provider spend, a staging identity, an unqualified lead, a verbal claim, or the operator decision
+alone cannot satisfy this gate.
 
 Evidence and prepared materials:
 
 - `docs/research/EVALUATOR_RECRUITMENT.md` session-protocol step 7 and recruitment log.
 - `governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md` section 4 and `Left open`.
+- `governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md` section 1.
 
-What remains: obtain one executed paid-pilot agreement or qualified payment record and commit a
-sanitized durable proof that identifies qualification and commitment without exposing customer or
-payment secrets.
+What remains: obtain sanitized durable proof from one qualified DTC customer or design partner that
+it will use staging and either intends to pay or has agreed commercial terms, without exposing
+customer data, payment secrets, customer media, tokens, or signed URLs.
 
 ## 12. Money appendix — every spend-ladder capture
 
@@ -395,7 +399,9 @@ The operator sequence is:
 3. **Five to eight qualified sessions.** Run the registered protocol against the real staging web
    product. Keep the first five completed qualified participants as the fixed preference cohort,
    distribute all 20 golden briefs, and record unassisted completion plus usable-concept judgments.
-4. **Paid pilot.** Obtain one executed qualified payment or signed pilot. Interest does not count.
+4. **Customer commitment.** Obtain sanitized durable evidence that one qualified DTC customer or
+   design partner will use staging and either intends to pay or has agreed commercial terms. Actual
+   payment and Stripe are not required; unqualified or verbal interest does not count.
 5. **Go/no-go.** Review this dossier plus remediation and human evidence, then record `go` or
    `pivot/stop`. Silence is not approval, and a failed usable-output, economics, or paid-demand gate
    blocks P1 expansion.
@@ -484,7 +490,20 @@ cost remains unobservable. The technical representative gate is now closed; the 
 sequence is evaluator-zero self-sessions, recruitment, five-to-eight qualified sessions, one signed
 paid pilot, and the P0 go/no-go or pivot/stop decision.
 
-## 19. Left open
+## 19. Amendment 2026-08-30: paid-demand proof definition
+
+The operator-supplied 2026-08-30 decision supersedes only the P0 paid-demand proof definition. The
+gate no longer requires actual payment or a signed paid-pilot agreement in P0. It remains
+`pending-human` until sanitized durable evidence proves that one qualified DTC customer or design
+partner will use staging and either intends to pay or has agreed commercial terms. This amendment
+does not change any evaluator denominator, usable-output judgment, landed-cost requirement,
+production-segment performance gate, provider-spend boundary, or operator exit decision.
+
+Evidence is
+`governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md`. Historical sections above remain
+the dated record of the earlier gate definition; this section controls the current verdict.
+
+## 20. Left open
 
 - Representative completion and latency are proven at 16/20, median 101.631 seconds, and p90
   122.314 seconds. `GB-18` through `GB-20` remain cap-deferred but are not required to exceed the
@@ -494,6 +513,7 @@ paid pilot, and the P0 go/no-go or pivot/stop decision.
 - External provider invoice and complete fully landed cost are not observable, and no pack has a
   qualified-evaluator usable judgment; the $5 gate and P1a $1.82 guardrail remain unproven.
 - All eight recruitment slots remain `PENDING`; unassisted completion, usable concept rate,
-  evaluator preference, paid pilot, and the operator P0 exit decision remain human work.
-- The packet stays on p0-005 until its completion criterion resolves. This cross-step dossier does
-  not force p0-006 or p0-007 current and does not prepare the p0-008 successor transition early.
+  evaluator preference, qualified customer commitment, and the operator P0 exit decision remain
+  human work.
+- The packet remains on `p0-007-p0-gate-evaluation`; this dossier records no operator exit decision
+  and does not prepare the p0-008 successor transition early.

@@ -48,7 +48,9 @@ All must pass:
 - At least 70% of jobs produce one or more usable concepts.
 - Median first reviewable static pack ≤10 minutes; p90 ≤15 minutes.
 - At least 3 of 5 qualified evaluators prefer the workflow to their current process.
-- At least one qualified customer pays or signs a pilot.
+- At least one qualified DTC customer or design partner has sanitized durable evidence that it will
+  use staging and either intends to pay or has agreed commercial terms. Actual payment and Stripe
+  are not required in P0.
 - Landed cost ≤$5 per usable launch pack.
 - No hidden mock, silent fallback, duplicate provider submission/charge, unexplained ledger difference, public artifact, or missing lineage receipt.
 - Default caps of $8/run, $25/workspace/day, and $100/global/day are transactionally enforced.
