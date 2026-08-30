@@ -10,7 +10,6 @@ import {
 import type { DatabaseRow } from '../../../../packages/db/src/index';
 
 import type { CoreBindings } from '../bindings';
-import { SupabaseDataApiExecutor } from '../data/supabase-data-api';
 
 export type FalAttemptTerminalStatus = 'succeeded' | 'failed' | 'canceled';
 
@@ -431,6 +430,7 @@ export class PrivilegedArtifactMachinePort {
   async getExportContext(
     runId: string,
     artifactIds: readonly string[],
+    persistedReservation: Readonly<DatabaseRow<'cost_reservations'>> | null,
   ): Promise<ExportMachineContext> {
     const raw = record(
       await this.#rpc('get_export_context', {
@@ -448,25 +448,14 @@ export class PrivilegedArtifactMachinePort {
     const workspaceId = string(raw.workspace_id);
     const resolvedRunId = string(raw.run_id);
     const rawReservation = reservation(raw.reservation, false);
-    let persistedReservation: Readonly<DatabaseRow<'cost_reservations'>> | null;
-    try {
-      const executor = new SupabaseDataApiExecutor({
-        baseUrl: this.#baseUrl ?? '',
-        publishableKey: this.#privilegedKey ?? '',
-        callerJwt: this.#privilegedKey ?? '',
-        fetch: this.#fetch,
-      });
-      persistedReservation = await executor.selectOne('cost_reservations', {
-        workspace_id: `eq.${workspaceId}`,
-        run_id: `eq.${resolvedRunId}`,
-        select:
-          'id,workspace_id,run_id,amount_micros,captured_micros,released_micros,refunded_micros,status',
-      });
-    } catch (cause) {
-      throw unavailable(cause);
-    }
     if (persistedReservation === null) {
       throw invariantViolated('export context has no persisted cost reservation');
+    }
+    if (
+      persistedReservation.workspace_id !== workspaceId ||
+      persistedReservation.run_id !== resolvedRunId
+    ) {
+      throw invariantViolated('export RPC and caller-scoped reservation identity disagree');
     }
     const settlementStatuses = new Set([
       'active',
@@ -555,40 +544,31 @@ export class PrivilegedArtifactMachinePort {
     workspaceId: string,
     runId: string,
     artifactIds: readonly string[],
+    persistedArtifacts: readonly Readonly<DatabaseRow<'artifacts'>>[],
+    persistedRunNodes: readonly Readonly<DatabaseRow<'run_nodes'>>[],
   ): Promise<readonly ExportMemberDescriptor[]> {
-    if (!this.#baseUrl || !this.#privilegedKey) throw unavailable();
     const requested = new Set(artifactIds);
     if (requested.size !== artifactIds.length || requested.size === 0 || requested.size > 100) {
       throw invariantViolated(
         'export member descriptor request is empty, duplicated, or too large',
       );
     }
-    const executor = new SupabaseDataApiExecutor({
-      baseUrl: this.#baseUrl,
-      publishableKey: this.#privilegedKey,
-      callerJwt: this.#privilegedKey,
-      fetch: this.#fetch,
-    });
     try {
-      const [artifacts, runNodes] = await Promise.all([
-        executor.select('artifacts', {
-          workspace_id: `eq.${workspaceId}`,
-          run_id: `eq.${runId}`,
-          select: '*',
-          order: 'id.asc',
-        }),
-        executor.select('run_nodes', {
-          workspace_id: `eq.${workspaceId}`,
-          run_id: `eq.${runId}`,
-          select: '*',
-          order: 'node_key.asc,id.asc',
-        }),
-      ]);
-      const selected = artifacts.filter((artifact) => requested.has(artifact.id));
+      if (
+        persistedArtifacts.some(
+          (artifact) => artifact.workspace_id !== workspaceId || artifact.run_id !== runId,
+        ) ||
+        persistedRunNodes.some(
+          (runNode) => runNode.workspace_id !== workspaceId || runNode.run_id !== runId,
+        )
+      ) {
+        throw invariantViolated('caller-scoped export facts do not belong to the RPC run');
+      }
+      const selected = persistedArtifacts.filter((artifact) => requested.has(artifact.id));
       if (selected.length !== requested.size) {
         throw invariantViolated('approved export member descriptor is missing');
       }
-      const nodesById = new Map(runNodes.map((node) => [node.id, node]));
+      const nodesById = new Map(persistedRunNodes.map((node) => [node.id, node]));
       const descriptors = selected.map((artifact): ExportMemberDescriptor => {
         if (
           artifact.artifact_kind !== 'approved_output' ||

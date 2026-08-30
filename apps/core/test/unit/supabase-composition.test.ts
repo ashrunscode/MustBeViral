@@ -489,6 +489,107 @@ describe('production Supabase composition', () => {
     expect(JSON.stringify(fetchImplementation.mock.calls)).not.toContain(legacyPrivilegedSecret);
   });
 
+  it('keeps export table reads caller-scoped and limits the privileged key to the export RPC', async () => {
+    const privilegedSecret = 'fixture-export-machine-secret';
+    const runId = '20000000-0000-4000-8000-000000000010';
+    const artifactId = '30000000-0000-4000-8000-000000000010';
+    const runNodeId = '40000000-0000-4000-8000-000000000010';
+    const observed: Array<
+      Readonly<{ url: string; authorization: string | null; apiKey: string | null }>
+    > = [];
+    const fetchImplementation = vi.fn(
+      async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
+        const url = String(request);
+        const requestHeaders = new Headers(init?.headers);
+        observed.push({
+          url,
+          authorization: requestHeaders.get('authorization'),
+          apiKey: requestHeaders.get('apikey'),
+        });
+        if (url.includes('/cost_reservations?')) {
+          return Response.json({
+            id: '50000000-0000-4000-8000-000000000010',
+            workspace_id: workspaceId,
+            run_id: runId,
+            amount_micros: 4_550_000,
+            captured_micros: 4_550_000,
+            released_micros: 0,
+            refunded_micros: 0,
+            status: 'captured',
+          });
+        }
+        if (url.includes('/artifacts?')) {
+          return Response.json({
+            id: artifactId,
+            workspace_id: workspaceId,
+            run_id: runId,
+            run_node_id: runNodeId,
+            artifact_kind: 'approved_output',
+            status: 'available',
+            accessibility_description: 'Approved buyer description.',
+          });
+        }
+        if (url.includes('/run_nodes?')) {
+          return Response.json([
+            { id: runNodeId, workspace_id: workspaceId, run_id: runId, node_key: 'copy-1' },
+          ]);
+        }
+        if (url.endsWith('/rest/v1/rpc/get_export_context')) {
+          return Response.json({ message: 'fixture stops before R2' }, { status: 503 });
+        }
+        throw new Error(`Unexpected export-boundary fixture request: ${url}`);
+      },
+    );
+    const scoped = createSupabaseRequestDependencies(
+      {
+        ...configuredBindings,
+        [['SUPABASE', 'SECRET', 'KEY'].join('_')]: privilegedSecret,
+        MEDIA_BUCKET: { get: vi.fn(), put: vi.fn() },
+      } as unknown as PlatformBindings,
+      'verified-caller-jwt',
+      actor,
+      fetchImplementation,
+    );
+    expect(scoped).not.toBeNull();
+    if (scoped === null) throw new Error('Expected configured Supabase dependencies');
+
+    await expect(
+      scoped.handlers.create_export({
+        context: {
+          workspace_id: workspaceId,
+          actor_id: actor.actorId,
+          request_id: 'request-export-boundary-1',
+        },
+        run_id: runId,
+        artifact_ids: [artifactId],
+        format: 'zip',
+        idempotency_key: 'export-boundary-key-1',
+      }),
+    ).rejects.toThrow('Artifact persistence is unavailable');
+
+    const tableReads = observed.filter(({ url }) =>
+      ['/cost_reservations?', '/artifacts?', '/run_nodes?'].some((path) => url.includes(path)),
+    );
+    expect(tableReads).toHaveLength(3);
+    expect(tableReads.map(({ authorization }) => authorization)).toEqual([
+      'Bearer verified-caller-jwt',
+      'Bearer verified-caller-jwt',
+      'Bearer verified-caller-jwt',
+    ]);
+    expect(tableReads.map(({ apiKey }) => apiKey)).toEqual([
+      'sb_publishable_fixture',
+      'sb_publishable_fixture',
+      'sb_publishable_fixture',
+    ]);
+    const privilegedCalls = observed.filter(({ apiKey }) => apiKey === privilegedSecret);
+    expect(privilegedCalls).toEqual([
+      expect.objectContaining({
+        url: 'https://project.supabase.co/rest/v1/rpc/get_export_context',
+        authorization: null,
+      }),
+    ]);
+  });
+
   it('normalizes create-workspace input before the composed port calls the RPC', async () => {
     const fetchImplementation = vi.fn(
       async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {

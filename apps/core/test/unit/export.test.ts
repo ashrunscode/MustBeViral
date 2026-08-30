@@ -145,40 +145,6 @@ describe('private launch-pack export composition', () => {
             ],
           });
         }
-        if (url.includes('/rest/v1/cost_reservations?')) {
-          return Response.json({
-            id: 'reservation-1',
-            workspace_id: 'workspace-1',
-            run_id: 'run-1',
-            amount_micros: 4_550_000,
-            captured_micros: 4_550_000,
-            released_micros: 0,
-            refunded_micros: 125_000,
-            status: 'refunded',
-          });
-        }
-        if (url.includes('/rest/v1/artifacts?')) {
-          return Response.json(
-            members.map((member) => ({
-              id: member.id,
-              artifact_kind: 'approved_output',
-              status: 'available',
-              run_id: 'run-1',
-              run_node_id: member.runNodeId,
-              accessibility_description: `Approved buyer description for ${member.nodeKey}.`,
-            })),
-          );
-        }
-        if (url.includes('/rest/v1/run_nodes?')) {
-          return Response.json(
-            members.map((member) => ({
-              id: member.runNodeId,
-              run_id: 'run-1',
-              node_key: member.nodeKey,
-              workspace_id: 'workspace-1',
-            })),
-          );
-        }
         if (url.endsWith('/rest/v1/rpc/register_artifact')) {
           const body = JSON.parse(String(init?.body)) as Readonly<Record<string, unknown>>;
           return Response.json({
@@ -210,6 +176,33 @@ describe('private launch-pack export composition', () => {
         MEDIA_BUCKET: { get, put },
       } as never,
       { runId: 'run-1', artifactIds: members.map((member) => member.id), format: 'zip' },
+      {
+        reservation: {
+          id: 'reservation-1',
+          workspace_id: 'workspace-1',
+          run_id: 'run-1',
+          amount_micros: 4_550_000,
+          captured_micros: 4_550_000,
+          released_micros: 0,
+          refunded_micros: 125_000,
+          status: 'refunded',
+        } as never,
+        artifacts: members.map((member) => ({
+          id: member.id,
+          workspace_id: 'workspace-1',
+          artifact_kind: 'approved_output',
+          status: 'available',
+          run_id: 'run-1',
+          run_node_id: member.runNodeId,
+          accessibility_description: `Approved buyer description for ${member.nodeKey}.`,
+        })) as never,
+        runNodes: members.map((member) => ({
+          id: member.runNodeId,
+          run_id: 'run-1',
+          node_key: member.nodeKey,
+          workspace_id: 'workspace-1',
+        })) as never,
+      },
       fetchImplementation as unknown as typeof fetch,
     );
 
@@ -238,9 +231,11 @@ describe('private launch-pack export composition', () => {
     expect(exportText).toContain('"settlement_status":"refunded"');
     expect(
       fetchImplementation.mock.calls.some(([request]) =>
-        String(request).includes('/rest/v1/cost_reservations?'),
+        ['/rest/v1/cost_reservations?', '/rest/v1/artifacts?', '/rest/v1/run_nodes?'].some((path) =>
+          String(request).includes(path),
+        ),
       ),
-    ).toBe(true);
+    ).toBe(false);
     expect(exportText).toContain('assets/concept-01/reels-motion-9x16.mp4');
     expect(exportText).toContain('captured_micros');
     expect(exportText).not.toContain('"capture_micros"');

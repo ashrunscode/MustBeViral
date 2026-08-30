@@ -984,6 +984,18 @@ function createResourcePort(
       }
     },
     async createExport(input) {
+      const context = asTenantContext(input.context);
+      // These facts deliberately travel through the caller JWT and RLS. The privileged export RPC
+      // remains authoritative for the approved member set, provider receipt, and lineage; it must
+      // never regain ambient service-role table reads just to decorate that result.
+      const [reservation, requestedArtifacts, runNodes] = await Promise.all([
+        repositories.billing.getReservationForRun(context, input.run_id),
+        Promise.all(
+          input.artifact_ids.map((artifactId) => repositories.artifacts.get(context, artifactId)),
+        ),
+        repositories.runs.listNodes(context, input.run_id),
+      ]);
+      const artifacts = requestedArtifacts.filter((artifact) => artifact !== null);
       return await createPrivateRunExport(
         bindings,
         {
@@ -991,6 +1003,7 @@ function createResourcePort(
           artifactIds: input.artifact_ids,
           format: input.format,
         },
+        { reservation, artifacts, runNodes },
         fetchImplementation,
       );
     },

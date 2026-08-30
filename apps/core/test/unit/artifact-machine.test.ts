@@ -4,31 +4,8 @@ import { PrivilegedArtifactMachinePort } from '../../src/composition/artifact-ma
 
 describe('export member descriptors', () => {
   it('maps an approved artifact to its immutable launch-pack node without widening the export RPC', async () => {
-    const fetchImplementation = vi.fn(async (request: string | URL | Request) => {
-      const url = String(request);
-      if (url.includes('/rest/v1/artifacts?')) {
-        return Response.json([
-          {
-            id: 'artifact-copy',
-            artifact_kind: 'approved_output',
-            status: 'available',
-            run_id: 'run-1',
-            run_node_id: 'run-node-copy',
-            accessibility_description: 'Approved copy for concept one.',
-          },
-        ]);
-      }
-      if (url.includes('/rest/v1/run_nodes?')) {
-        return Response.json([
-          {
-            id: 'run-node-copy',
-            run_id: 'run-1',
-            node_key: 'copy-1',
-            workspace_id: 'workspace-1',
-          },
-        ]);
-      }
-      return Response.json({ message: 'unexpected fixture request' }, { status: 500 });
+    const fetchImplementation = vi.fn(() => {
+      throw new Error('Descriptor composition must not make a privileged table request');
     });
     const machine = new PrivilegedArtifactMachinePort(
       {
@@ -39,7 +16,30 @@ describe('export member descriptors', () => {
     );
 
     await expect(
-      machine.getExportMemberDescriptors('workspace-1', 'run-1', ['artifact-copy']),
+      machine.getExportMemberDescriptors(
+        'workspace-1',
+        'run-1',
+        ['artifact-copy'],
+        [
+          {
+            id: 'artifact-copy',
+            workspace_id: 'workspace-1',
+            artifact_kind: 'approved_output',
+            status: 'available',
+            run_id: 'run-1',
+            run_node_id: 'run-node-copy',
+            accessibility_description: 'Approved copy for concept one.',
+          },
+        ] as never,
+        [
+          {
+            id: 'run-node-copy',
+            run_id: 'run-1',
+            node_key: 'copy-1',
+            workspace_id: 'workspace-1',
+          },
+        ] as never,
+      ),
     ).resolves.toEqual([
       {
         artifactId: 'artifact-copy',
@@ -48,26 +48,13 @@ describe('export member descriptors', () => {
         accessibilityDescription: 'Approved copy for concept one.',
       },
     ]);
-    expect(fetchImplementation).toHaveBeenCalledTimes(2);
+    expect(fetchImplementation).not.toHaveBeenCalled();
   });
 
   it('fails closed when an approved artifact has no durable run-node descriptor', async () => {
-    const fetchImplementation = vi.fn(async (request: string | URL | Request) =>
-      Response.json(
-        String(request).includes('/rest/v1/artifacts?')
-          ? [
-              {
-                id: 'artifact-copy',
-                artifact_kind: 'approved_output',
-                status: 'available',
-                run_id: 'run-1',
-                run_node_id: 'missing-node',
-                accessibility_description: 'Approved copy for concept one.',
-              },
-            ]
-          : [],
-      ),
-    );
+    const fetchImplementation = vi.fn(() => {
+      throw new Error('Descriptor composition must not make a privileged table request');
+    });
     const machine = new PrivilegedArtifactMachinePort(
       {
         SUPABASE_URL: 'https://staging.example.test',
@@ -77,7 +64,24 @@ describe('export member descriptors', () => {
     );
 
     await expect(
-      machine.getExportMemberDescriptors('workspace-1', 'run-1', ['artifact-copy']),
+      machine.getExportMemberDescriptors(
+        'workspace-1',
+        'run-1',
+        ['artifact-copy'],
+        [
+          {
+            id: 'artifact-copy',
+            workspace_id: 'workspace-1',
+            artifact_kind: 'approved_output',
+            status: 'available',
+            run_id: 'run-1',
+            run_node_id: 'missing-node',
+            accessibility_description: 'Approved copy for concept one.',
+          },
+        ] as never,
+        [] as never,
+      ),
     ).rejects.toThrow('no run-node descriptor');
+    expect(fetchImplementation).not.toHaveBeenCalled();
   });
 });

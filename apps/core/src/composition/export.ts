@@ -11,10 +11,17 @@ import {
   parseLaunchPackCopy,
 } from '../../../../packages/contracts/src/launch-pack-qa';
 import type { P0HandlerResult } from '../../../../packages/contracts/src/rest';
+import type { DatabaseRow } from '../../../../packages/db/src/index';
 
 import type { CoreBindings } from '../bindings';
 import { PrivilegedArtifactMachinePort } from './artifact-machine';
 import { putPrivateCanonicalBytes, readVerifiedPrivateArtifact } from './artifact-storage';
+
+export interface CallerScopedExportFacts {
+  readonly reservation: Readonly<DatabaseRow<'cost_reservations'>> | null;
+  readonly artifacts: readonly Readonly<DatabaseRow<'artifacts'>>[];
+  readonly runNodes: readonly Readonly<DatabaseRow<'run_nodes'>>[];
+}
 
 export async function createPrivateRunExport(
   bindings: CoreBindings,
@@ -23,14 +30,21 @@ export async function createPrivateRunExport(
     artifactIds: readonly string[];
     format: 'json' | 'zip';
   }>,
+  callerScopedFacts: CallerScopedExportFacts,
   fetchImplementation?: typeof fetch,
 ): Promise<P0HandlerResult & Readonly<Record<string, unknown>>> {
   const machine = new PrivilegedArtifactMachinePort(bindings, fetchImplementation);
-  const context = await machine.getExportContext(input.runId, input.artifactIds);
+  const context = await machine.getExportContext(
+    input.runId,
+    input.artifactIds,
+    callerScopedFacts.reservation,
+  );
   const descriptors = await machine.getExportMemberDescriptors(
     context.workspaceId,
     context.runId,
     context.artifacts.map((artifact) => artifact.id),
+    callerScopedFacts.artifacts,
+    callerScopedFacts.runNodes,
   );
   const descriptorsByArtifactId = new Map(
     descriptors.map((descriptor) => [descriptor.artifactId, descriptor]),
