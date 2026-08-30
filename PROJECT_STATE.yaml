@@ -19,7 +19,7 @@ blockers:
   - Live GB-02 16/16 is retired. Probe 17145ccd still content_policy_violation after the
     closed-packaging master-2 direction on Worker 872ac183. Do not pay GB-02 again. Harness 16/20
     still stands. Evidence governance/evidence/WP-P0-001/fail-evaluation/17145ccd.md.
-  - Buyer last mile ZIP/copy/header/upload is live on web 87jj0310i and Worker 1d909c1f. Official
+  - Buyer last mile ZIP/copy/header/upload remains available in current staging. Official
     fal-ai/flux-2-pro input has no image_url; packshot bytes cannot ride the pinned T2I route. Live
     Reject is already not offered. Evidence
     governance/evidence/WP-P0-001/packshot-upload-staging-walk.md.

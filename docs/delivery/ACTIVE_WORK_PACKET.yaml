@@ -302,10 +302,10 @@ acceptance:
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: qualified-paid-pilot-proof
       criterion:
-        At least one qualified DTC customer or design partner has sanitized durable evidence that it
-        will use staging and either intends to pay or has agreed commercial terms, without exposing
-        customer data, payment secrets, customer media, tokens, or signed URLs. Actual payment and
-        Stripe are not required in P0.
+        At least one qualified DTC customer or design partner has sanitized durable evidence that
+        it will use staging and either intends to pay or has agreed commercial terms, without
+        exposing customer data, payment secrets, customer media, tokens, or signed URLs. Actual
+        payment and Stripe are not required in P0.
       status: pending
       evidence:
         - docs/research/EVALUATOR_RECRUITMENT.md
@@ -328,16 +328,19 @@ quality_gates:
     status: passed
     evidence:
       - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+      - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
   - id: governance
     command: pnpm governance:check
     status: passed
     evidence:
       - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+      - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
   - id: repository-verification
     command: pnpm verify
     status: passed
     evidence:
       - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+      - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
 rollback:
   strategy:
     Revert the packet's implementation paths and generated/evidence changes through auditable
@@ -353,15 +356,15 @@ external_effects:
 handoff:
   current_step: p0-007-p0-gate-evaluation
   next_action: Operator enables the ready DTC design partner on GB-04 staging, records sanitized
-    qualification/commitment evidence and explicit authorization for the customer's $4.55 run,
-    then gives the customer access.
+    qualification/commitment evidence and explicit authorization for the customer's $4.55 run, then
+    gives the customer access.
   blockers:
     - Live GB-02 16/16 is retired. Probe 17145ccd still content_policy_violation after the
       closed-packaging master-2 direction on Worker 872ac183. Do not pay GB-02 again. Harness 16/20
       still stands. Evidence governance/evidence/WP-P0-001/fail-evaluation/17145ccd.md.
-    - Buyer last mile ZIP/copy/header/upload is live on web 87jj0310i and Worker 1d909c1f. Official
-      fal-ai/flux-2-pro input has no image_url; packshot bytes cannot ride the pinned T2I route.
-      Live Reject is already not offered. Evidence
+    - Buyer last mile ZIP/copy/header/upload remains available in current staging. Official
+      fal-ai/flux-2-pro input has no image_url; packshot bytes cannot ride the pinned T2I route. Live
+      Reject is already not offered. Evidence
       governance/evidence/WP-P0-001/packshot-upload-staging-walk.md.
     - Production-segment Web Vitals are unmeasured, and P0 cannot mark them passed until an accepted
       measurement/sequencing path preserves the evidence standard without promoting V2 or cutting
@@ -369,10 +372,10 @@ handoff:
       Catalog capture is 4,550,000 micros; that is the customer charge, not a fal invoice. No
       usable-pack denominator. Evidence
       governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md.
-    - P0 exit still needs production-segment Web Vitals, 5-8 qualified evaluator sessions,
-      sanitized durable proof that one qualified DTC customer/design partner will use staging and
-      either intends to pay or has agreed commercial terms, plus an operator go/no-go. Actual
-      payment and Stripe are not required in P0; the decision alone does not pass the pending gate.
+    - P0 exit still needs production-segment Web Vitals, 5-8 qualified evaluator sessions, sanitized
+      durable proof that one qualified DTC customer/design partner will use staging and either
+      intends to pay or has agreed commercial terms, plus an operator go/no-go. Actual payment and
+      Stripe are not required in P0; the decision alone does not pass the pending gate.
       Self-sessions do not count. See
       governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md.
   changed_paths:
@@ -454,6 +457,32 @@ handoff:
     - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-29.md
     - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-29-1400.md
     - governance/evidence/WP-P0-001/agent-handoff-2026-08-29.md
+    - .env.example
+    - apps/core/src/composition/artifact-machine.ts
+    - apps/core/src/composition/artifact-storage.ts
+    - apps/core/src/composition/export.ts
+    - apps/core/src/http/request-id.ts
+    - apps/core/src/routes/v1.ts
+    - apps/core/test/unit
+    - apps/core/tools/launch-pack-harness-lib.ts
+    - apps/core/wrangler.jsonc
+    - apps/web/.env.production
+    - apps/web/app/api/download/[id]/route.ts
+    - apps/web/app/auth
+    - apps/web/app/forgot-password
+    - apps/web/app/reset-password
+    - apps/web/src/components
+    - apps/web/src/config
+    - apps/web/src/lib/auth
+    - apps/web/tests/integration
+    - packages/artifacts/src
+    - packages/config
+    - packages/contracts/src
+    - docs/product/PRODUCT_CONTRACT.md
+    - docs/delivery/QUALITY_GATES.md
+    - docs/research/EVALUATOR_RECRUITMENT.md
+    - governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md
+    - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
   last_green_checks:
     - pnpm packet:verify
     - 20/20 staging launch-pack quotes at 4,550,000 micros
@@ -485,6 +514,22 @@ handoff:
     - pnpm design:check
     - pnpm governance:check
     - pnpm verify with CI=true and apps/core/.dev.vars.example materialised locally
+    - 2026-08-30 buyer-journey release source f6c3992, 3fbb050, 8f2d223, e089d99, 08eff8f, 4a5997f,
+      and 3c0f376
+    - 2026-08-30 governance 122, Core unit 241, web unit 166, web integration 21, contracts
+      integration 3, Core integration 2, focused regression 30, and package build 14 passed
+    - 2026-08-30 clean Vercel upload input 753, upload set 750, and zero blocked inputs
+    - 2026-08-30 authenticated Vercel download bridge and checksum parity passed; unauthenticated
+      route returned 401 with no redirect and private no-store policy
+    - 2026-08-30 Worker smoke health 200
+    - 2026-08-30 no-spend GB-04 browser proof 1/1 passed with 4,550,000 micros, 16 priced lines, and
+      no run submitted
+    - 2026-08-30 deployed downstream proof passed with 19 ZIP members, 18 manifest hashes, 16
+      approved outputs, 16 lineage rows, honest failed QA, and final-replay zero export posts, run
+      starts, provider calls, or spend/provider fact changes
+    - 2026-08-30 staging Vercel dpl_EFVgRCdcWm3DkrVBL8usUQgidkMN and Core Worker deployment
+      ce5c33dc-fdb6-4259-8fc7-e3e8fc259184 version 246b5df9-bbcd-48cb-b90c-a050db73f208
+    - 2026-08-30 Cursor implementation-commit staged-diff audits returned zero blockers
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []
