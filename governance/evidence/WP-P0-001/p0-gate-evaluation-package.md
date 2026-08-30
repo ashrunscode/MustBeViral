@@ -24,7 +24,7 @@ Current roll-up:
 | Unassisted workflow completion                 | pending-human       | Zero qualified sessions completed                                             |
 | Usable concept rate                            | pending-human       | Zero qualified usable-concept judgments                                       |
 | Evaluator workflow preference                  | pending-human       | The fixed first-five cohort has not completed                                 |
-| Qualified customer commitment                  | pending-human       | No qualified staging-use and commercial-intent evidence exists                |
+| Qualified customer commitment                  | pending-human       | Private source has no candidate ID, screen, commitment, or verified recipient |
 
 Current canvas evidence is 60.16 FPS for 100 nodes and 60.26 FPS for the 500-node stress fixture,
 with 30 DOM nodes mounted and 29.9 ms selection latency. These values supersede the earlier passing
@@ -313,10 +313,13 @@ Evidence and prepared materials:
 - `docs/research/EVALUATOR_RECRUITMENT.md` session-protocol step 7 and recruitment log.
 - `governance/evidence/WP-P0-001/operator-decisions-2026-08-11.md` section 4 and `Left open`.
 - `governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md` section 1.
+- `governance/evidence/WP-P0-001/design-partner-enablement-check-2026-08-30.md`.
 
 What remains: obtain sanitized durable proof from one qualified DTC customer or design partner that
 it will use staging and either intends to pay or has agreed commercial terms, without exposing
-customer data, payment secrets, customer media, tokens, or signed URLs.
+customer data, payment secrets, customer media, tokens, or signed URLs. The 2026-08-30 private
+source check found no existing candidate ID, completed screen, commitment record, or verified
+recipient, so access and invitation actions correctly stopped before mutation.
 
 ## 12. Money appendix — every spend-ladder capture
 
@@ -503,7 +506,21 @@ Evidence is
 `governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md`. Historical sections above remain
 the dated record of the earlier gate definition; this section controls the current verdict.
 
-## 20. Left open
+## 20. Amendment 2026-08-30: enablement stopped on missing private evidence
+
+The owner recorded an unexercised ceiling of `4,550,000` USD micros for exactly one new `GB-04`
+staging run. That authorization is not a run, confirmation, retry, reservation, provider call,
+customer charge, or gate pass. The customer must still receive the named quote and explicitly
+confirm it through the normal UI.
+
+The approved private recruiting source contained only three one-message outbound permission
+threads and no inbound message. It contained no existing candidate ID, completed qualification
+screen, durable staging-use/commercial commitment, or verified recipient. No staging identity,
+membership, invitation, customer session, run, provider call, deployment, or spend mutation was
+made. `design-partner-enablement-check-2026-08-30.md` is the controlling sanitized receipt for this
+attempt, and the qualified customer commitment gate remains pending.
+
+## 21. Left open
 
 - Representative completion and latency are proven at 16/20, median 101.631 seconds, and p90
   122.314 seconds. `GB-18` through `GB-20` remain cap-deferred but are not required to exceed the
@@ -512,7 +529,8 @@ the dated record of the earlier gate definition; this section controls the curre
   navigability alone do not pass the combined performance gate.
 - External provider invoice and complete fully landed cost are not observable, and no pack has a
   qualified-evaluator usable judgment; the $5 gate and P1a $1.82 guardrail remain unproven.
-- All eight recruitment slots remain `PENDING`; unassisted completion, usable concept rate,
+- All eight recruitment slots remain `PENDING`; the approved private source still lacks an existing
+  candidate-ID qualification and commitment record. Unassisted completion, usable concept rate,
   evaluator preference, qualified customer commitment, and the operator P0 exit decision remain
   human work.
 - The packet remains on `p0-007-p0-gate-evaluation`; this dossier records no operator exit decision

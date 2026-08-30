@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Operator enables the ready DTC design partner on GB-04 staging, records sanitized qualification/commitment evidence and explicit authorization for the customer's $4.55 run, then gives the customer access.
+Operator records the ready partner under an existing EV-01 through EV-08 candidate ID in the approved private recruiting system, including complete qualification, durable staging-use and commercial-commitment evidence, and one verified recipient, then reruns staging enablement.
