@@ -1022,8 +1022,8 @@ function createResourcePort(
       const [reservation, ledger, artifacts, attempts, providerJobs, runNodes, captureLedger] =
         await Promise.all([
           repositories.billing.getReservationForRun(context, runId),
-          repositories.billing.listLedger(context, 100),
-          repositories.artifacts.listForRun(context, runId, 100),
+          repositories.billing.listLedgerForRun(context, runId),
+          repositories.artifacts.listForRun(context, runId),
           executor.select('attempts', {
             workspace_id: `eq.${context.workspaceId}`,
             run_id: `eq.${runId}`,
@@ -1087,7 +1087,7 @@ function createResourcePort(
         receipt: {
           run: receiptRunProjection(run),
           reservation: reservation === null ? null : receiptReservationProjection(reservation),
-          ledger: ledger.filter((entry) => entry.run_id === runId).map(receiptLedgerProjection),
+          ledger: ledger.map(receiptLedgerProjection),
           artifacts: artifacts.map(receiptArtifactProjection),
           lineage: lineage.map(receiptLineageProjection),
           provider_jobs: composeReceiptProviderJobs({

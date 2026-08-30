@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { GB04_EXPECTED_EXPORT_MEMBERS, gb04ExportFilename } from '@mustbeviral/artifacts';
 import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 
 import { InMemoryExportPort, WorkerExportPort, sameOriginArtifactUrl } from './export-port';
@@ -57,7 +58,19 @@ describe('InMemoryExportPort', () => {
 describe('WorkerExportPort', () => {
   const timestamp = '2026-08-11T12:00:00.000Z';
   const hash = 'a'.repeat(64);
-  const artifact = (kind: 'approved_output' | 'provider_output' | 'export', id: string) => ({
+  const memberKeys = GB04_EXPECTED_EXPORT_MEMBERS.map(({ nodeKey }) => nodeKey);
+  const runNodeId = (nodeKey: string) => `run-node-${nodeKey}`;
+  const mimeTypeFor = (nodeKey: string) =>
+    nodeKey.startsWith('copy-')
+      ? 'application/json'
+      : nodeKey === 'motion-1'
+        ? 'video/mp4'
+        : 'image/png';
+  const artifact = (
+    kind: 'approved_output' | 'provider_output' | 'export',
+    id: string,
+    nodeKey = 'master-1',
+  ) => ({
     accessibility_description: kind === 'export' ? null : 'Approved product output.',
     approved_at: kind === 'approved_output' ? timestamp : null,
     artifact_kind: kind,
@@ -66,10 +79,10 @@ describe('WorkerExportPort', () => {
     content_hash: hash,
     created_at: timestamp,
     id,
-    mime_type: kind === 'export' ? 'application/zip' : 'image/png',
+    mime_type: kind === 'export' ? 'application/zip' : mimeTypeFor(nodeKey),
     project_id: 'project-live',
     run_id: 'run-live',
-    run_node_id: kind === 'export' ? null : 'run-node-live',
+    run_node_id: kind === 'export' ? null : runNodeId(nodeKey),
     status: 'available',
     updated_at: timestamp,
   });
@@ -80,6 +93,44 @@ describe('WorkerExportPort', () => {
     rights_attestation: {},
     workspace_id: 'workspace-live',
   });
+  const runResponse = (
+    requestId: string,
+    nodeOverride?: Readonly<{ nodeKey: string; status: string }>,
+  ) =>
+    new Response(
+      JSON.stringify({
+        data: {
+          run: {
+            runId: 'run-live',
+            projectId: 'project-live',
+            canvasId: 'canvas-live',
+            canvasRevisionId: 'revision-live',
+            quoteId: 'quote-live',
+            status: 'succeeded',
+            reservationId: 'reservation-live',
+          },
+          nodes: memberKeys.map((nodeKey, index) => ({
+            runNodeId: runNodeId(nodeKey),
+            nodeKey,
+            modelRouteId: `route-${nodeKey}`,
+            status: nodeOverride?.nodeKey === nodeKey ? nodeOverride.status : 'succeeded',
+            dispatchWave: index < 3 ? 1 : 2,
+          })),
+          recovery: null,
+          spend: {
+            currency: 'USD',
+            authorizedMicros: '4550000',
+            capturedMicros: '672574',
+            releasedMicros: '3877426',
+            refundedMicros: '0',
+            netMicros: '672574',
+            settlementStatus: 'partially_captured',
+          },
+        },
+        meta: { request_id: requestId },
+      }),
+      { status: 200, headers: { 'content-type': 'application/json' } },
+    );
   const receipt = (includeExport: boolean) => ({
     run: {
       canvas_id: 'canvas-live',
@@ -120,7 +171,7 @@ describe('WorkerExportPort', () => {
       },
     ],
     artifacts: [
-      artifact('approved_output', 'artifact-approved'),
+      ...memberKeys.map((nodeKey) => artifact('approved_output', `artifact-${nodeKey}`, nodeKey)),
       ...(includeExport ? [artifact('export', 'artifact-export')] : []),
     ],
     lineage: [],
@@ -156,6 +207,7 @@ describe('WorkerExportPort', () => {
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
         }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-0001');
         if (url.includes('/artifacts/artifact-export')) {
           return new Response(
             JSON.stringify({
@@ -202,7 +254,36 @@ describe('WorkerExportPort', () => {
       .mockReturnValueOnce('export-idem-create')
       .mockReturnValueOnce('export-idem-rebuild');
     const port = new WorkerExportPort(client, 'run-live', createIdempotencyKey);
-    await expect(port.read()).resolves.toMatchObject({ type: 'export_required' });
+    const read = await port.read();
+    expect(read).toMatchObject({ type: 'export_required' });
+    if (read.type !== 'export_required') throw new Error('Expected an export-ready receipt');
+    expect(read.rows).toHaveLength(20);
+    expect(read.rows).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'copy-1',
+          label: 'copy/concept-01.json',
+          state: 'ready',
+        }),
+        expect.objectContaining({
+          id: 'adaptation-3-3',
+          label: 'assets/concept-03/stories-9x16.png',
+          state: 'ready',
+        }),
+        expect.objectContaining({ id: 'qa-report.json', state: 'queued' }),
+        expect.objectContaining({ id: 'manifest.json', state: 'queued' }),
+        expect.objectContaining({
+          id: 'launch-pack-archive',
+          label: 'mustbeviral-launch-pack-run-live.zip',
+          state: 'queued',
+        }),
+      ]),
+    );
+    for (const expected of GB04_EXPECTED_EXPORT_MEMBERS) {
+      expect(read.rows.find(({ id }) => id === expected.nodeKey)?.label).toBe(
+        gb04ExportFilename(expected, mimeTypeFor(expected.nodeKey)),
+      );
+    }
     expect(calls.filter(({ method }) => method === 'POST')).toHaveLength(0);
     expect(createIdempotencyKey).not.toHaveBeenCalled();
 
@@ -256,6 +337,7 @@ describe('WorkerExportPort', () => {
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
         }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-session');
         exportCalls += 1;
         idempotencyKeys.push(new Headers(init?.headers).get('idempotency-key'));
         if (exportCalls === 1) {
@@ -335,6 +417,7 @@ describe('WorkerExportPort', () => {
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
         }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-remint');
         if ((init?.method ?? 'GET') === 'POST') exportCalls += 1;
         accessReads += 1;
         const capability = `download-${String(accessReads)}.${'s'.repeat(43)}`;
@@ -388,6 +471,7 @@ describe('WorkerExportPort', () => {
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
         }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-rebuild');
         if ((init?.method ?? 'GET') === 'GET') {
           return new Response(
             JSON.stringify({
@@ -443,6 +527,49 @@ describe('WorkerExportPort', () => {
     expect(exportCalls).toBe(1);
   });
 
+  it('selects the newest available ZIP after a legacy export is rebuilt', async () => {
+    const rebuiltReceipt = receipt(false);
+    rebuiltReceipt.artifacts.push(
+      {
+        ...artifact('export', 'artifact-export-legacy'),
+        created_at: '2026-08-11T12:00:00.000Z',
+      },
+      {
+        ...artifact('export', 'artifact-export-rebuilt'),
+        created_at: '2026-08-11T12:01:00.000Z',
+      },
+    );
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-newest',
+      fetch: async (input) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: rebuiltReceipt },
+              meta: { request_id: 'request-export-newest' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-newest');
+        throw new Error(`Unexpected newest-export fixture request: ${url}`);
+      },
+    });
+
+    await expect(
+      new WorkerExportPort(client, 'run-live', () => 'unused-export-idem').read(),
+    ).resolves.toMatchObject({
+      type: 'ok',
+      exportArtifactId: 'artifact-export-rebuilt',
+      rows: expect.arrayContaining([
+        expect.objectContaining({ id: 'artifact-export-rebuilt', state: 'ready' }),
+      ]),
+    });
+  });
+
   it('keeps a transient mint failure retryable without rebuilding', async () => {
     let exportCalls = 0;
     const client = createMustBeViralRestClient({
@@ -477,13 +604,15 @@ describe('WorkerExportPort', () => {
   it('stops before export when provider outputs are still unapproved', async () => {
     let exportCalls = 0;
     const pendingReceipt = receipt(false);
-    pendingReceipt.artifacts = [artifact('provider_output', 'artifact-pending')];
+    pendingReceipt.artifacts = [artifact('provider_output', 'artifact-pending', 'master-1')];
     const client = createMustBeViralRestClient({
       baseUrl: 'https://api.example.test',
       getAccessToken: async () => 'session-token',
       createRequestId: () => 'request-export-0002',
       fetch: async (input) => {
-        if (!String(input).endsWith('/receipt')) exportCalls += 1;
+        const url = String(input);
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-0002');
+        if (!url.endsWith('/receipt')) exportCalls += 1;
         return new Response(
           JSON.stringify({
             data: { receipt: pendingReceipt },
@@ -495,9 +624,234 @@ describe('WorkerExportPort', () => {
     });
     await expect(
       new WorkerExportPort(client, 'run-live', () => 'export-idem-pending').create(),
-    ).resolves.toEqual({
+    ).resolves.toMatchObject({
       type: 'review_incomplete',
-      pending_group_ids: ['artifact-pending'],
+      pending_group_ids: expect.arrayContaining(['copy-1', 'master-1', 'motion-1']),
+      rows: expect.arrayContaining([
+        expect.objectContaining({ id: 'master-1', state: 'queued' }),
+        expect.objectContaining({ id: 'copy-1', state: 'missing' }),
+        expect.objectContaining({ id: 'motion-1', state: 'missing' }),
+      ]),
+    });
+    expect(exportCalls).toBe(0);
+  });
+
+  it('fails closed when the only provider output is quarantined', async () => {
+    let exportCalls = 0;
+    const quarantinedReceipt = receipt(false);
+    quarantinedReceipt.artifacts = [
+      ...quarantinedReceipt.artifacts.filter(({ id }) => id !== 'artifact-master-1'),
+      {
+        ...artifact('provider_output', 'artifact-master-1-quarantined', 'master-1'),
+        status: 'quarantined',
+      },
+    ];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-quarantine',
+      fetch: async (input) => {
+        const url = String(input);
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-quarantine');
+        if (!url.endsWith('/receipt')) exportCalls += 1;
+        return new Response(
+          JSON.stringify({
+            data: { receipt: quarantinedReceipt },
+            meta: { request_id: 'request-export-quarantine' },
+          }),
+          { status: 200, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+
+    await expect(
+      new WorkerExportPort(client, 'run-live', () => 'unused-quarantine-key').create(),
+    ).resolves.toMatchObject({
+      type: 'review_incomplete',
+      pending_group_ids: ['master-1'],
+      rows: expect.arrayContaining([
+        expect.objectContaining({
+          id: 'master-1',
+          state: 'failed',
+          detail: 'Generated output is quarantined or unavailable and cannot be approved.',
+        }),
+      ]),
+    });
+    expect(exportCalls).toBe(0);
+  });
+
+  it('prioritizes reconciliation over an otherwise ready approved output', async () => {
+    let exportCalls = 0;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-reconciliation',
+      fetch: async (input) => {
+        const url = String(input);
+        if (url.endsWith('/v1/runs/run-live')) {
+          return runResponse('request-export-reconciliation', {
+            nodeKey: 'master-1',
+            status: 'reconciliation_required',
+          });
+        }
+        if (!url.endsWith('/receipt')) exportCalls += 1;
+        return new Response(
+          JSON.stringify({
+            data: { receipt: receipt(false) },
+            meta: { request_id: 'request-export-reconciliation' },
+          }),
+          { status: 200, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+
+    await expect(
+      new WorkerExportPort(client, 'run-live', () => 'unused-reconciliation-key').create(),
+    ).resolves.toMatchObject({
+      type: 'review_incomplete',
+      pending_group_ids: ['master-1'],
+      rows: expect.arrayContaining([
+        expect.objectContaining({
+          id: 'master-1',
+          state: 'failed',
+          detail: 'The run node needs reconciliation before export.',
+        }),
+      ]),
+    });
+    expect(exportCalls).toBe(0);
+  });
+
+  it('preserves the exact checklist and receipt when Core rejects export creation', async () => {
+    let exportCalls = 0;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-failed',
+      fetch: async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: receipt(false) },
+              meta: { request_id: 'request-export-failed' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-failed');
+        if ((init?.method ?? 'GET') === 'POST') exportCalls += 1;
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: 'VALIDATION_FAILED',
+              message: 'The immutable archive could not be verified.',
+              request_id: 'request-export-failed',
+              retryable: false,
+            },
+          }),
+          { status: 422, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+    const port = new WorkerExportPort(client, 'run-live', () => 'export-idem-failed');
+
+    const failed = await port.create();
+    expect(failed).toMatchObject({
+      type: 'export_failed',
+      message: 'The immutable archive could not be verified.',
+      request_id: 'request-export-failed',
+      receipt: { quoteMicros: 4_550_000n },
+    });
+    if (failed.type !== 'export_failed') throw new Error('Expected a failed export checklist');
+    expect(failed.rows).toHaveLength(20);
+    expect(failed.rows.filter(({ state }) => state === 'ready')).toHaveLength(16);
+    expect(failed.rows.filter(({ state }) => state === 'failed')).toHaveLength(4);
+    expect(exportCalls).toBe(1);
+
+    await expect(port.read()).resolves.toMatchObject({ type: 'export_required' });
+    expect(exportCalls).toBe(1);
+  });
+
+  it('uses a read-only recheck to discover an export after an uncertain create response', async () => {
+    let exportCalls = 0;
+    let exportExists = false;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-uncertain',
+      fetch: async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: receipt(exportExists) },
+              meta: { request_id: 'request-export-uncertain' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-uncertain');
+        if ((init?.method ?? 'GET') === 'POST') {
+          exportCalls += 1;
+          exportExists = true;
+          throw new Error('connection closed after request');
+        }
+        throw new Error(`Unexpected uncertain-export fixture request: ${url}`);
+      },
+    });
+    const port = new WorkerExportPort(client, 'run-live', () => 'export-idem-uncertain');
+
+    await expect(port.create()).resolves.toMatchObject({
+      type: 'export_failed',
+      message: 'Core did not prove whether this export was created.',
+    });
+    expect(exportCalls).toBe(1);
+    await expect(port.read()).resolves.toMatchObject({
+      type: 'ok',
+      exportArtifactId: 'artifact-export',
+    });
+    expect(exportCalls).toBe(1);
+  });
+
+  it('does not mistake an existing JSON export for the buyer ZIP', async () => {
+    let exportCalls = 0;
+    const jsonReceipt = receipt(false);
+    jsonReceipt.artifacts.push({
+      ...artifact('export', 'artifact-json-export'),
+      mime_type: 'application/json',
+    });
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-json',
+      fetch: async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: jsonReceipt },
+              meta: { request_id: 'request-export-json' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-export-json');
+        if ((init?.method ?? 'GET') === 'POST') exportCalls += 1;
+        throw new Error(`Unexpected JSON-export fixture request: ${url}`);
+      },
+    });
+
+    await expect(
+      new WorkerExportPort(client, 'run-live', () => 'unused-json-export-key').read(),
+    ).resolves.toMatchObject({
+      type: 'export_required',
+      rows: expect.arrayContaining([
+        expect.objectContaining({
+          id: 'launch-pack-archive',
+          label: 'mustbeviral-launch-pack-run-live.zip',
+          state: 'queued',
+        }),
+      ]),
     });
     expect(exportCalls).toBe(0);
   });

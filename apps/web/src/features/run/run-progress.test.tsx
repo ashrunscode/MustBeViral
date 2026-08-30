@@ -106,6 +106,9 @@ describe('RunProgress', () => {
     expect(html).toContain('This launch pack needs verification');
     expect(html).toContain('data-recovery="ambiguous"');
     expect(html).toContain('$1.40 pending');
+    expect(html).toContain('Reconciliation pending');
+    expect(html).not.toContain('Providers active');
+    expect(html).not.toContain('Terminal state');
     expect(html).toContain('Open receipt');
     expect(html).not.toMatch(/retry now|retry run|retry branch/iu);
   });

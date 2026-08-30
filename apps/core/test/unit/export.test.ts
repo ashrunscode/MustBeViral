@@ -98,14 +98,38 @@ describe('private launch-pack export composition', () => {
   it('carries immutable run-node semantics into a checksummed buyer ZIP', async () => {
     const members = await launchPackArtifacts();
     const membersByObjectKey = new Map(members.map((member) => [member.objectKey, member]));
-    const put = vi.fn(async (key: string, bytes: Uint8Array, options: unknown) => {
+    let storedExportBytes: Uint8Array | undefined;
+    const put = vi.fn(async (key: string, body: ReadableStream, options: unknown) => {
       void key;
-      void bytes;
-      void options;
+      storedExportBytes = new Uint8Array(await new Response(body).arrayBuffer());
+      const supplied = (options as Readonly<{ sha256?: Uint8Array }>).sha256;
+      const checksum = supplied?.buffer.slice(
+        supplied.byteOffset,
+        supplied.byteOffset + supplied.byteLength,
+      );
+      return {
+        size: storedExportBytes.byteLength,
+        checksums: { sha256: checksum },
+      };
     });
-    const get = vi.fn(async (key: string) => {
+    const get = vi.fn(async (key: string, options?: R2GetOptions) => {
       const member = membersByObjectKey.get(key);
-      return member === undefined ? null : { arrayBuffer: async () => member.bytes.slice().buffer };
+      if (member === undefined) return null;
+      const etag = `etag-${member.id}`;
+      if (options?.onlyIf !== undefined && !(options.onlyIf instanceof Headers)) {
+        if (options.onlyIf.etagMatches !== etag) return { size: member.bytes.byteLength, etag };
+      }
+      return {
+        size: member.bytes.byteLength,
+        etag,
+        body: new ReadableStream({
+          start(controller) {
+            controller.enqueue(member.bytes);
+            controller.close();
+          },
+        }),
+        arrayBuffer: async () => member.bytes.slice().buffer,
+      };
     });
     const fetchImplementation = vi.fn(
       async (request: string | URL | Request, init?: RequestInit) => {
@@ -217,7 +241,9 @@ describe('private launch-pack export composition', () => {
     expect(put).toHaveBeenCalledOnce();
     const putCall = put.mock.calls[0];
     if (putCall === undefined) throw new TypeError('Expected one R2 export PUT');
-    const exportBytes = putCall[1] as Uint8Array;
+    expect(putCall[1]).toBeInstanceOf(ReadableStream);
+    const exportBytes = storedExportBytes;
+    if (exportBytes === undefined) throw new TypeError('Expected streamed R2 export bytes');
     const options = putCall[2] as Readonly<{ sha256?: Uint8Array }>;
     expect(exportBytes.subarray(0, 2)).toEqual(Uint8Array.of(0x50, 0x4b));
     const exportText = new TextDecoder().decode(exportBytes);
@@ -242,5 +268,16 @@ describe('private launch-pack export composition', () => {
     const exportHash = await sha256Hex(exportBytes);
     expect(Buffer.from(options.sha256 ?? new Uint8Array()).toString('hex')).toBe(exportHash);
     expect(result.artifact).toMatchObject({ content_hash: exportHash });
+    expect(get.mock.calls.filter(([, options]) => options?.onlyIf !== undefined)).toHaveLength(26);
+    expect(
+      get.mock.calls
+        .filter(([, options]) => options?.onlyIf !== undefined)
+        .every(([, options]) => {
+          const onlyIf = options?.onlyIf;
+          return (
+            onlyIf !== undefined && !(onlyIf instanceof Headers) && onlyIf.etagMatches !== undefined
+          );
+        }),
+    ).toBe(true);
   });
 });

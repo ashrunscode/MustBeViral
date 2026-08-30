@@ -167,6 +167,31 @@ describe('WorkerReviewPort', () => {
     netMicros: '672574',
     settlementStatus: 'partially_captured',
   } as const;
+  const succeededRunResponse = (requestId: string) => ({
+    data: {
+      run: {
+        runId: 'run-live',
+        projectId: 'project-live',
+        canvasId: 'canvas-live',
+        canvasRevisionId: 'revision-live',
+        quoteId: 'quote-live',
+        status: 'succeeded',
+        reservationId: 'reservation-live',
+      },
+      nodes: [
+        {
+          runNodeId: 'run-node-live',
+          nodeKey: 'master-1',
+          modelRouteId: 'provider/model-live',
+          status: 'succeeded',
+          dispatchWave: 2,
+        },
+      ],
+      recovery: null,
+      spend: runSpend,
+    },
+    meta: { request_id: requestId },
+  });
 
   it('reads receipt artifacts and records approval with exact description and stable idempotency', async () => {
     const calls: Array<Readonly<{ body: string | undefined; headers: Headers; url: string }>> = [];
@@ -316,7 +341,8 @@ describe('WorkerReviewPort', () => {
       getAccessToken: async () => (sessionActive ? 'session-token' : null),
       createRequestId: () => 'request-review-session',
       fetch: async (input, init) => {
-        if (String(input).endsWith('/approvals')) {
+        const url = String(input);
+        if (url.endsWith('/approvals')) {
           approvalCalls.push({ headers: new Headers(init?.headers) });
           return new Response(
             JSON.stringify({
@@ -330,6 +356,12 @@ describe('WorkerReviewPort', () => {
             }),
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
+        }
+        if (url.endsWith('/v1/runs/run-live')) {
+          return new Response(JSON.stringify(succeededRunResponse('request-review-session')), {
+            status: 200,
+            headers: { 'content-type': 'application/json' },
+          });
         }
         return new Response(JSON.stringify(receiptResponse()), {
           status: 200,
@@ -476,6 +508,52 @@ describe('WorkerReviewPort', () => {
     ).not.toMatch(/provider payload|normalized_evidence|signed\.example|token=/iu);
   });
 
+  it('fails closed when run recovery context cannot be read', async () => {
+    const requestedUrls: string[] = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-review-context',
+      fetch: async (input) => {
+        const url = String(input);
+        requestedUrls.push(url);
+        if (url.endsWith('/receipt')) {
+          return new Response(JSON.stringify(receiptResponse()), {
+            status: 200,
+            headers: { 'content-type': 'application/json' },
+          });
+        }
+        if (url.endsWith('/v1/runs/run-live')) {
+          return new Response(
+            JSON.stringify({
+              error: {
+                code: 'RUN_CONTEXT_UNAVAILABLE',
+                message: 'Run recovery context is temporarily unavailable.',
+                request_id: 'request-review-context',
+                retryable: true,
+              },
+            }),
+            { status: 503, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        throw new Error(`Unexpected request: ${url}`);
+      },
+    });
+
+    await expect(
+      new WorkerReviewPort(client, 'run-live', 'user-live', () => 'approval-idem-context').read(),
+    ).resolves.toEqual({
+      type: 'error',
+      message: 'Run recovery context is temporarily unavailable.',
+      retryable: true,
+      request_id: 'request-review-context',
+    });
+    expect(requestedUrls).toEqual([
+      'https://api.example.test/v1/runs/run-live/receipt',
+      'https://api.example.test/v1/runs/run-live',
+    ]);
+  });
+
   it('keeps rejection local and refuses approval without an accessibility description', async () => {
     let approvalCalls = 0;
     const client = createMustBeViralRestClient({
@@ -483,7 +561,14 @@ describe('WorkerReviewPort', () => {
       getAccessToken: async () => 'session-token',
       createRequestId: () => 'request-review-0002',
       fetch: async (input) => {
-        if (String(input).endsWith('/approvals')) approvalCalls += 1;
+        const url = String(input);
+        if (url.endsWith('/approvals')) approvalCalls += 1;
+        if (url.endsWith('/v1/runs/run-live')) {
+          return new Response(JSON.stringify(succeededRunResponse('request-review-0002')), {
+            status: 200,
+            headers: { 'content-type': 'application/json' },
+          });
+        }
         return new Response(JSON.stringify(receiptResponse(null)), {
           status: 200,
           headers: { 'content-type': 'application/json' },
@@ -518,7 +603,8 @@ describe('WorkerReviewPort', () => {
       getAccessToken: async () => 'session-token',
       createRequestId: () => 'request-review-0003',
       fetch: async (input, init) => {
-        if (String(input).endsWith('/approvals')) {
+        const url = String(input);
+        if (url.endsWith('/approvals')) {
           bodies.push(String(init?.body ?? ''));
           return new Response(
             JSON.stringify({
@@ -532,6 +618,12 @@ describe('WorkerReviewPort', () => {
             }),
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
+        }
+        if (url.endsWith('/v1/runs/run-live')) {
+          return new Response(JSON.stringify(succeededRunResponse('request-review-0003')), {
+            status: 200,
+            headers: { 'content-type': 'application/json' },
+          });
         }
         return new Response(JSON.stringify(receiptResponse(null)), {
           status: 200,

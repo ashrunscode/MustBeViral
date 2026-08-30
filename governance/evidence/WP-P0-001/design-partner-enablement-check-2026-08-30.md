@@ -19,6 +19,9 @@ outbound permission message and no inbound message. The private source contained
 - no durable staging-use commitment with intent to pay or agreed commercial terms; and
 - no unambiguous verified invitation recipient.
 
+A second read-only recheck later on 2026-08-30 found the same three sent-only threads, no inbound
+reply, and no existing candidate record. No outreach or private-system mutation occurred.
+
 Result: the qualified customer/design-partner commitment gate remains `pending`. The exact missing
 fact is a private record under an existing candidate ID that proves every registered qualification
 criterion, the staging-use commitment, commercial intent or agreed terms, and one verified
@@ -45,6 +48,8 @@ invoke a provider outside the customer's explicit named-quote confirmation in th
 - Stable entry: `mustbeviral-web-staging.vercel.app/login` returned HTTP 200.
 - Vercel CLI resolved the stable staging alias to READY deployment
   `dpl_EFVgRCdcWm3DkrVBL8usUQgidkMN`.
+- The existing Core staging Worker remained deployment `ce5c33dc-fdb6-4259-8fc7-e3e8fc259184`,
+  version `246b5df9-bbcd-48cb-b90c-a050db73f208`, with healthy `/health` status.
 - Vercel or Cloudflare deployment/alias mutation: none.
 
 The existing actor-scoped `campaign` sentinel remains the only membership bootstrap. Membership is
@@ -56,8 +61,11 @@ pre-created or truthfully verified here without customer action or impersonation
 - Run submitted or confirmed: no.
 - Provider invocation: none.
 - Provider spend incurred by this enablement: `0` USD micros.
+- The no-spend browser proof passed login without `next`, campaign-sentinel bootstrap/replay, draft
+  restoration, synthetic packshot attachment, and the 16-line `GB-04` quote at `4,550,000` micros.
+  No run request was submitted.
 - Final staging global exposure snapshot: `0` micros, zero reservations, and zero unsettled
-  reservations at `2026-08-30T11:20:58.671672Z`.
+  reservations at `2026-08-30T14:48:46.427417Z`.
 - Recorded but unexercised one-run authorization ceiling: `4,550,000` USD micros.
 - Qualified customer commitment: pending.
 - Staging access provisioned: no.

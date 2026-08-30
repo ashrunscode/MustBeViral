@@ -18,7 +18,7 @@ doc_id: canvas-screen-states
 | Run                        | Shipped                   | Monitor execution and recover locally                  | queued, dispatching, running, partial success, cancel requested, canceled, failed, reconciliation |
 | Output comparison          | Shipped                   | Compare current vs prior when a prior pin exists       | no output, partial, processing, ready, approved, rejected, superseded                             |
 | Live Review                | Shipped                   | Judge composed Meta ads by concept and placement       | no output, partial, processing, ready, approved, rejected, superseded                             |
-| Export and receipt         | Partial (descriptor only) | Retrieve an immutable, verifiable package              | preparing, ready, expired download, export failed, receipt available                              |
+| Export and receipt         | Shipped                   | Retrieve an immutable, verifiable package              | preparing, ready, expired download, export failed, receipt available                              |
 | Assets                     | Last-mile upload          | Attach private packshots                               | uploading, processing, ready, quarantined, missing rights                                         |
 | Model catalog              | Operator/internal         | Understand enabled capability and price                | enabled, degraded, disabled, price changed                                                        |
 | Usage and billing          | Later (P1a)               | Understand wallet, charges, and limits                 | funded, low balance, blocked, receipt detail, refund/release                                      |

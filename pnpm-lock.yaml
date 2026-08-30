@@ -103,6 +103,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@mustbeviral/artifacts':
+        specifier: workspace:*
+        version: link:../../packages/artifacts
       '@mustbeviral/config':
         specifier: workspace:*
         version: link:../../packages/config

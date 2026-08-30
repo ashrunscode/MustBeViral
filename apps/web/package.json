@@ -13,6 +13,7 @@
     "test:e2e": "playwright test --config ../../playwright.config.ts"
   },
   "dependencies": {
+    "@mustbeviral/artifacts": "workspace:*",
     "@mustbeviral/config": "workspace:*",
     "@mustbeviral/contracts": "workspace:*",
     "@mustbeviral/ui": "workspace:*",

@@ -180,6 +180,12 @@ export function RunProgress({
   const completeCount = snapshot.attempts.filter((attempt) => attempt.state === 'complete').length;
   const terminal =
     snapshot.state === 'complete' || snapshot.state === 'failed' || snapshot.state === 'cancelled';
+  const activityLabel =
+    snapshot.state === 'reconciliation_required'
+      ? 'Reconciliation pending'
+      : terminal
+        ? 'Terminal state'
+        : 'Providers active';
   const settlement = snapshot.settlement;
   return (
     <main id="main-content" className={styles.runPage} data-run-state={snapshot.state}>
@@ -351,7 +357,7 @@ export function RunProgress({
       </aside>
       <div className={styles.runBar}>
         <div>
-          <MonoCaps>{terminal ? 'Terminal state' : 'Providers active'}</MonoCaps>
+          <MonoCaps>{activityLabel}</MonoCaps>
           <strong>{snapshot.state}</strong>
         </div>
         {snapshot.state === 'reconciliation_required' ? (

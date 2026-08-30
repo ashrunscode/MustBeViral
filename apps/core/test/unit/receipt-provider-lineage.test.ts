@@ -403,5 +403,10 @@ describe('receipt provider-job lineage composition', () => {
     ]) {
       expect(requestedTables.some((url) => url.includes(`/rest/v1/${table}?`))).toBe(true);
     }
+    const receiptLedgerRequest = requestedTables.find(
+      (url) =>
+        url.includes('/rest/v1/ledger_transactions?') && !url.includes('entry_type=eq.capture'),
+    );
+    expect(receiptLedgerRequest).toContain(`run_id=eq.${runId}`);
   });
 });

@@ -38,6 +38,7 @@ import {
   serveArtifactContent,
 } from '../composition/artifact-access';
 import { ArtifactMachineError } from '../composition/artifact-machine';
+import { ArtifactStorageError } from '../composition/artifact-storage';
 import { createFalWebhookVerifierPort } from '../composition/fal-webhook';
 import { createProviderScheduledLifecycle } from '../composition/provider-outbox';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
@@ -514,6 +515,33 @@ async function handleClientRoute(
     const result = await scopedDependencies.handlers[route.operation](input);
     return mapResult(context, route, result);
   } catch (error) {
+    if (route.operation === 'create_export') {
+      const persistentExportFailure =
+        error instanceof RangeError ||
+        (error instanceof ArtifactMachineError && error.reason === 'artifact_machine_invariant') ||
+        (error instanceof ArtifactStorageError && !error.retryable);
+      if (persistentExportFailure) {
+        return context.json(
+          safeError(
+            context,
+            'VALIDATION_FAILED',
+            'The immutable export source set could not be verified.',
+          ),
+          422,
+        );
+      }
+      if (error instanceof ArtifactMachineError || error instanceof ArtifactStorageError) {
+        return context.json(
+          safeError(
+            context,
+            'INTERNAL_ERROR',
+            'Immutable export storage is unavailable.',
+            error.retryable,
+          ),
+          503,
+        );
+      }
+    }
     if (
       error instanceof SyntaxError ||
       error instanceof TypeError ||

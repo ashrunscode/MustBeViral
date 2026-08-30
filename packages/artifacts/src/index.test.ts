@@ -1,12 +1,19 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  GB04_EXPECTED_EXPORT_MEMBERS,
+  createCrc32Accumulator,
   createDeterministicExport,
+  createDeterministicExportPlan,
+  crc32Bytes,
+  gb04ExportFilename,
   providerArtifactObjectKey,
   requirePrivateArtifact,
   sha256Hex,
+  streamDeterministicExport,
   verifyProviderArtifactBytes,
   type DeterministicExportMember,
+  type DeterministicExportMemberDescriptor,
 } from './index';
 
 function png(width: number, height: number): Uint8Array {
@@ -124,6 +131,16 @@ async function gb04Members(): Promise<readonly DeterministicExportMember[]> {
   return [...conceptOne, ...conceptTwo, ...conceptThree, motion];
 }
 
+function exportDescriptors(
+  members: readonly DeterministicExportMember[],
+): readonly DeterministicExportMemberDescriptor[] {
+  return members.map(({ bytes, ...member }) => ({
+    ...member,
+    byteSize: bytes.byteLength,
+    crc32: crc32Bytes(bytes),
+  }));
+}
+
 const RECEIPT = {
   runId: 'run-1',
   canvasRevisionId: 'revision-1',
@@ -213,6 +230,21 @@ describe('artifact visibility', () => {
     expect([...entries.keys()].filter((filename) => filename.includes('reels-motion'))).toEqual([
       'assets/concept-01/reels-motion-9x16.mp4',
     ]);
+    const fixtureMimeTypes = new Map(members.map((member) => [member.nodeKey, member.mimeType]));
+    expect(
+      GB04_EXPECTED_EXPORT_MEMBERS.map((expected) =>
+        gb04ExportFilename(expected, fixtureMimeTypes.get(expected.nodeKey) ?? ''),
+      ).sort(),
+    ).toEqual(
+      [...entries.keys()]
+        .filter(
+          (filename) =>
+            filename !== 'manifest.json' &&
+            filename !== 'qa-report.json' &&
+            filename !== 'receipt.json',
+        )
+        .sort(),
+    );
     const manifest = jsonEntry<{
       schema_version: number;
       files: readonly Readonly<{
@@ -282,6 +314,21 @@ describe('artifact visibility', () => {
     ).rejects.toThrow('missing=[copy-3]');
   });
 
+  it('publishes one canonical, collision-free GB-04 member descriptor', () => {
+    expect(GB04_EXPECTED_EXPORT_MEMBERS).toHaveLength(16);
+    expect(new Set(GB04_EXPECTED_EXPORT_MEMBERS.map(({ nodeKey }) => nodeKey)).size).toBe(16);
+    const resolvedFilenames = GB04_EXPECTED_EXPORT_MEMBERS.flatMap((member) =>
+      member.mimeTypes.map((mimeType) => gb04ExportFilename(member, mimeType)),
+    );
+    expect(resolvedFilenames).not.toContain(undefined);
+    expect(new Set(resolvedFilenames).size).toBe(resolvedFilenames.length);
+    expect(
+      GB04_EXPECTED_EXPORT_MEMBERS.filter(({ role }) => role === 'motion').map(
+        ({ nodeKey, filenameTemplate }) => [nodeKey, filenameTemplate],
+      ),
+    ).toEqual([['motion-1', 'assets/concept-01/reels-motion-9x16.mp4']]);
+  });
+
   it('rejects extra or duplicate GB-04 members', async () => {
     const members = await gb04Members();
     const motionOne = members.find((member) => member.nodeKey === 'motion-1');
@@ -333,5 +380,73 @@ describe('artifact visibility', () => {
         receipt: RECEIPT,
       }),
     ).rejects.toThrow('immutable content hash');
+  });
+
+  it('streams a logically greater-than-128-MiB GB-04 set with one lazy source open at a time', async () => {
+    const sourceChunk = new Uint8Array(1024 * 1024);
+    const chunksPerSource = 11;
+    const sourceByteSize = sourceChunk.byteLength * chunksPerSource;
+    const crc = createCrc32Accumulator();
+    for (let index = 0; index < chunksPerSource; index += 1) crc.update(sourceChunk);
+    const sourceCrc32 = crc.digest();
+    const base = exportDescriptors(await gb04Members());
+    const descriptors = base.map((member) =>
+      member.mimeType === 'application/json'
+        ? member
+        : { ...member, byteSize: sourceByteSize, crc32: sourceCrc32 },
+    );
+    const plan = await createDeterministicExportPlan({
+      format: 'zip',
+      members: descriptors,
+      receipt: RECEIPT,
+    });
+    expect(plan.byteSize).toBeGreaterThan(128 * 1024 * 1024);
+
+    let activeSources = 0;
+    let maximumActiveSources = 0;
+    let openedSources = 0;
+    let observedByteSize = 0;
+    for await (const chunk of streamDeterministicExport(plan, () =>
+      (async function* () {
+        openedSources += 1;
+        activeSources += 1;
+        maximumActiveSources = Math.max(maximumActiveSources, activeSources);
+        try {
+          for (let index = 0; index < chunksPerSource; index += 1) yield sourceChunk;
+        } finally {
+          activeSources -= 1;
+        }
+      })(),
+    )) {
+      observedByteSize += chunk.byteLength;
+    }
+
+    expect(observedByteSize).toBe(plan.byteSize);
+    expect(openedSources).toBe(13);
+    expect(maximumActiveSources).toBe(1);
+    expect(activeSources).toBe(0);
+  });
+
+  it('fails a streamed archive when a pinned source changes after validation', async () => {
+    const members = await gb04Members();
+    const bytesByArtifactId = new Map(members.map((member) => [member.artifactId, member.bytes]));
+    const plan = await createDeterministicExportPlan({
+      format: 'zip',
+      members: exportDescriptors(members),
+      receipt: RECEIPT,
+    });
+
+    await expect(async () => {
+      const streamed = streamDeterministicExport(plan, (artifactId) =>
+        (async function* () {
+          const bytes = bytesByArtifactId.get(artifactId);
+          if (bytes === undefined) throw new TypeError('Fixture artifact is missing');
+          yield artifactId === 'artifact-master-1' ? new Uint8Array(bytes.byteLength) : bytes;
+        })(),
+      );
+      while (!(await streamed.next()).done) {
+        // The sink intentionally retains no chunk.
+      }
+    }).rejects.toThrow('changed after validation');
   });
 });

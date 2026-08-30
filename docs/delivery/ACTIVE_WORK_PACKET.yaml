@@ -471,6 +471,7 @@ handoff:
     - apps/core/tools/launch-pack-harness-lib.ts
     - apps/core/wrangler.jsonc
     - apps/web/.env.production
+    - apps/web/package.json
     - apps/web/app/api/download/[id]/route.ts
     - apps/web/app/auth
     - apps/web/app/forgot-password
@@ -480,10 +481,12 @@ handoff:
     - apps/web/src/lib/auth
     - apps/web/tests/integration
     - packages/artifacts/src
+    - packages/db/src
     - packages/config
     - packages/contracts/src
     - docs/product/PRODUCT_CONTRACT.md
     - docs/delivery/QUALITY_GATES.md
+    - docs/ux/CANVAS_AND_SCREEN_STATES.md
     - docs/research/EVALUATOR_RECRUITMENT.md
     - governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md
     - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
@@ -536,6 +539,12 @@ handoff:
     - 2026-08-30 staging Vercel dpl_EFVgRCdcWm3DkrVBL8usUQgidkMN and Core Worker deployment
       ce5c33dc-fdb6-4259-8fc7-e3e8fc259184 version 246b5df9-bbcd-48cb-b90c-a050db73f208
     - 2026-08-30 Cursor implementation-commit staged-diff audits returned zero blockers
+    - 2026-08-30 technical-gap closure full pnpm verify passed with governance 122, artifacts 26,
+      database 9, Core unit 253, web unit 175, web integration 21, contracts integration 3, Core
+      integration 2, and all 14 lint, typecheck, and build lanes
+    - 2026-08-30 export regressions passed for a logically greater-than-128-MiB sequential pack,
+      repository-pinned workerd FixedLengthStream/R2 checksum upload, and newest verified ZIP
+      selection after a legacy rebuild
 completion:
   successor_packet_id: WP-P1A-001
   evidence_paths: []

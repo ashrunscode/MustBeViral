@@ -173,6 +173,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.exportDetail {
+  overflow: hidden;
+  color: var(--ink-muted);
+  font-family: var(--font-sans);
+  font-size: 9px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .documentFoot {
   display: flex;
   align-items: flex-end;

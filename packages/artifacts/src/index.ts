@@ -38,13 +38,12 @@ export interface VerifiedProviderArtifact {
   readonly measurement: VerifiedProviderMeasurement;
 }
 
-export interface DeterministicExportMember {
+interface DeterministicExportMemberFacts {
   readonly artifactId: string;
   readonly artifactKind: string;
   readonly nodeKey: string;
   readonly contentHash: string;
   readonly mimeType: string;
-  readonly bytes: Uint8Array;
   readonly accessibilityDescription: string;
   readonly measurement?: VerifiedProviderMeasurement;
   readonly copy?: Readonly<{
@@ -57,6 +56,19 @@ export interface DeterministicExportMember {
     readonly severity: 'hard' | 'soft';
     readonly message: string;
   }>[];
+}
+
+export interface DeterministicExportMember extends DeterministicExportMemberFacts {
+  readonly bytes: Uint8Array;
+}
+
+/**
+ * A source member that was already verified against its immutable artifact facts. The streaming
+ * export path deliberately retains only bounded metadata here; source bytes stay in private R2.
+ */
+export interface DeterministicExportMemberDescriptor extends DeterministicExportMemberFacts {
+  readonly byteSize: number;
+  readonly crc32: number;
 }
 
 export interface DeterministicExportReceipt {
@@ -92,6 +104,26 @@ export interface DeterministicExport {
   readonly bytes: Uint8Array;
   readonly fileExtension: 'json' | 'zip';
   readonly mimeType: 'application/json' | 'application/zip';
+}
+
+interface PlannedExportFile {
+  readonly filename: string;
+  readonly kind: 'asset' | 'copy' | 'qa_report' | 'receipt' | 'manifest';
+  readonly mimeType: string;
+  readonly byteSize: number;
+  readonly contentHash: string;
+  readonly crc32: number;
+  readonly source:
+    | Readonly<{ kind: 'inline'; bytes: Uint8Array }>
+    | Readonly<{ kind: 'artifact'; artifactId: string }>;
+}
+
+export interface DeterministicExportPlan {
+  readonly fileExtension: 'json' | 'zip';
+  readonly mimeType: 'application/json' | 'application/zip';
+  readonly byteSize: number;
+  /** Internal ordered archive layout. Callers should consume it with streamDeterministicExport. */
+  readonly files: readonly PlannedExportFile[];
 }
 
 export function requirePrivateArtifact(value: string): ArtifactVisibility {
@@ -275,10 +307,10 @@ function normalizedMimeType(value: string): string {
   return mimeType;
 }
 
-export async function verifyProviderArtifactBytes(
+export function measureProviderArtifactBytes(
   bytes: Uint8Array,
   contentType: string,
-): Promise<VerifiedProviderArtifact> {
+): Readonly<{ mimeType: string; measurement: VerifiedProviderMeasurement }> {
   if (bytes.byteLength === 0 || !Number.isSafeInteger(bytes.byteLength)) {
     throw new TypeError('Provider artifact bytes are empty or too large');
   }
@@ -302,6 +334,14 @@ export async function verifyProviderArtifactBytes(
   ) {
     throw new TypeError('Provider artifact measurement is invalid');
   }
+  return { mimeType, measurement };
+}
+
+export async function verifyProviderArtifactBytes(
+  bytes: Uint8Array,
+  contentType: string,
+): Promise<VerifiedProviderArtifact> {
+  const { mimeType, measurement } = measureProviderArtifactBytes(bytes, contentType);
   return {
     byteSize: bytes.byteLength,
     contentHash: await sha256Hex(bytes),
@@ -320,21 +360,10 @@ export function providerArtifactObjectKey(
   return `workspaces/${input.workspaceId}/runs/${input.runId}/attempts/${input.attemptId}/provider-output`;
 }
 
-function extensionForMimeType(mimeType: string): string {
-  const extensions: Readonly<Record<string, string>> = {
-    'image/jpeg': 'jpg',
-    'image/png': 'png',
-    'image/webp': 'webp',
-    'video/mp4': 'mp4',
-    'application/json': 'json',
-  };
-  return extensions[mimeType] ?? 'bin';
-}
-
 type ExportQaStatus = 'passed' | 'failed' | 'not_evaluated';
 
 interface SemanticExportMember {
-  readonly member: DeterministicExportMember;
+  readonly member: DeterministicExportMemberDescriptor;
   readonly concept: number;
   readonly role: 'copy' | 'master' | 'adaptation' | 'motion';
   readonly placement:
@@ -344,10 +373,11 @@ interface SemanticExportMember {
 
 interface HashedExportFile {
   readonly filename: string;
-  readonly kind: 'asset' | 'copy' | 'qa_report' | 'receipt';
+  readonly kind: 'asset' | 'copy' | 'qa_report' | 'receipt' | 'manifest';
   readonly mimeType: string;
   readonly bytes: Uint8Array;
   readonly contentHash: string;
+  readonly crc32: number;
 }
 
 function compareText(left: string, right: string): number {
@@ -358,42 +388,135 @@ function conceptLabel(concept: number): string {
   return `concept-${String(concept).padStart(2, '0')}`;
 }
 
-function positiveIndex(value: string, field: string): number {
-  const index = Number(value);
-  if (!Number.isSafeInteger(index) || index <= 0 || index > 99) {
-    throw new TypeError(`Export member ${field} is outside the supported launch-pack range`);
-  }
-  return index;
-}
-
-const GB04_EXPORT_NODE_KEYS = [
-  'copy-1',
-  'copy-2',
-  'copy-3',
-  'master-1',
-  'master-2',
-  'master-3',
-  'adaptation-1-1',
-  'adaptation-1-2',
-  'adaptation-1-3',
-  'adaptation-2-1',
-  'adaptation-2-2',
-  'adaptation-2-3',
-  'adaptation-3-1',
-  'adaptation-3-2',
-  'adaptation-3-3',
-  'motion-1',
+export const GB04_EXPORT_MIME_TYPES = [
+  'application/json',
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'video/mp4',
 ] as const;
 
-const GB04_EXPORT_NODE_KEY_SET = new Set<string>(GB04_EXPORT_NODE_KEYS);
-const GB04_IMAGE_MIME_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+export type Gb04ExportMimeType = (typeof GB04_EXPORT_MIME_TYPES)[number];
+type Gb04Concept = 1 | 2 | 3;
+export type Gb04ExportNodeKey =
+  | `copy-${Gb04Concept}`
+  | `master-${Gb04Concept}`
+  | `adaptation-${Gb04Concept}-${Gb04Concept}`
+  | 'motion-1';
 
-function assertExactGb04MemberSet(members: readonly DeterministicExportMember[]): void {
+export interface Gb04ExpectedExportMember {
+  readonly nodeKey: Gb04ExportNodeKey;
+  readonly concept: Gb04Concept;
+  readonly role: 'copy' | 'master' | 'adaptation' | 'motion';
+  readonly placement:
+    'copy' | 'master' | 'feed-4x5' | 'square-1x1' | 'stories-9x16' | 'reels-motion-9x16';
+  readonly filenameTemplate: string;
+  readonly mimeTypes: readonly Gb04ExportMimeType[];
+  readonly filenamesByMimeType: Readonly<Partial<Record<Gb04ExportMimeType, string>>>;
+}
+
+const GB04_IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+
+function imageMember(
+  nodeKey: Gb04ExportNodeKey,
+  concept: Gb04Concept,
+  role: 'master' | 'adaptation',
+  placement: 'master' | 'feed-4x5' | 'square-1x1' | 'stories-9x16',
+): Gb04ExpectedExportMember {
+  const base = `assets/${conceptLabel(concept)}/${placement}`;
+  return {
+    nodeKey,
+    concept,
+    role,
+    placement,
+    filenameTemplate: `${base}.{jpg|png|webp}`,
+    mimeTypes: GB04_IMAGE_MIME_TYPES,
+    filenamesByMimeType: {
+      'image/jpeg': `${base}.jpg`,
+      'image/png': `${base}.png`,
+      'image/webp': `${base}.webp`,
+    },
+  };
+}
+
+function copyMember(concept: Gb04Concept): Gb04ExpectedExportMember {
+  const filename = `copy/${conceptLabel(concept)}.json`;
+  return {
+    nodeKey: `copy-${concept}`,
+    concept,
+    role: 'copy',
+    placement: 'copy',
+    filenameTemplate: filename,
+    mimeTypes: ['application/json'],
+    filenamesByMimeType: { 'application/json': filename },
+  };
+}
+
+export const GB04_EXPECTED_EXPORT_MEMBERS = [
+  copyMember(1),
+  copyMember(2),
+  copyMember(3),
+  imageMember('master-1', 1, 'master', 'master'),
+  imageMember('master-2', 2, 'master', 'master'),
+  imageMember('master-3', 3, 'master', 'master'),
+  imageMember('adaptation-1-1', 1, 'adaptation', 'feed-4x5'),
+  imageMember('adaptation-1-2', 1, 'adaptation', 'square-1x1'),
+  imageMember('adaptation-1-3', 1, 'adaptation', 'stories-9x16'),
+  imageMember('adaptation-2-1', 2, 'adaptation', 'feed-4x5'),
+  imageMember('adaptation-2-2', 2, 'adaptation', 'square-1x1'),
+  imageMember('adaptation-2-3', 2, 'adaptation', 'stories-9x16'),
+  imageMember('adaptation-3-1', 3, 'adaptation', 'feed-4x5'),
+  imageMember('adaptation-3-2', 3, 'adaptation', 'square-1x1'),
+  imageMember('adaptation-3-3', 3, 'adaptation', 'stories-9x16'),
+  {
+    nodeKey: 'motion-1',
+    concept: 1,
+    role: 'motion',
+    placement: 'reels-motion-9x16',
+    filenameTemplate: 'assets/concept-01/reels-motion-9x16.mp4',
+    mimeTypes: ['video/mp4'],
+    filenamesByMimeType: {
+      'video/mp4': 'assets/concept-01/reels-motion-9x16.mp4',
+    },
+  },
+] as const satisfies readonly Gb04ExpectedExportMember[];
+
+const GB04_EXPECTED_EXPORT_MEMBERS_BY_NODE_KEY = new Map<string, Gb04ExpectedExportMember>(
+  GB04_EXPECTED_EXPORT_MEMBERS.map((member) => [member.nodeKey, member]),
+);
+
+export function findGb04ExpectedExportMember(
+  nodeKey: string,
+): Gb04ExpectedExportMember | undefined {
+  return GB04_EXPECTED_EXPORT_MEMBERS_BY_NODE_KEY.get(nodeKey);
+}
+
+export function gb04ExportFilename(
+  member: Gb04ExpectedExportMember,
+  mimeType: string,
+): string | undefined {
+  return GB04_EXPORT_MIME_TYPES.includes(mimeType as Gb04ExportMimeType)
+    ? member.filenamesByMimeType[mimeType as Gb04ExportMimeType]
+    : undefined;
+}
+
+export function gb04ExpectedMimeTypeLabel(member: Gb04ExpectedExportMember): string {
+  if (member.mimeTypes.length === 1) return member.mimeTypes[0] ?? '';
+  return `${member.mimeTypes.slice(0, -1).join(', ')}, or ${member.mimeTypes.at(-1) ?? ''}`;
+}
+
+const GB04_EXPORT_NODE_KEY_SET = new Set<string>(
+  GB04_EXPECTED_EXPORT_MEMBERS.map(({ nodeKey }) => nodeKey),
+);
+
+function assertExactGb04MemberSet(members: readonly DeterministicExportMemberFacts[]): void {
   const counts = new Map<string, number>();
   for (const member of members) {
     counts.set(member.nodeKey, (counts.get(member.nodeKey) ?? 0) + 1);
   }
-  const missing = GB04_EXPORT_NODE_KEYS.filter((nodeKey) => !counts.has(nodeKey));
+  const missing = GB04_EXPECTED_EXPORT_MEMBERS.map(({ nodeKey }) => nodeKey).filter(
+    (nodeKey) => !counts.has(nodeKey),
+  );
   const unexpected = [...counts.keys()]
     .filter((nodeKey) => !GB04_EXPORT_NODE_KEY_SET.has(nodeKey))
     .sort(compareText);
@@ -407,78 +530,39 @@ function assertExactGb04MemberSet(members: readonly DeterministicExportMember[])
   );
 }
 
-function requireGb04ImageMimeType(member: DeterministicExportMember): void {
-  if (!GB04_IMAGE_MIME_TYPES.has(member.mimeType)) {
-    throw new TypeError(
-      `Visual export member ${member.nodeKey} must use image/jpeg, image/png, or image/webp`,
-    );
+function semanticExportMember(member: DeterministicExportMemberDescriptor): SemanticExportMember {
+  const expected = findGb04ExpectedExportMember(member.nodeKey);
+  if (expected === undefined) {
+    throw new TypeError(`Export member ${member.nodeKey} has no buyer-facing launch-pack role`);
   }
-}
-
-function semanticExportMember(member: DeterministicExportMember): SemanticExportMember {
-  const copy = /^copy-(\d+)$/u.exec(member.nodeKey);
-  if (copy !== null) {
-    const concept = positiveIndex(copy[1] ?? '', 'copy concept');
+  const filename = gb04ExportFilename(expected, member.mimeType);
+  if (expected.role === 'copy') {
     if (member.mimeType !== 'application/json' || member.copy === undefined) {
       throw new TypeError(`Copy export member ${member.nodeKey} is not normalized JSON copy`);
     }
     return {
       member,
-      concept,
+      concept: expected.concept,
       role: 'copy',
       placement: 'copy',
-      filename: `copy/${conceptLabel(concept)}.json`,
+      filename: filename ?? expected.filenameTemplate,
     };
   }
-
-  const master = /^master-(\d+)$/u.exec(member.nodeKey);
-  if (master !== null) {
-    const concept = positiveIndex(master[1] ?? '', 'master concept');
-    requireGb04ImageMimeType(member);
-    return {
-      member,
-      concept,
-      role: 'master',
-      placement: 'master',
-      filename: `assets/${conceptLabel(concept)}/master.${extensionForMimeType(member.mimeType)}`,
-    };
-  }
-
-  const adaptation = /^adaptation-(\d+)-([123])$/u.exec(member.nodeKey);
-  if (adaptation !== null) {
-    const concept = positiveIndex(adaptation[1] ?? '', 'adaptation concept');
-    requireGb04ImageMimeType(member);
-    const placementIndex = Number(adaptation[2]);
-    const placement =
-      placementIndex === 1 ? 'feed-4x5' : placementIndex === 2 ? 'square-1x1' : 'stories-9x16';
-    return {
-      member,
-      concept,
-      role: 'adaptation',
-      placement,
-      filename: `assets/${conceptLabel(concept)}/${placement}.${extensionForMimeType(member.mimeType)}`,
-    };
-  }
-
-  const motion = /^motion-(\d+)$/u.exec(member.nodeKey);
-  if (motion !== null) {
-    const concept = positiveIndex(motion[1] ?? '', 'motion concept');
-    if (concept !== 1) {
-      throw new TypeError('The Reels motion placement is reserved for concept 01');
-    }
-    if (member.mimeType !== 'video/mp4') {
+  if (filename === undefined) {
+    if (expected.role === 'motion') {
       throw new TypeError('Reels motion export member motion-1 must use video/mp4');
     }
-    return {
-      member,
-      concept,
-      role: 'motion',
-      placement: 'reels-motion-9x16',
-      filename: `assets/${conceptLabel(concept)}/reels-motion-9x16.${extensionForMimeType(member.mimeType)}`,
-    };
+    throw new TypeError(
+      `Visual export member ${member.nodeKey} must use ${gb04ExpectedMimeTypeLabel(expected)}`,
+    );
   }
-
-  throw new TypeError(`Export member ${member.nodeKey} has no buyer-facing launch-pack role`);
+  return {
+    member,
+    concept: expected.concept,
+    role: expected.role,
+    placement: expected.placement,
+    filename,
+  };
 }
 
 function copyBytes(member: SemanticExportMember): Uint8Array {
@@ -569,7 +653,7 @@ function qaReport(
       evidence: {
         artifact_id: member.artifactId,
         sha256: member.contentHash,
-        byte_size: member.bytes.byteLength,
+        byte_size: member.byteSize,
         mime_type: member.mimeType,
       },
     });
@@ -741,87 +825,115 @@ function concatenate(parts: readonly Uint8Array[]): Uint8Array {
   return result;
 }
 
-function crc32(bytes: Uint8Array): number {
+export interface Crc32Accumulator {
+  update(bytes: Uint8Array): void;
+  digest(): number;
+}
+
+const CRC32_TABLE = Uint32Array.from({ length: 256 }, (_, index) => {
+  let value = index;
+  for (let bit = 0; bit < 8; bit += 1) {
+    value = (value >>> 1) ^ (value & 1 ? 0xedb8_8320 : 0);
+  }
+  return value >>> 0;
+});
+
+export function createCrc32Accumulator(): Crc32Accumulator {
   let crc = 0xffff_ffff;
-  for (const byte of bytes) {
-    crc ^= byte;
-    for (let bit = 0; bit < 8; bit += 1) {
-      crc = (crc >>> 1) ^ (crc & 1 ? 0xedb8_8320 : 0);
-    }
-  }
-  return (crc ^ 0xffff_ffff) >>> 0;
+  let finalized = false;
+  return {
+    update(bytes) {
+      if (finalized) throw new TypeError('CRC-32 accumulator is already finalized');
+      for (const byte of bytes) {
+        crc = (crc >>> 8) ^ (CRC32_TABLE[(crc ^ byte) & 0xff] ?? 0);
+      }
+    },
+    digest() {
+      finalized = true;
+      return (crc ^ 0xffff_ffff) >>> 0;
+    },
+  };
 }
 
-function deterministicZip(files: readonly Readonly<{ name: string; bytes: Uint8Array }>[]) {
-  const localParts: Uint8Array[] = [];
-  const centralParts: Uint8Array[] = [];
-  let localOffset = 0;
-  const utf8Flag = 0x0800;
-  const dosDate = 0x0021;
+export function crc32Bytes(bytes: Uint8Array): number {
+  const accumulator = createCrc32Accumulator();
+  accumulator.update(bytes);
+  return accumulator.digest();
+}
 
-  for (const file of files) {
-    const name = new TextEncoder().encode(file.name);
-    const checksum = crc32(file.bytes);
-    const localHeader = concatenate([
-      u32leBytes(0x04034b50),
-      u16leBytes(20),
-      u16leBytes(utf8Flag),
-      u16leBytes(0),
-      u16leBytes(0),
-      u16leBytes(dosDate),
-      u32leBytes(checksum),
-      u32leBytes(file.bytes.byteLength),
-      u32leBytes(file.bytes.byteLength),
-      u16leBytes(name.byteLength),
-      u16leBytes(0),
-      name,
-    ]);
-    localParts.push(localHeader, file.bytes);
-    centralParts.push(
-      concatenate([
-        u32leBytes(0x02014b50),
-        u16leBytes(20),
-        u16leBytes(20),
-        u16leBytes(utf8Flag),
-        u16leBytes(0),
-        u16leBytes(0),
-        u16leBytes(dosDate),
-        u32leBytes(checksum),
-        u32leBytes(file.bytes.byteLength),
-        u32leBytes(file.bytes.byteLength),
-        u16leBytes(name.byteLength),
-        u16leBytes(0),
-        u16leBytes(0),
-        u16leBytes(0),
-        u16leBytes(0),
-        u32leBytes(0),
-        u32leBytes(localOffset),
-        name,
-      ]),
-    );
-    localOffset += localHeader.byteLength + file.bytes.byteLength;
+function requireZip32(value: number, field: string): number {
+  if (!Number.isSafeInteger(value) || value < 0 || value > 0xffff_ffff) {
+    throw new RangeError(`Deterministic ZIP ${field} exceeds the ZIP32 structural range`);
   }
-  const central = concatenate(centralParts);
-  const end = concatenate([
-    u32leBytes(0x06054b50),
+  return value;
+}
+
+const ZIP_UTF8_FLAG = 0x0800;
+const ZIP_DOS_DATE = 0x0021;
+
+function localZipHeader(file: PlannedExportFile): Uint8Array {
+  const name = new TextEncoder().encode(file.filename);
+  requireZip32(file.byteSize, `${file.filename} byte size`);
+  return concatenate([
+    u32leBytes(0x04034b50),
+    u16leBytes(20),
+    u16leBytes(ZIP_UTF8_FLAG),
     u16leBytes(0),
     u16leBytes(0),
-    u16leBytes(files.length),
-    u16leBytes(files.length),
-    u32leBytes(central.byteLength),
-    u32leBytes(localOffset),
+    u16leBytes(ZIP_DOS_DATE),
+    u32leBytes(file.crc32),
+    u32leBytes(file.byteSize),
+    u32leBytes(file.byteSize),
+    u16leBytes(name.byteLength),
     u16leBytes(0),
+    name,
   ]);
-  return concatenate([...localParts, central, end]);
 }
 
-export async function createDeterministicExport(
+function centralZipHeader(file: PlannedExportFile, localOffset: number): Uint8Array {
+  const name = new TextEncoder().encode(file.filename);
+  requireZip32(localOffset, `${file.filename} local offset`);
+  return concatenate([
+    u32leBytes(0x02014b50),
+    u16leBytes(20),
+    u16leBytes(20),
+    u16leBytes(ZIP_UTF8_FLAG),
+    u16leBytes(0),
+    u16leBytes(0),
+    u16leBytes(ZIP_DOS_DATE),
+    u32leBytes(file.crc32),
+    u32leBytes(file.byteSize),
+    u32leBytes(file.byteSize),
+    u16leBytes(name.byteLength),
+    u16leBytes(0),
+    u16leBytes(0),
+    u16leBytes(0),
+    u16leBytes(0),
+    u32leBytes(0),
+    u32leBytes(localOffset),
+    name,
+  ]);
+}
+
+function inlineFile(file: HashedExportFile): PlannedExportFile {
+  return {
+    filename: file.filename,
+    kind: file.kind,
+    mimeType: file.mimeType,
+    byteSize: file.bytes.byteLength,
+    contentHash: file.contentHash,
+    crc32: file.crc32,
+    source: { kind: 'inline', bytes: file.bytes },
+  };
+}
+
+export async function createDeterministicExportPlan(
   input: Readonly<{
     format: 'json' | 'zip';
-    members: readonly DeterministicExportMember[];
+    members: readonly DeterministicExportMemberDescriptor[];
     receipt: DeterministicExportReceipt;
   }>,
-): Promise<DeterministicExport> {
+): Promise<DeterministicExportPlan> {
   assertExactGb04MemberSet(input.members);
   const members = input.members
     .map(semanticExportMember)
@@ -833,37 +945,65 @@ export async function createDeterministicExport(
   if (new Set(members.map((member) => member.filename)).size !== members.length) {
     throw new TypeError('Approved export members resolve to duplicate buyer-facing filenames');
   }
+  for (const { member } of members) {
+    if (!Number.isSafeInteger(member.byteSize) || member.byteSize <= 0) {
+      throw new TypeError(`Export member ${member.artifactId} has an invalid immutable byte size`);
+    }
+    if (!/^[0-9a-f]{64}$/u.test(member.contentHash)) {
+      throw new TypeError(`Export member ${member.artifactId} has an invalid immutable SHA-256`);
+    }
+    if (!Number.isSafeInteger(member.crc32) || member.crc32 < 0 || member.crc32 > 0xffff_ffff) {
+      throw new TypeError(`Export member ${member.artifactId} has an invalid verified CRC-32`);
+    }
+  }
 
   const buyerFiles = await Promise.all(
-    members.map(async (semantic): Promise<HashedExportFile> => {
-      const sourceHash = await sha256Hex(semantic.member.bytes);
-      if (sourceHash !== semantic.member.contentHash) {
-        throw new TypeError(
-          `Export member ${semantic.member.artifactId} does not match its immutable content hash`,
-        );
+    members.map(async (semantic): Promise<PlannedExportFile> => {
+      if (semantic.role !== 'copy') {
+        return {
+          filename: semantic.filename,
+          kind: 'asset',
+          mimeType: semantic.member.mimeType,
+          byteSize: semantic.member.byteSize,
+          contentHash: semantic.member.contentHash,
+          crc32: semantic.member.crc32,
+          source: { kind: 'artifact', artifactId: semantic.member.artifactId },
+        };
       }
-      return await hashedFile({
-        filename: semantic.filename,
-        kind: semantic.role === 'copy' ? 'copy' : 'asset',
-        mimeType: semantic.role === 'copy' ? 'application/json' : semantic.member.mimeType,
-        bytes: semantic.role === 'copy' ? copyBytes(semantic) : semantic.member.bytes,
-      });
+      const bytes = copyBytes(semantic);
+      return inlineFile(
+        await hashedFile({
+          filename: semantic.filename,
+          kind: 'copy',
+          mimeType: 'application/json',
+          bytes,
+          crc32: crc32Bytes(bytes),
+        }),
+      );
     }),
   );
   const receipt = receiptDocument(input.receipt);
-  const receiptFile = await hashedFile({
-    filename: 'receipt.json',
-    kind: 'receipt',
-    mimeType: 'application/json',
-    bytes: jsonBytes(receipt),
-  });
+  const receiptBytes = jsonBytes(receipt);
+  const receiptFile = inlineFile(
+    await hashedFile({
+      filename: 'receipt.json',
+      kind: 'receipt',
+      mimeType: 'application/json',
+      bytes: receiptBytes,
+      crc32: crc32Bytes(receiptBytes),
+    }),
+  );
   const qa = qaReport(input.receipt.runId, members);
-  const qaFile = await hashedFile({
-    filename: 'qa-report.json',
-    kind: 'qa_report',
-    mimeType: 'application/json',
-    bytes: jsonBytes(qa),
-  });
+  const qaBytes = jsonBytes(qa);
+  const qaFile = inlineFile(
+    await hashedFile({
+      filename: 'qa-report.json',
+      kind: 'qa_report',
+      mimeType: 'application/json',
+      bytes: qaBytes,
+      crc32: crc32Bytes(qaBytes),
+    }),
+  );
   const nonManifestFiles = [...buyerFiles, qaFile, receiptFile].sort((left, right) =>
     compareText(left.filename, right.filename),
   );
@@ -882,7 +1022,7 @@ export async function createDeterministicExport(
         placement: semantic.placement,
         filename: semantic.filename,
         mime_type: file.mimeType,
-        byte_size: file.bytes.byteLength,
+        byte_size: file.byteSize,
         sha256: file.contentHash,
         source_content_hash: semantic.member.contentHash,
         accessibility_description: semantic.member.accessibilityDescription,
@@ -892,7 +1032,7 @@ export async function createDeterministicExport(
       filename: file.filename,
       kind: file.kind,
       mime_type: file.mimeType,
-      byte_size: file.bytes.byteLength,
+      byte_size: file.byteSize,
       sha256: file.contentHash,
     })),
     receipt: {
@@ -907,17 +1047,157 @@ export async function createDeterministicExport(
     },
   };
   const manifestBytes = jsonBytes(manifest);
+  const manifestFile = inlineFile(
+    await hashedFile({
+      filename: 'manifest.json',
+      kind: 'manifest',
+      mimeType: 'application/json',
+      bytes: manifestBytes,
+      crc32: crc32Bytes(manifestBytes),
+    }),
+  );
   if (input.format === 'json') {
-    return { bytes: manifestBytes, fileExtension: 'json', mimeType: 'application/json' };
+    return {
+      fileExtension: 'json',
+      mimeType: 'application/json',
+      byteSize: manifestBytes.byteLength,
+      files: [manifestFile],
+    };
   }
-  const files = [
-    { name: 'manifest.json', bytes: manifestBytes },
-    ...nonManifestFiles.map((file) => ({ name: file.filename, bytes: file.bytes })),
-  ];
+  const files = [manifestFile, ...nonManifestFiles];
+  let localOffset = 0;
+  let centralSize = 0;
+  for (const file of files) {
+    localOffset += localZipHeader(file).byteLength + file.byteSize;
+    centralSize += centralZipHeader(file, 0).byteLength;
+  }
+  requireZip32(localOffset, 'central directory offset');
+  requireZip32(centralSize, 'central directory size');
+  const endSize = 22;
   return {
-    bytes: deterministicZip(files),
     fileExtension: 'zip',
     mimeType: 'application/zip',
+    byteSize: localOffset + centralSize + endSize,
+    files,
+  };
+}
+
+export async function* streamDeterministicExport(
+  plan: DeterministicExportPlan,
+  openArtifact: (
+    artifactId: string,
+  ) => AsyncIterable<Uint8Array> | Promise<AsyncIterable<Uint8Array>>,
+): AsyncGenerator<Uint8Array, void, void> {
+  if (plan.fileExtension === 'json') {
+    const manifest = plan.files[0];
+    if (manifest?.source.kind !== 'inline' || manifest.byteSize !== plan.byteSize) {
+      throw new TypeError('Deterministic JSON export plan is malformed');
+    }
+    yield manifest.source.bytes;
+    return;
+  }
+
+  let emitted = 0;
+  let localOffset = 0;
+  const centralParts: Uint8Array[] = [];
+  for (const file of plan.files) {
+    const header = localZipHeader(file);
+    yield header;
+    emitted += header.byteLength;
+
+    const observedCrc = createCrc32Accumulator();
+    let observedSize = 0;
+    if (file.source.kind === 'inline') {
+      observedCrc.update(file.source.bytes);
+      observedSize = file.source.bytes.byteLength;
+      yield file.source.bytes;
+    } else {
+      const source = await openArtifact(file.source.artifactId);
+      for await (const chunk of source) {
+        if (!(chunk instanceof Uint8Array) || chunk.byteLength === 0) {
+          throw new TypeError(`Export member ${file.source.artifactId} emitted an invalid chunk`);
+        }
+        observedSize += chunk.byteLength;
+        if (observedSize > file.byteSize) {
+          throw new TypeError(
+            `Export member ${file.source.artifactId} exceeded its immutable size`,
+          );
+        }
+        observedCrc.update(chunk);
+        yield chunk;
+      }
+    }
+    emitted += observedSize;
+    if (observedSize !== file.byteSize || observedCrc.digest() !== file.crc32) {
+      const identifier = file.source.kind === 'artifact' ? file.source.artifactId : file.filename;
+      throw new TypeError(`Export member ${identifier} changed after validation`);
+    }
+    centralParts.push(centralZipHeader(file, localOffset));
+    localOffset += header.byteLength + file.byteSize;
+  }
+
+  const central = concatenate(centralParts);
+  yield central;
+  emitted += central.byteLength;
+  const end = concatenate([
+    u32leBytes(0x06054b50),
+    u16leBytes(0),
+    u16leBytes(0),
+    u16leBytes(plan.files.length),
+    u16leBytes(plan.files.length),
+    u32leBytes(central.byteLength),
+    u32leBytes(localOffset),
+    u16leBytes(0),
+  ]);
+  yield end;
+  emitted += end.byteLength;
+  if (emitted !== plan.byteSize) {
+    throw new TypeError('Deterministic ZIP stream length disagrees with its immutable plan');
+  }
+}
+
+export async function createDeterministicExport(
+  input: Readonly<{
+    format: 'json' | 'zip';
+    members: readonly DeterministicExportMember[];
+    receipt: DeterministicExportReceipt;
+  }>,
+): Promise<DeterministicExport> {
+  const descriptors: DeterministicExportMemberDescriptor[] = [];
+  const bytesByArtifactId = new Map<string, Uint8Array>();
+  for (const member of input.members) {
+    const sourceHash = await sha256Hex(member.bytes);
+    if (sourceHash !== member.contentHash) {
+      throw new TypeError(
+        `Export member ${member.artifactId} does not match its immutable content hash`,
+      );
+    }
+    descriptors.push({
+      ...member,
+      byteSize: member.bytes.byteLength,
+      crc32: crc32Bytes(member.bytes),
+    });
+    bytesByArtifactId.set(member.artifactId, member.bytes);
+  }
+  const plan = await createDeterministicExportPlan({
+    format: input.format,
+    members: descriptors,
+    receipt: input.receipt,
+  });
+  const chunks: Uint8Array[] = [];
+  for await (const chunk of streamDeterministicExport(plan, (artifactId) => {
+    const bytes = bytesByArtifactId.get(artifactId);
+    if (bytes === undefined) throw new TypeError(`Export member ${artifactId} is unavailable`);
+    return (async function* () {
+      yield bytes;
+    })();
+  })) {
+    chunks.push(chunk);
+  }
+  return {
+    bytes: concatenate(chunks),
+    fileExtension: plan.fileExtension,
+    mimeType: plan.mimeType,
   };
 }
 
@@ -930,7 +1210,21 @@ export async function exportArtifactObjectKey(
   }>,
 ): Promise<string> {
   const contentHash = await sha256Hex(input.bytes);
-  return `workspaces/${input.workspaceId}/runs/${input.runId}/exports/${contentHash}.${input.format}`;
+  return exportArtifactObjectKeyFromHash({ ...input, contentHash });
+}
+
+export function exportArtifactObjectKeyFromHash(
+  input: Readonly<{
+    workspaceId: string;
+    runId: string;
+    format: 'json' | 'zip';
+    contentHash: string;
+  }>,
+): string {
+  if (!/^[0-9a-f]{64}$/u.test(input.contentHash)) {
+    throw new TypeError('Export artifact SHA-256 must be 64 lowercase hexadecimal characters');
+  }
+  return `workspaces/${input.workspaceId}/runs/${input.runId}/exports/${input.contentHash}.${input.format}`;
 }
 
 export * from './access-token';

@@ -106,6 +106,68 @@ describe('tenant-safe repository invariants', () => {
     );
   });
 
+  it('paginates every tenant-scoped artifact for a receipt run', async () => {
+    const firstPage = Array.from({ length: 100 }, (_, index) => ({
+      id: `artifact-${String(index).padStart(3, '0')}`,
+    }));
+    const finalArtifact = { id: 'artifact-100' };
+    const select = vi.fn().mockResolvedValueOnce(firstPage).mockResolvedValueOnce([finalArtifact]);
+    const executor = { select } as unknown as DatabaseExecutor;
+    const repositories = createDatabaseRepositories(executor);
+    const context = tenantContext({
+      workspaceId: '10000000-0000-4000-8000-000000000001',
+      actorId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
+      requestId: 'request-artifacts',
+    });
+
+    await expect(
+      repositories.artifacts.listForRun(context, '20000000-0000-4000-8000-000000000001'),
+    ).resolves.toHaveLength(101);
+    expect(select).toHaveBeenNthCalledWith(
+      2,
+      'artifacts',
+      expect.objectContaining({
+        workspace_id: 'eq.10000000-0000-4000-8000-000000000001',
+        run_id: 'eq.20000000-0000-4000-8000-000000000001',
+        limit: '100',
+        offset: '100',
+      }),
+    );
+  });
+
+  it('paginates a receipt ledger by run instead of truncating workspace history', async () => {
+    const firstPage = Array.from({ length: 100 }, (_, index) => ({
+      id: `ledger-${String(index).padStart(3, '0')}`,
+    }));
+    const finalEntry = { id: 'ledger-100' };
+    const select = vi.fn().mockResolvedValueOnce(firstPage).mockResolvedValueOnce([finalEntry]);
+    const executor = { select } as unknown as DatabaseExecutor;
+    const repositories = createDatabaseRepositories(executor);
+    const context = tenantContext({
+      workspaceId: '10000000-0000-4000-8000-000000000001',
+      actorId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
+      requestId: 'request-run-ledger',
+    });
+
+    await expect(
+      repositories.billing.listLedgerForRun(context, '20000000-0000-4000-8000-000000000001'),
+    ).resolves.toHaveLength(101);
+    expect(select).toHaveBeenNthCalledWith(
+      1,
+      'ledger_transactions',
+      expect.objectContaining({
+        workspace_id: 'eq.10000000-0000-4000-8000-000000000001',
+        run_id: 'eq.20000000-0000-4000-8000-000000000001',
+        order: 'created_at.asc,id.asc',
+      }),
+    );
+    expect(select).toHaveBeenNthCalledWith(
+      2,
+      'ledger_transactions',
+      expect.objectContaining({ limit: '100', offset: '100' }),
+    );
+  });
+
   it('returns the server-authoritative run identity from the start barrier RPC', async () => {
     const rpc = vi.fn().mockResolvedValue({
       run_id: '20000000-0000-4000-8000-000000000001',

@@ -589,10 +589,9 @@ export class WorkerReviewPort implements ReviewReadPort {
     try {
       const result = await this.client.request('get_receipt', { id: this.runId });
       if ('error' in result) return this.#mapError(result.error, this.runId);
-      const [runContext, extras] = await Promise.all([
-        this.#runContext(),
-        loadReviewExtras(this.client, result.data.receipt.artifacts),
-      ]);
+      const runContext = await this.#runContext();
+      if (runContext.type === 'failure') return runContext.result;
+      const extras = await loadReviewExtras(this.client, result.data.receipt.artifacts);
       const mapped = reviewFromReceipt(
         result.data.receipt,
         this.reviewer,
@@ -762,26 +761,40 @@ export class WorkerReviewPort implements ReviewReadPort {
   }
 
   async #runContext(): Promise<
-    Readonly<{
-      nodeKeys: Readonly<Record<string, string>>;
-      recovery: RunRecoveryView | null;
-      settlement: RunSettlementView | null;
-    }>
+    | Readonly<{
+        type: 'ok';
+        nodeKeys: Readonly<Record<string, string>>;
+        recovery: RunRecoveryView | null;
+        settlement: RunSettlementView | null;
+      }>
+    | Readonly<{
+        type: 'failure';
+        result: Exclude<ReviewReadResult, { type: 'ok' }>;
+      }>
   > {
     try {
       const run = await this.client.request('get_run', { id: this.runId });
       if ('error' in run) {
-        if (isSessionExpiredFailure(run.error)) throw run.error;
-        return { nodeKeys: {}, recovery: null, settlement: null };
+        return { type: 'failure', result: this.#mapError(run.error, this.runId) };
       }
       return {
+        type: 'ok',
         nodeKeys: Object.fromEntries(run.data.nodes.map((node) => [node.runNodeId, node.nodeKey])),
         recovery: runRecoveryView(run.data),
         settlement: runSettlementView(run.data),
       };
     } catch (error) {
-      if (isSessionExpiredFailure(error)) throw error;
-      return { nodeKeys: {}, recovery: null, settlement: null };
+      if (isSessionExpiredFailure(error)) {
+        return { type: 'failure', result: SESSION_EXPIRED_RESULT };
+      }
+      return {
+        type: 'failure',
+        result: {
+          type: 'error',
+          message: 'Core could not read run recovery and settlement.',
+          retryable: true,
+        },
+      };
     }
   }
 

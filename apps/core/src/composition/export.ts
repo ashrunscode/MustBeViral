@@ -1,9 +1,10 @@
 import {
-  createDeterministicExport,
-  exportArtifactObjectKey,
-  sha256Hex,
-  verifyProviderArtifactBytes,
+  createDeterministicExportPlan,
+  exportArtifactObjectKeyFromHash,
+  measureProviderArtifactBytes,
+  streamDeterministicExport,
   type ArtifactLineageRelationship,
+  type DeterministicExportMemberDescriptor,
 } from '../../../../packages/artifacts/src/index';
 import { usdMicrosToSafeInteger } from '../../../../packages/billing/src/index';
 import {
@@ -15,7 +16,13 @@ import type { DatabaseRow } from '../../../../packages/db/src/index';
 
 import type { CoreBindings } from '../bindings';
 import { PrivilegedArtifactMachinePort } from './artifact-machine';
-import { putPrivateCanonicalBytes, readVerifiedPrivateArtifact } from './artifact-storage';
+import {
+  ArtifactStorageError,
+  openPinnedPrivateArtifactStream,
+  putPrivateCanonicalStream,
+  readVerifiedPrivateArtifactSnapshot,
+  sha256HexOfChunks,
+} from './artifact-storage';
 
 export interface CallerScopedExportFacts {
   readonly reservation: Readonly<DatabaseRow<'cost_reservations'>> | null;
@@ -49,55 +56,61 @@ export async function createPrivateRunExport(
   const descriptorsByArtifactId = new Map(
     descriptors.map((descriptor) => [descriptor.artifactId, descriptor]),
   );
-  const members = await Promise.all(
-    context.artifacts.map(async (artifact) => {
-      const descriptor = descriptorsByArtifactId.get(artifact.id);
-      if (descriptor === undefined) {
-        throw new TypeError('Approved export member has no immutable run-node descriptor');
+  const snapshotsByArtifactId = new Map<
+    string,
+    Readonly<{ objectKey: string; etag: string; byteSize: number }>
+  >();
+  const members: DeterministicExportMemberDescriptor[] = [];
+  // Deliberately sequential: an approved source may be large, while the exact GB-04 set contains
+  // sixteen members. Keeping only one source buffer live prevents aggregate source retention.
+  for (const artifact of context.artifacts) {
+    const descriptor = descriptorsByArtifactId.get(artifact.id);
+    if (descriptor === undefined) {
+      throw new TypeError('Approved export member has no immutable run-node descriptor');
+    }
+    const snapshot = await readVerifiedPrivateArtifactSnapshot(bindings.MEDIA_BUCKET, {
+      objectKey: artifact.objectKey,
+      contentHash: artifact.contentHash,
+      byteSize: artifact.byteSize,
+    });
+    snapshotsByArtifactId.set(artifact.id, {
+      objectKey: artifact.objectKey,
+      etag: snapshot.etag,
+      byteSize: snapshot.byteSize,
+    });
+    const common = {
+      artifactId: artifact.id,
+      artifactKind: artifact.artifactKind,
+      nodeKey: descriptor.nodeKey,
+      contentHash: artifact.contentHash,
+      mimeType: artifact.mimeType,
+      byteSize: snapshot.byteSize,
+      crc32: snapshot.crc32,
+      accessibilityDescription: descriptor.accessibilityDescription,
+    };
+    if (artifact.mimeType === 'application/json') {
+      const copy = parseLaunchPackCopy(new TextDecoder().decode(snapshot.bytes));
+      if (copy === null) {
+        throw new TypeError(`Approved copy artifact ${artifact.id} is not buyer-ready copy`);
       }
-      const bytes = await readVerifiedPrivateArtifact(bindings.MEDIA_BUCKET, {
-        objectKey: artifact.objectKey,
-        contentHash: artifact.contentHash,
+      members.push({
+        ...common,
+        copy: {
+          primaryText: copy.primary_text,
+          headline: copy.headline,
+          description: copy.description,
+        },
+        copyQaFindings: evaluateLaunchPackCopy(copy),
       });
-      if (bytes.byteLength !== artifact.byteSize) {
-        throw new RangeError('Private R2 export member size does not match artifact metadata');
-      }
-      const common = {
-        artifactId: artifact.id,
-        artifactKind: artifact.artifactKind,
-        nodeKey: descriptor.nodeKey,
-        contentHash: artifact.contentHash,
-        mimeType: artifact.mimeType,
-        bytes,
-        accessibilityDescription: descriptor.accessibilityDescription,
-      };
-      if (artifact.mimeType === 'application/json') {
-        const copy = parseLaunchPackCopy(new TextDecoder().decode(bytes));
-        if (copy === null) {
-          throw new TypeError(`Approved copy artifact ${artifact.id} is not buyer-ready copy`);
-        }
-        return {
-          ...common,
-          copy: {
-            primaryText: copy.primary_text,
-            headline: copy.headline,
-            description: copy.description,
-          },
-          copyQaFindings: evaluateLaunchPackCopy(copy),
-        };
-      }
-      const verified = await verifyProviderArtifactBytes(bytes, artifact.mimeType);
-      if (
-        verified.contentHash !== artifact.contentHash ||
-        verified.byteSize !== artifact.byteSize ||
-        verified.mimeType !== artifact.mimeType
-      ) {
-        throw new TypeError('Approved export member verification disagrees with artifact metadata');
-      }
-      return { ...common, measurement: verified.measurement };
-    }),
-  );
-  const output = await createDeterministicExport({
+      continue;
+    }
+    const verified = measureProviderArtifactBytes(snapshot.bytes, artifact.mimeType);
+    if (verified.mimeType !== artifact.mimeType) {
+      throw new TypeError('Approved export member verification disagrees with artifact metadata');
+    }
+    members.push({ ...common, measurement: verified.measurement });
+  }
+  const plan = await createDeterministicExportPlan({
     format: input.format,
     members,
     receipt: {
@@ -118,20 +131,44 @@ export async function createPrivateRunExport(
       lineage: context.lineage,
     },
   });
-  const objectKey = await exportArtifactObjectKey({
+  const openArtifact = async (artifactId: string): Promise<ReadableStream> => {
+    const snapshot = snapshotsByArtifactId.get(artifactId);
+    if (snapshot === undefined) {
+      throw new TypeError('Deterministic export requested an unknown private source');
+    }
+    return await openPinnedPrivateArtifactStream(bindings.MEDIA_BUCKET, snapshot);
+  };
+  // R2 needs the expected SHA-256 before PUT. The first pass hashes a lazy archive stream without
+  // retaining it; the second byte-identical, ETag-pinned pass is the actual checksummed upload.
+  let digest: Readonly<{ contentHash: string; byteSize: number }>;
+  try {
+    digest = await sha256HexOfChunks(streamDeterministicExport(plan, openArtifact));
+  } catch (cause) {
+    if (cause instanceof ArtifactStorageError) throw cause;
+    throw new ArtifactStorageError(
+      'artifact_verification_failed',
+      false,
+      'Private R2 export source changed during deterministic digest',
+      { cause },
+    );
+  }
+  if (digest.byteSize !== plan.byteSize) {
+    throw new TypeError('Deterministic export digest length disagrees with its immutable plan');
+  }
+  const objectKey = exportArtifactObjectKeyFromHash({
     workspaceId: context.workspaceId,
     runId: context.runId,
-    format: output.fileExtension,
-    bytes: output.bytes,
+    format: plan.fileExtension,
+    contentHash: digest.contentHash,
   });
-  const contentHash = await sha256Hex(output.bytes);
-  await putPrivateCanonicalBytes(bindings.MEDIA_BUCKET, {
+  await putPrivateCanonicalStream(bindings.MEDIA_BUCKET, {
     objectKey,
-    bytes: output.bytes,
-    mimeType: output.mimeType,
+    chunks: streamDeterministicExport(plan, openArtifact),
+    byteSize: plan.byteSize,
+    mimeType: plan.mimeType,
     workspaceId: context.workspaceId,
     runId: context.runId,
-    contentHash,
+    contentHash: digest.contentHash,
   });
   const registration = await machine.registerArtifact({
     runId: context.runId,
@@ -139,9 +176,9 @@ export async function createPrivateRunExport(
     artifactKind: 'export',
     status: 'available',
     objectKey,
-    contentHash,
-    mimeType: output.mimeType,
-    byteSize: output.bytes.byteLength,
+    contentHash: digest.contentHash,
+    mimeType: plan.mimeType,
+    byteSize: plan.byteSize,
     parentArtifactIds: context.artifacts.map((artifact) => artifact.id),
     relationship: 'export_member' satisfies ArtifactLineageRelationship,
   });

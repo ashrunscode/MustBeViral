@@ -84,11 +84,7 @@ export interface RunRepository {
 
 export interface ArtifactRepository {
   get(context: TenantContext, artifactId: string): Promise<Readonly<Row<'artifacts'>> | null>;
-  listForRun(
-    context: TenantContext,
-    runId: string,
-    limit: number,
-  ): Promise<readonly Readonly<Row<'artifacts'>>[]>;
+  listForRun(context: TenantContext, runId: string): Promise<readonly Readonly<Row<'artifacts'>>[]>;
   listLineage(
     context: TenantContext,
     artifactId: string,
@@ -116,9 +112,9 @@ export interface BillingRepository {
     context: TenantContext,
     runId: string,
   ): Promise<Readonly<Row<'cost_reservations'>> | null>;
-  listLedger(
+  listLedgerForRun(
     context: TenantContext,
-    limit: number,
+    runId: string,
   ): Promise<readonly Readonly<Row<'ledger_transactions'>>[]>;
   availableBalance(context: TenantContext): Promise<IntegerMicros>;
   dailyExposure(context: TenantContext, dayStart: string, dayEnd: string): Promise<IntegerMicros>;
@@ -311,14 +307,25 @@ export function createDatabaseRepositories(executor: DatabaseExecutor): Database
           workspace_id: equals(context.workspaceId),
           select: '*',
         }),
-      listForRun: (context, runId, requestedLimit) =>
-        executor.select('artifacts', {
-          run_id: equals(runId),
-          workspace_id: equals(context.workspaceId),
-          select: '*',
-          order: 'created_at.asc,id.asc',
-          limit: limit(requestedLimit),
-        }),
+      async listForRun(context, runId) {
+        const pageSize = 100;
+        let offset = 0;
+        const artifacts: Readonly<Row<'artifacts'>>[] = [];
+        while (true) {
+          const page = await executor.select('artifacts', {
+            run_id: equals(runId),
+            workspace_id: equals(context.workspaceId),
+            select: '*',
+            order: 'created_at.asc,id.asc',
+            limit: String(pageSize),
+            offset: String(offset),
+          });
+          artifacts.push(...page);
+          if (page.length < pageSize) break;
+          offset += page.length;
+        }
+        return artifacts;
+      },
       listLineage: (context, artifactId) =>
         executor.select('artifact_lineage', {
           child_artifact_id: equals(artifactId),
@@ -356,13 +363,25 @@ export function createDatabaseRepositories(executor: DatabaseExecutor): Database
           workspace_id: equals(context.workspaceId),
           select: '*',
         }),
-      listLedger: (context, requestedLimit) =>
-        executor.select('ledger_transactions', {
-          workspace_id: equals(context.workspaceId),
-          select: '*',
-          order: 'created_at.desc,id.desc',
-          limit: limit(requestedLimit),
-        }),
+      async listLedgerForRun(context, runId) {
+        const pageSize = 100;
+        let offset = 0;
+        const ledger: Readonly<Row<'ledger_transactions'>>[] = [];
+        while (true) {
+          const page = await executor.select('ledger_transactions', {
+            run_id: equals(runId),
+            workspace_id: equals(context.workspaceId),
+            select: '*',
+            order: 'created_at.asc,id.asc',
+            limit: String(pageSize),
+            offset: String(offset),
+          });
+          ledger.push(...page);
+          if (page.length < pageSize) break;
+          offset += page.length;
+        }
+        return ledger;
+      },
       async availableBalance(context) {
         const pageSize = 100;
         let offset = 0;

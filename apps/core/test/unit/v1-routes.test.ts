@@ -13,6 +13,8 @@ import {
 import { mintArtifactAccessToken, sha256Hex } from '../../../../packages/artifacts/src/index';
 import { FalWebhookVerifier } from '../../../../packages/provider/src/webhook';
 import { createCoreApp } from '../../src/app';
+import { ArtifactMachineError } from '../../src/composition/artifact-machine';
+import { ArtifactStorageError } from '../../src/composition/artifact-storage';
 import type { V1Dependencies } from '../../src/routes/v1';
 import { V1_ROUTE_TABLE } from '../../src/routes/v1-table';
 
@@ -146,6 +148,68 @@ describe('P0 /v1 route boundary', () => {
       ),
     );
   });
+
+  it.each([
+    {
+      label: 'persisted size drift',
+      error: new RangeError('raw size mismatch detail'),
+      status: 422,
+      code: 'VALIDATION_FAILED',
+      retryable: false,
+    },
+    {
+      label: 'persistent checksum failure',
+      error: new ArtifactStorageError('artifact_verification_failed', false, 'raw checksum detail'),
+      status: 422,
+      code: 'VALIDATION_FAILED',
+      retryable: false,
+    },
+    {
+      label: 'persistent machine invariant',
+      error: new ArtifactMachineError(
+        'artifact_machine_invariant',
+        false,
+        undefined,
+        'raw invariant detail',
+      ),
+      status: 422,
+      code: 'VALIDATION_FAILED',
+      retryable: false,
+    },
+    {
+      label: 'transient R2 read failure',
+      error: new ArtifactStorageError('r2_read_failed', true, 'raw R2 detail'),
+      status: 503,
+      code: 'INTERNAL_ERROR',
+      retryable: true,
+    },
+    {
+      label: 'rejected privileged credential',
+      error: new ArtifactMachineError('artifact_machine_forbidden', false),
+      status: 503,
+      code: 'INTERNAL_ERROR',
+      retryable: false,
+    },
+  ])(
+    'maps $label through a sanitized create-export retry boundary',
+    async ({ error, status, code, retryable }) => {
+      const handlers = {
+        ...handlersWith(),
+        create_export: async () => {
+          throw error;
+        },
+      } as P0RestHandlers;
+      const response = await requestRoute(
+        createCoreApp(dependencies({ handlers })),
+        'create_export',
+      );
+      const envelope = ApiErrorEnvelopeSchema.parse(await response.json());
+
+      expect(response.status).toBe(status);
+      expect(envelope.error).toMatchObject({ code, retryable });
+      expect(JSON.stringify(envelope)).not.toMatch(/raw .* detail/iu);
+    },
+  );
 
   it('rejects missing authentication and cross-workspace authorization', async () => {
     const app = createCoreApp(dependencies({ workspaces: { resolve: async () => null } }));

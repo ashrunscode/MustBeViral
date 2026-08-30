@@ -21,6 +21,7 @@ const exportChip = {
   queued: { status: 'queued', label: 'Queued' },
   ready: { status: 'verified', label: 'Ready' },
   failed: { status: 'failed', label: 'Failed' },
+  missing: { status: 'failed', label: 'Missing' },
 } as const satisfies Record<
   ExportRowState,
   { status: 'queued' | 'verified' | 'failed'; label: string }
@@ -51,9 +52,10 @@ export function ExportResultNotice({
         role="alert"
         data-result="review_incomplete"
       >
-        <strong>Review is incomplete</strong>
+        <strong>Launch pack is incomplete</strong>
         <span>
-          Approve groups: {result.pending_group_ids.join(', ')} before creating an export.
+          Resolve required members: {result.pending_group_ids.join(', ')} before creating an export.
+          The checklist below names every expected file and its current state.
         </span>
         <Link
           href={
@@ -64,6 +66,17 @@ export function ExportResultNotice({
         >
           Return to named review
         </Link>
+      </Card>
+    );
+  }
+  if (result.type === 'export_failed') {
+    return (
+      <Card className={styles.resultCard} feedback="error" role="alert" data-result="export_failed">
+        <strong>Export creation was not verified</strong>
+        <span>
+          {result.message} The checklist below keeps the approved source files and failed generated
+          members visible.
+        </span>
       </Card>
     );
   }
@@ -171,7 +184,9 @@ export function ReceiptFlow({
   if (
     result.type !== 'ok' &&
     result.type !== 'export_required' &&
-    result.type !== 'rebuild_required'
+    result.type !== 'rebuild_required' &&
+    result.type !== 'review_incomplete' &&
+    result.type !== 'export_failed'
   ) {
     return (
       <main id="main-content" className={styles.receiptPage}>
@@ -263,6 +278,13 @@ export function ReceiptFlow({
         </span>
       </div>
       <article className={`${styles.receiptCard} receipt-card`} aria-labelledby="receipt-title">
+        {result.type === 'review_incomplete' || result.type === 'export_failed' ? (
+          <ExportResultNotice
+            {...(runId === undefined ? {} : { runId })}
+            result={result}
+            workspace={workspace}
+          />
+        ) : null}
         <header className={styles.documentHead}>
           <div>
             <h1 id="receipt-title">
@@ -367,10 +389,12 @@ export function ReceiptFlow({
                   className={`${styles.exportRow} export-row`}
                   key={row.id}
                   data-export-state={row.state}
+                  data-export-member={row.id}
                 >
                   <span>
                     <strong>{row.label}</strong>
                     <MonoCaps>{row.format}</MonoCaps>
+                    <small className={styles.exportDetail}>{row.detail}</small>
                   </span>
                   <Chip status={chip.status}>{chip.label}</Chip>
                 </div>
@@ -399,7 +423,22 @@ export function ReceiptFlow({
             {formatUsdMicros(receipt.actualMicros)} · {formatUsdMicros(varianceMicros)} retained
           </span>
         </div>
-        {result.type === 'export_required' || result.type === 'rebuild_required' ? (
+        {result.type === 'review_incomplete' ? (
+          <Link
+            className="mbv-button mbv-button--primary"
+            href={
+              runId === undefined
+                ? `/studio/${workspace}/review`
+                : `/studio/${workspace}/review?run=${encodeURIComponent(runId)}`
+            }
+          >
+            Return to named review
+          </Link>
+        ) : result.type === 'export_failed' ? (
+          <Button variant="ghost" disabled={readPort === null} onClick={() => void retryRead()}>
+            Check export status
+          </Button>
+        ) : result.type === 'export_required' || result.type === 'rebuild_required' ? (
           <Button
             variant="primary"
             disabled={creatingExport}
