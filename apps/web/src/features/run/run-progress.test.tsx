@@ -85,6 +85,22 @@ describe('RunProgress', () => {
     expect(html).toContain('This launch pack stopped');
     expect(html).toContain('Do not resubmit the same prompt');
     expect(html).toContain('Edit campaign brief');
+    expect(html).toContain('Open receipt');
+    expect(html).toContain('Run settlement: $2.80 captured · $1.40 released');
+    expect(html).not.toMatch(/retry (run|branch)|retry now/iu);
     expect(html).not.toMatch(/fal\.|payload|signed url/iu);
+  });
+
+  it('shows reconciliation, exact pending spend, and receipt inspection without retry', () => {
+    const port = new InMemoryRunPort('reconciliation');
+    port.advance('run-lumen-0007', 0);
+    port.advance('run-lumen-0007', 1);
+    const html = renderToStaticMarkup(<RunProgress workspace="lumen-skin" port={port} />);
+    expect(html).toContain('data-run-state="reconciliation_required"');
+    expect(html).toContain('This launch pack needs verification');
+    expect(html).toContain('data-recovery="ambiguous"');
+    expect(html).toContain('$1.40 pending');
+    expect(html).toContain('Open receipt');
+    expect(html).not.toMatch(/retry now|retry run|retry branch/iu);
   });
 });

@@ -200,6 +200,20 @@
   color: var(--ink-strong);
   font-size: 12px;
 }
+.downloadError {
+  position: fixed;
+  right: 24px;
+  bottom: 108px;
+  z-index: 2;
+  max-width: min(420px, calc(100vw - 32px));
+  margin: 0;
+  border: 1px solid var(--fail);
+  border-radius: 6px;
+  padding: 9px 12px;
+  background: var(--card);
+  color: var(--fail);
+  font-size: 11px;
+}
 .footer {
   display: flex;
   align-items: center;

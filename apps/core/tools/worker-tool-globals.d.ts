@@ -10,9 +10,11 @@ interface PlatformBindings {
 
 interface R2ObjectBody {
   readonly body: ReadableStream;
+  readonly key: string;
   readonly httpEtag: string;
   readonly size: number;
   readonly uploaded: Date;
+  readonly checksums: { readonly sha256?: ArrayBuffer };
   readonly customMetadata?: Record<string, string>;
   readonly httpMetadata?: Record<string, string>;
   arrayBuffer(): Promise<ArrayBuffer>;

@@ -1,11 +1,18 @@
 import {
+  classifyProviderErrorCode,
   runFailureRecoveryCopy,
+  runFailureRecoveryCopyForKind,
   type MustBeViralRestClient,
   type P0OperationData,
-  type RunFailureRecoveryCopy,
 } from '@mustbeviral/contracts';
 
 import { quoteIsExpired, type QuoteConfirmResult, type RunQuote } from '../quote/quote-port';
+import {
+  runRecoveryView,
+  runSettlementView,
+  type RunRecoveryView,
+  type RunSettlementView,
+} from './run-recovery';
 
 export type RunAttemptState =
   'queued' | 'running' | 'complete' | 'failed' | 'cancelled' | 'skipped' | 'reconciliation';
@@ -28,7 +35,8 @@ export interface RunSnapshot {
   readonly state: RunState;
   readonly firstReviewable: boolean;
   readonly attempts: readonly RunAttempt[];
-  readonly recovery: RunFailureRecoveryCopy | null;
+  readonly recovery: RunRecoveryView | null;
+  readonly settlement: RunSettlementView | null;
 }
 
 export type RunPortResult =
@@ -198,16 +206,17 @@ function visibleRunState(status: string): RunState {
   return 'running';
 }
 
-function failedNodeRecovery(data: P0OperationData<'get_run'>): RunFailureRecoveryCopy | null {
-  const failed = data.nodes.filter((node) => node.status === 'failed');
-  if (failed.length === 0) return null;
-  const policy = failed.find((node) => node.providerErrorCode === 'content_policy_violation');
-  return runFailureRecoveryCopy(policy?.providerErrorCode ?? failed[0]?.providerErrorCode);
-}
-
-function nodeDetail(node: P0OperationData<'get_run'>['nodes'][number]): string {
-  if (node.status === 'failed') {
-    return runFailureRecoveryCopy(node.providerErrorCode).attemptDetail;
+function nodeDetail(
+  data: P0OperationData<'get_run'>,
+  node: P0OperationData<'get_run'>['nodes'][number],
+): string {
+  if (node.status === 'failed' || node.status === 'reconciliation_required') {
+    const kind =
+      (data.recovery?.affectedNodeKeys.includes(node.nodeKey) ? data.recovery.kind : undefined) ??
+      (node.status === 'reconciliation_required'
+        ? 'ambiguous'
+        : classifyProviderErrorCode(node.providerErrorCode));
+    return runFailureRecoveryCopyForKind(kind).attemptDetail;
   }
   return `Dispatch wave ${String(node.dispatchWave)} · ${node.status.replaceAll('_', ' ')}`;
 }
@@ -218,7 +227,7 @@ function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {
     node: node.nodeKey,
     provider: node.modelRouteId ?? 'Core route',
     state: runAttemptState(node.status),
-    detail: nodeDetail(node),
+    detail: nodeDetail(data, node),
   }));
   return {
     runId: data.run.runId,
@@ -227,7 +236,8 @@ function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {
     state: runState(data),
     firstReviewable: attempts.some((attempt) => attempt.state === 'complete'),
     attempts,
-    recovery: failedNodeRecovery(data),
+    recovery: runRecoveryView(data),
+    settlement: runSettlementView(data),
   };
 }
 
@@ -424,29 +434,82 @@ const fixtureFrames = [
 function snapshotFor(sequence: number, attempts: readonly RunAttempt[]): RunSnapshot {
   const completeCount = attempts.filter((attempt) => attempt.state === 'complete').length;
   const failed = attempts.some((attempt) => attempt.state === 'failed');
+  const reconciliation = attempts.some((attempt) => attempt.state === 'reconciliation');
+  const recoveryKind = reconciliation ? 'ambiguous' : 'content_policy_violation';
   return {
     runId: 'run-lumen-0007',
     revision: '7f3a',
     sequence,
-    state: failed
-      ? 'failed'
-      : completeCount === attempts.length
-        ? 'complete'
-        : completeCount > 0
-          ? 'reviewable'
-          : 'running',
+    state: reconciliation
+      ? 'reconciliation_required'
+      : failed
+        ? 'failed'
+        : completeCount === attempts.length
+          ? 'complete'
+          : completeCount > 0
+            ? 'reviewable'
+            : 'running',
     firstReviewable: completeCount > 0,
     attempts,
-    recovery: failed ? runFailureRecoveryCopy('content_policy_violation') : null,
+    recovery:
+      failed || reconciliation
+        ? {
+            ...runFailureRecoveryCopyForKind(recoveryKind),
+            state: reconciliation ? 'reconciliation_required' : 'failed',
+            affectedNodes: attempts
+              .filter((attempt) => attempt.state === 'failed' || attempt.state === 'reconciliation')
+              .map((attempt) => ({
+                runNodeId: attempt.id,
+                nodeKey: attempt.node,
+                state:
+                  attempt.state === 'reconciliation'
+                    ? ('reconciliation_required' as const)
+                    : ('failed' as const),
+                kind: recoveryKind,
+              })),
+            retainedRunNodeIds: attempts
+              .filter((attempt) => attempt.state === 'complete')
+              .map((attempt) => attempt.id),
+          }
+        : null,
+    settlement: {
+      reservationMicros: 4_200_000n,
+      capturedMicros:
+        failed || reconciliation
+          ? 2_800_000n
+          : sequence === fixtureFrames.length - 1
+            ? 4_200_000n
+            : 0n,
+      releasedMicros: failed ? 1_400_000n : 0n,
+      refundedMicros: 0n,
+      netMicros:
+        failed || reconciliation
+          ? 2_800_000n
+          : sequence === fixtureFrames.length - 1
+            ? 4_200_000n
+            : 0n,
+      pendingMicros:
+        failed || sequence === fixtureFrames.length - 1
+          ? 0n
+          : reconciliation
+            ? 1_400_000n
+            : 4_200_000n,
+      settlementStatus:
+        failed || reconciliation
+          ? 'partially_captured'
+          : sequence === fixtureFrames.length - 1
+            ? 'captured'
+            : 'active',
+    },
   };
 }
 
 export class InMemoryRunPort implements RunPort {
   #snapshot = snapshotFor(0, fixtureFrames[0]);
   readonly #listeners = new Set<(snapshot: RunSnapshot) => void>();
-  readonly #scenario: 'normal' | 'failed';
+  readonly #scenario: 'normal' | 'failed' | 'reconciliation';
 
-  constructor(scenario: 'normal' | 'failed' = 'normal') {
+  constructor(scenario: 'normal' | 'failed' | 'reconciliation' = 'normal') {
     this.#scenario = scenario;
   }
 
@@ -465,13 +528,19 @@ export class InMemoryRunPort implements RunPort {
     const nextIndex = Math.min(current.snapshot.sequence + 1, fixtureFrames.length - 1);
     const fixtureFrame = fixtureFrames[nextIndex] ?? fixtureFrames[0];
     const nextAttempts =
-      this.#scenario === 'failed' && nextIndex === 2
+      this.#scenario !== 'normal' && nextIndex === 2
         ? fixtureFrame.map((attempt) =>
             attempt.id === 'motion'
               ? {
                   ...attempt,
-                  state: 'failed' as const,
-                  detail: runFailureRecoveryCopy('content_policy_violation').attemptDetail,
+                  state:
+                    this.#scenario === 'reconciliation'
+                      ? ('reconciliation' as const)
+                      : ('failed' as const),
+                  detail:
+                    this.#scenario === 'reconciliation'
+                      ? runFailureRecoveryCopyForKind('ambiguous').attemptDetail
+                      : runFailureRecoveryCopy('content_policy_violation').attemptDetail,
                 }
               : attempt,
           )
@@ -500,6 +569,20 @@ export class InMemoryRunPort implements RunPort {
             }
           : attempt,
       ),
+      settlement:
+        current.snapshot.settlement === null
+          ? null
+          : {
+              ...current.snapshot.settlement,
+              releasedMicros:
+                current.snapshot.settlement.reservationMicros -
+                current.snapshot.settlement.capturedMicros,
+              pendingMicros: 0n,
+              settlementStatus:
+                current.snapshot.settlement.capturedMicros === 0n
+                  ? 'released'
+                  : 'partially_captured',
+            },
     };
     this.#emit();
     return { type: 'ok', snapshot: this.#snapshot };

@@ -12,6 +12,7 @@ import {
 } from '../../../../packages/artifacts/src/index';
 
 import type { CoreBindings } from '../bindings';
+import { SupabaseDataApiExecutor } from '../data/supabase-data-api';
 
 /**
  * Worker-side composition for signed artifact access.
@@ -74,8 +75,133 @@ export async function mintArtifactAccessUrl(
 }
 
 export type ArtifactContentResult =
-  | Readonly<{ status: 200; body: ReadableStream; claims: ArtifactAccessClaims }>
+  | Readonly<{
+      status: 200;
+      body: ReadableStream;
+      claims: ArtifactAccessClaims;
+      verifiedDownloadRunId: string | null;
+    }>
   | Readonly<{ status: 401 | 404 | 410 }>;
+
+interface CustomerDownloadState {
+  readonly workspaceId: string;
+  readonly runId: string;
+}
+
+function checksumHex(value: ArrayBuffer): string {
+  return Array.from(new Uint8Array(value), (byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+export interface ExportObjectIntegrityFacts {
+  readonly objectKey: string;
+  readonly contentHash: string;
+  readonly byteSize: number;
+  readonly mimeType: string;
+  readonly workspaceId: string;
+  readonly runId: string;
+}
+
+export type ExportObjectIntegrity = 'valid' | 'invalid' | 'unavailable';
+
+/**
+ * Verifies the stored export before a customer-download capability is minted. A legacy object
+ * without R2's stored SHA-256 is intentionally not mintable: the buyer must explicitly create a
+ * new export so the archive is written again with the required checksum and private metadata.
+ */
+export async function verifyExportObjectBeforeMint(
+  bucket: Pick<R2Bucket, 'head'>,
+  facts: ExportObjectIntegrityFacts,
+): Promise<ExportObjectIntegrity> {
+  try {
+    const object = await bucket.head(facts.objectKey);
+    if (object === null) return 'invalid';
+    const checksum = object.checksums.sha256;
+    return object.key === facts.objectKey &&
+      object.size === facts.byteSize &&
+      object.httpMetadata?.contentType === facts.mimeType &&
+      object.customMetadata?.visibility === 'private' &&
+      object.customMetadata.workspace_id === facts.workspaceId &&
+      object.customMetadata.run_id === facts.runId &&
+      checksum !== undefined &&
+      checksumHex(checksum) === facts.contentHash
+      ? 'valid'
+      : 'invalid';
+  } catch {
+    return 'unavailable';
+  }
+}
+
+async function verifiedCustomerDownloadState(
+  bindings: Pick<
+    CoreBindings,
+    'SUPABASE_URL' | 'SUPABASE_SECRET_KEY' | 'SUPABASE_SERVICE_ROLE_KEY'
+  >,
+  claims: ArtifactAccessClaims,
+  fetchImplementation: typeof fetch,
+): Promise<CustomerDownloadState | null> {
+  const baseUrl = bindings.SUPABASE_URL?.replace(/\/$/u, '');
+  const privilegedKey = bindings.SUPABASE_SECRET_KEY ?? bindings.SUPABASE_SERVICE_ROLE_KEY;
+  if (!baseUrl || !privilegedKey) return null;
+  const executor = new SupabaseDataApiExecutor({
+    baseUrl,
+    publishableKey: privilegedKey,
+    callerJwt: privilegedKey,
+    fetch: fetchImplementation,
+  });
+  try {
+    const artifact = await executor.selectOne('artifacts', {
+      id: `eq.${claims.artifactId}`,
+      select: '*',
+    });
+    if (
+      artifact === null ||
+      artifact.artifact_kind !== 'export' ||
+      artifact.status !== 'available' ||
+      artifact.run_id === null ||
+      artifact.content_hash === null ||
+      artifact.object_key !== claims.objectKey ||
+      artifact.content_hash !== claims.contentHash ||
+      artifact.byte_size !== claims.byteSize ||
+      artifact.mime_type !== claims.mimeType
+    ) {
+      return null;
+    }
+    const run = await executor.selectOne('runs', {
+      id: `eq.${artifact.run_id}`,
+      workspace_id: `eq.${artifact.workspace_id}`,
+      select: '*',
+    });
+    if (
+      run === null ||
+      (run.status !== 'succeeded' && run.status !== 'partial_succeeded') ||
+      run.project_id !== artifact.project_id ||
+      run.canvas_revision_id !== artifact.canvas_revision_id
+    ) {
+      return null;
+    }
+    return { workspaceId: artifact.workspace_id, runId: artifact.run_id };
+  } catch {
+    return null;
+  }
+}
+
+function verifiedCustomerDownloadObject(
+  object: R2ObjectBody,
+  claims: ArtifactAccessClaims,
+  state: CustomerDownloadState,
+): boolean {
+  const checksum = object.checksums.sha256;
+  return (
+    object.key === claims.objectKey &&
+    object.size === claims.byteSize &&
+    object.httpMetadata?.contentType === claims.mimeType &&
+    object.customMetadata?.visibility === 'private' &&
+    object.customMetadata.workspace_id === state.workspaceId &&
+    object.customMetadata.run_id === state.runId &&
+    checksum !== undefined &&
+    checksumHex(checksum) === claims.contentHash
+  );
+}
 
 /**
  * Serves the bytes for a valid capability. Verification is crypto + expiry only for
@@ -84,10 +210,18 @@ export type ArtifactContentResult =
  * that check lives with the caller because it needs the privileged executor.
  */
 export async function serveArtifactContent(
-  bindings: Pick<CoreBindings, 'ARTIFACT_ACCESS_SIGNING_KEY' | 'MEDIA_BUCKET'>,
+  bindings: Pick<
+    CoreBindings,
+    | 'ARTIFACT_ACCESS_SIGNING_KEY'
+    | 'MEDIA_BUCKET'
+    | 'SUPABASE_URL'
+    | 'SUPABASE_SECRET_KEY'
+    | 'SUPABASE_SERVICE_ROLE_KEY'
+  >,
   artifactIdFromPath: string,
   token: string,
   nowEpochSeconds: number,
+  fetchImplementation: typeof fetch = (input, init) => fetch(input, init),
 ): Promise<ArtifactContentResult> {
   const verification = await verifyArtifactAccessToken(
     bindings.ARTIFACT_ACCESS_SIGNING_KEY,
@@ -101,23 +235,65 @@ export async function serveArtifactContent(
   // The path id must match the signed id: a token is not transferable between artifact URLs.
   if (verification.claims.artifactId !== artifactIdFromPath) return { status: 401 };
   if (verification.claims.purpose === 'customer_upload') return { status: 401 };
+  const downloadState =
+    verification.claims.purpose === 'customer_download'
+      ? await verifiedCustomerDownloadState(bindings, verification.claims, fetchImplementation)
+      : null;
+  if (verification.claims.purpose === 'customer_download' && downloadState === null) {
+    return { status: 404 };
+  }
   const object = await bindings.MEDIA_BUCKET.get(verification.claims.objectKey);
   if (object === null) return { status: 404 };
-  return { status: 200, body: object.body, claims: verification.claims };
+  if (
+    verification.claims.purpose === 'customer_download' &&
+    (downloadState === null ||
+      !verifiedCustomerDownloadObject(object, verification.claims, downloadState))
+  ) {
+    return { status: 404 };
+  }
+  return {
+    status: 200,
+    body: object.body,
+    claims: verification.claims,
+    verifiedDownloadRunId: downloadState?.runId ?? null,
+  };
+}
+
+function customerDownloadFilename(claims: ArtifactAccessClaims, verifiedRunId: string): string {
+  const safeRunId = verifiedRunId
+    .replace(/[^a-zA-Z0-9._-]+/gu, '-')
+    .replace(/^-+|-+$/gu, '')
+    .slice(0, 80);
+  if (safeRunId.length === 0) throw new RangeError('A verified run ID is required for downloads');
+  const extension =
+    claims.mimeType === 'application/zip'
+      ? 'zip'
+      : claims.mimeType === 'application/json'
+        ? 'json'
+        : 'bin';
+  return `mustbeviral-launch-pack-${safeRunId}.${extension}`;
 }
 
 /** Response headers for served content. Content-Type comes from the signed claims, never from R2
  * metadata, so a swapped object cannot change how the response is interpreted. */
 export function artifactContentHeaders(
   claims: ArtifactAccessClaims,
+  verifiedDownloadRunId: string | null = null,
 ): Readonly<Record<string, string>> {
+  if (claims.purpose === 'customer_download' && verifiedDownloadRunId === null) {
+    throw new RangeError('Customer download headers require a verified run ID');
+  }
   return {
     'content-type': claims.mimeType,
     'content-length': String(claims.byteSize),
     'cache-control': 'private, no-store',
     'x-content-type-options': 'nosniff',
     'referrer-policy': 'no-referrer',
-    ...(claims.purpose === 'customer_download' ? { 'content-disposition': 'attachment' } : {}),
+    ...(claims.purpose === 'customer_download'
+      ? {
+          'content-disposition': `attachment; filename="${customerDownloadFilename(claims, verifiedDownloadRunId ?? '')}"`,
+        }
+      : {}),
   };
 }
 

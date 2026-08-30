@@ -292,6 +292,76 @@ describe('production Supabase composition', () => {
     expect(body.data.upload_url).toContain('/v1/artifacts/artifact-upload/content?token=');
   });
 
+  it('fails closed before minting a legacy export that has no stored R2 SHA-256', async () => {
+    const exportArtifact = {
+      id: 'artifact-legacy-export',
+      workspace_id: workspaceId,
+      project_id: 'project-export',
+      run_id: 'run-export',
+      run_node_id: null,
+      canvas_revision_id: 'revision-export',
+      artifact_kind: 'export',
+      status: 'available',
+      object_key: 'workspaces/export/run-export/launch-pack.zip',
+      content_hash: 'a'.repeat(64),
+      mime_type: 'application/zip',
+      byte_size: 4_096,
+    };
+    const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
+      const url = String(request);
+      if (url.includes('/artifacts?') && url.includes('select=workspace_id')) {
+        return Response.json({ workspace_id: workspaceId });
+      }
+      if (url.includes('/artifacts?')) return Response.json(exportArtifact);
+      if (url.includes('/runs?')) {
+        return Response.json({
+          id: 'run-export',
+          workspace_id: workspaceId,
+          project_id: 'project-export',
+          canvas_revision_id: 'revision-export',
+          status: 'succeeded',
+        });
+      }
+      throw new Error(`Unexpected fixture request: ${url}`);
+    });
+    const requestFactory: RequestDependencyFactory = {
+      create: async ({ bindings, callerJwt, actor: verifiedActor }) =>
+        createSupabaseRequestDependencies(bindings, callerJwt, verifiedActor, fetchImplementation),
+    };
+    const app = createCoreApp({
+      ...defaultV1Dependencies,
+      jwt: { verify: async () => actor },
+      requestFactory,
+    });
+    const head = vi.fn(async () => ({
+      key: exportArtifact.object_key,
+      size: exportArtifact.byte_size,
+      httpMetadata: { contentType: exportArtifact.mime_type },
+      customMetadata: {
+        visibility: 'private',
+        workspace_id: workspaceId,
+        run_id: 'run-export',
+      },
+      checksums: {},
+    }));
+    const exportBindings = {
+      ...configuredBindings,
+      FAL_WEBHOOK_URL: 'https://core.example.test/v1/webhooks/fal',
+      ARTIFACT_ACCESS_SIGNING_KEY: 'artifact-access-signing-key-fixture-32ch',
+      MEDIA_BUCKET: { head },
+    } as unknown as PlatformBindings;
+
+    const response = await app.request(
+      '/v1/artifacts/artifact-legacy-export',
+      { headers: headers() },
+      exportBindings,
+    );
+
+    expect(response.status).toBe(404);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error.code).toBe('NOT_FOUND');
+    expect(head).toHaveBeenCalledOnce();
+  });
+
   it('allows a member to explain a global model route without treating the model id as a tenant id', async () => {
     const fetchImplementation = vi.fn(async (request: Parameters<typeof fetch>[0]) => {
       const url = String(request);

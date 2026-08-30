@@ -44,7 +44,7 @@ import {
   REVIEW_PREVIEW_TTL_SECONDS,
 } from '../../../../packages/artifacts/src/index';
 
-import { mintArtifactAccessUrl } from './artifact-access';
+import { mintArtifactAccessUrl, verifyExportObjectBeforeMint } from './artifact-access';
 import type { CoreBindings } from '../bindings';
 import { SupabaseDataApiError, SupabaseDataApiExecutor } from '../data/supabase-data-api';
 import type {
@@ -78,6 +78,15 @@ const RUN_SETTLEMENT_STATUSES = new Set<RunSettlementStatus>([
   'released',
   'refunded',
 ]);
+const PROVIDER_JOB_STATUSES = new Set([
+  'submitted',
+  'running',
+  'succeeded',
+  'failed',
+  'cancel_requested',
+  'canceled',
+  'unknown',
+] as const);
 
 class ProviderUnavailableError extends Error {
   override readonly name = 'ProviderUnavailableError';
@@ -426,6 +435,192 @@ function runSettlementRecord(row: Readonly<DatabaseRow<'cost_reservations'>>): R
   };
 }
 
+export interface ReceiptProviderJob {
+  readonly attempt_id: string;
+  readonly provider: string;
+  readonly provider_model_id: string;
+  readonly route_id: string;
+  readonly status:
+    'submitted' | 'running' | 'succeeded' | 'failed' | 'cancel_requested' | 'canceled' | 'unknown';
+  readonly captured_micros: string;
+}
+
+function captureAttemptId(metadata: Json): string | undefined {
+  if (!isRecord(metadata)) return undefined;
+  const attemptId = metadata.attempt_id;
+  return typeof attemptId === 'string' && attemptId.length > 0 && attemptId.length <= 200
+    ? attemptId
+    : undefined;
+}
+
+/**
+ * Builds the customer receipt projection from relational catalog rows and the canonical debit side
+ * of persisted capture ledger movements. Provider request identity and evidence never cross this
+ * boundary.
+ */
+export function composeReceiptProviderJobs(
+  input: Readonly<{
+    attempts: readonly Readonly<DatabaseRow<'attempts'>>[];
+    providerJobs: readonly Readonly<DatabaseRow<'provider_jobs'>>[];
+    runNodes: readonly Readonly<DatabaseRow<'run_nodes'>>[];
+    providerRegistrations: readonly Readonly<DatabaseRow<'provider_registrations'>>[];
+    modelRoutes: readonly Readonly<DatabaseRow<'model_routes'>>[];
+    captureLedger: readonly Readonly<DatabaseRow<'ledger_transactions'>>[];
+  }>,
+): readonly ReceiptProviderJob[] {
+  const capturesByAttempt = new Map<string, bigint>();
+  const seenCaptureTransactions = new Set<string>();
+  for (const entry of input.captureLedger) {
+    if (
+      entry.entry_type !== 'capture' ||
+      entry.direction !== 'debit' ||
+      entry.account_code !== 'wallet_reserved' ||
+      seenCaptureTransactions.has(entry.transaction_id)
+    ) {
+      continue;
+    }
+    const attemptId = captureAttemptId(entry.metadata);
+    if (attemptId === undefined) continue;
+    if (!Number.isSafeInteger(entry.amount_micros) || entry.amount_micros < 0) {
+      throw new RangeError('Capture ledger micros must be a nonnegative safe integer');
+    }
+    seenCaptureTransactions.add(entry.transaction_id);
+    capturesByAttempt.set(
+      attemptId,
+      (capturesByAttempt.get(attemptId) ?? 0n) + BigInt(entry.amount_micros),
+    );
+  }
+
+  const nodesById = new Map(input.runNodes.map((node) => [node.id, node]));
+  const registrationsById = new Map(
+    input.providerRegistrations.map((registration) => [registration.id, registration]),
+  );
+  const routesById = new Map(input.modelRoutes.map((route) => [route.id, route]));
+  const attemptsById = new Map(input.attempts.map((attempt) => [attempt.id, attempt]));
+  const seenAttempts = new Set<string>();
+
+  return [...input.providerJobs]
+    .sort((left, right) => {
+      const leftAttempt = attemptsById.get(left.attempt_id);
+      const rightAttempt = attemptsById.get(right.attempt_id);
+      const attemptOrder =
+        (leftAttempt?.attempt_number ?? Number.MAX_SAFE_INTEGER) -
+        (rightAttempt?.attempt_number ?? Number.MAX_SAFE_INTEGER);
+      return (
+        attemptOrder ||
+        left.attempt_id.localeCompare(right.attempt_id) ||
+        left.id.localeCompare(right.id)
+      );
+    })
+    .map((job): ReceiptProviderJob => {
+      if (seenAttempts.has(job.attempt_id)) {
+        throw new TypeError('Receipt contains more than one provider job for an attempt');
+      }
+      seenAttempts.add(job.attempt_id);
+      const attempt = attemptsById.get(job.attempt_id);
+      const node = attempt === undefined ? undefined : nodesById.get(attempt.run_node_id);
+      const route =
+        node?.model_route_id === null ? undefined : routesById.get(node?.model_route_id ?? '');
+      const registration = registrationsById.get(job.provider_registration_id);
+      if (
+        attempt === undefined ||
+        node === undefined ||
+        route === undefined ||
+        registration === undefined ||
+        attempt.provider_registration_id !== job.provider_registration_id ||
+        route.provider_registration_id !== job.provider_registration_id
+      ) {
+        throw new TypeError('Provider-job receipt lineage is incomplete');
+      }
+      if (!PROVIDER_JOB_STATUSES.has(job.status as ReceiptProviderJob['status'])) {
+        throw new TypeError('Database returned an unsupported provider-job state');
+      }
+      return {
+        attempt_id: attempt.id,
+        provider: registration.provider_key,
+        provider_model_id: route.provider_model_id,
+        route_id: route.route_key,
+        status: job.status as ReceiptProviderJob['status'],
+        captured_micros: (capturesByAttempt.get(attempt.id) ?? 0n).toString(10),
+      };
+    });
+}
+
+function receiptRunProjection(row: Readonly<DatabaseRow<'runs'>>) {
+  return {
+    canvas_id: row.canvas_id,
+    canvas_revision_hash: row.canvas_revision_hash,
+    canvas_revision_id: row.canvas_revision_id,
+    confirmed_at: row.confirmed_at,
+    created_at: row.created_at,
+    dispatch_wave: row.dispatch_wave,
+    id: row.id,
+    project_id: row.project_id,
+    quote_id: row.quote_id,
+    status: row.status,
+    updated_at: row.updated_at,
+  };
+}
+
+function receiptReservationProjection(row: Readonly<DatabaseRow<'cost_reservations'>>) {
+  return {
+    amount_micros: row.amount_micros,
+    captured_micros: row.captured_micros,
+    created_at: row.created_at,
+    id: row.id,
+    quote_id: row.quote_id,
+    refunded_micros: row.refunded_micros,
+    released_micros: row.released_micros,
+    run_id: row.run_id,
+    status: row.status,
+    updated_at: row.updated_at,
+  };
+}
+
+function receiptLedgerProjection(row: Readonly<DatabaseRow<'ledger_transactions'>>) {
+  if (row.run_id === null) throw new TypeError('Run receipt ledger entry has no run id');
+  return {
+    account_code: row.account_code,
+    amount_micros: row.amount_micros,
+    created_at: row.created_at,
+    direction: row.direction,
+    entry_type: row.entry_type,
+    id: row.id,
+    reservation_id: row.reservation_id,
+    run_id: row.run_id,
+    transaction_id: row.transaction_id,
+  };
+}
+
+function receiptArtifactProjection(row: Readonly<DatabaseRow<'artifacts'>>) {
+  return {
+    accessibility_description: row.accessibility_description,
+    approved_at: row.approved_at,
+    artifact_kind: row.artifact_kind,
+    byte_size: row.byte_size,
+    canvas_revision_id: row.canvas_revision_id,
+    content_hash: row.content_hash,
+    created_at: row.created_at,
+    id: row.id,
+    mime_type: row.mime_type,
+    project_id: row.project_id,
+    run_id: row.run_id,
+    run_node_id: row.run_node_id,
+    status: row.status,
+    updated_at: row.updated_at,
+  };
+}
+
+function receiptLineageProjection(row: Readonly<DatabaseRow<'artifact_lineage'>>) {
+  return {
+    child_artifact_id: row.child_artifact_id,
+    created_at: row.created_at,
+    id: row.id,
+    parent_artifact_id: row.parent_artifact_id,
+    relationship: row.relationship,
+  };
+}
+
 function failureResult(error: SupabaseDataApiError): P0HandlerResult | null {
   if (error.kind === 'forbidden') return { status: 'forbidden' };
   if (error.kind === 'not_found') return { status: 'not_found' };
@@ -696,6 +891,33 @@ function createResourcePort(
       if (artifact.content_hash === null || artifact.status !== 'available') {
         return { status: 'ok', artifact, access: null, copy };
       }
+      if (artifact.artifact_kind === 'export') {
+        if (artifact.run_id === null || artifact.canvas_revision_id === null) {
+          return { status: 'not_found' };
+        }
+        const run = await repositories.runs.get(context, artifact.run_id);
+        if (
+          run === null ||
+          (run.status !== 'succeeded' && run.status !== 'partial_succeeded') ||
+          run.workspace_id !== artifact.workspace_id ||
+          run.project_id !== artifact.project_id ||
+          run.canvas_revision_id !== artifact.canvas_revision_id
+        ) {
+          return { status: 'not_found' };
+        }
+        const integrity = await verifyExportObjectBeforeMint(bindings.MEDIA_BUCKET, {
+          objectKey: artifact.object_key,
+          contentHash: artifact.content_hash,
+          byteSize: artifact.byte_size,
+          mimeType: artifact.mime_type,
+          workspaceId: artifact.workspace_id,
+          runId: artifact.run_id,
+        });
+        if (integrity === 'invalid') return { status: 'not_found' };
+        if (integrity === 'unavailable') {
+          return { status: 'ok', artifact, access: null, copy };
+        }
+      }
       try {
         const nowEpochSeconds = Math.floor(Date.now() / 1000);
         const purpose =
@@ -773,10 +995,63 @@ function createResourcePort(
       const runId = input.run_id;
       const run = await repositories.runs.get(context, runId);
       if (run === null) return { status: 'not_found' };
-      const [reservation, ledger, artifacts] = await Promise.all([
-        repositories.billing.getReservationForRun(context, runId),
-        repositories.billing.listLedger(context, 100),
-        repositories.artifacts.listForRun(context, runId, 100),
+      const [reservation, ledger, artifacts, attempts, providerJobs, runNodes, captureLedger] =
+        await Promise.all([
+          repositories.billing.getReservationForRun(context, runId),
+          repositories.billing.listLedger(context, 100),
+          repositories.artifacts.listForRun(context, runId, 100),
+          executor.select('attempts', {
+            workspace_id: `eq.${context.workspaceId}`,
+            run_id: `eq.${runId}`,
+            select: 'id,run_node_id,provider_registration_id,attempt_number',
+            order: 'attempt_number.asc,id.asc',
+          }),
+          executor.select('provider_jobs', {
+            workspace_id: `eq.${context.workspaceId}`,
+            run_id: `eq.${runId}`,
+            select: 'id,attempt_id,provider_registration_id,status',
+            order: 'attempt_id.asc,id.asc',
+          }),
+          executor.select('run_nodes', {
+            workspace_id: `eq.${context.workspaceId}`,
+            run_id: `eq.${runId}`,
+            select: 'id,model_route_id',
+            order: 'id.asc',
+          }),
+          executor.select('ledger_transactions', {
+            workspace_id: `eq.${context.workspaceId}`,
+            run_id: `eq.${runId}`,
+            entry_type: 'eq.capture',
+            account_code: 'eq.wallet_reserved',
+            direction: 'eq.debit',
+            select: 'id,transaction_id,entry_type,account_code,direction,amount_micros,metadata',
+            order: 'created_at.asc,id.asc',
+            limit: '1000',
+          }),
+        ]);
+      const providerRegistrationIds = [
+        ...new Set(providerJobs.map((job) => job.provider_registration_id)),
+      ];
+      const modelRouteIds = [
+        ...new Set(
+          runNodes.flatMap((node) => (node.model_route_id === null ? [] : [node.model_route_id])),
+        ),
+      ];
+      const [providerRegistrations, modelRoutes] = await Promise.all([
+        providerRegistrationIds.length === 0
+          ? Promise.resolve([])
+          : executor.select('provider_registrations', {
+              id: `in.(${providerRegistrationIds.join(',')})`,
+              select: 'id,provider_key',
+              order: 'id.asc',
+            }),
+        modelRouteIds.length === 0
+          ? Promise.resolve([])
+          : executor.select('model_routes', {
+              id: `in.(${modelRouteIds.join(',')})`,
+              select: 'id,provider_registration_id,provider_model_id,route_key',
+              order: 'id.asc',
+            }),
       ]);
       const lineage = (
         await Promise.all(
@@ -786,11 +1061,19 @@ function createResourcePort(
       return {
         status: 'ok',
         receipt: {
-          run,
-          reservation,
-          ledger: ledger.filter((entry) => entry.run_id === runId),
-          artifacts,
-          lineage,
+          run: receiptRunProjection(run),
+          reservation: reservation === null ? null : receiptReservationProjection(reservation),
+          ledger: ledger.filter((entry) => entry.run_id === runId).map(receiptLedgerProjection),
+          artifacts: artifacts.map(receiptArtifactProjection),
+          lineage: lineage.map(receiptLineageProjection),
+          provider_jobs: composeReceiptProviderJobs({
+            attempts,
+            providerJobs,
+            runNodes,
+            providerRegistrations,
+            modelRoutes,
+            captureLedger,
+          }),
         },
       };
     },

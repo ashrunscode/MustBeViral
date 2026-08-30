@@ -1,7 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 
-import { composeReviewConcepts, InMemoryReviewPort, WorkerReviewPort } from './review-port';
+import {
+  composeReviewConcepts,
+  InMemoryReviewPort,
+  WorkerReviewPort,
+  type ReviewVariant,
+} from './review-port';
 
 describe('InMemoryReviewPort', () => {
   it('persists approve and reject transitions', () => {
@@ -99,6 +104,22 @@ describe('WorkerReviewPort', () => {
     updated_at: timestamp,
     workspace_id: 'workspace-live',
   };
+  const receiptArtifact = {
+    accessibility_description: artifact.accessibility_description,
+    approved_at: artifact.approved_at,
+    artifact_kind: artifact.artifact_kind,
+    byte_size: artifact.byte_size,
+    canvas_revision_id: artifact.canvas_revision_id,
+    content_hash: artifact.content_hash,
+    created_at: artifact.created_at,
+    id: artifact.id,
+    mime_type: artifact.mime_type,
+    project_id: artifact.project_id,
+    run_id: artifact.run_id,
+    run_node_id: artifact.run_node_id,
+    status: artifact.status,
+    updated_at: artifact.updated_at,
+  };
   const receiptResponse = (
     accessibilityDescription: string | null = artifact.accessibility_description,
   ) => ({
@@ -109,16 +130,13 @@ describe('WorkerReviewPort', () => {
           canvas_revision_hash: hash,
           canvas_revision_id: 'revision-live',
           confirmed_at: timestamp,
-          confirmed_by: 'user-live',
           created_at: timestamp,
-          dispatch_epoch: 0,
           dispatch_wave: 1,
           id: 'run-live',
           project_id: 'project-live',
           quote_id: 'quote-live',
           status: 'succeeded',
           updated_at: timestamp,
-          workspace_id: 'workspace-live',
         },
         reservation: {
           amount_micros: 4_550_000,
@@ -131,15 +149,24 @@ describe('WorkerReviewPort', () => {
           run_id: 'run-live',
           status: 'released',
           updated_at: timestamp,
-          workspace_id: 'workspace-live',
         },
         ledger: [],
-        artifacts: [{ ...artifact, accessibility_description: accessibilityDescription }],
+        artifacts: [{ ...receiptArtifact, accessibility_description: accessibilityDescription }],
         lineage: [],
+        provider_jobs: [],
       },
     },
     meta: { request_id: 'request-review-0001' },
   });
+  const runSpend = {
+    currency: 'USD',
+    authorizedMicros: '4550000',
+    capturedMicros: '672574',
+    releasedMicros: '3877426',
+    refundedMicros: '0',
+    netMicros: '672574',
+    settlementStatus: 'partially_captured',
+  } as const;
 
   it('reads receipt artifacts and records approval with exact description and stable idempotency', async () => {
     const calls: Array<Readonly<{ body: string | undefined; headers: Headers; url: string }>> = [];
@@ -216,6 +243,8 @@ describe('WorkerReviewPort', () => {
                           dispatchWave: 2,
                         },
                       ],
+                      recovery: null,
+                      spend: runSpend,
                     },
                     meta: { request_id: 'request-review-0001' },
                   };
@@ -247,6 +276,10 @@ describe('WorkerReviewPort', () => {
       summary: {
         quotedMicros: 4_550_000n,
         capturedMicros: 672_574n,
+        releasedMicros: 3_877_426n,
+        refundedMicros: 0n,
+        netMicros: 672_574n,
+        settlementStatus: 'partially_captured',
         campaignName: 'Stillroom compost caddy launch pack',
       },
     });
@@ -273,6 +306,174 @@ describe('WorkerReviewPort', () => {
         },
       ],
     });
+  });
+
+  it('requires a fresh explicit approval after session expiry without replaying the mutation', async () => {
+    let sessionActive = true;
+    const approvalCalls: Array<Readonly<{ headers: Headers }>> = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => (sessionActive ? 'session-token' : null),
+      createRequestId: () => 'request-review-session',
+      fetch: async (input, init) => {
+        if (String(input).endsWith('/approvals')) {
+          approvalCalls.push({ headers: new Headers(init?.headers) });
+          return new Response(
+            JSON.stringify({
+              data: {
+                run_id: 'run-live',
+                approved: 1,
+                replayed: 0,
+                artifacts: [{ artifact_id: 'artifact-live', artifact_kind: 'approved_output' }],
+              },
+              meta: { request_id: 'request-review-session' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        return new Response(JSON.stringify(receiptResponse()), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+    const createIdempotencyKey = vi.fn(() => 'approval-idem-session');
+    const port = new WorkerReviewPort(client, 'run-live', 'user-live', createIdempotencyKey);
+    await port.read();
+    const input = {
+      variantId: 'artifact-live',
+      decision: 'approved' as const,
+      expectedRevisionId: 'revision-live',
+    };
+
+    sessionActive = false;
+    await expect(port.decideVariant(input)).resolves.toEqual({ type: 'session_expired' });
+    expect(approvalCalls).toHaveLength(0);
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(1);
+
+    sessionActive = true;
+    expect(approvalCalls).toHaveLength(0);
+    await expect(port.decideVariant(input)).resolves.toMatchObject({
+      type: 'ok',
+      groups: [{ variants: [{ decision: 'approved' }] }],
+    });
+    expect(approvalCalls).toHaveLength(1);
+    expect(approvalCalls[0]?.headers.get('idempotency-key')).toBe('approval-idem-session');
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps partial artifacts and recovery context together after a failed run', async () => {
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-review-recovery',
+      fetch: async (input) => {
+        const url = String(input);
+        let payload: unknown;
+        if (url.endsWith('/receipt')) {
+          payload = {
+            ...receiptResponse(),
+            data: {
+              receipt: {
+                ...receiptResponse().data.receipt,
+                run: { ...receiptResponse().data.receipt.run, status: 'failed' },
+              },
+            },
+          };
+        } else if (url.includes('/artifacts/artifact-live')) {
+          payload = {
+            data: { artifact, access: null, copy: null },
+            meta: { request_id: 'request-review-recovery' },
+          };
+        } else if (url.includes('/projects/')) {
+          payload = {
+            data: {
+              project: {
+                brand_kit_id: null,
+                brief_id: null,
+                created_at: timestamp,
+                created_by: 'user-live',
+                id: 'project-live',
+                name: 'Partial launch pack',
+                status: 'active',
+                updated_at: timestamp,
+                workspace_id: 'workspace-live',
+              },
+            },
+            meta: { request_id: 'request-review-recovery' },
+          };
+        } else {
+          payload = {
+            data: {
+              run: {
+                runId: 'run-live',
+                projectId: 'project-live',
+                canvasId: 'canvas-live',
+                canvasRevisionId: 'revision-live',
+                quoteId: 'quote-live',
+                status: 'failed',
+                reservationId: 'reservation-live',
+              },
+              nodes: [
+                {
+                  runNodeId: 'run-node-live',
+                  nodeKey: 'master-1',
+                  modelRouteId: 'provider/model-live',
+                  status: 'succeeded',
+                  dispatchWave: 1,
+                },
+                {
+                  runNodeId: 'run-node-blocked',
+                  nodeKey: 'master-2',
+                  modelRouteId: 'provider/model-live',
+                  status: 'failed',
+                  dispatchWave: 1,
+                  providerErrorCode: 'content_policy_violation',
+                },
+              ],
+              recovery: {
+                kind: 'content_policy_violation',
+                affectedNodeKeys: ['master-2'],
+                title: 'Image blocked',
+                message:
+                  'The image provider blocked this branch as a content-policy violation. 1 completed branch was kept and remains reviewable.',
+                nextAction:
+                  'Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.',
+              },
+              spend: runSpend,
+            },
+            meta: { request_id: 'request-review-recovery' },
+          };
+        }
+        return new Response(JSON.stringify(payload), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      },
+    });
+
+    const read = await new WorkerReviewPort(
+      client,
+      'run-live',
+      'user-live',
+      () => 'approval-idem-recovery',
+    ).read();
+    expect(read).toMatchObject({
+      type: 'ok',
+      groups: [{ variants: [{ id: 'artifact-live', nodeKey: 'master-1' }] }],
+      summary: {
+        capturedMicros: 672_574n,
+        releasedMicros: 3_877_426n,
+        pendingMicros: 0n,
+        recovery: {
+          kind: 'content_policy_violation',
+          retainedRunNodeIds: ['run-node-live'],
+        },
+      },
+    });
+    expect(
+      JSON.stringify(read, (_key, value) => (typeof value === 'bigint' ? String(value) : value)),
+    ).not.toMatch(/provider payload|normalized_evidence|signed\.example|token=/iu);
   });
 
   it('keeps rejection local and refuses approval without an accessibility description', async () => {
@@ -367,6 +568,11 @@ describe('WorkerReviewPort', () => {
       id: 'artifact-live-2',
       run_node_id: 'run-node-adaptation',
     };
+    const secondReceipt = {
+      ...receiptArtifact,
+      id: second.id,
+      run_node_id: second.run_node_id,
+    };
     const bodies: string[] = [];
     const client = createMustBeViralRestClient({
       baseUrl: 'https://api.example.test',
@@ -401,6 +607,8 @@ describe('WorkerReviewPort', () => {
                 dispatchWave: 3,
               },
             ],
+            recovery: null,
+            spend: runSpend,
           },
           meta: { request_id: 'request-review-0006' },
         };
@@ -423,7 +631,7 @@ describe('WorkerReviewPort', () => {
             data: {
               receipt: {
                 ...receiptResponse().data.receipt,
-                artifacts: [artifact, second],
+                artifacts: [receiptArtifact, secondReceipt],
               },
             },
             meta: { request_id: 'request-review-0006' },
@@ -495,6 +703,13 @@ describe('WorkerReviewPort', () => {
       run_node_id: 'run-node-copy',
       accessibility_description: 'Problem-recognition copy set for the launch pack.',
     };
+    const copyReceiptArtifact = {
+      ...receiptArtifact,
+      id: copyArtifact.id,
+      mime_type: copyArtifact.mime_type,
+      run_node_id: copyArtifact.run_node_id,
+      accessibility_description: copyArtifact.accessibility_description,
+    };
     const client = createMustBeViralRestClient({
       baseUrl: 'https://api.example.test',
       getAccessToken: async () => 'session-token',
@@ -506,7 +721,7 @@ describe('WorkerReviewPort', () => {
               data: {
                 receipt: {
                   ...receiptResponse().data.receipt,
-                  artifacts: [copyArtifact],
+                  artifacts: [copyReceiptArtifact],
                 },
               },
               meta: { request_id: 'request-review-0004' },
@@ -544,6 +759,8 @@ describe('WorkerReviewPort', () => {
                       dispatchWave: 1,
                     },
                   ],
+                  recovery: null,
+                  spend: runSpend,
                 },
                 meta: { request_id: 'request-review-0004' },
               };
@@ -588,6 +805,12 @@ describe('WorkerReviewPort', () => {
       object_key: 'private/artifact-copy-long.json',
       run_node_id: 'run-node-copy',
     };
+    const copyReceiptArtifact = {
+      ...receiptArtifact,
+      id: copyArtifact.id,
+      mime_type: copyArtifact.mime_type,
+      run_node_id: copyArtifact.run_node_id,
+    };
     const client = createMustBeViralRestClient({
       baseUrl: 'https://api.example.test',
       getAccessToken: async () => 'session-token',
@@ -599,7 +822,7 @@ describe('WorkerReviewPort', () => {
               data: {
                 receipt: {
                   ...receiptResponse().data.receipt,
-                  artifacts: [copyArtifact],
+                  artifacts: [copyReceiptArtifact],
                 },
               },
               meta: { request_id: 'request-review-0005' },
@@ -637,6 +860,8 @@ describe('WorkerReviewPort', () => {
                       dispatchWave: 1,
                     },
                   ],
+                  recovery: null,
+                  spend: runSpend,
                 },
                 meta: { request_id: 'request-review-0005' },
               };
@@ -659,11 +884,7 @@ describe('WorkerReviewPort', () => {
 
 describe('composeReviewConcepts', () => {
   it('pairs copy, master, and placements into three concepts', () => {
-    const variant = (
-      id: string,
-      nodeKey: string,
-      extras: Partial<import('./review-port').ReviewVariant> = {},
-    ) => ({
+    const variant = (id: string, nodeKey: string, extras: Partial<ReviewVariant> = {}) => ({
       id,
       groupId: 'visuals',
       label: nodeKey,

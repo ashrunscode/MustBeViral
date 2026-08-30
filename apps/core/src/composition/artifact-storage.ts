@@ -79,6 +79,13 @@ function metadata(
   };
 }
 
+function sha256ChecksumBytes(contentHash: string): Uint8Array {
+  if (!/^[0-9a-f]{64}$/u.test(contentHash)) {
+    throw new TypeError('Canonical artifact SHA-256 must be 64 lowercase hexadecimal characters');
+  }
+  return Uint8Array.from(contentHash.match(/.{2}/gu) ?? [], (pair) => Number.parseInt(pair, 16));
+}
+
 export async function copyFalDeliveryToPrivateR2(
   input: Readonly<{
     bindings: CoreBindings;
@@ -233,12 +240,17 @@ export async function putPrivateCanonicalBytes(
     mimeType: string;
     workspaceId: string;
     runId: string;
+    /** R2 verifies these bytes during PUT and retains the SHA-256 for download-time integrity. */
+    contentHash?: string;
   }>,
 ): Promise<void> {
   try {
     await bucket.put(input.objectKey, input.bytes, {
       httpMetadata: { contentType: input.mimeType },
       customMetadata: metadata(input),
+      ...(input.contentHash === undefined
+        ? {}
+        : { sha256: sha256ChecksumBytes(input.contentHash) }),
     });
   } catch (cause) {
     throw new ArtifactStorageError(

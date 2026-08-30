@@ -91,6 +91,11 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.recoveryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
 
 .attemptList {
   display: grid;

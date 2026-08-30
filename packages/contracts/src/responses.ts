@@ -443,26 +443,29 @@ const ArtifactSchema = z
   })
   .strict();
 
-const RunRowSchema = z
+/*
+ * A receipt is a buyer-facing accounting and lineage document, not a database dump. Keep these
+ * projections separate from the broader row schemas used by other authorized endpoints so a new
+ * storage column cannot silently cross the receipt boundary. In particular, object keys, access
+ * URLs, actor ids, rights/provider evidence and arbitrary ledger metadata are intentionally absent.
+ */
+const ReceiptRunSchema = z
   .object({
     canvas_id: IdentifierSchema,
     canvas_revision_hash: Sha256Schema,
     canvas_revision_id: IdentifierSchema,
     confirmed_at: TimestampSchema,
-    confirmed_by: IdentifierSchema,
     created_at: TimestampSchema,
-    dispatch_epoch: z.number().int().nonnegative(),
     dispatch_wave: z.number().int().positive(),
     id: IdentifierSchema,
     project_id: IdentifierSchema,
     quote_id: IdentifierSchema,
     status: z.enum(runStates),
     updated_at: TimestampSchema,
-    workspace_id: IdentifierSchema,
   })
   .strict();
 
-const ReservationSchema = z
+const ReceiptReservationSchema = z
   .object({
     amount_micros: MicrosSchema,
     captured_micros: MicrosSchema,
@@ -472,37 +475,70 @@ const ReservationSchema = z
     refunded_micros: MicrosSchema,
     released_micros: MicrosSchema,
     run_id: IdentifierSchema,
-    status: z.string().min(1),
+    status: z.enum(['active', 'partially_captured', 'captured', 'released', 'refunded']),
     updated_at: TimestampSchema,
-    workspace_id: IdentifierSchema,
   })
   .strict();
 
-const LedgerEntrySchema = z
+const ReceiptLedgerEntrySchema = z
   .object({
-    account_code: z.string().min(1),
+    account_code: z.string().min(1).max(120),
     amount_micros: MicrosSchema,
-    causative_key: z.string().min(1),
     created_at: TimestampSchema,
-    direction: z.string().min(1),
-    entry_type: z.string().min(1),
+    direction: z.enum(['debit', 'credit']),
+    entry_type: z.string().min(1).max(120),
     id: IdentifierSchema,
-    metadata: JsonValueSchema,
     reservation_id: IdentifierSchema.nullable(),
-    run_id: IdentifierSchema.nullable(),
+    run_id: IdentifierSchema,
     transaction_id: IdentifierSchema,
-    workspace_id: IdentifierSchema,
   })
   .strict();
 
-const LineageSchema = z
+const ReceiptArtifactSchema = z
+  .object({
+    accessibility_description: z.string().nullable(),
+    approved_at: TimestampSchema.nullable(),
+    artifact_kind: z.string().min(1).max(80),
+    byte_size: MicrosSchema,
+    canvas_revision_id: IdentifierSchema.nullable(),
+    content_hash: Sha256Schema.nullable(),
+    created_at: TimestampSchema,
+    id: IdentifierSchema,
+    mime_type: z.string().min(1).max(160),
+    project_id: IdentifierSchema,
+    run_id: IdentifierSchema.nullable(),
+    run_node_id: IdentifierSchema.nullable(),
+    status: z.string().min(1).max(80),
+    updated_at: TimestampSchema,
+  })
+  .strict();
+
+const ReceiptLineageSchema = z
   .object({
     child_artifact_id: IdentifierSchema,
     created_at: TimestampSchema,
     id: IdentifierSchema,
     parent_artifact_id: IdentifierSchema,
-    relationship: z.string().min(1),
-    workspace_id: IdentifierSchema,
+    relationship: z.string().min(1).max(120),
+  })
+  .strict();
+
+export const ReceiptProviderJobSchema = z
+  .object({
+    attempt_id: IdentifierSchema,
+    provider: IdentifierSchema,
+    provider_model_id: z.string().min(1).max(300),
+    route_id: IdentifierSchema,
+    status: z.enum([
+      'submitted',
+      'running',
+      'succeeded',
+      'failed',
+      'cancel_requested',
+      'canceled',
+      'unknown',
+    ]),
+    captured_micros: WireMicrosSchema,
   })
   .strict();
 
@@ -615,11 +651,12 @@ const operationDataSchemas = {
     .object({
       receipt: z
         .object({
-          run: RunRowSchema,
-          reservation: ReservationSchema.nullable(),
-          ledger: z.array(LedgerEntrySchema),
-          artifacts: z.array(ArtifactSchema),
-          lineage: z.array(LineageSchema),
+          run: ReceiptRunSchema,
+          reservation: ReceiptReservationSchema.nullable(),
+          ledger: z.array(ReceiptLedgerEntrySchema),
+          artifacts: z.array(ReceiptArtifactSchema),
+          lineage: z.array(ReceiptLineageSchema),
+          provider_jobs: z.array(ReceiptProviderJobSchema),
         })
         .strict(),
     })

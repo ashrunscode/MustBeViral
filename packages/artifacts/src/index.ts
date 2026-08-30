@@ -41,9 +41,22 @@ export interface VerifiedProviderArtifact {
 export interface DeterministicExportMember {
   readonly artifactId: string;
   readonly artifactKind: string;
+  readonly nodeKey: string;
   readonly contentHash: string;
   readonly mimeType: string;
   readonly bytes: Uint8Array;
+  readonly accessibilityDescription: string;
+  readonly measurement?: VerifiedProviderMeasurement;
+  readonly copy?: Readonly<{
+    readonly primaryText: string;
+    readonly headline: string;
+    readonly description: string;
+  }>;
+  readonly copyQaFindings?: readonly Readonly<{
+    readonly code: string;
+    readonly severity: 'hard' | 'soft';
+    readonly message: string;
+  }>[];
 }
 
 export interface DeterministicExportReceipt {
@@ -56,6 +69,9 @@ export interface DeterministicExportReceipt {
     amountMicros: number;
     capturedMicros: number;
     releasedMicros: number;
+    refundedMicros: number;
+    netMicros: number;
+    settlementStatus: 'active' | 'partially_captured' | 'captured' | 'released' | 'refunded';
   }>;
   readonly providerJobs: readonly Readonly<{
     attemptId: string;
@@ -63,7 +79,7 @@ export interface DeterministicExportReceipt {
     providerModelId: string;
     routeId: string;
     status: string;
-    captureMicros: number;
+    capturedMicros: number;
   }>[];
   readonly lineage: readonly Readonly<{
     parentArtifactId: string;
@@ -315,6 +331,388 @@ function extensionForMimeType(mimeType: string): string {
   return extensions[mimeType] ?? 'bin';
 }
 
+type ExportQaStatus = 'passed' | 'failed' | 'not_evaluated';
+
+interface SemanticExportMember {
+  readonly member: DeterministicExportMember;
+  readonly concept: number;
+  readonly role: 'copy' | 'master' | 'adaptation' | 'motion';
+  readonly placement:
+    'copy' | 'master' | 'feed-4x5' | 'square-1x1' | 'stories-9x16' | 'reels-motion-9x16';
+  readonly filename: string;
+}
+
+interface HashedExportFile {
+  readonly filename: string;
+  readonly kind: 'asset' | 'copy' | 'qa_report' | 'receipt';
+  readonly mimeType: string;
+  readonly bytes: Uint8Array;
+  readonly contentHash: string;
+}
+
+function compareText(left: string, right: string): number {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
+function conceptLabel(concept: number): string {
+  return `concept-${String(concept).padStart(2, '0')}`;
+}
+
+function positiveIndex(value: string, field: string): number {
+  const index = Number(value);
+  if (!Number.isSafeInteger(index) || index <= 0 || index > 99) {
+    throw new TypeError(`Export member ${field} is outside the supported launch-pack range`);
+  }
+  return index;
+}
+
+const GB04_EXPORT_NODE_KEYS = [
+  'copy-1',
+  'copy-2',
+  'copy-3',
+  'master-1',
+  'master-2',
+  'master-3',
+  'adaptation-1-1',
+  'adaptation-1-2',
+  'adaptation-1-3',
+  'adaptation-2-1',
+  'adaptation-2-2',
+  'adaptation-2-3',
+  'adaptation-3-1',
+  'adaptation-3-2',
+  'adaptation-3-3',
+  'motion-1',
+] as const;
+
+const GB04_EXPORT_NODE_KEY_SET = new Set<string>(GB04_EXPORT_NODE_KEYS);
+const GB04_IMAGE_MIME_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+
+function assertExactGb04MemberSet(members: readonly DeterministicExportMember[]): void {
+  const counts = new Map<string, number>();
+  for (const member of members) {
+    counts.set(member.nodeKey, (counts.get(member.nodeKey) ?? 0) + 1);
+  }
+  const missing = GB04_EXPORT_NODE_KEYS.filter((nodeKey) => !counts.has(nodeKey));
+  const unexpected = [...counts.keys()]
+    .filter((nodeKey) => !GB04_EXPORT_NODE_KEY_SET.has(nodeKey))
+    .sort(compareText);
+  const duplicate = [...counts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(([nodeKey]) => nodeKey)
+    .sort(compareText);
+  if (missing.length === 0 && unexpected.length === 0 && duplicate.length === 0) return;
+  throw new TypeError(
+    `GB-04 export requires the exact launch-pack member set; missing=[${missing.join(',')}]; unexpected=[${unexpected.join(',')}]; duplicate=[${duplicate.join(',')}]`,
+  );
+}
+
+function requireGb04ImageMimeType(member: DeterministicExportMember): void {
+  if (!GB04_IMAGE_MIME_TYPES.has(member.mimeType)) {
+    throw new TypeError(
+      `Visual export member ${member.nodeKey} must use image/jpeg, image/png, or image/webp`,
+    );
+  }
+}
+
+function semanticExportMember(member: DeterministicExportMember): SemanticExportMember {
+  const copy = /^copy-(\d+)$/u.exec(member.nodeKey);
+  if (copy !== null) {
+    const concept = positiveIndex(copy[1] ?? '', 'copy concept');
+    if (member.mimeType !== 'application/json' || member.copy === undefined) {
+      throw new TypeError(`Copy export member ${member.nodeKey} is not normalized JSON copy`);
+    }
+    return {
+      member,
+      concept,
+      role: 'copy',
+      placement: 'copy',
+      filename: `copy/${conceptLabel(concept)}.json`,
+    };
+  }
+
+  const master = /^master-(\d+)$/u.exec(member.nodeKey);
+  if (master !== null) {
+    const concept = positiveIndex(master[1] ?? '', 'master concept');
+    requireGb04ImageMimeType(member);
+    return {
+      member,
+      concept,
+      role: 'master',
+      placement: 'master',
+      filename: `assets/${conceptLabel(concept)}/master.${extensionForMimeType(member.mimeType)}`,
+    };
+  }
+
+  const adaptation = /^adaptation-(\d+)-([123])$/u.exec(member.nodeKey);
+  if (adaptation !== null) {
+    const concept = positiveIndex(adaptation[1] ?? '', 'adaptation concept');
+    requireGb04ImageMimeType(member);
+    const placementIndex = Number(adaptation[2]);
+    const placement =
+      placementIndex === 1 ? 'feed-4x5' : placementIndex === 2 ? 'square-1x1' : 'stories-9x16';
+    return {
+      member,
+      concept,
+      role: 'adaptation',
+      placement,
+      filename: `assets/${conceptLabel(concept)}/${placement}.${extensionForMimeType(member.mimeType)}`,
+    };
+  }
+
+  const motion = /^motion-(\d+)$/u.exec(member.nodeKey);
+  if (motion !== null) {
+    const concept = positiveIndex(motion[1] ?? '', 'motion concept');
+    if (concept !== 1) {
+      throw new TypeError('The Reels motion placement is reserved for concept 01');
+    }
+    if (member.mimeType !== 'video/mp4') {
+      throw new TypeError('Reels motion export member motion-1 must use video/mp4');
+    }
+    return {
+      member,
+      concept,
+      role: 'motion',
+      placement: 'reels-motion-9x16',
+      filename: `assets/${conceptLabel(concept)}/reels-motion-9x16.${extensionForMimeType(member.mimeType)}`,
+    };
+  }
+
+  throw new TypeError(`Export member ${member.nodeKey} has no buyer-facing launch-pack role`);
+}
+
+function copyBytes(member: SemanticExportMember): Uint8Array {
+  const copy = member.member.copy;
+  if (member.role !== 'copy' || copy === undefined) {
+    throw new TypeError(`Export member ${member.member.nodeKey} is not a copy set`);
+  }
+  return jsonBytes({
+    schema_version: 1,
+    concept_id: conceptLabel(member.concept),
+    primary_text: copy.primaryText,
+    headline: copy.headline,
+    description: copy.description,
+    source_artifact: {
+      artifact_id: member.member.artifactId,
+      content_hash: member.member.contentHash,
+    },
+  });
+}
+
+function receiptDocument(receipt: DeterministicExportReceipt) {
+  return {
+    schema_version: 1,
+    run_id: receipt.runId,
+    canvas_revision_id: receipt.canvasRevisionId,
+    canvas_revision_hash: receipt.canvasRevisionHash,
+    quote_id: receipt.quoteId,
+    run_status: receipt.runStatus,
+    reservation: {
+      amount_micros: String(receipt.reservation.amountMicros),
+      captured_micros: String(receipt.reservation.capturedMicros),
+      released_micros: String(receipt.reservation.releasedMicros),
+      refunded_micros: String(receipt.reservation.refundedMicros),
+      net_micros: String(receipt.reservation.netMicros),
+      settlement_status: receipt.reservation.settlementStatus,
+    },
+    provider_jobs: [...receipt.providerJobs]
+      .sort((left, right) => compareText(left.attemptId, right.attemptId))
+      .map((job) => ({
+        attempt_id: job.attemptId,
+        provider: job.provider,
+        provider_model_id: job.providerModelId,
+        route_id: job.routeId,
+        status: job.status,
+        captured_micros: String(job.capturedMicros),
+      })),
+    lineage: [...receipt.lineage]
+      .sort((left, right) =>
+        compareText(
+          `${left.childArtifactId}:${left.parentArtifactId}:${left.relationship}`,
+          `${right.childArtifactId}:${right.parentArtifactId}:${right.relationship}`,
+        ),
+      )
+      .map((entry) => ({
+        parent_artifact_id: entry.parentArtifactId,
+        child_artifact_id: entry.childArtifactId,
+        relationship: entry.relationship,
+      })),
+  };
+}
+
+function expectedAdaptationDimensions(placement: SemanticExportMember['placement']): Readonly<{
+  widthPixels: number;
+  heightPixels: number;
+}> | null {
+  if (placement === 'feed-4x5') return { widthPixels: 1080, heightPixels: 1350 };
+  if (placement === 'square-1x1') return { widthPixels: 1080, heightPixels: 1080 };
+  if (placement === 'stories-9x16') return { widthPixels: 1080, heightPixels: 1920 };
+  return null;
+}
+
+function qaReport(
+  runId: string,
+  members: readonly SemanticExportMember[],
+): Readonly<{
+  schema_version: 1;
+  run_id: string;
+  overall_status: ExportQaStatus;
+  checks: readonly Readonly<Record<string, unknown>>[];
+}> {
+  const checks: Readonly<Record<string, unknown>>[] = [];
+  for (const semantic of members) {
+    const { member } = semantic;
+    checks.push({
+      check: 'source_artifact_integrity',
+      scope: semantic.filename,
+      status: 'passed',
+      evidence: {
+        artifact_id: member.artifactId,
+        sha256: member.contentHash,
+        byte_size: member.bytes.byteLength,
+        mime_type: member.mimeType,
+      },
+    });
+
+    if (semantic.role === 'adaptation') {
+      const expected = expectedAdaptationDimensions(semantic.placement);
+      const measurement = member.measurement;
+      if (expected === null || measurement?.kind !== 'image') {
+        checks.push({
+          check: 'required_dimensions',
+          scope: semantic.filename,
+          status: 'not_evaluated',
+          reason: 'Verified image dimensions were not available to the export builder.',
+        });
+      } else {
+        const passed =
+          measurement.widthPixels === expected.widthPixels &&
+          measurement.heightPixels === expected.heightPixels;
+        checks.push({
+          check: 'required_dimensions',
+          scope: semantic.filename,
+          status: passed ? 'passed' : 'failed',
+          expected: {
+            width_pixels: expected.widthPixels,
+            height_pixels: expected.heightPixels,
+          },
+          observed: {
+            width_pixels: measurement.widthPixels,
+            height_pixels: measurement.heightPixels,
+          },
+        });
+      }
+    } else if (semantic.role === 'motion') {
+      const measurement = member.measurement;
+      if (measurement?.kind !== 'video') {
+        checks.push({
+          check: 'required_duration',
+          scope: semantic.filename,
+          status: 'not_evaluated',
+          reason: 'Verified video duration was not available to the export builder.',
+        });
+      } else {
+        const passed =
+          measurement.durationMilliseconds >= 6_000 && measurement.durationMilliseconds <= 10_000;
+        checks.push({
+          check: 'required_duration',
+          scope: semantic.filename,
+          status: passed ? 'passed' : 'failed',
+          expected: { minimum_milliseconds: 6_000, maximum_milliseconds: 10_000 },
+          observed: { duration_milliseconds: measurement.durationMilliseconds },
+        });
+      }
+      checks.push({
+        check: 'required_dimensions',
+        scope: semantic.filename,
+        status: 'not_evaluated',
+        reason: 'The current verified MP4 measurement records duration but not frame dimensions.',
+      });
+    } else if (semantic.role === 'master') {
+      checks.push({
+        check: 'required_dimensions',
+        scope: semantic.filename,
+        status: 'not_evaluated',
+        reason: 'P0 does not pin a buyer-facing master-static pixel size.',
+      });
+    } else {
+      const findings = member.copyQaFindings;
+      checks.push({
+        check: 'copy_structure',
+        scope: semantic.filename,
+        status:
+          member.copy !== undefined &&
+          member.copy.primaryText.length > 0 &&
+          member.copy.headline.length > 0
+            ? 'passed'
+            : 'failed',
+      });
+      checks.push({
+        check: 'copy_format_policy',
+        scope: semantic.filename,
+        status:
+          findings === undefined
+            ? 'not_evaluated'
+            : findings.some((finding) => finding.severity === 'hard')
+              ? 'failed'
+              : 'passed',
+        ...(findings === undefined
+          ? { reason: 'No deterministic copy-policy evaluation was supplied.' }
+          : { findings }),
+      });
+    }
+  }
+
+  checks.push(
+    {
+      check: 'readable_safe_areas',
+      scope: 'launch_pack',
+      status: 'not_evaluated',
+      reason: 'No deterministic visual safe-area evaluator is registered for this export.',
+    },
+    {
+      check: 'brand_constraints',
+      scope: 'launch_pack',
+      status: 'not_evaluated',
+      reason: 'Brand compliance requires a recorded evaluator decision that is not available here.',
+    },
+    {
+      check: 'supplied_claims',
+      scope: 'launch_pack',
+      status: 'not_evaluated',
+      reason: 'The export builder does not infer claim support from generated media or copy.',
+    },
+    {
+      check: 'prohibited_claims',
+      scope: 'launch_pack',
+      status: 'not_evaluated',
+      reason: 'No durable prohibited-claim evaluator result was supplied to this export.',
+    },
+    {
+      check: 'missing_evidence',
+      scope: 'launch_pack',
+      status: 'not_evaluated',
+      reason:
+        'Missing-evidence review remains a human evaluation until a durable evaluator exists.',
+    },
+  );
+  const statuses = checks.map((check) => check.status);
+  return {
+    schema_version: 1,
+    run_id: runId,
+    overall_status: statuses.includes('failed')
+      ? 'failed'
+      : statuses.includes('not_evaluated')
+        ? 'not_evaluated'
+        : 'passed',
+    checks,
+  };
+}
+
+async function hashedFile(input: Omit<HashedExportFile, 'contentHash'>): Promise<HashedExportFile> {
+  return { ...input, contentHash: await sha256Hex(input.bytes) };
+}
+
 function jsonBytes(value: unknown): Uint8Array {
   return new TextEncoder().encode(`${JSON.stringify(value)}\n`);
 }
@@ -417,42 +815,95 @@ function deterministicZip(files: readonly Readonly<{ name: string; bytes: Uint8A
   return concatenate([...localParts, central, end]);
 }
 
-export function createDeterministicExport(
+export async function createDeterministicExport(
   input: Readonly<{
     format: 'json' | 'zip';
     members: readonly DeterministicExportMember[];
     receipt: DeterministicExportReceipt;
   }>,
-): DeterministicExport {
-  const members = [...input.members].sort((left, right) =>
-    left.artifactId.localeCompare(right.artifactId),
-  );
+): Promise<DeterministicExport> {
+  assertExactGb04MemberSet(input.members);
+  const members = input.members
+    .map(semanticExportMember)
+    .sort((left, right) => compareText(left.filename, right.filename));
   if (members.length === 0) throw new TypeError('An export requires at least one approved member');
+  if (new Set(members.map(({ member }) => member.artifactId)).size !== members.length) {
+    throw new TypeError('An export cannot contain the same approved artifact more than once');
+  }
+  if (new Set(members.map((member) => member.filename)).size !== members.length) {
+    throw new TypeError('Approved export members resolve to duplicate buyer-facing filenames');
+  }
+
+  const buyerFiles = await Promise.all(
+    members.map(async (semantic): Promise<HashedExportFile> => {
+      const sourceHash = await sha256Hex(semantic.member.bytes);
+      if (sourceHash !== semantic.member.contentHash) {
+        throw new TypeError(
+          `Export member ${semantic.member.artifactId} does not match its immutable content hash`,
+        );
+      }
+      return await hashedFile({
+        filename: semantic.filename,
+        kind: semantic.role === 'copy' ? 'copy' : 'asset',
+        mimeType: semantic.role === 'copy' ? 'application/json' : semantic.member.mimeType,
+        bytes: semantic.role === 'copy' ? copyBytes(semantic) : semantic.member.bytes,
+      });
+    }),
+  );
+  const receipt = receiptDocument(input.receipt);
+  const receiptFile = await hashedFile({
+    filename: 'receipt.json',
+    kind: 'receipt',
+    mimeType: 'application/json',
+    bytes: jsonBytes(receipt),
+  });
+  const qa = qaReport(input.receipt.runId, members);
+  const qaFile = await hashedFile({
+    filename: 'qa-report.json',
+    kind: 'qa_report',
+    mimeType: 'application/json',
+    bytes: jsonBytes(qa),
+  });
+  const nonManifestFiles = [...buyerFiles, qaFile, receiptFile].sort((left, right) =>
+    compareText(left.filename, right.filename),
+  );
   const manifest = {
-    schema_version: 1,
+    schema_version: 2,
     run_id: input.receipt.runId,
-    assets: members.map((member, index) => ({
-      artifact_id: member.artifactId,
-      artifact_kind: member.artifactKind,
-      filename: `assets/${String(index + 1).padStart(3, '0')}-${member.artifactId}.${extensionForMimeType(member.mimeType)}`,
-      mime_type: member.mimeType,
-      byte_size: member.bytes.byteLength,
-      content_hash: member.contentHash,
+    assets: members.map((semantic) => {
+      const file = buyerFiles.find((candidate) => candidate.filename === semantic.filename);
+      if (file === undefined) throw new TypeError('Export member file mapping is incomplete');
+      return {
+        artifact_id: semantic.member.artifactId,
+        artifact_kind: semantic.member.artifactKind,
+        node_key: semantic.member.nodeKey,
+        concept_id: conceptLabel(semantic.concept),
+        role: semantic.role,
+        placement: semantic.placement,
+        filename: semantic.filename,
+        mime_type: file.mimeType,
+        byte_size: file.bytes.byteLength,
+        sha256: file.contentHash,
+        source_content_hash: semantic.member.contentHash,
+        accessibility_description: semantic.member.accessibilityDescription,
+      };
+    }),
+    files: nonManifestFiles.map((file) => ({
+      filename: file.filename,
+      kind: file.kind,
+      mime_type: file.mimeType,
+      byte_size: file.bytes.byteLength,
+      sha256: file.contentHash,
     })),
     receipt: {
-      canvas_revision_id: input.receipt.canvasRevisionId,
-      canvas_revision_hash: input.receipt.canvasRevisionHash,
-      quote_id: input.receipt.quoteId,
-      run_status: input.receipt.runStatus,
-      reservation: input.receipt.reservation,
-      provider_jobs: [...input.receipt.providerJobs].sort((left, right) =>
-        left.attemptId.localeCompare(right.attemptId),
-      ),
-      lineage: [...input.receipt.lineage].sort((left, right) =>
-        `${left.childArtifactId}:${left.parentArtifactId}:${left.relationship}`.localeCompare(
-          `${right.childArtifactId}:${right.parentArtifactId}:${right.relationship}`,
-        ),
-      ),
+      ...receipt,
+      filename: receiptFile.filename,
+      sha256: receiptFile.contentHash,
+    },
+    qa_report: {
+      filename: qaFile.filename,
+      sha256: qaFile.contentHash,
+      overall_status: qa.overall_status,
     },
   };
   const manifestBytes = jsonBytes(manifest);
@@ -461,10 +912,7 @@ export function createDeterministicExport(
   }
   const files = [
     { name: 'manifest.json', bytes: manifestBytes },
-    ...members.map((member, index) => ({
-      name: manifest.assets[index]?.filename ?? `assets/${String(index + 1)}.bin`,
-      bytes: member.bytes,
-    })),
+    ...nonManifestFiles.map((file) => ({ name: file.filename, bytes: file.bytes })),
   ];
   return {
     bytes: deterministicZip(files),

@@ -4,6 +4,7 @@ import { Button, Card, Chip, Drawer, MonoCaps, formatUsdMicros } from '@mustbevi
 import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
+import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
 import {
   composeReviewConcepts,
   InMemoryReviewPort,
@@ -32,7 +33,14 @@ const decisionChip = {
   { status: 'running' | 'verified' | 'failed'; label: string }
 >;
 
-export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResult | null }>) {
+export function offersLocalRejectAction(dataMode: 'preview' | 'worker'): boolean {
+  return dataMode === 'preview';
+}
+
+export function ReviewResultNotice({
+  onRetryRead,
+  result,
+}: Readonly<{ onRetryRead?: () => void; result: ReviewPortResult | null }>) {
   if (result === null || result.type === 'ok') return null;
   if (result.type === 'reason_required') {
     return (
@@ -48,6 +56,9 @@ export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResu
       </div>
     );
   }
+  if (result.type === 'session_expired') {
+    return <SessionExpiredAction className={styles.reviewError} />;
+  }
   const message =
     result.type === 'not_found'
       ? `Artifact ${result.artifact_id} was not found.`
@@ -58,7 +69,59 @@ export function ReviewResultNotice({ result }: Readonly<{ result: ReviewPortResu
           : result.message;
   return (
     <div className={styles.reviewError} role="alert" data-result={result.type}>
-      {message}
+      <span>{message}</span>
+      {result.type === 'error' && result.retryable && onRetryRead !== undefined ? (
+        <Button variant="ghost" onClick={onRetryRead}>
+          Try loading review again
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
+export function ReviewRecoveryNotice({
+  runId,
+  summary,
+  workspace,
+}: Readonly<{ runId: string | undefined; summary: ReviewSummary; workspace: string }>) {
+  if (summary.recovery === null) return null;
+  return (
+    <div
+      className={styles.recoveryBanner}
+      role="alert"
+      data-review-recovery={summary.recovery.kind}
+    >
+      <div>
+        <MonoCaps>Run recovery</MonoCaps>
+        <strong>{summary.recovery.title}</strong>
+      </div>
+      <p>{summary.recovery.whatFailed}</p>
+      <p data-review-settlement="true">
+        Run settlement: {formatUsdMicros(summary.authorizedMicros)} authorized ·{' '}
+        {formatUsdMicros(summary.capturedMicros)} captured ·{' '}
+        {formatUsdMicros(summary.releasedMicros)} released ·{' '}
+        {formatUsdMicros(summary.refundedMicros)} refunded · {formatUsdMicros(summary.netMicros)}{' '}
+        net · {summary.settlementStatus} · {formatUsdMicros(summary.pendingMicros)} pending.
+      </p>
+      <p>
+        {summary.recovery.retained}{' '}
+        {summary.recovery.retainedRunNodeIds.length > 0
+          ? `${String(summary.recovery.retainedRunNodeIds.length)} completed branch${summary.recovery.retainedRunNodeIds.length === 1 ? ' is' : 'es are'} available below.`
+          : 'No completed branch was retained.'}
+      </p>
+      <p>{summary.recovery.nextAction}</p>
+      <div className={styles.recoveryActions}>
+        <Link href={`/studio/${workspace}/brief`}>Edit campaign brief</Link>
+        <Link
+          href={
+            runId === undefined
+              ? `/studio/${workspace}/receipt`
+              : `/studio/${workspace}/receipt?run=${encodeURIComponent(runId)}`
+          }
+        >
+          Open receipt
+        </Link>
+      </div>
     </div>
   );
 }
@@ -368,7 +431,7 @@ function VariantCard({
           />
         </label>
       ) : null}
-      {rejecting ? (
+      {offersLocalRejectAction(dataMode) && rejecting ? (
         <label className={styles.rejectionField}>
           <span>Reason for rejection</span>
           <textarea
@@ -385,15 +448,9 @@ function VariantCard({
           ) : (
             <Button onClick={() => onDecide(variant, 'approved')}>Approve</Button>
           )}
-          {variant.decision !== 'approved' || dataMode === 'preview' ? (
+          {offersLocalRejectAction(dataMode) ? (
             <Button onClick={() => onDecide(variant, 'rejected')}>
-              {rejecting
-                ? dataMode === 'preview'
-                  ? 'Submit rejection'
-                  : 'Save local rejection note'
-                : dataMode === 'preview'
-                  ? 'Reject'
-                  : 'Reject locally'}
+              {rejecting ? 'Submit rejection' : 'Reject'}
             </Button>
           ) : null}
         </div>
@@ -488,7 +545,13 @@ export function ReviewFlow({
     dataMode === 'worker'
       ? {
           quotedMicros: 0n,
+          authorizedMicros: 0n,
           capturedMicros: 0n,
+          releasedMicros: 0n,
+          refundedMicros: 0n,
+          pendingMicros: 0n,
+          netMicros: 0n,
+          settlementStatus: 'active',
           budgetUsedMicros: 0n,
           budgetCapMicros: 0n,
           exportReady: false,
@@ -496,10 +559,17 @@ export function ReviewFlow({
           qaFindings: [],
           route: '',
           campaignName: null,
+          recovery: null,
         }
       : {
           quotedMicros: 4_200_000n,
+          authorizedMicros: 4_200_000n,
           capturedMicros: 4_200_000n,
+          releasedMicros: 0n,
+          refundedMicros: 0n,
+          pendingMicros: 0n,
+          netMicros: 4_200_000n,
+          settlementStatus: 'captured',
           budgetUsedMicros: 18_420_000n,
           budgetCapMicros: 100_000_000n,
           exportReady: true,
@@ -507,6 +577,7 @@ export function ReviewFlow({
           qaFindings: [],
           route: 'kimi + flux + seedance',
           campaignName: null,
+          recovery: null,
         },
   );
   const [result, setResult] = useState<ReviewPortResult | null>(() =>
@@ -617,6 +688,30 @@ export function ReviewFlow({
     setResult(next);
     if (next.type === 'ok') setGroups(next.groups);
   }
+
+  async function retryRead() {
+    if (readPort === null) return;
+    setLoading(true);
+    const next = await readPort.read();
+    if (next.type === 'ok') {
+      setGroups(next.groups);
+      setSummary(next.summary);
+      setResult(null);
+    } else {
+      setResult(next);
+    }
+    setLoading(false);
+  }
+
+  if (result?.type === 'session_expired') {
+    return (
+      <main id="main-content" className={styles.reviewPage}>
+        <section className={styles.reviewStage} aria-label="Session expired">
+          <SessionExpiredAction className={styles.reviewError} />
+        </section>
+      </main>
+    );
+  }
   return (
     <main
       id="main-content"
@@ -651,7 +746,11 @@ export function ReviewFlow({
             QA findings
           </Button>
         </div>
-        <ReviewResultNotice result={result} />
+        <ReviewResultNotice
+          result={result}
+          {...(groups.length === 0 ? { onRetryRead: () => void retryRead() } : {})}
+        />
+        <ReviewRecoveryNotice runId={runId} summary={summary} workspace={workspace} />
         {dataMode === 'worker' &&
         !loading &&
         variants.length > 0 &&
@@ -764,6 +863,24 @@ export function ReviewFlow({
                   {formatUsdMicros(summary.budgetCapMicros)}
                 </strong>
               </div>
+              {dataMode === 'worker' ? (
+                <>
+                  <div>
+                    <MonoCaps>Released / refunded / net</MonoCaps>
+                    <strong>
+                      {formatUsdMicros(summary.releasedMicros)} /{' '}
+                      {formatUsdMicros(summary.refundedMicros)} /{' '}
+                      {formatUsdMicros(summary.netMicros)}
+                    </strong>
+                  </div>
+                  <div>
+                    <MonoCaps>Settlement / pending</MonoCaps>
+                    <strong>
+                      {summary.settlementStatus} / {formatUsdMicros(summary.pendingMicros)}
+                    </strong>
+                  </div>
+                </>
+              ) : null}
             </section>
             <section
               className={`${styles.exportStatus} export-status`}

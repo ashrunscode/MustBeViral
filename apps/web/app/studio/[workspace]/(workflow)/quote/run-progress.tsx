@@ -74,7 +74,7 @@ export function RunProgress({
   dataMode?: 'preview' | 'worker';
   maximumChargeMicros?: bigint;
   runId?: string;
-  scenario?: 'normal' | 'failed';
+  scenario?: 'normal' | 'failed' | 'reconciliation';
   workspace: string;
 }>) {
   const [previewPort] = useState<RunPort | null>(() =>
@@ -164,6 +164,7 @@ export function RunProgress({
   const completeCount = snapshot.attempts.filter((attempt) => attempt.state === 'complete').length;
   const terminal =
     snapshot.state === 'complete' || snapshot.state === 'failed' || snapshot.state === 'cancelled';
+  const settlement = snapshot.settlement;
   return (
     <main id="main-content" className={styles.runPage} data-run-state={snapshot.state}>
       <section className={`${styles.quoteStage} quote-stage`} aria-labelledby="run-title">
@@ -175,10 +176,12 @@ export function RunProgress({
             <h1 id="run-title">
               {snapshot.state === 'failed'
                 ? 'This launch pack stopped'
-                : 'Generating the launch pack'}
+                : snapshot.state === 'reconciliation_required'
+                  ? 'This launch pack needs verification'
+                  : 'Generating the launch pack'}
             </h1>
             <p>
-              {snapshot.state === 'failed'
+              {snapshot.state === 'failed' || snapshot.state === 'reconciliation_required'
                 ? 'Failed branches name what happened, whether spend was accepted, and the safest next step.'
                 : 'Completed branches remain reviewable while downstream work continues.'}
             </p>
@@ -220,12 +223,25 @@ export function RunProgress({
             data-recovery={snapshot.recovery.kind}
           >
             <strong>{snapshot.recovery.title}</strong>
-            <p>
-              {snapshot.recovery.whatFailed} {snapshot.recovery.spend}
+            <p>{snapshot.recovery.whatFailed}</p>
+            <p data-recovery-settlement="true">
+              {settlement === null
+                ? snapshot.recovery.spend
+                : `Run settlement: ${formatUsdMicros(settlement.capturedMicros)} captured · ${formatUsdMicros(settlement.releasedMicros)} released · ${formatUsdMicros(settlement.refundedMicros)} refunded · ${formatUsdMicros(settlement.pendingMicros)} pending.`}
             </p>
-            <p>{snapshot.recovery.retained}</p>
+            <p>
+              {snapshot.recovery.retained}{' '}
+              {snapshot.recovery.retainedRunNodeIds.length > 0
+                ? `${String(snapshot.recovery.retainedRunNodeIds.length)} completed branch${snapshot.recovery.retainedRunNodeIds.length === 1 ? ' is' : 'es are'} retained.`
+                : 'No completed branch was retained.'}
+            </p>
             <p>{snapshot.recovery.nextAction}</p>
-            <Link href={`/studio/${workspace}/brief`}>Edit campaign brief</Link>
+            <div className={styles.recoveryActions}>
+              <Link href={`/studio/${workspace}/brief`}>Edit campaign brief</Link>
+              <Link href={`/studio/${workspace}/receipt?run=${encodeURIComponent(snapshot.runId)}`}>
+                Open receipt
+              </Link>
+            </div>
           </div>
         ) : null}
         <RunResultNotice result={result} />
@@ -288,14 +304,28 @@ export function RunProgress({
           <div>
             <dt>Reserved maximum</dt>
             <dd>
-              {maximumChargeMicros === undefined && dataMode === 'worker'
-                ? 'Pinned quote'
-                : formatUsdMicros(maximumChargeMicros ?? 4_200_000n)}
+              {settlement !== null
+                ? formatUsdMicros(settlement.reservationMicros)
+                : maximumChargeMicros === undefined && dataMode === 'worker'
+                  ? 'Pinned quote'
+                  : formatUsdMicros(maximumChargeMicros ?? 4_200_000n)}
             </dd>
           </div>
           <div>
-            <dt>Partial value</dt>
-            <dd>{snapshot.firstReviewable ? 'Retained' : 'Pending'}</dd>
+            <dt>Captured</dt>
+            <dd>{settlement === null ? 'Pending' : formatUsdMicros(settlement.capturedMicros)}</dd>
+          </div>
+          <div>
+            <dt>Released</dt>
+            <dd>{settlement === null ? 'Pending' : formatUsdMicros(settlement.releasedMicros)}</dd>
+          </div>
+          <div>
+            <dt>Refunded</dt>
+            <dd>{settlement === null ? 'Pending' : formatUsdMicros(settlement.refundedMicros)}</dd>
+          </div>
+          <div>
+            <dt>Pending</dt>
+            <dd>{settlement === null ? 'Unknown' : formatUsdMicros(settlement.pendingMicros)}</dd>
           </div>
           <div>
             <dt>Revision</dt>
@@ -308,7 +338,14 @@ export function RunProgress({
           <MonoCaps>{terminal ? 'Terminal state' : 'Providers active'}</MonoCaps>
           <strong>{snapshot.state}</strong>
         </div>
-        {snapshot.state === 'failed' && !snapshot.firstReviewable ? (
+        {snapshot.state === 'reconciliation_required' ? (
+          <Link
+            className="mbv-button mbv-button--primary"
+            href={`/studio/${workspace}/receipt?run=${encodeURIComponent(snapshot.runId)}`}
+          >
+            Open receipt
+          </Link>
+        ) : snapshot.state === 'failed' && !snapshot.firstReviewable ? (
           <Link className="mbv-button mbv-button--primary" href={`/studio/${workspace}/brief`}>
             Edit campaign brief
           </Link>

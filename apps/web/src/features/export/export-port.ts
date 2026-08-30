@@ -8,11 +8,12 @@ export interface ExportRow {
 }
 
 export interface ReceiptLineageRow {
-  readonly id: string;
-  readonly artifact: string;
+  readonly attemptId: string;
   readonly provider: string;
-  readonly model: string;
-  readonly costMicros: bigint;
+  readonly providerModelId: string;
+  readonly routeId: string;
+  readonly status: P0OperationData<'get_receipt'>['receipt']['provider_jobs'][number]['status'];
+  readonly capturedMicros: bigint;
 }
 
 export interface ImmutableReceipt {
@@ -24,12 +25,41 @@ export interface ImmutableReceipt {
   readonly lineage: readonly ReceiptLineageRow[];
 }
 
+export interface ExportDownloadLink {
+  readonly artifactId: string;
+  readonly url: string;
+  readonly expiresAt: string;
+}
+
+export type ExportDownloadResult =
+  | { readonly type: 'ok'; readonly download: ExportDownloadLink }
+  | { readonly type: 'rebuild_required' }
+  | { readonly type: 'forbidden' }
+  | { readonly type: 'not_found'; readonly run_id: string }
+  | {
+      readonly type: 'error';
+      readonly message: string;
+      readonly retryable: boolean;
+      readonly request_id?: string;
+    };
+
 export type ExportPortResult =
   | {
       readonly type: 'ok';
       readonly rows: readonly ExportRow[];
       readonly receipt: ImmutableReceipt;
-      readonly downloadUrl?: string | null;
+      readonly exportArtifactId?: string;
+      readonly download?: ExportDownloadLink;
+    }
+  | {
+      readonly type: 'export_required';
+      readonly rows: readonly ExportRow[];
+      readonly receipt: ImmutableReceipt;
+    }
+  | {
+      readonly type: 'rebuild_required';
+      readonly rows: readonly ExportRow[];
+      readonly receipt: ImmutableReceipt;
     }
   | { readonly type: 'review_incomplete'; readonly pending_group_ids: readonly string[] }
   | {
@@ -47,7 +77,9 @@ export type ExportPortResult =
     };
 
 export interface ExportReadPort {
+  read(): Promise<ExportPortResult>;
   create(): Promise<ExportPortResult>;
+  remintDownload?(artifactId: string): Promise<ExportDownloadResult>;
 }
 
 export interface ExportPort {
@@ -90,47 +122,41 @@ export class InMemoryExportPort implements ExportPort {
         issuedAt: '2026-07-20T18:42:00.000Z',
         lineage: [
           {
-            id: 'concept',
-            artifact: 'Concept logic',
+            attemptId: 'attempt-concept',
             provider: 'Moonshot',
-            model: 'kimi-2.6',
-            costMicros: 1_140_000n,
+            providerModelId: 'kimi-2.6',
+            routeId: 'openrouter/kimi-concept',
+            status: 'succeeded',
+            capturedMicros: 1_140_000n,
           },
           {
-            id: 'assets',
-            artifact: 'Visual assets x3',
+            attemptId: 'attempt-assets',
             provider: 'fal',
-            model: 'flux-2-klein',
-            costMicros: 2_340_000n,
+            providerModelId: 'flux-2-klein',
+            routeId: 'fal/flux-visuals',
+            status: 'succeeded',
+            capturedMicros: 2_340_000n,
           },
           {
-            id: 'copy',
-            artifact: 'Copy sets x3',
+            attemptId: 'attempt-copy',
             provider: 'Moonshot',
-            model: 'kimi-2.6',
-            costMicros: 240_000n,
+            providerModelId: 'kimi-2.6',
+            routeId: 'openrouter/kimi-copy',
+            status: 'succeeded',
+            capturedMicros: 240_000n,
           },
           {
-            id: 'motion',
-            artifact: 'Motion 6s',
+            attemptId: 'attempt-motion',
             provider: 'fal',
-            model: 'seedance-1.0',
-            costMicros: 360_000n,
+            providerModelId: 'seedance-1.0',
+            routeId: 'fal/seedance-motion',
+            status: 'succeeded',
+            capturedMicros: 360_000n,
           },
         ],
       },
     };
   }
-}
-
-function metadataString(value: unknown, keys: readonly string[]): string | undefined {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return undefined;
-  const record = value as Readonly<Record<string, unknown>>;
-  for (const key of keys) {
-    const candidate = record[key];
-    if (typeof candidate === 'string' && candidate.length > 0) return candidate;
-  }
-  return undefined;
 }
 
 function immutableReceipt(receipt: P0OperationData<'get_receipt'>['receipt']): ImmutableReceipt {
@@ -143,21 +169,25 @@ function immutableReceipt(receipt: P0OperationData<'get_receipt'>['receipt']): I
     actualMicros: capturedMicros >= refundedMicros ? capturedMicros - refundedMicros : 0n,
     revision: receipt.run.canvas_revision_id,
     issuedAt: receipt.run.updated_at,
-    lineage: receipt.ledger
-      .filter((entry) => entry.entry_type === 'capture' && entry.direction === 'debit')
-      .map((entry) => ({
-        id: entry.id,
-        artifact:
-          metadataString(entry.metadata, ['artifact_label', 'artifact_id']) ?? 'Captured output',
-        provider:
-          metadataString(entry.metadata, ['provider', 'provider_registration_id']) ??
-          'Ledger metadata unavailable',
-        model:
-          metadataString(entry.metadata, ['provider_model_id', 'model_route_id', 'model']) ??
-          'Ledger metadata unavailable',
-        costMicros: BigInt(entry.amount_micros),
+    lineage: [...receipt.provider_jobs]
+      .sort((left, right) => left.attempt_id.localeCompare(right.attempt_id))
+      .map((job) => ({
+        attemptId: job.attempt_id,
+        provider: job.provider,
+        providerModelId: job.provider_model_id,
+        routeId: job.route_id,
+        status: job.status,
+        capturedMicros: BigInt(job.captured_micros),
       })),
   };
+}
+
+function errorDetailString(
+  details: Readonly<Record<string, unknown>> | undefined,
+  key: string,
+): string | undefined {
+  const value = details?.[key];
+  return typeof value === 'string' && value.length > 0 ? value : undefined;
 }
 
 function sameOriginArtifactUrl(accessUrl: string): string {
@@ -192,7 +222,15 @@ export class WorkerExportPort implements ExportReadPort {
     private readonly createIdempotencyKey: () => string,
   ) {}
 
-  async create(): Promise<ExportPortResult> {
+  read(): Promise<ExportPortResult> {
+    return this.#readOrCreate(false);
+  }
+
+  create(): Promise<ExportPortResult> {
+    return this.#readOrCreate(true);
+  }
+
+  async #readOrCreate(allowCreate: boolean): Promise<ExportPortResult> {
     try {
       const before = await this.client.request('get_receipt', { id: this.runId });
       if ('error' in before) return this.#mapError(before.error);
@@ -212,30 +250,39 @@ export class WorkerExportPort implements ExportReadPort {
       if (approved.length === 0) {
         return { type: 'review_incomplete', pending_group_ids: ['approved artifacts'] };
       }
-      this.#idempotencyKey ??= this.createIdempotencyKey();
-      const created = await this.client.request('create_export', {
-        id: this.runId,
-        idempotencyKey: this.#idempotencyKey,
-        body: { artifact_ids: approved.map(({ id }) => id), format: 'zip' },
-      });
-      if ('error' in created) return this.#mapError(created.error);
-      const after = await this.client.request('get_receipt', { id: this.runId });
-      if ('error' in after) return this.#mapError(after.error);
-      const rows = exportRows(after.data.receipt);
-      const exportId = created.data.artifact.artifact_id;
-      let downloadUrl: string | null = null;
-      try {
-        const detail = await this.client.request('get_artifact', { id: exportId });
-        if (
-          !('error' in detail) &&
-          detail.data.access?.purpose === 'customer_download' &&
-          detail.data.access.url.length > 0
-        ) {
-          downloadUrl = sameOriginArtifactUrl(detail.data.access.url);
+      const existingExport = before.data.receipt.artifacts.find(
+        (artifact) => artifact.artifact_kind === 'export' && artifact.status === 'available',
+      );
+      let exportId: string;
+      let receipt = before.data.receipt;
+      let createdMimeType = existingExport?.mime_type ?? 'application/zip';
+      if (!allowCreate) {
+        if (existingExport === undefined) {
+          return {
+            type: 'export_required',
+            rows: exportRows(receipt),
+            receipt: immutableReceipt(receipt),
+          };
         }
-      } catch {
-        downloadUrl = null;
+        exportId = existingExport.id;
+      } else {
+        this.#idempotencyKey ??= this.createIdempotencyKey();
+        const created = await this.client.request('create_export', {
+          id: this.runId,
+          idempotencyKey: this.#idempotencyKey,
+          body: { artifact_ids: approved.map(({ id }) => id), format: 'zip' },
+        });
+        if ('error' in created) return this.#mapError(created.error, false);
+        // Preserve the key for uncertain failures above, but rotate it after a proven response so
+        // a later buyer-triggered rebuild cannot replay an earlier successful create operation.
+        this.#idempotencyKey = null;
+        exportId = created.data.artifact.artifact_id;
+        createdMimeType = created.data.artifact.mime_type;
+        const after = await this.client.request('get_receipt', { id: this.runId });
+        if ('error' in after) return this.#mapError(after.error, false);
+        receipt = after.data.receipt;
       }
+      const rows = exportRows(receipt);
       return {
         type: 'ok',
         rows: rows.some(({ id }) => id === exportId)
@@ -245,15 +292,63 @@ export class WorkerExportPort implements ExportReadPort {
               {
                 id: exportId,
                 label: 'Immutable export bundle',
-                format: created.data.artifact.mime_type,
+                format: createdMimeType,
                 state: 'ready',
               },
             ],
-        receipt: immutableReceipt(after.data.receipt),
-        ...(downloadUrl === null ? {} : { downloadUrl }),
+        receipt: immutableReceipt(receipt),
+        exportArtifactId: exportId,
       };
-    } catch {
-      return { type: 'error', message: 'Core could not create this export.', retryable: true };
+    } catch (error) {
+      return {
+        type: 'error',
+        message: allowCreate
+          ? 'Core could not create this export.'
+          : 'Core could not read this export receipt.',
+        retryable: !allowCreate,
+      };
+    }
+  }
+
+  async remintDownload(artifactId: string): Promise<ExportDownloadResult> {
+    try {
+      const detail = await this.client.request('get_artifact', { id: artifactId });
+      if ('error' in detail) {
+        if (detail.error.code === 'NOT_FOUND') return { type: 'rebuild_required' };
+        const mapped = this.#mapError(detail.error);
+        if (mapped.type === 'conflict') {
+          return {
+            type: 'error',
+            message: 'Core could not mint this download link.',
+            retryable: false,
+          };
+        }
+        return mapped;
+      }
+      if (
+        detail.data.access?.purpose !== 'customer_download' ||
+        detail.data.access.url.length === 0
+      ) {
+        return {
+          type: 'error',
+          message: 'Core did not return a customer download link.',
+          retryable: true,
+        };
+      }
+      return {
+        type: 'ok',
+        download: {
+          artifactId,
+          url: sameOriginArtifactUrl(detail.data.access.url),
+          expiresAt: detail.data.access.expires_at,
+        },
+      };
+    } catch (error) {
+      return {
+        type: 'error',
+        message: 'Core could not mint this download link.',
+        retryable: true,
+      };
     }
   }
 
@@ -265,7 +360,8 @@ export class WorkerExportPort implements ExportReadPort {
       retryable: boolean;
       details?: Readonly<Record<string, unknown>> | undefined;
     }>,
-  ): Exclude<ExportPortResult, { type: 'ok' | 'review_incomplete' }> {
+    allowRetry = true,
+  ): Exclude<ExportPortResult, { type: 'ok' | 'export_required' | 'review_incomplete' }> {
     if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
     if (error.code === 'NOT_FOUND') return { type: 'not_found', run_id: this.runId };
     if (error.code === 'REVISION_CONFLICT' || error.code === 'IDEMPOTENCY_CONFLICT') {
@@ -273,13 +369,13 @@ export class WorkerExportPort implements ExportReadPort {
         type: 'conflict',
         expected_revision_id: this.#revision,
         actual_revision_id:
-          metadataString(error.details, ['actual']) ?? 'current immutable revision',
+          errorDetailString(error.details, 'actual') ?? 'current immutable revision',
       };
     }
     return {
       type: 'error',
       message: error.message,
-      retryable: error.retryable,
+      retryable: allowRetry && error.retryable,
       request_id: error.request_id,
     };
   }

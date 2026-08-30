@@ -3,6 +3,17 @@ import {
   type MustBeViralRestClient,
   type P0OperationData,
 } from '@mustbeviral/contracts';
+import {
+  runRecoveryView,
+  runSettlementView,
+  type RunRecoveryView,
+  type RunSettlementView,
+} from '../run/run-recovery';
+import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
 
 export type ReviewDecision = 'pending' | 'approved' | 'rejected';
 
@@ -64,8 +75,14 @@ export interface ReviewQaFinding {
 }
 
 export interface ReviewSummary {
+  readonly authorizedMicros: bigint;
   readonly quotedMicros: bigint;
   readonly capturedMicros: bigint;
+  readonly releasedMicros: bigint;
+  readonly refundedMicros: bigint;
+  readonly pendingMicros: bigint;
+  readonly netMicros: bigint;
+  readonly settlementStatus: P0OperationData<'get_run'>['spend']['settlementStatus'];
   readonly budgetUsedMicros: bigint;
   readonly budgetCapMicros: bigint;
   readonly exportReady: boolean;
@@ -73,6 +90,7 @@ export interface ReviewSummary {
   readonly qaFindings: readonly ReviewQaFinding[];
   readonly route: string;
   readonly campaignName: string | null;
+  readonly recovery: RunRecoveryView | null;
 }
 
 export type ReviewPortResult =
@@ -82,6 +100,7 @@ export type ReviewPortResult =
   | { readonly type: 'not_found'; readonly artifact_id: string }
   | { readonly type: 'description_required'; readonly artifact_id: string }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | {
       readonly type: 'error';
       readonly message: string;
@@ -312,10 +331,14 @@ async function loadReviewExtras(
     let detail: Awaited<ReturnType<MustBeViralRestClient['request']>>;
     try {
       detail = await client.request('get_artifact', { id: artifact.id });
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) throw error;
       continue;
     }
-    if ('error' in detail) continue;
+    if ('error' in detail) {
+      if (isSessionExpiredFailure(detail.error)) throw detail.error;
+      continue;
+    }
     const payload = detail.data as {
       access?: { url: string } | null;
       copy?: { primary_text: string; headline: string; description: string } | null;
@@ -351,16 +374,6 @@ function reviewKind(nodeKey: string | undefined, mimeType: string) {
   if (nodeKey?.startsWith('adaptation-')) return { id: 'adaptations', name: 'Adaptations' };
   if (nodeKey?.startsWith('motion-')) return { id: 'motion', name: 'Motion' };
   return groupKind(mimeType);
-}
-
-function metadataRoute(value: unknown): string | undefined {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return undefined;
-  const record = value as Readonly<Record<string, unknown>>;
-  for (const key of ['provider_model_id', 'model_route_id', 'model', 'provider']) {
-    const candidate = record[key];
-    if (typeof candidate === 'string' && candidate.length > 0) return candidate;
-  }
-  return undefined;
 }
 
 function reviewLabel(kindId: string, indexInGroup: number): string {
@@ -472,6 +485,8 @@ function reviewFromReceipt(
   > = {},
   nodeKeys: Readonly<Record<string, string>> = {},
 ): Readonly<{ groups: readonly ArtifactGroupReview[]; summary: ReviewSummary }> {
+  const routeIds = [...new Set(receipt.provider_jobs.map(({ route_id }) => route_id))];
+  const routeLabel = routeIds.join(' + ') || 'Receipt lineage';
   const reviewable = receipt.artifacts.filter(
     (artifact) =>
       artifact.artifact_kind === 'provider_output' || artifact.artifact_kind === 'approved_output',
@@ -491,7 +506,9 @@ function reviewFromReceipt(
       groupId: kind.id,
       label: reviewLabelFromNodeKey(nodeKey, kind.id, indexInGroup),
       format: reviewFormat(nodeKey, kind.id, artifact.mime_type),
-      model: metadataRoute(artifact.rights_attestation) ?? 'Pinned catalog route',
+      // The safe receipt deliberately does not claim an artifact-to-attempt relation that the
+      // persisted lineage does not prove. Exact provider/model/route rows remain in receipt lineage.
+      model: routeIds.length > 0 ? 'See receipt lineage' : 'Pinned catalog route',
       decision: artifact.artifact_kind === 'approved_output' ? 'approved' : 'pending',
       accessibilityDescription: artifact.accessibility_description,
       hasPrior: receipt.lineage.some(({ child_artifact_id }) => child_artifact_id === artifact.id),
@@ -517,7 +534,7 @@ function reviewFromReceipt(
     groups.set(kind.id, {
       id: kind.id,
       name: kind.name,
-      reviewer: artifact.approved_by === null ? reviewer : 'Approved',
+      reviewer: artifact.approved_at === null ? reviewer : 'Approved',
       decision: variants.every((candidate) => candidate.decision === 'approved')
         ? 'approved'
         : 'pending',
@@ -525,21 +542,30 @@ function reviewFromReceipt(
       variants,
     });
   }
-  const routes = [
-    ...new Set(receipt.ledger.map(({ metadata }) => metadataRoute(metadata)).filter(Boolean)),
-  ];
+  const quotedMicros = BigInt(receipt.reservation?.amount_micros ?? 0);
+  const capturedMicros = BigInt(receipt.reservation?.captured_micros ?? 0);
+  const releasedMicros = BigInt(receipt.reservation?.released_micros ?? 0);
+  const refundedMicros = BigInt(receipt.reservation?.refunded_micros ?? 0);
+  const pendingMicros = quotedMicros - capturedMicros - releasedMicros;
   return {
     groups: [...groups.values()],
     summary: {
-      quotedMicros: BigInt(receipt.reservation?.amount_micros ?? 0),
-      capturedMicros: BigInt(receipt.reservation?.captured_micros ?? 0),
-      budgetUsedMicros: BigInt(receipt.reservation?.captured_micros ?? 0),
-      budgetCapMicros: BigInt(receipt.reservation?.amount_micros ?? 0),
+      authorizedMicros: quotedMicros,
+      quotedMicros,
+      capturedMicros,
+      releasedMicros,
+      refundedMicros,
+      pendingMicros: pendingMicros < 0n ? 0n : pendingMicros,
+      netMicros: capturedMicros >= refundedMicros ? capturedMicros - refundedMicros : 0n,
+      settlementStatus: receipt.reservation?.status ?? 'active',
+      budgetUsedMicros: capturedMicros,
+      budgetCapMicros: quotedMicros,
       exportReady: receipt.artifacts.some((artifact) => artifact.artifact_kind === 'export'),
       qaNoteCount: qaFindings.length,
       qaFindings,
-      route: routes.join(' + ') || 'Receipt lineage',
+      route: routeLabel,
       campaignName: null,
+      recovery: null,
     },
   };
 }
@@ -563,13 +589,43 @@ export class WorkerReviewPort implements ReviewReadPort {
     try {
       const result = await this.client.request('get_receipt', { id: this.runId });
       if ('error' in result) return this.#mapError(result.error, this.runId);
-      const nodeKeys = await this.#nodeKeys();
-      const extras = await loadReviewExtras(this.client, result.data.receipt.artifacts);
-      const mapped = reviewFromReceipt(result.data.receipt, this.reviewer, extras, nodeKeys);
+      const [runContext, extras] = await Promise.all([
+        this.#runContext(),
+        loadReviewExtras(this.client, result.data.receipt.artifacts),
+      ]);
+      const mapped = reviewFromReceipt(
+        result.data.receipt,
+        this.reviewer,
+        extras,
+        runContext.nodeKeys,
+      );
       const campaignName = await this.#campaignName(result.data.receipt.run.project_id);
       this.#groups = mapped.groups;
-      return { type: 'ok', ...mapped, summary: { ...mapped.summary, campaignName } };
-    } catch {
+      return {
+        type: 'ok',
+        ...mapped,
+        summary: {
+          ...mapped.summary,
+          ...(runContext.settlement === null
+            ? {}
+            : {
+                quotedMicros: runContext.settlement.reservationMicros,
+                authorizedMicros: runContext.settlement.reservationMicros,
+                capturedMicros: runContext.settlement.capturedMicros,
+                releasedMicros: runContext.settlement.releasedMicros,
+                refundedMicros: runContext.settlement.refundedMicros,
+                pendingMicros: runContext.settlement.pendingMicros,
+                netMicros: runContext.settlement.netMicros,
+                settlementStatus: runContext.settlement.settlementStatus,
+                budgetUsedMicros: runContext.settlement.capturedMicros,
+                budgetCapMicros: runContext.settlement.reservationMicros,
+              }),
+          campaignName,
+          recovery: runContext.recovery,
+        },
+      };
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return { type: 'error', message: 'Core could not read review artifacts.', retryable: true };
     }
   }
@@ -651,14 +707,15 @@ export class WorkerReviewPort implements ReviewReadPort {
           })),
         },
       });
-      if ('error' in result) return this.#mapError(result.error, this.runId);
+      if ('error' in result) return this.#mapError(result.error, this.runId, false);
       this.#groups = this.#updateDecisions(
         result.data.artifacts.map(({ artifact_id }) => artifact_id),
         'approved',
       );
       return { type: 'ok', groups: this.#groups };
-    } catch {
-      return { type: 'error', message: 'Core could not record this approval.', retryable: true };
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
+      return { type: 'error', message: 'Core could not record this approval.', retryable: false };
     }
   }
 
@@ -693,20 +750,38 @@ export class WorkerReviewPort implements ReviewReadPort {
   async #campaignName(projectId: string): Promise<string | null> {
     try {
       const project = await this.client.request('get_project', { id: projectId });
-      if ('error' in project) return null;
+      if ('error' in project) {
+        if (isSessionExpiredFailure(project.error)) throw project.error;
+        return null;
+      }
       return project.data.project.name;
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) throw error;
       return null;
     }
   }
 
-  async #nodeKeys(): Promise<Readonly<Record<string, string>>> {
+  async #runContext(): Promise<
+    Readonly<{
+      nodeKeys: Readonly<Record<string, string>>;
+      recovery: RunRecoveryView | null;
+      settlement: RunSettlementView | null;
+    }>
+  > {
     try {
       const run = await this.client.request('get_run', { id: this.runId });
-      if ('error' in run) return {};
-      return Object.fromEntries(run.data.nodes.map((node) => [node.runNodeId, node.nodeKey]));
-    } catch {
-      return {};
+      if ('error' in run) {
+        if (isSessionExpiredFailure(run.error)) throw run.error;
+        return { nodeKeys: {}, recovery: null, settlement: null };
+      }
+      return {
+        nodeKeys: Object.fromEntries(run.data.nodes.map((node) => [node.runNodeId, node.nodeKey])),
+        recovery: runRecoveryView(run.data),
+        settlement: runSettlementView(run.data),
+      };
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) throw error;
+      return { nodeKeys: {}, recovery: null, settlement: null };
     }
   }
 
@@ -727,7 +802,9 @@ export class WorkerReviewPort implements ReviewReadPort {
       details?: Readonly<Record<string, unknown>> | undefined;
     }>,
     resourceId: string,
+    allowRetry = true,
   ): Exclude<ReviewPortResult, { type: 'ok' | 'reason_required' | 'description_required' }> {
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
     if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
     if (error.code === 'NOT_FOUND') return { type: 'not_found', artifact_id: resourceId };
     if (error.code === 'RUN_NOT_APPROVABLE') {
@@ -736,7 +813,7 @@ export class WorkerReviewPort implements ReviewReadPort {
     return {
       type: 'error',
       message: error.message,
-      retryable: error.retryable,
+      retryable: allowRetry && error.retryable,
       request_id: error.request_id,
     };
   }

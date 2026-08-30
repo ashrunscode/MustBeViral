@@ -69,6 +69,22 @@ const artifact = {
   updated_at: timestamp,
   workspace_id: 'workspace-1',
 };
+const receiptArtifact = {
+  accessibility_description: artifact.accessibility_description,
+  approved_at: artifact.approved_at,
+  artifact_kind: artifact.artifact_kind,
+  byte_size: artifact.byte_size,
+  canvas_revision_id: artifact.canvas_revision_id,
+  content_hash: artifact.content_hash,
+  created_at: artifact.created_at,
+  id: artifact.id,
+  mime_type: artifact.mime_type,
+  project_id: artifact.project_id,
+  run_id: artifact.run_id,
+  run_node_id: artifact.run_node_id,
+  status: artifact.status,
+  updated_at: artifact.updated_at,
+};
 const quote = {
   quoteId: 'quote-1',
   workspaceId: 'workspace-1',
@@ -222,16 +238,13 @@ const successData = {
         canvas_revision_hash: hash,
         canvas_revision_id: 'revision-1',
         confirmed_at: timestamp,
-        confirmed_by: 'user-1',
         created_at: timestamp,
-        dispatch_epoch: 1,
         dispatch_wave: 1,
         id: 'run-1',
         project_id: 'project-1',
         quote_id: 'quote-1',
         status: 'succeeded',
         updated_at: timestamp,
-        workspace_id: 'workspace-1',
       },
       reservation: {
         amount_micros: 400,
@@ -244,25 +257,21 @@ const successData = {
         run_id: 'run-1',
         status: 'captured',
         updated_at: timestamp,
-        workspace_id: 'workspace-1',
       },
       ledger: [
         {
           account_code: 'wallet',
           amount_micros: 400,
-          causative_key: 'capture-1',
           created_at: timestamp,
           direction: 'debit',
           entry_type: 'capture',
           id: 'ledger-1',
-          metadata: {},
           reservation_id: 'reservation-1',
           run_id: 'run-1',
           transaction_id: 'transaction-1',
-          workspace_id: 'workspace-1',
         },
       ],
-      artifacts: [artifact],
+      artifacts: [receiptArtifact],
       lineage: [
         {
           child_artifact_id: 'artifact-1',
@@ -270,7 +279,16 @@ const successData = {
           id: 'lineage-1',
           parent_artifact_id: 'input-1',
           relationship: 'input_to_output',
-          workspace_id: 'workspace-1',
+        },
+      ],
+      provider_jobs: [
+        {
+          attempt_id: 'attempt-1',
+          provider: 'fal',
+          provider_model_id: 'fal-ai/flux-pro',
+          route_id: 'fal/flux-pro',
+          status: 'succeeded',
+          captured_micros: '400',
         },
       ],
     },
@@ -389,6 +407,78 @@ describe('P0 REST response contracts', () => {
           ...recovery.data,
           provider_payload: { msg: 'secret', url: 'https://signed.example.test/object' },
         },
+      }).success,
+    ).toBe(false);
+  });
+
+  it('pins safe receipt provider-job lineage and rejects raw provider fields or numeric micros', () => {
+    const receipt = { data: successData.get_receipt, meta };
+    expect(P0_OPERATION_RESPONSE_SCHEMAS.get_receipt.safeParse(receipt).success).toBe(true);
+    const providerJob = successData.get_receipt.receipt.provider_jobs[0];
+    if (providerJob === undefined) throw new Error('Missing receipt provider-job fixture');
+    expect(
+      P0_OPERATION_RESPONSE_SCHEMAS.get_receipt.safeParse({
+        data: {
+          receipt: {
+            ...successData.get_receipt.receipt,
+            provider_jobs: [{ ...providerJob, captured_micros: 400 }],
+          },
+        },
+        meta,
+      }).success,
+    ).toBe(false);
+    expect(
+      P0_OPERATION_RESPONSE_SCHEMAS.get_receipt.safeParse({
+        data: {
+          receipt: {
+            ...successData.get_receipt.receipt,
+            provider_jobs: [
+              {
+                ...providerJob,
+                provider_request_id: 'private-request',
+                normalized_evidence: { msg: 'raw provider message' },
+                url: 'https://signed.example.test/object?token=secret',
+                object_key: 'private/customer/object',
+              },
+            ],
+          },
+        },
+        meta,
+      }).success,
+    ).toBe(false);
+    expect(
+      P0_OPERATION_RESPONSE_SCHEMAS.get_receipt.safeParse({
+        data: {
+          receipt: {
+            ...successData.get_receipt.receipt,
+            artifacts: [
+              {
+                ...successData.get_receipt.receipt.artifacts[0],
+                object_key: 'private/customer/object',
+                rights_attestation: { evidence: 'raw customer/provider payload' },
+                signed_url: 'https://signed.example.test/object?token=secret',
+              },
+            ],
+          },
+        },
+        meta,
+      }).success,
+    ).toBe(false);
+    expect(
+      P0_OPERATION_RESPONSE_SCHEMAS.get_receipt.safeParse({
+        data: {
+          receipt: {
+            ...successData.get_receipt.receipt,
+            ledger: [
+              {
+                ...successData.get_receipt.receipt.ledger[0],
+                metadata: { provider_request_id: 'private-request' },
+                causative_key: 'private-causative-key',
+              },
+            ],
+          },
+        },
+        meta,
       }).success,
     ).toBe(false);
   });

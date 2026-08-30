@@ -7,8 +7,10 @@ import {
   usdMicrosToSafeInteger,
   type UsdMicros,
 } from '../../../../packages/billing/src/index';
+import type { DatabaseRow } from '../../../../packages/db/src/index';
 
 import type { CoreBindings } from '../bindings';
+import { SupabaseDataApiExecutor } from '../data/supabase-data-api';
 
 export type FalAttemptTerminalStatus = 'succeeded' | 'failed' | 'canceled';
 
@@ -77,6 +79,13 @@ export interface ExportContextArtifact {
   readonly byteSize: number;
 }
 
+export interface ExportMemberDescriptor {
+  readonly artifactId: string;
+  readonly runNodeId: string;
+  readonly nodeKey: string;
+  readonly accessibilityDescription: string;
+}
+
 export interface ExportMachineContext {
   readonly workspaceId: string;
   readonly projectId: string;
@@ -85,7 +94,12 @@ export interface ExportMachineContext {
   readonly canvasRevisionHash: string;
   readonly quoteId: string;
   readonly runStatus: string;
-  readonly reservation: Omit<MachineReservation, 'id'>;
+  readonly reservation: Omit<MachineReservation, 'id'> &
+    Readonly<{
+      refundedMicros: UsdMicros;
+      netMicros: UsdMicros;
+      settlementStatus: 'active' | 'partially_captured' | 'captured' | 'released' | 'refunded';
+    }>;
   readonly artifacts: readonly ExportContextArtifact[];
   readonly lineage: readonly Readonly<{
     parentArtifactId: string;
@@ -98,7 +112,7 @@ export interface ExportMachineContext {
     providerModelId: string;
     routeId: string;
     status: string;
-    captureMicros: number;
+    capturedMicros: number;
   }>[];
 }
 
@@ -431,19 +445,69 @@ export class PrivilegedArtifactMachinePort {
     ) {
       throw unavailable();
     }
+    const workspaceId = string(raw.workspace_id);
+    const resolvedRunId = string(raw.run_id);
     const rawReservation = reservation(raw.reservation, false);
+    let persistedReservation: Readonly<DatabaseRow<'cost_reservations'>> | null;
+    try {
+      const executor = new SupabaseDataApiExecutor({
+        baseUrl: this.#baseUrl ?? '',
+        publishableKey: this.#privilegedKey ?? '',
+        callerJwt: this.#privilegedKey ?? '',
+        fetch: this.#fetch,
+      });
+      persistedReservation = await executor.selectOne('cost_reservations', {
+        workspace_id: `eq.${workspaceId}`,
+        run_id: `eq.${resolvedRunId}`,
+        select:
+          'id,workspace_id,run_id,amount_micros,captured_micros,released_micros,refunded_micros,status',
+      });
+    } catch (cause) {
+      throw unavailable(cause);
+    }
+    if (persistedReservation === null) {
+      throw invariantViolated('export context has no persisted cost reservation');
+    }
+    const settlementStatuses = new Set([
+      'active',
+      'partially_captured',
+      'captured',
+      'released',
+      'refunded',
+    ]);
+    if (!settlementStatuses.has(persistedReservation.status)) {
+      throw invariantViolated('export context has an unsupported settlement status');
+    }
+    const amountMicros = micros(persistedReservation.amount_micros);
+    const capturedMicros = micros(persistedReservation.captured_micros);
+    const releasedMicros = micros(persistedReservation.released_micros);
+    const refundedMicros = micros(persistedReservation.refunded_micros);
+    if (
+      amountMicros !== rawReservation.amountMicros ||
+      capturedMicros !== rawReservation.capturedMicros ||
+      releasedMicros !== rawReservation.releasedMicros
+    ) {
+      throw invariantViolated('export RPC and persisted reservation settlement disagree');
+    }
+    if (refundedMicros > capturedMicros) {
+      throw invariantViolated('export reservation refunds exceed captures');
+    }
     return {
-      workspaceId: string(raw.workspace_id),
+      workspaceId,
       projectId: string(raw.project_id),
-      runId: string(raw.run_id),
+      runId: resolvedRunId,
       canvasRevisionId: string(raw.canvas_revision_id),
       canvasRevisionHash: string(raw.canvas_revision_hash),
       quoteId: string(raw.quote_id),
       runStatus: string(raw.run_status),
       reservation: {
-        amountMicros: rawReservation.amountMicros,
-        capturedMicros: rawReservation.capturedMicros,
-        releasedMicros: rawReservation.releasedMicros,
+        amountMicros,
+        capturedMicros,
+        releasedMicros,
+        refundedMicros,
+        netMicros: usdMicros(capturedMicros - refundedMicros),
+        settlementStatus:
+          persistedReservation.status as ExportMachineContext['reservation']['settlementStatus'],
       },
       artifacts: raw.artifacts.map((value) => {
         const artifact = record(value);
@@ -472,9 +536,90 @@ export class PrivilegedArtifactMachinePort {
           providerModelId: string(job.provider_model_id),
           routeId: string(job.route_id),
           status: string(job.status),
-          captureMicros: integer(job.capture_micros),
+          // The accepted RPC predates the public/archive spelling. Normalize at this private
+          // boundary; every exported or customer-facing receipt uses `captured_micros`.
+          capturedMicros: integer(job.capture_micros),
         };
       }),
     };
+  }
+
+  /**
+   * Resolve buyer-facing launch-pack semantics without widening the immutable export RPC.
+   *
+   * The export RPC remains the authority for the approved set, settled money, lineage and provider
+   * receipt. These existing rows only attach each already-authorized artifact to its immutable run
+   * node so the ZIP can say `concept-01/placements/feed-4x5.png` instead of exposing UUID filenames.
+   */
+  async getExportMemberDescriptors(
+    workspaceId: string,
+    runId: string,
+    artifactIds: readonly string[],
+  ): Promise<readonly ExportMemberDescriptor[]> {
+    if (!this.#baseUrl || !this.#privilegedKey) throw unavailable();
+    const requested = new Set(artifactIds);
+    if (requested.size !== artifactIds.length || requested.size === 0 || requested.size > 100) {
+      throw invariantViolated(
+        'export member descriptor request is empty, duplicated, or too large',
+      );
+    }
+    const executor = new SupabaseDataApiExecutor({
+      baseUrl: this.#baseUrl,
+      publishableKey: this.#privilegedKey,
+      callerJwt: this.#privilegedKey,
+      fetch: this.#fetch,
+    });
+    try {
+      const [artifacts, runNodes] = await Promise.all([
+        executor.select('artifacts', {
+          workspace_id: `eq.${workspaceId}`,
+          run_id: `eq.${runId}`,
+          select: '*',
+          order: 'id.asc',
+        }),
+        executor.select('run_nodes', {
+          workspace_id: `eq.${workspaceId}`,
+          run_id: `eq.${runId}`,
+          select: '*',
+          order: 'node_key.asc,id.asc',
+        }),
+      ]);
+      const selected = artifacts.filter((artifact) => requested.has(artifact.id));
+      if (selected.length !== requested.size) {
+        throw invariantViolated('approved export member descriptor is missing');
+      }
+      const nodesById = new Map(runNodes.map((node) => [node.id, node]));
+      const descriptors = selected.map((artifact): ExportMemberDescriptor => {
+        if (
+          artifact.artifact_kind !== 'approved_output' ||
+          artifact.status !== 'available' ||
+          artifact.run_node_id === null ||
+          artifact.accessibility_description === null
+        ) {
+          throw invariantViolated(
+            `artifact ${artifact.id} is not an available, described approved output`,
+          );
+        }
+        const runNode = nodesById.get(artifact.run_node_id);
+        if (runNode === undefined) {
+          throw invariantViolated(`artifact ${artifact.id} has no run-node descriptor`);
+        }
+        return {
+          artifactId: artifact.id,
+          runNodeId: runNode.id,
+          nodeKey: runNode.node_key,
+          accessibilityDescription: artifact.accessibility_description,
+        };
+      });
+      if (
+        new Set(descriptors.map((descriptor) => descriptor.nodeKey)).size !== descriptors.length
+      ) {
+        throw invariantViolated('approved export members map to duplicate run nodes');
+      }
+      return descriptors;
+    } catch (error) {
+      if (error instanceof ArtifactMachineError) throw error;
+      throw unavailable(error);
+    }
   }
 }

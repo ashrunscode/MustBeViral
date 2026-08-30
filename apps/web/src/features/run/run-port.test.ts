@@ -49,6 +49,20 @@ describe('InMemoryRunPort', () => {
     );
   });
 
+  it('blocks a reconciliation branch from looking retryable', () => {
+    const port = new InMemoryRunPort('reconciliation');
+    port.advance('run-lumen-0007', 0);
+    const result = port.advance('run-lumen-0007', 1);
+    expect(result).toMatchObject({
+      type: 'ok',
+      snapshot: {
+        state: 'reconciliation_required',
+        recovery: { kind: 'ambiguous', state: 'reconciliation_required' },
+        settlement: { pendingMicros: 1_400_000n },
+      },
+    });
+  });
+
   it('cancels active attempts into a terminal state', () => {
     const port = new InMemoryRunPort();
     const result = port.cancel('run-lumen-0007', 0);
@@ -189,6 +203,16 @@ describe('WorkerRunPort', () => {
                   dispatchWave: 1,
                 },
               ],
+              recovery: null,
+              spend: {
+                currency: 'USD',
+                authorizedMicros: '4550000',
+                capturedMicros: '150000',
+                releasedMicros: '0',
+                refundedMicros: '0',
+                netMicros: '150000',
+                settlementStatus: 'partially_captured',
+              },
             },
             meta: { request_id: 'request-run-0001' },
           }),
@@ -240,6 +264,24 @@ describe('WorkerRunPort', () => {
                   providerErrorCode: 'content_policy_violation',
                 },
               ],
+              recovery: {
+                kind: 'content_policy_violation',
+                affectedNodeKeys: ['master-2'],
+                title: 'Image blocked',
+                message:
+                  'The image provider blocked this branch as a content-policy violation. No completed output was available to keep.',
+                nextAction:
+                  'Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.',
+              },
+              spend: {
+                currency: 'USD',
+                authorizedMicros: '4550000',
+                capturedMicros: '0',
+                releasedMicros: '4550000',
+                refundedMicros: '0',
+                netMicros: '0',
+                settlementStatus: 'released',
+              },
             },
             meta: { request_id: 'request-run-0002' },
           }),

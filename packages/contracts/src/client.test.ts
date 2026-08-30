@@ -159,4 +159,97 @@ describe('MustBeViral REST client', () => {
     } satisfies Partial<MustBeViralClientError>);
   });
 
+  it('accepts only the explicit buyer receipt projection', async () => {
+    const timestamp = '2026-08-30T00:00:00.000Z';
+    const receipt = {
+      run: {
+        canvas_id: 'canvas-1',
+        canvas_revision_hash: 'a'.repeat(64),
+        canvas_revision_id: 'revision-1',
+        confirmed_at: timestamp,
+        created_at: timestamp,
+        dispatch_wave: 1,
+        id: 'run-1',
+        project_id: 'project-1',
+        quote_id: 'quote-1',
+        status: 'succeeded',
+        updated_at: timestamp,
+      },
+      reservation: {
+        amount_micros: 4_550_000,
+        captured_micros: 150_000,
+        created_at: timestamp,
+        id: 'reservation-1',
+        quote_id: 'quote-1',
+        refunded_micros: 25_000,
+        released_micros: 4_400_000,
+        run_id: 'run-1',
+        status: 'partially_captured',
+        updated_at: timestamp,
+      },
+      ledger: [],
+      artifacts: [
+        {
+          accessibility_description: 'A buyer-safe product still.',
+          approved_at: timestamp,
+          artifact_kind: 'approved_output',
+          byte_size: 24,
+          canvas_revision_id: 'revision-1',
+          content_hash: 'b'.repeat(64),
+          created_at: timestamp,
+          id: 'artifact-1',
+          mime_type: 'image/png',
+          project_id: 'project-1',
+          run_id: 'run-1',
+          run_node_id: 'node-1',
+          status: 'available',
+          updated_at: timestamp,
+        },
+      ],
+      lineage: [],
+      provider_jobs: [
+        {
+          attempt_id: 'attempt-1',
+          provider: 'fal',
+          provider_model_id: 'fal/model',
+          route_id: 'fal/route',
+          status: 'succeeded',
+          captured_micros: '150000',
+        },
+      ],
+    } as const;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://core.example.test',
+      getAccessToken: async () => 'session-jwt',
+      fetch: async () =>
+        Response.json({ data: { receipt }, meta: { request_id: 'request-receipt-safe' } }),
+    });
+    await expect(client.request('get_receipt', { id: 'run-1' })).resolves.toMatchObject({
+      data: { receipt: { provider_jobs: [{ captured_micros: '150000' }] } },
+    });
+
+    const unsafe = createMustBeViralRestClient({
+      baseUrl: 'https://core.example.test',
+      getAccessToken: async () => 'session-jwt',
+      fetch: async () =>
+        Response.json({
+          data: {
+            receipt: {
+              ...receipt,
+              artifacts: [
+                {
+                  ...receipt.artifacts[0],
+                  object_key: 'private/customer/object',
+                  signed_url: 'https://signed.example.test/object?token=secret',
+                },
+              ],
+            },
+          },
+          meta: { request_id: 'request-receipt-unsafe' },
+        }),
+    });
+    await expect(unsafe.request('get_receipt', { id: 'run-1' })).rejects.toMatchObject({
+      code: 'INVALID_RESPONSE',
+    } satisfies Partial<MustBeViralClientError>);
+  });
 });

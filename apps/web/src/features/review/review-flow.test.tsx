@@ -1,15 +1,23 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
+import { runFailureRecoveryCopyForKind } from '@mustbeviral/contracts';
 
 import {
   ComposedReview,
+  offersLocalRejectAction,
   ReviewCopyPreview,
   ReviewFlow,
+  ReviewRecoveryNotice,
   ReviewResultNotice,
 } from '../../../app/studio/[workspace]/(workflow)/review/review-flow';
-import type { ReviewConcept } from './review-port';
+import type { ReviewConcept, ReviewSummary } from './review-port';
 
 describe('ReviewFlow', () => {
+  it('keeps Reject exclusive to the explicitly local preview fixture', () => {
+    expect(offersLocalRejectAction('preview')).toBe(true);
+    expect(offersLocalRejectAction('worker')).toBe(false);
+  });
+
   it('renders comparison pairs, named reviewer, and approval controls', () => {
     const html = renderToStaticMarkup(<ReviewFlow workspace="lumen-skin" mode="compare" />);
     expect(html.match(/compare-pair/gu)?.length).toBe(4);
@@ -103,6 +111,50 @@ describe('ReviewFlow', () => {
     expect(html).toContain('200 mg glycinate. Take one capsule.');
     expect(html).toContain('Description');
     expect(html).toContain('Dietary supplement. FDA has not evaluated this statement.');
+  });
+
+  it('keeps recovery and exact settlement above retained review artifacts', () => {
+    const summary: ReviewSummary = {
+      authorizedMicros: 4_550_000n,
+      quotedMicros: 4_550_000n,
+      capturedMicros: 150_000n,
+      releasedMicros: 3_000_000n,
+      refundedMicros: 125_000n,
+      pendingMicros: 1_400_000n,
+      netMicros: 25_000n,
+      settlementStatus: 'partially_captured',
+      budgetUsedMicros: 150_000n,
+      budgetCapMicros: 4_550_000n,
+      exportReady: false,
+      qaNoteCount: 0,
+      qaFindings: [],
+      route: 'Receipt lineage',
+      campaignName: 'Partial pack',
+      recovery: {
+        ...runFailureRecoveryCopyForKind('ambiguous'),
+        state: 'reconciliation_required',
+        affectedNodes: [
+          {
+            runNodeId: 'run-node-unknown',
+            nodeKey: 'master-2',
+            state: 'reconciliation_required',
+            kind: 'ambiguous',
+          },
+        ],
+        retainedRunNodeIds: ['run-node-kept'],
+      },
+    };
+    const html = renderToStaticMarkup(
+      <ReviewRecoveryNotice runId="run-partial" summary={summary} workspace="lumen-skin" />,
+    );
+    expect(html).toContain('data-review-recovery="ambiguous"');
+    expect(html).toContain(
+      'Run settlement: $4.55 authorized · $0.15 captured · $3.00 released · $0.13 refunded · $0.03 net · partially_captured · $1.40 pending',
+    );
+    expect(html).toContain('1 completed branch is available below');
+    expect(html).toContain('Edit campaign brief');
+    expect(html).toContain('Open receipt');
+    expect(html).not.toMatch(/retry now|provider payload|signed url|token=/iu);
   });
 
   it.each([

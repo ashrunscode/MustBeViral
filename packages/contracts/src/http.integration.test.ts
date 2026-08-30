@@ -36,4 +36,37 @@ describe('Zod and OpenAPI integration', () => {
       ),
     ).toHaveLength(18);
   });
+
+  it('publishes exact safe get_run recovery/spend and receipt provider-job lineage fields', () => {
+    const schema = JSON.stringify(openApi.components.schemas.GetRunSuccess);
+    expect(schema).toContain('"recovery"');
+    expect(schema).toContain('"affectedNodeKeys"');
+    expect(schema).toContain('"title"');
+    expect(schema).toContain('"message"');
+    expect(schema).toContain('"nextAction"');
+    expect(schema).toContain('"spend"');
+    expect(schema).toContain('"authorizedMicros":{"type":"string","pattern":"^\\\\d+$"}');
+    expect(schema).toContain('"netMicros":{"type":"string","pattern":"^\\\\d+$"}');
+    expect(schema).toContain('"settlementStatus"');
+    expect(schema).not.toMatch(/affectedNodes|retainedRunNodeIds|"settlement":|pendingMicros/iu);
+    expect(schema).not.toMatch(/normalized_evidence|provider_payload|object_key|signed_url/iu);
+
+    const receiptSchema = JSON.stringify(openApi.components.schemas.GetReceiptSuccess);
+    expect(receiptSchema).toContain('"provider_jobs"');
+    for (const field of [
+      'attempt_id',
+      'provider',
+      'provider_model_id',
+      'route_id',
+      'status',
+      'captured_micros',
+    ]) {
+      expect(receiptSchema).toContain(`"${field}"`);
+    }
+    expect(receiptSchema).toContain('"captured_micros":{"type":"string","pattern":"^\\\\d+$"}');
+    expect(receiptSchema).not.toContain('"capture_micros"');
+    expect(receiptSchema).not.toMatch(
+      /object_key|signed_url|rights_attestation|approved_by|confirmed_by|workspace_id|causative_key|"metadata"|normalized_evidence|provider_request_id/iu,
+    );
+  });
 });

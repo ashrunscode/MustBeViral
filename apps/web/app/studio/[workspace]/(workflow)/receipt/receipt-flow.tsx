@@ -29,8 +29,17 @@ export function ExportResultNotice({
   result,
   runId,
   workspace,
-}: Readonly<{ result: ExportPortResult; runId?: string; workspace: string }>) {
-  if (result.type === 'ok') return null;
+}: Readonly<{
+  result: ExportPortResult;
+  runId?: string;
+  workspace: string;
+}>) {
+  if (
+    result.type === 'ok' ||
+    result.type === 'export_required' ||
+    result.type === 'rebuild_required'
+  )
+    return null;
   if (result.type === 'review_incomplete') {
     return (
       <Card
@@ -116,16 +125,19 @@ export function ReceiptFlow({
       (readPort === null
         ? {
             type: 'error',
-            message: 'Open receipt from a run so Core can create its export.',
+            message: 'Open receipt from a run so Core can read its export state.',
             retryable: false,
           }
         : null),
   );
+  const [refreshingDownload, setRefreshingDownload] = useState(false);
+  const [creatingExport, setCreatingExport] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (readPort === null) return;
     let active = true;
-    void readPort.create().then((next) => {
+    void readPort.read().then((next) => {
       if (active) setResult(next);
     });
     return () => {
@@ -137,14 +149,18 @@ export function ReceiptFlow({
     return (
       <main id="main-content" className={styles.receiptPage}>
         <Card className={styles.resultCard} feedback="loading" role="status" data-result="loading">
-          <strong>Creating immutable export</strong>
-          <span>Core is assembling approved artifacts and reading the authoritative receipt.</span>
+          <strong>Reading immutable receipt</strong>
+          <span>Core is reading approved artifacts without creating or replaying an export.</span>
         </Card>
       </main>
     );
   }
 
-  if (result.type !== 'ok') {
+  if (
+    result.type !== 'ok' &&
+    result.type !== 'export_required' &&
+    result.type !== 'rebuild_required'
+  ) {
     return (
       <main id="main-content" className={styles.receiptPage}>
         <ExportResultNotice
@@ -156,7 +172,60 @@ export function ReceiptFlow({
     );
   }
 
-  const { receipt, rows, downloadUrl } = result;
+  const { receipt, rows } = result;
+  const exportArtifactId = result.type === 'ok' ? result.exportArtifactId : undefined;
+  const canRemint =
+    dataMode === 'worker' &&
+    exportArtifactId !== undefined &&
+    readPort?.remintDownload !== undefined;
+  const remintDownload = async () => {
+    if (
+      !canRemint ||
+      result.type !== 'ok' ||
+      exportArtifactId === undefined ||
+      readPort?.remintDownload === undefined
+    )
+      return;
+    setRefreshingDownload(true);
+    setDownloadError(null);
+    const next = await readPort.remintDownload(exportArtifactId);
+    setRefreshingDownload(false);
+    if (next.type !== 'ok') {
+      if (next.type === 'rebuild_required') {
+        setResult({ type: 'rebuild_required', rows, receipt });
+        setDownloadError(
+          'This legacy export cannot be verified against its stored checksum. Create a new verified export to download it.',
+        );
+        return;
+      }
+      setDownloadError(
+        next.type === 'forbidden'
+          ? 'Your session is not permitted to download this export.'
+          : next.type === 'not_found'
+            ? 'The export could not be found.'
+            : next.message,
+      );
+      return;
+    }
+    setResult({ ...result, download: next.download });
+    const anchor = document.createElement('a');
+    anchor.href = next.download.url;
+    anchor.download = '';
+    anchor.rel = 'noopener';
+    anchor.click();
+  };
+  async function createExport() {
+    if (
+      readPort === null ||
+      (result?.type !== 'export_required' && result?.type !== 'rebuild_required')
+    )
+      return;
+    setDownloadError(null);
+    setCreatingExport(true);
+    const next = await readPort.create();
+    setCreatingExport(false);
+    setResult(next);
+  }
   const varianceMicros =
     receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros - receipt.actualMicros : 0n;
   const issuedDate = receipt.issuedAt.slice(0, 10);
@@ -188,35 +257,43 @@ export function ReceiptFlow({
         <div className={styles.documentBody}>
           <section aria-labelledby="lineage-title">
             <h2 id="lineage-title" className={styles.sectionLabel}>
-              Provider, model, and cost lineage
+              Provider-job capture lineage
             </h2>
             <LedgerTable className={styles.ledger} aria-label="Receipt lineage rows">
               <thead>
                 <tr>
-                  <th>Artifact</th>
+                  <th>Attempt</th>
                   <th>Provider</th>
                   <th>Model</th>
-                  <th>Cost</th>
+                  <th>Route</th>
+                  <th>Status</th>
+                  <th>Captured</th>
                 </tr>
               </thead>
               <tbody>
                 {receipt.lineage.length === 0 ? (
                   <tr>
-                    <td colSpan={4}>No capture-lineage rows were returned for this receipt.</td>
+                    <td colSpan={6}>
+                      No provider-job lineage rows were returned for this receipt.
+                    </td>
                   </tr>
                 ) : null}
                 {receipt.lineage.map((row) => (
-                  <tr key={row.id} data-lineage-id={row.id}>
-                    <td>{row.artifact}</td>
+                  <tr key={row.attemptId} data-lineage-id={row.attemptId}>
+                    <td>{row.attemptId}</td>
                     <td>{row.provider}</td>
-                    <td>{row.model}</td>
-                    <td>{formatUsdMicros(row.costMicros)}</td>
+                    <td>{row.providerModelId}</td>
+                    <td>{row.routeId}</td>
+                    <td>{row.status.replaceAll('_', ' ')}</td>
+                    <td>{formatUsdMicros(row.capturedMicros)}</td>
                   </tr>
                 ))}
                 <tr className={styles.totalRow}>
                   <td>Total actual</td>
                   <td>Settled</td>
                   <td>Rev {receipt.revision}</td>
+                  <td>All routes</td>
+                  <td>Net capture</td>
                   <td>{formatUsdMicros(receipt.actualMicros)}</td>
                 </tr>
               </tbody>
@@ -297,16 +374,33 @@ export function ReceiptFlow({
             {formatUsdMicros(receipt.actualMicros)} · {formatUsdMicros(varianceMicros)} retained
           </span>
         </div>
-        {dataMode === 'worker' && downloadUrl ? (
-          <a className="mbv-button mbv-button--primary" href={downloadUrl} download>
-            Download pack
-          </a>
+        {result.type === 'export_required' || result.type === 'rebuild_required' ? (
+          <Button
+            variant="primary"
+            disabled={creatingExport}
+            feedback={creatingExport ? 'loading' : 'default'}
+            loadingLabel="Creating export"
+            onClick={() => void createExport()}
+          >
+            {result.type === 'rebuild_required'
+              ? 'Create new verified export'
+              : 'Create immutable export'}
+          </Button>
+        ) : canRemint ? (
+          <Button disabled={refreshingDownload} onClick={() => void remintDownload()}>
+            {refreshingDownload ? 'Minting download' : 'Download pack'}
+          </Button>
         ) : (
           <Button disabled={dataMode === 'worker'}>
             {dataMode === 'preview' ? 'Download PDF' : 'Export recorded'}
           </Button>
         )}
       </div>
+      {downloadError === null ? null : (
+        <p className={styles.downloadError} role="alert">
+          {downloadError}
+        </p>
+      )}
       <footer className={styles.footer}>
         <MonoCaps>
           {dataMode === 'preview'

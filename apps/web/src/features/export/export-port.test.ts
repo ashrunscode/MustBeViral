@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 
 import { InMemoryExportPort, WorkerExportPort } from './export-port';
@@ -12,7 +12,9 @@ describe('InMemoryExportPort', () => {
     expect(result.type).toBe('ok');
     if (result.type !== 'ok') return;
     expect(result.rows.map((row) => row.state)).toEqual(['ready', 'ready', 'queued', 'failed']);
-    expect(result.receipt.lineage.map((row) => [row.provider, row.model, row.costMicros])).toEqual([
+    expect(
+      result.receipt.lineage.map((row) => [row.provider, row.providerModelId, row.capturedMicros]),
+    ).toEqual([
       ['Moonshot', 'kimi-2.6', 1_140_000n],
       ['fal', 'flux-2-klein', 2_340_000n],
       ['Moonshot', 'kimi-2.6', 240_000n],
@@ -35,7 +37,6 @@ describe('WorkerExportPort', () => {
   const artifact = (kind: 'approved_output' | 'provider_output' | 'export', id: string) => ({
     accessibility_description: kind === 'export' ? null : 'Approved product output.',
     approved_at: kind === 'approved_output' ? timestamp : null,
-    approved_by: kind === 'approved_output' ? 'user-live' : null,
     artifact_kind: kind,
     byte_size: kind === 'export' ? 4096 : 2048,
     canvas_revision_id: 'revision-live',
@@ -43,13 +44,17 @@ describe('WorkerExportPort', () => {
     created_at: timestamp,
     id,
     mime_type: kind === 'export' ? 'application/zip' : 'image/png',
-    object_key: `private/${id}`,
     project_id: 'project-live',
-    rights_attestation: {},
     run_id: 'run-live',
     run_node_id: kind === 'export' ? null : 'run-node-live',
     status: 'available',
     updated_at: timestamp,
+  });
+  const downloadableArtifact = (id: string) => ({
+    ...artifact('export', id),
+    approved_by: null,
+    object_key: `private/${id}`,
+    rights_attestation: {},
     workspace_id: 'workspace-live',
   });
   const receipt = (includeExport: boolean) => ({
@@ -58,16 +63,13 @@ describe('WorkerExportPort', () => {
       canvas_revision_hash: hash,
       canvas_revision_id: 'revision-live',
       confirmed_at: timestamp,
-      confirmed_by: 'user-live',
       created_at: timestamp,
-      dispatch_epoch: 0,
       dispatch_wave: 1,
       id: 'run-live',
       project_id: 'project-live',
       quote_id: 'quote-live',
       status: 'succeeded',
       updated_at: timestamp,
-      workspace_id: 'workspace-live',
     },
     reservation: {
       amount_micros: 4_550_000,
@@ -80,26 +82,18 @@ describe('WorkerExportPort', () => {
       run_id: 'run-live',
       status: 'released',
       updated_at: timestamp,
-      workspace_id: 'workspace-live',
     },
     ledger: [
       {
         account_code: 'wallet',
         amount_micros: 672_574,
-        causative_key: 'capture-live',
         created_at: timestamp,
         direction: 'debit',
         entry_type: 'capture',
         id: 'ledger-live',
-        metadata: {
-          artifact_id: 'artifact-approved',
-          provider_registration_id: 'fal',
-          provider_model_id: 'fal/model-live',
-        },
         reservation_id: 'reservation-live',
         run_id: 'run-live',
         transaction_id: 'transaction-live',
-        workspace_id: 'workspace-live',
       },
     ],
     artifacts: [
@@ -107,11 +101,21 @@ describe('WorkerExportPort', () => {
       ...(includeExport ? [artifact('export', 'artifact-export')] : []),
     ],
     lineage: [],
+    provider_jobs: [
+      {
+        attempt_id: 'attempt-live',
+        provider: 'fal',
+        provider_model_id: 'fal/model-live',
+        route_id: 'fal/model-live-route',
+        status: 'succeeded',
+        captured_micros: '672574',
+      },
+    ],
   });
 
-  it('exports approved artifacts, re-reads the receipt, and reuses idempotency on replay', async () => {
+  it('reads without mutation and gives each proven explicit create or rebuild a fresh key', async () => {
     const calls: Array<Readonly<{ headers: Headers; method: string; url: string }>> = [];
-    let receiptReads = 0;
+    let exportCreated = false;
     const client = createMustBeViralRestClient({
       baseUrl: 'https://api.example.test',
       getAccessToken: async () => 'session-token',
@@ -121,10 +125,9 @@ describe('WorkerExportPort', () => {
         const method = init?.method ?? 'GET';
         calls.push({ headers: new Headers(init?.headers), method, url });
         if (url.endsWith('/receipt')) {
-          receiptReads += 1;
           return new Response(
             JSON.stringify({
-              data: { receipt: receipt(receiptReads > 1) },
+              data: { receipt: receipt(exportCreated) },
               meta: { request_id: 'request-export-0001' },
             }),
             { status: 200, headers: { 'content-type': 'application/json' } },
@@ -134,7 +137,7 @@ describe('WorkerExportPort', () => {
           return new Response(
             JSON.stringify({
               data: {
-                artifact: artifact('export', 'artifact-export'),
+                artifact: downloadableArtifact('artifact-export'),
                 access: {
                   url: 'https://core.example.test/v1/artifacts/artifact-export/content?token=download',
                   expires_at: timestamp,
@@ -147,6 +150,7 @@ describe('WorkerExportPort', () => {
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
         }
+        exportCreated = true;
         return new Response(
           JSON.stringify({
             data: {
@@ -162,7 +166,7 @@ describe('WorkerExportPort', () => {
                 mime_type: 'application/zip',
                 byte_size: 4096,
               },
-              replayed: receiptReads > 2,
+              replayed: false,
             },
             meta: { request_id: 'request-export-0001' },
           }),
@@ -170,10 +174,18 @@ describe('WorkerExportPort', () => {
         );
       },
     });
-    const port = new WorkerExportPort(client, 'run-live', () => 'export-idem-stable');
+    const createIdempotencyKey = vi
+      .fn<() => string>()
+      .mockReturnValueOnce('export-idem-create')
+      .mockReturnValueOnce('export-idem-rebuild');
+    const port = new WorkerExportPort(client, 'run-live', createIdempotencyKey);
+    await expect(port.read()).resolves.toMatchObject({ type: 'export_required' });
+    expect(calls.filter(({ method }) => method === 'POST')).toHaveLength(0);
+    expect(createIdempotencyKey).not.toHaveBeenCalled();
+
     await expect(port.create()).resolves.toMatchObject({
       type: 'ok',
-      downloadUrl: 'https://core.example.test/v1/artifacts/artifact-export/content?token=download',
+      exportArtifactId: 'artifact-export',
       rows: expect.arrayContaining([
         expect.objectContaining({ id: 'artifact-export', state: 'ready' }),
       ]),
@@ -182,9 +194,12 @@ describe('WorkerExportPort', () => {
         actualMicros: 672_574n,
         lineage: [
           {
+            attemptId: 'attempt-live',
             provider: 'fal',
-            model: 'fal/model-live',
-            costMicros: 672_574n,
+            providerModelId: 'fal/model-live',
+            routeId: 'fal/model-live-route',
+            status: 'succeeded',
+            capturedMicros: 672_574n,
           },
         ],
       },
@@ -194,7 +209,167 @@ describe('WorkerExportPort', () => {
       calls
         .filter(({ method }) => method === 'POST')
         .map(({ headers }) => headers.get('idempotency-key')),
-    ).toEqual(['export-idem-stable', 'export-idem-stable']);
+    ).toEqual(['export-idem-create', 'export-idem-rebuild']);
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(2);
+  });
+
+  it('remints an expired download link without rebuilding the existing export', async () => {
+    let receiptReads = 0;
+    let exportCalls = 0;
+    let accessReads = 0;
+    const existingReceipt = receipt(true);
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-remint',
+      fetch: async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          receiptReads += 1;
+          return new Response(
+            JSON.stringify({
+              data: { receipt: existingReceipt },
+              meta: { request_id: 'request-export-remint' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if ((init?.method ?? 'GET') === 'POST') exportCalls += 1;
+        accessReads += 1;
+        return new Response(
+          JSON.stringify({
+            data: {
+              artifact: downloadableArtifact('artifact-export'),
+              access: {
+                url: `https://core.example.test/v1/artifacts/artifact-export/content?token=download-${String(accessReads)}`,
+                expires_at: `2026-08-${String(10 + accessReads).padStart(2, '0')}T12:00:00.000Z`,
+                purpose: 'customer_download',
+              },
+              copy: null,
+            },
+            meta: { request_id: 'request-export-remint' },
+          }),
+          { status: 200, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+    const port = new WorkerExportPort(client, 'run-live', () => 'unused-export-idem');
+    await expect(port.read()).resolves.toMatchObject({
+      type: 'ok',
+      exportArtifactId: 'artifact-export',
+    });
+    await expect(port.remintDownload('artifact-export')).resolves.toMatchObject({
+      type: 'ok',
+      download: {
+        url: expect.stringContaining('download-1'),
+        expiresAt: '2026-08-11T12:00:00.000Z',
+      },
+    });
+    expect(receiptReads).toBe(1);
+    expect(exportCalls).toBe(0);
+  });
+
+  it('maps a receipt-known legacy checksum failure to an explicit buyer-triggered rebuild', async () => {
+    let exportCalls = 0;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-rebuild',
+      fetch: async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: receipt(true) },
+              meta: { request_id: 'request-export-rebuild' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if ((init?.method ?? 'GET') === 'GET') {
+          return new Response(
+            JSON.stringify({
+              error: {
+                code: 'NOT_FOUND',
+                message: 'Artifact unavailable.',
+                request_id: 'request-export-rebuild',
+                retryable: false,
+              },
+            }),
+            { status: 404, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        exportCalls += 1;
+        return new Response(
+          JSON.stringify({
+            data: {
+              artifact: {
+                artifact_id: 'artifact-export',
+                project_id: 'project-live',
+                run_id: 'run-live',
+                canvas_revision_id: 'revision-live',
+                artifact_kind: 'export',
+                status: 'available',
+                object_key: 'private/artifact-export',
+                content_hash: hash,
+                mime_type: 'application/zip',
+                byte_size: 4096,
+              },
+              replayed: true,
+            },
+            meta: { request_id: 'request-export-rebuild' },
+          }),
+          { status: 201, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+    const port = new WorkerExportPort(client, 'run-live', () => 'export-idem-rebuild');
+
+    await expect(port.read()).resolves.toMatchObject({
+      type: 'ok',
+      exportArtifactId: 'artifact-export',
+    });
+    await expect(port.remintDownload('artifact-export')).resolves.toEqual({
+      type: 'rebuild_required',
+    });
+    expect(exportCalls).toBe(0);
+
+    await expect(port.create()).resolves.toMatchObject({
+      type: 'ok',
+      exportArtifactId: 'artifact-export',
+    });
+    expect(exportCalls).toBe(1);
+  });
+
+  it('keeps a transient mint failure retryable without rebuilding', async () => {
+    let exportCalls = 0;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-transient',
+      fetch: async (input, init) => {
+        if ((init?.method ?? 'GET') === 'POST') exportCalls += 1;
+        return new Response(
+          JSON.stringify({
+            data: {
+              artifact: downloadableArtifact('artifact-export'),
+              access: null,
+              copy: null,
+            },
+            meta: { request_id: 'request-export-transient' },
+          }),
+          { status: 200, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+    const port = new WorkerExportPort(client, 'run-live', () => 'unused-export-idem');
+
+    await expect(port.remintDownload('artifact-export')).resolves.toEqual({
+      type: 'error',
+      message: 'Core did not return a customer download link.',
+      retryable: true,
+    });
+    expect(exportCalls).toBe(0);
   });
 
   it('stops before export when provider outputs are still unapproved', async () => {

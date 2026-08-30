@@ -596,7 +596,7 @@ export function createV1Route(dependencies: V1Dependencies): Hono<CoreHonoEnviro
     );
     return new Response(result.body, {
       status: 200,
-      headers: artifactContentHeaders(result.claims),
+      headers: artifactContentHeaders(result.claims, result.verifiedDownloadRunId),
     });
   });
   router.put('/artifacts/:id/content', async (context) => {
