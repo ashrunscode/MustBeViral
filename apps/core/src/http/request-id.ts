@@ -16,5 +16,7 @@ export const requestIdMiddleware: MiddlewareHandler<CoreHonoEnvironment> = async
   context.set('requestId', requestId);
   await next();
   context.header('x-request-id', requestId);
-  context.header('cache-control', 'no-store');
+  if (!context.res.headers.has('cache-control')) {
+    context.header('cache-control', 'no-store');
+  }
 };

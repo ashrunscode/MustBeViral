@@ -243,6 +243,7 @@ describe('P0 /v1 route boundary', () => {
     expect(response.headers.get('content-disposition')).toBe(
       'attachment; filename="mustbeviral-launch-pack-run-1.zip"',
     );
+    expect(response.headers.get('cache-control')).toBe('private, no-store');
     expect(new Uint8Array(await response.arrayBuffer())).toEqual(exportBytes);
     expect(supabaseFetch).toHaveBeenCalledTimes(2);
     for (const [, init] of supabaseFetch.mock.calls) {
