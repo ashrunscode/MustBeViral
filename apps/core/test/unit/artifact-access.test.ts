@@ -78,7 +78,8 @@ function databaseFetch(
     runStatus?: string;
   }> = {},
 ): ReturnType<typeof vi.fn> {
-  return vi.fn(async (request: string | URL | Request) => {
+  return vi.fn(async (request: string | URL | Request, _init?: RequestInit) => {
+    void _init;
     const url = String(request);
     if (url.includes('/rest/v1/artifacts?')) {
       return Response.json({
@@ -171,6 +172,34 @@ describe('customer upload capability', () => {
     expect(result.status).toBe(400);
     expect(put).not.toHaveBeenCalled();
   });
+
+  it.each(['provider_input', 'review_preview'] as const)(
+    'keeps %s reads capability-only and independent of caller auth',
+    async (purpose) => {
+      const signed = { ...(await claims()), purpose };
+      const token = await mintArtifactAccessToken(KEY, signed);
+      const get = vi.fn(async () => ({ body: new ReadableStream() }));
+      const fetchImplementation = vi.fn(() => {
+        throw new Error('Capability-only reads must not query Supabase');
+      });
+
+      const result = await serveArtifactContent(
+        {
+          ARTIFACT_ACCESS_SIGNING_KEY: KEY,
+          MEDIA_BUCKET: { get },
+        } as never,
+        signed.artifactId,
+        token,
+        1_999_000,
+        null,
+        fetchImplementation as unknown as typeof fetch,
+      );
+
+      expect(result.status).toBe(200);
+      expect(get).toHaveBeenCalledWith(signed.objectKey);
+      expect(fetchImplementation).not.toHaveBeenCalled();
+    },
+  );
 });
 
 describe('customer download capability', () => {
@@ -209,17 +238,34 @@ describe('customer download capability', () => {
         ARTIFACT_ACCESS_SIGNING_KEY: KEY,
         MEDIA_BUCKET: { get },
         SUPABASE_URL: 'https://staging.example.test',
-        SUPABASE_SECRET_KEY: 'service-role-key',
+        SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
+        SUPABASE_SECRET_KEY: 'privileged-key-must-not-be-used',
       } as never,
       signed.artifactId,
       token,
       1_999_000,
+      'verified-caller-jwt',
       fetchImplementation as unknown as typeof fetch,
     );
 
     expect(result).toMatchObject({ status: 200, verifiedDownloadRunId: 'run-1' });
     expect(get).toHaveBeenCalledWith(signed.objectKey);
     expect(fetchImplementation).toHaveBeenCalledTimes(2);
+    for (const [, init] of fetchImplementation.mock.calls) {
+      const headers = new Headers(init?.headers);
+      expect(headers.get('apikey')).toBe('publishable-key');
+      expect(headers.get('authorization')).toBe('Bearer verified-caller-jwt');
+    }
+    expect(JSON.stringify(fetchImplementation.mock.calls)).not.toContain(
+      'privileged-key-must-not-be-used',
+    );
+    expect(fetchImplementation.mock.calls.map(([request]) => String(request))).toEqual([
+      expect.stringContaining('/rest/v1/artifacts?'),
+      expect.stringContaining('/rest/v1/runs?'),
+    ]);
+    expect(
+      fetchImplementation.mock.calls.map(([request]) => String(request)).join('\n'),
+    ).not.toContain('select=*');
     expect(artifactContentHeaders(signed, 'run-1')).toMatchObject({
       'content-type': 'application/zip',
       'content-length': String(EXPORT_BYTES.byteLength),
@@ -245,11 +291,12 @@ describe('customer download capability', () => {
         ARTIFACT_ACCESS_SIGNING_KEY: KEY,
         MEDIA_BUCKET: { get },
         SUPABASE_URL: 'https://staging.example.test',
-        SUPABASE_SECRET_KEY: 'service-role-key',
+        SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
       } as never,
       signed.artifactId,
       token,
       1_999_000,
+      'verified-caller-jwt',
       databaseFetch(signed, overrides) as unknown as typeof fetch,
     );
     expect(result.status).toBe(404);
@@ -279,21 +326,53 @@ describe('customer download capability', () => {
           ARTIFACT_ACCESS_SIGNING_KEY: KEY,
           MEDIA_BUCKET: { get: async () => object },
           SUPABASE_URL: 'https://staging.example.test',
-          SUPABASE_SECRET_KEY: 'service-role-key',
+          SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
         } as never,
         signed.artifactId,
         token,
         1_999_000,
+        'verified-caller-jwt',
         databaseFetch(signed) as unknown as typeof fetch,
       );
       expect(result.status).toBe(404);
     },
   );
 
-  it('fails closed when privileged state verification is unavailable', async () => {
+  it('fails closed before R2 when caller-scoped state verification is unavailable', async () => {
     const signed = await downloadClaims();
     const token = await mintArtifactAccessToken(KEY, signed);
     const get = vi.fn(async () => downloadObject(signed));
+    const fetchImplementation = vi.fn(async () => new Response(null, { status: 401 }));
+
+    const missingCaller = await serveArtifactContent(
+      {
+        ARTIFACT_ACCESS_SIGNING_KEY: KEY,
+        MEDIA_BUCKET: { get },
+        SUPABASE_URL: 'https://staging.example.test',
+        SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
+      } as never,
+      signed.artifactId,
+      token,
+      1_999_000,
+    );
+    expect(missingCaller.status).toBe(404);
+    expect(fetchImplementation).not.toHaveBeenCalled();
+
+    const rejectedCaller = await serveArtifactContent(
+      {
+        ARTIFACT_ACCESS_SIGNING_KEY: KEY,
+        MEDIA_BUCKET: { get },
+        SUPABASE_URL: 'https://staging.example.test',
+        SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
+      } as never,
+      signed.artifactId,
+      token,
+      1_999_000,
+      'invalid-caller-jwt',
+      fetchImplementation as unknown as typeof fetch,
+    );
+    expect(rejectedCaller.status).toBe(404);
+
     const result = await serveArtifactContent(
       {
         ARTIFACT_ACCESS_SIGNING_KEY: KEY,

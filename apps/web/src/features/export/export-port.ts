@@ -198,13 +198,33 @@ function errorDetailString(
   return typeof value === 'string' && value.length > 0 ? value : undefined;
 }
 
-function sameOriginArtifactUrl(accessUrl: string): string {
+export function sameOriginArtifactUrl(artifactId: string, accessUrl: string): string | null {
   try {
     const url = new URL(accessUrl);
-    if (typeof window === 'undefined') return accessUrl;
-    return `${window.location.origin}/api/core${url.pathname}${url.search}`;
+    const expectedPath = `/v1/artifacts/${encodeURIComponent(artifactId)}/content`;
+    const tokenValues = url.searchParams.getAll('token');
+    const token = tokenValues[0];
+    const [payload, signature, ...extraTokenParts] = token?.split('.') ?? [];
+    if (
+      url.pathname !== expectedPath ||
+      url.hash.length > 0 ||
+      tokenValues.length !== 1 ||
+      [...url.searchParams.keys()].some((key) => key !== 'token') ||
+      token === undefined ||
+      token.length === 0 ||
+      token.length > 8_192 ||
+      payload === undefined ||
+      !/^[A-Za-z0-9_-]+$/u.test(payload) ||
+      signature === undefined ||
+      signature.length !== 43 ||
+      !/^[A-Za-z0-9_-]+$/u.test(signature) ||
+      extraTokenParts.length > 0
+    ) {
+      return null;
+    }
+    return `/api/download/${encodeURIComponent(artifactId)}?${new URLSearchParams({ token }).toString()}`;
   } catch {
-    return accessUrl;
+    return null;
   }
 }
 
@@ -344,11 +364,19 @@ export class WorkerExportPort implements ExportReadPort {
           retryable: true,
         };
       }
+      const url = sameOriginArtifactUrl(artifactId, detail.data.access.url);
+      if (url === null) {
+        return {
+          type: 'error',
+          message: 'Core returned an invalid customer download link.',
+          retryable: false,
+        };
+      }
       return {
         type: 'ok',
         download: {
           artifactId,
-          url: sameOriginArtifactUrl(detail.data.access.url),
+          url,
           expiresAt: detail.data.access.expires_at,
         },
       };

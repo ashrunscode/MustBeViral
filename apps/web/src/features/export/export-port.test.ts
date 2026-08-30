@@ -1,7 +1,30 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 
-import { InMemoryExportPort, WorkerExportPort } from './export-port';
+import { InMemoryExportPort, WorkerExportPort, sameOriginArtifactUrl } from './export-port';
+
+describe('sameOriginArtifactUrl', () => {
+  const capability = `payload.${'s'.repeat(43)}`;
+
+  it('maps only the exact artifact capability to the same-origin download bridge', () => {
+    expect(
+      sameOriginArtifactUrl(
+        'artifact-export',
+        `https://untrusted-host.example/v1/artifacts/artifact-export/content?token=${capability}`,
+      ),
+    ).toBe(`/api/download/artifact-export?token=${capability}`);
+  });
+
+  it.each([
+    'https://core.example/v1/artifacts/another-artifact/content?token=payload.signature',
+    'https://core.example/v1/artifacts/artifact-export/content',
+    'https://core.example/v1/artifacts/artifact-export/content?token=one&token=two',
+    'https://core.example/v1/artifacts/artifact-export/content?token=one&next=https://attacker.invalid',
+    'not a URL',
+  ])('fails closed instead of preserving an unsafe access URL: %s', (accessUrl) => {
+    expect(sameOriginArtifactUrl('artifact-export', accessUrl)).toBeNull();
+  });
+});
 
 describe('InMemoryExportPort', () => {
   it('returns deterministic export row states and immutable receipt lineage', () => {
@@ -314,12 +337,13 @@ describe('WorkerExportPort', () => {
         }
         if ((init?.method ?? 'GET') === 'POST') exportCalls += 1;
         accessReads += 1;
+        const capability = `download-${String(accessReads)}.${'s'.repeat(43)}`;
         return new Response(
           JSON.stringify({
             data: {
               artifact: downloadableArtifact('artifact-export'),
               access: {
-                url: `https://core.example.test/v1/artifacts/artifact-export/content?token=download-${String(accessReads)}`,
+                url: `https://core.example.test/v1/artifacts/artifact-export/content?token=${capability}`,
                 expires_at: `2026-08-${String(10 + accessReads).padStart(2, '0')}T12:00:00.000Z`,
                 purpose: 'customer_download',
               },
@@ -339,7 +363,7 @@ describe('WorkerExportPort', () => {
     await expect(port.remintDownload('artifact-export')).resolves.toMatchObject({
       type: 'ok',
       download: {
-        url: expect.stringContaining('download-1'),
+        url: `/api/download/artifact-export?token=download-1.${'s'.repeat(43)}`,
         expiresAt: '2026-08-11T12:00:00.000Z',
       },
     });

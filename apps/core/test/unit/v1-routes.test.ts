@@ -10,6 +10,7 @@ import {
   type P0RestHandlers,
 } from '@mustbeviral/contracts';
 
+import { mintArtifactAccessToken, sha256Hex } from '../../../../packages/artifacts/src/index';
 import { FalWebhookVerifier } from '../../../../packages/provider/src/webhook';
 import { createCoreApp } from '../../src/app';
 import type { V1Dependencies } from '../../src/routes/v1';
@@ -157,6 +158,101 @@ describe('P0 /v1 route boundary', () => {
     const forbidden = await requestRoute(app, 'get_run');
     expect(forbidden.status).toBe(403);
     expect(ApiErrorEnvelopeSchema.parse(await forbidden.json()).error.code).toBe('FORBIDDEN');
+  });
+
+  it('forwards an optional caller bearer to customer-download RLS verification', async () => {
+    const signingKey = 'artifact-access-signing-key-fixture-32ch';
+    const exportBytes = new TextEncoder().encode('PK deterministic buyer export');
+    const contentHash = await sha256Hex(exportBytes);
+    const expiresAtEpochSeconds = Math.floor(Date.now() / 1000) + 60;
+    const claims = {
+      purpose: 'customer_download' as const,
+      artifactId: 'artifact-export',
+      objectKey: 'workspaces/workspace-1/runs/run-1/exports/hash.zip',
+      contentHash,
+      byteSize: exportBytes.byteLength,
+      mimeType: 'application/zip',
+      expiresAtEpochSeconds,
+    };
+    const token = await mintArtifactAccessToken(signingKey, claims);
+    const supabaseFetch = vi.fn(async (request: string | URL | Request, _init?: RequestInit) => {
+      void _init;
+      const url = String(request);
+      if (url.includes('/rest/v1/artifacts?')) {
+        return Response.json({
+          id: claims.artifactId,
+          artifact_kind: 'export',
+          status: 'available',
+          run_id: 'run-1',
+          content_hash: claims.contentHash,
+          object_key: claims.objectKey,
+          byte_size: claims.byteSize,
+          mime_type: claims.mimeType,
+          workspace_id: 'workspace-1',
+          project_id: 'project-1',
+          canvas_revision_id: 'revision-1',
+        });
+      }
+      if (url.includes('/rest/v1/runs?')) {
+        return Response.json({
+          id: 'run-1',
+          status: 'succeeded',
+          workspace_id: 'workspace-1',
+          project_id: 'project-1',
+          canvas_revision_id: 'revision-1',
+        });
+      }
+      return Response.json({ message: 'unexpected fixture request' }, { status: 500 });
+    });
+    vi.stubGlobal('fetch', supabaseFetch);
+    const checksum = Uint8Array.from(contentHash.match(/.{2}/gu) ?? [], (pair) =>
+      Number.parseInt(pair, 16),
+    ).buffer as ArrayBuffer;
+    const app = createCoreApp(dependencies());
+    const response = await app.request(
+      `/v1/artifacts/${claims.artifactId}/content?token=${encodeURIComponent(token)}`,
+      { headers: { authorization: 'Bearer caller-session-jwt' } },
+      {
+        ARTIFACT_ACCESS_SIGNING_KEY: signingKey,
+        SUPABASE_URL: 'https://staging.example.test',
+        SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
+        SUPABASE_SECRET_KEY: 'privileged-key-must-not-be-used',
+        MEDIA_BUCKET: {
+          get: async () => ({
+            key: claims.objectKey,
+            size: claims.byteSize,
+            body: new ReadableStream({
+              start(controller) {
+                controller.enqueue(exportBytes);
+                controller.close();
+              },
+            }),
+            httpMetadata: { contentType: claims.mimeType },
+            customMetadata: {
+              visibility: 'private',
+              workspace_id: 'workspace-1',
+              run_id: 'run-1',
+            },
+            checksums: { sha256: checksum },
+          }),
+        },
+      } as unknown as PlatformBindings,
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-disposition')).toBe(
+      'attachment; filename="mustbeviral-launch-pack-run-1.zip"',
+    );
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(exportBytes);
+    expect(supabaseFetch).toHaveBeenCalledTimes(2);
+    for (const [, init] of supabaseFetch.mock.calls) {
+      const headers = new Headers(init?.headers);
+      expect(headers.get('apikey')).toBe('publishable-key');
+      expect(headers.get('authorization')).toBe('Bearer caller-session-jwt');
+    }
+    expect(JSON.stringify(supabaseFetch.mock.calls)).not.toContain(
+      'privileged-key-must-not-be-used',
+    );
   });
 
   it('uses shared schemas for validation and requires idempotency on mutations', async () => {

@@ -132,26 +132,25 @@ export async function verifyExportObjectBeforeMint(
 }
 
 async function verifiedCustomerDownloadState(
-  bindings: Pick<
-    CoreBindings,
-    'SUPABASE_URL' | 'SUPABASE_SECRET_KEY' | 'SUPABASE_SERVICE_ROLE_KEY'
-  >,
+  bindings: Pick<CoreBindings, 'SUPABASE_URL' | 'SUPABASE_PUBLISHABLE_KEY'>,
   claims: ArtifactAccessClaims,
+  callerJwt: string | null,
   fetchImplementation: typeof fetch,
 ): Promise<CustomerDownloadState | null> {
   const baseUrl = bindings.SUPABASE_URL?.replace(/\/$/u, '');
-  const privilegedKey = bindings.SUPABASE_SECRET_KEY ?? bindings.SUPABASE_SERVICE_ROLE_KEY;
-  if (!baseUrl || !privilegedKey) return null;
+  const publishableKey = bindings.SUPABASE_PUBLISHABLE_KEY;
+  if (!baseUrl || !publishableKey || !callerJwt) return null;
   const executor = new SupabaseDataApiExecutor({
     baseUrl,
-    publishableKey: privilegedKey,
-    callerJwt: privilegedKey,
+    publishableKey,
+    callerJwt,
     fetch: fetchImplementation,
   });
   try {
     const artifact = await executor.selectOne('artifacts', {
       id: `eq.${claims.artifactId}`,
-      select: '*',
+      select:
+        'id,artifact_kind,status,run_id,content_hash,object_key,byte_size,mime_type,workspace_id,project_id,canvas_revision_id',
     });
     if (
       artifact === null ||
@@ -169,7 +168,7 @@ async function verifiedCustomerDownloadState(
     const run = await executor.selectOne('runs', {
       id: `eq.${artifact.run_id}`,
       workspace_id: `eq.${artifact.workspace_id}`,
-      select: '*',
+      select: 'id,status,workspace_id,project_id,canvas_revision_id',
     });
     if (
       run === null ||
@@ -206,21 +205,19 @@ function verifiedCustomerDownloadObject(
 /**
  * Serves the bytes for a valid capability. Verification is crypto + expiry only for
  * provider_input - a database blip during fal's fetch must not waste the paid master that
- * produced the input. customer_download additionally re-checks the artifact row before serving;
- * that check lives with the caller because it needs the privileged executor.
+ * produced the input. customer_download additionally re-checks the artifact and run under the
+ * caller's authenticated RLS scope before serving. A capability alone cannot download a buyer
+ * export.
  */
 export async function serveArtifactContent(
   bindings: Pick<
     CoreBindings,
-    | 'ARTIFACT_ACCESS_SIGNING_KEY'
-    | 'MEDIA_BUCKET'
-    | 'SUPABASE_URL'
-    | 'SUPABASE_SECRET_KEY'
-    | 'SUPABASE_SERVICE_ROLE_KEY'
+    'ARTIFACT_ACCESS_SIGNING_KEY' | 'MEDIA_BUCKET' | 'SUPABASE_URL' | 'SUPABASE_PUBLISHABLE_KEY'
   >,
   artifactIdFromPath: string,
   token: string,
   nowEpochSeconds: number,
+  callerJwt: string | null = null,
   fetchImplementation: typeof fetch = (input, init) => fetch(input, init),
 ): Promise<ArtifactContentResult> {
   const verification = await verifyArtifactAccessToken(
@@ -237,7 +234,12 @@ export async function serveArtifactContent(
   if (verification.claims.purpose === 'customer_upload') return { status: 401 };
   const downloadState =
     verification.claims.purpose === 'customer_download'
-      ? await verifiedCustomerDownloadState(bindings, verification.claims, fetchImplementation)
+      ? await verifiedCustomerDownloadState(
+          bindings,
+          verification.claims,
+          callerJwt,
+          fetchImplementation,
+        )
       : null;
   if (verification.claims.purpose === 'customer_download' && downloadState === null) {
     return { status: 404 };

@@ -544,10 +544,11 @@ export function createV1Route(dependencies: V1Dependencies): Hono<CoreHonoEnviro
         : handleClientRoute(context, route, dependencies),
     );
   }
-  // Deliberately outside V1_ROUTE_TABLE and not a V1Operation: authentication is the signed
-  // capability token itself, so this route must never enter the JWT, workspace-resolution or
-  // idempotency machinery. fal's image fetcher sends no headers, which is why the capability
-  // rides in the query string.
+  // Deliberately outside V1_ROUTE_TABLE and not a V1Operation: the signed capability is required
+  // for every purpose, while customer_download additionally passes an optional caller bearer to
+  // authenticated Supabase RLS verification. Provider fetchers send no headers, so their
+  // provider_input capability must continue to ride in the query string without entering the
+  // workspace or idempotency machinery.
   router.get('/artifacts/:id/content', async (context) => {
     const token = context.req.query('token');
     if (token === undefined || token.length === 0) {
@@ -561,6 +562,7 @@ export function createV1Route(dependencies: V1Dependencies): Hono<CoreHonoEnviro
       context.req.param('id'),
       token,
       Math.floor(Date.now() / 1000),
+      bearerToken(context),
     );
     if (result.status !== 200) {
       // Structured log line, never the token: this is the observable evidence of who fetched what.
