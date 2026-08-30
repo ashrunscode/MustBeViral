@@ -35,6 +35,7 @@ import {
   type CanvasPortResult,
   type CanvasPortScenario,
 } from '../../../../../src/features/canvas/canvas-port';
+import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './canvas-flow.module.css';
@@ -205,6 +206,9 @@ export function CanvasResultBanner({
       </div>
     );
   }
+  if (result.type === 'session_expired') {
+    return <SessionExpiredAction className={`${styles.resultBanner} ${styles.resultInvalid}`} />;
+  }
   if (result.type === 'forbidden' || result.type === 'not_found' || result.type === 'error') {
     const message =
       result.type === 'forbidden'
@@ -236,14 +240,21 @@ export function CanvasResultBanner({
 }
 
 export function CanvasLoadNotice({
+  onRetry,
   result,
-}: Readonly<{ result: Exclude<CanvasReadResult, { type: 'ok' }> | null }>) {
+}: Readonly<{
+  onRetry?: () => void;
+  result: Exclude<CanvasReadResult, { type: 'ok' }> | null;
+}>) {
   if (result === null) {
     return (
       <div className={styles.resultBanner} role="status" data-result="loading">
         Loading canvas from Core…
       </div>
     );
+  }
+  if (result.type === 'session_expired') {
+    return <SessionExpiredAction className={`${styles.resultBanner} ${styles.resultInvalid}`} />;
   }
   const message =
     result.type === 'forbidden'
@@ -259,6 +270,11 @@ export function CanvasLoadNotice({
     >
       <strong>Canvas unavailable</strong>
       <span>{message}</span>
+      {result.type === 'error' && result.retryable && onRetry !== undefined ? (
+        <Button variant="ghost" onClick={onRetry}>
+          Try loading again
+        </Button>
+      ) : null}
     </div>
   );
 }
@@ -558,7 +574,7 @@ export function CanvasFlow({
     return (
       <main id="main-content" className={styles.canvasPage}>
         <section className={styles.workspace} aria-label="ViralGraph canvas">
-          <CanvasLoadNotice result={loadResult} />
+          <CanvasLoadNotice result={loadResult} onRetry={() => void reloadLatest()} />
         </section>
       </main>
     );
@@ -595,7 +611,7 @@ export function CanvasFlow({
                       : 'error'
               }
               loadingLabel="Validating"
-              disabled={mutationPort === null}
+              disabled={mutationPort === null || result?.type === 'session_expired'}
               onClick={() => void validateCanvas()}
             >
               Validate graph
@@ -694,16 +710,18 @@ export function CanvasFlow({
             <MonoCaps>Quote basis</MonoCaps>
             <MonoCaps>{canvasQuotePresentation(dataMode).basis}</MonoCaps>
           </div>
-          <Link
-            className="mbv-button mbv-button--primary"
-            href={
-              canvasId === undefined
-                ? `/studio/${workspace}/quote`
-                : `/studio/${workspace}/quote?canvas=${encodeURIComponent(canvasId)}&revision=${encodeURIComponent(model.revision)}`
-            }
-          >
-            {canvasQuotePresentation(dataMode).cta}
-          </Link>
+          {result?.type === 'session_expired' ? null : (
+            <Link
+              className="mbv-button mbv-button--primary"
+              href={
+                canvasId === undefined
+                  ? `/studio/${workspace}/quote`
+                  : `/studio/${workspace}/quote?canvas=${encodeURIComponent(canvasId)}&revision=${encodeURIComponent(model.revision)}`
+              }
+            >
+              {canvasQuotePresentation(dataMode).cta}
+            </Link>
+          )}
         </div>
       </section>
       <CanvasOutlinePanel

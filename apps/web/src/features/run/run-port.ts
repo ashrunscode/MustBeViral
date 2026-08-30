@@ -8,6 +8,11 @@ import {
 
 import { quoteIsExpired, type QuoteConfirmResult, type RunQuote } from '../quote/quote-port';
 import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
+import {
   runRecoveryView,
   runSettlementView,
   type RunRecoveryView,
@@ -44,6 +49,7 @@ export type RunPortResult =
   | { readonly type: 'conflict'; readonly actual_state: RunState }
   | { readonly type: 'not_found'; readonly run_id: string }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | {
       readonly type: 'error';
       readonly message: string;
@@ -106,6 +112,7 @@ export class WorkerRunStartPort implements RunStartPort {
       });
       if ('error' in result) {
         const { error } = result;
+        if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
         if (error.code === 'QUOTE_EXPIRED') {
           const expiredAt = detailString(error.details, 'expired_at');
           return {
@@ -146,7 +153,7 @@ export class WorkerRunStartPort implements RunStartPort {
         return {
           type: 'error',
           message: error.message,
-          retryable: error.retryable,
+          retryable: false,
           request_id: error.request_id,
         };
       }
@@ -155,11 +162,13 @@ export class WorkerRunStartPort implements RunStartPort {
         runId: result.data.run.runId,
         acceptedMaximumMicros: input.quote.totalMicros,
       };
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
-        type: 'error',
-        message: 'Core could not start this run.',
-        retryable: true,
+        type: 'reconciliation_required',
+        quoteId: input.quote.id,
+        message:
+          'Core did not return an authoritative confirmation result. Do not submit this paid operation again until its idempotency receipt is reconciled.',
       };
     }
   }
@@ -254,7 +263,8 @@ export class WorkerRunPort implements RunReadPort {
       const result = await this.client.request('get_run', { id: runId });
       if ('error' in result) return this.#mapError(result.error, runId);
       return { type: 'ok', snapshot: runSnapshot(result.data) };
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return { type: 'error', message: 'Core could not read this run.', retryable: true };
     }
   }
@@ -268,7 +278,8 @@ export class WorkerRunPort implements RunReadPort {
       });
       if ('error' in result) return this.#mapError(result.error, runId);
       return this.read(runId);
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return { type: 'error', message: 'Core could not cancel this run.', retryable: true };
     }
   }
@@ -283,6 +294,7 @@ export class WorkerRunPort implements RunReadPort {
     }>,
     runId: string,
   ): RunPortResult {
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
     if (error.code === 'NOT_FOUND') return { type: 'not_found', run_id: runId };
     if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
     if (error.code === 'RUN_NOT_CANCELABLE') {

@@ -2,6 +2,14 @@
   "schema_version": 1,
   "variables": [
     {
+      "name": "NEXT_PUBLIC_APP_ORIGIN",
+      "owner": "web",
+      "environments": ["local", "preview", "staging", "production"],
+      "sensitivity": "public",
+      "required": true,
+      "description": "Exact public origin for same-environment auth callbacks and recovery links."
+    },
+    {
       "name": "NEXT_PUBLIC_SUPABASE_URL",
       "owner": "web",
       "environments": ["local", "preview", "staging", "production"],

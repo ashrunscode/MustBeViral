@@ -2,21 +2,27 @@
 
 import { Button, Chip, MonoCaps } from '@mustbeviral/ui';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { buildGoldenLaunchPackGraph } from '@mustbeviral/contracts';
 
+import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
+
 import {
   BriefDraftSchema,
+  BriefDraftStorageError,
   InMemoryBriefDraftPort,
+  SessionStorageBriefDraftPort,
   briefCompletionFlags,
   briefSectionState,
+  firstIncompleteBriefSection,
   isUploadedPackshotRef,
   stagingWorkerDraft,
   launchPackBriefFromDraft,
   lumenSkinDraft,
   missingBriefItems,
   type BriefDraft,
+  type BriefDraftPort,
   type BriefSectionId,
 } from '../../../../../src/features/brief/brief-schema';
 import {
@@ -33,7 +39,7 @@ import styles from './campaign-brief.module.css';
 
 type SectionId = BriefSectionId;
 
-const draftPort = new InMemoryBriefDraftPort();
+const previewDraftPort = new InMemoryBriefDraftPort();
 
 const sectionLabels: ReadonlyArray<Readonly<{ id: SectionId; label: string }>> = [
   { id: 'productTruth', label: 'Product truth' },
@@ -420,10 +426,14 @@ function SectionFields({
 export function CampaignBrief({
   bootstrapPort: suppliedBootstrapPort,
   dataMode = 'preview',
+  draftPort: suppliedDraftPort,
+  subject,
   workspace,
 }: Readonly<{
   bootstrapPort?: BriefBootstrapPort;
   dataMode?: 'preview' | 'worker';
+  draftPort?: BriefDraftPort;
+  subject: string;
   workspace: string;
 }>) {
   const router = useRouter();
@@ -432,11 +442,22 @@ export function CampaignBrief({
       ? (suppliedBootstrapPort ?? new WorkerBriefBootstrapPort(createBrowserCoreClient()))
       : null,
   );
+  const [draftPort] = useState<BriefDraftPort>(
+    () =>
+      suppliedDraftPort ??
+      (dataMode === 'preview' ? previewDraftPort : new SessionStorageBriefDraftPort(subject)),
+  );
   const [draft, setDraftState] = useState<BriefDraft>(
     dataMode === 'preview' ? lumenSkinDraft : stagingWorkerDraft(),
   );
-  const [activeSection, setActiveSection] = useState<SectionId>('claimsLegal');
-  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [activeSection, setActiveSection] = useState<SectionId>(
+    dataMode === 'preview' ? 'claimsLegal' : 'productTruth',
+  );
+  const [draftLoadState, setDraftLoadState] = useState<'loading' | 'ready' | 'error'>(
+    dataMode === 'preview' ? 'ready' : 'loading',
+  );
+  const [draftMessage, setDraftMessage] = useState<string | null>(null);
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [validated, setValidated] = useState(false);
   const [bootstrapResult, setBootstrapResult] = useState<BriefBootstrapResult | null>(null);
   const [bootstrapping, setBootstrapping] = useState(false);
@@ -447,6 +468,34 @@ export function CampaignBrief({
   const flags = briefCompletionFlags(draft);
   const completeness = Math.round((flags.filter(Boolean).length / flags.length) * 100);
 
+  useEffect(() => {
+    if (dataMode === 'preview') return;
+    let active = true;
+    void draftPort
+      .load(workspace)
+      .then((savedDraft) => {
+        if (!active) return;
+        if (savedDraft !== null) {
+          setDraftState(savedDraft);
+          setActiveSection(firstIncompleteBriefSection(savedDraft) ?? 'productTruth');
+          setSaveState('saved');
+        }
+        setDraftLoadState('ready');
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        setDraftLoadState('error');
+        setDraftMessage(
+          error instanceof BriefDraftStorageError
+            ? error.message
+            : 'The saved browser-session draft could not be restored.',
+        );
+      });
+    return () => {
+      active = false;
+    };
+  }, [dataMode, draftPort, workspace]);
+
   const setDraft = (updater: (current: BriefDraft) => BriefDraft) => {
     setValidated(false);
     setSaveState('idle');
@@ -455,8 +504,35 @@ export function CampaignBrief({
 
   async function saveDraft() {
     setSaveState('saving');
-    await draftPort.save(workspace, draft);
-    setSaveState('saved');
+    setDraftMessage(null);
+    try {
+      await draftPort.save(workspace, draft);
+      setSaveState('saved');
+    } catch (error) {
+      setSaveState('error');
+      setDraftMessage(
+        error instanceof BriefDraftStorageError
+          ? error.message
+          : 'The draft could not be saved in this browser session.',
+      );
+    }
+  }
+
+  async function discardUnreadableDraft() {
+    try {
+      await draftPort.clear(workspace);
+      setDraftState(stagingWorkerDraft());
+      setActiveSection('productTruth');
+      setSaveState('idle');
+      setDraftMessage(null);
+      setDraftLoadState('ready');
+    } catch (error) {
+      setDraftMessage(
+        error instanceof BriefDraftStorageError
+          ? error.message
+          : 'The saved browser-session draft could not be cleared.',
+      );
+    }
   }
 
   async function validateBrief() {
@@ -475,6 +551,17 @@ export function CampaignBrief({
     setBootstrapResult(next);
     setBootstrapping(false);
     if (next.type !== 'ok') return;
+    try {
+      await draftPort.clear(workspace);
+      setSaveState('idle');
+    } catch (error) {
+      setSaveState('error');
+      setDraftMessage(
+        error instanceof BriefDraftStorageError
+          ? error.message
+          : 'The completed session draft could not be cleared from this browser.',
+      );
+    }
     setValidated(true);
     router.push(
       `/studio/${encodeURIComponent(next.workspaceId)}/canvas?canvas=${encodeURIComponent(next.canvasId)}`,
@@ -494,12 +581,18 @@ export function CampaignBrief({
         });
         setBootstrapResult(ready);
         if (ready.type !== 'ok') {
-          setUploadMessage('Create the campaign project before attaching a packshot.');
+          if (ready.type !== 'session_expired') {
+            setUploadMessage('Create the campaign project before attaching a packshot.');
+          }
           return;
         }
         projectId = ready.projectId;
       }
       const uploaded = await uploadPackshot(createBrowserCoreClient(), projectId, file);
+      if (uploaded.type === 'session_expired') {
+        setBootstrapResult(uploaded);
+        return;
+      }
       setDraft((current) => ({
         ...current,
         assets: {
@@ -523,7 +616,9 @@ export function CampaignBrief({
   }
 
   const bootstrapMessage =
-    bootstrapResult === null || bootstrapResult.type === 'ok'
+    bootstrapResult === null ||
+    bootstrapResult.type === 'ok' ||
+    bootstrapResult.type === 'session_expired'
       ? null
       : bootstrapResult.type === 'forbidden'
         ? 'Your session is not permitted to bootstrap this workspace.'
@@ -572,17 +667,30 @@ export function CampaignBrief({
             {sectionLabels.find((section) => section.id === activeSection)?.label}
           </h1>
           <p className={styles.lede}>{sectionDescriptions[activeSection]}</p>
-          <form className={styles.fieldGrid} onSubmit={(event) => event.preventDefault()}>
-            <SectionFields
-              dataMode={dataMode}
-              draft={draft}
-              onUploadPackshot={handleUploadPackshot}
-              section={activeSection}
-              setDraft={setDraft}
-              uploadBusy={uploadBusy}
-              uploadMessage={uploadMessage}
-            />
-          </form>
+          {draftLoadState === 'loading' ? (
+            <div className={styles.errorMessage} role="status">
+              <span>Restoring this browser-session draft…</span>
+            </div>
+          ) : draftLoadState === 'error' ? (
+            <div className={styles.errorMessage} role="alert">
+              <span>{draftMessage}</span>
+              <Button variant="ghost" onClick={() => void discardUnreadableDraft()}>
+                Start a new session draft
+              </Button>
+            </div>
+          ) : (
+            <form className={styles.fieldGrid} onSubmit={(event) => event.preventDefault()}>
+              <SectionFields
+                dataMode={dataMode}
+                draft={draft}
+                onUploadPackshot={handleUploadPackshot}
+                section={activeSection}
+                setDraft={setDraft}
+                uploadBusy={uploadBusy}
+                uploadMessage={uploadMessage}
+              />
+            </form>
+          )}
         </section>
 
         <aside className={styles.summary} aria-labelledby="summary-title">
@@ -632,6 +740,15 @@ export function CampaignBrief({
               <span>{bootstrapMessage}</span>
             </div>
           )}
+          {bootstrapResult?.type === 'session_expired' ? (
+            <SessionExpiredAction className={styles.errorMessage} />
+          ) : null}
+          {draftMessage === null || draftLoadState === 'error' ? null : (
+            <div className={styles.errorMessage} role="alert">
+              <span aria-hidden="true">!</span>
+              <span>{draftMessage}</span>
+            </div>
+          )}
         </aside>
       </main>
 
@@ -659,16 +776,32 @@ export function CampaignBrief({
             className={styles.saveDraft}
             variant="ghost"
             feedback={
-              saveState === 'saving' ? 'loading' : saveState === 'saved' ? 'success' : 'default'
+              saveState === 'saving'
+                ? 'loading'
+                : saveState === 'saved'
+                  ? 'success'
+                  : saveState === 'error'
+                    ? 'error'
+                    : 'default'
             }
+            disabled={draftLoadState !== 'ready'}
             loadingLabel="Saving"
             onClick={() => void saveDraft()}
           >
-            {saveState === 'saved' ? 'Draft saved' : 'Save draft'}
+            {saveState === 'saved'
+              ? dataMode === 'preview'
+                ? 'Draft saved'
+                : 'Saved for this session'
+              : 'Save draft'}
           </Button>
           <Button
             variant="primary"
-            disabled={!validation.success || bootstrapping}
+            disabled={
+              draftLoadState !== 'ready' ||
+              !validation.success ||
+              bootstrapping ||
+              bootstrapResult?.type === 'session_expired'
+            }
             feedback={
               bootstrapping
                 ? 'loading'
@@ -688,7 +821,21 @@ export function CampaignBrief({
 
       <footer className={styles.footer}>
         <div>
-          <MonoCaps>Autosave: 18ms</MonoCaps>
+          <MonoCaps>
+            {dataMode === 'preview'
+              ? 'Autosave: 18ms'
+              : `Session draft: ${
+                  draftLoadState === 'loading'
+                    ? 'loading'
+                    : saveState === 'saving'
+                      ? 'saving'
+                      : saveState === 'saved'
+                        ? 'saved'
+                        : saveState === 'error' || draftLoadState === 'error'
+                          ? 'error'
+                          : 'not saved'
+                }`}
+          </MonoCaps>
           <MonoCaps>
             Fields: {flags.filter(Boolean).length + 7} / {flags.length + 7}
           </MonoCaps>

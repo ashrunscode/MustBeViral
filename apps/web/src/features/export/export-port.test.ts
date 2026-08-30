@@ -213,6 +213,84 @@ describe('WorkerExportPort', () => {
     expect(createIdempotencyKey).toHaveBeenCalledTimes(2);
   });
 
+  it('does not replay create_export after reauthentication or a read-only remount', async () => {
+    let exportCreated = false;
+    let exportCalls = 0;
+    const idempotencyKeys: Array<string | null> = [];
+    const createIdempotencyKey = vi.fn(() => 'export-idem-session');
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-export-session',
+      fetch: async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: receipt(exportCreated) },
+              meta: { request_id: 'request-export-session' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        exportCalls += 1;
+        idempotencyKeys.push(new Headers(init?.headers).get('idempotency-key'));
+        if (exportCalls === 1) {
+          return new Response(
+            JSON.stringify({
+              error: {
+                code: 'UNAUTHENTICATED',
+                message: 'The bearer session expired.',
+                request_id: 'request-export-session',
+                retryable: false,
+              },
+            }),
+            { status: 401, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        exportCreated = true;
+        return new Response(
+          JSON.stringify({
+            data: {
+              artifact: {
+                artifact_id: 'artifact-export',
+                project_id: 'project-live',
+                run_id: 'run-live',
+                canvas_revision_id: 'revision-live',
+                artifact_kind: 'export',
+                status: 'available',
+                object_key: 'private/artifact-export',
+                content_hash: hash,
+                mime_type: 'application/zip',
+                byte_size: 4096,
+              },
+              replayed: false,
+            },
+            meta: { request_id: 'request-export-session' },
+          }),
+          { status: 201, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+    const port = new WorkerExportPort(client, 'run-live', createIdempotencyKey);
+
+    await expect(port.read()).resolves.toMatchObject({ type: 'export_required' });
+    await expect(port.create()).resolves.toEqual({ type: 'session_expired' });
+    expect(exportCalls).toBe(1);
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(1);
+
+    await expect(port.read()).resolves.toMatchObject({ type: 'export_required' });
+    expect(exportCalls).toBe(1);
+
+    await expect(port.create()).resolves.toMatchObject({
+      type: 'ok',
+      exportArtifactId: 'artifact-export',
+    });
+    expect(exportCalls).toBe(2);
+    expect(idempotencyKeys).toEqual(['export-idem-session', 'export-idem-session']);
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(1);
+  });
+
   it('remints an expired download link without rebuilding the existing export', async () => {
     let receiptReads = 0;
     let exportCalls = 0;

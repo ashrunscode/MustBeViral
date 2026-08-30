@@ -1,5 +1,11 @@
 import type { MustBeViralRestClient, P0OperationData } from '@mustbeviral/contracts';
 
+import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
+
 export interface QuoteLineItem {
   readonly id: string;
   readonly node: string;
@@ -30,6 +36,7 @@ export type QuoteReadResult =
     }
   | { readonly type: 'graph_invalid'; readonly message: string }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'not_found'; readonly canvas_id: string }
   | {
       readonly type: 'error';
@@ -45,6 +52,11 @@ export interface QuoteReadPort {
 
 export type QuoteConfirmResult =
   | { readonly type: 'ok'; readonly runId: string; readonly acceptedMaximumMicros: bigint }
+  | {
+      readonly type: 'reconciliation_required';
+      readonly quoteId: string;
+      readonly message: string;
+    }
   | { readonly type: 'expired_quote'; readonly expiredAtMs: number }
   | {
       readonly type: 'cap_exceeded';
@@ -58,6 +70,7 @@ export type QuoteConfirmResult =
       readonly actual_revision_id: string;
     }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'not_found'; readonly quote_id: string }
   | {
       readonly type: 'error';
@@ -173,7 +186,8 @@ export class WorkerQuotePort implements QuoteReadPort {
       });
       if ('error' in result) return this.#mapError(result.error, revision);
       return { type: 'ok', quote: quoteFromData(result.data) };
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
         message: 'Core could not create a quote for this canvas.',
@@ -192,6 +206,7 @@ export class WorkerQuotePort implements QuoteReadPort {
     }>,
     expectedRevisionId: string,
   ): QuoteReadResult {
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
     if (error.code === 'REVISION_CONFLICT') {
       return {
         type: 'conflict',
@@ -231,12 +246,18 @@ export function formatQuoteCountdown(seconds: number): string {
 export function canConfirmQuote(
   input: Readonly<{
     acknowledged: boolean;
+    confirmationAttempted: boolean;
     expiresAtMs: number;
     nowMs: number;
     pending: boolean;
   }>,
 ): boolean {
-  return input.acknowledged && !input.pending && !quoteIsExpired(input.expiresAtMs, input.nowMs);
+  return (
+    input.acknowledged &&
+    !input.confirmationAttempted &&
+    !input.pending &&
+    !quoteIsExpired(input.expiresAtMs, input.nowMs)
+  );
 }
 
 export class InMemoryQuotePort implements QuotePort {

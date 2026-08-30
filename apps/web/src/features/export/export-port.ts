@@ -1,3 +1,9 @@
+import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
+
 export type ExportRowState = 'queued' | 'ready' | 'failed';
 
 export interface ExportRow {
@@ -35,6 +41,7 @@ export type ExportDownloadResult =
   | { readonly type: 'ok'; readonly download: ExportDownloadLink }
   | { readonly type: 'rebuild_required' }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'not_found'; readonly run_id: string }
   | {
       readonly type: 'error';
@@ -68,6 +75,7 @@ export type ExportPortResult =
       readonly actual_revision_id: string;
     }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'not_found'; readonly run_id: string }
   | {
       readonly type: 'error';
@@ -300,6 +308,7 @@ export class WorkerExportPort implements ExportReadPort {
         exportArtifactId: exportId,
       };
     } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
         message: allowCreate
@@ -344,6 +353,7 @@ export class WorkerExportPort implements ExportReadPort {
         },
       };
     } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
         message: 'Core could not mint this download link.',
@@ -362,6 +372,7 @@ export class WorkerExportPort implements ExportReadPort {
     }>,
     allowRetry = true,
   ): Exclude<ExportPortResult, { type: 'ok' | 'export_required' | 'review_incomplete' }> {
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
     if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
     if (error.code === 'NOT_FOUND') return { type: 'not_found', run_id: this.runId };
     if (error.code === 'REVISION_CONFLICT' || error.code === 'IDEMPOTENCY_CONFLICT') {

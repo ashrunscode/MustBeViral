@@ -8,6 +8,7 @@ Source: `packages/config/environment.manifest.json`. Values are intentionally ex
 
 | Variable | Owner | Environments | Sensitivity | Required | Purpose |
 |---|---|---|---|---|---|
+| `NEXT_PUBLIC_APP_ORIGIN` | web | local, preview, staging, production | public | yes | Exact public origin for same-environment auth callbacks and recovery links. |
 | `NEXT_PUBLIC_SUPABASE_URL` | web | local, preview, staging, production | public | yes | Environment-specific Supabase API URL. |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | web | local, preview, staging, production | public | yes | Environment-specific Supabase publishable browser key; never a service-role key. |
 | `NEXT_PUBLIC_CORE_API_URL` | web | local, preview, staging, production | public | yes | Origin for the matching Core API environment. |

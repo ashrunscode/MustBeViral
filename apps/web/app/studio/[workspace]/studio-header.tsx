@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { createBrowserCoreClient } from '../../../src/lib/core/browser-client';
+import { shouldLookupWorkspace } from '../../../src/lib/core/workspace-ref';
 
 const routeLabels: Readonly<Record<string, string>> = {
   brief: 'Brief',
@@ -35,7 +36,7 @@ export function StudioHeader({
   const [workspaceName, setWorkspaceName] = useState<string | null>(null);
 
   useEffect(() => {
-    if (presentation !== 'authenticated') return;
+    if (presentation !== 'authenticated' || !shouldLookupWorkspace(workspace)) return;
     let active = true;
     void createBrowserCoreClient()
       .request('get_workspace', { id: workspace })

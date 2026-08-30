@@ -1,6 +1,13 @@
 import { launchPackGraphPatch, type MustBeViralRestClient } from '@mustbeviral/contracts';
 import type { GraphSnapshot } from '@mustbeviral/graph';
 
+import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
+import { isCampaignWorkspaceSentinel, isWorkspaceUuid } from '../../lib/core/workspace-ref';
+
 export type BriefBootstrapResult =
   | {
       readonly type: 'ok';
@@ -10,6 +17,7 @@ export type BriefBootstrapResult =
       readonly revisionId: string;
     }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'conflict'; readonly message: string }
   | {
       readonly type: 'error';
@@ -52,17 +60,18 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
     }>,
   ): Promise<BriefBootstrapResult> {
     try {
-      const existing = await this.client.request('get_workspace', { id: input.workspaceRef });
       let workspaceId: string;
-      if ('error' in existing) {
-        if (existing.error.code !== 'NOT_FOUND') return this.#mapError(existing.error);
+      if (isCampaignWorkspaceSentinel(input.workspaceRef)) {
         const created = await this.client.request('create_workspace', {
           idempotencyKey: stableKey('workspace', input.workspaceRef),
-          body: { name: input.workspaceRef.replaceAll('-', ' ') },
+          body: { name: 'Campaign' },
         });
         if ('error' in created) return this.#mapError(created.error);
         workspaceId = created.data.workspace_id;
       } else {
+        if (!isWorkspaceUuid(input.workspaceRef)) return { type: 'forbidden' };
+        const existing = await this.client.request('get_workspace', { id: input.workspaceRef });
+        if ('error' in existing) return this.#mapError(existing.error);
         workspaceId = existing.data.workspace.id;
       }
 
@@ -94,7 +103,8 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
         graph: input.graph,
         campaignName: input.campaignName,
       });
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
         message: 'Core could not bootstrap this campaign workspace.',
@@ -137,7 +147,8 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
   #mapError(
     error: Readonly<{ code: string; message: string; request_id: string; retryable: boolean }>,
   ): BriefBootstrapResult {
-    if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
+    if (error.code === 'FORBIDDEN' || error.code === 'NOT_FOUND') return { type: 'forbidden' };
     if (error.code === 'IDEMPOTENCY_CONFLICT') {
       return { type: 'conflict', message: error.message };
     }

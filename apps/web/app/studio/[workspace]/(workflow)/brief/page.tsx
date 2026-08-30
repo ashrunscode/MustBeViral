@@ -8,6 +8,7 @@ export default async function CampaignBriefPage({
   return (
     <CampaignBrief
       dataMode={session.mode === 'local-preview' ? 'preview' : 'worker'}
+      subject={session.subject}
       workspace={workspace}
     />
   );

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import {
   RunProgress,
   RunResultNotice,
+  shouldStopRunPolling,
 } from '../../../app/studio/[workspace]/(workflow)/quote/run-progress';
 import { InMemoryRunPort } from './run-port';
 
@@ -16,6 +17,11 @@ describe('RunProgress', () => {
     expect(html).toContain('filament-sweep');
     expect(html).toContain('Queued');
     expect(html).toContain('Cancel run');
+  });
+
+  it('stops worker polling immediately when the session expires', () => {
+    expect(shouldStopRunPolling('session_expired', 'running')).toBe(true);
+    expect(shouldStopRunPolling(null, 'running')).toBe(false);
   });
 
   it.each([

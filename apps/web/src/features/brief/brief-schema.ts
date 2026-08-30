@@ -51,10 +51,76 @@ export const BriefDraftSchema = z.object({
   }),
 });
 
+export const BriefDraftStorageSchema = z
+  .object({
+    productTruth: z
+      .object({
+        productName: z.string(),
+        category: z.string(),
+        features: z.string(),
+        benefits: z.string(),
+        evidence: z.string(),
+        approvedFacts: z.string(),
+      })
+      .strict(),
+    brandKit: z
+      .object({
+        colors: z.string(),
+        typography: z.string(),
+        tone: z.string(),
+        visualRules: z.string(),
+        examples: z.string(),
+        prohibitedTreatments: z.string(),
+      })
+      .strict(),
+    audience: z
+      .object({
+        targetAudience: z.string(),
+        awarenessStage: z.string(),
+        painPoints: z.string(),
+        desires: z.string(),
+        objections: z.string(),
+      })
+      .strict(),
+    offer: z
+      .object({
+        pricePresentation: z.string(),
+        urgencyConstraints: z.string(),
+        destinationUrl: z.string(),
+      })
+      .strict(),
+    claimsLegal: z
+      .object({
+        approvedClaims: z.string(),
+        evidenceSource: z.string(),
+        legalCopy: z.string(),
+        prohibitedClaims: z.array(z.string()),
+        creativeConstraints: z.string(),
+      })
+      .strict(),
+    assets: z
+      .object({
+        packshots: z.array(z.string()),
+        squarePackshotReady: z.boolean(),
+        rightsAttested: z.boolean(),
+      })
+      .strict(),
+  })
+  .strict();
+
 export type BriefDraft = z.infer<typeof BriefDraftSchema>;
 
 export type BriefSectionId =
   'productTruth' | 'brandKit' | 'audience' | 'offer' | 'claimsLegal' | 'assets';
+
+const BRIEF_SECTION_ORDER = [
+  'productTruth',
+  'brandKit',
+  'audience',
+  'offer',
+  'claimsLegal',
+  'assets',
+] as const satisfies readonly BriefSectionId[];
 
 function filled(value: string) {
   return value.trim().length > 0;
@@ -166,6 +232,10 @@ export function briefSectionState(
     complete: missing.length === 0,
     meta: missing.length === 0 ? 'Complete' : `${String(missing.length)} missing`,
   };
+}
+
+export function firstIncompleteBriefSection(draft: BriefDraft): BriefSectionId | null {
+  return BRIEF_SECTION_ORDER.find((section) => !briefSectionState(section, draft).complete) ?? null;
 }
 
 export function briefCompletionFlags(draft: BriefDraft): readonly boolean[] {
@@ -381,16 +451,97 @@ export const lumenSkinDraft: BriefDraft = {
 export interface BriefDraftPort {
   load(workspace: string): Promise<BriefDraft | null>;
   save(workspace: string, draft: BriefDraft): Promise<void>;
+  clear(workspace: string): Promise<void>;
 }
 
 export class InMemoryBriefDraftPort implements BriefDraftPort {
   readonly #drafts = new Map<string, BriefDraft>();
 
   async load(workspace: string) {
-    return this.#drafts.get(workspace) ?? null;
+    const draft = this.#drafts.get(workspace);
+    return draft === undefined ? null : structuredClone(draft);
   }
 
   async save(workspace: string, draft: BriefDraft) {
     this.#drafts.set(workspace, structuredClone(draft));
+  }
+
+  async clear(workspace: string) {
+    this.#drafts.delete(workspace);
+  }
+}
+
+interface SessionStorageLike {
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+}
+
+const BriefDraftEnvelopeSchema = z
+  .object({
+    schema_version: z.literal(1),
+    draft: BriefDraftStorageSchema,
+  })
+  .strict();
+
+export class BriefDraftStorageError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'BriefDraftStorageError';
+  }
+}
+
+export class SessionStorageBriefDraftPort implements BriefDraftPort {
+  constructor(
+    private readonly subject: string,
+    private readonly getStorage: () => SessionStorageLike = () => window.sessionStorage,
+  ) {}
+
+  async load(workspace: string): Promise<BriefDraft | null> {
+    let storage: SessionStorageLike;
+    let encoded: string | null;
+    try {
+      storage = this.getStorage();
+      encoded = storage.getItem(this.#key(workspace));
+    } catch {
+      // Storage can be unavailable in privacy-restricted browsers. Keep the brief editable and
+      // let explicit save report that persistence is unavailable instead of deadlocking entry.
+      return null;
+    }
+    if (encoded === null) return null;
+    try {
+      const parsed: unknown = JSON.parse(encoded);
+      const envelope = BriefDraftEnvelopeSchema.parse(parsed);
+      return structuredClone(envelope.draft);
+    } catch {
+      // A corrupt draft is never echoed. Remove it when possible and continue with a clean draft.
+      try {
+        storage.removeItem(this.#key(workspace));
+      } catch {
+        // Removal is best effort; an unavailable store still must not block the buyer journey.
+      }
+      return null;
+    }
+  }
+
+  async save(workspace: string, draft: BriefDraft): Promise<void> {
+    try {
+      const envelope = BriefDraftEnvelopeSchema.parse({ schema_version: 1, draft });
+      this.getStorage().setItem(this.#key(workspace), JSON.stringify(envelope));
+    } catch {
+      throw new BriefDraftStorageError('The draft could not be saved in this browser session.');
+    }
+  }
+
+  async clear(workspace: string): Promise<void> {
+    try {
+      this.getStorage().removeItem(this.#key(workspace));
+    } catch {
+      throw new BriefDraftStorageError('The saved browser-session draft could not be cleared.');
+    }
+  }
+
+  #key(workspace: string): string {
+    return `mustbeviral:brief-draft:v1:${encodeURIComponent(this.subject)}:${encodeURIComponent(workspace)}`;
   }
 }

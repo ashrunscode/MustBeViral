@@ -533,6 +533,64 @@ describe('production Supabase composition', () => {
     });
   });
 
+  it('uses distinct non-reversible actor-scoped slugs for Campaign workspaces', async () => {
+    const slugs: string[] = [];
+    const actorIds = [
+      'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
+      'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2',
+    ] as const;
+    const fetchImplementation = vi.fn(
+      async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
+        expect(String(request)).toBe('https://project.supabase.co/rest/v1/rpc/create_workspace');
+        const body = JSON.parse(String(init?.body)) as Readonly<Record<string, unknown>>;
+        expect(body.p_name).toBe('Campaign');
+        expect(typeof body.p_slug).toBe('string');
+        slugs.push(String(body.p_slug));
+        return Response.json({ role: 'owner', workspace_id: workspaceId });
+      },
+    );
+
+    for (const [index, actorId] of actorIds.entries()) {
+      const requestFactory: RequestDependencyFactory = {
+        create: async ({ bindings, callerJwt, actor: verifiedActor }) =>
+          createSupabaseRequestDependencies(
+            bindings,
+            callerJwt,
+            verifiedActor,
+            fetchImplementation,
+          ),
+      };
+      const app = createCoreApp({
+        ...defaultV1Dependencies,
+        jwt: {
+          verify: async () => ({ actorId, authenticationMethod: 'supabase_jwt' as const }),
+        },
+        requestFactory,
+      });
+      const response = await app.request(
+        '/v1/workspaces',
+        {
+          method: 'POST',
+          headers: {
+            ...headers(),
+            'idempotency-key': `campaign-workspace-${String(index)}`,
+            'x-request-id': `request-campaign-${String(index)}`,
+          },
+          body: JSON.stringify({ name: 'Campaign' }),
+        },
+        configuredBindings,
+      );
+      expect(response.status).toBe(201);
+    }
+
+    expect(slugs).toHaveLength(2);
+    expect(new Set(slugs).size).toBe(2);
+    for (const slug of slugs) {
+      expect(slug).toMatch(/^campaign-[a-f0-9]{64}$/u);
+      expect(actorIds.every((actorId) => !slug.includes(actorId))).toBe(true);
+    }
+  });
+
   it('replays direct project creation and rejects changed-body key reuse', async () => {
     let storedProject: Readonly<Record<string, unknown>> | null = null;
     const fetchImplementation = vi.fn(

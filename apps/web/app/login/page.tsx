@@ -9,6 +9,9 @@ const notices: Readonly<Record<string, string>> = {
   signed_out: 'You are signed out.',
   verified: 'Email verified. Sign in to continue.',
   expired_link: 'That sign-in link expired. Request a new link before trying again.',
+  auth_link_failed: 'That sign-in link could not be verified. Sign in to continue.',
+  password_updated: 'Password updated. Sign in with your new password.',
+  rate_limited: 'Too many auth attempts. Wait a moment, then try again.',
   recovery_sent: 'If the account exists, recovery instructions are on the way.',
   sign_out_failed: 'Sign-out did not complete. Try again before closing this browser.',
 };
@@ -25,6 +28,7 @@ export default async function LoginPage({
   const supabase = await createServerSupabaseClient();
   const { data } = await supabase.auth.getClaims();
   const signedIn = typeof data?.claims?.sub === 'string';
+  const forgotPasswordUrl = `/forgot-password?${new URLSearchParams({ next }).toString()}`;
 
   return (
     <main className="auth-page">
@@ -56,7 +60,14 @@ export default async function LoginPage({
             </form>
           </div>
         ) : (
-          <LoginForm next={next} />
+          <>
+            <LoginForm next={next} />
+            <div className="auth-links">
+              <a className="auth-link" href={forgotPasswordUrl}>
+                Forgot password?
+              </a>
+            </div>
+          </>
         )}
       </section>
     </main>

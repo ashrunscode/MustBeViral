@@ -4,6 +4,7 @@ import { Button, Card, Chip, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
 import {
   InMemoryRunPort,
   WorkerRunPort,
@@ -46,6 +47,9 @@ export function RunResultNotice({ result }: Readonly<{ result: RunPortResult | n
       </div>
     );
   }
+  if (result.type === 'session_expired') {
+    return <SessionExpiredAction className={styles.runError} />;
+  }
   if (result.type === 'error') {
     return (
       <div className={styles.runError} role="alert" data-result="error">
@@ -57,6 +61,18 @@ export function RunResultNotice({ result }: Readonly<{ result: RunPortResult | n
     <div className={styles.runError} role="alert" data-result="conflict">
       Run state changed to {result.actual_state}. Reload before issuing another command.
     </div>
+  );
+}
+
+export function shouldStopRunPolling(
+  resultType: RunPortResult['type'] | null,
+  snapshotState: RunSnapshot['state'] | null,
+): boolean {
+  return (
+    resultType === 'session_expired' ||
+    snapshotState === 'complete' ||
+    snapshotState === 'failed' ||
+    snapshotState === 'cancelled'
   );
 }
 
@@ -115,27 +131,27 @@ export function RunProgress({
   }, [previewPort, snapshot]);
 
   useEffect(() => {
-    if (
-      readPort === null ||
-      snapshot?.state === 'complete' ||
-      snapshot?.state === 'failed' ||
-      snapshot?.state === 'cancelled'
-    )
+    if (readPort === null || shouldStopRunPolling(result?.type ?? null, snapshot?.state ?? null))
       return;
+    const workerPort = readPort;
     let active = true;
     async function poll() {
-      const next = await readPort?.read(runId);
-      if (!active || next === undefined) return;
+      const next = await workerPort.read(runId);
+      if (!active) return;
       setResult(next.type === 'ok' ? null : next);
       if (next.type === 'ok') setSnapshot(next.snapshot);
+      if (next.type === 'session_expired') {
+        active = false;
+        window.clearInterval(timer);
+      }
     }
-    void poll();
     const timer = window.setInterval(() => void poll(), 1_000);
+    void poll();
     return () => {
       active = false;
       window.clearInterval(timer);
     };
-  }, [readPort, runId, snapshot?.state]);
+  }, [readPort, result?.type, runId, snapshot?.state]);
 
   async function cancel() {
     if (snapshot === null) return;
@@ -360,7 +376,7 @@ export function RunProgress({
           <span className={styles.cancelledCopy}>
             Run cancelled. Completed outputs were retained.
           </span>
-        ) : (
+        ) : result?.type === 'session_expired' ? null : (
           <Button variant="ghost" onClick={() => void cancel()}>
             Cancel run
           </Button>

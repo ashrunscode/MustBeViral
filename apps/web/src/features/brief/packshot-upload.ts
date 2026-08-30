@@ -1,5 +1,11 @@
 import type { MustBeViralRestClient } from '@mustbeviral/contracts';
 
+import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
+
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 export class PackshotUploadError extends Error {
@@ -12,6 +18,9 @@ export class PackshotUploadError extends Error {
     super(message);
   }
 }
+
+export type PackshotUploadResult =
+  Readonly<{ type: 'ok'; artifactId: string }> | SessionExpiredResult;
 
 function sameOriginUploadUrl(accessUrl: string): string {
   try {
@@ -47,7 +56,7 @@ export async function uploadPackshot(
   projectId: string,
   file: File,
   fetchImplementation: typeof fetch = (input, init) => fetch(input, init),
-): Promise<Readonly<{ artifactId: string }>> {
+): Promise<PackshotUploadResult> {
   const contentType = packshotContentType(file);
   if (contentType === null) {
     throw new PackshotUploadError('type', 'Use a JPEG, PNG, or WebP packshot.');
@@ -57,17 +66,26 @@ export async function uploadPackshot(
   }
   const bytes = new Uint8Array(await file.arrayBuffer());
   const sha256 = await sha256HexOfBytes(bytes);
-  const created = await client.request('create_artifact_upload', {
-    idempotencyKey: `packshot-${sha256}`,
-    body: {
-      project_id: projectId,
-      content_type: contentType,
-      byte_size: file.size,
-      sha256,
-      purpose: 'packshot',
-    },
-  });
+  const requestUpload = () =>
+    client.request('create_artifact_upload', {
+      idempotencyKey: `packshot-${sha256}`,
+      body: {
+        project_id: projectId,
+        content_type: contentType,
+        byte_size: file.size,
+        sha256,
+        purpose: 'packshot',
+      },
+    });
+  let created: Awaited<ReturnType<typeof requestUpload>>;
+  try {
+    created = await requestUpload();
+  } catch (error) {
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
+    throw error;
+  }
   if ('error' in created) {
+    if (isSessionExpiredFailure(created.error)) return SESSION_EXPIRED_RESULT;
     throw new PackshotUploadError('sign', 'Core could not prepare a private upload.');
   }
   const put = await fetchImplementation(sameOriginUploadUrl(created.data.upload_url), {
@@ -78,5 +96,5 @@ export async function uploadPackshot(
   if (!put.ok) {
     throw new PackshotUploadError('put', 'The packshot could not be stored privately.');
   }
-  return { artifactId: created.data.artifact_id };
+  return { type: 'ok', artifactId: created.data.artifact_id };
 }

@@ -4,6 +4,7 @@ import { Button, Card, Chip, LedgerTable, MonoCaps, formatUsdMicros } from '@mus
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
 import {
   InMemoryExportPort,
   WorkerExportPort,
@@ -26,10 +27,12 @@ const exportChip = {
 >;
 
 export function ExportResultNotice({
+  onRetryRead,
   result,
   runId,
   workspace,
 }: Readonly<{
+  onRetryRead?: () => void;
   result: ExportPortResult;
   runId?: string;
   workspace: string;
@@ -76,6 +79,9 @@ export function ExportResultNotice({
       </Card>
     );
   }
+  if (result.type === 'session_expired') {
+    return <SessionExpiredAction className={styles.resultCard} />;
+  }
   const message =
     result.type === 'forbidden'
       ? 'Your session is not permitted to export this run.'
@@ -86,6 +92,11 @@ export function ExportResultNotice({
     <Card className={styles.resultCard} feedback="error" role="alert" data-result={result.type}>
       <strong>Export unavailable</strong>
       <span>{message}</span>
+      {result.type === 'error' && result.retryable && onRetryRead !== undefined ? (
+        <Button variant="ghost" onClick={onRetryRead}>
+          Try reading receipt again
+        </Button>
+      ) : null}
     </Card>
   );
 }
@@ -132,6 +143,7 @@ export function ReceiptFlow({
   );
   const [refreshingDownload, setRefreshingDownload] = useState(false);
   const [creatingExport, setCreatingExport] = useState(false);
+  const [lastOperation, setLastOperation] = useState<'read' | 'create'>('read');
   const [downloadError, setDownloadError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -167,6 +179,7 @@ export function ReceiptFlow({
           {...(runId === undefined ? {} : { runId })}
           result={result}
           workspace={workspace}
+          {...(lastOperation === 'read' ? { onRetryRead: () => void retryRead() } : {})}
         />
       </main>
     );
@@ -190,6 +203,10 @@ export function ReceiptFlow({
     setDownloadError(null);
     const next = await readPort.remintDownload(exportArtifactId);
     setRefreshingDownload(false);
+    if (next.type === 'session_expired') {
+      setResult(next);
+      return;
+    }
     if (next.type !== 'ok') {
       if (next.type === 'rebuild_required') {
         setResult({ type: 'rebuild_required', rows, receipt });
@@ -214,12 +231,20 @@ export function ReceiptFlow({
     anchor.rel = 'noopener';
     anchor.click();
   };
+  async function retryRead() {
+    if (readPort === null) return;
+    setLastOperation('read');
+    setResult(null);
+    setResult(await readPort.read());
+  }
+
   async function createExport() {
     if (
       readPort === null ||
       (result?.type !== 'export_required' && result?.type !== 'rebuild_required')
     )
       return;
+    setLastOperation('create');
     setDownloadError(null);
     setCreatingExport(true);
     const next = await readPort.create();

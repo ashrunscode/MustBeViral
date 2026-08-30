@@ -256,6 +256,50 @@ a {
   width: 100%;
 }
 
+.auth-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.auth-link {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  text-underline-offset: 0.2em;
+}
+
+.auth-link:hover {
+  color: var(--ink);
+}
+
+.auth-policy {
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin: -0.25rem 0 0;
+}
+
+.session-expired-link {
+  width: fit-content;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--signal);
+  border-radius: 4px;
+  margin-top: 8px;
+  padding: 0 14px;
+  background: var(--signal);
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.session-expired-link:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
 @media (max-width: 520px) {
   .auth-card {
     padding: 24px;

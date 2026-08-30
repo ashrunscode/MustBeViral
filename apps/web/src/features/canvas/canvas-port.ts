@@ -13,6 +13,12 @@ import {
 } from '@mustbeviral/contracts';
 import type { ChipStatus } from '@mustbeviral/ui';
 
+import {
+  SESSION_EXPIRED_RESULT,
+  isSessionExpiredFailure,
+  type SessionExpiredResult,
+} from '../../lib/core/session-expiry';
+
 export type CanvasNodeStatus = 'verified' | 'running' | 'queued' | 'failed' | 'notes';
 export type CanvasEdgeState = 'default' | 'active' | 'transfer';
 
@@ -56,6 +62,7 @@ export type CanvasPortResult =
     }
   | { readonly type: 'graph_invalid'; readonly issues: readonly GraphValidationIssue[] }
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'not_found'; readonly canvas_id: string }
   | {
       readonly type: 'error';
@@ -67,6 +74,7 @@ export type CanvasPortResult =
 export type CanvasReadResult =
   | Extract<CanvasPortResult, { type: 'ok' }>
   | { readonly type: 'forbidden' }
+  | SessionExpiredResult
   | { readonly type: 'not_found'; readonly canvas_id: string }
   | {
       readonly type: 'error';
@@ -500,6 +508,7 @@ export class WorkerCanvasReadPort implements CanvasReadPort {
       if ('data' in response) {
         return { type: 'ok', model: canvasModelFromContext(response.data.canvas) };
       }
+      if (isSessionExpiredFailure(response.error)) return SESSION_EXPIRED_RESULT;
       if (response.error.code === 'FORBIDDEN') return { type: 'forbidden' };
       if (response.error.code === 'NOT_FOUND') {
         return { type: 'not_found', canvas_id: this.canvasId };
@@ -510,7 +519,8 @@ export class WorkerCanvasReadPort implements CanvasReadPort {
         retryable: response.error.retryable,
         request_id: response.error.request_id,
       };
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
         message: 'The canvas could not be loaded from Core.',
@@ -597,7 +607,8 @@ export class WorkerCanvasMutationPort implements CanvasMutationPort {
       });
       if ('error' in applied) return this.#mapError(applied.error, model.revision);
       return { type: 'ok', model: { ...model, revision: applied.data.revisionId } };
-    } catch {
+    } catch (error) {
+      if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
         message: 'The canvas could not be validated by Core.',
@@ -616,6 +627,7 @@ export class WorkerCanvasMutationPort implements CanvasMutationPort {
     }>,
     expectedRevisionId: string,
   ): CanvasPortResult {
+    if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
     if (error.code === 'REVISION_CONFLICT') {
       return {
         type: 'conflict',

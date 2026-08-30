@@ -28,6 +28,7 @@ describe('quote expiry and confirmation gate', () => {
     expect(
       canConfirmQuote({
         acknowledged: true,
+        confirmationAttempted: false,
         expiresAtMs: quote.expiresAtMs,
         nowMs: quote.expiresAtMs,
         pending: false,
@@ -36,6 +37,16 @@ describe('quote expiry and confirmation gate', () => {
     expect(
       canConfirmQuote({
         acknowledged: false,
+        confirmationAttempted: false,
+        expiresAtMs: quote.expiresAtMs,
+        nowMs: now,
+        pending: false,
+      }),
+    ).toBe(false);
+    expect(
+      canConfirmQuote({
+        acknowledged: true,
+        confirmationAttempted: true,
         expiresAtMs: quote.expiresAtMs,
         nowMs: now,
         pending: false,

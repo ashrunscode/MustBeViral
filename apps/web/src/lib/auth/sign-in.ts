@@ -14,13 +14,19 @@ export function safeStudioRedirectPath(value: unknown): string {
   }
   try {
     const url = new URL(value, 'https://mustbeviral.invalid');
-    if (url.origin !== 'https://mustbeviral.invalid' || !url.pathname.startsWith('/studio')) {
+    const isStudioPath = url.pathname === '/studio' || url.pathname.startsWith('/studio/');
+    if (url.origin !== 'https://mustbeviral.invalid' || !isStudioPath) {
       return '/studio';
     }
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {
     return '/studio';
   }
+}
+
+export function studioLoginHref(pathname: string, search: string): string {
+  const pathAndQuery = `${pathname}${search.length === 0 ? '' : `?${search}`}`;
+  return `/login?${new URLSearchParams({ next: safeStudioRedirectPath(pathAndQuery) }).toString()}`;
 }
 
 export function classifySignInError(

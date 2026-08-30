@@ -2,9 +2,12 @@ import { describe, expect, it } from 'vitest';
 
 import {
   BriefDraftSchema,
+  BriefDraftStorageError,
   InMemoryBriefDraftPort,
+  SessionStorageBriefDraftPort,
   STAGING_SYNTHETIC_PACKSHOTS,
   briefSectionState,
+  firstIncompleteBriefSection,
   launchPackBriefFromDraft,
   lumenSkinDraft,
   missingBriefItems,
@@ -59,6 +62,72 @@ describe('campaign brief validation', () => {
     expect((await port.load('lumen-skin'))?.productTruth.productName).toBe(
       'Lumen Skin Barrier Serum',
     );
+    await port.clear('lumen-skin');
+    await expect(port.load('lumen-skin')).resolves.toBeNull();
+  });
+
+  it('restores only schema-valid session drafts scoped to subject and workspace', async () => {
+    const values = new Map<string, string>();
+    const storage = {
+      getItem: (key: string) => values.get(key) ?? null,
+      setItem: (key: string, value: string) => values.set(key, value),
+      removeItem: (key: string) => values.delete(key),
+    };
+    const alice = new SessionStorageBriefDraftPort('user-alice', () => storage);
+    const bob = new SessionStorageBriefDraftPort('user-bob', () => storage);
+    const draft = stagingWorkerDraft();
+    draft.productTruth.productName = 'Session campaign';
+
+    await alice.save('workspace-a', draft);
+    draft.productTruth.productName = 'Mutated after save';
+    await expect(alice.load('workspace-a')).resolves.toMatchObject({
+      productTruth: { productName: 'Session campaign' },
+    });
+    await expect(alice.load('workspace-b')).resolves.toBeNull();
+    await expect(bob.load('workspace-a')).resolves.toBeNull();
+
+    await alice.clear('workspace-a');
+    await expect(alice.load('workspace-a')).resolves.toBeNull();
+  });
+
+  it('discards corrupt session draft envelopes without echoing or blocking editing', async () => {
+    const values = new Map<string, string>([
+      ['mustbeviral:brief-draft:v1:user-alice:workspace-a', '{"raw_secret":"do-not-echo"}'],
+    ]);
+    const port = new SessionStorageBriefDraftPort('user-alice', () => ({
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, value),
+      removeItem: (key) => values.delete(key),
+    }));
+
+    await expect(port.load('workspace-a')).resolves.toBeNull();
+    expect(values.size).toBe(0);
+  });
+
+  it('keeps editing available when sessionStorage cannot be read', async () => {
+    const port = new SessionStorageBriefDraftPort('user-alice', () => {
+      throw new DOMException('Blocked', 'SecurityError');
+    });
+
+    await expect(port.load('workspace-a')).resolves.toBeNull();
+    await expect(port.save('workspace-a', stagingWorkerDraft())).rejects.toEqual(
+      new BriefDraftStorageError('The draft could not be saved in this browser session.'),
+    );
+  });
+
+  it('selects the first incomplete worker section in workflow order', () => {
+    expect(firstIncompleteBriefSection(stagingWorkerDraft())).toBe('productTruth');
+    expect(firstIncompleteBriefSection(lumenSkinDraft)).toBe('claimsLegal');
+    expect(
+      firstIncompleteBriefSection({
+        ...lumenSkinDraft,
+        claimsLegal: {
+          ...lumenSkinDraft.claimsLegal,
+          evidenceSource: 'Formulation dossier, page 12',
+        },
+        assets: { ...lumenSkinDraft.assets, squarePackshotReady: true, rightsAttested: true },
+      }),
+    ).toBeNull();
   });
 
   it('does not mark product or offer sections complete when required fields are empty', () => {

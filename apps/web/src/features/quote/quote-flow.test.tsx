@@ -34,7 +34,16 @@ describe('QuoteResultNotice result-union rendering', () => {
       'data-result="conflict"',
       'Open canvas recovery',
     ],
-    [{ type: 'forbidden' }, 'data-result="forbidden"', 'Run was not started'],
+    [
+      {
+        type: 'reconciliation_required',
+        quoteId: 'quote-uncertain',
+        message: 'Do not submit this paid operation again until reconciled.',
+      },
+      'data-result="reconciliation_required"',
+      'Confirmation requires reconciliation',
+    ],
+    [{ type: 'forbidden' }, 'data-result="forbidden"', 'Confirmation stopped'],
     [
       { type: 'not_found', quote_id: 'quote-missing' },
       'data-result="not_found"',

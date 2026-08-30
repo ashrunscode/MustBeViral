@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { MustBeViralClientError } from '@mustbeviral/contracts';
+
 import { packshotContentType, sha256HexOfBytes, uploadPackshot } from './packshot-upload';
 
 describe('packshot upload', () => {
@@ -29,7 +31,7 @@ describe('packshot upload', () => {
         file,
         fetchImplementation as unknown as typeof fetch,
       ),
-    ).resolves.toEqual({ artifactId: 'artifact-packshot' });
+    ).resolves.toEqual({ type: 'ok', artifactId: 'artifact-packshot' });
     expect(request).toHaveBeenCalledWith(
       'create_artifact_upload',
       expect.objectContaining({
@@ -44,5 +46,48 @@ describe('packshot upload', () => {
       expect.stringContaining('/v1/artifacts/artifact-packshot/content'),
       expect.objectContaining({ method: 'PUT' }),
     );
+  });
+
+  it('maps a missing browser token to session_expired without attempting the upload', async () => {
+    const file = new File([Uint8Array.of(9, 8, 7)], 'bottle.jpg', { type: 'image/jpeg' });
+    const request = vi.fn(async () => {
+      throw new MustBeViralClientError('A Supabase session is required.', 'AUTH_REQUIRED');
+    });
+    const fetchImplementation = vi.fn();
+
+    await expect(
+      uploadPackshot(
+        { request } as never,
+        'project-1',
+        file,
+        fetchImplementation as unknown as typeof fetch,
+      ),
+    ).resolves.toEqual({ type: 'session_expired' });
+    expect(request).toHaveBeenCalledOnce();
+    expect(fetchImplementation).not.toHaveBeenCalled();
+  });
+
+  it('maps Core UNAUTHENTICATED to session_expired without replaying or PUTting bytes', async () => {
+    const file = new File([Uint8Array.of(9, 8, 7)], 'bottle.jpg', { type: 'image/jpeg' });
+    const request = vi.fn(async () => ({
+      error: {
+        code: 'UNAUTHENTICATED',
+        message: 'The bearer session is missing or expired.',
+        request_id: 'request-packshot-expired',
+        retryable: false,
+      },
+    }));
+    const fetchImplementation = vi.fn();
+
+    await expect(
+      uploadPackshot(
+        { request } as never,
+        'project-1',
+        file,
+        fetchImplementation as unknown as typeof fetch,
+      ),
+    ).resolves.toEqual({ type: 'session_expired' });
+    expect(request).toHaveBeenCalledOnce();
+    expect(fetchImplementation).not.toHaveBeenCalled();
   });
 });

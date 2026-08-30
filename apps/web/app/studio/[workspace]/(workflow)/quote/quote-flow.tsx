@@ -12,6 +12,7 @@ import {
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
 import {
   InMemoryQuotePort,
   WorkerQuotePort,
@@ -110,6 +111,22 @@ export function QuoteResultNotice({
       </div>
     );
   }
+  if (result.type === 'session_expired') {
+    return <SessionExpiredAction className={`${styles.notice} ${styles.noticeError}`} />;
+  }
+  if (result.type === 'reconciliation_required') {
+    return (
+      <div
+        className={`${styles.notice} ${styles.noticeError}`}
+        role="alert"
+        data-result="reconciliation_required"
+      >
+        <strong>Confirmation requires reconciliation</strong>
+        <span>{result.message}</span>
+        <MonoCaps>Quote {result.quoteId} · confirmation locked</MonoCaps>
+      </div>
+    );
+  }
   const message =
     result.type === 'forbidden'
       ? 'Your session is not permitted to start this run.'
@@ -122,7 +139,7 @@ export function QuoteResultNotice({
       role="alert"
       data-result={result.type}
     >
-      <strong>Run was not started</strong>
+      <strong>Confirmation stopped</strong>
       <span>{message}</span>
     </div>
   );
@@ -137,6 +154,19 @@ function QuoteLoadState({
   result: Exclude<QuoteReadResult, { type: 'ok' }> | null;
   workspace: string;
 }>) {
+  if (result?.type === 'session_expired') {
+    return (
+      <main id="main-content" className={styles.quotePage}>
+        <section className={styles.quoteStage} aria-labelledby="quote-title">
+          <Card className={styles.quoteCard} feedback="error">
+            <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
+            <h1 id="quote-title">Review this run before spending</h1>
+            <SessionExpiredAction className={`${styles.notice} ${styles.noticeError}`} />
+          </Card>
+        </section>
+      </main>
+    );
+  }
   const message =
     result === null
       ? 'Reading the pinned canvas revision and calculating its named maximum price.'
@@ -304,8 +334,15 @@ export function QuoteFlow({
   const secondsRemaining = quoteSecondsRemaining(quote.expiresAtMs, nowMs);
   const expired = quoteIsExpired(quote.expiresAtMs, nowMs) || result?.type === 'expired_quote';
   const confirmEnabled =
-    canConfirmQuote({ acknowledged, expiresAtMs: quote.expiresAtMs, nowMs, pending }) &&
+    canConfirmQuote({
+      acknowledged,
+      confirmationAttempted: result !== null,
+      expiresAtMs: quote.expiresAtMs,
+      nowMs,
+      pending,
+    }) &&
     !expired &&
+    result?.type !== 'session_expired' &&
     runStartPort !== null;
   const total = formatUsdMicros(quote.totalMicros);
   const feedback = pending
@@ -379,7 +416,7 @@ export function QuoteFlow({
             workspace={workspace}
             onRequote={() => void requote()}
           />
-          {expired && result?.type !== 'expired_quote' ? (
+          {expired && result?.type !== 'expired_quote' && result?.type !== 'session_expired' ? (
             <QuoteResultNotice
               {...(canvasId === undefined ? {} : { canvasId })}
               result={{ type: 'expired_quote', expiredAtMs: quote.expiresAtMs }}
@@ -445,7 +482,7 @@ export function QuoteFlow({
               id="quote-acknowledgment"
               type="checkbox"
               checked={acknowledged}
-              disabled={expired || pending}
+              disabled={expired || pending || result !== null}
               onChange={(event) => setAcknowledged(event.target.checked)}
             />
             <span>
@@ -521,7 +558,7 @@ export function QuoteFlow({
             <MonoCaps>{expired ? 'Expired' : formatQuoteCountdown(secondsRemaining)}</MonoCaps>
           </div>
         </div>
-        {expired ? (
+        {result?.type === 'session_expired' ? null : expired ? (
           <Button
             feedback={pending ? 'loading' : 'error'}
             loadingLabel="Re-quoting"
@@ -529,7 +566,7 @@ export function QuoteFlow({
           >
             Re-quote this run
           </Button>
-        ) : (
+        ) : result !== null ? null : (
           <Button
             variant="primary"
             feedback={feedback}

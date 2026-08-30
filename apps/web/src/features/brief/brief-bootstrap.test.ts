@@ -4,8 +4,9 @@ import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 import { WorkerBriefBootstrapPort } from './brief-bootstrap';
 
 describe('WorkerBriefBootstrapPort', () => {
-  it('resolves or creates the workspace, then creates a project and canvas in order', async () => {
+  it('resolves a real workspace UUID without creating a replacement', async () => {
     const timestamp = '2026-08-11T12:00:00.000Z';
+    const workspaceRef = '11111111-1111-4111-8111-111111111111';
     const calls: Array<Readonly<{ body: string | undefined; headers: Headers; url: string }>> = [];
     const client = createMustBeViralRestClient({
       baseUrl: 'https://api.example.test',
@@ -18,47 +19,50 @@ describe('WorkerBriefBootstrapPort', () => {
           headers: new Headers(init?.headers),
           url,
         });
-        const payload = url.endsWith('/workspaces/lumen-skin')
+        const payload = url.endsWith(`/workspaces/${workspaceRef}`)
           ? {
-              error: {
-                code: 'NOT_FOUND',
-                message: 'The requested resource was not found.',
-                request_id: 'request-brief-0001',
-                retryable: false,
+              data: {
+                workspace: {
+                  created_at: timestamp,
+                  created_by: 'user-live',
+                  daily_spend_cap_micros: 25_000_000,
+                  id: workspaceRef,
+                  name: 'Lumen Skin',
+                  per_run_spend_cap_micros: 8_000_000,
+                  slug: 'lumen-skin',
+                  status: 'active',
+                  updated_at: timestamp,
+                },
               },
+              meta: { request_id: 'request-brief-0001' },
             }
-          : url.endsWith('/workspaces')
+          : url.endsWith('/projects')
             ? {
-                data: { workspace_id: 'workspace-live', role: 'owner' },
+                data: {
+                  project: {
+                    brand_kit_id: null,
+                    brief_id: null,
+                    created_at: timestamp,
+                    created_by: 'user-live',
+                    id: 'project-live',
+                    name: 'Lumen Skin launch pack',
+                    status: 'active',
+                    updated_at: timestamp,
+                    workspace_id: workspaceRef,
+                  },
+                },
                 meta: { request_id: 'request-brief-0001' },
               }
-            : url.endsWith('/projects')
-              ? {
-                  data: {
-                    project: {
-                      brand_kit_id: null,
-                      brief_id: null,
-                      created_at: timestamp,
-                      created_by: 'user-live',
-                      id: 'project-live',
-                      name: 'Lumen Skin launch pack',
-                      status: 'active',
-                      updated_at: timestamp,
-                      workspace_id: 'workspace-live',
-                    },
-                  },
-                  meta: { request_id: 'request-brief-0001' },
-                }
-              : {
-                  data: {
-                    canvasId: 'canvas-live',
-                    revisionId: 'revision-live',
-                    canonicalHash: 'a'.repeat(64),
-                  },
-                  meta: { request_id: 'request-brief-0001' },
-                };
+            : {
+                data: {
+                  canvasId: 'canvas-live',
+                  revisionId: 'revision-live',
+                  canonicalHash: 'a'.repeat(64),
+                },
+                meta: { request_id: 'request-brief-0001' },
+              };
         return new Response(JSON.stringify(payload), {
-          status: 'error' in payload ? 404 : url.endsWith('/canvases') ? 201 : 200,
+          status: url.endsWith('/canvases') ? 201 : 200,
           headers: { 'content-type': 'application/json' },
         });
       },
@@ -66,24 +70,22 @@ describe('WorkerBriefBootstrapPort', () => {
 
     await expect(
       new WorkerBriefBootstrapPort(client).bootstrap({
-        workspaceRef: 'lumen-skin',
+        workspaceRef,
         campaignName: 'Lumen Skin launch pack',
       }),
     ).resolves.toEqual({
       type: 'ok',
-      workspaceId: 'workspace-live',
+      workspaceId: workspaceRef,
       projectId: 'project-live',
       canvasId: 'canvas-live',
       revisionId: 'revision-live',
     });
     expect(calls.map(({ url }) => url)).toEqual([
-      'https://api.example.test/v1/workspaces/lumen-skin',
-      'https://api.example.test/v1/workspaces',
-      'https://api.example.test/v1/workspaces/workspace-live/projects',
+      `https://api.example.test/v1/workspaces/${workspaceRef}`,
+      `https://api.example.test/v1/workspaces/${workspaceRef}/projects`,
       'https://api.example.test/v1/projects/project-live/canvases',
     ]);
     expect(calls.slice(1).every(({ headers }) => headers.has('idempotency-key'))).toBe(true);
-    expect(JSON.parse(calls[1]?.body ?? '{}')).toEqual({ name: 'lumen skin' });
   });
 
   it('applies the launch-pack graph onto the new canvas instead of leaving the empty brief root', async () => {
@@ -117,19 +119,6 @@ describe('WorkerBriefBootstrapPort', () => {
       fetch: async (input, init) => {
         const url = String(input);
         calls.push(`${init?.method ?? 'GET'} ${url}`);
-        if (url.endsWith('/workspaces/campaign')) {
-          return new Response(
-            JSON.stringify({
-              error: {
-                code: 'NOT_FOUND',
-                message: 'The requested resource was not found.',
-                request_id: 'request-brief-0002',
-                retryable: false,
-              },
-            }),
-            { status: 404, headers: { 'content-type': 'application/json' } },
-          );
-        }
         if (url.endsWith('/workspaces')) {
           return new Response(
             JSON.stringify({
@@ -224,6 +213,8 @@ describe('WorkerBriefBootstrapPort', () => {
       canvasId: 'canvas-live',
       revisionId: 'revision-pack',
     });
+    expect(calls[0]).toBe('POST https://api.example.test/v1/workspaces');
+    expect(calls).not.toContain('GET https://api.example.test/v1/workspaces/campaign');
     expect(calls.some((entry) => entry.includes('/patches'))).toBe(true);
   });
 
@@ -258,22 +249,10 @@ describe('WorkerBriefBootstrapPort', () => {
       fetch: async (input, init) => {
         const url = String(input);
         calls.push(`${init?.method ?? 'GET'} ${url}`);
-        if (url.endsWith('/workspaces/campaign')) {
+        if (url.endsWith('/workspaces')) {
           return new Response(
             JSON.stringify({
-              data: {
-                workspace: {
-                  created_at: '2026-08-17T12:00:00.000Z',
-                  created_by: 'user-live',
-                  daily_spend_cap_micros: 25_000_000,
-                  id: 'workspace-live',
-                  name: 'Campaign',
-                  per_run_spend_cap_micros: 8_000_000,
-                  slug: 'campaign',
-                  status: 'active',
-                  updated_at: '2026-08-17T12:00:00.000Z',
-                },
-              },
+              data: { workspace_id: 'workspace-live', role: 'owner' },
               meta: { request_id: 'request-brief-0003' },
             }),
             { status: 200, headers: { 'content-type': 'application/json' } },
@@ -387,6 +366,93 @@ describe('WorkerBriefBootstrapPort', () => {
       canvasId: 'canvas-seeded',
       revisionId: 'revision-refreshed',
     });
+    expect(calls[0]).toBe('POST https://api.example.test/v1/workspaces');
+    expect(calls).not.toContain('GET https://api.example.test/v1/workspaces/campaign');
     expect(calls.some((entry) => entry.includes('/patches'))).toBe(true);
+  });
+
+  it('fails closed for a non-sentinel, non-UUID workspace reference', async () => {
+    let calls = 0;
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-brief-invalid',
+      fetch: async () => {
+        calls += 1;
+        throw new Error('fetch should not be called');
+      },
+    });
+
+    await expect(
+      new WorkerBriefBootstrapPort(client).bootstrap({
+        workspaceRef: 'campaign-typo',
+        campaignName: 'Campaign',
+      }),
+    ).resolves.toEqual({ type: 'forbidden' });
+    expect(calls).toBe(0);
+  });
+
+  it('does not create a replacement when a real workspace UUID is forbidden', async () => {
+    const workspaceRef = '22222222-2222-4222-8222-222222222222';
+    const calls: string[] = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-brief-forbidden',
+      fetch: async (input, init) => {
+        calls.push(`${init?.method ?? 'GET'} ${String(input)}`);
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: 'FORBIDDEN',
+              message: 'Access denied.',
+              request_id: 'request-brief-forbidden',
+              retryable: false,
+            },
+          }),
+          { status: 403, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+
+    await expect(
+      new WorkerBriefBootstrapPort(client).bootstrap({
+        workspaceRef,
+        campaignName: 'Campaign',
+      }),
+    ).resolves.toEqual({ type: 'forbidden' });
+    expect(calls).toEqual([`GET https://api.example.test/v1/workspaces/${workspaceRef}`]);
+  });
+
+  it('does not create a replacement when a real workspace UUID is missing', async () => {
+    const workspaceRef = '33333333-3333-4333-8333-333333333333';
+    const calls: string[] = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-brief-missing',
+      fetch: async (input, init) => {
+        calls.push(`${init?.method ?? 'GET'} ${String(input)}`);
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: 'NOT_FOUND',
+              message: 'The requested resource was not found.',
+              request_id: 'request-brief-missing',
+              retryable: false,
+            },
+          }),
+          { status: 404, headers: { 'content-type': 'application/json' } },
+        );
+      },
+    });
+
+    await expect(
+      new WorkerBriefBootstrapPort(client).bootstrap({
+        workspaceRef,
+        campaignName: 'Campaign',
+      }),
+    ).resolves.toEqual({ type: 'forbidden' });
+    expect(calls).toEqual([`GET https://api.example.test/v1/workspaces/${workspaceRef}`]);
   });
 });

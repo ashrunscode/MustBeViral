@@ -178,10 +178,21 @@ export function slugify(value: string): string {
   return slug.length > 0 ? slug : 'workspace';
 }
 
+async function sha256Bytes(value: string): Promise<Uint8Array> {
+  return new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)));
+}
+
+async function workspaceSlug(name: string, actorId: string): Promise<string> {
+  if (name !== 'Campaign') return slugify(name);
+
+  const fingerprint = [...(await sha256Bytes(`mustbeviral:campaign-workspace:v1\u0000${actorId}`))]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+  return `campaign-${fingerprint}`;
+}
+
 async function deterministicUuid(value: string): Promise<string> {
-  const digest = new Uint8Array(
-    await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)),
-  ).slice(0, 16);
+  const digest = (await sha256Bytes(value)).slice(0, 16);
   digest[6] = ((digest[6] ?? 0) & 0x0f) | 0x50;
   digest[8] = ((digest[8] ?? 0) & 0x3f) | 0x80;
   const hex = [...digest].map((byte) => byte.toString(16).padStart(2, '0')).join('');
@@ -780,7 +791,7 @@ function createResourcePort(
     async createWorkspace(input) {
       const result = await executor.rpc('create_workspace', {
         p_name: input.name,
-        p_slug: slugify(input.name),
+        p_slug: await workspaceSlug(input.name, input.context.actor_id),
         p_idempotency_key: input.idempotency_key,
         p_request_id: input.context.request_id,
       });

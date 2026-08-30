@@ -166,6 +166,79 @@ describe('WorkerRunStartPort', () => {
       explanation: expect.stringContaining('No provider work was submitted'),
     });
   });
+
+  it('locks an uncertain post-submission transport failure for reconciliation', async () => {
+    const fetch = vi.fn(async () => {
+      throw new TypeError('connection closed after request submission');
+    });
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-start-uncertain',
+      fetch,
+    });
+    const quote = { ...createGoldenQuote(1_000), id: 'quote-uncertain' };
+    const port = new WorkerRunStartPort(client, () => 'start-idem-uncertain');
+
+    await expect(port.confirm({ quote, acknowledged: true, nowMs: 2_000 })).resolves.toEqual({
+      type: 'reconciliation_required',
+      quoteId: 'quote-uncertain',
+      message: expect.stringContaining('Do not submit this paid operation again'),
+    });
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('requires a fresh explicit confirmation after session expiry without replaying start_run', async () => {
+    let sessionActive = false;
+    const startRequests: Array<Readonly<{ headers: Headers; url: string }>> = [];
+    const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      startRequests.push({ headers: new Headers(init?.headers), url: String(input) });
+      return new Response(
+        JSON.stringify({
+          data: {
+            run: {
+              runId: 'run-live',
+              projectId: 'project-live',
+              canvasId: 'canvas-live',
+              canvasRevisionId: 'revision-live',
+              quoteId: 'quote-live',
+              status: 'queued',
+              reservationId: 'reservation-live',
+            },
+          },
+          meta: { request_id: 'request-start-session' },
+        }),
+        { status: 200, headers: { 'content-type': 'application/json' } },
+      );
+    });
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => (sessionActive ? 'session-token' : null),
+      createRequestId: () => 'request-start-session',
+      fetch,
+    });
+    const createIdempotencyKey = vi.fn(() => 'start-idem-session');
+    const quote = { ...createGoldenQuote(1_000), id: 'quote-live', revision: 'revision-live' };
+    const port = new WorkerRunStartPort(client, createIdempotencyKey);
+
+    await expect(port.confirm({ quote, acknowledged: true, nowMs: 2_000 })).resolves.toEqual({
+      type: 'session_expired',
+    });
+    expect(fetch).not.toHaveBeenCalled();
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(1);
+
+    sessionActive = true;
+    expect(fetch).not.toHaveBeenCalled();
+    await expect(port.confirm({ quote, acknowledged: true, nowMs: 2_000 })).resolves.toEqual({
+      type: 'ok',
+      runId: 'run-live',
+      acceptedMaximumMicros: quote.totalMicros,
+    });
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(startRequests[0]?.url).toContain('quote-live');
+    expect(startRequests[0]?.headers.get('idempotency-key')).toBe('start-idem-session');
+    expect(createIdempotencyKey).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe('WorkerRunPort', () => {
