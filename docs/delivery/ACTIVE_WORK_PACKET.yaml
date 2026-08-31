@@ -3,7 +3,7 @@ id: WP-P0-001
 spec_revision: 4
 title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
 phase: P0
-status: blocked
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Complete remaining P0 implementable product (onboarding, last-mile Studio, measurement
@@ -358,12 +358,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p0-008-p1a-successor-handoff
-  next_action: Operator must commit the finish-sprint tree, then run corepack pnpm agent:verify and
-    corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml.
-    Continue WP-P1A-001 with Resend auth SMTP wiring and production deploy evidence.
-  blockers:
-    - finish-requires-clean-commit — agent:finish requires a clean committed predecessor tree per
-      governance policy.
+  next_action: Run corepack pnpm agent:finish --successor
+    governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml to activate WP-P1A-001.
+  blockers: []
   changed_paths:
     - packages/billing/src/entitlements.ts
     - packages/billing/src/stripe-settlement.ts

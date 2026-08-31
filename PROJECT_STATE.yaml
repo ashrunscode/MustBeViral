@@ -4,20 +4,17 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
-project_state: blocked
+project_state: active
 phase:
   id: P0
   title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
-  state: blocked
+  state: active
 release_target: P0
 active_work_packet: WP-P0-001
-next_action: Operator must commit the finish-sprint tree, then run corepack pnpm agent:verify and
-  corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml.
-  Continue WP-P1A-001 with Resend auth SMTP wiring and production deploy evidence.
+next_action: Run corepack pnpm agent:finish --successor
+  governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml to activate WP-P1A-001.
 decisions_pending: []
-blockers:
-  - finish-requires-clean-commit — agent:finish requires a clean committed predecessor tree per
-    governance policy.
+blockers: []
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
