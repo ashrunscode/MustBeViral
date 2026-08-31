@@ -11,8 +11,7 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P2-001
-next_action: Prove collaboration drafts checkpoint into new immutable Postgres revisions and never
-  mutate history or bypass expected_revision_id.
+next_action: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
 decisions_pending: []
 blockers: []
 legacy:
