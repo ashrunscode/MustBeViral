@@ -50,4 +50,15 @@ P4 may introduce agency accounts, client approval portals, white-labeling, multi
 - Full multiplayer and mobile graph editing.
 - Multiple planning agents, autonomous provider access, or agent access to database, storage, and billing credentials.
 
+## Remaining finish-sprint sequence
+
+Remaining accepted engineering work, in order, is:
+
+1. P0 last-mile product: signed-out story, auth completeness including honest closed-enrollment signup, brief onboarding, continue-this-campaign, measurement and landed-cost instrumentation.
+2. P1a paid single-user product as defined above.
+3. P1b programmable surface as defined above.
+4. P2 collaboration as defined above.
+
+P3 and P4 stay evidence-driven or deferred. Connected social publishing, Drive import, and auto-publishing are not in this sequence until a separately accepted product/architecture change.
+
 Scope can expand only through a product/architecture change linked to measured evidence and a new or superseding decision. An implementation packet cannot promote deferred work by convenience.

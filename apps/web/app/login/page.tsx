@@ -12,6 +12,7 @@ const notices: Readonly<Record<string, string>> = {
   auth_link_failed: 'That sign-in link could not be verified. Sign in to continue.',
   password_updated: 'Password updated. Sign in with your new password.',
   rate_limited: 'Too many auth attempts. Wait a moment, then try again.',
+  verification_sent: 'If the account exists, a new verification email is on the way.',
   recovery_sent: 'If the account exists, recovery instructions are on the way.',
   sign_out_failed: 'Sign-out did not complete. Try again before closing this browser.',
 };
@@ -65,6 +66,17 @@ export default async function LoginPage({
             <div className="auth-links">
               <a className="auth-link" href={forgotPasswordUrl}>
                 Forgot password?
+              </a>
+              <span aria-hidden="true">·</span>
+              <a className="auth-link" href="/signup">
+                Request access
+              </a>
+              <span aria-hidden="true">·</span>
+              <a
+                className="auth-link"
+                href={`/verify-email?${new URLSearchParams({ next }).toString()}`}
+              >
+                Verify email
               </a>
             </div>
           </>

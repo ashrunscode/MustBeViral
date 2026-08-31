@@ -77,9 +77,14 @@ Video may complete after the static pack and must appear as a clearly labeled pa
 
 ## Product-validation success
 
-P0 is a go only when 20 representative briefs and 5–8 qualified users prove the technical,
-usability, quality, economic, and paid-demand gates in `quality-gates`. A technically functioning
-workflow is insufficient if users reject the outputs, cost exceeds the target, or no qualified DTC
-customer or design partner has sanitized durable evidence that it will use staging and either
-intends to pay or has agreed commercial terms. Actual payment and Stripe are not required in P0;
-the qualification and commitment evidence is.
+P0 **product-validation success** is a go only when 20 representative briefs and 5–8 qualified users
+prove the technical, usability, quality, economic, and paid-demand gates in `quality-gates`. A
+technically functioning workflow is insufficient to claim that success if users reject the outputs,
+cost exceeds the target, or no qualified DTC customer or design partner has sanitized durable
+evidence that it will use staging and either intends to pay or has agreed commercial terms. Actual
+payment and Stripe are not required in P0; the qualification and commitment evidence is.
+
+Those human gates remain a parallel appendix. They do not stall remaining accepted product
+implementation (onboarding, last-mile Studio, P1a paid product, P1b integrations, P2 collaboration).
+The engineering next action is the finish sprint in `docs/delivery/CODEX_FINISH_MEGA_PROMPT.md`, not
+partner EV recording.

@@ -779,7 +779,8 @@ export function ReviewFlow({
         ) : null}
         {!loading && result === null && groups.length === 0 ? (
           <div className={styles.reviewError} role="status" data-result="empty">
-            This run has no reviewable provider outputs yet.
+            <span>This run has no reviewable provider outputs yet.</span>
+            <Link href={`/studio/${workspace}/quote`}>Return to quote and run progress</Link>
           </div>
         ) : null}
         {composed ? (

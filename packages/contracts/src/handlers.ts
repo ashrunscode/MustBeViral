@@ -3,7 +3,10 @@ import {
   deriveIdempotencyKey,
   quoteExpiryState,
   assembleQuote,
+  evaluateQuoteEntitlements,
+  evaluateStartRunEntitlements,
   usdMicros,
+  type BillingEntitlementBlockReason,
   type ImmutableRunQuote,
   type ReservationCapExceeded,
 } from '@mustbeviral/billing';
@@ -61,6 +64,10 @@ export interface ExpiredQuoteResult {
   readonly quoteId: string;
   readonly expiredAt: string;
 }
+export interface BillingBlockedResult {
+  readonly status: 'billing_blocked';
+  readonly reason: BillingEntitlementBlockReason;
+}
 export interface CapExceededResult extends ReservationCapExceeded {
   readonly status: 'cap_exceeded';
 }
@@ -116,7 +123,8 @@ export type QuoteRunResult =
   | ForbiddenResult
   | NotFoundResult
   | ConflictResult
-  | GraphInvalidResult;
+  | GraphInvalidResult
+  | BillingBlockedResult;
 
 export type StartRunResult =
   | Readonly<{ status: 'ok'; run: RunRecord }>
@@ -125,7 +133,8 @@ export type StartRunResult =
   | ConflictResult
   | ExpiredQuoteResult
   | CapExceededResult
-  | InsufficientBalanceResult;
+  | InsufficientBalanceResult
+  | BillingBlockedResult;
 
 export type GetRunResult =
   | Readonly<{
@@ -503,6 +512,25 @@ export function createCommandHandlers(ports: HandlerPorts) {
             catalogPrices: plan.prices,
             nodes: plan.nodes,
           });
+          const exposure = await ports.billing.get(command.context);
+          const quoteEntitlements = evaluateQuoteEntitlements(
+            exposure.entitlements,
+            assembledQuote.maximumChargeMicros,
+          );
+          if (quoteEntitlements.status === 'blocked') {
+            await audit(
+              ports,
+              command.context,
+              'quote_run',
+              'billing_blocked',
+              'canvas',
+              command.canvas_id,
+              {
+                reason: quoteEntitlements.reason,
+              },
+            );
+            return { status: 'billing_blocked', reason: quoteEntitlements.reason };
+          }
           const storedQuote = await ports.quotes.save(
             command.context,
             {
@@ -520,7 +548,6 @@ export function createCommandHandlers(ports: HandlerPorts) {
             quoteId: quote.quoteId,
             maximumChargeMicros: quote.maximumChargeMicros,
           });
-          const exposure = await ports.billing.get(command.context);
           await audit(ports, command.context, 'quote_run', 'ok', 'quote', quote.quoteId, {
             canvas_revision_id: quote.canvasRevisionId,
             price_catalog_version_id: quote.priceCatalogVersionId,
@@ -573,6 +600,24 @@ export function createCommandHandlers(ports: HandlerPorts) {
             return { status: 'conflict', reason: 'quote_stale', actual: canvas.headRevisionId };
           }
           const exposure = await ports.billing.get(command.context);
+          const startEntitlements = evaluateStartRunEntitlements(
+            exposure.entitlements,
+            quote.maximumChargeMicros,
+          );
+          if (startEntitlements.status === 'blocked') {
+            await audit(
+              ports,
+              command.context,
+              'start_run',
+              'billing_blocked',
+              'quote',
+              quote.quoteId,
+              {
+                reason: startEntitlements.reason,
+              },
+            );
+            return { status: 'billing_blocked', reason: startEntitlements.reason };
+          }
           if (quote.maximumChargeMicros > exposure.availableBalanceMicros) {
             return {
               status: 'cap_exceeded',

@@ -18,12 +18,17 @@ doc_id: roadmap
 ## Sequence rules
 
 - R0 authority precedes scaffold implementation; D0 design precedes production UI.
-- P0 proves user value with real providers and private artifacts before paid-platform breadth.
+- P0 engineering completeness (real providers, private artifacts, last-mile onboarding, measurement instrumentation) precedes P1a paid-platform breadth.
+- P0 human product-validation (qualified evaluator sessions, usable-concept votes, partner commitment, operator go/no-go) remains required to claim P0 validation success. It is a parallel human appendix and does not stall remaining accepted product implementation.
 - P1a ships the paid web product before P1b expands programmable surfaces.
 - P2 collaboration does not alter Postgres revision authority.
-- Each optional infrastructure addition needs a recorded trigger, benchmark, rollback, and accepted decision.
-- Failed P0 value, cost, or paid-demand gates cause a pivot/stop review rather than automatic progression.
+- Each optional P3 infrastructure addition needs a recorded trigger, benchmark, rollback, and accepted decision. P4 agency expansion stays deferred until DTC retention evidence exists.
+- Failed P0 value, cost, or paid-demand evidence still blocks claiming validation success and blocks customer charging. It does not set the engineering next action to partner recruiting.
+
+## Finish sprint
+
+The remaining engineering sequence is P0 implementable product → P1a → P1b → P2. The paste-ready execution contract is `CODEX_FINISH_MEGA_PROMPT.md`. Successor packets live under `governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml`, `successor-WP-P1B-001.yaml`, and `successor-WP-P2-001.yaml`.
 
 ## Phase handoff
 
-Every exit replaces the active packet with an already-defined successor, updates `PROJECT_STATE.yaml` and `STATUS.md`, records evidence, regenerates traceability, and leaves exactly one next action. Effort estimates assume one strong technical founder using coding agents full-time; evidence and security gates are not compressed by parallelism.
+Every engineering exit replaces the active packet with an already-defined successor, updates `PROJECT_STATE.yaml` and `STATUS.md`, records evidence, regenerates traceability, and leaves exactly one next action. Effort estimates assume one strong technical founder using coding agents full-time; human evidence gates are not compressed by parallelism and are not an engineering stall.

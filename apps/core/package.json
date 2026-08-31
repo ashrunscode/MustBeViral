@@ -19,7 +19,9 @@
     "test:integration": "vitest run --config vitest.config.ts test/integration"
   },
   "dependencies": {
+    "@mustbeviral/billing": "workspace:*",
     "@mustbeviral/contracts": "workspace:*",
+    "@mustbeviral/telemetry": "workspace:*",
     "hono": "4.12.29"
   },
   "devDependencies": {

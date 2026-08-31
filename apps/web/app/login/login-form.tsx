@@ -3,8 +3,16 @@
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
-import { INITIAL_SIGN_IN_STATE } from '../../src/lib/auth/sign-in';
+import { INITIAL_SIGN_IN_STATE, type SignInStatus } from '../../src/lib/auth/sign-in';
 import { signInWithPassword } from './actions';
+
+function authMessageClass(status: SignInStatus): string {
+  if (status === 'idle') return 'auth-message';
+  if (status === 'verification_required' || status === 'rate_limited') {
+    return 'auth-message auth-message--notice';
+  }
+  return 'auth-message';
+}
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -31,8 +39,19 @@ export function LoginForm({ next }: Readonly<{ next: string }>) {
         type="password"
       />
       {state.message === undefined ? null : (
-        <p className={`auth-message auth-message--${state.status}`} role="alert">
+        <p className={authMessageClass(state.status)} role="alert">
           {state.message}
+          {state.status === 'verification_required' ? (
+            <>
+              {' '}
+              <a
+                className="auth-link"
+                href={`/verify-email?${new URLSearchParams({ next }).toString()}`}
+              >
+                Resend verification email
+              </a>
+            </>
+          ) : null}
         </p>
       )}
       <SubmitButton />

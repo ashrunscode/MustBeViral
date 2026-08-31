@@ -256,6 +256,19 @@ const InsufficientBalanceResultSchema = z
     requestedMicros: z.bigint().nonnegative(),
   })
   .strict();
+const BillingBlockedResultSchema = z
+  .object({
+    status: z.literal('billing_blocked'),
+    reason: z.enum([
+      'charging_disabled',
+      'generation_disabled',
+      'provider_routes_disabled',
+      'setup_fee_unpaid',
+      'subscription_inactive',
+      'insufficient_wallet',
+    ]),
+  })
+  .strict();
 
 export const ApplyCanvasPatchResultSchema = z.union([
   z
@@ -306,6 +319,7 @@ export const QuoteRunResultSchema = z.union([
   NotFoundResultSchema,
   ConflictResultSchema,
   GraphInvalidResultSchema,
+  BillingBlockedResultSchema,
 ]);
 
 export const StartRunResultSchema = z.union([
@@ -316,6 +330,7 @@ export const StartRunResultSchema = z.union([
   ExpiredQuoteResultSchema,
   CapExceededResultSchema,
   InsufficientBalanceResultSchema,
+  BillingBlockedResultSchema,
 ]);
 
 export const GetRunResultSchema = z.union([

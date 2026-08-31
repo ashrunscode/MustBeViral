@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P0
 active_packet: WP-P0-001
-current_step: p0-007-p0-gate-evaluation
-next_action: Operator records the ready partner under an existing EV-01 through EV-08 candidate ID in the approved private recruiting system, including complete qualification, durable staging-use and commercial-commitment evidence, and one verified recipient, then reruns staging enablement.
+current_step: p0-008-p1a-successor-handoff
+next_action: Operator must commit the finish-sprint + P1a tree (billing UI acceptance tests, deploy/telemetry evidence stubs), run pnpm agent:verify, then pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml. Continue WP-P1A-001 with Resend auth SMTP operator provisioning and production deploy with exact resource IDs.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

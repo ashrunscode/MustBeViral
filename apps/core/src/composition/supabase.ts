@@ -55,6 +55,7 @@ import type {
 import type { V1Operation } from '../routes/v1-table';
 import { buildLaunchCatalogQuotePlan } from './launch-catalog';
 import { mintConfirmationToken, verifyConfirmationToken } from './confirmation-token';
+import { createBillingEntitlementsPort } from './billing-entitlements';
 import { createPrivateRunExport } from './export';
 import { createFalWebhookIngestHandler } from './fal-ingest';
 import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
@@ -1114,10 +1115,17 @@ function createResourcePort(
 export function createSupabaseHandlerPorts(
   executor: SupabaseDataApiExecutor,
   repositories: DatabaseRepositories,
-  // Only the signing key, not the whole binding set: the handler ports must not grow ambient
-  // access to provider credentials through this seam.
-  bindings: Pick<CoreBindings, 'CONFIRMATION_SIGNING_KEY'>,
+  // Signing key plus Supabase credentials for kill-switch and entitlement reads.
+  bindings: Pick<
+    CoreBindings,
+    | 'CONFIRMATION_SIGNING_KEY'
+    | 'SUPABASE_URL'
+    | 'SUPABASE_SECRET_KEY'
+    | 'SUPABASE_SERVICE_ROLE_KEY'
+  >,
+  fetchImplementation?: typeof fetch,
 ): HandlerPorts {
+  const billingEntitlements = createBillingEntitlementsPort(bindings, fetchImplementation);
   return {
     authorization: {
       async authorize(context) {
@@ -1232,8 +1240,13 @@ export function createSupabaseHandlerPorts(
           repositories.billing.availableBalance(tenant),
           repositories.billing.dailyExposure(tenant, day.start, day.end),
         ]);
+        const availableBalanceMicros = usdMicros(BigInt(availableBalance));
+        const entitlements = await billingEntitlements.getForWorkspace(
+          context.workspace_id,
+          availableBalanceMicros,
+        );
         return {
-          availableBalanceMicros: usdMicros(BigInt(availableBalance)),
+          availableBalanceMicros,
           workspaceDayExposureMicros: usdMicros(BigInt(workspaceDayExposure)),
           // Caller-scoped RLS cannot observe other tenants; start_run_barrier remains global authority.
           globalDayExposureMicros: usdMicros(BigInt(workspaceDayExposure)),
@@ -1242,6 +1255,7 @@ export function createSupabaseHandlerPorts(
             workspaceDay: usdMicros(BigInt(workspace.daily_spend_cap_micros)),
             globalDay: DEFAULT_GLOBAL_DAY_CAP_MICROS,
           },
+          entitlements,
         };
       },
     },
@@ -1457,7 +1471,7 @@ export function createSupabaseRequestDependencies(
   });
   const repositories = createDatabaseRepositories(executor);
   const commands = createCommandHandlers(
-    createSupabaseHandlerPorts(executor, repositories, bindings),
+    createSupabaseHandlerPorts(executor, repositories, bindings, fetchImplementation),
   );
   const resources = createP0ResourceHandlers(
     createResourcePort(executor, repositories, bindings, fetchImplementation),

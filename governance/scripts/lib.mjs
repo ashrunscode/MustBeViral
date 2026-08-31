@@ -131,6 +131,8 @@ export function pathMatches(value, patterns) {
 
 const WINDOWS_NPM_SHIMS = new Set(['corepack', 'npm', 'npx', 'pnpm']);
 
+let pnpmInvocationCache = new Map();
+
 export function resolveCommandName(commandName, platform = process.platform) {
   return platform === 'win32' && WINDOWS_NPM_SHIMS.has(commandName.toLowerCase())
     ? `${commandName}.cmd`
@@ -141,12 +143,56 @@ export function commandUsesShell(commandName, platform = process.platform) {
   return platform === 'win32' && resolveCommandName(commandName, platform).endsWith('.cmd');
 }
 
+function pnpmDirectlyAvailable(platform = process.platform) {
+  const result = spawnSync(resolveCommandName('pnpm', platform), ['--version'], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    stdio: 'pipe',
+    shell: commandUsesShell('pnpm', platform),
+  });
+  return result.status === 0;
+}
+
+export function resolveCommandInvocation(commandName, args, platform = process.platform) {
+  if (commandName !== 'pnpm') {
+    return {
+      command: resolveCommandName(commandName, platform),
+      args,
+      shell: commandUsesShell(commandName, platform),
+    };
+  }
+
+  if (!pnpmInvocationCache.has(platform)) {
+    if (platform !== 'win32' || pnpmDirectlyAvailable(platform)) {
+      pnpmInvocationCache.set(platform, {
+        command: resolveCommandName('pnpm', platform),
+        prefixArgs: [],
+        shell: commandUsesShell('pnpm', platform),
+      });
+    } else {
+      pnpmInvocationCache.set(platform, {
+        command: resolveCommandName('corepack', platform),
+        prefixArgs: ['pnpm'],
+        shell: commandUsesShell('corepack', platform),
+      });
+    }
+  }
+
+  const cached = pnpmInvocationCache.get(platform);
+  return {
+    command: cached.command,
+    args: [...cached.prefixArgs, ...args],
+    shell: cached.shell,
+  };
+}
+
 export function command(commandName, args, options = {}) {
-  const result = spawnSync(resolveCommandName(commandName), args, {
+  const invocation = resolveCommandInvocation(commandName, args);
+  const result = spawnSync(invocation.command, invocation.args, {
     cwd: repoRoot,
     encoding: 'utf8',
     stdio: options.capture ? 'pipe' : 'inherit',
-    shell: commandUsesShell(commandName),
+    shell: invocation.shell,
     env: { ...process.env, ...options.env },
   });
   return {

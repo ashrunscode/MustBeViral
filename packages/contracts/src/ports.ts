@@ -5,6 +5,7 @@ import type {
   QuoteNodeRequest,
   SpendCaps,
   UsdMicros,
+  BillingEntitlementsSnapshot,
 } from '@mustbeviral/billing';
 import type { RunNodeState, RunState } from '@mustbeviral/domain';
 import type { GraphSnapshot, GraphValidationIssue } from '@mustbeviral/graph';
@@ -181,6 +182,7 @@ export interface BillingExposurePort {
       workspaceDayExposureMicros: UsdMicros;
       globalDayExposureMicros: UsdMicros;
       caps: SpendCaps;
+      entitlements: BillingEntitlementsSnapshot;
     }>
   >;
 }

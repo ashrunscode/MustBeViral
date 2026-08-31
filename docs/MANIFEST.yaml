@@ -268,6 +268,15 @@ documents:
     review_triggers: [packet_started, packet_handed_off, packet_completed, packet_blocked]
     supersedes: []
 
+  - id: codex-finish-mega-prompt
+    path: docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    kind: delivery
+    status: accepted
+    owner: delivery
+    authority_topics: [delivery.finish_sprint_prompt]
+    review_triggers: [packet_started, packet_handed_off, phase_changed]
+    supersedes: []
+
   - id: local-env-secrets
     path: docs/operations/LOCAL_ENV_AND_SECRETS.md
     kind: runbook

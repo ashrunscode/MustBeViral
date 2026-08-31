@@ -14,6 +14,8 @@ const routeLabels: Readonly<Record<string, string>> = {
   review: 'Review',
   compare: 'Compare',
   receipt: 'Receipt',
+  billing: 'Billing',
+  internal: 'Internal',
 };
 
 function titleCaseWorkspace(workspace: string) {

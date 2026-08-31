@@ -12,14 +12,14 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P0 — Real Meta Campaign Launch Pack vertical slice and private MCP proof (in_progress) |
+| Phase | P0 — Real Meta Campaign Launch Pack vertical slice and private MCP proof (blocked) |
 | Active packet | `WP-P0-001` |
-| Current step | `p0-007-p0-gate-evaluation` |
+| Current step | `p0-008-p1a-successor-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
-| Blockers | Live GB-02 16/16 is retired. Probe 17145ccd still content_policy_violation after the closed-packaging master-2 direction on Worker 872ac183. Do not pay GB-02 again. Harness 16/20 still stands. Evidence governance/evidence/WP-P0-001/fail-evaluation/17145ccd.md.; Buyer last mile ZIP/copy/header/upload remains available in current staging. Official fal-ai/flux-2-pro input has no image_url; packshot bytes cannot ride the pinned T2I route. Live Reject is already not offered. Evidence governance/evidence/WP-P0-001/packshot-upload-staging-walk.md.; Production-segment Web Vitals are unmeasured, and P0 cannot mark them passed until an accepted measurement/sequencing path preserves the evidence standard without promoting V2 or cutting legacy traffic outside the P1a production packet. usable-pack-landed-cost remains pending: catalog 4,550,000 micros is the customer charge, not a fal invoice, and no pack has a qualified usable vote. Evidence governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md.; P0 exit is gated on people. Five-to-eight qualified evaluator sessions are PENDING. Operator self-sessions do not count. The qualified DTC customer/design-partner commitment gate remains pending until sanitized durable staging-use plus intent-to-pay or agreed-commercial-terms evidence exists; actual payment and Stripe are not required in P0. The decision alone does not pass the gate. An explicit go/no-go is still required. See governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md.; P1a charging must use the fully-landed margin guardrail (at most $1.82 per pack for 60% margin), not the looser $5 gate.; Staging migration HISTORY still diverges from repository filenames. It stays untouched for the rest of P0 per operator decision 2026-08-11. |
+| Blockers | finish-requires-clean-commit — agent:finish requires a clean committed predecessor tree per governance policy. |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Operator records the ready partner under an existing EV-01 through EV-08 candidate ID in the approved private recruiting system, including complete qualification, durable staging-use and commercial-commitment evidence, and one verified recipient, then reruns staging enablement.
+Operator must commit the finish-sprint + P1a tree (billing UI acceptance tests, deploy/telemetry evidence stubs), run pnpm agent:verify, then pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml. Continue WP-P1A-001 with Resend auth SMTP operator provisioning and production deploy with exact resource IDs.

@@ -11,6 +11,7 @@ import {
   commandUsesShell,
   hasAbsolutePath,
   pathMatches,
+  resolveCommandInvocation,
   resolveCommandName,
 } from '../scripts/lib.mjs';
 
@@ -76,6 +77,13 @@ test('uses cmd shims for npm-family tools only on Windows', () => {
   assert.equal(commandUsesShell('pnpm', 'win32'), true);
   assert.equal(commandUsesShell('git', 'win32'), false);
   assert.equal(commandUsesShell('pnpm', 'linux'), false);
+});
+
+test('resolveCommandInvocation keeps pnpm args on POSIX', () => {
+  const invocation = resolveCommandInvocation('pnpm', ['exec', 'turbo'], 'linux');
+  assert.equal(invocation.command, 'pnpm');
+  assert.deepEqual(invocation.args, ['exec', 'turbo']);
+  assert.equal(invocation.shell, false);
 });
 
 test('rejects duplicate authority ownership', () => {

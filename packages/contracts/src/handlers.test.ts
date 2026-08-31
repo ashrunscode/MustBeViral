@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { usdMicros, type SpendCaps } from '@mustbeviral/billing';
+import {
+  usdMicros,
+  DEFAULT_BILLING_ENTITLEMENTS,
+  type BillingEntitlementsSnapshot,
+  type SpendCaps,
+} from '@mustbeviral/billing';
 import { hashCanonicalGraph, type GraphSnapshot } from '@mustbeviral/graph';
 import { createCommandHandlers } from './handlers';
 import type {
@@ -46,6 +51,7 @@ class MemoryPorts {
     workspaceDay: usdMicros(25_000_000n),
     globalDay: usdMicros(100_000_000n),
   };
+  entitlements: BillingEntitlementsSnapshot = DEFAULT_BILLING_ENTITLEMENTS;
 
   constructor() {
     this.canvas = {
@@ -112,6 +118,7 @@ class MemoryPorts {
           workspaceDayExposureMicros: usdMicros(0n),
           globalDayExposureMicros: usdMicros(0n),
           caps: this.caps,
+          entitlements: this.entitlements,
         }),
       },
       confirmations: {
@@ -584,5 +591,73 @@ describe('command handler flows', () => {
     });
     expect(changed).toEqual({ status: 'conflict', reason: 'idempotency' });
     expect(memory.runsById).toHaveLength(1);
+  });
+
+  it('blocks quote_run when generation is disabled by kill switch', async () => {
+    const memory = new MemoryPorts();
+    memory.canvas = { ...memory.canvas, canonicalHash: await hashCanonicalGraph(briefGraph) };
+    memory.entitlements = {
+      ...DEFAULT_BILLING_ENTITLEMENTS,
+      generationEnabled: false,
+    };
+    const handlers = createCommandHandlers(memory.asPorts());
+    await handlers.applyCanvasPatch({
+      context,
+      canvas_id: 'canvas-1',
+      expected_revision_id: 'revision-0',
+      reason: 'Add first generation branch',
+      patch: {
+        upsert_nodes: [
+          {
+            id: 'image-1',
+            kind: 'image_generation',
+            parameter_schema_version: 1,
+            parameters: { prompt: 'Product hero' },
+          },
+        ],
+        upsert_edges: [
+          {
+            id: 'edge-1',
+            kind: 'dependency',
+            source_node_id: 'brief-1',
+            target_node_id: 'image-1',
+          },
+        ],
+      },
+      idempotency_key: 'patch-key',
+    });
+    const quote = await handlers.quoteRun({
+      context,
+      canvas_id: 'canvas-1',
+      expected_revision_id: memory.canvas.headRevisionId,
+      idempotency_key: 'quote-key',
+    });
+    expect(quote).toEqual({ status: 'billing_blocked', reason: 'generation_disabled' });
+  });
+
+  it('blocks start_run when paid entitlements fail under charging', async () => {
+    const memory = new MemoryPorts();
+    memory.entitlements = {
+      chargingEnabled: true,
+      generationEnabled: true,
+      providerRoutesEnabled: true,
+      walletBalanceMicros: 750_000n,
+      subscriptionStatus: 'active',
+      setupFeePaid: true,
+    };
+    const { handlers, quote } = await buildQuotedFlow(memory);
+    memory.entitlements = {
+      ...memory.entitlements,
+      walletBalanceMicros: 100_000n,
+    };
+    const result = await handlers.startRun({
+      context,
+      quote_id: quote.quoteId,
+      confirmed: true,
+      confirmation_token: 'confirmation-token-123',
+      idempotency_key: 'billing-key',
+    });
+    expect(result).toEqual({ status: 'billing_blocked', reason: 'insufficient_wallet' });
+    expect(memory.runsById).toHaveLength(0);
   });
 });

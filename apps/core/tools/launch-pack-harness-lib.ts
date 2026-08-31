@@ -396,6 +396,14 @@ export function createInMemoryHarnessTransport(
           workspaceDayExposureMicros: 0n,
           globalDayExposureMicros: 0n,
           caps: { run: RUN_CAP_MICROS, workspaceDay: 25_000_000n, globalDay: 100_000_000n },
+          entitlements: {
+            chargingEnabled: false,
+            generationEnabled: true,
+            providerRoutesEnabled: true,
+            walletBalanceMicros: 0n,
+            subscriptionStatus: 'none',
+            setupFeePaid: false,
+          },
         }) as BillingExposure,
     },
     confirmations: {

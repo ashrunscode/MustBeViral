@@ -51,6 +51,14 @@ export interface CoreBindings extends Omit<
   readonly MEDIA_BUCKET: R2Bucket;
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;
+  /** Stripe test-mode webhook signing secret. Fail-closed when absent. */
+  readonly STRIPE_WEBHOOK_SECRET?: string;
+  /** Optional Resend API key for transactional email; absent means disabled. */
+  readonly RESEND_API_KEY?: string;
+  readonly RESEND_FROM_ADDRESS?: string;
+  /** Optional Sentry DSN for error reporting; absent means disabled. */
+  readonly SENTRY_DSN?: string;
+  readonly OTEL_EXPORTER_OTLP_ENDPOINT?: string;
 }
 
 export interface CoreVariables {

@@ -1,5 +1,12 @@
 import { redirect } from 'next/navigation';
 
-export default function HomePage() {
-  redirect('/login');
+import { LandingPage } from '../src/components/landing-page';
+import { createServerSupabaseClient } from '../src/lib/supabase/server';
+
+export default async function HomePage() {
+  const supabase = await createServerSupabaseClient();
+  const { data } = await supabase.auth.getClaims();
+  if (typeof data?.claims?.sub === 'string') redirect('/studio');
+
+  return <LandingPage />;
 }

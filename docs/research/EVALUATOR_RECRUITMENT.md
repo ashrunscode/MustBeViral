@@ -6,6 +6,8 @@ doc_id: evaluator-recruitment
 
 This document defines the D0 evaluator cohort, recruitment method, and living recruitment record. It is an informative operating record, not proof that a pending candidate is qualified or recruited. Use candidate IDs only; keep names, contact details, brand names, and scheduling links in the approved private recruiting system.
 
+This recruiting track is human-only. It is not the engineering next action. Codex continues the product finish sprint in `docs/delivery/CODEX_FINISH_MEGA_PROMPT.md` while this log remains `PENDING`.
+
 ## Qualification definition
 
 Every evaluator must satisfy all of these criteria:

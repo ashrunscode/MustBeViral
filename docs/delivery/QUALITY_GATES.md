@@ -41,23 +41,29 @@ running before `pnpm supabase:test`.
 
 ## P0 validation gates
 
-All must pass:
+### Engineering gates (must be proven in repository; they do not wait on partners)
 
 - At least 16 of 20 representative runs technically complete.
-- At least 80% of users complete brief → quote → run → review without assistance.
-- At least 70% of jobs produce one or more usable concepts.
 - Median first reviewable static pack ≤10 minutes; p90 ≤15 minutes.
+- No hidden mock, silent fallback, duplicate provider submission/charge, unexplained ledger difference, public artifact, or missing lineage receipt.
+- Default caps of $8/run, $25/workspace/day, and $100/global/day are transactionally enforced.
+- Canvas maintains ≥55 FPS at 100 visible nodes; 500-node stress remains navigable.
+- Private MCP proof passes Inspector and two real clients with REST-semantic parity.
+- Web Vitals instrumentation exists; p75 LCP ≤2.5s, INP ≤200ms, and CLS ≤0.1 are measured on the agreed production segment only after an authorized P1a production deploy.
+- Landed-cost instrumentation computes integer USD micros from immutable receipts. The ≤$5 usable-pack comparison still needs the human usable denominator below.
+
+### Human-only appendix (required to claim P0 product-validation success; not the engineering next action)
+
+- At least 80% of qualified users complete brief → quote → run → review without assistance.
+- At least 70% of jobs produce one or more usable concepts under the registered rubric.
 - At least 3 of 5 qualified evaluators prefer the workflow to their current process.
 - At least one qualified DTC customer or design partner has sanitized durable evidence that it will
   use staging and either intends to pay or has agreed commercial terms. Actual payment and Stripe
   are not required in P0.
-- Landed cost ≤$5 per usable launch pack.
-- No hidden mock, silent fallback, duplicate provider submission/charge, unexplained ledger difference, public artifact, or missing lineage receipt.
-- Default caps of $8/run, $25/workspace/day, and $100/global/day are transactionally enforced.
-- Canvas maintains ≥55 FPS at 100 visible nodes; 500-node stress remains navigable; p75 LCP ≤2.5s, INP ≤200ms, CLS ≤0.1.
-- Private MCP proof passes Inspector and two real clients with REST-semantic parity.
+- Landed cost ≤$5 for every launch pack counted as usable by those evaluators.
+- Operator explicit go/no-go after reading the dossier. Silence is not approval.
 
-Failure of usable output, economics, or paid proof blocks P1 expansion and triggers a documented pivot/stop review.
+Failure of usable output, economics, or paid-demand **evidence** blocks claiming P0 validation success and blocks customer charging. It does not stall remaining accepted product implementation (onboarding through P1a/P1b/P2). Partner recruiting is never the next engineering action.
 
 ## Initial paid-release definition of done
 

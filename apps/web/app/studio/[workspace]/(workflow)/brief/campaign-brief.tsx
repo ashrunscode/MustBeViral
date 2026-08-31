@@ -104,6 +104,7 @@ function SectionFields({
   dataMode,
   draft,
   onUploadPackshot,
+  packshotStatus,
   section,
   setDraft,
   uploadBusy,
@@ -112,6 +113,7 @@ function SectionFields({
   dataMode: 'preview' | 'worker';
   draft: BriefDraft;
   onUploadPackshot?: (file: File) => Promise<void>;
+  packshotStatus?: 'none' | 'uploading' | 'ready' | 'quarantined' | 'missing_rights';
   section: SectionId;
   setDraft: (updater: (current: BriefDraft) => BriefDraft) => void;
   uploadBusy?: boolean;
@@ -304,6 +306,12 @@ function SectionFields({
                   <span>{uploadMessage}</span>
                 </div>
               ) : null}
+              {packshotStatus === 'quarantined' ? (
+                <Chip status="failed">Packshot quarantined — resolve upload before planning</Chip>
+              ) : null}
+              {packshotStatus === 'missing_rights' ? (
+                <Chip status="failed">Missing rights attestation — execution blocked</Chip>
+              ) : null}
             </label>
           ) : null}
         </div>
@@ -463,6 +471,10 @@ export function CampaignBrief({
   const [bootstrapping, setBootstrapping] = useState(false);
   const [uploadBusy, setUploadBusy] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
+  const [packshotStatus, setPackshotStatus] = useState<
+    'none' | 'uploading' | 'ready' | 'quarantined' | 'missing_rights'
+  >('none');
+  const [firstUse, setFirstUse] = useState(dataMode === 'worker');
   const validation = useMemo(() => BriefDraftSchema.safeParse(draft), [draft]);
   const missingItems = missingBriefItems(draft);
   const flags = briefCompletionFlags(draft);
@@ -477,8 +489,11 @@ export function CampaignBrief({
         if (!active) return;
         if (savedDraft !== null) {
           setDraftState(savedDraft);
+          setFirstUse(false);
           setActiveSection(firstIncompleteBriefSection(savedDraft) ?? 'productTruth');
           setSaveState('saved');
+        } else {
+          setFirstUse(true);
         }
         setDraftLoadState('ready');
       })
@@ -537,6 +552,12 @@ export function CampaignBrief({
 
   async function validateBrief() {
     if (!validation.success) return;
+    if (!draft.assets.rightsAttested) {
+      setDraftMessage('Execution stays blocked until asset-rights attestation is checked.');
+      setActiveSection('assets');
+      setPackshotStatus('missing_rights');
+      return;
+    }
     if (bootstrapPort === null) {
       setValidated(true);
       return;
@@ -572,6 +593,7 @@ export function CampaignBrief({
     if (bootstrapPort === null) return;
     setUploadBusy(true);
     setUploadMessage(null);
+    setPackshotStatus('uploading');
     try {
       let projectId = bootstrapResult?.type === 'ok' ? bootstrapResult.projectId : undefined;
       if (projectId === undefined) {
@@ -604,7 +626,14 @@ export function CampaignBrief({
           squarePackshotReady: true,
         },
       }));
+      setPackshotStatus('ready');
+      setUploadMessage(
+        'Packshot stored privately. Bytes are shown in the brief but do not ride flux-2-pro as image_url.',
+      );
     } catch (error) {
+      const quarantined =
+        error instanceof PackshotUploadError && (error.code === 'sign' || error.code === 'put');
+      setPackshotStatus(quarantined ? 'quarantined' : 'missing_rights');
       setUploadMessage(
         error instanceof PackshotUploadError
           ? error.message
@@ -627,6 +656,15 @@ export function CampaignBrief({
   return (
     <>
       <main id="main-content" className={styles.main}>
+        {firstUse ? (
+          <div className={styles.firstUseBanner} role="status">
+            <MonoCaps>First use</MonoCaps>
+            <p>
+              Complete each required brief section before spend. Every field explains why it matters
+              for planning, rights, and the named-price quote.
+            </p>
+          </div>
+        ) : null}
         <nav className={styles.rail} aria-label="Brief sections">
           <h2>Brief sections</h2>
           <div className={styles.steps}>
@@ -684,6 +722,7 @@ export function CampaignBrief({
                 dataMode={dataMode}
                 draft={draft}
                 onUploadPackshot={handleUploadPackshot}
+                packshotStatus={packshotStatus}
                 section={activeSection}
                 setDraft={setDraft}
                 uploadBusy={uploadBusy}

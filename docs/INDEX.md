@@ -30,6 +30,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `roadmap` | [delivery/ROADMAP.md](./delivery/ROADMAP.md) | delivery | accepted | delivery |
 | `quality-gates` | [delivery/QUALITY_GATES.md](./delivery/QUALITY_GATES.md) | quality | accepted | quality |
 | `active-work-packet` | [delivery/ACTIVE_WORK_PACKET.yaml](./delivery/ACTIVE_WORK_PACKET.yaml) | work_packet | accepted | delivery |
+| `codex-finish-mega-prompt` | [delivery/CODEX_FINISH_MEGA_PROMPT.md](./delivery/CODEX_FINISH_MEGA_PROMPT.md) | delivery | accepted | delivery |
 | `local-env-secrets` | [operations/LOCAL_ENV_AND_SECRETS.md](./operations/LOCAL_ENV_AND_SECRETS.md) | runbook | accepted | operations-security |
 | `toolchain-template-provenance` | [operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md](./operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md) | runbook | accepted | developer-experience |
 | `deploy-rollback-incidents` | [operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md](./operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md) | runbook | accepted | operations |

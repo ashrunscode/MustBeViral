@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { requireStudioSession } from '../../../src/lib/supabase/session-boundary';
+import { StudioWorkflowNav } from '../../../src/components/studio-workflow-nav';
 import { StudioHeader } from './studio-header';
 
 export default async function StudioWorkspaceLayout({
@@ -17,6 +18,7 @@ export default async function StudioWorkspaceLayout({
         presentation={session.mode === 'local-preview' ? 'preview' : 'authenticated'}
         workspace={workspace}
       />
+      <StudioWorkflowNav workspace={workspace} />
       {children}
     </div>
   );

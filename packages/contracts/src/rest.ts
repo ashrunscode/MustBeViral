@@ -236,8 +236,20 @@ export type P0HandlerResult = Readonly<{
     | 'graph_invalid'
     | 'provider_unavailable'
     | 'rate_limited'
-    | 'provider_ambiguous';
-  reason?: 'revision' | 'run_state' | 'quote_stale' | 'idempotency' | 'approval';
+    | 'provider_ambiguous'
+    | 'billing_blocked';
+  reason?:
+    | 'revision'
+    | 'run_state'
+    | 'quote_stale'
+    | 'idempotency'
+    | 'approval'
+    | 'charging_disabled'
+    | 'generation_disabled'
+    | 'provider_routes_disabled'
+    | 'setup_fee_unpaid'
+    | 'subscription_inactive'
+    | 'insufficient_wallet';
   actual?: string;
   issues?: readonly GraphValidationIssue[];
   quoteId?: string;

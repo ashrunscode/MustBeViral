@@ -42,6 +42,10 @@ export default async function ForgotPasswordPage({
           <a className="auth-link" href={signInUrl}>
             Return to sign in
           </a>
+          <span aria-hidden="true">·</span>
+          <a className="auth-link" href="/signup">
+            Request access
+          </a>
         </div>
       </section>
     </main>

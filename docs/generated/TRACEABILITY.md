@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P0-001` (in_progress). Current step: `p0-007-p0-gate-evaluation`.
+Current packet: `WP-P0-001` (blocked). Current step: `p0-008-p1a-successor-handoff`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -61,6 +61,7 @@ Current packet: `WP-P0-001` (in_progress). Current step: `p0-007-p0-gate-evaluat
 | `quality.test_strategy` | `quality-gates` | docs/delivery/QUALITY_GATES.md |
 | `quality.definition_of_done` | `quality-gates` | docs/delivery/QUALITY_GATES.md |
 | `delivery.active_work` | `active-work-packet` | docs/delivery/ACTIVE_WORK_PACKET.yaml |
+| `delivery.finish_sprint_prompt` | `codex-finish-mega-prompt` | docs/delivery/CODEX_FINISH_MEGA_PROMPT.md |
 | `operations.local_environment` | `local-env-secrets` | docs/operations/LOCAL_ENV_AND_SECRETS.md |
 | `operations.secret_handling` | `local-env-secrets` | docs/operations/LOCAL_ENV_AND_SECRETS.md |
 | `operations.environment_isolation` | `local-env-secrets` | docs/operations/LOCAL_ENV_AND_SECRETS.md |
