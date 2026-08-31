@@ -23,6 +23,7 @@ import {
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
+import { ReviewDraftPanel } from '../../../../../src/features/collaboration/draft-panels';
 import {
   collaborationActorForReviewer,
   commentsForAnchor,
@@ -602,6 +603,9 @@ export function ReviewFlow({
   const [rejectionReason, setRejectionReason] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [inspected, setInspected] = useState<ReviewVariant | null>(null);
+  const [reviewTextDrafts, setReviewTextDrafts] = useState<Record<string, Record<string, string>>>(
+    {},
+  );
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const variants = groups.flatMap((group) => group.variants);
 
@@ -703,7 +707,12 @@ export function ReviewFlow({
     surface: 'review',
     transport: dataMode === 'preview' ? 'preview' : 'websocket',
   });
+  const collaborationActor = collaborationActorForReviewer(
+    reviewer,
+    dataMode === 'preview' ? 'preview' : 'websocket',
+  );
   const anchoredComments = commentsForAnchor(collaboration.snapshot, commentAnchorId);
+  const reviewDrafts = commentAnchorId === null ? {} : (reviewTextDrafts[commentAnchorId] ?? {});
 
   function submitCollaborationComment(body: string): void {
     if (commentAnchorId === null) return;
@@ -711,6 +720,25 @@ export function ReviewFlow({
       comment_id: `comment-${commentAnchorId}-${String(Date.now())}`,
       body,
       anchor_node_id: commentAnchorId,
+    });
+  }
+
+  function updateReviewDraft(fieldPath: string, value: string): void {
+    if (commentAnchorId === null) return;
+    setReviewTextDrafts((current) => ({
+      ...current,
+      [commentAnchorId]: {
+        ...(current[commentAnchorId] ?? {}),
+        [fieldPath]: value,
+      },
+    }));
+  }
+
+  function syncReviewDraft(input: { nodeId: string; fieldPath: string; body: string }): void {
+    collaboration.upsertTextDraft({
+      node_id: input.nodeId,
+      field_path: input.fieldPath,
+      body: input.body,
     });
   }
 
@@ -785,6 +813,19 @@ export function ReviewFlow({
           anchorId={commentAnchorId}
           anchorLabel={commentAnchorLabel}
           comments={anchoredComments}
+          draftPanel={
+            <ReviewDraftPanel
+              actorId={collaborationActor.actor_id}
+              anchorId={commentAnchorId}
+              anchorLabel={commentAnchorLabel}
+              localDrafts={reviewDrafts}
+              snapshot={collaboration.snapshot}
+              onAcquireLease={collaboration.acquireLease}
+              onReleaseLease={collaboration.releaseLease}
+              onChange={updateReviewDraft}
+              onSyncDraft={syncReviewDraft}
+            />
+          }
           onSubmitComment={submitCollaborationComment}
           snapshot={collaboration.snapshot}
           status={collaboration.status}

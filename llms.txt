@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P2
 active_packet: WP-P2-001
-current_step: p2-002-presence-and-comments
-next_action: Implement presence and comments on review and canvas surfaces with Lightfield states and accessibility.
+current_step: p2-003-text-sync-and-leases
+next_action: Implement text collaboration and edit leases for expensive node configuration with deterministic conflict recovery.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

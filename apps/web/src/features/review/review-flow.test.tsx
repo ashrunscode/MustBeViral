@@ -23,7 +23,8 @@ describe('ReviewFlow', () => {
     expect(html.match(/compare-pair/gu)?.length).toBe(4);
     expect(html).toContain('Reviewer · Maya Chen');
     expect(html).toContain('Approve group as Maya Chen');
-    expect(html).not.toContain('Accessibility description');
+    expect(html).toContain('Review drafts');
+    expect(html).toContain('Accessibility description');
     expect(html).toContain('aria-label="Collaborator presence"');
   });
 

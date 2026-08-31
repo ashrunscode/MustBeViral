@@ -162,3 +162,107 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.draftPanel {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  background: var(--card);
+}
+
+.draftFieldStack {
+  display: grid;
+  gap: 12px;
+}
+
+.collaborativeField {
+  display: grid;
+  gap: 6px;
+}
+
+.collaborativeFieldHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.collaborativeFieldHeader label {
+  color: var(--ink-head);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.leaseBadge {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  color: var(--ink-muted);
+}
+
+.collaborativeField[data-lease-state='held'] .leaseBadge,
+.leaseBadge[data-lease-state='held'] {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.collaborativeField[data-lease-state='contested'] .leaseBadge,
+.leaseBadge[data-lease-state='contested'] {
+  border-color: #c2410c;
+  color: #c2410c;
+}
+
+.leaseHelp {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.collaborativeTextarea {
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  padding: 8px 10px;
+  background: var(--paper);
+  color: var(--ink-strong);
+  font: inherit;
+  font-size: 12px;
+}
+
+.collaborativeTextarea:focus-visible {
+  outline: 2px solid var(--signal-soft);
+  border-color: var(--signal);
+}
+
+.collaborativeTextarea[aria-readonly='true'] {
+  background: var(--wash-faint);
+  color: var(--ink-muted);
+}
+
+.leaseActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.leaseRetry {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  background: var(--paper);
+  color: var(--ink-head);
+  font-size: 11px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.leaseRetry:focus-visible {
+  outline: 2px solid var(--signal-soft);
+}

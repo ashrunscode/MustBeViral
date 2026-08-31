@@ -4,6 +4,8 @@ import {
   CollaborationClient,
   InMemoryCollaborationSession,
   createPreviewCollaborationSnapshot,
+  leaseIdForActor,
+  textDraftKey,
   type CollaborationActor,
   type CollaborationSnapshot,
 } from '@mustbeviral/collaboration';
@@ -30,6 +32,15 @@ export interface CollaborationSessionState {
       anchor_node_id?: string;
     }>,
   ) => void;
+  readonly upsertTextDraft: (
+    input: Readonly<{
+      node_id: string;
+      field_path: string;
+      body: string;
+    }>,
+  ) => void;
+  readonly acquireLease: (nodeId: string) => void;
+  readonly releaseLease: (nodeId: string) => void;
 }
 
 function emptySnapshot(canvasId: string): CollaborationSnapshot {
@@ -42,7 +53,7 @@ function emptySnapshot(canvasId: string): CollaborationSnapshot {
   };
 }
 
-const noopUpsertComment: CollaborationSessionState['upsertComment'] = () => undefined;
+const noop = () => undefined;
 
 export function useCollaborationSession(
   options: UseCollaborationSessionOptions,
@@ -50,7 +61,10 @@ export function useCollaborationSession(
   const isActive = options.canvasId !== null && options.canvasId.length > 0;
   const [snapshot, setSnapshot] = useState<CollaborationSnapshot | null>(null);
   const [status, setStatus] = useState<CollaborationSessionState['status']>('connecting');
-  const upsertRef = useRef<CollaborationSessionState['upsertComment']>(noopUpsertComment);
+  const upsertCommentRef = useRef<CollaborationSessionState['upsertComment']>(noop);
+  const upsertTextDraftRef = useRef<CollaborationSessionState['upsertTextDraft']>(noop);
+  const acquireLeaseRef = useRef<CollaborationSessionState['acquireLease']>(noop);
+  const releaseLeaseRef = useRef<CollaborationSessionState['releaseLease']>(noop);
 
   const collaborationBaseUrl = useMemo(() => {
     try {
@@ -65,7 +79,10 @@ export function useCollaborationSession(
 
   useEffect(() => {
     if (!isActive || configurationError) {
-      upsertRef.current = noopUpsertComment;
+      upsertCommentRef.current = noop;
+      upsertTextDraftRef.current = noop;
+      acquireLeaseRef.current = noop;
+      releaseLeaseRef.current = noop;
       return undefined;
     }
 
@@ -80,19 +97,36 @@ export function useCollaborationSession(
         surface: options.surface,
         seedPresence: previewSnapshot.presence,
         seedComments: previewSnapshot.comments,
+        seedTextDrafts: previewSnapshot.text_drafts,
+        seedLeases: previewSnapshot.leases,
       });
       const unsubscribe = session.subscribe((next) => {
         setSnapshot(next);
         setStatus('open');
       });
       session.connect();
-      upsertRef.current = (input) => {
+      upsertCommentRef.current = (input) => {
         session.upsertComment(input);
+      };
+      upsertTextDraftRef.current = (input) => {
+        session.upsertTextDraft({
+          draft_id: textDraftKey(input.node_id, input.field_path),
+          ...input,
+        });
+      };
+      acquireLeaseRef.current = (nodeId) => {
+        session.acquireLease(nodeId, leaseIdForActor(nodeId, options.actor.actor_id));
+      };
+      releaseLeaseRef.current = (nodeId) => {
+        session.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
       };
       return () => {
         unsubscribe();
         session.disconnect();
-        upsertRef.current = noopUpsertComment;
+        upsertCommentRef.current = noop;
+        upsertTextDraftRef.current = noop;
+        acquireLeaseRef.current = noop;
+        releaseLeaseRef.current = noop;
       };
     }
 
@@ -105,12 +139,27 @@ export function useCollaborationSession(
       onStatus: setStatus,
     });
     client.connect();
-    upsertRef.current = (input) => {
+    upsertCommentRef.current = (input) => {
       client.upsertComment(input);
+    };
+    upsertTextDraftRef.current = (input) => {
+      client.upsertTextDraft({
+        draft_id: textDraftKey(input.node_id, input.field_path),
+        ...input,
+      });
+    };
+    acquireLeaseRef.current = (nodeId) => {
+      client.acquireLease(nodeId, leaseIdForActor(nodeId, options.actor.actor_id));
+    };
+    releaseLeaseRef.current = (nodeId) => {
+      client.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
     };
     return () => {
       client.disconnect();
-      upsertRef.current = noopUpsertComment;
+      upsertCommentRef.current = noop;
+      upsertTextDraftRef.current = noop;
+      acquireLeaseRef.current = noop;
+      releaseLeaseRef.current = noop;
     };
   }, [
     collaborationBaseUrl,
@@ -126,7 +175,10 @@ export function useCollaborationSession(
     return {
       snapshot: null,
       status: 'idle',
-      upsertComment: noopUpsertComment,
+      upsertComment: noop,
+      upsertTextDraft: noop,
+      acquireLease: noop,
+      releaseLease: noop,
     };
   }
 
@@ -134,7 +186,10 @@ export function useCollaborationSession(
     return {
       snapshot: emptySnapshot(options.canvasId!),
       status: 'error',
-      upsertComment: noopUpsertComment,
+      upsertComment: noop,
+      upsertTextDraft: noop,
+      acquireLease: noop,
+      releaseLease: noop,
     };
   }
 
@@ -142,7 +197,16 @@ export function useCollaborationSession(
     snapshot,
     status,
     upsertComment: (input) => {
-      upsertRef.current(input);
+      upsertCommentRef.current(input);
+    },
+    upsertTextDraft: (input) => {
+      upsertTextDraftRef.current(input);
+    },
+    acquireLease: (nodeId) => {
+      acquireLeaseRef.current(nodeId);
+    },
+    releaseLease: (nodeId) => {
+      releaseLeaseRef.current(nodeId);
     },
   };
 }

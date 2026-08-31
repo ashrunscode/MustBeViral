@@ -1,7 +1,15 @@
 'use client';
 
 import { Button, MonoCaps } from '@mustbeviral/ui';
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type RefObject } from 'react';
+import {
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 
 import type { CollaborationSnapshot } from '@mustbeviral/collaboration';
 
@@ -198,6 +206,7 @@ export function CollaborationSidebar({
   anchorId,
   anchorLabel,
   comments,
+  draftPanel,
   onSubmitComment,
   snapshot,
   status,
@@ -206,6 +215,7 @@ export function CollaborationSidebar({
   anchorId: string | null;
   anchorLabel: string;
   comments: readonly CollaborationSnapshot['comments'][number][];
+  draftPanel?: ReactNode;
   onSubmitComment: (body: string) => void;
   snapshot: CollaborationSnapshot | null;
   status: 'idle' | 'connecting' | 'open' | 'closed' | 'error';
@@ -214,6 +224,7 @@ export function CollaborationSidebar({
   return (
     <div className={styles.collaborationStack}>
       <PresenceBar snapshot={snapshot} status={status} surface={surface} />
+      {draftPanel}
       <CommentThreadPanel
         anchorId={anchorId}
         anchorLabel={anchorLabel}

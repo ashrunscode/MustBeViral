@@ -37,6 +37,7 @@ import {
 } from '../../../../../src/features/canvas/canvas-port';
 import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
 import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
+import { NodeConfigDraftPanel } from '../../../../../src/features/collaboration/draft-panels';
 import {
   collaborationActorForReviewer,
   commentsForAnchor,
@@ -384,6 +385,7 @@ export function CanvasFlow({
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [viewport, setViewport] = useState({ width: 1120, height: 620 });
   const [arrivalNodeId, setArrivalNodeId] = useState<string | null>(null);
+  const [textDrafts, setTextDrafts] = useState<Record<string, Record<string, string>>>({});
   const surfaceRef = useRef<HTMLDivElement>(null);
   const graphPlaneRef = useRef<HTMLDivElement>(null);
   const livePanRef = useRef(pan);
@@ -454,13 +456,40 @@ export function CanvasFlow({
     surface: 'canvas',
     transport: dataMode === 'preview' ? 'preview' : 'websocket',
   });
+  const collaborationActorId = collaborationActorForReviewer(
+    dataMode === 'preview' ? 'Maya Chen' : 'You',
+    dataMode === 'preview' ? 'preview' : 'websocket',
+  ).actor_id;
   const anchoredComments = commentsForAnchor(collaboration.snapshot, selectedId);
+  const selectedDrafts = textDrafts[selectedId] ?? {};
 
   function submitCollaborationComment(body: string): void {
     collaboration.upsertComment({
       comment_id: `comment-${selectedId}-${String(Date.now())}`,
       body,
       anchor_node_id: selectedId,
+    });
+  }
+
+  function updateCollaborationDraft(fieldPath: string, value: string): void {
+    setTextDrafts((current) => ({
+      ...current,
+      [selectedId]: {
+        ...(current[selectedId] ?? {}),
+        [fieldPath]: value,
+      },
+    }));
+  }
+
+  function syncCollaborationDraft(input: {
+    nodeId: string;
+    fieldPath: string;
+    body: string;
+  }): void {
+    collaboration.upsertTextDraft({
+      node_id: input.nodeId,
+      field_path: input.fieldPath,
+      body: input.body,
     });
   }
 
@@ -769,6 +798,20 @@ export function CanvasFlow({
           anchorId={selectedId}
           anchorLabel={selectedNode?.label ?? 'Selected node'}
           comments={anchoredComments}
+          draftPanel={
+            <NodeConfigDraftPanel
+              actorId={collaborationActorId}
+              localDrafts={selectedDrafts}
+              nodeId={selectedId}
+              nodeKind={selectedNode?.kind}
+              nodeLabel={selectedNode?.label ?? 'Selected node'}
+              snapshot={collaboration.snapshot}
+              onAcquireLease={collaboration.acquireLease}
+              onReleaseLease={collaboration.releaseLease}
+              onChange={updateCollaborationDraft}
+              onSyncDraft={syncCollaborationDraft}
+            />
+          }
           onSubmitComment={submitCollaborationComment}
           snapshot={collaboration.snapshot}
           status={collaboration.status}
