@@ -332,6 +332,36 @@ export function createProgrammaticAuthPort(
         return mapRpcError(error);
       }
     },
+    async listSkillVersions(input) {
+      try {
+        const skills = await selectRows(
+          `skills?id=eq.${encodeURIComponent(input.skill_id)}&workspace_id=eq.${encodeURIComponent(input.context.workspace_id)}&select=id,name`,
+        );
+        if (skills.length === 0) return { status: 'not_found' };
+        const skill = skills[0];
+        if (skill === undefined) return { status: 'not_found' };
+        const versions = await selectRows(
+          `skill_versions?skill_id=eq.${encodeURIComponent(input.skill_id)}&select=id,skill_id,version_number,title,instructions,published_at&order=version_number.desc`,
+        );
+        return {
+          status: 'ok',
+          data: {
+            skill_id: String(skill.id),
+            name: String(skill.name),
+            versions: versions.map((version) => ({
+              skill_id: String(version.skill_id),
+              skill_version_id: String(version.id),
+              version_number: Number(version.version_number),
+              title: String(version.title),
+              instructions: String(version.instructions),
+              published_at: wireTimestamp(version.published_at),
+            })),
+          },
+        };
+      } catch (error) {
+        return mapRpcError(error);
+      }
+    },
   };
 }
 export function createPrivilegedProgrammaticAuthPort(

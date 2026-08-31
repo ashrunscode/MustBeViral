@@ -80,7 +80,8 @@ public_interfaces:
     handlers as the browser. Final social publication remains unavailable on these surfaces.
 steps:
   - id: p1b-001-oauth-api-keys
-    title: Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
+    title:
+      Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
       without autonomous spend.
     status: completed
   - id: p1b-002-public-rest-and-mcp
@@ -92,13 +93,14 @@ steps:
       automation output, and confirmation-preserving mutations.
     status: completed
   - id: p1b-004-user-authored-skills
-    title: Implement user-authored Skills with immutable published versions and no credential access to
+    title:
+      Implement user-authored Skills with immutable published versions and no credential access to
       database, storage, or billing.
-    status: current
+    status: completed
   - id: p1b-005-three-client-parity
     title: Prove handler/adapter contract vectors for success, validation, authorization, conflict,
       expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
-    status: pending
+    status: current
   - id: p1b-006-p2-successor-handoff
     title: Prove P1b implementable acceptance and activate WP-P2-001 from
       governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
@@ -106,7 +108,8 @@ steps:
 acceptance:
   automated:
     - id: oauth-scope-and-revocation
-      criterion: Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
+      criterion:
+        Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
         and cannot start a run without an unexpired confirmed quote.
       status: passed
       evidence:
@@ -122,10 +125,15 @@ acceptance:
         - apps/cli/test/p1b-cli-parity.test.ts
         - apps/cli/test/cli.test.ts
     - id: immutable-skill-versions
-      criterion: Publishing a Skill creates an immutable version; edits create a new version and never
+      criterion:
+        Publishing a Skill creates an immutable version; edits create a new version and never
         mutate a published snapshot or access secrets.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
+        - supabase/tests/database/00033_p1b_immutable_skill_versions.test.sql
+        - apps/web/src/features/skills/skills-access-panel.test.tsx
+        - packages/contracts/src/p1b-handlers.test.ts
   manual:
     - id: no-autonomous-spend-surface
       criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
@@ -154,22 +162,32 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p1b-004-user-authored-skills
-  next_action: Implement user-authored Skills with immutable published versions and no credential
-    access to database, storage, or billing.
+  current_step: p1b-005-three-client-parity
+  next_action:
+    Prove handler/adapter contract vectors for success, validation, authorization, conflict,
+    expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
   blockers: []
   changed_paths:
-    - apps/cli/package.json
-    - apps/cli/src/cli-response.ts
-    - apps/cli/src/credential-store.ts
-    - apps/cli/src/index.ts
-    - apps/cli/src/login.ts
-    - apps/cli/src/main.ts
-    - apps/cli/src/production-commands.ts
-    - apps/cli/test/cli.test.ts
-    - apps/cli/test/p1b-cli-parity.test.ts
-    - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
-    - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
+    - apps/core/src/composition/programmatic-auth.ts
+    - apps/core/src/routes/p1b-table.ts
+    - apps/core/src/routes/p1b.ts
+    - apps/core/test/unit/p1b-three-client-parity.test.ts
+    - apps/web/app/globals.css
+    - apps/web/app/studio/[workspace]/skills/page.tsx
+    - apps/web/app/studio/[workspace]/studio-header.tsx
+    - apps/web/src/components/studio-workflow-nav.tsx
+    - apps/web/src/features/skills/skills-access-panel.tsx
+    - apps/web/src/features/skills/skills-access-panel.test.tsx
+    - apps/web/src/lib/core/p1b-client.ts
+    - docs/generated/OPENAPI.md
+    - governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
+    - packages/contracts/openapi/core.v1.json
+    - packages/contracts/src/http.integration.test.ts
+    - packages/contracts/src/p1b-handlers.test.ts
+    - packages/contracts/src/p1b-handlers.ts
+    - packages/contracts/src/p1b-parity.test.ts
+    - packages/contracts/src/p1b.ts
+    - supabase/tests/database/00033_p1b_immutable_skill_versions.test.sql
   last_green_checks:
     - corepack pnpm agent:verify
 completion:

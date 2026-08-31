@@ -28,6 +28,7 @@ describe('P1b handlers', () => {
       issueOAuthToken: vi.fn(),
       publishSkill: vi.fn(),
       listSkills: vi.fn(),
+      listSkillVersions: vi.fn(),
     };
     const handlers = createP1bHandlers(port, {
       generateApiKey: () => ({ token: `mbv_sk_${'b'.repeat(64)}`, prefix: 'mbv_sk_bbbb' }),
@@ -66,6 +67,7 @@ describe('P1b handlers', () => {
       })),
       publishSkill: vi.fn(),
       listSkills: vi.fn(),
+      listSkillVersions: vi.fn(),
     };
     const handlers = createP1bHandlers(port, {
       generateApiKey: () => ({ token: 'mbv_sk_x', prefix: 'mbv_sk_x' }),
@@ -108,6 +110,7 @@ describe('P1b handlers', () => {
         },
       })),
       listSkills: vi.fn(),
+      listSkillVersions: vi.fn(),
     };
     const handlers = createP1bHandlers(port, {
       generateApiKey: () => ({ token: 'mbv_sk_x', prefix: 'mbv_sk_x' }),
@@ -130,6 +133,69 @@ describe('P1b handlers', () => {
     expect(result.status).toBe('ok');
     if (result.status === 'ok') {
       expect(result.data).toMatchObject({ version_number: 2, skill_version_id: 'version-2' });
+    }
+  });
+
+  it('returns immutable version history for a skill', async () => {
+    const port: ProgrammaticAuthPort = {
+      createApiKey: vi.fn(),
+      listApiKeys: vi.fn(),
+      revokeApiKey: vi.fn(),
+      createOAuthClient: vi.fn(),
+      listOAuthClients: vi.fn(),
+      revokeOAuthClient: vi.fn(),
+      issueOAuthToken: vi.fn(),
+      publishSkill: vi.fn(),
+      listSkills: vi.fn(),
+      listSkillVersions: vi.fn(async () => ({
+        status: 'ok' as const,
+        data: {
+          skill_id: 'skill-1',
+          name: 'launch-copy',
+          versions: [
+            {
+              skill_id: 'skill-1',
+              skill_version_id: 'version-2',
+              version_number: 2,
+              title: 'Launch copy v2',
+              instructions: 'Updated instructions.',
+              published_at: '2026-08-31T13:00:00Z',
+            },
+            {
+              skill_id: 'skill-1',
+              skill_version_id: 'version-1',
+              version_number: 1,
+              title: 'Launch copy v1',
+              instructions: 'Original instructions.',
+              published_at: '2026-08-31T12:00:00Z',
+            },
+          ],
+        },
+      })),
+    };
+    const handlers = createP1bHandlers(port, {
+      generateApiKey: () => ({ token: 'mbv_sk_x', prefix: 'mbv_sk_x' }),
+      generateOAuthClient: () => ({ clientId: 'mbv_client_x', clientSecret: 'mbv_client_secret' }),
+      generateOAuthAccessToken: () => ({ token: 'mbv_oauth_x' }),
+      hashSecret: async (value) => `hash:${value}`,
+    });
+    const result = await handlers.list_skill_versions({
+      context: {
+        workspace_id: 'workspace-1',
+        actor_id: 'owner-1',
+        request_id: 'req-1',
+      },
+      workspace_id: 'workspace-1',
+      skill_id: 'skill-1',
+    });
+    expect(result.status).toBe('ok');
+    if (result.status === 'ok') {
+      expect(result.data).toMatchObject({
+        versions: [
+          expect.objectContaining({ version_number: 2 }),
+          expect.objectContaining({ version_number: 1 }),
+        ],
+      });
     }
   });
 });

@@ -141,6 +141,7 @@ export function createP1bRoute(dependencies: P1bRouteDependencies): Hono<CoreHon
           issueOAuthToken: privilegedPort.issueOAuthToken.bind(privilegedPort),
           publishSkill: async () => ({ status: 'validation_failed' }),
           listSkills: async () => ({ status: 'validation_failed' }),
+          listSkillVersions: async () => ({ status: 'validation_failed' }),
         },
         workerCredentialGenerator,
       );
@@ -408,6 +409,39 @@ export function createP1bRoute(dependencies: P1bRouteDependencies): Hono<CoreHon
       const result = await handlers.list_skills({
         context: handlerContext(actor, workspaceId, context.get('requestId')),
         workspace_id: workspaceId,
+      });
+      return mapResult(context, result, 200);
+    } catch (error) {
+      if (error instanceof TypeError && error.message === 'UNAUTHENTICATED') {
+        return context.json(
+          safeError(context, 'UNAUTHENTICATED', 'A valid bearer token is required.'),
+          401,
+        );
+      }
+      if (error instanceof TypeError && error.message === 'FORBIDDEN') {
+        return context.json(
+          safeError(
+            context,
+            'FORBIDDEN',
+            'Programmatic credential management requires a browser session.',
+          ),
+          403,
+        );
+      }
+      return context.json(safeError(context, 'VALIDATION_FAILED', 'The request is invalid.'), 400);
+    }
+  });
+
+  router.get('/workspaces/:workspaceId/skills/:skillId/versions', async (context) => {
+    try {
+      const { actor, callerJwt } = await requireJwtActor(context, dependencies);
+      const workspaceId = context.req.param('workspaceId');
+      const skillId = context.req.param('skillId');
+      const handlers = resolveHandlers(context, callerJwt, dependencies);
+      const result = await handlers.list_skill_versions({
+        context: handlerContext(actor, workspaceId, context.get('requestId')),
+        workspace_id: workspaceId,
+        skill_id: skillId,
       });
       return mapResult(context, result, 200);
     } catch (error) {

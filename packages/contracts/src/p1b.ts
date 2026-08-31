@@ -104,6 +104,14 @@ export const ListSkillsResourceInputSchema = z
   })
   .strict();
 
+export const ListSkillVersionsResourceInputSchema = z
+  .object({
+    context: HandlerContextSchema,
+    workspace_id: IdentifierSchema,
+    skill_id: IdentifierSchema,
+  })
+  .strict();
+
 export const ApiKeyRecordSchema = z
   .object({
     id: IdentifierSchema,
@@ -180,6 +188,17 @@ export const SkillVersionRecordSchema = z
   })
   .strict();
 
+export const SkillVersionDetailSchema = z
+  .object({
+    skill_id: IdentifierSchema,
+    skill_version_id: IdentifierSchema,
+    version_number: z.number().int().positive(),
+    title: z.string().min(1),
+    instructions: z.string().min(1),
+    published_at: WireTimestampSchema,
+  })
+  .strict();
+
 export const PublishSkillSuccessSchema = SkillVersionRecordSchema;
 
 export const ListSkillsSuccessSchema = z
@@ -193,6 +212,14 @@ export const ListSkillsSuccessSchema = z
         })
         .strict(),
     ),
+  })
+  .strict();
+
+export const ListSkillVersionsSuccessSchema = z
+  .object({
+    skill_id: IdentifierSchema,
+    name: z.string().min(1),
+    versions: z.array(SkillVersionDetailSchema),
   })
   .strict();
 
@@ -212,6 +239,7 @@ export const P1B_JWT_MANAGEMENT_OPERATIONS = [
   'revoke_oauth_client',
   'publish_skill',
   'list_skills',
+  'list_skill_versions',
 ] as const;
 
 export type P1bJwtManagementOperation = (typeof P1B_JWT_MANAGEMENT_OPERATIONS)[number];
@@ -226,6 +254,7 @@ export const P1B_OPERATION_DATA_SCHEMAS = {
   issue_oauth_token: IssueOAuthTokenSuccessSchema,
   publish_skill: PublishSkillSuccessSchema,
   list_skills: ListSkillsSuccessSchema,
+  list_skill_versions: ListSkillVersionsSuccessSchema,
 } as const;
 
 export type P1bHandlerResult =
@@ -265,6 +294,9 @@ export interface ProgrammaticAuthPort {
   }): Promise<P1bHandlerResult>;
   publishSkill(input: z.infer<typeof PublishSkillResourceInputSchema>): Promise<P1bHandlerResult>;
   listSkills(input: z.infer<typeof ListSkillsResourceInputSchema>): Promise<P1bHandlerResult>;
+  listSkillVersions(
+    input: z.infer<typeof ListSkillVersionsResourceInputSchema>,
+  ): Promise<P1bHandlerResult>;
 }
 
 export function scopesToWireValue(scopes: readonly ApiKeyScope[]): string {

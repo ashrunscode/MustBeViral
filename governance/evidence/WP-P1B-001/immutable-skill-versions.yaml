@@ -1,0 +1,24 @@
+schema_version: 1
+acceptance_id: immutable-skill-versions
+recorded_at: '2026-08-31T14:30:00.000Z'
+status: proven
+criterion: Publishing a Skill creates an immutable version; edits create a new version and never
+  mutate a published snapshot or access secrets.
+proofs:
+  - kind: pgTAP
+    path: supabase/tests/database/00033_p1b_immutable_skill_versions.test.sql
+    assertions:
+      - publish_skill creates version 1 for a new Skill name
+      - publish_skill increments version number for the same Skill name
+      - edits create a new immutable version row instead of replacing the prior snapshot
+      - published version 1 title remains unchanged after version 2 is published
+      - publish_skill replays the same idempotency key without creating version 3
+      - authenticated users cannot mutate published skill_versions rows
+      - authenticated users cannot delete published skill_versions rows
+      - authenticated users cannot insert skill_versions outside publish_skill
+      - skill workflow tables do not grant direct credential storage access to authenticated users
+      - skill_versions grants are read-only for authenticated users
+  - kind: unit
+    path: packages/contracts/src/p1b-handlers.test.ts
+  - kind: unit
+    path: apps/web/src/features/skills/skills-access-panel.test.tsx

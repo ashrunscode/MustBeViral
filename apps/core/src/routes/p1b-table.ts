@@ -9,7 +9,8 @@ export type P1bOperation =
   | 'list_oauth_clients'
   | 'revoke_oauth_client'
   | 'publish_skill'
-  | 'list_skills';
+  | 'list_skills'
+  | 'list_skill_versions';
 
 export interface P1bRouteDefinition {
   readonly method: 'GET' | 'POST';
@@ -80,6 +81,13 @@ export const P1B_ROUTE_TABLE = [
     method: 'GET',
     path: '/workspaces/:id/skills',
     operation: 'list_skills',
+    auth: 'supabase_jwt',
+    mutation: false,
+  },
+  {
+    method: 'GET',
+    path: '/workspaces/:workspaceId/skills/:skillId/versions',
+    operation: 'list_skill_versions',
     auth: 'supabase_jwt',
     mutation: false,
   },

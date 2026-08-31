@@ -16,6 +16,7 @@ const routeLabels: Readonly<Record<string, string>> = {
   receipt: 'Receipt',
   billing: 'Billing',
   access: 'Access',
+  skills: 'Skills',
   internal: 'Internal',
 };
 

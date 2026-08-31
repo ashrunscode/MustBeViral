@@ -82,6 +82,7 @@ describe('P1b JWT management contract vectors', () => {
       'revoke_oauth_client',
       'publish_skill',
       'list_skills',
+      'list_skill_versions',
     ]);
   });
 

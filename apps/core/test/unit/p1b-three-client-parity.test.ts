@@ -33,6 +33,7 @@ describe('P1b three-client parity for list_api_keys', () => {
       issueOAuthToken: vi.fn(),
       publishSkill: vi.fn(),
       listSkills: vi.fn(),
+      listSkillVersions: vi.fn(),
     };
     const handlers = createP1bHandlers(port, workerCredentialGenerator);
     const app = createCoreApp({

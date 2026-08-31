@@ -14,6 +14,43 @@ export interface ApiKeyListItem {
   readonly revoked_at: string | null;
 }
 
+export interface SkillListItem {
+  readonly id: string;
+  readonly name: string;
+  readonly latest_version: Readonly<{
+    readonly skill_id: string;
+    readonly skill_version_id: string;
+    readonly name: string;
+    readonly version_number: number;
+    readonly title: string;
+    readonly published_at: string;
+  }> | null;
+}
+
+export interface SkillVersionDetail {
+  readonly skill_id: string;
+  readonly skill_version_id: string;
+  readonly version_number: number;
+  readonly title: string;
+  readonly instructions: string;
+  readonly published_at: string;
+}
+
+export interface PublishSkillInput {
+  readonly name: string;
+  readonly title: string;
+  readonly instructions: string;
+}
+
+export interface PublishSkillResult {
+  readonly skill_id: string;
+  readonly skill_version_id: string;
+  readonly name: string;
+  readonly version_number: number;
+  readonly title: string;
+  readonly published_at: string;
+}
+
 interface ApiEnvelope<T> {
   readonly data: T;
 }
@@ -71,6 +108,12 @@ export interface P1bManagementClient {
     input: Readonly<{ name: string; scopes: readonly ApiKeyScope[] }>,
   ): Promise<Readonly<{ secret: string; key: ApiKeyListItem }>>;
   revokeApiKey(keyId: string, workspaceId: string): Promise<void>;
+  listSkills(workspaceId: string): Promise<readonly SkillListItem[]>;
+  listSkillVersions(
+    workspaceId: string,
+    skillId: string,
+  ): Promise<Readonly<{ skill_id: string; name: string; versions: readonly SkillVersionDetail[] }>>;
+  publishSkill(workspaceId: string, input: PublishSkillInput): Promise<PublishSkillResult>;
 }
 
 export async function createP1bManagementClient(): Promise<P1bManagementClient> {
@@ -98,6 +141,29 @@ export async function createP1bManagementClient(): Promise<P1bManagementClient> 
         idempotencyKey: crypto.randomUUID(),
         workspaceId,
       });
+    },
+    async listSkills(workspaceId) {
+      const data = await request<{ skills: readonly SkillListItem[] }>(
+        `/v1/workspaces/${encodeURIComponent(workspaceId)}/skills`,
+        { method: 'GET' },
+      );
+      return data.skills;
+    },
+    async listSkillVersions(workspaceId, skillId) {
+      return request<{ skill_id: string; name: string; versions: readonly SkillVersionDetail[] }>(
+        `/v1/workspaces/${encodeURIComponent(workspaceId)}/skills/${encodeURIComponent(skillId)}/versions`,
+        { method: 'GET' },
+      );
+    },
+    async publishSkill(workspaceId, input) {
+      return request<PublishSkillResult>(
+        `/v1/workspaces/${encodeURIComponent(workspaceId)}/skills/publish`,
+        {
+          method: 'POST',
+          body: input,
+          idempotencyKey: crypto.randomUUID(),
+        },
+      );
     },
   };
 }

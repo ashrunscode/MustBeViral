@@ -29,7 +29,7 @@ describe('Zod and OpenAPI integration', () => {
       .flatMap((path) => Object.values(path))
       .map((operation) => operation.operationId);
 
-    expect(Object.keys(document.paths)).toHaveLength(27);
+    expect(Object.keys(document.paths)).toHaveLength(28);
     expect(operations).toEqual(['get_health', ...P0_REST_OPERATIONS, ...P1B_REST_OPERATIONS]);
     expect(
       operations.filter((operation) =>

@@ -4,6 +4,7 @@ import {
   CreateOAuthClientResourceInputSchema,
   ListApiKeysResourceInputSchema,
   ListOAuthClientsResourceInputSchema,
+  ListSkillVersionsResourceInputSchema,
   ListSkillsResourceInputSchema,
   PublishSkillResourceInputSchema,
   RevokeApiKeyResourceInputSchema,
@@ -100,6 +101,9 @@ export function createP1bHandlers(port: ProgrammaticAuthPort, credentials: Crede
     },
     async list_skills(input: unknown): Promise<P1bHandlerResult> {
       return port.listSkills(ListSkillsResourceInputSchema.parse(input));
+    },
+    async list_skill_versions(input: unknown): Promise<P1bHandlerResult> {
+      return port.listSkillVersions(ListSkillVersionsResourceInputSchema.parse(input));
     },
   };
 }
