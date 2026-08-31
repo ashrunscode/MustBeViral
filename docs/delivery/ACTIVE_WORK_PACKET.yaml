@@ -313,6 +313,7 @@ acceptance:
         - governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md
         - governance/evidence/WP-P0-001/design-partner-enablement-check-2026-08-30.md
         - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-30-1400.md
+        - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-31-1400.md
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: operator-p0-exit-decision
       criterion:
@@ -461,6 +462,8 @@ handoff:
     - governance/evidence/WP-P0-001/agent-handoff-2026-08-29.md
     - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-30-1400.md
     - governance/evidence/WP-P0-001/agent-handoff-2026-08-30.md
+    - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-31-1400.md
+    - governance/evidence/WP-P0-001/agent-handoff-2026-08-31.md
     - .env.example
     - apps/core/src/composition/artifact-machine.ts
     - apps/core/src/composition/artifact-storage.ts
@@ -520,6 +523,7 @@ handoff:
     - pnpm agent:verify after 2026-08-29 Cursor Cloud recruiting-inbox connector-absent check
     - pnpm agent:verify after 2026-08-29 14:00 UTC cron recruiting-inbox connector-absent check
     - pnpm agent:verify after 2026-08-30 14:00 UTC cron recruiting-inbox connector-absent check
+    - pnpm agent:verify after 2026-08-31 14:00 UTC cron recruiting-inbox connector-absent check
     - pnpm design:check
     - pnpm governance:check
     - pnpm verify with CI=true and apps/core/.dev.vars.example materialised locally
