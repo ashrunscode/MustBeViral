@@ -4,10 +4,10 @@ project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
-phase: P1b
-active_packet: WP-P1B-001
-current_step: p1b-006-p2-successor-handoff
-next_action: Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface evidence, run quality gates, and activate WP-P2-001 from governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+phase: P2
+active_packet: WP-P2-001
+current_step: p2-002-presence-and-comments
+next_action: Implement presence and comments on review and canvas surfaces with Lightfield states and accessibility.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

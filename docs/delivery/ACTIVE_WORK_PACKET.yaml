@@ -1,42 +1,46 @@
 schema_version: 1
-id: WP-P1B-001
+id: WP-P2-001
 spec_revision: 1
-title: Public API, MCP, CLI, and user-authored Skills
-phase: P1b
+title: Multiplayer collaboration and shared review
+phase: P2
 status: in_progress
 priority: high
 branch: codex/viralgraph-cleanroom
-objective: Ship production OAuth and API-key authorization, the supported public REST API,
-  production MCP tools, CLI parity, immutable user-authored Skills, and three-client semantic parity
-  over the same command/query handlers, without autonomous spend or a second policy layer.
+objective: Add presence, comments, text collaboration, edit leases, and checkpointing through one
+  dedicated collaboration Worker and one coordination object per canvas, while Postgres remains the
+  only authority for permissions, revisions, runs, and money.
 authority_refs:
   - product-contract
   - release-scope
+  - experience-contract
+  - canvas-screen-states
   - system-overview
   - data-auth-tenancy
-  - api-mcp-cli
+  - adr-0002-platform-boundaries
+  - adr-0004-immutable-graph-revisions
   - roadmap
   - quality-gates
-  - local-env-secrets
-  - generated-openapi
   - codex-finish-mega-prompt
 required_skills:
-  - api-craft
-  - auth-fortress
+  - durable-objects
+  - realtime-sync
   - cloudflare
   - wrangler
   - workers-best-practices
+  - data-architect
+  - frontend-master
   - test-mastery
 depends_on:
-  - WP-P1A-001
+  - WP-P1B-001
 scope:
   allowed_paths:
     - apps/**
     - packages/**
     - supabase/**
-    - governance/evidence/WP-P1B-001/**
-    - governance/evidence/WP-P1A-001/transition-receipt.yaml
-    - governance/evidence/WP-P1A-001/completed-work-packet.yaml
+    - .superdesign/**
+    - governance/evidence/WP-P2-001/**
+    - governance/evidence/WP-P1B-001/transition-receipt.yaml
+    - governance/evidence/WP-P1B-001/completed-work-packet.yaml
     - governance/tests/**
     - governance/schemas/**
     - governance/scripts/**
@@ -50,8 +54,8 @@ scope:
     - eslint.config.mjs
     - vitest.config.ts
     - playwright.config.ts
-    - .env.example
-    - .dev.vars.example
+    - wrangler.jsonc
+    - apps/core/wrangler.jsonc
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
@@ -61,129 +65,103 @@ scope:
   required_doc_ids:
     - product-contract
     - release-scope
-    - api-mcp-cli
+    - experience-contract
+    - canvas-screen-states
+    - system-overview
     - data-auth-tenancy
+    - adr-0002-platform-boundaries
+    - adr-0004-immutable-graph-revisions
     - roadmap
     - quality-gates
-    - generated-openapi
     - codex-finish-mega-prompt
 deliverables:
-  - Production OAuth and API-key authorization with scopes, revocation, and audit UX that cannot
-    bypass quote confirmation or spend autonomously.
-  - Supported public REST /v1 generated from Zod/OpenAPI using the shared command layer.
-  - Production MCP tools as thin adapters over the same handlers, preserving explicit confirmation.
-  - CLI thin client with JSON automation output, OS credential storage, and stable non-zero exits.
-  - User-authored Skills with immutable published versions.
-  - Contract vectors proving three-client semantic parity.
+  - One collaboration Worker and one coordination object per canvas for presence, comments, text
+    drafts, and edit leases.
+  - Recoverable collaboration drafts that checkpoint into immutable Postgres revisions and never
+    become a second authority for money, permissions, or graph history.
+  - Tablet comment/review support within the accepted responsive contract; no mobile graph authoring.
 public_interfaces:
-  - Production OAuth/API-key REST /v1, production MCP tools, and CLI commands that call the same
-    handlers as the browser. Final social publication remains unavailable on these surfaces.
+  - Collaboration Worker realtime surface plus existing REST/MCP/CLI adapters remaining thin over
+    the same command layer. Collaboration drafts are not public API authority.
 steps:
-  - id: p1b-001-oauth-api-keys
+  - id: p2-001-collaboration-worker
     title:
-      Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
-      without autonomous spend.
+      Add the dedicated collaboration Worker and one coordination object per canvas without moving
+      revision, permission, or money authority out of Postgres.
     status: completed
-  - id: p1b-002-public-rest-and-mcp
-    title: Ship supported public REST /v1 and production MCP tools as thin adapters over the shared
-      command/query handlers with generated OpenAPI remaining current.
-    status: completed
-  - id: p1b-003-cli-parity
-    title: Ship the CLI thin API client with environment selection, OS credential storage, JSON
-      automation output, and confirmation-preserving mutations.
-    status: completed
-  - id: p1b-004-user-authored-skills
-    title:
-      Implement user-authored Skills with immutable published versions and no credential access to
-      database, storage, or billing.
-    status: completed
-  - id: p1b-005-three-client-parity
-    title: Prove handler/adapter contract vectors for success, validation, authorization, conflict,
-      expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
-    status: completed
-  - id: p1b-006-p2-successor-handoff
-    title: Prove P1b implementable acceptance and activate WP-P2-001 from
-      governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+  - id: p2-002-presence-and-comments
+    title: Implement presence and comments on review and canvas surfaces with Lightfield states and
+      accessibility.
     status: current
+  - id: p2-003-text-sync-and-leases
+    title: Implement text collaboration and edit leases for expensive node configuration with
+      deterministic conflict recovery.
+    status: pending
+  - id: p2-004-revision-checkpoint-integrity
+    title:
+      Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
+      history or bypass expected_revision_id.
+    status: pending
+  - id: p2-005-phase-exit-handoff
+    title: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
+    status: pending
 acceptance:
   automated:
-    - id: oauth-scope-and-revocation
+    - id: postgres-remains-authority
       criterion:
-        Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
-        and cannot start a run without an unexpired confirmed quote.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1B-001/oauth-scope-and-revocation.yaml
-        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
-    - id: rest-mcp-cli-parity
-      criterion: Shared contract vectors pass against REST, MCP, and CLI adapters for the shipped
-        operations with no handler-local policy drift.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
-        - governance/evidence/WP-P1B-001/three-client-parity.yaml
-        - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
-        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
-    - id: immutable-skill-versions
+        Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
+        through the existing revision/command barriers.
+      status: pending
+      evidence: []
+    - id: lease-and-checkpoint
       criterion:
-        Publishing a Skill creates an immutable version; edits create a new version and never
-        mutate a published snapshot or access secrets.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
-        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+        Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
+        immutable revisions rather than rewriting history.
+      status: pending
+      evidence: []
   manual:
-    - id: no-autonomous-spend-surface
-      criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
-        provider spend or confirmation bypass.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1B-001/no-autonomous-spend-surface.yaml
-        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    - id: no-queue-or-agency-expansion
+      criterion:
+        This packet did not add queues, a separate executor, agency portals, or connected social
+        publishing.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert implementation and generated contracts through Git. Disable newly issued keys and
-    OAuth clients with kill switches if any test credentials were created under authorization.
+  strategy: Revert collaboration Worker and client changes through Git. Disable the collaboration
+    Worker route rather than destroying namespaces unless exact IDs and rollback evidence are
+    authorized.
   remote_actions_required: false
 external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p1b-006-p2-successor-handoff
-  next_action: Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface
-    evidence, run quality gates, and activate WP-P2-001 from
-    governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+  current_step: p2-002-presence-and-comments
+  next_action: Implement presence and comments on review and canvas surfaces with Lightfield states
+    and accessibility.
   blockers: []
   changed_paths:
-    - apps/core/test/unit/p1b-three-client-parity.test.ts
-    - apps/core/test/unit/production-mcp-parity.test.ts
-    - apps/web/src/lib/core/p1b-client.test.ts
-    - docs/STATUS.md
-    - docs/generated/TRACEABILITY.md
-    - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
-    - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
-    - governance/evidence/WP-P1B-001/three-client-parity.yaml
-    - llms.txt
-    - packages/contracts/src/p1b-parity.test.ts
+    - apps/collaboration/**
+    - packages/collaboration/**
+    - governance/scripts/validate-task-graph.mjs
+    - package.json
+    - pnpm-lock.yaml
   last_green_checks:
-    - corepack pnpm agent:verify
+    - corepack pnpm --filter @mustbeviral/collaboration test
+    - corepack pnpm --filter @mustbeviral/collaboration-worker test
 completion:
-  successor_packet_id: WP-P2-001
-  evidence_paths:
-    - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+  successor_packet_id: WP-P3-001
+  evidence_paths: []
   completed_at: null

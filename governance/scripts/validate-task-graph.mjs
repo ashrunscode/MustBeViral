@@ -3,7 +3,9 @@ import { command, fail, listRepositoryFiles, readJson } from './lib.mjs';
 export const workspacePaths = {
   '@mustbeviral/web': 'apps/web',
   '@mustbeviral/core': 'apps/core',
+  '@mustbeviral/collaboration-worker': 'apps/collaboration',
   '@mustbeviral/contracts': 'packages/contracts',
+  '@mustbeviral/collaboration': 'packages/collaboration',
   '@mustbeviral/domain': 'packages/domain',
   '@mustbeviral/graph': 'packages/graph',
   '@mustbeviral/db': 'packages/db',
@@ -19,7 +21,9 @@ export const workspacePaths = {
 export const requiredWorkspaceTasks = {
   '@mustbeviral/web': ['lint', 'typecheck', 'test', 'test:integration', 'build'],
   '@mustbeviral/core': ['lint', 'typecheck', 'test', 'test:integration', 'build'],
+  '@mustbeviral/collaboration-worker': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/contracts': ['lint', 'typecheck', 'test', 'test:integration', 'build'],
+  '@mustbeviral/collaboration': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/domain': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/graph': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/db': ['lint', 'typecheck', 'test', 'build'],

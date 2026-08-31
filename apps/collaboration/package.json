@@ -1,0 +1,21 @@
+{
+  "name": "@mustbeviral/collaboration-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --env staging --outdir dist --x-provision=false --x-auto-create=false",
+    "lint": "eslint . --max-warnings 0",
+    "types:generate": "wrangler types worker-configuration.d.ts --env-interface CollaborationBindings",
+    "types:check": "wrangler types worker-configuration.d.ts --env-interface CollaborationBindings --check",
+    "typecheck": "pnpm types:check && tsc --noEmit && tsc -p test/tsconfig.json --noEmit",
+    "test": "vitest run --config vitest.config.ts test"
+  },
+  "dependencies": {
+    "@mustbeviral/collaboration": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.18.4"
+  }
+}

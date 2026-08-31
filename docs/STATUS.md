@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P1b — Public API, MCP, CLI, and user-authored Skills (in_progress) |
-| Active packet | `WP-P1B-001` |
-| Current step | `p1b-006-p2-successor-handoff` |
+| Phase | P2 — Multiplayer collaboration and shared review (in_progress) |
+| Active packet | `WP-P2-001` |
+| Current step | `p2-002-presence-and-comments` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface evidence, run quality gates, and activate WP-P2-001 from governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+Implement presence and comments on review and canvas surfaces with Lightfield states and accessibility.

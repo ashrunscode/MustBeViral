@@ -1,0 +1,53 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mustbeviral-v2-development-collaboration",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {
+    "SERVICE_NAME": "mustbeviral-collaboration",
+    "SERVICE_GENERATION": "viralgraph-cleanroom-v2"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CANVAS_COORDINATION",
+        "class_name": "CanvasCoordination"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["CanvasCoordination"]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true
+    }
+  },
+  "env": {
+    "staging": {
+      "name": "mustbeviral-v2-staging-collaboration",
+      "workers_dev": true,
+      "vars": {
+        "SERVICE_NAME": "mustbeviral-collaboration",
+        "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+        "APP_ENV": "staging"
+      }
+    },
+    "production": {
+      "name": "mustbeviral-v2-production-collaboration",
+      "vars": {
+        "SERVICE_NAME": "mustbeviral-collaboration",
+        "SERVICE_GENERATION": "viralgraph-cleanroom-v2"
+      }
+    }
+  }
+}

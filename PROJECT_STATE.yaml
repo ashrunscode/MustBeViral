@@ -6,14 +6,13 @@ internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
-  id: P1b
-  title: Public API, MCP, CLI, and user-authored Skills
+  id: P2
+  title: Multiplayer collaboration and shared review
   state: in_progress
 release_target: P0
-active_work_packet: WP-P1B-001
-next_action: Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface
-  evidence, run quality gates, and activate WP-P2-001 from
-  governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+active_work_packet: WP-P2-001
+next_action: Implement presence and comments on review and canvas surfaces with Lightfield states
+  and accessibility.
 decisions_pending: []
 blockers: []
 legacy:
@@ -33,7 +32,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-08-31T12:31:56.544Z
+  at: 2026-08-31T14:28:55.839Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md

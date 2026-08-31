@@ -1,0 +1,185 @@
+schema_version: 1
+id: WP-P1B-001
+spec_revision: 1
+title: Public API, MCP, CLI, and user-authored Skills
+phase: P1b
+status: complete
+priority: high
+branch: codex/viralgraph-cleanroom
+objective: Ship production OAuth and API-key authorization, the supported public REST API,
+  production MCP tools, CLI parity, immutable user-authored Skills, and three-client semantic parity
+  over the same command/query handlers, without autonomous spend or a second policy layer.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - api-mcp-cli
+  - roadmap
+  - quality-gates
+  - local-env-secrets
+  - generated-openapi
+  - codex-finish-mega-prompt
+required_skills:
+  - api-craft
+  - auth-fortress
+  - cloudflare
+  - wrangler
+  - workers-best-practices
+  - test-mastery
+depends_on:
+  - WP-P1A-001
+scope:
+  allowed_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - governance/evidence/WP-P1B-001/**
+    - governance/evidence/WP-P1A-001/transition-receipt.yaml
+    - governance/evidence/WP-P1A-001/completed-work-packet.yaml
+    - governance/tests/**
+    - governance/schemas/**
+    - governance/scripts/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - playwright.config.ts
+    - .env.example
+    - .dev.vars.example
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - api-mcp-cli
+    - data-auth-tenancy
+    - roadmap
+    - quality-gates
+    - generated-openapi
+    - codex-finish-mega-prompt
+deliverables:
+  - Production OAuth and API-key authorization with scopes, revocation, and audit UX that cannot
+    bypass quote confirmation or spend autonomously.
+  - Supported public REST /v1 generated from Zod/OpenAPI using the shared command layer.
+  - Production MCP tools as thin adapters over the same handlers, preserving explicit confirmation.
+  - CLI thin client with JSON automation output, OS credential storage, and stable non-zero exits.
+  - User-authored Skills with immutable published versions.
+  - Contract vectors proving three-client semantic parity.
+public_interfaces:
+  - Production OAuth/API-key REST /v1, production MCP tools, and CLI commands that call the same
+    handlers as the browser. Final social publication remains unavailable on these surfaces.
+steps:
+  - id: p1b-001-oauth-api-keys
+    title: Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
+      without autonomous spend.
+    status: completed
+  - id: p1b-002-public-rest-and-mcp
+    title: Ship supported public REST /v1 and production MCP tools as thin adapters over the shared
+      command/query handlers with generated OpenAPI remaining current.
+    status: completed
+  - id: p1b-003-cli-parity
+    title: Ship the CLI thin API client with environment selection, OS credential storage, JSON
+      automation output, and confirmation-preserving mutations.
+    status: completed
+  - id: p1b-004-user-authored-skills
+    title: Implement user-authored Skills with immutable published versions and no credential access to
+      database, storage, or billing.
+    status: completed
+  - id: p1b-005-three-client-parity
+    title: Prove handler/adapter contract vectors for success, validation, authorization, conflict,
+      expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
+    status: completed
+  - id: p1b-006-p2-successor-handoff
+    title: Prove P1b implementable acceptance and activate WP-P2-001 from
+      governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+    status: completed
+acceptance:
+  automated:
+    - id: oauth-scope-and-revocation
+      criterion: Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
+        and cannot start a run without an unexpired confirmed quote.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P1B-001/oauth-scope-and-revocation.yaml
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    - id: rest-mcp-cli-parity
+      criterion: Shared contract vectors pass against REST, MCP, and CLI adapters for the shipped
+        operations with no handler-local policy drift.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
+        - governance/evidence/WP-P1B-001/three-client-parity.yaml
+        - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    - id: immutable-skill-versions
+      criterion: Publishing a Skill creates an immutable version; edits create a new version and never
+        mutate a published snapshot or access secrets.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+  manual:
+    - id: no-autonomous-spend-surface
+      criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
+        provider spend or confirmation bypass.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P1B-001/no-autonomous-spend-surface.yaml
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+rollback:
+  strategy: Revert implementation and generated contracts through Git. Disable newly issued keys and
+    OAuth clients with kill switches if any test credentials were created under authorization.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: approval-required
+  destructive_remote_actions: false
+handoff:
+  current_step: p1b-006-p2-successor-handoff
+  next_action: Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface
+    evidence, run quality gates, and activate WP-P2-001 from
+    governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+  blockers: []
+  changed_paths:
+    - apps/core/test/unit/p1b-three-client-parity.test.ts
+    - apps/core/test/unit/production-mcp-parity.test.ts
+    - apps/web/src/lib/core/p1b-client.test.ts
+    - docs/STATUS.md
+    - docs/generated/TRACEABILITY.md
+    - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+    - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
+    - governance/evidence/WP-P1B-001/three-client-parity.yaml
+    - llms.txt
+    - packages/contracts/src/p1b-parity.test.ts
+  last_green_checks:
+    - corepack pnpm agent:verify
+completion:
+  successor_packet_id: WP-P2-001
+  evidence_paths:
+    - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+  completed_at: 2026-08-31T14:28:55.839Z
