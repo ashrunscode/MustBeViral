@@ -6,13 +6,13 @@ internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
-  id: P1a
-  title: Secure paid single-user web product
+  id: P1b
+  title: Public API, MCP, CLI, and user-authored Skills
   state: in_progress
 release_target: P0
-active_work_packet: WP-P1A-001
-next_action: Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill
-  switches for signup, generation, provider routes, and charging without enabling public signup.
+active_work_packet: WP-P1B-001
+next_action: Implement production OAuth and API-key authorization with scopes, revocation, and audit
+  UX without autonomous spend.
 decisions_pending: []
 blockers: []
 legacy:
@@ -32,10 +32,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-08-31T12:03:33.939Z
+  at: 2026-08-31T12:31:56.544Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
-    - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
-    - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
-    - governance/evidence/WP-P0-001/web-vitals-measurement-path.md
+    - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md

@@ -1,55 +1,42 @@
 schema_version: 1
-id: WP-P1A-001
+id: WP-P1B-001
 spec_revision: 1
-title: Secure paid single-user web product
-phase: P1a
+title: Public API, MCP, CLI, and user-authored Skills
+phase: P1b
 status: in_progress
-priority: critical
+priority: high
 branch: codex/viralgraph-cleanroom
-objective: Ship the paid single-user MustBeViral Studio product with production-grade identity and
-  RLS, Stripe subscription and prepaid wallet, entitlements and spend caps, transactional email,
-  telemetry, billing UI, operational reconciliation, and a production deploy/rollback path, without
-  waiting on P0 partner-qualification evidence and without unauthorized production mutations.
+objective: Ship production OAuth and API-key authorization, the supported public REST API,
+  production MCP tools, CLI parity, immutable user-authored Skills, and three-client semantic parity
+  over the same command/query handlers, without autonomous spend or a second policy layer.
 authority_refs:
   - product-contract
   - release-scope
-  - experience-contract
-  - canvas-screen-states
   - system-overview
   - data-auth-tenancy
-  - execution-providers-billing
   - api-mcp-cli
   - roadmap
   - quality-gates
   - local-env-secrets
-  - deploy-rollback-incidents
-  - legacy-v1-retirement
-  - generated-model-catalog
+  - generated-openapi
   - codex-finish-mega-prompt
 required_skills:
-  - data-architect
-  - auth-fortress
   - api-craft
+  - auth-fortress
   - cloudflare
   - wrangler
   - workers-best-practices
-  - billing-engine
-  - email-flow
-  - observability-ops
   - test-mastery
-  - superdesign
-  - frontend-master
 depends_on:
-  - WP-P0-001
+  - WP-P1A-001
 scope:
   allowed_paths:
     - apps/**
     - packages/**
     - supabase/**
-    - .superdesign/**
-    - governance/evidence/WP-P1A-001/**
-    - governance/evidence/WP-P0-001/transition-receipt.yaml
-    - governance/evidence/WP-P0-001/completed-work-packet.yaml
+    - governance/evidence/WP-P1B-001/**
+    - governance/evidence/WP-P1A-001/transition-receipt.yaml
+    - governance/evidence/WP-P1A-001/completed-work-packet.yaml
     - governance/tests/**
     - governance/schemas/**
     - governance/scripts/**
@@ -65,8 +52,6 @@ scope:
     - playwright.config.ts
     - .env.example
     - .dev.vars.example
-    - .prettierignore
-    - .github/workflows/quality.yml
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
@@ -76,121 +61,99 @@ scope:
   required_doc_ids:
     - product-contract
     - release-scope
-    - experience-contract
-    - canvas-screen-states
-    - system-overview
-    - data-auth-tenancy
-    - execution-providers-billing
     - api-mcp-cli
+    - data-auth-tenancy
     - roadmap
     - quality-gates
-    - local-env-secrets
-    - deploy-rollback-incidents
-    - generated-model-catalog
+    - generated-openapi
     - codex-finish-mega-prompt
 deliverables:
-  - Closed-enrollment production-grade identity and forced RLS for the single-owner workspace, with
-    kill switches for signup, generation, provider routes, and charging.
-  - Stripe test-mode subscription, setup charge, prepaid wallet, entitlements, and signed webhook
-    ingestion at POST /webhooks/stripe on the shared command layer using integer USD micros.
-  - Transactional Resend email and Sentry/OTel telemetry that never become business-state authority
-    and never log secrets, signed URLs, or customer media.
-  - Usage and billing UI states plus expanded private exports and operational reconciliation.
-  - Production deploy/rollback evidence path and Web Vitals instrumentation; live production
-    mutation only when exact resource IDs and rollback evidence are authorized.
+  - Production OAuth and API-key authorization with scopes, revocation, and audit UX that cannot
+    bypass quote confirmation or spend autonomously.
+  - Supported public REST /v1 generated from Zod/OpenAPI using the shared command layer.
+  - Production MCP tools as thin adapters over the same handlers, preserving explicit confirmation.
+  - CLI thin client with JSON automation output, OS credential storage, and stable non-zero exits.
+  - User-authored Skills with immutable published versions.
+  - Contract vectors proving three-client semantic parity.
 public_interfaces:
-  - P1a authenticated REST /v1 plus POST /webhooks/stripe, browser billing/usage surfaces, and
-    existing launch-pack commands. No production OAuth, public MCP discovery, or CLI in this packet.
+  - Production OAuth/API-key REST /v1, production MCP tools, and CLI commands that call the same
+    handlers as the browser. Final social publication remains unavailable on these surfaces.
 steps:
-  - id: p1a-001-production-identity-and-rls
-    title:
-      Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill switches for
-      signup, generation, provider routes, and charging without enabling public signup.
-    status: completed
-  - id: p1a-002-stripe-wallet-entitlements
-    title: Implement Stripe test-mode setup charge, subscription, prepaid wallet, entitlements, and
-      signed webhook settlement on the integer-micros ledger with the $1.82 fully-landed margin
-      guardrail.
-    status: completed
-  - id: p1a-003-transactional-email-and-telemetry
-    title:
-      Integrate Resend transactional/auth email and Sentry/OTel with redaction, correlation IDs,
-      and fail-closed missing-credential behavior.
-    status: completed
-  - id: p1a-004-billing-usage-ui
-    title: Ship Lightfield usage and billing screens and expanded private exports against approved
-      tokens, with tests for funded, low-balance, blocked, receipt, and refund/release states.
-    status: completed
-  - id: p1a-005-production-deploy-rollback-and-vitals
-    title: Complete the production deploy/rollback evidence path and Web Vitals measurement contract
-      without promoting V2 or cutting legacy traffic unless exact IDs are authorized.
-    status: completed
-  - id: p1a-006-p1b-successor-handoff
-    title: Prove P1a implementable acceptance and activate WP-P1B-001 from
-      governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml.
+  - id: p1b-001-oauth-api-keys
+    title: Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
+      without autonomous spend.
     status: current
+  - id: p1b-002-public-rest-and-mcp
+    title: Ship supported public REST /v1 and production MCP tools as thin adapters over the shared
+      command/query handlers with generated OpenAPI remaining current.
+    status: pending
+  - id: p1b-003-cli-parity
+    title: Ship the CLI thin API client with environment selection, OS credential storage, JSON
+      automation output, and confirmation-preserving mutations.
+    status: pending
+  - id: p1b-004-user-authored-skills
+    title: Implement user-authored Skills with immutable published versions and no credential access to
+      database, storage, or billing.
+    status: pending
+  - id: p1b-005-three-client-parity
+    title: Prove handler/adapter contract vectors for success, validation, authorization, conflict,
+      expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
+    status: pending
+  - id: p1b-006-p2-successor-handoff
+    title: Prove P1b implementable acceptance and activate WP-P2-001 from
+      governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
+    status: pending
 acceptance:
   automated:
-    - id: stripe-wallet-ledger-invariants
-      criterion:
-        Tests prove setup, subscription, wallet credit, reservation, capture, release, and refund
-        stay balanced in integer USD micros, enforce entitlements and caps, and ignore duplicate
-        Stripe webhook deliveries.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
-    - id: email-telemetry-fail-closed
-      criterion: Missing Resend or Sentry configuration fails closed; successful paths never persist
-        secrets, signed URLs, or customer media in logs or fixtures.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
-    - id: billing-ui-states
-      criterion: Component and flow tests cover funded, low-balance, blocked, receipt-detail, and
-        refund/release billing states without a hidden mock charge.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    - id: oauth-scope-and-revocation
+      criterion: Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
+        and cannot start a run without an unexpired confirmed quote.
+      status: pending
+      evidence: []
+    - id: rest-mcp-cli-parity
+      criterion: Shared contract vectors pass against REST, MCP, and CLI adapters for the shipped
+        operations with no handler-local policy drift.
+      status: pending
+      evidence: []
+    - id: immutable-skill-versions
+      criterion: Publishing a Skill creates an immutable version; edits create a new version and never
+        mutate a published snapshot or access secrets.
+      status: pending
+      evidence: []
   manual:
-    - id: no-unauthorized-production-mutation
-      criterion: No production, live Stripe, DNS, or credential dashboard mutation occurred unless
-        PROJECT_STATE and this packet named the exact resource IDs and rollback evidence.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    - id: no-autonomous-spend-surface
+      criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
+        provider spend or confirmation bypass.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert the packet's implementation and generated/evidence changes through auditable Git
-    history. Do not destroy remote resources. Disable new charging and signup with kill switches if
-    a remote test-mode object was created under explicit authorization.
+  strategy: Revert implementation and generated contracts through Git. Disable newly issued keys and
+    OAuth clients with kill switches if any test credentials were created under authorization.
   remote_actions_required: false
 external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p1a-006-p1b-successor-handoff
-  next_action: Run corepack pnpm agent:finish --successor
-    governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml to activate WP-P1B-001.
+  current_step: p1b-001-oauth-api-keys
+  next_action: Implement production OAuth and API-key authorization with scopes, revocation, and audit
+    UX without autonomous spend.
   blockers: []
   changed_paths: []
   last_green_checks: []
 completion:
-  successor_packet_id: WP-P1B-001
-  evidence_paths:
-    - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+  successor_packet_id: WP-P2-001
+  evidence_paths: []
   completed_at: null
