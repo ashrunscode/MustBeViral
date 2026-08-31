@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P1B-001
-next_action: Implement user-authored Skills with immutable published versions and no credential
-  access to database, storage, or billing.
+next_action: Prove handler/adapter contract vectors for success, validation, authorization,
+  conflict, expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
 decisions_pending: []
 blockers: []
 legacy:
