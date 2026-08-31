@@ -84,10 +84,30 @@ export const AcquireLeaseInputSchema = z.object({
 
 export type AcquireLeaseInput = z.infer<typeof AcquireLeaseInputSchema>;
 
+export const ReleaseLeaseInputSchema = z.object({
+  lease_id: z.string().min(1).max(128),
+  actor_id: z.string().min(1).max(128),
+});
+
+export type ReleaseLeaseInput = z.infer<typeof ReleaseLeaseInputSchema>;
+
+export const UpsertTextDraftInputSchema = z.object({
+  draft_id: z.string().min(1).max(128),
+  node_id: z.string().min(1).max(128),
+  field_path: z.string().min(1).max(256),
+  body: z.string().max(32_000),
+  author: CollaborationActorSchema,
+});
+
+export type UpsertTextDraftInput = z.infer<typeof UpsertTextDraftInputSchema>;
+
 export const ClientMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('presence.join'), payload: JoinPresenceInputSchema }),
   z.object({ type: z.literal('presence.leave'), payload: z.object({ actor_id: z.string() }) }),
   z.object({ type: z.literal('comment.upsert'), payload: UpsertCommentInputSchema }),
+  z.object({ type: z.literal('text.draft.upsert'), payload: UpsertTextDraftInputSchema }),
+  z.object({ type: z.literal('lease.acquire'), payload: AcquireLeaseInputSchema }),
+  z.object({ type: z.literal('lease.release'), payload: ReleaseLeaseInputSchema }),
   z.object({ type: z.literal('snapshot.request') }),
 ]);
 
@@ -95,6 +115,24 @@ export type ClientMessage = z.infer<typeof ClientMessageSchema>;
 
 export const ServerMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('snapshot'), payload: CollaborationSnapshotSchema }),
+  z.object({
+    type: z.literal('lease.result'),
+    payload: z.object({
+      accepted: z.boolean(),
+      lease_id: z.string(),
+      node_id: z.string(),
+    }),
+  }),
+  z.object({
+    type: z.literal('text.draft.result'),
+    payload: z.object({
+      accepted: z.boolean(),
+      draft_id: z.string(),
+      node_id: z.string(),
+      field_path: z.string(),
+      reason: z.enum(['ok', 'lease_held', 'stale']).optional(),
+    }),
+  }),
   z.object({
     type: z.literal('error'),
     payload: z.object({ code: z.string(), message: z.string() }),
@@ -104,6 +142,16 @@ export const ServerMessageSchema = z.discriminatedUnion('type', [
 export type ServerMessage = z.infer<typeof ServerMessageSchema>;
 
 export const DEFAULT_LEASE_TTL_SECONDS = 120;
+
+export const LEASE_GATED_NODE_KINDS = [
+  'image_generation',
+  'image_edit',
+  'video_generation',
+] as const;
+
+export function requiresEditLease(nodeKind: string): boolean {
+  return (LEASE_GATED_NODE_KINDS as readonly string[]).includes(nodeKind);
+}
 
 export const FORBIDDEN_COLLABORATION_ROUTES = [
   '/v1/quotes',

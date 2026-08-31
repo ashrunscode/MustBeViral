@@ -1,13 +1,18 @@
 import { DurableObject } from 'cloudflare:workers';
 
 import {
+  evaluateTextDraftUpsert,
+  leaseAcquireVerdict,
+  leaseForNode,
   type AcquireLeaseInput,
   type CollaborationSnapshot,
   type CommentDraft,
   ClientMessageSchema,
   type JoinPresenceInput,
   ServerMessageSchema,
+  type TextDraft,
   type UpsertCommentInput,
+  type UpsertTextDraftInput,
 } from '@mustbeviral/collaboration';
 
 const PRESENCE_STALE_MS = 60_000;
@@ -187,23 +192,79 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     return this.getSnapshot(canvasId);
   }
 
+  private findTextDraftByField(nodeId: string, fieldPath: string): TextDraft | undefined {
+    const rows = this.ctx.storage.sql
+      .exec<{ payload: string }>('SELECT payload FROM text_drafts')
+      .toArray();
+    for (const row of rows) {
+      const draft = parseJson<TextDraft>(row.payload);
+      if (draft.node_id === nodeId && draft.field_path === fieldPath) return draft;
+    }
+    return undefined;
+  }
+
+  async upsertTextDraft(
+    canvasId: string,
+    input: UpsertTextDraftInput,
+  ): Promise<{
+    accepted: boolean;
+    reason: 'ok' | 'lease_held' | 'stale';
+    snapshot: CollaborationSnapshot;
+  }> {
+    this.ensureCanvasId(canvasId);
+    this.pruneExpiredLeases();
+    const snapshot = await this.getSnapshot(canvasId);
+    const lease = leaseForNode(snapshot.leases, input.node_id);
+    const existing = this.findTextDraftByField(input.node_id, input.field_path);
+    const timestamp = nowIso();
+    const incoming: TextDraft = {
+      draft_id: input.draft_id,
+      node_id: input.node_id,
+      field_path: input.field_path,
+      body: input.body,
+      author: input.author,
+      updated_at: timestamp,
+    };
+    const verdict = evaluateTextDraftUpsert({
+      incoming,
+      existing,
+      lease,
+      actorId: input.author.actor_id,
+    });
+    if (verdict === 'rejected_lease') {
+      return { accepted: false, reason: 'lease_held', snapshot };
+    }
+    if (verdict === 'rejected_stale') {
+      return { accepted: false, reason: 'stale', snapshot };
+    }
+    if (existing !== undefined) {
+      this.ctx.storage.sql.exec('DELETE FROM text_drafts WHERE draft_id = ?', existing.draft_id);
+    }
+    this.ctx.storage.sql.exec(
+      'INSERT OR REPLACE INTO text_drafts (draft_id, payload) VALUES (?, ?)',
+      input.draft_id,
+      JSON.stringify(incoming),
+    );
+    await this.broadcastSnapshot();
+    return { accepted: true, reason: 'ok', snapshot: await this.getSnapshot(canvasId) };
+  }
+
   async acquireLease(
     canvasId: string,
     input: AcquireLeaseInput,
   ): Promise<{ accepted: boolean; snapshot: CollaborationSnapshot }> {
     this.ensureCanvasId(canvasId);
     this.pruneExpiredLeases();
-    const conflict = this.ctx.storage.sql
-      .exec<{ lease_id: string; payload: string }>(
-        'SELECT lease_id, payload FROM leases WHERE node_id = ? LIMIT 1',
-        input.node_id,
-      )
-      .toArray()[0];
-    if (conflict) {
-      const holder = parseJson<CollaborationSnapshot['leases'][number]>(conflict.payload);
-      if (holder.holder.actor_id !== input.holder.actor_id) {
-        return { accepted: false, snapshot: await this.getSnapshot(canvasId) };
-      }
+    const snapshot = await this.getSnapshot(canvasId);
+    const conflict = leaseForNode(snapshot.leases, input.node_id);
+    const verdict = leaseAcquireVerdict({
+      existing: conflict,
+      holder: input.holder,
+    });
+    if (verdict === 'contested') {
+      return { accepted: false, snapshot };
+    }
+    if (conflict !== undefined) {
       this.ctx.storage.sql.exec('DELETE FROM leases WHERE lease_id = ?', conflict.lease_id);
     }
     const acquiredAt = nowIso();
@@ -304,6 +365,40 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
       }
       if (parsed.type === 'comment.upsert') {
         await this.upsertComment(canvasId, parsed.payload);
+        return;
+      }
+      if (parsed.type === 'text.draft.upsert') {
+        const result = await this.upsertTextDraft(canvasId, parsed.payload);
+        socket.send(
+          encodeServerMessage({
+            type: 'text.draft.result',
+            payload: {
+              accepted: result.accepted,
+              draft_id: parsed.payload.draft_id,
+              node_id: parsed.payload.node_id,
+              field_path: parsed.payload.field_path,
+              reason: result.reason,
+            },
+          }),
+        );
+        return;
+      }
+      if (parsed.type === 'lease.acquire') {
+        const result = await this.acquireLease(canvasId, parsed.payload);
+        socket.send(
+          encodeServerMessage({
+            type: 'lease.result',
+            payload: {
+              accepted: result.accepted,
+              lease_id: parsed.payload.lease_id,
+              node_id: parsed.payload.node_id,
+            },
+          }),
+        );
+        return;
+      }
+      if (parsed.type === 'lease.release') {
+        await this.releaseLease(canvasId, parsed.payload.lease_id, parsed.payload.actor_id);
         return;
       }
       if (parsed.type === 'snapshot.request') {

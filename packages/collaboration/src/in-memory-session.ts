@@ -1,10 +1,19 @@
-import type {
-  CollaborationActor,
-  CollaborationSnapshot,
-  CommentDraft,
-  PresenceEntry,
-  UpsertCommentInput,
+import {
+  DEFAULT_LEASE_TTL_SECONDS,
+  type CollaborationActor,
+  type CollaborationSnapshot,
+  type CommentDraft,
+  type EditLease,
+  type TextDraft,
+  type UpsertCommentInput,
+  type UpsertTextDraftInput,
 } from './protocol';
+import {
+  evaluateTextDraftUpsert,
+  leaseAcquireVerdict,
+  leaseForNode,
+  textDraftKey,
+} from './conflict-resolution';
 
 function nowIso(): string {
   return new Date().toISOString();
@@ -14,17 +23,33 @@ export interface InMemoryCollaborationSessionOptions {
   readonly canvasId: string;
   readonly actor: CollaborationActor;
   readonly surface: 'canvas' | 'review';
-  readonly seedPresence?: readonly PresenceEntry[];
+  readonly seedPresence?: readonly CollaborationSnapshot['presence'][number][];
   readonly seedComments?: readonly CommentDraft[];
+  readonly seedTextDrafts?: readonly TextDraft[];
+  readonly seedLeases?: readonly EditLease[];
 }
 
 export class InMemoryCollaborationSession {
   readonly #canvasId: string;
   readonly #actor: CollaborationActor;
   readonly #surface: 'canvas' | 'review';
-  #presence: PresenceEntry[];
+  #presence: CollaborationSnapshot['presence'];
   #comments: CommentDraft[];
+  #textDrafts: TextDraft[];
+  #leases: EditLease[];
   readonly #listeners = new Set<(snapshot: CollaborationSnapshot) => void>();
+  readonly #leaseListeners = new Set<
+    (result: { accepted: boolean; lease_id: string; node_id: string }) => void
+  >();
+  readonly #textListeners = new Set<
+    (result: {
+      accepted: boolean;
+      draft_id: string;
+      node_id: string;
+      field_path: string;
+      reason?: 'ok' | 'lease_held' | 'stale';
+    }) => void
+  >();
 
   constructor(options: InMemoryCollaborationSessionOptions) {
     this.#canvasId = options.canvasId;
@@ -32,6 +57,8 @@ export class InMemoryCollaborationSession {
     this.#surface = options.surface;
     this.#presence = [...(options.seedPresence ?? [])];
     this.#comments = [...(options.seedComments ?? [])];
+    this.#textDrafts = [...(options.seedTextDrafts ?? [])];
+    this.#leases = [...(options.seedLeases ?? [])];
   }
 
   connect(): void {
@@ -46,12 +73,13 @@ export class InMemoryCollaborationSession {
   }
 
   get snapshot(): CollaborationSnapshot {
+    this.#pruneExpiredLeases();
     return {
       canvas_id: this.#canvasId,
       presence: [...this.#presence],
       comments: [...this.#comments],
-      text_drafts: [],
-      leases: [],
+      text_drafts: [...this.#textDrafts],
+      leases: [...this.#leases],
     };
   }
 
@@ -60,6 +88,30 @@ export class InMemoryCollaborationSession {
     listener(this.snapshot);
     return () => {
       this.#listeners.delete(listener);
+    };
+  }
+
+  onLeaseResult(
+    listener: (result: { accepted: boolean; lease_id: string; node_id: string }) => void,
+  ): () => void {
+    this.#leaseListeners.add(listener);
+    return () => {
+      this.#leaseListeners.delete(listener);
+    };
+  }
+
+  onTextDraftResult(
+    listener: (result: {
+      accepted: boolean;
+      draft_id: string;
+      node_id: string;
+      field_path: string;
+      reason?: 'ok' | 'lease_held' | 'stale';
+    }) => void,
+  ): () => void {
+    this.#textListeners.add(listener);
+    return () => {
+      this.#textListeners.delete(listener);
     };
   }
 
@@ -81,9 +133,92 @@ export class InMemoryCollaborationSession {
     this.#emit();
   }
 
+  upsertTextDraft(input: Omit<UpsertTextDraftInput, 'author'>): void {
+    this.#pruneExpiredLeases();
+    const existing = this.#textDrafts.find(
+      (draft) => draft.node_id === input.node_id && draft.field_path === input.field_path,
+    );
+    const incoming: TextDraft = {
+      draft_id: input.draft_id,
+      node_id: input.node_id,
+      field_path: input.field_path,
+      body: input.body,
+      author: this.#actor,
+      updated_at: nowIso(),
+    };
+    const verdict = evaluateTextDraftUpsert({
+      incoming,
+      existing,
+      lease: leaseForNode(this.#leases, input.node_id),
+      actorId: this.#actor.actor_id,
+    });
+    const payload = {
+      accepted: verdict === 'accepted',
+      draft_id: input.draft_id,
+      node_id: input.node_id,
+      field_path: input.field_path,
+      reason:
+        verdict === 'accepted'
+          ? ('ok' as const)
+          : verdict === 'rejected_lease'
+            ? ('lease_held' as const)
+            : ('stale' as const),
+    };
+    if (verdict === 'accepted') {
+      this.#textDrafts = [
+        ...this.#textDrafts.filter(
+          (draft) => !(draft.node_id === input.node_id && draft.field_path === input.field_path),
+        ),
+        incoming,
+      ];
+      this.#emit();
+    }
+    for (const listener of this.#textListeners) {
+      listener(payload);
+    }
+  }
+
+  acquireLease(
+    nodeId: string,
+    leaseId = `lease-${nodeId}-${this.#actor.actor_id}`,
+    ttlSeconds = DEFAULT_LEASE_TTL_SECONDS,
+  ): void {
+    this.#pruneExpiredLeases();
+    const conflict = leaseForNode(this.#leases, nodeId);
+    const accepted =
+      leaseAcquireVerdict({
+        existing: conflict,
+        holder: this.#actor,
+      }) === 'accepted';
+    if (accepted) {
+      this.#leases = [
+        ...this.#leases.filter((lease) => lease.node_id !== nodeId),
+        {
+          lease_id: leaseId,
+          node_id: nodeId,
+          holder: this.#actor,
+          acquired_at: nowIso(),
+          expires_at: new Date(Date.now() + ttlSeconds * 1_000).toISOString(),
+        },
+      ];
+      this.#emit();
+    }
+    for (const listener of this.#leaseListeners) {
+      listener({ accepted, lease_id: leaseId, node_id: nodeId });
+    }
+  }
+
+  releaseLease(leaseId: string): void {
+    const lease = this.#leases.find((candidate) => candidate.lease_id === leaseId);
+    if (lease?.holder.actor_id === this.#actor.actor_id) {
+      this.#leases = this.#leases.filter((candidate) => candidate.lease_id !== leaseId);
+      this.#emit();
+    }
+  }
+
   async joinPresence(): Promise<void> {
     const timestamp = nowIso();
-    const entry: PresenceEntry = {
+    const entry: CollaborationSnapshot['presence'][number] = {
       actor: this.#actor,
       joined_at: timestamp,
       last_seen_at: timestamp,
@@ -94,6 +229,14 @@ export class InMemoryCollaborationSession {
       entry,
     ];
     this.#emit();
+  }
+
+  #pruneExpiredLeases(): void {
+    const now = Date.now();
+    this.#leases = this.#leases.filter((lease) => {
+      const expiresMs = Date.parse(lease.expires_at);
+      return !Number.isNaN(expiresMs) && expiresMs > now;
+    });
   }
 
   #emit(): void {
@@ -151,7 +294,39 @@ export function createPreviewCollaborationSnapshot(
               updated_at: timestamp,
             },
           ],
-    text_drafts: [],
-    leases: [],
+    text_drafts:
+      surface === 'canvas'
+        ? [
+            {
+              draft_id: textDraftKey('7', 'parameters.prompt'),
+              node_id: '7',
+              field_path: 'parameters.prompt',
+              body: 'Macro texture on matte ceramic with soft rim light.',
+              author: { actor_id: 'maya-chen', display_name: 'Maya Chen', color: '#3182d4' },
+              updated_at: timestamp,
+            },
+          ]
+        : [
+            {
+              draft_id: textDraftKey('hero-b', 'accessibility_description'),
+              node_id: 'hero-b',
+              field_path: 'accessibility_description',
+              body: 'Product hero on warm neutral backdrop with soft key light.',
+              author: { actor_id: 'jordan-lee', display_name: 'Jordan Lee', color: '#1F9D63' },
+              updated_at: timestamp,
+            },
+          ],
+    leases:
+      surface === 'canvas'
+        ? [
+            {
+              lease_id: 'lease-7-maya-chen',
+              node_id: '7',
+              holder: { actor_id: 'maya-chen', display_name: 'Maya Chen', color: '#3182d4' },
+              acquired_at: timestamp,
+              expires_at: new Date(Date.now() + DEFAULT_LEASE_TTL_SECONDS * 1_000).toISOString(),
+            },
+          ]
+        : [],
   };
 }

@@ -64,4 +64,35 @@ describe('CanvasCoordination durable object', () => {
       expect(third.accepted).toBe(true);
     });
   });
+
+  it('syncs recoverable text drafts with lease gating and stale rejection', async () => {
+    const stub = canvasStub('canvas-text');
+    await runInDurableObject(stub, async (instance) => {
+      await instance.acquireLease('canvas-text', {
+        lease_id: 'lease-node-7',
+        node_id: 'node-7',
+        holder: { actor_id: 'actor-1', display_name: 'A' },
+        ttl_seconds: 120,
+      });
+      const accepted = await instance.upsertTextDraft('canvas-text', {
+        draft_id: 'node-7::parameters.prompt',
+        node_id: 'node-7',
+        field_path: 'parameters.prompt',
+        body: 'Macro ceramic texture',
+        author: { actor_id: 'actor-1', display_name: 'A' },
+      });
+      expect(accepted.accepted).toBe(true);
+      expect(accepted.snapshot.text_drafts).toHaveLength(1);
+      const blocked = await instance.upsertTextDraft('canvas-text', {
+        draft_id: 'node-7::parameters.prompt',
+        node_id: 'node-7',
+        field_path: 'parameters.prompt',
+        body: 'Competing draft',
+        author: { actor_id: 'actor-2', display_name: 'B' },
+      });
+      expect(blocked.accepted).toBe(false);
+      expect(blocked.reason).toBe('lease_held');
+      expect(blocked.snapshot.text_drafts[0]?.body).toContain('Macro ceramic');
+    });
+  });
 });

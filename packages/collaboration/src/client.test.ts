@@ -88,6 +88,17 @@ describe('collaboration client', () => {
       anchor_node_id: 'node-1',
     });
     expect(MockWebSocket.instances[0]?.sent.at(-1)).toContain('"type":"comment.upsert"');
+    client.upsertTextDraft({
+      draft_id: 'node-1::parameters.prompt',
+      node_id: 'node-1',
+      field_path: 'parameters.prompt',
+      body: 'Sharper macro texture',
+    });
+    expect(MockWebSocket.instances[0]?.sent.at(-1)).toContain('"type":"text.draft.upsert"');
+    client.acquireLease('node-1', 'lease-node-1');
+    expect(MockWebSocket.instances[0]?.sent.at(-1)).toContain('"type":"lease.acquire"');
+    client.releaseLease('lease-node-1');
+    expect(MockWebSocket.instances[0]?.sent.at(-1)).toContain('"type":"lease.release"');
     client.disconnect();
     expect(MockWebSocket.instances[0]?.sent.at(-1)).toContain('"type":"presence.leave"');
   });

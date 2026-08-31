@@ -49,4 +49,25 @@ describe('collaboration protocol', () => {
     });
     expect(message.type).toBe('presence.join');
   });
+
+  it('accepts text draft and lease websocket messages', () => {
+    expect(
+      ClientMessageSchema.parse({
+        type: 'text.draft.upsert',
+        payload: {
+          draft_id: 'node-1::parameters.prompt',
+          node_id: 'node-1',
+          field_path: 'parameters.prompt',
+          body: 'Draft prompt',
+          author: { actor_id: 'actor-1', display_name: 'A' },
+        },
+      }).type,
+    ).toBe('text.draft.upsert');
+    expect(
+      ClientMessageSchema.parse({
+        type: 'lease.release',
+        payload: { lease_id: 'lease-1', actor_id: 'actor-1' },
+      }).type,
+    ).toBe('lease.release');
+  });
 });

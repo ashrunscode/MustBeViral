@@ -1,9 +1,11 @@
 import {
   ClientMessageSchema,
+  DEFAULT_LEASE_TTL_SECONDS,
   ServerMessageSchema,
   type CollaborationActor,
   type CollaborationSnapshot,
   type UpsertCommentInput,
+  type UpsertTextDraftInput,
 } from './protocol';
 
 export function collaborationWebSocketUrl(baseUrl: string, canvasId: string): string {
@@ -25,6 +27,18 @@ export interface CollaborationClientOptions {
   readonly surface: 'canvas' | 'review';
   readonly onSnapshot?: (snapshot: CollaborationSnapshot) => void;
   readonly onStatus?: (status: CollaborationClientStatus) => void;
+  readonly onLeaseResult?: (result: {
+    accepted: boolean;
+    lease_id: string;
+    node_id: string;
+  }) => void;
+  readonly onTextDraftResult?: (result: {
+    accepted: boolean;
+    draft_id: string;
+    node_id: string;
+    field_path: string;
+    reason?: 'ok' | 'lease_held' | 'stale';
+  }) => void;
   readonly WebSocketImpl?: typeof WebSocket;
 }
 
@@ -81,6 +95,21 @@ export class CollaborationClient {
         if (parsed.type === 'snapshot') {
           this.#snapshot = parsed.payload;
           this.#options.onSnapshot?.(parsed.payload);
+          return;
+        }
+        if (parsed.type === 'lease.result') {
+          this.#options.onLeaseResult?.(parsed.payload);
+          return;
+        }
+        if (parsed.type === 'text.draft.result') {
+          const payload = parsed.payload;
+          this.#options.onTextDraftResult?.({
+            accepted: payload.accepted,
+            draft_id: payload.draft_id,
+            node_id: payload.node_id,
+            field_path: payload.field_path,
+            ...(payload.reason === undefined ? {} : { reason: payload.reason }),
+          });
         }
       } catch {
         this.#setStatus('error');
@@ -123,6 +152,44 @@ export class CollaborationClient {
       payload: {
         ...input,
         author: this.#options.actor,
+      },
+    });
+  }
+
+  upsertTextDraft(input: Omit<UpsertTextDraftInput, 'author'>): void {
+    const socket = this.#socket;
+    if (socket === null || socket.readyState !== WebSocket.OPEN) return;
+    sendMessage(socket, {
+      type: 'text.draft.upsert',
+      payload: {
+        ...input,
+        author: this.#options.actor,
+      },
+    });
+  }
+
+  acquireLease(nodeId: string, leaseId?: string, ttlSeconds = DEFAULT_LEASE_TTL_SECONDS): void {
+    const socket = this.#socket;
+    if (socket === null || socket.readyState !== WebSocket.OPEN) return;
+    sendMessage(socket, {
+      type: 'lease.acquire',
+      payload: {
+        lease_id: leaseId ?? `lease-${nodeId}-${this.#options.actor.actor_id}`,
+        node_id: nodeId,
+        holder: this.#options.actor,
+        ttl_seconds: ttlSeconds,
+      },
+    });
+  }
+
+  releaseLease(leaseId: string): void {
+    const socket = this.#socket;
+    if (socket === null || socket.readyState !== WebSocket.OPEN) return;
+    sendMessage(socket, {
+      type: 'lease.release',
+      payload: {
+        lease_id: leaseId,
+        actor_id: this.#options.actor.actor_id,
       },
     });
   }
