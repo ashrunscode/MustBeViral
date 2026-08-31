@@ -17,13 +17,11 @@ describe('programmatic credential auth', () => {
       }),
     );
     const apiKeyVerifier = createApiKeyVerifier(fetchMock);
-    const actor = await apiKeyVerifier.verify('mbv_sk_test_secret', {
+    const bindings = {
       SUPABASE_URL: 'https://example.supabase.co',
       SUPABASE_SECRET_KEY: 'secret',
-      MEDIA_BUCKET: {} as R2Bucket,
-      SERVICE_NAME: 'core',
-      SERVICE_GENERATION: 'viralgraph-cleanroom-v2',
-    } as CoreBindings);
+    } as CoreBindings;
+    const actor = await apiKeyVerifier.verify('mbv_sk_test_secret', bindings);
     const authenticator = createRequestAuthenticator({
       verify: vi.fn(),
     });
@@ -40,9 +38,6 @@ describe('programmatic credential auth', () => {
       oauthVerifier.verify('mbv_oauth_test_revoked', {
         SUPABASE_URL: 'https://example.supabase.co',
         SUPABASE_SECRET_KEY: 'secret',
-        MEDIA_BUCKET: {} as R2Bucket,
-        SERVICE_NAME: 'core',
-        SERVICE_GENERATION: 'viralgraph-cleanroom-v2',
       } as CoreBindings),
     ).rejects.toThrow(/invalid|expired|revoked/i);
   });
