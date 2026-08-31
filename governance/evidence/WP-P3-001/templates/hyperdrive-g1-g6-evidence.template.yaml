@@ -1,0 +1,68 @@
+schema_version: 1
+gate_id: hyperdrive_g1_g6
+packet_id: WP-P3-001
+recorded_at: TBD
+branch: codex/viralgraph-cleanroom
+status: not_met
+authority: docs/research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md
+operator_acceptance:
+  accepted_by: TBD
+  accepted_at: TBD
+  rollback_plan_acknowledged: false
+paths:
+  baseline: baseline_data_api_rpc
+  candidate: candidate_hyperdrive_pooled
+  candidate_enabled: false
+fixture:
+  manifest_path: TBD
+  manifest_hash: TBD
+  synthetic_tenants: [TBD]
+run:
+  manifest_path: TBD
+  commit_sha: TBD
+  staging_deployment_id: TBD
+  supabase_region: TBD
+  load_regions: [TBD]
+  observed_worker_colos: [TBD]
+gates:
+  g1_non_owner_role:
+    status: unchecked
+    evidence_path: TBD
+  g2_transaction_local_claims:
+    status: unchecked
+    evidence_path: TBD
+  g3_pooled_identity_isolation:
+    status: unchecked
+    evidence_path: TBD
+  g4_barrier_recheck:
+    status: unchecked
+    evidence_path: TBD
+  g5_latency_improvement_20pct:
+    status: unchecked
+    evidence_path: TBD
+    speedup_percent_w2_cold: TBD
+    speedup_percent_w2_warm: TBD
+    speedup_percent_aggregate_cold: TBD
+    speedup_percent_aggregate_warm: TBD
+  g6_p95_p99_thresholds:
+    status: unchecked
+    evidence_path: TBD
+    w2_50vu_cold_p95_ms: TBD
+    w2_50vu_cold_p99_ms: TBD
+    w2_50vu_warm_p95_ms: TBD
+    w2_50vu_warm_p99_ms: TBD
+    unexpected_error_rate: TBD
+artifacts:
+  raw_directory: governance/evidence/WP-P3-001/benchmarks/raw
+  summary_matrix_csv: TBD
+  decision_table_md: TBD
+  identity_directory: TBD
+  invariants_directory: TBD
+rollback:
+  strategy: >-
+    Keep Data API/RPC baseline. Disable candidate route selection and remove Hyperdrive binding only
+    with recorded binding ID and operator acceptance.
+  hyperdrive_binding_id: TBD
+notes:
+  - Local postgres superuser Hyperdrive binding cannot prove G1.
+  - All six gates must pass before candidate enablement.

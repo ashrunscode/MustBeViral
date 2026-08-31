@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Collect measured staging evidence for at least one P3 infrastructure gate (backpressure/fan-out, Hyperdrive G1-G6 benchmark matrix, or separate-executor isolation) with rollback plan and operator acceptance before implementing queues, executor, direct adapters, or BYOK.
+Run staging evidence harnesses per staging-evidence-collection-runbook.md, fill evidence YAML from templates, and obtain operator acceptance for at least one gate before implementing queues, executor, Hyperdrive user-path, or BYOK.

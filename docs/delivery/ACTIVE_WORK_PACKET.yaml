@@ -80,7 +80,8 @@ public_interfaces:
     services are internal execution infrastructure, not a second policy or billing authority.
 steps:
   - id: p3-001-evidence-gate-evaluation
-    title: Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
+    title:
+      Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
       queues, a separate executor, direct high-volume adapters, Hyperdrive user-path enablement, or
       BYOK.
     status: completed
@@ -95,12 +96,14 @@ steps:
 acceptance:
   automated:
     - id: postgres-remains-authority
-      criterion: Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
+      criterion:
+        Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
         through the existing revision/command barriers.
       status: pending
       evidence: []
     - id: evidence-gated-additions
-      criterion: Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
+      criterion:
+        Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
         and accepted decision before implementation.
       status: passed
       evidence:
@@ -140,25 +143,43 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3-002-scale-infrastructure
-  next_action: Collect measured staging evidence for at least one P3 infrastructure gate
-    (backpressure/fan-out, Hyperdrive G1-G6 benchmark matrix, or separate-executor isolation) with
-    rollback plan and operator acceptance before implementing queues, executor, direct adapters, or
-    BYOK.
+  next_action: >-
+    Run staging evidence harnesses per staging-evidence-collection-runbook.md, fill evidence YAML
+    from templates, and obtain operator acceptance for at least one gate before implementing queues,
+    executor, Hyperdrive user-path, or BYOK.
   blockers: []
   changed_paths:
-    - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
-    - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
+    - governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
+    - governance/evidence/WP-P3-001/operator-checklist.yaml
+    - governance/evidence/WP-P3-001/templates/backpressure-fan-out-evidence.template.yaml
+    - governance/evidence/WP-P3-001/templates/hyperdrive-g1-g6-evidence.template.yaml
+    - governance/evidence/WP-P3-001/templates/separate-executor-isolation-evidence.template.yaml
+    - governance/evidence/WP-P3-001/backpressure/README.md
+    - governance/evidence/WP-P3-001/benchmarks/README.md
+    - governance/evidence/WP-P3-001/separate-executor/README.md
     - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - governance/evidence/WP-P3-001/p3-002-framework-handoff-2026-08-31.md
+    - apps/core/tools/p3-scale-evidence-lib.ts
+    - apps/core/tools/p3-backpressure-harness.ts
+    - apps/core/tools/p3-hyperdrive-benchmark-harness.ts
+    - apps/core/tools/p3-executor-isolation-harness.ts
+    - apps/core/test/unit/p3-scale-evidence-harness.test.ts
+    - apps/core/package.json
     - PROJECT_STATE.yaml
+    - docs/STATUS.md
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
   last_green_checks:
     - corepack pnpm design:check
     - corepack pnpm agent:verify
-    - corepack pnpm test (apps/web — 205 passed)
+    - corepack pnpm test (apps/core — 311 passed incl. p3-scale-evidence-harness)
 completion:
   successor_packet_id: null
   evidence_paths:
     - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
     - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
     - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
+    - governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
+    - governance/evidence/WP-P3-001/p3-002-framework-handoff-2026-08-31.md
+    - governance/evidence/WP-P3-001/operator-checklist.yaml
   completed_at: null

@@ -6,18 +6,35 @@ frontend_audit:
   verdict: pass
   evidence_path: governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
   operator_authorized_p3_proceed: true
+evidence_framework:
+  runbook: governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
+  operator_checklist: governance/evidence/WP-P3-001/operator-checklist.yaml
+  harness_scripts:
+    - apps/core/tools/p3-backpressure-harness.ts
+    - apps/core/tools/p3-hyperdrive-benchmark-harness.ts
+    - apps/core/tools/p3-executor-isolation-harness.ts
+  templates:
+    - governance/evidence/WP-P3-001/templates/backpressure-fan-out-evidence.template.yaml
+    - governance/evidence/WP-P3-001/templates/hyperdrive-g1-g6-evidence.template.yaml
+    - governance/evidence/WP-P3-001/templates/separate-executor-isolation-evidence.template.yaml
 infrastructure_gates:
   queues_backpressure:
     status: not_met
     trigger_required: measured Worker backpressure or fan-out on representative launch-pack workload
     rollback_required: kill-switch disable before namespace destruction
     current_bindings: none
+    collection_harness: apps/core/tools/p3-backpressure-harness.ts
+    evidence_directory: governance/evidence/WP-P3-001/backpressure
+    evidence_template: governance/evidence/WP-P3-001/templates/backpressure-fan-out-evidence.template.yaml
     evidence_refs:
       - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
       - apps/core/wrangler.jsonc
   hyperdrive_g1_g6:
     status: not_met
     authority: docs/research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md
+    collection_harness: apps/core/tools/p3-hyperdrive-benchmark-harness.ts
+    evidence_directory: governance/evidence/WP-P3-001/benchmarks
+    evidence_template: governance/evidence/WP-P3-001/templates/hyperdrive-g1-g6-evidence.template.yaml
     gates:
       g1_non_owner_role: unchecked
       g2_transaction_local_claims: unchecked
@@ -30,6 +47,9 @@ infrastructure_gates:
   separate_executor:
     status: not_met
     trigger_required: measured fan-out and isolation benchmark with rollback plan
+    collection_harness: apps/core/tools/p3-executor-isolation-harness.ts
+    evidence_directory: governance/evidence/WP-P3-001/separate-executor
+    evidence_template: governance/evidence/WP-P3-001/templates/separate-executor-isolation-evidence.template.yaml
   byok:
     status: not_met
     trigger_required: accepted product decision and compliance review
@@ -38,5 +58,6 @@ cleanroom_negative_gates:
   connected_social_publishing: not_present
   queue_bindings: not_present
 next_action: >-
-  Collect measured staging evidence for at least one infrastructure gate with rollback plan and
-  operator acceptance before p3-002-scale-infrastructure implementation.
+  Run staging evidence harnesses per staging-evidence-collection-runbook.md, fill evidence YAML from
+  templates, and obtain operator acceptance for at least one gate before implementing queues,
+  executor, Hyperdrive user-path, or BYOK.
