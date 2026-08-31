@@ -14,6 +14,7 @@ function parseArgs(argv: readonly string[]): ParsedArgs {
   const rest: string[] = [];
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
+    if (arg === undefined) continue;
     if (arg === '--env' || arg === '-e') {
       const value = argv[index + 1];
       if (value !== 'staging' && value !== 'production') {
@@ -68,5 +69,8 @@ main()
     const message = error instanceof Error ? error.message : String(error);
     const codeMatch = /"code":"([^"]+)"/u.exec(message);
     process.stderr.write(`${message}\n`);
-    process.exitCode = codeMatch ? exitCodeForApiError(codeMatch[1]) : CLI_EXIT_CODES.internal;
+    process.exitCode =
+      codeMatch?.[1] !== undefined
+        ? exitCodeForApiError(codeMatch[1])
+        : CLI_EXIT_CODES.internal;
   });
