@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P1B-001` (in_progress). Current step: `p1b-001-oauth-api-keys`.
+Current packet: `WP-P1B-001` (in_progress). Current step: `p1b-003-cli-parity`.
 
 | Authority topic | Document | Path |
 |---|---|---|

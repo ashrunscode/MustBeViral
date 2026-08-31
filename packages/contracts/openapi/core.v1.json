@@ -3,7 +3,7 @@
   "info": {
     "title": "MustBeViral Core API",
     "version": "2026-07-12",
-    "description": "Typed P0 REST contract for the ViralGraph cleanroom Core Worker."
+    "description": "Typed P0 and P1b REST contract for the ViralGraph cleanroom Core Worker."
   },
   "servers": [{ "url": "/" }],
   "paths": {
@@ -848,11 +848,406 @@
           }
         }
       }
+    },
+    "/v1/oauth/token": {
+      "post": {
+        "operationId": "issue_oauth_token",
+        "summary": "Issue oauth token",
+        "security": [{ "clientCredentials": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IssueOauthTokenRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/IssueOauthTokenSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{id}/api-keys": {
+      "post": {
+        "operationId": "create_api_key",
+        "summary": "Create api key",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateApiKeyRequest" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateApiKeySuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "list_api_keys",
+        "summary": "List api keys",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ListApiKeysSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/api-keys/{id}/revoke": {
+      "post": {
+        "operationId": "revoke_api_key",
+        "summary": "Revoke api key",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RevokeApiKeySuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{id}/oauth-clients": {
+      "post": {
+        "operationId": "create_oauth_client",
+        "summary": "Create oauth client",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateOauthClientRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateOauthClientSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "list_oauth_clients",
+        "summary": "List oauth clients",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ListOauthClientsSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/oauth-clients/{id}/revoke": {
+      "post": {
+        "operationId": "revoke_oauth_client",
+        "summary": "Revoke oauth client",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RevokeOauthClientSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{id}/skills/publish": {
+      "post": {
+        "operationId": "publish_skill",
+        "summary": "Publish skill",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/PublishSkillRequest" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublishSkillSuccess" }
+              }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{id}/skills": {
+      "get": {
+        "operationId": "list_skills",
+        "summary": "List skills",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Request-Id",
+            "required": false,
+            "schema": { "type": "string", "minLength": 8, "maxLength": 128 }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ListSkillsSuccess" } }
+            }
+          },
+          "default": {
+            "description": "Operation failed with a typed API error.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ApiErrorEnvelope" } }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "securitySchemes": {
       "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" },
+      "clientCredentials": {
+        "type": "oauth2",
+        "flows": { "clientCredentials": { "tokenUrl": "/v1/oauth/token", "scopes": {} } }
+      },
       "falSignature": { "type": "apiKey", "in": "header", "name": "X-Fal-Signature" }
     },
     "schemas": {
@@ -2715,7 +3110,622 @@
         "required": ["data", "meta"],
         "additionalProperties": false
       },
-      "IngestFalWebhookRequest": {}
+      "IngestFalWebhookRequest": {},
+      "IssueOauthTokenSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "access_token": { "type": "string", "pattern": "^mbv_oauth_[a-f0-9]{64}$" },
+              "token_type": { "type": "string", "const": "Bearer" },
+              "expires_in": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "scope": { "type": "string", "minLength": 1 }
+            },
+            "required": ["access_token", "token_type", "expires_in", "scope"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "IssueOauthTokenRequest": {
+        "type": "object",
+        "properties": {
+          "grant_type": { "type": "string", "const": "client_credentials" },
+          "client_id": { "type": "string", "minLength": 8, "maxLength": 120 },
+          "client_secret": { "type": "string", "minLength": 16, "maxLength": 256 }
+        },
+        "required": ["grant_type", "client_id", "client_secret"],
+        "additionalProperties": false
+      },
+      "CreateApiKeySuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "name": { "type": "string", "minLength": 1 },
+                  "prefix": { "type": "string", "minLength": 1 },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "workspace:read",
+                        "workspace:write",
+                        "canvas:read",
+                        "canvas:write",
+                        "run:read",
+                        "run:write",
+                        "artifact:read",
+                        "artifact:write",
+                        "export:write",
+                        "model:read",
+                        "receipt:read"
+                      ]
+                    }
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  },
+                  "last_used_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      { "type": "null" }
+                    ]
+                  },
+                  "revoked_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      { "type": "null" }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "prefix",
+                  "scopes",
+                  "created_at",
+                  "last_used_at",
+                  "revoked_at"
+                ],
+                "additionalProperties": false
+              },
+              "secret": { "type": "string", "pattern": "^mbv_sk_[a-f0-9]{64}$" }
+            },
+            "required": ["key", "secret"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateApiKeyRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "scopes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "workspace:read",
+                "workspace:write",
+                "canvas:read",
+                "canvas:write",
+                "run:read",
+                "run:write",
+                "artifact:read",
+                "artifact:write",
+                "export:write",
+                "model:read",
+                "receipt:read"
+              ]
+            }
+          }
+        },
+        "required": ["name", "scopes"],
+        "additionalProperties": false
+      },
+      "ListApiKeysSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "keys": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "name": { "type": "string", "minLength": 1 },
+                    "prefix": { "type": "string", "minLength": 1 },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "workspace:read",
+                          "workspace:write",
+                          "canvas:read",
+                          "canvas:write",
+                          "run:read",
+                          "run:write",
+                          "artifact:read",
+                          "artifact:write",
+                          "export:write",
+                          "model:read",
+                          "receipt:read"
+                        ]
+                      }
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                    },
+                    "last_used_at": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                        },
+                        { "type": "null" }
+                      ]
+                    },
+                    "revoked_at": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                        },
+                        { "type": "null" }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "prefix",
+                    "scopes",
+                    "created_at",
+                    "last_used_at",
+                    "revoked_at"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["keys"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "RevokeApiKeySuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "key_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "revoked_at": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+              }
+            },
+            "required": ["key_id", "revoked_at"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateOauthClientSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "client": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "client_id": { "type": "string", "minLength": 1 },
+                  "name": { "type": "string", "minLength": 1 },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "workspace:read",
+                        "workspace:write",
+                        "canvas:read",
+                        "canvas:write",
+                        "run:read",
+                        "run:write",
+                        "artifact:read",
+                        "artifact:write",
+                        "export:write",
+                        "model:read",
+                        "receipt:read"
+                      ]
+                    }
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  },
+                  "revoked_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      { "type": "null" }
+                    ]
+                  }
+                },
+                "required": ["id", "client_id", "name", "scopes", "created_at", "revoked_at"],
+                "additionalProperties": false
+              },
+              "client_secret": { "type": "string", "pattern": "^mbv_client_[a-f0-9]{64}$" }
+            },
+            "required": ["client", "client_secret"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "CreateOauthClientRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "scopes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "workspace:read",
+                "workspace:write",
+                "canvas:read",
+                "canvas:write",
+                "run:read",
+                "run:write",
+                "artifact:read",
+                "artifact:write",
+                "export:write",
+                "model:read",
+                "receipt:read"
+              ]
+            }
+          }
+        },
+        "required": ["name", "scopes"],
+        "additionalProperties": false
+      },
+      "ListOauthClientsSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "clients": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "client_id": { "type": "string", "minLength": 1 },
+                    "name": { "type": "string", "minLength": 1 },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "workspace:read",
+                          "workspace:write",
+                          "canvas:read",
+                          "canvas:write",
+                          "run:read",
+                          "run:write",
+                          "artifact:read",
+                          "artifact:write",
+                          "export:write",
+                          "model:read",
+                          "receipt:read"
+                        ]
+                      }
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                    },
+                    "revoked_at": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                        },
+                        { "type": "null" }
+                      ]
+                    }
+                  },
+                  "required": ["id", "client_id", "name", "scopes", "created_at", "revoked_at"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["clients"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "RevokeOauthClientSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "client_uuid": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "revoked_at": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+              }
+            },
+            "required": ["client_uuid", "revoked_at"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "PublishSkillSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "skill_version_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "name": { "type": "string", "minLength": 1 },
+              "version_number": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "title": { "type": "string", "minLength": 1 },
+              "published_at": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+              }
+            },
+            "required": [
+              "skill_id",
+              "skill_version_id",
+              "name",
+              "version_number",
+              "title",
+              "published_at"
+            ],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      },
+      "PublishSkillRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "instructions": { "type": "string", "minLength": 1, "maxLength": 32000 }
+        },
+        "required": ["name", "title", "instructions"],
+        "additionalProperties": false
+      },
+      "ListSkillsSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                    "name": { "type": "string", "minLength": 1 },
+                    "latest_version": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "skill_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+                            "skill_version_id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "name": { "type": "string", "minLength": 1 },
+                            "version_number": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "title": { "type": "string", "minLength": 1 },
+                            "published_at": {
+                              "type": "string",
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                            }
+                          },
+                          "required": [
+                            "skill_id",
+                            "skill_version_id",
+                            "name",
+                            "version_number",
+                            "title",
+                            "published_at"
+                          ],
+                          "additionalProperties": false
+                        },
+                        { "type": "null" }
+                      ]
+                    }
+                  },
+                  "required": ["id", "name", "latest_version"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["skills"],
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              }
+            },
+            "required": ["request_id"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data", "meta"],
+        "additionalProperties": false
+      }
     }
   }
 }

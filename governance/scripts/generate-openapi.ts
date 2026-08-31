@@ -7,22 +7,29 @@ import {
   ApplyCanvasPatchBodySchema,
   ApproveArtifactsBodySchema,
   CancelRunBodySchema,
+  CreateApiKeyBodySchema,
   CreateArtifactUploadBodySchema,
   CreateCanvasBodySchema,
   CreateExportBodySchema,
+  CreateOAuthClientBodySchema,
   CreateProjectBodySchema,
   CreateWorkspaceBodySchema,
   EmptyBodySchema,
   HealthResponseSchema,
   IngestFalWebhookResourceInputSchema,
+  IssueOAuthTokenBodySchema,
   P0_OPERATION_DATA_SCHEMAS,
+  P1B_OPERATION_DATA_SCHEMAS,
+  PublishSkillBodySchema,
   QuoteRunBodySchema,
   StartRunBodySchema,
   contractSchemaToJsonSchema,
   createApiSuccessEnvelopeSchema,
   type ContractSchema,
   type P0RestOperation,
+  type P1bJwtManagementOperation,
 } from '../../packages/contracts/src/index';
+import { P1B_ROUTE_TABLE } from '../../apps/core/src/routes/p1b-table';
 import { V1_ROUTE_TABLE } from '../../apps/core/src/routes/v1-table';
 
 const outputPath = 'packages/contracts/openapi/core.v1.json';
@@ -49,7 +56,19 @@ const createdOperations = new Set([
   'start_run',
   'create_artifact_upload',
   'create_export',
+  'create_api_key',
+  'create_oauth_client',
+  'publish_skill',
 ]);
+
+const p1bBodySchemas: Partial<
+  Readonly<Record<P1bJwtManagementOperation | 'issue_oauth_token', ContractSchema>>
+> = {
+  create_api_key: CreateApiKeyBodySchema,
+  create_oauth_client: CreateOAuthClientBodySchema,
+  publish_skill: PublishSkillBodySchema,
+  issue_oauth_token: IssueOAuthTokenBodySchema,
+};
 
 function schemaName(operation: string): string {
   return operation
@@ -171,18 +190,108 @@ function buildOpenApi() {
     (paths[path] ??= {})[route.method.toLowerCase()] = operation;
   }
 
+  for (const route of P1B_ROUTE_TABLE) {
+    const operationName = schemaName(route.operation);
+    const successName = `${operationName}Success`;
+    const requestName = `${operationName}Request`;
+    schemas[successName] = contractSchemaToJsonSchema(
+      createApiSuccessEnvelopeSchema(P1B_OPERATION_DATA_SCHEMAS[route.operation]),
+    );
+    const bodySchema = p1bBodySchemas[route.operation];
+    if (bodySchema !== undefined) {
+      schemas[requestName] = contractSchemaToJsonSchema(bodySchema);
+    }
+
+    const path = `/v1${route.path.replace(':id', '{id}')}`;
+    const parameters: unknown[] = [
+      {
+        in: 'header',
+        name: 'X-Request-Id',
+        required: false,
+        schema: { type: 'string', minLength: 8, maxLength: 128 },
+      },
+    ];
+    if (route.path.includes(':id')) {
+      parameters.push({
+        in: 'path',
+        name: 'id',
+        required: true,
+        schema: { type: 'string', minLength: 1, maxLength: 200 },
+      });
+    }
+    if (route.mutation && route.auth === 'supabase_jwt') {
+      parameters.push({
+        in: 'header',
+        name: 'Idempotency-Key',
+        required: true,
+        schema: { type: 'string', minLength: 1, maxLength: 200 },
+      });
+    }
+    if (route.operation === 'revoke_api_key' || route.operation === 'revoke_oauth_client') {
+      parameters.push({
+        in: 'header',
+        name: 'X-Workspace-Id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      });
+    }
+
+    const successStatus = createdOperations.has(route.operation) ? '201' : '200';
+    const operation = {
+      operationId: route.operation,
+      summary: summary(route.operation),
+      security:
+        route.auth === 'client_credentials' ? [{ clientCredentials: [] }] : [{ bearerAuth: [] }],
+      parameters,
+      ...(bodySchema === undefined
+        ? {}
+        : {
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': { schema: { $ref: `#/components/schemas/${requestName}` } },
+              },
+            },
+          }),
+      responses: {
+        [successStatus]: {
+          description: 'Operation completed.',
+          content: {
+            'application/json': { schema: { $ref: `#/components/schemas/${successName}` } },
+          },
+        },
+        default: {
+          description: 'Operation failed with a typed API error.',
+          content: {
+            'application/json': { schema: { $ref: '#/components/schemas/ApiErrorEnvelope' } },
+          },
+        },
+      },
+    };
+    (paths[path] ??= {})[route.method.toLowerCase()] = operation;
+  }
+
   return {
     openapi: '3.1.0',
     info: {
       title: 'MustBeViral Core API',
       version: API_SCHEMA_VERSION,
-      description: 'Typed P0 REST contract for the ViralGraph cleanroom Core Worker.',
+      description: 'Typed P0 and P1b REST contract for the ViralGraph cleanroom Core Worker.',
     },
     servers: [{ url: '/' }],
     paths,
     components: {
       securitySchemes: {
         bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+        clientCredentials: {
+          type: 'oauth2',
+          flows: {
+            clientCredentials: {
+              tokenUrl: '/v1/oauth/token',
+              scopes: {},
+            },
+          },
+        },
         falSignature: { type: 'apiKey', in: 'header', name: 'X-Fal-Signature' },
       },
       schemas,

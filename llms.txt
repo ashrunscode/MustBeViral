@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P1b
 active_packet: WP-P1B-001
-current_step: p1b-001-oauth-api-keys
-next_action: Extend P1B with OAuth token issuance RPCs, API-key management REST routes, Skills publish handlers, expanded MCP tool catalog, and three-client parity vectors; add browser audit UX for key revocation.
+current_step: p1b-003-cli-parity
+next_action: Ship CLI environment selection, OS credential storage, JSON automation output, and confirmation-preserving mutations with parity vectors for production REST operations.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

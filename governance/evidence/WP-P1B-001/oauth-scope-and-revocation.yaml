@@ -1,0 +1,20 @@
+schema_version: 1
+acceptance_id: oauth-scope-and-revocation
+recorded_at: '2026-08-31T13:15:00.000Z'
+status: proven
+criterion: Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
+  and cannot start a run without an unexpired confirmed quote.
+proofs:
+  - kind: pgTAP
+    path: supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql
+    assertions:
+      - verify_api_key returns granted scopes only
+      - verify_api_key rejects a revoked key immediately
+      - verify_oauth_access_token returns granted scopes
+      - verify_oauth_access_token rejects revoked and expired tokens immediately
+      - start_run_barrier rejects unconfirmed spend
+      - create_api_key rejects unknown scopes
+  - kind: unit
+    path: packages/contracts/src/scopes.test.ts
+  - kind: unit
+    path: apps/core/test/unit/programmatic-auth.test.ts

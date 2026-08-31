@@ -1,8 +1,19 @@
 {
   "schema_version": 1,
-  "recorded_at": "2026-08-31T12:30:00.000Z",
-  "task": "P1b JWT management three-client parity",
+  "recorded_at": "2026-08-31T13:15:00.000Z",
+  "task": "P1b production MCP/REST parity and oauth-scope-and-revocation",
   "operations": [
+    "get_canvas_context",
+    "apply_canvas_patch",
+    "quote_run",
+    "start_run",
+    "get_run",
+    "validate_graph",
+    "cancel_run",
+    "get_artifact",
+    "create_export",
+    "explain_model",
+    "get_receipt",
     "list_api_keys",
     "create_api_key",
     "revoke_api_key",
@@ -19,6 +30,10 @@
       "base_path": "/v1",
       "transport": "fetch"
     },
+    "mcp": {
+      "base_path": "/mcp",
+      "transport": "json-rpc"
+    },
     "cli": {
       "module": "apps/cli/src/p1b-management.ts",
       "commands": [
@@ -31,6 +46,37 @@
     }
   },
   "vectors": [
+    {
+      "operation": "get_canvas_context",
+      "rest_path": "GET /v1/canvases/{canvas_id}",
+      "mcp_tool": "get_canvas_context",
+      "expected_success_status": 200
+    },
+    {
+      "operation": "start_run",
+      "rest_path": "POST /v1/quotes/{quote_id}/runs",
+      "mcp_tool": "start_run",
+      "expected_validation_code": "VALIDATION_FAILED",
+      "notes": "Missing confirmed=true"
+    },
+    {
+      "operation": "start_run",
+      "rest_path": "POST /v1/quotes/{quote_id}/runs",
+      "mcp_tool": "start_run",
+      "expected_code": "QUOTE_EXPIRED"
+    },
+    {
+      "operation": "apply_canvas_patch",
+      "rest_path": "POST /v1/canvases/{canvas_id}/patches",
+      "mcp_tool": "apply_canvas_patch",
+      "expected_code": "REVISION_CONFLICT"
+    },
+    {
+      "operation": "get_run",
+      "rest_path": "GET /v1/runs/{run_id}",
+      "mcp_tool": "get_run",
+      "expected_code": "RATE_LIMITED"
+    },
     {
       "operation": "list_api_keys",
       "rest_path": "GET /v1/workspaces/{workspace_id}/api-keys",
@@ -54,7 +100,13 @@
   ],
   "automated_proofs": [
     "packages/contracts/src/p1b-parity.test.ts",
+    "packages/contracts/src/http.integration.test.ts",
     "apps/core/test/unit/p1b-three-client-parity.test.ts",
-    "apps/core/test/unit/p1b-routes.test.ts"
+    "apps/core/test/unit/p1b-routes.test.ts",
+    "apps/core/test/unit/production-mcp-parity.test.ts",
+    "apps/core/test/unit/mcp-parity.test.ts",
+    "apps/core/test/unit/programmatic-auth.test.ts",
+    "packages/contracts/src/scopes.test.ts",
+    "supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql"
   ]
 }
