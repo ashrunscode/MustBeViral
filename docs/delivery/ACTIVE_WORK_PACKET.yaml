@@ -85,8 +85,7 @@ public_interfaces:
     the same command layer. Collaboration drafts are not public API authority.
 steps:
   - id: p2-001-collaboration-worker
-    title:
-      Add the dedicated collaboration Worker and one coordination object per canvas without moving
+    title: Add the dedicated collaboration Worker and one coordination object per canvas without moving
       revision, permission, or money authority out of Postgres.
     status: completed
   - id: p2-002-presence-and-comments
@@ -98,8 +97,7 @@ steps:
       deterministic conflict recovery.
     status: current
   - id: p2-004-revision-checkpoint-integrity
-    title:
-      Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
+    title: Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
       history or bypass expected_revision_id.
     status: pending
   - id: p2-005-phase-exit-handoff
@@ -108,21 +106,18 @@ steps:
 acceptance:
   automated:
     - id: postgres-remains-authority
-      criterion:
-        Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
+      criterion: Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
         through the existing revision/command barriers.
       status: pending
       evidence: []
     - id: lease-and-checkpoint
-      criterion:
-        Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
+      criterion: Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
         immutable revisions rather than rewriting history.
       status: pending
       evidence: []
   manual:
     - id: no-queue-or-agency-expansion
-      criterion:
-        This packet did not add queues, a separate executor, agency portals, or connected social
+      criterion: This packet did not add queues, a separate executor, agency portals, or connected social
         publishing.
       status: pending
       evidence: []
@@ -149,7 +144,8 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p2-003-text-sync-and-leases
-  next_action: Implement text collaboration and edit leases for expensive node configuration with deterministic conflict recovery.
+  next_action: Implement text collaboration and edit leases for expensive node configuration with
+    deterministic conflict recovery.
   blockers: []
   changed_paths:
     - packages/collaboration/src/client.ts

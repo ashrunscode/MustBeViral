@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P2-001
-next_action: Implement presence and comments on review and canvas surfaces with Lightfield states
-  and accessibility.
+next_action: Implement text collaboration and edit leases for expensive node configuration with
+  deterministic conflict recovery.
 decisions_pending: []
 blockers: []
 legacy:
