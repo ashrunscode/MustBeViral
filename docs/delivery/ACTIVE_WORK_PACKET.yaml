@@ -95,11 +95,11 @@ steps:
   - id: p2-003-text-sync-and-leases
     title: Implement text collaboration and edit leases for expensive node configuration with
       deterministic conflict recovery.
-    status: current
+    status: completed
   - id: p2-004-revision-checkpoint-integrity
     title: Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
       history or bypass expected_revision_id.
-    status: pending
+    status: current
   - id: p2-005-phase-exit-handoff
     title: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
     status: pending
@@ -143,22 +143,24 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p2-003-text-sync-and-leases
-  next_action: Implement text collaboration and edit leases for expensive node configuration with
-    deterministic conflict recovery.
+  current_step: p2-004-revision-checkpoint-integrity
+  next_action: Prove collaboration drafts checkpoint into new immutable Postgres revisions and never
+    mutate history or bypass expected_revision_id.
   blockers: []
   changed_paths:
+    - packages/collaboration/src/conflict-resolution.ts
+    - packages/collaboration/src/conflict-resolution.test.ts
+    - packages/collaboration/src/protocol.ts
     - packages/collaboration/src/client.ts
     - packages/collaboration/src/in-memory-session.ts
     - packages/collaboration/src/index.ts
-    - packages/config/src/index.ts
+    - apps/collaboration/src/canvas-coordination.ts
+    - apps/collaboration/test/canvas-coordination.test.ts
     - apps/web/src/features/collaboration/**
     - apps/web/app/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx
-    - apps/web/app/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css
     - apps/web/app/studio/[workspace]/(workflow)/review/review-flow.tsx
-    - apps/web/src/features/review/review-port.ts
-    - apps/web/package.json
-    - pnpm-lock.yaml
+    - apps/web/src/features/canvas/canvas-flow.test.tsx
+    - apps/web/src/features/review/review-flow.test.tsx
   last_green_checks:
     - corepack pnpm agent:verify
 completion:
