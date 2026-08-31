@@ -1,3 +1,4 @@
+import { scopesAuthorizeOperation } from '@mustbeviral/contracts';
 import { describe, expect, it, vi } from 'vitest';
 
 import { createRequestAuthenticator } from '../../src/auth/authenticate';
@@ -28,6 +29,7 @@ describe('programmatic credential auth', () => {
     expect(actor.workspaceId).toBe('workspace-1');
     expect(authenticator.authorizeOperation(actor, 'get_run')).toBe(true);
     expect(authenticator.authorizeOperation(actor, 'start_run')).toBe(false);
+    expect(scopesAuthorizeOperation(['run:read'], 'quote_run')).toBe(false);
     expect(fetchMock).toHaveBeenCalledOnce();
   });
 

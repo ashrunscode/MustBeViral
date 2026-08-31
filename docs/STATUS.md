@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P1a — Secure paid single-user web product (in_progress) |
-| Active packet | `WP-P1A-001` |
-| Current step | `p1a-006-p1b-successor-handoff` |
+| Phase | P1b — Public API, MCP, CLI, and user-authored Skills (in_progress) |
+| Active packet | `WP-P1B-001` |
+| Current step | `p1b-001-oauth-api-keys` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Run corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml to activate WP-P1B-001.
+Extend P1B with OAuth token issuance RPCs, API-key management REST routes, Skills publish handlers, expanded MCP tool catalog, and three-client parity vectors; add browser audit UX for key revocation.

@@ -4,10 +4,10 @@ project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
-phase: P1a
-active_packet: WP-P1A-001
-current_step: p1a-006-p1b-successor-handoff
-next_action: Run corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml to activate WP-P1B-001.
+phase: P1b
+active_packet: WP-P1B-001
+current_step: p1b-001-oauth-api-keys
+next_action: Extend P1B with OAuth token issuance RPCs, API-key management REST routes, Skills publish handlers, expanded MCP tool catalog, and three-client parity vectors; add browser audit UX for key revocation.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

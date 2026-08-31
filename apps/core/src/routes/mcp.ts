@@ -1,11 +1,11 @@
 import {
-  P0_MCP_TOOL_NAMES,
-  P0McpToolInputSchemas,
-  p0McpHandlers,
-  p0McpToolCatalog,
+  ProductionMcpToolInputSchemas,
+  productionMcpHandlers,
+  productionMcpToolCatalog,
   type HandlerContext,
-  type P0McpToolName,
+  type P0AuthenticatedRestOperation,
   type P0RestHandlers,
+  type ProductionMcpToolName,
 } from '@mustbeviral/contracts';
 import { Hono, type Context } from 'hono';
 
@@ -115,16 +115,31 @@ function mcpToolResult(
   };
 }
 
-function pathId(tool: P0McpToolName, input: Readonly<Record<string, unknown>>): string | undefined {
-  if (tool === 'get_canvas_context' || tool === 'apply_canvas_patch' || tool === 'quote_run') {
+function pathId(
+  tool: ProductionMcpToolName,
+  input: Readonly<Record<string, unknown>>,
+): string | undefined {
+  if (
+    tool === 'get_canvas_context' ||
+    tool === 'apply_canvas_patch' ||
+    tool === 'quote_run' ||
+    tool === 'validate_graph'
+  ) {
     return typeof input.canvas_id === 'string' ? input.canvas_id : undefined;
   }
   if (tool === 'start_run') return typeof input.quote_id === 'string' ? input.quote_id : undefined;
+  if (tool === 'get_artifact')
+    return typeof input.artifact_id === 'string' ? input.artifact_id : undefined;
+  if (tool === 'explain_model')
+    return typeof input.model_id === 'string' ? input.model_id : undefined;
   return typeof input.run_id === 'string' ? input.run_id : undefined;
 }
 
-function isToolName(value: unknown): value is P0McpToolName {
-  return typeof value === 'string' && P0_MCP_TOOL_NAMES.some((name) => name === value);
+function isToolName(value: unknown): value is ProductionMcpToolName {
+  return (
+    typeof value === 'string' &&
+    ProductionMcpToolInputSchemas[value as ProductionMcpToolName] !== undefined
+  );
 }
 
 async function callTool(
@@ -132,6 +147,7 @@ async function callTool(
   actor: AuthenticatedActor,
   request: JsonRpcRequest,
   dependencies: RequestScopedDependencies,
+  authenticator: RequestAuthenticator,
 ): Promise<Response> {
   const id = request.id;
   if (id === undefined) return context.body(null, 202);
@@ -140,9 +156,17 @@ async function callTool(
     return context.json(rpcError(id, -32602, 'Unknown or missing tool name.'), 200);
   }
   const tool = params.name;
+  if (!authenticator.authorizeOperation(actor, tool as P0AuthenticatedRestOperation)) {
+    const envelope = safeError(
+      context,
+      'FORBIDDEN',
+      'This credential is not authorized for the requested operation.',
+    );
+    return context.json(rpcResult(id, mcpToolResult(context, envelope, true)), 200);
+  }
   const argumentsValue = isRecord(params.arguments) ? params.arguments : {};
   try {
-    const input = P0McpToolInputSchemas[tool].parse(argumentsValue) as Readonly<
+    const input = ProductionMcpToolInputSchemas[tool].parse(argumentsValue) as Readonly<
       Record<string, unknown>
     >;
     const workspaceId = await dependencies.workspaces.resolve({
@@ -168,7 +192,7 @@ async function callTool(
       actor_id: actor.actorId,
       request_id: context.get('requestId'),
     };
-    const handlers = p0McpHandlers(dependencies.handlers);
+    const handlers = productionMcpHandlers(dependencies.handlers);
     const result = await handlers[tool]({ context: handlerContext, ...input });
     const semantic = p0ResultSemantics(result);
     const envelope = semantic.ok
@@ -231,6 +255,7 @@ async function handlePost(
       400,
     );
   }
+  const authenticator = dependencies.authenticator ?? createRequestAuthenticator(dependencies.jwt);
   const authentication = await authenticate(context, dependencies);
   if (authentication === null) {
     return context.json(
@@ -274,10 +299,10 @@ async function handlePost(
   }
   if (request.method === 'ping') return context.json(rpcResult(request.id, {}), 200);
   if (request.method === 'tools/list') {
-    return context.json(rpcResult(request.id, { tools: p0McpToolCatalog() }), 200);
+    return context.json(rpcResult(request.id, { tools: productionMcpToolCatalog() }), 200);
   }
   if (request.method === 'tools/call') {
-    return callTool(context, authentication.actor, request, scopedDependencies);
+    return callTool(context, authentication.actor, request, scopedDependencies, authenticator);
   }
   return context.json(rpcError(request.id, -32601, 'Method not found.'), 200);
 }

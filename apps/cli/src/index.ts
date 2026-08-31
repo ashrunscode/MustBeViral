@@ -41,7 +41,9 @@ export interface CliClientOptions {
 
 export async function createCliClient(
   options: CliClientOptions = {},
-): Promise<MustBeViralRestClient> {
+): Promise<
+  MustBeViralRestClient & Readonly<{ baseUrl: string; readAccessToken: () => Promise<string> }>
+> {
   const environment = options.environment ?? 'staging';
   const token =
     options.accessToken ??
@@ -51,10 +53,15 @@ export async function createCliClient(
   if (token === null || token.length === 0) {
     throw new Error(`No credential is stored for the ${environment} environment.`);
   }
-  return createMustBeViralRestClient({
-    baseUrl: options.baseUrl ?? DEFAULT_BASE_URLS[environment],
+  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URLS[environment];
+  const client = createMustBeViralRestClient({
+    baseUrl,
     getAccessToken: async () => token,
     ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
+  });
+  return Object.assign(client, {
+    baseUrl,
+    readAccessToken: async () => token,
   });
 }
 

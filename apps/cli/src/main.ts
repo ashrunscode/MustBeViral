@@ -57,6 +57,34 @@ async function main(): Promise<number> {
     return CLI_EXIT_CODES.ok;
   }
 
+  if (parsed.command === 'list-api-keys') {
+    const workspaceId = parsed.rest[0];
+    if (workspaceId === undefined) {
+      process.stderr.write('Usage: mbv list-api-keys <workspace-id>\n');
+      return CLI_EXIT_CODES.usage;
+    }
+    const token = await client.readAccessToken();
+    const response = await fetch(
+      `${client.baseUrl}/workspaces/${encodeURIComponent(workspaceId)}/api-keys`,
+      {
+        headers: { authorization: `Bearer ${token}`, accept: 'application/json' },
+      },
+    );
+    const body: unknown = await response.json();
+    process.stdout.write(`${JSON.stringify(body, null, 2)}\n`);
+    if (!response.ok) {
+      const code =
+        typeof body === 'object' &&
+        body !== null &&
+        'error' in body &&
+        typeof (body as { error?: { code?: string } }).error?.code === 'string'
+          ? (body as { error: { code: string } }).error.code
+          : 'INTERNAL_ERROR';
+      return exitCodeForApiError(code);
+    }
+    return CLI_EXIT_CODES.ok;
+  }
+
   process.stderr.write(`Unknown command: ${parsed.command}\n`);
   return CLI_EXIT_CODES.usage;
 }

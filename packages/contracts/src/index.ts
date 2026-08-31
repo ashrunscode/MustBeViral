@@ -6,6 +6,8 @@ export * from './fail-evaluation';
 export * from './launch-pack';
 export * from './launch-pack-qa';
 export * from './mcp';
+export * from './p1b';
+export * from './p1b-handlers';
 export * from './ports';
 export * from './rest';
 export * from './responses';

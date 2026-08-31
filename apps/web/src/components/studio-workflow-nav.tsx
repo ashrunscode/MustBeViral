@@ -17,6 +17,7 @@ const workflowSteps = [
   { segment: 'review', label: 'Review' },
   { segment: 'receipt', label: 'Receipt' },
   { segment: 'billing', label: 'Billing' },
+  { segment: 'access', label: 'Access' },
 ] as const;
 
 export function workflowStepIsActive(pathSegment: string, stepSegment: string): boolean {

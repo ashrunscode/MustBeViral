@@ -699,3 +699,77 @@ a {
   background: var(--wash-faint);
   color: var(--ink-muted);
 }
+
+.access-panel {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  overflow: auto;
+}
+
+.access-panel__grid,
+.access-panel__card {
+  display: grid;
+  gap: 12px;
+}
+
+.access-panel__card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  padding: 20px;
+}
+
+.access-panel__card h1,
+.access-panel__card h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.access-panel__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.access-panel__error {
+  color: var(--fail);
+}
+
+.access-panel__field,
+.access-panel__scopes {
+  display: grid;
+  gap: 8px;
+}
+
+.access-panel__scope {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.access-panel__secret {
+  display: block;
+  padding: 12px;
+  border-radius: var(--radius-control);
+  background: var(--wash-faint);
+  word-break: break-all;
+}
+
+.access-status {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+}
+
+.access-status--active {
+  background: color-mix(in srgb, var(--signal) 12%, transparent);
+  color: var(--signal);
+}
+
+.access-status--revoked {
+  background: color-mix(in srgb, var(--fail) 12%, transparent);
+  color: var(--fail);
+}
