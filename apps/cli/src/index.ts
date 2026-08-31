@@ -1,7 +1,4 @@
-import {
-  createMustBeViralRestClient,
-  type MustBeViralRestClient,
-} from '@mustbeviral/contracts';
+import { createMustBeViralRestClient, type MustBeViralRestClient } from '@mustbeviral/contracts';
 
 export type CliEnvironment = 'staging' | 'production';
 
@@ -42,11 +39,15 @@ export interface CliClientOptions {
   readonly fetch?: typeof fetch;
 }
 
-export async function createCliClient(options: CliClientOptions = {}): Promise<MustBeViralRestClient> {
+export async function createCliClient(
+  options: CliClientOptions = {},
+): Promise<MustBeViralRestClient> {
   const environment = options.environment ?? 'staging';
   const token =
     options.accessToken ??
-    (options.credentialStore === undefined ? null : await options.credentialStore.read(environment));
+    (options.credentialStore === undefined
+      ? null
+      : await options.credentialStore.read(environment));
   if (token === null || token.length === 0) {
     throw new Error(`No credential is stored for the ${environment} environment.`);
   }

@@ -1,9 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  requiredScopesForOperation,
-  scopesAuthorizeOperation,
-} from '@mustbeviral/contracts';
+import { requiredScopesForOperation, scopesAuthorizeOperation } from '@mustbeviral/contracts';
 
 describe('api key scopes', () => {
   it('requires run:write for quote and start operations', () => {

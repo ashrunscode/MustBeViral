@@ -111,12 +111,12 @@ deliverables:
     legal state machines, typed DAG validation, canonical hashing, expected-revision conflicts,
     affected-descendant invalidation, immutable 15-minute quotes, transactional spend caps, and
     balanced append-only semantic-ledger behavior without automated customer charging.
-  - "Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
+  - 'Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
     copy plus the curated fal launch trio for FLUX.2 [pro] masters, FLUX Kontext [pro] adaptations,
     and Seedance 1.0 Pro Fast motion (Lite retired on fal; historical route key retained); every
     route is versioned, price-pinned, retention/license-cleared, fail-closed when evidence or
     credentials are absent, and exercised through outbox dispatch, signed webhook verification,
-    reconciliation, and idempotent handling."
+    reconciliation, and idempotent handling.'
   - Verified server-side copy of accepted provider output into private R2, private-by-default
     metadata and access, artifact verification and quarantine, deterministic exports, and immutable
     provider/model/cost/lineage receipts with no fal delivery URL exposed as a product artifact.
@@ -137,8 +137,8 @@ public_interfaces:
   - P0 authenticated REST /v1 surface for workspace, project, canvas, patch, validation, quote,
     explicitly confirmed run, run status/cancel, private artifact upload/access, export, model
     explanation, receipt, and signed fal webhook operations defined by api-mcp-cli.
-  - "Private P0 MCP operations only: get_canvas_context, apply_canvas_patch, quote_run, start_run,
-    and get_run; no public discovery, production OAuth, broader tools, or CLI surface in P0."
+  - 'Private P0 MCP operations only: get_canvas_context, apply_canvas_patch, quote_run, start_run,
+    and get_run; no public discovery, production OAuth, broader tools, or CLI surface in P0.'
 steps:
   - id: p0-000-environment-provisioning
     title: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core
@@ -159,7 +159,8 @@ steps:
       confirmation, idempotency, auditability, and unit and contract tests.
     status: completed
   - id: p0-003-real-provider-adapters
-    title: Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
+    title:
+      Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
       through versioned drivers, a transactional outbox, immediate post-commit dispatch, signed
       webhook verification, safe ambiguous-submit reconciliation, duplicate-proof idempotency,
       private R2 verification/copy, catalog and kill-switch enforcement, and boundary integration
@@ -179,13 +180,15 @@ steps:
       enforcing per-run, workspace-day, and global-day caps and measuring first-reviewable latency.
     status: completed
   - id: p0-006-private-mcp-proof
-    title: Prove the exact five private MCP operations in MCP Inspector and two real clients against the
+    title:
+      Prove the exact five private MCP operations in MCP Inspector and two real clients against the
       shared REST handlers and contract vectors for success, validation, authorization, conflict,
       expiry, explicit confirmation, idempotent replay, rate limit, provider ambiguity, and safe
       error semantics.
     status: completed
   - id: p0-007-p0-gate-evaluation
-    title: Complete remaining P0 implementable product from docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    title:
+      Complete remaining P0 implementable product from docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
       (signed-out story, auth completeness with honest closed enrollment, brief onboarding,
       continue-this-campaign, Web Vitals instrumentation, landed-cost instrumentation). Do not stall
       on partner EV records or evaluator sessions.
@@ -198,7 +201,8 @@ steps:
 acceptance:
   automated:
     - id: representative-run-completion-and-latency
-      criterion: Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
+      criterion:
+        Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
         launch-pack runs technically complete with real enabled providers, while median time to the
         first reviewable static pack is at most 10 minutes and p90 is at most 15 minutes.
       status: passed
@@ -219,7 +223,8 @@ acceptance:
         - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: private-artifact-trust-and-lineage
-      criterion: Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
+      criterion:
+        Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
         is verified and private by default, no public bucket or provider-delivery URL is exposed,
         every access URL is exact-key and short-lived, and no completed output contains a hidden
         mock, silent fallback, missing artifact lineage, or missing immutable provider/model/cost
@@ -232,7 +237,8 @@ acceptance:
         - governance/evidence/WP-P0-001/launch-pack-runs/golden-20/summary.json
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: canvas-and-web-performance
-      criterion: Measured browser evidence proves ordinary pan and zoom maintains at least 55 FPS with 100
+      criterion:
+        Measured browser evidence proves ordinary pan and zoom maintains at least 55 FPS with 100
         visible nodes, the 500-node stress graph remains navigable through level-of-detail rendering
         and virtualization, Web Vitals instrumentation is shipped, and the production-segment
         measurement path is documented without promoting V2 or cutting legacy traffic outside P1a.
@@ -244,7 +250,8 @@ acceptance:
         - governance/evidence/WP-P0-001/web-vitals-measurement-path.md
         - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
     - id: private-mcp-rest-semantic-parity
-      criterion: Contract vectors pass for the exact five private MCP operations through MCP Inspector and
+      criterion:
+        Contract vectors pass for the exact five private MCP operations through MCP Inspector and
         two real clients, proving the same revision, validation, authorization, quote, confirmation,
         run, idempotency, recovery, and safe-error semantics as REST with no broader P0 MCP surface.
       status: passed
@@ -253,7 +260,8 @@ acceptance:
         - governance/evidence/WP-P0-001/mcp-parity-vectors.json
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: usable-pack-landed-cost
-      criterion: Reconciled immutable provider, storage, execution, and artifact evidence computes landed
+      criterion:
+        Reconciled immutable provider, storage, execution, and artifact evidence computes landed
         cost in integer USD micros for completed packs, with catalog 4,550,000 micros recorded as
         the customer charge rather than a fal invoice. The human usable-pack denominator stays in
         the quality-gates appendix and does not block this instrumentation.
@@ -267,7 +275,8 @@ acceptance:
         - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
         - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
     - id: onboarding-and-last-mile
-      criterion: Signed-out last-mile story, auth completeness including honest closed-enrollment signup,
+      criterion:
+        Signed-out last-mile story, auth completeness including honest closed-enrollment signup,
         progressive brief onboarding, and a signed-in continue-this-campaign screen exist with tests
         and Lightfield states, without enabling public signup or inventing a flux-2-pro image_url.
       status: passed
@@ -284,20 +293,23 @@ acceptance:
       evidence:
         - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
     - id: usable-concept-rate
-      criterion: Qualified evaluators applying the registered rubric determine that at least 70% of the 20
+      criterion:
+        Qualified evaluators applying the registered rubric determine that at least 70% of the 20
         launch-pack jobs produce one or more usable concepts without relaxing supplied claim,
         rights, brand, or QA constraints.
       status: not_applicable
       evidence:
         - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
     - id: evaluator-workflow-preference
-      criterion: At least three of five qualified evaluators explicitly prefer the launch-pack workflow to
+      criterion:
+        At least three of five qualified evaluators explicitly prefer the launch-pack workflow to
         their current process in recorded evaluation evidence.
       status: not_applicable
       evidence:
         - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
     - id: qualified-paid-pilot-proof
-      criterion: At least one qualified DTC customer or design partner has sanitized durable evidence that
+      criterion:
+        At least one qualified DTC customer or design partner has sanitized durable evidence that
         it will use staging and either intends to pay or has agreed commercial terms, without
         exposing customer data, payment secrets, customer media, tokens, or signed URLs. Actual
         payment and Stripe are not required in P0.
@@ -305,7 +317,8 @@ acceptance:
       evidence:
         - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
     - id: operator-p0-exit-decision
-      criterion: The operator reviews the complete technical, usability, output-quality, latency, trust,
+      criterion:
+        The operator reviews the complete technical, usability, output-quality, latency, trust,
         privacy, performance, economic, and paid-demand evidence and records an explicit P0 exit
         go/no-go; silence cannot count as approval, and any failed usable-output, economics, or
         paid-demand gate records a pivot/stop decision and blocks customer charging.
@@ -332,7 +345,8 @@ quality_gates:
       - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
       - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
 rollback:
-  strategy: Revert the packet's implementation paths and generated/evidence changes through auditable
+  strategy:
+    Revert the packet's implementation paths and generated/evidence changes through auditable
     Git history while preserving immutable transition receipts. Record every provisioned cloud
     target, exact resource ID, binding, dependency, and teardown procedure in sanitized evidence
     before use; do not perform destructive remote teardown without exact target IDs,

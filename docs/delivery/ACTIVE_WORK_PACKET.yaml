@@ -103,7 +103,8 @@ public_interfaces:
     existing launch-pack commands. No production OAuth, public MCP discovery, or CLI in this packet.
 steps:
   - id: p1a-001-production-identity-and-rls
-    title: Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill switches for
+    title:
+      Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill switches for
       signup, generation, provider routes, and charging without enabling public signup.
     status: completed
   - id: p1a-002-stripe-wallet-entitlements
@@ -112,7 +113,8 @@ steps:
       guardrail.
     status: completed
   - id: p1a-003-transactional-email-and-telemetry
-    title: Integrate Resend transactional/auth email and Sentry/OTel with redaction, correlation IDs,
+    title:
+      Integrate Resend transactional/auth email and Sentry/OTel with redaction, correlation IDs,
       and fail-closed missing-credential behavior.
     status: completed
   - id: p1a-004-billing-usage-ui
@@ -130,7 +132,8 @@ steps:
 acceptance:
   automated:
     - id: stripe-wallet-ledger-invariants
-      criterion: Tests prove setup, subscription, wallet credit, reservation, capture, release, and refund
+      criterion:
+        Tests prove setup, subscription, wallet credit, reservation, capture, release, and refund
         stay balanced in integer USD micros, enforce entitlements and caps, and ignore duplicate
         Stripe webhook deliveries.
       status: passed

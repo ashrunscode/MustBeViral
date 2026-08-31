@@ -486,7 +486,11 @@ async function handleClientRoute(
   }
   if (!authenticator.authorizeOperation(actor, route.operation)) {
     return context.json(
-      safeError(context, 'FORBIDDEN', 'This credential is not authorized for the requested operation.'),
+      safeError(
+        context,
+        'FORBIDDEN',
+        'This credential is not authorized for the requested operation.',
+      ),
       403,
     );
   }
@@ -520,7 +524,11 @@ async function handleClientRoute(
     }
     if (actor.workspaceId !== undefined && actor.workspaceId !== workspaceId) {
       return context.json(
-        safeError(context, 'FORBIDDEN', 'This credential is not authorized for the requested workspace.'),
+        safeError(
+          context,
+          'FORBIDDEN',
+          'This credential is not authorized for the requested workspace.',
+        ),
         403,
       );
     }

@@ -1472,8 +1472,7 @@ export function createSupabaseRequestDependencies(
   const publishableKey = bindings.SUPABASE_PUBLISHABLE_KEY;
   const privilegedKey = bindings.SUPABASE_SECRET_KEY ?? bindings.SUPABASE_SERVICE_ROLE_KEY;
   const effectiveCallerJwt =
-    callerJwt ??
-    (actor.authenticationMethod === 'supabase_jwt' ? undefined : privilegedKey);
+    callerJwt ?? (actor.authenticationMethod === 'supabase_jwt' ? undefined : privilegedKey);
   if (!baseUrl || !publishableKey || !effectiveCallerJwt) return null;
   const executor = new SupabaseDataApiExecutor({
     baseUrl,

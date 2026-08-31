@@ -46,16 +46,19 @@ export function createOAuthTokenVerifier(
       if (!baseUrl || !privilegedKey) throw new Error('OAuth token verification is not configured');
 
       const tokenHash = await sha256Hex(token);
-      const response = await fetchImplementation(`${baseUrl}/rest/v1/rpc/verify_oauth_access_token`, {
-        method: 'POST',
-        headers: {
-          accept: 'application/json',
-          apikey: privilegedKey,
-          authorization: `Bearer ${privilegedKey}`,
-          'content-type': 'application/json',
+      const response = await fetchImplementation(
+        `${baseUrl}/rest/v1/rpc/verify_oauth_access_token`,
+        {
+          method: 'POST',
+          headers: {
+            accept: 'application/json',
+            apikey: privilegedKey,
+            authorization: `Bearer ${privilegedKey}`,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({ p_token_hash: tokenHash }),
         },
-        body: JSON.stringify({ p_token_hash: tokenHash }),
-      });
+      );
       if (!response.ok) throw new Error('OAuth token verification failed');
 
       const actor = parseVerificationPayload(await response.json());
