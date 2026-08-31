@@ -114,7 +114,7 @@ acceptance:
       status: passed
       evidence:
         - governance/evidence/WP-P1B-001/oauth-scope-and-revocation.yaml
-        - supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
     - id: rest-mcp-cli-parity
       criterion: Shared contract vectors pass against REST, MCP, and CLI adapters for the shipped
         operations with no handler-local policy drift.
@@ -123,12 +123,7 @@ acceptance:
         - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
         - governance/evidence/WP-P1B-001/three-client-parity.yaml
         - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
-        - apps/cli/test/p1b-cli-parity.test.ts
-        - apps/cli/test/cli.test.ts
-        - apps/core/test/unit/p1b-three-client-parity.test.ts
-        - apps/core/test/unit/production-mcp-parity.test.ts
-        - apps/web/src/lib/core/p1b-client.test.ts
-        - packages/contracts/src/p1b-parity.test.ts
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
     - id: immutable-skill-versions
       criterion:
         Publishing a Skill creates an immutable version; edits create a new version and never
@@ -136,9 +131,7 @@ acceptance:
       status: passed
       evidence:
         - governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
-        - supabase/tests/database/00033_p1b_immutable_skill_versions.test.sql
-        - apps/web/src/features/skills/skills-access-panel.test.tsx
-        - packages/contracts/src/p1b-handlers.test.ts
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
   manual:
     - id: no-autonomous-spend-surface
       criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
@@ -162,7 +155,7 @@ quality_gates:
     command: pnpm verify
     status: passed
     evidence:
-      - corepack pnpm agent:verify
+      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
 rollback:
   strategy: Revert implementation and generated contracts through Git. Disable newly issued keys and
     OAuth clients with kill switches if any test credentials were created under authorization.
