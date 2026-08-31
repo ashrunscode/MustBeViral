@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Operator must commit the finish-sprint + P1a tree (billing UI acceptance tests, deploy/telemetry evidence stubs), run pnpm agent:verify, then pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml. Continue WP-P1A-001 with Resend auth SMTP operator provisioning and production deploy with exact resource IDs.
+Operator must commit the finish-sprint tree, then run corepack pnpm agent:verify and corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml. Continue WP-P1A-001 with Resend auth SMTP wiring and production deploy evidence.
