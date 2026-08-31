@@ -136,18 +136,17 @@ quality_gates:
     command: pnpm design:check
     status: passed
     evidence:
-      - governance/evidence/WP-D0-001/design-direction.yaml
-      - governance/evidence/WP-D0-002/design-direction.yaml
+      - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
   - id: governance
     command: pnpm governance:check
     status: passed
     evidence:
-      - corepack pnpm agent:verify
+      - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
   - id: repository-verification
     command: pnpm verify
     status: passed
     evidence:
-      - corepack pnpm agent:verify
+      - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
 rollback:
   strategy: Revert collaboration Worker and client changes through Git. Disable the collaboration
     Worker route rather than destroying namespaces unless exact IDs and rollback evidence are
