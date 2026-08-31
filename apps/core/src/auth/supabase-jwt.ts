@@ -1,11 +1,9 @@
 import { Jwt } from 'hono/utils/jwt';
 
 import type { CoreBindings } from '../bindings';
+import type { AuthenticatedActor } from './actor';
 
-export interface AuthenticatedActor {
-  readonly actorId: string;
-  readonly authenticationMethod: 'supabase_jwt';
-}
+export type { AuthenticatedActor };
 
 export interface SupabaseJwtVerifier {
   verify(token: string, bindings: CoreBindings): Promise<AuthenticatedActor>;

@@ -37,3 +37,8 @@ Sources: ordered raw SQL under `supabase/migrations`. Generated Supabase types b
 | `supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql` | table `app_private.platform_kill_switches` |
 | `supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql` | table `public.stripe_webhook_events` |
 | `supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql` | table `public.workspace_billing_profiles` |
+| `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.api_keys` |
+| `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.oauth_clients` |
+| `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.oauth_access_tokens` |
+| `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.skills` |
+| `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.skill_versions` |

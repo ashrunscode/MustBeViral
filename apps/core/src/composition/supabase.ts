@@ -723,6 +723,14 @@ function createWorkspaceResolver(
     async resolve({ operation, pathId, body }) {
       const strategy = WORKSPACE_RESOLUTION_BY_OPERATION[operation];
       if (strategy.kind === 'bootstrap') return BOOTSTRAP_WORKSPACE_ID;
+      if (actor.workspaceId !== undefined) {
+        if (strategy.kind === 'path_membership') {
+          return pathId === actor.workspaceId ? actor.workspaceId : null;
+        }
+        if (strategy.kind === 'actor_membership') {
+          return actor.workspaceId;
+        }
+      }
       if (strategy.kind === 'path_membership') {
         if (pathId === undefined) return null;
         const membership = await executor.selectOne('workspace_memberships', {
@@ -1456,17 +1464,21 @@ export function createSupabaseHandlerPorts(
 
 export function createSupabaseRequestDependencies(
   bindings: CoreBindings,
-  callerJwt: string,
+  callerJwt: string | undefined,
   actor: AuthenticatedActor,
   fetchImplementation?: typeof fetch,
 ): RequestScopedDependencies | null {
   const baseUrl = bindings.SUPABASE_URL;
   const publishableKey = bindings.SUPABASE_PUBLISHABLE_KEY;
-  if (!baseUrl || !publishableKey) return null;
+  const privilegedKey = bindings.SUPABASE_SECRET_KEY ?? bindings.SUPABASE_SERVICE_ROLE_KEY;
+  const effectiveCallerJwt =
+    callerJwt ??
+    (actor.authenticationMethod === 'supabase_jwt' ? undefined : privilegedKey);
+  if (!baseUrl || !publishableKey || !effectiveCallerJwt) return null;
   const executor = new SupabaseDataApiExecutor({
     baseUrl,
     publishableKey,
-    callerJwt,
+    callerJwt: effectiveCallerJwt,
     ...(fetchImplementation === undefined ? {} : { fetch: fetchImplementation }),
   });
   const repositories = createDatabaseRepositories(executor);

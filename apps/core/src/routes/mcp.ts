@@ -10,6 +10,7 @@ import {
 import { Hono, type Context } from 'hono';
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
+import { createRequestAuthenticator, type RequestAuthenticator } from '../auth/authenticate';
 import type { CoreHonoEnvironment } from '../bindings';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
 import { p0ResultSemantics } from '../transport/semantics';
@@ -23,6 +24,7 @@ const supportedProtocolVersions = new Set(['2025-03-26', '2025-06-18', MCP_PROTO
 export interface McpDependencies {
   readonly handlers: P0RestHandlers;
   readonly jwt: SupabaseJwtVerifier;
+  readonly authenticator?: RequestAuthenticator;
   readonly workspaces: WorkspaceResolutionPort;
   readonly requestFactory?: RequestDependencyFactory;
 }
@@ -64,11 +66,12 @@ function bearerToken(context: Context<CoreHonoEnvironment>): string | null {
 async function authenticate(
   context: Context<CoreHonoEnvironment>,
   dependencies: McpDependencies,
-): Promise<Readonly<{ actor: AuthenticatedActor; callerJwt: string }> | null> {
+): Promise<Readonly<{ actor: AuthenticatedActor; callerJwt?: string }> | null> {
   const token = bearerToken(context);
   if (token === null) return null;
+  const authenticator = dependencies.authenticator ?? createRequestAuthenticator(dependencies.jwt);
   try {
-    return { actor: await dependencies.jwt.verify(token, context.env), callerJwt: token };
+    return await authenticator.authenticate(token, context.env);
   } catch {
     return null;
   }
@@ -239,7 +242,7 @@ async function handlePost(
     (await dependencies.requestFactory?.create({
       actor: authentication.actor,
       bindings: context.env,
-      callerJwt: authentication.callerJwt,
+      ...(authentication.callerJwt === undefined ? {} : { callerJwt: authentication.callerJwt }),
     })) ?? dependencies;
   let request: JsonRpcRequest;
   try {
@@ -264,7 +267,7 @@ async function handlePost(
       rpcResult(request.id, {
         protocolVersion: requested,
         capabilities: { tools: { listChanged: false } },
-        serverInfo: { name: 'mustbeviral-core-private', version: 'p0' },
+        serverInfo: { name: 'mustbeviral-core', version: 'p1b' },
       }),
       200,
     );

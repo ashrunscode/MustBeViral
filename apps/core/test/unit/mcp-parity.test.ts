@@ -414,7 +414,7 @@ describe('P0 REST and private MCP contract vectors', () => {
     expect(body.result).toEqual({
       protocolVersion: '2025-11-25',
       capabilities: { tools: { listChanged: false } },
-      serverInfo: { name: 'mustbeviral-core-private', version: 'p0' },
+      serverInfo: { name: 'mustbeviral-core', version: 'p1b' },
     });
 
     const getResponse = await app.request(

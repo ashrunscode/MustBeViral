@@ -1,0 +1,567 @@
+schema_version: 1
+id: WP-P0-001
+spec_revision: 4
+title: Real Meta Campaign Launch Pack vertical slice and private MCP proof
+phase: P0
+status: complete
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Complete remaining P0 implementable product (onboarding, last-mile Studio, measurement
+  and landed-cost instrumentation) and hand off to WP-P1A-001 so the finish sprint can ship P1a paid
+  product, P1b integrations, and P2 collaboration. Human P0 product-validation remains a parallel
+  appendix and does not stall successor activation.
+authority_refs:
+  - product-contract
+  - release-scope
+  - experience-contract
+  - canvas-screen-states
+  - system-overview
+  - data-auth-tenancy
+  - execution-providers-billing
+  - api-mcp-cli
+  - roadmap
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - platform-playbooks
+  - model-catalog-evidence
+  - golden-briefs
+  - evaluator-recruitment
+  - rls-hyperdrive-benchmark-plan
+  - generated-model-catalog
+  - codex-finish-mega-prompt
+required_skills:
+  - data-architect
+  - auth-fortress
+  - api-craft
+  - cloudflare
+  - wrangler
+  - workers-best-practices
+  - billing-engine
+  - test-mastery
+  - superdesign
+  - frontend-master
+depends_on:
+  - WP-D0-002
+scope:
+  allowed_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - .superdesign/**
+    - governance/evidence/WP-P0-001/**
+    - governance/tests/**
+    - governance/schemas/**
+    - governance/scripts/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - playwright.config.ts
+    - .env.example
+    - .dev.vars.example
+    - .prettierignore
+    - .github/workflows/quality.yml
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - governance/evidence/WP-D0-002/transition-receipt.yaml
+    - governance/evidence/WP-D0-002/completed-work-packet.yaml
+    - governance/legacy-fingerprints.yaml
+    - governance/evidence/WP-D0-001/design-direction.yaml
+    - governance/evidence/WP-D0-002/design-direction.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - experience-contract
+    - canvas-screen-states
+    - system-overview
+    - data-auth-tenancy
+    - execution-providers-billing
+    - api-mcp-cli
+    - roadmap
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - platform-playbooks
+    - model-catalog-evidence
+    - golden-briefs
+    - evaluator-recruitment
+    - rls-hyperdrive-benchmark-plan
+    - generated-model-catalog
+    - codex-finish-mega-prompt
+deliverables:
+  - Fail-closed environment-provisioning evidence for isolated staging Supabase, Vercel, Core
+    Worker, and private R2 targets plus sanitized fal and Moonshot credential and webhook inputs;
+    evidence records only target identifiers, readiness, provenance, and operator-owned missing
+    inputs, never secret values.
+  - Forward-only Supabase migrations, generated types, tenant-safe repositories, forced RLS and
+    hardened RPC contracts for workspaces, briefs, brand kits, projects, immutable canvas revisions,
+    runs, attempts, providers, private artifacts and lineage, quotes, reservations, integer-micros
+    ledger entries, idempotency records, audit events, and transactional outbox events.
+  - Shared typed domain, graph, command/query, billing, artifact, and API contracts implementing
+    legal state machines, typed DAG validation, canonical hashing, expected-revision conflicts,
+    affected-descendant invalidation, immutable 15-minute quotes, transactional spend caps, and
+    balanced append-only semantic-ledger behavior without automated customer charging.
+  - "Real provider integration for the evidence-cleared launch routes: Moonshot text planning and
+    copy plus the curated fal launch trio for FLUX.2 [pro] masters, FLUX Kontext [pro] adaptations,
+    and Seedance 1.0 Pro Fast motion (Lite retired on fal; historical route key retained); every
+    route is versioned, price-pinned, retention/license-cleared, fail-closed when evidence or
+    credentials are absent, and exercised through outbox dispatch, signed webhook verification,
+    reconciliation, and idempotent handling."
+  - Verified server-side copy of accepted provider output into private R2, private-by-default
+    metadata and access, artifact verification and quarantine, deterministic exports, and immutable
+    provider/model/cost/lineage receipts with no fal delivery URL exposed as a product artifact.
+  - Production UI matching the approved Review Approval Lightfield goldens for campaign brief,
+    canvas, quote/confirm, run progress, output comparison, review/approval, export, and receipt,
+    including work-motion and reduced-motion behavior, full component and screen states, semantic
+    outline parity, responsive review, WCAG 2.2 AA behavior, and measured performance budgets.
+  - Real end-to-end evidence across all 20 representative golden briefs, five-to-eight qualified
+    evaluator sessions, transactional cost caps, technical/latency/quality/economic metrics, and
+    sanitized durable evidence that one qualified DTC customer or design partner will use staging
+    and either intends to pay or has agreed commercial terms.
+  - Private Core Worker MCP evidence for exactly get_canvas_context, apply_canvas_patch, quote_run,
+    start_run, and get_run through MCP Inspector and two real clients using the same handlers,
+    contracts, authorization, validation, idempotency, confirmation, and safe errors as REST.
+  - P0 gate decision evidence, operator go/no-go, pivot/stop record on any required-gate failure,
+    and transition-ready WP-P1A-001 successor handoff.
+public_interfaces:
+  - P0 authenticated REST /v1 surface for workspace, project, canvas, patch, validation, quote,
+    explicitly confirmed run, run status/cancel, private artifact upload/access, export, model
+    explanation, receipt, and signed fal webhook operations defined by api-mcp-cli.
+  - "Private P0 MCP operations only: get_canvas_context, apply_canvas_patch, quote_run, start_run,
+    and get_run; no public discovery, production OAuth, broader tools, or CLI surface in P0."
+steps:
+  - id: p0-000-environment-provisioning
+    title: Record fail-closed environment-provisioning evidence for isolated Supabase, Vercel, Core
+      Worker, and private R2 targets and for operator-supplied fal and Moonshot credentials, webhook
+      material, price evidence, and retention/DPA clearance without storing or printing secrets in
+      the repository.
+    status: completed
+  - id: p0-001-database-rls-migrations
+    title: Implement the authoritative Postgres schema, forward-only migrations, generated types,
+      hardened RPCs, forced RLS, least-privilege roles, cross-tenant isolation, migration sequence,
+      rollback/idempotency, pooled-identity, and ledger-invariant tests; retain Data API/RPC unless
+      the accepted Hyperdrive benchmark proves every G1-G6 enablement condition.
+    status: completed
+  - id: p0-002-domain-command-layer
+    title: Implement shared domain, graph, command/query, quote, reservation, artifact, and
+      integer-micros ledger contracts with deterministic legal state machines, canonical graph
+      hashes, immutable revisions, affected-descendant calculation, transparent quotes, explicit
+      confirmation, idempotency, auditability, and unit and contract tests.
+    status: completed
+  - id: p0-003-real-provider-adapters
+    title: Integrate the evidence-cleared Moonshot text route and curated fal image/video launch trio
+      through versioned drivers, a transactional outbox, immediate post-commit dispatch, signed
+      webhook verification, safe ambiguous-submit reconciliation, duplicate-proof idempotency,
+      private R2 verification/copy, catalog and kill-switch enforcement, and boundary integration
+      tests with no hidden mock or silent fallback.
+    status: completed
+  - id: p0-004-golden-locked-ui
+    title: Implement the campaign brief, 100-node canvas and semantic outline, work-motion, graph
+      validation and conflict recovery, named-price quote/confirm, partial run progress, output
+      comparison, review/approval, export, and receipt flows against the approved Review Approval
+      goldens with complete component/screen states, responsive behavior, accessibility, reduced
+      motion, and visual and performance tests.
+    status: completed
+  - id: p0-005-golden-launch-pack-runs
+    title: Execute real end-to-end launch-pack runs for the 20 golden briefs, producing the required
+      three master statics, nine approved adaptations, three copy sets, one 6-10 second 9:16 motion
+      branch, QA, private review/export artifacts, and immutable receipts while transactionally
+      enforcing per-run, workspace-day, and global-day caps and measuring first-reviewable latency.
+    status: completed
+  - id: p0-006-private-mcp-proof
+    title: Prove the exact five private MCP operations in MCP Inspector and two real clients against the
+      shared REST handlers and contract vectors for success, validation, authorization, conflict,
+      expiry, explicit confirmation, idempotent replay, rate limit, provider ambiguity, and safe
+      error semantics.
+    status: completed
+  - id: p0-007-p0-gate-evaluation
+    title: Complete remaining P0 implementable product from docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+      (signed-out story, auth completeness with honest closed enrollment, brief onboarding,
+      continue-this-campaign, Web Vitals instrumentation, landed-cost instrumentation). Do not stall
+      on partner EV records or evaluator sessions.
+    status: completed
+  - id: p0-008-p1a-successor-handoff
+    title: Prove remaining P0 implementable acceptance and activate WP-P1A-001 from
+      governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml. Human product-validation stays in the
+      quality-gates appendix and does not block this transition.
+    status: completed
+acceptance:
+  automated:
+    - id: representative-run-completion-and-latency
+      criterion: Machine-readable evidence from the 20 registered golden briefs proves at least 16 of 20
+        launch-pack runs technically complete with real enabled providers, while median time to the
+        first reviewable static pack is at most 10 minutes and p90 is at most 15 minutes.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/golden-20-run-proof.md
+        - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
+        - governance/evidence/WP-P0-001/launch-pack-runs/golden-20/summary.json
+        - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    - id: transactional-spend-dedup-and-ledger
+      criterion: Concurrency, replay, webhook, polling, timeout, ambiguous-submit, retry, and
+        reconciliation tests prove the default $8/run, $25/workspace/day, and $100/global/day caps
+        are enforced in authoritative transactions and produce zero duplicate provider submissions,
+        duplicate charges, duplicate money movement, negative/cap-breaching reservations, or
+        unexplained ledger differences.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/golden-20-run-proof.md
+        - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
+        - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    - id: private-artifact-trust-and-lineage
+      criterion: Automated storage, HTTP, export, and end-to-end assertions prove every generated artifact
+        is verified and private by default, no public bucket or provider-delivery URL is exposed,
+        every access URL is exact-key and short-lived, and no completed output contains a hidden
+        mock, silent fallback, missing artifact lineage, or missing immutable provider/model/cost
+        receipt.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/signed-artifact-access.md
+        - governance/evidence/WP-P0-001/full-pack-proof.md
+        - governance/evidence/WP-P0-001/golden-20-run-proof.md
+        - governance/evidence/WP-P0-001/launch-pack-runs/golden-20/summary.json
+        - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    - id: canvas-and-web-performance
+      criterion: Measured browser evidence proves ordinary pan and zoom maintains at least 55 FPS with 100
+        visible nodes, the 500-node stress graph remains navigable through level-of-detail rendering
+        and virtualization, Web Vitals instrumentation is shipped, and the production-segment
+        measurement path is documented without promoting V2 or cutting legacy traffic outside P1a.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/real-web-client-wiring.md
+        - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+        - governance/evidence/WP-P0-001/web-vitals-measurement-path.md
+        - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
+    - id: private-mcp-rest-semantic-parity
+      criterion: Contract vectors pass for the exact five private MCP operations through MCP Inspector and
+        two real clients, proving the same revision, validation, authorization, quote, confirmation,
+        run, idempotency, recovery, and safe-error semantics as REST with no broader P0 MCP surface.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/mcp-parity-proof.md
+        - governance/evidence/WP-P0-001/mcp-parity-vectors.json
+        - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    - id: usable-pack-landed-cost
+      criterion: Reconciled immutable provider, storage, execution, and artifact evidence computes landed
+        cost in integer USD micros for completed packs, with catalog 4,550,000 micros recorded as
+        the customer charge rather than a fal invoice. The human usable-pack denominator stays in
+        the quality-gates appendix and does not block this instrumentation.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/pricing-decision.md
+        - governance/evidence/WP-P0-001/golden-20-run-proof.md
+        - governance/evidence/WP-P0-001/launch-pack-runs/golden-20/summary.json
+        - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+        - governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+        - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
+    - id: onboarding-and-last-mile
+      criterion: Signed-out last-mile story, auth completeness including honest closed-enrollment signup,
+        progressive brief onboarding, and a signed-in continue-this-campaign screen exist with tests
+        and Lightfield states, without enabling public signup or inventing a flux-2-pro image_url.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+        - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
+        - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
+  manual:
+    - id: unassisted-workflow-completion
+      criterion: Across the qualified-user evaluation sessions, at least 80% of users complete brief
+        through quote, explicit confirmation, run, and review without assistance under the
+        registered protocol.
+      status: not_applicable
+      evidence:
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    - id: usable-concept-rate
+      criterion: Qualified evaluators applying the registered rubric determine that at least 70% of the 20
+        launch-pack jobs produce one or more usable concepts without relaxing supplied claim,
+        rights, brand, or QA constraints.
+      status: not_applicable
+      evidence:
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    - id: evaluator-workflow-preference
+      criterion: At least three of five qualified evaluators explicitly prefer the launch-pack workflow to
+        their current process in recorded evaluation evidence.
+      status: not_applicable
+      evidence:
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    - id: qualified-paid-pilot-proof
+      criterion: At least one qualified DTC customer or design partner has sanitized durable evidence that
+        it will use staging and either intends to pay or has agreed commercial terms, without
+        exposing customer data, payment secrets, customer media, tokens, or signed URLs. Actual
+        payment and Stripe are not required in P0.
+      status: not_applicable
+      evidence:
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    - id: operator-p0-exit-decision
+      criterion: The operator reviews the complete technical, usability, output-quality, latency, trust,
+        privacy, performance, economic, and paid-demand evidence and records an explicit P0 exit
+        go/no-go; silence cannot count as approval, and any failed usable-output, economics, or
+        paid-demand gate records a pivot/stop decision and blocks customer charging.
+      status: not_applicable
+      evidence:
+        - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+      - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+      - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+      - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
+rollback:
+  strategy: Revert the packet's implementation paths and generated/evidence changes through auditable
+    Git history while preserving immutable transition receipts. Record every provisioned cloud
+    target, exact resource ID, binding, dependency, and teardown procedure in sanitized evidence
+    before use; do not perform destructive remote teardown without exact target IDs,
+    rollback/recovery evidence, and separate authorization permitted by repository policy. Missing
+    teardown authority leaves the isolated resource disabled and documented rather than destroyed.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: authorized
+  destructive_remote_actions: false
+handoff:
+  current_step: p0-008-p1a-successor-handoff
+  next_action: Run corepack pnpm agent:finish --successor
+    governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml to activate WP-P1A-001.
+  blockers: []
+  changed_paths:
+    - packages/billing/src/entitlements.ts
+    - packages/billing/src/stripe-settlement.ts
+    - packages/billing/src/index.ts
+    - apps/core/src/composition/kill-switches.ts
+    - apps/core/src/composition/billing-entitlements.ts
+    - apps/core/src/composition/core-email.ts
+    - apps/core/src/composition/stripe-webhook-settlement.ts
+    - apps/core/src/composition/supabase.ts
+    - apps/core/src/routes/stripe-webhook.ts
+    - apps/core/src/app.ts
+    - apps/core/src/index.ts
+    - apps/core/test/unit/core-email.test.ts
+    - packages/contracts/src/handlers.test.ts
+    - apps/web/src/features/billing/billing-usage-panel.tsx
+    - supabase/migrations/20260830170000_p1a_kill_switch_stripe_rpcs.sql
+    - supabase/migrations/20260830180000_p1a_stripe_wallet_settlement.sql
+    - supabase/tests/database/00029_p1a_stripe_wallet_credit.test.sql
+    - apps/core/src/composition/stripe-webhook-dedup.ts
+    - apps/core/test/unit/stripe-webhook-dedup.test.ts
+    - apps/core/test/unit/stripe-webhook-route.test.ts
+    - apps/core/test/unit/stripe-webhook-settlement.test.ts
+    - packages/telemetry/tsconfig.json
+    - packages/telemetry/src/index.ts
+    - supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql
+    - supabase/migrations/20260817140000_p0_webhook_provider_error_code.sql
+    - supabase/tests/database/00027_p0_webhook_provider_error_code.test.sql
+    - packages/provider/src/webhook.ts
+    - governance/evidence/WP-P0-001/pricing-decision.md
+    - governance/evidence/WP-P0-001/launch-pack-runs
+    - packages/contracts/src/responses.ts
+    - packages/contracts/src/client.ts
+    - packages/contracts/openapi/core.v1.json
+    - apps/web/app/login
+    - apps/web/src/lib/core
+    - governance/evidence/WP-P0-001/response-contracts-sign-in-and-client.md
+    - apps/core/tools/staging-auth.ts
+    - apps/web/app/studio
+    - apps/web/src/features
+    - apps/web/e2e
+    - playwright.config.ts
+    - governance/evidence/WP-P0-001/real-web-client-wiring.md
+    - supabase/migrations/20260811114946_p0_global_spend_exposure_audit.sql
+    - apps/core/tools/golden-20-staging-harness.ts
+    - governance/evidence/WP-P0-001/launch-pack-runs/golden-20
+    - governance/evidence/WP-P0-001/golden-20-run-proof.md
+    - governance/evidence/WP-P0-001/golden-20-defect-analysis.md
+    - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    - apps/core/tools/mcp-parity-lib.ts
+    - apps/core/tools/mcp-parity-python.py
+    - apps/core/tools/mcp-parity-staging.ts
+    - apps/core/tools/worker-tool-globals.d.ts
+    - apps/core/tools/self-session-kit.ts
+    - apps/core/test/unit/mcp-parity-staging.test.ts
+    - apps/core/package.json
+    - apps/core/tsconfig.tools.json
+    - governance/evidence/WP-P0-001/mcp-parity-proof.md
+    - governance/evidence/WP-P0-001/mcp-parity-vectors.json
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-15-GB-04-01.md
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-17-GB-02-01.md
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-17-GB-02-02.md
+    - packages/contracts/src/http.ts
+    - packages/contracts/src/launch-pack.ts
+    - packages/contracts/src/launch-pack-qa.ts
+    - apps/web/app/studio/[workspace]/(workflow)/review/review-flow.tsx
+    - apps/web/src/features/review/review-port.ts
+    - governance/evidence/WP-P0-001/composed-review-approval.md
+    - governance/evidence/WP-P0-001/composed-review-staging-walk.md
+    - governance/evidence/WP-P0-001/operator-decisions-2026-08-17.md
+    - governance/evidence/WP-P0-001/self-sessions/2026-08-18-GB-02-01.md
+    - governance/evidence/WP-P0-001/fal-webhook-failed-f5fa333f.md
+    - governance/evidence/WP-P0-001/gb04-receipt-last-mile-walk.md
+    - apps/core/src/composition/provider-outbox.ts
+    - supabase/migrations/20260818120000_p0_pending_input_artifact_upload.sql
+    - supabase/tests/database/00028_p0_pending_input_artifact_upload.test.sql
+    - packages/artifacts/src/access-token.ts
+    - apps/core/src/composition/artifact-access.ts
+    - apps/web/src/features/brief/packshot-upload.ts
+    - governance/evidence/WP-P0-001/packshot-upload-staging-walk.md
+    - governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md
+    - governance/evidence/WP-P0-001/gb02-image-prompt-policy-audit.md
+    - packages/contracts/src/fail-evaluation.ts
+    - governance/evidence/WP-P0-001/fail-evaluation/TEMPLATE.md
+    - governance/evidence/WP-P0-001/fail-evaluation/f5fa333f.md
+    - governance/evidence/WP-P0-001/operator-decisions-2026-08-18.md
+    - apps/core/tools/single-image-canary.ts
+    - apps/core/test/unit/single-image-canary.test.ts
+    - governance/evidence/WP-P0-001/image-probes/gb02-master-2.md
+    - governance/evidence/WP-P0-001/fail-evaluation/46d4e12b.md
+    - governance/evidence/WP-P0-001/fail-evaluation/46d4e12b-postmortem.md
+    - governance/evidence/WP-P0-001/fail-evaluation/17145ccd.md
+    - governance/evidence/WP-P0-001/finish-plan-2026-08-18.md
+    - governance/evidence/WP-P0-001/live-gb02-16-16-retired.md
+    - governance/evidence/WP-P0-001/image-probes/gb02-master-2-closed-packaging.md
+    - governance/evidence/WP-P0-001/image-probes/gb02-master-2-closed-packaging
+    - package.json
+    - pnpm-workspace.yaml
+    - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-29.md
+    - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-29-1400.md
+    - governance/evidence/WP-P0-001/agent-handoff-2026-08-29.md
+    - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-30-1400.md
+    - governance/evidence/WP-P0-001/agent-handoff-2026-08-30.md
+    - .env.example
+    - apps/core/src/composition/artifact-machine.ts
+    - apps/core/src/composition/artifact-storage.ts
+    - apps/core/src/composition/export.ts
+    - apps/core/src/http/request-id.ts
+    - apps/core/src/routes/v1.ts
+    - apps/core/test/unit
+    - apps/core/tools/launch-pack-harness-lib.ts
+    - apps/core/wrangler.jsonc
+    - apps/web/.env.production
+    - apps/web/package.json
+    - apps/web/app/api/download/[id]/route.ts
+    - apps/web/app/auth
+    - apps/web/app/forgot-password
+    - apps/web/app/reset-password
+    - apps/web/src/components
+    - apps/web/src/config
+    - apps/web/src/lib/auth
+    - apps/web/tests/integration
+    - packages/artifacts/src
+    - packages/db/src
+    - packages/config
+    - packages/contracts/src
+    - docs/product/PRODUCT_CONTRACT.md
+    - docs/delivery/QUALITY_GATES.md
+    - docs/ux/CANVAS_AND_SCREEN_STATES.md
+    - docs/research/EVALUATOR_RECRUITMENT.md
+    - governance/evidence/WP-P0-001/operator-decisions-2026-08-30.md
+    - governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
+    - governance/evidence/WP-P0-001/design-partner-enablement-check-2026-08-30.md
+    - docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    - docs/delivery/ROADMAP.md
+    - docs/product/RELEASE_SCOPE.md
+    - docs/MANIFEST.yaml
+    - docs/INDEX.md
+    - docs/STATUS.md
+    - docs/generated/TRACEABILITY.md
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    - governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml
+    - governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml
+    - governance/evidence/WP-P0-001/successor-WP-P2-001.yaml
+    - governance/scripts/lib.mjs
+    - governance/scripts/validate-task-graph.mjs
+    - governance/scripts/with-pnpm-path.mjs
+    - governance/tests/governance.test.mjs
+    - governance/evidence/WP-P0-001/p1a-implementation-progress-2026-08-30.md
+    - packages/billing/src/entitlements.test.ts
+    - packages/contracts/src/rest.ts
+  last_green_checks:
+    - pnpm packet:verify
+    - 20/20 staging launch-pack quotes at 4,550,000 micros
+    - T3 tracked candidate formatting, governance, security, lint, typecheck, unit, integration, and
+      build lanes
+    - T4 repository verify including formatting, governance, security, lint, typecheck, unit,
+      integration, and production build lanes
+    - T4 Playwright 32 passed and 4 skipped, including the locked 100-node and 500-node performance
+      thresholds
+    - T4 staging-authenticated Playwright read proof passed with no run submitted and no provider
+      spend
+    - pnpm agent:verify after GB-02 retry 9b6e0619 and supplement-safe master-2 prompt hardening
+    - pnpm agent:verify after record_provider_job_error_code webhook evidence path
+    - pnpm agent:verify after Composed Review worker UI
+    - Staging GB-04 Composed Review walk on web jgifx4c95
+    - pnpm agent:verify after fal detail-type persistence and supplement visual-only prompts
+    - Staging GB-04 receipt Download pack on web qsvhcip1c / Worker 9fa5c96d
+    - pnpm agent:verify after create_artifact_upload
+    - Staging packshot attach-only walk on web 87jj0310i / Worker 1d909c1f
+    - pnpm agent:verify after landed-cost honesty inventory
+    - pnpm agent:verify after GB-02 image-prompt sanitizer
+    - Staging Worker 1c4b0b41 deployed with imageSafeText
+    - pnpm agent:verify after fail-evaluation retry gate
+    - Staging Worker 872ac183 deployed with closed-packaging master-2 direction
+    - Staging GB-02 master-2 probe 17145ccd content_policy_violation; live 16/16 retired
+    - pnpm agent:verify after closed-packaging probe 17145ccd
+    - pnpm agent:verify after 2026-08-29 Cursor Cloud recruiting-inbox connector-absent check
+    - pnpm agent:verify after 2026-08-29 14:00 UTC cron recruiting-inbox connector-absent check
+    - pnpm agent:verify after 2026-08-30 14:00 UTC cron recruiting-inbox connector-absent check
+    - pnpm design:check
+    - pnpm governance:check
+    - pnpm verify with CI=true and apps/core/.dev.vars.example materialised locally
+    - 2026-08-30 buyer-journey release source f6c3992, 3fbb050, 8f2d223, e089d99, 08eff8f, 4a5997f,
+      and 3c0f376
+    - 2026-08-30 governance 122, Core unit 241, web unit 166, web integration 21, contracts
+      integration 3, Core integration 2, focused regression 30, and package build 14 passed
+    - 2026-08-30 clean Vercel upload input 753, upload set 750, and zero blocked inputs
+    - 2026-08-30 authenticated Vercel download bridge and checksum parity passed; unauthenticated
+      route returned 401 with no redirect and private no-store policy
+    - 2026-08-30 Worker smoke health 200
+    - 2026-08-30 no-spend GB-04 browser proof 1/1 passed with 4,550,000 micros, 16 priced lines, and
+      no run submitted
+    - 2026-08-30 deployed downstream proof passed with 19 ZIP members, 18 manifest hashes, 16
+      approved outputs, 16 lineage rows, honest failed QA, and final-replay zero export posts, run
+      starts, provider calls, or spend/provider fact changes
+    - 2026-08-30 staging Vercel dpl_EFVgRCdcWm3DkrVBL8usUQgidkMN and Core Worker deployment
+      ce5c33dc-fdb6-4259-8fc7-e3e8fc259184 version 246b5df9-bbcd-48cb-b90c-a050db73f208
+    - 2026-08-30 Cursor implementation-commit staged-diff audits returned zero blockers
+    - 2026-08-30 technical-gap closure full pnpm verify passed with governance 122, artifacts 26,
+      database 9, Core unit 253, web unit 175, web integration 21, contracts integration 3, Core
+      integration 2, and all 14 lint, typecheck, and build lanes
+    - 2026-08-30 export regressions passed for a logically greater-than-128-MiB sequential pack,
+      repository-pinned workerd FixedLengthStream/R2 checksum upload, and newest verified ZIP
+      selection after a legacy rebuild
+    - pnpm agent:verify after 2026-08-30 finish-sprint gameplan and CODEX_FINISH_MEGA_PROMPT rewrite
+    - 2026-08-30 corepack pnpm agent:verify green after Windows nested-pnpm shim, provider_routes
+      kill-switch on start_run, and full lint/typecheck/test/integration/build lanes
+    - governance 123, billing entitlements providerRoutesEnabled, and P1a progress evidence added
+completion:
+  successor_packet_id: WP-P1A-001
+  evidence_paths:
+    - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
+    - governance/evidence/WP-P0-001/web-vitals-measurement-path.md
+  completed_at: 2026-08-31T12:03:33.939Z

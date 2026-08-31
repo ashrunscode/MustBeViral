@@ -4,10 +4,10 @@ project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
-phase: P0
-active_packet: WP-P0-001
-current_step: p0-008-p1a-successor-handoff
-next_action: Operator must commit the finish-sprint tree, then run corepack pnpm agent:verify and corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1A-001.yaml. Continue WP-P1A-001 with Resend auth SMTP wiring and production deploy evidence.
+phase: P1a
+active_packet: WP-P1A-001
+current_step: p1a-001-production-identity-and-rls
+next_action: Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill switches for signup, generation, provider routes, and charging without enabling public signup.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -1,0 +1,75 @@
+schema_version: 1
+packet_id: WP-P0-001
+spec_revision: 4
+phase: P0
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-08-31T12:03:33.939Z
+successor_packet_id: WP-P1A-001
+predecessor_head: ca555a780e49e5687a2c68c043e152fe24cb7800
+closed_packet_path: governance/evidence/WP-P0-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+  - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+  - governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
+  - governance/evidence/WP-P0-001/web-vitals-measurement-path.md
+evidence_entries:
+  - path: governance/evidence/WP-P0-001/buyer-journey-staging-release-2026-08-30.md
+    sha256: af015d7085971a5d096ce7315cc39380a3a2684daa79d708b353d4dc31fe32ae
+    git_blob_oid: 29d4e50b46c9933b3d69708f805bddf590fb56f8
+  - path: governance/evidence/WP-P0-001/finish-sprint-gameplan-2026-08-30.md
+    sha256: 3e643a1343f9a4cb49012311f57b226c3502754189e5a5b78aa2a0178c9b47d9
+    git_blob_oid: 2d05a9ef088cc2faef69566ee39bd7cee414863f
+  - path: governance/evidence/WP-P0-001/full-pack-proof.md
+    sha256: 567ef146e9e00d8b80b3549dc3fe1b04672a32195646ee5be51fe5ec1f6bc87e
+    git_blob_oid: 5e88329d69ccb57fcfd31effb46f793b4759e608
+  - path: governance/evidence/WP-P0-001/golden-20-defect-analysis.md
+    sha256: fcc1408bd48ab70034a4ef54d99aa6491a39cbfa950bbedcd3d2a73ba8d3284e
+    git_blob_oid: 982f215360411bd07a3cd9a854f0d490417df10f
+  - path: governance/evidence/WP-P0-001/golden-20-run-proof.md
+    sha256: cb178402e868432f88131b3ba3afbdc63c6352bc274a8f904adb729b23453fa5
+    git_blob_oid: 66d07035c049561726396026f7ac6b148cbb8e04
+  - path: governance/evidence/WP-P0-001/landed-cost-honesty-inventory.md
+    sha256: 1f03c30726e5068e7ad4219c02c02b3c9b787df9f61f4b9e37e279e0e18e55c4
+    git_blob_oid: 531728a357203029cf9394a2a4450b87f0816b79
+  - path: governance/evidence/WP-P0-001/launch-pack-runs/golden-20/summary.json
+    sha256: 4b04ced5c085722430cc4e98dc5c7b9f019a555dba15a868f92353ddb8688b52
+    git_blob_oid: 01d0d876ffb4caac571a1ec9267d3fd2fa9717a4
+  - path: governance/evidence/WP-P0-001/launch-readiness-verification-2026-08-20.md
+    sha256: 7668c68e75a120907070fd20a767d6f343c871beb80a32aeb7851db381285994
+    git_blob_oid: 683073989c31a2381ded3d780e2b7014ac67b6ab
+  - path: governance/evidence/WP-P0-001/mcp-parity-proof.md
+    sha256: 0abab63739f86b2231ea1705141c0170c8720660b4048c7812ca11c75cb52e36
+    git_blob_oid: 553d608d98e45f9a396c7b01f77d3972b665a34d
+  - path: governance/evidence/WP-P0-001/mcp-parity-vectors.json
+    sha256: d948accf9d9a859fdc0b39975d6e26a915da7c31214ae07404ca794c8d041ba4
+    git_blob_oid: b8683913e36fcffea0be15707c381ea375112e72
+  - path: governance/evidence/WP-P0-001/p0-finish-sprint-implementation-2026-08-30.md
+    sha256: 238ccd1cd6d319b1ec3a9b6f8e28da95a9612337b37edd71d74af409ea32ac1c
+    git_blob_oid: df3d2f15807f3c80dcc174f357fbbe0a40f98d42
+  - path: governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
+    sha256: 0252eff818a01a79528ec6c03c06d8ea794f1f919f2892d6ccea03975d60adb4
+    git_blob_oid: 8f0bb1d5f5b710802f4bdc7fdce5a3a49cf9e02f
+  - path: governance/evidence/WP-P0-001/pricing-decision.md
+    sha256: ccb7fb31631d8adeb96e58607d6a580c201af63abdf304fc952c064c7299077f
+    git_blob_oid: 6a212f18758e83d28214f5b8274e276d329b857c
+  - path: governance/evidence/WP-P0-001/real-web-client-wiring.md
+    sha256: c30a0180e467e2e95d6c13ac7305eda83abee6b208d4da1c05aa2e3782c5a48e
+    git_blob_oid: a3fed687ca8383ded97b308c756443903a14feee
+  - path: governance/evidence/WP-P0-001/signed-artifact-access.md
+    sha256: d235b12cae6726e13a9c38786b774eeb569f76549cabf50c1b7443ac346d30eb
+    git_blob_oid: 884d45a82c483711103343c53e1cd62552fb6b7d
+  - path: governance/evidence/WP-P0-001/web-vitals-measurement-path.md
+    sha256: f39fcb674e4090fa6dc7f1d15a02ea36b578e180c88480a0b08f8671ba9f040a
+    git_blob_oid: 9bf897308414f8a35f7bd544300f67f7cc1defc8
+completed_step_ids:
+  - p0-000-environment-provisioning
+  - p0-001-database-rls-migrations
+  - p0-002-domain-command-layer
+  - p0-003-real-provider-adapters
+  - p0-004-golden-locked-ui
+  - p0-005-golden-launch-pack-runs
+  - p0-006-private-mcp-proof
+  - p0-007-p0-gate-evaluation
+  - p0-008-p1a-successor-handoff
+closed_packet_sha256: d89e1ec541613b8497497e5e0e2955b064e8586c0decc75159af40dfd96eb8ed

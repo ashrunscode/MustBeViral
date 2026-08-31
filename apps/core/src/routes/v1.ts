@@ -31,6 +31,7 @@ import { Hono, type Context } from 'hono';
 import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
+import { createRequestAuthenticator, type RequestAuthenticator } from '../auth/authenticate';
 import type { CoreBindings, CoreHonoEnvironment } from '../bindings';
 import {
   artifactContentHeaders,
@@ -72,6 +73,7 @@ export interface FalWebhookVerifierPort {
 export interface V1Dependencies {
   readonly handlers: P0RestHandlers;
   readonly jwt: SupabaseJwtVerifier;
+  readonly authenticator?: RequestAuthenticator;
   readonly workspaces: WorkspaceResolutionPort;
   readonly falWebhook?: FalWebhookVerifierPort;
   readonly falWebhookIngest?: (
@@ -92,7 +94,7 @@ export interface RequestDependencyFactory {
     input: Readonly<{
       actor: AuthenticatedActor;
       bindings: CoreBindings;
-      callerJwt: string;
+      callerJwt?: string;
     }>,
   ): Promise<RequestScopedDependencies | null>;
 }
@@ -469,13 +471,29 @@ async function handleClientRoute(
       401,
     );
   }
+  const authenticator = dependencies.authenticator ?? createRequestAuthenticator(dependencies.jwt);
   let actor: AuthenticatedActor;
+  let callerJwt: string | undefined;
   try {
-    actor = await dependencies.jwt.verify(token, context.env);
+    const authenticated = await authenticator.authenticate(token, context.env);
+    actor = authenticated.actor;
+    callerJwt = authenticated.callerJwt;
   } catch {
     return context.json(
       safeError(context, 'UNAUTHENTICATED', 'A valid bearer token is required.'),
       401,
+    );
+  }
+  if (!authenticator.authorizeOperation(actor, route.operation)) {
+    return context.json(
+      safeError(context, 'FORBIDDEN', 'This credential is not authorized for the requested operation.'),
+      403,
+    );
+  }
+  if (actor.workspaceId !== undefined && route.operation === 'create_workspace') {
+    return context.json(
+      safeError(context, 'FORBIDDEN', 'Scoped credentials cannot create workspaces.'),
+      403,
     );
   }
   try {
@@ -483,7 +501,7 @@ async function handleClientRoute(
       (await dependencies.requestFactory?.create({
         actor,
         bindings: context.env,
-        callerJwt: token,
+        ...(callerJwt === undefined ? {} : { callerJwt }),
       })) ?? dependencies;
     const body = route.method === 'POST' ? await readJsonObject(context) : {};
     const idempotencyKey = requireIdempotencyKey(context, route);
@@ -497,6 +515,12 @@ async function handleClientRoute(
     if (workspaceId === null) {
       return context.json(
         safeError(context, 'FORBIDDEN', 'Access to this resource is forbidden.'),
+        403,
+      );
+    }
+    if (actor.workspaceId !== undefined && actor.workspaceId !== workspaceId) {
+      return context.json(
+        safeError(context, 'FORBIDDEN', 'This credential is not authorized for the requested workspace.'),
         403,
       );
     }

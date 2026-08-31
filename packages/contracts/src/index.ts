@@ -9,3 +9,4 @@ export * from './mcp';
 export * from './ports';
 export * from './rest';
 export * from './responses';
+export * from './scopes';
