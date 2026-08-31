@@ -11,9 +11,9 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P1B-001
-next_action: Extend P1B with OAuth token issuance RPCs, API-key management REST routes, Skills
-  publish handlers, expanded MCP tool catalog, and three-client parity vectors; add browser audit UX
-  for key revocation.
+next_action: Advance to p1b-002-public-rest-and-mcp — register P1B routes in generated OpenAPI,
+  expand MCP/REST parity vectors for production tools, and prove oauth-scope-and-revocation
+  acceptance against Supabase pgTAP.
 decisions_pending: []
 blockers: []
 legacy:
