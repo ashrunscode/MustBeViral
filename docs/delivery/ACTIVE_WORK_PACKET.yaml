@@ -148,8 +148,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p1b-001-oauth-api-keys
-  next_action: Implement production OAuth and API-key authorization with scopes, revocation, and audit
-    UX without autonomous spend.
+  next_action: Extend P1B with OAuth token issuance RPCs, API-key management REST routes, Skills
+    publish handlers, expanded MCP tool catalog, and three-client parity vectors; add browser audit
+    UX for key revocation.
   blockers: []
   changed_paths: []
   last_green_checks: []

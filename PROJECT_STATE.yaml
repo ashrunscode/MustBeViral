@@ -11,8 +11,9 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P1B-001
-next_action: Implement production OAuth and API-key authorization with scopes, revocation, and audit
-  UX without autonomous spend.
+next_action: Extend P1B with OAuth token issuance RPCs, API-key management REST routes, Skills
+  publish handlers, expanded MCP tool catalog, and three-client parity vectors; add browser audit UX
+  for key revocation.
 decisions_pending: []
 blockers: []
 legacy:
