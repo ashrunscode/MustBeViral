@@ -139,17 +139,21 @@ acceptance:
     - id: no-autonomous-spend-surface
       criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
         provider spend or confirmation bypass.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P1B-001/no-autonomous-spend-surface.yaml
+        - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
   - id: repository-verification
     command: pnpm verify
     status: passed
@@ -183,5 +187,6 @@ handoff:
     - corepack pnpm agent:verify
 completion:
   successor_packet_id: WP-P2-001
-  evidence_paths: []
+  evidence_paths:
+    - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
   completed_at: null

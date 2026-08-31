@@ -1,0 +1,94 @@
+schema_version: 1
+acceptance_id: no-autonomous-spend-surface
+recorded_at: '2026-08-31T15:00:00.000Z'
+status: proven
+criterion: Production MCP, CLI, and API-key docs and tool descriptions cannot imply autonomous
+  provider spend or confirmation bypass.
+proofs:
+  - kind: contract
+    path: packages/contracts/src/mcp.ts
+    assertions:
+      - start_run tool description requires unexpired quote, explicit confirmed=true, confirmation token, and idempotency key
+      - start_run description explicitly states "Never autonomous spend"
+      - productionMcpToolCatalog publishes the same descriptions to MCP clients
+  - kind: contract
+    path: packages/contracts/src/commands.ts
+    assertions:
+      - StartRunInputSchema requires confirmed as z.literal(true)
+      - confirmation_token minimum length 16 prevents fabricated consent strings
+  - kind: openapi
+    path: packages/contracts/openapi/core.v1.json
+    assertions:
+      - POST /quotes/{id}/runs request body requires confirmed const true and confirmation_token
+      - quote response includes confirmationToken for browser-mediated consent
+  - kind: authority
+    path: docs/architecture/API_MCP_AND_CLI.md
+    assertions:
+      - start_run requires explicit confirmation flag and unexpired quote
+      - MCP tool description cannot imply autonomous spending
+      - CLI cannot bypass confirmation for paid execution
+  - kind: unit
+    path: packages/contracts/src/mcp.test.ts
+    assertions:
+      - start_run schema rejects confirmed=false at parse time
+  - kind: unit
+    path: apps/core/test/unit/confirmation-token.test.ts
+    assertions:
+      - confirmation tokens are HMAC-signed and cannot be fabricated by API-key or MCP callers
+      - legacy 16-character fabrication strings are rejected
+      - token replay against different quote, workspace, actor, or amount fails
+  - kind: unit
+    path: packages/contracts/src/handlers.test.ts
+    assertions:
+      - start_run rejects expired quotes before confirmation or reservation
+      - start_run blocks when paid entitlements fail under charging kill switch
+  - kind: unit
+    path: packages/contracts/src/scopes.test.ts
+    assertions:
+      - start_run requires run:write scope; read-only keys cannot start paid runs
+  - kind: pgTAP
+    path: supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql
+    assertions:
+      - start_run_barrier rejects unconfirmed spend at the database barrier
+      - revoked OAuth and API keys fail before any provider submission
+  - kind: unit
+    path: apps/cli/test/cli.test.ts
+    assertions:
+      - start-run requires --confirmed before calling Core
+      - paid and destructive mutations require explicit confirmation flags
+  - kind: unit
+    path: apps/cli/test/p1b-cli-parity.test.ts
+    assertions:
+      - CLI preserves start_run confirmation semantics before transport
+      - confirmed start_run forwards confirmation_token with idempotency keys
+  - kind: unit
+    path: apps/cli/src/production-commands.ts
+    assertions:
+      - start-run usage documents --confirmation-token and --confirmed requirements
+  - kind: unit
+    path: apps/core/test/unit/production-mcp-parity.test.ts
+    assertions:
+      - MCP start_run explicit confirmation missing returns validation failure across REST and MCP
+  - kind: parity
+    path: governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+    assertions:
+      - validation vectors for start_run require confirmed=true or CLI --confirmed
+  - kind: ui
+    path: apps/web/src/features/access/api-keys-access-panel.tsx
+    assertions:
+      - API key audit shell states keys cannot bypass quote confirmation or spend autonomously
+  - kind: unit
+    path: apps/web/src/features/access/api-keys-access-panel.test.tsx
+    assertions:
+      - rendered copy includes non-autonomous spend guardrails
+  - kind: kill-switch
+    path: apps/core/src/composition/kill-switches.ts
+    assertions:
+      - platform kill switches gate generation, provider routes, and charging before spend surfaces
+  - kind: unit
+    path: packages/contracts/src/handlers.test.ts
+    assertions:
+      - quote_run blocks when generation is disabled by kill switch
+notes:
+  - No live provider spend occurred while collecting this evidence.
+  - Confirmation tokens are minted only through the browser quote flow or Core confirmation port; MCP, CLI, and API keys cannot self-mint consent.
