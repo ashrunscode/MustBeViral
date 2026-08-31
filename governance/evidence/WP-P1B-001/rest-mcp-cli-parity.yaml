@@ -1,6 +1,6 @@
 schema_version: 1
 acceptance_id: rest-mcp-cli-parity
-recorded_at: '2026-08-31T14:30:00.000Z'
+recorded_at: '2026-08-31T16:00:00.000Z'
 status: proven
 criterion: Shared contract vectors pass against REST, MCP, and CLI adapters for the shipped
   operations with no handler-local policy drift.
@@ -21,9 +21,12 @@ proofs:
     path: apps/core/test/unit/production-mcp-parity.test.ts
     assertions:
       - REST and MCP semantic parity for all eleven production tools
+      - all nine vector kinds including idempotent replay provider ambiguity and safe errors
   - kind: unit
     path: apps/core/test/unit/p1b-three-client-parity.test.ts
     assertions:
-      - management list_api_keys parity between REST and CLI transport headers
+      - JWT management parity between REST browser and CLI transport headers
   - kind: contract
     path: governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+  - kind: contract
+    path: governance/evidence/WP-P1B-001/three-client-parity.yaml

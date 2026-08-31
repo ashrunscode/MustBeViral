@@ -1,7 +1,18 @@
 {
   "schema_version": 1,
-  "recorded_at": "2026-08-31T14:30:00.000Z",
-  "task": "P1b production MCP/REST/CLI parity and oauth-scope-and-revocation",
+  "recorded_at": "2026-08-31T16:00:00.000Z",
+  "task": "P1b three-client semantic parity across production tools",
+  "vector_kinds": [
+    "success",
+    "validation",
+    "authorization",
+    "conflict",
+    "expiry",
+    "idempotent_replay",
+    "rate_limit",
+    "provider_ambiguity",
+    "safe_error"
+  ],
   "operations": [
     "get_canvas_context",
     "apply_canvas_patch",
@@ -19,12 +30,16 @@
     "revoke_api_key",
     "list_oauth_clients",
     "issue_oauth_token",
-    "publish_skill"
+    "publish_skill",
+    "list_skills",
+    "list_skill_versions"
   ],
   "clients": {
     "browser": {
       "module": "apps/web/src/lib/core/p1b-client.ts",
-      "transport": "fetch"
+      "transport": "fetch",
+      "jwt_only_management": true,
+      "notes": "Skills and OAuth client management use browser session JWT only; no MCP or CLI adapters."
     },
     "rest": {
       "base_path": "/v1",
@@ -32,15 +47,16 @@
     },
     "mcp": {
       "base_path": "/mcp",
-      "transport": "json-rpc"
+      "transport": "json-rpc",
+      "tool_count": 11,
+      "notes": "Eleven production tools; JWT management and Skills are not MCP tools."
     },
     "cli": {
       "module": "apps/cli/src/production-commands.ts",
       "credential_store": "apps/cli/src/credential-store.ts",
       "login": "apps/cli/src/login.ts",
-      "commands": [
-        "login",
-        "logout",
+      "management_module": "apps/cli/src/p1b-management.ts",
+      "production_commands": [
         "get-canvas-context",
         "apply-canvas-patch",
         "quote-run",
@@ -51,21 +67,156 @@
         "get-artifact",
         "create-export",
         "explain-model",
-        "get-receipt",
+        "get-receipt"
+      ],
+      "management_commands": [
         "list-api-keys",
         "create-api-key",
         "revoke-api-key",
         "list-oauth-clients",
         "oauth-token"
+      ],
+      "jwt_only_boundary": [
+        "publish_skill",
+        "list_skills",
+        "list_skill_versions",
+        "create_oauth_client",
+        "revoke_oauth_client"
       ]
     }
   },
+  "production_tool_vectors": [
+    {
+      "kind": "success",
+      "operations": [
+        "get_canvas_context",
+        "apply_canvas_patch",
+        "quote_run",
+        "start_run",
+        "get_run",
+        "validate_graph",
+        "cancel_run",
+        "get_artifact",
+        "create_export",
+        "explain_model",
+        "get_receipt"
+      ],
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "validation",
+      "operation": "apply_canvas_patch",
+      "expected_code": "VALIDATION_FAILED",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "validation",
+      "operation": "start_run",
+      "expected_code": "VALIDATION_FAILED",
+      "notes": "Missing confirmed=true or CLI --confirmed",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "validation",
+      "operation": "create_export",
+      "expected_code": "VALIDATION_FAILED",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "authorization",
+      "operations": ["get_run", "get_artifact", "get_receipt", "explain_model"],
+      "expected_code": "FORBIDDEN",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "conflict",
+      "operation": "apply_canvas_patch",
+      "expected_code": "REVISION_CONFLICT",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "conflict",
+      "operation": "cancel_run",
+      "expected_code": "RUN_NOT_CANCELABLE",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "expiry",
+      "operation": "start_run",
+      "expected_code": "QUOTE_EXPIRED",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "idempotent_replay",
+      "operation": "apply_canvas_patch",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "rate_limit",
+      "operations": ["get_run", "validate_graph"],
+      "expected_code": "RATE_LIMITED",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "provider_ambiguity",
+      "operation": "start_run",
+      "expected_code": "PROVIDER_AMBIGUOUS",
+      "adapters": ["rest", "mcp", "cli"]
+    },
+    {
+      "kind": "safe_error",
+      "operation": "get_run",
+      "expected_code": "INTERNAL_ERROR",
+      "notes": "Thrown handler errors never leak opaque-vector-secret in REST or MCP envelopes.",
+      "adapters": ["rest", "mcp"]
+    }
+  ],
+  "jwt_management_vectors": [
+    {
+      "kind": "success",
+      "operations": ["list_api_keys", "list_skills", "list_skill_versions", "publish_skill"],
+      "adapters": ["rest", "browser"]
+    },
+    {
+      "kind": "authorization",
+      "operation": "publish_skill",
+      "expected_code": "FORBIDDEN",
+      "notes": "API keys cannot access JWT-only management routes.",
+      "adapters": ["rest"]
+    },
+    {
+      "kind": "validation",
+      "operation": "publish_skill",
+      "expected_code": "VALIDATION_FAILED",
+      "adapters": ["rest", "browser"]
+    },
+    {
+      "kind": "conflict",
+      "operation": "create_api_key",
+      "expected_code": "IDEMPOTENCY_CONFLICT",
+      "adapters": ["rest", "browser", "cli"]
+    },
+    {
+      "kind": "authorization",
+      "operation": "revoke_api_key",
+      "expected_code": "NOT_FOUND",
+      "notes": "Missing resource returns NOT_FOUND, not a secret-bearing error.",
+      "adapters": ["rest", "browser", "cli"]
+    },
+    {
+      "kind": "authorization",
+      "operation": "issue_oauth_token",
+      "expected_code": "UNAUTHENTICATED",
+      "adapters": ["rest", "cli"]
+    }
+  ],
   "vectors": [
     {
       "operation": "get_canvas_context",
       "rest_path": "GET /v1/canvases/{canvas_id}",
       "mcp_tool": "get_canvas_context",
       "cli_command": "get-canvas-context",
+      "kind": "success",
       "expected_success_status": 200
     },
     {
@@ -73,7 +224,8 @@
       "rest_path": "POST /v1/quotes/{quote_id}/runs",
       "mcp_tool": "start_run",
       "cli_command": "start-run",
-      "expected_validation_code": "VALIDATION_FAILED",
+      "kind": "validation",
+      "expected_code": "VALIDATION_FAILED",
       "notes": "Missing confirmed=true or CLI --confirmed"
     },
     {
@@ -81,40 +233,87 @@
       "rest_path": "POST /v1/quotes/{quote_id}/runs",
       "mcp_tool": "start_run",
       "cli_command": "start-run",
+      "kind": "expiry",
       "expected_code": "QUOTE_EXPIRED"
+    },
+    {
+      "operation": "start_run",
+      "rest_path": "POST /v1/quotes/{quote_id}/runs",
+      "mcp_tool": "start_run",
+      "cli_command": "start-run",
+      "kind": "provider_ambiguity",
+      "expected_code": "PROVIDER_AMBIGUOUS"
     },
     {
       "operation": "apply_canvas_patch",
       "rest_path": "POST /v1/canvases/{canvas_id}/patches",
       "mcp_tool": "apply_canvas_patch",
       "cli_command": "apply-canvas-patch",
+      "kind": "conflict",
       "expected_code": "REVISION_CONFLICT"
+    },
+    {
+      "operation": "apply_canvas_patch",
+      "rest_path": "POST /v1/canvases/{canvas_id}/patches",
+      "mcp_tool": "apply_canvas_patch",
+      "cli_command": "apply-canvas-patch",
+      "kind": "idempotent_replay"
     },
     {
       "operation": "get_run",
       "rest_path": "GET /v1/runs/{run_id}",
       "mcp_tool": "get_run",
       "cli_command": "get-run",
+      "kind": "rate_limit",
       "expected_code": "RATE_LIMITED"
+    },
+    {
+      "operation": "get_run",
+      "rest_path": "GET /v1/runs/{run_id}",
+      "mcp_tool": "get_run",
+      "cli_command": "get-run",
+      "kind": "safe_error",
+      "expected_code": "INTERNAL_ERROR"
     },
     {
       "operation": "list_api_keys",
       "rest_path": "GET /v1/workspaces/{workspace_id}/api-keys",
+      "browser_client": "listApiKeys",
       "cli_command": "list-api-keys",
+      "kind": "success",
       "expected_success_status": 200
     },
     {
       "operation": "revoke_api_key",
       "rest_path": "POST /v1/api-keys/{key_id}/revoke",
+      "browser_client": "revokeApiKey",
       "cli_command": "revoke-api-key",
+      "kind": "authorization",
       "expected_not_found_status": 404,
       "expected_code": "NOT_FOUND",
       "notes": "CLI requires --confirm before transport"
     },
     {
+      "operation": "publish_skill",
+      "rest_path": "POST /v1/workspaces/{workspace_id}/skills/publish",
+      "browser_client": "publishSkill",
+      "kind": "success",
+      "expected_success_status": 201,
+      "notes": "JWT-only; no MCP or CLI adapter"
+    },
+    {
+      "operation": "list_skill_versions",
+      "rest_path": "GET /v1/workspaces/{workspace_id}/skills/{skill_id}/versions",
+      "browser_client": "listSkillVersions",
+      "kind": "success",
+      "expected_success_status": 200,
+      "notes": "JWT-only; no MCP or CLI adapter"
+    },
+    {
       "operation": "issue_oauth_token",
       "rest_path": "POST /v1/oauth/token",
       "cli_command": "oauth-token",
+      "kind": "authorization",
       "expected_unauthenticated_status": 401,
       "expected_code": "UNAUTHENTICATED"
     }
@@ -125,12 +324,14 @@
     "apps/cli/test/p1b-cli-parity.test.ts",
     "apps/cli/test/cli.test.ts",
     "apps/core/test/unit/p1b-three-client-parity.test.ts",
-    "apps/core/test/unit/p1b-routes.test.ts",
     "apps/core/test/unit/production-mcp-parity.test.ts",
     "apps/core/test/unit/mcp-parity.test.ts",
+    "apps/core/test/unit/p1b-routes.test.ts",
     "apps/core/test/unit/programmatic-auth.test.ts",
+    "apps/web/src/lib/core/p1b-client.test.ts",
     "packages/contracts/src/scopes.test.ts",
     "supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql",
+    "governance/evidence/WP-P1B-001/three-client-parity.yaml",
     "governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml"
   ]
 }

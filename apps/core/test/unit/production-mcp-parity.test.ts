@@ -65,7 +65,16 @@ const validArguments: Readonly<Record<ProductionMcpToolName, Readonly<Record<str
   get_receipt: { run_id: 'run-1' },
 };
 
-type VectorKind = 'success' | 'validation' | 'authorization' | 'conflict' | 'expiry' | 'rate_limit';
+type VectorKind =
+  | 'success'
+  | 'validation'
+  | 'authorization'
+  | 'conflict'
+  | 'expiry'
+  | 'idempotent_replay'
+  | 'rate_limit'
+  | 'provider_ambiguity'
+  | 'safe_error';
 
 interface ProductionVector {
   readonly name: string;
@@ -74,6 +83,8 @@ interface ProductionVector {
   readonly result?: P0HandlerResult;
   readonly arguments?: Readonly<Record<string, unknown>>;
   readonly forbiddenWorkspace?: boolean;
+  readonly throws?: boolean;
+  readonly replay?: boolean;
   readonly expectedCode?: string;
 }
 
@@ -151,6 +162,26 @@ const productionVectors: readonly ProductionVector[] = [
     result: { status: 'rate_limited', retry_after_seconds: 15 },
     expectedCode: 'RATE_LIMITED',
   },
+  {
+    name: 'apply_canvas_patch idempotent replay',
+    tool: 'apply_canvas_patch',
+    kind: 'idempotent_replay',
+    replay: true,
+  },
+  {
+    name: 'start_run provider ambiguity',
+    tool: 'start_run',
+    kind: 'provider_ambiguity',
+    result: { status: 'provider_ambiguous', reconcile_state: 'reconcile_pending' },
+    expectedCode: 'PROVIDER_AMBIGUOUS',
+  },
+  {
+    name: 'get_run safe error opacity',
+    tool: 'get_run',
+    kind: 'safe_error',
+    throws: true,
+    expectedCode: 'INTERNAL_ERROR',
+  },
 ];
 
 function normalizedEnvelope(value: unknown): unknown {
@@ -174,21 +205,28 @@ function normalizedEnvelope(value: unknown): unknown {
   return value;
 }
 
-function createHandlers(vector: ProductionVector): P0RestHandlers {
+function createHandlers(vector: ProductionVector, executions: { value: number }): P0RestHandlers {
   return Object.fromEntries(
     P0_REST_OPERATIONS.map((operation) => [
       operation,
-      async () => {
+      async (input: unknown) => {
         if (operation !== vector.tool) return { status: 'ok' as const };
+        if (vector.throws) throw new Error('database-password=opaque-vector-secret');
+        if (vector.replay) {
+          const command = input as { idempotency_key: string };
+          expect(command.idempotency_key).toBe('vector-idem-1');
+          if (executions.value === 0) executions.value += 1;
+          return { status: 'ok' as const, revisionId: 'revision-replayed' };
+        }
         return vector.result ?? { status: 'ok' as const, fixture: vector.name };
       },
     ]),
   ) as unknown as P0RestHandlers;
 }
 
-function dependencies(vector: ProductionVector): V1Dependencies {
+function dependencies(vector: ProductionVector, executions: { value: number }): V1Dependencies {
   return {
-    handlers: createHandlers(vector),
+    handlers: createHandlers(vector, executions),
     jwt: {
       verify: async (token) => {
         if (token !== 'valid-jwt') throw new Error('rejected');
@@ -224,7 +262,7 @@ async function callRest(
   app: ReturnType<typeof createCoreApp>,
   tool: ProductionMcpToolName,
   input: Readonly<Record<string, unknown>>,
-): Promise<unknown> {
+): Promise<{ envelope: unknown; raw: string }> {
   const body = restBody(tool, input);
   const method =
     tool === 'get_canvas_context' ||
@@ -248,14 +286,15 @@ async function callRest(
     },
     enabledBindings,
   );
-  return JSON.parse(await response.text()) as unknown;
+  const raw = await response.text();
+  return { envelope: JSON.parse(raw) as unknown, raw };
 }
 
 async function callMcp(
   app: ReturnType<typeof createCoreApp>,
   tool: ProductionMcpToolName,
   input: Readonly<Record<string, unknown>>,
-): Promise<unknown> {
+): Promise<{ envelope: unknown; raw: string }> {
   const response = await app.request(
     '/mcp',
     {
@@ -276,11 +315,12 @@ async function callMcp(
     },
     enabledBindings,
   );
-  const rpc = JSON.parse(await response.text()) as {
+  const raw = await response.text();
+  const rpc = JSON.parse(raw) as {
     result?: { structuredContent?: unknown };
     error?: unknown;
   };
-  return rpc.result?.structuredContent ?? rpc;
+  return { envelope: rpc.result?.structuredContent ?? rpc, raw };
 }
 
 describe('production MCP and REST parity for all shipped tools', () => {
@@ -297,20 +337,26 @@ describe('production MCP and REST parity for all shipped tools', () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it.each(productionVectors)('$name keeps REST/MCP semantic parity', async (vector) => {
-    const app = createCoreApp(dependencies(vector));
+    const executions = { value: 0 };
+    const app = createCoreApp(dependencies(vector, executions));
     const input = vector.arguments ?? validArguments[vector.tool];
     const rest = await callRest(app, vector.tool, input);
     const mcp = await callMcp(app, vector.tool, input);
-    expect(normalizedEnvelope(mcp)).toEqual(normalizedEnvelope(rest));
+    expect(normalizedEnvelope(mcp.envelope)).toEqual(normalizedEnvelope(rest.envelope));
     if (vector.expectedCode !== undefined) {
-      expect(ApiErrorEnvelopeSchema.parse(rest).error.code).toBe(vector.expectedCode);
+      expect(ApiErrorEnvelopeSchema.parse(rest.envelope).error.code).toBe(vector.expectedCode);
     }
+    if (vector.throws) {
+      expect(rest.raw).not.toContain('opaque-vector-secret');
+      expect(mcp.raw).not.toContain('opaque-vector-secret');
+    }
+    if (vector.replay) expect(executions.value).toBe(1);
   });
 
   it('lists exactly eleven production tools after authentication', async () => {
     const vector = productionVectors[0];
     if (vector === undefined) throw new Error('Missing vector fixture');
-    const app = createCoreApp(dependencies(vector));
+    const app = createCoreApp(dependencies(vector, { value: 0 }));
     const response = await app.request(
       '/mcp',
       {
@@ -327,5 +373,22 @@ describe('production MCP and REST parity for all shipped tools', () => {
     );
     const body = (await response.json()) as { result: { tools: readonly { name: string }[] } };
     expect(body.result.tools.map((tool) => tool.name)).toEqual(PRODUCTION_MCP_TOOL_NAMES);
+  });
+
+  it('covers all nine production vector kinds', () => {
+    const kinds = new Set(productionVectors.map((vector) => vector.kind));
+    expect(kinds).toEqual(
+      new Set([
+        'success',
+        'validation',
+        'authorization',
+        'conflict',
+        'expiry',
+        'idempotent_replay',
+        'rate_limit',
+        'provider_ambiguity',
+        'safe_error',
+      ]),
+    );
   });
 });

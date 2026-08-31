@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P1b — Public API, MCP, CLI, and user-authored Skills (in_progress) |
 | Active packet | `WP-P1B-001` |
-| Current step | `p1b-004-user-authored-skills` |
+| Current step | `p1b-006-p2-successor-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement user-authored Skills with immutable published versions and no credential access to database, storage, or billing.
+Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface evidence, run quality gates, and activate WP-P2-001 from governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.

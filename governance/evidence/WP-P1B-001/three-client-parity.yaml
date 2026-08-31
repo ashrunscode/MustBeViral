@@ -1,0 +1,58 @@
+schema_version: 1
+acceptance_id: three-client-parity
+recorded_at: '2026-08-31T16:00:00.000Z'
+status: proven
+criterion: Every shipped operation has contract vectors for success, validation, authorization,
+  conflict, expiry, idempotent replay, rate limit, provider ambiguity, and safe errors across
+  browser/REST/MCP/CLI adapters as applicable with no handler-local policy drift.
+proofs:
+  - kind: contract
+    path: governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+    assertions:
+      - eleven production MCP tools map to REST and CLI production commands
+      - all nine vector kinds are registered for production tools
+      - JWT management and Skills routes document browser-only boundary without MCP or CLI adapters
+      - CLI management commands cover api-keys and oauth-token only
+  - kind: unit
+    path: apps/core/test/unit/production-mcp-parity.test.ts
+    assertions:
+      - REST and MCP semantic parity for all eleven production tools
+      - success validation authorization conflict expiry idempotent_replay rate_limit provider_ambiguity safe_error vectors
+      - thrown handler secrets never appear in REST or MCP envelopes
+  - kind: unit
+    path: apps/core/test/unit/mcp-parity.test.ts
+    assertions:
+      - P0 five-operation parity vectors including idempotent replay provider ambiguity and safe errors
+  - kind: unit
+    path: apps/core/test/unit/p1b-three-client-parity.test.ts
+    assertions:
+      - list_api_keys list_skills list_skill_versions publish_skill parity between REST and browser fetch
+      - revoke_api_key NOT_FOUND parity across REST browser and CLI transport headers
+      - API keys are rejected on JWT-only Skills routes before handlers run
+  - kind: unit
+    path: apps/web/src/lib/core/p1b-client.test.ts
+    assertions:
+      - browser client targets the same /v1 routes as REST adapters
+      - revoke and publish mutations send idempotency-key and x-workspace-id headers
+      - skill version routes are browser-only without CLI or MCP adapters
+  - kind: unit
+    path: packages/contracts/src/p1b-parity.test.ts
+    assertions:
+      - JWT management handler results map to REST error semantics
+      - authorization conflict and validation vector kinds covered for management operations
+  - kind: unit
+    path: apps/cli/test/p1b-cli-parity.test.ts
+    assertions:
+      - eleven production CLI commands map to production MCP tool names
+      - start_run requires explicit --confirmed before transport
+      - CLI REST transport uses single /v1 prefix without duplication
+jwt_only_boundary:
+  operations:
+    - publish_skill
+    - list_skills
+    - list_skill_versions
+    - create_oauth_client
+    - revoke_oauth_client
+  adapters: [browser, rest]
+  rationale: Skills management and OAuth client lifecycle require a browser session JWT; API keys
+    and MCP tools cannot access these routes.
