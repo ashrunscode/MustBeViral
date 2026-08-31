@@ -49,7 +49,13 @@ export function createCoreApp(
   app.use('*', requestIdMiddleware);
   app.route('/health', healthRoute);
   app.route('/v1', createV1Route(v1Dependencies));
-  app.route('/v1', createP1bRoute({ jwt: v1Dependencies.jwt }));
+  app.route(
+    '/v1',
+    createP1bRoute({
+      jwt: v1Dependencies.jwt,
+      ...(v1Dependencies.p1bHandlers === undefined ? {} : { handlers: v1Dependencies.p1bHandlers }),
+    }),
+  );
   app.route('/mcp', createMcpRoute(v1Dependencies));
   app.route(
     '/webhooks/stripe',

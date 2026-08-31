@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { CLI_EXIT_CODES, createCliClient, exitCodeForApiError } from './index.js';
+import { exitCodeForManagementResponse, p1bManagementRequest } from './p1b-management.js';
 
 interface ParsedArgs {
   readonly command: string | null;
@@ -33,10 +34,20 @@ function parseArgs(argv: readonly string[]): ParsedArgs {
   return { command: rest[0] ?? null, environment, json, rest: rest.slice(1) };
 }
 
+function writeJson(parsed: ParsedArgs, payload: unknown): void {
+  if (parsed.json) {
+    process.stdout.write(`${JSON.stringify(payload, null, 2)}\n`);
+  } else {
+    process.stdout.write(`${JSON.stringify(payload)}\n`);
+  }
+}
+
 async function main(): Promise<number> {
   const parsed = parseArgs(process.argv.slice(2));
   if (parsed.command === null) {
-    process.stderr.write('Usage: mbv [--env staging|production] get-run <run-id>\n');
+    process.stderr.write(
+      'Usage: mbv [--env staging|production] <command> [...]\nCommands: get-run, list-api-keys, create-api-key, revoke-api-key, list-oauth-clients, oauth-token\n',
+    );
     return CLI_EXIT_CODES.usage;
   }
 
@@ -49,13 +60,12 @@ async function main(): Promise<number> {
       return CLI_EXIT_CODES.usage;
     }
     const response = await client.request('get_run', { id: runId });
-    if (parsed.json) {
-      process.stdout.write(`${JSON.stringify(response, null, 2)}\n`);
-    } else {
-      process.stdout.write(`${runId}\t${JSON.stringify(response)}\n`);
-    }
+    writeJson(parsed, response);
     return CLI_EXIT_CODES.ok;
   }
+
+  const token = await client.readAccessToken();
+  const managementOptions = { baseUrl: client.baseUrl, accessToken: token };
 
   if (parsed.command === 'list-api-keys') {
     const workspaceId = parsed.rest[0];
@@ -63,26 +73,88 @@ async function main(): Promise<number> {
       process.stderr.write('Usage: mbv list-api-keys <workspace-id>\n');
       return CLI_EXIT_CODES.usage;
     }
-    const token = await client.readAccessToken();
-    const response = await fetch(
-      `${client.baseUrl}/workspaces/${encodeURIComponent(workspaceId)}/api-keys`,
+    const response = await p1bManagementRequest(
+      managementOptions,
+      `/workspaces/${encodeURIComponent(workspaceId)}/api-keys`,
+      { method: 'GET' },
+    );
+    writeJson(parsed, response.body);
+    return exitCodeForManagementResponse(response);
+  }
+
+  if (parsed.command === 'create-api-key') {
+    const workspaceId = parsed.rest[0];
+    const name = parsed.rest[1];
+    const scopes = parsed.rest[2]?.split(',').map((value) => value.trim()) ?? [];
+    if (workspaceId === undefined || name === undefined || scopes.length === 0) {
+      process.stderr.write('Usage: mbv create-api-key <workspace-id> <name> <scope,scope,...>\n');
+      return CLI_EXIT_CODES.usage;
+    }
+    const response = await p1bManagementRequest(
+      managementOptions,
+      `/workspaces/${encodeURIComponent(workspaceId)}/api-keys`,
       {
-        headers: { authorization: `Bearer ${token}`, accept: 'application/json' },
+        method: 'POST',
+        body: { name, scopes },
+        idempotencyKey: crypto.randomUUID(),
       },
     );
-    const body: unknown = await response.json();
-    process.stdout.write(`${JSON.stringify(body, null, 2)}\n`);
-    if (!response.ok) {
-      const code =
-        typeof body === 'object' &&
-        body !== null &&
-        'error' in body &&
-        typeof (body as { error?: { code?: string } }).error?.code === 'string'
-          ? (body as { error: { code: string } }).error.code
-          : 'INTERNAL_ERROR';
-      return exitCodeForApiError(code);
+    writeJson(parsed, response.body);
+    return exitCodeForManagementResponse(response);
+  }
+
+  if (parsed.command === 'revoke-api-key') {
+    const keyId = parsed.rest[0];
+    const workspaceId = parsed.rest[1];
+    if (keyId === undefined || workspaceId === undefined) {
+      process.stderr.write('Usage: mbv revoke-api-key <key-id> <workspace-id>\n');
+      return CLI_EXIT_CODES.usage;
     }
-    return CLI_EXIT_CODES.ok;
+    const response = await p1bManagementRequest(
+      managementOptions,
+      `/api-keys/${encodeURIComponent(keyId)}/revoke`,
+      {
+        method: 'POST',
+        idempotencyKey: crypto.randomUUID(),
+        workspaceId,
+      },
+    );
+    writeJson(parsed, response.body);
+    return exitCodeForManagementResponse(response);
+  }
+
+  if (parsed.command === 'list-oauth-clients') {
+    const workspaceId = parsed.rest[0];
+    if (workspaceId === undefined) {
+      process.stderr.write('Usage: mbv list-oauth-clients <workspace-id>\n');
+      return CLI_EXIT_CODES.usage;
+    }
+    const response = await p1bManagementRequest(
+      managementOptions,
+      `/workspaces/${encodeURIComponent(workspaceId)}/oauth-clients`,
+      { method: 'GET' },
+    );
+    writeJson(parsed, response.body);
+    return exitCodeForManagementResponse(response);
+  }
+
+  if (parsed.command === 'oauth-token') {
+    const clientId = parsed.rest[0];
+    const clientSecret = parsed.rest[1];
+    if (clientId === undefined || clientSecret === undefined) {
+      process.stderr.write('Usage: mbv oauth-token <client-id> <client-secret>\n');
+      return CLI_EXIT_CODES.usage;
+    }
+    const response = await p1bManagementRequest(managementOptions, '/oauth/token', {
+      method: 'POST',
+      body: {
+        grant_type: 'client_credentials',
+        client_id: clientId,
+        client_secret: clientSecret,
+      },
+    });
+    writeJson(parsed, response.body);
+    return exitCodeForManagementResponse(response);
   }
 
   process.stderr.write(`Unknown command: ${parsed.command}\n`);

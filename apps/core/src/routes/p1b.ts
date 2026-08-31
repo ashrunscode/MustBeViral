@@ -333,6 +333,39 @@ export function createP1bRoute(dependencies: P1bRouteDependencies): Hono<CoreHon
     }
   });
 
+  router.post('/oauth-clients/:id/revoke', async (context) => {
+    try {
+      const { actor, callerJwt } = await requireJwtActor(context, dependencies);
+      const clientUuid = context.req.param('id');
+      const workspaceId = context.req.header('x-workspace-id') ?? '';
+      const handlers = resolveHandlers(context, callerJwt, dependencies);
+      const result = await handlers.revoke_oauth_client({
+        context: handlerContext(actor, workspaceId, context.get('requestId')),
+        client_uuid: clientUuid,
+        idempotency_key: requireIdempotencyKey(context),
+      });
+      return mapResult(context, result, 200);
+    } catch (error) {
+      if (error instanceof TypeError && error.message === 'UNAUTHENTICATED') {
+        return context.json(
+          safeError(context, 'UNAUTHENTICATED', 'A valid bearer token is required.'),
+          401,
+        );
+      }
+      if (error instanceof TypeError && error.message === 'FORBIDDEN') {
+        return context.json(
+          safeError(
+            context,
+            'FORBIDDEN',
+            'Programmatic credential management requires a browser session.',
+          ),
+          403,
+        );
+      }
+      return context.json(safeError(context, 'VALIDATION_FAILED', 'The request is invalid.'), 400);
+    }
+  });
+
   router.post('/workspaces/:id/skills/publish', async (context) => {
     try {
       const { actor, callerJwt } = await requireJwtActor(context, dependencies);

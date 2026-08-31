@@ -6,6 +6,7 @@ import {
   createCliClient,
   exitCodeForApiError,
 } from '../src/index.js';
+import { exitCodeForManagementResponse } from '../src/p1b-management.js';
 
 describe('@mustbeviral/cli', () => {
   it('maps API error codes to stable exit codes', () => {
@@ -30,5 +31,12 @@ describe('@mustbeviral/cli', () => {
     await expect(createCliClient({ environment: 'production' })).rejects.toThrow(
       /No credential is stored/,
     );
+  });
+
+  it('maps management HTTP status to exit codes', () => {
+    expect(
+      exitCodeForManagementResponse({ status: 401, body: { error: { code: 'UNAUTHENTICATED' } } }),
+    ).toBe(CLI_EXIT_CODES.auth);
+    expect(exitCodeForManagementResponse({ status: 200, body: { data: { keys: [] } } })).toBe(0);
   });
 });

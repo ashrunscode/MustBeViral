@@ -93,7 +93,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
     setError(null);
     try {
       const client = await createP1bManagementClient();
-      await client.revokeApiKey(keyId);
+      await client.revokeApiKey(keyId, workspaceId);
       await reload();
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'The API key could not be revoked.');

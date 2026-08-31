@@ -41,6 +41,7 @@ async function request<T>(
     method: 'GET' | 'POST';
     body?: unknown;
     idempotencyKey?: string;
+    workspaceId?: string;
   }>,
 ): Promise<T> {
   const token = await accessToken();
@@ -51,6 +52,7 @@ async function request<T>(
       authorization: `Bearer ${token}`,
       'content-type': 'application/json',
       ...(init.idempotencyKey === undefined ? {} : { 'idempotency-key': init.idempotencyKey }),
+      ...(init.workspaceId === undefined ? {} : { 'x-workspace-id': init.workspaceId }),
     },
     ...(init.body === undefined ? {} : { body: JSON.stringify(init.body) }),
   });
@@ -68,7 +70,7 @@ export interface P1bManagementClient {
     workspaceId: string,
     input: Readonly<{ name: string; scopes: readonly ApiKeyScope[] }>,
   ): Promise<Readonly<{ secret: string; key: ApiKeyListItem }>>;
-  revokeApiKey(keyId: string): Promise<void>;
+  revokeApiKey(keyId: string, workspaceId: string): Promise<void>;
 }
 
 export async function createP1bManagementClient(): Promise<P1bManagementClient> {
@@ -90,10 +92,11 @@ export async function createP1bManagementClient(): Promise<P1bManagementClient> 
         },
       );
     },
-    async revokeApiKey(keyId) {
+    async revokeApiKey(keyId, workspaceId) {
       await request<{ key_id: string }>(`/v1/api-keys/${encodeURIComponent(keyId)}/revoke`, {
         method: 'POST',
         idempotencyKey: crypto.randomUUID(),
+        workspaceId,
       });
     },
   };

@@ -27,6 +27,7 @@ import {
   type P0AuthenticatedRestOperation,
   type P0HandlerResult,
   type P0RestHandlers,
+  type P1bHandlers,
 } from '@mustbeviral/contracts';
 import { Hono, type Context } from 'hono';
 import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
@@ -76,6 +77,7 @@ export interface V1Dependencies {
   readonly jwt: SupabaseJwtVerifier;
   readonly authenticator?: RequestAuthenticator;
   readonly workspaces: WorkspaceResolutionPort;
+  readonly p1bHandlers?: P1bHandlers;
   readonly falWebhook?: FalWebhookVerifierPort;
   readonly falWebhookIngest?: (
     event: VerifiedFalWebhookIdentity,

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-31T12:30:00.000Z",
+  "task": "P1b JWT management three-client parity",
+  "operations": [
+    "list_api_keys",
+    "create_api_key",
+    "revoke_api_key",
+    "list_oauth_clients",
+    "issue_oauth_token",
+    "publish_skill"
+  ],
+  "clients": {
+    "browser": {
+      "module": "apps/web/src/lib/core/p1b-client.ts",
+      "transport": "fetch"
+    },
+    "rest": {
+      "base_path": "/v1",
+      "transport": "fetch"
+    },
+    "cli": {
+      "module": "apps/cli/src/p1b-management.ts",
+      "commands": [
+        "list-api-keys",
+        "create-api-key",
+        "revoke-api-key",
+        "list-oauth-clients",
+        "oauth-token"
+      ]
+    }
+  },
+  "vectors": [
+    {
+      "operation": "list_api_keys",
+      "rest_path": "GET /v1/workspaces/{workspace_id}/api-keys",
+      "cli_command": "list-api-keys",
+      "expected_success_status": 200
+    },
+    {
+      "operation": "revoke_api_key",
+      "rest_path": "POST /v1/api-keys/{key_id}/revoke",
+      "cli_command": "revoke-api-key",
+      "expected_not_found_status": 404,
+      "expected_code": "NOT_FOUND"
+    },
+    {
+      "operation": "issue_oauth_token",
+      "rest_path": "POST /v1/oauth/token",
+      "cli_command": "oauth-token",
+      "expected_unauthenticated_status": 401,
+      "expected_code": "UNAUTHENTICATED"
+    }
+  ],
+  "automated_proofs": [
+    "packages/contracts/src/p1b-parity.test.ts",
+    "apps/core/test/unit/p1b-three-client-parity.test.ts",
+    "apps/core/test/unit/p1b-routes.test.ts"
+  ]
+}
