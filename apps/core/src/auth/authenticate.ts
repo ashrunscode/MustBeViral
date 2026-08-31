@@ -1,7 +1,4 @@
-import {
-  scopesAuthorizeOperation,
-  type P0AuthenticatedRestOperation,
-} from '@mustbeviral/contracts';
+import { scopesAuthorizeOperation, type P0AuthenticatedRestOperation } from '@mustbeviral/contracts';
 
 import type { CoreBindings } from '../bindings';
 import type { AuthenticatedActor } from './actor';
@@ -14,12 +11,15 @@ export interface RequestAuthenticator {
     token: string,
     bindings: CoreBindings,
   ): Promise<Readonly<{ actor: AuthenticatedActor; callerJwt?: string }>>;
-  authorizeOperation(actor: AuthenticatedActor, operation: P0AuthenticatedRestOperation): boolean;
+  authorizeOperation(
+    actor: AuthenticatedActor,
+    operation: P0AuthenticatedRestOperation,
+  ): boolean;
 }
 
 export function createRequestAuthenticator(jwt: SupabaseJwtVerifier): RequestAuthenticator {
-  return Object.freeze({
-    async authenticate(token, bindings) {
+  return {
+    async authenticate(token: string, bindings: CoreBindings) {
       if (isApiKeyToken(token)) {
         return { actor: await apiKeyVerifier.verify(token, bindings) };
       }
@@ -28,10 +28,10 @@ export function createRequestAuthenticator(jwt: SupabaseJwtVerifier): RequestAut
       }
       return { actor: await jwt.verify(token, bindings), callerJwt: token };
     },
-    authorizeOperation(actor, operation) {
+    authorizeOperation(actor: AuthenticatedActor, operation: P0AuthenticatedRestOperation) {
       if (actor.authenticationMethod === 'supabase_jwt') return true;
       const grantedScopes = actor.scopes ?? [];
       return scopesAuthorizeOperation(grantedScopes, operation);
     },
-  });
+  };
 }

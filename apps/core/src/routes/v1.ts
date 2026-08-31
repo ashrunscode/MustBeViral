@@ -24,6 +24,7 @@ import {
   StartRunInputSchema,
   ValidateGraphInputSchema,
   type HandlerContext,
+  type P0AuthenticatedRestOperation,
   type P0HandlerResult,
   type P0RestHandlers,
 } from '@mustbeviral/contracts';
@@ -484,7 +485,7 @@ async function handleClientRoute(
       401,
     );
   }
-  if (!authenticator.authorizeOperation(actor, route.operation)) {
+  if (!authenticator.authorizeOperation(actor, route.operation as P0AuthenticatedRestOperation)) {
     return context.json(
       safeError(
         context,
