@@ -194,6 +194,19 @@ export class CollaborationClient {
     });
   }
 
+  clearCheckpointedDrafts(draftIds: readonly string[], revisionId: string): void {
+    const socket = this.#socket;
+    if (socket === null || socket.readyState !== WebSocket.OPEN || draftIds.length === 0) return;
+    sendMessage(socket, {
+      type: 'text.draft.clear',
+      payload: {
+        draft_ids: [...draftIds],
+        actor_id: this.#options.actor.actor_id,
+        revision_id: revisionId,
+      },
+    });
+  }
+
   #setStatus(status: CollaborationClientStatus): void {
     this.#status = status;
     this.#options.onStatus?.(status);

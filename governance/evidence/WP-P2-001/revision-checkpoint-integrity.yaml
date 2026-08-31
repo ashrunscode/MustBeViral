@@ -1,0 +1,35 @@
+schema_version: 1
+acceptance_id: lease-and-checkpoint
+recorded_at: '2026-08-31T16:00:00.000Z'
+status: proven
+criterion: Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
+  immutable revisions rather than rewriting history.
+proofs:
+  - kind: unit
+    path: packages/collaboration/src/checkpoint.test.ts
+    assertions:
+      - merges remote and local parameter drafts for checkpoint
+      - builds upsert-only graph patches without removing nodes or edges
+      - skips orphan drafts that do not map to canvas nodes
+  - kind: unit
+    path: packages/contracts/src/handlers.test.ts
+    assertions:
+      - checkpoints collaboration draft parameters into a new immutable revision
+      - preserves prior revision snapshots when head advances
+      - rejects stale expected_revision_id without rewriting history
+  - kind: unit
+    path: apps/web/src/features/collaboration/checkpoint-canvas-drafts.test.ts
+    assertions:
+      - merges drafts before apply_canvas_patch through the mutation port
+      - returns conflict without clearing drafts when expected revision is stale
+  - kind: integration
+    path: apps/collaboration/test/canvas-coordination.test.ts
+    assertions:
+      - clears checkpointed drafts only after a successful revision checkpoint
+  - kind: pgTAP
+    path: supabase/tests/database/00034_p2_collaboration_checkpoint_revision.test.sql
+    assertions:
+      - checkpoint reason creates a new immutable child revision
+      - parent revision snapshot remains unchanged after checkpoint
+      - stale expected_revision_id rejects checkpoint without rewriting history
+      - checkpointed revisions remain immutable after creation

@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P2-001` (in_progress). Current step: `p2-003-text-sync-and-leases`.
+Current packet: `WP-P2-001` (in_progress). Current step: `p2-004-revision-checkpoint-integrity`.
 
 | Authority topic | Document | Path |
 |---|---|---|

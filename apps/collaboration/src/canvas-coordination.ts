@@ -306,6 +306,25 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     return this.getSnapshot(canvasId);
   }
 
+  async clearCheckpointedDrafts(
+    canvasId: string,
+    input: { draft_ids: readonly string[]; actor_id: string; revision_id: string },
+  ): Promise<{ cleared_draft_ids: readonly string[]; snapshot: CollaborationSnapshot }> {
+    this.ensureCanvasId(canvasId);
+    const requested = new Set(input.draft_ids);
+    const cleared: string[] = [];
+    const rows = this.ctx.storage.sql
+      .exec<{ draft_id: string }>('SELECT draft_id FROM text_drafts')
+      .toArray();
+    for (const row of rows) {
+      if (!requested.has(row.draft_id)) continue;
+      this.ctx.storage.sql.exec('DELETE FROM text_drafts WHERE draft_id = ?', row.draft_id);
+      cleared.push(row.draft_id);
+    }
+    await this.broadcastSnapshot();
+    return { cleared_draft_ids: cleared, snapshot: await this.getSnapshot(canvasId) };
+  }
+
   private async broadcastSnapshot(): Promise<void> {
     const snapshot = await this.getSnapshot(this.readCanvasId());
     const payload = encodeServerMessage({ type: 'snapshot', payload: snapshot });
@@ -399,6 +418,19 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
       }
       if (parsed.type === 'lease.release') {
         await this.releaseLease(canvasId, parsed.payload.lease_id, parsed.payload.actor_id);
+        return;
+      }
+      if (parsed.type === 'text.draft.clear') {
+        const result = await this.clearCheckpointedDrafts(canvasId, parsed.payload);
+        socket.send(
+          encodeServerMessage({
+            type: 'text.draft.clear.result',
+            payload: {
+              cleared_draft_ids: [...result.cleared_draft_ids],
+              revision_id: parsed.payload.revision_id,
+            },
+          }),
+        );
         return;
       }
       if (parsed.type === 'snapshot.request') {

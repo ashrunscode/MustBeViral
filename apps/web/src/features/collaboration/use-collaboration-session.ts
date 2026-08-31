@@ -41,6 +41,7 @@ export interface CollaborationSessionState {
   ) => void;
   readonly acquireLease: (nodeId: string) => void;
   readonly releaseLease: (nodeId: string) => void;
+  readonly clearCheckpointedDrafts: (draftIds: readonly string[], revisionId: string) => void;
 }
 
 function emptySnapshot(canvasId: string): CollaborationSnapshot {
@@ -65,6 +66,8 @@ export function useCollaborationSession(
   const upsertTextDraftRef = useRef<CollaborationSessionState['upsertTextDraft']>(noop);
   const acquireLeaseRef = useRef<CollaborationSessionState['acquireLease']>(noop);
   const releaseLeaseRef = useRef<CollaborationSessionState['releaseLease']>(noop);
+  const clearCheckpointedDraftsRef =
+    useRef<CollaborationSessionState['clearCheckpointedDrafts']>(noop);
 
   const collaborationBaseUrl = useMemo(() => {
     try {
@@ -83,6 +86,7 @@ export function useCollaborationSession(
       upsertTextDraftRef.current = noop;
       acquireLeaseRef.current = noop;
       releaseLeaseRef.current = noop;
+      clearCheckpointedDraftsRef.current = noop;
       return undefined;
     }
 
@@ -120,6 +124,9 @@ export function useCollaborationSession(
       releaseLeaseRef.current = (nodeId) => {
         session.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
       };
+      clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
+        session.clearCheckpointedDrafts({ draft_ids: draftIds, revision_id: revisionId });
+      };
       return () => {
         unsubscribe();
         session.disconnect();
@@ -127,6 +134,7 @@ export function useCollaborationSession(
         upsertTextDraftRef.current = noop;
         acquireLeaseRef.current = noop;
         releaseLeaseRef.current = noop;
+        clearCheckpointedDraftsRef.current = noop;
       };
     }
 
@@ -154,12 +162,16 @@ export function useCollaborationSession(
     releaseLeaseRef.current = (nodeId) => {
       client.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
     };
+    clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
+      client.clearCheckpointedDrafts(draftIds, revisionId);
+    };
     return () => {
       client.disconnect();
       upsertCommentRef.current = noop;
       upsertTextDraftRef.current = noop;
       acquireLeaseRef.current = noop;
       releaseLeaseRef.current = noop;
+      clearCheckpointedDraftsRef.current = noop;
     };
   }, [
     collaborationBaseUrl,
@@ -179,6 +191,7 @@ export function useCollaborationSession(
       upsertTextDraft: noop,
       acquireLease: noop,
       releaseLease: noop,
+      clearCheckpointedDrafts: noop,
     };
   }
 
@@ -190,6 +203,7 @@ export function useCollaborationSession(
       upsertTextDraft: noop,
       acquireLease: noop,
       releaseLease: noop,
+      clearCheckpointedDrafts: noop,
     };
   }
 
@@ -207,6 +221,9 @@ export function useCollaborationSession(
     },
     releaseLease: (nodeId) => {
       releaseLeaseRef.current(nodeId);
+    },
+    clearCheckpointedDrafts: (draftIds, revisionId) => {
+      clearCheckpointedDraftsRef.current(draftIds, revisionId);
     },
   };
 }

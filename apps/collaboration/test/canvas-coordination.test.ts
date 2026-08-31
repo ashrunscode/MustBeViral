@@ -95,4 +95,25 @@ describe('CanvasCoordination durable object', () => {
       expect(blocked.snapshot.text_drafts[0]?.body).toContain('Macro ceramic');
     });
   });
+
+  it('clears checkpointed drafts only after a successful revision checkpoint', async () => {
+    const stub = canvasStub('canvas-checkpoint');
+    await runInDurableObject(stub, async (instance) => {
+      await instance.upsertTextDraft('canvas-checkpoint', {
+        draft_id: 'node-7::parameters.prompt',
+        node_id: 'node-7',
+        field_path: 'parameters.prompt',
+        body: 'Draft to checkpoint',
+        author: { actor_id: 'actor-1', display_name: 'A' },
+      });
+      const cleared = await instance.clearCheckpointedDrafts('canvas-checkpoint', {
+        draft_ids: ['node-7::parameters.prompt'],
+        actor_id: 'actor-1',
+        revision_id: 'revision-2',
+      });
+      expect(cleared.cleared_draft_ids).toEqual(['node-7::parameters.prompt']);
+      expect(cleared.snapshot.text_drafts).toHaveLength(0);
+      expect(cleared.snapshot).not.toHaveProperty('revision_id');
+    });
+  });
 });

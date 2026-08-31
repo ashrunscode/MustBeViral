@@ -42,6 +42,7 @@ class MemoryPorts {
   readonly lineage = new Map<string, { parentArtifactId: string; childArtifactId: string }>();
   readonly idempotencyRecords = new Map<string, { fingerprint: string; result: unknown }>();
   readonly counters = new Map<string, number>();
+  readonly revisionHistory = new Map<string, GraphSnapshot>();
   canvas: CanvasContextRecord;
   nowValue = '2026-07-19T12:00:00.000Z';
   authorized = true;
@@ -62,6 +63,7 @@ class MemoryPorts {
       graphSnapshot: briefGraph,
       canonicalHash: 'initial-hash',
     };
+    this.revisionHistory.set('revision-0', structuredClone(briefGraph));
   }
 
   asPorts(): HandlerPorts {
@@ -75,12 +77,17 @@ class MemoryPorts {
           if (this.canvas.headRevisionId !== input.expectedRevisionId) {
             return { status: 'conflict' as const, actualHead: this.canvas.headRevisionId };
           }
+          this.revisionHistory.set(
+            input.expectedRevisionId,
+            structuredClone(this.canvas.graphSnapshot),
+          );
           this.canvas = {
             ...this.canvas,
             headRevisionId: input.nextRevisionId,
             graphSnapshot: input.graphSnapshot,
             canonicalHash: input.canonicalHash,
           };
+          this.revisionHistory.set(input.nextRevisionId, structuredClone(input.graphSnapshot));
           return { status: 'ok' as const };
         },
       },
@@ -371,6 +378,54 @@ describe('command handler flows', () => {
     });
     expect(result).toEqual({ status: 'conflict', reason: 'revision', actual: 'revision-0' });
     expect(memory.canvas.headRevisionId).toBe('revision-0');
+  });
+
+  it('checkpoints collaboration draft parameters into a new immutable revision', async () => {
+    const memory = new MemoryPorts();
+    const handlers = createCommandHandlers(memory.asPorts());
+    const initialSnapshot = structuredClone(memory.canvas.graphSnapshot);
+    const checkpoint = await handlers.applyCanvasPatch({
+      context,
+      canvas_id: 'canvas-1',
+      expected_revision_id: 'revision-0',
+      reason: 'Checkpoint collaboration drafts',
+      patch: {
+        upsert_nodes: [
+          {
+            id: 'brief-1',
+            kind: 'brief',
+            parameter_schema_version: 1,
+            parameters: { title: 'Launch', notes: 'Checkpointed brief notes' },
+          },
+        ],
+      },
+      idempotency_key: 'checkpoint-key',
+    });
+    expect(checkpoint).toMatchObject({ status: 'ok', revisionId: 'revision-1' });
+    expect(memory.canvas.headRevisionId).toBe('revision-1');
+    expect(memory.canvas.graphSnapshot.nodes[0]?.parameters.notes).toBe('Checkpointed brief notes');
+    expect(memory.revisionHistory.get('revision-0')).toEqual(initialSnapshot);
+    expect(memory.revisionHistory.get('revision-0')).not.toEqual(memory.canvas.graphSnapshot);
+    const stale = await handlers.applyCanvasPatch({
+      context,
+      canvas_id: 'canvas-1',
+      expected_revision_id: 'revision-0',
+      reason: 'Stale checkpoint retry',
+      patch: {
+        upsert_nodes: [
+          {
+            id: 'brief-1',
+            kind: 'brief',
+            parameter_schema_version: 1,
+            parameters: { title: 'Launch', notes: 'Should not apply' },
+          },
+        ],
+      },
+      idempotency_key: 'stale-checkpoint-key',
+    });
+    expect(stale).toEqual({ status: 'conflict', reason: 'revision', actual: 'revision-1' });
+    expect(memory.canvas.headRevisionId).toBe('revision-1');
+    expect(memory.canvas.graphSnapshot.nodes[0]?.parameters.notes).toBe('Checkpointed brief notes');
   });
 
   it('returns every affected branch, retained work, and safety-first reconciliation settlement', async () => {

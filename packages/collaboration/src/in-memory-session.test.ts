@@ -49,4 +49,28 @@ describe('in-memory collaboration session', () => {
     session.releaseLease('lease-7-you');
     expect(session.snapshot.leases).toHaveLength(0);
   });
+
+  it('clears checkpointed drafts from the in-memory session snapshot', () => {
+    const session = new InMemoryCollaborationSession({
+      canvasId: 'canvas-1',
+      actor: { actor_id: 'actor-1', display_name: 'A' },
+      surface: 'canvas',
+      seedTextDrafts: [
+        {
+          draft_id: 'node-1::parameters.prompt',
+          node_id: 'node-1',
+          field_path: 'parameters.prompt',
+          body: 'Draft',
+          author: { actor_id: 'actor-1', display_name: 'A' },
+          updated_at: '2026-08-31T12:00:00.000Z',
+        },
+      ],
+    });
+    const cleared = session.clearCheckpointedDrafts({
+      draft_ids: ['node-1::parameters.prompt'],
+      revision_id: 'revision-2',
+    });
+    expect(cleared).toEqual(['node-1::parameters.prompt']);
+    expect(session.snapshot.text_drafts).toHaveLength(0);
+  });
 });

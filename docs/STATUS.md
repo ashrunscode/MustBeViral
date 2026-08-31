@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P2 — Multiplayer collaboration and shared review (in_progress) |
 | Active packet | `WP-P2-001` |
-| Current step | `p2-003-text-sync-and-leases` |
+| Current step | `p2-004-revision-checkpoint-integrity` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement text collaboration and edit leases for expensive node configuration with deterministic conflict recovery.
+Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate history or bypass expected_revision_id.

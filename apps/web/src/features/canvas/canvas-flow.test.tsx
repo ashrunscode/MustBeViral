@@ -63,5 +63,6 @@ describe('CanvasFlow semantic outline component parity', () => {
     expect(html).toContain('Draft text');
     expect(html).toContain('Node notes');
     expect(html).toContain('aria-label="Collaborative text drafts"');
+    expect(html).toContain('Checkpoint drafts');
   });
 });

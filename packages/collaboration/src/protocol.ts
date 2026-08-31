@@ -101,6 +101,14 @@ export const UpsertTextDraftInputSchema = z.object({
 
 export type UpsertTextDraftInput = z.infer<typeof UpsertTextDraftInputSchema>;
 
+export const ClearCheckpointedDraftsInputSchema = z.object({
+  draft_ids: z.array(z.string().min(1).max(128)).min(1).max(64),
+  actor_id: z.string().min(1).max(128),
+  revision_id: z.string().min(1).max(128),
+});
+
+export type ClearCheckpointedDraftsInput = z.infer<typeof ClearCheckpointedDraftsInputSchema>;
+
 export const ClientMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('presence.join'), payload: JoinPresenceInputSchema }),
   z.object({ type: z.literal('presence.leave'), payload: z.object({ actor_id: z.string() }) }),
@@ -108,6 +116,10 @@ export const ClientMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('text.draft.upsert'), payload: UpsertTextDraftInputSchema }),
   z.object({ type: z.literal('lease.acquire'), payload: AcquireLeaseInputSchema }),
   z.object({ type: z.literal('lease.release'), payload: ReleaseLeaseInputSchema }),
+  z.object({
+    type: z.literal('text.draft.clear'),
+    payload: ClearCheckpointedDraftsInputSchema,
+  }),
   z.object({ type: z.literal('snapshot.request') }),
 ]);
 
@@ -131,6 +143,13 @@ export const ServerMessageSchema = z.discriminatedUnion('type', [
       node_id: z.string(),
       field_path: z.string(),
       reason: z.enum(['ok', 'lease_held', 'stale']).optional(),
+    }),
+  }),
+  z.object({
+    type: z.literal('text.draft.clear.result'),
+    payload: z.object({
+      cleared_draft_ids: z.array(z.string()),
+      revision_id: z.string(),
     }),
   }),
   z.object({

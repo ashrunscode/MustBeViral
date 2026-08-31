@@ -69,5 +69,15 @@ describe('collaboration protocol', () => {
         payload: { lease_id: 'lease-1', actor_id: 'actor-1' },
       }).type,
     ).toBe('lease.release');
+    expect(
+      ClientMessageSchema.parse({
+        type: 'text.draft.clear',
+        payload: {
+          draft_ids: ['node-1::parameters.prompt'],
+          actor_id: 'actor-1',
+          revision_id: 'revision-2',
+        },
+      }).type,
+    ).toBe('text.draft.clear');
   });
 });

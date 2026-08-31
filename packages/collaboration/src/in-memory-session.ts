@@ -216,6 +216,21 @@ export class InMemoryCollaborationSession {
     }
   }
 
+  clearCheckpointedDrafts(input: {
+    draft_ids: readonly string[];
+    revision_id: string;
+  }): readonly string[] {
+    const requested = new Set(input.draft_ids);
+    const cleared: string[] = [];
+    this.#textDrafts = this.#textDrafts.filter((draft) => {
+      if (!requested.has(draft.draft_id)) return true;
+      cleared.push(draft.draft_id);
+      return false;
+    });
+    if (cleared.length > 0) this.#emit();
+    return cleared;
+  }
+
   async joinPresence(): Promise<void> {
     const timestamp = nowIso();
     const entry: CollaborationSnapshot['presence'][number] = {

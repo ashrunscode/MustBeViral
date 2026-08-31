@@ -43,6 +43,10 @@ import {
   commentsForAnchor,
   useCollaborationSession,
 } from '../../../../../src/features/collaboration/use-collaboration-session';
+import {
+  checkpointCanvasDrafts,
+  resolveCheckpointDrafts,
+} from '../../../../../src/features/collaboration/checkpoint-canvas-drafts';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './canvas-flow.module.css';
@@ -193,6 +197,9 @@ export function CanvasResultBanner({
       >
         <span aria-hidden="true">✓</span> Revision {result.model.revision} is valid and ready to
         quote.
+        {result.clearedDraftIds !== undefined && result.clearedDraftIds.length > 0 ? (
+          <> Collaboration drafts checkpointed into this revision.</>
+        ) : null}
       </div>
     );
   }
@@ -381,6 +388,7 @@ export function CanvasFlow({
   const [selectedId, setSelectedId] = useState('2');
   const [result, setResult] = useState<CanvasPortResult | null>(null);
   const [validating, setValidating] = useState(false);
+  const [checkpointing, setCheckpointing] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [viewport, setViewport] = useState({ width: 1120, height: 620 });
@@ -462,6 +470,11 @@ export function CanvasFlow({
   ).actor_id;
   const anchoredComments = commentsForAnchor(collaboration.snapshot, selectedId);
   const selectedDrafts = textDrafts[selectedId] ?? {};
+  const checkpointDrafts = resolveCheckpointDrafts({
+    snapshotTextDrafts: collaboration.snapshot?.text_drafts ?? [],
+    localDrafts: textDrafts,
+  });
+  const hasCheckpointDrafts = checkpointDrafts.length > 0;
 
   function submitCollaborationComment(body: string): void {
     collaboration.upsertComment({
@@ -591,6 +604,46 @@ export function CanvasFlow({
     setValidating(false);
   }
 
+  async function checkpointDraftsToRevision() {
+    if (mutationPort === null || model === null || !hasCheckpointDrafts) return;
+    setCheckpointing(true);
+    const checkpointResult = await checkpointCanvasDrafts({
+      model,
+      drafts: checkpointDrafts,
+      mutationPort,
+    });
+    if (checkpointResult.type === 'ok') {
+      setModel(checkpointResult.model);
+      setResult({
+        type: 'ok',
+        model: checkpointResult.model,
+        clearedDraftIds: checkpointResult.clearedDraftIds,
+      });
+      collaboration.clearCheckpointedDrafts(
+        checkpointResult.clearedDraftIds,
+        checkpointResult.revisionId,
+      );
+      setTextDrafts((current) => {
+        const next = { ...current };
+        for (const draft of checkpointDrafts) {
+          const nodeDrafts = next[draft.node_id];
+          if (nodeDrafts === undefined) continue;
+          const remaining = { ...nodeDrafts };
+          delete remaining[draft.field_path];
+          if (Object.keys(remaining).length === 0) {
+            delete next[draft.node_id];
+          } else {
+            next[draft.node_id] = remaining;
+          }
+        }
+        return next;
+      });
+    } else if (checkpointResult.type !== 'no_drafts') {
+      setResult(checkpointResult);
+    }
+    setCheckpointing(false);
+  }
+
   async function reloadLatest() {
     if (previewPort !== null) {
       const next = await previewPort.reloadLatest();
@@ -676,6 +729,27 @@ export function CanvasFlow({
               onClick={() => void validateCanvas()}
             >
               Validate graph
+            </Button>
+            <Button
+              feedback={
+                checkpointing
+                  ? 'loading'
+                  : result?.type === 'ok' && hasCheckpointDrafts === false
+                    ? 'success'
+                    : result?.type === 'conflict'
+                      ? 'error'
+                      : 'default'
+              }
+              loadingLabel="Checkpointing"
+              disabled={
+                mutationPort === null ||
+                !hasCheckpointDrafts ||
+                result?.type === 'session_expired' ||
+                checkpointing
+              }
+              onClick={() => void checkpointDraftsToRevision()}
+            >
+              Checkpoint drafts
             </Button>
           </div>
         </div>

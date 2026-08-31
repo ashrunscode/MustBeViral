@@ -1,0 +1,20 @@
+schema_version: 1
+acceptance_id: postgres-remains-authority
+recorded_at: '2026-08-31T16:00:00.000Z'
+status: proven
+criterion: Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
+  through the existing revision/command barriers.
+proofs:
+  - kind: integration
+    path: apps/collaboration/test/worker.test.ts
+    assertions:
+      - collaboration worker does not expose revision or billing authority routes
+  - kind: integration
+    path: apps/collaboration/test/canvas-coordination.test.ts
+    assertions:
+      - comment and text draft snapshots never expose revision_id or ledger fields
+      - draft clearing does not expose revision authority on the coordination object
+  - kind: unit
+    path: packages/contracts/src/handlers.test.ts
+    assertions:
+      - apply_canvas_patch is the only path that advances canvas head during checkpoint

@@ -54,7 +54,11 @@ export interface CanvasOutlineRow {
 }
 
 export type CanvasPortResult =
-  | { readonly type: 'ok'; readonly model: CanvasModel }
+  | {
+      readonly type: 'ok';
+      readonly model: CanvasModel;
+      readonly clearedDraftIds?: readonly string[];
+    }
   | {
       readonly type: 'conflict';
       readonly expected_revision_id: string;
@@ -88,7 +92,18 @@ export interface CanvasReadPort {
 }
 
 export interface CanvasMutationPort {
-  validateAndApply(model: CanvasModel): Promise<CanvasPortResult>;
+  validateAndApply(
+    model: CanvasModel,
+    options?: Readonly<{
+      readonly reason?: string;
+      readonly patch?: Readonly<{
+        readonly upsert_nodes: readonly GraphNode[];
+        readonly remove_node_ids?: readonly string[];
+        readonly upsert_edges?: readonly GraphEdge[];
+        readonly remove_edge_ids?: readonly string[];
+      }>;
+    }>,
+  ): Promise<CanvasPortResult>;
 }
 
 export interface CanvasPort extends CanvasReadPort, CanvasMutationPort {
@@ -582,7 +597,18 @@ export class WorkerCanvasMutationPort implements CanvasMutationPort {
     private readonly createIdempotencyKey: () => string,
   ) {}
 
-  async validateAndApply(model: CanvasModel): Promise<CanvasPortResult> {
+  async validateAndApply(
+    model: CanvasModel,
+    options?: Readonly<{
+      readonly reason?: string;
+      readonly patch?: Readonly<{
+        readonly upsert_nodes: readonly GraphNode[];
+        readonly remove_node_ids?: readonly string[];
+        readonly upsert_edges?: readonly GraphEdge[];
+        readonly remove_edge_ids?: readonly string[];
+      }>;
+    }>,
+  ): Promise<CanvasPortResult> {
     try {
       const validation = await this.client.request('validate_graph', {
         id: this.canvasId,
@@ -601,8 +627,16 @@ export class WorkerCanvasMutationPort implements CanvasMutationPort {
         idempotencyKey: this.createIdempotencyKey(),
         body: {
           expected_revision_id: model.revision,
-          reason: 'Validated canvas draft',
-          patch: graphPatchFromModel(model),
+          reason: options?.reason ?? 'Validated canvas draft',
+          patch:
+            options?.patch === undefined
+              ? graphPatchFromModel(model)
+              : {
+                  upsert_nodes: [...options.patch.upsert_nodes],
+                  remove_node_ids: [...(options.patch.remove_node_ids ?? [])],
+                  upsert_edges: [...(options.patch.upsert_edges ?? [])],
+                  remove_edge_ids: [...(options.patch.remove_edge_ids ?? [])],
+                },
         },
       });
       if ('error' in applied) return this.#mapError(applied.error, model.revision);
@@ -654,7 +688,7 @@ function asSnapshot(model: CanvasModel): GraphSnapshot {
 }
 
 export class InMemoryCanvasPort implements CanvasPort {
-  readonly #model: CanvasModel;
+  #model: CanvasModel;
   readonly #scenario: CanvasPortScenario;
 
   constructor(
@@ -668,7 +702,19 @@ export class InMemoryCanvasPort implements CanvasPort {
     return { type: 'ok', model: this.#model };
   }
 
-  async validateAndApply(model: CanvasModel): Promise<CanvasPortResult> {
+  async validateAndApply(
+    model: CanvasModel,
+    options?: Readonly<{
+      readonly reason?: string;
+      readonly patch?: Readonly<{
+        readonly upsert_nodes: readonly GraphNode[];
+        readonly remove_node_ids?: readonly string[];
+        readonly upsert_edges?: readonly GraphEdge[];
+        readonly remove_edge_ids?: readonly string[];
+      }>;
+    }>,
+  ): Promise<CanvasPortResult> {
+    void options?.reason;
     const expectedRevisionId = model.revision;
     if (this.#scenario === 'conflict') {
       return {
@@ -690,10 +736,14 @@ export class InMemoryCanvasPort implements CanvasPort {
         ],
       };
     }
-    const validation = validateGraph(asSnapshot(this.#model));
-    return validation.valid
-      ? { type: 'ok', model: this.#model }
-      : { type: 'graph_invalid', issues: validation.issues };
+    const snapshot = asSnapshot(model);
+    const validation = validateGraph(snapshot);
+    if (!validation.valid) {
+      return { type: 'graph_invalid', issues: validation.issues };
+    }
+    const nextRevision = `${expectedRevisionId}-next`;
+    this.#model = { ...model, revision: nextRevision };
+    return { type: 'ok', model: this.#model };
   }
 
   async reloadLatest(): Promise<Extract<CanvasPortResult, { type: 'ok' }>> {
