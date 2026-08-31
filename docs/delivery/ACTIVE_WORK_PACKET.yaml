@@ -39,6 +39,7 @@ scope:
     - supabase/**
     - .superdesign/**
     - governance/evidence/WP-P2-001/**
+    - governance/evidence/WP-P0-001/successor-WP-P3-001.yaml
     - governance/evidence/WP-P1B-001/transition-receipt.yaml
     - governance/evidence/WP-P1B-001/completed-work-packet.yaml
     - governance/tests/**
@@ -85,7 +86,8 @@ public_interfaces:
     the same command layer. Collaboration drafts are not public API authority.
 steps:
   - id: p2-001-collaboration-worker
-    title: Add the dedicated collaboration Worker and one coordination object per canvas without moving
+    title:
+      Add the dedicated collaboration Worker and one coordination object per canvas without moving
       revision, permission, or money authority out of Postgres.
     status: completed
   - id: p2-002-presence-and-comments
@@ -97,7 +99,8 @@ steps:
       deterministic conflict recovery.
     status: completed
   - id: p2-004-revision-checkpoint-integrity
-    title: Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
+    title:
+      Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
       history or bypass expected_revision_id.
     status: completed
   - id: p2-005-phase-exit-handoff
@@ -106,23 +109,28 @@ steps:
 acceptance:
   automated:
     - id: postgres-remains-authority
-      criterion: Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
+      criterion:
+        Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
         through the existing revision/command barriers.
       status: passed
       evidence:
         - governance/evidence/WP-P2-001/postgres-remains-authority.yaml
     - id: lease-and-checkpoint
-      criterion: Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
+      criterion:
+        Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
         immutable revisions rather than rewriting history.
       status: passed
       evidence:
         - governance/evidence/WP-P2-001/revision-checkpoint-integrity.yaml
   manual:
     - id: no-queue-or-agency-expansion
-      criterion: This packet did not add queues, a separate executor, agency portals, or connected social
+      criterion:
+        This packet did not add queues, a separate executor, agency portals, or connected social
         publishing.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
+        - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
@@ -177,6 +185,8 @@ handoff:
 completion:
   successor_packet_id: WP-P3-001
   evidence_paths:
+    - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
     - governance/evidence/WP-P2-001/revision-checkpoint-integrity.yaml
     - governance/evidence/WP-P2-001/postgres-remains-authority.yaml
+    - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
   completed_at: null

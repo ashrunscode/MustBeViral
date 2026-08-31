@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P2 — Multiplayer collaboration and shared review (in_progress) |
 | Active packet | `WP-P2-001` |
-| Current step | `p2-004-revision-checkpoint-integrity` |
+| Current step | `p2-005-phase-exit-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate history or bypass expected_revision_id.
+Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.

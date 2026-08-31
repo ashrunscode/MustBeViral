@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P2
 active_packet: WP-P2-001
-current_step: p2-004-revision-checkpoint-integrity
-next_action: Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate history or bypass expected_revision_id.
+current_step: p2-005-phase-exit-handoff
+next_action: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
