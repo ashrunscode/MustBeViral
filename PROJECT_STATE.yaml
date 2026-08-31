@@ -6,12 +6,14 @@ internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
-  id: P2
-  title: Multiplayer collaboration and shared review
-  state: in_progress
+  id: P3
+  title: Scale, direct adapters, resilience, and compliance
+  state: planned
 release_target: P0
-active_work_packet: WP-P2-001
-next_action: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
+active_work_packet: WP-P3-001
+next_action: 'Operator decision required: record P3 evidence gates (measured backpressure/fan-out,
+  Hyperdrive G1-G6, or separate-executor isolation) before agent:start on WP-P3-001; do not add
+  queues, executor, or agency features without accepted gate evidence.'
 decisions_pending: []
 blockers: []
 legacy:
@@ -31,7 +33,10 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-08-31T14:28:55.839Z
+  at: 2026-08-31T16:13:59.327Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
+    - governance/evidence/WP-P2-001/revision-checkpoint-integrity.yaml
+    - governance/evidence/WP-P2-001/postgres-remains-authority.yaml
+    - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
