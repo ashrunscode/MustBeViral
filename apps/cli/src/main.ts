@@ -70,7 +70,5 @@ main()
     const codeMatch = /"code":"([^"]+)"/u.exec(message);
     process.stderr.write(`${message}\n`);
     process.exitCode =
-      codeMatch?.[1] !== undefined
-        ? exitCodeForApiError(codeMatch[1])
-        : CLI_EXIT_CODES.internal;
+      codeMatch?.[1] !== undefined ? exitCodeForApiError(codeMatch[1]) : CLI_EXIT_CODES.internal;
   });
