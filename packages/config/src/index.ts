@@ -21,6 +21,7 @@ export const WebPublicEnvironmentSchema = z
     NEXT_PUBLIC_SUPABASE_URL: HttpUrlSchema,
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(20),
     NEXT_PUBLIC_CORE_API_URL: HttpUrlSchema,
+    NEXT_PUBLIC_COLLABORATION_API_URL: HttpUrlSchema.optional(),
   })
   .strict();
 
