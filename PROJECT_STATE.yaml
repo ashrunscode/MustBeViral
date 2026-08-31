@@ -11,8 +11,9 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P1B-001
-next_action: Prove handler/adapter contract vectors for success, validation, authorization,
-  conflict, expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
+next_action: Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface
+  evidence, run quality gates, and activate WP-P2-001 from
+  governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
 decisions_pending: []
 blockers: []
 legacy:

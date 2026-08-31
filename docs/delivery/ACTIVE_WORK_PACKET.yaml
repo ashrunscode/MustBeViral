@@ -98,11 +98,11 @@ steps:
   - id: p1b-005-three-client-parity
     title: Prove handler/adapter contract vectors for success, validation, authorization, conflict,
       expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
-    status: current
+    status: completed
   - id: p1b-006-p2-successor-handoff
     title: Prove P1b implementable acceptance and activate WP-P2-001 from
       governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: oauth-scope-and-revocation
@@ -118,9 +118,14 @@ acceptance:
       status: passed
       evidence:
         - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
+        - governance/evidence/WP-P1B-001/three-client-parity.yaml
         - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
         - apps/cli/test/p1b-cli-parity.test.ts
         - apps/cli/test/cli.test.ts
+        - apps/core/test/unit/p1b-three-client-parity.test.ts
+        - apps/core/test/unit/production-mcp-parity.test.ts
+        - apps/web/src/lib/core/p1b-client.test.ts
+        - packages/contracts/src/p1b-parity.test.ts
     - id: immutable-skill-versions
       criterion: Publishing a Skill creates an immutable version; edits create a new version and never
         mutate a published snapshot or access secrets.
@@ -158,31 +163,22 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p1b-005-three-client-parity
-  next_action: Prove handler/adapter contract vectors for success, validation, authorization,
-    conflict, expiry, idempotent replay, rate limit, provider ambiguity, and safe errors.
+  current_step: p1b-006-p2-successor-handoff
+  next_action: Prove P1b implementable acceptance, complete manual no-autonomous-spend-surface
+    evidence, run quality gates, and activate WP-P2-001 from
+    governance/evidence/WP-P0-001/successor-WP-P2-001.yaml.
   blockers: []
   changed_paths:
-    - apps/core/src/composition/programmatic-auth.ts
-    - apps/core/src/routes/p1b-table.ts
-    - apps/core/src/routes/p1b.ts
     - apps/core/test/unit/p1b-three-client-parity.test.ts
-    - apps/web/app/globals.css
-    - apps/web/app/studio/[workspace]/skills/page.tsx
-    - apps/web/app/studio/[workspace]/studio-header.tsx
-    - apps/web/src/components/studio-workflow-nav.tsx
-    - apps/web/src/features/skills/skills-access-panel.tsx
-    - apps/web/src/features/skills/skills-access-panel.test.tsx
-    - apps/web/src/lib/core/p1b-client.ts
-    - docs/generated/OPENAPI.md
-    - governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
-    - packages/contracts/openapi/core.v1.json
-    - packages/contracts/src/http.integration.test.ts
-    - packages/contracts/src/p1b-handlers.test.ts
-    - packages/contracts/src/p1b-handlers.ts
+    - apps/core/test/unit/production-mcp-parity.test.ts
+    - apps/web/src/lib/core/p1b-client.test.ts
+    - docs/STATUS.md
+    - docs/generated/TRACEABILITY.md
+    - governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+    - governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
+    - governance/evidence/WP-P1B-001/three-client-parity.yaml
+    - llms.txt
     - packages/contracts/src/p1b-parity.test.ts
-    - packages/contracts/src/p1b.ts
-    - supabase/tests/database/00033_p1b_immutable_skill_versions.test.sql
   last_green_checks:
     - corepack pnpm agent:verify
 completion:
