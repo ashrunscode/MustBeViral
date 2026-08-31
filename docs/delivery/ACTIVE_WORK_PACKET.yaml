@@ -80,8 +80,7 @@ public_interfaces:
     handlers as the browser. Final social publication remains unavailable on these surfaces.
 steps:
   - id: p1b-001-oauth-api-keys
-    title:
-      Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
+    title: Implement production OAuth and API-key authorization with scopes, revocation, and audit UX
       without autonomous spend.
     status: completed
   - id: p1b-002-public-rest-and-mcp
@@ -93,8 +92,7 @@ steps:
       automation output, and confirmation-preserving mutations.
     status: completed
   - id: p1b-004-user-authored-skills
-    title:
-      Implement user-authored Skills with immutable published versions and no credential access to
+    title: Implement user-authored Skills with immutable published versions and no credential access to
       database, storage, or billing.
     status: current
   - id: p1b-005-three-client-parity
@@ -108,8 +106,7 @@ steps:
 acceptance:
   automated:
     - id: oauth-scope-and-revocation
-      criterion:
-        Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
+      criterion: Tests prove scoped OAuth/API keys authorize only granted operations, revoke immediately,
         and cannot start a run without an unexpired confirmed quote.
       status: passed
       evidence:
@@ -125,8 +122,7 @@ acceptance:
         - apps/cli/test/p1b-cli-parity.test.ts
         - apps/cli/test/cli.test.ts
     - id: immutable-skill-versions
-      criterion:
-        Publishing a Skill creates an immutable version; edits create a new version and never
+      criterion: Publishing a Skill creates an immutable version; edits create a new version and never
         mutate a published snapshot or access secrets.
       status: pending
       evidence: []
@@ -159,9 +155,8 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p1b-004-user-authored-skills
-  next_action:
-    Implement user-authored Skills with immutable published versions and no credential access
-    to database, storage, or billing.
+  next_action: Implement user-authored Skills with immutable published versions and no credential
+    access to database, storage, or billing.
   blockers: []
   changed_paths:
     - apps/cli/package.json

@@ -11,8 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P1B-001
-next_action: Ship CLI environment selection, OS credential storage, JSON automation output, and
-  confirmation-preserving mutations with parity vectors for production REST operations.
+next_action: Implement user-authored Skills with immutable published versions and no credential
+  access to database, storage, or billing.
 decisions_pending: []
 blockers: []
 legacy:
