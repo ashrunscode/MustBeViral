@@ -11,9 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P1B-001
-next_action: Advance to p1b-002-public-rest-and-mcp — register P1B routes in generated OpenAPI,
-  expand MCP/REST parity vectors for production tools, and prove oauth-scope-and-revocation
-  acceptance against Supabase pgTAP.
+next_action: Ship CLI environment selection, OS credential storage, JSON automation output, and
+  confirmation-preserving mutations with parity vectors for production REST operations.
 decisions_pending: []
 blockers: []
 legacy:
