@@ -93,6 +93,9 @@ importers:
       '@mustbeviral/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@napi-rs/keyring':
+        specifier: ^1.3.0
+        version: 1.3.0
 
   apps/core:
     dependencies:

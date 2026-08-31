@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P1b
 active_packet: WP-P1B-001
-current_step: p1b-003-cli-parity
-next_action: Ship CLI environment selection, OS credential storage, JSON automation output, and confirmation-preserving mutations with parity vectors for production REST operations.
+current_step: p1b-004-user-authored-skills
+next_action: Implement user-authored Skills with immutable published versions and no credential access to database, storage, or billing.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

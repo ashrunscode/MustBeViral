@@ -1,34 +1,27 @@
 import { createMustBeViralRestClient, type MustBeViralRestClient } from '@mustbeviral/contracts';
 
-export type CliEnvironment = 'staging' | 'production';
+import {
+  defaultCredentialStore,
+  type CliCredentialStore,
+  type CliEnvironment,
+} from './credential-store.js';
 
-const DEFAULT_BASE_URLS: Readonly<Record<CliEnvironment, string>> = Object.freeze({
-  staging: 'https://api-staging.mustbeviral.com/v1',
-  production: 'https://api.mustbeviral.com/v1',
+export type { CliCredentialStore, CliEnvironment } from './credential-store.js';
+export {
+  MemoryCliCredentialStore,
+  OsCliCredentialStore,
+  defaultCredentialStore,
+  type KeyringAdapter,
+} from './credential-store.js';
+
+const DEFAULT_API_HOSTS: Readonly<Record<CliEnvironment, string>> = Object.freeze({
+  staging: 'https://api-staging.mustbeviral.com',
+  production: 'https://api.mustbeviral.com',
 });
 
-export interface CliCredentialStore {
-  read(environment: CliEnvironment): Promise<string | null>;
-  write(environment: CliEnvironment, token: string): Promise<void>;
-  delete(environment: CliEnvironment): Promise<void>;
-}
-
-export class MemoryCliCredentialStore implements CliCredentialStore {
-  readonly #tokens = new Map<CliEnvironment, string>();
-
-  read(environment: CliEnvironment): Promise<string | null> {
-    return Promise.resolve(this.#tokens.get(environment) ?? null);
-  }
-
-  write(environment: CliEnvironment, token: string): Promise<void> {
-    this.#tokens.set(environment, token);
-    return Promise.resolve();
-  }
-
-  delete(environment: CliEnvironment): Promise<void> {
-    this.#tokens.delete(environment);
-    return Promise.resolve();
-  }
+export function apiV1BaseUrl(environment: CliEnvironment, override?: string): string {
+  const host = (override ?? DEFAULT_API_HOSTS[environment]).replace(/\/$/u, '');
+  return host.endsWith('/v1') ? host : `${host}/v1`;
 }
 
 export interface CliClientOptions {
@@ -45,17 +38,20 @@ export async function createCliClient(
   MustBeViralRestClient & Readonly<{ baseUrl: string; readAccessToken: () => Promise<string> }>
 > {
   const environment = options.environment ?? 'staging';
+  const credentialStore =
+    options.credentialStore ??
+    (options.accessToken === undefined ? defaultCredentialStore() : null);
   const token =
     options.accessToken ??
-    (options.credentialStore === undefined
-      ? null
-      : await options.credentialStore.read(environment));
+    (credentialStore === null ? null : await credentialStore.read(environment));
   if (token === null || token.length === 0) {
-    throw new Error(`No credential is stored for the ${environment} environment.`);
+    throw new Error(
+      `No credential is stored for the ${environment} environment. Run "mbv login" first.`,
+    );
   }
-  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URLS[environment];
+  const baseUrl = apiV1BaseUrl(environment, options.baseUrl);
   const client = createMustBeViralRestClient({
-    baseUrl,
+    baseUrl: baseUrl.replace(/\/v1$/u, ''),
     getAccessToken: async () => token,
     ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
   });
@@ -102,4 +98,4 @@ export function exitCodeForApiError(code: string): number {
   }
 }
 
-export { DEFAULT_BASE_URLS };
+export { DEFAULT_API_HOSTS as DEFAULT_BASE_URLS };

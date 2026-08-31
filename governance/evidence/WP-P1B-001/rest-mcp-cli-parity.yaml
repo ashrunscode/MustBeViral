@@ -1,0 +1,29 @@
+schema_version: 1
+acceptance_id: rest-mcp-cli-parity
+recorded_at: '2026-08-31T14:30:00.000Z'
+status: proven
+criterion: Shared contract vectors pass against REST, MCP, and CLI adapters for the shipped
+  operations with no handler-local policy drift.
+proofs:
+  - kind: unit
+    path: apps/cli/test/p1b-cli-parity.test.ts
+    assertions:
+      - eleven production CLI commands map to production MCP tool names
+      - CLI REST transport uses single /v1 prefix without duplication
+      - start_run requires explicit --confirmed before transport
+  - kind: unit
+    path: apps/cli/test/cli.test.ts
+    assertions:
+      - OS credential store adapter read/write/delete
+      - login token paste stores scoped credentials per environment
+      - stable non-zero exit codes for API error envelopes
+  - kind: unit
+    path: apps/core/test/unit/production-mcp-parity.test.ts
+    assertions:
+      - REST and MCP semantic parity for all eleven production tools
+  - kind: unit
+    path: apps/core/test/unit/p1b-three-client-parity.test.ts
+    assertions:
+      - management list_api_keys parity between REST and CLI transport headers
+  - kind: contract
+    path: governance/evidence/WP-P1B-001/p1b-parity-vectors.json

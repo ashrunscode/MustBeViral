@@ -13,6 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mustbeviral/contracts": "workspace:*"
+    "@mustbeviral/contracts": "workspace:*",
+    "@napi-rs/keyring": "^1.3.0"
   }
 }

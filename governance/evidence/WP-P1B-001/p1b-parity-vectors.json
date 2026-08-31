@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "recorded_at": "2026-08-31T13:15:00.000Z",
-  "task": "P1b production MCP/REST parity and oauth-scope-and-revocation",
+  "recorded_at": "2026-08-31T14:30:00.000Z",
+  "task": "P1b production MCP/REST/CLI parity and oauth-scope-and-revocation",
   "operations": [
     "get_canvas_context",
     "apply_canvas_patch",
@@ -35,8 +35,23 @@
       "transport": "json-rpc"
     },
     "cli": {
-      "module": "apps/cli/src/p1b-management.ts",
+      "module": "apps/cli/src/production-commands.ts",
+      "credential_store": "apps/cli/src/credential-store.ts",
+      "login": "apps/cli/src/login.ts",
       "commands": [
+        "login",
+        "logout",
+        "get-canvas-context",
+        "apply-canvas-patch",
+        "quote-run",
+        "start-run",
+        "get-run",
+        "validate-graph",
+        "cancel-run",
+        "get-artifact",
+        "create-export",
+        "explain-model",
+        "get-receipt",
         "list-api-keys",
         "create-api-key",
         "revoke-api-key",
@@ -50,31 +65,36 @@
       "operation": "get_canvas_context",
       "rest_path": "GET /v1/canvases/{canvas_id}",
       "mcp_tool": "get_canvas_context",
+      "cli_command": "get-canvas-context",
       "expected_success_status": 200
     },
     {
       "operation": "start_run",
       "rest_path": "POST /v1/quotes/{quote_id}/runs",
       "mcp_tool": "start_run",
+      "cli_command": "start-run",
       "expected_validation_code": "VALIDATION_FAILED",
-      "notes": "Missing confirmed=true"
+      "notes": "Missing confirmed=true or CLI --confirmed"
     },
     {
       "operation": "start_run",
       "rest_path": "POST /v1/quotes/{quote_id}/runs",
       "mcp_tool": "start_run",
+      "cli_command": "start-run",
       "expected_code": "QUOTE_EXPIRED"
     },
     {
       "operation": "apply_canvas_patch",
       "rest_path": "POST /v1/canvases/{canvas_id}/patches",
       "mcp_tool": "apply_canvas_patch",
+      "cli_command": "apply-canvas-patch",
       "expected_code": "REVISION_CONFLICT"
     },
     {
       "operation": "get_run",
       "rest_path": "GET /v1/runs/{run_id}",
       "mcp_tool": "get_run",
+      "cli_command": "get-run",
       "expected_code": "RATE_LIMITED"
     },
     {
@@ -88,7 +108,8 @@
       "rest_path": "POST /v1/api-keys/{key_id}/revoke",
       "cli_command": "revoke-api-key",
       "expected_not_found_status": 404,
-      "expected_code": "NOT_FOUND"
+      "expected_code": "NOT_FOUND",
+      "notes": "CLI requires --confirm before transport"
     },
     {
       "operation": "issue_oauth_token",
@@ -101,12 +122,15 @@
   "automated_proofs": [
     "packages/contracts/src/p1b-parity.test.ts",
     "packages/contracts/src/http.integration.test.ts",
+    "apps/cli/test/p1b-cli-parity.test.ts",
+    "apps/cli/test/cli.test.ts",
     "apps/core/test/unit/p1b-three-client-parity.test.ts",
     "apps/core/test/unit/p1b-routes.test.ts",
     "apps/core/test/unit/production-mcp-parity.test.ts",
     "apps/core/test/unit/mcp-parity.test.ts",
     "apps/core/test/unit/programmatic-auth.test.ts",
     "packages/contracts/src/scopes.test.ts",
-    "supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql"
+    "supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql",
+    "governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml"
   ]
 }

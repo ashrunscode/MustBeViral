@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P1b — Public API, MCP, CLI, and user-authored Skills (in_progress) |
 | Active packet | `WP-P1B-001` |
-| Current step | `p1b-003-cli-parity` |
+| Current step | `p1b-004-user-authored-skills` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Ship CLI environment selection, OS credential storage, JSON automation output, and confirmation-preserving mutations with parity vectors for production REST operations.
+Implement user-authored Skills with immutable published versions and no credential access to database, storage, or billing.
