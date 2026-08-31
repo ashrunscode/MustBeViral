@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P1a — Secure paid single-user web product (in_progress) |
 | Active packet | `WP-P1A-001` |
-| Current step | `p1a-001-production-identity-and-rls` |
+| Current step | `p1a-006-p1b-successor-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill switches for signup, generation, provider routes, and charging without enabling public signup.
+Run corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml to activate WP-P1B-001.

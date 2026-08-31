@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P1a
 active_packet: WP-P1A-001
-current_step: p1a-001-production-identity-and-rls
-next_action: Implement closed-enrollment production-grade identity, JWT/RLS tenancy, and kill switches for signup, generation, provider routes, and charging without enabling public signup.
+current_step: p1a-006-p1b-successor-handoff
+next_action: Run corepack pnpm agent:finish --successor governance/evidence/WP-P0-001/successor-WP-P1B-001.yaml to activate WP-P1B-001.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
