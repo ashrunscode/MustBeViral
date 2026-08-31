@@ -8,29 +8,29 @@
   "preview_urls": false,
   "vars": {
     "SERVICE_NAME": "mustbeviral-collaboration",
-    "SERVICE_GENERATION": "viralgraph-cleanroom-v2"
+    "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
   },
   "durable_objects": {
     "bindings": [
       {
         "name": "CANVAS_COORDINATION",
-        "class_name": "CanvasCoordination"
-      }
-    ]
+        "class_name": "CanvasCoordination",
+      },
+    ],
   },
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["CanvasCoordination"]
-    }
+      "new_sqlite_classes": ["CanvasCoordination"],
+    },
   ],
   "observability": {
     "enabled": true,
     "logs": {
       "enabled": true,
       "head_sampling_rate": 1,
-      "invocation_logs": true
-    }
+      "invocation_logs": true,
+    },
   },
   "env": {
     "staging": {
@@ -39,15 +39,15 @@
       "vars": {
         "SERVICE_NAME": "mustbeviral-collaboration",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
-        "APP_ENV": "staging"
-      }
+        "APP_ENV": "staging",
+      },
     },
     "production": {
       "name": "mustbeviral-v2-production-collaboration",
       "vars": {
         "SERVICE_NAME": "mustbeviral-collaboration",
-        "SERVICE_GENERATION": "viralgraph-cleanroom-v2"
-      }
-    }
-  }
+        "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+      },
+    },
+  },
 }

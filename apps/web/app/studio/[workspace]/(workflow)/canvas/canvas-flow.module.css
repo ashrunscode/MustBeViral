@@ -300,14 +300,29 @@
   color: var(--ink-muted);
 }
 
-.outlinePanel {
+.sideRail {
   min-height: 0;
   grid-column: 2;
   grid-row: 1;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
   border-left: 1px solid var(--line);
   background: var(--card);
+}
+
+.sideRail > :last-child {
+  border-top: 1px solid var(--line);
+  padding: 12px;
+  overflow-y: auto;
+  max-height: 42%;
+}
+
+.outlinePanel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .outlineHeader {

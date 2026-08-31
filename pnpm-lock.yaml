@@ -131,6 +131,9 @@ importers:
       '@mustbeviral/artifacts':
         specifier: workspace:*
         version: link:../../packages/artifacts
+      '@mustbeviral/collaboration':
+        specifier: workspace:*
+        version: link:../../packages/collaboration
       '@mustbeviral/config':
         specifier: workspace:*
         version: link:../../packages/config

@@ -164,7 +164,10 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
   async upsertComment(canvasId: string, input: UpsertCommentInput): Promise<CollaborationSnapshot> {
     this.ensureCanvasId(canvasId);
     const existing = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM comments WHERE comment_id = ? LIMIT 1', input.comment_id)
+      .exec<{ payload: string }>(
+        'SELECT payload FROM comments WHERE comment_id = ? LIMIT 1',
+        input.comment_id,
+      )
       .toArray()[0];
     const timestamp = nowIso();
     const draft: CommentDraft = {
@@ -223,7 +226,11 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     return { accepted: true, snapshot: await this.getSnapshot(canvasId) };
   }
 
-  async releaseLease(canvasId: string, leaseId: string, actorId: string): Promise<CollaborationSnapshot> {
+  async releaseLease(
+    canvasId: string,
+    leaseId: string,
+    actorId: string,
+  ): Promise<CollaborationSnapshot> {
     this.ensureCanvasId(canvasId);
     const row = this.ctx.storage.sql
       .exec<{ payload: string }>('SELECT payload FROM leases WHERE lease_id = ? LIMIT 1', leaseId)
@@ -254,7 +261,10 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     const url = new URL(request.url);
     const canvasId = url.searchParams.get('canvas_id');
     if (!canvasId) {
-      return Response.json({ error: { code: 'VALIDATION_FAILED', message: 'canvas_id is required' } }, { status: 400 });
+      return Response.json(
+        { error: { code: 'VALIDATION_FAILED', message: 'canvas_id is required' } },
+        { status: 400 },
+      );
     }
 
     if (request.headers.get('Upgrade') === 'websocket') {

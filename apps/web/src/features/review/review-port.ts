@@ -75,6 +75,7 @@ export interface ReviewQaFinding {
 }
 
 export interface ReviewSummary {
+  readonly canvasId: string | null;
   readonly authorizedMicros: bigint;
   readonly quotedMicros: bigint;
   readonly capturedMicros: bigint;
@@ -550,6 +551,7 @@ function reviewFromReceipt(
   return {
     groups: [...groups.values()],
     summary: {
+      canvasId: receipt.run.canvas_id,
       authorizedMicros: quotedMicros,
       quotedMicros,
       capturedMicros,

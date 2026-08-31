@@ -22,6 +22,12 @@ import {
 } from '../../../../../src/features/review/review-port';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
+import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
+import {
+  collaborationActorForReviewer,
+  commentsForAnchor,
+  useCollaborationSession,
+} from '../../../../../src/features/collaboration/use-collaboration-session';
 import styles from './review-flow.module.css';
 
 const decisionChip = {
@@ -544,6 +550,7 @@ export function ReviewFlow({
   const [summary, setSummary] = useState<ReviewSummary>(() =>
     dataMode === 'worker'
       ? {
+          canvasId: null,
           quotedMicros: 0n,
           authorizedMicros: 0n,
           capturedMicros: 0n,
@@ -562,6 +569,7 @@ export function ReviewFlow({
           recovery: null,
         }
       : {
+          canvasId: 'preview-canvas',
           quotedMicros: 4_200_000n,
           authorizedMicros: 4_200_000n,
           capturedMicros: 4_200_000n,
@@ -678,6 +686,33 @@ export function ReviewFlow({
   const concepts =
     dataMode === 'worker' && mode === 'approval' ? composeReviewConcepts(groups) : [];
   const composed = concepts.length > 0;
+  const commentAnchorId =
+    inspected?.id ?? (composed ? (concepts[0]?.members[0]?.id ?? null) : (variants[0]?.id ?? null));
+  const commentAnchorLabel =
+    inspected?.label ??
+    variants.find((variant) => variant.id === commentAnchorId)?.label ??
+    'Review output';
+  const collaborationCanvasId =
+    summary.canvasId ?? (dataMode === 'preview' ? 'preview-canvas' : null);
+  const collaboration = useCollaborationSession({
+    canvasId: collaborationCanvasId,
+    actor: collaborationActorForReviewer(
+      reviewer,
+      dataMode === 'preview' ? 'preview' : 'websocket',
+    ),
+    surface: 'review',
+    transport: dataMode === 'preview' ? 'preview' : 'websocket',
+  });
+  const anchoredComments = commentsForAnchor(collaboration.snapshot, commentAnchorId);
+
+  function submitCollaborationComment(body: string): void {
+    if (commentAnchorId === null) return;
+    collaboration.upsertComment({
+      comment_id: `comment-${commentAnchorId}-${String(Date.now())}`,
+      body,
+      anchor_node_id: commentAnchorId,
+    });
+  }
 
   async function approveConcept(concept: ReviewConcept) {
     if (readPort === null) return;
@@ -746,6 +781,15 @@ export function ReviewFlow({
             QA findings
           </Button>
         </div>
+        <CollaborationSidebar
+          anchorId={commentAnchorId}
+          anchorLabel={commentAnchorLabel}
+          comments={anchoredComments}
+          onSubmitComment={submitCollaborationComment}
+          snapshot={collaboration.snapshot}
+          status={collaboration.status}
+          surface="review"
+        />
         <ReviewResultNotice
           result={result}
           {...(groups.length === 0 ? { onRetryRead: () => void retryRead() } : {})}

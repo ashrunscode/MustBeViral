@@ -24,6 +24,7 @@ describe('ReviewFlow', () => {
     expect(html).toContain('Reviewer · Maya Chen');
     expect(html).toContain('Approve group as Maya Chen');
     expect(html).not.toContain('Accessibility description');
+    expect(html).toContain('aria-label="Collaborator presence"');
   });
 
   it('renders mobile receipt and export semantic sections from the same review DOM', () => {
@@ -115,6 +116,7 @@ describe('ReviewFlow', () => {
 
   it('keeps recovery and exact settlement above retained review artifacts', () => {
     const summary: ReviewSummary = {
+      canvasId: null,
       authorizedMicros: 4_550_000n,
       quotedMicros: 4_550_000n,
       capturedMicros: 150_000n,

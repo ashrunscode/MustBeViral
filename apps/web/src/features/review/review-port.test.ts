@@ -884,7 +884,7 @@ describe('WorkerReviewPort', () => {
           ],
         },
       ],
-      summary: { qaNoteCount: 0, qaFindings: [] },
+      summary: { canvasId: 'canvas-live', qaNoteCount: 0, qaFindings: [] },
     });
   });
 

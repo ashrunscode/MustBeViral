@@ -36,6 +36,12 @@ import {
   type CanvasPortScenario,
 } from '../../../../../src/features/canvas/canvas-port';
 import { SessionExpiredAction } from '../../../../../src/components/session-expired-action';
+import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
+import {
+  collaborationActorForReviewer,
+  commentsForAnchor,
+  useCollaborationSession,
+} from '../../../../../src/features/collaboration/use-collaboration-session';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import styles from './canvas-flow.module.css';
@@ -437,6 +443,27 @@ export function CanvasFlow({
     [model?.nodes],
   );
   const outline = useMemo(() => mapCanvasNodesToOutline(model?.nodes ?? []), [model?.nodes]);
+  const selectedNode = nodesById.get(selectedId);
+  const collaborationCanvasId = canvasId ?? (dataMode === 'preview' ? 'preview-canvas' : null);
+  const collaboration = useCollaborationSession({
+    canvasId: collaborationCanvasId,
+    actor: collaborationActorForReviewer(
+      dataMode === 'preview' ? 'Maya Chen' : 'You',
+      dataMode === 'preview' ? 'preview' : 'websocket',
+    ),
+    surface: 'canvas',
+    transport: dataMode === 'preview' ? 'preview' : 'websocket',
+  });
+  const anchoredComments = commentsForAnchor(collaboration.snapshot, selectedId);
+
+  function submitCollaborationComment(body: string): void {
+    collaboration.upsertComment({
+      comment_id: `comment-${selectedId}-${String(Date.now())}`,
+      body,
+      anchor_node_id: selectedId,
+    });
+  }
+
   const lineage = useMemo(
     () => (model === null ? new Set<string>() : lineageFor(model, selectedId)),
     [model, selectedId],
@@ -592,6 +619,11 @@ export function CanvasFlow({
             <MonoCaps data-testid="virtualized-count">
               {visibleNodes.length} / {model.nodes.length} nodes mounted
             </MonoCaps>
+            <MonoCaps data-collaboration-status={collaboration.status}>
+              {collaboration.snapshot?.presence.filter((entry) => entry.surface === 'canvas')
+                .length ?? 0}{' '}
+              live
+            </MonoCaps>
             <Button aria-label="Zoom out" onClick={() => setZoomClamped(zoom - 0.1)}>
               −
             </Button>
@@ -724,14 +756,25 @@ export function CanvasFlow({
           )}
         </div>
       </section>
-      <CanvasOutlinePanel
-        nodeCount={model.nodes.length}
-        outline={outline}
-        selectedId={selectedId}
-        onSelect={selectNode}
-        onNavigate={handleOutlineKeyDown}
-        onRegister={registerOutlineRef}
-      />
+      <div className={styles.sideRail}>
+        <CanvasOutlinePanel
+          nodeCount={model.nodes.length}
+          outline={outline}
+          selectedId={selectedId}
+          onSelect={selectNode}
+          onNavigate={handleOutlineKeyDown}
+          onRegister={registerOutlineRef}
+        />
+        <CollaborationSidebar
+          anchorId={selectedId}
+          anchorLabel={selectedNode?.label ?? 'Selected node'}
+          comments={anchoredComments}
+          onSubmitComment={submitCollaborationComment}
+          snapshot={collaboration.snapshot}
+          status={collaboration.status}
+          surface="canvas"
+        />
+      </div>
       <footer className={styles.footer}>
         <MonoCaps>Latency: 142ms · Node count: {model.nodes.length} · Region: us-east-1</MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>

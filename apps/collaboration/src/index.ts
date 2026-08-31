@@ -15,7 +15,10 @@ function parseCanvasId(pathname: string): string | null {
   return CANVAS_ID_PATTERN.test(canvasId) ? canvasId : null;
 }
 
-function coordinationStub(env: CollaborationBindings, canvasId: string): DurableObjectStub<CanvasCoordination> {
+function coordinationStub(
+  env: CollaborationBindings,
+  canvasId: string,
+): DurableObjectStub<CanvasCoordination> {
   const namespace = env.CANVAS_COORDINATION;
   if (!namespace) {
     throw new Error('CANVAS_COORDINATION binding is not configured');
@@ -52,7 +55,11 @@ const worker = {
 
     for (const forbidden of FORBIDDEN_COLLABORATION_ROUTES) {
       if (pathname === forbidden || pathname.startsWith(`${forbidden}/`)) {
-        return jsonError(404, 'NOT_FOUND', 'Collaboration worker does not expose revision or billing authority');
+        return jsonError(
+          404,
+          'NOT_FOUND',
+          'Collaboration worker does not expose revision or billing authority',
+        );
       }
     }
 

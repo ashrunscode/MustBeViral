@@ -54,4 +54,11 @@ describe('CanvasFlow semantic outline component parity', () => {
     expect(visualNodes.length).toBeLessThan(100);
     expect(outlineRows).toHaveLength(100);
   });
+
+  it('renders live presence and anchored draft comments in preview collaboration', () => {
+    const html = renderToStaticMarkup(<CanvasFlow dataMode="preview" workspace="lumen-skin" />);
+    expect(html).toContain('aria-label="Collaborator presence"');
+    expect(html).toContain('Draft comments');
+    expect(html).toContain('Post draft comment');
+  });
 });

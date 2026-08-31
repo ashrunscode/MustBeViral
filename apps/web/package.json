@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@mustbeviral/artifacts": "workspace:*",
+    "@mustbeviral/collaboration": "workspace:*",
     "@mustbeviral/config": "workspace:*",
     "@mustbeviral/contracts": "workspace:*",
     "@mustbeviral/ui": "workspace:*",
