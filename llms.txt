@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-001
-current_step: p3-001-evidence-gate-evaluation
-next_action: Operator decision required: record P3 evidence gates (measured backpressure/fan-out, Hyperdrive G1-G6, or separate-executor isolation) before agent:start on WP-P3-001; do not add queues, executor, or agency features without accepted gate evidence.
+current_step: p3-002-scale-infrastructure
+next_action: Collect measured staging evidence for at least one P3 infrastructure gate (backpressure/fan-out, Hyperdrive G1-G6 benchmark matrix, or separate-executor isolation) with rollback plan and operator acceptance before implementing queues, executor, direct adapters, or BYOK.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

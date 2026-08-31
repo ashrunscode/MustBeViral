@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-001` (ready). Current step: `p3-001-evidence-gate-evaluation`.
+Current packet: `WP-P3-001` (in_progress). Current step: `p3-002-scale-infrastructure`.
 
 | Authority topic | Document | Path |
 |---|---|---|

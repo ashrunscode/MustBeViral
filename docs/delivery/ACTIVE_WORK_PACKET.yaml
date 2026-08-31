@@ -3,7 +3,7 @@ id: WP-P3-001
 spec_revision: 1
 title: Scale, direct adapters, resilience, and compliance
 phase: P3
-status: ready
+status: in_progress
 priority: medium
 branch: codex/viralgraph-cleanroom
 objective: Add evidence-triggered scale infrastructure—queues, a separately deployable executor,
@@ -80,15 +80,14 @@ public_interfaces:
     services are internal execution infrastructure, not a second policy or billing authority.
 steps:
   - id: p3-001-evidence-gate-evaluation
-    title:
-      Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
+    title: Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
       queues, a separate executor, direct high-volume adapters, Hyperdrive user-path enablement, or
       BYOK.
-    status: pending
+    status: completed
   - id: p3-002-scale-infrastructure
     title: Implement only the P3 infrastructure additions explicitly authorized by a passed evidence
       gate in the prior step.
-    status: pending
+    status: current
   - id: p3-003-phase-exit-handoff
     title: Prove P3 implementable acceptance and hand off; do not start P4 agency work without DTC
       retention evidence.
@@ -96,36 +95,41 @@ steps:
 acceptance:
   automated:
     - id: postgres-remains-authority
-      criterion:
-        Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
+      criterion: Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
         through the existing revision/command barriers.
       status: pending
       evidence: []
     - id: evidence-gated-additions
-      criterion:
-        Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
+      criterion: Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
         and accepted decision before implementation.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
+        - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
   manual:
     - id: no-agency-expansion
       criterion: This packet did not add agency portals, white-labeling, multi-client reporting, or
         connected social publishing.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
+        - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
 rollback:
   strategy: Revert P3 infrastructure changes through Git. Disable newly introduced queues, executor
     routes, or direct adapters with kill switches rather than destroying namespaces unless exact IDs
@@ -135,14 +139,26 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p3-001-evidence-gate-evaluation
-  next_action: 'Operator decision required: record P3 evidence gates (measured backpressure/fan-out,
-    Hyperdrive G1-G6, or separate-executor isolation) before agent:start on WP-P3-001; do not add
-    queues, executor, or agency features without accepted gate evidence.'
+  current_step: p3-002-scale-infrastructure
+  next_action: Collect measured staging evidence for at least one P3 infrastructure gate
+    (backpressure/fan-out, Hyperdrive G1-G6 benchmark matrix, or separate-executor isolation) with
+    rollback plan and operator acceptance before implementing queues, executor, direct adapters, or
+    BYOK.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
+    - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
+    - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - corepack pnpm design:check
+    - corepack pnpm agent:verify
+    - corepack pnpm test (apps/web — 205 passed)
 completion:
   successor_packet_id: null
-  evidence_paths: []
+  evidence_paths:
+    - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
+    - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
+    - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
   completed_at: null
