@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { createRequestAuthenticator } from '../../src/auth/authenticate';
 import { createApiKeyVerifier } from '../../src/auth/api-key';
 import { createOAuthTokenVerifier } from '../../src/auth/oauth-token';
+import type { CoreBindings } from '../../src/bindings';
 
 describe('programmatic credential auth', () => {
   it('authorizes scoped API keys by operation', async () => {
@@ -20,7 +21,9 @@ describe('programmatic credential auth', () => {
       SUPABASE_URL: 'https://example.supabase.co',
       SUPABASE_SECRET_KEY: 'secret',
       MEDIA_BUCKET: {} as R2Bucket,
-    });
+      SERVICE_NAME: 'core',
+      SERVICE_GENERATION: 'viralgraph-cleanroom-v2',
+    } as CoreBindings);
     const authenticator = createRequestAuthenticator({
       verify: vi.fn(),
     });
@@ -38,7 +41,9 @@ describe('programmatic credential auth', () => {
         SUPABASE_URL: 'https://example.supabase.co',
         SUPABASE_SECRET_KEY: 'secret',
         MEDIA_BUCKET: {} as R2Bucket,
-      }),
+        SERVICE_NAME: 'core',
+        SERVICE_GENERATION: 'viralgraph-cleanroom-v2',
+      } as CoreBindings),
     ).rejects.toThrow(/invalid|expired|revoked/i);
   });
 });
