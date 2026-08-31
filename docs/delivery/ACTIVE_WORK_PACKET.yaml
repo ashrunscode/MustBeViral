@@ -138,52 +138,42 @@ acceptance:
         Stripe webhook deliveries.
       status: passed
       evidence:
-        - packages/billing/src/stripe-settlement.test.ts
-        - packages/billing/src/stripe-webhook.test.ts
-        - apps/core/test/unit/stripe-webhook-settlement.test.ts
-        - apps/core/test/unit/stripe-webhook-dedup.test.ts
-        - supabase/tests/database/00029_p1a_stripe_wallet_settlement.test.sql
-        - governance/evidence/WP-P0-001/p1a-implementation-progress-2026-08-30.md
+        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
     - id: email-telemetry-fail-closed
       criterion: Missing Resend or Sentry configuration fails closed; successful paths never persist
         secrets, signed URLs, or customer media in logs or fixtures.
       status: passed
       evidence:
-        - apps/core/test/unit/core-email.test.ts
-        - packages/telemetry/src/adapters.test.ts
-        - packages/email/src/index.test.ts
-        - governance/evidence/WP-P0-001/p1a-email-telemetry-fail-closed-2026-08-30.md
+        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
     - id: billing-ui-states
       criterion: Component and flow tests cover funded, low-balance, blocked, receipt-detail, and
         refund/release billing states without a hidden mock charge.
       status: passed
       evidence:
-        - apps/web/src/features/billing/billing-usage-panel.test.tsx
-        - packages/billing/src/entitlements.test.ts
-        - governance/evidence/WP-P0-001/p1a-implementation-progress-2026-08-30.md
+        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
   manual:
     - id: no-unauthorized-production-mutation
       criterion: No production, live Stripe, DNS, or credential dashboard mutation occurred unless
         PROJECT_STATE and this packet named the exact resource IDs and rollback evidence.
       status: passed
       evidence:
-        - governance/evidence/WP-P0-001/p1a-production-deploy-rollback-stub-2026-08-30.md
+        - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
     status: passed
     evidence:
-      - governance/evidence/WP-P0-001/p1a-implementation-progress-2026-08-30.md
+      - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
   - id: governance
     command: pnpm governance:check
     status: passed
     evidence:
-      - governance/evidence/WP-P0-001/p1a-implementation-progress-2026-08-30.md
+      - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
   - id: repository-verification
     command: pnpm verify
     status: passed
     evidence:
-      - governance/evidence/WP-P0-001/p1a-implementation-progress-2026-08-30.md
+      - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
 rollback:
   strategy: Revert the packet's implementation and generated/evidence changes through auditable Git
     history. Do not destroy remote resources. Disable new charging and signup with kill switches if
@@ -201,5 +191,6 @@ handoff:
   last_green_checks: []
 completion:
   successor_packet_id: WP-P1B-001
-  evidence_paths: []
+  evidence_paths:
+    - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
   completed_at: null
