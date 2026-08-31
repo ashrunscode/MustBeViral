@@ -1,4 +1,7 @@
-import { scopesAuthorizeOperation, type P0AuthenticatedRestOperation } from '@mustbeviral/contracts';
+import {
+  scopesAuthorizeOperation,
+  type P0AuthenticatedRestOperation,
+} from '@mustbeviral/contracts';
 
 import type { CoreBindings } from '../bindings';
 import type { AuthenticatedActor } from './actor';
@@ -11,10 +14,7 @@ export interface RequestAuthenticator {
     token: string,
     bindings: CoreBindings,
   ): Promise<Readonly<{ actor: AuthenticatedActor; callerJwt?: string }>>;
-  authorizeOperation(
-    actor: AuthenticatedActor,
-    operation: P0AuthenticatedRestOperation,
-  ): boolean;
+  authorizeOperation(actor: AuthenticatedActor, operation: P0AuthenticatedRestOperation): boolean;
 }
 
 export function createRequestAuthenticator(jwt: SupabaseJwtVerifier): RequestAuthenticator {
