@@ -1,7 +1,7 @@
 schema_version: 1
 packet_id: WP-P3-001
-step: p3-002-scale-infrastructure
-updated_at: 2026-08-31
+step: p3-003-phase-exit-handoff
+updated_at: 2026-09-01
 framework_ready: true
 runbook: governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
 harness_scripts:
@@ -28,7 +28,12 @@ gate_blocked_until_evidence:
   - Separate executor Worker deploy
   - Direct high-volume provider adapters
   - BYOK routing
+official_backpressure_matrix: collected_2026-08-31
+official_executor_dispatch_probes: collected_2026-08-31
+event_id_migration_applied: p3_start_run_barrier_outbox_event_id
+live_wake_path: queues_enabled_true
+hyperdrive_g1_g6: deferred_procedure_accepted
 next_operator_action: >-
-  Run backpressure harness against staging at VU tiers 1/10/50/200 and fill
-  backpressure/backpressure-fan-out-evidence.yaml, or begin Hyperdrive fixture seeding per benchmark
-  plan.
+  Commit the P3-001 tree, then run corepack pnpm agent:finish --successor
+  governance/evidence/WP-P3-001/successor-WP-P3-002.yaml. Do not start P4 agency
+  work. Instant queue rollback remains QUEUES_ENABLED=false.

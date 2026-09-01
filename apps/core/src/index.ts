@@ -1,5 +1,6 @@
 import { createCoreApp, defaultV1Dependencies } from './app';
 import type { CoreBindings } from './bindings';
+import { consumeOutboxWakeBatch, queuesEnabled } from './composition/outbox-queue';
 import { runProviderScheduled } from './composition/provider-outbox';
 import { createFalWebhookIngestHandler } from './composition/fal-ingest';
 import { createStripeWebhookRecordEvent } from './composition/stripe-webhook-dedup';
@@ -31,4 +32,14 @@ function scheduled(
   context.waitUntil(runProviderScheduled(bindings));
 }
 
-export default Object.assign(app, { scheduled });
+async function queue(batch: MessageBatch<unknown>, bindings: CoreBindings): Promise<void> {
+  if (!queuesEnabled(bindings)) return;
+  await consumeOutboxWakeBatch({
+    messages: batch.messages.map((message) => message.body),
+    drain: async () => {
+      await runProviderScheduled(bindings);
+    },
+  });
+}
+
+export default Object.assign(app, { scheduled, queue });

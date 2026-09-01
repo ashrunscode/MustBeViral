@@ -1,0 +1,16 @@
+{
+  "gate": "separate_executor",
+  "recorded_at": "2026-08-31T18:19:05.310Z",
+  "brief_id": "GB-02",
+  "dispatch_probe_only": true,
+  "vu_tier": 10,
+  "duration_seconds": 180,
+  "ramp_seconds": 30,
+  "observation_count": 2719,
+  "success_count": 2719,
+  "unexpected_error_count": 0,
+  "unexpected_error_rate": 0,
+  "p50_ms": 600.47,
+  "p95_ms": 856.85,
+  "p99_ms": 1066.78
+}

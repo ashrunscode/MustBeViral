@@ -45,6 +45,7 @@ import {
 } from '../../../../packages/artifacts/src/index';
 
 import { mintArtifactAccessUrl, verifyExportObjectBeforeMint } from './artifact-access';
+import { enqueueOutboxWake, queuesEnabled } from './outbox-queue';
 import type { CoreBindings } from '../bindings';
 import { SupabaseDataApiError, SupabaseDataApiExecutor } from '../data/supabase-data-api';
 import type {
@@ -1130,6 +1131,8 @@ export function createSupabaseHandlerPorts(
     | 'SUPABASE_URL'
     | 'SUPABASE_SECRET_KEY'
     | 'SUPABASE_SERVICE_ROLE_KEY'
+    | 'QUEUES_ENABLED'
+    | 'OUTBOX_DISPATCH_QUEUE'
   >,
   fetchImplementation?: typeof fetch,
 ): HandlerPorts {
@@ -1374,13 +1377,23 @@ export function createSupabaseHandlerPorts(
         return reservation === null ? null : runSettlementRecord(reservation);
       },
       async startBarrier(context, input) {
-        return repositories.runs.startBarrier(asTenantContext(context), {
+        const barrier = await repositories.runs.startBarrier(asTenantContext(context), {
           canvasId: input.canvasId,
           expectedRevisionId: input.expectedRevisionId,
           quoteId: input.quoteId,
           confirmed: input.confirmed,
           idempotencyKey: input.idempotencyKey,
         });
+        await enqueueOutboxWake(
+          bindings.OUTBOX_DISPATCH_QUEUE,
+          queuesEnabled(bindings),
+          barrier.eventId,
+        );
+        return {
+          runId: barrier.runId,
+          reservationId: barrier.reservationId,
+          status: barrier.status,
+        };
       },
       async requestCancellation(context, input) {
         // The RPC re-checks state under a row lock, cancels attempts that never reached a

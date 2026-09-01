@@ -13,6 +13,7 @@ import {
   scaffoldHyperdriveEvidenceLayout,
 } from '../../tools/p3-hyperdrive-benchmark-harness';
 import {
+  buildQuoteRunInput,
   parseCommonHarnessArguments,
   samplesToCsv,
   summarizeLatency,
@@ -135,6 +136,21 @@ describe('P3 scale evidence harness', () => {
         ]),
       ),
     ).rejects.toMatchObject({ safe: { code: 'GATE_BLOCKED' } });
+  });
+
+  it('builds quote_run input with expected revision and idempotency key', () => {
+    const input = buildQuoteRunInput({
+      context: { request_id: 'req-1' },
+      canvasId: 'canvas-1',
+      revisionId: 'rev-1',
+      idempotencyKey: 'idem-1',
+    });
+    expect(input).toEqual({
+      context: { request_id: 'req-1' },
+      canvas_id: 'canvas-1',
+      expected_revision_id: 'rev-1',
+      idempotency_key: 'idem-1',
+    });
   });
 
   it('requires dispatch-probe-only for executor isolation staging mode', () => {

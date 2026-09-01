@@ -1,0 +1,10 @@
+{
+  "gate": "queues_backpressure",
+  "mode": "dry-run",
+  "recorded_at": "2026-08-31T17:48:01.608Z",
+  "notes": [
+    "Dry-run validates arguments and output directories only.",
+    "Re-run with --staging to collect live measurements.",
+    "Planned operations: quote_run, validate_graph"
+  ]
+}

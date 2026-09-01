@@ -33,7 +33,7 @@ benchmarks/
 
 ```bash
 cd apps/core
-corepack pnpm hyperdrive:benchmark -- --dry-run --out ../../../governance/evidence/WP-P3-001/benchmarks
+corepack pnpm hyperdrive:benchmark -- --dry-run --out ../../governance/evidence/WP-P3-001/benchmarks
 ```
 
 ## Staging matrix (operator)
@@ -42,7 +42,7 @@ Requires staging Hyperdrive binding and dedicated least-privilege role **outside
 config. The harness fails fast if the candidate path is requested without operator authorization.
 
 ```bash
-corepack pnpm hyperdrive:benchmark -- --staging --path baseline_data_api_rpc --workload W1 --thermal warm --vus 50 --out ../../../governance/evidence/WP-P3-001/benchmarks
+corepack pnpm hyperdrive:benchmark -- --staging --path baseline_data_api_rpc --workload W1 --thermal warm --vus 50 --out ../../governance/evidence/WP-P3-001/benchmarks
 ```
 
 Run full Cartesian matrix per benchmark plan before filling evidence YAML.

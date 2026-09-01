@@ -1,6 +1,6 @@
 begin;
 
-select plan(38);
+select plan(40);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -345,6 +345,34 @@ select is(
   )),
   1,
   'barrier creates one unique outbox event'
+);
+select is(
+  (
+    select (response_payload ->> 'event_id')::uuid
+    from public.idempotency_records
+    where operation = 'start_run' and idempotency_key = 'start-run-key'
+  ),
+  (
+    select id
+    from public.outbox_events
+    where aggregate_id = (
+      select id from public.runs where quote_id = '44000000-0000-4000-8000-000000000001'
+    )
+  ),
+  'barrier returns the existing outbox event id'
+);
+select isnt(
+  (
+    select response_payload ->> 'event_id'
+    from public.idempotency_records
+    where operation = 'start_run' and idempotency_key = 'start-run-key'
+  ),
+  (
+    select id::text
+    from public.runs
+    where quote_id = '44000000-0000-4000-8000-000000000001'
+  ),
+  'outbox event_id is not derived from run_id'
 );
 set local role authenticated;
 select is(

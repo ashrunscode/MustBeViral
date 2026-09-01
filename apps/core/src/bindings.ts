@@ -1,3 +1,5 @@
+import type { QueueSendPort } from './composition/outbox-queue';
+
 export interface CoreBindings extends Omit<
   PlatformBindings,
   | 'APP_ENV'
@@ -16,6 +18,8 @@ export interface CoreBindings extends Omit<
   | 'MEDIA_BUCKET'
   | 'SUPABASE_SECRET_KEY'
   | 'SUPABASE_SERVICE_ROLE_KEY'
+  | 'QUEUES_ENABLED'
+  | 'OUTBOX_DISPATCH_QUEUE'
 > {
   readonly APP_ENV?: string;
   readonly CORS_ALLOWED_ORIGINS?: string;
@@ -59,6 +63,17 @@ export interface CoreBindings extends Omit<
   /** Optional Sentry DSN for error reporting; absent means disabled. */
   readonly SENTRY_DSN?: string;
   readonly OTEL_EXPORTER_OTLP_ENDPOINT?: string;
+  /**
+   * Opt-in Cloudflare Queue wake for outbox drain. Default unset/false keeps the cron
+   * reconciler as the only dispatcher. Staging binds OUTBOX_DISPATCH_QUEUE; enqueue
+   * no-ops unless this is the string true. Instant rollback is setting it back to
+   * false. The producer uses the existing outbox event_id after start_run_barrier.
+   * Union is wider than wrangler-generated `"true"` so the kill switch can return to
+   * false without a types regenerate, and narrower than `string` so CoreBindings still
+   * extends the omitted PlatformBindings slot.
+   */
+  readonly QUEUES_ENABLED?: 'true' | 'false';
+  readonly OUTBOX_DISPATCH_QUEUE?: QueueSendPort;
 }
 
 export interface CoreVariables {

@@ -32,5 +32,5 @@ fixtures per benchmark plan.
 
 ```bash
 cd apps/core
-corepack pnpm backpressure:harness -- --dry-run --vus 10 --out ../../../governance/evidence/WP-P3-001/backpressure
+corepack pnpm backpressure:harness -- --dry-run --vus 10 --out ../../governance/evidence/WP-P3-001/backpressure
 ```

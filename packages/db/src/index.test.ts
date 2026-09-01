@@ -168,11 +168,12 @@ describe('tenant-safe repository invariants', () => {
     );
   });
 
-  it('returns the server-authoritative run identity from the start barrier RPC', async () => {
+  it('returns the existing outbox event_id from the start barrier RPC', async () => {
     const rpc = vi.fn().mockResolvedValue({
       run_id: '20000000-0000-4000-8000-000000000001',
       reservation_id: '30000000-0000-4000-8000-000000000001',
       status: 'queued',
+      event_id: '70000000-0000-4000-8000-000000000001',
     });
     const executor = { rpc } as unknown as DatabaseExecutor;
     const repositories = createDatabaseRepositories(executor);
@@ -194,6 +195,7 @@ describe('tenant-safe repository invariants', () => {
       runId: '20000000-0000-4000-8000-000000000001',
       reservationId: '30000000-0000-4000-8000-000000000001',
       status: 'queued',
+      eventId: '70000000-0000-4000-8000-000000000001',
     });
     expect(rpc).toHaveBeenCalledWith('start_run_barrier', {
       p_workspace_id: '10000000-0000-4000-8000-000000000001',
@@ -204,5 +206,35 @@ describe('tenant-safe repository invariants', () => {
       p_idempotency_key: 'start-idempotency-1',
       p_request_id: 'request-start',
     });
+  });
+
+  it('rejects a barrier payload that copies run_id into event_id', async () => {
+    const runId = '20000000-0000-4000-8000-000000000001';
+    const rpc = vi.fn().mockResolvedValue({
+      run_id: runId,
+      reservation_id: '30000000-0000-4000-8000-000000000001',
+      status: 'queued',
+      event_id: runId,
+    });
+    const repositories = createDatabaseRepositories({
+      rpc,
+    } as unknown as DatabaseExecutor);
+
+    await expect(
+      repositories.runs.startBarrier(
+        tenantContext({
+          workspaceId: '10000000-0000-4000-8000-000000000001',
+          actorId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
+          requestId: 'request-start-derived',
+        }),
+        {
+          canvasId: '40000000-0000-4000-8000-000000000001',
+          expectedRevisionId: '50000000-0000-4000-8000-000000000001',
+          quoteId: '60000000-0000-4000-8000-000000000001',
+          confirmed: true,
+          idempotencyKey: 'start-idempotency-derived',
+        },
+      ),
+    ).rejects.toThrow('existing outbox id');
   });
 });

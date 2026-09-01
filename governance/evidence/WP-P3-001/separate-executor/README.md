@@ -21,8 +21,8 @@ separate-executor/
 
 ```bash
 cd apps/core
-corepack pnpm executor:isolation -- --dry-run --vus 10 --out ../../../governance/evidence/WP-P3-001/separate-executor
-corepack pnpm executor:isolation -- --staging --vus 10 --dispatch-probe-only --out ../../../governance/evidence/WP-P3-001/separate-executor
+corepack pnpm executor:isolation -- --dry-run --vus 10 --out ../../governance/evidence/WP-P3-001/separate-executor
+corepack pnpm executor:isolation -- --staging --vus 10 --dispatch-probe-only --out ../../governance/evidence/WP-P3-001/separate-executor
 ```
 
 **Do not deploy** a separate executor Worker until evidence passes. Baseline measurements on the

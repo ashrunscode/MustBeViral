@@ -1,0 +1,10 @@
+{
+  "gate": "hyperdrive_g1_g6",
+  "mode": "dry-run",
+  "recorded_at": "2026-08-31T17:48:01.584Z",
+  "notes": [
+    "Scaffolded benchmark directory layout per RLS_HYPERDRIVE_BENCHMARK_PLAN.md.",
+    "Staging candidate path requires operator-authorized Hyperdrive binding.",
+    "Planned cell: path=baseline_data_api_rpc workload=W1 thermal=warm vu=50"
+  ]
+}

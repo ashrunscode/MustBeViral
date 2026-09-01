@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `dtc_ecommerce_marketing_teams` |
 | Phase | P3 — Scale, direct adapters, resilience, and compliance (in_progress) |
 | Active packet | `WP-P3-001` |
-| Current step | `p3-002-scale-infrastructure` |
+| Current step | `p3-003-phase-exit-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Run staging evidence harnesses per staging-evidence-collection-runbook.md, fill evidence YAML from templates, and obtain operator acceptance for at least one gate before implementing queues, executor, Hyperdrive user-path, or BYOK.
+Commit the P3-001 tree, then run corepack pnpm agent:finish --successor governance/evidence/WP-P3-001/successor-WP-P3-002.yaml. Do not start P4 agency work.

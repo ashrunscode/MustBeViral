@@ -79,7 +79,7 @@ export interface RunRepository {
       confirmed: true;
       idempotencyKey: string;
     }>,
-  ): Promise<Readonly<{ runId: string; reservationId: string; status: 'queued' }>>;
+  ): Promise<Readonly<{ runId: string; reservationId: string; status: 'queued'; eventId: string }>>;
 }
 
 export interface ArtifactRepository {
@@ -293,10 +293,16 @@ export function createDatabaseRepositories(executor: DatabaseExecutor): Database
             p_request_id: context.requestId,
           }),
         );
+        const runId = requiredString(result.run_id, 'run_id');
+        const eventId = requiredString(result.event_id, 'event_id');
+        if (eventId === runId) {
+          throw new TypeError('event_id must be the existing outbox id, not run_id');
+        }
         return {
-          runId: requiredString(result.run_id, 'run_id'),
+          runId,
           reservationId: requiredString(result.reservation_id, 'reservation_id'),
           status: 'queued',
+          eventId,
         };
       },
     },

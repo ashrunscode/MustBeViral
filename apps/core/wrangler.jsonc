@@ -49,6 +49,27 @@
         "SUPABASE_JWT_AUDIENCE": "authenticated",
         "FAL_WEBHOOK_URL": "https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev/v1/webhooks/fal",
         "PROVIDER_RUNS_ENABLED": "true",
+        "QUEUES_ENABLED": "true",
+      },
+      // Staging-only wake queue. Created after PROJECT_STATE and the packet named
+      // mustbeviral-v2-staging-outbox-dispatch and mustbeviral-v2-staging-core.
+      // QUEUES_ENABLED is true after the event_id migration and no-op deploy.
+      // Instant rollback: set this var back to "false" and redeploy. Do not
+      // delete the queue. Producer sends { type: 'outbox.wake', event_id } only.
+      "queues": {
+        "producers": [
+          {
+            "binding": "OUTBOX_DISPATCH_QUEUE",
+            "queue": "mustbeviral-v2-staging-outbox-dispatch",
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "mustbeviral-v2-staging-outbox-dispatch",
+            "max_batch_size": 10,
+            "max_batch_timeout": 5,
+          },
+        ],
       },
       "triggers": {
         "crons": ["* * * * *"],

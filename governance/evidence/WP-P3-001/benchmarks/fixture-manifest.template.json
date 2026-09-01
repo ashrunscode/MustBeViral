@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "TBD",
+  "workspaces": "TBD",
+  "canvases": "TBD",
+  "tenants": ["TBD_A", "TBD_B"],
+  "randomization_key": "TBD",
+  "workloads": {
+    "W1": "TBD",
+    "W2": "TBD",
+    "W3": "TBD",
+    "W4": "TBD",
+    "W5": "TBD"
+  }
+}

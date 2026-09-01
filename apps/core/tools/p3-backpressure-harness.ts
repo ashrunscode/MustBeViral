@@ -11,6 +11,7 @@ import {
   type PreparedGoldenBrief,
 } from './launch-pack-harness-lib';
 import {
+  buildQuoteRunInput,
   classifyHarnessError,
   createStagingEvidenceTransport,
   parseCommonHarnessArguments,
@@ -190,13 +191,15 @@ async function collectBackpressureSamples(input: {
           if (!result.ok)
             throw new HarnessFlowError(result.error, input.prepared.context.request_id);
         } else {
-          const result = await input.transport.call('quote_run', {
-            context: input.prepared.context,
-            workspace_id: input.prepared.workspaceId,
-            canvas_id: input.prepared.canvasId,
-            revision_id: input.prepared.revisionId,
-            revision_hash: input.prepared.revisionHash,
-          });
+          const result = await input.transport.call(
+            'quote_run',
+            buildQuoteRunInput({
+              context: input.prepared.context,
+              canvasId: input.prepared.canvasId,
+              revisionId: input.prepared.revisionId,
+              idempotencyKey: randomUUID(),
+            }),
+          );
           if (!result.ok)
             throw new HarnessFlowError(result.error, input.prepared.context.request_id);
         }

@@ -11,10 +11,8 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P3-001
-next_action: >-
-  Run staging evidence harnesses per staging-evidence-collection-runbook.md, fill evidence YAML from
-  templates, and obtain operator acceptance for at least one gate before implementing queues,
-  executor, Hyperdrive user-path, or BYOK.
+next_action: Commit the P3-001 tree, then run corepack pnpm agent:finish --successor
+  governance/evidence/WP-P3-001/successor-WP-P3-002.yaml. Do not start P4 agency work.
 decisions_pending: []
 blockers: []
 legacy:
@@ -30,6 +28,10 @@ environments:
   staging:
     generation: viralgraph-cleanroom-v2
     state: ready
+    cloudflare_worker: mustbeviral-v2-staging-core
+    notes: Named staging outbox queue mustbeviral-v2-staging-outbox-dispatch. QUEUES_ENABLED is true
+      after the event_id migration. Instant rollback is QUEUES_ENABLED=false. Destructive remote
+      action stays forbidden.
   preview:
     generation: viralgraph-cleanroom-v2
     state: not_created

@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-001
-current_step: p3-002-scale-infrastructure
-next_action: Run staging evidence harnesses per staging-evidence-collection-runbook.md, fill evidence YAML from templates, and obtain operator acceptance for at least one gate before implementing queues, executor, Hyperdrive user-path, or BYOK.
+current_step: p3-003-phase-exit-handoff
+next_action: Commit the P3-001 tree, then run corepack pnpm agent:finish --successor governance/evidence/WP-P3-001/successor-WP-P3-002.yaml. Do not start P4 agency work.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -20,11 +20,18 @@ enablement, separate executor, BYOK) may ship until a filled evidence artifact p
 
 ## Gate status (2026-08-31)
 
-| Gate                            | Status  | Evidence output directory                          |
-| ------------------------------- | ------- | -------------------------------------------------- |
-| Queues / backpressure / fan-out | not_met | `governance/evidence/WP-P3-001/backpressure/`      |
-| Hyperdrive G1–G6                | not_met | `governance/evidence/WP-P3-001/benchmarks/`        |
-| Separate-executor isolation     | not_met | `governance/evidence/WP-P3-001/separate-executor/` |
+| Gate                            | Status                                     | Evidence output directory                          |
+| ------------------------------- | ------------------------------------------ | -------------------------------------------------- |
+| Queues / backpressure / fan-out | met                                        | `governance/evidence/WP-P3-001/backpressure/`      |
+| Hyperdrive G1–G6                | deferred; procedure accepted, not executed | `governance/evidence/WP-P3-001/benchmarks/`        |
+| Separate-executor isolation     | not_met                                    | `governance/evidence/WP-P3-001/separate-executor/` |
+
+Queue implementation note (2026-09-01): `mustbeviral-v2-staging-outbox-dispatch` exists and is
+bound to `mustbeviral-v2-staging-core` as `OUTBOX_DISPATCH_QUEUE`. Staging has
+`p3_start_run_barrier_outbox_event_id` applied and `QUEUES_ENABLED` is `"true"`. The producer
+sends `{ type: 'outbox.wake', event_id }` after `start_run_barrier` commit. Instant rollback
+is set the var back to `"false"` and redeploy; do not delete the queue. Evidence:
+`governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md`.
 
 Roll-up: `governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml`
 
@@ -54,9 +61,9 @@ Roll-up: `governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml`
 Harness entry points (from `apps/core`):
 
 ```bash
-corepack pnpm backpressure:harness -- --dry-run --vus 10 --out ../../../governance/evidence/WP-P3-001/backpressure
-corepack pnpm hyperdrive:benchmark -- --dry-run --out ../../../governance/evidence/WP-P3-001/benchmarks
-corepack pnpm executor:isolation -- --dry-run --out ../../../governance/evidence/WP-P3-001/separate-executor
+corepack pnpm backpressure:harness -- --dry-run --vus 10 --out ../../governance/evidence/WP-P3-001/backpressure
+corepack pnpm hyperdrive:benchmark -- --dry-run --out ../../governance/evidence/WP-P3-001/benchmarks
+corepack pnpm executor:isolation -- --dry-run --out ../../governance/evidence/WP-P3-001/separate-executor
 ```
 
 Replace `--dry-run` with `--staging` only when ready to collect live measurements.
@@ -132,7 +139,10 @@ absent** from `apps/core/wrangler.jsonc` until G1–G6 pass.
 
 ### Procedure
 
-1. Seed synthetic staging corpus per benchmark plan (≥250 workspaces, tenants A/B disjoint).
+1. Use the accepted procedure in
+   `benchmarks/hyperdrive-fixture-seed-procedure-2026-09-01.md` (plan corpus,
+   tenants A/B, rollback). WP-P3-001 deferred execution; successor WP-P3-002 may
+   seed. Do not invent a different corpus.
 2. Commit `fixture-manifest.json` with byte counts and hashes.
 3. Deploy benchmark build with **both** paths behind staging-only route selection (operator action).
 4. Run `p3-hyperdrive-benchmark-harness.ts` for each matrix cell (3×5 min runs per cell).

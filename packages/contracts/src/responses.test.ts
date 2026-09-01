@@ -545,5 +545,20 @@ describe('P0 REST response contracts', () => {
         requestedMicros: 400_000n,
       }).success,
     ).toBe(false);
+    expect(
+      StartRunResultSchema.safeParse({
+        status: 'ok',
+        run: {
+          runId: 'run-1',
+          projectId: 'project-1',
+          canvasId: 'canvas-1',
+          canvasRevisionId: 'revision-1',
+          quoteId: 'quote-1',
+          status: 'queued',
+          reservationId: 'reservation-1',
+        },
+        event_id: 'evt_1',
+      }).success,
+    ).toBe(false);
   });
 });

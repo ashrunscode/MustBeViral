@@ -257,6 +257,20 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
+export function buildQuoteRunInput(prepared: {
+  readonly context: unknown;
+  readonly canvasId: string;
+  readonly revisionId: string;
+  readonly idempotencyKey: string;
+}): Readonly<Record<string, unknown>> {
+  return {
+    context: prepared.context,
+    canvas_id: prepared.canvasId,
+    expected_revision_id: prepared.revisionId,
+    idempotency_key: prepared.idempotencyKey,
+  };
+}
+
 export async function createStagingEvidenceTransport(): Promise<StagingLaunchPackTransport> {
   const configuration = await loadStagingAdminConfiguration();
   const identity = createDisposableIdentity();

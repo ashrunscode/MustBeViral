@@ -1,0 +1,4 @@
+vu_tier,observation_count,success_count,unexpected_error_rate,p50_ms,p95_ms,p99_ms,run_id
+10,2719,2719,0,600.47,856.85,1066.78,p3-ex-official-vu10
+50,5785,5785,0,1366.53,2269.73,3139.93,p3-ex-official-vu50
+200,5586,5586,0,5613.87,10900.19,13747.55,p3-ex-official-vu200
