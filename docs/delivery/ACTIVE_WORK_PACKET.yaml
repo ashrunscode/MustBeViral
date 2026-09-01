@@ -1,15 +1,14 @@
 schema_version: 1
-id: WP-P3-001
+id: WP-P3-002
 spec_revision: 1
-title: Scale, direct adapters, resilience, and compliance
+title: Optional remaining P3 evidence gates
 phase: P3
-status: in_progress
+status: ready
 priority: medium
 branch: codex/viralgraph-cleanroom
-objective: Add evidence-triggered scale infrastructure—queues, a separately deployable executor,
-  direct high-volume provider adapters, circuit breakers, canaries, disaster-recovery automation,
-  stronger compliance controls, and BYOK—only when measured triggers, benchmarks, rollback plans,
-  and accepted decisions justify each addition.
+objective: Execute the accepted Hyperdrive fixture-seed procedure and G1-G6 matrix only when the
+  operator authorizes that measurement window, keep a separate executor and BYOK gated, and never
+  start P4 agency work without DTC retention evidence.
 authority_refs:
   - product-contract
   - release-scope
@@ -26,17 +25,19 @@ required_skills:
   - wrangler
   - workers-best-practices
   - observability-ops
+  - data-architect
   - test-mastery
 depends_on:
-  - WP-P2-001
+  - WP-P3-001
 scope:
   allowed_paths:
     - apps/**
     - packages/**
     - supabase/**
-    - governance/evidence/WP-P3-001/**
-    - governance/evidence/WP-P2-001/transition-receipt.yaml
-    - governance/evidence/WP-P2-001/completed-work-packet.yaml
+    - governance/evidence/WP-P3-002/**
+    - governance/evidence/WP-P3-001/transition-receipt.yaml
+    - governance/evidence/WP-P3-001/completed-work-packet.yaml
+    - governance/evidence/WP-P3-001/benchmarks/**
     - governance/tests/**
     - governance/schemas/**
     - governance/scripts/**
@@ -70,163 +71,72 @@ scope:
     - rls-hyperdrive-benchmark-plan
     - codex-finish-mega-prompt
 deliverables:
-  - Recorded evidence gates with measured triggers, benchmarks, rollback plans, and accepted
-    decisions before each optional P3 infrastructure addition.
-  - Queues, separate executor, direct high-volume adapters, circuit breakers, canaries, DR
-    automation, compliance controls, and BYOK only when the recorded gate passes.
-  - Postgres remains authoritative for permissions, revisions, runs, and money on every new path.
+  - A committed fixture-manifest.json and synthetic A/B corpus on mustbeviral-staging only after the
+    accepted seed procedure is executed, or a recorded decision to keep G1-G6 deferred.
+  - Hyperdrive user-path enablement only if G1 through G6 all pass on that frozen manifest.
+  - Separate executor and BYOK only if their evidence gates pass. No P4 agency surfaces.
 public_interfaces:
-  - Existing REST/MCP/CLI/browser transports remain thin over the shared command layer. P3 scale
-    services are internal execution infrastructure, not a second policy or billing authority.
+  - Existing REST/MCP/CLI/browser transports remain thin. Optional P3 scale paths stay internal and
+    never become a second policy or billing authority.
 steps:
-  - id: p3-001-evidence-gate-evaluation
-    title:
-      Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
-      queues, a separate executor, direct high-volume adapters, Hyperdrive user-path enablement, or
-      BYOK.
-    status: completed
-  - id: p3-002-scale-infrastructure
-    title: Implement only the P3 infrastructure additions explicitly authorized by a passed evidence
-      gate in the prior step.
-    status: completed
-  - id: p3-003-phase-exit-handoff
-    title: Prove P3 implementable acceptance and hand off; do not start P4 agency work without DTC
-      retention evidence.
-    status: current
+  - id: p3b-001-execute-or-keep-deferred
+    title: Execute the accepted Hyperdrive fixture-seed procedure on mustbeviral-staging and commit
+      fixture-manifest.json, or record that G1-G6 stays deferred for this packet.
+    status: pending
+  - id: p3b-002-g1-g6-or-close
+    title: Run the G1-G6 matrix only after the manifest exists, or close without a Hyperdrive binding if
+      the operator keeps the Data API/RPC baseline.
+    status: pending
+  - id: p3b-003-no-agency-handoff
+    title: Prove optional-gate outcomes and hand off without starting P4 agency work.
+    status: pending
 acceptance:
   automated:
     - id: postgres-remains-authority
-      criterion:
-        Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
-        through the existing revision/command barriers.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-001/queues/postgres-remains-authority-2026-08-31.md
-        - governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md
-    - id: evidence-gated-additions
-      criterion:
-        Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
-        and accepted decision before implementation.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
-        - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
-        - governance/evidence/WP-P3-001/backpressure/backpressure-fan-out-evidence.yaml
-        - governance/evidence/WP-P3-001/backpressure/observability-2026-08-31.md
-        - governance/evidence/WP-P3-001/benchmarks/hyperdrive-g1-g6-deferred-2026-09-01.md
-        - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-procedure-2026-09-01.md
+      criterion: Tests prove any new Hyperdrive or executor path cannot mutate ledger, membership, or
+        canvas head except through existing revision and command barriers.
+      status: pending
+      evidence: []
+    - id: no-ungated-enablement
+      criterion: No Hyperdrive user-path binding, separate executor, or BYOK ships without a passed
+        evidence gate.
+      status: pending
+      evidence: []
   manual:
     - id: no-agency-expansion
       criterion: This packet did not add agency portals, white-labeling, multi-client reporting, or
         connected social publishing.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-001/no-agency-expansion.yaml
-        - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
-        - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
-      - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
-      - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
+    status: pending
+    evidence: []
 rollback:
-  strategy:
-    Instant kill-switch set QUEUES_ENABLED=false on mustbeviral-v2-staging-core and redeploy,
-    or wrangler rollback e2614072-adfa-404f-9ba9-32376a221130 --env staging. Live version
-    e66b6d1c-47d1-44b9-b83d-e062c0119cae. Unbind OUTBOX_DISPATCH_QUEUE from the staging env and Git
-    revert if needed. Delete only mustbeviral-v2-staging-outbox-dispatch when a later authorized
-    destructive action names that exact queue. Do not destroy production or other queues.
+  strategy: Keep Data API/RPC baseline. Delete only synthetic A/B fixture rows created by the accepted
+    seed procedure. Remove a Hyperdrive binding only with a recorded binding ID. Instant queue
+    rollback remains QUEUES_ENABLED=false on mustbeviral-v2-staging-core.
   remote_actions_required: false
 external_effects:
-  remote_mutation: authorized
+  remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p3-003-phase-exit-handoff
-  next_action: Commit the P3-001 tree, then run corepack pnpm agent:finish --successor
-    governance/evidence/WP-P3-001/successor-WP-P3-002.yaml. Do not start P4 agency work.
+  current_step: p3b-001-execute-or-keep-deferred
+  next_action: Execute the accepted Hyperdrive fixture-seed procedure on mustbeviral-staging and
+    commit fixture-manifest.json, or record that G1-G6 stays deferred for this packet.
   blockers: []
-  changed_paths:
-    - apps/core/src/bindings.ts
-    - apps/core/src/index.ts
-    - apps/core/src/composition/outbox-queue.ts
-    - apps/core/src/composition/supabase.ts
-    - apps/core/test/unit/outbox-queue.test.ts
-    - apps/core/test/unit/start-run-outbox-wake.test.ts
-    - apps/core/wrangler.jsonc
-    - apps/core/worker-configuration.d.ts
-    - packages/db/src/repositories.ts
-    - packages/db/src/index.test.ts
-    - supabase/migrations/20260831140000_p3_start_run_barrier_outbox_event_id.sql
-    - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
-    - governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
-    - governance/evidence/WP-P3-001/operator-checklist.yaml
-    - governance/evidence/WP-P3-001/queues/staging-namespace-inspection-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/named-remote-mutation-approval-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/postgres-remains-authority-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-staging-apply-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-blocker-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-procedure-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-g1-g6-deferred-2026-09-01.md
-    - governance/evidence/WP-P3-001/no-agency-expansion.yaml
-    - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
-    - governance/evidence/WP-P3-001/successor-WP-P3-002.yaml
-    - packages/contracts/src/responses.test.ts
-    - governance/evidence/WP-P3-001/templates/backpressure-fan-out-evidence.template.yaml
-    - governance/evidence/WP-P3-001/templates/hyperdrive-g1-g6-evidence.template.yaml
-    - governance/evidence/WP-P3-001/templates/separate-executor-isolation-evidence.template.yaml
-    - governance/evidence/WP-P3-001/backpressure/README.md
-    - governance/evidence/WP-P3-001/benchmarks/README.md
-    - governance/evidence/WP-P3-001/separate-executor/README.md
-    - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
-    - governance/evidence/WP-P3-001/p3-002-framework-handoff-2026-08-31.md
-    - apps/core/tools/p3-scale-evidence-lib.ts
-    - apps/core/tools/p3-backpressure-harness.ts
-    - apps/core/tools/p3-hyperdrive-benchmark-harness.ts
-    - apps/core/tools/p3-executor-isolation-harness.ts
-    - apps/core/test/unit/p3-scale-evidence-harness.test.ts
-    - apps/core/package.json
-    - PROJECT_STATE.yaml
-    - docs/STATUS.md
-    - llms.txt
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-  last_green_checks:
-    - corepack pnpm design:check
-    - corepack pnpm governance:check
-    - corepack pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-002
-  evidence_paths:
-    - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
-    - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
-    - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
-    - governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
-    - governance/evidence/WP-P3-001/p3-002-framework-handoff-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/staging-namespace-inspection-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/postgres-remains-authority-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/named-remote-mutation-approval-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-staging-apply-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-blocker-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-procedure-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-g1-g6-deferred-2026-09-01.md
-    - governance/evidence/WP-P3-001/no-agency-expansion.yaml
-    - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
-    - governance/evidence/WP-P3-001/successor-WP-P3-002.yaml
-    - governance/evidence/WP-P3-001/operator-checklist.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null
