@@ -102,10 +102,7 @@ acceptance:
       status: passed
       evidence:
         - governance/evidence/WP-P3-001/queues/postgres-remains-authority-2026-08-31.md
-        - apps/core/test/unit/outbox-queue.test.ts
-        - apps/core/test/unit/start-run-outbox-wake.test.ts
-        - packages/contracts/src/responses.test.ts
-        - packages/db/src/index.test.ts
+        - governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md
     - id: evidence-gated-additions
       criterion:
         Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
