@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Ask the user to confirm the exact Supabase organization, then fetch and present the current project cost.
+Verify the cost approval evidence and activate WP-P3-006 for exact project creation.
