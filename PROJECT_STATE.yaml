@@ -7,11 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: Collaboration environment deployability remediation
-  state: in_progress
+  title: V2 production release-readiness preflight
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-003
-next_action: Verify WP-P3-003 and prepare the V2 production release-readiness successor without touching legacy V1.
+active_work_packet: WP-P3-004
+next_action: Refresh authenticated production inventory and secret-presence gates without remote mutation.
 decisions_pending: []
 blockers: []
 legacy:
@@ -35,14 +35,10 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-02T01:13:51.439Z
+  at: 2026-09-02T01:22:45.071Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-002/staging-inspection-2026-09-01.md
-    - governance/evidence/WP-P3-002/hyperdrive-g1-g6-deferred-2026-09-01.md
-    - governance/evidence/WP-P3-002/no-ungated-enablement.yaml
-    - governance/evidence/WP-P3-002/postgres-remains-authority.md
-    - governance/evidence/WP-P3-002/no-agency-expansion.yaml
-    - governance/evidence/WP-P3-002/optional-gate-outcomes-2026-09-01.md
-    - governance/evidence/WP-P3-002/operator-authorization-and-remote-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-002/successor-WP-P3-003.yaml
+    - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
+    - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
+    - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
+    - governance/evidence/WP-P3-003/successor-WP-P3-004.yaml

@@ -1,42 +1,47 @@
 schema_version: 1
-id: WP-P3-003
+id: WP-P3-004
 spec_revision: 1
-title: Collaboration environment deployability remediation
+title: V2 production release-readiness preflight
 phase: P3
-status: in_progress
-priority: high
+status: ready
+priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Correct the environment-specific Durable Object bindings for the dedicated collaboration
-  Worker, prove staging deployability, create only mustbeviral-v2-staging-collaboration in the
-  authorized Cloudflare account, and leave production traffic and legacy V1 untouched.
+objective: Convert the current repository and authenticated-provider state into an exact,
+  fail-closed V2 production provisioning and canary plan, resolving placeholders and
+  missing-resource facts before any production deploy or legacy cutover.
 authority_refs:
   - product-contract
   - release-scope
-  - experience-contract
-  - canvas-screen-states
   - system-overview
   - data-auth-tenancy
-  - adr-0002-platform-boundaries
-  - adr-0004-immutable-graph-revisions
+  - execution-providers-billing
   - roadmap
   - quality-gates
-  - deploy-rollback-incidents
   - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
   - codex-finish-mega-prompt
 required_skills:
   - cloudflare
   - wrangler
-  - workers-best-practices
-  - test-mastery
+  - deployments-cicd
+  - data-architect
+  - auth-fortress
+  - billing-engine
+  - observability-ops
+  - quality-check
 depends_on:
-  - WP-P3-002
+  - WP-P3-003
 scope:
   allowed_paths:
-    - apps/collaboration/**
+    - apps/**
+    - packages/**
+    - supabase/**
+    - governance/evidence/WP-P3-004/**
     - governance/evidence/WP-P3-003/**
-    - governance/evidence/WP-P3-002/**
     - governance/tests/**
     - docs/**
+    - scripts/**
     - package.json
     - pnpm-lock.yaml
     - pnpm-workspace.yaml
@@ -45,6 +50,9 @@ scope:
     - tsconfig.base.json
     - eslint.config.mjs
     - vitest.config.ts
+    - playwright.config.ts
+    - .env.example
+    - .dev.vars.example
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
@@ -54,119 +62,84 @@ scope:
   required_doc_ids:
     - product-contract
     - release-scope
-    - experience-contract
-    - canvas-screen-states
     - system-overview
     - data-auth-tenancy
-    - adr-0002-platform-boundaries
-    - adr-0004-immutable-graph-revisions
+    - execution-providers-billing
     - roadmap
     - quality-gates
-    - deploy-rollback-incidents
     - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
     - codex-finish-mega-prompt
 deliverables:
-  - env.staging and env.production declare CANVAS_COORDINATION explicitly because Durable Object
-    bindings are non-inheritable.
-  - Staging dry-run and generated binding checks contain CANVAS_COORDINATION without inheritance
-    warnings.
-  - Cloudflare account d2897bdebfa128919bd89b265e6a712e contains a verified
-    mustbeviral-v2-staging-collaboration deployment with recorded version and containment evidence.
+  - A current exact inventory of V2 and legacy production resources across Supabase, Cloudflare,
+    Vercel, DNS, Stripe mode, email, and observability, with missing sources labeled rather than
+    treated as passing.
+  - A production configuration audit that removes or blocks placeholder resource IDs and proves
+    production dry-runs cannot mutate remote state.
+  - A successor packet that names the first bounded production provisioning slice, its exact target
+    names or IDs, kill switches, rollback evidence, and exclusion of legacy destruction.
 public_interfaces:
-  - The collaboration Worker remains an internal realtime surface. Postgres remains the only durable
-    authority for permissions, immutable revisions, runs, and money.
+  - No traffic, DNS, signup, charging, provider-spend, invitation, or customer-access change occurs
+    in this preflight packet.
 steps:
-  - id: p3c-001-environment-bindings
-    title: Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
-    status: completed
-  - id: p3c-002-dry-run-and-types
-    title: Prove environment-specific Wrangler types and dry-runs have the expected binding and no
-      inheritance warning.
-    status: completed
-  - id: p3c-003-staging-deploy-smoke
+  - id: p3d-001-provider-inventory
     title:
-      Deploy only mustbeviral-v2-staging-collaboration, record its version, and run a bounded smoke
-      without connecting production traffic.
-    status: completed
-  - id: p3c-004-release-readiness-handoff
-    title: Record remediation evidence and prepare the separately governed V2 release-readiness
-      successor without touching legacy V1.
-    status: current
+      Refresh authenticated production resource inventory and credential-presence checks without
+      printing secret values.
+    status: pending
+  - id: p3d-002-placeholder-and-contract-audit
+    title:
+      Audit production configs, migration order, kill switches, domains, and rollback requirements;
+      add fail-closed checks for unresolved placeholders.
+    status: pending
+  - id: p3d-003-provisioning-successor
+    title: Author the exact non-destructive production provisioning successor from verified inventory.
+    status: pending
 acceptance:
   automated:
-    - id: environment-binding-parity
+    - id: production-config-fails-closed
       criterion:
-        Tests and Wrangler dry-runs prove CANVAS_COORDINATION is present in default, staging, and
-        production configurations without an environment-inheritance warning.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
-        - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
-    - id: postgres-remains-authority
-      criterion: Existing checkpoint and Worker tests prove collaboration drafts cannot bypass the
-        immutable Postgres revision barrier or mutate money and membership authority.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
+        Tests reject placeholder IDs, missing required production bindings, accidental legacy
+        targets, or an ungoverned custom-domain deploy.
+      status: pending
+      evidence: []
   manual:
-    - id: staging-deployment-contained
+    - id: inventory-and-rollback-complete
       criterion:
-        The exact staging collaboration Worker version is recorded, smoke-tested, and has no
-        production route, production client, or legacy dependency.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
+        Every proposed production mutation has an exact target, owner, kill switch, validation,
+        and recoverable rollback path; unavailable evidence remains explicitly blocked.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Do not connect Core, web, custom domains, or production clients during this packet. If a
-    staging deployment is unhealthy, keep it unrouted and deploy a corrected version; after a known
-    good predecessor exists, Wrangler rollback may restore that version. Do not delete the Worker or
-    Durable Object namespace in this packet.
-  remote_actions_required: true
+  strategy:
+    This packet is read-only against remote providers. Revert repository-only audit and guard
+    changes through Git. Do not deploy, provision, attach DNS, alter live provider mode, charge,
+    invite, or delete any remote resource.
+  remote_actions_required: false
 external_effects:
-  remote_mutation: authorized
+  remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: p3c-004-release-readiness-handoff
-  next_action: Verify WP-P3-003 and prepare the V2 production release-readiness successor without touching legacy V1.
+  current_step: p3d-001-provider-inventory
+  next_action: Refresh authenticated production inventory and secret-presence gates without remote mutation.
   blockers: []
-  changed_paths:
-    - apps/collaboration/wrangler.jsonc
-    - apps/collaboration/worker-configuration.d.ts
-    - governance/tests/collaboration-environment-bindings.test.mjs
-    - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
-    - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
-    - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
-    - governance/evidence/WP-P3-003/successor-WP-P3-004.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - PROJECT_STATE.yaml
-  last_green_checks:
-    - node --test governance/tests/collaboration-environment-bindings.test.mjs
-    - pnpm --filter @mustbeviral/collaboration-worker test
-    - pnpm --filter @mustbeviral/collaboration-worker typecheck
-    - pnpm exec wrangler deploy --config apps/collaboration/wrangler.jsonc --env staging --dry-run --outdir apps/collaboration/dist/staging --x-provision=false --x-auto-create=false
-    - pnpm exec wrangler deploy --config apps/collaboration/wrangler.jsonc --env production --dry-run --outdir apps/collaboration/dist/production --x-provision=false --x-auto-create=false
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-004
-  evidence_paths:
-    - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
-    - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
-    - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
-    - governance/evidence/WP-P3-003/successor-WP-P3-004.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null

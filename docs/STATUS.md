@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Collaboration environment deployability remediation (in_progress) |
-| Active packet | `WP-P3-003` |
-| Current step | `p3c-004-release-readiness-handoff` |
+| Phase | P3 — V2 production release-readiness preflight (planned) |
+| Active packet | `WP-P3-004` |
+| Current step | `p3d-001-provider-inventory` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify WP-P3-003 and prepare the V2 production release-readiness successor without touching legacy V1.
+Refresh authenticated production inventory and secret-presence gates without remote mutation.
