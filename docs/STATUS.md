@@ -12,7 +12,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Production Supabase migrations and security hardening (planned) |
+| Phase | P3 — Production Supabase migrations and security hardening (in_progress) |
 | Active packet | `WP-P3-007` |
 | Current step | `p3g-001-dry-run-and-manifest` |
 | Release target | `P0` |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Dry-run the exact pinned migration manifest against project jjgtlfblsfobdhmtngbz.
+Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.

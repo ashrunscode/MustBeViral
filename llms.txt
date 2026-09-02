@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-007
 current_step: p3g-001-dry-run-and-manifest
-next_action: Dry-run the exact pinned migration manifest against project jjgtlfblsfobdhmtngbz.
+next_action: Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

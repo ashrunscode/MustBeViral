@@ -8,10 +8,10 @@ project_state: active
 phase:
   id: P3
   title: Production Supabase migrations and security hardening
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P3-007
-next_action: Dry-run the exact pinned migration manifest against project jjgtlfblsfobdhmtngbz.
+next_action: Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
 decisions_pending: []
 blockers: []
 legacy:

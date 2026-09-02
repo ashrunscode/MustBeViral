@@ -3,7 +3,7 @@ id: WP-P3-007
 spec_revision: 1
 title: Production Supabase migrations and security hardening
 phase: P3
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Apply the exact reviewed repository migration sequence to the isolated production
@@ -60,10 +60,12 @@ scope:
 deliverables:
   - A dry-run and immutable manifest prove the exact 37-file sequence from
     `20260712000000_cleanroom_bootstrap.sql` through
-    `20260831140000_p3_start_run_barrier_outbox_event_id.sql`, with aggregate SHA-256
-    `eeaa570ca92b98b071310f9ec1cfab361f620fa4e66daf820684077979f44fcd`.
+    `20260831140000_p3_start_run_barrier_outbox_event_id.sql`. The pre-apply aggregate SHA-256 is
+    `eeaa570ca92b98b071310f9ec1cfab361f620fa4e66daf820684077979f44fcd`; after the separately
+    committed, bounded PL/pgSQL repair recorded by the dry-run evidence, the required aggregate is
+    `2d4ff1beb167d69895ff97216ae42e8cf88d881a413127a84835ed53004ff73e`.
   - The exact sequence is applied once to project `jjgtlfblsfobdhmtngbz`; no ad hoc DDL, seed,
-    repair, imported history, or unrelated project mutation is permitted.
+    unrecorded repair, imported history, or unrelated project mutation is permitted.
   - Authenticated reads prove migration history, expected schema, forced RLS, least-privilege
     grants, hardened RPC search paths, immutable machine-owned tables, and zero cross-tenant access.
   - Auth remains closed enrollment with `disable_signup=true`; production callback, SMTP, client,
@@ -78,7 +80,7 @@ public_interfaces:
 steps:
   - id: p3g-001-dry-run-and-manifest
     title: Re-prove the empty project and dry-run the exact pinned migration manifest.
-    status: pending
+    status: current
   - id: p3g-002-apply-exact-migrations
     title: Apply the exact 37-file forward-only migration sequence once to the production project.
     status: pending
@@ -131,10 +133,14 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3g-001-dry-run-and-manifest
-  next_action: Dry-run the exact pinned migration manifest against project jjgtlfblsfobdhmtngbz.
+  next_action: Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - pnpm exec supabase db push --linked --dry-run --include-all --yes
 completion:
   successor_packet_id: null
   evidence_paths: []
