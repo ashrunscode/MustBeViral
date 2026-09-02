@@ -132,7 +132,7 @@ rollback:
     invite, or delete any remote resource.
   remote_actions_required: false
 external_effects:
-  remote_mutation: prohibited
+  remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
   current_step: p3d-001-provider-inventory
