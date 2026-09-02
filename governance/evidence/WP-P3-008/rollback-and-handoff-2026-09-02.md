@@ -45,7 +45,13 @@ URI allowlist, but reverting them is unnecessary while the provider alias remain
 
 ## Handoff blocker
 
-`BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY`: `auth.users` is zero. The next authorized action
-is for the owner to name or separately authorize one production operator identity, after which the
-packet can run an authenticated zero-spend RLS/database smoke. Do not enable public signup, invite
-a customer, add provider/Stripe credentials, execute a queue/run, or change DNS to resolve this.
+`hello@mustbeviral.com` is now the exact approved production owner identity, but the pre-send email
+delivery gate failed closed. Supabase organization `cwsipbaunvifcpgoygsc` has one member and zero
+members matching the approved address, while project `jjgtlfblsfobdhmtngbz` has no custom SMTP.
+Supabase's default SMTP refuses Auth mail to addresses outside the project team. No Auth user or
+invitation was created, and the single authorized invitation attempt remains unused.
+
+`BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED`: configure an existing zero-spend custom SMTP provider
+for only project `jjgtlfblsfobdhmtngbz`, without sending a test email or changing DNS, then reply
+`SMTP READY`. Do not enable public signup, invite a customer, add provider/Stripe credentials,
+execute a queue/run, or change DNS to resolve this.

@@ -18,6 +18,23 @@
   users. Site/callback values now name only the protected provider alias
   `https://mustbeviral-web-production-ashrunscode-projects.vercel.app` and its `/auth/callback`.
 
+### Approved owner pre-send gate, 2026-09-02T18:06:40-05:00
+
+- Exact approved address: `hello@mustbeviral.com`.
+- Sanitized baseline counts were zero for Auth users, approved-address matches, identities,
+  sessions, refresh tokens, workspaces, memberships, projects, artifacts, runs, attempts, provider
+  jobs, outbox events, quotes, cost reservations, ledger transactions, Stripe webhook events, and
+  workspace billing profiles.
+- The database singleton still had signup, generation, provider routing, and charging disabled.
+- The Supabase organization had one member and zero members matching the approved address.
+- The project had no custom SMTP. Current Supabase Auth policy refuses default-SMTP delivery to an
+  address that is not on the project team, so the invitation call was not made. No Auth user or
+  invitation was created, and the one authorized invitation attempt remains unused.
+- R2 still had zero objects / zero bytes, no custom domain, and r2.dev disabled. The protected web
+  alias still returned 302, the removed short alias returned 404, and Core health returned 200.
+- No generation, provider, queue, charge, customer, DNS, public-traffic, R2, or legacy mutation was
+  performed during this pre-send verification.
+
 ## Cloudflare Core and private R2
 
 - Final Worker version: `b832cca9-3dea-46d2-8313-eba80854c1ca`.
@@ -78,9 +95,11 @@ successful clean tracked-source package uploaded 25.3 KB and contained no real e
 
 ## Concrete blocker
 
-The packet requires authenticated operator smoke for database/RLS connectivity. Production Auth
-has zero users, so there is no approved identity. Per packet authority, no identity was invented,
-self-service signup was not enabled, and no customer row was created. Health, closed enrollment,
-JWT denial, artifact denial, disabled provider/charge paths, provider configuration, and direct
-database state are proven; an actual signed-in RLS session remains blocked until the operator
-supplies or separately authorizes exactly one production owner identity.
+The packet requires authenticated operator smoke for database/RLS connectivity. The approved owner
+identity now exists as an authorization, but production Auth still has zero users because the email
+delivery gate is not ready. The approved address is not a Supabase organization member and the
+project has no custom SMTP, so default SMTP would reject the one authorized invitation. Per packet
+authority, the invitation was not attempted, self-service signup was not enabled, and no customer
+row was created. Health, closed enrollment, JWT denial, artifact denial, disabled provider/charge
+paths, provider configuration, and direct database state are proven; an actual signed-in RLS
+session remains blocked until custom SMTP is configured without sending a test email.
