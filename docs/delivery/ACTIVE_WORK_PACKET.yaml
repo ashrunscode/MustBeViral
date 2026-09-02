@@ -3,7 +3,7 @@ id: WP-P3-006
 spec_revision: 1
 title: Fresh Supabase production project provisioning
 phase: P3
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Create the cost-confirmed `mustbeviral-prod` Supabase project in the exact organization
@@ -71,46 +71,57 @@ public_interfaces:
 steps:
   - id: p3f-001-create-project
     title: Create only the exact cost-confirmed Supabase production project and wait for healthy status.
-    status: pending
+    status: completed
   - id: p3f-002-verify-empty-identity
     title: Verify project identity, API/key presence, default schema posture, and empty application state.
-    status: pending
+    status: completed
   - id: p3f-003-migration-successor
     title: Author the exact migration and security-hardening successor from the new project ref.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: exact-healthy-project
-      criterion: Authenticated provider reads prove one healthy `mustbeviral-prod` project at the exact
+      criterion:
+        Authenticated provider reads prove one healthy `mustbeviral-prod` project at the exact
         organization and region, with no credential values recorded.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
     - id: empty-before-migration
-      criterion: Read-only database and project inspection proves no MustBeViral application migration,
+      criterion:
+        Read-only database and project inspection proves no MustBeViral application migration,
         table, user, or storage payload exists before the successor packet.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
   manual:
     - id: cost-and-containment
-      criterion: The operator approved the provider-reported recurring cost and no production traffic,
+      criterion:
+        The operator approved the provider-reported recurring cost and no production traffic,
         data, or unrelated resource was changed.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+        - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
 rollback:
-  strategy: Keep an unhealthy or unusable new project isolated and record the defect. Do not delete or
+  strategy:
+    Keep an unhealthy or unusable new project isolated and record the defect. Do not delete or
     repurpose the project in this packet. No clients, Workers, DNS, or provider credentials may
     point to it until the successor proves migrations and security.
   remote_actions_required: true
@@ -118,12 +129,20 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3f-001-create-project
-  next_action: Create the exact confirmed Supabase project and wait for authenticated healthy status.
+  current_step: p3f-003-migration-successor
+  next_action: Verify the production project evidence and activate WP-P3-007 for exact migrations.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    - governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - pnpm exec supabase projects list --output json
+    - pnpm agent:verify
 completion:
-  successor_packet_id: null
-  evidence_paths: []
+  successor_packet_id: WP-P3-007
+  evidence_paths:
+    - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    - governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
   completed_at: null

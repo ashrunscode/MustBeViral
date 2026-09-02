@@ -91,7 +91,8 @@ acceptance:
         - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
   manual:
     - id: zero-traffic-containment
-      criterion: The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
+      criterion:
+        The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
         neither changed nor copied.
       status: passed
       evidence:
@@ -113,7 +114,8 @@ quality_gates:
     evidence:
       - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
 rollback:
-  strategy: Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
+  strategy:
+    Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
     and deploy a corrected version if required. Do not delete any bucket, project, Worker, Durable
     Object namespace, legacy resource, or customer data in this packet.
   remote_actions_required: true

@@ -8,10 +8,10 @@ project_state: active
 phase:
   id: P3
   title: Fresh Supabase production project provisioning
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P3-006
-next_action: Create the exact confirmed Supabase project and wait for authenticated healthy status.
+next_action: Verify the production Supabase evidence and activate WP-P3-007 for exact migrations.
 decisions_pending: []
 blockers: []
 legacy:

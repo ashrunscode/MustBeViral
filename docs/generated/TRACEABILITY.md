@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-006` (ready). Current step: `p3f-001-create-project`.
+Current packet: `WP-P3-006` (in_progress). Current step: `p3f-003-migration-successor`.
 
 | Authority topic | Document | Path |
 |---|---|---|

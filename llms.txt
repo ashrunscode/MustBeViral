@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-006
-current_step: p3f-001-create-project
-next_action: Create the exact confirmed Supabase project and wait for authenticated healthy status.
+current_step: p3f-003-migration-successor
+next_action: Verify the production project evidence and activate WP-P3-007 for exact migrations.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
