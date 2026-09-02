@@ -573,6 +573,38 @@ describe('P0 /v1 route boundary', () => {
     );
   });
 
+  it('rejects fal webhooks before verification when provider execution is disabled', async () => {
+    const verifyAndMap = vi.fn();
+    const webhookHandler = vi.fn();
+    const app = createCoreApp(
+      dependencies({
+        handlers: { ...handlersWith(), ingest_fal_webhook: webhookHandler },
+        falWebhook: {
+          verifyAndMap,
+          markProcessed: async () => true,
+          release: async () => true,
+        },
+      }),
+    );
+
+    const response = await app.request(
+      '/v1/webhooks/fal',
+      {
+        method: 'POST',
+        headers: { 'x-request-id': 'request-v1-provider-disabled' },
+        body: '{}',
+      },
+      { PROVIDER_RUNS_ENABLED: 'false' } as unknown as PlatformBindings,
+    );
+
+    expect(response.status).toBe(503);
+    expect(ApiErrorEnvelopeSchema.parse(await response.json()).error.code).toBe(
+      'MODEL_UNAVAILABLE',
+    );
+    expect(verifyAndMap).not.toHaveBeenCalled();
+    expect(webhookHandler).not.toHaveBeenCalled();
+  });
+
   it('returns retryable 503 for an event whose claim is in progress', async () => {
     const app = createCoreApp(
       dependencies({

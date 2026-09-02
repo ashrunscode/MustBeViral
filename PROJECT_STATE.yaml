@@ -4,16 +4,19 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
-project_state: active
+project_state: blocked
 phase:
   id: P3
   title: Disabled-behavior production environment binding
-  state: planned
+  state: blocked
 release_target: P0
 active_work_packet: WP-P3-008
-next_action: Validate the exact production bindings, disabled flags, secrets, and rollback IDs.
+next_action: Obtain fresh explicit authorization for exactly one production owner identity, then run
+  the authenticated zero-spend RLS/database smoke without enabling signup.
 decisions_pending: []
-blockers: []
+blockers:
+  - "BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY: Supabase auth.users is zero; no approved
+    production identity exists, and this packet forbids inventing one or enabling public signup."
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
@@ -24,6 +27,8 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
+    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+      workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
   staging:
     generation: viralgraph-cleanroom-v2
     state: ready

@@ -3,6 +3,15 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_PLATFORM_KILL_SWITCHES, fetchPlatformKillSwitches } from './kill-switches';
 
 describe('fetchPlatformKillSwitches', () => {
+  it('defaults every customer and spend behavior to disabled', () => {
+    expect(DEFAULT_PLATFORM_KILL_SWITCHES).toEqual({
+      signupsEnabled: false,
+      generationEnabled: false,
+      providerRoutesEnabled: false,
+      chargingEnabled: false,
+    });
+  });
+
   it('returns closed defaults when the RPC fails', async () => {
     const supabase = {
       rpc: async () => ({ data: null, error: new Error('rpc unavailable') }),

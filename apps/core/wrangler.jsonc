@@ -86,11 +86,19 @@
     },
     "production": {
       "name": "mustbeviral-v2-production-core",
-      // Production remains deliberately unrouted until the release packet records
-      // a resolving domain, exact resource IDs, secret-presence proof, and rollback target.
+      // WP-P3-008 permits only this provider-generated URL for private operator smoke.
+      // No custom domain or route is attached, and preview URLs stay disabled.
+      "workers_dev": true,
+      "preview_urls": false,
       "vars": {
         "SERVICE_NAME": "mustbeviral-core",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+        "APP_ENV": "production",
+        "CORS_ALLOWED_ORIGINS": "https://mustbeviral-web-production-ashrunscode-projects.vercel.app",
+        "SUPABASE_URL": "https://jjgtlfblsfobdhmtngbz.supabase.co",
+        "SUPABASE_JWT_AUDIENCE": "authenticated",
+        "PROVIDER_RUNS_ENABLED": "false",
+        "QUEUES_ENABLED": "false",
       },
       "r2_buckets": [
         {

@@ -9,8 +9,8 @@ export interface PlatformKillSwitchSnapshot {
 
 export const DEFAULT_PLATFORM_KILL_SWITCHES: PlatformKillSwitchSnapshot = Object.freeze({
   signupsEnabled: false,
-  generationEnabled: true,
-  providerRoutesEnabled: true,
+  generationEnabled: false,
+  providerRoutesEnabled: false,
   chargingEnabled: false,
 });
 
@@ -19,8 +19,8 @@ function parseKillSwitchPayload(value: unknown): PlatformKillSwitchSnapshot {
   const record = value as Readonly<Record<string, unknown>>;
   return Object.freeze({
     signupsEnabled: record.signups_enabled === true,
-    generationEnabled: record.generation_enabled !== false,
-    providerRoutesEnabled: record.provider_routes_enabled !== false,
+    generationEnabled: record.generation_enabled === true,
+    providerRoutesEnabled: record.provider_routes_enabled === true,
     chargingEnabled: record.charging_enabled === true,
   });
 }

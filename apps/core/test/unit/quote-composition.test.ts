@@ -66,6 +66,15 @@ function quoteFixtureFetch(state: QuoteFixtureState): typeof fetch {
   return vi.fn(async (request: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
     const url = String(request);
     const method = init?.method ?? 'GET';
+    if (url.includes('/rpc/get_platform_kill_switches')) {
+      return Response.json({
+        signups_enabled: false,
+        generation_enabled: true,
+        provider_routes_enabled: true,
+        charging_enabled: false,
+      });
+    }
+    if (url.includes('/workspace_billing_profiles?')) return Response.json([]);
     if (url.includes('/rpc/create_quote') && method === 'POST') {
       if (state.quote === null) {
         const createdAt = new Date().toISOString();
@@ -210,6 +219,7 @@ function dependencies(state: QuoteFixtureState) {
     {
       SUPABASE_URL: 'https://project.supabase.co',
       SUPABASE_PUBLISHABLE_KEY: 'public-fixture-key',
+      SUPABASE_SECRET_KEY: 'privileged-fixture-key',
       CONFIRMATION_SIGNING_KEY: 'quote-composition-fixture-signing-key-32ch',
     } as unknown as PlatformBindings,
     'verified-caller-jwt',
@@ -228,6 +238,8 @@ function ports(state: QuoteFixtureState) {
     fetch: quoteFixtureFetch(state),
   });
   return createSupabaseHandlerPorts(executor, createDatabaseRepositories(executor), {
+    SUPABASE_URL: 'https://project.supabase.co',
+    SUPABASE_SECRET_KEY: 'privileged-fixture-key',
     CONFIRMATION_SIGNING_KEY: 'quote-composition-fixture-signing-key-32ch',
   });
 }

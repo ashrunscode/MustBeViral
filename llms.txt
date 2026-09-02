@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-008
-current_step: p3h-001-config-and-secret-preflight
-next_action: Validate the exact production bindings, disabled flags, secrets, and rollback IDs.
+current_step: p3h-004-private-smoke-and-cutover-gate
+next_action: Obtain fresh explicit authorization for exactly one production owner identity, then run the authenticated zero-spend RLS/database smoke without enabling signup.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

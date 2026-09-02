@@ -350,6 +350,7 @@ describe('durable private fal ingest', () => {
       }),
     } as unknown as R2Bucket;
     const bindings = {
+      PROVIDER_RUNS_ENABLED: 'true',
       FAL_KEY: 'fixture-fal-key',
       MEDIA_BUCKET: bucket,
     } as unknown as CoreBindings;

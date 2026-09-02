@@ -13,8 +13,8 @@ export class KillSwitchUnavailableError extends Error {
 
 const DEFAULT_KILL_SWITCHES: PlatformKillSwitchSnapshot = Object.freeze({
   signupsEnabled: false,
-  generationEnabled: true,
-  providerRoutesEnabled: true,
+  generationEnabled: false,
+  providerRoutesEnabled: false,
   chargingEnabled: false,
 });
 
@@ -28,7 +28,9 @@ function isKillSwitchSnapshot(value: unknown): value is Readonly<{
     typeof value === 'object' &&
     value !== null &&
     !Array.isArray(value) &&
+    typeof (value as Readonly<Record<string, unknown>>).signups_enabled === 'boolean' &&
     typeof (value as Readonly<Record<string, unknown>>).generation_enabled === 'boolean' &&
+    typeof (value as Readonly<Record<string, unknown>>).provider_routes_enabled === 'boolean' &&
     typeof (value as Readonly<Record<string, unknown>>).charging_enabled === 'boolean'
   );
 }

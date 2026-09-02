@@ -46,6 +46,13 @@ function missingRequiredProductionBindings(source, worker) {
   return [];
 }
 
+function missingDisabledProductionFlags(source) {
+  const production = productionSlice(source);
+  return ['PROVIDER_RUNS_ENABLED', 'QUEUES_ENABLED'].filter(
+    (name) => !new RegExp(`"${name}"\\s*:\\s*"false"`, 'u').test(production),
+  );
+}
+
 test('unsafe production config signals are detected', () => {
   const fixture = `
     "production": {
@@ -64,6 +71,10 @@ test('unsafe production config signals are detected', () => {
   assert.deepEqual(missingRequiredProductionBindings(fixture, 'collaboration'), [
     'missing-canvas-coordination',
   ]);
+  assert.deepEqual(missingDisabledProductionFlags(fixture), [
+    'PROVIDER_RUNS_ENABLED',
+    'QUEUES_ENABLED',
+  ]);
 });
 
 test('current V2 production Worker configs stay unrouted and placeholder-free', () => {
@@ -77,4 +88,11 @@ test('current V2 production Worker configs stay unrouted and placeholder-free', 
   assert.deepEqual(unsafeProductionSignals(collaboration), []);
   assert.deepEqual(missingRequiredProductionBindings(core, 'core'), []);
   assert.deepEqual(missingRequiredProductionBindings(collaboration, 'collaboration'), []);
+  assert.deepEqual(missingDisabledProductionFlags(core), []);
+  assert.match(
+    productionSlice(core),
+    /"SUPABASE_URL"\s*:\s*"https:\/\/jjgtlfblsfobdhmtngbz\.supabase\.co"/u,
+  );
+  assert.match(productionSlice(core), /"workers_dev"\s*:\s*true/u);
+  assert.match(productionSlice(core), /"preview_urls"\s*:\s*false/u);
 });

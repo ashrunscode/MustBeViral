@@ -279,6 +279,12 @@ async function handleFalWebhook(
   route: V1RouteDefinition,
   dependencies: V1Dependencies,
 ): Promise<Response> {
+  if (!providerRunsEnabled(context.env)) {
+    return context.json(
+      safeError(context, 'MODEL_UNAVAILABLE', 'Provider-backed execution is not enabled.'),
+      503,
+    );
+  }
   const falWebhook =
     dependencies.falWebhook ?? createFalWebhookVerifierPort(context.env, context.get('requestId'));
   const rawBody = new Uint8Array(await context.req.arrayBuffer());

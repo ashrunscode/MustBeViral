@@ -12,14 +12,14 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Disabled-behavior production environment binding (planned) |
+| Phase | P3 — Disabled-behavior production environment binding (blocked) |
 | Active packet | `WP-P3-008` |
-| Current step | `p3h-001-config-and-secret-preflight` |
+| Current step | `p3h-004-private-smoke-and-cutover-gate` |
 | Release target | `P0` |
 | Pending decisions | None |
-| Blockers | None |
+| Blockers | BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY: Supabase auth.users is zero; no approved production identity exists, and this packet forbids inventing one or enabling public signup. |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Validate the exact production bindings, disabled flags, secrets, and rollback IDs.
+Obtain fresh explicit authorization for exactly one production owner identity, then run the authenticated zero-spend RLS/database smoke without enabling signup.
