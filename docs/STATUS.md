@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — V2 production release-readiness preflight (in_progress) |
-| Active packet | `WP-P3-004` |
-| Current step | `p3d-003-provisioning-successor` |
+| Phase | P3 — Unrouted V2 production foundation provisioning (planned) |
+| Active packet | `WP-P3-005` |
+| Current step | `p3e-001-empty-storage-and-web-project` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify the fail-closed production preflight and activate the exact unrouted foundation packet.
+Create and verify only the exact empty production R2 bucket and Vercel project.

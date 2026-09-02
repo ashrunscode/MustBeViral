@@ -7,12 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: V2 production release-readiness preflight
-  state: in_progress
+  title: Unrouted V2 production foundation provisioning
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-004
-next_action: Verify the fail-closed production preflight and activate the exact unrouted foundation
-  packet.
+active_work_packet: WP-P3-005
+next_action: Create and verify only the exact empty production R2 bucket and Vercel project.
 decisions_pending: []
 blockers: []
 legacy:
@@ -36,10 +35,9 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-02T01:22:45.071Z
+  at: 2026-09-02T01:34:21.220Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
-    - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
-    - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
-    - governance/evidence/WP-P3-003/successor-WP-P3-004.yaml
+    - governance/evidence/WP-P3-004/production-provider-inventory-2026-09-02.md
+    - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
+    - governance/evidence/WP-P3-004/successor-WP-P3-005.yaml

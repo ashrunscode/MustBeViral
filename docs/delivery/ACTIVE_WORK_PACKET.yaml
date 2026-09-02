@@ -1,20 +1,19 @@
 schema_version: 1
-id: WP-P3-004
+id: WP-P3-005
 spec_revision: 1
-title: V2 production release-readiness preflight
+title: Unrouted V2 production foundation provisioning
 phase: P3
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Convert the current repository and authenticated-provider state into an exact,
-  fail-closed V2 production provisioning and canary plan, resolving placeholders and
-  missing-resource facts before any production deploy or legacy cutover.
+objective: Create the exact empty and unrouted V2 production foundation resources that do not depend
+  on database credentials or provider secrets, verify their IDs, and preserve a zero-traffic
+  rollback posture before the separately confirmed Supabase production project.
 authority_refs:
   - product-contract
   - release-scope
   - system-overview
   - data-auth-tenancy
-  - execution-providers-billing
   - roadmap
   - quality-gates
   - local-env-secrets
@@ -25,23 +24,16 @@ required_skills:
   - cloudflare
   - wrangler
   - deployments-cicd
-  - data-architect
-  - auth-fortress
-  - billing-engine
-  - observability-ops
   - quality-check
 depends_on:
-  - WP-P3-003
+  - WP-P3-004
 scope:
   allowed_paths:
-    - apps/**
-    - packages/**
-    - supabase/**
+    - apps/collaboration/**
+    - governance/evidence/WP-P3-005/**
     - governance/evidence/WP-P3-004/**
-    - governance/evidence/WP-P3-003/**
     - governance/tests/**
     - docs/**
-    - scripts/**
     - package.json
     - pnpm-lock.yaml
     - pnpm-workspace.yaml
@@ -50,9 +42,6 @@ scope:
     - tsconfig.base.json
     - eslint.config.mjs
     - vitest.config.ts
-    - playwright.config.ts
-    - .env.example
-    - .dev.vars.example
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
@@ -64,7 +53,6 @@ scope:
     - release-scope
     - system-overview
     - data-auth-tenancy
-    - execution-providers-billing
     - roadmap
     - quality-gates
     - local-env-secrets
@@ -72,95 +60,70 @@ scope:
     - legacy-v1-retirement
     - codex-finish-mega-prompt
 deliverables:
-  - A current exact inventory of V2 and legacy production resources across Supabase, Cloudflare,
-    Vercel, DNS, Stripe mode, email, and observability, with missing sources labeled rather than
-    treated as passing.
-  - A production configuration audit that removes or blocks placeholder resource IDs and proves
-    production dry-runs cannot mutate remote state.
-  - A successor packet that names the first bounded production provisioning slice, its exact target
-    names or IDs, kill switches, rollback evidence, and exclusion of legacy destruction.
+  - Empty private R2 bucket `mustbeviral-v2-production-media` in Cloudflare account
+    `d2897bdebfa128919bd89b265e6a712e`, with no legacy copy or public access.
+  - Empty Vercel project `mustbeviral-web-production` in team `team_A11dbY2xnTWzGL63IRBTWmLo`, with
+    no deployment, domain, or environment values.
+  - Unrouted Worker `mustbeviral-v2-production-collaboration` with its exact version and Durable
+    Object binding recorded, `workers_dev=false`, and no product client.
+  - A cost-confirmation handoff for a fresh `mustbeviral-prod` Supabase project in organization
+    `cwsipbaunvifcpgoygsc`, region `us-east-1`; no project is created before that confirmation.
 public_interfaces:
-  - No traffic, DNS, signup, charging, provider-spend, invitation, or customer-access change occurs
-    in this preflight packet.
+  - No V2 production web/API URL, DNS route, signup, charging, provider run, invitation, or customer
+    access is enabled in this packet.
 steps:
-  - id: p3d-001-provider-inventory
-    title:
-      Refresh authenticated production resource inventory and credential-presence checks without
-      printing secret values.
-    status: completed
-  - id: p3d-002-placeholder-and-contract-audit
-    title:
-      Audit production configs, migration order, kill switches, domains, and rollback requirements;
-      add fail-closed checks for unresolved placeholders.
-    status: completed
-  - id: p3d-003-provisioning-successor
-    title: Author the exact non-destructive production provisioning successor from verified inventory.
-    status: current
+  - id: p3e-001-empty-storage-and-web-project
+    title: Create and inspect only the exact empty production R2 bucket and Vercel project.
+    status: pending
+  - id: p3e-002-unrouted-collaboration-worker
+    title: Deploy and inspect only the production collaboration Worker with no workers.dev URL or route.
+    status: pending
+  - id: p3e-003-supabase-cost-handoff
+    title: Obtain the exact Supabase project cost and prepare the confirmation-gated database successor.
+    status: pending
 acceptance:
   automated:
-    - id: production-config-fails-closed
-      criterion:
-        Tests reject placeholder IDs, missing required production bindings, accidental legacy
-        targets, or an ungoverned custom-domain deploy.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
+    - id: exact-foundation-targets
+      criterion: Provider reads prove only the exact new V2 target names exist and production Worker
+        config remains free of routes, legacy targets, placeholder IDs, and ungated Hyperdrive.
+      status: pending
+      evidence: []
   manual:
-    - id: inventory-and-rollback-complete
+    - id: zero-traffic-containment
       criterion:
-        Every proposed production mutation has an exact target, owner, kill switch, validation,
-        and recoverable rollback path; unavailable evidence remains explicitly blocked.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-004/production-provider-inventory-2026-09-02.md
-        - governance/evidence/WP-P3-004/successor-WP-P3-005.yaml
+        The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
+        neither changed nor copied.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-004/production-provider-inventory-2026-09-02.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
+    status: pending
+    evidence: []
 rollback:
   strategy:
-    This packet is read-only against remote providers. Revert repository-only audit and guard
-    changes through Git. Do not deploy, provision, attach DNS, alter live provider mode, charge,
-    invite, or delete any remote resource.
-  remote_actions_required: false
+    Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
+    and deploy a corrected version if required. Do not delete any bucket, project, Worker, Durable
+    Object namespace, legacy resource, or customer data in this packet.
+  remote_actions_required: true
 external_effects:
-  remote_mutation: read-only
+  remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3d-003-provisioning-successor
-  next_action: Verify the fail-closed production preflight and activate the exact unrouted foundation packet.
+  current_step: p3e-001-empty-storage-and-web-project
+  next_action: Create and verify only the exact empty production R2 bucket and Vercel project.
   blockers: []
-  changed_paths:
-    - apps/core/wrangler.jsonc
-    - apps/core/worker-configuration.d.ts
-    - governance/tests/production-release-config-gate.test.mjs
-    - governance/evidence/WP-P3-004/production-provider-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
-    - governance/evidence/WP-P3-004/successor-WP-P3-005.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - PROJECT_STATE.yaml
-  last_green_checks:
-    - node --test governance/tests/production-release-config-gate.test.mjs
-    - pnpm --filter @mustbeviral/core typecheck
-    - pnpm exec wrangler deploy --config apps/core/wrangler.jsonc --env production --dry-run --outdir apps/core/dist/production-preflight --x-provision=false --x-auto-create=false
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-005
-  evidence_paths:
-    - governance/evidence/WP-P3-004/production-provider-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
-    - governance/evidence/WP-P3-004/successor-WP-P3-005.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null
