@@ -4,16 +4,19 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
-project_state: active
+project_state: blocked
 phase:
   id: P3
   title: Unrouted V2 production foundation provisioning
-  state: planned
+  state: blocked
 release_target: P0
 active_work_packet: WP-P3-005
-next_action: Create and verify only the exact empty production R2 bucket and Vercel project.
+next_action: Confirm Supabase organization cwsipbaunvifcpgoygsc for mustbeviral-prod, then fetch and
+  present the current project cost.
 decisions_pending: []
-blockers: []
+blockers:
+  - Supabase requires an explicit user organization choice before cost lookup and a separate cost
+    confirmation before project creation.
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21

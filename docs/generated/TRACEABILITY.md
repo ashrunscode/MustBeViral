@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-005` (ready). Current step: `p3e-001-empty-storage-and-web-project`.
+Current packet: `WP-P3-005` (in_progress). Current step: `p3e-003-supabase-cost-handoff`.
 
 | Authority topic | Document | Path |
 |---|---|---|

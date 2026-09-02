@@ -3,7 +3,7 @@ id: WP-P3-005
 spec_revision: 1
 title: Unrouted V2 production foundation provisioning
 phase: P3
-status: ready
+status: blocked
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Create the exact empty and unrouted V2 production foundation resources that do not depend
@@ -74,27 +74,28 @@ public_interfaces:
 steps:
   - id: p3e-001-empty-storage-and-web-project
     title: Create and inspect only the exact empty production R2 bucket and Vercel project.
-    status: pending
+    status: completed
   - id: p3e-002-unrouted-collaboration-worker
     title: Deploy and inspect only the production collaboration Worker with no workers.dev URL or route.
-    status: pending
+    status: completed
   - id: p3e-003-supabase-cost-handoff
     title: Obtain the exact Supabase project cost and prepare the confirmation-gated database successor.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: exact-foundation-targets
       criterion: Provider reads prove only the exact new V2 target names exist and production Worker
         config remains free of routes, legacy targets, placeholder IDs, and ungated Hyperdrive.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
   manual:
     - id: zero-traffic-containment
-      criterion:
-        The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
+      criterion: The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
         neither changed nor copied.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
@@ -109,8 +110,7 @@ quality_gates:
     status: pending
     evidence: []
 rollback:
-  strategy:
-    Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
+  strategy: Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
     and deploy a corrected version if required. Do not delete any bucket, project, Worker, Durable
     Object namespace, legacy resource, or customer data in this packet.
   remote_actions_required: true
@@ -118,11 +118,25 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3e-001-empty-storage-and-web-project
-  next_action: Create and verify only the exact empty production R2 bucket and Vercel project.
-  blockers: []
-  changed_paths: []
-  last_green_checks: []
+  current_step: p3e-003-supabase-cost-handoff
+  next_action: Confirm Supabase organization cwsipbaunvifcpgoygsc for mustbeviral-prod, then fetch and
+    present the current project cost.
+  blockers:
+    - Supabase requires an explicit user organization choice before cost lookup and a separate cost
+      confirmation before project creation.
+  changed_paths:
+    - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - pnpm exec wrangler r2 bucket info mustbeviral-v2-production-media
+    - pnpm exec vercel project inspect mustbeviral-web-production --scope ashrunscode-projects
+    - pnpm exec vercel list mustbeviral-web-production --scope ashrunscode-projects --format json
+      --limit 20
+    - pnpm exec wrangler versions list --config apps/collaboration/wrangler.jsonc --env production
+    - pnpm exec wrangler deployments status --config apps/collaboration/wrangler.jsonc --env
+      production
 completion:
   successor_packet_id: null
   evidence_paths: []

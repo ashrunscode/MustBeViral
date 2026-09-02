@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-005
-current_step: p3e-001-empty-storage-and-web-project
-next_action: Create and verify only the exact empty production R2 bucket and Vercel project.
+current_step: p3e-003-supabase-cost-handoff
+next_action: Ask the user to confirm the exact Supabase organization, then fetch and present the current project cost.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
