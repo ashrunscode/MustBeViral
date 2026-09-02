@@ -112,7 +112,8 @@ acceptance:
         - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
   manual:
     - id: private-production-containment
-      criterion: The deployments are usable only for operator smoke through provider URLs and are not
+      criterion:
+        The deployments are usable only for operator smoke through provider URLs and are not
         represented as a public launch or customer-ready release.
       status: passed
       evidence:
@@ -143,11 +144,12 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3h-004-private-smoke-and-cutover-gate
-  next_action: Obtain fresh explicit authorization for exactly one production owner identity, then run
+  next_action:
+    Obtain fresh explicit authorization for exactly one production owner identity, then run
     the authenticated zero-spend RLS/database smoke without enabling signup.
   blockers:
-    - "BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY: Supabase auth.users is zero; no approved
-      production identity exists, and this packet forbids inventing one or enabling public signup."
+    - 'BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY: Supabase auth.users is zero; no approved
+      production identity exists, and this packet forbids inventing one or enabling public signup.'
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example

@@ -15,8 +15,8 @@ next_action: Obtain fresh explicit authorization for exactly one production owne
   the authenticated zero-spend RLS/database smoke without enabling signup.
 decisions_pending: []
 blockers:
-  - "BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY: Supabase auth.users is zero; no approved
-    production identity exists, and this packet forbids inventing one or enabling public signup."
+  - 'BLOCKED_NO_APPROVED_PRODUCTION_OPERATOR_IDENTITY: Supabase auth.users is zero; no approved
+    production identity exists, and this packet forbids inventing one or enabling public signup.'
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
@@ -27,7 +27,8 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+    notes:
+      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
   staging:
     generation: viralgraph-cleanroom-v2
