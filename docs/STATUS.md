@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
+Add and verify the authorized forward-only RLS Advisor hardening migration.

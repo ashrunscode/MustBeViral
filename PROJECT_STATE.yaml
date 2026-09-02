@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: P0
 active_work_packet: WP-P3-007
-next_action: Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
+next_action: Add and verify the authorized forward-only RLS Advisor hardening migration.
 decisions_pending: []
 blockers: []
 legacy:

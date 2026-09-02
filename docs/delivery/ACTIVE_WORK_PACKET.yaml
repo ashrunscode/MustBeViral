@@ -64,14 +64,17 @@ deliverables:
     `eeaa570ca92b98b071310f9ec1cfab361f620fa4e66daf820684077979f44fcd`; after the separately
     committed, bounded PL/pgSQL repair recorded by the dry-run evidence, the required aggregate is
     `2d4ff1beb167d69895ff97216ae42e8cf88d881a413127a84835ed53004ff73e`.
-  - The exact sequence is applied once to project `jjgtlfblsfobdhmtngbz`; no ad hoc DDL, seed,
-    unrecorded repair, imported history, or unrelated project mutation is permitted.
+  - The exact 37-file sequence and the separately authorized forward-only hardening migration
+    `20260902000000_production_rls_advisor_hardening.sql` are applied once to project
+    `jjgtlfblsfobdhmtngbz`; no ad hoc DDL, seed, unrecorded repair, imported history, or unrelated
+    project mutation is permitted.
   - Authenticated reads prove migration history, expected schema, forced RLS, least-privilege
     grants, hardened RPC search paths, immutable machine-owned tables, and zero cross-tenant access.
   - Auth remains closed enrollment with `disable_signup=true`; production callback, SMTP, client,
     and service-role bindings remain absent.
-  - Data API exposure and both Advisor classes are inspected after migration. Security findings are
-    fixed through reviewed migrations or block the packet; performance notices are dispositioned.
+  - Data API exposure and both Advisor classes are inspected after migration. Security Advisor has
+    zero errors and every remaining intentional finding is exactly allowlisted and explained;
+    performance notices are dispositioned.
   - A ready successor names the exact production environment/secret binding, disabled-behavior
     Worker deployment, web deployment, authenticated smoke, and rollback gates.
 public_interfaces:
@@ -101,7 +104,8 @@ acceptance:
     - id: production-database-security
       criterion:
         Remote database checks prove forced RLS and least privilege for every user-visible table,
-        hardened RPCs, zero security-advisor findings, closed enrollment, and no customer rows.
+        hardened RPCs, zero Security Advisor errors, no unclassified findings, closed enrollment,
+        and no customer rows.
       status: pending
       evidence: []
   manual:
@@ -133,14 +137,16 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3g-001-dry-run-and-manifest
-  next_action: Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
+  next_action: Add and verify the authorized forward-only RLS Advisor hardening migration.
   blockers: []
   changed_paths:
     - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
     - PROJECT_STATE.yaml
   last_green_checks:
     - pnpm exec supabase db push --linked --dry-run --include-all --yes
+    - pnpm exec supabase db push --linked --include-all --yes
 completion:
   successor_packet_id: null
   evidence_paths: []

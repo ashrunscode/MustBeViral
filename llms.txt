@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-007
 current_step: p3g-001-dry-run-and-manifest
-next_action: Apply the recorded PL/pgSQL repair, re-dry-run, and resume at the failed migration.
+next_action: Add and verify the authorized forward-only RLS Advisor hardening migration.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
