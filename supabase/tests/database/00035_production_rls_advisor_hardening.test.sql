@@ -1,13 +1,8 @@
 begin;
 
-create extension if not exists pgtap with schema extensions;
-grant usage on schema extensions to public;
-grant execute on all functions in schema extensions to public;
-set local search_path = public, extensions;
+select plan(4);
 
-select extensions.plan(4);
-
-select extensions.is(
+select is(
   (
     select count(*)::integer
     from pg_catalog.pg_class as relation
@@ -20,7 +15,7 @@ select extensions.is(
   'every public application table has RLS enabled'
 );
 
-select extensions.is(
+select is(
   (
     select count(*)::integer
     from pg_catalog.pg_class as relation
@@ -33,7 +28,7 @@ select extensions.is(
   'every public application table has RLS forced'
 );
 
-select extensions.is(
+select is(
   (
     select count(*)::integer
     from pg_catalog.pg_policies
@@ -81,7 +76,7 @@ insert into public.workspaces (
 select set_config('request.jwt.claim.sub', '9a000000-0000-4000-8000-000000000099', true);
 set local role authenticated;
 
-select extensions.is(
+select is(
   (
     select count(*)::integer
     from public.workspaces
@@ -93,6 +88,6 @@ select extensions.is(
 
 reset role;
 
-select * from extensions.finish();
+select * from finish();
 
 rollback;
