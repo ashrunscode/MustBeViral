@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — V2 production release-readiness preflight (planned) |
+| Phase | P3 — V2 production release-readiness preflight (in_progress) |
 | Active packet | `WP-P3-004` |
-| Current step | `p3d-001-provider-inventory` |
+| Current step | `p3d-003-provisioning-successor` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Refresh authenticated production inventory and secret-presence gates without remote mutation.
+Verify the fail-closed production preflight and activate the exact unrouted foundation packet.

@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-004
-current_step: p3d-001-provider-inventory
-next_action: Refresh authenticated production inventory and secret-presence gates without remote mutation.
+current_step: p3d-003-provisioning-successor
+next_action: Verify the fail-closed production preflight and activate the exact unrouted foundation packet.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -8,10 +8,11 @@ project_state: active
 phase:
   id: P3
   title: V2 production release-readiness preflight
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P3-004
-next_action: Refresh authenticated production inventory and secret-presence gates without remote mutation.
+next_action: Verify the fail-closed production preflight and activate the exact unrouted foundation
+  packet.
 decisions_pending: []
 blockers: []
 legacy:

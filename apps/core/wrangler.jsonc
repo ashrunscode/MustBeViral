@@ -86,12 +86,8 @@
     },
     "production": {
       "name": "mustbeviral-v2-production-core",
-      "routes": [
-        {
-          "pattern": "api.mustbeviral.com",
-          "custom_domain": true,
-        },
-      ],
+      // Production remains deliberately unrouted until the release packet records
+      // a resolving domain, exact resource IDs, secret-presence proof, and rollback target.
       "vars": {
         "SERVICE_NAME": "mustbeviral-core",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
@@ -102,12 +98,8 @@
           "bucket_name": "mustbeviral-v2-production-media",
         },
       ],
-      "hyperdrive": [
-        {
-          "binding": "HYPERDRIVE",
-          "id": "00000000000000000000000000000002",
-        },
-      ],
+      // Hyperdrive remains absent: WP-P3-002 kept G1-G6 deferred and the
+      // Supabase Data API/RPC path remains authoritative.
     },
   },
 }
