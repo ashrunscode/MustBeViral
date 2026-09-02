@@ -7,11 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: Production Supabase migrations and security hardening
-  state: in_progress
+  title: Disabled-behavior production environment binding
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-007
-next_action: Verify the database release evidence and activate WP-P3-008 for disabled bindings.
+active_work_packet: WP-P3-008
+next_action: Validate the exact production bindings, disabled flags, secrets, and rollback IDs.
 decisions_pending: []
 blockers: []
 legacy:
@@ -35,8 +35,10 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-02T13:58:18.227Z
+  at: 2026-09-02T14:21:21.769Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
-    - governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
+    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml

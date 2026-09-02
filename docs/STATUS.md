@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Production Supabase migrations and security hardening (in_progress) |
-| Active packet | `WP-P3-007` |
-| Current step | `p3g-004-binding-successor` |
+| Phase | P3 — Disabled-behavior production environment binding (planned) |
+| Active packet | `WP-P3-008` |
+| Current step | `p3h-001-config-and-secret-preflight` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify the database release evidence and activate WP-P3-008 for disabled bindings.
+Validate the exact production bindings, disabled flags, secrets, and rollback IDs.

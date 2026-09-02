@@ -1,14 +1,14 @@
 schema_version: 1
-id: WP-P3-007
+id: WP-P3-008
 spec_revision: 1
-title: Production Supabase migrations and security hardening
+title: Disabled-behavior production environment binding
 phase: P3
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Apply the exact reviewed repository migration sequence to the isolated production
-  Supabase project, prove RLS and Auth fail closed, and leave the database unbound from production
-  clients until a separate environment-binding packet.
+objective: Bind the exact isolated V2 production resources, deploy Core and web with all customer,
+  provider, charging, and signup behavior disabled, verify private smoke paths, and keep legacy
+  traffic and DNS unchanged.
 authority_refs:
   - product-contract
   - release-scope
@@ -20,17 +20,25 @@ authority_refs:
   - legacy-v1-retirement
   - codex-finish-mega-prompt
 required_skills:
+  - cloudflare
+  - wrangler
+  - workers-best-practices
   - supabase
-  - data-architect
   - auth-fortress
+  - observability-ops
   - quality-check
 depends_on:
-  - WP-P3-006
+  - WP-P3-007
 scope:
   allowed_paths:
+    - apps/core/**
+    - apps/web/**
+    - packages/config/**
+    - packages/contracts/**
+    - packages/db/**
     - supabase/**
+    - governance/evidence/WP-P3-008/**
     - governance/evidence/WP-P3-007/**
-    - governance/evidence/WP-P3-006/**
     - governance/tests/**
     - docs/**
     - package.json
@@ -58,109 +66,81 @@ scope:
     - legacy-v1-retirement
     - codex-finish-mega-prompt
 deliverables:
-  - A dry-run and immutable manifest prove the exact 37-file sequence from
-    `20260712000000_cleanroom_bootstrap.sql` through
-    `20260831140000_p3_start_run_barrier_outbox_event_id.sql`. The pre-apply aggregate SHA-256 is
-    `eeaa570ca92b98b071310f9ec1cfab361f620fa4e66daf820684077979f44fcd`; after the separately
-    committed, bounded PL/pgSQL repair recorded by the dry-run evidence, the required aggregate is
-    `2d4ff1beb167d69895ff97216ae42e8cf88d881a413127a84835ed53004ff73e`.
-  - The exact 37-file sequence and the separately authorized forward-only hardening migration
-    `20260902000000_production_rls_advisor_hardening.sql` are applied once to project
-    `jjgtlfblsfobdhmtngbz`; no ad hoc DDL, seed, unrecorded repair, imported history, or unrelated
-    project mutation is permitted.
-  - Authenticated reads prove migration history, expected schema, forced RLS, least-privilege
-    grants, hardened RPC search paths, immutable machine-owned tables, and zero cross-tenant access.
-  - Auth remains closed enrollment with `disable_signup=true`; production callback, SMTP, client,
-    and service-role bindings remain absent.
-  - Data API exposure and both Advisor classes are inspected after migration. Security Advisor has
-    zero errors and every remaining intentional finding is exactly allowlisted and explained;
-    performance notices are dispositioned.
-  - A ready successor names the exact production environment/secret binding, disabled-behavior
-    Worker deployment, web deployment, authenticated smoke, and rollback gates.
+  - Production configuration names only Supabase `jjgtlfblsfobdhmtngbz`, R2
+    `mustbeviral-v2-production-media`, Core `mustbeviral-v2-production-core`, and Vercel project ID
+    `prj_oPGn8bYorRz0VvXhsWUnHhGN0vGj`; no legacy or placeholder target is accepted.
+  - Production secrets are transferred provider-to-provider without values entering source, docs,
+    logs, or messages; secret presence and environment separation are verified.
+  - Core and web deploy with signup, generation, provider routes, queues, and customer charging off;
+    no custom domain or DNS route changes.
+  - Authenticated smoke proves health, closed enrollment, private artifact denial, database/RLS
+    connectivity, and rollback identifiers without creating customer or provider work.
+  - Security/performance Advisor findings are rechecked; justified foreign-key and RLS-plan repairs
+    are forward-only and complete before traffic.
 public_interfaces:
-  - No production web/API deployment, DNS, signup, customer charging, provider run, invitation, seed
-    data, customer data, or legacy cutover is enabled in this packet.
+  - Provider-generated preview/worker URLs may be used for private smoke only. `mustbeviral.com`,
+    `api.mustbeviral.com`, legacy V1 traffic, public signup, charging, and generation remain
+    unchanged.
 steps:
-  - id: p3g-001-dry-run-and-manifest
-    title: Re-prove the empty project and dry-run the exact pinned migration manifest.
-    status: completed
-  - id: p3g-002-apply-exact-migrations
-    title: Apply the exact 37-file forward-only migration sequence once to the production project.
-    status: completed
-  - id: p3g-003-security-and-auth-proof
-    title: Prove schema, RLS, grants, RPC, Auth, Data API, Advisor, and empty-customer invariants.
-    status: completed
-  - id: p3g-004-binding-successor
-    title: Prepare the exact disabled-behavior production environment-binding successor.
-    status: current
+  - id: p3h-001-config-and-secret-preflight
+    title: Validate exact resource identities, disabled flags, secrets, Advisor disposition, and rollback.
+    status: pending
+  - id: p3h-002-unrouted-core-deploy
+    title: Deploy production Core without a custom route and prove all costly behavior disabled.
+    status: pending
+  - id: p3h-003-isolated-web-deploy
+    title: Deploy the exact Vercel project without attaching MustBeViral production domains.
+    status: pending
+  - id: p3h-004-private-smoke-and-cutover-gate
+    title: Run private smoke checks and prepare a separate DNS/customer-traffic decision packet.
+    status: pending
 acceptance:
   automated:
-    - id: exact-migration-history
-      criterion:
-        Authenticated remote migration history exactly matches the authorized repository migration
-        versions and the project remains `ACTIVE_HEALTHY`.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
-    - id: production-database-security
-      criterion:
-        Remote database checks prove forced RLS and least privilege for every user-visible table,
-        hardened RPCs, zero Security Advisor errors, no unclassified findings, closed enrollment,
-        and no customer rows.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - id: exact-disabled-production
+      criterion: Provider reads and HTTP smoke prove exact bindings, healthy deployments, closed
+        enrollment, private media, and all spend/traffic feature gates disabled.
+      status: pending
+      evidence: []
+    - id: no-legacy-or-dns-mutation
+      criterion: Before/after inventory proves no legacy resource, custom domain, DNS record, route,
+        customer row, provider run, or charge changed.
+      status: pending
+      evidence: []
   manual:
-    - id: isolated-forward-only-release
-      criterion: Evidence proves only project `jjgtlfblsfobdhmtngbz` was mutated, the exact reviewed
-        sequence was used, and no application or traffic was bound to it.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - id: private-production-containment
+      criterion:
+        The deployments are usable only for operator smoke through provider URLs and are not
+        represented as a public launch or customer-ready release.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Keep the production project isolated. Production migrations are forward-only; on any
-    defect, stop before client binding and apply a separately reviewed repair migration. Do not
-    delete the project, rewrite migration history, restore over the database, or touch legacy V1.
+  strategy: Keep DNS and legacy traffic unchanged. Roll web back to its prior Vercel deployment or
+    remove the new alias; deploy the prior Core version/config; leave additive database migrations
+    intact and fix forward. Disable every behavior gate before investigating.
   remote_actions_required: true
 external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3g-004-binding-successor
-  next_action: Verify the database release evidence and activate WP-P3-008 for disabled bindings.
+  current_step: p3h-001-config-and-secret-preflight
+  next_action: Validate the exact production bindings, disabled flags, secrets, and rollback IDs.
   blockers: []
-  changed_paths:
-    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
-    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
-    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
-    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - PROJECT_STATE.yaml
-  last_green_checks:
-    - pnpm exec supabase db push --linked --dry-run --include-all --yes
-    - pnpm exec supabase db push --linked --include-all --yes
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-008
-  evidence_paths:
-    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
-    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
-    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
-    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null
