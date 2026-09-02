@@ -22,6 +22,23 @@ export interface HyperdriveHarnessArguments {
   readonly loadRegion: string;
 }
 
+/**
+ * Staging user-path Hyperdrive stays off until G1–G6 pass on a frozen fixture
+ * manifest. Detects a real `hyperdrive` binding key, not the comment that says
+ * the binding is intentionally absent.
+ */
+export function stagingEnvHasHyperdriveBinding(wranglerSource: string): boolean {
+  const stagingStart = wranglerSource.indexOf('"staging":');
+  const productionStart = wranglerSource.indexOf('"production":', stagingStart + 1);
+  if (stagingStart < 0 || productionStart < 0) {
+    throw new HarnessFlowError({
+      code: 'INVALID_ARGUMENTS',
+      message: 'wrangler source must declare staging and production environments.',
+    });
+  }
+  return /"hyperdrive"\s*:/.test(wranglerSource.slice(stagingStart, productionStart));
+}
+
 export function hyperdriveArgumentsFrom(argv: readonly string[]): HyperdriveHarnessArguments {
   const common = parseCommonHarnessArguments(argv, {
     durationSeconds: 300,

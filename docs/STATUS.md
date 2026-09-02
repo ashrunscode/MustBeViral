@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Optional remaining P3 evidence gates (planned) |
+| Phase | P3 — Optional remaining P3 evidence gates (in_progress) |
 | Active packet | `WP-P3-002` |
-| Current step | `p3b-001-execute-or-keep-deferred` |
+| Current step | `p3b-003-no-agency-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Execute the accepted Hyperdrive fixture-seed procedure on mustbeviral-staging and commit fixture-manifest.json, or record that G1-G6 stays deferred for this packet.
+Verify and commit WP-P3-002, then run pnpm agent:finish --successor governance/evidence/WP-P3-002/successor-WP-P3-003.yaml.

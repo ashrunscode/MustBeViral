@@ -1,0 +1,42 @@
+schema_version: 1
+acceptance_id: no-ungated-enablement
+packet_id: WP-P3-002
+recorded_at: '2026-09-01T12:00:00.000Z'
+status: proven
+criterion: No Hyperdrive user-path binding, separate executor, or BYOK ships without a
+  passed evidence gate.
+proofs:
+  - kind: config
+    path: apps/core/wrangler.jsonc
+    assertions:
+      - env.staging (mustbeviral-v2-staging-core) has no hyperdrive binding
+      - Hyperdrive user path remains comment-gated until G1-G6 pass
+      - no separate executor Worker name or BYOK vars were added
+  - kind: test
+    path: apps/core/test/unit/p3-scale-evidence-harness.test.ts
+    assertions:
+      - stagingEnvHasHyperdriveBinding detects a binding key and ignores comments
+      - candidate_hyperdrive_pooled staging mode throws GATE_BLOCKED
+  - kind: test
+    path: governance/tests/staging-hyperdrive-gate.test.mjs
+    assertions:
+      - apps/core/wrangler.jsonc env.staging has no hyperdrive binding
+  - kind: test
+    path: governance/tests/p3-optional-gates.test.mjs
+    assertions:
+      - apps/core/wrangler.jsonc env.staging has no hyperdrive binding
+      - no separate executor Worker name exists
+      - no BYOK or customer-supplied provider credential vars were added
+  - kind: domain
+    path: packages/db/src/index.ts
+    assertions:
+      - isAllowedUserDatabasePath('hyperdrive') is false
+      - only supabase-data-api-rpc is the allowed user path
+  - kind: evidence
+    path: governance/evidence/WP-P3-002/hyperdrive-g1-g6-deferred-2026-09-01.md
+    assertions:
+      - G1-G6 stays deferred
+      - fixture-manifest.json was not invented
+notes:
+  - Separate executor and BYOK remain not_met and were not implemented.
+  - Account Hyperdrive configs include no MustBeViral staging binding.

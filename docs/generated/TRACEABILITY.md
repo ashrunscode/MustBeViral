@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-002` (ready). Current step: `p3b-001-execute-or-keep-deferred`.
+Current packet: `WP-P3-002` (in_progress). Current step: `p3b-003-no-agency-handoff`.
 
 | Authority topic | Document | Path |
 |---|---|---|

@@ -80,7 +80,8 @@ public_interfaces:
     services are internal execution infrastructure, not a second policy or billing authority.
 steps:
   - id: p3-001-evidence-gate-evaluation
-    title: Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
+    title:
+      Record measured triggers, benchmarks, rollback plans, and accepted decisions before adding
       queues, a separate executor, direct high-volume adapters, Hyperdrive user-path enablement, or
       BYOK.
     status: completed
@@ -95,14 +96,16 @@ steps:
 acceptance:
   automated:
     - id: postgres-remains-authority
-      criterion: Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
+      criterion:
+        Tests prove any P3 scale path cannot mutate ledger, membership, or canvas head except
         through the existing revision/command barriers.
       status: passed
       evidence:
         - governance/evidence/WP-P3-001/queues/postgres-remains-authority-2026-08-31.md
         - governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md
     - id: evidence-gated-additions
-      criterion: Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
+      criterion:
+        Each shipped P3 infrastructure addition has a recorded trigger, benchmark, rollback plan,
         and accepted decision before implementation.
       status: passed
       evidence:
@@ -140,7 +143,8 @@ quality_gates:
       - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
       - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
 rollback:
-  strategy: Instant kill-switch set QUEUES_ENABLED=false on mustbeviral-v2-staging-core and redeploy,
+  strategy:
+    Instant kill-switch set QUEUES_ENABLED=false on mustbeviral-v2-staging-core and redeploy,
     or wrangler rollback e2614072-adfa-404f-9ba9-32376a221130 --env staging. Live version
     e66b6d1c-47d1-44b9-b83d-e062c0119cae. Unbind OUTBOX_DISPATCH_QUEUE from the staging env and Git
     revert if needed. Delete only mustbeviral-v2-staging-outbox-dispatch when a later authorized

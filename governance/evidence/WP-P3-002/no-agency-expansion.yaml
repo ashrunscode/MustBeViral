@@ -1,0 +1,33 @@
+schema_version: 1
+acceptance_id: no-agency-expansion
+packet_id: WP-P3-002
+recorded_at: '2026-09-01T12:00:00.000Z'
+status: proven
+criterion: This packet did not add agency portals, white-labeling, multi-client reporting, or
+  connected social publishing.
+proofs:
+  - kind: authority
+    path: docs/product/RELEASE_SCOPE.md
+    assertions:
+      - P4 agency accounts, client portals, and auto-publishing remain deferred
+  - kind: authority
+    path: docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    assertions:
+      - finish sprint does not start P4 agency work
+  - kind: infrastructure
+    path: apps/core/wrangler.jsonc
+    assertions:
+      - staging Worker remains mustbeviral-v2-staging-core
+      - no agency or social-publish Worker was added
+  - kind: test
+    path: governance/tests/p3-optional-gates.test.mjs
+    assertions:
+      - apps/ has no agency-portal, white-label, client-portal, auto-publish, or social-publish files
+      - Worker names remain Core and collaboration only
+  - kind: evidence
+    path: governance/evidence/WP-P3-002/optional-gate-outcomes-2026-09-01.md
+    assertions:
+      - no P4 surfaces
+      - no successor P4 packet was invented
+notes:
+  - Completion.successor_packet_id stays null. Do not invent P4.

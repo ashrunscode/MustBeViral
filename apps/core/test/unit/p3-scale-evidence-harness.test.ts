@@ -11,6 +11,7 @@ import {
   hyperdriveArgumentsFrom,
   runHyperdriveBenchmarkHarness,
   scaffoldHyperdriveEvidenceLayout,
+  stagingEnvHasHyperdriveBinding,
 } from '../../tools/p3-hyperdrive-benchmark-harness';
 import {
   buildQuoteRunInput,
@@ -121,6 +122,25 @@ describe('P3 scale evidence harness', () => {
     );
     expect(result.mode).toBe('dry-run');
     expect(result.gate).toBe('hyperdrive_g1_g6');
+  });
+
+  it('detects a staging Hyperdrive binding key and ignores comments', () => {
+    expect(
+      stagingEnvHasHyperdriveBinding(
+        '{ "staging": { "name": "mustbeviral-v2-staging-core" }, "production": {} }',
+      ),
+    ).toBe(false);
+    expect(
+      stagingEnvHasHyperdriveBinding(
+        '{ "staging": { "hyperdrive": [{ "binding": "HYPERDRIVE" }] }, "production": {} }',
+      ),
+    ).toBe(true);
+    expect(
+      stagingEnvHasHyperdriveBinding(
+        '{ "staging": { /* hyperdrive stays off */ }, "production": { "hyperdrive": [] } }',
+      ),
+    ).toBe(false);
+    expect(() => stagingEnvHasHyperdriveBinding('{ "development": {} }')).toThrow(HarnessFlowError);
   });
 
   it('blocks hyperdrive candidate path on staging without operator binding', async () => {

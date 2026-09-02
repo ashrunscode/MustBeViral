@@ -8,11 +8,11 @@ project_state: active
 phase:
   id: P3
   title: Optional remaining P3 evidence gates
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P3-002
-next_action: Execute the accepted Hyperdrive fixture-seed procedure on mustbeviral-staging and
-  commit fixture-manifest.json, or record that G1-G6 stays deferred for this packet.
+next_action: Verify and commit WP-P3-002, then run pnpm agent:finish --successor
+  governance/evidence/WP-P3-002/successor-WP-P3-003.yaml.
 decisions_pending: []
 blockers: []
 legacy:
