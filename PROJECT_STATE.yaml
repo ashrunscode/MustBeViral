@@ -7,11 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: Unrouted V2 production foundation provisioning
-  state: in_progress
+  title: Fresh Supabase production project provisioning
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-005
-next_action: Record the approved Supabase project cost and activate WP-P3-006 for exact project creation.
+active_work_packet: WP-P3-006
+next_action: Create the exact confirmed Supabase project and wait for authenticated healthy status.
 decisions_pending: []
 blockers: []
 legacy:
@@ -35,9 +35,10 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-02T01:34:21.220Z
+  at: 2026-09-02T13:40:52.866Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-004/production-provider-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-004/production-config-fail-closed-2026-09-02.md
-    - governance/evidence/WP-P3-004/successor-WP-P3-005.yaml
+    - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+    - governance/evidence/WP-P3-005/successor-WP-P3-006.yaml

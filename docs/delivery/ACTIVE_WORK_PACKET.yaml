@@ -1,37 +1,36 @@
 schema_version: 1
-id: WP-P3-005
+id: WP-P3-006
 spec_revision: 1
-title: Unrouted V2 production foundation provisioning
+title: Fresh Supabase production project provisioning
 phase: P3
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Create the exact empty and unrouted V2 production foundation resources that do not depend
-  on database credentials or provider secrets, verify their IDs, and preserve a zero-traffic
-  rollback posture before the separately confirmed Supabase production project.
+objective: Create the cost-confirmed `mustbeviral-prod` Supabase project in the exact organization
+  and region, verify its identity and health without exposing credentials, and prepare the
+  separately governed migration and security-hardening slice.
 authority_refs:
   - product-contract
   - release-scope
   - system-overview
   - data-auth-tenancy
-  - roadmap
   - quality-gates
   - local-env-secrets
   - deploy-rollback-incidents
   - legacy-v1-retirement
   - codex-finish-mega-prompt
 required_skills:
-  - cloudflare
-  - wrangler
-  - deployments-cicd
+  - supabase
+  - data-architect
+  - auth-fortress
   - quality-check
 depends_on:
-  - WP-P3-004
+  - WP-P3-005
 scope:
   allowed_paths:
-    - apps/collaboration/**
+    - supabase/**
+    - governance/evidence/WP-P3-006/**
     - governance/evidence/WP-P3-005/**
-    - governance/evidence/WP-P3-004/**
     - governance/tests/**
     - docs/**
     - package.json
@@ -53,100 +52,78 @@ scope:
     - release-scope
     - system-overview
     - data-auth-tenancy
-    - roadmap
     - quality-gates
     - local-env-secrets
     - deploy-rollback-incidents
     - legacy-v1-retirement
     - codex-finish-mega-prompt
 deliverables:
-  - Empty private R2 bucket `mustbeviral-v2-production-media` in Cloudflare account
-    `d2897bdebfa128919bd89b265e6a712e`, with no legacy copy or public access.
-  - Empty Vercel project `mustbeviral-web-production` in team `team_A11dbY2xnTWzGL63IRBTWmLo`, with
-    no deployment, domain, or environment values.
-  - Unrouted Worker `mustbeviral-v2-production-collaboration` with its exact version and Durable
-    Object binding recorded, `workers_dev=false`, and no product client.
-  - A cost-confirmation handoff for a fresh `mustbeviral-prod` Supabase project in organization
-    `cwsipbaunvifcpgoygsc`, region `us-east-1`; no project is created before that confirmation.
+  - Supabase project `mustbeviral-prod` created in organization `cwsipbaunvifcpgoygsc`, region
+    `us-east-1`, under the operator-approved USD 10 monthly recurring cost.
+  - Exact project ref, creation timestamp, Postgres version, API URL presence, publishable-key
+    presence, and healthy state recorded without secret or key values.
+  - Empty-project validation proves no MustBeViral application tables, users, storage objects, or
+    migration history were fabricated before the migration packet.
+  - A successor packet names the exact migration, RLS, Auth, Data API, Advisor, and rollback gates.
 public_interfaces:
-  - No V2 production web/API URL, DNS route, signup, charging, provider run, invitation, or customer
-    access is enabled in this packet.
+  - No production web/API deployment, DNS, signup, charging, provider run, invitation, migration,
+    application table, storage object, or customer access is enabled in this packet.
 steps:
-  - id: p3e-001-empty-storage-and-web-project
-    title: Create and inspect only the exact empty production R2 bucket and Vercel project.
-    status: completed
-  - id: p3e-002-unrouted-collaboration-worker
-    title: Deploy and inspect only the production collaboration Worker with no workers.dev URL or route.
-    status: completed
-  - id: p3e-003-supabase-cost-handoff
-    title: Obtain the exact Supabase project cost and prepare the confirmation-gated database successor.
-    status: current
+  - id: p3f-001-create-project
+    title: Create only the exact cost-confirmed Supabase production project and wait for healthy status.
+    status: pending
+  - id: p3f-002-verify-empty-identity
+    title: Verify project identity, API/key presence, default schema posture, and empty application state.
+    status: pending
+  - id: p3f-003-migration-successor
+    title: Author the exact migration and security-hardening successor from the new project ref.
+    status: pending
 acceptance:
   automated:
-    - id: exact-foundation-targets
-      criterion: Provider reads prove only the exact new V2 target names exist and production Worker
-        config remains free of routes, legacy targets, placeholder IDs, and ungated Hyperdrive.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    - id: exact-healthy-project
+      criterion: Authenticated provider reads prove one healthy `mustbeviral-prod` project at the exact
+        organization and region, with no credential values recorded.
+      status: pending
+      evidence: []
+    - id: empty-before-migration
+      criterion: Read-only database and project inspection proves no MustBeViral application migration,
+        table, user, or storage payload exists before the successor packet.
+      status: pending
+      evidence: []
   manual:
-    - id: zero-traffic-containment
-      criterion:
-        The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
-        neither changed nor copied.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    - id: cost-and-containment
+      criterion: The operator approved the provider-reported recurring cost and no production traffic,
+        data, or unrelated resource was changed.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+    status: pending
+    evidence: []
 rollback:
-  strategy:
-    Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
-    and deploy a corrected version if required. Do not delete any bucket, project, Worker, Durable
-    Object namespace, legacy resource, or customer data in this packet.
+  strategy: Keep an unhealthy or unusable new project isolated and record the defect. Do not delete or
+    repurpose the project in this packet. No clients, Workers, DNS, or provider credentials may
+    point to it until the successor proves migrations and security.
   remote_actions_required: true
 external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3e-003-supabase-cost-handoff
-  next_action: Verify the cost approval evidence and activate WP-P3-006 for exact project creation.
+  current_step: p3f-001-create-project
+  next_action: Create the exact confirmed Supabase project and wait for authenticated healthy status.
   blockers: []
-  changed_paths:
-    - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
-    - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
-    - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
-    - governance/evidence/WP-P3-005/successor-WP-P3-006.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - PROJECT_STATE.yaml
-  last_green_checks:
-    - pnpm exec wrangler r2 bucket info mustbeviral-v2-production-media
-    - pnpm exec vercel project inspect mustbeviral-web-production --scope ashrunscode-projects
-    - pnpm exec vercel list mustbeviral-web-production --scope ashrunscode-projects --format json
-      --limit 20
-    - pnpm exec wrangler versions list --config apps/collaboration/wrangler.jsonc --env production
-    - pnpm exec wrangler deployments status --config apps/collaboration/wrangler.jsonc --env
-      production
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-006
-  evidence_paths:
-    - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
-    - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
-    - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
-    - governance/evidence/WP-P3-005/successor-WP-P3-006.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null

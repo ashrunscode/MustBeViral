@@ -1,0 +1,150 @@
+schema_version: 1
+id: WP-P3-005
+spec_revision: 1
+title: Unrouted V2 production foundation provisioning
+phase: P3
+status: complete
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Create the exact empty and unrouted V2 production foundation resources that do not depend
+  on database credentials or provider secrets, verify their IDs, and preserve a zero-traffic
+  rollback posture before the separately confirmed Supabase production project.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - roadmap
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
+  - codex-finish-mega-prompt
+required_skills:
+  - cloudflare
+  - wrangler
+  - deployments-cicd
+  - quality-check
+depends_on:
+  - WP-P3-004
+scope:
+  allowed_paths:
+    - apps/collaboration/**
+    - governance/evidence/WP-P3-005/**
+    - governance/evidence/WP-P3-004/**
+    - governance/tests/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - roadmap
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
+    - codex-finish-mega-prompt
+deliverables:
+  - Empty private R2 bucket `mustbeviral-v2-production-media` in Cloudflare account
+    `d2897bdebfa128919bd89b265e6a712e`, with no legacy copy or public access.
+  - Empty Vercel project `mustbeviral-web-production` in team `team_A11dbY2xnTWzGL63IRBTWmLo`, with
+    no deployment, domain, or environment values.
+  - Unrouted Worker `mustbeviral-v2-production-collaboration` with its exact version and Durable
+    Object binding recorded, `workers_dev=false`, and no product client.
+  - A cost-confirmation handoff for a fresh `mustbeviral-prod` Supabase project in organization
+    `cwsipbaunvifcpgoygsc`, region `us-east-1`; no project is created before that confirmation.
+public_interfaces:
+  - No V2 production web/API URL, DNS route, signup, charging, provider run, invitation, or customer
+    access is enabled in this packet.
+steps:
+  - id: p3e-001-empty-storage-and-web-project
+    title: Create and inspect only the exact empty production R2 bucket and Vercel project.
+    status: completed
+  - id: p3e-002-unrouted-collaboration-worker
+    title: Deploy and inspect only the production collaboration Worker with no workers.dev URL or route.
+    status: completed
+  - id: p3e-003-supabase-cost-handoff
+    title: Obtain the exact Supabase project cost and prepare the confirmation-gated database successor.
+    status: completed
+acceptance:
+  automated:
+    - id: exact-foundation-targets
+      criterion: Provider reads prove only the exact new V2 target names exist and production Worker
+        config remains free of routes, legacy targets, placeholder IDs, and ungated Hyperdrive.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+  manual:
+    - id: zero-traffic-containment
+      criterion: The new resources are empty or unrouted, have no customers or domains, and legacy V1 was
+        neither changed nor copied.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+rollback:
+  strategy: Keep the empty R2 bucket and Vercel project unused. Keep the collaboration Worker unrouted
+    and deploy a corrected version if required. Do not delete any bucket, project, Worker, Durable
+    Object namespace, legacy resource, or customer data in this packet.
+  remote_actions_required: true
+external_effects:
+  remote_mutation: authorized
+  destructive_remote_actions: false
+handoff:
+  current_step: p3e-003-supabase-cost-handoff
+  next_action: Verify the cost approval evidence and activate WP-P3-006 for exact project creation.
+  blockers: []
+  changed_paths:
+    - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+    - governance/evidence/WP-P3-005/successor-WP-P3-006.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - pnpm exec wrangler r2 bucket info mustbeviral-v2-production-media
+    - pnpm exec vercel project inspect mustbeviral-web-production --scope ashrunscode-projects
+    - pnpm exec vercel list mustbeviral-web-production --scope ashrunscode-projects --format json
+      --limit 20
+    - pnpm exec wrangler versions list --config apps/collaboration/wrangler.jsonc --env production
+    - pnpm exec wrangler deployments status --config apps/collaboration/wrangler.jsonc --env
+      production
+    - pnpm agent:verify
+completion:
+  successor_packet_id: WP-P3-006
+  evidence_paths:
+    - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
+    - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+    - governance/evidence/WP-P3-005/successor-WP-P3-006.yaml
+  completed_at: 2026-09-02T13:40:52.866Z

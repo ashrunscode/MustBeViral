@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Unrouted V2 production foundation provisioning (in_progress) |
-| Active packet | `WP-P3-005` |
-| Current step | `p3e-003-supabase-cost-handoff` |
+| Phase | P3 — Fresh Supabase production project provisioning (planned) |
+| Active packet | `WP-P3-006` |
+| Current step | `p3f-001-create-project` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify the cost approval evidence and activate WP-P3-006 for exact project creation.
+Create the exact confirmed Supabase project and wait for authenticated healthy status.
