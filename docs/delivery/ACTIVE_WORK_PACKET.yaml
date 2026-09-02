@@ -101,7 +101,6 @@ acceptance:
         data, or unrelated resource was changed.
       status: passed
       evidence:
-        - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
         - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
 quality_gates:
   - id: design-direction
