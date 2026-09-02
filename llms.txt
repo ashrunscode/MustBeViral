@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-007
-current_step: p3g-001-dry-run-and-manifest
-next_action: Add and verify the authorized forward-only RLS Advisor hardening migration.
+current_step: p3g-004-binding-successor
+next_action: Verify the database release evidence and activate WP-P3-008 for disabled bindings.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

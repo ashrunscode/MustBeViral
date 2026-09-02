@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-007` (in_progress). Current step: `p3g-001-dry-run-and-manifest`.
+Current packet: `WP-P3-007` (in_progress). Current step: `p3g-004-binding-successor`.
 
 | Authority topic | Document | Path |
 |---|---|---|

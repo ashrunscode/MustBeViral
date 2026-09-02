@@ -83,50 +83,56 @@ public_interfaces:
 steps:
   - id: p3g-001-dry-run-and-manifest
     title: Re-prove the empty project and dry-run the exact pinned migration manifest.
-    status: current
+    status: completed
   - id: p3g-002-apply-exact-migrations
     title: Apply the exact 37-file forward-only migration sequence once to the production project.
-    status: pending
+    status: completed
   - id: p3g-003-security-and-auth-proof
     title: Prove schema, RLS, grants, RPC, Auth, Data API, Advisor, and empty-customer invariants.
-    status: pending
+    status: completed
   - id: p3g-004-binding-successor
     title: Prepare the exact disabled-behavior production environment-binding successor.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: exact-migration-history
       criterion:
-        Authenticated remote migration history exactly matches the 37 pinned repository migration
+        Authenticated remote migration history exactly matches the authorized repository migration
         versions and the project remains `ACTIVE_HEALTHY`.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
     - id: production-database-security
       criterion:
         Remote database checks prove forced RLS and least privilege for every user-visible table,
         hardened RPCs, zero Security Advisor errors, no unclassified findings, closed enrollment,
         and no customer rows.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
   manual:
     - id: isolated-forward-only-release
       criterion: Evidence proves only project `jjgtlfblsfobdhmtngbz` was mutated, the exact reviewed
         sequence was used, and no application or traffic was bound to it.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
 rollback:
   strategy: Keep the production project isolated. Production migrations are forward-only; on any
     defect, stop before client binding and apply a separately reviewed repair migration. Do not
@@ -136,18 +142,25 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3g-001-dry-run-and-manifest
-  next_action: Add and verify the authorized forward-only RLS Advisor hardening migration.
+  current_step: p3g-004-binding-successor
+  next_action: Verify the database release evidence and activate WP-P3-008 for disabled bindings.
   blockers: []
   changed_paths:
     - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
     - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
     - PROJECT_STATE.yaml
   last_green_checks:
     - pnpm exec supabase db push --linked --dry-run --include-all --yes
     - pnpm exec supabase db push --linked --include-all --yes
+    - pnpm agent:verify
 completion:
-  successor_packet_id: null
-  evidence_paths: []
+  successor_packet_id: WP-P3-008
+  evidence_paths:
+    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
   completed_at: null
