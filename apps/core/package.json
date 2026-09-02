@@ -15,8 +15,8 @@
     "openrouter:blind-eval": "tsx tools/openrouter-blind-eval.ts",
     "self-session:provision": "tsx tools/self-session-kit.ts",
     "lint": "eslint . --max-warnings 0",
-    "types:generate": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings",
-    "types:check": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --check",
+    "types:generate": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --env-file .dev.vars.example",
+    "types:check": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --env-file .dev.vars.example --check",
     "typecheck": "pnpm types:check && tsc --noEmit && tsc -p test/tsconfig.json --noEmit && tsc -p tsconfig.tools.json --noEmit",
     "test": "vitest run --config vitest.config.ts test/unit",
     "test:integration": "vitest run --config vitest.config.ts test/integration"

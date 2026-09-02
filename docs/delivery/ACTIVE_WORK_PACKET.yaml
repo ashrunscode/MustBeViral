@@ -153,7 +153,9 @@ handoff:
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example
+    - apps/core/package.json
     - apps/core/src/composition/kill-switches.ts
+    - apps/core/src/bindings.ts
     - apps/core/src/routes/v1.ts
     - apps/core/test/unit/fal-ingest.test.ts
     - apps/core/test/unit/kill-switches.test.ts

@@ -30,6 +30,9 @@
   on stdin and never entered source/evidence. fal, OpenRouter, Stripe, Resend, and Sentry secrets are
   intentionally absent.
 - R2 remains at 0 objects / 0 B with no custom domain and r2.dev disabled.
+- Core Worker type generation and checking both use `.dev.vars.example` explicitly, so the declared
+  binding-name surface is deterministic between developer machines and clean CI checkouts without
+  reading or copying real local values.
 
 Final HTTP probes on the exact Worker version:
 
