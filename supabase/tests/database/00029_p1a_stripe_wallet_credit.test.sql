@@ -1,6 +1,6 @@
 begin;
 
-select plan(6);
+select plan(9);
 
 insert into auth.users (
   id,
@@ -110,6 +110,40 @@ select is(
   ),
   'cus_wallet_1',
   'wallet credit upserts stripe customer linkage on the billing profile'
+);
+
+select is(
+  public.record_stripe_webhook_event(
+    'evt_webhook_claim_1',
+    'checkout.session.completed',
+    false,
+    repeat('a', 64),
+    'req-webhook-claim-1'
+  ) ->> 'claim',
+  'inserted',
+  'record_stripe_webhook_event reports the first claim as inserted'
+);
+
+select is(
+  public.record_stripe_webhook_event(
+    'evt_webhook_claim_1',
+    'checkout.session.completed',
+    false,
+    repeat('a', 64),
+    'req-webhook-claim-replay'
+  ) ->> 'claim',
+  'duplicate',
+  'record_stripe_webhook_event reports a replay as duplicate'
+);
+
+select is(
+  (
+    select count(*)::integer
+    from public.stripe_webhook_events
+    where stripe_event_id = 'evt_webhook_claim_1'
+  ),
+  1,
+  'record_stripe_webhook_event stores one row for duplicate event ids'
 );
 
 select * from finish();

@@ -81,6 +81,7 @@ set search_path = public, app_private
 as $$
 declare
   v_inserted boolean := false;
+  v_row_count bigint := 0;
 begin
   insert into public.stripe_webhook_events (
     stripe_event_id,
@@ -98,7 +99,8 @@ begin
   )
   on conflict (stripe_event_id) do nothing;
 
-  get diagnostics v_inserted = row_count > 0;
+  get diagnostics v_row_count = row_count;
+  v_inserted := v_row_count > 0;
   return jsonb_build_object('claim', case when v_inserted then 'inserted' else 'duplicate' end);
 end;
 $$;
