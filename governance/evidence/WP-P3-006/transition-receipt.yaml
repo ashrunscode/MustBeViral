@@ -1,0 +1,25 @@
+schema_version: 1
+packet_id: WP-P3-006
+spec_revision: 1
+phase: P3
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-02T13:58:18.227Z
+successor_packet_id: WP-P3-007
+predecessor_head: b0de87d249809a0b803ac5dba9650c5bbc4efbe8
+closed_packet_path: governance/evidence/WP-P3-006/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+  - governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
+evidence_entries:
+  - path: governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    sha256: 057bca85c97e63b21fb927e2c89441a70c9122cf40c5a728a6199c43f17a4ae0
+    git_blob_oid: c210985fcfe956f1083053512a3bca9fbd5fd513
+  - path: governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
+    sha256: ef5a060427a596649da369d22b76bc352d3d4650adf18b283dc46a4afd84b499
+    git_blob_oid: dd816463b17e5c9e3f07250ad0c02abac408f57f
+completed_step_ids:
+  - p3f-001-create-project
+  - p3f-002-verify-empty-identity
+  - p3f-003-migration-successor
+closed_packet_sha256: 451bc0f07d1fa2f20bf6bc0c22672425d420203def3f5d85e981a9b539513b26

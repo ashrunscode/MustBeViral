@@ -1,14 +1,14 @@
 schema_version: 1
-id: WP-P3-006
+id: WP-P3-007
 spec_revision: 1
-title: Fresh Supabase production project provisioning
+title: Production Supabase migrations and security hardening
 phase: P3
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Create the cost-confirmed `mustbeviral-prod` Supabase project in the exact organization
-  and region, verify its identity and health without exposing credentials, and prepare the
-  separately governed migration and security-hardening slice.
+objective: Apply the exact reviewed repository migration sequence to the isolated production
+  Supabase project, prove RLS and Auth fail closed, and leave the database unbound from production
+  clients until a separate environment-binding packet.
 authority_refs:
   - product-contract
   - release-scope
@@ -25,12 +25,12 @@ required_skills:
   - auth-fortress
   - quality-check
 depends_on:
-  - WP-P3-005
+  - WP-P3-006
 scope:
   allowed_paths:
     - supabase/**
+    - governance/evidence/WP-P3-007/**
     - governance/evidence/WP-P3-006/**
-    - governance/evidence/WP-P3-005/**
     - governance/tests/**
     - docs/**
     - package.json
@@ -58,90 +58,84 @@ scope:
     - legacy-v1-retirement
     - codex-finish-mega-prompt
 deliverables:
-  - Supabase project `mustbeviral-prod` created in organization `cwsipbaunvifcpgoygsc`, region
-    `us-east-1`, under the operator-approved USD 10 monthly recurring cost.
-  - Exact project ref, creation timestamp, Postgres version, API URL presence, publishable-key
-    presence, and healthy state recorded without secret or key values.
-  - Empty-project validation proves no MustBeViral application tables, users, storage objects, or
-    migration history were fabricated before the migration packet.
-  - A successor packet names the exact migration, RLS, Auth, Data API, Advisor, and rollback gates.
+  - A dry-run and immutable manifest prove the exact 37-file sequence from
+    `20260712000000_cleanroom_bootstrap.sql` through
+    `20260831140000_p3_start_run_barrier_outbox_event_id.sql`, with aggregate SHA-256
+    `eeaa570ca92b98b071310f9ec1cfab361f620fa4e66daf820684077979f44fcd`.
+  - The exact sequence is applied once to project `jjgtlfblsfobdhmtngbz`; no ad hoc DDL, seed,
+    repair, imported history, or unrelated project mutation is permitted.
+  - Authenticated reads prove migration history, expected schema, forced RLS, least-privilege
+    grants, hardened RPC search paths, immutable machine-owned tables, and zero cross-tenant access.
+  - Auth remains closed enrollment with `disable_signup=true`; production callback, SMTP, client,
+    and service-role bindings remain absent.
+  - Data API exposure and both Advisor classes are inspected after migration. Security findings are
+    fixed through reviewed migrations or block the packet; performance notices are dispositioned.
+  - A ready successor names the exact production environment/secret binding, disabled-behavior
+    Worker deployment, web deployment, authenticated smoke, and rollback gates.
 public_interfaces:
-  - No production web/API deployment, DNS, signup, charging, provider run, invitation, migration,
-    application table, storage object, or customer access is enabled in this packet.
+  - No production web/API deployment, DNS, signup, customer charging, provider run, invitation, seed
+    data, customer data, or legacy cutover is enabled in this packet.
 steps:
-  - id: p3f-001-create-project
-    title: Create only the exact cost-confirmed Supabase production project and wait for healthy status.
-    status: completed
-  - id: p3f-002-verify-empty-identity
-    title: Verify project identity, API/key presence, default schema posture, and empty application state.
-    status: completed
-  - id: p3f-003-migration-successor
-    title: Author the exact migration and security-hardening successor from the new project ref.
-    status: current
+  - id: p3g-001-dry-run-and-manifest
+    title: Re-prove the empty project and dry-run the exact pinned migration manifest.
+    status: pending
+  - id: p3g-002-apply-exact-migrations
+    title: Apply the exact 37-file forward-only migration sequence once to the production project.
+    status: pending
+  - id: p3g-003-security-and-auth-proof
+    title: Prove schema, RLS, grants, RPC, Auth, Data API, Advisor, and empty-customer invariants.
+    status: pending
+  - id: p3g-004-binding-successor
+    title: Prepare the exact disabled-behavior production environment-binding successor.
+    status: pending
 acceptance:
   automated:
-    - id: exact-healthy-project
+    - id: exact-migration-history
       criterion:
-        Authenticated provider reads prove one healthy `mustbeviral-prod` project at the exact
-        organization and region, with no credential values recorded.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
-    - id: empty-before-migration
+        Authenticated remote migration history exactly matches the 37 pinned repository migration
+        versions and the project remains `ACTIVE_HEALTHY`.
+      status: pending
+      evidence: []
+    - id: production-database-security
       criterion:
-        Read-only database and project inspection proves no MustBeViral application migration,
-        table, user, or storage payload exists before the successor packet.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+        Remote database checks prove forced RLS and least privilege for every user-visible table,
+        hardened RPCs, zero security-advisor findings, closed enrollment, and no customer rows.
+      status: pending
+      evidence: []
   manual:
-    - id: cost-and-containment
-      criterion:
-        The operator approved the provider-reported recurring cost and no production traffic,
-        data, or unrelated resource was changed.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    - id: isolated-forward-only-release
+      criterion: Evidence proves only project `jjgtlfblsfobdhmtngbz` was mutated, the exact reviewed
+        sequence was used, and no application or traffic was bound to it.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
+    status: pending
+    evidence: []
 rollback:
-  strategy:
-    Keep an unhealthy or unusable new project isolated and record the defect. Do not delete or
-    repurpose the project in this packet. No clients, Workers, DNS, or provider credentials may
-    point to it until the successor proves migrations and security.
+  strategy: Keep the production project isolated. Production migrations are forward-only; on any
+    defect, stop before client binding and apply a separately reviewed repair migration. Do not
+    delete the project, rewrite migration history, restore over the database, or touch legacy V1.
   remote_actions_required: true
 external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3f-003-migration-successor
-  next_action: Verify the production project evidence and activate WP-P3-007 for exact migrations.
+  current_step: p3g-001-dry-run-and-manifest
+  next_action: Dry-run the exact pinned migration manifest against project jjgtlfblsfobdhmtngbz.
   blockers: []
-  changed_paths:
-    - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
-    - governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - PROJECT_STATE.yaml
-  last_green_checks:
-    - pnpm exec supabase projects list --output json
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-007
-  evidence_paths:
-    - governance/evidence/WP-P3-006/production-supabase-project-2026-09-02.md
-    - governance/evidence/WP-P3-006/successor-WP-P3-007.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null

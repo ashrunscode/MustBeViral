@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Fresh Supabase production project provisioning (in_progress) |
-| Active packet | `WP-P3-006` |
-| Current step | `p3f-003-migration-successor` |
+| Phase | P3 — Production Supabase migrations and security hardening (planned) |
+| Active packet | `WP-P3-007` |
+| Current step | `p3g-001-dry-run-and-manifest` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify the production project evidence and activate WP-P3-007 for exact migrations.
+Dry-run the exact pinned migration manifest against project jjgtlfblsfobdhmtngbz.
