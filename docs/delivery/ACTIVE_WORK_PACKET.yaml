@@ -100,8 +100,6 @@ acceptance:
       status: passed
       evidence:
         - governance/evidence/WP-P3-002/postgres-remains-authority.md
-        - packages/db/src/index.test.ts
-        - apps/core/test/unit/p3-scale-evidence-harness.test.ts
     - id: no-ungated-enablement
       criterion: No Hyperdrive user-path binding, separate executor, or BYOK ships without a passed
         evidence gate.
@@ -109,9 +107,6 @@ acceptance:
       evidence:
         - governance/evidence/WP-P3-002/no-ungated-enablement.yaml
         - governance/evidence/WP-P3-002/hyperdrive-g1-g6-deferred-2026-09-01.md
-        - apps/core/wrangler.jsonc
-        - governance/tests/staging-hyperdrive-gate.test.mjs
-        - governance/tests/p3-optional-gates.test.mjs
   manual:
     - id: no-agency-expansion
       criterion: This packet did not add agency portals, white-labeling, multi-client reporting, or
@@ -120,7 +115,6 @@ acceptance:
       evidence:
         - governance/evidence/WP-P3-002/no-agency-expansion.yaml
         - governance/evidence/WP-P3-002/optional-gate-outcomes-2026-09-01.md
-        - governance/tests/p3-optional-gates.test.mjs
 quality_gates:
   - id: design-direction
     command: pnpm design:check
@@ -188,5 +182,4 @@ completion:
     - governance/evidence/WP-P3-002/optional-gate-outcomes-2026-09-01.md
     - governance/evidence/WP-P3-002/operator-authorization-and-remote-inventory-2026-09-02.md
     - governance/evidence/WP-P3-002/successor-WP-P3-003.yaml
-    - governance/tests/p3-optional-gates.test.mjs
   completed_at: null
