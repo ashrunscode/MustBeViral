@@ -15,10 +15,10 @@ next_action: Configure an existing zero-spend custom SMTP provider for Supabase 
   jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.
 decisions_pending: []
 blockers:
-  - "BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com is the approved production
+  - 'BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com is the approved production
     owner identity, but it is not a Supabase organization member and project jjgtlfblsfobdhmtngbz
     has no custom SMTP. Supabase therefore refuses delivery through its default SMTP. No Auth user
-    or invitation was created, and the single authorized invitation attempt remains unused."
+    or invitation was created, and the single authorized invitation attempt remains unused.'
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
@@ -29,7 +29,8 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+    notes:
+      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
   staging:
     generation: viralgraph-cleanroom-v2

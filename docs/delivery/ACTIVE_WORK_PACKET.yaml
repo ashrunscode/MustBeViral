@@ -112,7 +112,8 @@ acceptance:
         - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
   manual:
     - id: private-production-containment
-      criterion: The deployments are usable only for operator smoke through provider URLs and are not
+      criterion:
+        The deployments are usable only for operator smoke through provider URLs and are not
         represented as a public launch or customer-ready release.
       status: passed
       evidence:
@@ -146,10 +147,10 @@ handoff:
   next_action: Configure an existing zero-spend custom SMTP provider for Supabase project
     jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.
   blockers:
-    - "BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com is the approved production
+    - 'BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com is the approved production
       owner identity, but it is not a Supabase organization member and project jjgtlfblsfobdhmtngbz
       has no custom SMTP. Supabase therefore refuses delivery through its default SMTP. No Auth user
-      or invitation was created, and the single authorized invitation attempt remains unused."
+      or invitation was created, and the single authorized invitation attempt remains unused.'
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example
