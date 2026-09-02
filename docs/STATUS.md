@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Collaboration environment deployability remediation (planned) |
+| Phase | P3 — Collaboration environment deployability remediation (in_progress) |
 | Active packet | `WP-P3-003` |
-| Current step | `p3c-001-environment-bindings` |
+| Current step | `p3c-004-release-readiness-handoff` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
+Verify WP-P3-003 and prepare the V2 production release-readiness successor without touching legacy V1.

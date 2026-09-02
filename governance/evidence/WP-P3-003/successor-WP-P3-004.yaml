@@ -1,0 +1,146 @@
+schema_version: 1
+id: WP-P3-004
+spec_revision: 1
+title: V2 production release-readiness preflight
+phase: P3
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective:
+  Convert the current repository and authenticated-provider state into an exact, fail-closed
+  V2 production provisioning and canary plan, resolving placeholders and missing-resource facts before
+  any production deploy or legacy cutover.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - execution-providers-billing
+  - roadmap
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
+  - codex-finish-mega-prompt
+required_skills:
+  - cloudflare
+  - wrangler
+  - deployments-cicd
+  - data-architect
+  - auth-fortress
+  - billing-engine
+  - observability-ops
+  - quality-check
+depends_on:
+  - WP-P3-003
+scope:
+  allowed_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - governance/evidence/WP-P3-004/**
+    - governance/evidence/WP-P3-003/**
+    - governance/tests/**
+    - docs/**
+    - scripts/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - playwright.config.ts
+    - .env.example
+    - .dev.vars.example
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - execution-providers-billing
+    - roadmap
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
+    - codex-finish-mega-prompt
+deliverables:
+  - A current exact inventory of V2 and legacy production resources across Supabase, Cloudflare,
+    Vercel, DNS, Stripe mode, email, and observability, with missing sources labeled rather than
+    treated as passing.
+  - A production configuration audit that removes or blocks placeholder resource IDs and proves
+    production dry-runs cannot mutate remote state.
+  - A successor packet that names the first bounded production provisioning slice, its exact target
+    names or IDs, kill switches, rollback evidence, and exclusion of legacy destruction.
+public_interfaces:
+  - No traffic, DNS, signup, charging, provider-spend, invitation, or customer-access change occurs
+    in this preflight packet.
+steps:
+  - id: p3d-001-provider-inventory
+    title:
+      Refresh authenticated production resource inventory and credential-presence checks without
+      printing secret values.
+    status: pending
+  - id: p3d-002-placeholder-and-contract-audit
+    title:
+      Audit production configs, migration order, kill switches, domains, and rollback requirements;
+      add fail-closed checks for unresolved placeholders.
+    status: pending
+  - id: p3d-003-provisioning-successor
+    title: Author the exact non-destructive production provisioning successor from verified inventory.
+    status: pending
+acceptance:
+  automated:
+    - id: production-config-fails-closed
+      criterion:
+        Tests reject placeholder IDs, missing required production bindings, accidental legacy
+        targets, or an ungoverned custom-domain deploy.
+      status: pending
+      evidence: []
+  manual:
+    - id: inventory-and-rollback-complete
+      criterion:
+        Every proposed production mutation has an exact target, owner, kill switch, validation,
+        and recoverable rollback path; unavailable evidence remains explicitly blocked.
+      status: pending
+      evidence: []
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: repository-verification
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy:
+    This packet is read-only against remote providers. Revert repository-only audit and guard
+    changes through Git. Do not deploy, provision, attach DNS, alter live provider mode, charge,
+    invite, or delete any remote resource.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: prohibited
+  destructive_remote_actions: false
+handoff:
+  current_step: p3d-001-provider-inventory
+  next_action: Refresh authenticated production inventory and secret-presence gates without remote mutation.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: null
+  evidence_paths: []
+  completed_at: null

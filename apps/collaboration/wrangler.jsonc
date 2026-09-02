@@ -36,6 +36,14 @@
     "staging": {
       "name": "mustbeviral-v2-staging-collaboration",
       "workers_dev": true,
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "CANVAS_COORDINATION",
+            "class_name": "CanvasCoordination",
+          },
+        ],
+      },
       "vars": {
         "SERVICE_NAME": "mustbeviral-collaboration",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
@@ -44,6 +52,14 @@
     },
     "production": {
       "name": "mustbeviral-v2-production-collaboration",
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "CANVAS_COORDINATION",
+            "class_name": "CanvasCoordination",
+          },
+        ],
+      },
       "vars": {
         "SERVICE_NAME": "mustbeviral-collaboration",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",

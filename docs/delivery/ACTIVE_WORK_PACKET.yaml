@@ -3,7 +3,7 @@ id: WP-P3-003
 spec_revision: 1
 title: Collaboration environment deployability remediation
 phase: P3
-status: ready
+status: in_progress
 priority: high
 branch: codex/viralgraph-cleanroom
 objective: Correct the environment-specific Durable Object bindings for the dedicated collaboration
@@ -78,53 +78,60 @@ public_interfaces:
 steps:
   - id: p3c-001-environment-bindings
     title: Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
-    status: pending
+    status: completed
   - id: p3c-002-dry-run-and-types
     title: Prove environment-specific Wrangler types and dry-runs have the expected binding and no
       inheritance warning.
-    status: pending
+    status: completed
   - id: p3c-003-staging-deploy-smoke
     title:
       Deploy only mustbeviral-v2-staging-collaboration, record its version, and run a bounded smoke
       without connecting production traffic.
-    status: pending
+    status: completed
   - id: p3c-004-release-readiness-handoff
     title: Record remediation evidence and prepare the separately governed V2 release-readiness
       successor without touching legacy V1.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: environment-binding-parity
       criterion:
         Tests and Wrangler dry-runs prove CANVAS_COORDINATION is present in default, staging, and
         production configurations without an environment-inheritance warning.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
+        - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
     - id: postgres-remains-authority
       criterion: Existing checkpoint and Worker tests prove collaboration drafts cannot bypass the
         immutable Postgres revision barrier or mutate money and membership authority.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
   manual:
     - id: staging-deployment-contained
       criterion:
         The exact staging collaboration Worker version is recorded, smoke-tested, and has no
         production route, production client, or legacy dependency.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
 rollback:
   strategy: Do not connect Core, web, custom domains, or production clients during this packet. If a
     staging deployment is unhealthy, keep it unrouted and deploy a corrected version; after a known
@@ -135,12 +142,31 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: p3c-001-environment-bindings
-  next_action: Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
+  current_step: p3c-004-release-readiness-handoff
+  next_action: Verify WP-P3-003 and prepare the V2 production release-readiness successor without touching legacy V1.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - apps/collaboration/wrangler.jsonc
+    - apps/collaboration/worker-configuration.d.ts
+    - governance/tests/collaboration-environment-bindings.test.mjs
+    - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
+    - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
+    - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
+    - governance/evidence/WP-P3-003/successor-WP-P3-004.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - node --test governance/tests/collaboration-environment-bindings.test.mjs
+    - pnpm --filter @mustbeviral/collaboration-worker test
+    - pnpm --filter @mustbeviral/collaboration-worker typecheck
+    - pnpm exec wrangler deploy --config apps/collaboration/wrangler.jsonc --env staging --dry-run --outdir apps/collaboration/dist/staging --x-provision=false --x-auto-create=false
+    - pnpm exec wrangler deploy --config apps/collaboration/wrangler.jsonc --env production --dry-run --outdir apps/collaboration/dist/production --x-provision=false --x-auto-create=false
+    - pnpm agent:verify
 completion:
-  successor_packet_id: null
-  evidence_paths: []
+  successor_packet_id: WP-P3-004
+  evidence_paths:
+    - governance/evidence/WP-P3-003/environment-binding-parity-2026-09-02.md
+    - governance/evidence/WP-P3-003/wrangler-dry-run-2026-09-02.md
+    - governance/evidence/WP-P3-003/staging-collaboration-deployment-2026-09-02.md
+    - governance/evidence/WP-P3-003/successor-WP-P3-004.yaml
   completed_at: null

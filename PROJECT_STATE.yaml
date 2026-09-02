@@ -8,10 +8,10 @@ project_state: active
 phase:
   id: P3
   title: Collaboration environment deployability remediation
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P3-003
-next_action: Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
+next_action: Verify WP-P3-003 and prepare the V2 production release-readiness successor without touching legacy V1.
 decisions_pending: []
 blockers: []
 legacy:
