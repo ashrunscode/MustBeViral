@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Optional remaining P3 evidence gates (in_progress) |
-| Active packet | `WP-P3-002` |
-| Current step | `p3b-003-no-agency-handoff` |
+| Phase | P3 — Collaboration environment deployability remediation (planned) |
+| Active packet | `WP-P3-003` |
+| Current step | `p3c-001-environment-bindings` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify and commit WP-P3-002, then run pnpm agent:finish --successor governance/evidence/WP-P3-002/successor-WP-P3-003.yaml.
+Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.

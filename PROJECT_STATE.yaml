@@ -7,12 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: Optional remaining P3 evidence gates
-  state: in_progress
+  title: Collaboration environment deployability remediation
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-002
-next_action: Verify and commit WP-P3-002, then run pnpm agent:finish --successor
-  governance/evidence/WP-P3-002/successor-WP-P3-003.yaml.
+active_work_packet: WP-P3-003
+next_action: Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
 decisions_pending: []
 blockers: []
 legacy:
@@ -36,24 +35,14 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-01T02:20:07.489Z
+  at: 2026-09-02T01:13:51.439Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-001/frontend-audit-2026-08-31.md
-    - governance/evidence/WP-P3-001/p3-evidence-gate-evaluation-2026-08-31.md
-    - governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
-    - governance/evidence/WP-P3-001/staging-evidence-collection-runbook.md
-    - governance/evidence/WP-P3-001/p3-002-framework-handoff-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/staging-namespace-inspection-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/postgres-remains-authority-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/named-remote-mutation-approval-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-staging-apply-2026-08-31.md
-    - governance/evidence/WP-P3-001/queues/live-wake-path-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-blocker-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-fixture-seed-procedure-2026-09-01.md
-    - governance/evidence/WP-P3-001/benchmarks/hyperdrive-g1-g6-deferred-2026-09-01.md
-    - governance/evidence/WP-P3-001/no-agency-expansion.yaml
-    - governance/evidence/WP-P3-001/p3-implementable-acceptance-2026-09-01.md
-    - governance/evidence/WP-P3-001/successor-WP-P3-002.yaml
-    - governance/evidence/WP-P3-001/operator-checklist.yaml
+    - governance/evidence/WP-P3-002/staging-inspection-2026-09-01.md
+    - governance/evidence/WP-P3-002/hyperdrive-g1-g6-deferred-2026-09-01.md
+    - governance/evidence/WP-P3-002/no-ungated-enablement.yaml
+    - governance/evidence/WP-P3-002/postgres-remains-authority.md
+    - governance/evidence/WP-P3-002/no-agency-expansion.yaml
+    - governance/evidence/WP-P3-002/optional-gate-outcomes-2026-09-01.md
+    - governance/evidence/WP-P3-002/operator-authorization-and-remote-inventory-2026-09-02.md
+    - governance/evidence/WP-P3-002/successor-WP-P3-003.yaml

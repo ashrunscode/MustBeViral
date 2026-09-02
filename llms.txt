@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
-active_packet: WP-P3-002
-current_step: p3b-003-no-agency-handoff
-next_action: Verify and commit WP-P3-002, then run pnpm agent:finish --successor governance/evidence/WP-P3-002/successor-WP-P3-003.yaml.
+active_packet: WP-P3-003
+current_step: p3c-001-environment-bindings
+next_action: Add explicit staging and production CANVAS_COORDINATION bindings and regression tests.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
