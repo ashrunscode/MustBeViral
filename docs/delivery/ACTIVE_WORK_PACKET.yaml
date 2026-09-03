@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-P3-008
-spec_revision: 1
+spec_revision: 2
 title: Disabled-behavior production environment binding
 phase: P3
 status: blocked
@@ -105,11 +105,19 @@ acceptance:
       evidence:
         - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
     - id: no-legacy-or-dns-mutation
-      criterion: Before/after inventory proves no legacy resource, custom domain, DNS record, route,
-        customer row, provider run, or charge changed.
+      criterion: Before/after inventory proves no legacy resource, custom domain, traffic-routing
+        DNS record, route, customer row, provider run, or charge changed. Named exception, ruled by
+        the owner on 2026-09-03 at spec_revision 2, dropping the previous unqualified
+        no-DNS-record-change wording, which the delivery work made broader than the truth. Three
+        Resend delivery records may exist on mustbeviral.com — resend._domainkey TXT,
+        send.mustbeviral.com TXT, and send.mustbeviral.com MX — because owner email delivery
+        requires them. The exception is limited to mail delivery and authorizes no A, CNAME, route,
+        or custom-domain change. Separately ruled by the owner, the single Auth row created by the
+        authorized owner invitation is the approved owner identity, not a customer row.
       status: passed
       evidence:
         - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
+        - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
   manual:
     - id: private-production-containment
       criterion:
@@ -153,13 +161,6 @@ handoff:
       Resend. The invitation is still pending acceptance, so production Auth has no signed-in
       session and the authenticated database/RLS smoke remains unproven. Evidence:
       governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md'
-    - 'DECISION_NO_LEGACY_OR_DNS_MUTATION_WORDING: three Resend delivery DNS records were added to
-      mustbeviral.com. The zone was read first-hand on 2026-09-03: 10 records total, no
-      api.mustbeviral.com record of any type, apex and www still CNAME to the legacy Cloudflare
-      Pages surface. Legacy traffic and routing are unaffected, but the accepted
-      no-legacy-or-dns-mutation wording is now broader than the truth and needs an owner ruling
-      rather than a packet-level rewrite. The customer-row clause of the same criterion is already
-      ruled: the single new Auth row is the approved owner identity, not a customer.'
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example

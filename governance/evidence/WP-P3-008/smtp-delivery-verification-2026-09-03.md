@@ -145,3 +145,23 @@ The likely cause is therefore sending-domain reputation on a newly warmed domain
 `p=none` offering receivers no enforcement signal. No DNS change is proposed here: the packet
 forbids DNS mutation, and any deliverability hardening (DMARC progression, warm-up) belongs to a
 separately scoped packet with its own authorization.
+
+## Owner ruling, 2026-09-03
+
+The owner ruled on both open clauses of `no-legacy-or-dns-mutation`. The earlier note above saying
+the decision is "carried in the packet handoff as a pending decision" is superseded by this
+section; the decision is closed.
+
+1. **DNS wording — amended, criterion stays `passed`.** The unqualified "no DNS record changed"
+   wording is replaced with "no traffic-routing DNS record changed", plus a named exception for the
+   three Resend delivery records (`resend._domainkey` TXT, `send.mustbeviral.com` TXT,
+   `send.mustbeviral.com` MX). The exception is limited to mail delivery and authorizes no A,
+   CNAME, route, or custom-domain change. Every clause of the amended criterion is backed by the
+   first-hand zone read recorded above, including the absence of any `api.mustbeviral.com` record.
+2. **Auth row — owner identity, not a customer.** The single row created by the authorized owner
+   invitation is the approved production owner. The criterion's customer-row clause is unaffected.
+
+`spec_revision` is bumped from `1` to `2` to mark that the packet specification changed, so the
+transition receipt written at completion records the amended revision rather than the original.
+Nothing else in the packet spec was altered, and no acceptance status changed as a result of this
+ruling.
