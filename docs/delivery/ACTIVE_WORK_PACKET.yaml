@@ -105,6 +105,7 @@ acceptance:
       evidence:
         - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
         - governance/evidence/WP-P3-008/production-closeout-revalidation-2026-09-03.md
+        - governance/evidence/WP-P3-008/smtp-claim-revalidation-2026-09-03.md
     - id: no-legacy-or-dns-mutation
       criterion: Before/after inventory proves no legacy resource, custom domain, DNS record, route,
         customer row, provider run, or charge changed.
@@ -112,15 +113,16 @@ acceptance:
       evidence:
         - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
         - governance/evidence/WP-P3-008/production-closeout-revalidation-2026-09-03.md
+        - governance/evidence/WP-P3-008/smtp-claim-revalidation-2026-09-03.md
   manual:
     - id: private-production-containment
-      criterion:
-        The deployments are usable only for operator smoke through provider URLs and are not
+      criterion: The deployments are usable only for operator smoke through provider URLs and are not
         represented as a public launch or customer-ready release.
       status: passed
       evidence:
         - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
         - governance/evidence/WP-P3-008/production-closeout-revalidation-2026-09-03.md
+        - governance/evidence/WP-P3-008/smtp-claim-revalidation-2026-09-03.md
 quality_gates:
   - id: design-direction
     command: pnpm design:check
@@ -147,18 +149,18 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3h-004-private-smoke-and-cutover-gate
-  next_action:
-    On the trusted workstation that already has the approved agent-secrets store, or after
-    that store is loaded here through the documented loader without pasting secrets into chat,
-    configure the existing zero-spend custom SMTP provider for Supabase project jjgtlfblsfobdhmtngbz
-    without sending a test email or changing DNS, then reply SMTP READY.
+  next_action: On a trusted workstation already authenticated to the Supabase Management API, or after
+    the documented agent-secrets loader provides a Management API token without pasting secrets into
+    chat, read Auth config for project jjgtlfblsfobdhmtngbz as booleans only. Do not send the single
+    authorized invitation until custom SMTP, host, user, sender, and secure transport are proven
+    true and accepted authority records same-origin invite redemption on the existing
+    /auth/callback. Official inviteUserByEmail does not support PKCE.
   blockers:
-    - 'BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com remains the approved
-      production owner identity. This cloud execution environment has no trusted machine secret
-      store, no self-hosted worker, no active Resend connection, and no SMTP credentials, so custom
-      SMTP for project jjgtlfblsfobdhmtngbz was not configured. Official Supabase Auth policy still
-      refuses default-SMTP delivery to an address that is not on the project team. No Auth user or
-      invitation was created, and the single authorized invitation attempt remains unused.'
+    - "BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: A dashboard SMTP-saved claim for project
+      jjgtlfblsfobdhmtngbz was treated as unverified. Official Management API Auth-config read-back
+      is unavailable in this environment, so custom SMTP, host, user, sender, and secure transport
+      remain unproven. Official inviteUserByEmail does not support PKCE and the deployed
+      /auth/callback only exchanges a code. The single authorized invitation was not sent."
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example
@@ -178,6 +180,7 @@ handoff:
     - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
     - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
     - governance/evidence/WP-P3-008/production-closeout-revalidation-2026-09-03.md
+    - governance/evidence/WP-P3-008/smtp-claim-revalidation-2026-09-03.md
     - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
     - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
     - governance/tests/production-release-config-gate.test.mjs
