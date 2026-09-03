@@ -535,6 +535,7 @@ handoff:
     - pnpm agent:verify after 2026-08-31 14:00 UTC cron recruiting-inbox connector-absent check
     - pnpm agent:verify after 2026-09-01 14:00 UTC cron recruiting-inbox connector-absent check
     - pnpm agent:verify after 2026-09-02 14:00 UTC cron recruiting-inbox connector-absent check
+    - pnpm agent:verify after 2026-09-03 14:00 UTC cron recruiting-inbox connector-absent check
     - pnpm design:check
     - pnpm governance:check
     - pnpm verify with CI=true and apps/core/.dev.vars.example materialised locally
