@@ -126,7 +126,7 @@ browser would actually reach the database:
 | `provider_registrations` | 401  | `42501` |
 
 The REST results agree exactly with the direct-SQL results. That agreement is the point of running
-both: PostgREST connects *as* the `anon` role, so a divergence would have meant a grant or policy
+both: PostgREST connects _as_ the `anon` role, so a divergence would have meant a grant or policy
 that behaves differently over the API than in the database.
 
 ## Feature gates, read from production
