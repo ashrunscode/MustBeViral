@@ -43,6 +43,7 @@ function fixture(t) {
   state.active_work_packet = 'WP-R0-002';
   packet.id = 'WP-R0-002';
   packet.depends_on = [];
+  packet.branch = 'codex/viralgraph-cleanroom';
   writeFileSync(statePath, YAML.stringify(state, { lineWidth: 100 }), 'utf8');
   writeFileSync(packetPath, YAML.stringify(packet, { lineWidth: 100 }), 'utf8');
   writeFileSync(path.join(root, 'source.txt'), 'before verification\n', 'utf8');
