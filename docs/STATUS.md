@@ -17,9 +17,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Current step | `p3h-004-private-smoke-and-cutover-gate` |
 | Release target | `P0` |
 | Pending decisions | None |
-| Blockers | BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com is the approved production owner identity, but it is not a Supabase organization member and project jjgtlfblsfobdhmtngbz has no custom SMTP. Supabase therefore refuses delivery through its default SMTP. No Auth user or invitation was created, and the single authorized invitation attempt remains unused. |
+| Blockers | BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com remains the approved production owner identity. This cloud execution environment has no trusted machine secret store, no self-hosted worker, no active Resend connection, and no SMTP credentials, so custom SMTP for project jjgtlfblsfobdhmtngbz was not configured. Official Supabase Auth policy still refuses default-SMTP delivery to an address that is not on the project team. No Auth user or invitation was created, and the single authorized invitation attempt remains unused. |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Configure an existing zero-spend custom SMTP provider for Supabase project jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.
+On the trusted workstation that already has the approved agent-secrets store, or after that store is loaded here through the documented loader without pasting secrets into chat, configure the existing zero-spend custom SMTP provider for Supabase project jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.

@@ -55,3 +55,18 @@ invitation was created, and the single authorized invitation attempt remains unu
 for only project `jjgtlfblsfobdhmtngbz`, without sending a test email or changing DNS, then reply
 `SMTP READY`. Do not enable public signup, invite a customer, add provider/Stripe credentials,
 execute a queue/run, or change DNS to resolve this.
+
+## 2026-09-03 cloud-environment revalidation
+
+Production containment still holds: zero Auth users/identities/sessions, zero approved-email
+matches, zero workspaces/memberships, all four database kill switches false, Core health 200,
+unsigned artifact 401, protected Vercel alias 302 SSO, removed short alias 404, legacy public
+DNS surface unchanged, and no invitation sent.
+
+This Linux cloud VM does not contain `%USERPROFILE%\.agent-secrets` / `$HOME/.agent-secrets`,
+has no self-hosted worker, and has no active Resend or SMTP credentials. Custom SMTP was
+therefore not configured. Official current `inviteUserByEmail` documentation states PKCE is not
+supported, while the deployed callback is SSR PKCE-only; resolve that from accepted authority
+before using the one authorized invitation. Do not paste secrets into chat. Do not use the
+fallback Gmail address unless a recorded authority-compatible decision changes the exact owner
+email. Do not begin WP-P3-009 observation and do not merge PR #3.
