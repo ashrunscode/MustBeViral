@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-008` (blocked). Current step: `p3h-004-private-smoke-and-cutover-gate`.
+Current packet: `WP-P3-008` (in_progress). Current step: `p3h-004-private-smoke-and-cutover-gate`.
 
 | Authority topic | Document | Path |
 |---|---|---|

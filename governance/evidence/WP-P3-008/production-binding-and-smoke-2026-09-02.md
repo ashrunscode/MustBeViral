@@ -127,3 +127,21 @@ strength of the SMTP fix alone, because the authenticated RLS session it depends
 happened. The remaining action is an operator one that this session cannot perform: accept the
 invitation at `hello@mustbeviral.com`, establish the owner credential, then run the authenticated
 zero-spend RLS smoke.
+
+## Status update, 2026-09-03 (second)
+
+The "Still open" note in the preceding section is now closed. The operator rebound the `supabase`
+MCP server to project `jjgtlfblsfobdhmtngbz`, which removed the verification boundary that had
+prevented reading production database state from an agent session.
+
+The `database/RLS connectivity` clause is proven in
+`authenticated-rls-verification-2026-09-03.md`: RLS is enabled and forced on all 31 `public`
+tables, tenant isolation was tested by role simulation in rolled-back transactions, anonymous
+access is denied at the grant layer both in-database and through the live PostgREST API, and all
+four platform kill switches read `false`. The HTTP smoke was re-run and still passes.
+
+Acceptance `exact-disabled-production` therefore moves from `pending` to `passed`.
+
+One qualification is carried forward rather than buried: no end-user session has ever existed on
+production Auth, so the RLS proof is structural rather than session-based. That is recorded as a
+non-blocking owner-credential risk in the new evidence file.

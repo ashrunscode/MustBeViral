@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Accept the owner invitation delivered to hello@mustbeviral.com, establish the owner credential, then run the authenticated zero-spend RLS smoke for step p3h-004.
+Promote the prepared successor packet WP-P3-009 from governance/evidence/WP-P3-008/successor-WP-P3-009.yaml. Packet acceptance is proven and no blocker remains. Carry forward the non-blocking owner-credential risk recorded in the carried-forward-risk section of governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md.

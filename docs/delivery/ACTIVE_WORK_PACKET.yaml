@@ -3,7 +3,7 @@ id: WP-P3-008
 spec_revision: 2
 title: Disabled-behavior production environment binding
 phase: P3
-status: blocked
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Bind the exact isolated V2 production resources, deploy Core and web with all customer,
@@ -101,9 +101,10 @@ acceptance:
     - id: exact-disabled-production
       criterion: Provider reads and HTTP smoke prove exact bindings, healthy deployments, closed
         enrollment, private media, and all spend/traffic feature gates disabled.
-      status: pending
+      status: passed
       evidence:
         - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+        - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
     - id: no-legacy-or-dns-mutation
       criterion: Before/after inventory proves no legacy resource, custom domain, traffic-routing
         DNS record, route, customer row, provider run, or charge changed. Named exception, ruled by
@@ -152,15 +153,13 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3h-004-private-smoke-and-cutover-gate
-  next_action: Accept the owner invitation delivered to hello@mustbeviral.com, establish the owner
-    credential, then run the authenticated zero-spend RLS smoke for step p3h-004.
-  blockers:
-    - 'BLOCKED_OWNER_INVITATION_PENDING_ACCEPTANCE: custom SMTP is configured on
-      jjgtlfblsfobdhmtngbz (smtp.resend.com:465, sender hello@mustbeviral.com, verified via the
-      Management API) and the one authorized owner invitation was sent and reported Delivered by
-      Resend. The invitation is still pending acceptance, so production Auth has no signed-in
-      session and the authenticated database/RLS smoke remains unproven. Evidence:
-      governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md'
+  next_action: >-
+    Promote the prepared successor packet WP-P3-009 from
+    governance/evidence/WP-P3-008/successor-WP-P3-009.yaml. Packet acceptance is proven and no
+    blocker remains. Carry forward the non-blocking owner-credential risk recorded in the
+    carried-forward-risk section of
+    governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md.
+  blockers: []
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example
@@ -181,6 +180,7 @@ handoff:
     - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
     - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
     - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
+    - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
     - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
     - governance/tests/production-release-config-gate.test.mjs
     - llms.txt
