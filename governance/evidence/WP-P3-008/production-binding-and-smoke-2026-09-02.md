@@ -103,3 +103,27 @@ authority, the invitation was not attempted, self-service signup was not enabled
 row was created. Health, closed enrollment, JWT denial, artifact denial, disabled provider/charge
 paths, provider configuration, and direct database state are proven; an actual signed-in RLS
 session remains blocked until custom SMTP is configured without sending a test email.
+
+## Status update, 2026-09-03
+
+The "Concrete blocker" section above is superseded in its cause but not in its effect.
+
+**Cleared:** the email-delivery gate. Project `jjgtlfblsfobdhmtngbz` now has custom SMTP
+(`smtp.resend.com:465`, sender `Must Be Viral <hello@mustbeviral.com>`), verified in this session
+against the Supabase Management API. The one authorized owner invitation was sent and Resend
+reports it Delivered. Details and the verification boundary are in
+`smtp-delivery-verification-2026-09-03.md`.
+
+**Still open:** the invitation is pending acceptance, so production Auth has no signed-in session.
+The packet deliverable "Authenticated smoke proves health, closed enrollment, private artifact
+denial, database/RLS connectivity, and rollback identifiers" is therefore still unproven on its
+database/RLS-connectivity clause. Everything else in that deliverable — health, closed enrollment,
+JWT denial, unsigned-artifact denial, disabled provider and charge paths, exact bindings, and
+rollback identifiers — remains proven by the probes recorded above and is unchanged by the SMTP
+work.
+
+Acceptance `exact-disabled-production` therefore stays `pending`. It is not being flipped on the
+strength of the SMTP fix alone, because the authenticated RLS session it depends on has not
+happened. The remaining action is an operator one that this session cannot perform: accept the
+invitation at `hello@mustbeviral.com`, establish the owner credential, then run the authenticated
+zero-spend RLS smoke.

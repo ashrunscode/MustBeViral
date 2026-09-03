@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-008
 current_step: p3h-004-private-smoke-and-cutover-gate
-next_action: Configure an existing zero-spend custom SMTP provider for Supabase project jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.
+next_action: Accept the owner invitation delivered to hello@mustbeviral.com, establish the owner credential, then run the authenticated zero-spend RLS smoke for step p3h-004.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

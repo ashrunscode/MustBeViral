@@ -144,13 +144,19 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3h-004-private-smoke-and-cutover-gate
-  next_action: Configure an existing zero-spend custom SMTP provider for Supabase project
-    jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.
+  next_action: Accept the owner invitation delivered to hello@mustbeviral.com, establish the owner
+    credential, then run the authenticated zero-spend RLS smoke for step p3h-004.
   blockers:
-    - 'BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: hello@mustbeviral.com is the approved production
-      owner identity, but it is not a Supabase organization member and project jjgtlfblsfobdhmtngbz
-      has no custom SMTP. Supabase therefore refuses delivery through its default SMTP. No Auth user
-      or invitation was created, and the single authorized invitation attempt remains unused.'
+    - 'BLOCKED_OWNER_INVITATION_PENDING_ACCEPTANCE: custom SMTP is configured on
+      jjgtlfblsfobdhmtngbz (smtp.resend.com:465, sender hello@mustbeviral.com, verified via the
+      Management API) and the one authorized owner invitation was sent and reported Delivered by
+      Resend. The invitation is still pending acceptance, so production Auth has no signed-in
+      session and the authenticated database/RLS smoke remains unproven. Evidence:
+      governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md'
+    - 'DECISION_NO_LEGACY_OR_DNS_MUTATION_WORDING: five mail-authentication DNS records were added
+      to mustbeviral.com on 2026-09-03. Legacy traffic and routing are unaffected, but the accepted
+      no-legacy-or-dns-mutation wording is now broader than the truth and needs an owner ruling
+      rather than a packet-level rewrite.'
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example
@@ -170,6 +176,7 @@ handoff:
     - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
     - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
     - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
+    - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
     - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
     - governance/tests/production-release-config-gate.test.mjs
     - llms.txt

@@ -39,3 +39,38 @@ No DNS API mutation, Cloudflare route attachment, custom-domain attachment, publ
 customer admission, provider invocation, queue binding, Stripe/Resend action, or charge command was
 issued. The public-DNS conclusion is backed by the unchanged legacy HTTP surface plus the mutation
 ledger; the available Cloudflare credential did not expose a machine-readable zone-route listing.
+
+## Addendum, 2026-09-03: authorized email-delivery remediation
+
+The capture above remains a correct point-in-time record of 2026-09-02. The following authorized
+changes occurred afterwards, on 2026-09-03, while resolving
+`BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED`. They supersede two rows and one closing sentence of
+that capture, which are left intact above as the historical record.
+
+| Boundary            | 2026-09-02 capture             | 2026-09-03 after remediation                                                                              |
+| ------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| Supabase Auth users | 0                              | 1 — the approved production owner identity, invitation pending acceptance                                 |
+| Project SMTP        | None; default SMTP refused     | Custom SMTP enabled: `smtp.resend.com:465`, user `resend`, sender `Must Be Viral <hello@mustbeviral.com>` |
+| Public DNS          | No mail-authentication records | Five mail records added to `mustbeviral.com`: DKIM x2, SPF x2, DMARC `p=none`                             |
+
+### DNS delta and its exact boundary
+
+Five records were added to the `mustbeviral.com` zone: two DKIM, two SPF, and one DMARC at
+`p=none`. These are mail-authentication records only. **No A record, CNAME, traffic route,
+custom domain, or Cloudflare route was created, changed, or removed.** Legacy V1 traffic is
+therefore unaffected: `mustbeviral.com` and `www.mustbeviral.com` continue to serve 200 from the
+legacy Cloudflare surface, and `api.mustbeviral.com` remains NXDOMAIN.
+
+The 2026-09-02 closing sentence "No DNS API mutation ... or Stripe/Resend action ... was issued"
+was true as written on that date. It does not describe 2026-09-03: a DNS mail-record mutation and
+a Resend email delivery both occurred, under the authorization recorded in
+`smtp-delivery-verification-2026-09-03.md`. The packet's `no-legacy-or-dns-mutation` acceptance is
+re-expressed there in the terms it was actually meant to protect — legacy traffic and routing —
+rather than being silently left as an unqualified no-DNS-change claim.
+
+### Boundaries that did not move
+
+Signup, generation, provider routes, and customer charging remain disabled. R2 remains at 0 objects
+and 0 bytes with no custom domain and r2.dev disabled. No queue, no Cloudflare route, no custom
+domain attachment, no provider run, no charge, and no destructive remote action occurred. Zero
+customer rows were created; the single new Auth row is the approved owner, not a customer.
