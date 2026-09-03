@@ -316,6 +316,7 @@ acceptance:
         - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-08-31-1400.md
         - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-09-01-1400.md
         - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-09-02-1400.md
+        - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-09-03-1400.md
         - governance/evidence/WP-P0-001/p0-gate-evaluation-package.md
     - id: operator-p0-exit-decision
       criterion:
@@ -470,6 +471,8 @@ handoff:
     - governance/evidence/WP-P0-001/agent-handoff-2026-09-01.md
     - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-09-02-1400.md
     - governance/evidence/WP-P0-001/agent-handoff-2026-09-02.md
+    - governance/evidence/WP-P0-001/recruiting-inbox-check-2026-09-03-1400.md
+    - governance/evidence/WP-P0-001/agent-handoff-2026-09-03.md
     - .env.example
     - apps/core/src/composition/artifact-machine.ts
     - apps/core/src/composition/artifact-storage.ts
