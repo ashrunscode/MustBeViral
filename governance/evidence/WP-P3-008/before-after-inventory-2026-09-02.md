@@ -47,16 +47,19 @@ changes occurred afterwards, on 2026-09-03, while resolving
 `BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED`. They supersede two rows and one closing sentence of
 that capture, which are left intact above as the historical record.
 
-| Boundary            | 2026-09-02 capture             | 2026-09-03 after remediation                                                                              |
-| ------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------- |
-| Supabase Auth users | 0                              | 1 — the approved production owner identity, invitation pending acceptance                                 |
-| Project SMTP        | None; default SMTP refused     | Custom SMTP enabled: `smtp.resend.com:465`, user `resend`, sender `Must Be Viral <hello@mustbeviral.com>` |
-| Public DNS          | No mail-authentication records | Five mail records added to `mustbeviral.com`: DKIM x2, SPF x2, DMARC `p=none`                             |
+| Boundary            | 2026-09-02 capture                 | 2026-09-03 after remediation                                                                                                         |
+| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Supabase Auth users | 0                                  | 1 — the approved production owner identity, invitation pending acceptance                                                            |
+| Project SMTP        | None; default SMTP refused         | Custom SMTP enabled: `smtp.resend.com:465`, user `resend`, sender `Must Be Viral <hello@mustbeviral.com>`                            |
+| Public DNS          | Google Workspace mail records only | Three Resend delivery records added to `mustbeviral.com`; see the verified enumeration in `smtp-delivery-verification-2026-09-03.md` |
 
 ### DNS delta and its exact boundary
 
-Five records were added to the `mustbeviral.com` zone: two DKIM, two SPF, and one DMARC at
-`p=none`. These are mail-authentication records only. **No A record, CNAME, traffic route,
+Three Resend delivery records were added to the `mustbeviral.com` zone: `resend._domainkey` TXT
+(DKIM), `send.mustbeviral.com` TXT (SPF), and `send.mustbeviral.com` MX (bounce Return-Path). An
+earlier summary here said "five records: DKIM x2, SPF x2, DMARC"; reading the zone first-hand
+showed that count wrongly absorbed pre-existing Google Workspace records. These are
+mail-delivery records only. **No A record, CNAME, traffic route,
 custom domain, or Cloudflare route was created, changed, or removed.** Legacy V1 traffic is
 therefore unaffected: `mustbeviral.com` and `www.mustbeviral.com` continue to serve 200 from the
 legacy Cloudflare surface, and `api.mustbeviral.com` remains NXDOMAIN.

@@ -41,7 +41,8 @@ and are **not** corroborated by a query run from this session:
   meaning the receiving Google Workspace tenant accepted delivery rather than merely accepting the
   message for sending.
 - Resend domain `mustbeviral.com` is verified in `us-east-1` with link tracking disabled.
-- DNS on `mustbeviral.com` carries DKIM x2, SPF x2, and DMARC `p=none`, live and aligned.
+- DNS was reported as "DKIM x2, SPF x2, DMARC `p=none`". That summary is superseded and partly
+  incorrect; the zone was read first-hand afterwards. See "Verified DNS record set" below.
 - `auth.users` holds exactly one row, `hello@mustbeviral.com`, invitation pending acceptance.
 
 **Why the gap:** the `supabase` MCP server available in this session is bound to project
@@ -63,7 +64,8 @@ reservation, ledger row, outbox event, Stripe event, or billing profile was crea
 
 That acceptance criterion was recorded `passed` on 2026-09-02 against a before/after inventory
 proving no legacy resource, custom domain, DNS record, route, customer row, provider run, or charge
-had changed. Five mail-authentication DNS records have since been added to `mustbeviral.com`.
+had changed. Three Resend delivery records have since been added to `mustbeviral.com` — see
+"Verified DNS record set" below — plus a `_dmarc` TXT whose origin could not be dated.
 
 The criterion exists to protect legacy V1 traffic and routing from being disturbed before an
 authorized cutover. That protection is intact and is what remains proven: no A record, CNAME,
@@ -80,3 +82,66 @@ The email-delivery blocker is cleared. It is replaced by a narrower and differen
 invitation is **pending acceptance**, so production Auth still has no signed-in session. The
 packet's authenticated database/RLS smoke therefore remains unproven. See
 `production-binding-and-smoke-2026-09-02.md`, section "Status update, 2026-09-03".
+
+## Verified DNS record set, read first-hand 2026-09-03
+
+The `mustbeviral.com` zone was read directly from the Cloudflare dashboard
+(account `d2897bdebfa128919bd89b265e6a712e`). It holds exactly 10 records. This supersedes the
+operator-reported "five records: DKIM x2, SPF x2, DMARC" summary, which double-counted
+pre-existing Google Workspace records as part of this work.
+
+### Traffic routing — unchanged, legacy V1
+
+| Name                  | Type  | Content                 | Proxy   |
+| --------------------- | ----- | ----------------------- | ------- |
+| `mustbeviral.com`     | CNAME | `www.mustbeviral.com`   | Proxied |
+| `www.mustbeviral.com` | CNAME | `mustbeviral.pages.dev` | Proxied |
+
+Apex flattens to `www`, which serves the legacy Cloudflare Pages surface. **There is no
+`api.mustbeviral.com` record of any type in the zone**, which independently confirms the NXDOMAIN
+claim carried since 2026-09-02. No V2 resource — not the production Worker, not the Vercel
+project — is referenced by any record.
+
+### Resend delivery records — attributable to this work
+
+| Name                                | Type | Purpose                                      |
+| ----------------------------------- | ---- | -------------------------------------------- |
+| `resend._domainkey.mustbeviral.com` | TXT  | Resend DKIM public key, apex-scoped          |
+| `send.mustbeviral.com`              | TXT  | `v=spf1 include:amazonses.com ~all`          |
+| `send.mustbeviral.com`              | MX   | `feedback-smtp.us-east-1.amazonses.com` (10) |
+
+Three records, not five. Note the `send.` **MX** record was not in the operator's reported list at
+all.
+
+### Pre-existing Google Workspace records — not part of this work
+
+`mustbeviral.com` MX to `smtp.google.com` (1); `mustbeviral.com` TXT
+`v=spf1 include:_spf.google.com ~all`; `google._domainkey.mustbeviral.com` TXT; and a
+`google-site-verification` TXT. These are the "second DKIM" and "second SPF" of the reported
+summary and predate this packet.
+
+`_dmarc.mustbeviral.com` TXT (`v=DMARC1; p=none; rua=mailto:hello@mustbeviral.com; fo=1`) exists
+and is correct, but its creation date could not be established in this session, so it is **not**
+attributed either way.
+
+**Timestamp gap:** exact per-record `created_on` values were not obtained. No Cloudflare API token
+is present in this environment, and the dashboard audit log could not be narrowed to this zone's
+DNS events within the session. Attribution above is by record purpose, not by timestamp. An
+operator with a zone-scoped API token can close this by reading `created_on` from
+`/zones/{id}/dns_records`.
+
+## Spam placement — observed, and not a misconfiguration
+
+The invitation was delivered to the Gmail **Spam** folder, with Google's reason given as "similar
+to messages that were identified as spam in the past". Delivered is therefore not the same as
+inboxed, and the earlier "Delivered" note in this file should be read with that qualification.
+
+The Resend configuration matches Resend's documented setup for sending as an apex address: DKIM
+published at the apex (`resend._domainkey.mustbeviral.com`) so DKIM alignment holds for a
+`From: hello@mustbeviral.com`, with a custom Return-Path on `send.mustbeviral.com` carrying its own
+SPF and bounce MX. Nothing in the zone is missing or misdirected for that pattern.
+
+The likely cause is therefore sending-domain reputation on a newly warmed domain, compounded by
+`p=none` offering receivers no enforcement signal. No DNS change is proposed here: the packet
+forbids DNS mutation, and any deliverability hardening (DMARC progression, warm-up) belongs to a
+separately scoped packet with its own authorization.
