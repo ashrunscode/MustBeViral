@@ -116,7 +116,8 @@ acceptance:
         - governance/evidence/WP-P3-008/smtp-claim-revalidation-2026-09-03.md
   manual:
     - id: private-production-containment
-      criterion: The deployments are usable only for operator smoke through provider URLs and are not
+      criterion:
+        The deployments are usable only for operator smoke through provider URLs and are not
         represented as a public launch or customer-ready release.
       status: passed
       evidence:
@@ -149,18 +150,19 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: p3h-004-private-smoke-and-cutover-gate
-  next_action: On a trusted workstation already authenticated to the Supabase Management API, or after
+  next_action:
+    On a trusted workstation already authenticated to the Supabase Management API, or after
     the documented agent-secrets loader provides a Management API token without pasting secrets into
     chat, read Auth config for project jjgtlfblsfobdhmtngbz as booleans only. Do not send the single
     authorized invitation until custom SMTP, host, user, sender, and secure transport are proven
     true and accepted authority records same-origin invite redemption on the existing
     /auth/callback. Official inviteUserByEmail does not support PKCE.
   blockers:
-    - "BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: A dashboard SMTP-saved claim for project
+    - 'BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: A dashboard SMTP-saved claim for project
       jjgtlfblsfobdhmtngbz was treated as unverified. Official Management API Auth-config read-back
       is unavailable in this environment, so custom SMTP, host, user, sender, and secure transport
       remain unproven. Official inviteUserByEmail does not support PKCE and the deployed
-      /auth/callback only exchanges a code. The single authorized invitation was not sent."
+      /auth/callback only exchanges a code. The single authorized invitation was not sent.'
   changed_paths:
     - PROJECT_STATE.yaml
     - apps/core/.dev.vars.example

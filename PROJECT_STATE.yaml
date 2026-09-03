@@ -19,11 +19,11 @@ next_action: On a trusted workstation already authenticated to the Supabase Mana
   Official inviteUserByEmail does not support PKCE.
 decisions_pending: []
 blockers:
-  - "BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: A dashboard SMTP-saved claim for project
+  - 'BLOCKED_AUTH_EMAIL_DELIVERY_NOT_CONFIGURED: A dashboard SMTP-saved claim for project
     jjgtlfblsfobdhmtngbz was treated as unverified. Official Management API Auth-config read-back is
     unavailable in this environment, so custom SMTP, host, user, sender, and secure transport remain
     unproven. Official inviteUserByEmail does not support PKCE and the deployed /auth/callback only
-    exchanges a code. The single authorized invitation was not sent."
+    exchanges a code. The single authorized invitation was not sent.'
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
@@ -34,7 +34,8 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+    notes:
+      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
   staging:
     generation: viralgraph-cleanroom-v2
