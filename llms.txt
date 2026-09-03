@@ -7,7 +7,7 @@ launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-008
 current_step: p3h-004-private-smoke-and-cutover-gate
-next_action: On the trusted workstation that already has the approved agent-secrets store, or after that store is loaded here through the documented loader without pasting secrets into chat, configure the existing zero-spend custom SMTP provider for Supabase project jjgtlfblsfobdhmtngbz without sending a test email or changing DNS, then reply SMTP READY.
+next_action: On a trusted workstation already authenticated to the Supabase Management API, or after the documented agent-secrets loader provides a Management API token without pasting secrets into chat, read Auth config for project jjgtlfblsfobdhmtngbz as booleans only. Do not send the single authorized invitation until custom SMTP, host, user, sender, and secure transport are proven true and accepted authority records same-origin invite redemption on the existing /auth/callback. Official inviteUserByEmail does not support PKCE.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

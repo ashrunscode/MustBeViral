@@ -176,6 +176,7 @@ handoff:
     - apps/core/wrangler.jsonc
     - apps/web/src/lib/platform/kill-switches.test.ts
     - apps/web/src/lib/platform/kill-switches.ts
+    - docs/STATUS.md
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
     - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
     - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
