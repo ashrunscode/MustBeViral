@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
 active_packet: WP-P3-009
-current_step: p3i-001-owner-identity-decision
-next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
+current_step: p3i-003-private-72-hour-observation
+next_action: p3i-003: observe the protected provider surface for 72 continuous hours (window 2026-09-04T21:22Z to 2026-09-07T21:22Z) with daily zero-mutation snapshots (auth.sessions, all tenant and money tables, R2 object count, Core health, Vercel runtime errors); the owner may set the password at any time via the reset page; then prepare the p3i-004 traffic decision draft.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

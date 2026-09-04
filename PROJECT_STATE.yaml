@@ -8,10 +8,13 @@ project_state: active
 phase:
   id: P3
   title: Owner-only production observation and traffic decision
-  state: planned
+  state: in_progress
 release_target: P0
 active_work_packet: WP-P3-009
-next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
+next_action: 'p3i-003: observe the protected provider surface for 72 continuous hours (window
+  2026-09-04T21:22Z to 2026-09-07T21:22Z) with daily zero-mutation snapshots (auth.sessions, all
+  tenant and money tables, R2 object count, Core health, Vercel runtime errors); the owner may set
+  the password at any time via the reset page; then prepare the p3i-004 traffic decision draft.'
 decisions_pending: []
 blockers: []
 legacy:

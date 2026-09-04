@@ -3,7 +3,7 @@ id: WP-P3-009
 spec_revision: 1
 title: Owner-only production observation and traffic decision
 phase: P3
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: With fresh explicit operator authorization, prove exactly one approved owner session on
@@ -81,15 +81,15 @@ public_interfaces:
 steps:
   - id: p3i-001-owner-identity-decision
     title: Obtain fresh explicit authorization for exactly one production owner identity.
-    status: pending
+    status: completed
   - id: p3i-002-authenticated-zero-spend-smoke
     title:
       Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend
       gates off.
-    status: pending
+    status: completed
   - id: p3i-003-private-72-hour-observation
     title: Observe the protected provider surface and zero-mutation invariants for 72 continuous hours.
-    status: pending
+    status: current
   - id: p3i-004-traffic-go-no-go-packet
     title: Prepare but do not execute a separate exact DNS/customer-traffic decision packet.
     status: pending
@@ -99,8 +99,10 @@ acceptance:
       criterion:
         Provider and database evidence proves the one approved owner session was tenant scoped
         and created no provider, queue, charge, signup, or customer activity.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
+        - governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
     - id: observation-window
       criterion: A continuous 72-hour provider observation shows healthy private endpoints, redacted
         telemetry, private storage, disabled gates, and no customer-impacting activity.
@@ -136,10 +138,16 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p3i-001-owner-identity-decision
-  next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
+  current_step: p3i-003-private-72-hour-observation
+  next_action: 'p3i-003: observe the protected provider surface for 72 continuous hours (window
+    2026-09-04T21:22Z to 2026-09-07T21:22Z) with daily zero-mutation snapshots (auth.sessions, all
+    tenant and money tables, R2 object count, Core health, Vercel runtime errors); the owner may set
+    the password at any time via the reset page; then prepare the p3i-004 traffic decision draft.'
   blockers: []
-  changed_paths: []
+  changed_paths:
+    - governance/evidence/WP-P3-009/trunk-sync-2026-09-04.md
+    - governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
+    - governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
   last_green_checks: []
 completion:
   successor_packet_id: null

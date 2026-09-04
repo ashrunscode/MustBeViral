@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-009` (ready). Current step: `p3i-001-owner-identity-decision`.
+Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hour-observation`.
 
 | Authority topic | Document | Path |
 |---|---|---|
