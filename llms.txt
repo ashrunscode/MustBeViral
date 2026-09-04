@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: dtc_ecommerce_marketing_teams
 phase: P3
-active_packet: WP-P3-008
-current_step: p3h-004-private-smoke-and-cutover-gate
-next_action: Promote the prepared successor packet WP-P3-009 from governance/evidence/WP-P3-008/successor-WP-P3-009.yaml. Packet acceptance is proven and no blocker remains. Carry forward the non-blocking owner-credential risk recorded in the carried-forward-risk section of governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md.
+active_packet: WP-P3-009
+current_step: p3i-001-owner-identity-decision
+next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

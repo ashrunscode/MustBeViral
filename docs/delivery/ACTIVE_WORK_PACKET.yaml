@@ -83,7 +83,8 @@ steps:
     title: Obtain fresh explicit authorization for exactly one production owner identity.
     status: pending
   - id: p3i-002-authenticated-zero-spend-smoke
-    title: Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend
+    title:
+      Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend
       gates off.
     status: pending
   - id: p3i-003-private-72-hour-observation
@@ -95,7 +96,8 @@ steps:
 acceptance:
   automated:
     - id: owner-session-containment
-      criterion: Provider and database evidence proves the one approved owner session was tenant scoped
+      criterion:
+        Provider and database evidence proves the one approved owner session was tenant scoped
         and created no provider, queue, charge, signup, or customer activity.
       status: pending
       evidence: []
@@ -106,7 +108,8 @@ acceptance:
       evidence: []
   manual:
     - id: fresh-traffic-decision
-      criterion: The owner explicitly records go or no-go after reading the exact smoke, observability,
+      criterion:
+        The owner explicitly records go or no-go after reading the exact smoke, observability,
         rollback, capacity, and legacy evidence; silence is not approval.
       status: pending
       evidence: []
@@ -124,7 +127,8 @@ quality_gates:
     status: pending
     evidence: []
 rollback:
-  strategy: Keep all behavior gates false, leave the protected provider deployment in place, stop the
+  strategy:
+    Keep all behavior gates false, leave the protected provider deployment in place, stop the
     observation, revoke only the newly authorized owner session if compromised, and fix forward. Do
     not alter DNS, legacy traffic, migration history, or production data in this packet.
   remote_actions_required: true

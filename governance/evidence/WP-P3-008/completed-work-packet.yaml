@@ -106,7 +106,8 @@ acceptance:
         - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
         - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
     - id: no-legacy-or-dns-mutation
-      criterion: Before/after inventory proves no legacy resource, custom domain, traffic-routing DNS
+      criterion:
+        Before/after inventory proves no legacy resource, custom domain, traffic-routing DNS
         record, route, customer row, provider run, or charge changed. Named exception, ruled by the
         owner on 2026-09-03 at spec_revision 2, dropping the previous unqualified
         no-DNS-record-change wording, which the delivery work made broader than the truth. Three
@@ -121,7 +122,8 @@ acceptance:
         - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
   manual:
     - id: private-production-containment
-      criterion: The deployments are usable only for operator smoke through provider URLs and are not
+      criterion:
+        The deployments are usable only for operator smoke through provider URLs and are not
         represented as a public launch or customer-ready release.
       status: passed
       evidence:

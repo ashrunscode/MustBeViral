@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Disabled-behavior production environment binding (active) |
-| Active packet | `WP-P3-008` |
-| Current step | `p3h-004-private-smoke-and-cutover-gate` |
+| Phase | P3 — Owner-only production observation and traffic decision (planned) |
+| Active packet | `WP-P3-009` |
+| Current step | `p3i-001-owner-identity-decision` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Promote the prepared successor packet WP-P3-009 from governance/evidence/WP-P3-008/successor-WP-P3-009.yaml. Packet acceptance is proven and no blocker remains. Carry forward the non-blocking owner-credential risk recorded in the carried-forward-risk section of governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md.
+Wait for fresh explicit authorization naming exactly one production owner identity.
