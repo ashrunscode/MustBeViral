@@ -194,6 +194,6 @@ handoff:
     - pnpm governance:check
     - pnpm verify
 completion:
-  successor_packet_id: null
+  successor_packet_id: WP-P3-009
   evidence_paths: []
   completed_at: null

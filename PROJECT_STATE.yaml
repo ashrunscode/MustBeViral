@@ -4,23 +4,19 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: dtc_ecommerce_marketing_teams
-project_state: blocked
+project_state: active
 phase:
   id: P3
   title: Disabled-behavior production environment binding
-  state: blocked
+  state: active
 release_target: P0
 active_work_packet: WP-P3-008
-next_action: Accept the owner invitation delivered to hello@mustbeviral.com, establish the owner
-  credential, then run the authenticated zero-spend RLS smoke for step p3h-004.
+next_action: >-
+  Promote the prepared successor packet WP-P3-009 with pnpm agent:finish. WP-P3-008 acceptance is
+  proven and no blocker remains. The owner still holds no application credential, which WP-P3-009
+  addresses as its first step.
 decisions_pending: []
-blockers:
-  - "BLOCKED_OWNER_INVITATION_PENDING_ACCEPTANCE: custom SMTP is configured on jjgtlfblsfobdhmtngbz
-    (smtp.resend.com:465, sender hello@mustbeviral.com, verified via the Management API) and the one
-    authorized owner invitation was sent and reported Delivered by Resend. The invitation is still
-    pending acceptance, so production Auth has no signed-in session and the packet's authenticated
-    database/RLS smoke remains unproven. Evidence:
-    governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md"
+blockers: []
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
