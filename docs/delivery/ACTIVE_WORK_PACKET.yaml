@@ -195,5 +195,11 @@ handoff:
     - pnpm verify
 completion:
   successor_packet_id: WP-P3-009
-  evidence_paths: []
+  evidence_paths:
+    - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
+    - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
+    - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
+    - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
+    - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
   completed_at: null
