@@ -1,14 +1,15 @@
 schema_version: 1
-id: WP-P3-008
-spec_revision: 2
-title: Disabled-behavior production environment binding
+id: WP-P3-009
+spec_revision: 1
+title: Owner-only production observation and traffic decision
 phase: P3
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Bind the exact isolated V2 production resources, deploy Core and web with all customer,
-  provider, charging, and signup behavior disabled, verify private smoke paths, and keep legacy
-  traffic and DNS unchanged.
+objective: With fresh explicit operator authorization, prove exactly one approved owner session on
+  the SSO-protected provider surface, observe the disabled private foundation for 72 continuous
+  hours, and prepare a separate evidence-backed DNS/customer-traffic go or no-go decision without
+  performing cutover.
 authority_refs:
   - product-contract
   - release-scope
@@ -20,15 +21,14 @@ authority_refs:
   - legacy-v1-retirement
   - codex-finish-mega-prompt
 required_skills:
-  - cloudflare
-  - wrangler
-  - workers-best-practices
-  - supabase
   - auth-fortress
   - observability-ops
+  - cloudflare
+  - wrangler
+  - supabase
   - quality-check
 depends_on:
-  - WP-P3-007
+  - WP-P3-008
 scope:
   allowed_paths:
     - apps/core/**
@@ -37,8 +37,8 @@ scope:
     - packages/contracts/**
     - packages/db/**
     - supabase/**
+    - governance/evidence/WP-P3-009/**
     - governance/evidence/WP-P3-008/**
-    - governance/evidence/WP-P3-007/**
     - governance/tests/**
     - docs/**
     - package.json
@@ -52,8 +52,6 @@ scope:
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/STATUS.md
-    - docs/generated/TRACEABILITY.md
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
@@ -68,138 +66,78 @@ scope:
     - legacy-v1-retirement
     - codex-finish-mega-prompt
 deliverables:
-  - Production configuration names only Supabase `jjgtlfblsfobdhmtngbz`, R2
-    `mustbeviral-v2-production-media`, Core `mustbeviral-v2-production-core`, and Vercel project ID
-    `prj_oPGn8bYorRz0VvXhsWUnHhGN0vGj`; no legacy or placeholder target is accepted.
-  - Production secrets are transferred provider-to-provider without values entering source, docs,
-    logs, or messages; secret presence and environment separation are verified.
-  - Core and web deploy with signup, generation, provider routes, queues, and customer charging off;
-    no custom domain or DNS route changes.
-  - Authenticated smoke proves health, closed enrollment, private artifact denial, database/RLS
-    connectivity, and rollback identifiers without creating customer or provider work.
-  - Security/performance Advisor findings are rechecked; justified foreign-key and RLS-plan repairs
-    are forward-only and complete before traffic.
+  - Fresh explicit authorization names exactly one owner identity; provisioning and credentials stay
+    out of source and evidence, public signup remains disabled, and no customer is admitted.
+  - The approved owner proves sign-in, JWT validation, workspace-scoped RLS/database connectivity,
+    private artifact denial/access boundaries, and sign-out without generation, charging, or queues.
+  - The protected provider surface is observed for 72 continuous hours with all behavior gates off,
+    zero customer/provider/charge rows, private R2, and redacted error/latency evidence.
+  - A separate traffic decision packet records owner go or no-go, rollback owner, exact DNS/routes,
+    and current evidence; this packet performs no DNS, custom-domain, or public-traffic mutation.
 public_interfaces:
-  - Provider-generated preview/worker URLs may be used for private smoke only. `mustbeviral.com`,
-    `api.mustbeviral.com`, legacy V1 traffic, public signup, charging, and generation remain
-    unchanged.
+  - Only the SSO-protected Vercel team alias and the workers.dev Core URL are in scope. Legacy V1,
+    MustBeViral custom domains, public signup, customer admission, provider execution, queues, and
+    charging remain unchanged.
 steps:
-  - id: p3h-001-config-and-secret-preflight
-    title: Validate exact resource identities, disabled flags, secrets, Advisor disposition, and rollback.
-    status: completed
-  - id: p3h-002-unrouted-core-deploy
-    title: Deploy production Core without a custom route and prove all costly behavior disabled.
-    status: completed
-  - id: p3h-003-isolated-web-deploy
-    title: Deploy the exact Vercel project without attaching MustBeViral production domains.
-    status: completed
-  - id: p3h-004-private-smoke-and-cutover-gate
-    title: Run private smoke checks and prepare a separate DNS/customer-traffic decision packet.
-    status: current
+  - id: p3i-001-owner-identity-decision
+    title: Obtain fresh explicit authorization for exactly one production owner identity.
+    status: pending
+  - id: p3i-002-authenticated-zero-spend-smoke
+    title: Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend
+      gates off.
+    status: pending
+  - id: p3i-003-private-72-hour-observation
+    title: Observe the protected provider surface and zero-mutation invariants for 72 continuous hours.
+    status: pending
+  - id: p3i-004-traffic-go-no-go-packet
+    title: Prepare but do not execute a separate exact DNS/customer-traffic decision packet.
+    status: pending
 acceptance:
   automated:
-    - id: exact-disabled-production
-      criterion: Provider reads and HTTP smoke prove exact bindings, healthy deployments, closed
-        enrollment, private media, and all spend/traffic feature gates disabled.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
-        - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
-    - id: no-legacy-or-dns-mutation
-      criterion: Before/after inventory proves no legacy resource, custom domain, traffic-routing
-        DNS record, route, customer row, provider run, or charge changed. Named exception, ruled by
-        the owner on 2026-09-03 at spec_revision 2, dropping the previous unqualified
-        no-DNS-record-change wording, which the delivery work made broader than the truth. Three
-        Resend delivery records may exist on mustbeviral.com — resend._domainkey TXT,
-        send.mustbeviral.com TXT, and send.mustbeviral.com MX — because owner email delivery
-        requires them. The exception is limited to mail delivery and authorizes no A, CNAME, route,
-        or custom-domain change. Separately ruled by the owner, the single Auth row created by the
-        authorized owner invitation is the approved owner identity, not a customer row.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
-        - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
+    - id: owner-session-containment
+      criterion: Provider and database evidence proves the one approved owner session was tenant scoped
+        and created no provider, queue, charge, signup, or customer activity.
+      status: pending
+      evidence: []
+    - id: observation-window
+      criterion: A continuous 72-hour provider observation shows healthy private endpoints, redacted
+        telemetry, private storage, disabled gates, and no customer-impacting activity.
+      status: pending
+      evidence: []
   manual:
-    - id: private-production-containment
-      criterion:
-        The deployments are usable only for operator smoke through provider URLs and are not
-        represented as a public launch or customer-ready release.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    - id: fresh-traffic-decision
+      criterion: The owner explicitly records go or no-go after reading the exact smoke, observability,
+        rollback, capacity, and legacy evidence; silence is not approval.
+      status: pending
+      evidence: []
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Keep DNS and legacy traffic unchanged. Roll web back to its prior Vercel deployment or
-    remove the new alias; deploy the prior Core version/config; leave additive database migrations
-    intact and fix forward. Disable every behavior gate before investigating.
+  strategy: Keep all behavior gates false, leave the protected provider deployment in place, stop the
+    observation, revoke only the newly authorized owner session if compromised, and fix forward. Do
+    not alter DNS, legacy traffic, migration history, or production data in this packet.
   remote_actions_required: true
 external_effects:
-  remote_mutation: authorized
+  remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p3h-004-private-smoke-and-cutover-gate
-  next_action: >-
-    Promote the prepared successor packet WP-P3-009 from
-    governance/evidence/WP-P3-008/successor-WP-P3-009.yaml. Packet acceptance is proven and no
-    blocker remains. Carry forward the non-blocking owner-credential risk recorded in the
-    carried-forward-risk section of
-    governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md.
+  current_step: p3i-001-owner-identity-decision
+  next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
   blockers: []
-  changed_paths:
-    - PROJECT_STATE.yaml
-    - apps/core/.dev.vars.example
-    - apps/core/package.json
-    - apps/core/src/composition/kill-switches.ts
-    - apps/core/src/bindings.ts
-    - apps/core/src/routes/v1.ts
-    - apps/core/test/unit/fal-ingest.test.ts
-    - apps/core/test/unit/kill-switches.test.ts
-    - apps/core/test/unit/quote-composition.test.ts
-    - apps/core/test/unit/v1-routes.test.ts
-    - apps/core/worker-configuration.d.ts
-    - apps/core/wrangler.jsonc
-    - apps/web/src/lib/platform/kill-switches.test.ts
-    - apps/web/src/lib/platform/kill-switches.ts
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
-    - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
-    - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
-    - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
-    - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
-    - governance/tests/production-release-config-gate.test.mjs
-    - llms.txt
-    - supabase/migrations/20260902154759_production_disabled_binding_hardening.sql
-    - supabase/tests/database/00036_production_disabled_binding_hardening.test.sql
-  last_green_checks:
-    - pnpm exec vitest run --config vitest.config.ts test/unit/v1-routes.test.ts
-      test/unit/kill-switches.test.ts test/unit/fal-ingest.test.ts
-    - pnpm exec wrangler deploy --env production --config apps/core/wrangler.jsonc
-    - pnpm design:check
-    - pnpm governance:check
-    - pnpm verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-P3-009
-  evidence_paths:
-    - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
-    - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
-    - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
-    - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
-    - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null

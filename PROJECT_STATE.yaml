@@ -7,14 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: Disabled-behavior production environment binding
-  state: active
+  title: Owner-only production observation and traffic decision
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-008
-next_action: >-
-  Promote the prepared successor packet WP-P3-009 with pnpm agent:finish. WP-P3-008 acceptance is
-  proven and no blocker remains. The owner still holds no application credential, which WP-P3-009
-  addresses as its first step.
+active_work_packet: WP-P3-009
+next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
 decisions_pending: []
 blockers: []
 legacy:
@@ -27,8 +24,7 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes:
-      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
   staging:
     generation: viralgraph-cleanroom-v2
@@ -41,10 +37,12 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-02T14:21:21.769Z
+  at: 2026-09-04T00:19:01.495Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
-    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
-    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
-    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
+    - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
+    - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
+    - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
+    - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
+    - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
