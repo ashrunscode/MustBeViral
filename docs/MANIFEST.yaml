@@ -450,3 +450,12 @@ documents:
     review_triggers: [authority_changed, acceptance_changed, implementation_changed]
     supersedes: []
     generator: pnpm docs:generate
+
+  - id: adr-0008-packet-supersession
+    path: docs/decisions/ADR-0008-PACKET-SUPERSESSION.md
+    kind: decision
+    status: accepted
+    owner: delivery
+    authority_topics: [delivery.owner_directed_supersession]
+    review_triggers: [packet_superseded, authority_model_change_requested]
+    supersedes: []

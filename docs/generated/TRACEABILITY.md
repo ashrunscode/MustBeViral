@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hour-observation`.
+Current packet: `WP-P3-009` (in_progress). Current step: `p3i-005-owner-directed-supersession`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -88,3 +88,4 @@ Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hou
 | `generated.environment_variables` | `generated-environment` | docs/generated/ENVIRONMENT.md |
 | `generated.model_catalog` | `generated-model-catalog` | docs/generated/MODEL_CATALOG.md |
 | `generated.traceability` | `generated-traceability` | docs/generated/TRACEABILITY.md |
+| `delivery.owner_directed_supersession` | `adr-0008-packet-supersession` | docs/decisions/ADR-0008-PACKET-SUPERSESSION.md |

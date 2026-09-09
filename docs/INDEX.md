@@ -46,3 +46,4 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `generated-environment` | [generated/ENVIRONMENT.md](./generated/ENVIRONMENT.md) | generated | generated | developer-experience |
 | `generated-model-catalog` | [generated/MODEL_CATALOG.md](./generated/MODEL_CATALOG.md) | generated | generated | execution |
 | `generated-traceability` | [generated/TRACEABILITY.md](./generated/TRACEABILITY.md) | generated | generated | quality |
+| `adr-0008-packet-supersession` | [decisions/ADR-0008-PACKET-SUPERSESSION.md](./decisions/ADR-0008-PACKET-SUPERSESSION.md) | decision | accepted | delivery |

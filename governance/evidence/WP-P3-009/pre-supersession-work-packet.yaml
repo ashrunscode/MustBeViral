@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-P3-009
-spec_revision: 2
+spec_revision: 1
 title: Owner-only production observation and traffic decision
 phase: P3
 status: in_progress
@@ -9,9 +9,7 @@ branch: codex/viralgraph-cleanroom
 objective: With fresh explicit operator authorization, prove exactly one approved owner session on
   the SSO-protected provider surface, observe the disabled private foundation for 72 continuous
   hours, and prepare a separate evidence-backed DNS/customer-traffic go or no-go decision without
-  performing cutover. The owner subsequently authorized a separate local governance amendment to
-  implement audited supersession into WP-P3-010; unfinished production acceptance remains unproved
-  and is carried forward.
+  performing cutover.
 authority_refs:
   - product-contract
   - release-scope
@@ -22,7 +20,6 @@ authority_refs:
   - deploy-rollback-incidents
   - legacy-v1-retirement
   - codex-finish-mega-prompt
-  - adr-0008-packet-supersession
 required_skills:
   - auth-fortress
   - observability-ops
@@ -55,13 +52,6 @@ scope:
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - AGENTS.md
-    - governance/scripts/agent-state.mjs
-    - governance/scripts/packet-supersession.mjs
-    - governance/scripts/validate-transition-receipts.mjs
-    - governance/scripts/validate-diff-scope.mjs
-    - governance/schemas/packet-supersession-decision.schema.json
-    - governance/schemas/packet-transition-receipt.schema.json
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
@@ -75,7 +65,6 @@ scope:
     - deploy-rollback-incidents
     - legacy-v1-retirement
     - codex-finish-mega-prompt
-    - adr-0008-packet-supersession
 deliverables:
   - Fresh explicit authorization names exactly one owner identity; provisioning and credentials stay
     out of source and evidence, public signup remains disabled, and no customer is admitted.
@@ -100,14 +89,10 @@ steps:
     status: completed
   - id: p3i-003-private-72-hour-observation
     title: Observe the protected provider surface and zero-mutation invariants for 72 continuous hours.
-    status: pending
+    status: current
   - id: p3i-004-traffic-go-no-go-packet
     title: Prepare but do not execute a separate exact DNS/customer-traffic decision packet.
     status: pending
-  - id: p3i-005-owner-directed-supersession
-    title: Implement and verify owner-authorized packet supersession, then activate the revised
-      WP-P3-010 without completing observation acceptance.
-    status: current
 acceptance:
   automated:
     - id: owner-session-containment
@@ -125,11 +110,6 @@ acceptance:
       evidence:
         - governance/evidence/WP-P3-009/private-72-hour-observation-2026-09-07.md
         - governance/evidence/WP-P3-009/replacement-observation-baseline-2026-09-08.md
-    - id: supersession-integrity
-      criterion: Audited supersession preserves the predecessor snapshot and unfinished acceptance,
-        verifies committed authorization, and rejects stale inputs with atomic recovery.
-      status: pending
-      evidence: []
   manual:
     - id: fresh-traffic-decision
       criterion:
@@ -140,16 +120,19 @@ acceptance:
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
 rollback:
   strategy:
     Keep all behavior gates false, leave the protected provider deployment in place, stop the
@@ -160,11 +143,27 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: p3i-005-owner-directed-supersession
-  next_action: Implement and verify the committed ADR-0008 supersession contract, then use the owner
-    decision to activate WP-P3-010 while retaining unproved release obligations.
+  current_step: p3i-003-private-72-hour-observation
+  next_action: 'p3i-003: continue the replacement observation from 2026-09-08T03:18:11Z through at
+    least 2026-09-11T03:18:11Z; hour-01 evidence is recorded, the next required daily capture is
+    September 9 at 03:18:11Z plus or minus two hours, and the separate owner traffic ruling remains
+    pending.'
   blockers: []
-  changed_paths: []
+  changed_paths:
+    - governance/evidence/WP-P3-009/trunk-sync-2026-09-04.md
+    - governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
+    - governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
+    - governance/evidence/WP-P3-009/private-observation-2026-09-05.md
+    - governance/evidence/WP-P3-009/private-observation-2026-09-06.md
+    - governance/evidence/WP-P3-009/private-observation-2026-09-08.md
+    - governance/evidence/WP-P3-009/private-72-hour-observation-2026-09-07.md
+    - governance/evidence/WP-P3-009/replacement-observation-baseline-2026-09-08.md
+    - governance/evidence/WP-P3-009/replacement-observation-hour-01-2026-09-08.md
+    - governance/evidence/WP-P3-009/observation-recovery-procedure-2026-09-08.md
+    - governance/evidence/WP-P3-009/traffic-decision-draft.md
+    - governance/evidence/WP-P3-009/execution-recovery-review-2026-09-08.md
+    - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
+    - governance/evidence/WP-P3-009/successor-WP-P3-010.yaml
   last_green_checks:
     - pnpm agent:preflight
     - pnpm agent:verify

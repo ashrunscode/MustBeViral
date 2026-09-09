@@ -55,6 +55,10 @@ Skills accelerate work but never override repository authority. Retrieve current
 - Keep Supabase/Postgres authoritative for permissions, revisions, runs, and money. Do not create a second authority in Durable Objects or local caches.
 - Do not broaden a ready packet's scope in the same change as implementation.
 
+Owner-directed replacement of unfinished work follows accepted ADR-0008: commit a separate
+authority-only amendment first, then implement and use audited supersession. Preserve unfinished
+acceptance and historical evidence; never use `agent:finish` to claim a superseded packet passed.
+
 ## Finish or hand off
 
 1. Run `pnpm agent:verify` and the packet's named checks.
