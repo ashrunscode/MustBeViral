@@ -1,17 +1,15 @@
 schema_version: 1
-id: WP-P3-009
+id: WP-P3-010
 spec_revision: 2
-title: Owner-only production observation and traffic decision
+title: Full-platform authority rebaseline
 phase: P3
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: With fresh explicit operator authorization, prove exactly one approved owner session on
-  the SSO-protected provider surface, observe the disabled private foundation for 72 continuous
-  hours, and prepare a separate evidence-backed DNS/customer-traffic go or no-go decision without
-  performing cutover. The owner subsequently authorized a separate local governance amendment to
-  implement audited supersession into WP-P3-010; unfinished production acceptance remains unproved
-  and is carried forward.
+objective: Adopt the owner-approved September 9 full-platform plan across the existing accepted
+  authorities, preserving all 65 work units, cleanroom infrastructure, truthful evidence states, and
+  separate production release obligations. Prepare the Wave 0 baseline and feasibility successor
+  before product implementation.
 authority_refs:
   - product-contract
   - release-scope
@@ -21,48 +19,35 @@ authority_refs:
   - local-env-secrets
   - deploy-rollback-incidents
   - legacy-v1-retirement
-  - codex-finish-mega-prompt
+  - adr-0005-document-governance
   - adr-0008-packet-supersession
 required_skills:
-  - auth-fortress
-  - observability-ops
-  - cloudflare
-  - wrangler
-  - supabase
+  - build-mustbeviral
   - quality-check
 depends_on:
-  - WP-P3-008
+  - WP-P3-009
 scope:
   allowed_paths:
-    - apps/core/**
-    - apps/web/**
-    - packages/config/**
-    - packages/contracts/**
-    - packages/db/**
-    - supabase/**
-    - governance/evidence/WP-P3-009/**
-    - governance/evidence/WP-P3-008/**
-    - governance/tests/**
+    - AGENTS.md
+    - .agents/**
     - docs/**
-    - package.json
-    - pnpm-lock.yaml
-    - pnpm-workspace.yaml
-    - turbo.json
-    - tsconfig.json
-    - tsconfig.base.json
-    - eslint.config.mjs
-    - vitest.config.ts
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/generated/**
+    - docs/STATUS.md
+    - docs/INDEX.md
+    - governance/**
+    - governance/config/**
+    - governance/tests/**
+    - governance/evidence/WP-P3-009/**
+    - governance/evidence/WP-P3-010/**
     - PROJECT_STATE.yaml
     - llms.txt
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - AGENTS.md
-    - governance/scripts/agent-state.mjs
-    - governance/scripts/packet-supersession.mjs
-    - governance/scripts/validate-transition-receipts.mjs
-    - governance/scripts/validate-diff-scope.mjs
-    - governance/schemas/packet-supersession-decision.schema.json
-    - governance/schemas/packet-transition-receipt.schema.json
+    - package.json
+    - governance/evidence/WP-PLATFORM-W0-001/**
   forbidden_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
     - docs/archive/**
     - legacy-exports/**
   required_doc_ids:
@@ -71,117 +56,92 @@ scope:
     - system-overview
     - data-auth-tenancy
     - quality-gates
-    - local-env-secrets
     - deploy-rollback-incidents
-    - legacy-v1-retirement
-    - codex-finish-mega-prompt
+    - adr-0005-document-governance
     - adr-0008-packet-supersession
 deliverables:
-  - Fresh explicit authorization names exactly one owner identity; provisioning and credentials stay
-    out of source and evidence, public signup remains disabled, and no customer is admitted.
-  - The approved owner proves sign-in, JWT validation, workspace-scoped RLS/database connectivity,
-    private artifact denial/access boundaries, and sign-out without generation, charging, or queues.
-  - The protected provider surface is observed for 72 continuous hours with all behavior gates off,
-    zero customer/provider/charge rows, private R2, and redacted error/latency evidence.
-  - A separate traffic decision packet records owner go or no-go, rollback owner, exact DNS/routes,
-    and current evidence; this packet performs no DNS, custom-domain, or public-traffic mutation.
+  - Accept ADR-0007 as the owner-directed full-platform product reset and supersede the DTC-only
+    decision and outdated finish-sprint contract without claiming their human validation passed.
+  - Reconcile the product, release, UX, architecture, terminology, agent contract, build skill,
+    roadmap and quality authorities. The roadmap owns all 65 supplied work units; do not add a
+    competing ship plan or execution document database.
+  - Preserve tenant isolation, immutable revisions and ledger, private media, existing deployment
+    containment, required reviews, and CI cost controls. Replace only product-scope gates that
+    contradict the accepted direction with tests of the new boundaries.
+  - Record implemented, local, connected staging and production evidence distinctly; retain the
+    unfinished observation and owner traffic ruling as release requirements.
+  - Prepare a ready Wave 0 baseline/design/feasibility successor with exact scope, checks and
+    external-effect boundaries.
 public_interfaces:
-  - Only the SSO-protected Vercel team alias and the workers.dev Core URL are in scope. Legacy V1,
-    MustBeViral custom domains, public signup, customer admission, provider execution, queues, and
-    charging remain unchanged.
+  - Governance and documentation only. No product runtime, database, provider, account, deployment,
+    DNS, traffic or financial mutation. Existing public API behavior stays unchanged.
 steps:
-  - id: p3i-001-owner-identity-decision
-    title: Obtain fresh explicit authorization for exactly one production owner identity.
-    status: completed
-  - id: p3i-002-authenticated-zero-spend-smoke
-    title:
-      Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend
-      gates off.
-    status: completed
-  - id: p3i-003-private-72-hour-observation
-    title: Observe the protected provider surface and zero-mutation invariants for 72 continuous hours.
+  - id: p3j-001-full-platform-authorities
+    title: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
     status: pending
-  - id: p3i-004-traffic-go-no-go-packet
-    title: Prepare but do not execute a separate exact DNS/customer-traffic decision packet.
+  - id: p3j-002-scope-and-release-gates
+    title: Update scope-sensitive governance tests while preserving runtime release containment and
+      evidence requirements.
     status: pending
-  - id: p3i-005-owner-directed-supersession
-    title: Implement and verify owner-authorized packet supersession, then activate the revised
-      WP-P3-010 without completing observation acceptance.
-    status: current
+  - id: p3j-003-roadmap-and-successor
+    title: Map all 65 work units into the existing roadmap and prepare the bounded Wave 0 successor.
+    status: pending
+  - id: p3j-004-rebaseline-verification
+    title: Verify the authority-only rebaseline, committed evidence and ready successor.
+    status: pending
 acceptance:
   automated:
-    - id: owner-session-containment
+    - id: coherent-authority
       criterion:
-        Provider and database evidence proves the one approved owner session was tenant scoped
-        and created no provider, queue, charge, signup, or customer activity.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
-        - governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
-    - id: observation-window
-      criterion: A continuous 72-hour provider observation shows healthy private endpoints, redacted
-        telemetry, private storage, disabled gates, and no customer-impacting activity.
-      status: pending
-      evidence:
-        - governance/evidence/WP-P3-009/private-72-hour-observation-2026-09-07.md
-        - governance/evidence/WP-P3-009/replacement-observation-baseline-2026-09-08.md
-    - id: supersession-integrity
-      criterion: Audited supersession preserves the predecessor snapshot and unfinished acceptance,
-        verifies committed authorization, and rejects stale inputs with atomic recovery.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
-  manual:
-    - id: fresh-traffic-decision
-      criterion:
-        The owner explicitly records go or no-go after reading the exact smoke, observability,
-        rollback, capacity, and legacy evidence; silence is not approval.
+        Manifest and generated documentation are valid with one accepted authority per topic, and
+        no active contract contradicts the full-platform scope.
       status: pending
       evidence: []
+    - id: complete-roadmap
+      criterion:
+        All supplied W0.1 through W12.5 work units and acceptance journeys are represented in the
+        existing delivery authorities.
+      status: pending
+      evidence: []
+    - id: preserved-boundaries
+      criterion:
+        Governance tests preserve historical receipts, private production containment, permission
+        and spend boundaries, and truthful pending release obligations.
+      status: pending
+      evidence: []
+    - id: ready-successor
+      criterion: The Wave 0 successor names baseline reproduction, prototypes and feasibility
+        deliverables, tests, rollback and external authorizations.
+      status: pending
+      evidence: []
+  manual: []
 quality_gates:
-  - id: design-direction
-    command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
+    status: pending
+    evidence: []
+  - id: governance-tests
+    command: pnpm governance:test
+    status: pending
+    evidence: []
   - id: repository-verification
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
+    status: pending
+    evidence: []
 rollback:
   strategy:
-    Keep all behavior gates false, leave the protected provider deployment in place, stop the
-    observation, revoke only the newly authorized owner session if compromised, and fix forward. Do
-    not alter DNS, legacy traffic, migration history, or production data in this packet.
-  remote_actions_required: true
+    Revert the rebaseline commit without rewriting receipt history. Keep supersession evidence
+    and all unfinished production release obligations. No remote changes occur.
+  remote_actions_required: false
 external_effects:
-  remote_mutation: approval-required
+  remote_mutation: none
   destructive_remote_actions: false
 handoff:
-  current_step: p3i-005-owner-directed-supersession
-  next_action: Implement and verify the committed ADR-0008 supersession contract, then use the owner
-    decision to activate WP-P3-010 while retaining unproved release obligations.
+  current_step: p3j-001-full-platform-authorities
+  next_action: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
   blockers: []
-  changed_paths:
-    - governance/schemas/packet-transition-receipt.schema.json
-    - governance/scripts/agent-state.mjs
-    - governance/scripts/validate-diff-scope.mjs
-    - governance/scripts/validate-transition-receipts.mjs
-    - governance/tests/agent-state.integration.test.mjs
-    - governance/tests/authority-transaction.test.mjs
-    - package.json
-    - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
-    - governance/schemas/packet-supersession-decision.schema.json
-    - governance/scripts/packet-supersession.mjs
-  last_green_checks:
-    - pnpm agent:preflight
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
   successor_packet_id: null
   evidence_paths: []

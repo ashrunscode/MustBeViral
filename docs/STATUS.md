@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Owner-only production observation and traffic decision (in_progress) |
-| Active packet | `WP-P3-009` |
-| Current step | `p3i-005-owner-directed-supersession` |
+| Phase | P3 — Full-platform authority rebaseline (planned) |
+| Active packet | `WP-P3-010` |
+| Current step | `p3j-001-full-platform-authorities` |
 | Release target | `P0` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement and verify the committed ADR-0008 supersession contract, then use the owner decision to activate WP-P3-010 while retaining unproved release obligations.
+Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.

@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-009` (in_progress). Current step: `p3i-005-owner-directed-supersession`.
+Current packet: `WP-P3-010` (ready). Current step: `p3j-001-full-platform-authorities`.
 
 | Authority topic | Document | Path |
 |---|---|---|

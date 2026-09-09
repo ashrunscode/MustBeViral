@@ -7,12 +7,11 @@ launch_customer: dtc_ecommerce_marketing_teams
 project_state: active
 phase:
   id: P3
-  title: Owner-only production observation and traffic decision
-  state: in_progress
+  title: Full-platform authority rebaseline
+  state: planned
 release_target: P0
-active_work_packet: WP-P3-009
-next_action: Implement and verify the committed ADR-0008 supersession contract, then use the owner
-  decision to activate WP-P3-010 while retaining unproved release obligations.
+active_work_packet: WP-P3-010
+next_action: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
 decisions_pending: []
 blockers: []
 legacy:
@@ -39,12 +38,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-04T00:19:01.495Z
-  by: pnpm agent:finish
+  at: 2026-09-09T23:37:02.760Z
+  by: pnpm agent:supersede
   evidence:
-    - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
-    - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
-    - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
-    - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
-    - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
-    - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
+    - governance/evidence/WP-P3-009/owner-supersession-decision-2026-09-09.yaml
