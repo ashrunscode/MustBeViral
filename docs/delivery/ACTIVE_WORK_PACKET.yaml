@@ -128,8 +128,9 @@ acceptance:
     - id: supersession-integrity
       criterion: Audited supersession preserves the predecessor snapshot and unfinished acceptance,
         verifies committed authorization, and rejects stale inputs with atomic recovery.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
   manual:
     - id: fresh-traffic-decision
       criterion:
@@ -140,16 +141,19 @@ acceptance:
 quality_gates:
   - id: design-direction
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
 rollback:
   strategy:
     Keep all behavior gates false, leave the protected provider deployment in place, stop the
@@ -164,7 +168,17 @@ handoff:
   next_action: Implement and verify the committed ADR-0008 supersession contract, then use the owner
     decision to activate WP-P3-010 while retaining unproved release obligations.
   blockers: []
-  changed_paths: []
+  changed_paths:
+    - governance/schemas/packet-transition-receipt.schema.json
+    - governance/scripts/agent-state.mjs
+    - governance/scripts/validate-diff-scope.mjs
+    - governance/scripts/validate-transition-receipts.mjs
+    - governance/tests/agent-state.integration.test.mjs
+    - governance/tests/authority-transaction.test.mjs
+    - package.json
+    - governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
+    - governance/schemas/packet-supersession-decision.schema.json
+    - governance/scripts/packet-supersession.mjs
   last_green_checks:
     - pnpm agent:preflight
     - pnpm agent:verify
