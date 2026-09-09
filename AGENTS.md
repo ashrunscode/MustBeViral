@@ -24,9 +24,9 @@ If dependencies are not installed, use `corepack pnpm install --frozen-lockfile`
 
 ## Mandatory cleanroom rules
 
-- MustBeViral Studio serves DTC/e-commerce marketing teams first. Agency workflows are deferred.
+- MustBeViral Studio serves single-brand operators and multi-brand client studios across local services and e-commerce. Implement the full-platform scope accepted in ADR-0007 through bounded packets.
 - ViralGraph V2 uses Next.js/Vercel, Supabase, one Cloudflare Core Worker, private R2, and fal-first provider drivers.
-- Never revive the legacy React Router, D1-auth, marketing-autopilot, multi-brand social-posting, or System DNA implementation.
+- Never revive the legacy React Router, D1-auth, marketing-autopilot, or System DNA implementation. New connected publishing and portfolio workflows belong in the existing V2 architecture.
 - Do not add a second documentation database, `docs/archive`, progress diary, nested `AGENTS.md`, or competing status file.
 - Never expose secrets, raw environment values, account tokens, customer media, or signed URLs in docs, logs, evidence, fixtures, or messages.
 - Never perform a remote destructive action unless `PROJECT_STATE.yaml` and the active packet explicitly allow the exact resource IDs and rollback evidence.

@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-010` (ready). Current step: `p3j-001-full-platform-authorities`.
+Current packet: `WP-P3-010` (in_progress). Current step: `p3j-004-rebaseline-verification`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -89,3 +89,4 @@ Current packet: `WP-P3-010` (ready). Current step: `p3j-001-full-platform-author
 | `generated.model_catalog` | `generated-model-catalog` | docs/generated/MODEL_CATALOG.md |
 | `generated.traceability` | `generated-traceability` | docs/generated/TRACEABILITY.md |
 | `delivery.owner_directed_supersession` | `adr-0008-packet-supersession` | docs/decisions/ADR-0008-PACKET-SUPERSESSION.md |
+| `decision.0007` | `adr-0007-full-platform` | docs/decisions/ADR-0007-FULL-PLATFORM.md |

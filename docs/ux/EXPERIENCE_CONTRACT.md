@@ -36,7 +36,7 @@ The user must always be able to answer five questions: Where am I? What is ready
 
 ## Interaction principles
 
-1. **Brief before canvas.** Onboarding progressively captures product truth, brand constraints, audience, offer, and claim rules; the system explains why each required field matters.
+1. **Brand before campaign.** Onboarding saves a durable brand draft, analyzes supplied sources, lets the owner correct findings, and reuses approved knowledge across campaigns. Advanced graph controls remain available without being required for ordinary work.
 2. **Plan before spend.** Agent-proposed graph changes appear as a readable patch with reasons. Provider spend begins only after validation, quote, and explicit confirmation.
 3. **Progressive disclosure.** Default views show task, outcome, status, and cost. Provider IDs, hashes, model versions, and lineage remain one action away.
 4. **Partial value is visible.** Completed static branches become reviewable while motion or a failed branch continues. Global progress never hides branch state.
@@ -80,3 +80,43 @@ Lightfield tokens in `.superdesign/design-system.md` are the system. The SuperDe
 - p75 LCP ≤2.5s, INP ≤200ms, and CLS ≤0.1 on the agreed production measurement segment.
 - List and canvas views load thumbnails or metadata, not full-resolution media.
 - Route and panel skeletons reserve final geometry; no fake progress percentages are shown.
+
+## Full-platform experience
+
+The interface should feel like a production workspace with real media and clear next actions. The default interaction is selecting brands, reviewing work, editing content, and handling exceptions. AI assistance is available in context; the user should not need to converse with a blank chat to find basic controls.
+
+### Navigation
+
+| Scope             | Primary surfaces                                                                              |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| Studio            | Overview, Brands, Calendar, Approvals, Tasks, Creators/Partners, Reports, Team, Settings.     |
+| Brand             | Overview, Brand Intelligence, Assets, Channels, Campaigns, Content, Calendar, Inbox, Results. |
+| Campaign          | Overview/brief, Plan, Content, Collaborators, Approvals, Calendar, Results, Budget.           |
+| Content item      | Source/brief, Editor, Channel previews, QA, Comments, Approval, Publishing history.           |
+| Advanced settings | Billing, API access, reusable agent workflows, integrations, audit, export, ownership.        |
+
+Keep brand avatar/name and workspace context visible. Use breadcrumbs and real durable identifiers. Search and quick switching must handle many brands without accidental changes to the wrong account.
+
+### Key screens
+
+- **Studio overview:** attention list, scheduled work, pending approvals, disconnected channels, and a media-rich brand grid. Avoid empty revenue/follower charts before integrations exist.
+- **Brand onboarding:** website entry, staged analysis, editable findings with sources, identity preview, and targeted questions. Save continuously.
+- **Brand home:** identity preview, next campaign, current offers, recent assets, channel health, and suggested next work.
+- **Asset library:** visual browsing with usage/rights filters, real-media emphasis, and clear capture requests.
+- **Campaign planner:** objective and audience above a content board/calendar; every card shows selected assets, reason, owner, status, and channels.
+- **Composer:** editing and channel preview side by side; accessible modal/drawer behavior; save status; undo; version history; exact approval impact.
+- **Approvals:** media-first review, clear change requests, comparison to previous revision, and one decisive action per item.
+- **Creator discovery:** explainable filters and shortlist cards with actual supporting content and freshness, not decorative AI scores.
+- **Results:** answers to campaign questions, source freshness, and an actionable next experiment.
+
+### Design requirements
+
+Create a consistent type scale, spacing system, navigation hierarchy, buttons, forms, tables, cards, drawers, skeletons, notifications, and empty/error states. Use a restrained application palette while preserving each customer's identity inside creative previews. Do not recolor the entire studio to every active brand.
+
+Make desktop authoring strong; tablet/mobile support review, capture, approvals, scheduling, and exceptions. Require keyboard access, readable contrast, visible focus, non-color status cues, screen-reader labels, reduced motion, and zoom resilience.
+
+Replace internal copy such as “Core can pin the expected revision,” “P1a,” and “fully-landed margin cap” with user actions and understandable costs. Put diagnostic IDs and implementation details in support/admin views.
+
+Every empty or unavailable screen needs an appropriate recovery action: select a brand, add an asset, resume an existing item, reconnect an account, request approval, or retry a failed load. Unknown billing/metrics must not be rendered as zero. A session expiry should return the user to the same permitted content after sign-in.
+
+Postiz's calendar/composer and Sendible's workspace/campaign/inbox/report organization provide useful interaction references. Build an original coherent MustBeViral experience. The supplied guides explicitly leave some areas inferred or untested; neither guide proves that every observed menu has a working API.

@@ -1,10 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { listRepositoryFiles, readText } from '../scripts/lib.mjs';
-
-const FORBIDDEN_APP_PATH =
-  /(?:agency[-_]?portal|white[-_]?label|client[-_]?portal|auto[-_]?publish|social[-_]?publish|multi[-_]?client[-_]?(?:report|reporting))/i;
+import { listRepositoryFiles, readText, readYaml } from '../scripts/lib.mjs';
 
 const ALLOWED_WORKER_NAMES = new Set([
   'mustbeviral-v2-development-core',
@@ -27,9 +24,28 @@ function stagingSlice(source) {
   return source.slice(stagingStart, productionStart);
 }
 
-test('apps have no P4 agency or connected-social implementation files', () => {
-  const hits = listRepositoryFiles(['apps/**/*']).filter((file) => FORBIDDEN_APP_PATH.test(file));
-  assert.deepEqual(hits, [], 'P4 agency or social-publish files must not appear under apps/');
+test('platform implementation follows accepted scope without reviving superseded exclusions', () => {
+  const manifest = readYaml('docs/MANIFEST.yaml');
+  const lifecycle = (id) => manifest.documents.find((document) => document.id === id)?.status;
+  assert.equal(lifecycle('adr-0007-full-platform'), 'accepted');
+  assert.equal(lifecycle('adr-0001-dtc-first'), 'superseded');
+  assert.equal(lifecycle('codex-finish-mega-prompt'), 'superseded');
+  const instructions = `${readText('AGENTS.md')}\n${readText('.agents/skills/build-mustbeviral/SKILL.md')}`;
+  assert.doesNotMatch(
+    instructions,
+    /Agency workflows are deferred|Build only the DTC\/e-commerce-first/i,
+  );
+  const product = readText('docs/product/PRODUCT_CONTRACT.md');
+  assert.doesNotMatch(
+    product,
+    /Agency-specific operation is deliberately excluded|product does not crawl or import/i,
+  );
+  assert.match(product, /studio can access multiple client workspaces through explicit grants/i);
+  assert.match(readText('docs/architecture/DATA_AUTH_AND_TENANCY.md'), /Enable and force RLS/);
+  assert.match(
+    readText('docs/product/RELEASE_SCOPE.md'),
+    /observation.*traffic ruling remain unproved/i,
+  );
 });
 
 test('Workers remain Core and collaboration only; no executor or BYOK vars', () => {

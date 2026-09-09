@@ -4,9 +4,9 @@ doc_id: execution-providers-billing
 
 # Execution, providers, artifacts, and billing
 
-## P0 execution model
+## Execution foundation
 
-P0 uses the Core Worker, a transactional Postgres outbox, immediate post-commit dispatch, and a scheduled reconciler. It does not use durable workflow, queue, or coordination products.
+The platform reuses the Core Worker, transactional Postgres outbox, immediate post-commit dispatch and scheduled reconciliation, plus the existing evidence-gated queue and collaboration mechanisms. Environment gates remain separate from local implementation.
 
 - Normal outbox-to-dispatch p95 target: ≤1 second.
 - Abandoned event recovery target: ≤2 minutes.
@@ -14,7 +14,7 @@ P0 uses the Core Worker, a transactional Postgres outbox, immediate post-commit 
 - Unique event, attempt, provider request, webhook, artifact, and ledger keys make duplicate delivery safe.
 - External calls never occur inside a database transaction.
 
-Durable workflows enter P1a only for proven multi-step waits/retries. Queues require measured backpressure or fan-out. A separate executor requires independently scaling load, CPU limits, or deploy isolation. Coordination objects wait until P2 collaboration.
+New durable workflows require proven multi-step waits/retries. New queue topology requires measured backpressure or fan-out. A separate executor requires a recorded architecture decision, workload benchmark, security boundary, costs and rollback. Existing coordination objects remain recoverable drafts, not durable authority.
 
 ## State machines and ownership
 
@@ -53,7 +53,7 @@ ModelDriver
 
 `FalTransport` is the first implementation. A common transport is not a common model schema: every enabled model has a driver and versioned catalog entry covering provider model ID, capability, input/output schema, limits, moderation, license, retention, price source, health, and idempotency behavior.
 
-Enable only 3–5 models required for the launch pack. Direct adapters are added model-by-model when measured volume, margin, control, or SLA justifies them without changing the command layer.
+Preserve the existing curated media catalog. Add model routes only when the real-asset/rendering feasibility gate proves needed capability, input fidelity, rights, retention and cost. Direct media adapters require measured justification. Publishing adapters have a distinct integration contract.
 
 ## Run reproducibility
 
@@ -81,8 +81,32 @@ Ledger transaction types are `credit`, `reserve`, `capture`, `release`, and `ref
 - Partial success captures completed/accepted branch cost and releases the remainder.
 - Duplicate command, webhook, poll, or operator replay returns the existing ledger result.
 
-P0 exercises the complete semantic ledger without automated customer charging. P1a pilot pricing is $500 setup, $149/month, and a prepaid usage wallet. Usage begins at landed provider cost plus 25% with model-specific minimums; pricing is reconsidered only after 30 paid runs, targeting at least 60% blended gross margin without rewriting historical receipts.
+Historical launch-pack quotes and price versions remain immutable. The full-platform commercial offer is selected in W11 from measured unit costs and customer evidence; historical pilot prices are not the default platform offer. Until an accepted billing packet implements and validates a new offer, retain existing configured charging containment.
 
 ## Spend and safety controls
 
 P0 default caps are $8 per run, $25 per workspace per day, and $100 globally per day. Core enforces caps transactionally before reservation and again before provider submission. Operations has environment, provider, model, workspace, and global kill switches. Catalog canaries precede model changes; drift in price, license, retention, or moderation disables new quotes until reviewed.
+
+## Publication and commercial boundaries
+
+Content approval and publishing are separate state machines. An approved content revision can have several independently progressing channel deliveries.
+
+`draft → needs_review → approved → scheduled → submitting → processing → published`
+
+Additional explicit states: `changes_requested`, `canceled`, `permission_required`, `manual_completion_required`, `failed_retryable`, `failed_terminal`, and `outcome_unknown`.
+
+Before dispatch, recheck approval hash, rights/offer expiry, channel identity, current permissions, destination validity, schedule, and kill switches. An API acceptance response is not a published post. Record provider IDs and confirm terminal status through supported reads/webhooks. Unknown outcomes enter reconciliation before any resubmission.
+
+Use transactional intent/outbox records, stable idempotency keys, deduplication, per-account locks, retry backoff, bounded attempts, and operator repair paths. Promise controlled duplicate prevention and reconciliation, not mathematically guaranteed exactly-once effects across third-party systems.
+
+Changing media, caption, destination, account, or material offer terms invalidates the relevant approval. Define whether a timing-only change requires reapproval per workspace policy. Store both local scheduling intent and resolved UTC time; daylight-saving ambiguities must be shown and resolved.
+
+## Platform commercial model
+
+### Commercial model
+
+Provide plans appropriate to one brand, a studio portfolio, and larger organizations. Entitlements may cover active brands, channels, seats, storage, reporting history, and automation. Meter costly generation/discovery/rendering transparently. Choose actual prices after measured unit costs and customer evaluation; do not inherit old pilot pricing as the new platform's business model.
+
+Show a clear quote or approved budget policy before paid creation. Allow owner-set recurring budgets and delegated spend limits with receipts and stop controls, so the mature product does not require approving every inexpensive background step individually. Keep provider usage, subscription fees, advertising spend, and creator fees separate.
+
+Support real invoices/receipts, cancellations, credits/refunds, failed payments, entitlements, low-balance recovery, and client-level usage allocation. Display operational charging status truthfully. No live money movement is part of writing this plan.

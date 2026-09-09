@@ -3,7 +3,7 @@ id: WP-P3-010
 spec_revision: 2
 title: Full-platform authority rebaseline
 phase: P3
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Adopt the owner-approved September 9 full-platform plan across the existing accepted
@@ -78,56 +78,63 @@ public_interfaces:
 steps:
   - id: p3j-001-full-platform-authorities
     title: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
-    status: pending
+    status: completed
   - id: p3j-002-scope-and-release-gates
     title: Update scope-sensitive governance tests while preserving runtime release containment and
       evidence requirements.
-    status: pending
+    status: completed
   - id: p3j-003-roadmap-and-successor
     title: Map all 65 work units into the existing roadmap and prepare the bounded Wave 0 successor.
-    status: pending
+    status: completed
   - id: p3j-004-rebaseline-verification
     title: Verify the authority-only rebaseline, committed evidence and ready successor.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: coherent-authority
       criterion:
         Manifest and generated documentation are valid with one accepted authority per topic, and
         no active contract contradicts the full-platform scope.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
     - id: complete-roadmap
       criterion:
         All supplied W0.1 through W12.5 work units and acceptance journeys are represented in the
         existing delivery authorities.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
     - id: preserved-boundaries
       criterion:
         Governance tests preserve historical receipts, private production containment, permission
         and spend boundaries, and truthful pending release obligations.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
     - id: ready-successor
       criterion: The Wave 0 successor names baseline reproduction, prototypes and feasibility
         deliverables, tests, rollback and external authorizations.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
   manual: []
 quality_gates:
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
   - id: governance-tests
     command: pnpm governance:test
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
   - id: repository-verification
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
 rollback:
   strategy:
     Revert the rebaseline commit without rewriting receipt history. Keep supersession evidence
@@ -137,12 +144,45 @@ external_effects:
   remote_mutation: none
   destructive_remote_actions: false
 handoff:
-  current_step: p3j-001-full-platform-authorities
-  next_action: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
+  current_step: p3j-004-rebaseline-verification
+  next_action: Verify the authority-only rebaseline, committed evidence and ready successor.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - .agents/skills/build-mustbeviral/SKILL.md
+    - .agents/skills/build-mustbeviral/evals/scenarios.yaml
+    - AGENTS.md
+    - PROJECT_STATE.yaml
+    - docs/GLOSSARY.md
+    - docs/INDEX.md
+    - docs/MANIFEST.yaml
+    - docs/STATUS.md
+    - docs/architecture/API_MCP_AND_CLI.md
+    - docs/architecture/DATA_AUTH_AND_TENANCY.md
+    - docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md
+    - docs/architecture/SYSTEM_OVERVIEW.md
+    - docs/decisions/ADR-0001-DTC-FIRST.md
+    - docs/decisions/ADR-0003-FAL-FIRST.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    - docs/delivery/QUALITY_GATES.md
+    - docs/delivery/ROADMAP.md
+    - docs/generated/TRACEABILITY.md
+    - docs/product/PRODUCT_CONTRACT.md
+    - docs/product/RELEASE_SCOPE.md
+    - docs/ux/CANVAS_AND_SCREEN_STATES.md
+    - docs/ux/EXPERIENCE_CONTRACT.md
+    - governance/tests/p3-optional-gates.test.mjs
+    - llms.txt
+    - docs/decisions/ADR-0007-FULL-PLATFORM.md
+    - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
+    - governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
+    - governance/tests/platform-roadmap.test.mjs
+  last_green_checks:
+    - pnpm agent:preflight
+    - pnpm agent:verify
 completion:
-  successor_packet_id: null
-  evidence_paths: []
+  successor_packet_id: WP-PLATFORM-W0-001
+  evidence_paths:
+    - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
+    - governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
   completed_at: null

@@ -3,11 +3,11 @@
 project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
-launch_customer: dtc_ecommerce_marketing_teams
+launch_customer: brand_operators_and_multi_brand_studios
 phase: P3
 active_packet: WP-P3-010
-current_step: p3j-001-full-platform-authorities
-next_action: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
+current_step: p3j-004-rebaseline-verification
+next_action: Verify the authority-only rebaseline, committed evidence and ready successor.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -21,7 +21,7 @@ Zod schemas are the source for TypeScript types and OpenAPI 3.1. Breaking wire c
 - Errors never contain secrets, SQL, provider headers, internal stack traces, or another tenant’s identifiers.
 - List endpoints use opaque cursor pagination ordered by stable timestamp plus ID; default 20, maximum 100.
 
-## P0 command/query surface
+## Existing launch-pack command/query foundation
 
 | Method and path                  | Shared operation     | Notes                                                   |
 | -------------------------------- | -------------------- | ------------------------------------------------------- |
@@ -71,3 +71,9 @@ The CLI begins in P1b and is a thin API client. It supports machine-readable JSO
 ## Version and parity proof
 
 Every operation has one contract test vector executed against the handler and each shipped adapter. Parity covers success, validation, authorization, conflict, expiry, idempotent replay, rate limit, provider ambiguity, and safe error details. Generated OpenAPI and MCP catalogs must match registered handlers before merge.
+
+## Additive platform commands
+
+Introduce studio/grant, brand/location/knowledge, asset/rights, campaign/content/variant, approval, channel/publication, creator/partnership, conversation and metric operations through the same typed handlers. Generate every shipped transport from the contracts. Add actor/resource scope and expected versions where a command requires them. Cursor pagination and idempotency apply to new domains.
+
+Old campaign links resolve through authenticated durable project/brand mappings. No sentinel workspace value or browser-local resume record is an authority. Missing or ambiguous mappings yield a scoped recovery flow. Account connection OAuth is distinct from authorization to call MustBeViral APIs.

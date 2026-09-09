@@ -3,15 +3,15 @@ project_id: mustbeviral
 generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
-launch_customer: dtc_ecommerce_marketing_teams
+launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P3
   title: Full-platform authority rebaseline
-  state: planned
-release_target: P0
+  state: in_progress
+release_target: full-platform
 active_work_packet: WP-P3-010
-next_action: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
+next_action: Verify the authority-only rebaseline, committed evidence and ready successor.
 decisions_pending: []
 blockers: []
 legacy:

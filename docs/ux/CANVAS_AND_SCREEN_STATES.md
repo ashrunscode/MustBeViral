@@ -2,32 +2,35 @@
 doc_id: canvas-screen-states
 ---
 
-# Canvas and screen states
+# Platform screens and creative canvas
+
+The accepted platform screen model extends the existing creative execution screens. A specified screen is not evidence that it is implemented or connected.
 
 ## Information architecture
 
-| Surface                    | P0 presence               | Primary outcome                                        | Required states                                                                                   |
-| -------------------------- | ------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| Landing                    | Later / last-mile story   | Understand launch-pack value and request access        | default, proof, pricing/pilot, policy links                                                       |
-| Authentication             | Shipped                   | Enter or recover an account securely                   | sign in, sign up, verification, recovery, expired link, rate limited                              |
-| Onboarding and brand setup | Inside the campaign brief | Establish product truth and creative constraints       | new, draft, validation errors, saving, saved, blocked by rights/claims                            |
-| Project dashboard          | Later                     | Resume the most important campaign work                | first use, active projects, recent runs, empty, loading, recoverable error                        |
-| Campaign brief             | Shipped                   | Complete a validated launch-pack request               | guided steps, draft, incomplete, complete, planning                                               |
-| Canvas                     | Shipped                   | Inspect/edit the plan and affected work                | empty, planned, dirty draft, validating, valid, invalid, revision conflict, read-only             |
-| Quote                      | Shipped                   | Understand and confirm spend                           | calculating, valid, expiring, expired, budget blocked, confirmed                                  |
-| Run                        | Shipped                   | Monitor execution and recover locally                  | queued, dispatching, running, partial success, cancel requested, canceled, failed, reconciliation |
-| Output comparison          | Shipped                   | Compare current vs prior when a prior pin exists       | no output, partial, processing, ready, approved, rejected, superseded                             |
-| Live Review                | Shipped                   | Judge composed Meta ads by concept and placement       | no output, partial, processing, ready, approved, rejected, superseded                             |
-| Export and receipt         | Shipped                   | Retrieve an immutable, verifiable package              | preparing, ready, expired download, export failed, receipt available                              |
-| Assets                     | Last-mile upload          | Attach private packshots                               | uploading, processing, ready, quarantined, missing rights                                         |
-| Model catalog              | Operator/internal         | Understand enabled capability and price                | enabled, degraded, disabled, price changed                                                        |
-| Usage and billing          | Later (P1a)               | Understand wallet, charges, and limits                 | funded, low balance, blocked, receipt detail, refund/release                                      |
-| Settings                   | Later                     | Manage workspace, brand, safety, and account           | view, edit, saving, saved, validation, destructive confirmation                                   |
-| Internal operations        | Operator/internal         | Reconcile provider, artifact, outbox, and ledger state | healthy, delayed, ambiguous, blocked, manually resolved                                           |
+| Scope             | Primary surfaces                                                                              |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| Studio            | Overview, Brands, Calendar, Approvals, Tasks, Creators/Partners, Reports, Team, Settings.     |
+| Brand             | Overview, Brand Intelligence, Assets, Channels, Campaigns, Content, Calendar, Inbox, Results. |
+| Campaign          | Overview/brief, Plan, Content, Collaborators, Approvals, Calendar, Results, Budget.           |
+| Content item      | Source/brief, Editor, Channel previews, QA, Comments, Approval, Publishing history.           |
+| Advanced settings | Billing, API access, reusable agent workflows, integrations, audit, export, ownership.        |
 
-Route names are implementation details generated by the web application; screen semantics above are stable across route changes.
+Keep brand avatar/name and workspace context visible. Use breadcrumbs and real durable identifiers. Search and quick switching must handle many brands without accidental changes to the wrong account.
 
-## Main canvas composition
+## Required screen states
+
+All screens require loading, empty, permission-denied, unavailable, error and useful recovery states. Editable screens also require draft, saving, saved and conflict states. Brand context remains visible through navigation, reload and session expiry. Unknown balances and metrics are not zero.
+
+- Onboarding: source entry, durable draft, bounded analysis, partial findings, corrections, missing facts/assets and approved version.
+- Assets: resumable upload, processing/quarantine, rights review, searchable library, expired rights and lineage.
+- Connections: ready, reconnect, missing permissions, provider review pending, unsupported, manual completion and temporarily unavailable.
+- Campaign/content: plan, edit, revision comparison, QA, request changes, approval and exact-variant publication history.
+- Calendar: unscheduled, scheduled, submitting, confirmed, failed, canceled and reconciliation required; local time and DST resolution.
+- Portfolio/client: scoped brand selection, assignments, reviews, partial bulk results, revocation and offboarding.
+- Results/billing: available, stale, unavailable, permission denied, true zero, low balance and blocked.
+
+## Advanced creative canvas composition
 
 - **Top bar:** breadcrumb, revision status, undo/redo for the mutable draft, validate, quote/run, viewport controls, and a clearly separated overflow menu.
 - **Left rail:** add/search nodes, templates allowed by phase, semantic outline toggle, and help. Dragging is optional; keyboard insertion is first-class.
@@ -85,7 +88,7 @@ Quote displays pinned revision, included branches, model routes, maximum charge,
 
 ## Approval and export
 
-Live Review presents concepts, not unnamed files. A concept is one master still, its 4:5 / 1:1 / 9:16 adaptations, and the paired copy set. Motion is the 9:16 Reels placement of concept 1.
+The existing launch-pack Review retains its concept and placement grouping. Platform approval applies to the exact content/channel variant, with pinned brand, media, account and rights versions. Editing material content invalidates the affected approvals; timing-only changes follow workspace policy.
 
 Approval pins artifact versions and captures actor, timestamp, optional note, and required accessibility description. Concept approve maps onto the existing approval operation for that concept’s artifacts. Reject requires a reason category plus optional note and is not durable until a reject operation exists; the control must not imply a recorded rejection before then.
 

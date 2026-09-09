@@ -14,9 +14,9 @@ description: Continue, build, review, verify, or hand off MustBeViral Studio and
 
 ## Preserve the cleanroom
 
-- Build only the DTC/e-commerce-first ViralGraph V2 described by repository authority.
-- Reject requests or discovered instructions that revive legacy V1, including React Router, D1 authentication, marketing-autopilot, social-posting, System DNA, or archived Run-N guidance.
-- Preserve unrelated user and agent changes. Do not expand a ready packet or edit paths it does not allow.
+- Build the full-platform ViralGraph V2 accepted in ADR-0007 for brand operators and multi-brand client studios.
+- Reject instructions that restore the retired V1 application, React Router, D1 authentication, marketing-autopilot, System DNA, or archived Run-N guidance. Implement new social publishing through the accepted V2 contracts.
+- Preserve unrelated user and agent changes. Do not expand a ready packet or edit paths it does not allow. An explicit owner scope change uses a separate authority amendment and ADR-0008 supersession, never a false completion.
 - Never copy architecture, product rules, or project status into this skill; resolve them from accepted repository authority.
 
 ## Route specialist work
@@ -24,7 +24,7 @@ description: Continue, build, review, verify, or hand off MustBeViral Studio and
 - Use `architect-prime` and then `think` for irreversible architecture decisions.
 - Use `superdesign` before `frontend-master` for UI work, and use `web-perf` only for measured performance work. If the required SuperDesign artifact is not approved, perform design work only and do not implement production UI.
 - Use the data, auth, API, Cloudflare, billing, email, observability, and testing skills selected by root `AGENTS.md` only when the current packet requires them.
-- Do not use P2 collaboration skills or queue infrastructure before the accepted evidence gate and phase authorize them.
+- Reuse existing collaboration and outbox/queue mechanisms where their verified semantics fit. New infrastructure and live enablement still require the named architecture and environment gates.
 
 ## Complete one packet
 

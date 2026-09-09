@@ -11,15 +11,15 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Product | MustBeViral Studio |
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
-| Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Full-platform authority rebaseline (planned) |
+| Launch customer | `brand_operators_and_multi_brand_studios` |
+| Phase | P3 — Full-platform authority rebaseline (in_progress) |
 | Active packet | `WP-P3-010` |
-| Current step | `p3j-001-full-platform-authorities` |
-| Release target | `P0` |
+| Current step | `p3j-004-rebaseline-verification` |
+| Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
+Verify the authority-only rebaseline, committed evidence and ready successor.
