@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P3 — Full-platform authority rebaseline (in_progress) |
-| Active packet | `WP-P3-010` |
-| Current step | `p3j-004-rebaseline-verification` |
+| Phase | P4 — Platform baseline, prototypes and feasibility (planned) |
+| Active packet | `WP-PLATFORM-W0-001` |
+| Current step | `w0-002-baseline-and-recovery` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify the authority-only rebaseline, committed evidence and ready successor.
+Run preflight, inventory existing routes and contracts, then reproduce navigation/billing/styling and inherited database failures in the local test environment.

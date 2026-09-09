@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-010` (in_progress). Current step: `p3j-004-rebaseline-verification`.
+Current packet: `WP-PLATFORM-W0-001` (ready). Current step: `w0-002-baseline-and-recovery`.
 
 | Authority topic | Document | Path |
 |---|---|---|
