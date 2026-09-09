@@ -4,10 +4,10 @@ project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
-phase: P3
-active_packet: WP-P3-010
-current_step: p3j-004-rebaseline-verification
-next_action: Verify the authority-only rebaseline, committed evidence and ready successor.
+phase: P4
+active_packet: WP-PLATFORM-W0-001
+current_step: w0-002-baseline-and-recovery
+next_action: Run preflight, inventory existing routes and contracts, then reproduce navigation/billing/styling and inherited database failures in the local test environment.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

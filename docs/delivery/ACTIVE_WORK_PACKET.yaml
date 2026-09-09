@@ -1,53 +1,57 @@
 schema_version: 1
-id: WP-P3-010
-spec_revision: 2
-title: Full-platform authority rebaseline
-phase: P3
-status: in_progress
+id: WP-PLATFORM-W0-001
+spec_revision: 1
+title: Platform baseline, prototypes and feasibility
+phase: P4
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Adopt the owner-approved September 9 full-platform plan across the existing accepted
-  authorities, preserving all 65 work units, cleanroom infrastructure, truthful evidence states, and
-  separate production release obligations. Prepare the Wave 0 baseline and feasibility successor
-  before product implementation.
+objective: Complete the Wave 0 baseline, failure reproduction, reviewable studio/brand prototypes
+  and bounded publishing/rendering feasibility evidence; prepare the durable portfolio foundation
+  packet while preserving unverified design/provider/release dependencies.
 authority_refs:
   - product-contract
   - release-scope
   - system-overview
   - data-auth-tenancy
+  - execution-providers-billing
+  - api-mcp-cli
+  - experience-contract
+  - canvas-screen-states
   - quality-gates
+  - roadmap
   - local-env-secrets
   - deploy-rollback-incidents
-  - legacy-v1-retirement
-  - adr-0005-document-governance
+  - adr-0007-full-platform
   - adr-0008-packet-supersession
 required_skills:
   - build-mustbeviral
+  - superdesign
+  - frontend-master
   - quality-check
 depends_on:
-  - WP-P3-009
+  - WP-P3-010
 scope:
   allowed_paths:
     - AGENTS.md
     - .agents/**
+    - .superdesign/**
     - docs/**
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/generated/**
-    - docs/STATUS.md
-    - docs/INDEX.md
     - governance/**
-    - governance/config/**
-    - governance/tests/**
-    - governance/evidence/WP-P3-009/**
-    - governance/evidence/WP-P3-010/**
     - PROJECT_STATE.yaml
     - llms.txt
-    - package.json
-    - governance/evidence/WP-PLATFORM-W0-001/**
-  forbidden_paths:
     - apps/**
     - packages/**
     - supabase/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+  forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
   required_doc_ids:
@@ -55,134 +59,111 @@ scope:
     - release-scope
     - system-overview
     - data-auth-tenancy
+    - execution-providers-billing
+    - api-mcp-cli
+    - experience-contract
+    - canvas-screen-states
     - quality-gates
+    - roadmap
+    - local-env-secrets
     - deploy-rollback-incidents
-    - adr-0005-document-governance
-    - adr-0008-packet-supersession
+    - adr-0007-full-platform
 deliverables:
-  - Accept ADR-0007 as the owner-directed full-platform product reset and supersede the DTC-only
-    decision and outdated finish-sprint contract without claiming their human validation passed.
-  - Reconcile the product, release, UX, architecture, terminology, agent contract, build skill,
-    roadmap and quality authorities. The roadmap owns all 65 supplied work units; do not add a
-    competing ship plan or execution document database.
-  - Preserve tenant isolation, immutable revisions and ledger, private media, existing deployment
-    containment, required reviews, and CI cost controls. Replace only product-scope gates that
-    contradict the accepted direction with tests of the new boundaries.
-  - Record implemented, local, connected staging and production evidence distinctly; retain the
-    unfinished observation and owner traffic ruling as release requirements.
-  - Prepare a ready Wave 0 baseline/design/feasibility successor with exact scope, checks and
-    external-effect boundaries.
+  - Feature inventory links existing routes, shared commands, contracts, database tables and test
+    evidence, separating specification from local, connected and production proof.
+  - Reproduce navigation context loss, campaign sentinel, closed billing model and styling failures
+    in a controlled browser; record exact triggers and regression acceptance. Reproduce inherited
+    database verification failures and repair underlying test/contract defects within the existing
+    implementation.
+  - Create named desktop/mobile HTML frames using approved Lightfield tokens and actual approved
+    brand materials where available; walkthrough covers studio, persistent brand draft, findings,
+    assets, campaign, review and recovery. Record missing visual approval explicitly; no unapproved
+    production UI is shipped.
+  - Use current official documentation to evaluate Postiz then Sendible then direct publishing, and
+    source-first composition/reference input/render execution. Record capability, isolation, rights,
+    retention, costs, ambiguity, quota and schedule ownership with unknowns explicit. No paid calls
+    or external writes.
+  - Prepare a ready W1 foundation packet with additive studio/grant/brand/location ownership,
+    resource-aware routes and billing read contracts, negative tests and rollback. Record
+    design/provider decisions as prerequisites of dependent work; do not mark unknown access or
+    visual approval passed.
 public_interfaces:
-  - Governance and documentation only. No product runtime, database, provider, account, deployment,
-    DNS, traffic or financial mutation. Existing public API behavior stays unchanged.
+  - No public runtime behavior is newly advertised. Existing interfaces may receive bounded baseline
+    repairs with tests; new product domains begin in the foundation successor. Prototype fixtures
+    are explicitly local and synthetic where not actual owner-approved assets.
 steps:
-  - id: p3j-001-full-platform-authorities
-    title: Accept ADR-0007 and reconcile all accepted authorities with the September 9 full-platform plan.
-    status: completed
-  - id: p3j-002-scope-and-release-gates
-    title: Update scope-sensitive governance tests while preserving runtime release containment and
-      evidence requirements.
-    status: completed
-  - id: p3j-003-roadmap-and-successor
-    title: Map all 65 work units into the existing roadmap and prepare the bounded Wave 0 successor.
-    status: completed
-  - id: p3j-004-rebaseline-verification
-    title: Verify the authority-only rebaseline, committed evidence and ready successor.
-    status: current
+  - id: w0-002-baseline-and-recovery
+    title:
+      Inventory existing capability/evidence and reproduce baseline UI and database failures with
+      bounded repairs.
+    status: pending
+  - id: w0-004-studio-brand-prototypes
+    title: Produce and inspect desktop/mobile studio-to-brand-to-review frames and record the visual
+      review state.
+    status: pending
+  - id: w0-005-integration-render-feasibility
+    title:
+      Record bounded publishing and source-first rendering feasibility, selected local approach and
+      external dependencies.
+    status: pending
+  - id: w0-006-foundation-handoff
+    title: Verify baseline evidence and ready W1 foundation successor without claiming missing
+      human/provider acceptance.
+    status: pending
 acceptance:
   automated:
-    - id: coherent-authority
+    - id: baseline-traceability
       criterion:
-        Manifest and generated documentation are valid with one accepted authority per topic, and
-        no active contract contradicts the full-platform scope.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-    - id: complete-roadmap
+        Every baseline capability and reported failure has concrete code/test/browser evidence
+        and a truthful evidence classification.
+      status: pending
+      evidence: []
+    - id: database-baseline
+      criterion: Run local migration/pgTAP verification; repair reproducible inherited failures and
+        document exact unavailable dependencies without replacing connected proof with fixtures.
+      status: pending
+      evidence: []
+    - id: reviewable-prototypes
+      criterion: Named HTML frames and desktop/mobile captures support the complete walkthrough with
+        loading, empty, error, recovery and cross-brand context; no approval is inferred.
+      status: pending
+      evidence: []
+    - id: feasibility-and-foundation
       criterion:
-        All supplied W0.1 through W12.5 work units and acceptance journeys are represented in the
-        existing delivery authorities.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-    - id: preserved-boundaries
-      criterion:
-        Governance tests preserve historical receipts, private production containment, permission
-        and spend boundaries, and truthful pending release obligations.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-    - id: ready-successor
-      criterion: The Wave 0 successor names baseline reproduction, prototypes and feasibility
-        deliverables, tests, rollback and external authorizations.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
+        Dated provider/render capability evidence and a ready W1 packet identify the selected
+        local approach, missing access and the exact prerequisites for dependent implementation.
+      status: pending
+      evidence: []
   manual: []
 quality_gates:
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-  - id: governance-tests
-    command: pnpm governance:test
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-  - id: repository-verification
+    status: pending
+    evidence: []
+  - id: repository
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
+    status: pending
+    evidence: []
 rollback:
-  strategy:
-    Revert the rebaseline commit without rewriting receipt history. Keep supersession evidence
-    and all unfinished production release obligations. No remote changes occur.
+  strategy: Revert bounded baseline repairs and local prototype additions while preserving evidence
+    and immutable history. No production or provider mutations occur. New foundation migrations are
+    designed additively and applied only in their successor.
   remote_actions_required: false
 external_effects:
-  remote_mutation: none
+  remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: p3j-004-rebaseline-verification
-  next_action: Verify the authority-only rebaseline, committed evidence and ready successor.
+  current_step: w0-002-baseline-and-recovery
+  next_action: Run preflight, inventory existing routes and contracts, then reproduce
+    navigation/billing/styling and inherited database failures in the local test environment.
   blockers: []
-  changed_paths:
-    - .agents/skills/build-mustbeviral/SKILL.md
-    - .agents/skills/build-mustbeviral/evals/scenarios.yaml
-    - AGENTS.md
-    - PROJECT_STATE.yaml
-    - docs/GLOSSARY.md
-    - docs/INDEX.md
-    - docs/MANIFEST.yaml
-    - docs/STATUS.md
-    - docs/architecture/API_MCP_AND_CLI.md
-    - docs/architecture/DATA_AUTH_AND_TENANCY.md
-    - docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md
-    - docs/architecture/SYSTEM_OVERVIEW.md
-    - docs/decisions/ADR-0001-DTC-FIRST.md
-    - docs/decisions/ADR-0003-FAL-FIRST.md
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
-    - docs/delivery/QUALITY_GATES.md
-    - docs/delivery/ROADMAP.md
-    - docs/generated/TRACEABILITY.md
-    - docs/product/PRODUCT_CONTRACT.md
-    - docs/product/RELEASE_SCOPE.md
-    - docs/ux/CANVAS_AND_SCREEN_STATES.md
-    - docs/ux/EXPERIENCE_CONTRACT.md
-    - governance/tests/p3-optional-gates.test.mjs
-    - llms.txt
-    - docs/decisions/ADR-0007-FULL-PLATFORM.md
-    - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-    - governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
-    - governance/tests/platform-roadmap.test.mjs
-  last_green_checks:
-    - pnpm agent:preflight
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-PLATFORM-W0-001
-  evidence_paths:
-    - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-    - governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
+  successor_packet_id: null
+  evidence_paths: []
   completed_at: null
