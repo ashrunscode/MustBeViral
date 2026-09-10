@@ -7,11 +7,12 @@ launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P4
-  title: Platform baseline, prototypes and feasibility
-  state: in_progress
+  title: Durable studios, access grants and brand identity
+  state: planned
 release_target: full-platform
-active_work_packet: WP-PLATFORM-W0-001
-next_action: Complete W0 with its verified receipt and activate the prepared W1 foundation packet.
+active_work_packet: WP-PLATFORM-W1-001
+next_action: After W0 is legitimately completed, run preflight and define explicit studio/workspace
+  grant and brand/location ownership mapping with additive local migration tests.
 decisions_pending: []
 blockers: []
 legacy:
@@ -38,8 +39,13 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-09T23:50:02.738Z
+  at: 2026-09-10T20:22:52.186Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
-    - governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
+    - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
+    - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
+    - governance/evidence/WP-PLATFORM-W0-001/database-baseline-2026-09-10.json

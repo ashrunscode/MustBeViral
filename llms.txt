@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
-active_packet: WP-PLATFORM-W0-001
-current_step: w0-006-foundation-handoff
-next_action: Complete W0 with its verified receipt and activate the prepared W1 foundation packet.
+active_packet: WP-PLATFORM-W1-001
+current_step: w1a-001-ownership-and-schema
+next_action: After W0 is legitimately completed, run preflight and define explicit studio/workspace grant and brand/location ownership mapping with additive local migration tests.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

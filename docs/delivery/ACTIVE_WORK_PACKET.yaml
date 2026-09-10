@@ -1,57 +1,51 @@
 schema_version: 1
-id: WP-PLATFORM-W0-001
+id: WP-PLATFORM-W1-001
 spec_revision: 1
-title: Platform baseline, prototypes and feasibility
+title: Durable studios, access grants and brand identity
 phase: P4
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Complete the Wave 0 baseline, failure reproduction, reviewable studio/brand prototypes
-  and bounded publishing/rendering feasibility evidence; prepare the durable portfolio foundation
-  packet while preserving unverified design/provider/release dependencies.
+objective: Deliver the persistent tenant-safe foundation for W1.1-W1.2 so an authorized operator can
+  create a studio, attach a permitted workspace, and manage distinct brands and locations through
+  shared commands and queries. No new production UI is shipped by this backend packet.
 authority_refs:
   - product-contract
   - release-scope
   - system-overview
   - data-auth-tenancy
-  - execution-providers-billing
   - api-mcp-cli
+  - execution-providers-billing
   - experience-contract
-  - canvas-screen-states
   - quality-gates
   - roadmap
   - local-env-secrets
-  - deploy-rollback-incidents
   - adr-0007-full-platform
-  - adr-0008-packet-supersession
 required_skills:
   - build-mustbeviral
-  - superdesign
-  - frontend-master
+  - data-architect
+  - auth-fortress
+  - api-and-interface-design
   - quality-check
 depends_on:
-  - WP-P3-010
+  - WP-PLATFORM-W0-001
 scope:
   allowed_paths:
-    - AGENTS.md
-    - .agents/**
-    - .superdesign/**
-    - docs/**
+    - apps/core/**
+    - apps/cli/**
+    - apps/mcp/**
+    - packages/contracts/**
+    - packages/domain/**
+    - packages/db/**
+    - packages/config/**
+    - supabase/**
     - governance/**
+    - docs/**
     - PROJECT_STATE.yaml
     - llms.txt
-    - apps/**
-    - packages/**
-    - supabase/**
-    - package.json
-    - pnpm-lock.yaml
-    - pnpm-workspace.yaml
-    - turbo.json
-    - tsconfig.json
-    - tsconfig.base.json
-    - eslint.config.mjs
-    - vitest.config.ts
   forbidden_paths:
+    - apps/web/**
+    - .github/workflows/**
     - docs/archive/**
     - legacy-exports/**
   required_doc_ids:
@@ -59,149 +53,113 @@ scope:
     - release-scope
     - system-overview
     - data-auth-tenancy
-    - execution-providers-billing
     - api-mcp-cli
+    - execution-providers-billing
     - experience-contract
-    - canvas-screen-states
     - quality-gates
     - roadmap
     - local-env-secrets
-    - deploy-rollback-incidents
-    - adr-0007-full-platform
 deliverables:
-  - Feature inventory links existing routes, shared commands, contracts, database tables and test
-    evidence, separating specification from local, connected and production proof.
-  - Reproduce navigation context loss, campaign sentinel, closed billing model and styling failures
-    in a controlled browser; record exact triggers and regression acceptance. Reproduce inherited
-    database verification failures and repair underlying test/contract defects within the existing
-    implementation.
-  - Create named desktop/mobile HTML frames using approved Lightfield tokens and actual approved
-    brand materials where available; walkthrough covers studio, persistent brand draft, findings,
-    assets, campaign, review and recovery. Record missing visual approval explicitly; no unapproved
-    production UI is shipped.
-  - Use current official documentation to evaluate Postiz then Sendible then direct publishing, and
-    source-first composition/reference input/render execution. Record capability, isolation, rights,
-    retention, costs, ambiguity, quota and schedule ownership with unknowns explicit. No paid calls
-    or external writes.
-  - Prepare a ready W1 foundation packet with additive studio/grant/brand/location ownership,
-    resource-aware routes and billing read contracts, negative tests and rollback. Record
-    design/provider decisions as prerequisites of dependent work; do not mark unknown access or
-    visual approval passed.
+  - Add normalized studios, studio memberships, owner-authorized workspace grants, brands and
+    locations with immutable identities, workspace scoping and explicit action grants. A studio is a
+    portfolio view; the workspace remains the tenant, ledger and RLS boundary.
+  - Specify ownership mapping before additive migration. Backfill only from active authoritative
+    workspace ownership, report orphan or conflicting ownership, validate before/after counts and
+    retain a reversible mapping. Never infer a grant from creator names, email or portfolio
+    visibility.
+  - Add create/list/get/update/archive studio and brand/location commands and queries plus
+    owner-authorized grant/revoke handlers. All adapters use shared handlers, generated wire
+    contracts and Postgres-backed permissions. Validate parent workspace for every identifier.
+  - Add cursor pagination and deliberate not-found/forbidden semantics; archived brands remain
+    referentially intact. Privileged credentials cannot become browser data or permission evidence.
+  - Require W0 database baseline acceptance before activation. The W0 prototype is a design input;
+    the UI successor uses the WashBodega/UnPile direction explicitly approved on 2026-09-09 and
+    recorded by the experience contract, with behavior and accessibility verified separately.
+  - Prepare WP-PLATFORM-W1-002 for persistent onboarding, resource-aware navigation and compatible
+    old links, settings/invitation presets and actual ledger-backed billing reads (W1.3-W1.5).
 public_interfaces:
-  - No public runtime behavior is newly advertised. Existing interfaces may receive bounded baseline
-    repairs with tests; new product domains begin in the foundation successor. Prototype fixtures
-    are explicitly local and synthetic where not actual owner-approved assets.
+  - Authoritative Zod command/query schemas and operation registry additions generate REST OpenAPI,
+    typed clients, MCP and CLI projections. Preserve all existing operation names and wire fields.
+  - Additive Postgres schema and generated database types; existing workspace, project, canvas,
+    execution and ledger contracts remain callable by the previous application version.
 steps:
-  - id: w0-002-baseline-and-recovery
-    title:
-      Inventory existing capability/evidence and reproduce baseline UI and database failures with
-      bounded repairs.
-    status: completed
-  - id: w0-004-studio-brand-prototypes
-    title: Produce and inspect desktop/mobile studio-to-brand-to-review frames and record the visual
-      review state.
-    status: completed
-  - id: w0-005-integration-render-feasibility
-    title:
-      Record bounded publishing and source-first rendering feasibility, selected local approach and
-      external dependencies.
-    status: completed
-  - id: w0-006-foundation-handoff
-    title: Verify baseline evidence and ready W1 foundation successor without claiming missing
-      human/provider acceptance.
-    status: current
+  - id: w1a-001-ownership-and-schema
+    title: Specify explicit ownership mapping and add normalized portfolio identity and grants with RLS.
+    status: pending
+  - id: w1a-002-shared-operations
+    title: Implement typed shared commands and queries with transaction, tenant and revocation checks.
+    status: pending
+  - id: w1a-003-transports-and-backfill
+    title: Generate transport/database contracts and prove additive backfill and compatible rollback
+      locally.
+    status: pending
+  - id: w1a-004-isolation-and-successor
+    title: Run both-brand isolation journeys and prepare the bounded onboarding/navigation/billing
+      successor.
+    status: pending
 acceptance:
   automated:
-    - id: baseline-traceability
+    - id: durable-two-brand-identity
       criterion:
-        Every baseline capability and reported failure has concrete code/test/browser evidence
-        and a truthful evidence classification.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
-    - id: database-baseline
-      criterion: Run local migration/pgTAP verification; repair reproducible inherited failures and
-        document exact unavailable dependencies without replacing connected proof with fixtures.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
-        - governance/evidence/WP-PLATFORM-W0-001/database-baseline-2026-09-10.json
-    - id: reviewable-prototypes
-      criterion: Named HTML frames and desktop/mobile captures support the complete walkthrough with
-        loading, empty, error, recovery and cross-brand context; no approval is inferred.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
-    - id: feasibility-and-foundation
+        WashBodega and UnPile (owner-selected second brand; synthetic operational data) have
+        separate workspace identities, grants, brands and locations; reload/reconnect reads
+        authoritative state with no fixture or browser-storage substitute. Studio list responses
+        contain only currently permitted records.
+      status: pending
+      evidence: []
+    - id: tenant-and-revocation
       criterion:
-        Dated provider/render capability evidence and a ready W1 packet identify the selected
-        local approach, missing access and the exact prerequisites for dependent implementation.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
-        - governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
+        Handler and pgTAP tests deny cross-workspace child IDs, forged studio access, revoked
+        memberships/grants, owner transfer conflicts and unauthorized brand mutation; grants never
+        confer billing access implicitly. Revoke access while a request is in flight.
+      status: pending
+      evidence: []
+    - id: migration-and-backfill
+      criterion:
+        All migrations and pgTAP tests pass on local Supabase; duplicate/backfill reruns, orphan
+        owners and conflicting mappings fail explicitly. Old application contracts still run against
+        the additive schema and tenant ledger counts/balances remain unchanged.
+      status: pending
+      evidence: []
+    - id: transport-parity
+      criterion:
+        Browser-ready REST clients, MCP and CLI share operation validation and authorization;
+        idempotent creation/replay, concurrent slug/name collision, invalid pagination and archived
+        references have behavioral tests. Generated contracts and documentation are current.
+      status: pending
+      evidence: []
   manual: []
 quality_gates:
-  - id: design
-    command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
+  - id: database
+    command: pnpm supabase:test
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
+    status: pending
+    evidence: []
   - id: repository
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert bounded baseline repairs and local prototype additions while preserving evidence
-    and immutable history. No production or provider mutations occur. New foundation migrations are
-    designed additively and applied only in their successor.
+  strategy: Preserve old workspace/ledger tables and all durable IDs. Revert application handlers to
+    the prior version while retaining additive tables and ownership mapping. Test that old commands
+    continue working. Do not drop tenant data or reverse a backfill by guessing ownership;
+    corrective local migrations must use the recorded mapping. No remote migrations are authorized.
   remote_actions_required: false
 external_effects:
   remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: w0-006-foundation-handoff
-  next_action: Complete W0 with its verified receipt and activate the prepared W1 foundation packet.
+  current_step: w1a-001-ownership-and-schema
+  next_action:
+    After W0 is legitimately completed, run preflight and define explicit studio/workspace
+    grant and brand/location ownership mapping with additive local migration tests.
   blockers: []
-  changed_paths:
-    - apps/web/src/features/campaign/campaign-progress.ts
-    - apps/web/src/components/studio-workflow-nav.tsx
-    - apps/web/src/features/collaboration/use-collaboration-session.ts
-    - apps/web/e2e/campaign-resume-recovery.spec.ts
-    - apps/web/e2e/cleanroom.spec.ts
-    - supabase/migrations/20260910000000_platform_baseline_subscription_audit_identity.sql
-    - supabase/tests/database/00029_p1a_stripe_wallet_settlement.test.sql
-    - supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql
-    - supabase/tests/database/00034_p2_collaboration_checkpoint_revision.test.sql
-    - .superdesign/hifi/platform-studio-desktop.html
-    - .superdesign/hifi/platform-studio-mobile.html
-    - .superdesign/hifi/platform-studio.js
-    - .superdesign/hifi/platform-studio.css
-    - docs/ux/EXPERIENCE_CONTRACT.md
-    - package.json
-    - governance/format-evidence.ignore
-    - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
-  last_green_checks:
-    - pnpm agent:verify (143 governance, 925 unit, 26 integration tests; 18 build tasks)
-    - 'Targeted Playwright: 34 passing cases'
-    - 'Revised WashBodega/UnPile prototype: 16 screen checks'
-    - W1 successor schema, authority and prospective-state validation
-    - 'pnpm supabase:test: 38 files, 494 assertions passed against local Postgres'
-    - 'pnpm agent:verify rerun 2026-09-10: all required gates passed'
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-PLATFORM-W1-001
-  evidence_paths:
-    - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
-    - governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
-    - governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
-    - governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
-    - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
-    - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
-    - governance/evidence/WP-PLATFORM-W0-001/database-baseline-2026-09-10.json
+  successor_packet_id: WP-PLATFORM-W1-002
+  evidence_paths: []
   completed_at: null

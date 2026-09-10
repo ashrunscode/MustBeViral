@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-W0-001` (in_progress). Current step: `w0-006-foundation-handoff`.
+Current packet: `WP-PLATFORM-W1-001` (ready). Current step: `w1a-001-ownership-and-schema`.
 
 | Authority topic | Document | Path |
 |---|---|---|
