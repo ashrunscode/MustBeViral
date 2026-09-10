@@ -1,0 +1,34 @@
+schema_version: 1
+packet_id: WP-PLATFORM-W1-001
+spec_revision: 1
+phase: P4
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-10T21:26:22.073Z
+successor_packet_id: WP-PLATFORM-W1-002
+predecessor_head: b4e3c11ee8c283cd643b7702cc4eeb570f4ddd95
+closed_packet_path: governance/evidence/WP-PLATFORM-W1-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-PLATFORM-W1-001/ownership-mapping-2026-09-10.md
+  - governance/evidence/WP-PLATFORM-W1-001/verification-2026-09-10.md
+  - governance/evidence/WP-PLATFORM-W1-001/local-verification-2026-09-10.json
+  - governance/evidence/WP-PLATFORM-W1-001/successor-WP-PLATFORM-W1-002.yaml
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-W1-001/local-verification-2026-09-10.json
+    sha256: e6b019a4dbe2fed8f0875eb68d7baf81651f27fd103256bbba6c7451443c20fe
+    git_blob_oid: 209b91414f1cbf7caf40c5681a3189f93f6aecbf
+  - path: governance/evidence/WP-PLATFORM-W1-001/ownership-mapping-2026-09-10.md
+    sha256: 6e4c2a3b7e131abe4c7fec2ed1ea706188b21b2c9411852643fc915032644547
+    git_blob_oid: 9b7ea4c1cc9f1137801d53598efd847ce9e0f238
+  - path: governance/evidence/WP-PLATFORM-W1-001/successor-WP-PLATFORM-W1-002.yaml
+    sha256: 83be9a904181d21c1f3bfde34cf2f86fb5e35536c48cb21953511eeeef788a80
+    git_blob_oid: dc49fa6ba4b45d406524c79ea299051e141fd3b3
+  - path: governance/evidence/WP-PLATFORM-W1-001/verification-2026-09-10.md
+    sha256: 7ad7d239297d7563badcfec04f59b1cad244e2baab3478b1a2be9bf5fe9d03b8
+    git_blob_oid: e5673197486e3a6ed55a08302c23b757cc8e827c
+completed_step_ids:
+  - w1a-001-ownership-and-schema
+  - w1a-002-shared-operations
+  - w1a-003-transports-and-backfill
+  - w1a-004-isolation-and-successor
+closed_packet_sha256: 2c1f67dd23048e235db4a221359e7d079f755ce92be199defe44eaf15e862b0a
