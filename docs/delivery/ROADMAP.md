@@ -28,13 +28,13 @@ Exit: accepted scope, named architecture choices, reviewable product experience,
 
 Dependency: W0 product/data decisions.
 
-| ID   | Deliverable                                                                                              | Proof required                                                                          |
-| ---- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| W1.1 | Add studio/workspace grants, brands, locations, and project mappings with additive migrations.           | Cross-tenant and cross-brand denial tests; migration/backfill rehearsal.                |
-| W1.2 | Implement portfolio list/search, brand creation, switching, archive, and permissions-aware home.         | Two unrelated brands remain distinct after reload and sign-in on another device.        |
-| W1.3 | Implement durable resource routes and compatible redirects; replace browser-only resume authority.       | Direct link, refresh, back/forward, session expiry, and missing-resource recovery pass. |
-| W1.4 | Persist onboarding and draft changes with visible save/conflict recovery.                                | Closing the browser and concurrent edits do not silently lose or overwrite work.        |
-| W1.5 | Establish permission presets, invitation contracts, and settings boundaries; connect real billing reads. | Unauthorized actions denied at server/database; unavailable billing never becomes zero. |
+| ID   | Deliverable                                                                                              | Proof required                                                                                   |
+| ---- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| W1.1 | Add studio/workspace grants, brands, locations, and project mappings with additive migrations.           | Cross-tenant and cross-brand denial tests; migration/backfill rehearsal.                         |
+| W1.2 | Implement portfolio list/search, brand creation, switching, archive, and permissions-aware home.         | WashBodega and owner-selected UnPile remain distinct after reload and sign-in on another device. |
+| W1.3 | Implement durable resource routes and compatible redirects; replace browser-only resume authority.       | Direct link, refresh, back/forward, session expiry, and missing-resource recovery pass.          |
+| W1.4 | Persist onboarding and draft changes with visible save/conflict recovery.                                | Closing the browser and concurrent edits do not silently lose or overwrite work.                 |
+| W1.5 | Establish permission presets, invitation contracts, and settings boundaries; connect real billing reads. | Unauthorized actions denied at server/database; unavailable billing never becomes zero.          |
 
 Exit: one operator manages multiple persistent brands with correct identity, access, and recovery. The existing creative flow can still be reached under a real project context.
 

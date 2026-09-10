@@ -16,13 +16,15 @@ test('platform acceptance preserves all golden journeys and pending production o
   const quality = readText('docs/delivery/QUALITY_GATES.md');
   for (const journey of [
     'WashBodega',
-    'unrelated second brand',
+    'independent second brand (UnPile pilot)',
     'studio and client',
     'creator',
     'partnership',
   ]) {
     assert.ok(quality.includes(journey), `missing acceptance journey: ${journey}`);
   }
+  assert.match(quality, /this pilot does not establish unrelated-industry coverage/);
+  assert.match(quality, /broader local-service and e-commerce brief rubric/);
   for (const area of [
     'Ingestion',
     'Knowledge',

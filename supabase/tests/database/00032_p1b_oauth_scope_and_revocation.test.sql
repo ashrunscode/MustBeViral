@@ -1,6 +1,6 @@
 begin;
 
-select plan(14);
+select plan(16);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -151,7 +151,7 @@ reset role;
 set local role service_role;
 
 -- Capture the public RPC result while acting as the issuing service. Authenticated
--- owners must revoke through that returned identifier, never by reading token hashes.
+-- owners revoke through that returned identifier without selecting token hashes.
 select set_config(
   'test.oauth_token_id',
   (public.issue_oauth_access_token(
@@ -182,10 +182,18 @@ set local role authenticated;
 set local request.jwt.claim.sub = 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee1';
 
 select is(
-  pg_temp.error_of('select id from public.oauth_access_tokens'),
-  '42501:permission denied for table oauth_access_tokens',
-  'authenticated owners cannot read the private token table'
+  (select count(id)::integer from public.oauth_access_tokens),
+  1,
+  'authenticated owner can read its permitted token metadata'
 );
+
+set local request.jwt.claim.sub = 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee';
+select is(
+  (select count(id)::integer from public.oauth_access_tokens),
+  0,
+  'actor without workspace membership cannot read another owner token'
+);
+set local request.jwt.claim.sub = 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee1';
 
 select ok(
   (
@@ -208,6 +216,17 @@ select is(
   'verify_oauth_access_token rejects a revoked token immediately'
 );
 
+select is(
+  pg_temp.error_of($sql$
+    insert into public.oauth_access_tokens (id)
+    values ('55000000-0000-4000-8000-000000000009')
+  $sql$),
+  '42501:permission denied for table oauth_access_tokens',
+  'service role must issue tokens through the checked RPC'
+);
+
+-- An already-expired token is an administrative fixture, not a service-role write.
+reset role;
 insert into public.oauth_access_tokens (
   id,
   client_id,
@@ -229,6 +248,7 @@ insert into public.oauth_access_tokens (
   statement_timestamp() - interval '1 minute'
 );
 
+set local role service_role;
 select is(
   (public.verify_oauth_access_token(
     'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'

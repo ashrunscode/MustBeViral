@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W0-001
-current_step: w0-002-baseline-and-recovery
-next_action: Restore local Docker/Supabase, apply the pending local migration and pass all 38 pgTAP suites before completing W0 and activating W1.
+current_step: w0-006-foundation-handoff
+next_action: Complete W0 with its verified receipt and activate the prepared W1 foundation packet.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

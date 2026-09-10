@@ -1,0 +1,327 @@
+{
+  "classification": "LOCALLY_VERIFIED_POSTGRESQL",
+  "command": "corepack pnpm supabase:test",
+  "exitCode": 0,
+  "files": 38,
+  "assertions": 494,
+  "result": "PASS",
+  "supabaseCli": "2.109.1",
+  "postgresImage": "public.ecr.aws/supabase/postgres:17.6.1.166",
+  "volume": "supabase_db_mustbeviral",
+  "migrations": [
+    {
+      "path": "20260712000000_cleanroom_bootstrap.sql",
+      "sha256": "91824e7cece950a01728a2543bf10a810a0668e10fd2be11bc6dae43dd7e466d"
+    },
+    {
+      "path": "20260719010000_p0_authoritative_schema.sql",
+      "sha256": "06b836c689048507fb9593a5e6b2a819bc0d7511c901305f4be248ca705b73fa"
+    },
+    {
+      "path": "20260719020000_p0_invariants_rls_and_grants.sql",
+      "sha256": "587d827abfbd23fe30e27212a900b56d87ab9f2fb96137f042ca24564c9128ac"
+    },
+    {
+      "path": "20260719030000_p0_hardened_rpcs.sql",
+      "sha256": "237f512db49d58c5801d03be426eddadb904114c468696660277b855db899549"
+    },
+    {
+      "path": "20260726000000_p0_launch_catalog_and_create_quote.sql",
+      "sha256": "56446066130e53348bc7baad892c62ab797da87cc4c309c9ce05ba6eb96d288b"
+    },
+    {
+      "path": "20260727000000_p0_webhook_event_dedup.sql",
+      "sha256": "f7303b622522abddd1f455de9577ab73dd33710db8034da2aa3c6bb91839a4c5"
+    },
+    {
+      "path": "20260728000000_p0_webhook_claim_lifecycle.sql",
+      "sha256": "53932897cd4a8e8d1a43433ed5252f304c9881bed6858fc4300f737f9d7f7dbc"
+    },
+    {
+      "path": "20260728010000_p0_provider_outbox_dispatch.sql",
+      "sha256": "1bbd09be6a3bc22fd2211179c90e6c6de6386967a1b1e51f68af66a2227e1a8e"
+    },
+    {
+      "path": "20260728020000_p0_artifact_ingest_export.sql",
+      "sha256": "720735ea18d73adb1fd6fc97bda97525dc97e684b9c09105d65ca36d09323ca4"
+    },
+    {
+      "path": "20260728030000_p0_seedance_pro_fast_repoint.sql",
+      "sha256": "7b818952e2f28591111269af3e2f03aabe4f9e5129577c970db7a99b52c63df8"
+    },
+    {
+      "path": "20260729000000_p0_price_catalog_retirement_transition.sql",
+      "sha256": "7aafc41ec2b7968fadcfd7ba53365e7164c98b8be7b8061d98faab60baedd847"
+    },
+    {
+      "path": "20260729010000_p0_openrouter_copy_catalog_v2.sql",
+      "sha256": "6d79e63a2e828091f2377e0bb51730017b67b0454f91469370106b7b3c6b414e"
+    },
+    {
+      "path": "20260729020000_p0_create_quote_openrouter_copy_route.sql",
+      "sha256": "21fee1274aa6ea043f3e8e3ca4b4ad1acde4a7b7ecaf0160003b1ffced276e5d"
+    },
+    {
+      "path": "20260730000000_p0_submission_requires_capture_proof.sql",
+      "sha256": "fa6c426400da00ca5f698ce8604cf0c39719aaac4411473bbb6031972cea3872"
+    },
+    {
+      "path": "20260730010000_p0_reap_dead_dispatch.sql",
+      "sha256": "92210faec5e4c55bde27366b3e5bc13a1e2612143122d372577ef3a620d950aa"
+    },
+    {
+      "path": "20260730020000_p0_app_tier_idempotency.sql",
+      "sha256": "397dad4e0e97819decd5fab342f7a5d9ab9baf0250aba9bef12d52d74ab74a8c"
+    },
+    {
+      "path": "20260730030000_p0_run_cancellation.sql",
+      "sha256": "116a1ec973412a85c44f93a3b08894afe758b73efcfccf10d00e62be0238df75"
+    },
+    {
+      "path": "20260730040000_p0_refund_run_capture.sql",
+      "sha256": "5d9abeb1c39e56fce3a671aeb185bc9a5f00e390aa23d3a44f1b4c520b56b0dd"
+    },
+    {
+      "path": "20260730050000_p0_flux_kontext_pro_repoint.sql",
+      "sha256": "5b06f73a106986102f5f581027dc5815568fae21f328b59b3fd0eaafd9656b89"
+    },
+    {
+      "path": "20260730060000_p0_dispatch_wave_readiness.sql",
+      "sha256": "3fd98cd5dd7b87713ddd3a68f9ad440a3fd240375c8d42979bd094281d422d42"
+    },
+    {
+      "path": "20260730070000_p0_dispatch_brief_and_upstream.sql",
+      "sha256": "a8d1a563fd5461184e63ad1194f0658fdddeff131e3f872af33e49853da4b06b"
+    },
+    {
+      "path": "20260730080000_p0_copy_terminal_path.sql",
+      "sha256": "8162f0d572f4c8ce71790558a2461d00cbd6c873d6248f1fb1f361318f0bc4b4"
+    },
+    {
+      "path": "20260731000000_p0_approval_produces_approved_output.sql",
+      "sha256": "39661ed3ac2281e3f6140cd92778ea0b6f58b643f6d183192a0d39d43d5879a8"
+    },
+    {
+      "path": "20260731010000_p0_reap_stranded_synchronous_jobs.sql",
+      "sha256": "d79e1750ef2593749bab27c8a4bccfb894356dab43f8ed83000d4acad8c7d32c"
+    },
+    {
+      "path": "20260731020000_p0_readiness_safeupdate_fix.sql",
+      "sha256": "6b453d97be80235eaf231b105f36b1beb4dd9c940ff4a44db79c5afc877da948"
+    },
+    {
+      "path": "20260802020000_p0_dispatch_epoch_and_stranded_sweeper.sql",
+      "sha256": "022c2e68961e560fd7b0040c7fb4786d9946cef9a2898b8cf763a9fdfca978cd"
+    },
+    {
+      "path": "20260811000000_p0_poll_reconciliation_run_exit.sql",
+      "sha256": "63a45a23d21dcb2f9652881b3d81b0020105937c740a2c37d9450eb2c66042c6"
+    },
+    {
+      "path": "20260811114946_p0_global_spend_exposure_audit.sql",
+      "sha256": "2aac09177d06f422eaa88bdc27640f6d50764eea3aa06c88e83a36ec936a5836"
+    },
+    {
+      "path": "20260811132914_p0_golden_20_defect_audit.sql",
+      "sha256": "abd1de2432b321c4b8264e3bd4c634a140b89894ac9b490e55b20291377e268d"
+    },
+    {
+      "path": "20260817140000_p0_webhook_provider_error_code.sql",
+      "sha256": "2020573d98ae6241387c643eb966d3d52c192f7685ab215eddd5931aa1ea8477"
+    },
+    {
+      "path": "20260818120000_p0_pending_input_artifact_upload.sql",
+      "sha256": "6581082d148526a3e59cb5ad36b526cef19bfc0b9fa6d3de3da441a418e8a350"
+    },
+    {
+      "path": "20260830163000_p1a_billing_kill_switches_stripe.sql",
+      "sha256": "6988cd4fc61b2c9af58db4eb2ede0a8a9cdefa13d2e9fd84d6120b1fad902ea7"
+    },
+    {
+      "path": "20260830170000_p1a_kill_switch_stripe_rpcs.sql",
+      "sha256": "2a0140a66a75735a77c0d5a69a4b2d5de4813ffcba6f40a1348f396a4bcba4c5"
+    },
+    {
+      "path": "20260830180000_p1a_stripe_wallet_settlement.sql",
+      "sha256": "658d169603ea354e340ccaf0e606bdc78b84e05001ef87c31d59a2e13c360d6f"
+    },
+    {
+      "path": "20260831120000_p1b_api_keys_oauth_skills.sql",
+      "sha256": "c416bbed828349efd28a90c2c915da0ff711c07655e50a48106fc5dbf6c530b3"
+    },
+    {
+      "path": "20260831130000_p1b_programmatic_auth_rpcs.sql",
+      "sha256": "6a8a52243c16a92b3a34fc0e2f41218f22e803a20411ca9801dd26694c774c50"
+    },
+    {
+      "path": "20260831140000_p3_start_run_barrier_outbox_event_id.sql",
+      "sha256": "612780ddda1d7e541806743173cac9bd6e5dae5fd155d2880a2f55a4c92e56b3"
+    },
+    {
+      "path": "20260902000000_production_rls_advisor_hardening.sql",
+      "sha256": "c1754912b5655c1e422ec41d4d173d0f419efe8a397ca2f086641afe2bf832bd"
+    },
+    {
+      "path": "20260902154759_production_disabled_binding_hardening.sql",
+      "sha256": "83c478599baf1772176a0d74b09a3e6a377ff5b9f6ceb006fe824442fabad3eb"
+    },
+    {
+      "path": "20260910000000_platform_baseline_subscription_audit_identity.sql",
+      "sha256": "d22f352184fa4cad08498cc8f94247c9196820e1765284873e7de9c554e1e797"
+    }
+  ],
+  "suites": [
+    {
+      "path": "00000_cleanroom_bootstrap.test.sql",
+      "sha256": "a68e7fce0cd094219f63789a78eb0c571d8e0eed41a1e813010094a88680eae3"
+    },
+    {
+      "path": "00001_p0_schema_security.test.sql",
+      "sha256": "38abe1be2c0e6572cc87611b46afda2a16343f75921c3d0a50b0e716059668d2"
+    },
+    {
+      "path": "00002_p0_cross_tenant_rls.test.sql",
+      "sha256": "93b0af16bee53243650d950d4b99612970e2ebcad04c325bccec877caef008c6"
+    },
+    {
+      "path": "00003_p0_barrier_and_invariants.test.sql",
+      "sha256": "0f09143cbce74ac1b460722b3e240ab7d80ff167c685fd0cc94ab506ef62563b"
+    },
+    {
+      "path": "00004_p0_pooled_identity_reset.test.sql",
+      "sha256": "08cdc13142ca135c98000f2f78d38d0f70530f23f1d6e17aa050d5665ef63a1e"
+    },
+    {
+      "path": "00005_p0_user_command_rpcs.test.sql",
+      "sha256": "d62008137d0002cd461da5a99bb617992c4a6c77139422f8715e6939ca5365f7"
+    },
+    {
+      "path": "00006_p0_create_quote.test.sql",
+      "sha256": "820ad23968935df52bd99689e53998b108b4373ce57550c3132a4846dc7193a8"
+    },
+    {
+      "path": "00007_p0_webhook_event_dedup.test.sql",
+      "sha256": "8678a7ba96cd16b7975d72bce1caf93e8806e94bd1fd8ada96b04d1f27d45131"
+    },
+    {
+      "path": "00008_p0_webhook_claim_lifecycle.test.sql",
+      "sha256": "f53aef8ab44a6743121ea1bc371d372e671695dda7f7c3a2b7bdcbe44571ccfa"
+    },
+    {
+      "path": "00009_p0_settlement.test.sql",
+      "sha256": "af141da4a562b9a0c3acbed6a095b9bfe5e08161f68ea75bc0635ebb77260c24"
+    },
+    {
+      "path": "00010_p0_provider_outbox_dispatch.test.sql",
+      "sha256": "54e00ab4740b18d7ffb51e4e7b7a929b222f94168e0d4f64fa9ac3c1c8a29a44"
+    },
+    {
+      "path": "00011_p0_artifact_ingest_export.test.sql",
+      "sha256": "c0ba638c6415e916692ef3fd409c7f221d7ae9c370ec33fdce882bee10a332d1"
+    },
+    {
+      "path": "00012_p0_seedance_pro_fast_repoint.test.sql",
+      "sha256": "d98ce219e7dcdea2e5bd2716373e55c5557badc6f031043d727717f044643752"
+    },
+    {
+      "path": "00013_p0_price_catalog_retirement_transition.test.sql",
+      "sha256": "3a5e8f4c1aa99571ad821abcfa30038f628f559e26938a364c18acf38119ceed"
+    },
+    {
+      "path": "00014_p0_create_quote_openrouter_copy_route.test.sql",
+      "sha256": "024912da44006b8cdb1a86fca9dbce079a9321794a2759396ff93702fc2f9b4b"
+    },
+    {
+      "path": "00015_p0_submission_requires_capture_proof.test.sql",
+      "sha256": "4e02576b8141cb62133126bd1f4fa1ceec2afa95c747b0cef33b615ab75233be"
+    },
+    {
+      "path": "00016_p0_reap_dead_dispatch.test.sql",
+      "sha256": "50ef1d93af9b4494d159fa3f1ea7970f0377412c14f2f7a90ef6e038f4a24b23"
+    },
+    {
+      "path": "00017_p0_app_tier_idempotency.test.sql",
+      "sha256": "f829156705d3d3edcf9a98fa47ce4b98e2af900d5f3a90e5587193e7ac8dbce3"
+    },
+    {
+      "path": "00018_p0_run_cancellation.test.sql",
+      "sha256": "8e0d3a867f38db8ba25271409cdbca1ac49e1c2e8c3a14a6f15918abcaf25e4a"
+    },
+    {
+      "path": "00019_p0_dispatch_wave_readiness.test.sql",
+      "sha256": "b6e3c0aac84dd9a910c10af3b6d4d019c0b612afa54a18be3a926a1e60a3ecae"
+    },
+    {
+      "path": "00020_p0_copy_terminal_path.test.sql",
+      "sha256": "f5522eb54cd996916395d364084479c42b7987f87c1ea1f9aea9954a839822fb"
+    },
+    {
+      "path": "00021_p0_privileged_rpc_grants.test.sql",
+      "sha256": "50b5122358bd6d8489e4cda4615c0973183552b3719d971eeae981cba9cf31fa"
+    },
+    {
+      "path": "00022_p0_approval_and_export.test.sql",
+      "sha256": "312572caec271304061887e9cab1644af0b4ba50f77d953c63adb2fab9cfa2bc"
+    },
+    {
+      "path": "00023_p0_dispatch_epoch_staggered_promotion.test.sql",
+      "sha256": "53e1e17326566b24721ef2fba73a817538024727fc6205f0553c8ffafa4dbb20"
+    },
+    {
+      "path": "00024_p0_poll_reconciliation_run_exit.test.sql",
+      "sha256": "09aea41145ada32e3aba084f4e99e17b4457a082b51098e89d5f43707ded4f5c"
+    },
+    {
+      "path": "00025_p0_global_spend_exposure_audit.test.sql",
+      "sha256": "eb4897384d3e42956696fbb27613a93cf80d0eb818de98f233eecb2937da407f"
+    },
+    {
+      "path": "00026_p0_golden_20_defect_audit.test.sql",
+      "sha256": "ad8e663cb59ae86e1f33d779deb937d2834b360ebcc2fdd7efab1285b11252b1"
+    },
+    {
+      "path": "00027_p0_webhook_provider_error_code.test.sql",
+      "sha256": "cbe02671ee8a086ba2d156438116275589729616f5c568c0f0b996d89c4d6027"
+    },
+    {
+      "path": "00028_p0_pending_input_artifact_upload.test.sql",
+      "sha256": "aabb6fd84fe50656596c6601e1a54c19c97f60909454aa1fa646dc52431ba609"
+    },
+    {
+      "path": "00029_p1a_stripe_wallet_credit.test.sql",
+      "sha256": "57af887739c9f65cdd71e44b86d34c6cf1d7ead7c3594a630e333656b95cae2f"
+    },
+    {
+      "path": "00029_p1a_stripe_wallet_settlement.test.sql",
+      "sha256": "fe9d07eb05090eb92f6af8fb252026b3ce0e3ea52773fc32e3fd5b1bf88ba371"
+    },
+    {
+      "path": "00030_p1b_api_keys_oauth_skills.test.sql",
+      "sha256": "f4d9cfc623d51693a617e9e82d04bd7e1f71f20e7a680f0e48a34fd443fac158"
+    },
+    {
+      "path": "00031_p1b_programmatic_auth_rpcs.test.sql",
+      "sha256": "73354cf0a9be59388679098800cb764f44e3b936ec62edd3ad08ba248d824783"
+    },
+    {
+      "path": "00032_p1b_oauth_scope_and_revocation.test.sql",
+      "sha256": "e99bacf20a2a66c06f3653fae8f1de2c16ee171cdcdae62213a15aaeaf4e3328"
+    },
+    {
+      "path": "00033_p1b_immutable_skill_versions.test.sql",
+      "sha256": "1075470567ad65aaee2428f16c285ff4a3ca75deb6653b7c53058678467e2b3c"
+    },
+    {
+      "path": "00034_p2_collaboration_checkpoint_revision.test.sql",
+      "sha256": "08f0b42a378786c369f1adb8f2fa89497db265cfe436f5146fe1652babcf9059"
+    },
+    {
+      "path": "00035_production_rls_advisor_hardening.test.sql",
+      "sha256": "6f1d7cddc8a35c6240acca03e819dcd15f815f4059d3c686a35dd2ee566e67c4"
+    },
+    {
+      "path": "00036_production_disabled_binding_hardening.test.sql",
+      "sha256": "3826a12fce18127a974619db45a7bb6acb7d2654675f6e363d2d30b1c1f3236e"
+    }
+  ]
+}

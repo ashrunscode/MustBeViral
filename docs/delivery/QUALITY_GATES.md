@@ -90,9 +90,9 @@ The following supersedes the historical launch-pack scope as the full-platform r
 
 Test content and any actual publication require the relevant execution authorization when this journey is run. This document has not posted or changed accounts.
 
-### Golden journey B: unrelated second brand
+### Golden journey B: independent second brand (UnPile pilot)
 
-Repeat the journey for a brand with visibly different colors, voice, audience, industry, and assets. Switch frequently between brands. Reuse the same operator but test a separate client reviewer.
+Repeat the journey with UnPile, explicitly selected by the owner on September 9, in its own workspace with distinct identity, voice, service context and assets. Switch frequently between brands. Reuse the same operator but test a separate client reviewer. WashBodega and UnPile are both laundry businesses; this pilot does not establish unrelated-industry coverage. The broader local-service and e-commerce brief rubric below still requires separate varied-category cases.
 
 Required evidence: no WashBodega logo, location, prices, prompts, source assets, private messages, or audience assumptions appear in the other brand's work. Search, cached results, embeddings, bulk actions, notifications, exports, and background jobs all respect the same boundary.
 

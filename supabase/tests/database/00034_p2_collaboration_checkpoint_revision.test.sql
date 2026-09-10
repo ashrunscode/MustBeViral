@@ -1,6 +1,6 @@
 begin;
 
-select plan(6);
+select plan(8);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -184,10 +184,40 @@ select is(
   pg_temp.error_of($sql$
     update public.canvas_revisions
     set reason = 'mutated'
-    where id = '54300000-0000-4000-8000-000000000001'
+    where id = (
+      select head_revision_id from public.canvases
+      where id = '54200000-0000-4000-8000-000000000001'
+    )
+  $sql$),
+  '42501:permission denied for table canvas_revisions',
+  'authenticated owner cannot directly update a checkpoint revision'
+);
+
+-- Prove the immutable trigger as well as the earlier authenticated privilege denial.
+reset role;
+select is(
+  pg_temp.error_of($sql$
+    update public.canvas_revisions
+    set reason = 'mutated'
+    where id = (
+      select head_revision_id from public.canvases
+      where id = '54200000-0000-4000-8000-000000000001'
+    )
   $sql$),
   '55000:canvas_revisions_IMMUTABLE',
-  'checkpointed revisions remain immutable after creation'
+  'checkpointed child revision remains immutable for privileged writes too'
+);
+
+select is(
+  (
+    select reason from public.canvas_revisions
+    where id = (
+      select head_revision_id from public.canvases
+      where id = '54200000-0000-4000-8000-000000000001'
+    )
+  ),
+  'Checkpoint collaboration drafts',
+  'denied writes preserve the checkpoint revision content'
 );
 
 select * from finish();
