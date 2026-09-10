@@ -45,7 +45,7 @@ Runs pin a revision ID and hash. Subsequent canvas edits cannot change an existi
 ## RLS contract
 
 - Enable and force RLS on every user-visible tenant table.
-- Authenticated policies derive actor identity from the validated Supabase JWT and require active workspace membership.
+- Authenticated policies derive actor identity from the validated Supabase JWT and require active workspace membership or an explicit owner-issued studio grant intersected with active studio membership and the requested brand action. Existing execution, media and billing policies retain their workspace permissions; portfolio grants do not implicitly extend them.
 - Reads outside membership return no row; mutations additionally enforce allowed role/action and immutable-column restrictions.
 - Users cannot insert or mutate ledger entries, provider jobs, audit events, outbox events, model prices, or machine-owned state directly.
 - Security-definer functions are exceptional, schema-qualified, use a fixed safe `search_path`, validate the actor and workspace inside the transaction, expose only necessary arguments, and revoke public execution.

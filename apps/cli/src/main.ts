@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { isPlatformOperation, PLATFORM_OPERATION_NAMES } from '@mustbeviral/contracts';
 import {
   CLI_EXIT_CODES,
   createCliClient,
@@ -8,6 +9,7 @@ import {
 import { defaultCredentialStore } from './credential-store.js';
 import { loginWithToken, logout } from './login.js';
 import { exitCodeForManagementResponse, p1bManagementRequest } from './p1b-management.js';
+import { runPlatformCommand } from './platform-commands.js';
 import {
   isProductionCliCommand,
   runProductionCommand,
@@ -116,7 +118,8 @@ function writeJson(parsed: ParsedArgs, payload: unknown): void {
 }
 
 const COMMAND_HELP =
-  'Commands: login, logout, get-canvas-context, apply-canvas-patch, quote-run, start-run, get-run, validate-graph, cancel-run, get-artifact, create-export, explain-model, get-receipt, list-api-keys, create-api-key, revoke-api-key, list-oauth-clients, oauth-token';
+  'Commands: login, logout, get-canvas-context, apply-canvas-patch, quote-run, start-run, get-run, validate-graph, cancel-run, get-artifact, create-export, explain-model, get-receipt, list-api-keys, create-api-key, revoke-api-key, list-oauth-clients, oauth-token. Platform commands use --body-json and --idempotency-key for mutations: ' +
+  PLATFORM_OPERATION_NAMES.map((name) => name.replaceAll('_', '-')).join(', ');
 
 async function main(): Promise<number> {
   const parsed = parseArgs(process.argv.slice(2));
@@ -156,6 +159,19 @@ async function main(): Promise<number> {
     credentialStore,
     ...(parsed.token === undefined ? {} : { accessToken: parsed.token }),
   });
+
+  if (isPlatformOperation(parsed.command.replaceAll('-', '_'))) {
+    if (parsed.rest.length > 0) return CLI_EXIT_CODES.usage;
+    const result = await runPlatformCommand({
+      command: parsed.command,
+      bodyJson: parsed.bodyJson,
+      idempotencyKey: parsed.idempotencyKey,
+      baseUrl: client.baseUrl,
+      readAccessToken: client.readAccessToken,
+    });
+    writeJson(parsed, result.payload);
+    return result.exitCode;
+  }
 
   if (isProductionCliCommand(parsed.command)) {
     const result = await runProductionCommand(client, parsed.command, parsed.rest, {

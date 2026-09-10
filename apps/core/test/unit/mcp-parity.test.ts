@@ -5,6 +5,7 @@ import {
   P0_MCP_TOOL_NAMES,
   P0_REST_OPERATIONS,
   PRODUCTION_MCP_TOOL_NAMES,
+  PLATFORM_OPERATION_NAMES,
   type P0HandlerResult,
   type P0McpToolName,
   type P0RestHandlers,
@@ -377,8 +378,13 @@ describe('P0 REST and private MCP contract vectors', () => {
       enabledBindings,
     );
     const body = (await listed.json()) as { result: { tools: readonly { name: string }[] } };
-    expect(body.result.tools.map((tool) => tool.name)).toEqual(PRODUCTION_MCP_TOOL_NAMES);
-    expect(body.result.tools).toHaveLength(PRODUCTION_MCP_TOOL_NAMES.length);
+    expect(body.result.tools.map((tool) => tool.name)).toEqual([
+      ...PRODUCTION_MCP_TOOL_NAMES,
+      ...PLATFORM_OPERATION_NAMES,
+    ]);
+    expect(body.result.tools).toHaveLength(
+      PRODUCTION_MCP_TOOL_NAMES.length + PLATFORM_OPERATION_NAMES.length,
+    );
     expect(
       P0_MCP_TOOL_NAMES.every((name) => body.result.tools.some((tool) => tool.name === name)),
     ).toBe(true);

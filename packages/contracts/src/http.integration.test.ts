@@ -4,6 +4,7 @@ import openApi from '../openapi/core.v1.json';
 import { API_SCHEMA_VERSION, HealthResponseSchema, SERVICE_GENERATION } from './http';
 import { P0_AUTHENTICATED_REST_OPERATIONS, P0_REST_OPERATIONS } from './rest';
 import { P1B_JWT_MANAGEMENT_OPERATIONS } from './p1b';
+import { PLATFORM_OPERATIONS, PLATFORM_OPERATION_NAMES } from './platform';
 
 const P1B_REST_OPERATIONS = ['issue_oauth_token', ...P1B_JWT_MANAGEMENT_OPERATIONS] as const;
 
@@ -16,7 +17,7 @@ describe('Zod and OpenAPI integration', () => {
     expect(example.generation).toBe(SERVICE_GENERATION);
   });
 
-  it('publishes health and the complete P0/P1b Worker surface from the contract generator', () => {
+  it('publishes health, existing execution and registered platform operations from the contract generator', () => {
     const document = openApi as unknown as Readonly<{
       paths: Readonly<
         Record<
@@ -29,8 +30,17 @@ describe('Zod and OpenAPI integration', () => {
       .flatMap((path) => Object.values(path))
       .map((operation) => operation.operationId);
 
-    expect(Object.keys(document.paths)).toHaveLength(28);
-    expect(operations).toEqual(['get_health', ...P0_REST_OPERATIONS, ...P1B_REST_OPERATIONS]);
+    expect(Object.keys(document.paths)).toHaveLength(
+      28 + new Set(Object.values(PLATFORM_OPERATIONS).map((operation) => operation.path)).size,
+    );
+    expect([...operations].sort()).toEqual(
+      [
+        'get_health',
+        ...P0_REST_OPERATIONS,
+        ...P1B_REST_OPERATIONS,
+        ...PLATFORM_OPERATION_NAMES,
+      ].sort(),
+    );
     expect(
       operations.filter((operation) =>
         P0_AUTHENTICATED_REST_OPERATIONS.includes(
