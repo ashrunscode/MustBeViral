@@ -4,6 +4,7 @@ import {
   ApiErrorEnvelopeSchema,
   P0_REST_OPERATIONS,
   PRODUCTION_MCP_TOOL_NAMES,
+  PLATFORM_OPERATION_NAMES,
   type P0HandlerResult,
   type P0RestHandlers,
   type ProductionMcpToolName,
@@ -353,7 +354,7 @@ describe('production MCP and REST parity for all shipped tools', () => {
     if (vector.replay) expect(executions.value).toBe(1);
   });
 
-  it('lists exactly eleven production tools after authentication', async () => {
+  it('lists existing execution tools and registered platform tools after authentication', async () => {
     const vector = productionVectors[0];
     if (vector === undefined) throw new Error('Missing vector fixture');
     const app = createCoreApp(dependencies(vector, { value: 0 }));
@@ -372,7 +373,10 @@ describe('production MCP and REST parity for all shipped tools', () => {
       enabledBindings,
     );
     const body = (await response.json()) as { result: { tools: readonly { name: string }[] } };
-    expect(body.result.tools.map((tool) => tool.name)).toEqual(PRODUCTION_MCP_TOOL_NAMES);
+    expect(body.result.tools.map((tool) => tool.name)).toEqual([
+      ...PRODUCTION_MCP_TOOL_NAMES,
+      ...PLATFORM_OPERATION_NAMES,
+    ]);
   });
 
   it('covers all nine production vector kinds', () => {

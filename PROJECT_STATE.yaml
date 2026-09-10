@@ -8,11 +8,12 @@ project_state: active
 phase:
   id: P4
   title: Durable studios, access grants and brand identity
-  state: planned
+  state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W1-001
-next_action: After W0 is legitimately completed, run preflight and define explicit studio/workspace
-  grant and brand/location ownership mapping with additive local migration tests.
+next_action: Finish WP-PLATFORM-W1-001 with its committed evidence and activate
+  WP-PLATFORM-W1-002 for saved onboarding, approved studio navigation and actual
+  billing.
 decisions_pending: []
 blockers: []
 legacy:
@@ -25,16 +26,16 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes:
-      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
-      workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
+    notes: V2 private foundation is deployed only on SSO-protected Vercel provider
+      URLs and an unrouted workers.dev Core URL; all signup, generation,
+      provider, queue, and charge behavior is off.
   staging:
     generation: viralgraph-cleanroom-v2
     state: ready
     cloudflare_worker: mustbeviral-v2-staging-core
-    notes: Named staging outbox queue mustbeviral-v2-staging-outbox-dispatch. QUEUES_ENABLED is true
-      after the event_id migration. Instant rollback is QUEUES_ENABLED=false. Destructive remote
-      action stays forbidden.
+    notes: Named staging outbox queue mustbeviral-v2-staging-outbox-dispatch.
+      QUEUES_ENABLED is true after the event_id migration. Instant rollback is
+      QUEUES_ENABLED=false. Destructive remote action stays forbidden.
   preview:
     generation: viralgraph-cleanroom-v2
     state: not_created

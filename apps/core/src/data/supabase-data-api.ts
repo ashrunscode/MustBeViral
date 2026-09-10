@@ -32,6 +32,7 @@ export class SupabaseDataApiError extends Error {
   constructor(
     readonly kind: SupabaseFailureKind,
     readonly safeDetails: Readonly<Record<string, unknown>> = {},
+    readonly databaseMessage?: string,
   ) {
     super(`Supabase Data API request failed: ${kind}`);
   }
@@ -106,7 +107,7 @@ function rpcFailureKind(error: SupabasePostgrestError): SupabaseFailureKind | nu
   return null;
 }
 
-export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataApiError {
+function mapSupabaseFailureKind(status: number, body: unknown): SupabaseDataApiError {
   const error = postgrestError(body);
   if (status === 401 || status === 403) return new SupabaseDataApiError('forbidden');
   if (error.code === 'PGRST116') return new SupabaseDataApiError('not_found');
@@ -127,6 +128,27 @@ export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataA
   const rpcKind = rpcFailureKind(error);
   if (rpcKind !== null) return new SupabaseDataApiError(rpcKind);
   return new SupabaseDataApiError(status >= 500 ? 'internal' : 'validation');
+}
+
+export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataApiError {
+  const mapped = mapSupabaseFailureKind(status, body);
+  const message = postgrestError(body).message;
+  // Preserve only known public contract codes, never raw SQL messages or details.
+  const publicCodes = new Set([
+    'UNAUTHENTICATED',
+    'FORBIDDEN',
+    'NOT_FOUND',
+    'VALIDATION_FAILED',
+    'IDEMPOTENCY_CONFLICT',
+    'REVISION_CONFLICT',
+    'RESOURCE_CONFLICT',
+    'RESOURCE_ARCHIVED',
+  ]);
+  return new SupabaseDataApiError(
+    mapped.kind,
+    mapped.safeDetails,
+    message !== undefined && publicCodes.has(message) ? message : undefined,
+  );
 }
 
 export class SupabaseDataApiExecutor implements DatabaseExecutor {

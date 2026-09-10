@@ -42,3 +42,12 @@ Sources: ordered raw SQL under `supabase/migrations`. Generated Supabase types b
 | `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.oauth_access_tokens` |
 | `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.skills` |
 | `supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql` | table `public.skill_versions` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.studios` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.studio_memberships` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.brands` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.brand_locations` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.workspace_access_grants` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.platform_owner_studio_mappings` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.platform_workspace_mappings` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.project_brand_mappings` |
+| `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.studio_events` |
