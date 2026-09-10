@@ -101,7 +101,9 @@ export function createPlatformRoute(
             }
           } else {
             const text = await context.req.text();
-            if (text.length > 8192) throw new TypeError('Invalid request size');
+            const maximumBytes = 'rpc' in definition ? 65536 : 8192;
+            if (new TextEncoder().encode(text).length > maximumBytes)
+              throw new TypeError('Invalid request size');
             const body: unknown = JSON.parse(text);
             if (typeof body !== 'object' || body === null || Array.isArray(body))
               throw new TypeError('Invalid body');

@@ -14,6 +14,21 @@ const context = {
 const workspace = 'b2000000-0000-4000-8000-000000000001';
 
 describe('platform user-scoped database port', () => {
+  it('selects the setup query from fixed registry metadata with the original JWT', async () => {
+    const fetcher = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(Response.json({ items: [], next_cursor: null }));
+    const result = await createPlatformHandlers(
+      createPlatformPort(bindings, 'synthetic-user-jwt', fetcher),
+    ).execute('list_my_invitations', {}, context);
+    expect(result).toEqual({ status: 'ok', data: { items: [], next_cursor: null } });
+    expect(fetcher.mock.calls[0]?.[0]).toBe(
+      'http://127.0.0.1:54321/rest/v1/rpc/platform_setup_query',
+    );
+    expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('authorization')).toBe(
+      'Bearer synthetic-user-jwt',
+    );
+  });
   it('forwards the caller JWT and never accepts an actor ID as RPC authorization', async () => {
     const fetcher = vi
       .fn<typeof fetch>()

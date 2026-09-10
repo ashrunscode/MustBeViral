@@ -51,3 +51,5 @@ Sources: ordered raw SQL under `supabase/migrations`. Generated Supabase types b
 | `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.platform_workspace_mappings` |
 | `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.project_brand_mappings` |
 | `supabase/migrations/20260910100000_platform_portfolio_identity.sql` | table `public.studio_events` |
+| `supabase/migrations/20260910150000_platform_saved_setup.sql` | table `public.brand_onboarding_drafts` |
+| `supabase/migrations/20260910150000_platform_saved_setup.sql` | table `public.studio_invitations` |

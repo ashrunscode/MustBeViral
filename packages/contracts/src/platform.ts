@@ -1,112 +1,41 @@
 import { z } from 'zod';
 
 import { IdempotencyKeySchema } from './commands';
-import { RequestIdSchema, WireTimestampSchema } from './http';
+import { RequestIdSchema } from './http';
 
-const uuid = z.uuid();
-const name = z
-  .string()
-  .min(1)
-  .max(120)
-  .refine((value) => value === value.trim());
-const slug = z
-  .string()
-  .min(1)
-  .max(120)
-  .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/u);
-const version = z.number().int().min(1).max(2_147_483_647);
-const page = {
-  limit: z.number().int().min(1).max(100).optional(),
-  cursor: z
-    .string()
-    .min(1)
-    .max(2048)
-    .regex(/^[A-Za-z0-9_-]+$/u)
-    .optional(),
-  include_archived: z.boolean().optional(),
-};
-const identity = { name, slug };
-const workspace = { workspace_id: uuid };
-const brand = { ...workspace, brand_id: uuid };
-const location = { ...brand, location_id: uuid };
-const studio = { studio_id: uuid };
-const expected = { expected_version: version };
-const timeZone = z
-  .string()
-  .min(1)
-  .max(100)
-  .refine((value) => {
-    try {
-      new Intl.DateTimeFormat('en', { timeZone: value });
-      return true;
-    } catch {
-      return false;
-    }
-  });
-export const PlatformActionSchema = z.enum([
-  'brand:read',
-  'brand:write',
-  'location:read',
-  'location:write',
-]);
-const actions = z
-  .array(PlatformActionSchema)
-  .min(1)
-  .max(4)
-  .refine(
-    (values) =>
-      new Set(values).size === values.length &&
-      values.includes('brand:read') &&
-      (!values.includes('location:write') || values.includes('location:read')),
-  );
-const record = {
-  id: uuid,
-  name,
-  slug,
-  status: z.enum(['active', 'archived']),
-  version,
-  created_by: uuid,
-  created_at: WireTimestampSchema,
-  updated_at: WireTimestampSchema,
-};
-export const StudioRecordSchema = z.object(record).strict();
-export const BrandRecordSchema = z.object({ ...record, ...workspace }).strict();
-export const BrandLocationRecordSchema = z
-  .object({ ...record, ...brand, time_zone: z.string().min(1).max(100) })
-  .strict();
-export const StudioMemberRecordSchema = z
-  .object({
-    id: uuid,
-    ...studio,
-    user_id: uuid,
-    role: z.enum(['owner', 'editor', 'viewer']),
-    status: z.enum(['active', 'revoked']),
-    version,
-    created_at: WireTimestampSchema,
-    revoked_at: WireTimestampSchema.nullable(),
-  })
-  .strict();
-export const WorkspaceGrantRecordSchema = z
-  .object({
-    id: uuid,
-    ...workspace,
-    ...studio,
-    brand_id: uuid.nullable(),
-    owner_membership_id: uuid,
-    granted_by: uuid,
-    actions,
-    status: z.enum(['active', 'revoked']),
-    version,
-    created_at: WireTimestampSchema,
-    revoked_at: WireTimestampSchema.nullable(),
-  })
-  .strict();
-const single = <T extends z.ZodType>(schema: T) => z.object({ record: schema }).strict();
-const list = <T extends z.ZodType>(schema: T) =>
-  z.object({ items: z.array(schema), next_cursor: z.string().nullable() }).strict();
+import {
+  uuid,
+  identity,
+  workspace,
+  brand,
+  location,
+  studio,
+  expected,
+  page,
+  timeZone,
+  actions,
+  single,
+  list,
+  StudioRecordSchema,
+  BrandRecordSchema,
+  BrandLocationRecordSchema,
+  StudioMemberRecordSchema,
+  WorkspaceGrantRecordSchema,
+} from './platform-models';
+import { PLATFORM_SETUP_OPERATIONS } from './platform-setup';
+export {
+  PlatformActionSchema,
+  StudioRecordSchema,
+  BrandRecordSchema,
+  BrandLocationRecordSchema,
+  StudioMemberRecordSchema,
+  WorkspaceGrantRecordSchema,
+} from './platform-models';
+export * from './platform-setup';
 
 /** One registry drives shared validation and REST, client, CLI and MCP projections. */
 export const PLATFORM_OPERATIONS = {
+  ...PLATFORM_SETUP_OPERATIONS,
   create_studio: {
     method: 'POST',
     path: '/studios',

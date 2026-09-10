@@ -121,6 +121,15 @@ These names are proposals, not generated schema. Final migrations should reuse e
 
 ## Platform migration and compatibility
 
+W1 saved onboarding uses `brand_onboarding_drafts` with a composite workspace/brand foreign key,
+versioned operator input and private-by-default reads. It is separate from approved brand versions.
+`studio_invitations` binds a normalized recipient, issuing owner membership, role, expiry and audited
+state. Both tables force RLS and deny direct client writes; shared authenticated commands perform
+locked permission checks before mutation or idempotent replay. Studio/member revocation and draft
+saves share the existing portfolio lock order. Invitation acceptance checks the current verified
+Supabase email while locking the user and studio; creation alone grants no access. Settings edit
+existing workspace/brand identities and do not create a second permissions or money authority.
+
 - Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
 - Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
 - Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.
