@@ -1,15 +1,14 @@
 schema_version: 1
-id: WP-PLATFORM-W1-001
+id: WP-PLATFORM-W1-002
 spec_revision: 1
-title: Durable studios, access grants and brand identity
+title: Saved onboarding, resource-aware navigation and actual billing
 phase: P4
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Deliver the persistent tenant-safe foundation for W1.1-W1.2 so an
-  authorized operator can create a studio, attach a permitted workspace, and
-  manage distinct brands and locations through shared commands and queries. No
-  new production UI is shipped by this backend packet.
+objective: Complete the W1.2 portfolio UI and W1.3-W1.5 so an operator can add and resume a durable
+  brand draft, switch WashBodega and UnPile safely in the approved studio interface, recover old
+  campaign links and see actual workspace billing without invented balances or implicit access.
 authority_refs:
   - product-contract
   - release-scope
@@ -27,11 +26,15 @@ required_skills:
   - data-architect
   - auth-fortress
   - api-and-interface-design
+  - superdesign
+  - frontend-master
+  - billing-engine
   - quality-check
 depends_on:
-  - WP-PLATFORM-W0-001
+  - WP-PLATFORM-W1-001
 scope:
   allowed_paths:
+    - apps/web/**
     - apps/core/**
     - apps/cli/**
     - apps/mcp/**
@@ -39,13 +42,14 @@ scope:
     - packages/domain/**
     - packages/db/**
     - packages/config/**
+    - packages/ui/**
     - supabase/**
     - governance/**
     - docs/**
+    - .superdesign/**
     - PROJECT_STATE.yaml
     - llms.txt
   forbidden_paths:
-    - apps/web/**
     - .github/workflows/**
     - docs/archive/**
     - legacy-exports/**
@@ -61,177 +65,115 @@ scope:
     - roadmap
     - local-env-secrets
 deliverables:
-  - Add normalized studios, studio memberships, owner-authorized workspace
-    grants, brands and locations with immutable identities, workspace scoping
-    and explicit action grants. A studio is a portfolio view; the workspace
-    remains the tenant, ledger and RLS boundary.
-  - Specify ownership mapping before additive migration. Backfill only from
-    active authoritative workspace ownership, report orphan or conflicting
-    ownership, validate before/after counts and retain a reversible mapping.
-    Never infer a grant from creator names, email or portfolio visibility.
-  - Add create/list/get/update/archive studio and brand/location commands and
-    queries plus owner-authorized grant/revoke handlers. All adapters use shared
-    handlers, generated wire contracts and Postgres-backed permissions. Validate
-    parent workspace for every identifier.
-  - Add cursor pagination and deliberate not-found/forbidden semantics; archived
-    brands remain referentially intact. Privileged credentials cannot become
-    browser data or permission evidence.
-  - Require W0 database baseline acceptance before activation. The W0 prototype
-    is a design input; the UI successor uses the WashBodega/UnPile direction
-    explicitly approved on 2026-09-09 and recorded by the experience contract,
-    with behavior and accessibility verified separately.
-  - Prepare WP-PLATFORM-W1-002 for persistent onboarding, resource-aware
-    navigation and compatible old links, settings/invitation presets and actual
-    ledger-backed billing reads (W1.3-W1.5).
+  - Implement the owner-approved September 9 WashBodega/UnPile desktop and mobile direction with
+    durable studio, brand and location selection, portfolio search and permission-aware
+    home/navigation, explicit empty, loading, revoked, archived and failure states, and accessible
+    keyboard and screen-reader flows.
+  - Persist a minimal brand onboarding draft immediately through shared commands. Website/manual
+    entry, operator corrections, draft progress and chosen workspace/studio survive reload and
+    reconnect. Do not claim website understanding or approved knowledge before W2 evidence exists.
+  - Resolve old campaign/project links through authenticated project-to-brand mappings. Missing or
+    ambiguous mappings show scoped recovery without sentinel IDs, name guessing, cross-tenant
+    fallback or browser storage as authority. Navigation must retain only the active resource scope.
+  - Add workspace and brand settings, team invitation/role presets and revocation behavior through
+    typed grants. Persist invitation state without sending mail or granting access before the
+    intended recipient accepts. No new implicit execution, media, billing or publishing authority.
+  - Read actual workspace ledger balances, usage and billing/subscription state. Loading,
+    unavailable, missing subscription and permission denial remain distinct. Preserve integer money
+    and existing charging/checkout kill switches; no customer charge, Stripe mutation or provider
+    run is authorized.
+  - Prepare WP-PLATFORM-W2-001 for bounded website/document sourcing, extraction provenance and
+    reviewable brand knowledge drafts, preserving W1 resource and permission contracts.
 public_interfaces:
-  - Authoritative Zod command/query schemas and operation registry additions
-    generate REST OpenAPI, typed clients, MCP and CLI projections. Preserve all
-    existing operation names and wire fields.
-  - Additive Postgres schema and generated database types; existing workspace,
-    project, canvas, execution and ledger contracts remain callable by the
-    previous application version.
+  - Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections.
+    Preserve the existing W1 identity operations and legacy supported routes.
+  - Additive onboarding/invitation persistence with explicit ownership and backfill mapping,
+    generated database types, and application rollback to the prior schema-compatible version.
 steps:
-  - id: w1a-001-ownership-and-schema
-    title: Specify explicit ownership mapping and add normalized portfolio identity
-      and grants with RLS.
-    status: completed
-  - id: w1a-002-shared-operations
-    title: Implement typed shared commands and queries with transaction, tenant and
-      revocation checks.
-    status: completed
-  - id: w1a-003-transports-and-backfill
-    title: Generate transport/database contracts and prove additive backfill and
-      compatible rollback locally.
-    status: completed
-  - id: w1a-004-isolation-and-successor
-    title: Run both-brand isolation journeys and prepare the bounded
-      onboarding/navigation/billing successor.
-    status: current
+  - id: w1b-001-durable-drafts-and-settings
+    title:
+      Implement persistent onboarding, resource resolution and invitation/settings contracts with
+      tenant-safe database behavior.
+    status: pending
+  - id: w1b-002-approved-studio-navigation
+    title: Implement the approved studio and brand surfaces with saved draft progress and compatible
+      authenticated old links.
+    status: pending
+  - id: w1b-003-actual-billing
+    title:
+      Connect actual workspace billing reads and distinct error/permission states without enabling
+      charging.
+    status: pending
+  - id: w1b-004-journeys-and-successor
+    title:
+      Verify desktop/mobile two-brand onboarding, navigation and billing journeys and prepare the
+      bounded W2 sourcing successor.
+    status: pending
 acceptance:
   automated:
-    - id: durable-two-brand-identity
-      criterion: WashBodega and UnPile (owner-selected second brand; synthetic
-        operational data) have separate workspace identities, grants, brands and
-        locations; reload/reconnect reads authoritative state with no fixture or
-        browser-storage substitute. Studio list responses contain only currently
-        permitted records.
-      status: passed
-      evidence: &a1
-        - governance/evidence/WP-PLATFORM-W1-001/verification-2026-09-10.md
-        - governance/evidence/WP-PLATFORM-W1-001/local-verification-2026-09-10.json
-    - id: tenant-and-revocation
-      criterion: Handler and pgTAP tests deny cross-workspace child IDs, forged studio
-        access, revoked memberships/grants, owner transfer conflicts and
-        unauthorized brand mutation; grants never confer billing access
-        implicitly. Revoke access while a request is in flight.
-      status: passed
-      evidence: *a1
-    - id: migration-and-backfill
-      criterion: All migrations and pgTAP tests pass on local Supabase;
-        duplicate/backfill reruns, orphan owners and conflicting mappings fail
-        explicitly. Old application contracts still run against the additive
-        schema and tenant ledger counts/balances remain unchanged.
-      status: passed
-      evidence: *a1
-    - id: transport-parity
-      criterion: Browser-ready REST clients, MCP and CLI share operation validation
-        and authorization; idempotent creation/replay, concurrent slug/name
-        collision, invalid pagination and archived references have behavioral
-        tests. Generated contracts and documentation are current.
-      status: passed
-      evidence: *a1
+    - id: saved-two-brand-onboarding
+      criterion:
+        WashBodega and UnPile synthetic drafts persist separately through reload, reconnect,
+        concurrent edits and interrupted saves; no browser-storage substitute or fabricated
+        analysis.
+      status: pending
+      evidence: []
+    - id: tenant-resource-navigation
+      criterion:
+        Desktop/mobile navigation, brand switches, direct/old links, back/forward and archived or
+        missing resources resolve only permitted identities. Revoked grants, forged child IDs and
+        stale responses cannot display another brand or re-enable a forbidden action.
+      status: pending
+      evidence: []
+    - id: invitations-and-permissions
+      criterion:
+        Invitation creation/replay, expiry, exact recipient acceptance, revoked membership, stale
+        role changes and unauthorized grant escalation are tested in handlers and pgTAP. Local
+        delivery uses explicit synthetic fixtures and sends no outreach.
+      status: pending
+      evidence: []
+    - id: truthful-billing-and-accessibility
+      criterion: Billing reads match actual seeded integer ledger balances and subscription records;
+        missing, unavailable and denied states are distinct. Desktop/mobile behavior, keyboard,
+        accessibility and approved visual direction pass without enabling spending or charging.
+      status: pending
+      evidence: []
   manual: []
 quality_gates:
   - id: database
     command: pnpm supabase:test
-    status: passed
-    evidence: *a1
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence: *a1
+    status: pending
+    evidence: []
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
   - id: repository
     command: pnpm verify
-    status: passed
-    evidence: *a1
+    status: pending
+    evidence: []
 rollback:
-  strategy: Preserve old workspace/ledger tables and all durable IDs. Revert
-    application handlers to the prior version while retaining additive tables
-    and ownership mapping. Test that old commands continue working. Do not drop
-    tenant data or reverse a backfill by guessing ownership; corrective local
-    migrations must use the recorded mapping. No remote migrations are
-    authorized.
+  strategy: Revert application changes while retaining additive drafts, invitations and durable
+    mappings. Confirm old workspace, project, execution and ledger commands still work. Do not
+    delete tenant data, weaken RLS, discard old routes or enable checkout to simulate recovery.
   remote_actions_required: false
 external_effects:
   remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: w1a-004-isolation-and-successor
-  next_action: Finish WP-PLATFORM-W1-001 with its committed evidence and activate
-    WP-PLATFORM-W1-002 for saved onboarding, approved studio navigation and
-    actual billing.
+  current_step: w1b-001-durable-drafts-and-settings
+  next_action:
+    After W1 foundation completion, run preflight and implement durable onboarding drafts,
+    invitation/settings contracts and authenticated resource resolution using the accepted identity
+    and grant model.
   blockers: []
-  changed_paths:
-    - PROJECT_STATE.yaml
-    - apps/cli/src/index.ts
-    - apps/cli/src/main.ts
-    - apps/core/src/app.ts
-    - apps/core/src/data/supabase-data-api.ts
-    - apps/core/src/routes/mcp.ts
-    - apps/core/src/routes/v1.ts
-    - apps/core/test/unit/mcp-parity.test.ts
-    - apps/core/test/unit/production-mcp-parity.test.ts
-    - docs/STATUS.md
-    - docs/architecture/API_MCP_AND_CLI.md
-    - docs/architecture/DATA_AUTH_AND_TENANCY.md
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/generated/DATABASE_SCHEMA.md
-    - docs/generated/OPENAPI.md
-    - docs/generated/TRACEABILITY.md
-    - governance/scripts/generate-openapi.ts
-    - llms.txt
-    - packages/contracts/openapi/core.v1.json
-    - packages/contracts/src/http.integration.test.ts
-    - packages/contracts/src/index.ts
-    - packages/db/scripts/generate-types.mjs
-    - packages/db/src/database.generated.ts
-    - apps/cli/src/exit-codes.ts
-    - apps/cli/src/platform-commands.ts
-    - apps/core/src/composition/platform.ts
-    - apps/core/src/routes/platform.ts
-    - apps/core/test/unit/platform-parity.test.ts
-    - apps/core/test/unit/platform-port.test.ts
-    - governance/evidence/WP-PLATFORM-W1-001/ownership-mapping-2026-09-10.md
-    - governance/evidence/WP-PLATFORM-W1-001/successor-WP-PLATFORM-W1-002.yaml
-    - governance/evidence/WP-PLATFORM-W1-001/verification-2026-09-10.md
-    - packages/contracts/src/platform-transports.ts
-    - packages/contracts/src/platform.test.ts
-    - packages/contracts/src/platform.ts
-    - packages/db/scripts/local-supabase.mjs
-    - packages/db/scripts/verify-platform-connected.mjs
-    - supabase/migrations/20260910100000_platform_portfolio_identity.sql
-    - supabase/migrations/20260910110000_platform_commands.sql
-    - supabase/migrations/20260910120000_platform_queries.sql
-    - supabase/migrations/20260910130000_platform_revocation_hardening.sql
-    - supabase/migrations/20260910140000_platform_foreign_key_indexes.sql
-    - supabase/tests/database/00037_platform_identity_and_backfill.test.sql
-    - supabase/tests/database/00038_platform_operations.test.sql
-    - governance/evidence/WP-PLATFORM-W1-001/local-verification-2026-09-10.json
-  last_green_checks:
-    - Local additive migration installed; 31 portfolio identity/backfill pgTAP
-      assertions passed on 2026-09-10.
-    - 65 platform pgTAP assertions, 20 shared handler tests and 33 Core
-      port/data tests passed locally.
-    - 40 real local pgTAP suites / 561 assertions passed; 7 connected
-      concurrency/backfill journeys passed; 81 Core parity/port/MCP tests
-      passed; all 28 previous OpenAPI paths and 47 schemas unchanged.
-    - 'agent:verify passed: 143 governance, 984 unit, 26 integration, 561 pgTAP
-      assertions and 18 builds. design:check passed.'
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-PLATFORM-W1-002
-  evidence_paths:
-    - governance/evidence/WP-PLATFORM-W1-001/ownership-mapping-2026-09-10.md
-    - governance/evidence/WP-PLATFORM-W1-001/verification-2026-09-10.md
-    - governance/evidence/WP-PLATFORM-W1-001/local-verification-2026-09-10.json
-    - governance/evidence/WP-PLATFORM-W1-001/successor-WP-PLATFORM-W1-002.yaml
+  successor_packet_id: WP-PLATFORM-W2-001
+  evidence_paths: []
   completed_at: null
