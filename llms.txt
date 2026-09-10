@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W1-002
-current_step: w1b-001-durable-drafts-and-settings
-next_action: After W1 foundation completion, run preflight and implement durable onboarding drafts, invitation/settings contracts and authenticated resource resolution using the accepted identity and grant model.
+current_step: w1b-002-approved-studio-navigation
+next_action: Implement persistent onboarding, resource resolution and invitation/settings contracts with tenant-safe database behavior.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

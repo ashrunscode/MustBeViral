@@ -29,11 +29,13 @@ export function createPlatformPort(
   });
   return {
     async execute({ operation, input, context, idempotencyKey }) {
-      const mutation = PLATFORM_OPERATIONS[operation].method !== 'GET';
+      const definition = PLATFORM_OPERATIONS[operation];
+      const mutation = definition.method !== 'GET';
+      const rpc = 'rpc' in definition ? definition.rpc : 'platform';
       try {
         const data = await executor.request({
           method: 'POST',
-          path: mutation ? 'rpc/platform_command' : 'rpc/platform_query',
+          path: `rpc/${rpc}_${mutation ? 'command' : 'query'}`,
           body: {
             p_operation: operation,
             p_input: input,

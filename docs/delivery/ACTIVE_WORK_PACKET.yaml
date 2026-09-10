@@ -3,7 +3,7 @@ id: WP-PLATFORM-W1-002
 spec_revision: 1
 title: Saved onboarding, resource-aware navigation and actual billing
 phase: P4
-status: ready
+status: in_progress
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Complete the W1.2 portfolio UI and W1.3-W1.5 so an operator can add and resume a durable
@@ -94,11 +94,11 @@ steps:
     title:
       Implement persistent onboarding, resource resolution and invitation/settings contracts with
       tenant-safe database behavior.
-    status: pending
+    status: completed
   - id: w1b-002-approved-studio-navigation
     title: Implement the approved studio and brand surfaces with saved draft progress and compatible
       authenticated old links.
-    status: pending
+    status: current
   - id: w1b-003-actual-billing
     title:
       Connect actual workspace billing reads and distinct error/permission states without enabling
@@ -165,11 +165,10 @@ external_effects:
   remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: w1b-001-durable-drafts-and-settings
+  current_step: w1b-002-approved-studio-navigation
   next_action:
-    After W1 foundation completion, run preflight and implement durable onboarding drafts,
-    invitation/settings contracts and authenticated resource resolution using the accepted identity
-    and grant model.
+    Implement persistent onboarding, resource resolution and invitation/settings contracts
+    with tenant-safe database behavior.
   blockers: []
   changed_paths: []
   last_green_checks: []

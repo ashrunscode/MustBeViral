@@ -31,6 +31,15 @@ const fields: Record<string, unknown> = {
   actions: ['brand:read'],
   expected_version: 1,
   time_zone: 'America/Chicago',
+  invitation_id: location,
+  project_id: location,
+  recipient_email: 'recipient@example.test',
+  website_url: 'https://example.test',
+  description: 'Synthetic operator input',
+  audience: 'Synthetic audience',
+  goals: 'Synthetic goals',
+  current_step: 'details',
+  expected_updated_at: '2026-09-10T20:00:00+00:00',
 };
 
 function inputFor(operation: PlatformOperation): PlatformInput<PlatformOperation> {

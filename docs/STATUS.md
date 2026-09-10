@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Saved onboarding, resource-aware navigation and actual billing (planned) |
+| Phase | P4 — Saved onboarding, resource-aware navigation and actual billing (in_progress) |
 | Active packet | `WP-PLATFORM-W1-002` |
-| Current step | `w1b-001-durable-drafts-and-settings` |
+| Current step | `w1b-002-approved-studio-navigation` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-After W1 foundation completion, run preflight and implement durable onboarding drafts, invitation/settings contracts and authenticated resource resolution using the accepted identity and grant model.
+Implement persistent onboarding, resource resolution and invitation/settings contracts with tenant-safe database behavior.

@@ -414,6 +414,72 @@ export type Database = {
           },
         ];
       };
+      brand_onboarding_drafts: {
+        Row: {
+          audience: string;
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          current_step: string;
+          description: string;
+          goals: string;
+          id: string;
+          origin_studio_id: string;
+          updated_at: string;
+          updated_by: string;
+          version: number;
+          website_url: string;
+          workspace_id: string;
+        };
+        Insert: {
+          audience?: string;
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          current_step?: string;
+          description?: string;
+          goals?: string;
+          id?: string;
+          origin_studio_id: string;
+          updated_at?: string;
+          updated_by: string;
+          version?: number;
+          website_url?: string;
+          workspace_id: string;
+        };
+        Update: {
+          audience?: string;
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          current_step?: string;
+          description?: string;
+          goals?: string;
+          id?: string;
+          origin_studio_id?: string;
+          updated_at?: string;
+          updated_by?: string;
+          version?: number;
+          website_url?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_onboarding_drafts_origin_studio_id_fkey';
+            columns: ['origin_studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'brand_onboarding_drafts_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: true;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
       brands: {
         Row: {
           created_at: string;
@@ -1739,6 +1805,72 @@ export type Database = {
           },
         ];
       };
+      studio_invitations: {
+        Row: {
+          accepted_at: string | null;
+          accepted_by: string | null;
+          accepted_membership_version: number | null;
+          created_at: string;
+          created_by: string;
+          expires_at: string;
+          id: string;
+          owner_membership_id: string;
+          recipient_email: string;
+          revoked_at: string | null;
+          role: string;
+          status: string;
+          studio_id: string;
+          version: number;
+        };
+        Insert: {
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          accepted_membership_version?: number | null;
+          created_at?: string;
+          created_by: string;
+          expires_at?: string;
+          id?: string;
+          owner_membership_id: string;
+          recipient_email: string;
+          revoked_at?: string | null;
+          role: string;
+          status?: string;
+          studio_id: string;
+          version?: number;
+        };
+        Update: {
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          accepted_membership_version?: number | null;
+          created_at?: string;
+          created_by?: string;
+          expires_at?: string;
+          id?: string;
+          owner_membership_id?: string;
+          recipient_email?: string;
+          revoked_at?: string | null;
+          role?: string;
+          status?: string;
+          studio_id?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'studio_invitations_owner_membership_id_fkey';
+            columns: ['owner_membership_id'];
+            isOneToOne: false;
+            referencedRelation: 'studio_memberships';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'studio_invitations_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       studio_memberships: {
         Row: {
           created_at: string;
@@ -2256,7 +2388,29 @@ export type Database = {
         };
         Returns: Json;
       };
+      platform_onboarding_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
       platform_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
+      platform_setup_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_setup_query: {
         Args: { p_input: Json; p_operation: string };
         Returns: Json;
       };
