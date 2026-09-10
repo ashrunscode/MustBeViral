@@ -1,0 +1,20 @@
+{
+  "classification": "LOCAL_RENDER_SPIKE_NOT_APPROVED_PUBLICATION",
+  "renderer": "pinned Playwright Chromium",
+  "browserVersion": "149.0.7827.55",
+  "width": 1080,
+  "height": 1350,
+  "sourceHashes": {
+    "washbodega-logo.webp": "d929e5a55c2cb35a18d78151384601d76188164b7cd9bb78a0901f5a53f8ce0d",
+    "washbodega-storefront.webp": "85e514bf810d177eee8389f59f2cb25000174a1e0176caa5736392fcc3b484ab"
+  },
+  "firstRenderSha256": "5a516906ea68b23861c07dfe16be98d64f2baed12bb69898e8977f3d9c6f1697",
+  "secondRenderSha256": "5a516906ea68b23861c07dfe16be98d64f2baed12bb69898e8977f3d9c6f1697",
+  "text": "Laundry on your schedule.\n\nYour neighborhood laundry. Customer access 24/7.",
+  "limits": [
+    "Same host/browser/font rendering only; cross-runtime determinism unproved.",
+    "Original media source bytes retained; no generative provider called.",
+    "Brand facts and rights require approval; no live delivery.",
+    "No durable render worker, R2 upload, cost ledger or video encode proved."
+  ]
+}

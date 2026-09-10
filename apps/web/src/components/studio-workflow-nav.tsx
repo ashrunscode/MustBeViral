@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import {
+  isCampaignWorkflowStep,
   writeCampaignProgress,
-  type CampaignWorkflowStep,
 } from '../features/campaign/campaign-progress';
 
 const workflowSteps = [
@@ -34,10 +34,10 @@ export function StudioWorkflowNav({ workspace }: Readonly<{ workspace: string }>
 
   useEffect(() => {
     const step = workflowSteps.find((entry) => workflowStepIsActive(pathSegment, entry.segment));
-    if (step === undefined) return;
+    if (step === undefined || !isCampaignWorkflowStep(step.segment)) return;
     writeCampaignProgress({
       workspace,
-      step: step.segment as CampaignWorkflowStep,
+      step: step.segment,
       campaignLabel: 'Current launch pack',
     });
   }, [pathSegment, workspace]);

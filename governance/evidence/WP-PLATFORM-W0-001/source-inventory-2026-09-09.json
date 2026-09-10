@@ -1,0 +1,271 @@
+{
+  "routes": [
+    "apps/web/app/forgot-password/page.tsx",
+    "apps/web/app/login/page.tsx",
+    "apps/web/app/maintenance/page.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/app/reset-password/page.tsx",
+    "apps/web/app/signup/page.tsx",
+    "apps/web/app/studio/[workspace]/(workflow)/brief/page.tsx",
+    "apps/web/app/studio/[workspace]/(workflow)/canvas/page.tsx",
+    "apps/web/app/studio/[workspace]/(workflow)/quote/page.tsx",
+    "apps/web/app/studio/[workspace]/(workflow)/receipt/page.tsx",
+    "apps/web/app/studio/[workspace]/(workflow)/review/compare/page.tsx",
+    "apps/web/app/studio/[workspace]/(workflow)/review/page.tsx",
+    "apps/web/app/studio/[workspace]/access/page.tsx",
+    "apps/web/app/studio/[workspace]/billing/page.tsx",
+    "apps/web/app/studio/[workspace]/internal/page.tsx",
+    "apps/web/app/studio/[workspace]/skills/page.tsx",
+    "apps/web/app/studio/continue/page.tsx",
+    "apps/web/app/studio/page.tsx",
+    "apps/web/app/unauthorized/page.tsx",
+    "apps/web/app/verify-email/page.tsx"
+  ],
+  "contracts": [
+    "packages/contracts/src/client.test.ts",
+    "packages/contracts/src/client.ts",
+    "packages/contracts/src/commands.ts",
+    "packages/contracts/src/fail-evaluation.test.ts",
+    "packages/contracts/src/fail-evaluation.ts",
+    "packages/contracts/src/handlers.test.ts",
+    "packages/contracts/src/handlers.ts",
+    "packages/contracts/src/http.integration.test.ts",
+    "packages/contracts/src/http.test.ts",
+    "packages/contracts/src/http.ts",
+    "packages/contracts/src/index.ts",
+    "packages/contracts/src/launch-pack-qa.ts",
+    "packages/contracts/src/launch-pack.test.ts",
+    "packages/contracts/src/launch-pack.ts",
+    "packages/contracts/src/mcp.production.test.ts",
+    "packages/contracts/src/mcp.test.ts",
+    "packages/contracts/src/mcp.ts",
+    "packages/contracts/src/p1b-handlers.test.ts",
+    "packages/contracts/src/p1b-handlers.ts",
+    "packages/contracts/src/p1b-parity.test.ts",
+    "packages/contracts/src/p1b.ts",
+    "packages/contracts/src/ports.ts",
+    "packages/contracts/src/responses.test.ts",
+    "packages/contracts/src/responses.ts",
+    "packages/contracts/src/rest.test.ts",
+    "packages/contracts/src/rest.ts",
+    "packages/contracts/src/scopes.test.ts",
+    "packages/contracts/src/scopes.ts"
+  ],
+  "migrations": [
+    "supabase/migrations/20260712000000_cleanroom_bootstrap.sql",
+    "supabase/migrations/20260719010000_p0_authoritative_schema.sql",
+    "supabase/migrations/20260719020000_p0_invariants_rls_and_grants.sql",
+    "supabase/migrations/20260719030000_p0_hardened_rpcs.sql",
+    "supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql",
+    "supabase/migrations/20260727000000_p0_webhook_event_dedup.sql",
+    "supabase/migrations/20260728000000_p0_webhook_claim_lifecycle.sql",
+    "supabase/migrations/20260728010000_p0_provider_outbox_dispatch.sql",
+    "supabase/migrations/20260728020000_p0_artifact_ingest_export.sql",
+    "supabase/migrations/20260728030000_p0_seedance_pro_fast_repoint.sql",
+    "supabase/migrations/20260729000000_p0_price_catalog_retirement_transition.sql",
+    "supabase/migrations/20260729010000_p0_openrouter_copy_catalog_v2.sql",
+    "supabase/migrations/20260729020000_p0_create_quote_openrouter_copy_route.sql",
+    "supabase/migrations/20260730000000_p0_submission_requires_capture_proof.sql",
+    "supabase/migrations/20260730010000_p0_reap_dead_dispatch.sql",
+    "supabase/migrations/20260730020000_p0_app_tier_idempotency.sql",
+    "supabase/migrations/20260730030000_p0_run_cancellation.sql",
+    "supabase/migrations/20260730040000_p0_refund_run_capture.sql",
+    "supabase/migrations/20260730050000_p0_flux_kontext_pro_repoint.sql",
+    "supabase/migrations/20260730060000_p0_dispatch_wave_readiness.sql",
+    "supabase/migrations/20260730070000_p0_dispatch_brief_and_upstream.sql",
+    "supabase/migrations/20260730080000_p0_copy_terminal_path.sql",
+    "supabase/migrations/20260731000000_p0_approval_produces_approved_output.sql",
+    "supabase/migrations/20260731010000_p0_reap_stranded_synchronous_jobs.sql",
+    "supabase/migrations/20260731020000_p0_readiness_safeupdate_fix.sql",
+    "supabase/migrations/20260802020000_p0_dispatch_epoch_and_stranded_sweeper.sql",
+    "supabase/migrations/20260811000000_p0_poll_reconciliation_run_exit.sql",
+    "supabase/migrations/20260811114946_p0_global_spend_exposure_audit.sql",
+    "supabase/migrations/20260811132914_p0_golden_20_defect_audit.sql",
+    "supabase/migrations/20260817140000_p0_webhook_provider_error_code.sql",
+    "supabase/migrations/20260818120000_p0_pending_input_artifact_upload.sql",
+    "supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql",
+    "supabase/migrations/20260830170000_p1a_kill_switch_stripe_rpcs.sql",
+    "supabase/migrations/20260830180000_p1a_stripe_wallet_settlement.sql",
+    "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql",
+    "supabase/migrations/20260831130000_p1b_programmatic_auth_rpcs.sql",
+    "supabase/migrations/20260831140000_p3_start_run_barrier_outbox_event_id.sql",
+    "supabase/migrations/20260902000000_production_rls_advisor_hardening.sql",
+    "supabase/migrations/20260902154759_production_disabled_binding_hardening.sql",
+    "supabase/migrations/20260910000000_platform_baseline_subscription_audit_identity.sql"
+  ],
+  "databaseTests": [
+    "supabase/tests/database/00000_cleanroom_bootstrap.test.sql",
+    "supabase/tests/database/00001_p0_schema_security.test.sql",
+    "supabase/tests/database/00002_p0_cross_tenant_rls.test.sql",
+    "supabase/tests/database/00003_p0_barrier_and_invariants.test.sql",
+    "supabase/tests/database/00004_p0_pooled_identity_reset.test.sql",
+    "supabase/tests/database/00005_p0_user_command_rpcs.test.sql",
+    "supabase/tests/database/00006_p0_create_quote.test.sql",
+    "supabase/tests/database/00007_p0_webhook_event_dedup.test.sql",
+    "supabase/tests/database/00008_p0_webhook_claim_lifecycle.test.sql",
+    "supabase/tests/database/00009_p0_settlement.test.sql",
+    "supabase/tests/database/00010_p0_provider_outbox_dispatch.test.sql",
+    "supabase/tests/database/00011_p0_artifact_ingest_export.test.sql",
+    "supabase/tests/database/00012_p0_seedance_pro_fast_repoint.test.sql",
+    "supabase/tests/database/00013_p0_price_catalog_retirement_transition.test.sql",
+    "supabase/tests/database/00014_p0_create_quote_openrouter_copy_route.test.sql",
+    "supabase/tests/database/00015_p0_submission_requires_capture_proof.test.sql",
+    "supabase/tests/database/00016_p0_reap_dead_dispatch.test.sql",
+    "supabase/tests/database/00017_p0_app_tier_idempotency.test.sql",
+    "supabase/tests/database/00018_p0_run_cancellation.test.sql",
+    "supabase/tests/database/00019_p0_dispatch_wave_readiness.test.sql",
+    "supabase/tests/database/00020_p0_copy_terminal_path.test.sql",
+    "supabase/tests/database/00021_p0_privileged_rpc_grants.test.sql",
+    "supabase/tests/database/00022_p0_approval_and_export.test.sql",
+    "supabase/tests/database/00023_p0_dispatch_epoch_staggered_promotion.test.sql",
+    "supabase/tests/database/00024_p0_poll_reconciliation_run_exit.test.sql",
+    "supabase/tests/database/00025_p0_global_spend_exposure_audit.test.sql",
+    "supabase/tests/database/00026_p0_golden_20_defect_audit.test.sql",
+    "supabase/tests/database/00027_p0_webhook_provider_error_code.test.sql",
+    "supabase/tests/database/00028_p0_pending_input_artifact_upload.test.sql",
+    "supabase/tests/database/00029_p1a_stripe_wallet_credit.test.sql",
+    "supabase/tests/database/00029_p1a_stripe_wallet_settlement.test.sql",
+    "supabase/tests/database/00030_p1b_api_keys_oauth_skills.test.sql",
+    "supabase/tests/database/00031_p1b_programmatic_auth_rpcs.test.sql",
+    "supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql",
+    "supabase/tests/database/00033_p1b_immutable_skill_versions.test.sql",
+    "supabase/tests/database/00034_p2_collaboration_checkpoint_revision.test.sql",
+    "supabase/tests/database/00035_production_rls_advisor_hardening.test.sql",
+    "supabase/tests/database/00036_production_disabled_binding_hardening.test.sql"
+  ],
+  "browserTests": [
+    "apps/web/e2e/campaign-resume-recovery.spec.ts",
+    "apps/web/e2e/canvas-perf.spec.ts",
+    "apps/web/e2e/canvas-stress.spec.ts",
+    "apps/web/e2e/cleanroom.spec.ts",
+    "apps/web/e2e/final-ui.spec.ts",
+    "apps/web/e2e/operator-self-session.spec.ts",
+    "apps/web/e2e/staging-authenticated.spec.ts"
+  ],
+  "tables": [
+    {
+      "table": "public.workspaces",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.workspace_memberships",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.briefs",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.brand_kits",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.projects",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.canvases",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.canvas_revisions",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.provider_registrations",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.price_catalog_versions",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.model_routes",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.model_route_prices",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.quotes",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.runs",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.run_nodes",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.attempts",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.provider_jobs",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.artifacts",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.artifact_lineage",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.cost_reservations",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.ledger_transactions",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.idempotency_records",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.audit_events",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.outbox_events",
+      "migration": "supabase/migrations/20260719010000_p0_authoritative_schema.sql"
+    },
+    {
+      "table": "public.provider_webhook_events",
+      "migration": "supabase/migrations/20260727000000_p0_webhook_event_dedup.sql"
+    },
+    {
+      "table": "public.stripe_webhook_events",
+      "migration": "supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql"
+    },
+    {
+      "table": "public.workspace_billing_profiles",
+      "migration": "supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql"
+    },
+    {
+      "table": "public.api_keys",
+      "migration": "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql"
+    },
+    {
+      "table": "public.oauth_clients",
+      "migration": "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql"
+    },
+    {
+      "table": "public.oauth_access_tokens",
+      "migration": "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql"
+    },
+    {
+      "table": "public.skills",
+      "migration": "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql"
+    },
+    {
+      "table": "public.skill_versions",
+      "migration": "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql"
+    }
+  ]
+}

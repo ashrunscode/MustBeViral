@@ -12,14 +12,14 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Platform baseline, prototypes and feasibility (planned) |
+| Phase | P4 — Platform baseline, prototypes and feasibility (blocked) |
 | Active packet | `WP-PLATFORM-W0-001` |
 | Current step | `w0-002-baseline-and-recovery` |
 | Release target | `full-platform` |
 | Pending decisions | None |
-| Blockers | None |
+| Blockers | Local Docker engine and Postgres unavailable; supabase:test fails to connect. Automatic approval review rejected exact dockerInference endpoint removal as blocked by policy. Operator recovery required; SQL repairs remain unverified. |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Run preflight, inventory existing routes and contracts, then reproduce navigation/billing/styling and inherited database failures in the local test environment.
+Restore local Docker/Supabase, apply the pending local migration and pass all 38 pgTAP suites before completing W0 and activating W1.

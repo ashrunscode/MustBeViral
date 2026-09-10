@@ -55,6 +55,7 @@ Lightfield tokens in `.superdesign/design-system.md` are the system. The SuperDe
 3. A new live surface needs named HTML frames, desktop and mobile captures, and explicit operator approval before its production components ship.
 4. Composed Review frames at `.superdesign/hifi/composed-review-desktop.html` and `composed-review-mobile.html` were operator-approved on 2026-08-17. Live worker Review implements that layout. Preview fixtures stay on Review Approval.
 5. Do not require `.superdesign/init/` freshness as a production block; that analysis is historical.
+6. Full-platform frames `.superdesign/hifi/platform-studio-desktop.html` and `platform-studio-mobile.html`, using WashBodega and the owner-selected UnPile second brand, were operator-approved on 2026-09-09: “Approve revised visual direction”. Their studio, brand draft/findings, asset library, campaign, content review and recovery direction is accepted. The approval evidence and captures are in `governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md`. Durable behavior, accessibility, connected data, publication rights and release checks still require their packet-specific proof.
 
 ## Accessibility contract
 

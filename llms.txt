@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W0-001
 current_step: w0-002-baseline-and-recovery
-next_action: Run preflight, inventory existing routes and contracts, then reproduce navigation/billing/styling and inherited database failures in the local test environment.
+next_action: Restore local Docker/Supabase, apply the pending local migration and pass all 38 pgTAP suites before completing W0 and activating W1.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

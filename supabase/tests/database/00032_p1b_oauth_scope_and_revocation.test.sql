@@ -150,15 +150,21 @@ select ok(
 reset role;
 set local role service_role;
 
-select ok(
-  (
-    public.issue_oauth_access_token(
+-- Capture the public RPC result while acting as the issuing service. Authenticated
+-- owners must revoke through that returned identifier, never by reading token hashes.
+select set_config(
+  'test.oauth_token_id',
+  (public.issue_oauth_access_token(
       'mbv_client_fixture_01',
       'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
       'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
       statement_timestamp() + interval '1 hour'
-    ) ->> 'ok'
-  )::boolean,
+    ) ->> 'token_id'),
+  true
+);
+
+select ok(
+  current_setting('test.oauth_token_id')::uuid is not null,
   'issue_oauth_access_token mints a scoped access token'
 );
 
@@ -175,15 +181,16 @@ select is(
 set local role authenticated;
 set local request.jwt.claim.sub = 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee1';
 
+select is(
+  pg_temp.error_of('select id from public.oauth_access_tokens'),
+  '42501:permission denied for table oauth_access_tokens',
+  'authenticated owners cannot read the private token table'
+);
+
 select ok(
   (
     public.revoke_oauth_access_token(
-      (
-        select id
-        from public.oauth_access_tokens
-        where token_hash = 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
-        limit 1
-      ),
+      current_setting('test.oauth_token_id')::uuid,
       'oauth-token-revoke-request'
     ) ->> 'revoked_at'
   ) is not null,

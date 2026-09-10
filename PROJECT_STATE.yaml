@@ -4,17 +4,20 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: brand_operators_and_multi_brand_studios
-project_state: active
+project_state: blocked
 phase:
   id: P4
   title: Platform baseline, prototypes and feasibility
-  state: planned
+  state: blocked
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W0-001
-next_action: Run preflight, inventory existing routes and contracts, then reproduce
-  navigation/billing/styling and inherited database failures in the local test environment.
+next_action: Restore local Docker/Supabase, apply the pending local migration and pass all 38 pgTAP
+  suites before completing W0 and activating W1.
 decisions_pending: []
-blockers: []
+blockers:
+  - Local Docker engine and Postgres unavailable; supabase:test fails to connect. Automatic approval
+    review rejected exact dockerInference endpoint removal as blocked by policy. Operator recovery
+    required; SQL repairs remain unverified.
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21

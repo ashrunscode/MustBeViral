@@ -49,6 +49,15 @@ insert into public.workspaces (
   25000000
 );
 
+-- Direct workspace fixtures do not execute create_workspace's membership insert.
+insert into public.workspace_memberships (workspace_id, user_id, role, status)
+values (
+  '54000000-0000-4000-8000-000000000001',
+  'ffffffff-ffff-4fff-8fff-fffffffffff2',
+  'owner',
+  'active'
+);
+
 insert into public.projects (
   id, workspace_id, name, created_by
 ) values (

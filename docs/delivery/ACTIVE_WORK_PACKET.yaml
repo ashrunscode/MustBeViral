@@ -3,7 +3,7 @@ id: WP-PLATFORM-W0-001
 spec_revision: 1
 title: Platform baseline, prototypes and feasibility
 phase: P4
-status: ready
+status: blocked
 priority: critical
 branch: codex/viralgraph-cleanroom
 objective: Complete the Wave 0 baseline, failure reproduction, reviewable studio/brand prototypes
@@ -96,58 +96,66 @@ steps:
     title:
       Inventory existing capability/evidence and reproduce baseline UI and database failures with
       bounded repairs.
-    status: pending
+    status: current
   - id: w0-004-studio-brand-prototypes
     title: Produce and inspect desktop/mobile studio-to-brand-to-review frames and record the visual
       review state.
-    status: pending
+    status: completed
   - id: w0-005-integration-render-feasibility
     title:
       Record bounded publishing and source-first rendering feasibility, selected local approach and
       external dependencies.
-    status: pending
+    status: completed
   - id: w0-006-foundation-handoff
     title: Verify baseline evidence and ready W1 foundation successor without claiming missing
       human/provider acceptance.
-    status: pending
+    status: completed
 acceptance:
   automated:
     - id: baseline-traceability
       criterion:
         Every baseline capability and reported failure has concrete code/test/browser evidence
         and a truthful evidence classification.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
     - id: database-baseline
       criterion: Run local migration/pgTAP verification; repair reproducible inherited failures and
         document exact unavailable dependencies without replacing connected proof with fixtures.
-      status: pending
-      evidence: []
+      status: failed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
     - id: reviewable-prototypes
       criterion: Named HTML frames and desktop/mobile captures support the complete walkthrough with
         loading, empty, error, recovery and cross-brand context; no approval is inferred.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
     - id: feasibility-and-foundation
       criterion:
         Dated provider/render capability evidence and a ready W1 packet identify the selected
         local approach, missing access and the exact prerequisites for dependent implementation.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
+        - governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
   manual: []
 quality_gates:
   - id: design
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
   - id: repository
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
 rollback:
   strategy: Revert bounded baseline repairs and local prototype additions while preserving evidence
     and immutable history. No production or provider mutations occur. New foundation migrations are
@@ -158,12 +166,42 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: w0-002-baseline-and-recovery
-  next_action: Run preflight, inventory existing routes and contracts, then reproduce
-    navigation/billing/styling and inherited database failures in the local test environment.
-  blockers: []
-  changed_paths: []
-  last_green_checks: []
+  next_action:
+    Restore local Docker/Supabase, apply the pending local migration and pass all 38 pgTAP
+    suites before completing W0 and activating W1.
+  blockers:
+    - Local Docker engine and Postgres unavailable; supabase:test fails to connect. Automatic
+      approval review rejected exact dockerInference endpoint removal as blocked by policy. Operator
+      recovery required; SQL repairs remain unverified.
+  changed_paths:
+    - apps/web/src/features/campaign/campaign-progress.ts
+    - apps/web/src/components/studio-workflow-nav.tsx
+    - apps/web/src/features/collaboration/use-collaboration-session.ts
+    - apps/web/e2e/campaign-resume-recovery.spec.ts
+    - apps/web/e2e/cleanroom.spec.ts
+    - supabase/migrations/20260910000000_platform_baseline_subscription_audit_identity.sql
+    - supabase/tests/database/00029_p1a_stripe_wallet_settlement.test.sql
+    - supabase/tests/database/00032_p1b_oauth_scope_and_revocation.test.sql
+    - supabase/tests/database/00034_p2_collaboration_checkpoint_revision.test.sql
+    - .superdesign/hifi/platform-studio-desktop.html
+    - .superdesign/hifi/platform-studio-mobile.html
+    - .superdesign/hifi/platform-studio.js
+    - .superdesign/hifi/platform-studio.css
+    - docs/ux/EXPERIENCE_CONTRACT.md
+    - package.json
+    - governance/format-evidence.ignore
+    - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
+  last_green_checks:
+    - pnpm agent:verify (143 governance, 925 unit, 26 integration tests; 18 build tasks)
+    - 'Targeted Playwright: 34 passing cases'
+    - 'Revised WashBodega/UnPile prototype: 16 screen checks'
+    - W1 successor schema, authority and prospective-state validation
 completion:
-  successor_packet_id: null
-  evidence_paths: []
+  successor_packet_id: WP-PLATFORM-W1-001
+  evidence_paths:
+    - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
+    - governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
+    - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
   completed_at: null

@@ -1,0 +1,90 @@
+{
+  "observedAt": "2026-09-10T00:27:01.058Z",
+  "classification": "LOCAL_DESIGN_ONLY",
+  "results": [
+    {
+      "width": 1440,
+      "view": "studio",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "brand",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "findings",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "assets",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "campaign",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "review",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "recovery",
+      "images": true
+    },
+    {
+      "width": 1440,
+      "view": "second-brand-review",
+      "crossBrandLeak": false,
+      "errors": [],
+      "external": []
+    },
+    {
+      "width": 390,
+      "view": "studio",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "brand",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "findings",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "assets",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "campaign",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "review",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "recovery",
+      "images": true
+    },
+    {
+      "width": 390,
+      "view": "second-brand-review",
+      "crossBrandLeak": false,
+      "errors": [],
+      "external": []
+    }
+  ]
+}
