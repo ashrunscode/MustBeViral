@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-W1-002
-spec_revision: 1
+spec_revision: 2
 title: Saved onboarding, resource-aware navigation and actual billing
 phase: P4
 status: in_progress
@@ -34,6 +34,8 @@ depends_on:
   - WP-PLATFORM-W1-001
 scope:
   allowed_paths:
+    - AGENTS.md
+    - .agents/skills/build-mustbeviral/SKILL.md
     - apps/web/**
     - apps/core/**
     - apps/cli/**
