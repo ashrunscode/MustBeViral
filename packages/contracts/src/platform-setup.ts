@@ -15,6 +15,8 @@ import {
   list,
   BrandRecordSchema,
   PlatformActionSchema,
+  StudioRecordSchema,
+  StudioMemberRecordSchema,
 } from './platform-models';
 
 const website = z
@@ -87,6 +89,29 @@ const rpc = 'platform_setup' as const;
 
 /** Setup operations use the same handler and transport generators as portfolio identity. */
 export const PLATFORM_SETUP_OPERATIONS = {
+  list_brand_studios: {
+    rpc: 'platform_presentation',
+    method: 'GET',
+    path: '/workspaces/{workspace_id}/brands/{brand_id}/studios',
+    input: z.object({ ...brand, limit: page.limit, cursor: page.cursor }).strict(),
+    output: list(StudioRecordSchema),
+  },
+  list_studio_team: {
+    rpc: 'platform_presentation',
+    method: 'GET',
+    path: '/studios/{studio_id}/team',
+    input: z.object({ ...studio, limit: page.limit, cursor: page.cursor }).strict(),
+    output: list(StudioMemberRecordSchema.extend({ display_label: z.string().min(1).max(254) })),
+  },
+  get_studio_access: {
+    rpc: 'platform_presentation',
+    method: 'GET',
+    path: '/studios/{studio_id}/access',
+    input: z.object(studio).strict(),
+    output: z
+      .object({ studio: StudioRecordSchema, role: z.enum(['owner', 'editor', 'viewer']) })
+      .strict(),
+  },
   initialize_brand_draft: {
     rpc: 'platform_onboarding',
     method: 'POST',
@@ -211,5 +236,25 @@ export const PLATFORM_SETUP_OPERATIONS = {
       .object({ ...workspace, ...identity, expected_updated_at: WireTimestampSchema })
       .strict(),
     output: single(WorkspaceSettingsSchema),
+  },
+  get_workspace_billing: {
+    rpc: 'platform_billing',
+    method: 'GET',
+    path: '/workspaces/{workspace_id}/billing',
+    input: z.object(workspace).strict(),
+    output: z
+      .object({
+        workspace_id: uuid,
+        profile_present: z.boolean(),
+        charging_enabled: z.boolean(),
+        subscription_status: z
+          .enum(['none', 'trialing', 'active', 'past_due', 'canceled'])
+          .nullable(),
+        wallet_balance_micros: z.string().regex(/^\d+$/u).nullable(),
+        ledger_wallet_available_micros: z.string().regex(/^\d+$/u),
+        usage_expense_micros: z.string().regex(/^\d+$/u),
+        balances_match: z.boolean().nullable(),
+      })
+      .strict(),
   },
 } as const;

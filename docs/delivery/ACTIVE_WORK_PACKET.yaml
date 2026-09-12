@@ -100,17 +100,17 @@ steps:
   - id: w1b-002-approved-studio-navigation
     title: Implement the approved studio and brand surfaces with saved draft progress and compatible
       authenticated old links.
-    status: current
+    status: completed
   - id: w1b-003-actual-billing
     title:
       Connect actual workspace billing reads and distinct error/permission states without enabling
       charging.
-    status: pending
+    status: completed
   - id: w1b-004-journeys-and-successor
     title:
       Verify desktop/mobile two-brand onboarding, navigation and billing journeys and prepare the
       bounded W2 sourcing successor.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: saved-two-brand-onboarding
@@ -167,13 +167,37 @@ external_effects:
   remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: w1b-002-approved-studio-navigation
+  current_step: w1b-004-journeys-and-successor
   next_action:
-    Implement persistent onboarding, resource resolution and invitation/settings contracts
-    with tenant-safe database behavior.
+    Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and
+    billing, then prepare WP-PLATFORM-W2-001.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - apps/web/app/layout.tsx
+    - apps/web/app/studio
+    - apps/web/src/features/platform
+    - packages/contracts/src/platform-setup.ts
+    - packages/contracts/src/platform-setup.test.ts
+    - packages/contracts/openapi/core.v1.json
+    - packages/db/src/database.generated.ts
+    - packages/db/scripts/start-platform-local.mjs
+    - packages/db/scripts/verify-platform-setup-connected.mjs
+    - supabase/migrations/20260910180000_platform_studio_presentation.sql
+    - supabase/migrations/20260910190000_platform_context_directory.sql
+    - supabase/migrations/20260910200000_platform_workspace_billing.sql
+    - supabase/tests/database/00041_platform_presentation_directory.test.sql
+    - supabase/tests/database/00042_platform_workspace_billing.test.sql
+    - apps/core/test/unit/platform-port.test.ts
+    - governance/evidence/WP-PLATFORM-W1-002/studio-navigation-and-billing-2026-09-11.md
+  last_green_checks:
+    - pnpm supabase:test
+    - pnpm --filter @mustbeviral/contracts test
+    - pnpm --filter @mustbeviral/web lint
+    - pnpm --filter @mustbeviral/web typecheck
+    - pnpm generated:check
+    - node packages/db/scripts/verify-platform-connected.mjs
+    - node packages/db/scripts/verify-platform-setup-connected.mjs
+
 completion:
   successor_packet_id: WP-PLATFORM-W2-001
   evidence_paths: []

@@ -29,6 +29,61 @@ describe('platform user-scoped database port', () => {
       'Bearer synthetic-user-jwt',
     );
   });
+  it('selects presentation queries from registry metadata with the original JWT', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+      Response.json({
+        studio: {
+          id: workspace,
+          name: 'Directory studio',
+          slug: 'directory-studio',
+          status: 'active',
+          version: 1,
+          created_by: context.actor_id,
+          created_at: '2026-09-10T20:00:00.000Z',
+          updated_at: '2026-09-10T20:00:00.000Z',
+        },
+        role: 'owner',
+      }),
+    );
+    const result = await createPlatformHandlers(
+      createPlatformPort(bindings, 'synthetic-user-jwt', fetcher),
+    ).execute('get_studio_access', { studio_id: workspace }, context);
+    expect(result.status).toBe('ok');
+    expect(fetcher.mock.calls[0]?.[0]).toBe(
+      'http://127.0.0.1:54321/rest/v1/rpc/platform_presentation_query',
+    );
+    expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('authorization')).toBe(
+      'Bearer synthetic-user-jwt',
+    );
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toEqual({
+      p_operation: 'get_studio_access',
+      p_input: { studio_id: workspace },
+    });
+  });
+  it('selects billing queries from registry metadata with the original JWT', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+      Response.json({
+        workspace_id: workspace,
+        profile_present: false,
+        charging_enabled: false,
+        subscription_status: null,
+        wallet_balance_micros: null,
+        ledger_wallet_available_micros: '0',
+        usage_expense_micros: '0',
+        balances_match: null,
+      }),
+    );
+    const result = await createPlatformHandlers(
+      createPlatformPort(bindings, 'synthetic-user-jwt', fetcher),
+    ).execute('get_workspace_billing', { workspace_id: workspace }, context);
+    expect(result.status).toBe('ok');
+    expect(fetcher.mock.calls[0]?.[0]).toBe(
+      'http://127.0.0.1:54321/rest/v1/rpc/platform_billing_query',
+    );
+    expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('authorization')).toBe(
+      'Bearer synthetic-user-jwt',
+    );
+  });
   it('forwards the caller JWT and never accepts an actor ID as RPC authorization', async () => {
     const fetcher = vi
       .fn<typeof fetch>()

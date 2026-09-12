@@ -240,6 +240,15 @@ try {
   assert.deepEqual(accepted[0], accepted[1]);
   results.push('simultaneous matching acceptance: one membership and one durable accepted receipt');
   await userTransaction(sql, owner, async (tx) => {
+    const [access] =
+      await tx`select public.platform_presentation_query('get_studio_access',${tx.json({ studio_id: studio.id })}) as result`;
+    assert.equal(access.result.role, 'owner');
+    const [contexts] =
+      await tx`select public.platform_presentation_query('list_brand_studios',${tx.json({ workspace_id: wb.brand.workspace_id, brand_id: wb.brand.id })}) as result`;
+    assert.equal(contexts.result.items.length, 1);
+  });
+  results.push('presentation reads: owner studio access and WashBodega studio context');
+  await userTransaction(sql, owner, async (tx) => {
     await command(
       tx,
       'revoke_studio_member',
@@ -273,7 +282,11 @@ try {
         .filter((line) => /ERROR:|FATAL:/u.test(line))
         .join('\n') + '\n',
     );
-  if (error.code) process.stderr.write(`${error.message}\n`);
+  if (error.code) {
+    process.stderr.write(
+      `${error.message}${error.detail ? ` (${error.detail})` : ''}${error.where ? ` at ${error.where}` : ''}\n`,
+    );
+  }
   process.exitCode = 1;
 } finally {
   await Promise.all(sessions.map((sql) => sql.end({ timeout: 5 })));

@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-W1-002` (in_progress). Current step: `w1b-002-approved-studio-navigation`.
+Current packet: `WP-PLATFORM-W1-002` (in_progress). Current step: `w1b-004-journeys-and-successor`.
 
 | Authority topic | Document | Path |
 |---|---|---|
