@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
   title: 'MustBeViral Studio',
-  description: 'DTC campaign launch packs powered by ViralGraph.',
+  description: 'A shared studio for brands, creative work and reviewed campaigns.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

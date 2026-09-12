@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W1-002
-next_action: Implement the approved studio and brand surfaces with saved draft progress and compatible authenticated old links.
+next_action: Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and billing, then prepare WP-PLATFORM-W2-001.
 decisions_pending: []
 blockers: []
 legacy:

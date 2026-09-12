@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `brand_operators_and_multi_brand_studios` |
 | Phase | P4 — Saved onboarding, resource-aware navigation and actual billing (in_progress) |
 | Active packet | `WP-PLATFORM-W1-002` |
-| Current step | `w1b-002-approved-studio-navigation` |
+| Current step | `w1b-004-journeys-and-successor` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement persistent onboarding, resource resolution and invitation/settings contracts with tenant-safe database behavior.
+Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and billing, then prepare WP-PLATFORM-W2-001.

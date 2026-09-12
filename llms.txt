@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W1-002
-current_step: w1b-002-approved-studio-navigation
-next_action: Implement persistent onboarding, resource resolution and invitation/settings contracts with tenant-safe database behavior.
+current_step: w1b-004-journeys-and-successor
+next_action: Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and billing, then prepare WP-PLATFORM-W2-001.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
