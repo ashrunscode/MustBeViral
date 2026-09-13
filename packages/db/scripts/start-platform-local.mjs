@@ -1,7 +1,8 @@
 import { execFileSync, spawn } from 'node:child_process';
 import { createWriteStream, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { setTimeout as delay } from 'node:timers/promises';
+import { fileURLToPath, URL } from 'node:url';
 import process from 'node:process';
 
 import { localSupabaseDatabase } from './local-supabase.mjs';
@@ -44,7 +45,8 @@ function localChildEnv(extra) {
 function parseJsonObject(text) {
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
-  if (start < 0 || end <= start) throw new Error('Expected local Supabase status JSON is unavailable.');
+  if (start < 0 || end <= start)
+    throw new Error('Expected local Supabase status JSON is unavailable.');
   return JSON.parse(text.slice(start, end + 1));
 }
 
@@ -142,12 +144,12 @@ async function ready(url, label) {
   const deadline = Date.now() + 60000;
   while (Date.now() < deadline) {
     try {
-      const response = await fetch(url, { method: 'GET' });
+      const response = await globalThis.fetch(url, { method: 'GET' });
       if (response.ok || response.status === 404) return;
     } catch {
       // Retry until the child accepts local connections.
     }
-    await new Promise((resolveWait) => setTimeout(resolveWait, 500));
+    await delay(500);
   }
   throw new Error(`${label} did not become ready.`);
 }
