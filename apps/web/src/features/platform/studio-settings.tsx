@@ -2,7 +2,7 @@
 import type { FormEvent } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformRecovery } from './platform-frame';
-import { PlatformRequestError, platformErrorMessage } from './platform-client';
+import { PlatformRequestError, platformMutationErrorMessage } from './platform-client';
 import { usePlatformMutation } from './platform-mutation';
 
 export function StudioSettings({
@@ -48,7 +48,7 @@ export function StudioSettings({
         </fieldset>
         {mutation.error !== undefined && (
           <p role="alert" className="platform-error">
-            {platformErrorMessage(mutation.error)}
+            {platformMutationErrorMessage(mutation.error)}
           </p>
         )}
         <p className="platform-muted">

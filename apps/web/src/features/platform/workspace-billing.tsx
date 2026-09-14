@@ -33,7 +33,7 @@ export function WorkspaceBillingView({ data }: Readonly<{ data: Billing }>) {
   const usageLabel = formatUsdMicros(parseWireMicros(data.usage_expense_micros));
   return (
     <div className="platform-app">
-      <main id="platform-main" className="platform-main">
+      <main id="main-content" className="platform-main">
         <PlatformHeading
           title="Workspace billing."
           description="These totals come from this workspace’s saved wallet and ledger. Charging stays off until it is separately authorized."

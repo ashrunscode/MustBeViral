@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
-import { platformErrorMessage, PlatformRequestError } from './platform-client';
+import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
 import { brandHref, isResourceId } from './platform-navigation';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
@@ -208,7 +208,7 @@ function LocationForm({
       )}
       {mutation.error !== undefined && (
         <p role="alert" className="platform-error">
-          {platformErrorMessage(mutation.error)}
+          {platformMutationErrorMessage(mutation.error)}
         </p>
       )}
       {record && !readOnly && (

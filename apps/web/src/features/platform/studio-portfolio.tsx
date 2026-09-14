@@ -10,7 +10,7 @@ import {
   PlatformRecovery,
 } from './platform-frame';
 import { brandHref, isResourceId, studioHref } from './platform-navigation';
-import { platformErrorMessage, PlatformRequestError } from './platform-client';
+import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
 import { StudioTeam } from './studio-team';
@@ -110,7 +110,7 @@ function StudioChooser() {
           </fieldset>
           {mutation.error !== undefined && (
             <p role="alert" className="platform-error">
-              {platformErrorMessage(mutation.error)}
+              {platformMutationErrorMessage(mutation.error)}
             </p>
           )}
         </form>
@@ -180,6 +180,7 @@ function SelectedStudio({
     true,
   );
   const [adding, setAdding] = useState(false);
+  const [teamNotice, setTeamNotice] = useState('');
   if (access.loading)
     return (
       <PlatformFrame>
@@ -202,7 +203,13 @@ function SelectedStudio({
         </div>
       )}
       {view === 'team' ? (
-        <StudioTeam studio={studio} role={role} refresh={access.refresh} />
+        <StudioTeam
+          studio={studio}
+          role={role}
+          refresh={access.refresh}
+          notice={teamNotice}
+          onNotice={setTeamNotice}
+        />
       ) : view === 'settings' ? (
         <StudioSettings studio={studio} role={role} refresh={access.refresh} />
       ) : (
@@ -343,7 +350,7 @@ function NewBrand({ studioId }: Readonly<{ studioId: string }>) {
       </fieldset>
       {mutation.error !== undefined && (
         <p role="alert" className="platform-error">
-          {platformErrorMessage(mutation.error)}
+          {platformMutationErrorMessage(mutation.error)}
         </p>
       )}
     </form>

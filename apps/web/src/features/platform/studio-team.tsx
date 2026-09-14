@@ -2,7 +2,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
-import { platformErrorMessage, PlatformRequestError } from './platform-client';
+import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
 
@@ -10,10 +10,14 @@ export function StudioTeam({
   studio,
   role,
   refresh,
+  notice,
+  onNotice,
 }: Readonly<{
   studio: PlatformOutput<'get_studio'>['record'];
   role: string;
   refresh: () => void;
+  notice: string;
+  onNotice: (message: string) => void;
 }>) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -33,13 +37,12 @@ export function StudioTeam({
     role === 'owner',
   );
   const mutation = usePlatformMutation();
-  const [notice, setNotice] = useState('');
   if (role !== 'owner')
     return (
       <PlatformRecovery error={new PlatformRequestError('FORBIDDEN', 'Owner access required')} />
     );
   function changed(message: string) {
-    setNotice(message);
+    onNotice(message);
     members.refresh();
     invitations.refresh();
     refresh();
@@ -103,7 +106,8 @@ export function StudioTeam({
       )}
       {mutation.error !== undefined && (
         <div role="alert" className="platform-note platform-error">
-          {platformErrorMessage(mutation.error)} <button onClick={refresh}>Refresh team</button>
+          {platformMutationErrorMessage(mutation.error)}{' '}
+          <button onClick={refresh}>Refresh team</button>
         </div>
       )}
       <div className="platform-section">

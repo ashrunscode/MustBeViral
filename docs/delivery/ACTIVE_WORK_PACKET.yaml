@@ -119,45 +119,69 @@ acceptance:
         concurrent edits and interrupted saves; no browser-storage substitute or fabricated
         analysis.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-coverage-gap-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-harness-repair-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/browser-receipt.json
     - id: tenant-resource-navigation
       criterion:
         Desktop/mobile navigation, brand switches, direct/old links, back/forward and archived or
         missing resources resolve only permitted identities. Revoked grants, forged child IDs and
         stale responses cannot display another brand or re-enable a forbidden action.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-coverage-gap-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-harness-repair-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/browser-receipt.json
     - id: invitations-and-permissions
       criterion:
         Invitation creation/replay, expiry, exact recipient acceptance, revoked membership, stale
         role changes and unauthorized grant escalation are tested in handlers and pgTAP. Local
         delivery uses explicit synthetic fixtures and sends no outreach.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-coverage-gap-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-harness-repair-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/browser-receipt.json
     - id: truthful-billing-and-accessibility
       criterion: Billing reads match actual seeded integer ledger balances and subscription records;
         missing, unavailable and denied states are distinct. Desktop/mobile behavior, keyboard,
         accessibility and approved visual direction pass without enabling spending or charging.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-coverage-gap-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/journeys-harness-repair-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/browser-receipt.json
   manual: []
 quality_gates:
   - id: database
     command: pnpm supabase:test
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/verification-receipt.json
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/verification-receipt.json
   - id: design
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/verification-receipt.json
   - id: repository
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/verification-receipt.json
 rollback:
   strategy: Revert application changes while retaining additive drafts, invitations and durable
     mappings. Confirm old workspace, project, execution and ledger commands still work. Do not
@@ -168,9 +192,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: w1b-004-journeys-and-successor
-  next_action:
-    Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and
-    billing, then prepare WP-PLATFORM-W2-001.
+  next_action: Coordinate the local database lane, then close interrupted in-flight save, delayed
+    stale-response, mapped old-link and keyboard/accessibility/approved-design proof using the
+    connected two-brand harness; keep w1b-004 current and W2-001 inactive.
   blockers: []
   changed_paths:
     - apps/web/app/layout.tsx
@@ -189,6 +213,41 @@ handoff:
     - supabase/tests/database/00042_platform_workspace_billing.test.sql
     - apps/core/test/unit/platform-port.test.ts
     - governance/evidence/WP-PLATFORM-W1-002/studio-navigation-and-billing-2026-09-11.md
+    - apps/web/e2e/platform-connected.spec.ts
+    - apps/web/src/features/platform/platform-client.ts
+    - apps/web/src/features/platform/studio-team.tsx
+    - apps/web/src/features/platform/platform-client.test.ts
+    - apps/web/src/features/platform/platform-frame.test.tsx
+    - apps/web/src/features/platform/workspace-billing.test.tsx
+    - packages/db/scripts/platform-journey-fixtures.ts
+    - governance/evidence/WP-PLATFORM-W1-002/journeys-coverage-gap-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/journeys-harness-repair-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/successor-WP-PLATFORM-W2-001.yaml
+    - PROJECT_STATE.yaml
+    - apps/core/.dev.vars.example
+    - apps/web/src/features/platform/brand-draft-editor.tsx
+    - apps/web/src/features/platform/brand-locations.tsx
+    - apps/web/src/features/platform/brand-settings.tsx
+    - apps/web/src/features/platform/studio-portfolio.tsx
+    - apps/web/src/features/platform/studio-settings.tsx
+    - apps/web/src/features/platform/workspace-billing.tsx
+    - docs/STATUS.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - llms.txt
+    - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
+    - supabase/tests/database/00037_platform_identity_and_backfill.test.sql
+    - supabase/tests/database/00039_platform_saved_setup.test.sql
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/browser-receipt.json
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/verification-receipt.json
   last_green_checks:
     - pnpm supabase:test
     - pnpm --filter @mustbeviral/contracts test
@@ -197,7 +256,13 @@ handoff:
     - pnpm generated:check
     - node packages/db/scripts/verify-platform-connected.mjs
     - node packages/db/scripts/verify-platform-setup-connected.mjs
-
+    - pnpm agent:preflight
+    - pnpm governance:check
+    - pnpm design:check
+    - pnpm agent:verify
+    - pnpm verify
+    - pnpm exec playwright test --config playwright.config.ts
+      apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --project=mobile-chromium
 completion:
   successor_packet_id: WP-PLATFORM-W2-001
   evidence_paths: []
