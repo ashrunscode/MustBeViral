@@ -1,0 +1,86 @@
+schema_version: 1
+packet_id: WP-PLATFORM-W2-001
+spec_revision: 1
+phase: P4
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-14T23:51:02.177Z
+successor_packet_id: WP-PLATFORM-W2-002
+predecessor_head: f826952ebd9e0bdcf125a4bd6715bf2f0ba2d793
+closed_packet_path: governance/evidence/WP-PLATFORM-W2-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+  - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
+  - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
+    sha256: b1d7b91fedc4d0c9943b45b8ca6ef44eda8123c60e52cfba438c5d95b08ac7e7
+    git_blob_oid: 1ba5024a0be8282426c52e4e33c46cbdc055ec11
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
+    sha256: d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182
+    git_blob_oid: b5ac32ff9cc071e015353d27b4e3940aa3f6182e
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
+    sha256: 0b034a1bbb1fd92c729970cc68fb8de07a2ecb088a5e5fbcf6f4a7891514e617
+    git_blob_oid: 6742a12e908e1894e1ab10829dfae54d2dc47f9b
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
+    sha256: 1829d4d8bd4dcf58bcc1b72c16a098653e2ff51af81a959175938f1c5dad334e
+    git_blob_oid: e48d264004b23325080c41672d72b91f559d7c79
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
+    sha256: d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182
+    git_blob_oid: b5ac32ff9cc071e015353d27b4e3940aa3f6182e
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
+    sha256: 95d6b72ec66ff1840e735929236a8779448bbd46a1ac3817006519271eb62c6c
+    git_blob_oid: 22455e53408ccc0b0e00fb9ba1c92109374984bd
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
+    sha256: 78ead2bad0d9b1ae73acdd9c041eb24eb3553a76d36059ec85d07faaa90b1f24
+    git_blob_oid: fefd74debd87cbdd1f529ac23e7a1ea42318dcdc
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
+    sha256: 922e0924539726b4f82b64f68d317b9bcb2f157659a686e321fcad40bab7ed2b
+    git_blob_oid: f40fc7384c8c8f319ce8481143b1926783ee8444
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
+    sha256: 1bd04ab3ba8f81d4e2fea381b8e981f12a72db22cd3c6b0799565fdca44f5bf4
+    git_blob_oid: 4acbcdd4f8fe9102b2fb09531317e3e77cfe37d1
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
+    sha256: d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182
+    git_blob_oid: b5ac32ff9cc071e015353d27b4e3940aa3f6182e
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
+    sha256: 3965f982b99118561fb7df25ac7b6830d02624b4b32f46c00a369b52cfbc73eb
+    git_blob_oid: bcd199724b4d229a495fb391d2c0842e19c4c3d9
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
+    sha256: 303d190f2f8168b7977fa325adbc0bdbf5b63858cdac7bcc5eb0979346d0a63f
+    git_blob_oid: 0c2a75823932a705b2f3ff384d7e89b229d6363d
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
+    sha256: d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182
+    git_blob_oid: b5ac32ff9cc071e015353d27b4e3940aa3f6182e
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
+    sha256: 44106f1ec5c4dffbf22663c81ae617b74c76bc01a03f56667488497e5fd6ab28
+    git_blob_oid: 1cf61597c44e1e2907e914982ba931359e430d17
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    sha256: ab1685066e676481ecb9aef58742c5e3e1ed340328f842523c3e5051ac2275d5
+    git_blob_oid: d229406ba41f556ca94d75507bc69372164b5edd
+  - path: governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+    sha256: 428b5d39e92f7d1d6805fa57b61b705e919323651475364e597fda553abae9ba
+    git_blob_oid: e4ec3cf0e7ade26fd574dc7b2472e34413e8e297
+  - path: governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
+    sha256: 3fb8a81974db904de313ba15301883dcf1a6ebacedd05201f9d15f6316f2a039
+    git_blob_oid: a2ee2d0de8c365ae798d4119e9ac5835348036e5
+completed_step_ids:
+  - w2a-001-source-ingestion-contracts
+  - w2a-002-extraction-provenance
+  - w2a-003-reviewable-knowledge-drafts
+  - w2a-004-journeys-and-successor
+closed_packet_sha256: 12db704dae83b58231e318fa7956dbbb9688e6aadb313f66b3f91e7582fc7a58

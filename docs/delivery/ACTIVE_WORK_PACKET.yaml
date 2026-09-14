@@ -1,16 +1,18 @@
 schema_version: 1
-id: WP-PLATFORM-W2-001
+id: WP-PLATFORM-W2-002
 spec_revision: 1
-title: Bounded website and document sourcing with reviewable knowledge drafts
+title: Representative extraction, voice proposals and owner-approved brand versions
 phase: P4
-status: in_progress
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: Implement W2.1 sourcing plus provenance-backed unapproved brand knowledge drafts so an
-  operator can capture a website or document for WashBodega and UnPile, inspect where each finding
-  came from, and correct a reviewable draft without treating extraction as approved knowledge.
-  Preserve W1 studio, brand, invitation and billing contracts. No outreach, provider runs, charging
-  or Stripe mutation.
+objective: Implement W2.2 representative extraction quality, W2.3 voice/audience/positioning
+  proposals and W2.4 owner-approved brand versions on W2.1 captures so an operator can extract
+  offerings, locations, facts, offers, visual candidates and language, review
+  voice/audience/positioning proposals with evidence and confidence, and approve an exact immutable
+  brand version for WashBodega and UnPile. Preserve W1 studio, brand, invitation and billing
+  contracts and W2.1 source capture, provenance, unapproved drafts, manual/no-website parity and
+  immutable corrections. No outreach, provider runs, charging or Stripe mutation.
 authority_refs:
   - product-contract
   - release-scope
@@ -32,7 +34,7 @@ required_skills:
   - frontend-master
   - quality-check
 depends_on:
-  - WP-PLATFORM-W1-002
+  - WP-PLATFORM-W2-001
 scope:
   allowed_paths:
     - apps/web/**
@@ -67,229 +69,140 @@ scope:
     - local-env-secrets
 deliverables:
   - >
-    Add bounded website and document ingestion with safe URL handling, private-network and unsafe
-    redirect denial, timeouts, duplicate capture detection, malformed-file rejection and
-    prompt-injection isolation. Treat fetched content as untrusted evidence.
+    Extract typed offerings, locations, facts, offers, visual candidates and language from existing
+    W2.1 HTML, plaintext and Markdown captures plus deterministic synthetic fixtures. Every
+    assertion keeps source reference, capture time, excerpt, method and tenant/brand identity.
+    Unknowns stay unknown. Do not add PDF/DOCX parsers, live public crawlers, paid-provider
+    inference or reusable campaign assets from website images.
   - >
-    Persist source capture and extraction provenance for every factual candidate, including source
-    reference, capture time, excerpt, method and tenant/brand identity. Unknowns stay unknown.
-    Images found on a website do not become reusable campaign assets.
+    Produce voice, audience and positioning proposals with evidence, confidence and status so a
+    reviewer can distinguish observed facts from hypotheses and correct them. Inferred personas stay
+    labeled. Missing audience or voice evidence is not filled with stereotypes. Proposal generation
+    must not start a provider run or spend.
   - >
-    Produce operator-reviewable, unapproved brand knowledge drafts on existing W1 brand records.
-    Manual correction and businesses without a usable website remain first-class. Do not
-    auto-approve knowledge or claim W2.2 representative-site completeness, W2.3 voice proposals or
-    W2.4 approved brand versions.
+    Deliver editable findings, source review, targeted questions and in-app owner-approved immutable
+    brand versions on existing WashBodega and UnPile brands. Approval is an authorized operator
+    command against one exact version, not a chat permission and not auto-approval. Corrections
+    create a new version. A later campaign pin/read reuses the approved snapshot. Approval must
+    refuse a version that already contains known expired offers or contradictory assertions. That
+    guard is required correctness for W2.4, not W2.5 change detection, expiry lifecycle or catalog
+    import. Preserve W2.1 manual/no-website drafts and immutable corrections.
   - >
-    Preserve W1 resource and permission contracts. No new implicit execution, media, billing,
-    publishing or invitation-mail authority. Integer money and charging kill switches stay
-    unchanged.
+    Preserve W1 resource and permission contracts and W2.1 capture, provenance, unapproved-draft,
+    manual/no-website and correction behavior. No new implicit execution, media, billing,
+    publishing, invitation-mail or queue-driver authority. Integer money and charging kill switches
+    stay unchanged. Images found on a website remain visual candidates until a later asset packet.
   - >
-    Prepare WP-PLATFORM-W2-002 for representative extraction quality, voice/audience/positioning
-    proposals and owner-approved brand versions.
+    Verify desktop and mobile connected WashBodega and UnPile journeys from capture or manual draft
+    through extraction, proposals, correction and owner approval, with independent review evidence,
+    then prepare WP-PLATFORM-W2-003 for W2.5 change detection, expiry, contradiction lifecycle and
+    manual/catalog imports. Do not claim Wave 2 exited or Wave 3 started.
 public_interfaces:
   - >
-    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections.
-    Preserve W1 identity, setup, presentation and billing operations.
+    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections for
+    extract, propose, correct, question, approve-version and pin/read-version commands. Preserve W1
+    identity, setup, presentation and billing operations and W2.1 capture, manual draft and
+    correction operations. Do not add catalog-import or change-monitor commands.
   - >
-    Additive source/provenance/knowledge-draft persistence with explicit ownership, generated
-    database types and application rollback to the prior schema-compatible version.
+    Additive assertion, proposal, brand-version and pin persistence with explicit ownership, forced
+    RLS, generated database types and application rollback to the prior schema-compatible version.
+    Reuse the W2.1 job/source/candidate pattern. Do not add a new queue driver, live enablement
+    flag, scheduled recapture pipeline or catalog-import schema.
 steps:
-  - id: w2a-001-source-ingestion-contracts
-    title: Implement safe website/document capture contracts and tenant-safe persistence.
-    status: completed
-  - id: w2a-002-extraction-provenance
-    title: Record source provenance for captured evidence without approving brand knowledge.
-    status: completed
-  - id: w2a-003-reviewable-knowledge-drafts
-    title: Deliver correctable unapproved knowledge drafts on existing WashBodega and UnPile brands.
-    status: completed
-  - id: w2a-004-journeys-and-successor
-    title: Verify two-brand sourcing journeys and prepare WP-PLATFORM-W2-002.
-    status: current
+  - id: w2b-001-representative-extraction
+    title: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+    status: pending
+  - id: w2b-002-voice-audience-positioning
+    title: Produce evidence-backed voice, audience and positioning proposals with labeled unknowns.
+    status: pending
+  - id: w2b-003-approved-brand-versions
+    title: Deliver targeted questions and in-app owner-approved immutable brand versions.
+    status: pending
+  - id: w2b-004-journeys-and-successor
+    title: Verify two-brand desktop/mobile approval journeys and prepare WP-PLATFORM-W2-003.
+    status: pending
 acceptance:
   automated:
-    - id: safe-source-capture
+    - id: representative-extraction-quality
       criterion:
-        Synthetic WashBodega and UnPile website/document captures persist with bounded jobs.
-        Private-network destinations, unsafe redirects, timeouts, duplicates, malformed files and
-        prompt-injection payloads cannot change permissions, reveal other tenants or create approved
-        knowledge.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
-    - id: provenance-preserving-drafts
-      criterion: Every factual candidate retains source reference, capture time, excerpt and method.
-        Unknowns remain unlabeled as facts. Manual correction survives reload. A brand without a
-        website can reach the same unapproved draft state.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
-    - id: tenant-safe-knowledge-reads
-      criterion: Knowledge drafts and source captures resolve only permitted W1 identities. Revoked
-        grants, forged child IDs and stale responses cannot display another brand's captured
-        evidence.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
-    - id: no-approval-or-spend
+        Deterministic extractors over synthetic HTML/plaintext/Markdown fixtures for WashBodega,
+        UnPile and additional accepted-roadmap category samples persist typed offerings, locations,
+        facts, offers, visual candidates and language with source reference, capture time, excerpt
+        and method. Fields absent from the fixture remain unknown. Visual candidates are not marked
+        reusable. UnPile fixtures cannot produce WashBodega facts and vice versa. Extraction does
+        not call paid inference providers, perform live public crawls, parse PDF/DOCX or treat
+        prompt-injection text as approved knowledge or a permission change.
+      status: pending
+      evidence: []
+    - id: labeled-voice-audience-positioning
       criterion:
-        Extraction never marks brand knowledge approved, never sends outreach, never enables
-        charging and never starts a provider run. Desktop/mobile review of captured evidence stays
-        on the approved studio direction.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+        Voice, audience and positioning proposals store evidence links, confidence and status so
+        tests can list observed facts versus inferred hypotheses. Inferred personas cannot become
+        owner-confirmed without the approval command. Missing audience or voice evidence stays
+        unknown rather than a demographic stereotype. Proposal generation does not start a provider
+        run, send outreach or spend.
+      status: pending
+      evidence: []
+    - id: owner-approved-immutable-versions
+      criterion:
+        An authorized in-app operator command against an exact draft hash creates an immutable
+        brand_version. A later correction creates a new version and does not mutate the approved
+        snapshot. A campaign pin or pin-read RPC returns that approved version's facts after drafts
+        change. Approve refuses a payload that already contains a known expired offer or
+        contradictory assertion. A brand without a website still reaches the same
+        unapproved-then-approved path through existing W2.1 manual draft and correction commands.
+        Direct table writes are denied. Knowledge, proposals and versions resolve only permitted W1
+        identities. Revoked grants, forged child IDs and stale responses cannot approve or display
+        another brand's knowledge. Passing this guard is not W2.5 change-detection, expiry-lifecycle
+        or catalog-import completeness.
+      status: pending
+      evidence: []
+    - id: two-brand-journeys-no-spend
+      criterion:
+        Desktop and mobile connected journeys for WashBodega and UnPile go from W2.1 capture or
+        manual draft through extraction, proposals, correction, targeted questions and owner
+        approval without mixing identity, offers, voice or sources. Independent review evidence is
+        recorded for this packet. Extraction never marks drafts approved by default, never sends
+        outreach, never enables charging, never starts a provider run and never writes production
+        remotes. UI stays on the accepted September 9 Lightfield studio direction.
+      status: pending
+      evidence: []
   manual: []
 quality_gates:
   - id: database
     command: pnpm supabase:test
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    status: pending
+    evidence: []
   - id: design
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    status: pending
+    evidence: []
   - id: repository
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert application changes while retaining additive source and knowledge-draft tables.
-    Confirm W1 studio, brand, invitation, mapping and billing commands still work. Do not delete
-    tenant data, weaken RLS, auto-approve knowledge or enable checkout to simulate recovery.
+  strategy:
+    Revert application changes while retaining additive assertion, proposal, brand-version and
+    pin tables. Confirm W1 studio, brand, invitation, mapping and billing commands and W2.1 capture,
+    provenance, unapproved-draft, manual/no-website and correction commands still work. Do not
+    delete tenant data, weaken RLS, auto-approve knowledge, reuse website images as campaign assets
+    or enable checkout to simulate recovery.
   remote_actions_required: false
 external_effects:
   remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: w2a-004-journeys-and-successor
-  next_action: Run the governed finish transition to activate the prepared WP-PLATFORM-W2-002.
+  current_step: w2b-001-representative-extraction
+  next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
   blockers: []
-  changed_paths:
-    - PROJECT_STATE.yaml
-    - apps/cli/src/exit-codes.ts
-    - apps/core/src/app.ts
-    - apps/core/src/bindings.ts
-    - apps/core/src/composition/platform-knowledge.ts
-    - apps/core/src/composition/source-capture.ts
-    - apps/core/src/composition/source-egress.ts
-    - apps/core/src/composition/source-extract.ts
-    - apps/core/src/composition/source-machine.ts
-    - apps/core/src/data/supabase-data-api.ts
-    - apps/core/src/routes/mcp.ts
-    - apps/core/src/routes/platform.ts
-    - apps/core/src/routes/source-content.ts
-    - apps/core/test/unit/platform-knowledge-port.test.ts
-    - apps/core/test/unit/platform-parity.test.ts
-    - apps/core/test/unit/platform-port.test.ts
-    - apps/core/test/unit/source-capture.test.ts
-    - apps/core/test/unit/source-content-route.test.ts
-    - apps/core/test/unit/source-egress.test.ts
-    - apps/core/tools/source-public-egress-runner.mjs
-    - apps/core/worker-configuration.d.ts
-    - apps/core/wrangler.jsonc
-    - apps/web/e2e/platform-connected.spec.ts
-    - apps/web/e2e/platform-journey-helpers.ts
-    - apps/web/e2e/platform-knowledge-connected.spec.ts
-    - apps/web/src/features/platform/brand-draft-editor.tsx
-    - apps/web/src/features/platform/brand-findings-page.test.ts
-    - apps/web/src/features/platform/brand-findings.tsx
-    - apps/web/src/features/platform/brand-workspace.tsx
-    - apps/web/src/features/platform/platform-client.ts
-    - docs/STATUS.md
-    - docs/architecture/API_MCP_AND_CLI.md
-    - docs/architecture/DATA_AUTH_AND_TENANCY.md
-    - docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md
-    - docs/architecture/SYSTEM_OVERVIEW.md
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/generated/DATABASE_SCHEMA.md
-    - docs/generated/OPENAPI.md
-    - docs/generated/TRACEABILITY.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-    - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
-    - governance/scripts/generate-openapi.ts
-    - llms.txt
-    - packages/contracts/openapi/core.v1.json
-    - packages/contracts/src/http.integration.test.ts
-    - packages/contracts/src/index.ts
-    - packages/contracts/src/platform-knowledge.test.ts
-    - packages/contracts/src/platform-knowledge.ts
-    - packages/contracts/src/platform-transports.ts
-    - packages/contracts/src/platform.ts
-    - packages/contracts/src/source-policy.ts
-    - packages/db/scripts/platform-knowledge-fixture-worker.mjs
-    - packages/db/scripts/start-platform-knowledge-local.mjs
-    - packages/db/scripts/verify-platform-knowledge-connected.mjs
-    - packages/db/scripts/verify-platform-knowledge-fixtures.mjs
-    - packages/db/src/database.generated.ts
-    - packages/domain/src/index.ts
-    - packages/domain/src/source-capture.test.ts
-    - packages/domain/src/source-capture.ts
-    - packages/domain/src/source-url.test.ts
-    - packages/domain/src/source-url.ts
-    - packages/domain/tsconfig.json
-    - supabase/migrations/20260914010000_platform_knowledge.sql
-    - supabase/migrations/20260914020000_platform_knowledge_fk_indexes.sql
-    - supabase/tests/database/00043_platform_knowledge.test.sql
-  last_green_checks:
-    - pnpm agent:verify
-    - pnpm supabase:test
-    - pnpm governance:check
-    - pnpm design:check
-    - pnpm verify
-    - 'W2 desktop/mobile connected journeys: 8 passed'
-    - 'W1 desktop/mobile connected regression: 14 passed'
-    - 'Connected knowledge database: 6 passed'
-    - 'Public-only egress: private targets blocked'
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-PLATFORM-W2-002
-  evidence_paths:
-    - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
+  successor_packet_id: WP-PLATFORM-W2-003
+  evidence_paths: []
   completed_at: null

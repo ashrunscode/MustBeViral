@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
-active_packet: WP-PLATFORM-W2-001
-current_step: w2a-004-journeys-and-successor
-next_action: Run the governed finish transition to activate the prepared WP-PLATFORM-W2-002.
+active_packet: WP-PLATFORM-W2-002
+current_step: w2b-001-representative-extraction
+next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
