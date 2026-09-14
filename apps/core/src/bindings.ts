@@ -58,6 +58,14 @@ export interface CoreBindings extends Omit<
    */
   readonly ARTIFACT_ACCESS_SIGNING_KEY?: string;
   readonly MEDIA_BUCKET: R2Bucket;
+  /**
+   * Optional public-only Fetcher for website capture. Local Wrangler global fetch is not
+   * public-only; capture must use this binding or fail closed. Staging/production may omit it and
+   * use strictly-public global fetch without user credentials.
+   */
+  readonly PUBLIC_EGRESS?: {
+    fetch(input: string | URL | Request, init?: RequestInit): Promise<Response>;
+  };
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;
   /** Stripe test-mode webhook signing secret. Fail-closed when absent. */

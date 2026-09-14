@@ -9,6 +9,7 @@ export * from './mcp';
 export * from './p1b';
 export * from './p1b-handlers';
 export * from './platform';
+export * from './source-policy';
 export * from './platform-transports';
 export * from './ports';
 export * from './rest';

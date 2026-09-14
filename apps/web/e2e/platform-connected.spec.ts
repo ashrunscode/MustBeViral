@@ -14,23 +14,26 @@ import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import {
-  createSyntheticUser,
-  deleteSyntheticUser,
   requireConnectedPlatformServers,
   requireMustBeViralDatabase,
   seedLegacyProject,
   seedProjectBrandMapping,
   seedWorkspaceBilling,
   SEEDED_WALLET_MICROS,
-  SYNTHETIC_JOURNEY_PASSWORD,
 } from '../../../packages/db/scripts/platform-journey-fixtures';
+import {
+  cleanupSyntheticUsers,
+  createStudioAndBrands,
+  FORGED_ID,
+  NOT_FOUND_COPY,
+  registerSyntheticUser,
+  signIn,
+  switchToBrand,
+} from './platform-journey-helpers';
 
 const connected =
   process.env['MBV_PLATFORM_CONNECTED'] === '1' && process.env['MBV_PLAYWRIGHT_EXTERNAL'] === '1';
-const FORGED_ID = '00000000-0000-4000-8000-ffffffffffff';
-const NOT_FOUND_COPY = 'unavailable or your access has changed';
 const createdUsers: Array<{ id: string; email: string }> = [];
-const preservedUsers: Array<{ id: string; email: string; status: number }> = [];
 
 test.use({
   screenshot: 'off',
@@ -51,15 +54,7 @@ test.describe('connected platform journeys', () => {
   test.afterAll(async () => {
     if (!connected || createdUsers.length === 0) return;
     requireMustBeViralDatabase();
-    for (const user of createdUsers) {
-      const result = await deleteSyntheticUser(user.id);
-      if (!result.deleted) preservedUsers.push({ ...user, status: result.status });
-    }
-    if (preservedUsers.length) {
-      process.stderr.write(
-        `Preserved ${preservedUsers.length} synthetic users from this run because cleanup was blocked.\n`,
-      );
-    }
+    await cleanupSyntheticUsers(createdUsers);
   });
 
   test.beforeEach(() => {
@@ -700,109 +695,7 @@ test.describe('connected platform journeys', () => {
 
 async function registerUser(email: string) {
   requireMustBeViralDatabase();
-  const user = await createSyntheticUser(email);
-  createdUsers.push(user);
-  return user;
-}
-
-async function signIn(page: Page, email: string) {
-  // WSL's clock can lead the Windows verifier by a fraction of a second. Wait for
-  // the real synthetic token's issue time; do not relax auth or retry failed APIs.
-  await page.route('**/api/core/v1/**', async (route) => {
-    const authorization = route.request().headers()['authorization'];
-    if (authorization?.startsWith('Bearer ')) {
-      const parts = authorization.slice(7).split('.');
-      const claims = JSON.parse(Buffer.from(parts[1] ?? '', 'base64url').toString()) as {
-        iss?: string;
-        iat?: number;
-      };
-      if (
-        claims.iss !== 'http://127.0.0.1:54321/auth/v1' ||
-        typeof claims.iat !== 'number' ||
-        !Number.isSafeInteger(claims.iat)
-      ) {
-        throw new Error('Synthetic readiness requires a local issued-at claim.');
-      }
-      const issuedAt = claims.iat;
-      const aheadSeconds = issuedAt - Math.floor(Date.now() / 1000);
-      expect(
-        aheadSeconds,
-        'Local clock skew exceeds the fixture readiness bound',
-      ).toBeLessThanOrEqual(3);
-      if (aheadSeconds > 0) {
-        await expect
-          .poll(() => Math.floor(Date.now() / 1000), { timeout: 5000, intervals: [50, 100, 250] })
-          .toBeGreaterThanOrEqual(issuedAt);
-        await test.info().attach('synthetic-session-clock', {
-          body: JSON.stringify({ ahead_seconds: aheadSeconds, ready: true }),
-          contentType: 'application/json',
-        });
-      }
-    }
-    await route.continue();
-  });
-  await page.goto('/login?next=/studio');
-  await page.getByLabel('Email').fill(email);
-  await page.getByLabel('Password').fill(SYNTHETIC_JOURNEY_PASSWORD);
-  await page.getByRole('button', { name: 'Sign in' }).click();
-  await expect(page).toHaveURL((url) => url.pathname === '/studio');
-  await expect(
-    page.getByRole('heading', { name: 'Good work starts with the right context.' }),
-  ).toBeVisible();
-}
-
-function parseBrandLocation(url: string) {
-  const parsed = new URL(url);
-  const match = parsed.pathname.match(/^\/studio\/([0-9a-f-]{36})\/brands\/([0-9a-f-]{36})$/iu);
-  const studioId = parsed.searchParams.get('studio');
-  if (!match?.[1] || !match[2] || !studioId) {
-    throw new Error('Brand location was not returned.');
-  }
-  return { workspaceId: match[1], brandId: match[2], studioId, url };
-}
-
-async function createStudioAndBrands(page: Page) {
-  await page.getByLabel('Studio name').fill(`Synthetic W1 journeys ${randomUUID()}`);
-  await page.getByRole('button', { name: 'Create studio' }).click();
-  await expect(page.getByRole('button', { name: '+ Add a brand' })).toBeVisible({
-    timeout: 60_000,
-  });
-  await page.getByRole('button', { name: '+ Add a brand' }).click();
-  await page.getByLabel('Brand name').fill('WashBodega');
-  await page.getByRole('button', { name: 'Create brand draft' }).click();
-  await expect(
-    page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
-  ).toBeVisible();
-  const washbodega = parseBrandLocation(page.url());
-  await page.getByRole('link', { name: '← All brands' }).click();
-  await page.getByRole('button', { name: '+ Add a brand' }).click();
-  await page.getByLabel('Brand name').fill('UnPile');
-  await page.getByRole('button', { name: 'Create brand draft' }).click();
-  await expect(page.getByRole('heading', { name: 'Make UnPile feel like itself.' })).toBeVisible();
-  const unpile = parseBrandLocation(page.url());
-  await page.goto(washbodega.url);
-  await expect(
-    page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
-  ).toBeVisible();
-  return {
-    washbodegaUrl: washbodega.url,
-    unpileUrl: unpile.url,
-    workspaceId: washbodega.workspaceId,
-    studioId: washbodega.studioId,
-    washbodegaBrandId: washbodega.brandId,
-    unpileWorkspaceId: unpile.workspaceId,
-    unpileBrandId: unpile.brandId,
-  };
-}
-
-async function switchToBrand(page: Page, name: string) {
-  const select = page.getByLabel('Switch brand');
-  await expect(select).toBeVisible({ timeout: 15_000 });
-  await expect(select.locator('option', { hasText: name })).toHaveCount(1, { timeout: 15_000 });
-  await select.selectOption({ label: name });
-  await expect(page.getByRole('heading', { name: `Make ${name} feel like itself.` })).toBeVisible({
-    timeout: 15_000,
-  });
+  return registerSyntheticUser(email, createdUsers);
 }
 
 async function saveDraftDescription(page: Page, value: string) {

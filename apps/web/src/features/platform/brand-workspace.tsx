@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
 import {
   PlatformFrame,
@@ -13,6 +13,7 @@ import { brandHref, isResourceId, studioHref, workspaceBillingHref } from './pla
 import { PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { BrandDraftEditor } from './brand-draft-editor';
+import { BrandFindings } from './brand-findings';
 import { BrandLocations } from './brand-locations';
 import { BrandSettings } from './brand-settings';
 import { BrandStudioChoices } from './legacy-project';
@@ -101,6 +102,12 @@ function BrandResource({
     { studio_id: studioId, limit: 100, ...(switchCursor ? { cursor: switchCursor } : {}) },
     confirmed !== null,
   );
+  const refreshAccess = access.refresh;
+  const refreshStudio = studio.refresh;
+  const onAuthorityLost = useCallback(() => {
+    refreshAccess();
+    refreshStudio();
+  }, [refreshAccess, refreshStudio]);
   const router = useRouter();
   if (studio.error !== undefined || access.error !== undefined)
     return (
@@ -187,13 +194,20 @@ function BrandResource({
           </p>
         )}
         <nav className="platform-tabs" aria-label="Brand navigation">
-          {(['draft', 'locations', 'settings'] as const).map((tab) => (
+          {(['draft', 'findings', 'locations', 'settings'] as const).map((tab) => (
             <Link
               key={tab}
               href={brandHref(studioId, workspaceId, brandId, tab)}
               aria-current={view === tab ? 'page' : undefined}
             >
-              {{ draft: 'Brand draft', locations: 'Locations', settings: 'Settings' }[tab]}
+              {
+                {
+                  draft: 'Brand draft',
+                  findings: 'Findings',
+                  locations: 'Locations',
+                  settings: 'Settings',
+                }[tab]
+              }
             </Link>
           ))}
           {current.workspace_owner && (
@@ -205,7 +219,14 @@ function BrandResource({
             </Link>
           )}
         </nav>
-        {view === 'locations' ? (
+        {view === 'findings' ? (
+          <BrandFindings
+            studioId={studioId}
+            brand={current.brand}
+            canWrite={canWrite}
+            onAuthorityLost={onAuthorityLost}
+          />
+        ) : view === 'locations' ? (
           <BrandLocations
             workspaceId={workspaceId}
             brandId={brandId}

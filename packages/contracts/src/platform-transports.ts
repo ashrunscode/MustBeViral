@@ -9,8 +9,10 @@ import {
 } from './http';
 import { contractSchemaToJsonSchema } from './responses';
 import {
+  PLATFORM_ERRORS,
   PLATFORM_OPERATIONS,
   PLATFORM_OPERATION_NAMES,
+  parsePlatformOperationInput,
   type PlatformInput,
   type PlatformOperation,
   type PlatformOutput,
@@ -33,7 +35,10 @@ export function platformMcpInputSchema(operation: PlatformOperation) {
 export function platformMcpToolCatalog() {
   return PLATFORM_OPERATION_NAMES.map((operation) => ({
     name: operation,
-    description: `${operation.replaceAll('_', ' ')}. Requires a user session and current database permissions.`,
+    description:
+      operation === 'start_document_capture'
+        ? 'Start document capture. CLI and MCP send text_content up to 32768 characters. Larger documents use the REST PUT companion /v1/workspaces/{workspace_id}/brands/{brand_id}/source-jobs/{job_id}/content after claim_document_upload. CLI and MCP do not upload raw files.'
+        : `${operation.replaceAll('_', ' ')}. Requires a user session and current database permissions.`,
     inputSchema: contractSchemaToJsonSchema(platformMcpInputSchema(operation)),
     outputSchema: contractSchemaToJsonSchema(
       createApiSuccessEnvelopeSchema(PLATFORM_OPERATIONS[operation].output),
@@ -58,15 +63,26 @@ export function createPlatformRestClient(options: MustBeViralClientOptions) {
       idempotencyKey?: string,
     ): Promise<PlatformResponse<O>> {
       const definition = PLATFORM_OPERATIONS[operation];
-      const parsed = definition.input.parse(input) as Readonly<Record<string, unknown>>;
+      const parsed = parsePlatformOperationInput(operation, input);
+      if (parsed.status === 'error') {
+        const error = PLATFORM_ERRORS[parsed.code];
+        return {
+          error: {
+            code: parsed.code,
+            message: error.message,
+            request_id: options.createRequestId?.() ?? 'platform-client',
+            retryable: error.retryable,
+          },
+        };
+      }
       const mutation = definition.method !== 'GET';
       if (mutation) IdempotencyKeySchema.parse(idempotencyKey);
       const pathKeys = platformPathKeys(operation);
       const path = definition.path.replace(/\{([a-z_]+)\}/gu, (_, key: string) =>
-        encodeURIComponent(String(parsed[key])),
+        encodeURIComponent(String(parsed.data[key])),
       );
       const rest = Object.fromEntries(
-        Object.entries(parsed).filter(([key]) => !pathKeys.includes(key)),
+        Object.entries(parsed.data).filter(([key]) => !pathKeys.includes(key)),
       );
       const url = new URL(`${options.baseUrl.replace(/\/$/u, '').replace(/\/v1$/u, '')}/v1${path}`);
       if (!mutation)

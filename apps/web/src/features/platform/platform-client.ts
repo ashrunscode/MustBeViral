@@ -60,6 +60,21 @@ export function platformErrorMessage(error: unknown): string {
       return 'Someone saved a newer version. Your edits are still here. Reload the saved version before trying again.';
     if (error.code === 'RESOURCE_ARCHIVED')
       return 'This record is archived, revoked or expired. Refresh to see its current state.';
+    if (error.code === 'SOURCE_UNSAFE')
+      return 'That destination is not a permitted public website.';
+    if (error.code === 'SOURCE_UNSUPPORTED')
+      return 'Use a text, Markdown, or HTML file. PDF and Word files are not supported yet.';
+    if (error.code === 'SOURCE_MALFORMED')
+      return 'That file could not be read as a supported document.';
+    if (error.code === 'SOURCE_TOO_LARGE') return 'That source is larger than the capture limit.';
+    if (error.code === 'SOURCE_TIMEOUT')
+      return 'The website did not respond in time. You can retry.';
+    if (error.code === 'SOURCE_UNREACHABLE')
+      return 'The website could not be retrieved. You can retry.';
+    if (error.code === 'SOURCE_INTERRUPTED')
+      return 'Capture stopped before it finished. You can retry.';
+    if (error.code === 'SOURCE_EGRESS_UNAVAILABLE')
+      return 'Website capture is not configured in this environment.';
     if (error.code === 'INTERNAL_ERROR') return UNAVAILABLE_REQUEST;
     return error.message;
   }

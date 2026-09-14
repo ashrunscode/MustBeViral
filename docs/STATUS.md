@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Bounded website and document sourcing with reviewable knowledge drafts (planned) |
+| Phase | P4 — Bounded website and document sourcing with reviewable knowledge drafts (in_progress) |
 | Active packet | `WP-PLATFORM-W2-001` |
-| Current step | `w2a-001-source-ingestion-contracts` |
+| Current step | `w2a-004-journeys-and-successor` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-After W1-002 completion, run preflight and implement bounded website/document capture contracts with tenant-safe persistence and private-network denial.
+Run the governed finish transition to activate the prepared WP-PLATFORM-W2-002.

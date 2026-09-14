@@ -101,8 +101,23 @@ function rpcFailureKind(error: SupabasePostgrestError): SupabaseFailureKind | nu
     return 'forbidden';
   }
   if (message.includes('NOT_FOUND')) return 'not_found';
-  if (message.includes('VALIDATION_FAILED') || error.code?.startsWith('22') === true) {
+  if (
+    message.includes('VALIDATION_FAILED') ||
+    message.includes('SOURCE_UNSAFE') ||
+    message.includes('SOURCE_UNSUPPORTED') ||
+    message.includes('SOURCE_MALFORMED') ||
+    message.includes('SOURCE_TOO_LARGE') ||
+    error.code?.startsWith('22') === true
+  ) {
     return 'validation';
+  }
+  if (
+    message.includes('SOURCE_TIMEOUT') ||
+    message.includes('SOURCE_UNREACHABLE') ||
+    message.includes('SOURCE_INTERRUPTED') ||
+    message.includes('SOURCE_EGRESS_UNAVAILABLE')
+  ) {
+    return 'internal';
   }
   return null;
 }
@@ -143,6 +158,14 @@ export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataA
     'REVISION_CONFLICT',
     'RESOURCE_CONFLICT',
     'RESOURCE_ARCHIVED',
+    'SOURCE_UNSAFE',
+    'SOURCE_UNSUPPORTED',
+    'SOURCE_MALFORMED',
+    'SOURCE_TOO_LARGE',
+    'SOURCE_TIMEOUT',
+    'SOURCE_UNREACHABLE',
+    'SOURCE_INTERRUPTED',
+    'SOURCE_EGRESS_UNAVAILABLE',
   ]);
   return new SupabaseDataApiError(
     mapped.kind,

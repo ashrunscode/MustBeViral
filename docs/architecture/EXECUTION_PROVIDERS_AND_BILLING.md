@@ -14,6 +14,8 @@ The platform reuses the Core Worker, transactional Postgres outbox, immediate po
 - Unique event, attempt, provider request, webhook, artifact, and ledger keys make duplicate delivery safe.
 - External calls never occur inside a database transaction.
 
+W2.1 website/document capture uses `brand_source_jobs` with a 20-second lease, not `provider_jobs` or a new queue. Core fetches on a public-only egress capability after the user command commits, then the service_role `record_brand_source_capture` RPC persists evidence. Local development does not fall back to unrestricted `fetch` when that capability is missing.
+
 New durable workflows require proven multi-step waits/retries. New queue topology requires measured backpressure or fan-out. A separate executor requires a recorded architecture decision, workload benchmark, security boundary, costs and rollback. Existing coordination objects remain recoverable drafts, not durable authority.
 
 ## State machines and ownership

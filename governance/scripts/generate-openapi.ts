@@ -22,6 +22,7 @@ import {
   P1B_OPERATION_DATA_SCHEMAS,
   PLATFORM_OPERATIONS,
   PLATFORM_OPERATION_NAMES,
+  SOURCE_DOCUMENT_UPLOAD_HTTP,
   platformPathKeys,
   PublishSkillBodySchema,
   QuoteRunBodySchema,
@@ -312,6 +313,12 @@ function buildOpenApi() {
     (paths[path] ??= {})[definition.method.toLowerCase()] = {
       operationId: name,
       summary: summary(name),
+      ...(name === 'start_document_capture'
+        ? {
+            description:
+              'CLI and MCP send text_content up to 32768 characters. Larger documents use the REST PUT companion after claim_document_upload. CLI and MCP do not upload raw files.',
+          }
+        : {}),
       security: [{ bearerAuth: [] }],
       parameters,
       ...(mutation
@@ -340,6 +347,69 @@ function buildOpenApi() {
       },
     };
   }
+
+  const upload = SOURCE_DOCUMENT_UPLOAD_HTTP;
+  const uploadPath = `/v1${upload.path}`;
+  const uploadSuccess = 'PutSourceJobContentPlatformResponse';
+  schemas[uploadSuccess] = contractSchemaToJsonSchema(
+    createApiSuccessEnvelopeSchema(PLATFORM_OPERATIONS.start_website_capture.output),
+  );
+  (paths[uploadPath] ??= {}).put = {
+    operationId: 'put_source_job_content',
+    summary: 'Put source job document bytes',
+    description: `Authorized raw document upload after claim_document_upload. Bounded to ${String(upload.maxBytes)} bytes, ${upload.mediaTypes.join(', ')}, a ${String(upload.deadlineMs)} ms deadline, and a ${String(upload.leaseSeconds)}s lease. Available on REST and web only. CLI and MCP send start_document_capture.text_content up to ${String(upload.textContentMaxChars)} characters and do not upload raw files.`,
+    security: [{ bearerAuth: [] }],
+    parameters: [
+      {
+        in: 'path',
+        name: 'workspace_id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      },
+      {
+        in: 'path',
+        name: 'brand_id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      },
+      {
+        in: 'path',
+        name: 'job_id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      },
+      {
+        in: 'header',
+        name: 'X-Request-Id',
+        required: false,
+        schema: { type: 'string', minLength: 8, maxLength: 128 },
+      },
+    ],
+    requestBody: {
+      required: true,
+      content: Object.fromEntries(
+        upload.mediaTypes.map((mediaType) => [
+          mediaType,
+          { schema: { type: 'string', format: 'binary', maxLength: upload.maxBytes } },
+        ]),
+      ),
+    },
+    responses: {
+      '200': {
+        description: 'Capture completed.',
+        content: {
+          'application/json': { schema: { $ref: `#/components/schemas/${uploadSuccess}` } },
+        },
+      },
+      default: {
+        description:
+          'Typed API error including SOURCE_TIMEOUT, SOURCE_TOO_LARGE, SOURCE_UNSUPPORTED, SOURCE_MALFORMED, SOURCE_INTERRUPTED, FORBIDDEN, and NOT_FOUND.',
+        content: {
+          'application/json': { schema: { $ref: '#/components/schemas/ApiErrorEnvelope' } },
+        },
+      },
+    },
+  };
 
   return {
     openapi: '3.1.0',

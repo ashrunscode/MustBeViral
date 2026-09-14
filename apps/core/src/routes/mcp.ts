@@ -3,7 +3,7 @@ import {
   productionMcpHandlers,
   productionMcpToolCatalog,
   isPlatformOperation,
-  platformMcpInputSchema,
+  PLATFORM_OPERATIONS,
   platformMcpToolCatalog,
   type PlatformHandlers,
   type HandlerContext,
@@ -314,27 +314,18 @@ async function handlePost(
   if (request.method === 'tools/call') {
     const params = isRecord(request.params) ? request.params : {};
     if (typeof params.name === 'string' && isPlatformOperation(params.name)) {
-      const parsed = platformMcpInputSchema(params.name).safeParse(params.arguments);
-      if (!parsed.success)
-        return context.json(
-          rpcResult(
-            request.id,
-            mcpToolResult(
-              context,
-              safeError(context, 'VALIDATION_FAILED', 'The request is invalid.'),
-              true,
-            ),
-          ),
-          200,
-        );
-      const { idempotency_key: key, ...input } = parsed.data as Record<string, unknown>;
+      const argumentsValue = isRecord(params.arguments) ? params.arguments : {};
+      const mutation = PLATFORM_OPERATIONS[params.name].method !== 'GET';
+      const { idempotency_key, ...rest } = argumentsValue;
+      const input = mutation ? rest : argumentsValue;
+      const key = mutation && typeof idempotency_key === 'string' ? idempotency_key : undefined;
       const result = await invokePlatform(
         context,
         authentication.actor,
         authentication.callerJwt,
         params.name,
         input,
-        typeof key === 'string' ? key : undefined,
+        key,
         dependencies.platformHandlers,
       );
       return context.json(

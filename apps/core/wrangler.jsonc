@@ -3,7 +3,9 @@
   "name": "mustbeviral-v2-development-core",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-12",
-  "compatibility_flags": ["nodejs_compat"],
+  // global_fetch_strictly_public applies on Cloudflare (staging/production). Local workerd does
+  // not honor it; website capture must use PUBLIC_EGRESS or fail closed, never unrestricted fetch.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": false,
   "preview_urls": false,
   "vars": {
