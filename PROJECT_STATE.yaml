@@ -7,12 +7,12 @@ launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P4
-  title: Saved onboarding, resource-aware navigation and actual billing
-  state: in_progress
+  title: Bounded website and document sourcing with reviewable knowledge drafts
+  state: planned
 release_target: full-platform
-active_work_packet: WP-PLATFORM-W1-002
-next_action: All W1 acceptance is proven and independently reviewed. Commit the verified
-  predecessor, then run pnpm agent:finish with the prepared WP-PLATFORM-W2-001 successor.
+active_work_packet: WP-PLATFORM-W2-001
+next_action: After W1-002 completion, run preflight and implement bounded website/document capture
+  contracts with tenant-safe persistence and private-network denial.
 decisions_pending: []
 blockers: []
 legacy:
@@ -39,10 +39,55 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-10T21:26:22.073Z
+  at: 2026-09-14T18:29:47.444Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-PLATFORM-W1-001/ownership-mapping-2026-09-10.md
-    - governance/evidence/WP-PLATFORM-W1-001/verification-2026-09-10.md
-    - governance/evidence/WP-PLATFORM-W1-001/local-verification-2026-09-10.json
-    - governance/evidence/WP-PLATFORM-W1-001/successor-WP-PLATFORM-W1-002.yaml
+    - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W1-002/successor-WP-PLATFORM-W2-001.yaml
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-brand-draft.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-reduced-motion.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-zoom-200.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-forced-colors-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/independent-review.md
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-brand-draft.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-reduced-motion.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-zoom-200.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-forced-colors-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/stack-stop-receipt.json
