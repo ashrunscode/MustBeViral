@@ -22,6 +22,10 @@ export function exitCodeForApiError(code: string): number {
     case 'GRAPH_INVALID':
     case 'QUOTE_EXPIRED':
     case 'QUOTE_STALE':
+    case 'SOURCE_UNSAFE':
+    case 'SOURCE_UNSUPPORTED':
+    case 'SOURCE_MALFORMED':
+    case 'SOURCE_TOO_LARGE':
       return CLI_EXIT_CODES.validation;
     case 'IDEMPOTENCY_CONFLICT':
     case 'REVISION_CONFLICT':
@@ -31,6 +35,10 @@ export function exitCodeForApiError(code: string): number {
     case 'MODEL_UNAVAILABLE':
     case 'PROVIDER_REJECTED':
     case 'PROVIDER_AMBIGUOUS':
+    case 'SOURCE_TIMEOUT':
+    case 'SOURCE_UNREACHABLE':
+    case 'SOURCE_INTERRUPTED':
+    case 'SOURCE_EGRESS_UNAVAILABLE':
       return CLI_EXIT_CODES.provider;
     default:
       return CLI_EXIT_CODES.internal;

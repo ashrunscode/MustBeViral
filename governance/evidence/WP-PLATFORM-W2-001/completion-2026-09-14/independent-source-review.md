@@ -1,0 +1,42 @@
+I will verify the repaired snapshot against the original five findings and the new attempt fence, using only the listed index and reports.I will now read the mapper, SQL lease fence, PUT path, OpenAPI generator, and the new tests.## Verdict: **source review passed, connected validation pending**
+
+Reviewed `C:\dev\bootstrap\mustbeviral-grok-w2a001-20260914\source-repaired-index.json` (base `ea835215e3bd4c028950005a1b55d3323d403261`, captured `2026-09-14T22:05:01.644Z`) against the checkout. Hashes were not recomputed.
+
+No remaining source bugs in the repaired snapshot. Original five findings are closed. The extra per-attempt fence is real, not a correlation-ID rename.
+
+---
+
+### Repair-by-repair
+
+| Item                                  | Verdict                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Completion error envelopes**     | **Fixed.** `mapCompletedSourceCapture` (`packages/contracts/src/platform.ts` 340–363) returns `captured`/`duplicate` as ok; `failed`/`rejected` + known `failure_code` as that error **with no `data`**; leftover `capturing`/`queued`/`awaiting_bytes` after expected completion as `SOURCE_INTERRUPTED`. Website/inline document (`platform-knowledge.ts` 33, 61, 81) and PUT persist (`source-content.ts` 142–144) use it. REST/CLI/MCP tests assert code **and** HTTP status (`platform-parity.test.ts` 191–287: `SOURCE_UNSAFE` 400, `SOURCE_TIMEOUT` 504).                                                                                                                                                                                                                                                                                         |
+| **2. Tenant R2 key + safe final URL** | **Fixed.** SQL requires exact `brand-sources/{workspace}/{brand}/{source_id}` (`20260914010000_platform_knowledge.sql` 756–758). Website origin/final must pass `public_https_destination`; document origin/final must be empty (737–748). pgTAP denies cross-tenant key and `https://127.0.0.1/secret` (113–150). Matching trusted complete still succeeds.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **3. `SOURCE_UNSAFE` mapping**        | **Fixed.** URL `superRefine` issues `SOURCE_UNSAFE` (`platform-knowledge.ts` 13–20). `parsePlatformOperationInput` is shared by handlers, REST client, and MCP (`mcp.ts` 319–330 strips `idempotency_key` then uses handlers). Extra fields stay `VALIDATION_FAILED`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **4. Binary PUT contract**            | **Fixed.** `SOURCE_DOCUMENT_UPLOAD_HTTP` is rest/web only (`platform-knowledge.ts` 247–257). Generator emits `PUT /v1/.../source-jobs/{job_id}/content` (`generate-openapi.ts` 351–409; `core.v1.json` 3912–3975). MCP `start_document_capture` copy says CLI/MCP do not upload raw files. PUT is not a CLI/MCP tool. Platform loop is unchanged; extra route is appended.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| **5. Viewer + same-actor replay**     | **Fixed.** Replay without write is `NOT_FOUND` before returning payload (`platform_knowledge.sql` 479–482). New writes without a row still `FORBIDDEN` (504–506). pgTAP: same editor key `editor-site` after revoke → `P0002:NOT_FOUND` (292–295); viewer draft id equals stored owner `test.draft_id` (270–299).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **Additional P1: per-attempt fence**  | **Fixed.** `X-Request-ID` / `normalizeRequestId` unchanged. Fence is `p_expected_attempt_count` captured from the leased job via `acquiredSourceAttemptCount` (range 1..3). Core does not reread or default the live counter (missing/0 → `INTERNAL_ERROR`, no machine RPC). Both `record_brand_source_capture` and `fail_brand_source_job` compare owner + **attempt_count** + unexpired lease (`source_attempt_lease_matches` 419–426). Website, inline document, PUT persist, timeout, and fail paths all pass the acquired value. pgTAP: same correlation A expire → B `attempt_count=2` → late A fail and late A complete leave B `capturing`; B complete with acquired `2` captures (316–385). Late A cannot delete B’s committed object: delete uses A’s own new key, and `captured` with a different `source_id` is not treated as unreferenced. |
+
+**Return-shape split:** `capture_pending !== true` returns the port view (awaiting_bytes start and in-flight replay stay `ok`). Mapper runs only after Core expected completion. Covered by `platform-knowledge-port.test.ts` 293–346.
+
+---
+
+### Remaining findings
+
+None that require source changes.
+
+---
+
+### Validation gaps (not source bugs)
+
+Parent still owes, and this review did not run:
+
+- Apply `20260914010000_platform_knowledge.sql` (rehearsal 63/63 rolled back; hashes match this index)
+- Generated DB types after apply
+- Full `pnpm agent:verify` / format / remaining projections
+- W2 desktop/mobile connected journeys and W1 regressions
+- Final evidence review
+
+Do not treat this as packet complete or product acceptance.
+
+**Index reviewed:** `C:\dev\bootstrap\mustbeviral-grok-w2a001-20260914\source-repaired-index.json`.

@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   createPlatformHandlers,
   createPlatformRestClient,
+  PLATFORM_ERRORS,
   PLATFORM_OPERATION_NAMES,
   PLATFORM_OPERATIONS,
   type PlatformOperation,
@@ -40,6 +41,16 @@ const fields: Record<string, unknown> = {
   goals: 'Synthetic goals',
   current_step: 'details',
   expected_updated_at: '2026-09-10T20:00:00+00:00',
+  job_id: location,
+  source_id: location,
+  candidate_id: location,
+  url: 'https://example.test',
+  filename: 'notes.md',
+  media_type: 'text/markdown',
+  text_content: 'Synthetic operator document',
+  value_text: 'Corrected unknown',
+  excerpt: 'Operator correction excerpt',
+  locator: 'manual',
 };
 
 function inputFor(operation: PlatformOperation): PlatformInput<PlatformOperation> {
@@ -177,6 +188,115 @@ describe('platform registry transport parity', () => {
       }),
     ).toMatchObject({ exitCode: code === 'FORBIDDEN' ? 5 : 7, payload: { error: { code } } });
   });
+  it('maps SOURCE_UNSAFE to HTTP 400 on REST, CLI and MCP without a job payload', async () => {
+    const execute = vi.fn<PlatformPort['execute']>();
+    const { app, client, mcp, fetcher } = fixture({ execute });
+    const input = {
+      workspace_id: workspace,
+      brand_id: brand,
+      url: 'https://127.0.0.1/',
+    };
+    const restHttp = await app.request(
+      `https://platform.test/v1/workspaces/${workspace}/brands/${brand}/source-jobs/website`,
+      {
+        method: 'POST',
+        headers: {
+          authorization: 'Bearer synthetic-session',
+          'content-type': 'application/json',
+          'idempotency-key': 'unsafe-key',
+          'x-request-id': context.request_id,
+        },
+        body: JSON.stringify({ url: input.url }),
+      },
+    );
+    expect(restHttp.status).toBe(PLATFORM_ERRORS.SOURCE_UNSAFE.httpStatus);
+    const restBody = await restHttp.json();
+    expect(restBody).toMatchObject({
+      error: {
+        code: 'SOURCE_UNSAFE',
+        message: PLATFORM_ERRORS.SOURCE_UNSAFE.message,
+        retryable: false,
+      },
+    });
+    expect(restBody).not.toHaveProperty('data');
+    expect(await client.execute('start_website_capture', input, 'unsafe-key')).toMatchObject({
+      error: { code: 'SOURCE_UNSAFE', retryable: false },
+    });
+    expect((await mcp('start_website_capture', input, 'unsafe-key')).result).toMatchObject({
+      isError: true,
+      structuredContent: { error: { code: 'SOURCE_UNSAFE', retryable: false } },
+    });
+    expect(
+      await runPlatformCommand({
+        command: 'start-website-capture',
+        bodyJson: JSON.stringify(input),
+        idempotencyKey: 'unsafe-key',
+        baseUrl: 'https://platform.test',
+        readAccessToken: async () => 'synthetic-session',
+        fetch: fetcher,
+      }),
+    ).toMatchObject({ exitCode: 4, payload: { error: { code: 'SOURCE_UNSAFE' } } });
+    expect(execute).not.toHaveBeenCalled();
+  });
+  it.each([
+    ['SOURCE_TIMEOUT', 8],
+    ['SOURCE_UNREACHABLE', 8],
+    ['SOURCE_INTERRUPTED', 8],
+    ['SOURCE_TOO_LARGE', 4],
+    ['FORBIDDEN', 5],
+    ['NOT_FOUND', 6],
+  ] as const)(
+    'maps completed %s to the public HTTP status on REST, CLI and MCP without a payload',
+    async (code, exitCode) => {
+      const execute = vi.fn<PlatformPort['execute']>().mockResolvedValue({ status: 'error', code });
+      const { app, client, mcp, fetcher } = fixture({ execute });
+      const input = {
+        workspace_id: workspace,
+        brand_id: brand,
+        url: 'https://example.test',
+      };
+      const restHttp = await app.request(
+        `https://platform.test/v1/workspaces/${workspace}/brands/${brand}/source-jobs/website`,
+        {
+          method: 'POST',
+          headers: {
+            authorization: 'Bearer synthetic-session',
+            'content-type': 'application/json',
+            'idempotency-key': 'timeout-key',
+            'x-request-id': context.request_id,
+          },
+          body: JSON.stringify({ url: input.url }),
+        },
+      );
+      expect(restHttp.status).toBe(PLATFORM_ERRORS[code].httpStatus);
+      const restBody = await restHttp.json();
+      expect(restBody).toMatchObject({
+        error: {
+          code,
+          message: PLATFORM_ERRORS[code].message,
+          retryable: PLATFORM_ERRORS[code].retryable,
+        },
+      });
+      expect(restBody).not.toHaveProperty('data');
+      expect(await client.execute('start_website_capture', input, 'timeout-key')).toMatchObject({
+        error: { code, retryable: PLATFORM_ERRORS[code].retryable },
+      });
+      expect((await mcp('start_website_capture', input, 'timeout-key')).result).toMatchObject({
+        isError: true,
+        structuredContent: { error: { code, retryable: PLATFORM_ERRORS[code].retryable } },
+      });
+      expect(
+        await runPlatformCommand({
+          command: 'start-website-capture',
+          bodyJson: JSON.stringify(input),
+          idempotencyKey: 'timeout-key',
+          baseUrl: 'https://platform.test',
+          readAccessToken: async () => 'synthetic-session',
+          fetch: fetcher,
+        }),
+      ).toMatchObject({ exitCode, payload: { error: { code } } });
+    },
+  );
   it('rejects missing idempotency in HTTP and MCP before executing', async () => {
     const execute = vi.fn<PlatformPort['execute']>();
     const { app, mcp } = fixture({ execute });

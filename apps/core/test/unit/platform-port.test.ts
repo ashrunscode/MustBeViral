@@ -84,6 +84,50 @@ describe('platform user-scoped database port', () => {
       'Bearer synthetic-user-jwt',
     );
   });
+  it('selects knowledge commands from fixed registry metadata with the original JWT', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+      Response.json({
+        job: {
+          id: workspace,
+          workspace_id: workspace,
+          brand_id: workspace,
+          kind: 'website',
+          status: 'capturing',
+          request_url: 'https://example.test/',
+          normalized_url: 'https://example.test/',
+          filename: '',
+          media_type: '',
+          attempt_count: 1,
+          lease_expires_at: '2026-09-14T20:00:20.000Z',
+          failure_code: null,
+          source_id: null,
+          version: 1,
+          created_by: context.actor_id,
+          created_at: '2026-09-14T20:00:00.000Z',
+          updated_at: '2026-09-14T20:00:00.000Z',
+        },
+        draft: null,
+        current_candidates: [],
+        next_cursor: null,
+        capture_pending: false,
+      }),
+    );
+    const result = await createPlatformHandlers(
+      createPlatformPort(bindings, 'synthetic-user-jwt', fetcher),
+    ).execute(
+      'start_website_capture',
+      { workspace_id: workspace, brand_id: workspace, url: 'https://example.test/' },
+      context,
+      'knowledge-key',
+    );
+    expect(result.status).toBe('ok');
+    expect(fetcher.mock.calls[0]?.[0]).toBe(
+      'http://127.0.0.1:54321/rest/v1/rpc/platform_knowledge_command',
+    );
+    expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('authorization')).toBe(
+      'Bearer synthetic-user-jwt',
+    );
+  });
   it('forwards the caller JWT and never accepts an actor ID as RPC authorization', async () => {
     const fetcher = vi
       .fn<typeof fetch>()

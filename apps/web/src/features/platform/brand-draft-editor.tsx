@@ -256,8 +256,8 @@ function DraftForm({
               as a brand version.
             </p>
             <div className="platform-note">
-              Entering a website saves its address. It does not run website analysis or approve
-              claims.
+              Entering a website here saves its address only. Capture and review findings on the
+              Findings tab. Nothing here is approved brand knowledge.
             </div>
             <p className="platform-muted">
               Original assets, rights and source review will attach to this brand as those workflows

@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W2-001
-current_step: w2a-001-source-ingestion-contracts
-next_action: After W1-002 completion, run preflight and implement bounded website/document capture contracts with tenant-safe persistence and private-network denial.
+current_step: w2a-004-journeys-and-successor
+next_action: Run the governed finish transition to activate the prepared WP-PLATFORM-W2-002.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

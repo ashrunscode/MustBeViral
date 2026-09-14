@@ -14,7 +14,7 @@ import type { CoreHonoEnvironment } from '../bindings';
 import type { AuthenticatedActor } from '../auth/actor';
 import { createRequestAuthenticator } from '../auth/authenticate';
 import type { SupabaseJwtVerifier } from '../auth/supabase-jwt';
-import { createPlatformPort } from '../composition/platform';
+import { createKnowledgeAwarePlatformPort } from '../composition/platform-knowledge';
 import { jsonSafe, safeError, safeSuccess } from '../http/responses';
 
 export interface PlatformRouteDependencies {
@@ -35,7 +35,7 @@ export async function invokePlatform(
     return { status: 'error', code: 'FORBIDDEN' };
   try {
     return await (
-      handlers ?? createPlatformHandlers(createPlatformPort(context.env, callerJwt))
+      handlers ?? createPlatformHandlers(createKnowledgeAwarePlatformPort(context.env, callerJwt))
     ).execute(
       operation,
       input,

@@ -96,19 +96,19 @@ Secrets, buckets, database projects, signing keys, webhooks, and telemetry envir
 
 ## Full-platform domain boundaries
 
-| Domain                      | Authoritative records and behaviors                                                                                |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Identity and portfolio      | Studios, workspace grants, members, roles, brand/location scopes, invitations, offboarding.                        |
-| Brand knowledge             | Sources, observations, assertions, approved versions, voice/visual rules, offerings, audiences, offers.            |
-| Assets and rights           | Originals, derivatives, collections, source references, consent/rights grants, usage and expiry.                   |
-| Campaigns and content       | Campaign versions, plans, tasks, content revisions, scenes, channel variants, experiment hypotheses.               |
-| Creative execution          | Existing graph/run machinery, generation requests, compositor/render jobs, checks, receipts.                       |
-| Approvals                   | Policies, review requests, decisions, comments, immutable approved revision hashes.                                |
-| Connections and publication | External accounts, encrypted credentials, capability snapshots, schedules, attempts, external IDs, reconciliation. |
-| Creators and partnerships   | Profiles, evidence, lists, relationships, agreements, deliverables, selected sharing grants.                       |
-| Engagement                  | Conversations, messages, assignments, reply intents, permitted identity links.                                     |
-| Measurement                 | Metric observations, first-party events, definitions, attribution records, aggregate reporting.                    |
-| Commercial and operations   | Workspace ledgers, entitlements, budgets, subscription state, notification policies, operational incidents.        |
+| Domain                      | Authoritative records and behaviors                                                                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity and portfolio      | Studios, workspace grants, members, roles, brand/location scopes, invitations, offboarding.                                                                                                     |
+| Brand knowledge             | Implemented W2.1: source jobs, immutable sources, unapproved knowledge drafts and append-only candidates with provenance. Approved versions, voice, offerings and audiences remain later waves. |
+| Assets and rights           | Originals, derivatives, collections, source references, consent/rights grants, usage and expiry.                                                                                                |
+| Campaigns and content       | Campaign versions, plans, tasks, content revisions, scenes, channel variants, experiment hypotheses.                                                                                            |
+| Creative execution          | Existing graph/run machinery, generation requests, compositor/render jobs, checks, receipts.                                                                                                    |
+| Approvals                   | Policies, review requests, decisions, comments, immutable approved revision hashes.                                                                                                             |
+| Connections and publication | External accounts, encrypted credentials, capability snapshots, schedules, attempts, external IDs, reconciliation.                                                                              |
+| Creators and partnerships   | Profiles, evidence, lists, relationships, agreements, deliverables, selected sharing grants.                                                                                                    |
+| Engagement                  | Conversations, messages, assignments, reply intents, permitted identity links.                                                                                                                  |
+| Measurement                 | Metric observations, first-party events, definitions, attribution records, aggregate reporting.                                                                                                 |
+| Commercial and operations   | Workspace ledgers, entitlements, budgets, subscription state, notification policies, operational incidents.                                                                                     |
 
 Use typed command/query handlers and generated transport contracts. The web, REST, CLI, and MCP clients call the same permissions, approvals, and idempotency logic. A chat or agent tool never creates a privileged alternate path.
 

@@ -23,6 +23,7 @@ import {
   WorkspaceGrantRecordSchema,
 } from './platform-models';
 import { PLATFORM_SETUP_OPERATIONS } from './platform-setup';
+import { PLATFORM_KNOWLEDGE_OPERATIONS } from './platform-knowledge';
 export {
   PlatformActionSchema,
   StudioRecordSchema,
@@ -32,10 +33,12 @@ export {
   WorkspaceGrantRecordSchema,
 } from './platform-models';
 export * from './platform-setup';
+export * from './platform-knowledge';
 
 /** One registry drives shared validation and REST, client, CLI and MCP projections. */
 export const PLATFORM_OPERATIONS = {
   ...PLATFORM_SETUP_OPERATIONS,
+  ...PLATFORM_KNOWLEDGE_OPERATIONS,
   create_studio: {
     method: 'POST',
     path: '/studios',
@@ -220,6 +223,46 @@ export const PLATFORM_ERRORS = {
     message: 'This resource is archived or revoked.',
     retryable: false,
   },
+  SOURCE_UNSAFE: {
+    httpStatus: 400,
+    message: 'That destination is not a permitted public website.',
+    retryable: false,
+  },
+  SOURCE_UNSUPPORTED: {
+    httpStatus: 400,
+    message: 'That file type is not supported for brand source capture.',
+    retryable: false,
+  },
+  SOURCE_MALFORMED: {
+    httpStatus: 400,
+    message: 'The source could not be read as a supported document.',
+    retryable: false,
+  },
+  SOURCE_TOO_LARGE: {
+    httpStatus: 400,
+    message: 'The source exceeds the capture size limit.',
+    retryable: false,
+  },
+  SOURCE_TIMEOUT: {
+    httpStatus: 504,
+    message: 'The source capture timed out.',
+    retryable: true,
+  },
+  SOURCE_UNREACHABLE: {
+    httpStatus: 502,
+    message: 'The source could not be retrieved.',
+    retryable: true,
+  },
+  SOURCE_INTERRUPTED: {
+    httpStatus: 409,
+    message: 'The source capture was interrupted before it finished.',
+    retryable: true,
+  },
+  SOURCE_EGRESS_UNAVAILABLE: {
+    httpStatus: 503,
+    message: 'Public-only source capture is not configured.',
+    retryable: true,
+  },
   INTERNAL_ERROR: {
     httpStatus: 500,
     message: 'The request could not be completed.',
@@ -239,6 +282,20 @@ export interface PlatformPort {
   }): Promise<PlatformResult>;
 }
 
+export function parsePlatformOperationInput(
+  operation: PlatformOperation,
+  raw: unknown,
+):
+  | { readonly status: 'ok'; readonly data: Readonly<Record<string, unknown>> }
+  | { readonly status: 'error'; readonly code: 'SOURCE_UNSAFE' | 'VALIDATION_FAILED' } {
+  const parsed = PLATFORM_OPERATIONS[operation].input.safeParse(raw);
+  if (!parsed.success) {
+    const unsafe = parsed.error.issues.some((issue) => issue.message === 'SOURCE_UNSAFE');
+    return { status: 'error', code: unsafe ? 'SOURCE_UNSAFE' : 'VALIDATION_FAILED' };
+  }
+  return { status: 'ok', data: parsed.data as Readonly<Record<string, unknown>> };
+}
+
 export function createPlatformHandlers(port: PlatformPort) {
   return {
     async execute<O extends PlatformOperation>(
@@ -248,9 +305,9 @@ export function createPlatformHandlers(port: PlatformPort) {
       idempotencyKey?: string,
     ): Promise<PlatformResult<PlatformOutput<O>>> {
       const definition = PLATFORM_OPERATIONS[operation];
-      const parsed = definition.input.safeParse(raw);
+      const parsed = parsePlatformOperationInput(operation, raw);
+      if (parsed.status === 'error') return parsed;
       if (
-        !parsed.success ||
         !PlatformContextSchema.safeParse(context).success ||
         (definition.method !== 'GET' && !IdempotencyKeySchema.safeParse(idempotencyKey).success)
       ) {
@@ -275,3 +332,32 @@ export function createPlatformHandlers(port: PlatformPort) {
   };
 }
 export type PlatformHandlers = ReturnType<typeof createPlatformHandlers>;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/** Maps a machine capture receipt after Core expected completion. Start/replay views stay on the port. */
+export function mapCompletedSourceCapture(value: unknown): PlatformResult {
+  const parsed = PLATFORM_OPERATIONS.start_website_capture.output.safeParse(value);
+  if (parsed.success) {
+    const job = parsed.data.job;
+    if (job.status === 'captured' || job.status === 'duplicate') {
+      return { status: 'ok', data: parsed.data };
+    }
+    if (
+      (job.status === 'failed' || job.status === 'rejected') &&
+      job.failure_code !== null &&
+      Object.hasOwn(PLATFORM_ERRORS, job.failure_code)
+    ) {
+      return { status: 'error', code: job.failure_code };
+    }
+    return { status: 'error', code: 'SOURCE_INTERRUPTED' };
+  }
+  if (isRecord(value) && isRecord(value.job) && typeof value.job.failure_code === 'string') {
+    const code = value.job.failure_code;
+    if (Object.hasOwn(PLATFORM_ERRORS, code))
+      return { status: 'error', code: code as PlatformErrorCode };
+  }
+  return { status: 'error', code: 'INTERNAL_ERROR' };
+}

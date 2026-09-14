@@ -357,6 +357,140 @@ export type Database = {
           },
         ];
       };
+      brand_knowledge_candidates: {
+        Row: {
+          brand_id: string;
+          captured_at: string;
+          created_at: string;
+          created_by: string;
+          draft_id: string;
+          excerpt: string;
+          field_key: string;
+          id: string;
+          job_id: string | null;
+          locator: string;
+          method: string;
+          source_id: string;
+          status: string;
+          supersedes_id: string | null;
+          value_text: string | null;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          captured_at: string;
+          created_at?: string;
+          created_by: string;
+          draft_id: string;
+          excerpt: string;
+          field_key: string;
+          id?: string;
+          job_id?: string | null;
+          locator?: string;
+          method: string;
+          source_id: string;
+          status: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          captured_at?: string;
+          created_at?: string;
+          created_by?: string;
+          draft_id?: string;
+          excerpt?: string;
+          field_key?: string;
+          id?: string;
+          job_id?: string | null;
+          locator?: string;
+          method?: string;
+          source_id?: string;
+          status?: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_brand_id_fkey1';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_drafts';
+            referencedColumns: ['workspace_id', 'brand_id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_job_id_fkey';
+            columns: ['workspace_id', 'job_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_source_jobs';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_source_id_fkey';
+            columns: ['workspace_id', 'source_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_sources';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_supersedes_id_fkey';
+            columns: ['workspace_id', 'supersedes_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_candidates';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_knowledge_drafts: {
+        Row: {
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          updated_at: string;
+          updated_by: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          updated_at?: string;
+          updated_by: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          updated_at?: string;
+          updated_by?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_knowledge_drafts_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: true;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
       brand_locations: {
         Row: {
           brand_id: string;
@@ -476,6 +610,159 @@ export type Database = {
             columns: ['workspace_id', 'brand_id'];
             isOneToOne: true;
             referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_source_jobs: {
+        Row: {
+          attempt_count: number;
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          failure_code: string | null;
+          filename: string;
+          id: string;
+          kind: string;
+          lease_expires_at: string | null;
+          lease_owner: string | null;
+          media_type: string;
+          normalized_url: string;
+          request_url: string;
+          source_id: string | null;
+          status: string;
+          updated_at: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          attempt_count?: number;
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          failure_code?: string | null;
+          filename?: string;
+          id?: string;
+          kind: string;
+          lease_expires_at?: string | null;
+          lease_owner?: string | null;
+          media_type?: string;
+          normalized_url?: string;
+          request_url?: string;
+          source_id?: string | null;
+          status: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          attempt_count?: number;
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          failure_code?: string | null;
+          filename?: string;
+          id?: string;
+          kind?: string;
+          lease_expires_at?: string | null;
+          lease_owner?: string | null;
+          media_type?: string;
+          normalized_url?: string;
+          request_url?: string;
+          source_id?: string | null;
+          status?: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_source_jobs_source_fk';
+            columns: ['workspace_id', 'source_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_sources';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_source_jobs_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_sources: {
+        Row: {
+          brand_id: string;
+          byte_size: number;
+          captured_at: string;
+          content_sha256: string | null;
+          created_at: string;
+          created_by: string;
+          final_url: string;
+          http_status: number | null;
+          id: string;
+          job_id: string | null;
+          kind: string;
+          media_type: string;
+          method: string;
+          origin_url: string;
+          r2_key: string | null;
+          redirect_hops: Json;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          byte_size?: number;
+          captured_at: string;
+          content_sha256?: string | null;
+          created_at?: string;
+          created_by: string;
+          final_url?: string;
+          http_status?: number | null;
+          id?: string;
+          job_id?: string | null;
+          kind: string;
+          media_type?: string;
+          method: string;
+          origin_url?: string;
+          r2_key?: string | null;
+          redirect_hops?: Json;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          byte_size?: number;
+          captured_at?: string;
+          content_sha256?: string | null;
+          created_at?: string;
+          created_by?: string;
+          final_url?: string;
+          http_status?: number | null;
+          id?: string;
+          job_id?: string | null;
+          kind?: string;
+          media_type?: string;
+          method?: string;
+          origin_url?: string;
+          r2_key?: string | null;
+          redirect_hops?: Json;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_sources_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_sources_workspace_id_job_id_fkey';
+            columns: ['workspace_id', 'job_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_source_jobs';
             referencedColumns: ['workspace_id', 'id'];
           },
         ];
@@ -2296,6 +2583,15 @@ export type Database = {
         };
         Returns: Json;
       };
+      fail_brand_source_job: {
+        Args: {
+          p_expected_attempt_count: number;
+          p_failure_code: string;
+          p_job_id: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
       fail_outbox_event: {
         Args: {
           p_event_id: string;
@@ -2392,6 +2688,19 @@ export type Database = {
         };
         Returns: Json;
       };
+      platform_knowledge_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_knowledge_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
       platform_onboarding_command: {
         Args: {
           p_idempotency_key: string;
@@ -2446,6 +2755,15 @@ export type Database = {
           p_request_hash: string;
           p_response: Json;
           p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      record_brand_source_capture: {
+        Args: {
+          p_expected_attempt_count: number;
+          p_job_id: string;
+          p_payload: Json;
+          p_request_id: string;
         };
         Returns: Json;
       };

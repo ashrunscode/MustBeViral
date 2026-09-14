@@ -130,6 +130,23 @@ saves share the existing portfolio lock order. Invitation acceptance checks the 
 Supabase email while locking the user and studio; creation alone grants no access. Settings edit
 existing workspace/brand identities and do not create a second permissions or money authority.
 
+W2.1 brand knowledge persistence is additive. `brand_source_jobs` is the durable capture job with a
+lease/deadline so an interrupted `capturing` row becomes `queued` or `failed` rather than stuck.
+`brand_sources` are immutable evidence rows. Website and document HTTPS/R2 provenance is written only
+by `record_brand_source_capture`, a service_role machine RPC that rechecks
+`app_private.platform_can_for(original_actor, workspace, brand, 'brand:write')` inside the
+transaction. Authenticated clients cannot execute that function or `fail_brand_source_job`.
+`start_website_capture` / `start_document_capture` / `start_manual_knowledge_draft` /
+`correct_knowledge_candidate` are user-scoped `platform_knowledge_command` operations. Manual
+operator input is its own `method=manual` source; corrections append a new candidate with
+`supersedes_id` and a new manual source. `brand_knowledge_drafts` stay unapproved. Direct table
+writes are denied. Reads use forced RLS through `platform_can`. Revoked actors do not receive stored
+idempotent capture results. Same content hash is unique per brand; the same bytes on another brand
+remain a separate private source. R2 objects under `brand-sources/{workspace}/{brand}/{source}` are
+unlisted unless a source row exists. `get_knowledge_draft` pages current candidates (max 50 per
+response) with `next_cursor`; captures admit at most 40 candidates each. Results are not silently
+discarded.
+
 - Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
 - Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
 - Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.

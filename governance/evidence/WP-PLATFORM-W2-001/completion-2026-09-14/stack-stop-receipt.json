@@ -1,0 +1,11 @@
+{
+  "supabase_container": "supabase_db_mustbeviral",
+  "harness_root_pid": 59736,
+  "docker_empty": true,
+  "stop_log_sha256": "9f0f3752d9289339d6161defa8f9b898bfaa012f75b6e3ea741da63ecd875b06",
+  "harness_stopped": true,
+  "preserved_volume": "supabase_db_mustbeviral",
+  "harness_root_creation": "2026-09-14T18:34:17.830685-05:00",
+  "supabase_stopped": true,
+  "time": "2026-09-14T18:41:47.0005976-05:00"
+}
