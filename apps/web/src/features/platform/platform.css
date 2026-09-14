@@ -119,10 +119,17 @@
 .platform-breadcrumb {
   flex: 1;
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
   min-width: 0;
   overflow-wrap: anywhere;
   font-size: 13px;
+}
+.platform-breadcrumb span,
+.platform-breadcrumb strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .platform-layout {
   display: grid;
@@ -156,12 +163,30 @@
   padding: 30px 12px 4px;
   font-size: 12px;
 }
+.platform-app > .skip-link {
+  top: 8px;
+  transform: none;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.platform-app > .skip-link:focus,
+.platform-app > .skip-link:focus-visible {
+  top: 8px;
+  transform: none;
+  clip-path: none;
+  overflow: visible;
+}
 .platform-main {
   width: 100%;
   max-width: 1440px;
   min-width: 0;
   padding: 40px;
   margin: 0 auto;
+}
+.platform-main:focus,
+.platform-main:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
 }
 .platform-heading {
   display: flex;
@@ -272,7 +297,7 @@
   color: var(--ink-strong);
 }
 .platform-error {
-  color: #96303b;
+  color: #6b1f28;
 }
 .platform-success {
   color: #246b49;
@@ -343,10 +368,12 @@
   }
   .platform-sidebar nav {
     display: flex;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 4px 8px;
   }
   .platform-sidebar nav a {
-    white-space: nowrap;
+    white-space: normal;
   }
   .platform-main {
     padding: 26px 16px;
@@ -375,9 +402,63 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .platform-app * {
+  .platform-app *,
+  .platform-app *::before,
+  .platform-app *::after {
     scroll-behavior: auto;
     transition: none;
     animation: none;
+  }
+  .platform-app > .skip-link,
+  .platform-app > .skip-link:focus,
+  .platform-app > .skip-link:focus-visible {
+    transform: none;
+  }
+  .platform-app > .skip-link:not(:focus):not(:focus-visible) {
+    clip-path: inset(50%);
+  }
+}
+
+@media (forced-colors: active) {
+  .platform-app,
+  .platform-card,
+  .platform-topbar,
+  .platform-sidebar,
+  .platform-note,
+  .platform-app input,
+  .platform-app select,
+  .platform-app textarea,
+  .platform-tag {
+    background: Canvas;
+    color: CanvasText;
+    border-color: CanvasText;
+  }
+  .platform-app button,
+  .platform-button,
+  .platform-app button.platform-primary,
+  .platform-app .platform-primary {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  .platform-app button:disabled,
+  .platform-app button.platform-primary:disabled,
+  .platform-app .platform-primary:disabled {
+    background: ButtonFace;
+    color: GrayText;
+    border: 1px solid ButtonText;
+    opacity: 1;
+  }
+  .platform-tabs a[aria-current='page'],
+  .platform-sidebar nav a[aria-current='page'] {
+    background: Canvas;
+    color: LinkText;
+    border: 1px solid LinkText;
+    text-decoration: underline;
+  }
+  .platform-app > .skip-link {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
   }
 }

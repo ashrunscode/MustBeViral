@@ -20,3 +20,7 @@ export function brandHref(
   if (locationId) query.set('location', locationId);
   return `/studio/${encodeURIComponent(workspaceId)}/brands/${encodeURIComponent(brandId)}?${query}`;
 }
+
+export function workspaceBillingHref(workspaceId: string, studioId: string) {
+  return `/studio/${encodeURIComponent(workspaceId)}/billing?${new URLSearchParams({ studio: studioId })}`;
+}

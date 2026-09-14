@@ -32,16 +32,38 @@ a {
   z-index: 200;
   top: 8px;
   left: 8px;
-  transform: translateY(-160%);
+  transform: none;
+  clip-path: inset(50%);
+  overflow: hidden;
+  border: 1px solid var(--line);
   border-radius: var(--radius-control);
   padding: 8px 12px;
-  background: var(--signal);
-  color: #fff;
-  transition: transform var(--motion-local) var(--motion-ease);
+  background: var(--card);
+  color: var(--ink-strong);
+  white-space: nowrap;
 }
 
-.skip-link:focus {
-  transform: translateY(0);
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 8px;
+  transform: none;
+  clip-path: none;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .skip-link {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
+  }
 }
 
 .studio-app {

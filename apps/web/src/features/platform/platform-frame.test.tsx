@@ -16,10 +16,35 @@ describe('platform shell', () => {
       </PlatformFrame>,
     );
     expect(html).toContain('Skip to content');
+    expect(html).toContain('id="platform-main"');
+    expect(html).toContain('tabindex="-1"');
     expect(html).toContain('Sign out');
     expect(html).toContain('Studio team');
     expect(html).not.toContain('impressions');
     expect(html).not.toContain('engagement rate');
+  });
+
+  it('exposes billing only when the workspace owner context is provided', () => {
+    const withoutBilling = renderToStaticMarkup(
+      <PlatformFrame studioId="11111111-1111-4111-8111-111111111111" role="owner">
+        <p>Portfolio</p>
+      </PlatformFrame>,
+    );
+    expect(withoutBilling).not.toContain('Billing');
+    const billed = renderToStaticMarkup(
+      <PlatformFrame
+        studioId="11111111-1111-4111-8111-111111111111"
+        workspaceId="22222222-2222-4222-8222-222222222222"
+        role="owner"
+        showBilling
+        billingCurrent
+      >
+        <p>Wallet</p>
+      </PlatformFrame>,
+    );
+    expect(billed).toContain('>Billing</a>');
+    expect(billed).toContain('/studio/22222222-2222-4222-8222-222222222222/billing?studio=');
+    expect(billed).not.toContain('studio=22222222-2222-4222-8222-222222222222');
   });
 
   it('explains denied, missing, archived, and unsigned-in recovery without inventing access', () => {

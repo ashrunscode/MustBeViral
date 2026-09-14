@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { brandHref, isResourceId, studioHref } from './platform-navigation';
+import { brandHref, isResourceId, studioHref, workspaceBillingHref } from './platform-navigation';
 
 describe('platform navigation', () => {
   it('builds studio and brand hrefs from durable identifiers only', () => {
@@ -15,5 +15,9 @@ describe('platform navigation', () => {
       `/studio/${workspace}/brands/${brand}?`,
     );
     expect(brandHref(studio, workspace, brand)).toContain(`studio=${studio}`);
+    expect(workspaceBillingHref(workspace, studio)).toBe(
+      `/studio/${workspace}/billing?studio=${studio}`,
+    );
+    expect(workspaceBillingHref(workspace, studio)).not.toContain(`studio=${workspace}`);
   });
 });

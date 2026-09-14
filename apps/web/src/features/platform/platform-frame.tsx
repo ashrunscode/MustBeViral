@@ -1,10 +1,17 @@
 'use client';
 import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { studioHref } from './platform-navigation';
+import { studioHref, workspaceBillingHref } from './platform-navigation';
 import { PlatformRequestError, platformErrorMessage } from './platform-client';
 import { createBrowserSupabaseClient } from '../../lib/supabase/client';
 import './platform.css';
+
+function focusPlatformMain(event: { preventDefault: () => void }) {
+  const main = document.getElementById('platform-main');
+  if (!(main instanceof HTMLElement)) return;
+  event.preventDefault();
+  main.focus();
+}
 
 export function PlatformFrame({
   children,
@@ -12,12 +19,18 @@ export function PlatformFrame({
   studioName,
   brandName,
   role,
+  workspaceId,
+  showBilling = false,
+  billingCurrent = false,
 }: Readonly<{
   children: ReactNode;
   studioId?: string;
   studioName?: string;
   brandName?: string;
   role?: string;
+  workspaceId?: string;
+  showBilling?: boolean;
+  billingCurrent?: boolean;
 }>) {
   const [signingOut, setSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState(false);
@@ -35,7 +48,7 @@ export function PlatformFrame({
   }
   return (
     <div className="platform-app">
-      <a className="skip-link" href="#platform-main">
+      <a className="skip-link" href="#platform-main" onClick={focusPlatformMain}>
         Skip to content
       </a>
       <header className="platform-topbar">
@@ -43,13 +56,13 @@ export function PlatformFrame({
           <span aria-hidden="true">▦</span> MustBeViral <span>Studio</span>
         </Link>
         <div className="platform-breadcrumb">
-          {studioName ?? 'Your studios'}
-          {brandName && (
+          <span>{studioName ?? 'Your studios'}</span>
+          {brandName ? (
             <>
-              {' '}
-              <span aria-hidden="true">/</span> <strong>{brandName}</strong>
+              <span aria-hidden="true">/</span>
+              <strong>{brandName}</strong>
             </>
-          )}
+          ) : null}
         </div>
         <span className="platform-tag">
           {role ? `${role[0]?.toUpperCase()}${role.slice(1)}` : 'Your portfolio'}
@@ -64,7 +77,7 @@ export function PlatformFrame({
         </p>
       )}
       <div className="platform-layout">
-        <aside className="platform-sidebar">
+        <aside className="platform-sidebar" aria-label="Workspace">
           <span className="platform-eyebrow">Workspace</span>
           <nav aria-label="Studio navigation">
             <Link href={studioHref(studioId)}>Overview</Link>
@@ -75,6 +88,14 @@ export function PlatformFrame({
                 <Link href={studioHref(studioId, 'settings')}>Studio settings</Link>
               </>
             )}
+            {showBilling && studioId && workspaceId && (
+              <Link
+                href={workspaceBillingHref(workspaceId, studioId)}
+                aria-current={billingCurrent ? 'page' : undefined}
+              >
+                Billing
+              </Link>
+            )}
           </nav>
           <div className="platform-sidebar-note">
             One studio.
@@ -82,7 +103,7 @@ export function PlatformFrame({
             Each brand, its own context.
           </div>
         </aside>
-        <main id="platform-main" className="platform-main">
+        <main id="platform-main" className="platform-main" tabIndex={-1}>
           {children}
         </main>
       </div>

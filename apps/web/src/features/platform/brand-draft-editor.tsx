@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { PlatformInput, PlatformOutput } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
 import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
@@ -92,6 +92,13 @@ function DraftForm({
   const [saved, setSaved] = useState(initial);
   const [fields, setFields] = useState<Fields>(() => fieldsOf(initial));
   const mutation = usePlatformMutation();
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   const dirty = JSON.stringify(fields) !== JSON.stringify(fieldsOf(saved));
   const denied =
     mutation.error instanceof PlatformRequestError &&
@@ -120,7 +127,7 @@ function DraftForm({
       expected_version: saved.version,
       ...fields,
     });
-    if (result) setSaved(result.record);
+    if (mounted.current && result) setSaved(result.record);
   }
   if (denied) return <PlatformRecovery error={mutation.error} retry={reload} />;
   return (
@@ -132,7 +139,7 @@ function DraftForm({
       <div className="platform-split">
         <form className="platform-card platform-pad platform-stack" onSubmit={(e) => void save(e)}>
           <div className="platform-row platform-between">
-            <h2>Brand essentials</h2>
+            <h2 id="brand-essentials-heading">Brand essentials</h2>
             <span className="platform-tag" role="status" aria-live="polite">
               {mutation.pending
                 ? 'Saving…'
@@ -141,7 +148,10 @@ function DraftForm({
                   : `Saved · version ${saved.version}`}
             </span>
           </div>
-          <fieldset disabled={!canWrite || mutation.pending}>
+          <fieldset
+            disabled={!canWrite || mutation.pending}
+            aria-labelledby="brand-essentials-heading"
+          >
             <label>
               Website{' '}
               <span className="platform-muted">Optional — you can enter details manually.</span>

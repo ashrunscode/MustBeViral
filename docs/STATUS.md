@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Coordinate the local database lane, then close interrupted in-flight save, delayed stale-response, mapped old-link and keyboard/accessibility/approved-design proof using the connected two-brand harness; keep w1b-004 current and W2-001 inactive.
+All W1 acceptance is proven and independently reviewed. Commit the verified predecessor, then run pnpm agent:finish with the prepared WP-PLATFORM-W2-001 successor.

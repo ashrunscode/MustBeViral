@@ -11,9 +11,8 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W1-002
-next_action: Coordinate the local database lane, then close interrupted in-flight save, delayed
-  stale-response, mapped old-link and keyboard/accessibility/approved-design proof using the
-  connected two-brand harness; keep w1b-004 current and W2-001 inactive.
+next_action: All W1 acceptance is proven and independently reviewed. Commit the verified
+  predecessor, then run pnpm agent:finish with the prepared WP-PLATFORM-W2-001 successor.
 decisions_pending: []
 blockers: []
 legacy:

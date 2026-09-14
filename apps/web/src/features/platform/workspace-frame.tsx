@@ -16,7 +16,8 @@ export function WorkspaceFrame({
   const pathname = usePathname();
   if (
     pathname.startsWith(`/studio/${workspace}/brands/`) ||
-    pathname.startsWith(`/studio/${workspace}/projects/`)
+    pathname.startsWith(`/studio/${workspace}/projects/`) ||
+    (presentation === 'authenticated' && pathname === `/studio/${workspace}/billing`)
   )
     return children;
   return (
