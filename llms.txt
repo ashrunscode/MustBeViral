@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W1-002
 current_step: w1b-004-journeys-and-successor
-next_action: Coordinate the local database lane, then close interrupted in-flight save, delayed stale-response, mapped old-link and keyboard/accessibility/approved-design proof using the connected two-brand harness; keep w1b-004 current and W2-001 inactive.
+next_action: All W1 acceptance is proven and independently reviewed. Commit the verified predecessor, then run pnpm agent:finish with the prepared WP-PLATFORM-W2-001 successor.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

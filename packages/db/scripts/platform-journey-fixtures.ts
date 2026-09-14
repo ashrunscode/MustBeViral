@@ -214,3 +214,29 @@ export async function seedLegacyProject(workspaceId: string, ownerId: string, na
     await sql.end({ timeout: 5 });
   }
 }
+
+export async function seedProjectBrandMapping(
+  workspaceId: string,
+  projectId: string,
+  brandId: string,
+) {
+  const connection = requireMustBeViralDatabase();
+  const sql = postgres({
+    ...connection,
+    max: 1,
+    connect_timeout: 5,
+    idle_timeout: 5,
+    onnotice: () => {},
+  });
+  try {
+    const [row] = await sql`
+      insert into public.project_brand_mappings (workspace_id, project_id, brand_id)
+      values (${workspaceId}::uuid, ${projectId}::uuid, ${brandId}::uuid)
+      returning project_id
+    `;
+    if (!row?.project_id) throw new Error('Project brand mapping seed returned no identity.');
+    return { projectId: String(row.project_id), workspaceId, brandId };
+  } finally {
+    await sql.end({ timeout: 5 });
+  }
+}

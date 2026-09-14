@@ -1,11 +1,28 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
-import { parseWireMicros, WorkspaceBillingView } from './workspace-billing';
+import {
+  parseWireMicros,
+  studioDirectoryOwnsWorkspace,
+  WorkspaceBillingView,
+} from './workspace-billing';
 
 const workspace = 'a7000000-0000-4000-8000-000000000001';
 
 describe('workspace billing presentation', () => {
+  it('associates billing chrome only when the studio directory lists the workspace', () => {
+    const washbodega = 'a7000000-0000-4000-8000-000000000001';
+    const unpile = 'a7000000-0000-4000-8000-000000000002';
+    expect(
+      studioDirectoryOwnsWorkspace(
+        [{ workspace_id: washbodega }, { workspace_id: unpile }],
+        washbodega,
+      ),
+    ).toBe(true);
+    expect(studioDirectoryOwnsWorkspace([{ workspace_id: unpile }], washbodega)).toBe(false);
+    expect(studioDirectoryOwnsWorkspace([], washbodega)).toBe(false);
+  });
+
   it('parses integer micros from the wire without floating point', () => {
     expect(parseWireMicros('9007199254740993')).toBe(9007199254740993n);
   });
@@ -66,7 +83,10 @@ describe('workspace billing presentation', () => {
     expect(seeded).toContain('$250.00');
     expect(seeded).toContain('Charging is turned off');
     expect(seeded).not.toContain('No billing profile is on file');
-    expect(seeded).toContain('id="main-content"');
+    expect(seeded).toContain('Workspace billing.');
+    expect(seeded).not.toContain('studio-app');
+    expect(seeded).not.toContain('studio-workflow-nav');
+    expect(seeded).not.toContain('id="main-content"');
     const pastDue = renderToStaticMarkup(
       <WorkspaceBillingView
         data={{
