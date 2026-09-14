@@ -1,0 +1,32 @@
+{
+  "finish_called": false,
+  "verified_source_git_blobs": {
+    "apps/web/src/features/platform/brand-draft-editor.tsx": "e03d274f7cbd2a2c988e1a3a1fca2a12592bd34e",
+    "apps/web/src/features/platform/workspace-billing.test.tsx": "c364272da56cd04bf3864c220a5f5f1d4ae427ea",
+    "apps/core/.dev.vars.example": "58ba3d109c4c342aa777898849aef8162cf64aa9",
+    "apps/web/src/features/platform/brand-settings.tsx": "924ad1c15cdb0f41a908baa5cf1b6118b52d5803",
+    "apps/web/src/features/platform/studio-portfolio.tsx": "0aa7cc0c5d1c46148df7e581c2b17e611cbb705e",
+    "apps/web/src/features/platform/platform-client.ts": "65a477bc1bf5db062007be73bd0adcee4eb45fed",
+    "supabase/tests/database/00039_platform_saved_setup.test.sql": "cecf068e737fa4d3edcd67718c3c34434fc8567f",
+    "supabase/tests/database/00037_platform_identity_and_backfill.test.sql": "8d4c93d8387765b254bd131b1c70179ae8fdb52d",
+    "apps/web/src/features/platform/brand-locations.tsx": "36e7528db485dfe3638397e3a38f8a567a48868e",
+    "apps/web/src/features/platform/studio-team.tsx": "7ae2980b36b1a36862738949e3a6888a08bb110b",
+    "apps/web/src/features/platform/platform-client.test.ts": "ab1aa289b0b66fb856926fa6d2827569eeb97695",
+    "supabase/tests/database/00003_p0_barrier_and_invariants.test.sql": "5bd2cc6ff5243c9a6c33f4d9579e81f86dca6f47",
+    "apps/web/src/features/platform/workspace-billing.tsx": "d85ed52a3e9f172dfd53918c3fd73d1d5a311638",
+    "apps/web/src/features/platform/platform-frame.test.tsx": "9e86a5b3aac4ad578296900bd50221d360d03b9a",
+    "packages/db/scripts/platform-journey-fixtures.ts": "46e70ad0399160ad159c82a6e1e495595f769e1f",
+    "apps/web/e2e/platform-connected.spec.ts": "622a64929e7e4ec6e6acc110d961d10c05884a95",
+    "apps/web/src/features/platform/studio-settings.tsx": "489d70f6633ad730d2dcde0e805d237873989a0e"
+  },
+  "branch": "codex/viralgraph-cleanroom",
+  "recorded_at": "2026-09-14T11:07:31.4398423-05:00",
+  "distribution": "Local private commits only; public GitHub read-only; no push or PR.",
+  "verification_basis": "Successful agent:verify and browser receipt source hashes matched the unchanged working files and their committed Git blobs. Final modifications after that run were progress/evidence documents, revalidated with governance and design checks.",
+  "current_step": "w1b-004-journeys-and-successor",
+  "source_tree": "659c4c93c77a28ce86c4eb32f1c8bd4c3c940df9",
+  "import_commit": "3ca1620c37796f611dc55ecad329a4843b998cd5",
+  "packet": "WP-PLATFORM-W1-002",
+  "verification_receipt_sha256": "df69091f3a1b460cfa156069b507b4b467d8d405c6837776f4ff728c8b6c21eb",
+  "source_commit": "bd26bec78e442b6d68ce3171adafd9d7290f3ea7"
+}
