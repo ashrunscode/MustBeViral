@@ -22,12 +22,16 @@ describe('platform shell', () => {
     expect(html).not.toContain('engagement rate');
   });
 
-  it('explains revoked, archived, and unsigned-in recovery without inventing access', () => {
+  it('explains denied, missing, archived, and unsigned-in recovery without inventing access', () => {
     const denied = renderToStaticMarkup(
       <PlatformRecovery error={new PlatformRequestError('FORBIDDEN', 'hidden')} />,
     );
-    expect(denied).toContain('Return to your studio');
+    expect(denied).toContain('do not have permission');
     expect(denied).toContain('Choose a studio');
+    const missing = renderToStaticMarkup(
+      <PlatformRecovery error={new PlatformRequestError('NOT_FOUND', 'hidden')} />,
+    );
+    expect(missing).toContain('unavailable or your access has changed');
     const archived = renderToStaticMarkup(
       <PlatformRecovery error={new PlatformRequestError('RESOURCE_ARCHIVED', 'hidden')} />,
     );
@@ -36,5 +40,10 @@ describe('platform shell', () => {
       <PlatformRecovery error={new PlatformRequestError('UNAUTHENTICATED', 'hidden')} />,
     );
     expect(signedOut).toContain('Sign in');
+    const unavailable = renderToStaticMarkup(
+      <PlatformRecovery error={new PlatformRequestError('INTERNAL_ERROR', 'hidden')} />,
+    );
+    expect(unavailable).toContain('We could not confirm this request');
+    expect(unavailable).not.toContain('not marked as saved');
   });
 });

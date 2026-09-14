@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and billing, then prepare WP-PLATFORM-W2-001.
+Coordinate the local database lane, then close interrupted in-flight save, delayed stale-response, mapped old-link and keyboard/accessibility/approved-design proof using the connected two-brand harness; keep w1b-004 current and W2-001 inactive.

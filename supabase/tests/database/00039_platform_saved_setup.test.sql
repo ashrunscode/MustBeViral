@@ -101,6 +101,6 @@ select is((select status from public.studio_invitations where id=current_setting
 update public.studio_memberships set status='active',revoked_at=null,version=version+1 where studio_id=current_setting('test.studio')::uuid and role='owner';
 select is((select status from public.studio_invitations where id=current_setting('test.unverified')::uuid),'revoked','restoring owner cannot restore an old invitation');
 select ok((select count(*) from public.studio_events where action like '%invitation%')>=6,'invitation transitions audited without email in audit details');
-select ok((select count(*) from public.audit_events where action='platform.save_brand_draft')=2,'exactly two acknowledged saves audited');
+select ok((select count(*) from public.audit_events where action='platform.save_brand_draft' and workspace_id=current_setting('test.ws')::uuid)=2,'exactly two acknowledged saves audited');
 select * from finish();
 rollback;

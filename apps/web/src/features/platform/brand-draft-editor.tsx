@@ -2,7 +2,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import type { PlatformInput, PlatformOutput } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
-import { platformErrorMessage, PlatformRequestError } from './platform-client';
+import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
 import { attachUnsavedGuards, UNSAVED_LEAVE_MESSAGE } from './unsaved-navigation';
@@ -60,7 +60,9 @@ export function BrandDraftEditor({
             Start a brand draft
           </button>
         )}
-        {mutation.error !== undefined && <p role="alert">{platformErrorMessage(mutation.error)}</p>}
+        {mutation.error !== undefined && (
+          <p role="alert">{platformMutationErrorMessage(mutation.error)}</p>
+        )}
       </section>
     );
   return (
@@ -210,7 +212,7 @@ function DraftForm({
           </fieldset>
           {mutation.error !== undefined && (
             <div role="alert" className="platform-note platform-error">
-              <p>{platformErrorMessage(mutation.error)}</p>
+              <p>{platformMutationErrorMessage(mutation.error)}</p>
               {mutation.error instanceof PlatformRequestError &&
                 mutation.error.code === 'REVISION_CONFLICT' && (
                   <button

@@ -47,15 +47,28 @@ export async function platformRequest<O extends PlatformOperation>(
   return response.data;
 }
 
+const UNAVAILABLE_REQUEST = 'We could not confirm this request. Check your connection and retry.';
+const UNSAVED_CHANGES = 'Your changes are not marked as saved.';
+
 export function platformErrorMessage(error: unknown): string {
   if (error instanceof PlatformRequestError) {
-    if (error.code === 'NOT_FOUND' || error.code === 'FORBIDDEN')
+    if (error.code === 'FORBIDDEN')
+      return 'You do not have permission for this action. Return to your studio and use an allowed role.';
+    if (error.code === 'NOT_FOUND')
       return 'This resource is unavailable or your access has changed. Return to your studio and choose a permitted brand.';
     if (error.code === 'REVISION_CONFLICT')
       return 'Someone saved a newer version. Your edits are still here. Reload the saved version before trying again.';
     if (error.code === 'RESOURCE_ARCHIVED')
       return 'This record is archived, revoked or expired. Refresh to see its current state.';
+    if (error.code === 'INTERNAL_ERROR') return UNAVAILABLE_REQUEST;
     return error.message;
   }
-  return 'We could not confirm this request. Check your connection and retry. Your changes are not marked as saved.';
+  return UNAVAILABLE_REQUEST;
+}
+
+export function platformMutationErrorMessage(error: unknown): string {
+  const message = platformErrorMessage(error);
+  const uncertain = !(error instanceof PlatformRequestError) || error.code === 'INTERNAL_ERROR';
+  if (!uncertain || message.includes(UNSAVED_CHANGES)) return message;
+  return `${message} ${UNSAVED_CHANGES}`;
 }

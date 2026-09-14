@@ -15,13 +15,15 @@ insert into public.workspace_memberships(workspace_id, user_id) values
   ('b1000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000001'),
   ('b1000000-0000-4000-8000-000000000002', 'a1000000-0000-4000-8000-000000000001');
 create temporary table original_counts as select
+  (select count(*) from public.brands) brands,
+  (select count(*) from public.studios) studios,
   (select count(*) from public.ledger_transactions) ledger,
   (select count(*) from public.workspaces) workspaces,
   (select count(*) from public.workspace_memberships) memberships;
 select is(pg_temp.error_of($$select app_private.backfill_platform_identity(array[
   'b1000000-0000-4000-8000-000000000001','b1000000-0000-4000-8000-000000000003']::uuid[])$$),
   'P0001:BACKFILL_OWNER_CONFLICT', 'orphan prevents the entire bounded backfill');
-select is((select count(*) from public.brands), 0::bigint, 'failed backfill creates no partial brands');
+select is((select count(*) from public.brands), (select brands from original_counts), 'failed backfill creates no partial brands');
 select is(pg_temp.error_of($$select app_private.backfill_platform_identity(array[
   'b1000000-0000-4000-8000-000000000001','b1000000-0000-4000-8000-000000000001']::uuid[])$$),
   '22023:BACKFILL_INVALID_WORKSPACE_SET', 'duplicate input is explicit');
@@ -31,7 +33,7 @@ select is(pg_temp.error_of($$select app_private.backfill_platform_identity(array
 select is(app_private.backfill_platform_identity(array[
   'b1000000-0000-4000-8000-000000000001','b1000000-0000-4000-8000-000000000002']::uuid[]) ->> 'workspaces_created',
   '2', 'authoritative owner maps WashBodega and UnPile separately');
-select is((select count(*) from public.studios), 1::bigint, 'same owner has one mapped personal studio');
+select is((select count(*) from public.studios), (select studios + 1 from original_counts), 'same owner has one mapped personal studio');
 select is((select count(distinct brand_id) from public.platform_workspace_mappings), 2::bigint, 'brands preserve separate IDs');
 select is(app_private.backfill_platform_identity(array[
   'b1000000-0000-4000-8000-000000000001','b1000000-0000-4000-8000-000000000002']::uuid[]) ->> 'workspaces_created',

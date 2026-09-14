@@ -47,4 +47,42 @@ describe('workspace billing presentation', () => {
     expect(zero).toContain('$0.00');
     expect(zero).toContain('No subscription is attached');
   });
+
+  it('renders seeded integer wallet totals and distinct past-due and mismatch states', () => {
+    const seeded = renderToStaticMarkup(
+      <WorkspaceBillingView
+        data={{
+          workspace_id: workspace,
+          profile_present: true,
+          charging_enabled: false,
+          subscription_status: 'active',
+          wallet_balance_micros: '250000000',
+          ledger_wallet_available_micros: '250000000',
+          usage_expense_micros: '0',
+          balances_match: true,
+        }}
+      />,
+    );
+    expect(seeded).toContain('$250.00');
+    expect(seeded).toContain('Charging is turned off');
+    expect(seeded).not.toContain('No billing profile is on file');
+    expect(seeded).toContain('id="main-content"');
+    const pastDue = renderToStaticMarkup(
+      <WorkspaceBillingView
+        data={{
+          workspace_id: workspace,
+          profile_present: true,
+          charging_enabled: false,
+          subscription_status: 'past_due',
+          wallet_balance_micros: '1',
+          ledger_wallet_available_micros: '2',
+          usage_expense_micros: '0',
+          balances_match: false,
+        }}
+      />,
+    );
+    expect(pastDue).toContain('past due');
+    expect(pastDue).toContain('do not match');
+    expect(pastDue).not.toContain('No subscription is attached');
+  });
 });

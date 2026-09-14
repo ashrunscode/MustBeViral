@@ -2,7 +2,7 @@
 import { useState, type FormEvent } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
-import { platformErrorMessage } from './platform-client';
+import { platformMutationErrorMessage } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
 
@@ -52,7 +52,7 @@ export function BrandSettings({
           </fieldset>
           {mutation.error !== undefined && (
             <p role="alert" className="platform-error">
-              {platformErrorMessage(mutation.error)}
+              {platformMutationErrorMessage(mutation.error)}
             </p>
           )}
           {canWrite && (
@@ -146,7 +146,7 @@ function WorkspaceForm({
       {saved && <p role="status">Workspace name saved.</p>}
       {mutation.error !== undefined && (
         <p role="alert" className="platform-error">
-          {platformErrorMessage(mutation.error)}
+          {platformMutationErrorMessage(mutation.error)}
         </p>
       )}
     </form>
@@ -224,7 +224,7 @@ function BrandAccessGrants({
       </form>
       {mutation.error !== undefined && (
         <p role="alert" className="platform-error">
-          {platformErrorMessage(mutation.error)}
+          {platformMutationErrorMessage(mutation.error)}
         </p>
       )}
       {grants.loading && <PlatformLoading label="Loading current grants…" />}

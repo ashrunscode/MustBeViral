@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W1-002
 current_step: w1b-004-journeys-and-successor
-next_action: Run desktop/mobile two-brand connected browser journeys for onboarding, navigation and billing, then prepare WP-PLATFORM-W2-001.
+next_action: Coordinate the local database lane, then close interrupted in-flight save, delayed stale-response, mapped old-link and keyboard/accessibility/approved-design proof using the connected two-brand harness; keep w1b-004 current and W2-001 inactive.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

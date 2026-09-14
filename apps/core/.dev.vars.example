@@ -22,6 +22,8 @@ SUPABASE_PUBLISHABLE_KEY=replace-me
 SUPABASE_SECRET_KEY=replace-me
 SUPABASE_SERVICE_ROLE_KEY=replace-me
 PROVIDER_RUNS_ENABLED=false
+# QUEUES_ENABLED is a Wrangler variable. The local launcher sets it to false.
+# Keep it out of this types-generation env file so Wrangler preserves its literal union.
 FAL_KEY=replace-me
 MOONSHOT_API_KEY=replace-me
 OPENROUTER_API_KEY=replace-me
