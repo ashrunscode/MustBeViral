@@ -246,10 +246,12 @@ export const BrandVersionRecordSchema = z
     draft_id: uuid,
     draft_hash: draftHash,
     status: z.literal('approved'),
-    snapshot: z.object({
-      assertions: z.array(BrandAssertionRecordSchema).max(50),
-      proposals: z.array(BrandProposalRecordSchema).max(20),
-    }).strict(),
+    snapshot: z
+      .object({
+        assertions: z.array(BrandAssertionRecordSchema).max(50),
+        proposals: z.array(BrandProposalRecordSchema).max(20),
+      })
+      .strict(),
     approved_by: uuid,
     approved_at: WireTimestampSchema,
     created_at: WireTimestampSchema,
