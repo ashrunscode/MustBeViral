@@ -6,20 +6,20 @@ This packet implements W2.2–W2.4 on W2.1 captures. It is not Wave 2 exit. Inde
 
 ## Checks
 
-| Check | Result |
-| --- | --- |
-| `pnpm agent:preflight` | Passed; active packet WP-PLATFORM-W2-002 |
-| Additive local migrations | `20260915010000` applied, then repairs `20260915020000` and `20260915030000` on existing `supabase_db_mustbeviral` volume. 20260914 migrations were not edited. Volume not reset. |
-| `pnpm supabase:test` | 46 files, 759 assertions, Result: PASS |
-| Connected knowledge SQL | `verify-platform-knowledge-connected.mjs` 8 passed |
-| Fixture probe | `verify-platform-knowledge-fixtures.mjs` passed, including WashBodega, UnPile, Harbor Press, and Riverside Coffee samples |
-| Domain unit tests | 38 passed |
-| Contracts unit tests | 130 passed |
-| Core unit tests | 450 passed |
-| Platform web unit tests | 18 passed |
-| Connected knowledge journeys | 10 passed (5 desktop Chromium, 5 mobile Chromium), 0 skipped/flaky |
-| W1 connected regression | 14 passed, 0 skipped/flaky |
-| Successor | `successor-WP-PLATFORM-W2-003.yaml` schema-valid; W2.5 change detection, expiry lifecycle, contradiction/catalog import only |
+| Check                        | Result                                                                                                                                                                            |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm agent:preflight`       | Passed; active packet WP-PLATFORM-W2-002                                                                                                                                          |
+| Additive local migrations    | `20260915010000` applied, then repairs `20260915020000` and `20260915030000` on existing `supabase_db_mustbeviral` volume. 20260914 migrations were not edited. Volume not reset. |
+| `pnpm supabase:test`         | 46 files, 759 assertions, Result: PASS                                                                                                                                            |
+| Connected knowledge SQL      | `verify-platform-knowledge-connected.mjs` 8 passed                                                                                                                                |
+| Fixture probe                | `verify-platform-knowledge-fixtures.mjs` passed, including WashBodega, UnPile, Harbor Press, and Riverside Coffee samples                                                         |
+| Domain unit tests            | 38 passed                                                                                                                                                                         |
+| Contracts unit tests         | 130 passed                                                                                                                                                                        |
+| Core unit tests              | 450 passed                                                                                                                                                                        |
+| Platform web unit tests      | 18 passed                                                                                                                                                                         |
+| Connected knowledge journeys | 10 passed (5 desktop Chromium, 5 mobile Chromium), 0 skipped/flaky                                                                                                                |
+| W1 connected regression      | 14 passed, 0 skipped/flaky                                                                                                                                                        |
+| Successor                    | `successor-WP-PLATFORM-W2-003.yaml` schema-valid; W2.5 change detection, expiry lifecycle, contradiction/catalog import only                                                      |
 
 ## Acceptance mapping
 

@@ -123,9 +123,15 @@ function labeledHtml(html: string, attr: string, kind: AssertionKind): Represent
     const attrs = match[2] ?? '';
     const name = match[3] ?? '';
     const body = (match[4] ?? '').replaceAll(/<[^>]+>/gu, ' ');
-    const ends =
-      kind === 'offer' ? parseOfferEnd(attributeValue(attrs, 'data-offer-ends')) : null;
-    const item = observed(kind, name, body.length > 0 ? body : name, `data-${attr}:${index}`, 'data_attribute', ends);
+    const ends = kind === 'offer' ? parseOfferEnd(attributeValue(attrs, 'data-offer-ends')) : null;
+    const item = observed(
+      kind,
+      name,
+      body.length > 0 ? body : name,
+      `data-${attr}:${index}`,
+      'data_attribute',
+      ends,
+    );
     if (item) items.push(item);
     index += 1;
   }
@@ -145,13 +151,7 @@ function htmlImages(html: string): RepresentativeAssertion[] {
       index += 1;
       continue;
     }
-    const item = observed(
-      'visual_candidate',
-      alt || src,
-      src,
-      `img:${index}`,
-      'html_image',
-    );
+    const item = observed('visual_candidate', alt || src, src, `img:${index}`, 'html_image');
     if (item) items.push({ ...item, reusable: false });
     index += 1;
   }
@@ -207,9 +207,7 @@ function labeledLines(
 
 function withUnknowns(found: RepresentativeAssertion[]): RepresentativeAssertion[] {
   const present = new Set(found.map((item) => item.kind));
-  const missing = assertionKinds
-    .filter((kind) => !present.has(kind))
-    .map((kind) => unknown(kind));
+  const missing = assertionKinds.filter((kind) => !present.has(kind)).map((kind) => unknown(kind));
   return [...found, ...missing];
 }
 
