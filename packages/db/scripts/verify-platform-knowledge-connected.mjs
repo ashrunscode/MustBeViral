@@ -141,7 +141,21 @@ try {
       ),
     /permission denied for table brand_sources/u,
   );
-  results.push('authenticated cannot fabricate HTTPS provenance or write sources');
+  await assert.rejects(
+    () =>
+      userTransaction(
+        sql,
+        owner,
+        (tx) => tx`select public.record_brand_extraction(${randomUUID()}, ${tx.json([])}, 'req')`,
+      ),
+    /permission denied for function record_brand_extraction/u,
+  );
+  await assert.rejects(
+    () =>
+      userTransaction(sql, owner, (tx) => tx`insert into public.brand_assertions default values`),
+    /permission denied for table brand_assertions/u,
+  );
+  results.push('authenticated cannot fabricate HTTPS provenance, extraction, or assertion writes');
 
   stage = 'manual drafts stay tenant-private';
   const drafts = await userTransaction(sql, owner, async (tx) => {
@@ -199,6 +213,19 @@ try {
         other,
         (tx) =>
           tx`select public.platform_knowledge_query('get_knowledge_draft', ${tx.json({
+            workspace_id: seed.wb.workspace_id,
+            brand_id: seed.wb.id,
+          })})`,
+      ),
+    /NOT_FOUND/u,
+  );
+  await assert.rejects(
+    () =>
+      userTransaction(
+        outsider,
+        other,
+        (tx) =>
+          tx`select public.platform_knowledge_query('get_knowledge_review', ${tx.json({
             workspace_id: seed.wb.workspace_id,
             brand_id: seed.wb.id,
           })})`,
@@ -351,6 +378,204 @@ try {
   assert.equal(latest.status, 'captured');
   results.push('document upload requires a write claim; service completion is lease-fenced');
 
+  stage = 'extract, propose, approve and pin stay tenant-private';
+  const review = await userTransaction(sql, owner, async (tx) => {
+    const manualSource = (
+      await tx`select id from public.brand_sources
+        where workspace_id = ${seed.up.workspace_id} and brand_id = ${seed.up.id} and kind = 'manual'
+        order by created_at limit 1`
+    )[0];
+    const extracted = await knowledge(
+      tx,
+      'extract_brand_knowledge',
+      {
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+        source_id: manualSource.id,
+      },
+      'up-extract',
+    );
+    assert.equal(extracted.extract_pending, false);
+    assert.ok(extracted.current_assertions.every((item) => item.reusable === false));
+    assert.ok(extracted.current_assertions.some((item) => item.status === 'unknown'));
+    const proposed = await knowledge(
+      tx,
+      'propose_brand_knowledge',
+      {
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+      },
+      'up-propose',
+    );
+    const audience = proposed.current_proposals.find((item) => item.kind === 'audience');
+    assert.equal(audience?.status, 'unknown');
+    assert.equal(audience?.value_text, null);
+    const asked = await knowledge(
+      tx,
+      'ask_brand_knowledge_questions',
+      {
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+      },
+      'up-ask',
+    );
+    assert.match(asked.draft_hash, /^[0-9a-f]{64}$/u);
+    const approved = await knowledge(
+      tx,
+      'approve_brand_version',
+      {
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+        expected_version: asked.record.version,
+        draft_hash: asked.draft_hash,
+      },
+      'up-approve',
+    );
+    assert.equal(approved.record.status, 'approved');
+    const pin = await knowledge(
+      tx,
+      'pin_brand_version',
+      {
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+        pin_key: 'campaign-unpile',
+        brand_version_id: approved.record.id,
+      },
+      'up-pin',
+    );
+    assert.equal(pin.brand_version.id, approved.record.id);
+    const offer = asked.current_assertions.find((item) => item.kind === 'offer');
+    const corrected = await knowledge(
+      tx,
+      'correct_brand_assertion',
+      {
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+        assertion_id: offer.id,
+        expected_version: asked.record.version,
+        value_text: 'UnPile first bag ended.',
+        excerpt: 'Operator ended the first-bag offer.',
+      },
+      'up-correct-offer',
+    );
+    assert.equal(
+      corrected.current_assertions.find((item) => item.kind === 'offer')?.value_text,
+      'UnPile first bag ended.',
+    );
+    const [pinned] =
+      await tx`select public.platform_knowledge_query('get_brand_version_pin', ${tx.json({
+        workspace_id: seed.up.workspace_id,
+        brand_id: seed.up.id,
+        pin_key: 'campaign-unpile',
+      })}) as result`;
+    assert.equal(
+      pinned.result.brand_version.snapshot.assertions.some(
+        (item) => item.value_text === 'UnPile first bag ended.',
+      ),
+      false,
+    );
+    return { extracted, approved };
+  });
+  assert.equal(review.approved.record.status, 'approved');
+  results.push('UnPile exact-hash approval pins an immutable snapshot after later correction');
+
+  stage = 'expired offers and forged child ids are refused';
+  const expired = await userTransaction(sql, owner, async (tx) => {
+    const expWs = (
+      await tx`select public.create_workspace('Expired offer','extract-exp',${randomUUID()},'req-exp') as result`
+    )[0].result;
+    const expBrand = await command(tx, 'create_brand', {
+      workspace_id: expWs.workspace_id,
+      name: 'Expired',
+      slug: 'expired',
+    });
+    await knowledge(
+      tx,
+      'start_manual_knowledge_draft',
+      { workspace_id: expWs.workspace_id, brand_id: expBrand.id },
+      'exp-manual',
+    );
+    const expSource = (
+      await tx`select id from public.brand_sources
+        where workspace_id = ${expWs.workspace_id} and brand_id = ${expBrand.id}
+        order by created_at limit 1`
+    )[0];
+    await knowledge(
+      tx,
+      'extract_brand_knowledge',
+      {
+        workspace_id: expWs.workspace_id,
+        brand_id: expBrand.id,
+        source_id: expSource.id,
+      },
+      'exp-extract',
+    );
+    const [expReview] =
+      await tx`select public.platform_knowledge_query('get_knowledge_review', ${tx.json({
+        workspace_id: expWs.workspace_id,
+        brand_id: expBrand.id,
+      })}) as result`;
+    const expOffer = expReview.result.current_assertions.find((item) => item.kind === 'offer');
+    const after = await knowledge(
+      tx,
+      'correct_brand_assertion',
+      {
+        workspace_id: expWs.workspace_id,
+        brand_id: expBrand.id,
+        assertion_id: expOffer.id,
+        expected_version: expReview.result.record.version,
+        value_text: 'Old coupon',
+        excerpt: 'Expired coupon from a prior season.',
+        ends_at: '2020-01-01T00:00:00.000Z',
+      },
+      'exp-correct',
+    );
+    return {
+      workspace_id: expWs.workspace_id,
+      brand_id: expBrand.id,
+      offer_id: expOffer.id,
+      version: after.record.version,
+      draft_hash: after.draft_hash,
+    };
+  });
+  await assert.rejects(
+    () =>
+      userTransaction(sql, owner, (tx) =>
+        knowledge(
+          tx,
+          'approve_brand_version',
+          {
+            workspace_id: expired.workspace_id,
+            brand_id: expired.brand_id,
+            expected_version: expired.version,
+            draft_hash: expired.draft_hash,
+          },
+          'exp-approve',
+        ),
+      ),
+    /EXPIRED_OFFER/u,
+  );
+  await assert.rejects(
+    () =>
+      userTransaction(sql, owner, (tx) =>
+        knowledge(
+          tx,
+          'correct_brand_assertion',
+          {
+            workspace_id: seed.up.workspace_id,
+            brand_id: seed.up.id,
+            assertion_id: expired.offer_id,
+            expected_version: 1,
+            value_text: 'forged',
+            excerpt: 'forged child',
+          },
+          'forged-child',
+        ),
+      ),
+    /NOT_FOUND/u,
+  );
+  results.push('expired offers cannot be approved; forged child ids stay NOT_FOUND');
+
   stage = 'revoke grant hides later reads and keeps the owner receipt stable';
   const access = await userTransaction(sql, owner, async (tx) => {
     const studio = await command(tx, 'create_studio', {
@@ -393,6 +618,19 @@ try {
         other,
         (tx) =>
           tx`select public.platform_knowledge_query('get_knowledge_draft', ${tx.json({
+            workspace_id: seed.wb.workspace_id,
+            brand_id: seed.wb.id,
+          })})`,
+      ),
+    /NOT_FOUND/u,
+  );
+  await assert.rejects(
+    () =>
+      userTransaction(
+        outsider,
+        other,
+        (tx) =>
+          tx`select public.platform_knowledge_query('get_knowledge_review', ${tx.json({
             workspace_id: seed.wb.workspace_id,
             brand_id: seed.wb.id,
           })})`,
