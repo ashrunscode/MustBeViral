@@ -116,6 +116,18 @@ export class PrivilegedSourceMachinePort {
     });
   }
 
+  async recordExtraction(
+    sourceId: string,
+    assertions: readonly Record<string, unknown>[],
+    requestId: string,
+  ): Promise<unknown> {
+    return await this.#rpc('record_brand_extraction', {
+      p_source_id: sourceId,
+      p_assertions: assertions,
+      p_request_id: requestId,
+    });
+  }
+
   async failJob(
     jobId: string,
     failureCode: SourceMachineError['code'],

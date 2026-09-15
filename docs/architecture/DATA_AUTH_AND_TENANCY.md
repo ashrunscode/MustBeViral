@@ -147,6 +147,20 @@ unlisted unless a source row exists. `get_knowledge_draft` pages current candida
 response) with `next_cursor`; captures admit at most 40 candidates each. Results are not silently
 discarded.
 
+W2.2–W2.4 persistence is additive on that capture layer. `brand_assertions` store typed offerings,
+locations, facts, offers, visual candidates and language with source, capture time, excerpt and
+method. Visual candidates have `reusable=false`. `record_brand_extraction` is a service_role machine
+RPC over already captured private bytes; authenticated clients cannot execute it. User commands are
+`extract_brand_knowledge`, `propose_brand_knowledge`, `correct_brand_assertion`,
+`ask_brand_knowledge_questions`, `answer_brand_knowledge_question`, `approve_brand_version` and
+`pin_brand_version`. `brand_proposals` label observed, inferred or unknown voice, audience and
+positioning; inferred personas are not owner-confirmed until `approve_brand_version`.
+`brand_versions` are immutable approved snapshots of the exact draft hash. A later correction
+creates a new draft row, not a mutated snapshot. `brand_version_pins` return that approved snapshot
+after drafts change. Approve refuses `EXPIRED_OFFER` and `CONTRADICTORY_KNOWLEDGE`. That guard is not
+W2.5 change detection, expiry lifecycle or catalog import. Direct writes stay denied. Forced RLS
+still uses `platform_can`. Forged parent IDs and revoked grants resolve `NOT_FOUND` or `FORBIDDEN`.
+
 - Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
 - Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
 - Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.

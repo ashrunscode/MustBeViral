@@ -263,6 +263,16 @@ export const PLATFORM_ERRORS = {
     message: 'Public-only source capture is not configured.',
     retryable: true,
   },
+  EXPIRED_OFFER: {
+    httpStatus: 409,
+    message: 'This draft still contains a known expired offer.',
+    retryable: false,
+  },
+  CONTRADICTORY_KNOWLEDGE: {
+    httpStatus: 409,
+    message: 'This draft still contains contradictory assertions.',
+    retryable: false,
+  },
   INTERNAL_ERROR: {
     httpStatus: 500,
     message: 'The request could not be completed.',

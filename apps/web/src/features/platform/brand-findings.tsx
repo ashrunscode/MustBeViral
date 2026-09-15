@@ -22,6 +22,7 @@ import { createBrowserSupabaseClient } from '../../lib/supabase/client';
 type Brand = PlatformOutput<'get_brand'>['record'];
 type Candidate = PlatformOutput<'get_knowledge_draft'>['current_candidates'][number];
 type Job = PlatformOutput<'get_source_job'>['record'];
+type Question = PlatformOutput<'get_knowledge_review'>['current_questions'][number];
 
 export function isDenied(error: unknown) {
   return (
@@ -143,10 +144,29 @@ export function BrandFindings({
     jobId !== null,
     true,
   );
+  const reviewQuery = usePlatformQuery(
+    'get_knowledge_review',
+    { workspace_id: brand.workspace_id, brand_id: brand.id },
+    true,
+    true,
+  );
   const website = usePlatformMutation();
   const documentCapture = usePlatformMutation();
   const manual = usePlatformMutation();
   const correction = usePlatformMutation();
+  const extract = usePlatformMutation();
+  const propose = usePlatformMutation();
+  const ask = usePlatformMutation();
+  const answer = usePlatformMutation();
+  const assertionCorrection = usePlatformMutation();
+  const approve = usePlatformMutation();
+  const pin = usePlatformMutation();
+  const [selectedAssertionId, setSelectedAssertionId] = useState<string | null>(null);
+  const [assertionText, setAssertionText] = useState('');
+  const [assertionExcerpt, setAssertionExcerpt] = useState('');
+  const [questionAnswers, setQuestionAnswers] = useState<Record<string, string>>({});
+  const [pinKey, setPinKey] = useState('campaign-preview');
+  const [pinGeneration, setPinGeneration] = useState(0);
   const candidates = draftQuery.data?.current_candidates ?? [];
   const sources = sourcesQuery.data?.items ?? [];
 
@@ -162,12 +182,20 @@ export function BrandFindings({
   const denied =
     isDenied(draftQuery.error) ||
     isDenied(sourcesQuery.error) ||
+    isDenied(reviewQuery.error) ||
     isDenied(liveJob.error) ||
     isDenied(latestJob.error) ||
     isDenied(website.error) ||
     isDenied(documentCapture.error) ||
     isDenied(manual.error) ||
     isDenied(correction.error) ||
+    isDenied(extract.error) ||
+    isDenied(propose.error) ||
+    isDenied(ask.error) ||
+    isDenied(answer.error) ||
+    isDenied(assertionCorrection.error) ||
+    isDenied(approve.error) ||
+    isDenied(pin.error) ||
     isDenied(uploadError);
   const notifiedDenial = useRef(false);
   useEffect(() => {
@@ -185,35 +213,64 @@ export function BrandFindings({
         error={
           draftQuery.error ??
           sourcesQuery.error ??
+          reviewQuery.error ??
           liveJob.error ??
           latestJob.error ??
           website.error ??
           documentCapture.error ??
           manual.error ??
           correction.error ??
+          extract.error ??
+          propose.error ??
+          ask.error ??
+          answer.error ??
+          assertionCorrection.error ??
+          approve.error ??
+          pin.error ??
           uploadError
         }
       />
     );
   if (
     (draftQuery.loading && draftQuery.data === undefined) ||
-    (sourcesQuery.loading && sourcesQuery.data === undefined)
+    (sourcesQuery.loading && sourcesQuery.data === undefined) ||
+    (reviewQuery.loading && reviewQuery.data === undefined)
   )
     return <PlatformLoading label="Loading brand findings…" />;
   if (draftQuery.error !== undefined)
     return <PlatformRecovery error={draftQuery.error} retry={draftQuery.refresh} />;
   if (sourcesQuery.error !== undefined)
     return <PlatformRecovery error={sourcesQuery.error} retry={sourcesQuery.refresh} />;
+  if (reviewQuery.error !== undefined)
+    return <PlatformRecovery error={reviewQuery.error} retry={reviewQuery.refresh} />;
 
   const job = liveJob.data?.record ?? null;
   const current = currentCandidate(candidates, selectedId);
   const mutationError =
-    website.error ?? documentCapture.error ?? manual.error ?? correction.error ?? uploadError;
+    website.error ??
+    documentCapture.error ??
+    manual.error ??
+    correction.error ??
+    extract.error ??
+    propose.error ??
+    ask.error ??
+    answer.error ??
+    assertionCorrection.error ??
+    approve.error ??
+    pin.error ??
+    uploadError;
   const busy =
     website.pending ||
     documentCapture.pending ||
     manual.pending ||
     correction.pending ||
+    extract.pending ||
+    propose.pending ||
+    ask.pending ||
+    answer.pending ||
+    assertionCorrection.pending ||
+    approve.pending ||
+    pin.pending ||
     uploadBusy;
   const uncertain = (error: unknown) =>
     error !== undefined &&
@@ -224,6 +281,7 @@ export function BrandFindings({
     setSourceHistory([undefined]);
     draftQuery.refresh();
     sourcesQuery.refresh();
+    reviewQuery.refresh();
     latestJob.refresh();
   }
 
@@ -359,6 +417,95 @@ export function BrandFindings({
     resetPages();
   }
 
+  const capturedSourceId = job?.source_id ?? sources[0]?.id ?? null;
+  const assertions = reviewQuery.data?.current_assertions ?? [];
+  const proposals = reviewQuery.data?.current_proposals ?? [];
+  const questions = reviewQuery.data?.current_questions ?? [];
+  const selectedAssertion =
+    assertions.find((item) => item.id === selectedAssertionId) ?? assertions[0] ?? null;
+  const draftHash = reviewQuery.data?.draft_hash ?? null;
+  const draftVersion = reviewQuery.data?.record?.version ?? draftQuery.data?.record?.version ?? null;
+  const approvedVersion = reviewQuery.data?.approved_version ?? null;
+
+  async function runExtract() {
+    if (!capturedSourceId) return;
+    await extract.mutate('extract_brand_knowledge', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      source_id: capturedSourceId,
+    });
+    resetPages();
+  }
+
+  async function runPropose() {
+    await propose.mutate('propose_brand_knowledge', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+    });
+    resetPages();
+  }
+
+  async function runAsk() {
+    await ask.mutate('ask_brand_knowledge_questions', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+    });
+    resetPages();
+  }
+
+  async function saveAssertion(event: FormEvent) {
+    event.preventDefault();
+    if (!selectedAssertion || draftVersion === null) return;
+    await assertionCorrection.mutate('correct_brand_assertion', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      assertion_id: selectedAssertion.id,
+      expected_version: draftVersion,
+      value_text: assertionText.trim() === '' ? null : assertionText,
+      excerpt: assertionExcerpt.trim() || 'Operator assertion correction.',
+    });
+    setAssertionText('');
+    setAssertionExcerpt('');
+    resetPages();
+  }
+
+  async function saveAnswer(question: Question) {
+    if (draftVersion === null) return;
+    const text = (questionAnswers[question.id] ?? '').trim();
+    if (text.length === 0) return;
+    await answer.mutate('answer_brand_knowledge_question', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      question_id: question.id,
+      expected_version: draftVersion,
+      answer_text: text,
+    });
+    resetPages();
+  }
+
+  async function runApprove() {
+    if (draftVersion === null || !draftHash) return;
+    await approve.mutate('approve_brand_version', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      expected_version: draftVersion,
+      draft_hash: draftHash,
+    });
+    resetPages();
+  }
+
+  async function runPin() {
+    if (!approvedVersion) return;
+    const result = await pin.mutate('pin_brand_version', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      pin_key: pinKey.trim(),
+      brand_version_id: approvedVersion.id,
+    });
+    if (result) setPinGeneration((value) => value + 1);
+    resetPages();
+  }
+
   return (
     <>
       <PlatformHeading
@@ -427,6 +574,16 @@ export function BrandFindings({
           >
             {jobMessage(job)}
           </p>
+          {canWrite && capturedSourceId ? (
+            <button
+              type="button"
+              disabled={busy}
+              data-testid="extract-knowledge"
+              onClick={() => void runExtract()}
+            >
+              {extract.pending ? 'Extracting…' : 'Extract typed findings'}
+            </button>
+          ) : null}
           {mutationError !== undefined && (
             <p role="alert">{platformMutationErrorMessage(mutationError)}</p>
           )}
@@ -574,9 +731,218 @@ export function BrandFindings({
               </button>
             ) : null}
           </div>
+          <div className="platform-card platform-pad platform-stack">
+            <h2>Typed findings</h2>
+            <p className="platform-note">
+              Offerings, locations, facts, offers, language and visual candidates stay unapproved.
+              Images are not reusable campaign assets.
+            </p>
+            {assertions.length === 0 ? (
+              <p className="platform-muted">Extract a captured source to review typed findings.</p>
+            ) : (
+              <ul className="platform-stack">
+                {assertions.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      data-testid={`assertion-${item.kind}`}
+                      data-assertion-id={item.id}
+                      aria-current={selectedAssertion?.id === item.id ? 'true' : undefined}
+                      onClick={() => setSelectedAssertionId(item.id)}
+                    >
+                      {item.kind.replaceAll('_', ' ')} · {item.status}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {selectedAssertion ? (
+              <>
+                <p data-testid="assertion-value">
+                  {selectedAssertion.value_text ?? 'Unknown — not supplied.'}
+                </p>
+                <p className="platform-muted" data-testid="assertion-provenance">
+                  Source {selectedAssertion.source_id} · {selectedAssertion.method} · captured{' '}
+                  {selectedAssertion.captured_at}
+                </p>
+                {canWrite ? (
+                  <form className="platform-stack" onSubmit={(event) => void saveAssertion(event)}>
+                    <label>
+                      Correct this assertion
+                      <textarea
+                        value={assertionText}
+                        maxLength={4000}
+                        disabled={busy}
+                        onChange={(event) => setAssertionText(event.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Why this assertion correction
+                      <input
+                        value={assertionExcerpt}
+                        maxLength={2000}
+                        disabled={busy}
+                        onChange={(event) => setAssertionExcerpt(event.target.value)}
+                      />
+                    </label>
+                    <button className="platform-primary" type="submit" disabled={busy}>
+                      {assertionCorrection.pending ? 'Saving assertion…' : 'Save assertion'}
+                    </button>
+                  </form>
+                ) : null}
+              </>
+            ) : null}
+            {canWrite ? (
+              <button type="button" disabled={busy} onClick={() => void runPropose()}>
+                {propose.pending ? 'Proposing…' : 'Propose voice, audience and positioning'}
+              </button>
+            ) : null}
+            <ul className="platform-stack" data-testid="proposal-list">
+              {proposals.map((item) => (
+                <li key={item.id} data-testid={`proposal-${item.kind}`}>
+                  {item.kind} · {item.status}
+                  {item.confidence ? ` · ${item.confidence}` : ''} ·{' '}
+                  {item.value_text ?? 'Unknown — not supplied.'}
+                </li>
+              ))}
+            </ul>
+            {canWrite ? (
+              <button type="button" disabled={busy} onClick={() => void runAsk()}>
+                {ask.pending ? 'Preparing questions…' : 'Ask targeted questions'}
+              </button>
+            ) : null}
+            <ul className="platform-stack" data-testid="question-list">
+              {questions.map((item) => (
+                <li key={item.id} data-testid={`question-${item.target_kind}`}>
+                  <p>{item.prompt}</p>
+                  {item.status === 'answered' ? (
+                    <p className="platform-muted">{item.answer_text}</p>
+                  ) : canWrite ? (
+                    <form
+                      className="platform-stack"
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        void saveAnswer(item);
+                      }}
+                    >
+                      <label>
+                        Answer
+                        <input
+                          value={questionAnswers[item.id] ?? ''}
+                          maxLength={4000}
+                          disabled={busy}
+                          onChange={(event) =>
+                            setQuestionAnswers((current) => ({
+                              ...current,
+                              [item.id]: event.target.value,
+                            }))
+                          }
+                        />
+                      </label>
+                      <button type="submit" disabled={busy}>
+                        Save answer
+                      </button>
+                    </form>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+            {draftHash ? (
+              <p className="platform-muted" data-testid="draft-hash">
+                Draft hash {draftHash}
+              </p>
+            ) : null}
+            {canWrite && draftHash && draftVersion !== null ? (
+              <button
+                className="platform-primary"
+                type="button"
+                disabled={busy}
+                data-testid="approve-brand-version"
+                onClick={() => void runApprove()}
+              >
+                {approve.pending ? 'Approving…' : 'Approve this exact draft'}
+              </button>
+            ) : null}
+            {approvedVersion ? (
+              <p data-testid="approved-version">
+                Approved version {approvedVersion.version} · {approvedVersion.draft_hash}
+              </p>
+            ) : (
+              <p className="platform-muted">No owner-approved brand version yet.</p>
+            )}
+            {canWrite && approvedVersion ? (
+              <form
+                className="platform-stack"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  void runPin();
+                }}
+              >
+                <label>
+                  Campaign pin
+                  <input
+                    value={pinKey}
+                    maxLength={120}
+                    disabled={busy}
+                    onChange={(event) => setPinKey(event.target.value)}
+                  />
+                </label>
+                <button type="submit" disabled={busy} data-testid="pin-brand-version">
+                  {pin.pending ? 'Pinning…' : 'Pin approved version'}
+                </button>
+              </form>
+            ) : null}
+            <PinnedVersion
+              key={`${pinKey}-${pinGeneration}`}
+              workspaceId={brand.workspace_id}
+              brandId={brand.id}
+              pinKey={pinKey}
+              enabled={Boolean(approvedVersion)}
+            />
+          </div>
         </aside>
       </div>
       <p className="platform-muted">{studioId ? 'Findings stay on this brand.' : null}</p>
     </>
+  );
+}
+
+function PinnedVersion({
+  workspaceId,
+  brandId,
+  pinKey,
+  enabled,
+}: Readonly<{
+  workspaceId: string;
+  brandId: string;
+  pinKey: string;
+  enabled: boolean;
+}>) {
+  const query = usePlatformQuery(
+    'get_brand_version_pin',
+    { workspace_id: workspaceId, brand_id: brandId, pin_key: pinKey },
+    enabled && pinKey.length > 0,
+    true,
+  );
+  if (!enabled) return null;
+  if (query.loading && query.data === undefined)
+    return <p className="platform-muted">Checking campaign pin…</p>;
+  if (query.error instanceof PlatformRequestError && query.error.code === 'NOT_FOUND')
+    return <p className="platform-muted">No pin stored for this campaign key.</p>;
+  if (query.error !== undefined) return <p role="alert">{platformErrorMessage(query.error)}</p>;
+  const snapshot = query.data?.brand_version.snapshot.assertions ?? [];
+  return (
+    <div data-testid="pinned-version">
+      <p>
+        Pinned version {query.data?.brand_version.version} · {query.data?.brand_version.draft_hash}
+      </p>
+      <ul>
+        {snapshot.map((item) => (
+          <li key={item.id}>
+            {item.kind} · {item.value_text ?? 'Unknown — not supplied.'}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

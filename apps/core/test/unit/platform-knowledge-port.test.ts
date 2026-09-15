@@ -373,4 +373,68 @@ describe('knowledge-aware platform port', () => {
     expect(result).toEqual({ status: 'error', code: 'FORBIDDEN' });
     expect(publicFetch).not.toHaveBeenCalled();
   });
+
+  it('extracts typed assertions from private R2 bytes without a user capture-complete operation', async () => {
+    const sourceId = 'e8000000-0000-4000-8000-000000000001';
+    const html =
+      '<!doctype html><html lang="en"><body><section data-offering="self-serve wash">Self-serve washers at WashBodega.</section></body></html>';
+    const review = {
+      record: {
+        id: jobId,
+        workspace_id: workspace,
+        brand_id: brand,
+        version: 2,
+        created_by: context.actor_id,
+        updated_by: context.actor_id,
+        created_at: '2026-09-15T00:00:00.000Z',
+        updated_at: '2026-09-15T00:00:00.000Z',
+      },
+      draft_hash: 'a'.repeat(64),
+      current_assertions: [],
+      current_proposals: [],
+      current_questions: [],
+      approved_version: null,
+      extract_pending: false,
+      next_cursor: null,
+    };
+    const db = vi.fn<typeof fetch>(async (input, init) => {
+      const url = String(input);
+      if (url.endsWith('/platform_knowledge_command')) {
+        return Response.json({ ...review, extract_pending: true, current_assertions: [] });
+      }
+      if (url.endsWith('/record_brand_extraction')) {
+        const body = JSON.parse(String(init?.body)) as {
+          p_assertions: Array<{ kind: string; reusable: boolean }>;
+        };
+        expect(body.p_assertions.some((item) => item.kind === 'offering')).toBe(true);
+        expect(body.p_assertions.every((item) => item.reusable === false)).toBe(true);
+        return Response.json(review);
+      }
+      return Response.json({ message: 'unexpected' }, { status: 500 });
+    });
+    const get = vi.fn(async () => ({
+      arrayBuffer: async () => new TextEncoder().encode(html).buffer,
+      httpMetadata: { contentType: 'text/html' },
+    }));
+    const result = await createPlatformHandlers(
+      createKnowledgeAwarePlatformPort(
+        {
+          SUPABASE_URL: 'http://127.0.0.1:54321',
+          SUPABASE_PUBLISHABLE_KEY: 'synthetic-publishable',
+          SUPABASE_SECRET_KEY: 'synthetic-secret',
+          MEDIA_BUCKET: { get, put: vi.fn(), delete: vi.fn() } as unknown as R2Bucket,
+        } as CoreBindings,
+        'synthetic-user-jwt',
+        { fetch: db },
+      ),
+    ).execute(
+      'extract_brand_knowledge',
+      { workspace_id: workspace, brand_id: brand, source_id: sourceId },
+      context,
+      'extract-key',
+    );
+    expect(result.status).toBe('ok');
+    expect(get).toHaveBeenCalled();
+    expect(Object.hasOwn(PLATFORM_OPERATIONS, 'record_brand_extraction')).toBe(false);
+  });
 });

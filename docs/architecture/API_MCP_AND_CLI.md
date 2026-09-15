@@ -89,3 +89,11 @@ W2.1 knowledge operations join the same registry from `platform-knowledge.ts` wi
 `start_manual_knowledge_draft`, and `correct_knowledge_candidate`. Reads are `get_source_job`,
 `list_brand_sources`, `get_brand_source`, and `get_knowledge_draft`. There is no user-registerable
 complete/capture-attestation operation. Binary document bytes use `PUT /v1/workspaces/{workspace_id}/brands/{brand_id}/source-jobs/{job_id}/content` as a thin adapter around the same machine persist path. Capture errors include `SOURCE_UNSAFE`, `SOURCE_UNSUPPORTED`, `SOURCE_MALFORMED`, `SOURCE_TOO_LARGE`, `SOURCE_TIMEOUT`, `SOURCE_UNREACHABLE`, `SOURCE_INTERRUPTED`, and `SOURCE_EGRESS_UNAVAILABLE`. Idempotency keys replay the live authorized job or draft; a changed canonical input is `IDEMPOTENCY_CONFLICT`. Corrections require `expected_version`.
+
+W2.2–W2.4 add `extract_brand_knowledge`, `propose_brand_knowledge`, `correct_brand_assertion`,
+`ask_brand_knowledge_questions`, `answer_brand_knowledge_question`, `approve_brand_version` and
+`pin_brand_version`, plus reads `get_knowledge_review`, `list_brand_versions`, `get_brand_version`
+and `get_brand_version_pin`. There is no user-registerable extraction-attestation, catalog-import or
+change-monitor operation. `record_brand_extraction` stays a machine RPC. Approve requires the
+current draft version and exact `draft_hash`. Additional errors are `EXPIRED_OFFER` and
+`CONTRADICTORY_KNOWLEDGE` (non-retryable 409). Proposal generation does not start a provider run.
