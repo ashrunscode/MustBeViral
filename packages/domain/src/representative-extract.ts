@@ -25,7 +25,7 @@ export interface RepresentativeAssertion {
   readonly kind: AssertionKind;
   readonly field_key: string;
   readonly value_text: string | null;
-  readonly status: 'observed' | 'unknown';
+  readonly status: AssertionStatus;
   readonly excerpt: string;
   readonly locator: string;
   readonly method: AssertionMethod;
