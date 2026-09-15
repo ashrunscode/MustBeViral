@@ -1,6 +1,7 @@
 import { mapCompletedSourceCapture, type PlatformPort } from '@mustbeviral/contracts';
 
 import type { CoreBindings } from '../bindings';
+import { extractionNeedsBytes, runBrandExtraction } from './brand-extraction';
 import { createPlatformPort } from './platform';
 import { runDocumentCapture, runWebsiteCapture } from './source-capture';
 import { createSourceCaptureEgress, type SourceCaptureEgress } from './source-egress';
@@ -23,6 +24,37 @@ export function createKnowledgeAwarePlatformPort(
     async execute(request) {
       const started = await userPort.execute(request);
       if (started.status !== 'ok') return started;
+      if (request.operation === 'extract_brand_knowledge') {
+        if (!extractionNeedsBytes(started.data)) return started;
+        const sourceId =
+          typeof request.input === 'object' && request.input && 'source_id' in request.input
+            ? String((request.input as { source_id: string }).source_id)
+            : '';
+        const workspaceId =
+          typeof request.input === 'object' && request.input && 'workspace_id' in request.input
+            ? String((request.input as { workspace_id: string }).workspace_id)
+            : '';
+        const brandId =
+          typeof request.input === 'object' && request.input && 'brand_id' in request.input
+            ? String((request.input as { brand_id: string }).brand_id)
+            : '';
+        if (sourceId.length === 0 || workspaceId.length === 0 || brandId.length === 0) {
+          return { status: 'error', code: 'INTERNAL_ERROR' };
+        }
+        try {
+          const completed = await runBrandExtraction({
+            bindings,
+            workspaceId,
+            brandId,
+            sourceId,
+            requestId: request.context.request_id,
+            ...(options?.fetch === undefined ? {} : { dbFetch: options.fetch }),
+          });
+          return { status: 'ok', data: completed };
+        } catch {
+          return { status: 'error', code: 'INTERNAL_ERROR' };
+        }
+      }
       if (
         request.operation !== 'start_website_capture' &&
         request.operation !== 'start_document_capture'

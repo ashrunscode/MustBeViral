@@ -267,3 +267,6 @@ export function transitionAttempt(state: AttemptState, event: AttemptEvent): Att
 
 export * from './source-url';
 export * from './source-capture';
+export * from './representative-extract';
+export * from './knowledge-proposals';
+export * from './brand-version';

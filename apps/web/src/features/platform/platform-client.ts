@@ -75,6 +75,10 @@ export function platformErrorMessage(error: unknown): string {
       return 'Capture stopped before it finished. You can retry.';
     if (error.code === 'SOURCE_EGRESS_UNAVAILABLE')
       return 'Website capture is not configured in this environment.';
+    if (error.code === 'EXPIRED_OFFER')
+      return 'This draft still contains a known expired offer. Correct it before approving.';
+    if (error.code === 'CONTRADICTORY_KNOWLEDGE')
+      return 'This draft still contains contradictory assertions. Correct them before approving.';
     if (error.code === 'INTERNAL_ERROR') return UNAVAILABLE_REQUEST;
     return error.message;
   }

@@ -1,3 +1,9 @@
+export {
+  extractRepresentativeAssertions,
+  proposeBrandKnowledge,
+  targetedKnowledgeQuestions,
+  approvalBlockReason,
+} from '@mustbeviral/domain';
 export * from './commands';
 export * from './client';
 export * from './handlers';

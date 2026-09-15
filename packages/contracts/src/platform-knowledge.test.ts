@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  BrandAssertionRecordSchema,
   createPlatformHandlers,
   mapCompletedSourceCapture,
   PLATFORM_ERRORS,
@@ -214,6 +215,73 @@ describe('brand knowledge contracts', () => {
         },
       }).status,
     ).toBe('ok');
+  });
+  it('registers extract, propose, question, approve and pin operations without capture completion', () => {
+    expect(PLATFORM_OPERATIONS.extract_brand_knowledge.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.propose_brand_knowledge.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.correct_brand_assertion.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.ask_brand_knowledge_questions.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.answer_brand_knowledge_question.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.approve_brand_version.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.pin_brand_version.rpc).toBe('platform_knowledge');
+    expect(PLATFORM_OPERATIONS.get_brand_version_pin.rpc).toBe('platform_knowledge');
+    expect(Object.hasOwn(PLATFORM_OPERATIONS, 'import_brand_catalog')).toBe(false);
+    expect(Object.hasOwn(PLATFORM_OPERATIONS, 'monitor_brand_changes')).toBe(false);
+    expect(PLATFORM_ERRORS.EXPIRED_OFFER.httpStatus).toBe(409);
+    expect(PLATFORM_ERRORS.CONTRADICTORY_KNOWLEDGE.httpStatus).toBe(409);
+    expect(
+      PLATFORM_OPERATIONS.approve_brand_version.input.safeParse({
+        ...brand,
+        expected_version: 1,
+        draft_hash: 'a'.repeat(64),
+      }).success,
+    ).toBe(true);
+    expect(
+      BrandAssertionRecordSchema.safeParse({
+        id: brand.brand_id,
+        workspace_id: brand.workspace_id,
+        brand_id: brand.brand_id,
+        draft_id: brand.brand_id,
+        source_id: brand.brand_id,
+        job_id: null,
+        kind: 'visual_candidate',
+        field_key: 'storefront',
+        value_text: 'https://washbodega.example/storefront.jpg',
+        status: 'observed',
+        excerpt: 'storefront',
+        locator: 'img:0',
+        method: 'html_image',
+        captured_at: '2026-09-15T00:00:00.000Z',
+        ends_at: null,
+        reusable: false,
+        supersedes_id: null,
+        created_by: context.actor_id,
+        created_at: '2026-09-15T00:00:00.000Z',
+      }).success,
+    ).toBe(true);
+    expect(
+      BrandAssertionRecordSchema.safeParse({
+        id: brand.brand_id,
+        workspace_id: brand.workspace_id,
+        brand_id: brand.brand_id,
+        draft_id: brand.brand_id,
+        source_id: brand.brand_id,
+        job_id: null,
+        kind: 'visual_candidate',
+        field_key: 'storefront',
+        value_text: 'https://washbodega.example/storefront.jpg',
+        status: 'observed',
+        excerpt: 'storefront',
+        locator: 'img:0',
+        method: 'html_image',
+        captured_at: '2026-09-15T00:00:00.000Z',
+        ends_at: null,
+        reusable: true,
+        supersedes_id: null,
+        created_by: context.actor_id,
+        created_at: '2026-09-15T00:00:00.000Z',
+      }).success,
+    ).toBe(false);
   });
   it('keeps knowledge draft reads nullable and fails closed when unavailable', async () => {
     expect(

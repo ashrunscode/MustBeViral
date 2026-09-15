@@ -31,5 +31,11 @@ describe('platform client errors', () => {
     expect(
       platformMutationErrorMessage(new PlatformRequestError('REVISION_CONFLICT', 'hidden')),
     ).not.toContain('not marked as saved');
+    expect(platformErrorMessage(new PlatformRequestError('EXPIRED_OFFER', 'hidden'))).toContain(
+      'known expired offer',
+    );
+    expect(
+      platformErrorMessage(new PlatformRequestError('CONTRADICTORY_KNOWLEDGE', 'hidden')),
+    ).toContain('contradictory assertions');
   });
 });

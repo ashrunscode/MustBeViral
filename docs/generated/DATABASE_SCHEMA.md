@@ -57,3 +57,8 @@ Sources: ordered raw SQL under `supabase/migrations`. Generated Supabase types b
 | `supabase/migrations/20260914010000_platform_knowledge.sql` | table `public.brand_sources` |
 | `supabase/migrations/20260914010000_platform_knowledge.sql` | table `public.brand_knowledge_drafts` |
 | `supabase/migrations/20260914010000_platform_knowledge.sql` | table `public.brand_knowledge_candidates` |
+| `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_assertions` |
+| `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_proposals` |
+| `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_knowledge_questions` |
+| `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_versions` |
+| `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_version_pins` |

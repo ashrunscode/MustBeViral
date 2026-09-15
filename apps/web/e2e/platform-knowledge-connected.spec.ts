@@ -327,6 +327,63 @@ test.describe('connected brand knowledge journeys', () => {
     });
     await attachAxeAndAria(page, 'findings-a11y');
   });
+
+  test('extracts, proposes, questions and approves WashBodega and UnPile without mixing brands', async ({
+    page,
+  }) => {
+    test.setTimeout(240_000);
+    const owner = await registerSyntheticUser(
+      `w2-approve-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    await page.goto(findingsUrl(brands.washbodegaUrl));
+    await captureWebsite(page, 'https://washbodega.mbv-source.test/');
+    await expectJobStatus(page, 'captured');
+    await page.getByTestId('extract-knowledge').click();
+    await expect(page.getByTestId('assertion-offering')).toBeVisible({ timeout: 30_000 });
+    await page.getByTestId('assertion-offering').click();
+    await expect(page.getByTestId('assertion-value')).toContainText('WashBodega');
+    await expect(page.getByTestId('assertion-value')).not.toHaveText(/UnPile/i);
+    await page.getByRole('button', { name: 'Propose voice, audience and positioning' }).click();
+    await expect(page.getByTestId('proposal-audience')).toContainText('unknown');
+    await expect(page.getByTestId('proposal-audience')).not.toContainText(/millennial|urban/i);
+    await page.getByRole('button', { name: 'Ask targeted questions' }).click();
+    await expect(page.getByTestId('question-audience')).toBeVisible();
+    await page.getByTestId('approve-brand-version').click();
+    await expect(page.getByTestId('approved-version')).toContainText('Approved version');
+    await page.getByLabel('Campaign pin').fill('campaign-washbodega');
+    await page.getByTestId('pin-brand-version').click();
+    await expect(page.getByTestId('pinned-version')).toContainText('Pinned version');
+    await expect(page.getByTestId('pinned-version')).toContainText('WashBodega');
+    await page.getByTestId('assertion-offer').click();
+    await page.getByLabel('Correct this assertion').fill('Free drying ended for WashBodega.');
+    await page.getByLabel('Why this assertion correction').fill('Operator ended the Sunday offer.');
+    await page.getByRole('button', { name: 'Save assertion' }).click();
+    await expect(page.getByTestId('assertion-value')).toHaveText('Free drying ended for WashBodega.');
+    await expect(page.getByTestId('pinned-version')).not.toContainText('Free drying ended');
+    await expect(page.getByText(/\$|outreach|approved knowledge/i)).toHaveCount(0);
+
+    await page.goto(findingsUrl(brands.unpileUrl));
+    await expect(page.getByText('WashBodega storefront')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Continue without a website' }).click();
+    await expect(page.getByTestId('candidate-unknown_gap')).toBeVisible({ timeout: 20_000 });
+    await page.getByTestId('extract-knowledge').click();
+    await expect(page.getByTestId('assertion-offering')).toBeVisible({ timeout: 20_000 });
+    await page.getByTestId('assertion-offering').click();
+    await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+    await page.getByLabel('Correct this assertion').fill('UnPile wash-and-fold pickup.');
+    await page.getByLabel('Why this assertion correction').fill('Operator UnPile offering.');
+    await page.getByRole('button', { name: 'Save assertion' }).click();
+    await expect(page.getByTestId('assertion-value')).toHaveText('UnPile wash-and-fold pickup.');
+    await page.getByRole('button', { name: 'Propose voice, audience and positioning' }).click();
+    await expect(page.getByTestId('proposal-positioning')).toContainText('inferred');
+    await page.getByRole('button', { name: 'Ask targeted questions' }).click();
+    await page.getByTestId('approve-brand-version').click();
+    await expect(page.getByTestId('approved-version')).toContainText('Approved version');
+    await expect(page.getByText('WashBodega')).toHaveCount(0);
+  });
 });
 
 const AUTHORIZED_CAPTURE_MS = 15_000;
