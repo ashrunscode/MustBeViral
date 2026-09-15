@@ -338,20 +338,21 @@ revoke all on function app_private.bump_knowledge_draft(uuid, uuid, uuid)
 create function app_private.insert_unknown_assertions(
   p_draft public.brand_knowledge_drafts, p_source public.brand_sources, p_actor uuid)
 returns void language plpgsql set search_path = pg_catalog as $$
-declare kind text;
+declare assertion_kind text;
 begin
-  foreach kind in array array['offering','location','fact','offer','visual_candidate','language'] loop
+  foreach assertion_kind in array array['offering','location','fact','offer','visual_candidate','language'] loop
     if exists (
       select 1 from app_private.current_assertions(p_draft.workspace_id, p_draft.brand_id) a
-      where a.kind = kind) then
+      where a.kind = assertion_kind) then
       continue;
     end if;
     insert into public.brand_assertions (
       workspace_id, brand_id, draft_id, source_id, job_id, kind, field_key, value_text, status,
       excerpt, locator, method, captured_at, created_by)
       values (
-        p_draft.workspace_id, p_draft.brand_id, p_draft.id, p_source.id, p_source.job_id, kind, kind, null, 'unknown',
-        'No ' || replace(kind, '_', ' ') || ' was supplied.', 'manual', 'manual', p_source.captured_at, p_actor);
+        p_draft.workspace_id, p_draft.brand_id, p_draft.id, p_source.id, p_source.job_id,
+        assertion_kind, assertion_kind, null, 'unknown',
+        'No ' || replace(assertion_kind, '_', ' ') || ' was supplied.', 'manual', 'manual', p_source.captured_at, p_actor);
   end loop;
 end;
 $$;
@@ -436,46 +437,46 @@ revoke all on function app_private.propose_from_assertions(public.brand_knowledg
 create function app_private.ask_from_gaps(p_draft public.brand_knowledge_drafts, p_actor uuid)
 returns void language plpgsql set search_path = pg_catalog as $$
 declare
-  kind text;
+  gap_kind text;
   prompt text;
   excerpt text;
 begin
-  foreach kind in array array['offering','location','fact','offer','visual_candidate','language','voice','audience','positioning'] loop
+  foreach gap_kind in array array['offering','location','fact','offer','visual_candidate','language','voice','audience','positioning'] loop
     if exists (
       select 1 from public.brand_knowledge_questions q
       where q.workspace_id = p_draft.workspace_id and q.brand_id = p_draft.brand_id
-        and q.target_kind = kind and q.status = 'open') then
+        and q.target_kind = gap_kind and q.status = 'open') then
       continue;
     end if;
-    if kind in ('offering','location','fact','offer','visual_candidate','language') then
+    if gap_kind in ('offering','location','fact','offer','visual_candidate','language') then
       if exists (
         select 1 from app_private.current_assertions(p_draft.workspace_id, p_draft.brand_id) a
-        where a.kind = kind and a.status <> 'unknown') then
+        where a.kind = gap_kind and a.status <> 'unknown') then
         continue;
       end if;
-      prompt := case kind
+      prompt := case gap_kind
         when 'offering' then 'Which services or products should this brand advertise?'
         when 'location' then 'Where does this brand operate?'
         when 'fact' then 'Which operating facts should stay on the record?'
         when 'offer' then 'Which current offer, if any, may be stated, and when does it end?'
         when 'visual_candidate' then 'Which source image is only a visual candidate, not a reusable campaign asset?'
         else 'Which language should approved copy use?' end;
-      excerpt := 'Missing ' || replace(kind, '_', ' ') || '.';
+      excerpt := 'Missing ' || replace(gap_kind, '_', ' ') || '.';
     else
       if exists (
         select 1 from app_private.current_proposals(p_draft.workspace_id, p_draft.brand_id) p
-        where p.kind = kind and p.status <> 'unknown') then
+        where p.kind = gap_kind and p.status <> 'unknown') then
         continue;
       end if;
-      prompt := case kind
+      prompt := case gap_kind
         when 'audience' then 'Who is this offering for, in the operator''s words?'
         when 'voice' then 'Which existing phrases should future copy sound like?'
         else 'How should this brand be positioned against alternatives?' end;
-      excerpt := 'Missing ' || kind || ' evidence.';
+      excerpt := 'Missing ' || gap_kind || ' evidence.';
     end if;
     insert into public.brand_knowledge_questions (
       workspace_id, brand_id, draft_id, prompt, target_kind, status, excerpt, created_by)
-      values (p_draft.workspace_id, p_draft.brand_id, p_draft.id, prompt, kind, 'open', excerpt, p_actor);
+      values (p_draft.workspace_id, p_draft.brand_id, p_draft.id, prompt, gap_kind, 'open', excerpt, p_actor);
   end loop;
 end;
 $$;
@@ -568,8 +569,8 @@ declare
   draft public.brand_knowledge_drafts%rowtype;
   actor uuid;
   item jsonb;
-  kind text;
-  field_key text;
+  item_kind text;
+  item_field_key text;
   current_row public.brand_assertions%rowtype;
   ends_at timestamptz;
 begin
@@ -592,10 +593,10 @@ begin
     draft := app_private.ensure_knowledge_draft(source.workspace_id, source.brand_id, actor);
   end if;
   for item in select * from jsonb_array_elements(p_assertions) loop
-    kind := coalesce(item->>'kind','');
-    field_key := coalesce(item->>'field_key','');
-    if kind not in ('offering','location','fact','offer','visual_candidate','language')
-      or char_length(field_key) not between 1 and 120
+    item_kind := coalesce(item->>'kind','');
+    item_field_key := coalesce(item->>'field_key','');
+    if item_kind not in ('offering','location','fact','offer','visual_candidate','language')
+      or char_length(item_field_key) not between 1 and 120
       or coalesce(item->>'status','') not in ('observed','unknown')
       or coalesce(item->>'method','') not in ('data_attribute','html_image','html_lang','markdown_section','plaintext_labeled','visible_text')
       or coalesce(item->>'excerpt','') = ''
@@ -604,6 +605,10 @@ begin
       or (coalesce(item->>'status','') = 'unknown' and nullif(item->>'value_text','') is not null)
       or (coalesce(item->>'status','') <> 'unknown' and nullif(item->>'value_text','') is null) then
       raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
+    end if;
+    if coalesce(item->>'value_text','') ~* 'ignore (previous|all) instructions|you are now|delete_all|grant .{0,80}permission|system prompt|change permission|approved knowledge|millennial|boomer|gen[- ]?z|hispanic|latinx|african[- ]american|asian[- ]american|white neighborhood|urban poor|inner city'
+      or item_field_key ~* 'ignore (previous|all) instructions|you are now|delete_all|grant .{0,80}permission|system prompt|change permission|approved knowledge' then
+      continue;
     end if;
     ends_at := null;
     if item ? 'ends_at' and nullif(item->>'ends_at','') is not null then
@@ -614,7 +619,11 @@ begin
       end;
     end if;
     select * into current_row from app_private.current_assertions(source.workspace_id, source.brand_id) a
-      where a.kind = kind and a.field_key = field_key limit 1;
+      where a.kind = item_kind and a.field_key = item_field_key limit 1;
+    if current_row.id is null and coalesce(item->>'status','') <> 'unknown' then
+      select * into current_row from app_private.current_assertions(source.workspace_id, source.brand_id) a
+        where a.kind = item_kind and a.status = 'unknown' limit 1;
+    end if;
     if current_row.id is not null
       and current_row.value_text is not distinct from nullif(item->>'value_text','')
       and current_row.status is not distinct from item->>'status'
@@ -625,10 +634,11 @@ begin
       workspace_id, brand_id, draft_id, source_id, job_id, kind, field_key, value_text, status,
       excerpt, locator, method, captured_at, ends_at, reusable, supersedes_id, created_by)
       values (
-        source.workspace_id, source.brand_id, draft.id, source.id, source.job_id, kind, field_key,
+        source.workspace_id, source.brand_id, draft.id, source.id, source.job_id, item_kind, item_field_key,
         nullif(item->>'value_text',''), item->>'status', item->>'excerpt', coalesce(item->>'locator',''),
         item->>'method', source.captured_at, ends_at, false, current_row.id, actor);
   end loop;
+  perform app_private.insert_unknown_assertions(draft, source, actor);
   perform app_private.bump_knowledge_draft(source.workspace_id, source.brand_id, actor);
   insert into public.audit_events (workspace_id, actor_type, actor_id, action, entity_type, entity_id, request_id, details)
     values (source.workspace_id, 'system', null, 'platform.record_brand_extraction', 'platform_resource', source.id, p_request_id, '{}');

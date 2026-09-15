@@ -70,6 +70,14 @@ const fixtures = {
     + '<p data-location="harbor counter">Harbor Press counter on Harbor Blvd.</p>'
     + '<p data-fact="hours">Counter closes at 19:00.</p>'
   ),
+  'riverside-coffee.mbv-source.test': () => page(
+    'Riverside Coffee Hours',
+    'Drip coffee counter',
+    'RIVERSIDE_COFFEE_SITE_EXCERPT',
+    '<section data-offering="drip coffee">Drip coffee and pastry at Riverside Coffee.</section>'
+    + '<p data-location="riverside counter">Riverside Coffee counter on Riverside Dr.</p>'
+    + '<p data-fact="hours">Opens at 06:00.</p>'
+  ),
   'malformed.mbv-source.test': () => new Response('\\0not-html', { status: 200, headers: { 'content-type': 'text/html' } }),
   'redirect-private.mbv-source.test': () => new Response(null, { status: 302, headers: { location: 'https://127.0.0.1/secret' } }),
   'oversized.mbv-source.test': () => new Response('x'.repeat(2 * 1024 * 1024 + 8), {

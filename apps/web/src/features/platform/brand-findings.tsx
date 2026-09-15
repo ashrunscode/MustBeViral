@@ -422,9 +422,12 @@ export function BrandFindings({
   const proposals = reviewQuery.data?.current_proposals ?? [];
   const questions = reviewQuery.data?.current_questions ?? [];
   const selectedAssertion =
-    assertions.find((item) => item.id === selectedAssertionId) ?? assertions[0] ?? null;
+    assertions.find((item) => item.id === selectedAssertionId) ??
+    (selectedAssertionId ? null : assertions[0]) ??
+    null;
   const draftHash = reviewQuery.data?.draft_hash ?? null;
-  const draftVersion = reviewQuery.data?.record?.version ?? draftQuery.data?.record?.version ?? null;
+  const draftVersion =
+    reviewQuery.data?.record?.version ?? draftQuery.data?.record?.version ?? null;
   const approvedVersion = reviewQuery.data?.approved_version ?? null;
 
   async function runExtract() {
@@ -456,7 +459,7 @@ export function BrandFindings({
   async function saveAssertion(event: FormEvent) {
     event.preventDefault();
     if (!selectedAssertion || draftVersion === null) return;
-    await assertionCorrection.mutate('correct_brand_assertion', {
+    const result = await assertionCorrection.mutate('correct_brand_assertion', {
       workspace_id: brand.workspace_id,
       brand_id: brand.id,
       assertion_id: selectedAssertion.id,
@@ -464,8 +467,16 @@ export function BrandFindings({
       value_text: assertionText.trim() === '' ? null : assertionText,
       excerpt: assertionExcerpt.trim() || 'Operator assertion correction.',
     });
+    if (!result) {
+      reviewQuery.refresh();
+      return;
+    }
     setAssertionText('');
     setAssertionExcerpt('');
+    const next = result.current_assertions.find(
+      (item) => item.supersedes_id === selectedAssertion.id,
+    );
+    if (next) setSelectedAssertionId(next.id);
     resetPages();
   }
 

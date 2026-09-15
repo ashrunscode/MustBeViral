@@ -82,6 +82,22 @@ try {
       body: 'complete',
     });
 
+    const coffee = await dispatch(mf, 'riverside-coffee.mbv-source.test');
+    const coffeeHtml = await coffee.response.text();
+    assert(coffee.response.status === 200, 'Riverside Coffee fixture must return 200');
+    assert(
+      coffeeHtml.includes('Riverside Coffee Hours') &&
+        !coffeeHtml.toLowerCase().includes('washbodega') &&
+        !coffeeHtml.toLowerCase().includes('unpile'),
+      'Riverside Coffee fixture must stay a separate category sample',
+    );
+    results.push({
+      host: 'riverside-coffee.mbv-source.test',
+      status: coffee.response.status,
+      headerMs: coffee.headerMs,
+      body: 'complete',
+    });
+
     const malformed = await dispatch(mf, 'malformed.mbv-source.test');
     const malformedBytes = new Uint8Array(await malformed.response.arrayBuffer());
     assert(malformed.response.status === 200, 'malformed fixture must return 200');

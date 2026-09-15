@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "packet": "WP-PLATFORM-W2-002",
+  "frozen_base": "f49bd5b22fd839ec900b270cb4a0063b6735d059",
+  "starting_checkpoint": "16f7f325f83f12d649633bae460759dac4f7b6f7",
+  "branch": "codex/viralgraph-cleanroom",
+  "runtime": { "node": "24.18.0", "pnpm": "11.12.0" },
+  "database": {
+    "container": "supabase_db_mustbeviral",
+    "port": 54322,
+    "volume_preserved": "supabase_db_mustbeviral",
+    "applied_migrations": [
+      "20260915010000_platform_knowledge_extraction",
+      "20260915020000_platform_knowledge_extraction_plpgsql_names",
+      "20260915030000_platform_knowledge_extraction_supersede_unknowns"
+    ]
+  },
+  "checks": {
+    "supabase_test": { "files": 46, "assertions": 759, "result": "PASS" },
+    "connected_knowledge_sql": { "passed": 8, "result": "PASS" },
+    "knowledge_journeys": {
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "result": "PASS"
+    },
+    "w1_regression": {
+      "expected": 14,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "result": "PASS"
+    }
+  },
+  "source_sha256": {
+    "apps/web/src/features/platform/brand-findings.tsx": "2dc8ec4d1ad8f92fe5a7d5f72bfecd566f4a98da78604c425080a7b48cce41b3",
+    "apps/web/e2e/platform-knowledge-connected.spec.ts": "3cfff1e00e724cdae3401b6c1bbd24ce059d6aef029f8be27e7544cc9a7441fe",
+    "packages/domain/src/representative-extract.ts": "93591d97fe95daa569e72595a98926de665a1a3daefd5a691a19caa0a472d78c",
+    "supabase/migrations/20260915010000_platform_knowledge_extraction.sql": "0c759b9a1247f1417de70781dd3b44e769dc3c5925d7c7ae166bef0552c085f1",
+    "supabase/tests/database/00044_platform_knowledge_extraction.test.sql": "251d03cf85239e95a229400ab43af71fcd1bc6a0db24d426cf67a9851d2b80fb",
+    "governance/evidence/WP-PLATFORM-W2-002/successor-WP-PLATFORM-W2-003.yaml": "ca3174b3fe8120b9714ab23b4ab94023f30f64f7733f9439840b5c6beee36f5d3"
+  },
+  "limitations": [
+    "Independent Dispatch reviews are required before agent:finish.",
+    "Wave 2 is not exited. Successor covers remaining W2.5 only."
+  ]
+}
