@@ -1,4 +1,4 @@
-import { SOURCE_CAPTURE_MAX_ATTEMPTS } from '@mustbeviral/contracts';
+import { SOURCE_CAPTURE_MAX_ATTEMPTS, type RepresentativeAssertion } from '@mustbeviral/contracts';
 
 import type { CoreBindings } from '../bindings';
 import { SupabaseDataApiError } from '../data/supabase-data-api';
@@ -118,7 +118,7 @@ export class PrivilegedSourceMachinePort {
 
   async recordExtraction(
     sourceId: string,
-    assertions: readonly Record<string, unknown>[],
+    assertions: readonly RepresentativeAssertion[],
     requestId: string,
   ): Promise<unknown> {
     return await this.#rpc('record_brand_extraction', {
