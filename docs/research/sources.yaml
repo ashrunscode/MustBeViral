@@ -99,10 +99,10 @@ sources:
   - id: src-fal
     title: fal developer documentation
     publisher: fal
-    url: https://docs.fal.ai/
+    url: https://fal.ai/docs
     source_type: official-docs
-    valid_as_of: '2026-08-15'
-    reverify_after: '2026-09-15'
+    valid_as_of: '2026-09-15'
+    reverify_after: '2026-10-15'
     used_by: [execution-providers-billing]
   - id: src-stripe
     title: Stripe documentation
@@ -117,6 +117,6 @@ sources:
     publisher: SuperDesign
     url: https://raw.githubusercontent.com/superdesigndev/superdesign-skill/main/skills/superdesign/references/SUPERDESIGN.md
     source_type: primary-source
-    valid_as_of: '2026-08-15'
-    reverify_after: '2026-09-15'
+    valid_as_of: '2026-09-15'
+    reverify_after: '2026-10-15'
     used_by: [experience-contract, toolchain-template-provenance]
