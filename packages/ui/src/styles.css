@@ -32,6 +32,7 @@
 }
 
 .mbv-button {
+  position: relative;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -50,6 +51,13 @@
     transform var(--motion-local) var(--motion-ease);
 }
 
+/* Transparent hit area: compact 32–40px controls keep their visual size, the touch target grows
+   to at least 44×44px, centred on the control. Larger controls are unaffected. */
+.mbv-button::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
+}
 .mbv-button:hover:not(:disabled) {
   background: var(--wash);
 }

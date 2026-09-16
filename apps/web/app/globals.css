@@ -44,6 +44,13 @@ a {
   transform: translateY(0);
 }
 
+/* Transparent 44px touch target around the 35px link; the fixed link is its containing block. */
+.skip-link::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
+}
+
 .studio-app {
   width: 100vw;
   height: 100vh;
@@ -76,7 +83,7 @@ a {
 }
 .studio-system-row {
   gap: 10px;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .studio-wordmark {
   color: var(--ink-strong);
@@ -85,7 +92,7 @@ a {
   letter-spacing: -0.01em;
 }
 .studio-breadcrumb {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .studio-breadcrumb strong {
   color: var(--ink-strong);
@@ -331,7 +338,7 @@ a {
   border: 1px solid transparent;
   border-radius: var(--radius-control);
   padding: 0 14px;
-  color: var(--ink-muted);
+  color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
   transition:

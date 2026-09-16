@@ -49,13 +49,13 @@
 }
 
 .presenceMeta span {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
 }
 
 .presenceStatus {
   margin-left: auto;
-  color: var(--ink-faint);
+  color: var(--ink);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -85,7 +85,7 @@
 }
 
 .commentPanelHeader span {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
 }
 
@@ -125,7 +125,7 @@
 
 .commentEmpty {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 12px;
 }
 
@@ -137,7 +137,7 @@
 .commentComposer label {
   display: grid;
   gap: 6px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
 }
 
@@ -219,7 +219,7 @@
 
 .leaseHelp {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
   line-height: 1.4;
 }

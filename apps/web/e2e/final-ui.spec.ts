@@ -146,3 +146,35 @@ test('renders mobile review and export summary without horizontal scroll at 375x
     });
   }
 });
+
+test('keeps a 32px compact review control at a 44px touch target', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/studio/lumen-skin/review');
+  const control = page.getByRole('button', { name: 'Approve group as Maya Chen' }).first();
+  await expect(control).toBeVisible();
+  expect((await control.boundingBox())?.height).toBe(32);
+  // The bounding box stays compact; the pointer hit area extends to 44px, centred on the control.
+  const probes = await control.evaluate((element) => {
+    // elementFromPoint only resolves points inside the viewport.
+    element.scrollIntoView({ block: 'center' });
+    const rect = element.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const hits = (probeY: number) => {
+      const target = document.elementFromPoint(x, probeY);
+      return target !== null && element.contains(target);
+    };
+    return {
+      insideTop: hits(y - 21.5),
+      insideBottom: hits(y + 21.5),
+      outsideTop: hits(y - 23),
+      outsideBottom: hits(y + 23),
+    };
+  });
+  expect(probes).toEqual({
+    insideTop: true,
+    insideBottom: true,
+    outsideTop: false,
+    outsideBottom: false,
+  });
+});
