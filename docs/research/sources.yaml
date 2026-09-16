@@ -112,17 +112,6 @@ sources:
     valid_as_of: '2026-07-12'
     reverify_after: '2026-10-12'
     used_by: [execution-providers-billing, deploy-rollback-incidents]
-  - id: src-superdesign
-    title: SuperDesign skill guidance
-    publisher: SuperDesign
-    url: https://raw.githubusercontent.com/superdesigndev/superdesign-skill/main/skills/superdesign/references/SUPERDESIGN.md
-    source_type: primary-source
-    valid_as_of: '2026-09-16'
-    reverify_after: '2026-10-16'
-    used_by: [experience-contract, toolchain-template-provenance]
-    notes: 'The source mandates `npx --yes @superdesign/cli@latest` on every call, so a call that
-      follows it never runs the pinned 0.4.0 and the pin records no version provenance; see
-      docs/operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md.'
   - id: src-shadcn
     title: shadcn CLI agent skill
     publisher: shadcn

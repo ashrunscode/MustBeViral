@@ -22,7 +22,7 @@ description: Continue, build, review, verify, or hand off MustBeViral Studio and
 ## Route specialist work
 
 - Use `architect-prime` and then `think` for irreversible architecture decisions.
-- Use `superdesign` before `frontend-master` for UI work, and use `web-perf` only for measured performance work. If the required SuperDesign artifact is not approved, perform design work only and do not implement production UI.
+- Treat `brand/BRAND.md` as the design brief and `docs/ux/EXPERIENCE_CONTRACT.md` as the accepted UX authority. Use `frontend-design` to build UI, `web-design-guidelines` to review UI code, `design-qa-loop` before merging UI, and `core-web-vitals` only for measured performance work. If the required design frames are not approved under the visual approval gate in `docs/ux/EXPERIENCE_CONTRACT.md`, perform design work only and do not implement production UI.
 - Use the data, auth, API, Cloudflare, billing, email, observability, and testing skills selected by root `AGENTS.md` only when the current packet requires them.
 - Do not use P2 collaboration skills or queue infrastructure before the accepted evidence gate and phase authorize them.
 

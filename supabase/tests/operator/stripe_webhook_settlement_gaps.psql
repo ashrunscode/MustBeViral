@@ -1,0 +1,74 @@
+-- Stripe webhook receipts with no settlement evidence. READ ONLY; operator use only.
+--
+-- Before Core settled Stripe webhooks ahead of writing the receipt, a settlement failure after
+-- the receipt insert made every Stripe retry look like a duplicate, so the event was never
+-- applied. This lists receipts for settling event types that have no matching evidence:
+--   wallet_credit        checkout.session.completed, invoice.paid
+--                        evidence: a ledger credit with causative_key 'stripe:<event id>'
+--   subscription_update  customer.subscription.created, .updated, .deleted
+--                        evidence: an audit_events stripe.subscription_update row whose
+--                        details ->> 'stripe_event_id' is the event id
+-- A listed row is a candidate, not proof of loss: a checkout or invoice with a zero amount
+-- settles as ignored and legitimately has no evidence. Confirm each event in the Stripe
+-- dashboard, then repair by resending the event from Stripe (settlement is idempotent on the
+-- event id) rather than editing rows. Events that never produced a receipt do not appear here.
+--
+-- Run once per session, in a read-only session, as a role with BYPASSRLS and SELECT on these
+-- tables (for example postgres), for example:
+--   PGOPTIONS='-c default_transaction_read_only=on' psql "<connection>" -v ON_ERROR_STOP=1 \
+--     -f supabase/tests/operator/stripe_webhook_settlement_gaps.psql
+--
+-- The event type lists mirror StripeSettlementEventType in packages/billing/src/stripe-settlement.ts.
+-- The .psql extension keeps `supabase test db` from running this as a test; pgTAP suite
+-- 00029_p1a_stripe_settlement_replay_identity includes it and checks its result.
+
+-- These tables force row level security, so without BYPASSRLS the query would silently report
+-- no gaps.
+do $$
+begin
+  if not exists (
+    select 1 from pg_roles where rolname = current_user and (rolsuper or rolbypassrls)
+  ) then
+    raise exception 'stripe_webhook_settlement_gaps needs a role with BYPASSRLS; % would see no rows',
+      current_user;
+  end if;
+end;
+$$;
+
+prepare stripe_webhook_settlement_gaps as
+select
+  receipt.stripe_event_id,
+  receipt.event_type,
+  receipt.livemode,
+  case
+    when receipt.event_type in ('checkout.session.completed', 'invoice.paid')
+      then 'wallet_credit'
+    else 'subscription_update'
+  end as expected_settlement,
+  receipt.created_at as received_at
+from public.stripe_webhook_events as receipt
+where (
+    receipt.event_type in ('checkout.session.completed', 'invoice.paid')
+    and not exists (
+      select 1
+      from public.ledger_transactions as ledger
+      where ledger.entry_type = 'credit'
+        and ledger.causative_key = 'stripe:' || receipt.stripe_event_id
+    )
+  )
+  or (
+    receipt.event_type in (
+      'customer.subscription.created',
+      'customer.subscription.updated',
+      'customer.subscription.deleted'
+    )
+    and not exists (
+      select 1
+      from public.audit_events as audit
+      where audit.action = 'stripe.subscription_update'
+        and audit.details ->> 'stripe_event_id' = receipt.stripe_event_id
+    )
+  )
+order by receipt.created_at, receipt.stripe_event_id;
+
+execute stripe_webhook_settlement_gaps;
