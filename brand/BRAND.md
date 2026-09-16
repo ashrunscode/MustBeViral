@@ -52,7 +52,7 @@ Paper and ink, not a theme. One ink at many pressures; grey hex values are never
 | Ink, strong      | `--ink-strong`                       | `rgba(0,0,0,0.85)`                      | titles, emphasised values                        |
 | Ink, heading     | `--ink-head`                         | `rgba(0,0,0,0.75)`                      | page and panel headings                          |
 | Ink, body        | `--ink`                              | `rgba(0,0,0,0.60)`                      | body and labels                                  |
-| Ink, muted       | `--ink-muted`                        | `rgba(0,0,0,0.50)`                      | captions, secondary meta                         |
+| Ink, muted       | `--ink-muted`                        | `rgba(0,0,0,0.50)`                      | large-text captions only (AA fails below)        |
 | Ink, faint       | `--ink-faint`                        | `rgba(0,0,0,0.25)`                      | placeholders, disabled                           |
 | Line             | `--line`                             | `rgba(0,0,0,0.12)`                      | hairline borders and dividers                    |
 | Signal           | `--signal`                           | `#3182d4`                               | THE one primary action of the current moment     |
