@@ -55,6 +55,14 @@ export function createStripeWebhookRoute(
       );
     }
 
+    // A receipt must never exist without settlement: Stripe retries would then look like duplicates.
+    if (deps.recordEvent !== undefined && deps.settleEvent === undefined) {
+      return context.json(
+        safeError(context, 'PROVIDER_UNAVAILABLE', 'Stripe webhook settlement is not configured.'),
+        503,
+      );
+    }
+
     const signature = context.req.header('stripe-signature');
     if (signature === undefined || signature.length === 0) {
       return context.json(

@@ -2,11 +2,14 @@
 --
 -- Core settles a verified Stripe webhook before recording its receipt in stripe_webhook_events,
 -- so Stripe retries and redeliveries replay this function. Ledger idempotency is unique per
--- (workspace_id, causative_key), and a replay can resolve a different workspace when the payload
--- carries no workspace id, because the stripe_customer_id lookup is neither unique nor immutable.
--- A per-event advisory lock now serializes concurrent deliveries, and a credit already recorded
--- for the event in another workspace raises STRIPE_EVENT_WORKSPACE_MISMATCH instead of crediting
--- again, matching apply_stripe_subscription_update (20260910000000).
+-- (workspace_id, causative_key), and a replay can resolve a different workspace, or none, when
+-- the payload carries no workspace id, because the stripe_customer_id lookup is neither unique
+-- nor immutable. Now:
+-- - a per-event advisory lock serializes concurrent deliveries;
+-- - a replay without a workspace id keeps the workspace the event first credited and does not
+--   touch the billing profile, so it neither credits again nor rewrites the customer mapping;
+-- - a replay naming a different workspace raises STRIPE_EVENT_WORKSPACE_MISMATCH, matching
+--   apply_stripe_subscription_update (20260910000000).
 -- Signature, grants, search_path and the response shape are unchanged.
 begin;
 
@@ -32,6 +35,7 @@ set search_path = pg_catalog, public
 as $$
 declare
   v_workspace_id uuid := p_workspace_id;
+  v_credited_workspace_id uuid;
   v_causative_key text;
   v_ledger_result jsonb;
   v_replayed boolean;
@@ -57,54 +61,59 @@ begin
     raise exception using errcode = '22023', message = 'metadata must be an object';
   end if;
 
-  -- Held until commit. A concurrent delivery of the same event waits here, then sees the first
-  -- delivery's committed ledger rows and replays or rejects instead of crediting twice.
+  -- Held until commit. A concurrent delivery of the same event waits here, then reads the first
+  -- delivery's committed ledger rows below and replays or rejects instead of crediting twice.
   perform pg_advisory_xact_lock(hashtextextended('stripe-credit:' || p_stripe_event_id, 0));
-
-  if v_workspace_id is null and p_stripe_customer_id is not null and length(trim(p_stripe_customer_id)) > 0 then
-    select profile.workspace_id
-    into v_workspace_id
-    from public.workspace_billing_profiles as profile
-    where profile.stripe_customer_id = p_stripe_customer_id;
-  end if;
-
-  if v_workspace_id is null then
-    raise exception using errcode = 'P0002', message = 'WORKSPACE_NOT_FOUND';
-  end if;
-
-  if not exists (select 1 from public.workspaces where id = v_workspace_id) then
-    raise exception using errcode = 'P0002', message = 'WORKSPACE_NOT_FOUND';
-  end if;
 
   v_causative_key := 'stripe:' || p_stripe_event_id;
 
-  if exists (
-    select 1
-    from public.ledger_transactions as ledger
-    where ledger.causative_key = v_causative_key
-      and ledger.entry_type = 'credit'
-      and ledger.workspace_id <> v_workspace_id
-  ) then
-    raise exception using errcode = '22023', message = 'STRIPE_EVENT_WORKSPACE_MISMATCH';
-  end if;
+  select ledger.workspace_id
+  into v_credited_workspace_id
+  from public.ledger_transactions as ledger
+  where ledger.causative_key = v_causative_key
+    and ledger.entry_type = 'credit'
+  limit 1;
 
-  insert into public.workspace_billing_profiles (
-    workspace_id,
-    stripe_customer_id,
-    wallet_balance_micros
-  )
-  values (
-    v_workspace_id,
-    nullif(trim(p_stripe_customer_id), ''),
-    0
-  )
-  on conflict (workspace_id) do update
-  set
-    stripe_customer_id = coalesce(
-      excluded.stripe_customer_id,
-      public.workspace_billing_profiles.stripe_customer_id
-    ),
-    updated_at = statement_timestamp();
+  if v_credited_workspace_id is not null then
+    if p_workspace_id is not null and p_workspace_id <> v_credited_workspace_id then
+      raise exception using errcode = '22023', message = 'STRIPE_EVENT_WORKSPACE_MISMATCH';
+    end if;
+    -- A replay: record_ledger_movement below reports replayed and still rejects a changed amount.
+    v_workspace_id := v_credited_workspace_id;
+  else
+    if v_workspace_id is null and p_stripe_customer_id is not null and length(trim(p_stripe_customer_id)) > 0 then
+      select profile.workspace_id
+      into v_workspace_id
+      from public.workspace_billing_profiles as profile
+      where profile.stripe_customer_id = p_stripe_customer_id;
+    end if;
+
+    if v_workspace_id is null then
+      raise exception using errcode = 'P0002', message = 'WORKSPACE_NOT_FOUND';
+    end if;
+
+    if not exists (select 1 from public.workspaces where id = v_workspace_id) then
+      raise exception using errcode = 'P0002', message = 'WORKSPACE_NOT_FOUND';
+    end if;
+
+    insert into public.workspace_billing_profiles (
+      workspace_id,
+      stripe_customer_id,
+      wallet_balance_micros
+    )
+    values (
+      v_workspace_id,
+      nullif(trim(p_stripe_customer_id), ''),
+      0
+    )
+    on conflict (workspace_id) do update
+    set
+      stripe_customer_id = coalesce(
+        excluded.stripe_customer_id,
+        public.workspace_billing_profiles.stripe_customer_id
+      ),
+      updated_at = statement_timestamp();
+  end if;
 
   v_ledger_result := public.record_ledger_movement(
     v_workspace_id,

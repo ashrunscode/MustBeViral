@@ -6,7 +6,7 @@ begin;
 -- differently on the replay, and that the operator reconciliation query finds receipts that
 -- have no settlement evidence.
 
-select plan(14);
+select plan(16);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -20,23 +20,33 @@ exception when others then
 end;
 $$;
 
--- pgTAP runs in one session, so a second concurrent delivery cannot be started here. Instead
--- this asserts the lock that serializes concurrent deliveries is held until the transaction
--- ends; a separate two-session probe is the behavioral evidence.
+-- pgTAP runs in one session, so a second concurrent delivery cannot be started here (dblink
+-- would need a password-authenticated connection). Instead this asserts the lock that serializes
+-- concurrent deliveries is held and transaction scoped; a two-session probe is the behavioral
+-- evidence.
 create or replace function pg_temp.holds_xact_advisory_lock(p_key text)
 returns boolean
-language sql
+language plpgsql
+set client_min_messages = error
 as $$
+declare
+  v_key bigint := hashtextextended(p_key, 0);
+  v_held boolean;
+begin
   select exists (
     select 1
-    from pg_locks as held, (select hashtextextended(p_key, 0) as value) as lock_key
+    from pg_locks as held
     where held.locktype = 'advisory'
       and held.pid = pg_backend_pid()
       and held.granted
       and held.objsubid = 1
-      and held.classid::bigint = ((lock_key.value >> 32) & 4294967295)
-      and held.objid::bigint = (lock_key.value & 4294967295)
-  );
+      and held.classid::bigint = ((v_key >> 32) & 4294967295)
+      and held.objid::bigint = (v_key & 4294967295)
+  )
+  into v_held;
+  -- pg_advisory_unlock releases only session-level locks, so false means transaction scoped.
+  return v_held and not pg_advisory_unlock(v_key);
+end;
 $$;
 
 insert into auth.users (
@@ -118,8 +128,8 @@ select is(
   'a Stripe event id owns exactly one ledger transaction across all workspaces'
 );
 
--- 5-10: the stripe_customer_id lookup is neither unique nor immutable, so a replay whose payload
--- carries no workspace id can resolve to a different workspace than the original delivery did.
+-- 5-12: the stripe_customer_id lookup is neither unique nor immutable, so a replay whose payload
+-- carries no workspace id can resolve a different workspace, or none, than the first delivery.
 select is(
   public.apply_stripe_wallet_credit(
     null,
@@ -139,15 +149,16 @@ values ('99921000-0000-4000-8000-00000000000b', 'cus_replay_drift')
 on conflict (workspace_id) do update set stripe_customer_id = excluded.stripe_customer_id;
 
 select is(
-  pg_temp.error_of($sql$
-    select public.apply_stripe_wallet_credit(
+  (
+    select (result ->> 'workspace_id') || ':' || (result ->> 'replayed')
+    from public.apply_stripe_wallet_credit(
       null,
       'evt_replay_lookup', 'cus_replay_drift', 20000000, 'invoice.paid',
       'req_replay_lookup_2', '{}'::jsonb
-    )
-  $sql$),
-  '22023:STRIPE_EVENT_WORKSPACE_MISMATCH',
-  'a replay that resolves the customer to another workspace does not credit it again'
+    ) as result
+  ),
+  '99921000-0000-4000-8000-00000000000a:true',
+  'a lookup replay keeps the workspace it first credited when the customer now maps elsewhere'
 );
 
 select is(
@@ -157,11 +168,35 @@ select is(
   'the workspace that now owns the customer mapping was not credited'
 );
 
+update public.workspace_billing_profiles
+set stripe_customer_id = 'cus_replay_other'
+where workspace_id = '99921000-0000-4000-8000-00000000000b';
+
+select is(
+  (
+    select (result ->> 'workspace_id') || ':' || (result ->> 'replayed')
+    from public.apply_stripe_wallet_credit(
+      null,
+      'evt_replay_lookup', 'cus_replay_drift', 20000000, 'invoice.paid',
+      'req_replay_lookup_3', '{}'::jsonb
+    ) as result
+  ),
+  '99921000-0000-4000-8000-00000000000a:true',
+  'a lookup replay still replays after the customer mapping is removed'
+);
+
+select is(
+  (select stripe_customer_id from public.workspace_billing_profiles
+   where workspace_id = '99921000-0000-4000-8000-00000000000a'),
+  'cus_replay_moved',
+  'a replay does not rewrite the workspace Stripe customer mapping'
+);
+
 select is(
   (public.apply_stripe_wallet_credit(
     '99921000-0000-4000-8000-00000000000a',
     'evt_replay_lookup', null, 20000000, 'invoice.paid',
-    'req_replay_lookup_3', '{}'::jsonb
+    'req_replay_lookup_4', '{}'::jsonb
   ) ->> 'replayed')::boolean,
   true,
   'a replay into the original workspace still reports replayed'
@@ -183,7 +218,7 @@ select is(
   'the wallet_available ledger matches the profile balance after replays'
 );
 
--- 11-12: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
+-- 13-14: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
 select public.apply_stripe_wallet_credit(
   '99921000-0000-4000-8000-00000000000a',
   'evt_replay_lock_credit', null, 1000000, 'checkout.session.completed',
@@ -192,7 +227,7 @@ select public.apply_stripe_wallet_credit(
 
 select ok(
   pg_temp.holds_xact_advisory_lock('stripe-credit:evt_replay_lock_credit'),
-  'a wallet credit holds its per-event lock until the transaction ends'
+  'a wallet credit holds a transaction-scoped per-event lock'
 );
 
 select public.apply_stripe_subscription_update(
@@ -203,10 +238,10 @@ select public.apply_stripe_subscription_update(
 
 select ok(
   pg_temp.holds_xact_advisory_lock('stripe-sub:evt_replay_lock_subscription'),
-  'a subscription update holds its per-event lock until the transaction ends'
+  'a subscription update holds a transaction-scoped per-event lock'
 );
 
--- 13: the replaced function keeps its security contract.
+-- 15: the replaced function keeps its security contract.
 select ok(
   (select proc.prosecdef
      and proc.proconfig = array['search_path=pg_catalog, public']
@@ -222,7 +257,7 @@ select ok(
   'apply_stripe_wallet_credit stays security definer, pinned search_path and service_role only'
 );
 
--- 14: the operator reconciliation query lists receipts that have no settlement evidence.
+-- 16: the operator reconciliation query lists receipts that have no settlement evidence.
 insert into public.stripe_webhook_events (
   stripe_event_id, event_type, livemode, payload_hash, processed_at, created_at
 ) values

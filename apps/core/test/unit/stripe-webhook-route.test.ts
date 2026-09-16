@@ -3,10 +3,13 @@ import { createHmac } from 'node:crypto';
 
 import { createCoreApp } from '../../src/app';
 import type { CoreBindings } from '../../src/bindings';
+import { settleStripeWebhookEvent } from '@mustbeviral/billing';
+
 import { createStripeWebhookSettlementHandler } from '../../src/composition/stripe-webhook-settlement';
 import {
   createStripeWebhookRoute,
   resolveStripeWebhookDependencies,
+  type StripeWebhookDependencies,
 } from '../../src/routes/stripe-webhook';
 
 const emptyBindings = {} as CoreBindings;
@@ -57,6 +60,16 @@ function walletCreditDatabase(failuresBeforeSuccess: number) {
   });
   return { credited, fetchImplementation };
 }
+
+/** A settlement port that plans without persisting, for route tests that only need wiring. */
+const plannedSettlementOnly: NonNullable<StripeWebhookDependencies['settleEvent']> = async ({
+  verified,
+  requestId,
+}) => ({
+  settlement: settleStripeWebhookEvent({ verified, requestId }),
+  emailStatus: 'not_requested',
+  persisted: false,
+});
 
 /** Mirrors `record_stripe_webhook_event`: insert, or report a duplicate on conflict. */
 function insertOrConflictReceipts(existing: readonly string[] = []) {
@@ -173,6 +186,23 @@ describe('stripe webhook settlement ordering', () => {
     expect(payload.data).toMatchObject({ duplicate: true, acknowledged: true });
     expect([...database.credited.keys()]).toStrictEqual(['evt_receipt_without_settlement']);
   });
+
+  it('fails closed without writing a receipt when settlement is not wired', async () => {
+    const receipts = insertOrConflictReceipts();
+    const app = createCoreApp(undefined, {
+      createStripeWebhookRecordEvent: () => receipts.recordEvent,
+    });
+
+    const response = await app.request(
+      'http://localhost/webhooks/stripe',
+      signedDelivery('whsec_ordering', walletCreditEvent('evt_receipt_without_settle_port')),
+      settlementBindings,
+    );
+
+    // A receipt written without settlement would make every Stripe retry a silent duplicate.
+    expect(response.status).toBe(503);
+    expect(receipts.recordEvent).not.toHaveBeenCalled();
+  });
 });
 
 describe('standalone stripe webhook route', () => {
@@ -182,6 +212,7 @@ describe('standalone stripe webhook route', () => {
     const route = createStripeWebhookRoute(() => ({
       webhookSecret: secret,
       recordEvent,
+      settleEvent: plannedSettlementOnly,
     }));
     const body = JSON.stringify({
       id: 'evt_test',
@@ -208,6 +239,7 @@ describe('standalone stripe webhook route', () => {
     const route = createStripeWebhookRoute(() => ({
       webhookSecret: secret,
       recordEvent,
+      settleEvent: plannedSettlementOnly,
     }));
     const body = JSON.stringify({ id: 'evt_dup', type: 'invoice.paid', livemode: false });
     const timestamp = Math.floor(Date.now() / 1000);

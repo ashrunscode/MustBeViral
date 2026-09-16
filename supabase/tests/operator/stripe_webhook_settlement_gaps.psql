@@ -13,12 +13,27 @@
 -- dashboard, then repair by resending the event from Stripe (settlement is idempotent on the
 -- event id) rather than editing rows. Events that never produced a receipt do not appear here.
 --
--- Run in a read-only session as a role that can read these tables, for example:
+-- Run once per session, in a read-only session, as a role with BYPASSRLS and SELECT on these
+-- tables (for example postgres), for example:
 --   PGOPTIONS='-c default_transaction_read_only=on' psql "<connection>" -v ON_ERROR_STOP=1 \
 --     -f supabase/tests/operator/stripe_webhook_settlement_gaps.psql
 --
+-- The event type lists mirror StripeSettlementEventType in packages/billing/src/stripe-settlement.ts.
 -- The .psql extension keeps `supabase test db` from running this as a test; pgTAP suite
 -- 00029_p1a_stripe_settlement_replay_identity includes it and checks its result.
+
+-- These tables force row level security, so without BYPASSRLS the query would silently report
+-- no gaps.
+do $$
+begin
+  if not exists (
+    select 1 from pg_roles where rolname = current_user and (rolsuper or rolbypassrls)
+  ) then
+    raise exception 'stripe_webhook_settlement_gaps needs a role with BYPASSRLS; % would see no rows',
+      current_user;
+  end if;
+end;
+$$;
 
 prepare stripe_webhook_settlement_gaps as
 select
