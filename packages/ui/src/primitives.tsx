@@ -1,12 +1,14 @@
 'use client';
 
+import * as RadixDialog from '@radix-ui/react-dialog';
 import {
   forwardRef,
-  useEffect,
-  useId,
+  useLayoutEffect,
   useRef,
   type ButtonHTMLAttributes,
+  type FocusEvent,
   type HTMLAttributes,
+  type KeyboardEvent,
   type ReactNode,
   type TableHTMLAttributes,
 } from 'react';
@@ -148,14 +150,59 @@ export interface DrawerProps extends HTMLAttributes<HTMLElement> {
   readonly onClose?: () => void;
 }
 
-export function Drawer({ children, className, onClose, open, title, ...props }: DrawerProps) {
+/**
+ * Non-modal side panel. It never takes focus on its own; it only closes on Escape from inside and,
+ * when it closes with focus inside, hands focus back to where it was before focus entered it.
+ */
+export function Drawer({
+  children,
+  className,
+  onClose,
+  onFocus,
+  onKeyDown,
+  open,
+  title,
+  ...props
+}: DrawerProps) {
+  const drawerRef = useRef<HTMLElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+  const wasOpenRef = useRef(open);
+
+  useLayoutEffect(() => {
+    const closed = wasOpenRef.current && !open;
+    wasOpenRef.current = open;
+    if (!closed) return;
+    const drawer = drawerRef.current;
+    const target = returnFocusRef.current;
+    returnFocusRef.current = null;
+    if (drawer === null || !drawer.contains(document.activeElement)) return;
+    if (target !== null && target.isConnected && !drawer.contains(target)) target.focus();
+  }, [open]);
+
+  function handleFocus(event: FocusEvent<HTMLElement>) {
+    onFocus?.(event);
+    const previous = event.relatedTarget;
+    if (previous instanceof Node && event.currentTarget.contains(previous)) return;
+    returnFocusRef.current = previous instanceof HTMLElement ? previous : null;
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
+    onKeyDown?.(event);
+    if (event.defaultPrevented || event.key !== 'Escape' || !open || onClose === undefined) return;
+    event.preventDefault();
+    onClose();
+  }
+
   return (
     <aside
+      ref={drawerRef}
       className={classes('mbv-drawer', className)}
       data-state={open ? 'open' : 'closed'}
       aria-hidden={!open}
       aria-label={title}
       {...props}
+      onFocus={handleFocus}
+      onKeyDown={handleKeyDown}
     >
       <div className="mbv-drawer__header">
         <h2>{title}</h2>
@@ -170,15 +217,6 @@ export function Drawer({ children, className, onClose, open, title, ...props }: 
   );
 }
 
-const focusableSelector = [
-  'a[href]',
-  'button:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])',
-].join(',');
-
 export interface DialogProps {
   readonly children: ReactNode;
   readonly description?: string;
@@ -187,73 +225,74 @@ export interface DialogProps {
   readonly onClose: () => void;
 }
 
+/**
+ * Return-focus target of the dialog that closed most recently and has not restored focus yet. A
+ * dialog that opens in the same interaction (one dialog's action closes it and opens another)
+ * finds focus on <body>, because the pressed button was removed, so it inherits this target and
+ * focus still returns to the original trigger once the second dialog closes.
+ */
+let pendingReturnFocus: HTMLElement | null = null;
+
+/**
+ * Modal dialog on Radix Dialog: focus trap, Escape, background hidden from assistive technology,
+ * and body scroll lock. Pressing the backdrop does not close it, so a half-filled form survives a
+ * stray click. Only Close, Escape, or the consumer's own actions call `onClose`.
+ */
 export function Dialog({ children, description, onClose, open, title }: DialogProps) {
-  const titleId = useId();
-  const descriptionId = useId();
-  const panelRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    returnFocusRef.current =
-      document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const panel = panelRef.current;
-    const focusable = panel?.querySelectorAll<HTMLElement>(focusableSelector);
-    (focusable?.[0] ?? panel)?.focus();
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-      if (event.key !== 'Tab' || !panel) return;
-      const elements = [...panel.querySelectorAll<HTMLElement>(focusableSelector)];
-      if (elements.length === 0) {
-        event.preventDefault();
-        panel.focus();
-        return;
-      }
-      const first = elements[0];
-      const last = elements.at(-1);
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last?.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first?.focus();
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown);
+  useLayoutEffect(() => {
+    if (!open) return undefined;
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      returnFocusRef.current?.focus();
+      pendingReturnFocus = returnFocusRef.current;
     };
-  }, [onClose, open]);
+  }, [open]);
 
-  if (!open) return null;
+  function captureReturnFocus() {
+    const active = document.activeElement;
+    returnFocusRef.current =
+      active instanceof HTMLElement && active !== document.body ? active : pendingReturnFocus;
+    pendingReturnFocus = null;
+  }
+
+  function restoreFocus(event: Event) {
+    // Radix would focus a Dialog.Trigger here; this API has none, so focus is restored explicitly.
+    event.preventDefault();
+    const target = returnFocusRef.current;
+    returnFocusRef.current = null;
+    // A dialog that opened meanwhile inherited the target and will restore it when it closes.
+    if (target === null || pendingReturnFocus !== target) return;
+    pendingReturnFocus = null;
+    if (target.isConnected) target.focus();
+  }
 
   return (
-    <div className="mbv-dialog-backdrop" role="presentation">
-      <div
-        ref={panelRef}
-        className="mbv-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={description ? descriptionId : undefined}
-        tabIndex={-1}
-      >
-        <div className="mbv-dialog__header">
-          <h2 id={titleId}>{title}</h2>
-          <Button variant="quiet-link" onClick={onClose} aria-label={`Close ${title}`}>
-            Close
-          </Button>
-        </div>
-        {description ? <p id={descriptionId}>{description}</p> : null}
-        {children}
-      </div>
-    </div>
+    <RadixDialog.Root
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) onClose();
+      }}
+    >
+      <RadixDialog.Portal>
+        <RadixDialog.Overlay className="mbv-dialog-backdrop" role="presentation">
+          <RadixDialog.Content
+            className="mbv-dialog"
+            aria-modal="true"
+            onOpenAutoFocus={captureReturnFocus}
+            onCloseAutoFocus={restoreFocus}
+            onPointerDownOutside={(event) => event.preventDefault()}
+          >
+            <div className="mbv-dialog__header">
+              <RadixDialog.Title>{title}</RadixDialog.Title>
+              <Button variant="quiet-link" onClick={onClose} aria-label={`Close ${title}`}>
+                Close
+              </Button>
+            </div>
+            {description ? <RadixDialog.Description>{description}</RadixDialog.Description> : null}
+            {children}
+          </RadixDialog.Content>
+        </RadixDialog.Overlay>
+      </RadixDialog.Portal>
+    </RadixDialog.Root>
   );
 }
