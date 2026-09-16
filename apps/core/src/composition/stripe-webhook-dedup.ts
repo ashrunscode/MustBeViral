@@ -8,6 +8,48 @@ export class StripeWebhookDedupForbiddenError extends Error {
   override readonly name = 'StripeWebhookDedupForbiddenError';
 }
 
+/**
+ * The dedup RPC refused this event's input, for example SQLSTATE 22023 for a blank field. Sending
+ * the same event again fails the same way, so this is not an outage. Core's error log records the
+ * status and code, and the message is handed to exception telemetry, so both carry only the HTTP
+ * status and a well-formed SQLSTATE or PostgREST error code, never PostgREST's message or details,
+ * which can echo row values.
+ */
+export class StripeWebhookDedupRejectedError extends Error {
+  override readonly name = 'StripeWebhookDedupRejectedError';
+
+  constructor(
+    readonly status: number,
+    readonly code: string | undefined,
+  ) {
+    super(
+      `Stripe webhook dedup RPC rejected the event with HTTP ${status}${
+        code === undefined ? '' : ` (${code})`
+      }.`,
+    );
+  }
+}
+
+// PostgREST answers 400 for invalid input (SQLSTATE class 22, 23502, P0001, PGRST1xx request
+// errors), 409 for unique and foreign-key violations and 422 for unprocessable requests. Every other
+// failure can clear without a change to the event, so it stays Unavailable: 402 (a restricted
+// project), 404 (the RPC is missing: a Worker deployed ahead of its migration, or a stale schema
+// cache), 405 (SQLSTATE 25006, a read-only database, for example with a nearly full disk), 408, 425
+// and 429 (timing and rate limits), and 5xx.
+const PERMANENT_REJECTION_STATUSES: ReadonlySet<number> = new Set([400, 409, 422]);
+
+const SAFE_ERROR_CODE = /^(?:[0-9A-Z]{5}|PGRST\d{3})$/u;
+
+async function safeErrorCode(response: Response): Promise<string | undefined> {
+  try {
+    const body = (await response.json()) as Readonly<{ code?: unknown }> | null;
+    const code = body?.code;
+    return typeof code === 'string' && SAFE_ERROR_CODE.test(code) ? code : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 type StripeWebhookClaim = 'inserted' | 'duplicate';
 
 function isClaimResult(value: unknown): value is Readonly<{ claim: StripeWebhookClaim }> {
@@ -72,6 +114,9 @@ export function createStripeWebhookDedupPort(
       throw new StripeWebhookDedupForbiddenError(
         'Stripe webhook dedup rejected the privileged credential.',
       );
+    }
+    if (PERMANENT_REJECTION_STATUSES.has(response.status)) {
+      throw new StripeWebhookDedupRejectedError(response.status, await safeErrorCode(response));
     }
     if (!response.ok) {
       throw new StripeWebhookDedupUnavailableError(
