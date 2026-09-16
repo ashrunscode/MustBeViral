@@ -41,7 +41,12 @@ import {
   type UpsertTextDraftInput,
 } from '@mustbeviral/collaboration';
 
-const PRESENCE_STALE_MS = 60_000;
+/**
+ * A present member's `last_seen_at` is rewritten when it is at least this old as a snapshot is built,
+ * so every served row was confirmed live within this interval. Presence itself does not expire by
+ * time: it lasts as long as the member has an open, joined socket (see `reconcilePresence`).
+ */
+export const PRESENCE_LAST_SEEN_REFRESH_MS = 30_000;
 /** Version 2 introduced size limits, row caps and injective lease ids. */
 export const COORDINATION_SCHEMA_VERSION = 2;
 
@@ -420,15 +425,6 @@ export class CoordinationStore {
     this.#sql.exec('DELETE FROM leases WHERE expires_at <= ?', now);
   }
 
-  #pruneStalePresence(nowMs = Date.now()): void {
-    for (const row of this.#presenceRows()) {
-      const lastSeenMs = Date.parse(row.value.last_seen_at);
-      if (Number.isNaN(lastSeenMs) || nowMs - lastSeenMs > PRESENCE_STALE_MS) {
-        this.#sql.exec('DELETE FROM presence WHERE actor_id = ?', row.key);
-      }
-    }
-  }
-
   /**
    * Reads one section, validating every stored row against the current row schema. A row that fails
    * (for example one written by an older Worker after a rollback) is quarantined: it stays in
@@ -502,7 +498,6 @@ export class CoordinationStore {
   getSnapshot(canvasId: string): CollaborationSnapshot {
     this.ensureCanvasId(canvasId);
     this.#pruneExpiredLeases();
-    this.#pruneStalePresence();
     return {
       canvas_id: this.readCanvasId(),
       presence: this.#presenceRows().map((row) => row.value),
@@ -512,9 +507,57 @@ export class CoordinationStore {
     };
   }
 
+  /**
+   * Makes stored presence match the members who are connected. `presentActorIds` holds every actor
+   * with at least one open, unexpired, identity-bound socket that has joined; the object derives it
+   * from its sockets and their attachments, so it survives hibernation. Rows of any other actor are
+   * deleted: their last socket closed or expired, or they were left by an earlier object instance.
+   * A present member's row is kept however long ago they joined, and its `last_seen_at` is
+   * refreshed once it is `PRESENCE_LAST_SEEN_REFRESH_MS` old. Nothing is ever inserted, so a member
+   * whose join was refused at a cap never becomes present by staying connected, and a refresh is a
+   * write like any other: it is skipped if it would leave the section past its row cap or byte budget.
+   */
+  reconcilePresence(
+    canvasId: string,
+    presentActorIds: ReadonlySet<string>,
+    nowMs = Date.now(),
+  ): void {
+    this.ensureCanvasId(canvasId);
+    const kept: StoredRow<PresenceEntry>[] = [];
+    for (const row of this.#presenceRows()) {
+      if (presentActorIds.has(row.value.actor.actor_id)) {
+        kept.push(row);
+      } else {
+        this.#sql.exec('DELETE FROM presence WHERE actor_id = ?', row.key);
+      }
+    }
+    let bytes = sumBytes(kept);
+    const lastSeenAt = new Date(nowMs).toISOString();
+    for (const row of kept) {
+      if (nowMs - Date.parse(row.value.last_seen_at) < PRESENCE_LAST_SEEN_REFRESH_MS) continue;
+      const payload = JSON.stringify(
+        PresenceEntrySchema.parse({ ...row.value, last_seen_at: lastSeenAt }),
+      );
+      const bytesAfter = bytes - row.bytes + utf8ByteLength(payload);
+      try {
+        assertWithinLimits({
+          resource: 'presence',
+          rowsAfter: kept.length,
+          canvasRowCap: COLLABORATION_PRESENCE_MAX_PER_CANVAS,
+          bytesAfter,
+          byteBudget: COLLABORATION_PRESENCE_MAX_BYTES,
+        });
+      } catch (error) {
+        if (error instanceof CanvasLimitError) continue;
+        throw error;
+      }
+      this.#sql.exec('UPDATE presence SET payload = ? WHERE actor_id = ?', payload, row.key);
+      bytes = bytesAfter;
+    }
+  }
+
   joinPresence(canvasId: string, actor: CollaborationActor, surface: Surface): void {
     this.ensureCanvasId(canvasId);
-    this.#pruneStalePresence();
     const rows = this.#presenceRows();
     const existing = rows.find((row) => row.key === actor.actor_id);
     const timestamp = nowIso();
