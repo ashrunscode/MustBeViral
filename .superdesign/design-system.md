@@ -3,7 +3,7 @@
 Authority chain: operator brand directive (lightfield.app north star) → `brand-id.md` + `brand-detail.md`
 → this executable system. Composition authority: the unanimous 9/9/9 research verdict for the
 **Review-Approval-Confidence** direction with grafts (ledger receipts, large-node canvas grammar,
-docked quote strip). Live product frames and SuperDesign preview goldens must preserve these tokens exactly. The SuperDesign CLI is optional.
+docked quote strip). Live product frames and preview goldens must preserve these tokens exactly. Design and mockup tools are optional and never an authority. The shipped values live in `packages/ui/src/tokens.ts`; `docs/ux/EXPERIENCE_CONTRACT.md` and `brand/BRAND.md` record the WCAG AA rules applied on 2026-09-16.
 
 ## Surfaces (paper, not theme — EXACT Lightfield tokens, see reference/lightfield-teardown.md)
 
@@ -23,19 +23,22 @@ docked quote strip). Live product frames and SuperDesign preview goldens must pr
 | `ink-strong` | `rgba(0,0,0,0.85)` | titles, emphasized values  |
 | `ink-head`   | `rgba(0,0,0,0.75)` | page/panel headings        |
 | `ink`        | `rgba(0,0,0,0.60)` | body, labels               |
-| `ink-muted`  | `rgba(0,0,0,0.50)` | captions, secondary meta   |
+| `ink-muted`  | `rgba(0,0,0,0.50)` | large-text captions only   |
 | `ink-faint`  | `rgba(0,0,0,0.25)` | placeholders, disabled     |
 | `line`       | `rgba(0,0,0,0.12)` | hairline borders, dividers |
 
 ## Accent and status
 
-- `signal` `#3182d4` (Lightfield blue-z8 brand-strong) — THE action accent: exactly one signal
-  element per screen (Confirm run, Approve, Export). `signal-soft` `#80bfff` (blue-z5
-  content-brand) for selected borders, active lineage, links. Selected states: `#80bfff1f` wash
-  (blue-t2) + 1px `signal-soft` border.
-- Status (small, always icon+text, mono labels): `ok` `#1F9D63` · `attention` `#B87E14` · `fail` `#C4404D`.
-  Status colors never fill large areas; they mark chips, dots, and left-edges only.
-- White text only ever sits on `signal` or status fills.
+- `signal` `#3182d4` (Lightfield blue-z8 brand-strong) is the brand blue: the mark, borders, focus,
+  selection and active lineage. The one primary action per screen (Confirm run, Approve, Export)
+  is filled with `signal-fill` `#2875c2` (hover `#226bb3`, pressed `#1d5f9f`), because white text
+  on `#3182d4` measures 3.98:1 and fails WCAG AA. Small blue text uses `signal-ink` `#226bb3`.
+  `signal-soft` `#80bfff` (blue-z5 content-brand) is for selected borders and active lineage, never
+  text. Selected states: `#80bfff1f` wash (blue-t2) + 1px `signal-soft` border.
+- Status (small, always icon+text, mono labels): `ok` `#1F9D63` · `attention` `#B87E14` · `fail` `#C4404D`
+  mark dots, icons and left edges; label text uses `ok-ink` `#187B4E` · `attention-ink` `#8B5F0F` ·
+  `fail-ink` `#B73945`, which meet WCAG AA 4.5:1. Status colors never fill large areas.
+- White text only ever sits on `signal-fill` or a status-ink fill.
 
 ## Type (EXACT Lightfield scale — headings NEVER bold)
 
@@ -80,12 +83,12 @@ motion communicates causality only — nothing decorative.
 
 - **Confirm bar** (hero of the run moment): full-width, `card` on `line` hairline, containing —
   pinned revision (mono), model route (mono), price basis, expiry countdown (mono), and the single
-  `signal` button naming the amount: "Confirm $4.20 run". Never styled with urgency.
+  `signal-fill` button naming the amount: "Confirm $4.20 run". Never styled with urgency.
 - **Docked quote strip** (graft A): slim persistent strip showing live `QUOTE $4.20 · REV 7f3a`
   whenever the confirm bar is off-screen.
 - **Canvas** (graft B): `wash-faint` field; nodes = `card` hairline cards, 8px radius, 15px titles,
   12px mono meta; selected = `signal` border + focus ring; running = animated `attention` top edge +
-  label; verified = `ok` chip; failed = `fail` chip + local "Retry (no charge) — retains N verified"
+  label; verified = `ok` chip with `ok-ink` label; failed = `fail` chip with `fail-ink` label + local "Retry (no charge) — retains N verified"
   affordance. Edges 1.5px `line` bezier with directional arrowheads; active lineage in `signal`.
 - **QA panel:** `attention`-edged card listing findings with per-note mono JUMP_TO_ASSET links.
 - **Receipt drawer** (graft A): immutable ledger table — TIMESTAMP / NODE / EVENT / COST — DM Mono,
