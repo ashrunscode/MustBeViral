@@ -694,6 +694,24 @@ const operationDataSchemas = {
       })
       .strict(),
   ]),
+  create_collaboration_ticket: z
+    .object({
+      canvas_id: IdentifierSchema,
+      ticket: z
+        .string()
+        .min(1)
+        .max(2_048)
+        .regex(/^[A-Za-z0-9_-]+.[A-Za-z0-9_-]+$/u),
+      expires_at: TimestampSchema,
+      actor: z
+        .object({
+          actor_id: z.string().min(1).max(128),
+          display_name: z.string().min(1).max(128),
+          color: z.string().regex(/^#[0-9a-f]{6}$/u),
+        })
+        .strict(),
+    })
+    .strict(),
 } as const satisfies Readonly<Record<P0RestOperation, z.ZodType>>;
 
 export const P0_OPERATION_DATA_SCHEMAS = operationDataSchemas;

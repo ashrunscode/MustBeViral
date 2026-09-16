@@ -1,0 +1,12 @@
+# Declares the collaboration Worker's local secret surface. NOT a secret file: the value below is an
+# obvious placeholder, and only the NAME matters.
+#
+# `wrangler types` reads this file explicitly (see package.json) so the generated
+# `worker-configuration.d.ts` is reproducible without a developer's untracked `.dev.vars`.
+#
+# COLLABORATION_TICKET_SECRET must hold the same value as Core's COLLABORATION_TICKET_SECRET in the
+# same environment: Core signs collaboration tickets with it and this Worker verifies them. Without a
+# value of at least 32 characters the Worker refuses every canvas request. Real values live in your
+# own untracked `apps/collaboration/.dev.vars`, and in Cloudflare via `wrangler secret put`.
+
+COLLABORATION_TICKET_SECRET=replace-me-with-32-or-more-random-bytes

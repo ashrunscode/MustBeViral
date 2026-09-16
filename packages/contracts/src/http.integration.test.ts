@@ -29,7 +29,7 @@ describe('Zod and OpenAPI integration', () => {
       .flatMap((path) => Object.values(path))
       .map((operation) => operation.operationId);
 
-    expect(Object.keys(document.paths)).toHaveLength(28);
+    expect(Object.keys(document.paths)).toHaveLength(29);
     expect(operations).toEqual(['get_health', ...P0_REST_OPERATIONS, ...P1B_REST_OPERATIONS]);
     expect(
       operations.filter((operation) =>
@@ -37,7 +37,7 @@ describe('Zod and OpenAPI integration', () => {
           operation as (typeof P0_AUTHENTICATED_REST_OPERATIONS)[number],
         ),
       ),
-    ).toHaveLength(18);
+    ).toHaveLength(19);
     expect(operations).toContain('issue_oauth_token');
     expect(operations).toContain('publish_skill');
   });

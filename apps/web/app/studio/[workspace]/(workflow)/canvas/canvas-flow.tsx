@@ -39,7 +39,7 @@ import { SessionExpiredAction } from '../../../../../src/components/session-expi
 import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
 import { NodeConfigDraftPanel } from '../../../../../src/features/collaboration/draft-panels';
 import {
-  collaborationActorForReviewer,
+  previewCollaborationActor,
   commentsForAnchor,
   useCollaborationSession,
 } from '../../../../../src/features/collaboration/use-collaboration-session';
@@ -455,19 +455,15 @@ export function CanvasFlow({
   const outline = useMemo(() => mapCanvasNodesToOutline(model?.nodes ?? []), [model?.nodes]);
   const selectedNode = nodesById.get(selectedId);
   const collaborationCanvasId = canvasId ?? (dataMode === 'preview' ? 'preview-canvas' : null);
+  // Live collaboration acts as the identity Core binds into the ticket for the signed-in user; the
+  // preview actor is only the local demo identity and never reaches the collaboration Worker.
   const collaboration = useCollaborationSession({
     canvasId: collaborationCanvasId,
-    actor: collaborationActorForReviewer(
-      dataMode === 'preview' ? 'Maya Chen' : 'You',
-      dataMode === 'preview' ? 'preview' : 'websocket',
-    ),
+    previewActor: previewCollaborationActor('Maya Chen'),
     surface: 'canvas',
     transport: dataMode === 'preview' ? 'preview' : 'websocket',
   });
-  const collaborationActorId = collaborationActorForReviewer(
-    dataMode === 'preview' ? 'Maya Chen' : 'You',
-    dataMode === 'preview' ? 'preview' : 'websocket',
-  ).actor_id;
+  const collaborationActorId = collaboration.actor?.actor_id ?? '';
   const anchoredComments = commentsForAnchor(collaboration.snapshot, selectedId);
   const selectedDrafts = textDrafts[selectedId] ?? {};
   const checkpointDrafts = resolveCheckpointDrafts({

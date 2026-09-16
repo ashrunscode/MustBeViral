@@ -300,6 +300,16 @@ const successData = {
     run_status: 'succeeded',
     capture_micros: 400,
   },
+  create_collaboration_ticket: {
+    canvas_id: 'canvas-1',
+    ticket: 'eyJ2IjoxfQ.c2lnbmF0dXJl',
+    expires_at: '2026-09-16T12:01:00.000Z',
+    actor: {
+      actor_id: '9f2c1d7e-5b8a-4c3f-9e21-7a6b5c4d3e2f',
+      display_name: 'Collaborator 1A2B',
+      color: '#3182d4',
+    },
+  },
 } as const;
 
 describe('P0 REST response contracts', () => {

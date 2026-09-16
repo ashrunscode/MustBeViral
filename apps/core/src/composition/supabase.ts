@@ -60,6 +60,11 @@ import { createBillingEntitlementsPort } from './billing-entitlements';
 import { createPrivateRunExport } from './export';
 import { createFalWebhookIngestHandler } from './fal-ingest';
 import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
+import {
+  collaborationActorColor,
+  collaborationFallbackDisplayName,
+  mintCollaborationTicket,
+} from '../../../../packages/collaboration/src/ticket';
 
 const BOOTSTRAP_WORKSPACE_ID = '00000000-0000-4000-8000-000000000000';
 const RUN_STATES = new Set([
@@ -714,7 +719,23 @@ const WORKSPACE_RESOLUTION_BY_OPERATION = {
   explain_model: { kind: 'actor_membership' },
   get_receipt: { kind: 'path_resource', table: 'runs' },
   ingest_fal_webhook: { kind: 'webhook' },
+  // Same resolution as every other canvas endpoint: the canvas read through the caller JWT and RLS.
+  create_collaboration_ticket: { kind: 'path_resource', table: 'canvases' },
 } as const satisfies Readonly<Record<V1Operation, WorkspaceResolutionStrategy>>;
+
+async function hasActiveWorkspaceMembership(
+  executor: SupabaseDataApiExecutor,
+  context: Readonly<{ workspace_id: string; actor_id: string }>,
+): Promise<boolean> {
+  const membership = await executor.selectOne('workspace_memberships', {
+    workspace_id: `eq.${context.workspace_id}`,
+    user_id: `eq.${context.actor_id}`,
+    status: 'eq.active',
+    revoked_at: 'is.null',
+    select: 'id',
+  });
+  return membership !== null;
+}
 
 function createWorkspaceResolver(
   executor: SupabaseDataApiExecutor,
@@ -1111,6 +1132,51 @@ function createResourcePort(
         },
       };
     },
+    async createCollaborationTicket(input) {
+      // The same two checks every canvas endpoint applies before it acts: an active membership in the
+      // resolved workspace, then the canvas read through the caller's JWT so RLS decides visibility.
+      if (!(await hasActiveWorkspaceMembership(executor, input.context))) {
+        return { status: 'forbidden' };
+      }
+      const canvas = await repositories.canvases.get(
+        asTenantContext(input.context),
+        input.canvas_id,
+      );
+      if (canvas === null) return { status: 'not_found' };
+      const actorId = input.context.actor_id;
+      // No profile or membership display name exists in the schema, so the label is derived from
+      // the verified user id alone. Email and provider profile claims are never used.
+      const actor = {
+        actor_id: actorId,
+        display_name: collaborationFallbackDisplayName(actorId),
+        color: collaborationActorColor(actorId),
+      };
+      const { ticket, claims } = await mintCollaborationTicket(
+        bindings.COLLABORATION_TICKET_SECRET,
+        {
+          canvasId: canvas.id,
+          actor,
+          nowEpochSeconds: Math.floor(Date.now() / 1000),
+        },
+      );
+      const issued = {
+        canvas_id: canvas.id,
+        ticket,
+        expires_at: new Date(claims.exp * 1000).toISOString(),
+        actor,
+      };
+      // Never log the ticket itself.
+      console.log(
+        JSON.stringify({
+          level: 'info',
+          event: 'core.collaboration_ticket.issued',
+          request_id: input.context.request_id,
+          canvas_id: canvas.id,
+          expires_at: issued.expires_at,
+        }),
+      );
+      return { status: 'ok', ...issued };
+    },
     async ingestFalWebhook(input) {
       return await createFalWebhookIngestHandler(
         bindings,
@@ -1140,14 +1206,7 @@ export function createSupabaseHandlerPorts(
   return {
     authorization: {
       async authorize(context) {
-        const membership = await executor.selectOne('workspace_memberships', {
-          workspace_id: `eq.${context.workspace_id}`,
-          user_id: `eq.${context.actor_id}`,
-          status: 'eq.active',
-          revoked_at: 'is.null',
-          select: 'id',
-        });
-        return membership !== null;
+        return hasActiveWorkspaceMembership(executor, context);
       },
     },
     canvases: {
