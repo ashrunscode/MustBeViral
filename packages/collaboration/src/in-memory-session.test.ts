@@ -19,15 +19,14 @@ describe('in-memory collaboration session', () => {
       seen.push(snapshot.comments.map((comment) => comment.comment_id).join(','));
     });
     session.connect();
-    session.upsertComment({
-      comment_id: 'comment-new',
+    const created = session.createComment({
       body: 'Validate before quoting.',
       anchor_node_id: '2',
     });
     session.disconnect();
     unsubscribe();
     expect(seen.at(-2)).toContain('comment-asset-7');
-    expect(seen.at(-1)).toContain('comment-new');
+    expect(seen.at(-1)).toContain(created);
     expect(session.snapshot.presence.some((entry) => entry.actor.actor_id === 'you')).toBe(false);
   });
 
@@ -46,7 +45,8 @@ describe('in-memory collaboration session', () => {
     });
     expect(session.snapshot.text_drafts).toHaveLength(1);
     expect(session.snapshot.leases).toHaveLength(1);
-    session.releaseLease('lease-7-you');
+    expect(session.snapshot.leases[0]?.lease_id).toBe(JSON.stringify(['lease', '7', 'you']));
+    session.releaseLease('7');
     expect(session.snapshot.leases).toHaveLength(0);
   });
 

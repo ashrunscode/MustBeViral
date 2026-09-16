@@ -473,8 +473,8 @@ export function CanvasFlow({
   const hasCheckpointDrafts = checkpointDrafts.length > 0;
 
   function submitCollaborationComment(body: string): void {
-    collaboration.upsertComment({
-      comment_id: `comment-${selectedId}-${String(Date.now())}`,
+    // The collaboration Worker assigns the comment id.
+    collaboration.createComment({
       body,
       anchor_node_id: selectedId,
     });
@@ -865,6 +865,9 @@ export function CanvasFlow({
           onRegister={registerOutlineRef}
         />
         <CollaborationSidebar
+          actorId={collaboration.actor?.actor_id ?? null}
+          onDeleteComment={collaboration.deleteComment}
+          refusal={collaboration.refusal}
           anchorId={selectedId}
           anchorLabel={selectedNode?.label ?? 'Selected node'}
           comments={anchoredComments}

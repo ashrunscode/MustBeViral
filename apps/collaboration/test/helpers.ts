@@ -98,13 +98,19 @@ export interface ServerFrame {
 export interface TestSocket {
   readonly socket: WebSocket;
   readonly frames: ServerFrame[];
+  /** Size in UTF-8 bytes of each received frame, in arrival order. */
+  readonly frameBytes: number[];
   readonly response: Response;
+  /** The close frame the server sent, once one has arrived. */
+  readonly closed: { code: number; reason: string } | null;
   send(message: unknown): void;
+  sendRaw(message: string): void;
   waitFor(predicate: (frame: ServerFrame) => boolean, timeoutMs?: number): Promise<ServerFrame>;
+  waitForClose(timeoutMs?: number): Promise<{ code: number; reason: string }>;
   close(): void;
 }
 
-function delay(ms: number): Promise<void> {
+export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
@@ -114,10 +120,13 @@ export async function openSocket(
   canvasId: string,
   actor: Readonly<{ actor_id: string; display_name: string; color: string }>,
   extraHeaders: Readonly<Record<string, string>> = {},
+  ticket?: string,
 ): Promise<TestSocket> {
-  const ticket = await ticketFor(canvasId, actor);
   const response = await SELF.fetch(
-    socketRequest(canvasId, { ...protocolHeader(ticket), ...extraHeaders }),
+    socketRequest(canvasId, {
+      ...protocolHeader(ticket ?? (await ticketFor(canvasId, actor))),
+      ...extraHeaders,
+    }),
   );
   const socket = response.webSocket;
   if (response.status !== 101 || socket === null) {
@@ -125,15 +134,37 @@ export async function openSocket(
   }
   socket.accept();
   const frames: ServerFrame[] = [];
+  const frameBytes: number[] = [];
+  let closed: { code: number; reason: string } | null = null;
   socket.addEventListener('message', (event) => {
-    frames.push(JSON.parse(String(event.data)) as ServerFrame);
+    const text = String(event.data);
+    frameBytes.push(new TextEncoder().encode(text).byteLength);
+    frames.push(JSON.parse(text) as ServerFrame);
+  });
+  socket.addEventListener('close', (event) => {
+    closed = { code: event.code, reason: event.reason };
   });
   return {
     socket,
     frames,
+    frameBytes,
     response,
+    get closed() {
+      return closed;
+    },
     send(message) {
       socket.send(JSON.stringify(message));
+    },
+    sendRaw(message) {
+      socket.send(message);
+    },
+    async waitForClose(timeoutMs = 3_000) {
+      const deadline = Date.now() + timeoutMs;
+      for (;;) {
+        if (closed !== null) return closed;
+        if (Date.now() > deadline) throw new Error('Timed out waiting for the server to close');
+        await delay(10);
+      }
     },
     async waitFor(predicate, timeoutMs = 3_000) {
       const deadline = Date.now() + timeoutMs;
@@ -192,4 +223,28 @@ export async function freshSnapshot(socket: TestSocket): Promise<SnapshotPayload
 
 export async function settle(ms = 50): Promise<void> {
   await delay(ms);
+}
+
+export function coordinationStub(canvasId: string) {
+  const namespace = env.CANVAS_COORDINATION;
+  if (!namespace) throw new Error('CANVAS_COORDINATION binding is not configured');
+  return namespace.get(namespace.idFromName(canvasId));
+}
+
+export function errorFrames(
+  socket: TestSocket,
+  code?: string,
+): { code: string; message: string; request_type?: string; details?: Record<string, unknown> }[] {
+  return socket.frames
+    .filter((frame) => frame.type === 'error')
+    .map(
+      (frame) =>
+        frame.payload as {
+          code: string;
+          message: string;
+          request_type?: string;
+          details?: Record<string, unknown>;
+        },
+    )
+    .filter((payload) => code === undefined || payload.code === code);
 }

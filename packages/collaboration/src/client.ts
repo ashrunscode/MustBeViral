@@ -1,12 +1,16 @@
-import { leaseIdForActor } from './conflict-resolution';
+import { COLLABORATION_CLOSE_CODES } from './limits';
 import {
   ClientMessageSchema,
   CollaborationActorSchema,
   DEFAULT_LEASE_TTL_SECONDS,
   ServerMessageSchema,
+  describeClientMessageIssues,
+  type ClientMessage,
   type CollaborationActor,
+  type CollaborationErrorPayload,
   type CollaborationSnapshot,
-  type UpsertCommentInput,
+  type CreateCommentInput,
+  type UpdateCommentInput,
   type UpsertTextDraftInput,
 } from './protocol';
 import { COLLABORATION_WEBSOCKET_PROTOCOL } from './ticket';
@@ -42,6 +46,22 @@ export class CollaborationTicketDeniedError extends Error {
 
 export const DEFAULT_COLLABORATION_RECONNECT_DELAYS_MS = [1_000, 2_000, 5_000, 10_000, 30_000];
 
+/**
+ * A `SESSION_EXPIRED` close is expected only after the Worker's socket lifetime. One that arrives
+ * sooner is treated as an ordinary failure with backoff, so a misbehaving server cannot make the
+ * client request tickets in a tight loop.
+ */
+export const COLLABORATION_MIN_SESSION_MS_FOR_IMMEDIATE_RECONNECT = 30_000;
+/** Messages sent while re-authenticating after `SESSION_EXPIRED` wait for the new socket. */
+export const COLLABORATION_REAUTH_QUEUE_MAX_MESSAGES = 16;
+export const COLLABORATION_REAUTH_QUEUE_MAX_AGE_MS = 10_000;
+
+export interface CollaborationCommentResult {
+  readonly operation: 'create' | 'update' | 'delete';
+  readonly comment_id: string;
+  readonly client_request_id?: string;
+}
+
 export interface CollaborationClientOptions {
   readonly baseUrl: string;
   readonly canvasId: string;
@@ -54,28 +74,33 @@ export interface CollaborationClientOptions {
     accepted: boolean;
     lease_id: string;
     node_id: string;
+    reason?: 'ok' | 'contested' | 'invalid_lease_id' | 'limit_reached';
   }) => void;
   readonly onTextDraftResult?: (result: {
     accepted: boolean;
     draft_id: string;
     node_id: string;
     field_path: string;
-    reason?: 'ok' | 'lease_held' | 'stale';
+    reason?: 'ok' | 'lease_held' | 'stale' | 'limit_reached';
   }) => void;
+  readonly onCommentResult?: (result: CollaborationCommentResult) => void;
+  /** Typed refusals from the Worker: limits, rate limits, ownership and validation. */
+  readonly onError?: (error: CollaborationErrorPayload) => void;
   readonly WebSocketImpl?: typeof WebSocket;
   /** Delay before each consecutive reconnect attempt; the last entry repeats until the limit. */
   readonly reconnectDelaysMs?: readonly number[];
   /** Consecutive failed attempts before the client stops and reports `error`. */
   readonly maxReconnectAttempts?: number;
+  /** Clock for session age and queue expiry. Defaults to `Date.now`. */
+  readonly now?: () => number;
 }
 
 const OPEN_READY_STATE = 1;
 
-function sendMessage(
-  socket: WebSocket,
-  message: ReturnType<typeof ClientMessageSchema.parse>,
-): void {
-  socket.send(JSON.stringify(ClientMessageSchema.parse(message)));
+function closeCode(event: unknown): number | undefined {
+  if (typeof event !== 'object' || event === null) return undefined;
+  const code = (event as { code?: unknown }).code;
+  return typeof code === 'number' ? code : undefined;
 }
 
 export class CollaborationClient {
@@ -88,6 +113,8 @@ export class CollaborationClient {
   #generation = 0;
   #failedAttempts = 0;
   #reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+  #reauthenticating = false;
+  #pending: { readonly message: ClientMessage; readonly queuedAtMs: number }[] = [];
 
   constructor(options: CollaborationClientOptions) {
     this.#options = options;
@@ -106,6 +133,10 @@ export class CollaborationClient {
     return this.#actor;
   }
 
+  #now(): number {
+    return (this.#options.now ?? Date.now)();
+  }
+
   connect(): void {
     if (this.#active) return;
     this.#active = true;
@@ -117,6 +148,7 @@ export class CollaborationClient {
     const wasActive = this.#active;
     this.#active = false;
     this.#generation += 1;
+    this.#stopReauthenticating();
     if (this.#reconnectTimer !== null) {
       clearTimeout(this.#reconnectTimer);
       this.#reconnectTimer = null;
@@ -125,7 +157,7 @@ export class CollaborationClient {
     this.#socket = null;
     if (socket !== null) {
       if (socket.readyState === OPEN_READY_STATE) {
-        sendMessage(socket, { type: 'presence.leave', payload: {} });
+        this.#write(socket, { type: 'presence.leave', payload: {} });
       }
       socket.close();
     }
@@ -137,6 +169,7 @@ export class CollaborationClient {
     const WebSocketCtor = this.#options.WebSocketImpl ?? globalThis.WebSocket;
     if (WebSocketCtor === undefined) {
       this.#active = false;
+      this.#stopReauthenticating();
       this.#setStatus('error');
       return;
     }
@@ -169,45 +202,93 @@ export class CollaborationClient {
       return;
     }
     this.#socket = socket;
+    let openedAtMs: number | null = null;
 
     socket.addEventListener('open', () => {
       if (this.#socket !== socket) return;
+      openedAtMs = this.#now();
       this.#failedAttempts = 0;
       this.#setStatus('open');
-      sendMessage(socket, { type: 'presence.join', payload: { surface: this.#options.surface } });
+      this.#write(socket, {
+        type: 'presence.join',
+        payload: { surface: this.#options.surface },
+      });
+      this.#flushPending(socket);
     });
     socket.addEventListener('message', (event) => {
       if (this.#socket !== socket) return;
+      let raw: unknown;
       try {
-        const parsed = ServerMessageSchema.parse(JSON.parse(String(event.data)));
-        if (parsed.type === 'snapshot') {
-          this.#snapshot = parsed.payload;
-          this.#options.onSnapshot?.(parsed.payload);
-          return;
-        }
-        if (parsed.type === 'lease.result') {
-          this.#options.onLeaseResult?.(parsed.payload);
-          return;
-        }
-        if (parsed.type === 'text.draft.result') {
-          const payload = parsed.payload;
-          this.#options.onTextDraftResult?.({
-            accepted: payload.accepted,
-            draft_id: payload.draft_id,
-            node_id: payload.node_id,
-            field_path: payload.field_path,
-            ...(payload.reason === undefined ? {} : { reason: payload.reason }),
-          });
-        }
+        raw = JSON.parse(String(event.data));
       } catch {
-        this.#setStatus('error');
+        return;
+      }
+      // Frames this client does not understand are ignored, so a newer server stays compatible.
+      const parsed = ServerMessageSchema.safeParse(raw);
+      if (!parsed.success) return;
+      const message = parsed.data;
+      switch (message.type) {
+        case 'snapshot':
+          this.#snapshot = message.payload;
+          this.#options.onSnapshot?.(message.payload);
+          return;
+        case 'lease.result':
+          this.#options.onLeaseResult?.({
+            accepted: message.payload.accepted,
+            lease_id: message.payload.lease_id,
+            node_id: message.payload.node_id,
+            ...(message.payload.reason === undefined ? {} : { reason: message.payload.reason }),
+          });
+          return;
+        case 'text.draft.result':
+          this.#options.onTextDraftResult?.({
+            accepted: message.payload.accepted,
+            draft_id: message.payload.draft_id,
+            node_id: message.payload.node_id,
+            field_path: message.payload.field_path,
+            ...(message.payload.reason === undefined ? {} : { reason: message.payload.reason }),
+          });
+          return;
+        case 'comment.result':
+          this.#options.onCommentResult?.({
+            operation: message.payload.operation,
+            comment_id: message.payload.comment_id,
+            ...(message.payload.client_request_id === undefined
+              ? {}
+              : { client_request_id: message.payload.client_request_id }),
+          });
+          return;
+        case 'error':
+          this.#options.onError?.(message.payload);
+          return;
+        case 'text.draft.clear.result':
+          return;
       }
     });
-    socket.addEventListener('close', () => {
+    socket.addEventListener('close', (event) => {
       if (this.#socket !== socket) return;
       this.#socket = null;
       if (!this.#active) {
         this.#setStatus('closed');
+        return;
+      }
+      const code = closeCode(event);
+      if (code === COLLABORATION_CLOSE_CODES.POLICY_VIOLATION) {
+        // Refused identity or sustained abuse: reconnecting cannot help.
+        this.#active = false;
+        this.#stopReauthenticating();
+        this.#setStatus('error');
+        return;
+      }
+      if (
+        code === COLLABORATION_CLOSE_CODES.SESSION_EXPIRED &&
+        openedAtMs !== null &&
+        this.#now() - openedAtMs >= COLLABORATION_MIN_SESSION_MS_FOR_IMMEDIATE_RECONNECT
+      ) {
+        // The socket reached its lifetime. Ask Core for a fresh ticket now; Core re-checks access.
+        // Messages sent meanwhile wait for the new socket instead of being dropped.
+        this.#reauthenticating = true;
+        void this.#attempt();
         return;
       }
       this.#scheduleReconnect(true);
@@ -223,6 +304,7 @@ export class CollaborationClient {
     const maxAttempts = this.#options.maxReconnectAttempts ?? 6;
     if (!retryable || this.#failedAttempts > maxAttempts) {
       this.#active = false;
+      this.#stopReauthenticating();
       this.#setStatus('error');
       return;
     }
@@ -236,57 +318,92 @@ export class CollaborationClient {
     }, delay);
   }
 
-  #openSocket(): WebSocket | null {
+  #stopReauthenticating(): void {
+    this.#reauthenticating = false;
+    this.#pending = [];
+  }
+
+  #flushPending(socket: WebSocket): void {
+    const pending = this.#pending;
+    this.#stopReauthenticating();
+    const oldestAllowed = this.#now() - COLLABORATION_REAUTH_QUEUE_MAX_AGE_MS;
+    for (const entry of pending) {
+      if (entry.queuedAtMs >= oldestAllowed) this.#write(socket, entry.message);
+    }
+  }
+
+  #write(socket: WebSocket, message: ClientMessage): void {
+    socket.send(JSON.stringify(message));
+  }
+
+  /**
+   * Validates against the same limits the Worker enforces, then sends on the open socket or queues
+   * while re-authenticating. An over-limit message is reported through `onError` with the same typed
+   * error the Worker would send, and nothing is sent. Returns false when nothing was sent or queued.
+   */
+  #dispatch(message: ClientMessage): boolean {
+    const parsed = ClientMessageSchema.safeParse(message);
+    if (!parsed.success) {
+      this.#options.onError?.({
+        ...describeClientMessageIssues(parsed.error.issues),
+        request_type: message.type,
+      });
+      return false;
+    }
     const socket = this.#socket;
-    return socket !== null && socket.readyState === OPEN_READY_STATE ? socket : null;
+    if (socket !== null && socket.readyState === OPEN_READY_STATE) {
+      this.#write(socket, parsed.data);
+      return true;
+    }
+    if (this.#reauthenticating && this.#pending.length < COLLABORATION_REAUTH_QUEUE_MAX_MESSAGES) {
+      this.#pending.push({ message: parsed.data, queuedAtMs: this.#now() });
+      return true;
+    }
+    return false;
   }
 
-  requestSnapshot(): void {
-    const socket = this.#openSocket();
-    if (socket === null) return;
-    sendMessage(socket, { type: 'snapshot.request' });
+  requestSnapshot(): boolean {
+    return this.#dispatch({ type: 'snapshot.request' });
   }
 
-  upsertComment(input: UpsertCommentInput): void {
-    const socket = this.#openSocket();
-    if (socket === null) return;
-    sendMessage(socket, { type: 'comment.upsert', payload: input });
+  /** Creates a comment. The Worker assigns its id and reports it through `onCommentResult`. */
+  createComment(input: CreateCommentInput): boolean {
+    return this.#dispatch({ type: 'comment.create', payload: input });
   }
 
-  upsertTextDraft(input: UpsertTextDraftInput): void {
-    const socket = this.#openSocket();
-    if (socket === null) return;
-    sendMessage(socket, { type: 'text.draft.upsert', payload: input });
+  updateComment(input: UpdateCommentInput): boolean {
+    return this.#dispatch({ type: 'comment.update', payload: input });
   }
 
-  acquireLease(nodeId: string, ttlSeconds = DEFAULT_LEASE_TTL_SECONDS): void {
-    const socket = this.#openSocket();
-    const actor = this.#actor;
-    if (socket === null || actor === null) return;
-    sendMessage(socket, {
-      type: 'lease.acquire',
+  deleteComment(commentId: string, clientRequestId?: string): boolean {
+    return this.#dispatch({
+      type: 'comment.delete',
       payload: {
-        lease_id: leaseIdForActor(nodeId, actor.actor_id),
-        node_id: nodeId,
-        ttl_seconds: ttlSeconds,
+        comment_id: commentId,
+        ...(clientRequestId === undefined ? {} : { client_request_id: clientRequestId }),
       },
     });
   }
 
-  releaseLease(nodeId: string): void {
-    const socket = this.#openSocket();
-    const actor = this.#actor;
-    if (socket === null || actor === null) return;
-    sendMessage(socket, {
-      type: 'lease.release',
-      payload: { lease_id: leaseIdForActor(nodeId, actor.actor_id) },
+  upsertTextDraft(input: UpsertTextDraftInput): boolean {
+    return this.#dispatch({ type: 'text.draft.upsert', payload: input });
+  }
+
+  /** Leases a node to the ticket-bound actor. The Worker derives the lease id. */
+  acquireLease(nodeId: string, ttlSeconds = DEFAULT_LEASE_TTL_SECONDS): boolean {
+    return this.#dispatch({
+      type: 'lease.acquire',
+      payload: { node_id: nodeId, ttl_seconds: ttlSeconds },
     });
   }
 
-  clearCheckpointedDrafts(draftIds: readonly string[], revisionId: string): void {
-    const socket = this.#openSocket();
-    if (socket === null || draftIds.length === 0) return;
-    sendMessage(socket, {
+  releaseLease(nodeId: string): boolean {
+    return this.#dispatch({ type: 'lease.release', payload: { node_id: nodeId } });
+  }
+
+  clearCheckpointedDrafts(draftIds: readonly string[], revisionId: string): boolean {
+    if (draftIds.length === 0) return false;
+    return this.#dispatch({
       type: 'text.draft.clear',
       payload: { draft_ids: [...draftIds], revision_id: revisionId },
     });
