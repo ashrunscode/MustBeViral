@@ -63,6 +63,13 @@ scope:
     - .claude/skills/**
     - AGENTS.md
     - .prettierignore
+    # Scope amendment on explicit owner instruction, 2026-09-16: remove the unused SuperDesign CLI
+    # dependency and back the shared Dialog primitive with an accessible headless library. The
+    # toolchain pin record lives in governance/toolchain.yaml and the shared primitives live in
+    # packages/ui, neither of which this packet admitted. The amendment does not change this
+    # packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
+    - governance/toolchain.yaml
+    - packages/ui/**
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
