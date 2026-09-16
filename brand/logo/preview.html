@@ -1,0 +1,1219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Must Be Viral logo system</title>
+    <style>
+      :root {
+        --paper: #fafafa;
+        --card: #ffffff;
+        --ink-solid: #262626;
+        --line: rgba(0, 0, 0, 0.12);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --signal: #3182d4;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 32px 16px 64px;
+        background: var(--paper);
+        color: var(--ink-solid);
+        font:
+          400 15px/1.5 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Helvetica,
+          Arial,
+          sans-serif;
+      }
+      .page {
+        max-width: 1040px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        font-weight: 400;
+        margin: 0 0 8px;
+      }
+      h2 {
+        font-size: 21px;
+        line-height: 1.25;
+        letter-spacing: -0.015em;
+        font-weight: 400;
+        margin: 0 0 4px;
+      }
+      p.lede {
+        margin: 0 0 32px;
+        color: var(--ink-muted);
+        max-width: 70ch;
+      }
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 24px;
+      }
+      .panel.light {
+        background: var(--card);
+        color: var(--ink-solid);
+      }
+      .panel.dark {
+        background: var(--ink-solid);
+        color: var(--paper);
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+      .panel.dark .cap,
+      .panel.dark .sub {
+        color: rgba(250, 250, 250, 0.62);
+      }
+      .sub {
+        color: var(--ink-muted);
+        font-size: 13px;
+        margin: 0 0 20px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        padding: 20px 0;
+        border-top: 1px solid var(--line);
+      }
+      .panel.dark .row {
+        border-top-color: rgba(255, 255, 255, 0.18);
+      }
+      .row:first-of-type {
+        border-top: 0;
+        padding-top: 4px;
+      }
+      .item {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .cap {
+        font:
+          500 11px/1.45 ui-monospace,
+          SFMono-Regular,
+          'Cascadia Mono',
+          Menlo,
+          Consolas,
+          monospace;
+        letter-spacing: 0.04em;
+        color: var(--ink-muted);
+      }
+      .s svg {
+        display: block;
+        height: auto;
+      }
+      .ladder {
+        display: flex;
+        align-items: flex-end;
+        gap: 20px;
+      }
+      .w320 svg {
+        width: 320px;
+      }
+      .w240 svg {
+        width: 240px;
+      }
+      .w200 svg {
+        width: 200px;
+      }
+      .w175 svg {
+        width: 175px;
+      }
+      .w150 svg {
+        width: 150px;
+      }
+      .w120 svg {
+        width: 120px;
+      }
+      .h96 svg {
+        height: 96px;
+        width: auto;
+      }
+      .h48 svg {
+        height: 48px;
+        width: auto;
+      }
+      .h24 svg {
+        height: 24px;
+        width: auto;
+      }
+      .h16 svg {
+        height: 16px;
+        width: auto;
+      }
+      .pairs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .pair {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .pair-ink {
+        background: var(--paper);
+        color: var(--ink-solid);
+      }
+      .pair-rev {
+        background: var(--ink-solid);
+        color: var(--paper);
+      }
+      .pair-rev .cap {
+        color: rgba(250, 250, 250, 0.62);
+      }
+      .note {
+        font-size: 13px;
+        color: var(--ink-muted);
+        max-width: 70ch;
+      }
+      code {
+        font:
+          400 13px/1.45 ui-monospace,
+          SFMono-Regular,
+          'Cascadia Mono',
+          Menlo,
+          Consolas,
+          monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Must Be Viral logo system</h1>
+      <p class="lede">
+        Every file in <code>brand/logo/</code>, inlined, at real sizes. Ink is
+        <code>--ink-strong</code> composited over <code>--paper</code> (#262626); the accent is
+        <code>--signal</code> #3182D4. This page loads no font and no external stylesheet.
+      </p>
+
+      <section class="panel light">
+        <h2>Ink on paper</h2>
+        <p class="sub"><code>currentColor</code> resolves to #262626.</p>
+
+        <div class="row">
+          <div class="item">
+            <span class="cap">wordmark.svg &middot; 240&thinsp;px</span>
+            <div class="s w240">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 147.1 20.4" role="img">
+                <title>Must Be Viral</title>
+                <g fill="currentColor">
+                  <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                  <path transform="translate(99.5 0)" d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z" />
+                  <circle cx="115.2" cy="2.3" r="1.3" />
+                </g>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  stroke-miterlimit="8"
+                >
+                  <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                  <path
+                    transform="translate(38.3 0)"
+                    d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                  />
+                  <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                  <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                  <path transform="translate(66.7 0)" d="M0 0V20" />
+                  <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                  <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                  <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                  <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                  <path transform="translate(115.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                  <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                  <path transform="translate(128.8 0)" d="M12 6V20" />
+                  <path transform="translate(145.8 0)" d="M0 0V20" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">wordmark.svg &middot; 120&thinsp;px</span>
+            <div class="s w120">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 147.1 20.4" role="img">
+                <title>Must Be Viral</title>
+                <g fill="currentColor">
+                  <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                  <path transform="translate(99.5 0)" d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z" />
+                  <circle cx="115.2" cy="2.3" r="1.3" />
+                </g>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  stroke-miterlimit="8"
+                >
+                  <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                  <path
+                    transform="translate(38.3 0)"
+                    d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                  />
+                  <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                  <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                  <path transform="translate(66.7 0)" d="M0 0V20" />
+                  <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                  <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                  <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                  <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                  <path transform="translate(115.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                  <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                  <path transform="translate(128.8 0)" d="M12 6V20" />
+                  <path transform="translate(145.8 0)" d="M0 0V20" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">lockup-horizontal.svg &middot; 320&thinsp;px</span>
+            <div class="s w320">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.4 75.4" role="img">
+                <title>Must Be Viral horizontal lockup</title>
+                <g fill="currentColor" transform="translate(18.2 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(55.9 25.1)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">lockup-horizontal.svg &middot; 175&thinsp;px (minimum)</span>
+            <div class="s w175">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.4 75.4" role="img">
+                <title>Must Be Viral horizontal lockup</title>
+                <g fill="currentColor" transform="translate(18.2 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(55.9 25.1)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">lockup-stacked.svg &middot; 200&thinsp;px</span>
+            <div class="s w200">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193.9 107.4" role="img">
+                <title>Must Be Viral stacked lockup</title>
+                <g fill="currentColor" transform="translate(81.35 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(23.4 63.7)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">lockup-stacked.svg &middot; 150&thinsp;px (minimum)</span>
+            <div class="s w150">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193.9 107.4" role="img">
+                <title>Must Be Viral stacked lockup</title>
+                <g fill="currentColor" transform="translate(81.35 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(23.4 63.7)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">mark.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark</title>
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z"
+                />
+                <path fill="#3182D4" d="M9 6L16 10L9 14Z" />
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">mark-mono.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark, one colour</title>
+                <g fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">mark-reverse.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img">
+                <title>Must Be Viral mark, knocked out of ink</title>
+                <rect width="32" height="32" fill="#262626" />
+                <g fill="#FAFAFA" transform="translate(4 4)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">favicon.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral favicon</title>
+                <g fill="currentColor">
+                  <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                  <path d="M9 6L16.5 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">mark-mono.svg at 96 / 48 / 24&thinsp;px</span>
+            <div class="ladder">
+              <div class="s h96">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral mark, one colour</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                    <path d="M9 6L16 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h48">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral mark, one colour</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                    <path d="M9 6L16 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h24">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral mark, one colour</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                    <path d="M9 6L16 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">favicon.svg at 96 / 48 / 24 / 16&thinsp;px</span>
+            <div class="ladder">
+              <div class="s h96">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h48">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h24">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h16">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel dark">
+        <h2>Paper on ink</h2>
+        <p class="sub">
+          <code>currentColor</code> resolves to #FAFAFA. <code>mark-reverse.svg</code> carries its
+          own ink plate, so it looks the same on both panels by design.
+        </p>
+
+        <div class="row">
+          <div class="item">
+            <span class="cap">wordmark.svg &middot; 240&thinsp;px</span>
+            <div class="s w240">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 147.1 20.4" role="img">
+                <title>Must Be Viral</title>
+                <g fill="currentColor">
+                  <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                  <path transform="translate(99.5 0)" d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z" />
+                  <circle cx="115.2" cy="2.3" r="1.3" />
+                </g>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  stroke-miterlimit="8"
+                >
+                  <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                  <path
+                    transform="translate(38.3 0)"
+                    d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                  />
+                  <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                  <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                  <path transform="translate(66.7 0)" d="M0 0V20" />
+                  <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                  <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                  <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                  <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                  <path transform="translate(115.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                  <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                  <path transform="translate(128.8 0)" d="M12 6V20" />
+                  <path transform="translate(145.8 0)" d="M0 0V20" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">wordmark.svg &middot; 120&thinsp;px</span>
+            <div class="s w120">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 147.1 20.4" role="img">
+                <title>Must Be Viral</title>
+                <g fill="currentColor">
+                  <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                  <path transform="translate(99.5 0)" d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z" />
+                  <circle cx="115.2" cy="2.3" r="1.3" />
+                </g>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  stroke-miterlimit="8"
+                >
+                  <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                  <path
+                    transform="translate(38.3 0)"
+                    d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                  />
+                  <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                  <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                  <path transform="translate(66.7 0)" d="M0 0V20" />
+                  <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                  <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                  <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                  <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                  <path transform="translate(115.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 6V20" />
+                  <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                  <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                  <path transform="translate(128.8 0)" d="M12 6V20" />
+                  <path transform="translate(145.8 0)" d="M0 0V20" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">lockup-horizontal.svg &middot; 320&thinsp;px</span>
+            <div class="s w320">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.4 75.4" role="img">
+                <title>Must Be Viral horizontal lockup</title>
+                <g fill="currentColor" transform="translate(18.2 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(55.9 25.1)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">lockup-horizontal.svg &middot; 175&thinsp;px (minimum)</span>
+            <div class="s w175">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.4 75.4" role="img">
+                <title>Must Be Viral horizontal lockup</title>
+                <g fill="currentColor" transform="translate(18.2 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(55.9 25.1)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">lockup-stacked.svg &middot; 200&thinsp;px</span>
+            <div class="s w200">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193.9 107.4" role="img">
+                <title>Must Be Viral stacked lockup</title>
+                <g fill="currentColor" transform="translate(81.35 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(23.4 63.7)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">lockup-stacked.svg &middot; 150&thinsp;px (minimum)</span>
+            <div class="s w150">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193.9 107.4" role="img">
+                <title>Must Be Viral stacked lockup</title>
+                <g fill="currentColor" transform="translate(81.35 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(23.4 63.7)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">mark.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark</title>
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z"
+                />
+                <path fill="#3182D4" d="M9 6L16 10L9 14Z" />
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">mark-mono.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark, one colour</title>
+                <g fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">mark-reverse.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img">
+                <title>Must Be Viral mark, knocked out of ink</title>
+                <rect width="32" height="32" fill="#262626" />
+                <g fill="#FAFAFA" transform="translate(4 4)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">favicon.svg &middot; 96&thinsp;px</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral favicon</title>
+                <g fill="currentColor">
+                  <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                  <path d="M9 6L16.5 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <span class="cap">mark-mono.svg at 96 / 48 / 24&thinsp;px</span>
+            <div class="ladder">
+              <div class="s h96">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral mark, one colour</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                    <path d="M9 6L16 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h48">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral mark, one colour</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                    <path d="M9 6L16 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h24">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral mark, one colour</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                    <path d="M9 6L16 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">favicon.svg at 96 / 48 / 24 / 16&thinsp;px</span>
+            <div class="ladder">
+              <div class="s h96">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h48">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h24">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+              <div class="s h16">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                  <title>Must Be Viral favicon</title>
+                  <g fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 1.5H21V18.5H10L3 23ZM5.5 4V16H18.5V4Z" />
+                    <path d="M9 6L16.5 10L9 14Z" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel light">
+        <h2>Approved colour pairs</h2>
+        <p class="sub">Three, and only three.</p>
+        <ul class="pairs">
+          <li class="pair pair-ink">
+            <span class="cap">ink on paper</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark, one colour</title>
+                <g fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </li>
+          <li class="pair pair-rev">
+            <span class="cap">paper on ink</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark, one colour</title>
+                <g fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+              </svg>
+            </div>
+          </li>
+          <li class="pair pair-ink">
+            <span class="cap">accent on the play shape only</span>
+            <div class="s h96">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+                <title>Must Be Viral mark</title>
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z"
+                />
+                <path fill="#3182D4" d="M9 6L16 10L9 14Z" />
+              </svg>
+            </div>
+          </li>
+        </ul>
+        <p class="note" style="margin-top: 16px">
+          In product UI use <code>mark-mono.svg</code>, not <code>mark.svg</code>.
+          <code>--signal</code> is reserved for the one primary action on screen, and a blue logo
+          would compete with it.
+        </p>
+      </section>
+
+      <section class="panel light">
+        <h2>Clear space</h2>
+        <p class="sub">
+          Both lockups bake it in. The dashed rule marks the artwork bounds inside the file;
+          everything outside it, up to the file edge, is clear space and ships as part of the asset.
+        </p>
+        <div class="row" style="border-top: 0; padding-top: 4px">
+          <div class="item">
+            <span class="cap">lockup-horizontal.svg, artwork bounds shown</span>
+            <div class="s w320" style="outline: 1px solid var(--line)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.4 75.4" role="img">
+                <title>Must Be Viral horizontal lockup</title>
+                <g fill="currentColor" transform="translate(18.2 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(55.9 25.1)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+                <rect
+                  x="23.4"
+                  y="23.4"
+                  width="179.6"
+                  height="28.6"
+                  fill="none"
+                  stroke="#3182D4"
+                  stroke-width="0.6"
+                  stroke-dasharray="2 2"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cap">lockup-stacked.svg, artwork bounds shown</span>
+            <div class="s w200" style="outline: 1px solid var(--line)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193.9 107.4" role="img">
+                <title>Must Be Viral stacked lockup</title>
+                <g fill="currentColor" transform="translate(81.35 22.1) scale(1.3)">
+                  <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z" />
+                  <path d="M9 6L16 10L9 14Z" />
+                </g>
+                <g transform="translate(23.4 63.7)">
+                  <g fill="currentColor">
+                    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z" />
+                    <path
+                      transform="translate(99.5 0)"
+                      d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"
+                    />
+                    <circle cx="115.2" cy="2.3" r="1.3" />
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.6"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="8"
+                  >
+                    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6" />
+                    <path
+                      transform="translate(38.3 0)"
+                      d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"
+                    />
+                    <path transform="translate(51.3 0)" d="M2.6 2V20" />
+                    <path transform="translate(51.3 0)" d="M0 6H6.8" />
+                    <path transform="translate(66.7 0)" d="M0 0V20" />
+                    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0" />
+                    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0" />
+                    <path transform="translate(80.2 0)" d="M-1.3 13H13.3" />
+                    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24" />
+                    <path transform="translate(115.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 6V20" />
+                    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6" />
+                    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05" />
+                    <path transform="translate(128.8 0)" d="M12 6V20" />
+                    <path transform="translate(145.8 0)" d="M0 0V20" />
+                  </g>
+                </g>
+                <rect
+                  x="23.4"
+                  y="23.4"
+                  width="147.1"
+                  height="60.6"
+                  fill="none"
+                  stroke="#3182D4"
+                  stroke-width="0.6"
+                  stroke-dasharray="2 2"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

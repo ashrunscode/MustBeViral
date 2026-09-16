@@ -52,6 +52,17 @@ scope:
     - PROJECT_STATE.yaml
     - llms.txt
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    # Scope amendment under the brand-context task authority, 2026-09-15 (WP-P3-009 lead). No owner
+    # decision authorises this amendment; the authority is the lead's task, and it is recorded here
+    # as such rather than as an owner decision. These five entries admit the brand/ folder, the
+    # repo-local agent skill copies, the agent contract file and the formatter ignore list. The
+    # amendment does not change this packet's objective, steps, acceptance criteria, quality gates
+    # or evidence requirements.
+    - brand/**
+    - .agents/skills/**
+    - .claude/skills/**
+    - AGENTS.md
+    - .prettierignore
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
