@@ -225,7 +225,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
           ))}
         </fieldset>
         {errorInDialog ? errorAlert : null}
-        <div className="access-panel__actions">
+        <div className="access-panel__actions access-panel__actions--sticky">
           <Button
             type="button"
             disabled={busy || selectedScopes.length === 0}

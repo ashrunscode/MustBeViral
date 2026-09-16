@@ -12,12 +12,15 @@
   overflow-y: auto;
   display: grid;
   place-items: center;
-  padding: 28px 40px;
+  padding: 28px 0;
   background: var(--paper-2);
 }
 
+/* The 40px gutter is card margin, not stage padding: 80px of padding cannot shrink, so on a 375px
+   screen the stage overflowed its 55px track and the side panel covered the acknowledgment. */
 .quoteCard {
-  width: min(720px, 100%);
+  width: min(720px, calc(100% - 80px));
+  margin-inline: 40px;
   padding: 28px 32px 24px;
 }
 
