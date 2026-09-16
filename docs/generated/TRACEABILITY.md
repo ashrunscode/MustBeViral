@@ -88,3 +88,7 @@ Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hou
 | `generated.environment_variables` | `generated-environment` | docs/generated/ENVIRONMENT.md |
 | `generated.model_catalog` | `generated-model-catalog` | docs/generated/MODEL_CATALOG.md |
 | `generated.traceability` | `generated-traceability` | docs/generated/TRACEABILITY.md |
+| `gtm.outbound_target_lists` | `gtm-outbound-target-lists` | docs/gtm/outbound-target-lists.md |
+| `gtm.crm_object_mapping` | `gtm-hubspot-mapping` | docs/gtm/hubspot-mapping.md |
+| `gtm.consent_and_suppression` | `gtm-consent-and-suppression` | docs/gtm/consent-and-suppression.md |
+| `gtm.legal_input_pack` | `gtm-legal-input-pack` | docs/gtm/legal-input-pack.md |
