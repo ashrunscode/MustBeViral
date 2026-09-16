@@ -4,13 +4,14 @@
 -- empty or whitespace-only event id, event type or payload hash was recorded, so one blank event id
 -- would mark every later blank-id event a duplicate. p_request_id was never read, so a null or blank
 -- request id was accepted too. Null event id, event type, livemode or payload hash surfaced as raw
--- not-null violations (SQLSTATE 23502). The dropped four-argument overload carried these guards, but
--- its valid path never worked, so no working caller had them. This forward migration adds them to
--- the only overload, before the claim, with the same SQLSTATE 22023 and "<name> is required"
--- messages as the Stripe settlement RPCs.
+-- not-null violations (SQLSTATE 23502). The dropped four-argument overload checked only the event
+-- id, event type and payload hash, and its valid path never worked, so no working caller had any of
+-- these guards. This forward migration adds all five to the only overload, before the claim, with
+-- the same SQLSTATE 22023 and "<name> is required" messages as the Stripe settlement RPCs.
 --
--- CREATE OR REPLACE keeps the function's OID, owner and grants. The signature, SECURITY DEFINER,
--- pinned search_path, insert and {claim} contract are unchanged; only the guards are new.
+-- CREATE OR REPLACE keeps the function's OID, owner and grants but resets its settings, so the
+-- definition restates set search_path = pg_catalog, the pin from 20260916155000. The signature,
+-- SECURITY DEFINER, insert and {claim} contract are unchanged; only the guards are new.
 begin;
 
 create or replace function public.record_stripe_webhook_event(
