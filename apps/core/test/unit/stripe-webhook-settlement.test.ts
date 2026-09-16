@@ -4,6 +4,8 @@ import {
   createStripeWebhookSettlementHandler,
   createStripeWebhookSettlementPort,
   StripeWebhookSettlementForbiddenError,
+  StripeWebhookSettlementInvalidEventError,
+  StripeWebhookSettlementUnavailableError,
 } from '../../src/composition/stripe-webhook-settlement';
 
 describe('stripe webhook settlement port', () => {
@@ -63,6 +65,231 @@ describe('stripe webhook settlement port', () => {
         requestId: 'req-forbidden',
       }),
     ).rejects.toBeInstanceOf(StripeWebhookSettlementForbiddenError);
+  });
+});
+
+// apply_stripe_subscription_update orders events by lifecycle stage and the Stripe event `created`
+// second, so every subscription settlement must send both.
+describe('stripe webhook subscription settlement ordering', () => {
+  const bindings = {
+    SUPABASE_URL: 'https://example.supabase.co',
+    SUPABASE_SECRET_KEY: 'sb_secret_test',
+  } as never;
+
+  function subscriptionRpcMock(response: Readonly<Record<string, unknown>>) {
+    return vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      void init;
+      const url = String(input);
+      if (url.endsWith('/rpc/apply_stripe_subscription_update')) {
+        return Response.json(response);
+      }
+      throw new Error(`unexpected fetch: ${url}`);
+    });
+  }
+
+  function sentBody(fetchMock: ReturnType<typeof subscriptionRpcMock>): unknown {
+    const init = fetchMock.mock.calls[0]?.[1];
+    return JSON.parse(String(init?.body));
+  }
+
+  it('sends the event type and created time to the subscription RPC', async () => {
+    const fetchMock = subscriptionRpcMock({
+      workspace_id: '50000000-0000-4000-8000-000000000001',
+      replayed: false,
+      stale: false,
+      subscription_status: 'active',
+      setup_fee_paid: false,
+    });
+    const port = createStripeWebhookSettlementPort(bindings, fetchMock);
+
+    await expect(
+      port.applySubscriptionUpdate({
+        workspaceId: null,
+        stripeEventId: 'evt_sub_updated_1',
+        stripeEventType: 'customer.subscription.updated',
+        stripeEventCreated: 1_789_560_000,
+        stripeCustomerId: 'cus_sub_1',
+        stripeSubscriptionId: 'sub_1',
+        subscriptionStatus: 'active',
+        setupFeePaid: false,
+        requestId: 'req-sub-updated-1',
+      }),
+    ).resolves.toEqual({
+      workspaceId: '50000000-0000-4000-8000-000000000001',
+      replayed: false,
+      stale: false,
+      subscriptionStatus: 'active',
+      setupFeePaid: false,
+    });
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(sentBody(fetchMock)).toEqual({
+      p_workspace_id: null,
+      p_stripe_event_id: 'evt_sub_updated_1',
+      p_stripe_customer_id: 'cus_sub_1',
+      p_stripe_subscription_id: 'sub_1',
+      p_subscription_status: 'active',
+      p_setup_fee_paid: false,
+      p_request_id: 'req-sub-updated-1',
+      p_stripe_event_type: 'customer.subscription.updated',
+      p_stripe_event_created: 1_789_560_000,
+    });
+  });
+
+  // Only the ordered overload returns `stale`; the transitional seven-argument function does not.
+  it('rejects a subscription response without the stale flag', async () => {
+    const fetchMock = subscriptionRpcMock({
+      workspace_id: '50000000-0000-4000-8000-000000000001',
+      replayed: false,
+      subscription_status: 'active',
+      setup_fee_paid: false,
+    });
+    const port = createStripeWebhookSettlementPort(bindings, fetchMock);
+
+    await expect(
+      port.applySubscriptionUpdate({
+        workspaceId: null,
+        stripeEventId: 'evt_sub_unordered_shape',
+        stripeEventType: 'customer.subscription.updated',
+        stripeEventCreated: 1_789_560_000,
+        stripeCustomerId: 'cus_sub_1',
+        stripeSubscriptionId: 'sub_1',
+        subscriptionStatus: 'active',
+        setupFeePaid: false,
+        requestId: 'req-sub-unordered-shape',
+      }),
+    ).rejects.toBeInstanceOf(StripeWebhookSettlementUnavailableError);
+  });
+
+  it.each([
+    ['customer.subscription.created', 'incomplete', 'past_due'],
+    ['customer.subscription.updated', 'active', 'active'],
+    ['customer.subscription.deleted', 'active', 'canceled'],
+  ] as const)(
+    'settles %s with the payload created time',
+    async (eventType, stripeStatus, expectedStatus) => {
+      const fetchMock = subscriptionRpcMock({
+        workspace_id: '50000000-0000-4000-8000-000000000001',
+        replayed: false,
+        stale: false,
+        subscription_status: expectedStatus,
+        setup_fee_paid: false,
+      });
+      const handler = createStripeWebhookSettlementHandler(bindings, fetchMock);
+
+      const result = await handler({
+        verified: {
+          eventId: 'evt_sub_ordering',
+          eventType,
+          livemode: false,
+          payload: {
+            id: 'evt_sub_ordering',
+            type: eventType,
+            created: 1_789_560_042,
+            data: {
+              object: {
+                id: 'sub_ordering',
+                customer: 'cus_ordering',
+                status: stripeStatus,
+                metadata: { workspace_id: '50000000-0000-4000-8000-000000000001' },
+              },
+            },
+          },
+        },
+        requestId: 'req-sub-ordering',
+      });
+
+      expect(result.persisted).toBe(true);
+      expect(result.settlement.kind).toBe('subscription_update');
+      expect(sentBody(fetchMock)).toMatchObject({
+        p_workspace_id: '50000000-0000-4000-8000-000000000001',
+        p_stripe_event_id: 'evt_sub_ordering',
+        p_stripe_subscription_id: 'sub_ordering',
+        p_subscription_status: expectedStatus,
+        p_stripe_event_type: eventType,
+        p_stripe_event_created: 1_789_560_042,
+      });
+    },
+  );
+
+  // A stale event is still settled: the database audits it and leaves the newer state in place, so
+  // Core acknowledges it like any other settlement.
+  it('accepts a stale settlement reporting the newer subscription status', async () => {
+    const fetchMock = subscriptionRpcMock({
+      workspace_id: '50000000-0000-4000-8000-000000000001',
+      replayed: false,
+      stale: true,
+      subscription_status: 'active',
+      setup_fee_paid: false,
+    });
+    const handler = createStripeWebhookSettlementHandler(bindings, fetchMock);
+
+    const result = await handler({
+      verified: {
+        eventId: 'evt_sub_late_created',
+        eventType: 'customer.subscription.created',
+        livemode: false,
+        payload: {
+          created: 1_789_560_000,
+          data: { object: { id: 'sub_late', customer: 'cus_late', status: 'incomplete' } },
+        },
+      },
+      requestId: 'req-sub-late-created',
+    });
+
+    expect(result.persisted).toBe(true);
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
+  it.each([
+    ['missing', undefined],
+    ['a string', '1789560000'],
+    ['zero', 0],
+    ['negative', -1],
+    ['fractional', 1_789_560_000.5],
+    ['beyond safe integers', Number.MAX_SAFE_INTEGER + 1],
+  ] as const)(
+    'rejects a subscription event whose created time is %s without calling the RPC',
+    async (_label, created) => {
+      const fetchMock = subscriptionRpcMock({});
+      const handler = createStripeWebhookSettlementHandler(bindings, fetchMock);
+
+      await expect(
+        handler({
+          verified: {
+            eventId: 'evt_sub_bad_created',
+            eventType: 'customer.subscription.updated',
+            livemode: false,
+            payload: {
+              ...(created === undefined ? {} : { created }),
+              data: { object: { id: 'sub_bad', customer: 'cus_bad', status: 'active' } },
+            },
+          },
+          requestId: 'req-sub-bad-created',
+        }),
+      ).rejects.toBeInstanceOf(StripeWebhookSettlementInvalidEventError);
+      expect(fetchMock).not.toHaveBeenCalled();
+    },
+  );
+
+  it('rejects a subscription event without a subscription id without calling the RPC', async () => {
+    const fetchMock = subscriptionRpcMock({});
+    const handler = createStripeWebhookSettlementHandler(bindings, fetchMock);
+
+    await expect(
+      handler({
+        verified: {
+          eventId: 'evt_sub_no_id',
+          eventType: 'customer.subscription.updated',
+          livemode: false,
+          payload: {
+            created: 1_789_560_000,
+            data: { object: { customer: 'cus_no_id', status: 'active' } },
+          },
+        },
+        requestId: 'req-sub-no-id',
+      }),
+    ).rejects.toBeInstanceOf(StripeWebhookSettlementInvalidEventError);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
 

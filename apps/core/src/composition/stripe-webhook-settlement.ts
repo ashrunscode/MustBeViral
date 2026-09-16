@@ -3,6 +3,7 @@ import {
   extractStripeWorkspaceId,
   settleStripeWebhookEvent,
   type StripeSettlementPlan,
+  type StripeSubscriptionUpdatePlan,
   type VerifiedStripeWebhook,
 } from '@mustbeviral/billing';
 
@@ -43,6 +44,10 @@ export class StripeWebhookSettlementForbiddenError extends Error {
   override readonly name = 'StripeWebhookSettlementForbiddenError';
 }
 
+export class StripeWebhookSettlementInvalidEventError extends Error {
+  override readonly name = 'StripeWebhookSettlementInvalidEventError';
+}
+
 export interface StripeWalletCreditPersistenceResult {
   readonly workspaceId: string;
   readonly transactionId: string;
@@ -53,6 +58,8 @@ export interface StripeWalletCreditPersistenceResult {
 export interface StripeSubscriptionPersistenceResult {
   readonly workspaceId: string;
   readonly replayed: boolean;
+  /** An older event than the one that last set the subscription state; audited, state unchanged. */
+  readonly stale: boolean;
   readonly subscriptionStatus: string;
   readonly setupFeePaid: boolean;
 }
@@ -74,9 +81,11 @@ function isWalletCreditResult(value: unknown): value is Readonly<{
   );
 }
 
+// `stale` is returned only by the ordered overload, so requiring it also proves which one answered.
 function isSubscriptionUpdateResult(value: unknown): value is Readonly<{
   workspace_id: string;
   replayed: boolean;
+  stale: boolean;
   subscription_status: string;
   setup_fee_paid: boolean;
 }> {
@@ -85,9 +94,37 @@ function isSubscriptionUpdateResult(value: unknown): value is Readonly<{
   return (
     typeof record.workspace_id === 'string' &&
     typeof record.replayed === 'boolean' &&
+    typeof record.stale === 'boolean' &&
     typeof record.subscription_status === 'string' &&
     typeof record.setup_fee_paid === 'boolean'
   );
+}
+
+/**
+ * Reads the Stripe event `created` time, Unix seconds. apply_stripe_subscription_update uses it
+ * to skip an event older than the one that last set the subscription state.
+ */
+function readStripeEventCreated(payload: unknown): number {
+  const created =
+    typeof payload === 'object' && payload !== null && !Array.isArray(payload)
+      ? (payload as Readonly<Record<string, unknown>>).created
+      : undefined;
+  if (typeof created !== 'number' || !Number.isSafeInteger(created) || created <= 0) {
+    throw new StripeWebhookSettlementInvalidEventError(
+      'Stripe subscription event has no valid created time.',
+    );
+  }
+  return created;
+}
+
+/** apply_stripe_subscription_update orders events per subscription, so it needs the id. */
+function requireStripeSubscriptionId(stripeSubscriptionId: string | null): string {
+  if (stripeSubscriptionId === null) {
+    throw new StripeWebhookSettlementInvalidEventError(
+      'Stripe subscription event has no subscription id.',
+    );
+  }
+  return stripeSubscriptionId;
 }
 
 export function createStripeWebhookSettlementPort(
@@ -109,8 +146,11 @@ export function createStripeWebhookSettlementPort(
     input: Readonly<{
       workspaceId: string | null;
       stripeEventId: string;
+      stripeEventType: StripeSubscriptionUpdatePlan['eventType'];
+      /** The Stripe event `created` time, Unix seconds. */
+      stripeEventCreated: number;
       stripeCustomerId: string | null;
-      stripeSubscriptionId: string | null;
+      stripeSubscriptionId: string;
       subscriptionStatus: string;
       setupFeePaid: boolean;
       requestId: string;
@@ -210,6 +250,8 @@ export function createStripeWebhookSettlementPort(
         p_subscription_status: input.subscriptionStatus,
         p_setup_fee_paid: input.setupFeePaid,
         p_request_id: input.requestId,
+        p_stripe_event_type: input.stripeEventType,
+        p_stripe_event_created: input.stripeEventCreated,
       });
       if (!isSubscriptionUpdateResult(body)) {
         throw new StripeWebhookSettlementUnavailableError(
@@ -219,6 +261,7 @@ export function createStripeWebhookSettlementPort(
       return Object.freeze({
         workspaceId: body.workspace_id,
         replayed: body.replayed,
+        stale: body.stale,
         subscriptionStatus: body.subscription_status,
         setupFeePaid: body.setup_fee_paid,
       });
@@ -271,8 +314,10 @@ export function createStripeWebhookSettlementHandler(
       await persistence.applySubscriptionUpdate({
         workspaceId,
         stripeEventId: verified.eventId,
+        stripeEventType: settlement.eventType,
+        stripeEventCreated: readStripeEventCreated(verified.payload),
         stripeCustomerId,
-        stripeSubscriptionId: settlement.stripeSubscriptionId,
+        stripeSubscriptionId: requireStripeSubscriptionId(settlement.stripeSubscriptionId),
         subscriptionStatus: settlement.subscriptionStatus,
         setupFeePaid: settlement.setupFeePaid,
         requestId,
