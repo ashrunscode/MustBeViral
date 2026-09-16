@@ -451,3 +451,43 @@ documents:
     review_triggers: [authority_changed, acceptance_changed, implementation_changed]
     supersedes: []
     generator: pnpm docs:generate
+
+  # Go-to-market operational packs, registered under the brand-context task authority, 2026-09-15
+  # (WP-P3-009 lead). No owner decision authorises this registration; the authority is the lead's
+  # task. Registered here because every file under docs/ must be registered; each one carries only
+  # doc_id in its own frontmatter.
+  - id: gtm-outbound-target-lists
+    path: docs/gtm/outbound-target-lists.md
+    kind: operations
+    status: draft
+    owner: gtm
+    authority_topics: [gtm.outbound_target_lists]
+    review_triggers: [persona_changed, contact_data_provider_authorized, pricing_changed]
+    supersedes: []
+
+  - id: gtm-hubspot-mapping
+    path: docs/gtm/hubspot-mapping.md
+    kind: operations
+    status: draft
+    owner: gtm
+    authority_topics: [gtm.crm_object_mapping]
+    review_triggers: [crm_portal_decided, pipeline_changed, pricing_changed]
+    supersedes: []
+
+  - id: gtm-consent-and-suppression
+    path: docs/gtm/consent-and-suppression.md
+    kind: operations
+    status: draft
+    owner: gtm
+    authority_topics: [gtm.consent_and_suppression]
+    review_triggers: [consent_store_implemented, channel_added, capture_surface_changed]
+    supersedes: []
+
+  - id: gtm-legal-input-pack
+    path: docs/gtm/legal-input-pack.md
+    kind: operations
+    status: draft
+    owner: gtm
+    authority_topics: [gtm.legal_input_pack]
+    review_triggers: [processor_changed, legal_review_completed, disclosure_surface_added]
+    supersedes: []

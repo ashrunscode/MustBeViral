@@ -17,3 +17,8 @@ llms.txt
 # Verbatim model output captured as evaluation evidence. Reformatting would rewrite the
 # artifact being judged, so these are recorded exactly as the provider returned them.
 governance/evidence/WP-P0-001/openrouter-blind-eval/
+# Vendored upstream agent skills, copied byte-for-byte at the pinned revision recorded in each
+# provenance.md. Reformatting would make the copy no longer verbatim and break refresh diffs.
+.agents/skills/supabase-postgres-best-practices/
+.agents/skills/durable-objects/
+.agents/skills/resend/

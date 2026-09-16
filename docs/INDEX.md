@@ -46,3 +46,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `generated-environment` | [generated/ENVIRONMENT.md](./generated/ENVIRONMENT.md) | generated | generated | developer-experience |
 | `generated-model-catalog` | [generated/MODEL_CATALOG.md](./generated/MODEL_CATALOG.md) | generated | generated | execution |
 | `generated-traceability` | [generated/TRACEABILITY.md](./generated/TRACEABILITY.md) | generated | generated | quality |
+| `gtm-outbound-target-lists` | [gtm/outbound-target-lists.md](./gtm/outbound-target-lists.md) | operations | draft | gtm |
+| `gtm-hubspot-mapping` | [gtm/hubspot-mapping.md](./gtm/hubspot-mapping.md) | operations | draft | gtm |
+| `gtm-consent-and-suppression` | [gtm/consent-and-suppression.md](./gtm/consent-and-suppression.md) | operations | draft | gtm |
+| `gtm-legal-input-pack` | [gtm/legal-input-pack.md](./gtm/legal-input-pack.md) | operations | draft | gtm |
