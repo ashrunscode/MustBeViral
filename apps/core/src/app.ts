@@ -7,6 +7,8 @@ import { requestIdMiddleware } from './http/request-id';
 import { safeError } from './http/responses';
 import { healthRoute } from './routes/health';
 import { createCoreObservability } from './composition/core-observability';
+import { StripeWebhookDedupRejectedError } from './composition/stripe-webhook-dedup';
+import { StripeWebhookSettlementRpcRejectedError } from './composition/stripe-webhook-settlement';
 import { createMcpRoute } from './routes/mcp';
 import {
   createStripeWebhookRoute,
@@ -28,6 +30,22 @@ export const defaultV1Dependencies: V1Dependencies = {
   jwt: supabaseJwtVerifier,
   workspaces: { resolve: async () => null },
 };
+
+// Only values the error class has already validated: never a message, details or payload value.
+function safeErrorLogFields(error: Error): Readonly<Record<string, string | number>> {
+  if (error instanceof StripeWebhookSettlementRpcRejectedError) {
+    return {
+      error_rpc: error.rpc,
+      error_status: error.status,
+      error_code: error.code,
+      ...(error.reason === undefined ? {} : { error_reason: error.reason }),
+    };
+  }
+  if (error instanceof StripeWebhookDedupRejectedError) {
+    return { error_status: error.status, error_code: error.code };
+  }
+  return {};
+}
 
 export interface CoreAppExtensions {
   readonly createStripeWebhookRecordEvent?: (
@@ -81,6 +99,7 @@ export function createCoreApp(
         event: 'core.request.failed',
         request_id: requestId,
         error_name: error.name,
+        ...safeErrorLogFields(error),
       }),
     );
     return context.json(

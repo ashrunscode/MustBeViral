@@ -585,6 +585,12 @@ a {
   background: var(--paper);
 }
 
+/* When it scrolls, the panel is a tab stop that fills the studio frame, and the frame clips overflow:
+   a 2px outside offset would show only the top edge, so the same outline is drawn 2px inside. */
+.internal-ops:focus-visible {
+  outline-offset: -2px;
+}
+
 .internal-ops__grid {
   display: grid;
   gap: 16px;
@@ -750,18 +756,35 @@ a {
   gap: 8px;
 }
 
+/* Fields shrink with a narrow dialog (a phone at 200% zoom) instead of overflowing it at their
+   intrinsic width. */
+.access-panel__field > input,
+.access-panel__field > textarea {
+  min-width: 0;
+}
+
+/* Scope rows are 24px tall on a 48px pitch. Each label's transparent hit area grows 12px each way
+   to meet its neighbour at the midpoint: a 48px target that never overlaps the next row. Columns
+   are at least 160px (the longest label is 148px) with 16px between them, so the eleven scopes take
+   two columns and six rows in the 520px dialog, keeping the action row in view, and one column on a
+   phone-width dialog. */
+.access-panel__scopes {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 24px 16px;
+}
+
 .access-panel__scope {
   position: relative;
+  min-height: 24px;
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-/* Scope rows sit 8px apart, so each label's hit area grows only to the midpoint (4px). */
 .access-panel__scope::before {
   content: '';
   position: absolute;
-  inset: -4px 0;
+  inset: -12px 0;
 }
 
 /* Dialog forms: 12px between fields and 16px above the action row, so the 44px button hit
@@ -772,6 +795,28 @@ a {
 }
 .mbv-dialog .access-panel__actions {
   margin-top: 16px;
+}
+
+/* The create-key dialog scrolls on phones, so its action row sticks to the dialog's bottom edge on
+   the card background with a hairline above it; bottom -24px and the negative margins cover the
+   dialog's 24px padding. The row is one 81px line, kept clear of a focused or scrolled-to field by
+   96px of scroll padding. Below a 289px-wide viewport (a 375px phone at 150% zoom, for one) Issue key
+   and Cancel wrap and the row grows to 131px, which would cover a focused field, so the row is only
+   sticky from 300px wide, and from 320px tall so the dialog keeps room above it. */
+@media (min-width: 300px) and (min-height: 320px) {
+  .mbv-dialog .access-panel__actions--sticky {
+    position: sticky;
+    z-index: 1;
+    bottom: -24px;
+    margin: 16px -24px -24px;
+    border-top: 1px solid var(--line);
+    padding: 16px 24px 24px;
+    background: var(--card);
+  }
+
+  .mbv-dialog:has(.access-panel__actions--sticky) {
+    scroll-padding-bottom: 96px;
+  }
 }
 
 .access-panel__secret {

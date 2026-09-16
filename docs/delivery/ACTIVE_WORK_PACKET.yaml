@@ -86,6 +86,13 @@ scope:
     # admit. The amendment does not change this packet's objective, steps, acceptance criteria,
     # quality gates or evidence requirements.
     - packages/billing/**
+    # Scope amendment on explicit owner instruction, 2026-09-16: correct two stale references left by
+    # the SuperDesign removal and the WCAG AA colour fix. README.md still gates production UI on a
+    # SuperDesign artifact, and .superdesign/design-system.md still prescribes colours that fail WCAG
+    # AA. Only those two files are admitted. The amendment does not change this packet's objective,
+    # steps, acceptance criteria, quality gates or evidence requirements.
+    - README.md
+    - .superdesign/design-system.md
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**

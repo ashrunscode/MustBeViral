@@ -323,6 +323,41 @@ describe('Dialog', () => {
     expect(dialog.contains(document.activeElement)).toBe(true);
   });
 
+  it('scrolls the control that Tab wraps to into view inside a scrolled dialog', () => {
+    // The focus trap focuses with preventScroll; jsdom has no layout, so record the scroll request.
+    const revealed: Array<{ element: Element; options: unknown }> = [];
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      configurable: true,
+      value(this: Element, options: unknown) {
+        revealed.push({ element: this, options });
+      },
+    });
+    try {
+      render(
+        <>
+          <button type="button">Launcher</button>
+          <Dialog open title="Confirm revision" onClose={() => undefined}>
+            <button type="button">Cancel</button>
+            <button type="button">Confirm</button>
+          </Dialog>
+        </>,
+      );
+      const close = screen.getByRole('button', { name: 'Close Confirm revision' });
+      const confirm = screen.getByRole('button', { name: 'Confirm' });
+      focus(confirm);
+      revealed.length = 0;
+
+      fireEvent.keyDown(focusedElement(), { key: 'Tab' });
+
+      expect(document.activeElement).toBe(close);
+      expect(revealed).toEqual([
+        { element: close, options: { block: 'nearest', inline: 'nearest' } },
+      ]);
+    } finally {
+      delete (HTMLElement.prototype as { scrollIntoView?: unknown }).scrollIntoView;
+    }
+  });
+
   it('wires the title and description to aria-labelledby and aria-describedby', () => {
     render(
       <Dialog

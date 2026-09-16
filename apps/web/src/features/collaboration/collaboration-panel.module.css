@@ -3,6 +3,15 @@
   gap: 12px;
 }
 
+.collaborationRefusal {
+  margin: 0;
+  border-left: 2px solid var(--fail);
+  padding: 4px 10px;
+  color: var(--fail-ink);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .presenceBar {
   display: flex;
   align-items: center;
@@ -246,14 +255,17 @@
   color: var(--ink);
 }
 
+/* 6px on top of the field's 6px gap leaves 12px: Retry lease's hit area grows about 10px upward, so it stays clear of the textarea above. */
 .leaseActions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  margin-top: 6px;
 }
 
 .leaseRetry {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius-input);
   background: var(--paper);
@@ -261,6 +273,13 @@
   font-size: 11px;
   padding: 4px 8px;
   cursor: pointer;
+}
+
+/* The shared Button's rule: a transparent hit area that grows the 24px control to 44px. */
+.leaseRetry::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
 }
 
 .leaseRetry:focus-visible {

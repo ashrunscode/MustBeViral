@@ -1,6 +1,14 @@
 'use client';
 
-import { Button, Card, Chip, LedgerTable, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
+import {
+  Button,
+  Card,
+  Chip,
+  LedgerTable,
+  MonoCaps,
+  formatUsdMicros,
+  useScrollableRegion,
+} from '@mustbeviral/ui';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -158,6 +166,9 @@ export function ReceiptFlow({
   const [creatingExport, setCreatingExport] = useState(false);
   const [lastOperation, setLastOperation] = useState<'read' | 'create'>('read');
   const [downloadError, setDownloadError] = useState<string | null>(null);
+  // The receipt card scrolls inside the page on narrow screens and holds no focusable content there.
+  const { ref: receiptRegionRef, tabIndex: receiptRegionTabIndex } =
+    useScrollableRegion<HTMLElement>();
 
   useEffect(() => {
     if (readPort === null) return;
@@ -277,7 +288,12 @@ export function ReceiptFlow({
           <MonoCaps>Receipt verified</MonoCaps>
         </span>
       </div>
-      <article className={`${styles.receiptCard} receipt-card`} aria-labelledby="receipt-title">
+      <article
+        ref={receiptRegionRef}
+        className={`${styles.receiptCard} receipt-card`}
+        aria-labelledby="receipt-title"
+        tabIndex={receiptRegionTabIndex}
+      >
         {result.type === 'review_incomplete' || result.type === 'export_failed' ? (
           <ExportResultNotice
             {...(runId === undefined ? {} : { runId })}

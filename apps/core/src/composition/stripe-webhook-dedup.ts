@@ -1,4 +1,5 @@
 import type { CoreBindings } from '../bindings';
+import { readPermanentRejection } from './postgrest-rejection';
 
 export class StripeWebhookDedupUnavailableError extends Error {
   override readonly name = 'StripeWebhookDedupUnavailableError';
@@ -6,6 +7,24 @@ export class StripeWebhookDedupUnavailableError extends Error {
 
 export class StripeWebhookDedupForbiddenError extends Error {
   override readonly name = 'StripeWebhookDedupForbiddenError';
+}
+
+/**
+ * The dedup RPC refused this event's input, for example SQLSTATE 22023 for a blank field. Sending
+ * the same event again fails the same way, so this is not an outage. Core's error log records the
+ * status and code, and the message is handed to exception telemetry, so both carry only the HTTP
+ * status and a well-formed SQLSTATE or PostgREST error code, never PostgREST's message or details,
+ * which can echo row values.
+ */
+export class StripeWebhookDedupRejectedError extends Error {
+  override readonly name = 'StripeWebhookDedupRejectedError';
+
+  constructor(
+    readonly status: number,
+    readonly code: string,
+  ) {
+    super(`Stripe webhook dedup RPC rejected the event with HTTP ${status} (${code}).`);
+  }
 }
 
 type StripeWebhookClaim = 'inserted' | 'duplicate';
@@ -72,6 +91,10 @@ export function createStripeWebhookDedupPort(
       throw new StripeWebhookDedupForbiddenError(
         'Stripe webhook dedup rejected the privileged credential.',
       );
+    }
+    const rejection = await readPermanentRejection(response);
+    if (rejection !== null) {
+      throw new StripeWebhookDedupRejectedError(response.status, rejection.code);
     }
     if (!response.ok) {
       throw new StripeWebhookDedupUnavailableError(

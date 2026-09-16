@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  COLLABORATION_TEXT_DRAFT_BODY_MAX_LENGTH,
   leaseForNode,
   requiresEditLease,
   textDraftKey,
@@ -162,6 +163,7 @@ export function CollaborativeTextField({
         id={fieldId}
         className={styles.collaborativeTextarea}
         value={displayValue}
+        maxLength={COLLABORATION_TEXT_DRAFT_BODY_MAX_LENGTH}
         readOnly={readOnly}
         aria-readonly={readOnly}
         aria-describedby={statusId}

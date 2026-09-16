@@ -4,14 +4,41 @@ import {
   type StripeSettlementRejectedPlan,
   settleStripeWebhookEvent,
   type StripeSettlementPlan,
+  type StripeSubscriptionUpdatePlan,
   type VerifiedStripeWebhook,
 } from '@mustbeviral/billing';
 
 import type { CoreBindings } from '../bindings';
 import { createCoreEmailPort } from './core-email';
+import { readPermanentRejection } from './postgrest-rejection';
 
 export class StripeWebhookSettlementUnavailableError extends Error {
   override readonly name = 'StripeWebhookSettlementUnavailableError';
+}
+
+/**
+ * A settlement RPC refused this event, for example P0001 STRIPE_EVENT_WORKSPACE_MISMATCH or
+ * SQLSTATE 22023. Sending the same event again fails the same way until the data or the event
+ * changes, so this is not an outage. Core's error log records the RPC, status, code and reason, and
+ * the message is handed to exception telemetry, so both carry only the RPC name, the HTTP status, a
+ * well-formed error code and an upper-case reason token, never PostgREST's message or details,
+ * which can echo row values.
+ */
+export class StripeWebhookSettlementRpcRejectedError extends Error {
+  override readonly name = 'StripeWebhookSettlementRpcRejectedError';
+
+  constructor(
+    readonly rpc: string,
+    readonly status: number,
+    readonly code: string,
+    readonly reason: string | undefined,
+  ) {
+    super(
+      `Stripe webhook settlement RPC ${rpc} rejected the event with HTTP ${status} (${code})${
+        reason === undefined ? '' : `: ${reason}`
+      }.`,
+    );
+  }
 }
 
 export class StripeWebhookSettlementForbiddenError extends Error {
@@ -35,6 +62,10 @@ export class StripeWebhookSettlementRejectedError extends Error {
   }
 }
 
+export class StripeWebhookSettlementInvalidEventError extends Error {
+  override readonly name = 'StripeWebhookSettlementInvalidEventError';
+}
+
 export interface StripeWalletCreditPersistenceResult {
   readonly workspaceId: string;
   readonly transactionId: string;
@@ -45,6 +76,8 @@ export interface StripeWalletCreditPersistenceResult {
 export interface StripeSubscriptionPersistenceResult {
   readonly workspaceId: string;
   readonly replayed: boolean;
+  /** An older event than the one that last set the subscription state; audited, state unchanged. */
+  readonly stale: boolean;
   readonly subscriptionStatus: string;
   readonly setupFeePaid: boolean;
 }
@@ -66,9 +99,11 @@ function isWalletCreditResult(value: unknown): value is Readonly<{
   );
 }
 
+// `stale` is returned only by the ordered overload, so requiring it also proves which one answered.
 function isSubscriptionUpdateResult(value: unknown): value is Readonly<{
   workspace_id: string;
   replayed: boolean;
+  stale: boolean;
   subscription_status: string;
   setup_fee_paid: boolean;
 }> {
@@ -77,9 +112,37 @@ function isSubscriptionUpdateResult(value: unknown): value is Readonly<{
   return (
     typeof record.workspace_id === 'string' &&
     typeof record.replayed === 'boolean' &&
+    typeof record.stale === 'boolean' &&
     typeof record.subscription_status === 'string' &&
     typeof record.setup_fee_paid === 'boolean'
   );
+}
+
+/**
+ * Reads the Stripe event `created` time, Unix seconds. apply_stripe_subscription_update uses it
+ * to skip an event older than the one that last set the subscription state.
+ */
+function readStripeEventCreated(payload: unknown): number {
+  const created =
+    typeof payload === 'object' && payload !== null && !Array.isArray(payload)
+      ? (payload as Readonly<Record<string, unknown>>).created
+      : undefined;
+  if (typeof created !== 'number' || !Number.isSafeInteger(created) || created <= 0) {
+    throw new StripeWebhookSettlementInvalidEventError(
+      'Stripe subscription event has no valid created time.',
+    );
+  }
+  return created;
+}
+
+/** apply_stripe_subscription_update orders events per subscription, so it needs the id. */
+function requireStripeSubscriptionId(stripeSubscriptionId: string | null): string {
+  if (stripeSubscriptionId === null) {
+    throw new StripeWebhookSettlementInvalidEventError(
+      'Stripe subscription event has no subscription id.',
+    );
+  }
+  return stripeSubscriptionId;
 }
 
 export function createStripeWebhookSettlementPort(
@@ -102,8 +165,11 @@ export function createStripeWebhookSettlementPort(
     input: Readonly<{
       workspaceId: string | null;
       stripeEventId: string;
+      stripeEventType: StripeSubscriptionUpdatePlan['eventType'];
+      /** The Stripe event `created` time, Unix seconds. */
+      stripeEventCreated: number;
       stripeCustomerId: string | null;
-      stripeSubscriptionId: string | null;
+      stripeSubscriptionId: string;
       subscriptionStatus: string;
       setupFeePaid: boolean;
       requestId: string;
@@ -144,6 +210,15 @@ export function createStripeWebhookSettlementPort(
     if (response.status === 401 || response.status === 403) {
       throw new StripeWebhookSettlementForbiddenError(
         'Stripe webhook settlement rejected the privileged credential.',
+      );
+    }
+    const rejection = await readPermanentRejection(response);
+    if (rejection !== null) {
+      throw new StripeWebhookSettlementRpcRejectedError(
+        functionName,
+        response.status,
+        rejection.code,
+        rejection.reason,
       );
     }
     if (!response.ok) {
@@ -195,6 +270,8 @@ export function createStripeWebhookSettlementPort(
         p_subscription_status: input.subscriptionStatus,
         p_setup_fee_paid: input.setupFeePaid,
         p_request_id: input.requestId,
+        p_stripe_event_type: input.stripeEventType,
+        p_stripe_event_created: input.stripeEventCreated,
       });
       if (!isSubscriptionUpdateResult(body)) {
         throw new StripeWebhookSettlementUnavailableError(
@@ -204,6 +281,7 @@ export function createStripeWebhookSettlementPort(
       return Object.freeze({
         workspaceId: body.workspace_id,
         replayed: body.replayed,
+        stale: body.stale,
         subscriptionStatus: body.subscription_status,
         setupFeePaid: body.setup_fee_paid,
       });
@@ -273,8 +351,10 @@ export function createStripeWebhookSettlementHandler(
       await persistence.applySubscriptionUpdate({
         workspaceId,
         stripeEventId: verified.eventId,
+        stripeEventType: settlement.eventType,
+        stripeEventCreated: readStripeEventCreated(verified.payload),
         stripeCustomerId,
-        stripeSubscriptionId: settlement.stripeSubscriptionId,
+        stripeSubscriptionId: requireStripeSubscriptionId(settlement.stripeSubscriptionId),
         subscriptionStatus: settlement.subscriptionStatus,
         setupFeePaid: settlement.setupFeePaid,
         requestId,

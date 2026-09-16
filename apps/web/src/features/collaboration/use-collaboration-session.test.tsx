@@ -1,7 +1,11 @@
 // @vitest-environment jsdom
 
 import {
+  COLLABORATION_CLOSE_CODES,
+  COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS,
   COLLABORATION_WEBSOCKET_PROTOCOL,
+  CollaborationClient,
+  CollaborationTicketDeniedError,
   InMemoryCollaborationSession,
 } from '@mustbeviral/collaboration';
 import { createRoot, type Root } from 'react-dom/client';
@@ -162,10 +166,16 @@ class MockWebSocket {
 
   close(): void {
     this.readyState = 3;
-    this.emit('close', {});
+    this.emit('close', { code: 1000 });
   }
 
-  emit(type: string, event: { data?: string }): void {
+  /** The server closing the socket with a close code. */
+  drop(code: number): void {
+    this.readyState = 3;
+    this.emit('close', { code });
+  }
+
+  emit(type: string, event: { data?: string; code?: number }): void {
     for (const listener of this.listeners.get(type) ?? []) listener(event);
   }
 }
@@ -240,9 +250,19 @@ describe('useCollaborationSession websocket transport', () => {
     expect(maximumUpdateDepthErrors(consoleError)).toBe(0);
 
     latest?.acquireLease('node-7');
-    expect(JSON.parse(socket.sent.at(-1)!)).toMatchObject({
+    expect(JSON.parse(socket.sent.at(-1)!)).toEqual({
       type: 'lease.acquire',
-      payload: { lease_id: `lease-node-7-${boundActor.actor_id}`, node_id: 'node-7' },
+      payload: { node_id: 'node-7', ttl_seconds: 120 },
+    });
+    latest?.createComment({ body: 'Warmer key light', anchor_node_id: 'node-7' });
+    expect(JSON.parse(socket.sent.at(-1)!)).toEqual({
+      type: 'comment.create',
+      payload: { body: 'Warmer key light', anchor_node_id: 'node-7' },
+    });
+    latest?.deleteComment('3c1d2e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f');
+    expect(JSON.parse(socket.sent.at(-1)!)).toEqual({
+      type: 'comment.delete',
+      payload: { comment_id: '3c1d2e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f' },
     });
   });
 
@@ -274,6 +294,165 @@ describe('useCollaborationSession websocket transport', () => {
         'ticket-2.signature',
       ]);
       expect(latest?.actor).toEqual(boundActor);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('tells the member why a comment or draft was refused, without render loops', async () => {
+    const connect = vi.spyOn(CollaborationClient.prototype, 'connect');
+    const consoleError = vi.spyOn(console, 'error');
+    let latest: CollaborationSessionState | undefined;
+    let renders = 0;
+    const root = createRoot(document.createElement('div'));
+    mounted.push(root);
+    root.render(
+      <LiveCanvas
+        onState={(state) => {
+          renders += 1;
+          latest = state;
+        }}
+      />,
+    );
+    await waitUntil(() => latest?.status === 'open');
+    const socket = MockWebSocket.instances[0]!;
+    const serverSends = (message: unknown) => {
+      socket.emit('message', { data: JSON.stringify(message) });
+    };
+
+    serverSends({
+      type: 'error',
+      payload: {
+        code: 'CANVAS_LIMIT_REACHED',
+        message: 'Your comments on this canvas are at their 49152-byte limit.',
+        request_type: 'comment.create',
+        details: { resource: 'comments', scope: 'actor', unit: 'bytes', limit: 49_152 },
+      },
+    });
+    await waitUntil(() => latest?.refusal !== null);
+    expect(latest?.refusal).toBe(
+      'Comment not posted: you have reached your comment space on this canvas. Delete one of your comments to post another.',
+    );
+
+    serverSends({
+      type: 'text.draft.result',
+      payload: {
+        accepted: false,
+        draft_id: '["node-7","parameters.prompt"]',
+        node_id: 'node-7',
+        field_path: 'parameters.prompt',
+        reason: 'lease_held',
+      },
+    });
+    await waitUntil(() => latest?.refusal?.includes('holds the lease') === true);
+
+    serverSends({
+      type: 'error',
+      payload: {
+        code: 'RATE_LIMITED',
+        message: 'Too many collaboration messages.',
+        details: { scope: 'socket', retry_after_ms: 100, unit: 'tokens' },
+      },
+    });
+    await waitUntil(() => latest?.refusal?.includes('too quickly') === true);
+
+    // Refused before sending: the client checks the same limits and reports them the same way.
+    const sentBefore = socket.sent.length;
+    latest?.createComment({ body: 'x'.repeat(4_001) });
+    await waitUntil(() => latest?.refusal?.includes('longer than 4,000 characters') === true);
+    expect(socket.sent).toHaveLength(sentBefore);
+
+    serverSends({
+      type: 'comment.result',
+      payload: { operation: 'create', comment_id: '3c1d2e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f' },
+    });
+    await waitUntil(() => latest?.refusal === null);
+
+    // Steady state: the same refusal twice, or clearing when nothing is shown, renders nothing new.
+    await observeFor(50);
+    const settledRenders = renders;
+    serverSends({
+      type: 'comment.result',
+      payload: { operation: 'create', comment_id: '3c1d2e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f' },
+    });
+    await observeFor(100);
+    expect(renders).toBe(settledRenders);
+    expect(connect).toHaveBeenCalledTimes(1);
+    expect(maximumUpdateDepthErrors(consoleError)).toBe(0);
+  });
+
+  it('reconnects transparently with a fresh ticket when the Worker ends the session', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
+    const connect = vi.spyOn(CollaborationClient.prototype, 'connect');
+    const consoleError = vi.spyOn(console, 'error');
+    try {
+      const states: CollaborationSessionState[] = [];
+      const root = createRoot(document.createElement('div'));
+      mounted.push(root);
+      root.render(
+        <LiveCanvas
+          onState={(state) => {
+            states.push(state);
+          }}
+        />,
+      );
+      for (let index = 0; index < 20 && states.at(-1)?.status !== 'open'; index += 1) {
+        await vi.advanceTimersByTimeAsync(10);
+      }
+      expect(states.at(-1)?.status).toBe('open');
+      const openedAt = states.length;
+
+      vi.setSystemTime(Date.now() + COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS * 1_000);
+      MockWebSocket.instances[0]!.drop(COLLABORATION_CLOSE_CODES.SESSION_EXPIRED);
+      // Far less than the first reconnect backoff: a lifetime close reconnects at once.
+      for (let index = 0; index < 10; index += 1) await vi.advanceTimersByTimeAsync(10);
+
+      expect(requestCollaborationTicket).toHaveBeenCalledTimes(2);
+      expect(MockWebSocket.instances).toHaveLength(2);
+      expect(MockWebSocket.instances[1]!.protocols).toEqual([
+        COLLABORATION_WEBSOCKET_PROTOCOL,
+        'ticket-2.signature',
+      ]);
+      expect(states.at(-1)?.status).toBe('open');
+      expect(states.at(-1)?.actor).toEqual(boundActor);
+      // The session effect never restarted, and the last snapshot stayed on screen throughout.
+      expect(connect).toHaveBeenCalledTimes(1);
+      expect(states.slice(openedAt).every((state) => state.snapshot !== null)).toBe(true);
+      expect(maximumUpdateDepthErrors(consoleError)).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('stops when Core refuses the reconnect ticket, as for a removed member', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
+    let issued = 0;
+    vi.mocked(requestCollaborationTicket).mockImplementation(async () => {
+      issued += 1;
+      if (issued > 1) throw new CollaborationTicketDeniedError('FORBIDDEN');
+      return { ticket: 'ticket-1.signature', actor: boundActor };
+    });
+    try {
+      let latest: CollaborationSessionState | undefined;
+      const root = createRoot(document.createElement('div'));
+      mounted.push(root);
+      root.render(
+        <LiveCanvas
+          onState={(state) => {
+            latest = state;
+          }}
+        />,
+      );
+      for (let index = 0; index < 20 && latest?.status !== 'open'; index += 1) {
+        await vi.advanceTimersByTimeAsync(10);
+      }
+      vi.setSystemTime(Date.now() + COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS * 1_000);
+      MockWebSocket.instances[0]!.drop(COLLABORATION_CLOSE_CODES.SESSION_EXPIRED);
+      await vi.advanceTimersByTimeAsync(60_000);
+
+      expect(requestCollaborationTicket).toHaveBeenCalledTimes(2);
+      expect(MockWebSocket.instances).toHaveLength(1);
+      expect(latest?.status).toBe('error');
     } finally {
       vi.useRealTimers();
     }
