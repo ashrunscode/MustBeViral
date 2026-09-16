@@ -493,6 +493,18 @@ describe('P0 REST response contracts', () => {
     ).toBe(false);
   });
 
+  it('requires exactly one literal dot between the collaboration ticket payload and signature', () => {
+    const parse = (ticket: string) =>
+      P0_OPERATION_RESPONSE_SCHEMAS.create_collaboration_ticket.safeParse({
+        data: { ...successData.create_collaboration_ticket, ticket },
+        meta,
+      }).success;
+    expect(parse('eyJ2IjoxfQ.c2lnbmF0dXJl')).toBe(true);
+    for (const malformed of ['eyJ2IjoxfQXc2lnbmF0dXJl', 'eyJ2IjoxfQ~c2lnbmF0dXJl', 'abc', '.abc']) {
+      expect(parse(malformed), malformed).toBe(false);
+    }
+  });
+
   it('parses the common error envelope and rejects success drift per operation', () => {
     const error = {
       error: {

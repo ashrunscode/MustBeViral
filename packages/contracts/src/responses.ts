@@ -701,7 +701,7 @@ const operationDataSchemas = {
         .string()
         .min(1)
         .max(2_048)
-        .regex(/^[A-Za-z0-9_-]+.[A-Za-z0-9_-]+$/u),
+        .regex(/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/u),
       expires_at: TimestampSchema,
       actor: z
         .object({

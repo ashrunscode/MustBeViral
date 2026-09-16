@@ -165,6 +165,7 @@ interface SnapshotPayload {
   readonly text_drafts: readonly {
     draft_id: string;
     node_id: string;
+    field_path: string;
     body: string;
     author: CollaborationActor;
   }[];

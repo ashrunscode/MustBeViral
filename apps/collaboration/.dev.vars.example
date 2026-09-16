@@ -9,4 +9,6 @@
 # value of at least 32 characters the Worker refuses every canvas request. Real values live in your
 # own untracked `apps/collaboration/.dev.vars`, and in Cloudflare via `wrangler secret put`.
 
-COLLABORATION_TICKET_SECRET=replace-me-with-32-or-more-random-bytes
+# Deliberately shorter than the 32-character minimum: a copied example fails closed until a real
+# value is set.
+COLLABORATION_TICKET_SECRET=invalid-placeholder

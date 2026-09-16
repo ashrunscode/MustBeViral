@@ -256,6 +256,110 @@ describe('ticket-bound identity in the canvas coordination object', () => {
     expect(snapshot.presence.map((entry) => entry.actor.actor_id)).toEqual([actorA.actor_id]);
   });
 
+  it("does not let a draft-key separator collision replace A's leased draft", async () => {
+    const { a, b } = await pair('canvas-attack-draft-separator');
+    const leasedNode = 'n::1';
+    a.send({
+      type: 'lease.acquire',
+      payload: {
+        lease_id: leaseIdForActor(leasedNode, actorA.actor_id),
+        node_id: leasedNode,
+        ttl_seconds: 120,
+      },
+    });
+    a.send({
+      type: 'text.draft.upsert',
+      payload: {
+        draft_id: textDraftKey(leasedNode, 'parameters.prompt'),
+        node_id: leasedNode,
+        field_path: 'parameters.prompt',
+        body: 'Leased draft from A',
+      },
+    });
+    const beforeAttack = await freshSnapshot(a);
+    expect(beforeAttack.text_drafts.map((draft) => draft.node_id)).toEqual([leasedNode]);
+
+    // The reviewer's reproduction: node "n" plus field "1::parameters.prompt" joined with "::"
+    // spells the same string key as node "n::1" plus field "parameters.prompt".
+    b.send({
+      type: 'text.draft.upsert',
+      payload: {
+        draft_id: 'n::1::parameters.prompt',
+        node_id: 'n',
+        field_path: '1::parameters.prompt',
+        body: 'B overwriting through a colliding key',
+      },
+    });
+    b.send({
+      type: 'text.draft.upsert',
+      payload: {
+        draft_id: textDraftKey('n', '1::parameters.prompt'),
+        node_id: 'n',
+        field_path: '1::parameters.prompt',
+        body: 'B drafting its own field',
+      },
+    });
+    b.send({
+      type: 'text.draft.upsert',
+      payload: {
+        draft_id: textDraftKey(leasedNode, 'parameters.prompt'),
+        node_id: leasedNode,
+        field_path: 'parameters.prompt',
+        body: 'B writing the leased node directly',
+      },
+    });
+    const snapshot = await freshSnapshot(b);
+
+    const leased = snapshot.text_drafts.find(
+      (draft) => draft.node_id === leasedNode && draft.field_path === 'parameters.prompt',
+    );
+    expect(leased?.body).toBe('Leased draft from A');
+    expect(leased?.author.actor_id).toBe(actorA.actor_id);
+    expect(leased?.draft_id).toBe(textDraftKey(leasedNode, 'parameters.prompt'));
+    expect(textDraftKey('n', '1::parameters.prompt')).not.toBe(
+      textDraftKey(leasedNode, 'parameters.prompt'),
+    );
+    const direct = b.frames.find(
+      (frame) =>
+        frame.type === 'text.draft.result' &&
+        (frame.payload as { node_id: string; reason?: string }).node_id === leasedNode,
+    );
+    expect((direct?.payload as { reason?: string } | undefined)?.reason).toBe('lease_held');
+  });
+
+  it("does not let a lease-id collision replace another actor's lease", async () => {
+    // Lease ids are "lease-<node>-<actor>". Actor ids are Supabase UUIDs in practice, but the
+    // object must not rely on that: these ids collide as "lease-x-a-b".
+    const canvasId = 'canvas-attack-lease-collision';
+    const holder = { actor_id: 'a-b', display_name: 'Holder', color: '#3182d4' };
+    const attacker = { actor_id: 'b', display_name: 'Attacker', color: '#1f9d63' };
+    const a = await openSocket(canvasId, holder);
+    const b = await openSocket(canvasId, attacker);
+    openSockets.push(a, b);
+    await a.waitFor((frame) => frame.type === 'snapshot');
+    await b.waitFor((frame) => frame.type === 'snapshot');
+    expect(leaseIdForActor('x', holder.actor_id)).toBe(leaseIdForActor('x-a', attacker.actor_id));
+
+    a.send({
+      type: 'lease.acquire',
+      payload: { lease_id: leaseIdForActor('x', holder.actor_id), node_id: 'x', ttl_seconds: 120 },
+    });
+    await freshSnapshot(a);
+    b.send({
+      type: 'lease.acquire',
+      payload: {
+        lease_id: leaseIdForActor('x-a', attacker.actor_id),
+        node_id: 'x-a',
+        ttl_seconds: 120,
+      },
+    });
+    const snapshot = await freshSnapshot(b);
+
+    const onX = snapshot.leases.find((lease) => lease.node_id === 'x');
+    expect(onX?.holder.actor_id).toBe(holder.actor_id);
+    expect(snapshot.leases.find((lease) => lease.node_id === 'x-a')).toBeUndefined();
+  });
+
   it('keeps the bound identity across hibernation', async () => {
     const canvasId = 'canvas-hibernation';
     const b = await openSocket(canvasId, actorB);
