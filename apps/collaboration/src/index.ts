@@ -1,8 +1,14 @@
-import { FORBIDDEN_COLLABORATION_ROUTES } from '@mustbeviral/collaboration';
+import {
+  CollaborationCanvasIdSchema,
+  FORBIDDEN_COLLABORATION_ROUTES,
+  collaborationTicketFromAuthorization,
+  collaborationTicketFromWebSocketProtocols,
+  collaborationTicketSecretConfigured,
+  verifyCollaborationTicket,
+} from '@mustbeviral/collaboration';
 
 import { CanvasCoordination } from './canvas-coordination';
-
-const CANVAS_ID_PATTERN = /^[A-Za-z0-9_-]{1,128}$/u;
+import { INTERNAL_IDENTITY_HEADER, encodeVerifiedIdentity } from './identity';
 
 function jsonError(status: number, code: string, message: string): Response {
   return Response.json({ error: { code, message } }, { status });
@@ -11,8 +17,13 @@ function jsonError(status: number, code: string, message: string): Response {
 function parseCanvasId(pathname: string): string | null {
   const match = /^\/canvases\/([^/]+)(?:\/.*)?$/u.exec(pathname);
   if (!match?.[1]) return null;
-  const canvasId = decodeURIComponent(match[1]);
-  return CANVAS_ID_PATTERN.test(canvasId) ? canvasId : null;
+  let canvasId: string;
+  try {
+    canvasId = decodeURIComponent(match[1]);
+  } catch {
+    return null;
+  }
+  return CollaborationCanvasIdSchema.safeParse(canvasId).success ? canvasId : null;
 }
 
 function coordinationStub(
@@ -26,21 +37,18 @@ function coordinationStub(
   return namespace.get(namespace.idFromName(canvasId));
 }
 
-async function proxyToCoordination(
-  request: Request,
-  env: CollaborationBindings,
-  canvasId: string,
-  suffix: string,
-): Promise<Response> {
-  const url = new URL(request.url);
-  url.pathname = suffix;
-  url.searchParams.set('canvas_id', canvasId);
-  return coordinationStub(env, canvasId).fetch(new Request(url.toString(), request));
+function unauthenticated(): Response {
+  return jsonError(401, 'UNAUTHENTICATED', 'A valid collaboration ticket is required.');
 }
 
 const worker = {
-  async fetch(request: Request, env: CollaborationBindings): Promise<Response> {
-    const url = new URL(request.url);
+  async fetch(incoming: Request, env: CollaborationBindings): Promise<Response> {
+    // Strip the internal identity header before anything else reads the request. Only this Worker
+    // may set it, and only after a ticket verifies.
+    const headers = new Headers(incoming.headers);
+    headers.delete(INTERNAL_IDENTITY_HEADER);
+
+    const url = new URL(incoming.url);
     const pathname = url.pathname.replace(/\/+$/u, '') || '/';
 
     if (pathname === '/health') {
@@ -68,15 +76,51 @@ const worker = {
       return jsonError(404, 'NOT_FOUND', 'Unknown collaboration route');
     }
 
-    if (pathname === `/canvases/${canvasId}/snapshot` && request.method === 'GET') {
-      return proxyToCoordination(request, env, canvasId, '/snapshot');
+    const isSnapshot = pathname === `/canvases/${canvasId}/snapshot` && incoming.method === 'GET';
+    const isSocket = pathname === `/canvases/${canvasId}/ws`;
+    if (!isSnapshot && !isSocket) {
+      return jsonError(404, 'NOT_FOUND', 'Unknown collaboration route');
     }
 
-    if (pathname === `/canvases/${canvasId}/ws`) {
-      return proxyToCoordination(request, env, canvasId, '/ws');
+    // Fail closed: without a usable secret no ticket can be verified, so nothing is served.
+    const secret = env.COLLABORATION_TICKET_SECRET;
+    if (!collaborationTicketSecretConfigured(secret)) {
+      return jsonError(503, 'INTERNAL_ERROR', 'Collaboration authentication is not configured.');
     }
 
-    return jsonError(404, 'NOT_FOUND', 'Unknown collaboration route');
+    if (isSocket && (incoming.method !== 'GET' || headers.get('Upgrade') !== 'websocket')) {
+      return jsonError(426, 'VALIDATION_FAILED', 'A WebSocket upgrade is required.');
+    }
+
+    // Tickets are read only from headers. A query-string ticket would be recorded by invocation logs.
+    const ticket = isSocket
+      ? collaborationTicketFromWebSocketProtocols(headers.get('Sec-WebSocket-Protocol'))
+      : collaborationTicketFromAuthorization(headers.get('Authorization'));
+    if (ticket === null) return unauthenticated();
+
+    const verification = await verifyCollaborationTicket(secret, ticket, {
+      canvasId,
+      nowEpochSeconds: Math.floor(Date.now() / 1000),
+    });
+    if (!verification.valid) return unauthenticated();
+
+    // The object needs neither the ticket nor the caller's credentials, only the verified identity.
+    headers.delete('Authorization');
+    headers.delete('Sec-WebSocket-Protocol');
+    headers.delete('Cookie');
+    // A snapshot read stays a plain read: it can never be turned into a socket upgrade.
+    if (!isSocket) headers.delete('Upgrade');
+    headers.set(
+      INTERNAL_IDENTITY_HEADER,
+      encodeVerifiedIdentity({ canvas_id: canvasId, actor: verification.actor }),
+    );
+
+    const target = new URL(url.origin);
+    target.pathname = isSocket ? '/ws' : '/snapshot';
+    target.searchParams.set('canvas_id', canvasId);
+    return coordinationStub(env, canvasId).fetch(
+      new Request(target.toString(), { method: 'GET', headers }),
+    );
   },
 };
 

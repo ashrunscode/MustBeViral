@@ -1,340 +1,94 @@
 import { DurableObject } from 'cloudflare:workers';
 
 import {
-  evaluateTextDraftUpsert,
-  leaseAcquireVerdict,
-  leaseForNode,
-  type AcquireLeaseInput,
-  type CollaborationSnapshot,
-  type CommentDraft,
+  COLLABORATION_WEBSOCKET_PROTOCOL,
   ClientMessageSchema,
-  type JoinPresenceInput,
   ServerMessageSchema,
-  type TextDraft,
-  type UpsertCommentInput,
-  type UpsertTextDraftInput,
+  type CollaborationActor,
 } from '@mustbeviral/collaboration';
 
-const PRESENCE_STALE_MS = 60_000;
+import { CoordinationStore, OwnershipError, type Surface } from './coordination-store';
+import {
+  INTERNAL_IDENTITY_HEADER,
+  decodeVerifiedIdentity,
+  parseVerifiedIdentity,
+  type VerifiedIdentity,
+} from './identity';
 
-function nowIso(): string {
-  return new Date().toISOString();
-}
+const ATTACHMENT_VERSION = 1;
+const UNBOUND_SOCKET_CLOSE_CODE = 1008;
 
-function parseJson<T>(value: string): T {
-  return JSON.parse(value) as T;
+/**
+ * Serialized onto each accepted socket so the bound identity survives hibernation. Nothing a client
+ * sends can change `canvas_id` or `actor`; only the verified request that opened the socket sets them.
+ */
+interface SocketAttachment {
+  readonly v: typeof ATTACHMENT_VERSION;
+  readonly socket_id: string;
+  readonly canvas_id: string;
+  readonly actor: CollaborationActor;
+  readonly surface: Surface | null;
 }
 
 function encodeServerMessage(message: ReturnType<typeof ServerMessageSchema.parse>): string {
   return JSON.stringify(ServerMessageSchema.parse(message));
 }
 
+function readAttachment(socket: WebSocket): SocketAttachment | null {
+  let raw: unknown;
+  try {
+    raw = socket.deserializeAttachment() as unknown;
+  } catch {
+    return null;
+  }
+  if (typeof raw !== 'object' || raw === null) return null;
+  const record = raw as Readonly<Record<string, unknown>>;
+  const identity = parseVerifiedIdentity({ canvas_id: record.canvas_id, actor: record.actor });
+  if (
+    identity === null ||
+    record.v !== ATTACHMENT_VERSION ||
+    typeof record.socket_id !== 'string' ||
+    (record.surface !== null && record.surface !== 'canvas' && record.surface !== 'review')
+  ) {
+    return null;
+  }
+  return {
+    v: ATTACHMENT_VERSION,
+    socket_id: record.socket_id,
+    canvas_id: identity.canvas_id,
+    actor: identity.actor,
+    surface: record.surface,
+  };
+}
+
+function closeQuietly(socket: WebSocket, code: number, reason: string): void {
+  try {
+    socket.close(code, reason);
+  } catch {
+    // Already closed.
+  }
+}
+
+function unauthenticated(): Response {
+  return Response.json(
+    {
+      error: { code: 'UNAUTHENTICATED', message: 'A verified collaboration identity is required.' },
+    },
+    { status: 401 },
+  );
+}
+
+/**
+ * One coordination object per canvas. Its only public methods are the runtime entry points: `fetch`
+ * and the hibernatable WebSocket handlers. All state access lives in `CoordinationStore` and in
+ * `#private` members, so no Durable Object RPC call can read or change canvas state.
+ */
 export class CanvasCoordination extends DurableObject<CollaborationBindings> {
-  private canvasId: string | null = null;
+  readonly #store: CoordinationStore;
 
   constructor(ctx: DurableObjectState, env: CollaborationBindings) {
     super(ctx, env);
-    this.ctx.blockConcurrencyWhile(async () => {
-      this.ctx.storage.sql.exec(`
-        CREATE TABLE IF NOT EXISTS meta (
-          key TEXT PRIMARY KEY,
-          value TEXT NOT NULL
-        )
-      `);
-      this.ctx.storage.sql.exec(`
-        CREATE TABLE IF NOT EXISTS presence (
-          actor_id TEXT PRIMARY KEY,
-          payload TEXT NOT NULL
-        )
-      `);
-      this.ctx.storage.sql.exec(`
-        CREATE TABLE IF NOT EXISTS comments (
-          comment_id TEXT PRIMARY KEY,
-          payload TEXT NOT NULL
-        )
-      `);
-      this.ctx.storage.sql.exec(`
-        CREATE TABLE IF NOT EXISTS text_drafts (
-          draft_id TEXT PRIMARY KEY,
-          payload TEXT NOT NULL
-        )
-      `);
-      this.ctx.storage.sql.exec(`
-        CREATE TABLE IF NOT EXISTS leases (
-          lease_id TEXT PRIMARY KEY,
-          node_id TEXT NOT NULL,
-          payload TEXT NOT NULL,
-          expires_at TEXT NOT NULL
-        )
-      `);
-    });
-  }
-
-  private ensureCanvasId(canvasId: string): void {
-    if (this.canvasId === null) {
-      this.canvasId = canvasId;
-      this.ctx.storage.sql.exec(
-        'INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)',
-        'canvas_id',
-        canvasId,
-      );
-      return;
-    }
-    if (this.canvasId !== canvasId) {
-      throw new Error('Canvas coordination object is bound to a different canvas');
-    }
-  }
-
-  private readCanvasId(): string {
-    if (this.canvasId !== null) return this.canvasId;
-    const row = this.ctx.storage.sql
-      .exec<{ value: string }>('SELECT value FROM meta WHERE key = ? LIMIT 1', 'canvas_id')
-      .toArray()[0];
-    if (!row) throw new Error('Canvas coordination object is not initialized');
-    this.canvasId = row.value;
-    return row.value;
-  }
-
-  private pruneExpiredLeases(now = nowIso()): void {
-    this.ctx.storage.sql.exec('DELETE FROM leases WHERE expires_at <= ?', now);
-  }
-
-  private pruneStalePresence(nowMs = Date.now()): void {
-    const rows = this.ctx.storage.sql
-      .exec<{ actor_id: string; payload: string }>('SELECT actor_id, payload FROM presence')
-      .toArray();
-    for (const row of rows) {
-      const entry = parseJson<{ last_seen_at: string }>(row.payload);
-      const lastSeenMs = Date.parse(entry.last_seen_at);
-      if (Number.isNaN(lastSeenMs) || nowMs - lastSeenMs > PRESENCE_STALE_MS) {
-        this.ctx.storage.sql.exec('DELETE FROM presence WHERE actor_id = ?', row.actor_id);
-      }
-    }
-  }
-
-  async getSnapshot(canvasId: string): Promise<CollaborationSnapshot> {
-    this.ensureCanvasId(canvasId);
-    this.pruneExpiredLeases();
-    this.pruneStalePresence();
-    const presence = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM presence')
-      .toArray()
-      .map((row) => parseJson<CollaborationSnapshot['presence'][number]>(row.payload));
-    const comments = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM comments')
-      .toArray()
-      .map((row) => parseJson<CommentDraft>(row.payload));
-    const textDrafts = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM text_drafts')
-      .toArray()
-      .map((row) => parseJson<CollaborationSnapshot['text_drafts'][number]>(row.payload));
-    const leases = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM leases')
-      .toArray()
-      .map((row) => parseJson<CollaborationSnapshot['leases'][number]>(row.payload));
-    return {
-      canvas_id: this.readCanvasId(),
-      presence,
-      comments,
-      text_drafts: textDrafts,
-      leases,
-    };
-  }
-
-  async joinPresence(canvasId: string, input: JoinPresenceInput): Promise<CollaborationSnapshot> {
-    this.ensureCanvasId(canvasId);
-    const timestamp = nowIso();
-    const payload = {
-      actor: input.actor,
-      joined_at: timestamp,
-      last_seen_at: timestamp,
-      surface: input.surface,
-    };
-    this.ctx.storage.sql.exec(
-      'INSERT OR REPLACE INTO presence (actor_id, payload) VALUES (?, ?)',
-      input.actor.actor_id,
-      JSON.stringify(payload),
-    );
-    await this.broadcastSnapshot();
-    return this.getSnapshot(canvasId);
-  }
-
-  async leavePresence(canvasId: string, actorId: string): Promise<CollaborationSnapshot> {
-    this.ensureCanvasId(canvasId);
-    this.ctx.storage.sql.exec('DELETE FROM presence WHERE actor_id = ?', actorId);
-    await this.broadcastSnapshot();
-    return this.getSnapshot(canvasId);
-  }
-
-  async upsertComment(canvasId: string, input: UpsertCommentInput): Promise<CollaborationSnapshot> {
-    this.ensureCanvasId(canvasId);
-    const existing = this.ctx.storage.sql
-      .exec<{ payload: string }>(
-        'SELECT payload FROM comments WHERE comment_id = ? LIMIT 1',
-        input.comment_id,
-      )
-      .toArray()[0];
-    const timestamp = nowIso();
-    const draft: CommentDraft = {
-      comment_id: input.comment_id,
-      author: input.author,
-      body: input.body,
-      created_at: existing ? parseJson<CommentDraft>(existing.payload).created_at : timestamp,
-      updated_at: timestamp,
-      ...(input.anchor_node_id ? { anchor_node_id: input.anchor_node_id } : {}),
-    };
-    this.ctx.storage.sql.exec(
-      'INSERT OR REPLACE INTO comments (comment_id, payload) VALUES (?, ?)',
-      input.comment_id,
-      JSON.stringify(draft),
-    );
-    await this.broadcastSnapshot();
-    return this.getSnapshot(canvasId);
-  }
-
-  private findTextDraftByField(nodeId: string, fieldPath: string): TextDraft | undefined {
-    const rows = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM text_drafts')
-      .toArray();
-    for (const row of rows) {
-      const draft = parseJson<TextDraft>(row.payload);
-      if (draft.node_id === nodeId && draft.field_path === fieldPath) return draft;
-    }
-    return undefined;
-  }
-
-  async upsertTextDraft(
-    canvasId: string,
-    input: UpsertTextDraftInput,
-  ): Promise<{
-    accepted: boolean;
-    reason: 'ok' | 'lease_held' | 'stale';
-    snapshot: CollaborationSnapshot;
-  }> {
-    this.ensureCanvasId(canvasId);
-    this.pruneExpiredLeases();
-    const snapshot = await this.getSnapshot(canvasId);
-    const lease = leaseForNode(snapshot.leases, input.node_id);
-    const existing = this.findTextDraftByField(input.node_id, input.field_path);
-    const timestamp = nowIso();
-    const incoming: TextDraft = {
-      draft_id: input.draft_id,
-      node_id: input.node_id,
-      field_path: input.field_path,
-      body: input.body,
-      author: input.author,
-      updated_at: timestamp,
-    };
-    const verdict = evaluateTextDraftUpsert({
-      incoming,
-      existing,
-      lease,
-      actorId: input.author.actor_id,
-    });
-    if (verdict === 'rejected_lease') {
-      return { accepted: false, reason: 'lease_held', snapshot };
-    }
-    if (verdict === 'rejected_stale') {
-      return { accepted: false, reason: 'stale', snapshot };
-    }
-    if (existing !== undefined) {
-      this.ctx.storage.sql.exec('DELETE FROM text_drafts WHERE draft_id = ?', existing.draft_id);
-    }
-    this.ctx.storage.sql.exec(
-      'INSERT OR REPLACE INTO text_drafts (draft_id, payload) VALUES (?, ?)',
-      input.draft_id,
-      JSON.stringify(incoming),
-    );
-    await this.broadcastSnapshot();
-    return { accepted: true, reason: 'ok', snapshot: await this.getSnapshot(canvasId) };
-  }
-
-  async acquireLease(
-    canvasId: string,
-    input: AcquireLeaseInput,
-  ): Promise<{ accepted: boolean; snapshot: CollaborationSnapshot }> {
-    this.ensureCanvasId(canvasId);
-    this.pruneExpiredLeases();
-    const snapshot = await this.getSnapshot(canvasId);
-    const conflict = leaseForNode(snapshot.leases, input.node_id);
-    const verdict = leaseAcquireVerdict({
-      existing: conflict,
-      holder: input.holder,
-    });
-    if (verdict === 'contested') {
-      return { accepted: false, snapshot };
-    }
-    if (conflict !== undefined) {
-      this.ctx.storage.sql.exec('DELETE FROM leases WHERE lease_id = ?', conflict.lease_id);
-    }
-    const acquiredAt = nowIso();
-    const expiresAt = new Date(Date.now() + input.ttl_seconds * 1_000).toISOString();
-    const lease = {
-      lease_id: input.lease_id,
-      node_id: input.node_id,
-      holder: input.holder,
-      acquired_at: acquiredAt,
-      expires_at: expiresAt,
-    };
-    this.ctx.storage.sql.exec(
-      'INSERT OR REPLACE INTO leases (lease_id, node_id, payload, expires_at) VALUES (?, ?, ?, ?)',
-      input.lease_id,
-      input.node_id,
-      JSON.stringify(lease),
-      expiresAt,
-    );
-    await this.broadcastSnapshot();
-    return { accepted: true, snapshot: await this.getSnapshot(canvasId) };
-  }
-
-  async releaseLease(
-    canvasId: string,
-    leaseId: string,
-    actorId: string,
-  ): Promise<CollaborationSnapshot> {
-    this.ensureCanvasId(canvasId);
-    const row = this.ctx.storage.sql
-      .exec<{ payload: string }>('SELECT payload FROM leases WHERE lease_id = ? LIMIT 1', leaseId)
-      .toArray()[0];
-    if (row) {
-      const lease = parseJson<CollaborationSnapshot['leases'][number]>(row.payload);
-      if (lease.holder.actor_id === actorId) {
-        this.ctx.storage.sql.exec('DELETE FROM leases WHERE lease_id = ?', leaseId);
-      }
-    }
-    await this.broadcastSnapshot();
-    return this.getSnapshot(canvasId);
-  }
-
-  async clearCheckpointedDrafts(
-    canvasId: string,
-    input: { draft_ids: readonly string[]; actor_id: string; revision_id: string },
-  ): Promise<{ cleared_draft_ids: readonly string[]; snapshot: CollaborationSnapshot }> {
-    this.ensureCanvasId(canvasId);
-    const requested = new Set(input.draft_ids);
-    const cleared: string[] = [];
-    const rows = this.ctx.storage.sql
-      .exec<{ draft_id: string }>('SELECT draft_id FROM text_drafts')
-      .toArray();
-    for (const row of rows) {
-      if (!requested.has(row.draft_id)) continue;
-      this.ctx.storage.sql.exec('DELETE FROM text_drafts WHERE draft_id = ?', row.draft_id);
-      cleared.push(row.draft_id);
-    }
-    await this.broadcastSnapshot();
-    return { cleared_draft_ids: cleared, snapshot: await this.getSnapshot(canvasId) };
-  }
-
-  private async broadcastSnapshot(): Promise<void> {
-    const snapshot = await this.getSnapshot(this.readCanvasId());
-    const payload = encodeServerMessage({ type: 'snapshot', payload: snapshot });
-    for (const socket of this.ctx.getWebSockets()) {
-      try {
-        socket.send(payload);
-      } catch {
-        socket.close(1011, 'broadcast failed');
-      }
-    }
+    this.#store = new CoordinationStore(ctx.storage.sql);
   }
 
   override async fetch(request: Request): Promise<Response> {
@@ -347,47 +101,141 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
       );
     }
 
-    if (request.headers.get('Upgrade') === 'websocket') {
-      const pair = new WebSocketPair();
-      const client = pair[0];
-      const server = pair[1];
-      this.ctx.acceptWebSocket(server);
-      const snapshot = await this.getSnapshot(canvasId);
-      server.send(encodeServerMessage({ type: 'snapshot', payload: snapshot }));
-      server.addEventListener('message', (event) => {
-        void this.handleSocketMessage(canvasId, server, event);
-      });
-      return new Response(null, { status: 101, webSocket: client });
+    // Defense in depth: the Worker always sets this header after verifying a ticket. A request
+    // without a well-formed identity for this exact canvas is refused.
+    const identity = decodeVerifiedIdentity(request.headers.get(INTERNAL_IDENTITY_HEADER));
+    if (identity === null || identity.canvas_id !== canvasId) {
+      return unauthenticated();
     }
 
-    if (request.method === 'GET' && url.pathname.endsWith('/snapshot')) {
-      return Response.json({ data: await this.getSnapshot(canvasId) });
+    const upgrade = request.headers.get('Upgrade') === 'websocket';
+    if (url.pathname === '/ws' && upgrade) {
+      return this.#acceptSocket(identity);
+    }
+
+    if (url.pathname === '/snapshot' && request.method === 'GET' && !upgrade) {
+      return Response.json({ data: this.#store.getSnapshot(canvasId) });
     }
 
     return new Response('Not Found', { status: 404 });
   }
 
-  private async handleSocketMessage(
-    canvasId: string,
+  override async webSocketMessage(socket: WebSocket, message: string | ArrayBuffer): Promise<void> {
+    const attachment = readAttachment(socket);
+    if (attachment === null) {
+      closeQuietly(socket, UNBOUND_SOCKET_CLOSE_CODE, 'collaboration identity unavailable');
+      return;
+    }
+    this.#handleSocketMessage(socket, attachment, message);
+  }
+
+  override async webSocketClose(socket: WebSocket): Promise<void> {
+    const attachment = readAttachment(socket);
+    if (attachment !== null) this.#releasePresenceFor(attachment);
+    closeQuietly(socket, 1000, 'closed');
+  }
+
+  override async webSocketError(socket: WebSocket): Promise<void> {
+    const attachment = readAttachment(socket);
+    if (attachment !== null) this.#releasePresenceFor(attachment);
+  }
+
+  #acceptSocket(identity: VerifiedIdentity): Response {
+    const snapshot = this.#store.getSnapshot(identity.canvas_id);
+    const pair = new WebSocketPair();
+    const client = pair[0];
+    const server = pair[1];
+    this.ctx.acceptWebSocket(server);
+    // Serialized synchronously after acceptance: no broadcast can run in between.
+    const attachment: SocketAttachment = {
+      v: ATTACHMENT_VERSION,
+      socket_id: crypto.randomUUID(),
+      canvas_id: identity.canvas_id,
+      actor: identity.actor,
+      surface: null,
+    };
+    server.serializeAttachment(attachment);
+    server.send(encodeServerMessage({ type: 'snapshot', payload: snapshot }));
+    return new Response(null, {
+      status: 101,
+      webSocket: client,
+      headers: { 'Sec-WebSocket-Protocol': COLLABORATION_WEBSOCKET_PROTOCOL },
+    });
+  }
+
+  /** Sends the snapshot only to sockets with a valid bound identity; any other socket is closed. */
+  #broadcastSnapshot(): void {
+    const payload = encodeServerMessage({
+      type: 'snapshot',
+      payload: this.#store.getSnapshot(this.#store.readCanvasId()),
+    });
+    for (const socket of this.ctx.getWebSockets()) {
+      if (readAttachment(socket) === null) {
+        closeQuietly(socket, UNBOUND_SOCKET_CLOSE_CODE, 'collaboration identity unavailable');
+        continue;
+      }
+      try {
+        socket.send(payload);
+      } catch {
+        closeQuietly(socket, 1011, 'broadcast failed');
+      }
+    }
+  }
+
+  /**
+   * Removes the socket's bound actor from presence unless another socket of the same actor still
+   * holds a presence join, in which case that socket's surface is kept. Other actors are untouched.
+   */
+  #releasePresenceFor(attachment: SocketAttachment): void {
+    const remaining = this.ctx
+      .getWebSockets()
+      .map((candidate) => readAttachment(candidate))
+      .find(
+        (candidate) =>
+          candidate !== null &&
+          candidate.socket_id !== attachment.socket_id &&
+          candidate.actor.actor_id === attachment.actor.actor_id &&
+          candidate.surface !== null,
+      );
+    if (remaining?.surface) {
+      this.#store.joinPresence(attachment.canvas_id, remaining.actor, remaining.surface);
+    } else {
+      this.#store.leavePresence(attachment.canvas_id, attachment.actor);
+    }
+    this.#broadcastSnapshot();
+  }
+
+  #handleSocketMessage(
     socket: WebSocket,
-    event: MessageEvent,
-  ): Promise<void> {
+    attachment: SocketAttachment,
+    message: string | ArrayBuffer,
+  ): void {
+    const canvasId = attachment.canvas_id;
+    const actor = attachment.actor;
     try {
-      const parsed = ClientMessageSchema.parse(JSON.parse(String(event.data)));
+      const text = typeof message === 'string' ? message : new TextDecoder().decode(message);
+      // The schema strips any identity fields a client sends. Every branch below acts as `actor`,
+      // the identity bound when the socket was accepted.
+      const parsed = ClientMessageSchema.parse(JSON.parse(text));
       if (parsed.type === 'presence.join') {
-        await this.joinPresence(canvasId, parsed.payload);
+        socket.serializeAttachment({ ...attachment, surface: parsed.payload.surface });
+        this.#store.joinPresence(canvasId, actor, parsed.payload.surface);
+        this.#broadcastSnapshot();
         return;
       }
       if (parsed.type === 'presence.leave') {
-        await this.leavePresence(canvasId, parsed.payload.actor_id);
+        socket.serializeAttachment({ ...attachment, surface: null });
+        this.#releasePresenceFor(attachment);
         return;
       }
       if (parsed.type === 'comment.upsert') {
-        await this.upsertComment(canvasId, parsed.payload);
+        this.#store.upsertComment(canvasId, actor, parsed.payload);
+        this.#broadcastSnapshot();
         return;
       }
       if (parsed.type === 'text.draft.upsert') {
-        const result = await this.upsertTextDraft(canvasId, parsed.payload);
+        const result = this.#store.upsertTextDraft(canvasId, actor, parsed.payload);
+        if (result.accepted) this.#broadcastSnapshot();
         socket.send(
           encodeServerMessage({
             type: 'text.draft.result',
@@ -403,12 +251,13 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
         return;
       }
       if (parsed.type === 'lease.acquire') {
-        const result = await this.acquireLease(canvasId, parsed.payload);
+        const accepted = this.#store.acquireLease(canvasId, actor, parsed.payload);
+        if (accepted) this.#broadcastSnapshot();
         socket.send(
           encodeServerMessage({
             type: 'lease.result',
             payload: {
-              accepted: result.accepted,
+              accepted,
               lease_id: parsed.payload.lease_id,
               node_id: parsed.payload.node_id,
             },
@@ -417,16 +266,18 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
         return;
       }
       if (parsed.type === 'lease.release') {
-        await this.releaseLease(canvasId, parsed.payload.lease_id, parsed.payload.actor_id);
+        this.#store.releaseLease(canvasId, actor, parsed.payload.lease_id);
+        this.#broadcastSnapshot();
         return;
       }
       if (parsed.type === 'text.draft.clear') {
-        const result = await this.clearCheckpointedDrafts(canvasId, parsed.payload);
+        const cleared = this.#store.clearCheckpointedDrafts(canvasId, actor, parsed.payload);
+        this.#broadcastSnapshot();
         socket.send(
           encodeServerMessage({
             type: 'text.draft.clear.result',
             payload: {
-              cleared_draft_ids: [...result.cleared_draft_ids],
+              cleared_draft_ids: [...cleared],
               revision_id: parsed.payload.revision_id,
             },
           }),
@@ -434,17 +285,18 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
         return;
       }
       if (parsed.type === 'snapshot.request') {
-        const snapshot = await this.getSnapshot(canvasId);
-        socket.send(encodeServerMessage({ type: 'snapshot', payload: snapshot }));
+        socket.send(
+          encodeServerMessage({ type: 'snapshot', payload: this.#store.getSnapshot(canvasId) }),
+        );
       }
     } catch (error) {
       socket.send(
         encodeServerMessage({
           type: 'error',
-          payload: {
-            code: 'VALIDATION_FAILED',
-            message: error instanceof Error ? error.message : 'Invalid collaboration message',
-          },
+          payload:
+            error instanceof OwnershipError
+              ? { code: 'FORBIDDEN', message: error.message }
+              : { code: 'VALIDATION_FAILED', message: 'Invalid collaboration message' },
         }),
       );
     }

@@ -49,6 +49,18 @@ describe('collaboration checkpoint', () => {
     expect(drafts[0]?.body).toBe('Local prompt');
   });
 
+  it('keeps local drafts for separator-colliding node and field pairs apart', () => {
+    const drafts = collectCheckpointDrafts({
+      snapshotTextDrafts: [],
+      localDrafts: {
+        n: { 'parameters.1::parameters.prompt': 'Draft on node n' },
+        'n::parameters.1': { 'parameters.prompt': 'Draft on node n::parameters.1' },
+      },
+    });
+    expect(drafts).toHaveLength(2);
+    expect(new Set(drafts.map((draft) => draft.draft_id)).size).toBe(2);
+  });
+
   it('builds an upsert patch without removing nodes or edges', () => {
     const { patch, appliedDraftIds, skippedDraftIds } = buildCanvasPatchFromDrafts({
       nodes,

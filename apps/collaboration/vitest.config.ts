@@ -5,6 +5,13 @@ export default defineConfig({
   plugins: [
     cloudflareTest({
       wrangler: { configPath: './wrangler.jsonc' },
+      miniflare: {
+        // Test-only placeholder so the fail-closed ticket check can be exercised. Deployed Workers
+        // receive the real value through `wrangler secret put`, never through configuration.
+        bindings: {
+          COLLABORATION_TICKET_SECRET: 'test-only-collaboration-ticket-secret-000000',
+        },
+      },
     }),
   ],
   test: {
