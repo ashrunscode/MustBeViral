@@ -399,6 +399,7 @@ documents:
         src-fal,
         src-stripe,
         src-superdesign,
+        src-shadcn,
       ]
 
   - id: generated-openapi
