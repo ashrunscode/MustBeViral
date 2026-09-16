@@ -31,3 +31,5 @@ detail, not as permission to send: sending stays behind the repository's own aut
 Re-copy the whole directory from the same source path at a newer upstream revision, then update the
 pinned revision, version and date above. Do not hand-edit vendored files; upstream changes belong
 upstream.
+
+- 2026-09-15: in the API-key setup example, the shell export that assigned a placeholder key was rewritten to a quoted, self-describing placeholder. The upstream text is documentation, not a credential, but its shape matches this repository's assigned-secret scanner; the copy is otherwise verbatim.

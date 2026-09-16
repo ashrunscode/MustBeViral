@@ -198,7 +198,7 @@ See [installation.md](references/installation.md) for full installation commands
 
 Store in environment variable — never hardcode:
 ```bash
-export RESEND_API_KEY=re_xxxxxxxxx
+export RESEND_API_KEY="<paste the key from resend.com/api-keys>"
 ```
 
 Get your key at [resend.com/api-keys](https://resend.com/api-keys).
