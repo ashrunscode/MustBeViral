@@ -53,6 +53,7 @@ Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hou
 | `decision.0004` | `adr-0004-immutable-graph-revisions` | docs/decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md |
 | `decision.0005` | `adr-0005-document-governance` | docs/decisions/ADR-0005-DOCUMENT-GOVERNANCE.md |
 | `decision.0006` | `adr-0006-agent-publication-credentials` | docs/decisions/ADR-0006-AGENT-PUBLICATION-CREDENTIALS.md |
+| `decision.0007` | `adr-0007-stripe-wallet-funding` | docs/decisions/ADR-0007-STRIPE-WALLET-FUNDING.md |
 | `delivery.roadmap` | `roadmap` | docs/delivery/ROADMAP.md |
 | `delivery.phase_exits` | `roadmap` | docs/delivery/ROADMAP.md |
 | `delivery.sequence` | `roadmap` | docs/delivery/ROADMAP.md |

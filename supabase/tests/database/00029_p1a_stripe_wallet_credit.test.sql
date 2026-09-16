@@ -44,8 +44,9 @@ values (
 );
 
 select is(
-  (public.apply_stripe_wallet_credit(
+  (public.apply_stripe_wallet_top_up(
     '50000000-0000-4000-8000-000000000001',
+    'cs_test_wallet_credit_1',
     'evt_wallet_credit_1',
     'cus_wallet_1',
     50000000,
@@ -54,12 +55,13 @@ select is(
     '{}'::jsonb
   ) ->> 'replayed')::boolean,
   false,
-  'apply_stripe_wallet_credit writes the first wallet credit once'
+  'apply_stripe_wallet_top_up writes the first wallet credit once'
 );
 
 select is(
-  (public.apply_stripe_wallet_credit(
+  (public.apply_stripe_wallet_top_up(
     '50000000-0000-4000-8000-000000000001',
+    'cs_test_wallet_credit_1',
     'evt_wallet_credit_1',
     'cus_wallet_1',
     50000000,
@@ -68,7 +70,7 @@ select is(
     '{}'::jsonb
   ) ->> 'replayed')::boolean,
   true,
-  'apply_stripe_wallet_credit replays duplicate stripe event ids'
+  'apply_stripe_wallet_top_up replays a redelivered Checkout Session credit'
 );
 
 select is(
@@ -85,7 +87,7 @@ select is(
   (
     select count(*)::integer
     from public.ledger_transactions
-    where causative_key = 'stripe:evt_wallet_credit_1'
+    where causative_key = 'stripe:checkout_session:cs_test_wallet_credit_1'
   ),
   2,
   'duplicate wallet credit replay creates no extra ledger rows'
