@@ -61,8 +61,9 @@ values (
 
 select is(
   (
-    select (public.apply_stripe_wallet_credit(
+    select (public.apply_stripe_wallet_top_up(
       '99910000-0000-4000-8000-000000000001',
+      'cs_test_wallet_settlement_1',
       'evt_wallet_credit_1',
       'cus_wallet_test',
       50000000,
@@ -91,7 +92,7 @@ select is(
     from public.ledger_transactions
     where workspace_id = '99910000-0000-4000-8000-000000000001'
       and entry_type = 'credit'
-      and causative_key = 'stripe:evt_wallet_credit_1'
+      and causative_key = 'stripe:checkout_session:cs_test_wallet_settlement_1'
   ),
   2,
   'wallet credit writes a balanced ledger pair'
@@ -99,8 +100,9 @@ select is(
 
 select is(
   (
-    select (public.apply_stripe_wallet_credit(
+    select (public.apply_stripe_wallet_top_up(
       '99910000-0000-4000-8000-000000000001',
+      'cs_test_wallet_settlement_1',
       'evt_wallet_credit_1',
       'cus_wallet_test',
       50000000,
@@ -110,7 +112,7 @@ select is(
     ) ->> 'replayed')::boolean
   ),
   true,
-  'duplicate stripe event id replays without double credit'
+  'a redelivered Checkout Session credit replays without double credit'
 );
 
 select is(

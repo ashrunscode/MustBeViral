@@ -85,9 +85,10 @@ export function createStripeWebhookRoute(
 
       // Settle before writing the receipt. The receipt row is final (on conflict do nothing), so
       // writing it first and then failing settlement would make Stripe's retry look like a
-      // duplicate and the event would never be applied. Settlement RPCs are idempotent on the
-      // Stripe event id, so a retry after a failure, or a redelivery, replays safely. A throw
-      // here reaches Core's onError (HTTP 500) with no receipt written, and Stripe retries.
+      // duplicate and the event would never be applied. Settlement RPCs are idempotent (a wallet
+      // top-up on its Checkout Session, a subscription update on the Stripe event id), so a retry
+      // after a failure, or a redelivery, replays safely. A throw here reaches Core's onError
+      // (HTTP 500) with no receipt written, and Stripe retries.
       const requestId = normalizeRequestId(context.get('requestId'));
       const sideEffects =
         deps.settleEvent === undefined ? null : await deps.settleEvent({ verified, requestId });
@@ -112,6 +113,10 @@ export function createStripeWebhookRoute(
           acknowledged: true,
           event_type: verified.eventType,
           settlement_kind: settlement.kind,
+          settlement_reason:
+            settlement.kind === 'ignored' || settlement.kind === 'rejected'
+              ? settlement.reason
+              : null,
           wallet_credit_micros:
             settlement.kind === 'wallet_credit'
               ? settlement.plan.walletCreditMicros.toString()

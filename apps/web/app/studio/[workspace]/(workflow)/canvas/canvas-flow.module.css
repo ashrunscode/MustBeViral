@@ -7,10 +7,13 @@
   background: var(--paper);
 }
 
+/* One explicit column: the implicit auto column took the toolbar's 580.64px min-content width, so on
+   viewports under 901px the canvas surface ran under the side rail and nodes sat over its fields. */
 .workspace {
   min-width: 0;
   min-height: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 54px auto minmax(0, 1fr) 72px;
   overflow: hidden;
 }
@@ -152,8 +155,7 @@
   cursor: pointer;
   transition:
     border-color 120ms cubic-bezier(0.2, 0, 0, 1),
-    background-color 120ms cubic-bezier(0.2, 0, 0, 1),
-    opacity 120ms cubic-bezier(0.2, 0, 0, 1);
+    background-color 120ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .nodeCard:hover {
@@ -166,8 +168,31 @@
   background: #80bfff1f;
 }
 
+/* A node outside the selected lineage recedes through non-text chrome only: a dashed --ink-muted
+   border (the non-colour cue, 3.9:1 against the canvas), the canvas-field fill instead of a raised
+   card, and a quiet status icon. Every text stays at an AA ink on that fill; opacity .5 left mono
+   text at 2.14:1 and titles at 3.15:1. */
 :global(.node-dim) {
-  opacity: 0.5;
+  border-style: dashed;
+  border-color: var(--ink-muted);
+  background: var(--paper-2);
+}
+
+/* The dashed border is the inactive cue, so it keeps at least 3:1 against the canvas on hover. */
+:global(.node-dim):hover {
+  border-color: var(--ink);
+}
+
+:global(.node-dim) .nodeTitle {
+  color: var(--ink);
+}
+
+:global(.node-dim) :global(.mbv-chip) {
+  background: transparent;
+}
+
+:global(.node-dim) :global(.mbv-chip) :global(.mbv-chip__icon) {
+  color: var(--ink-muted);
 }
 
 :global(.arrival-warm) {
@@ -263,11 +288,13 @@
   text-align: right;
 }
 
+/* The tint is mixed into the card, not layered over the node: over a selected node's blue wash the
+   translucent tint left --fail-ink at 4.40:1. */
 .invalidReason {
   border: 1px solid rgba(196, 64, 77, 0.3);
   border-radius: 4px;
   padding: 6px;
-  background: rgba(196, 64, 77, 0.08);
+  background: color-mix(in srgb, var(--fail) 8%, var(--card));
   color: var(--fail-ink);
   font-size: 10px;
   line-height: 1.35;
@@ -310,7 +337,11 @@
   grid-column: 2;
   grid-row: 1;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  /* The collaboration row is capped at 36% of the rail and its stack scrolls inside it. An auto row
+     sized to the stack's full content (547px) because a percentage cap on the stack cannot resolve
+     while tracks are sized, leaving the outline list 16px at 1280x800 and 77px at 1440x900 beside
+     empty rail. 36% keeps at least five outline rows in view from 1280x800 up. */
+  grid-template-rows: minmax(0, 1fr) fit-content(36%);
   overflow: hidden;
   border-left: 1px solid var(--line);
   background: var(--card);
@@ -320,7 +351,6 @@
   border-top: 1px solid var(--line);
   padding: 12px;
   overflow-y: auto;
-  max-height: 42%;
 }
 
 .outlinePanel {
@@ -364,11 +394,16 @@
   list-style: none;
 }
 
+/* Rows sit 4px apart: touching rows at fractional offsets shared up to 1.25px of hit-test pixels. */
+.outlineList > li + li {
+  margin-top: 4px;
+}
+
 .outlineRow {
   width: 100%;
-  min-height: 54px;
+  min-height: 52px;
   content-visibility: auto;
-  contain-intrinsic-size: 54px;
+  contain-intrinsic-size: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;

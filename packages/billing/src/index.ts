@@ -96,23 +96,31 @@ export type { StripeWebhookVerificationInput, VerifiedStripeWebhook } from './st
 export {
   defaultStripeCatalogAmounts,
   extractStripeCustomerId,
-  extractStripeWalletCreditMicros,
   extractStripeWorkspaceId,
   isStripeWalletCreditEvent,
   parseStripeSubscriptionStatus,
   planStripeSubscriptionUpdate,
   planStripeWalletCredit,
+  readStripeWalletTopUp,
   settleStripeWebhookEvent,
+  STRIPE_WALLET_TOP_UP_PURPOSE,
+  stripeWalletCreditCausativeKey,
 } from './stripe-settlement';
 export type {
   StripeSettlementEventType,
   StripeSettlementIgnoredPlan,
+  StripeSettlementIgnoredReason,
   StripeSettlementPlan,
+  StripeSettlementRejectedPlan,
   StripeSubscriptionUpdateInput,
   StripeSubscriptionUpdatePlan,
+  StripeWalletCreditEventType,
   StripeWalletCreditInput,
   StripeWalletCreditPlan,
   StripeWalletCreditSettlementPlan,
+  StripeWalletTopUp,
+  StripeWalletTopUpIgnoredReason,
+  StripeWalletTopUpRejectedReason,
 } from './stripe-settlement';
 export { computePackLandedCost, emptyPackLandedCostEvidence } from './landed-cost';
 export type {

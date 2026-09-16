@@ -32,3 +32,4 @@ export {
   type LightfieldTokens,
 } from './tokens';
 export { formatUsdMicros } from './money';
+export { useScrollableRegion, type ScrollableRegion } from './scrollable-region';

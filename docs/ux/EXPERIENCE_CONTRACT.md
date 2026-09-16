@@ -59,11 +59,12 @@ Lightfield tokens in `.superdesign/design-system.md` are the system. Design and 
 ## Accessibility contract
 
 - Meet WCAG 2.2 AA for every shipped flow; target 7:1 text contrast where practical.
-- Provide a skip link, logical headings and landmarks, a persistent 2px brand-strong `#3182d4` focus-visible outline with a 2px offset, predictable tab order, and focus recovery after dialogs, node deletion, route changes, and errors.
+- Provide a skip link, logical headings and landmarks, a persistent 2px brand-strong `#3182d4` focus-visible outline with a 2px offset (drawn 2px inside instead on a scroll region that fills the clipped studio frame, so all four edges stay visible), predictable tab order, and focus recovery after dialogs, node deletion, route changes, and errors.
 - All essential canvas actions—select, inspect, connect, reorder, configure, validate, and delete—must be possible through the semantic outline/table without pointer gestures.
 - Announce agent patches, quote changes, run transitions, progress, partial results, and failures through appropriately scoped live regions without repeated noise.
 - Respect reduced motion, forced colors/high contrast, 200% zoom, browser text resizing, and screen magnification.
 - Icons have accessible names when actionable and are hidden when decorative. Status always includes text plus icon/shape.
+- An enabled, focusable control never shows an inactive or de-emphasised state through opacity, because opacity pulls its text below AA (a canvas node at opacity .5 measured 2.14:1 for mono text and 3.15:1 for its title). It recedes through non-text chrome only, keeps a non-colour cue that itself meets the WCAG 1.4.11 3:1 non-text contrast minimum, and every text keeps an AA ink. An inactive canvas node, outside the selected node's lineage, takes a dashed `--ink-muted` border as that cue (3.91:1 against the canvas at rest and with keyboard focus, `--ink` at 5.59:1 on hover), the canvas-field fill `--paper-2` instead of the raised card, a transparent status chip and an `--ink-muted` decorative status icon; its title steps down from `--ink-strong` to `--ink`, and on that fill its title and mono labels measure 5.59:1 and its status labels 4.84–5.59:1.
 - Generated images require user-editable descriptive text before approval/export.
 
 ## Responsive contract

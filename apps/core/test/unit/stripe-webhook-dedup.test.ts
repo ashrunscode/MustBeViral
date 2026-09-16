@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   createStripeWebhookDedupPort,
   StripeWebhookDedupForbiddenError,
+  StripeWebhookDedupRejectedError,
   StripeWebhookDedupUnavailableError,
 } from '../../src/composition/stripe-webhook-dedup';
 
@@ -20,6 +21,12 @@ const event = {
 
 function respondWith(body: unknown) {
   return vi.fn<typeof fetch>(async () => Response.json(body, { status: 200 }));
+}
+
+function respondWithStatus(status: number, body: unknown) {
+  return vi.fn<typeof fetch>(async () =>
+    typeof body === 'string' ? new Response(body, { status }) : Response.json(body, { status }),
+  );
 }
 
 describe('stripe webhook dedup', () => {
@@ -135,5 +142,104 @@ describe('stripe webhook dedup', () => {
         payloadHash: 'hash',
       }),
     ).rejects.toBeInstanceOf(StripeWebhookDedupForbiddenError);
+  });
+
+  it('treats a 401 as forbidden', async () => {
+    const port = createStripeWebhookDedupPort(
+      bindings,
+      'req-stripe-dedup-5',
+      respondWithStatus(401, { code: 'PGRST301', message: 'JWT expired' }),
+    );
+
+    await expect(port.recordEvent(event)).rejects.toBeInstanceOf(StripeWebhookDedupForbiddenError);
+  });
+
+  it.each([
+    ['blank input', 400, '22023', 'stripe_event_id is required'],
+    ['a not-null violation', 400, '23502', 'null value in column "event_type"'],
+    ['an unparseable request body', 400, 'PGRST102', 'Empty or invalid json'],
+    ['a unique violation', 409, '23505', 'duplicate key value'],
+    ['an HTTP 422', 422, '22P02', 'invalid input syntax'],
+  ])(
+    'reports %s as a permanent rejection, not an outage',
+    async (_label, status, code, postgrestMessage) => {
+      const port = createStripeWebhookDedupPort(
+        bindings,
+        'req-stripe-dedup-6',
+        respondWithStatus(status, {
+          code,
+          message: postgrestMessage,
+          details: 'Failing row contains (evt_1, abc123).',
+          hint: null,
+        }),
+      );
+
+      const error = await port.recordEvent(event).catch((caught: unknown) => caught);
+
+      expect(error).toBeInstanceOf(StripeWebhookDedupRejectedError);
+      expect(error).not.toBeInstanceOf(StripeWebhookDedupUnavailableError);
+      const rejected = error as StripeWebhookDedupRejectedError;
+      expect(rejected.name).toBe('StripeWebhookDedupRejectedError');
+      expect(rejected.status).toBe(status);
+      expect(rejected.code).toBe(code);
+      // The message is handed to exception telemetry, so it carries only the status and the error
+      // code, never PostgREST's message or details, which can echo row values.
+      expect(rejected.message).toBe(
+        `Stripe webhook dedup RPC rejected the event with HTTP ${status} (${code}).`,
+      );
+      expect(rejected.message).not.toContain(postgrestMessage);
+      expect(rejected.message).not.toContain('evt_1');
+    },
+  );
+
+  it.each([
+    ['a non-JSON body', 'Bad Request'],
+    ['a JSON body without a code', { message: 'bad' }],
+    ['an event id in the code field', { code: 'evt_1' }],
+    ['a lowercase code', { code: '22p02' }],
+    ['an overlong code', { code: 'PGRST1234' }],
+    ['a numeric code', { code: 22023 }],
+    ['a null body', null],
+    ['an array body', [{ code: '22023' }]],
+  ])(
+    'keeps a 400 with %s as unavailable: PostgREST always sends a well-formed code',
+    async (_label, body) => {
+      const port = createStripeWebhookDedupPort(
+        bindings,
+        'req-stripe-dedup-7',
+        respondWithStatus(400, body),
+      );
+
+      const error = await port.recordEvent(event).catch((caught: unknown) => caught);
+
+      expect(error).toBeInstanceOf(StripeWebhookDedupUnavailableError);
+      expect(error).not.toBeInstanceOf(StripeWebhookDedupRejectedError);
+    },
+  );
+
+  it.each([
+    ['a retired RPC during a deploy', 400, { code: '0A000' }],
+    ['a restricted project', 402, {}],
+    ['a missing RPC after a deploy ahead of its migration', 404, { code: 'PGRST202' }],
+    ['a read-only database with a nearly full disk', 405, { code: '25006' }],
+    ['a schema that is not exposed', 406, { code: 'PGRST106' }],
+    ['an undefined function', 404, { code: '42883' }],
+    ['a request timeout', 408, {}],
+    ['a too-early response', 425, {}],
+    ['rate limiting', 429, {}],
+    ['a server error', 500, { code: 'XX000' }],
+    ['a bad gateway', 502, 'upstream error'],
+    ['an unavailable service', 503, {}],
+  ])('keeps %s as unavailable', async (_label, status, body) => {
+    const port = createStripeWebhookDedupPort(
+      bindings,
+      'req-stripe-dedup-8',
+      respondWithStatus(status, body),
+    );
+
+    const error = await port.recordEvent(event).catch((caught: unknown) => caught);
+
+    expect(error).toBeInstanceOf(StripeWebhookDedupUnavailableError);
+    expect(error).not.toBeInstanceOf(StripeWebhookDedupRejectedError);
   });
 });
