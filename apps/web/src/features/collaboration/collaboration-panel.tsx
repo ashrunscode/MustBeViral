@@ -11,7 +11,10 @@ import {
   useState,
 } from 'react';
 
-import type { CollaborationSnapshot } from '@mustbeviral/collaboration';
+import {
+  COLLABORATION_COMMENT_BODY_MAX_LENGTH,
+  type CollaborationSnapshot,
+} from '@mustbeviral/collaboration';
 
 import styles from './collaboration-panel.module.css';
 import { presenceLabel } from './use-collaboration-session';
@@ -69,16 +72,21 @@ export function PresenceBar({
 }
 
 export function CommentThreadPanel({
+  actorId = null,
   anchorId,
   anchorLabel,
   comments,
   composerLabel = 'Add a draft comment',
+  onDeleteComment,
   onSubmit,
 }: Readonly<{
+  /** The acting identity. Only comments it wrote offer a delete action. */
+  actorId?: string | null;
   anchorId: string | null;
   anchorLabel: string;
   comments: readonly CollaborationSnapshot['comments'][number][];
   composerLabel?: string;
+  onDeleteComment?: (commentId: string) => void;
   onSubmit: (body: string) => void;
 }>) {
   const listId = useId();
@@ -163,6 +171,17 @@ export function CommentThreadPanel({
             >
               <span className={styles.commentAuthor}>{comment.author.display_name}</span>
               <p className={styles.commentBody}>{comment.body}</p>
+              {onDeleteComment !== undefined &&
+              actorId !== null &&
+              comment.author.actor_id === actorId ? (
+                <Button
+                  variant="quiet-link"
+                  onClick={() => onDeleteComment(comment.comment_id)}
+                  aria-label={`Delete your comment on ${anchorLabel}`}
+                >
+                  Delete
+                </Button>
+              ) : null}
             </li>
           ))}
         </ul>
@@ -173,6 +192,7 @@ export function CommentThreadPanel({
           <textarea
             id={composerId}
             value={draft}
+            maxLength={COLLABORATION_COMMENT_BODY_MAX_LENGTH}
             disabled={anchorId === null}
             placeholder={
               anchorId === null
@@ -203,19 +223,23 @@ export function CommentThreadPanel({
 }
 
 export function CollaborationSidebar({
+  actorId = null,
   anchorId,
   anchorLabel,
   comments,
   draftPanel,
+  onDeleteComment,
   onSubmitComment,
   snapshot,
   status,
   surface,
 }: Readonly<{
+  actorId?: string | null;
   anchorId: string | null;
   anchorLabel: string;
   comments: readonly CollaborationSnapshot['comments'][number][];
   draftPanel?: ReactNode;
+  onDeleteComment?: (commentId: string) => void;
   onSubmitComment: (body: string) => void;
   snapshot: CollaborationSnapshot | null;
   status: 'idle' | 'connecting' | 'open' | 'closed' | 'error';
@@ -226,9 +250,11 @@ export function CollaborationSidebar({
       <PresenceBar snapshot={snapshot} status={status} surface={surface} />
       {draftPanel}
       <CommentThreadPanel
+        actorId={actorId}
         anchorId={anchorId}
         anchorLabel={anchorLabel}
         comments={comments}
+        {...(onDeleteComment === undefined ? {} : { onDeleteComment })}
         onSubmit={onSubmitComment}
       />
     </div>

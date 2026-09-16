@@ -4,7 +4,6 @@ import {
   CollaborationClient,
   InMemoryCollaborationSession,
   createPreviewCollaborationSnapshot,
-  leaseIdForActor,
   textDraftKey,
   type CollaborationActor,
   type CollaborationSnapshot,
@@ -35,13 +34,15 @@ export interface CollaborationSessionState {
    * Core in websocket transport. Null until Core has issued a ticket.
    */
   readonly actor: CollaborationActor | null;
-  readonly upsertComment: (
+  /** Creates a comment. The collaboration Worker assigns its id; callers never choose one. */
+  readonly createComment: (
     input: Readonly<{
-      comment_id: string;
       body: string;
       anchor_node_id?: string;
     }>,
   ) => void;
+  /** Deletes one of the acting identity's own comments. Other members' comments are refused. */
+  readonly deleteComment: (commentId: string) => void;
   readonly upsertTextDraft: (
     input: Readonly<{
       node_id: string;
@@ -82,7 +83,8 @@ export function useCollaborationSession(
   const [snapshot, setSnapshot] = useState<CollaborationSnapshot | null>(null);
   const [status, setStatus] = useState<CollaborationSessionState['status']>('connecting');
   const [boundActor, setBoundActor] = useState<CollaborationActor | null>(null);
-  const upsertCommentRef = useRef<CollaborationSessionState['upsertComment']>(noop);
+  const createCommentRef = useRef<CollaborationSessionState['createComment']>(noop);
+  const deleteCommentRef = useRef<CollaborationSessionState['deleteComment']>(noop);
   const upsertTextDraftRef = useRef<CollaborationSessionState['upsertTextDraft']>(noop);
   const acquireLeaseRef = useRef<CollaborationSessionState['acquireLease']>(noop);
   const releaseLeaseRef = useRef<CollaborationSessionState['releaseLease']>(noop);
@@ -120,7 +122,8 @@ export function useCollaborationSession(
 
   useEffect(() => {
     if (!isActive || configurationError) {
-      upsertCommentRef.current = noop;
+      createCommentRef.current = noop;
+      deleteCommentRef.current = noop;
       upsertTextDraftRef.current = noop;
       acquireLeaseRef.current = noop;
       releaseLeaseRef.current = noop;
@@ -147,8 +150,11 @@ export function useCollaborationSession(
         setStatus('open');
       });
       session.connect();
-      upsertCommentRef.current = (input) => {
-        session.upsertComment(input);
+      createCommentRef.current = (input) => {
+        session.createComment(input);
+      };
+      deleteCommentRef.current = (commentId) => {
+        session.deleteComment(commentId);
       };
       upsertTextDraftRef.current = (input) => {
         session.upsertTextDraft({
@@ -157,10 +163,10 @@ export function useCollaborationSession(
         });
       };
       acquireLeaseRef.current = (nodeId) => {
-        session.acquireLease(nodeId, leaseIdForActor(nodeId, previewActor.actor_id));
+        session.acquireLease(nodeId);
       };
       releaseLeaseRef.current = (nodeId) => {
-        session.releaseLease(leaseIdForActor(nodeId, previewActor.actor_id));
+        session.releaseLease(nodeId);
       };
       clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
         session.clearCheckpointedDrafts({ draft_ids: draftIds, revision_id: revisionId });
@@ -168,7 +174,8 @@ export function useCollaborationSession(
       return () => {
         unsubscribe();
         session.disconnect();
-        upsertCommentRef.current = noop;
+        createCommentRef.current = noop;
+        deleteCommentRef.current = noop;
         upsertTextDraftRef.current = noop;
         acquireLeaseRef.current = noop;
         releaseLeaseRef.current = noop;
@@ -182,7 +189,9 @@ export function useCollaborationSession(
       canvasId,
       surface: options.surface,
       // Called for the first connection and again for every reconnect: tickets are single-use in
-      // practice and expire within seconds.
+      // practice and expire within seconds. The Worker also ends every socket at its maximum
+      // lifetime; the client then fetches a new ticket at once, so Core re-checks access, and the
+      // session carries on without restarting this effect.
       ticketProvider: () => requestCollaborationTicket(canvasId),
       onActor: (next) => {
         setBoundActor((current) => (sameActor(current, next) ? current : next));
@@ -191,8 +200,11 @@ export function useCollaborationSession(
       onStatus: setStatus,
     });
     client.connect();
-    upsertCommentRef.current = (input) => {
-      client.upsertComment(input);
+    createCommentRef.current = (input) => {
+      client.createComment(input);
+    };
+    deleteCommentRef.current = (commentId) => {
+      client.deleteComment(commentId);
     };
     upsertTextDraftRef.current = (input) => {
       client.upsertTextDraft({
@@ -211,7 +223,8 @@ export function useCollaborationSession(
     };
     return () => {
       client.disconnect();
-      upsertCommentRef.current = noop;
+      createCommentRef.current = noop;
+      deleteCommentRef.current = noop;
       upsertTextDraftRef.current = noop;
       acquireLeaseRef.current = noop;
       releaseLeaseRef.current = noop;
@@ -234,7 +247,8 @@ export function useCollaborationSession(
       snapshot: null,
       status: 'idle',
       actor: null,
-      upsertComment: noop,
+      createComment: noop,
+      deleteComment: noop,
       upsertTextDraft: noop,
       acquireLease: noop,
       releaseLease: noop,
@@ -247,7 +261,8 @@ export function useCollaborationSession(
       snapshot: emptySnapshot(options.canvasId!),
       status: 'error',
       actor: null,
-      upsertComment: noop,
+      createComment: noop,
+      deleteComment: noop,
       upsertTextDraft: noop,
       acquireLease: noop,
       releaseLease: noop,
@@ -259,8 +274,11 @@ export function useCollaborationSession(
     snapshot,
     status,
     actor,
-    upsertComment: (input) => {
-      upsertCommentRef.current(input);
+    createComment: (input) => {
+      createCommentRef.current(input);
+    },
+    deleteComment: (commentId) => {
+      deleteCommentRef.current(commentId);
     },
     upsertTextDraft: (input) => {
       upsertTextDraftRef.current(input);

@@ -25,10 +25,22 @@ export function textDraftKey(nodeId: string, fieldPath: string): string {
 }
 
 /**
- * Lease id for a node and holder. This joined string is only a label: the collaboration Worker also
- * refuses to store a lease under an id that already belongs to a different node or holder.
+ * Identity of a lease: one node held by one actor. Like `textDraftKey` this JSON array encoding is
+ * injective, so two different `(nodeId, actorId)` pairs never produce the same id. The earlier
+ * joined string `lease-${nodeId}-${actorId}` was not: node `x` held by `a-b` and node `x-a` held by
+ * `b` both spelled `lease-x-a-b`. The collaboration Worker derives this id itself from the requested
+ * node and the ticket-bound actor and never stores a lease under a client-chosen id.
  */
 export function leaseIdForActor(nodeId: string, actorId: string): string {
+  return JSON.stringify(['lease', nodeId, actorId]);
+}
+
+/**
+ * The joined lease id that clients released before the injective encoding. The Worker still
+ * accepts it, but only compared against the calling actor's own node and id, where it is
+ * unambiguous: with the actor fixed, prefix and suffix are fixed, so the string determines the node.
+ */
+export function legacyLeaseIdForActor(nodeId: string, actorId: string): string {
   return `lease-${nodeId}-${actorId}`;
 }
 

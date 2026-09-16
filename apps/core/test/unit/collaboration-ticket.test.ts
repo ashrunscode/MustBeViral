@@ -219,6 +219,53 @@ describe('POST /v1/canvases/:id/collaboration-tickets', () => {
     expect(membership?.url).toContain('revoked_at=is.null');
   });
 
+  it('re-checks membership for every ticket, so a removed member cannot reconnect', async () => {
+    vi.spyOn(console, 'log').mockImplementation(() => undefined);
+    const visibility = { canvasVisible: true, member: true };
+    const fixture = supabaseFixture(visibility);
+    const app = appWith(fixture.requestFactory);
+
+    // The first connection and a reconnect while still a member both receive tickets.
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const issued = await app.request(
+        `/v1/canvases/${canvasId}/collaboration-tickets`,
+        ticketRequest(),
+        bindings(),
+      );
+      expect(issued.status).toBe(200);
+    }
+    const membershipChecks = () =>
+      fixture.calls.filter((call) => call.url.includes('/workspace_memberships?')).length;
+    expect(membershipChecks()).toBe(2);
+
+    // The member is removed (or the workspace deleted) while a socket is open. When the Worker
+    // ends that socket at its lifetime, the client's reconnect asks for a new ticket and is refused
+    // with a non-retryable error, so the client stops instead of retrying.
+    visibility.member = false;
+    const refused = await app.request(
+      `/v1/canvases/${canvasId}/collaboration-tickets`,
+      ticketRequest(),
+      bindings(),
+    );
+    expect(refused.status).toBe(403);
+    const text = await refused.text();
+    expect(ApiErrorEnvelopeSchema.parse(JSON.parse(text)).error).toMatchObject({
+      code: 'FORBIDDEN',
+      retryable: false,
+    });
+    expect(text).not.toContain('ticket"');
+    expect(membershipChecks()).toBe(3);
+
+    visibility.canvasVisible = false;
+    const deleted = await app.request(
+      `/v1/canvases/${canvasId}/collaboration-tickets`,
+      ticketRequest(),
+      bindings(),
+    );
+    expect(deleted.status).toBe(403);
+    expect(await deleted.text()).not.toContain('ticket"');
+  });
+
   it('issues a verifiable ticket bound to the authenticated caller and the canvas', async () => {
     const log = vi.spyOn(console, 'log').mockImplementation(() => undefined);
     const fixture = supabaseFixture({ canvasVisible: true, member: true });

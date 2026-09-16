@@ -1,7 +1,7 @@
 import { env, evictDurableObject, runInDurableObject } from 'cloudflare:test';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { leaseIdForActor, textDraftKey } from '@mustbeviral/collaboration';
+import { leaseIdForActor, legacyLeaseIdForActor, textDraftKey } from '@mustbeviral/collaboration';
 
 import {
   actorA,
@@ -108,11 +108,20 @@ describe('ticket-bound identity in the canvas coordination object', () => {
       type: 'comment.upsert',
       payload: { comment_id: 'comment-a', author: actorA, body: 'Original from A' },
     });
-    await freshSnapshot(a);
+    const beforeAttack = await freshSnapshot(a);
+    const idA = beforeAttack.comments.find(
+      (comment) => comment.body === 'Original from A',
+    )?.comment_id;
+    expect(idA).toBeTypeOf('string');
 
+    // A legacy upsert naming A's id creates B's own comment; an update naming it is refused.
     b.send({
       type: 'comment.upsert',
-      payload: { comment_id: 'comment-a', author: actorA, body: 'Rewritten by B' },
+      payload: { comment_id: idA, author: actorA, body: 'Rewritten by B' },
+    });
+    b.send({
+      type: 'comment.update',
+      payload: { comment_id: idA, author: actorA, body: 'Updated by B' },
     });
     b.send({
       type: 'comment.upsert',
@@ -120,12 +129,23 @@ describe('ticket-bound identity in the canvas coordination object', () => {
     });
     const snapshot = await freshSnapshot(b);
 
-    const commentA = snapshot.comments.find((comment) => comment.comment_id === 'comment-a');
+    const commentA = snapshot.comments.find((comment) => comment.comment_id === idA);
     expect(commentA?.body).toBe('Original from A');
     expect(commentA?.author.actor_id).toBe(actorA.actor_id);
-    const commentB = snapshot.comments.find((comment) => comment.comment_id === 'comment-b');
+    const commentB = snapshot.comments.find((comment) => comment.body === 'Signed as A by B');
     expect(commentB?.author.actor_id).toBe(actorB.actor_id);
     expect(commentB?.author.display_name).toBe(actorB.display_name);
+    expect(commentB?.comment_id).not.toBe('comment-b');
+    expect(
+      snapshot.comments.find((comment) => comment.body === 'Rewritten by B')?.author.actor_id,
+    ).toBe(actorB.actor_id);
+    expect(snapshot.comments.some((comment) => comment.body === 'Updated by B')).toBe(false);
+    expect(
+      b.frames.some(
+        (frame) =>
+          frame.type === 'error' && (frame.payload as { code: string }).code === 'FORBIDDEN',
+      ),
+    ).toBe(true);
   });
 
   it("does not let B draft as A on A's leased node or overwrite A's draft by id", async () => {
@@ -327,9 +347,9 @@ describe('ticket-bound identity in the canvas coordination object', () => {
     expect((direct?.payload as { reason?: string } | undefined)?.reason).toBe('lease_held');
   });
 
-  it("does not let a lease-id collision replace another actor's lease", async () => {
-    // Lease ids are "lease-<node>-<actor>". Actor ids are Supabase UUIDs in practice, but the
-    // object must not rely on that: these ids collide as "lease-x-a-b".
+  it("does not let a lease-id collision replace or release another actor's lease", async () => {
+    // Legacy ids "lease-<node>-<actor>" collide as "lease-x-a-b". Actor ids are Supabase UUIDs in
+    // practice, but the object must not rely on that.
     const canvasId = 'canvas-attack-lease-collision';
     const holder = { actor_id: 'a-b', display_name: 'Holder', color: '#3182d4' };
     const attacker = { actor_id: 'b', display_name: 'Attacker', color: '#1f9d63' };
@@ -338,26 +358,51 @@ describe('ticket-bound identity in the canvas coordination object', () => {
     openSockets.push(a, b);
     await a.waitFor((frame) => frame.type === 'snapshot');
     await b.waitFor((frame) => frame.type === 'snapshot');
-    expect(leaseIdForActor('x', holder.actor_id)).toBe(leaseIdForActor('x-a', attacker.actor_id));
+    const collidingLegacyId = legacyLeaseIdForActor('x', holder.actor_id);
+    expect(collidingLegacyId).toBe(legacyLeaseIdForActor('x-a', attacker.actor_id));
+    expect(leaseIdForActor('x', holder.actor_id)).not.toBe(
+      leaseIdForActor('x-a', attacker.actor_id),
+    );
 
-    a.send({
-      type: 'lease.acquire',
-      payload: { lease_id: leaseIdForActor('x', holder.actor_id), node_id: 'x', ttl_seconds: 120 },
-    });
-    await freshSnapshot(a);
+    // The attacker claims the colliding id first, for its own node, then the holder uses it.
     b.send({
       type: 'lease.acquire',
-      payload: {
-        lease_id: leaseIdForActor('x-a', attacker.actor_id),
-        node_id: 'x-a',
-        ttl_seconds: 120,
-      },
+      payload: { lease_id: collidingLegacyId, node_id: 'x-a', ttl_seconds: 120 },
     });
+    await freshSnapshot(b);
+    a.send({
+      type: 'lease.acquire',
+      payload: { lease_id: collidingLegacyId, node_id: 'x', ttl_seconds: 120 },
+    });
+    await freshSnapshot(a);
+    // Releasing by either id reaches only the attacker's own lease.
+    b.send({ type: 'lease.release', payload: { lease_id: collidingLegacyId } });
+    b.send({ type: 'lease.release', payload: { lease_id: leaseIdForActor('x', holder.actor_id) } });
     const snapshot = await freshSnapshot(b);
 
     const onX = snapshot.leases.find((lease) => lease.node_id === 'x');
     expect(onX?.holder.actor_id).toBe(holder.actor_id);
+    expect(onX?.lease_id).toBe(leaseIdForActor('x', holder.actor_id));
     expect(snapshot.leases.find((lease) => lease.node_id === 'x-a')).toBeUndefined();
+    const results = [...a.frames, ...b.frames]
+      .filter((frame) => frame.type === 'lease.result')
+      .map((frame) => frame.payload);
+    expect(results).toEqual(
+      expect.arrayContaining([
+        {
+          accepted: true,
+          lease_id: leaseIdForActor('x-a', attacker.actor_id),
+          node_id: 'x-a',
+          reason: 'ok',
+        },
+        {
+          accepted: true,
+          lease_id: leaseIdForActor('x', holder.actor_id),
+          node_id: 'x',
+          reason: 'ok',
+        },
+      ]),
+    );
   });
 
   it('keeps the bound identity across hibernation', async () => {
@@ -385,7 +430,7 @@ describe('ticket-bound identity in the canvas coordination object', () => {
     const snapshot = await freshSnapshot(b);
     expect(snapshot.presence.map((entry) => entry.actor.actor_id)).toEqual([actorB.actor_id]);
     expect(
-      snapshot.comments.find((comment) => comment.comment_id === 'after-wake')?.author,
+      snapshot.comments.find((comment) => comment.body === 'Sent after hibernation')?.author,
     ).toMatchObject({ actor_id: actorB.actor_id, display_name: actorB.display_name });
   });
 });

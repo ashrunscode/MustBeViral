@@ -6,6 +6,11 @@ import {
   collaborationWebSocketUrl,
   type CollaborationTicketGrant,
 } from './client';
+import {
+  COLLABORATION_CLOSE_CODES,
+  COLLABORATION_COMMENT_BODY_MAX_LENGTH,
+  COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS,
+} from './limits';
 import { CollaborationSnapshotSchema } from './protocol';
 import { COLLABORATION_WEBSOCKET_PROTOCOL } from './ticket';
 
@@ -13,7 +18,7 @@ class MockWebSocket {
   static readonly OPEN = 1;
   static instances: MockWebSocket[] = [];
   readonly sent: string[] = [];
-  readonly listeners = new Map<string, Set<(event: { data?: string }) => void>>();
+  readonly listeners = new Map<string, Set<(event: { data?: string; code?: number }) => void>>();
   readyState = 0;
 
   constructor(
@@ -39,7 +44,10 @@ class MockWebSocket {
     });
   }
 
-  addEventListener(type: string, listener: (event: { data?: string }) => void): void {
+  addEventListener(
+    type: string,
+    listener: (event: { data?: string; code?: number }) => void,
+  ): void {
     const bucket = this.listeners.get(type) ?? new Set();
     bucket.add(listener);
     this.listeners.set(type, bucket);
@@ -51,16 +59,16 @@ class MockWebSocket {
 
   close(): void {
     this.readyState = 3;
-    this.emit('close', {});
+    this.emit('close', { code: 1000 });
   }
 
   /** Simulates the server or network dropping the connection. */
-  drop(): void {
+  drop(code = 1006): void {
     this.readyState = 3;
-    this.emit('close', {});
+    this.emit('close', { code });
   }
 
-  emit(type: string, event: { data?: string }): void {
+  emit(type: string, event: { data?: string; code?: number }): void {
     for (const listener of this.listeners.get(type) ?? []) {
       listener(event);
     }
@@ -138,8 +146,7 @@ describe('collaboration client', () => {
       payload: { surface: 'canvas' },
     });
 
-    client.upsertComment({
-      comment_id: 'comment-1',
+    client.createComment({
       body: 'Tighter crop.',
       anchor_node_id: 'node-1',
     });
@@ -157,15 +164,19 @@ describe('collaboration client', () => {
     const messages = sentMessages(socket);
     expect(messages.map((message) => message.type)).toEqual([
       'presence.join',
-      'comment.upsert',
+      'comment.create',
       'text.draft.upsert',
       'lease.acquire',
       'lease.release',
       'text.draft.clear',
       'presence.leave',
     ]);
-    expect(messages.find((message) => message.type === 'lease.acquire')?.payload).toMatchObject({
-      lease_id: 'lease-node-1-user-123',
+    // Leases are named by node only; the Worker derives the lease id from the bound actor.
+    expect(messages.find((message) => message.type === 'lease.acquire')?.payload).toEqual({
+      node_id: 'node-1',
+      ttl_seconds: 120,
+    });
+    expect(messages.find((message) => message.type === 'lease.release')?.payload).toEqual({
       node_id: 'node-1',
     });
     for (const message of messages) {
@@ -247,5 +258,201 @@ describe('collaboration client', () => {
     expect(provider).toHaveBeenCalledTimes(3);
     expect(client.status).toBe('error');
     expect(MockWebSocket.instances).toHaveLength(0);
+  });
+});
+
+describe('collaboration client session lifetime', () => {
+  afterEach(() => {
+    MockWebSocket.instances = [];
+  });
+
+  function lifetimeClient(
+    provider: () => Promise<CollaborationTicketGrant>,
+    extra: Partial<ConstructorParameters<typeof CollaborationClient>[0]> = {},
+  ) {
+    let now = 1_000_000;
+    const statuses: string[] = [];
+    const client = new CollaborationClient({
+      baseUrl: 'https://collab.example.test',
+      canvasId: 'canvas-1',
+      surface: 'canvas',
+      ticketProvider: provider,
+      WebSocketImpl: MockWebSocket as unknown as typeof WebSocket,
+      // A long backoff proves that a lifetime close reconnects without waiting for it.
+      reconnectDelaysMs: [60_000],
+      now: () => now,
+      onStatus: (status) => {
+        statuses.push(status);
+      },
+      ...extra,
+    });
+    return {
+      client,
+      statuses,
+      advance(ms: number) {
+        now += ms;
+      },
+    };
+  }
+
+  it('reconnects at once with a fresh ticket when the Worker ends the session', async () => {
+    const { provider, issued } = grants();
+    const snapshots: string[] = [];
+    const { client, advance } = lifetimeClient(provider, {
+      onSnapshot: (snapshot) => {
+        snapshots.push(snapshot.canvas_id);
+      },
+    });
+    client.connect();
+    await flush();
+    const first = MockWebSocket.instances[0]!;
+
+    advance(COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS * 1_000);
+    first.drop(COLLABORATION_CLOSE_CODES.SESSION_EXPIRED);
+    // Sent while re-authenticating: queued, not dropped.
+    expect(client.createComment({ body: 'Written during the reconnect' })).toBe(true);
+    expect(client.snapshot?.canvas_id).toBe('canvas-1');
+    await flush();
+    await flush();
+
+    expect(issued).toHaveLength(2);
+    const second = MockWebSocket.instances[1]!;
+    expect(second.protocols).toEqual([COLLABORATION_WEBSOCKET_PROTOCOL, issued[1]]);
+    expect(client.status).toBe('open');
+    expect(sentMessages(second).map((message) => message.type)).toEqual([
+      'presence.join',
+      'comment.create',
+    ]);
+    expect(snapshots).toEqual(['canvas-1', 'canvas-1']);
+    client.disconnect();
+  });
+
+  it('stops when Core refuses the new ticket, as for a removed member', async () => {
+    let calls = 0;
+    const provider = vi.fn(async (): Promise<CollaborationTicketGrant> => {
+      calls += 1;
+      if (calls === 1) return { ticket: 'ticket-1.signature', actor: boundActor };
+      throw new CollaborationTicketDeniedError('FORBIDDEN');
+    });
+    const { client, advance, statuses } = lifetimeClient(provider);
+    client.connect();
+    await flush();
+    advance(COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS * 1_000);
+    MockWebSocket.instances[0]!.drop(COLLABORATION_CLOSE_CODES.SESSION_EXPIRED);
+    expect(client.createComment({ body: 'Never delivered' })).toBe(true);
+    await flush();
+    await flush();
+
+    expect(provider).toHaveBeenCalledTimes(2);
+    expect(MockWebSocket.instances).toHaveLength(1);
+    expect(client.status).toBe('error');
+    expect(statuses.at(-1)).toBe('error');
+    // The queued message is discarded, not sent later.
+    expect(client.createComment({ body: 'After refusal' })).toBe(false);
+  });
+
+  it('does not reconnect after a policy-violation close', async () => {
+    const { provider, issued } = grants();
+    const { client } = lifetimeClient(provider, { reconnectDelaysMs: [0] });
+    client.connect();
+    await flush();
+    MockWebSocket.instances[0]!.drop(COLLABORATION_CLOSE_CODES.POLICY_VIOLATION);
+    await flush();
+    await flush();
+    expect(issued).toHaveLength(1);
+    expect(client.status).toBe('error');
+  });
+
+  it('backs off instead of looping when the session ends right after opening', async () => {
+    const { provider, issued } = grants();
+    const { client, statuses } = lifetimeClient(provider);
+    client.connect();
+    await flush();
+    MockWebSocket.instances[0]!.drop(COLLABORATION_CLOSE_CODES.SESSION_EXPIRED);
+    expect(client.createComment({ body: 'Not queued' })).toBe(false);
+    await flush();
+    await flush();
+    expect(issued).toHaveLength(1);
+    expect(statuses.at(-1)).toBe('connecting');
+    client.disconnect();
+  });
+
+  it('reports over-limit input with the typed error and sends nothing', async () => {
+    const { provider } = grants();
+    const errors: unknown[] = [];
+    const { client } = lifetimeClient(provider, {
+      onError: (error) => {
+        errors.push(error);
+      },
+    });
+    client.connect();
+    await flush();
+    const socket = MockWebSocket.instances[0]!;
+    const sentBefore = socket.sent.length;
+
+    expect(
+      client.createComment({ body: 'x'.repeat(COLLABORATION_COMMENT_BODY_MAX_LENGTH + 1) }),
+    ).toBe(false);
+    expect(socket.sent).toHaveLength(sentBefore);
+    expect(errors).toEqual([
+      {
+        code: 'FIELD_TOO_LARGE',
+        message: `payload.body exceeds its limit of ${String(COLLABORATION_COMMENT_BODY_MAX_LENGTH)} characters.`,
+        request_type: 'comment.create',
+        details: {
+          field: 'payload.body',
+          limit: COLLABORATION_COMMENT_BODY_MAX_LENGTH,
+          unit: 'characters',
+        },
+      },
+    ]);
+    client.disconnect();
+  });
+
+  it('routes comment results and typed errors, and ignores frames it does not understand', async () => {
+    const { provider } = grants();
+    const results: unknown[] = [];
+    const errors: unknown[] = [];
+    const { client, statuses } = lifetimeClient(provider, {
+      onCommentResult: (result) => {
+        results.push(result);
+      },
+      onError: (error) => {
+        errors.push(error);
+      },
+    });
+    client.connect();
+    await flush();
+    const socket = MockWebSocket.instances[0]!;
+    socket.emit('message', { data: JSON.stringify({ type: 'future.message', payload: {} }) });
+    socket.emit('message', {
+      data: JSON.stringify({
+        type: 'comment.result',
+        payload: { operation: 'create', comment_id: 'server-id', client_request_id: 'r-1' },
+      }),
+    });
+    socket.emit('message', {
+      data: JSON.stringify({
+        type: 'error',
+        payload: {
+          code: 'RATE_LIMITED',
+          message: 'Slow down',
+          details: { scope: 'socket', retry_after_ms: 100 },
+        },
+      }),
+    });
+    expect(client.status).toBe('open');
+    expect(statuses).not.toContain('error');
+    expect(results).toEqual([
+      { operation: 'create', comment_id: 'server-id', client_request_id: 'r-1' },
+    ]);
+    expect(errors).toEqual([
+      {
+        code: 'RATE_LIMITED',
+        message: 'Slow down',
+        details: { scope: 'socket', retry_after_ms: 100 },
+      },
+    ]);
+    client.disconnect();
   });
 });

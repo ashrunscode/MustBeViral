@@ -33,5 +33,35 @@ describe('collaboration panel', () => {
     expect(html).toContain('texture size');
     expect(html).toContain('Post draft comment');
     expect(html).toContain('data-comment-anchor="7"');
+    expect(html).toContain('maxLength="4000"');
+    // Without an acting identity and handler there is nothing to delete.
+    expect(html).not.toContain('Delete your comment');
+  });
+
+  it("offers delete only on the acting member's own comments", () => {
+    const comments = commentsForAnchor(snapshot, '7');
+    const author = comments[0]!.author.actor_id;
+    const own = renderToStaticMarkup(
+      <CommentThreadPanel
+        actorId={author}
+        anchorId="7"
+        anchorLabel="Asset 03"
+        comments={comments}
+        onDeleteComment={() => undefined}
+        onSubmit={() => undefined}
+      />,
+    );
+    expect(own).toContain('aria-label="Delete your comment on Asset 03"');
+    const others = renderToStaticMarkup(
+      <CommentThreadPanel
+        actorId="someone-else"
+        anchorId="7"
+        anchorLabel="Asset 03"
+        comments={comments}
+        onDeleteComment={() => undefined}
+        onSubmit={() => undefined}
+      />,
+    );
+    expect(others).not.toContain('Delete your comment');
   });
 });
