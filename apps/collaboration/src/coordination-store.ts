@@ -1,5 +1,8 @@
 import {
   COLLABORATION_COMMENTS_MAX_BYTES,
+  COLLABORATION_COMMENTS_MAX_BYTES_PER_ACTOR,
+  COLLABORATION_LEASES_MAX_BYTES_PER_ACTOR,
+  COLLABORATION_TEXT_DRAFTS_MAX_BYTES_PER_ACTOR,
   COLLABORATION_COMMENTS_MAX_PER_ACTOR,
   COLLABORATION_COMMENTS_MAX_PER_CANVAS,
   COLLABORATION_LEASES_MAX_BYTES,
@@ -70,7 +73,7 @@ export class CanvasLimitError extends Error {
     super(
       limit.unit === 'rows'
         ? `The ${limit.scope} limit of ${String(limit.limit)} ${limit.resource.replace('_', ' ')} is reached.`
-        : `The ${limit.resource.replace('_', ' ')} on this canvas are at their ${String(limit.limit)}-byte limit.`,
+        : `${limit.scope === 'actor' ? 'Your' : 'The'} ${limit.resource.replace('_', ' ')} on this canvas are at their ${String(limit.limit)}-byte limit.`,
     );
     this.limit = limit;
   }
@@ -90,6 +93,8 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
+type QuarantineSection = 'presence' | 'comments' | 'text_drafts' | 'leases';
+
 interface StoredRow<T> {
   readonly key: string;
   readonly value: T;
@@ -100,13 +105,20 @@ function sumBytes(rows: readonly StoredRow<unknown>[]): number {
   return rows.reduce((total, row) => total + row.bytes, 0);
 }
 
-/** Checks one section's canvas row cap, per-actor row cap and byte budget after a write. */
+/**
+ * Checks one section after a write: the canvas row cap, the actor's row cap, the actor's byte budget
+ * and the canvas byte budget. The actor checks come before the canvas byte budget, so a member who
+ * has used their own share is told so, and the per-actor budgets keep any one member from using
+ * the canvas budget up.
+ */
 function assertWithinLimits(input: {
   readonly resource: CollaborationLimitedResource;
   readonly rowsAfter: number;
   readonly canvasRowCap: number;
   readonly actorRowsAfter?: number;
   readonly actorRowCap?: number;
+  readonly actorBytesAfter?: number;
+  readonly actorByteBudget?: number;
   readonly bytesAfter: number;
   readonly byteBudget: number;
 }): void {
@@ -128,6 +140,18 @@ function assertWithinLimits(input: {
       scope: 'actor',
       unit: 'rows',
       limit: input.actorRowCap,
+    });
+  }
+  if (
+    input.actorBytesAfter !== undefined &&
+    input.actorByteBudget !== undefined &&
+    input.actorBytesAfter > input.actorByteBudget
+  ) {
+    throw new CanvasLimitError({
+      resource: input.resource,
+      scope: 'actor',
+      unit: 'bytes',
+      limit: input.actorByteBudget,
     });
   }
   if (input.bytesAfter > input.byteBudget) {
@@ -155,6 +179,13 @@ function assertWithinLimits(input: {
 export class CoordinationStore {
   readonly #sql: SqlStorage;
   #canvasId: string | null = null;
+  /** Last quarantined count logged per section, so a steady count is logged once, not per read. */
+  readonly #quarantined: Record<QuarantineSection, number> = {
+    presence: 0,
+    comments: 0,
+    text_drafts: 0,
+    leases: 0,
+  };
 
   constructor(sql: SqlStorage) {
     this.#sql = sql;
@@ -196,9 +227,12 @@ export class CoordinationStore {
   /**
    * Brings state written before version 2 within the current limits, once. Collaboration state is a
    * recoverable draft, never authority (revisions live in Postgres), so rows that no client could
-   * write today are dropped rather than served: rows that fail the current row schema, and the
-   * least recently updated rows of any section over its caps. Leases stored under the ambiguous
-   * joined id are dropped; they last at most 15 minutes and the deploy already closed their sockets.
+   * write today are dropped rather than served: rows that fail the current row schema, then rows
+   * over the caps. Trimming is fair: each actor is first cut to their own row cap and byte budget,
+   * keeping their newest rows, and only then is the canvas cap applied, round-robin across actors
+   * from each actor's newest row, so one actor's rows can never evict another's. Leases stored under
+   * the ambiguous joined id are dropped; they last at most 15 minutes and the deploy already closed
+   * their sockets.
    */
   #migrate(): void {
     const stored = this.#sql
@@ -218,7 +252,7 @@ export class CoordinationStore {
       schema: { safeParse(value: unknown): { success: boolean; data?: T } },
       recency: (value: T) => number,
       actorOf: (value: T) => string,
-      caps: Readonly<{ canvas: number; actor: number; bytes: number }>,
+      caps: Readonly<{ canvas: number; actor: number; actorBytes: number; bytes: number }>,
     ): number => {
       const rows = this.#sql
         .exec<Record<string, string>>(`SELECT ${keyColumn} AS key, payload FROM ${table}`)
@@ -243,20 +277,51 @@ export class CoordinationStore {
           removed += 1;
         }
       }
-      valid.sort((left, right) => recency(right.value) - recency(left.value));
-      let kept = 0;
-      let bytes = 0;
-      const perActor = new Map<string, number>();
+      const drop = (row: StoredRow<T>): void => {
+        this.#sql.exec(`DELETE FROM ${table} WHERE ${keyColumn} = ?`, row.key);
+        removed += 1;
+      };
+      const newestFirst = (left: StoredRow<T>, right: StoredRow<T>): number =>
+        recency(right.value) - recency(left.value);
+
+      // Pass 1: each actor on their own, newest rows first, within that actor's caps.
+      const byActor = new Map<string, StoredRow<T>[]>();
       for (const row of valid) {
         const actorId = actorOf(row.value);
-        const actorRows = perActor.get(actorId) ?? 0;
-        if (kept < caps.canvas && actorRows < caps.actor && bytes + row.bytes <= caps.bytes) {
-          kept += 1;
-          bytes += row.bytes;
-          perActor.set(actorId, actorRows + 1);
-        } else {
-          this.#sql.exec(`DELETE FROM ${table} WHERE ${keyColumn} = ?`, row.key);
-          removed += 1;
+        byActor.set(actorId, [...(byActor.get(actorId) ?? []), row]);
+      }
+      const keptByActor: StoredRow<T>[][] = [];
+      for (const rowsOfActor of byActor.values()) {
+        rowsOfActor.sort(newestFirst);
+        const kept: StoredRow<T>[] = [];
+        let actorBytes = 0;
+        for (const row of rowsOfActor) {
+          if (kept.length < caps.actor && actorBytes + row.bytes <= caps.actorBytes) {
+            kept.push(row);
+            actorBytes += row.bytes;
+          } else {
+            drop(row);
+          }
+        }
+        keptByActor.push(kept);
+      }
+
+      // Pass 2: the canvas caps, taking every actor's newest remaining row before anyone's next.
+      let keptRows = 0;
+      let bytes = 0;
+      const depth = Math.max(0, ...keptByActor.map((rowsOfActor) => rowsOfActor.length));
+      for (let rank = 0; rank < depth; rank += 1) {
+        const round = keptByActor
+          .map((rowsOfActor) => rowsOfActor[rank])
+          .filter((row): row is StoredRow<T> => row !== undefined)
+          .sort(newestFirst);
+        for (const row of round) {
+          if (keptRows < caps.canvas && bytes + row.bytes <= caps.bytes) {
+            keptRows += 1;
+            bytes += row.bytes;
+          } else {
+            drop(row);
+          }
         }
       }
       return removed;
@@ -271,6 +336,7 @@ export class CoordinationStore {
       {
         canvas: COLLABORATION_COMMENTS_MAX_PER_CANVAS,
         actor: COLLABORATION_COMMENTS_MAX_PER_ACTOR,
+        actorBytes: COLLABORATION_COMMENTS_MAX_BYTES_PER_ACTOR,
         bytes: COLLABORATION_COMMENTS_MAX_BYTES,
       },
     );
@@ -283,6 +349,7 @@ export class CoordinationStore {
       {
         canvas: COLLABORATION_TEXT_DRAFTS_MAX_PER_CANVAS,
         actor: COLLABORATION_TEXT_DRAFTS_MAX_PER_ACTOR,
+        actorBytes: COLLABORATION_TEXT_DRAFTS_MAX_BYTES_PER_ACTOR,
         bytes: COLLABORATION_TEXT_DRAFTS_MAX_BYTES,
       },
     );
@@ -295,6 +362,7 @@ export class CoordinationStore {
       {
         canvas: COLLABORATION_PRESENCE_MAX_PER_CANVAS,
         actor: 1,
+        actorBytes: COLLABORATION_PRESENCE_MAX_BYTES,
         bytes: COLLABORATION_PRESENCE_MAX_BYTES,
       },
     );
@@ -361,31 +429,74 @@ export class CoordinationStore {
     }
   }
 
-  #rows<T>(query: string): StoredRow<T>[] {
-    return this.#sql
-      .exec<{ key: string; payload: string }>(query)
-      .toArray()
-      .map((row) => ({
-        key: row.key,
-        value: JSON.parse(row.payload) as T,
-        bytes: utf8ByteLength(row.payload),
-      }));
+  /**
+   * Reads one section, validating every stored row against the current row schema. A row that fails
+   * (for example one written by an older Worker after a rollback) is quarantined: it stays in
+   * storage untouched but is never served, counted towards limits or acted on, so one bad row cannot
+   * break the snapshot for the whole canvas. Only counts are logged, never keys or content.
+   */
+  #rows<T>(
+    section: QuarantineSection,
+    query: string,
+    schema: { safeParse(value: unknown): { success: boolean; data?: T } },
+  ): StoredRow<T>[] {
+    const valid: StoredRow<T>[] = [];
+    let quarantined = 0;
+    for (const row of this.#sql.exec<{ key: string; payload: string }>(query).toArray()) {
+      let parsed: { success: boolean; data?: T };
+      try {
+        parsed = schema.safeParse(JSON.parse(row.payload));
+      } catch {
+        parsed = { success: false };
+      }
+      if (parsed.success && parsed.data !== undefined) {
+        valid.push({ key: row.key, value: parsed.data, bytes: utf8ByteLength(row.payload) });
+      } else {
+        quarantined += 1;
+      }
+    }
+    if (this.#quarantined[section] !== quarantined) {
+      this.#quarantined[section] = quarantined;
+      if (quarantined > 0) {
+        console.warn(
+          JSON.stringify({
+            level: 'warn',
+            event: 'collaboration.rows_quarantined',
+            section,
+            count: quarantined,
+          }),
+        );
+      }
+    }
+    return valid;
   }
 
   #presenceRows(): StoredRow<PresenceEntry>[] {
-    return this.#rows('SELECT actor_id AS key, payload FROM presence');
+    return this.#rows(
+      'presence',
+      'SELECT actor_id AS key, payload FROM presence',
+      PresenceEntrySchema,
+    );
   }
 
   #commentRows(): StoredRow<CommentDraft>[] {
-    return this.#rows('SELECT comment_id AS key, payload FROM comments');
+    return this.#rows(
+      'comments',
+      'SELECT comment_id AS key, payload FROM comments',
+      CommentDraftSchema,
+    );
   }
 
   #draftRows(): StoredRow<TextDraft>[] {
-    return this.#rows('SELECT draft_id AS key, payload FROM text_drafts');
+    return this.#rows(
+      'text_drafts',
+      'SELECT draft_id AS key, payload FROM text_drafts',
+      TextDraftSchema,
+    );
   }
 
   #leaseRows(): StoredRow<EditLease>[] {
-    return this.#rows('SELECT lease_id AS key, payload FROM leases');
+    return this.#rows('leases', 'SELECT lease_id AS key, payload FROM leases', EditLeaseSchema);
   }
 
   getSnapshot(canvasId: string): CollaborationSnapshot {
@@ -440,6 +551,7 @@ export class CoordinationStore {
   ): CommentDraft {
     this.ensureCanvasId(canvasId);
     const rows = this.#commentRows();
+    const ownRows = rows.filter((row) => row.value.author.actor_id === author.actor_id);
     const timestamp = nowIso();
     const comment = CommentDraftSchema.parse({
       comment_id: crypto.randomUUID(),
@@ -454,9 +566,10 @@ export class CoordinationStore {
       resource: 'comments',
       rowsAfter: rows.length + 1,
       canvasRowCap: COLLABORATION_COMMENTS_MAX_PER_CANVAS,
-      actorRowsAfter:
-        rows.filter((row) => row.value.author.actor_id === author.actor_id).length + 1,
+      actorRowsAfter: ownRows.length + 1,
       actorRowCap: COLLABORATION_COMMENTS_MAX_PER_ACTOR,
+      actorBytesAfter: sumBytes(ownRows) + utf8ByteLength(payload),
+      actorByteBudget: COLLABORATION_COMMENTS_MAX_BYTES_PER_ACTOR,
       bytesAfter: sumBytes(rows) + utf8ByteLength(payload),
       byteBudget: COLLABORATION_COMMENTS_MAX_BYTES,
     });
@@ -501,6 +614,11 @@ export class CoordinationStore {
       resource: 'comments',
       rowsAfter: rows.length,
       canvasRowCap: COLLABORATION_COMMENTS_MAX_PER_CANVAS,
+      actorBytesAfter:
+        sumBytes(rows.filter((candidate) => candidate.value.author.actor_id === actor.actor_id)) -
+        row.bytes +
+        utf8ByteLength(payload),
+      actorByteBudget: COLLABORATION_COMMENTS_MAX_BYTES_PER_ACTOR,
       bytesAfter: sumBytes(rows) - row.bytes + utf8ByteLength(payload),
       byteBudget: COLLABORATION_COMMENTS_MAX_BYTES,
     });
@@ -573,14 +691,16 @@ export class CoordinationStore {
     const payload = JSON.stringify(incoming);
     const replacedKeys = new Set(fieldRows.map((row) => row.key));
     const remaining = rows.filter((row) => !replacedKeys.has(row.key));
+    const ownRemaining = remaining.filter((row) => row.value.author.actor_id === author.actor_id);
     try {
       assertWithinLimits({
         resource: 'text_drafts',
         rowsAfter: remaining.length + 1,
         canvasRowCap: COLLABORATION_TEXT_DRAFTS_MAX_PER_CANVAS,
-        actorRowsAfter:
-          remaining.filter((row) => row.value.author.actor_id === author.actor_id).length + 1,
+        actorRowsAfter: ownRemaining.length + 1,
         actorRowCap: COLLABORATION_TEXT_DRAFTS_MAX_PER_ACTOR,
+        actorBytesAfter: sumBytes(ownRemaining) + utf8ByteLength(payload),
+        actorByteBudget: COLLABORATION_TEXT_DRAFTS_MAX_BYTES_PER_ACTOR,
         bytesAfter: sumBytes(remaining) + utf8ByteLength(payload),
         byteBudget: COLLABORATION_TEXT_DRAFTS_MAX_BYTES,
       });
@@ -595,8 +715,10 @@ export class CoordinationStore {
     for (const key of replacedKeys) {
       this.#sql.exec('DELETE FROM text_drafts WHERE draft_id = ?', key);
     }
+    // OR REPLACE only ever replaces a stored row under this exact key that failed validation on read
+    // (valid rows for this field were deleted above), so a quarantined row cannot block the field.
     this.#sql.exec(
-      'INSERT INTO text_drafts (draft_id, payload) VALUES (?, ?)',
+      'INSERT OR REPLACE INTO text_drafts (draft_id, payload) VALUES (?, ?)',
       input.draft_id,
       payload,
     );
@@ -647,14 +769,16 @@ export class CoordinationStore {
     });
     const payload = JSON.stringify(lease);
     const remaining = rows.filter((row) => row.value.node_id !== input.node_id);
+    const ownRemaining = remaining.filter((row) => row.value.holder.actor_id === holder.actor_id);
     try {
       assertWithinLimits({
         resource: 'leases',
         rowsAfter: remaining.length + 1,
         canvasRowCap: COLLABORATION_LEASES_MAX_PER_CANVAS,
-        actorRowsAfter:
-          remaining.filter((row) => row.value.holder.actor_id === holder.actor_id).length + 1,
+        actorRowsAfter: ownRemaining.length + 1,
         actorRowCap: COLLABORATION_LEASES_MAX_PER_ACTOR,
+        actorBytesAfter: sumBytes(ownRemaining) + utf8ByteLength(payload),
+        actorByteBudget: COLLABORATION_LEASES_MAX_BYTES_PER_ACTOR,
         bytesAfter: sumBytes(remaining) + utf8ByteLength(payload),
         byteBudget: COLLABORATION_LEASES_MAX_BYTES,
       });
@@ -667,8 +791,9 @@ export class CoordinationStore {
     for (const row of nodeRows) {
       this.#sql.exec('DELETE FROM leases WHERE lease_id = ?', row.key);
     }
+    // As for drafts, OR REPLACE can only replace a quarantined row stored under this exact key.
     this.#sql.exec(
-      'INSERT INTO leases (lease_id, node_id, payload, expires_at) VALUES (?, ?, ?, ?)',
+      'INSERT OR REPLACE INTO leases (lease_id, node_id, payload, expires_at) VALUES (?, ?, ?, ?)',
       leaseId,
       input.node_id,
       payload,

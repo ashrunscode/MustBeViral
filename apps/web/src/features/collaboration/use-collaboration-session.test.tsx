@@ -299,6 +299,88 @@ describe('useCollaborationSession websocket transport', () => {
     }
   });
 
+  it('tells the member why a comment or draft was refused, without render loops', async () => {
+    const connect = vi.spyOn(CollaborationClient.prototype, 'connect');
+    const consoleError = vi.spyOn(console, 'error');
+    let latest: CollaborationSessionState | undefined;
+    let renders = 0;
+    const root = createRoot(document.createElement('div'));
+    mounted.push(root);
+    root.render(
+      <LiveCanvas
+        onState={(state) => {
+          renders += 1;
+          latest = state;
+        }}
+      />,
+    );
+    await waitUntil(() => latest?.status === 'open');
+    const socket = MockWebSocket.instances[0]!;
+    const serverSends = (message: unknown) => {
+      socket.emit('message', { data: JSON.stringify(message) });
+    };
+
+    serverSends({
+      type: 'error',
+      payload: {
+        code: 'CANVAS_LIMIT_REACHED',
+        message: 'Your comments on this canvas are at their 49152-byte limit.',
+        request_type: 'comment.create',
+        details: { resource: 'comments', scope: 'actor', unit: 'bytes', limit: 49_152 },
+      },
+    });
+    await waitUntil(() => latest?.refusal !== null);
+    expect(latest?.refusal).toBe(
+      'Comment not posted: you have reached your comment space on this canvas. Delete one of your comments to post another.',
+    );
+
+    serverSends({
+      type: 'text.draft.result',
+      payload: {
+        accepted: false,
+        draft_id: '["node-7","parameters.prompt"]',
+        node_id: 'node-7',
+        field_path: 'parameters.prompt',
+        reason: 'lease_held',
+      },
+    });
+    await waitUntil(() => latest?.refusal?.includes('holds the lease') === true);
+
+    serverSends({
+      type: 'error',
+      payload: {
+        code: 'RATE_LIMITED',
+        message: 'Too many collaboration messages.',
+        details: { scope: 'socket', retry_after_ms: 100, unit: 'tokens' },
+      },
+    });
+    await waitUntil(() => latest?.refusal?.includes('too quickly') === true);
+
+    // Refused before sending: the client checks the same limits and reports them the same way.
+    const sentBefore = socket.sent.length;
+    latest?.createComment({ body: 'x'.repeat(4_001) });
+    await waitUntil(() => latest?.refusal?.includes('longer than 4,000 characters') === true);
+    expect(socket.sent).toHaveLength(sentBefore);
+
+    serverSends({
+      type: 'comment.result',
+      payload: { operation: 'create', comment_id: '3c1d2e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f' },
+    });
+    await waitUntil(() => latest?.refusal === null);
+
+    // Steady state: the same refusal twice, or clearing when nothing is shown, renders nothing new.
+    await observeFor(50);
+    const settledRenders = renders;
+    serverSends({
+      type: 'comment.result',
+      payload: { operation: 'create', comment_id: '3c1d2e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f' },
+    });
+    await observeFor(100);
+    expect(renders).toBe(settledRenders);
+    expect(connect).toHaveBeenCalledTimes(1);
+    expect(maximumUpdateDepthErrors(consoleError)).toBe(0);
+  });
+
   it('reconnects transparently with a fresh ticket when the Worker ends the session', async () => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
     const connect = vi.spyOn(CollaborationClient.prototype, 'connect');

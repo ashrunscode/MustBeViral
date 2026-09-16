@@ -230,6 +230,7 @@ export function CollaborationSidebar({
   draftPanel,
   onDeleteComment,
   onSubmitComment,
+  refusal = null,
   snapshot,
   status,
   surface,
@@ -241,6 +242,8 @@ export function CollaborationSidebar({
   draftPanel?: ReactNode;
   onDeleteComment?: (commentId: string) => void;
   onSubmitComment: (body: string) => void;
+  /** Why the last collaboration change was refused, shown until the next accepted change. */
+  refusal?: string | null;
   snapshot: CollaborationSnapshot | null;
   status: 'idle' | 'connecting' | 'open' | 'closed' | 'error';
   surface: 'canvas' | 'review';
@@ -248,6 +251,11 @@ export function CollaborationSidebar({
   return (
     <div className={styles.collaborationStack}>
       <PresenceBar snapshot={snapshot} status={status} surface={surface} />
+      {refusal === null ? null : (
+        <p className={styles.collaborationRefusal} role="alert">
+          {refusal}
+        </p>
+      )}
       {draftPanel}
       <CommentThreadPanel
         actorId={actorId}

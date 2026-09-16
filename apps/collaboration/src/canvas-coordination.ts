@@ -36,7 +36,11 @@ import {
 import {
   BROADCAST_MIN_INTERVAL_MS,
   CanvasRateLimiter,
+  INVALID_FRAME_STRIKES,
+  INVALID_FRAME_TOKEN_COST,
   MESSAGE_TOKEN_COST,
+  OVERSIZED_FRAME_STRIKES,
+  OVERSIZED_FRAME_TOKEN_COST,
   SNAPSHOT_TOKEN_COST,
   type RateDecision,
 } from './rate-limit';
@@ -268,19 +272,15 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
       return;
     }
     if (exceedsMessageLimit(message)) {
-      this.#send(socket, {
-        type: 'error',
-        payload: {
-          code: 'PAYLOAD_TOO_LARGE',
-          message: `Messages are limited to ${String(COLLABORATION_CLIENT_MESSAGE_MAX_BYTES)} bytes.`,
-          details: {
-            resource: 'message',
-            unit: 'bytes',
-            limit: COLLABORATION_CLIENT_MESSAGE_MAX_BYTES,
-          },
+      this.#refuseFrame(socket, attachment, OVERSIZED_FRAME_TOKEN_COST, OVERSIZED_FRAME_STRIKES, {
+        code: 'PAYLOAD_TOO_LARGE',
+        message: `Messages are limited to ${String(COLLABORATION_CLIENT_MESSAGE_MAX_BYTES)} bytes.`,
+        details: {
+          resource: 'message',
+          unit: 'bytes',
+          limit: COLLABORATION_CLIENT_MESSAGE_MAX_BYTES,
         },
       });
-      if (this.#limiter.strike(attachment.socket_id)) this.#closeAbusive(socket, attachment);
       return;
     }
     const decision = this.#limiter.consume(
@@ -450,6 +450,33 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     });
   }
 
+  /**
+   * Refuses a frame that failed before doing any work (oversized or invalid). It still spends
+   * `tokenCost` tokens when the buckets have them, and adds `strikes`, so a client that keeps sending
+   * such frames is closed even while it stays under the message rate.
+   */
+  #refuseFrame(
+    socket: WebSocket,
+    attachment: SocketAttachment,
+    tokenCost: number,
+    strikes: number,
+    error: CollaborationErrorPayload,
+  ): void {
+    const decision = this.#limiter.consume(
+      attachment.socket_id,
+      attachment.actor.actor_id,
+      tokenCost,
+    );
+    if (
+      (!decision.allowed && decision.abusive) ||
+      this.#limiter.strike(attachment.socket_id, strikes)
+    ) {
+      this.#closeAbusive(socket, attachment);
+      return;
+    }
+    this.#sendError(socket, error);
+  }
+
   /** Closes a socket whose client keeps sending after refusals; the client must not reconnect. */
   #closeAbusive(socket: WebSocket, attachment: SocketAttachment): void {
     console.log(
@@ -569,12 +596,26 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     const actor = attachment.actor;
     let requestType: string | undefined;
     let clientRequestId: string | undefined;
+    // A frame that is not UTF-8 JSON, or that fails the protocol schema, spends the extra tokens and
+    // strikes for invalid frames; one token was already spent before parsing.
+    let raw: unknown;
     try {
       const text =
         typeof message === 'string'
           ? message
           : new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(message);
-      const raw = JSON.parse(text) as unknown;
+      raw = JSON.parse(text) as unknown;
+    } catch {
+      this.#refuseFrame(
+        socket,
+        attachment,
+        INVALID_FRAME_TOKEN_COST - MESSAGE_TOKEN_COST,
+        INVALID_FRAME_STRIKES,
+        { code: 'VALIDATION_FAILED', message: 'Collaboration messages must be JSON text.' },
+      );
+      return;
+    }
+    try {
       if (typeof raw === 'object' && raw !== null && !Array.isArray(raw)) {
         const type = (raw as Readonly<Record<string, unknown>>).type;
         if (typeof type === 'string' && CLIENT_MESSAGE_TYPES.has(type)) requestType = type;
@@ -583,10 +624,16 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
       // the identity bound when the socket was accepted.
       const result = ClientMessageSchema.safeParse(raw);
       if (!result.success) {
-        this.#sendError(socket, {
-          ...describeClientMessageIssues(result.error.issues),
-          ...(requestType === undefined ? {} : { request_type: requestType }),
-        });
+        this.#refuseFrame(
+          socket,
+          attachment,
+          INVALID_FRAME_TOKEN_COST - MESSAGE_TOKEN_COST,
+          INVALID_FRAME_STRIKES,
+          {
+            ...describeClientMessageIssues(result.error.issues),
+            ...(requestType === undefined ? {} : { request_type: requestType }),
+          },
+        );
         return;
       }
       const parsed = result.data;

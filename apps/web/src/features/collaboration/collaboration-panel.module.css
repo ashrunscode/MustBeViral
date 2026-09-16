@@ -3,6 +3,15 @@
   gap: 12px;
 }
 
+.collaborationRefusal {
+  margin: 0;
+  border-left: 2px solid var(--fail);
+  padding: 4px 10px;
+  color: var(--fail-ink);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .presenceBar {
   display: flex;
   align-items: center;

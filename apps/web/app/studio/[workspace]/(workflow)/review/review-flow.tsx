@@ -807,6 +807,7 @@ export function ReviewFlow({
         <CollaborationSidebar
           actorId={collaboration.actor?.actor_id ?? null}
           onDeleteComment={collaboration.deleteComment}
+          refusal={collaboration.refusal}
           anchorId={commentAnchorId}
           anchorLabel={commentAnchorLabel}
           comments={anchoredComments}

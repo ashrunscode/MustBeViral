@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createPreviewCollaborationSnapshot } from '@mustbeviral/collaboration';
 
-import { CommentThreadPanel, PresenceBar } from './collaboration-panel';
+import { CollaborationSidebar, CommentThreadPanel, PresenceBar } from './collaboration-panel';
 import { commentsForAnchor, presenceLabel } from './use-collaboration-session';
 
 describe('collaboration panel', () => {
@@ -36,6 +36,36 @@ describe('collaboration panel', () => {
     expect(html).toContain('maxLength="4000"');
     // Without an acting identity and handler there is nothing to delete.
     expect(html).not.toContain('Delete your comment');
+  });
+
+  it('shows a refused change as an alert in the collaboration sidebar', () => {
+    const message = 'Comment not posted: this canvas has reached its comment limit.';
+    const withRefusal = renderToStaticMarkup(
+      <CollaborationSidebar
+        anchorId="7"
+        anchorLabel="Asset 03"
+        comments={[]}
+        onSubmitComment={() => undefined}
+        refusal={message}
+        snapshot={snapshot}
+        status="open"
+        surface="canvas"
+      />,
+    );
+    expect(withRefusal).toContain('role="alert"');
+    expect(withRefusal).toContain(message);
+    const without = renderToStaticMarkup(
+      <CollaborationSidebar
+        anchorId="7"
+        anchorLabel="Asset 03"
+        comments={[]}
+        onSubmitComment={() => undefined}
+        snapshot={snapshot}
+        status="open"
+        surface="canvas"
+      />,
+    );
+    expect(without).not.toContain('role="alert"');
   });
 
   it("offers delete only on the acting member's own comments", () => {

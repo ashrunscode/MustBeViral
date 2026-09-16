@@ -63,6 +63,17 @@ export const COLLABORATION_LEASES_MAX_BYTES = 64 * KIB;
 export const COLLABORATION_PRESENCE_MAX_BYTES = 48 * KIB;
 
 /**
+ * Byte budgets per actor within a canvas, in the same measure and in the same proportion to the
+ * canvas budget as the per-actor row caps are to the canvas row caps. One member can therefore
+ * fill at most a quarter of the comment budget, half of the draft budget and an eighth of the lease
+ * budget, and never deny those sections to everyone else. Presence needs no per-actor budget: each
+ * actor has exactly one presence row, bounded by the actor schema.
+ */
+export const COLLABORATION_COMMENTS_MAX_BYTES_PER_ACTOR = 48 * KIB;
+export const COLLABORATION_TEXT_DRAFTS_MAX_BYTES_PER_ACTOR = 96 * KIB;
+export const COLLABORATION_LEASES_MAX_BYTES_PER_ACTOR = 8 * KIB;
+
+/**
  * Ceiling for one encoded snapshot message. The section budgets add up to 496 KiB, and the envelope,
  * canvas id and separators add under 2 KiB. Workers accept WebSocket messages up to 32 MiB; this
  * stays at a sixty-fourth of that, and under the earlier 1 MiB limit, to bound broadcast fan-out.

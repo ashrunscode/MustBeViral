@@ -867,6 +867,7 @@ export function CanvasFlow({
         <CollaborationSidebar
           actorId={collaboration.actor?.actor_id ?? null}
           onDeleteComment={collaboration.deleteComment}
+          refusal={collaboration.refusal}
           anchorId={selectedId}
           anchorLabel={selectedNode?.label ?? 'Selected node'}
           comments={anchoredComments}

@@ -149,8 +149,16 @@ describe('collaboration field and message size limits', () => {
         'items',
       ],
     ];
-    for (const [message] of cases) socket.send(message);
-    const snapshot = await freshSnapshot(socket);
+    // Invalid frames spend five tokens each, so send them in two bursts within the socket budget.
+    for (const [message] of cases.slice(0, 5)) socket.send(message);
+    await socket.waitFor(() => errorFrames(socket, 'FIELD_TOO_LARGE').length === 5);
+    await delay(2_000);
+    for (const [message] of cases.slice(5)) socket.send(message);
+    await socket.waitFor(() => errorFrames(socket, 'FIELD_TOO_LARGE').length === cases.length);
+    // The sender's bucket is spent; read the snapshot as another member.
+    const observer = await open('canvas-limits-fields', actorB);
+    const snapshot = await freshSnapshot(observer);
+    await delay(50);
 
     const errors = errorFrames(socket, 'FIELD_TOO_LARGE');
     expect(errors.map((error) => error.details)).toEqual(
@@ -171,19 +179,24 @@ describe('collaboration field and message size limits', () => {
     expect(euros.length).toBeLessThan(limit);
     socket.sendRaw(JSON.stringify({ type: 'comment.create', payload: { body: 'ok', pad: euros } }));
     socket.socket.send(new TextEncoder().encode(' '.repeat(limit + 1)).buffer as ArrayBuffer);
-    // Control: the largest comment body in three-byte characters is accepted.
+    // Oversized frames spend a second of refill each; once the bucket refills, the largest comment
+    // body in three-byte characters is accepted.
+    await socket.waitFor(() => errorFrames(socket, 'PAYLOAD_TOO_LARGE').length === 3);
+    await delay(3_100);
     socket.send({ type: 'comment.create', payload: { body: '\u20ac'.repeat(4_000) } });
     await socket.waitFor((frame) => frame.type === 'comment.result');
-    const snapshot = await freshSnapshot(socket);
+    const snapshot = await freshSnapshot(await open('canvas-limits-message', actorB));
 
     const tooLarge = errorFrames(socket, 'PAYLOAD_TOO_LARGE');
     expect(tooLarge).toHaveLength(3);
     expect(tooLarge[0]?.details).toEqual({ resource: 'message', unit: 'bytes', limit });
     expect(snapshot.comments).toHaveLength(1);
-    // Only the requested snapshots were sent; the oversized snapshot.request was never parsed.
+    // The oversized snapshot.request was never parsed: this socket only saw its opening snapshot
+    // and broadcasts of its own comment.
     expect(socket.frames.filter((frame) => frame.type === 'snapshot').length).toBeLessThanOrEqual(
-      3,
+      2,
     );
+    expect(socket.closed).toBeNull();
   });
 });
 
@@ -317,8 +330,8 @@ describe('collaboration row caps and snapshot ceiling', () => {
     const canvasId = 'canvas-limits-worst-case';
     const sizes = [4_000, 1_000, 200, 20, 1];
     const sectionBytes = await withStore(canvasId, (store) => {
+      // Many members, each filling their own share, until the canvas budget refuses.
       let actorIndex = 0;
-      let commentRows = 0;
       for (const size of sizes) {
         for (;;) {
           try {
@@ -326,10 +339,13 @@ describe('collaboration row caps and snapshot ceiling', () => {
               body: '\u0001'.repeat(size),
               anchor_node_id: '\u0001'.repeat(128),
             });
-            commentRows += 1;
-            if (commentRows % COLLABORATION_COMMENTS_MAX_PER_ACTOR === 0) actorIndex += 1;
           } catch (error) {
-            if (limitError(error) === null) throw error;
+            const limit = limitError(error);
+            if (limit === null) throw error;
+            if (limit.scope === 'actor') {
+              actorIndex += 1;
+              continue;
+            }
             break;
           }
         }
@@ -390,25 +406,25 @@ describe('collaboration row caps and snapshot ceiling', () => {
   it("refuses the reviewer's 40 oversized drafts, so the snapshot stays small", async () => {
     const canvasId = 'canvas-limits-reviewer-repro';
     const socket = await open(canvasId);
-    for (let batch = 0; batch < 2; batch += 1) {
-      for (let index = 0; index < 20; index += 1) {
-        const node = `node-${String(batch)}-${String(index)}`;
-        socket.send({
-          type: 'text.draft.upsert',
-          payload: {
-            draft_id: textDraftKey(node, 'parameters.prompt'),
-            node_id: node,
-            field_path: 'parameters.prompt',
-            body: 'x'.repeat(32_000),
-          },
-        });
-      }
-      await delay(2_100);
+    for (let index = 0; index < 40; index += 1) {
+      const node = `node-${String(index)}`;
+      socket.send({
+        type: 'text.draft.upsert',
+        payload: {
+          draft_id: textDraftKey(node, 'parameters.prompt'),
+          node_id: node,
+          field_path: 'parameters.prompt',
+          body: 'x'.repeat(32_000),
+        },
+      });
     }
-    const snapshot = await freshSnapshot(socket);
+    // Each refusal is typed, and a client that keeps sending invalid frames is closed.
+    expect(await socket.waitForClose()).toMatchObject({ code: 1008 });
+    expect(errorFrames(socket, 'FIELD_TOO_LARGE').length).toBeGreaterThan(0);
+    const observer = await open(canvasId, actorB);
+    const snapshot = await freshSnapshot(observer);
     expect(snapshot.text_drafts).toEqual([]);
-    expect(errorFrames(socket, 'FIELD_TOO_LARGE')).toHaveLength(40);
-    expect(Math.max(...socket.frameBytes)).toBeLessThan(COLLABORATION_SNAPSHOT_MAX_BYTES);
+    expect(Math.max(...observer.frameBytes)).toBeLessThan(COLLABORATION_SNAPSHOT_MAX_BYTES);
   });
 
   it('never sends a snapshot above the ceiling, even for rows written around the store', async () => {

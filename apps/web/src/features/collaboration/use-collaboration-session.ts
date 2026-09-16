@@ -11,6 +11,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { readWebPublicEnvironment } from '../../config/public-environment';
+import { describeCollaborationRefusal, describeTextDraftRefusal } from './collaboration-refusal';
 import { requestCollaborationTicket } from './collaboration-ticket';
 
 export type CollaborationTransport = 'preview' | 'websocket';
@@ -53,6 +54,11 @@ export interface CollaborationSessionState {
   readonly acquireLease: (nodeId: string) => void;
   readonly releaseLease: (nodeId: string) => void;
   readonly clearCheckpointedDrafts: (draftIds: readonly string[], revisionId: string) => void;
+  /**
+   * Why the last comment, draft or lease change was refused (a limit, the rate limit, a held lease),
+   * or null. Cleared by the next accepted comment or draft.
+   */
+  readonly refusal: string | null;
 }
 
 function emptySnapshot(canvasId: string): CollaborationSnapshot {
@@ -76,6 +82,14 @@ function sameActor(left: CollaborationActor | null, right: CollaborationActor): 
 
 const noop = () => undefined;
 
+/** An accepted draft clears the last refusal; a draft refused for a held lease sets one. */
+function draftResultRefusal(
+  result: Readonly<{ accepted: boolean; reason?: string }>,
+): string | null | undefined {
+  if (result.accepted) return null;
+  return describeTextDraftRefusal(result.reason) ?? undefined;
+}
+
 export function useCollaborationSession(
   options: UseCollaborationSessionOptions,
 ): CollaborationSessionState {
@@ -83,6 +97,10 @@ export function useCollaborationSession(
   const [snapshot, setSnapshot] = useState<CollaborationSnapshot | null>(null);
   const [status, setStatus] = useState<CollaborationSessionState['status']>('connecting');
   const [boundActor, setBoundActor] = useState<CollaborationActor | null>(null);
+  const [refusal, setRefusal] = useState<string | null>(null);
+  // Mirrors `refusal` so session callbacks set state only when the message actually changes: no
+  // render at all for a repeated refusal or for clearing when nothing is shown.
+  const refusalRef = useRef<string | null>(null);
   const createCommentRef = useRef<CollaborationSessionState['createComment']>(noop);
   const deleteCommentRef = useRef<CollaborationSessionState['deleteComment']>(noop);
   const upsertTextDraftRef = useRef<CollaborationSessionState['upsertTextDraft']>(noop);
@@ -121,6 +139,11 @@ export function useCollaborationSession(
     isActive && options.transport === 'websocket' && collaborationBaseUrl === null;
 
   useEffect(() => {
+    const report = (next: string | null | undefined): void => {
+      if (next === undefined || refusalRef.current === next) return;
+      refusalRef.current = next;
+      setRefusal(next);
+    };
     if (!isActive || configurationError) {
       createCommentRef.current = noop;
       deleteCommentRef.current = noop;
@@ -144,6 +167,9 @@ export function useCollaborationSession(
         seedComments: previewSnapshot.comments,
         seedTextDrafts: previewSnapshot.text_drafts,
         seedLeases: previewSnapshot.leases,
+      });
+      const stopDraftResults = session.onTextDraftResult((result) => {
+        report(draftResultRefusal(result));
       });
       const unsubscribe = session.subscribe((next) => {
         setSnapshot(next);
@@ -173,7 +199,9 @@ export function useCollaborationSession(
       };
       return () => {
         unsubscribe();
+        stopDraftResults();
         session.disconnect();
+        report(null);
         createCommentRef.current = noop;
         deleteCommentRef.current = noop;
         upsertTextDraftRef.current = noop;
@@ -198,6 +226,17 @@ export function useCollaborationSession(
       },
       onSnapshot: setSnapshot,
       onStatus: setStatus,
+      // Refusals are shown instead of vanishing. Setters are stable and each update returns the
+      // current value when nothing changed, so none of these re-renders without a new message.
+      onError: (error) => {
+        report(describeCollaborationRefusal(error));
+      },
+      onTextDraftResult: (result) => {
+        report(draftResultRefusal(result));
+      },
+      onCommentResult: () => {
+        report(null);
+      },
     });
     client.connect();
     createCommentRef.current = (input) => {
@@ -223,6 +262,7 @@ export function useCollaborationSession(
     };
     return () => {
       client.disconnect();
+      report(null);
       createCommentRef.current = noop;
       deleteCommentRef.current = noop;
       upsertTextDraftRef.current = noop;
@@ -253,6 +293,7 @@ export function useCollaborationSession(
       acquireLease: noop,
       releaseLease: noop,
       clearCheckpointedDrafts: noop,
+      refusal: null,
     };
   }
 
@@ -267,6 +308,7 @@ export function useCollaborationSession(
       acquireLease: noop,
       releaseLease: noop,
       clearCheckpointedDrafts: noop,
+      refusal: null,
     };
   }
 
@@ -274,6 +316,7 @@ export function useCollaborationSession(
     snapshot,
     status,
     actor,
+    refusal,
     createComment: (input) => {
       createCommentRef.current(input);
     },

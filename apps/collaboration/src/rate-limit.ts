@@ -28,10 +28,27 @@ export const ACTOR_MESSAGE_BUCKET: TokenBucketPolicy = { capacity: 60, refillPer
 /** A full snapshot costs far more to send than a mutation, so reading one spends more tokens. */
 export const MESSAGE_TOKEN_COST = 1;
 export const SNAPSHOT_TOKEN_COST = 5;
+/**
+ * Frames that are refused before they do anything still cost the object work, so they spend more
+ * than a valid message: an oversized frame 10 tokens (a full second of a socket's refill) and a
+ * frame that is not valid JSON or fails the protocol schema 5. A well-behaved client sends neither:
+ * it checks the same limits before sending.
+ */
+export const OVERSIZED_FRAME_TOKEN_COST = 10;
+export const INVALID_FRAME_TOKEN_COST = 5;
 
-/** Refusals beyond this many undrained strikes close the socket with a policy violation. */
+/** Undrained strikes beyond this close the socket with a policy violation. */
 export const ABUSE_STRIKE_LIMIT = 20;
 export const ABUSE_STRIKE_DRAIN_PER_SECOND = 1;
+/**
+ * Strikes per event. A refusal for rate adds 1. An oversized frame adds 5 and an invalid frame 2, so
+ * sending them faster than one every five seconds (oversized) or two seconds (invalid) accumulates
+ * strikes faster than they drain and ends in a close: one oversized frame a second closes the
+ * socket within five seconds.
+ */
+export const RATE_REFUSAL_STRIKES = 1;
+export const OVERSIZED_FRAME_STRIKES = 5;
+export const INVALID_FRAME_STRIKES = 2;
 
 /** Broadcasts are coalesced to at most one full snapshot per canvas per interval. */
 export const BROADCAST_MIN_INTERVAL_MS = 100;
@@ -109,7 +126,12 @@ export class CanvasRateLimiter {
     const bucket = scope === 'socket' ? socket : actor;
     const policy = scope === 'socket' ? SOCKET_MESSAGE_BUCKET : ACTOR_MESSAGE_BUCKET;
     const retryAfterMs = Math.ceil(((cost - bucket.tokens) / policy.refillPerSecond) * 1_000);
-    return { allowed: false, scope, retryAfterMs, abusive: this.strike(socketId) };
+    return {
+      allowed: false,
+      scope,
+      retryAfterMs,
+      abusive: this.strike(socketId, RATE_REFUSAL_STRIKES),
+    };
   }
 
   /** Spends tokens from an actor's bucket for a request that has no socket, such as a snapshot read. */
@@ -125,10 +147,10 @@ export class CanvasRateLimiter {
     return { allowed: false, scope: 'actor', retryAfterMs, abusive: false };
   }
 
-  /** Records a refused message against a socket. Returns true once the socket must be closed. */
-  strike(socketId: string): boolean {
+  /** Records a refused frame against a socket. Returns true once the socket must be closed. */
+  strike(socketId: string, weight: number): boolean {
     const socket = this.#socket(socketId, this.#now());
-    socket.strikes += 1;
+    socket.strikes += weight;
     return socket.strikes > ABUSE_STRIKE_LIMIT;
   }
 
