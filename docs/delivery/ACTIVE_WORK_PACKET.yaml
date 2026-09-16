@@ -70,6 +70,14 @@ scope:
     # packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
     - governance/toolchain.yaml
     - packages/ui/**
+    # Scope amendment on explicit owner instruction, 2026-09-16: fix collaboration identity. The
+    # collaboration worker accepts WebSocket and snapshot requests without authentication and trusts
+    # the actor_id each client sends, and the web app gives every live user the same actor_id. The fix
+    # binds server-verified identity in apps/collaboration and its shared protocol and client in
+    # packages/collaboration, neither of which this packet admitted. The amendment does not change
+    # this packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
+    - apps/collaboration/**
+    - packages/collaboration/**
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
