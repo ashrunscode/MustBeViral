@@ -18,7 +18,6 @@ doc_id: toolchain-template-provenance
 | create-cloudflare         |       2.70.10 | Hono Worker scratch scaffold                          |
 | Vercel CLI                |        55.0.0 | preview/deployment operations                         |
 | Supabase CLI              |       2.109.1 | local stack, migrations, project operations           |
-| SuperDesign CLI           |         0.4.0 | design workflow                                       |
 | shadcn CLI                |        4.13.0 | accessible component source                           |
 | Vitest                    |        4.1.10 | unit/integration tests                                |
 | Playwright                |        1.61.1 | browser/accessibility/visual tests                    |
@@ -102,7 +101,7 @@ pnpm dlx shadcn@4.13.0 init `
 - Result: disposable 56-file probe manifest SHA-256 `cd825b7a059e400b6d53aca1ea75c8d5d97a62b307c1b0c15798ea7d97fcd857`.
 - Selected now: only the proven CLI/registry mechanism.
 - Rejected now: generated CSS, `components.json`, button primitive, utility module, application-local aliases, lockfile/package changes, and unapproved theme/dependencies.
-- Gate: initialization in the repository remains prohibited until SuperDesign approval. Final aliases must point at `packages/ui`. Per research register source `src-shadcn`, which documents the current CLI rather than the pinned 4.13.0, preset codes do not encode the base, and the base an existing project keeps is the one already in its `components.json`, which this repository rejects above. A disposable probe therefore has to pass `--base` explicitly, as the command above does; `--defaults` would instead use `--template=next --preset=nova`, with the `base` library implied.
+- Gate: initialization in the repository remains prohibited until operator approval under the visual approval gate in `docs/ux/EXPERIENCE_CONTRACT.md`. Final aliases must point at `packages/ui`. Per research register source `src-shadcn`, which documents the current CLI rather than the pinned 4.13.0, preset codes do not encode the base, and the base an existing project keeps is the one already in its `components.json`, which this repository rejects above. A disposable probe therefore has to pass `--base` explicitly, as the command above does; `--defaults` would instead use `--template=next --preset=nova`, with the `base` library implied.
 
 ### Supabase local configuration
 
@@ -130,8 +129,8 @@ License authorities are the upstream [Turborepo license](https://github.com/verc
 - Wrangler 4.110.0 generated types and completed a no-provision dry build with compatibility date 2026-07-12 even though its local workerd build is dated 2026-07-08.
 - Shared runtime TypeScript keeps `skipLibCheck: false`. Only the Cloudflare test/tool projects use targeted `skipLibCheck: true` because official generated Worker globals intentionally conflict with DOM declarations pulled by test-tool types; production Worker types remain generated and drift-checked.
 
-## SuperDesign sequencing
+## Design frames
 
-Do not initialize SuperDesign until the clean Next scaffold exists. Then verify CLI version/authentication, complete `.superdesign/init`, create the design system from accepted contracts, render three explicit branches, and wait for user approval before production UI code.
+A new live surface follows the visual approval gate in `docs/ux/EXPERIENCE_CONTRACT.md`: named HTML frames, desktop and mobile captures, and explicit operator approval before its production components ship.
 
-The pinned `0.4.0` is a repository-local dependency set with the cleanroom baseline on 2026-07-12. It is not a record of the version that produced anything: the CLI is optional tooling rather than a design authority (`docs/ux/EXPERIENCE_CONTRACT.md`), the `.superdesign/init/` analysis was authored directly from repository sources, and the only CLI invocations the repository names are in `governance/evidence/WP-D0-001/initialize-evidence.md`, where line 7 ran `npx --yes @superdesign/cli@latest`, which ignores the pin and whose resolved version no file records, and line 19 records an `@superdesign/cli init` whose version is not stated at all. Because research register source `src-superdesign` mandates `@latest` on every call, the pinned version and the version an invocation actually runs will keep diverging, so verifying the CLI version above means recording what `@latest` resolved to. Changing the pin means changing `governance/toolchain.yaml`, root package metadata, the lockfile and the version table together, as required at the top of this document.
+High-fidelity design-direction frames recorded as evidence live as HTML under `.superdesign/hifi/`, the path `governance/schemas/design-direction-evidence.schema.json` requires; the folder name is historical. Any mockup tool may produce frames, but none is an authority, and no design-generation CLI is a repository dependency.
