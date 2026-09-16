@@ -17,12 +17,13 @@ const bindings = {
   SUPABASE_SECRET_KEY,
 } as CoreBindings;
 
-/** Named arguments of `apply_stripe_wallet_credit`; `p_metadata` has a default. */
-const WALLET_CREDIT_ARGUMENTS = {
+/** Named arguments of `apply_stripe_wallet_top_up`; `p_metadata` has a default. */
+const WALLET_TOP_UP_ARGUMENTS = {
   required: [
     'p_amount_micros',
     'p_event_type',
     'p_request_id',
+    'p_stripe_checkout_session_id',
     'p_stripe_customer_id',
     'p_stripe_event_id',
     'p_workspace_id',
@@ -66,9 +67,9 @@ function isNonBlankText(value: unknown): value is string {
  *
  * - Any other `apikey` answers 401, as the Supabase gateway does.
  * - A body whose argument names do not match the function's signature answers 404 PGRST202.
- * - `apply_stripe_wallet_credit` rejects a blank event id, event type or request id, or a
- *   non-positive amount, with 22023 (as the deployed function does). It is idempotent on the Stripe
- *   event id: a replay reports `replayed` and credits nothing.
+ * - `apply_stripe_wallet_top_up` rejects a blank checkout session id, event id, event type or
+ *   request id, or a non-positive amount, with 22023 (as the deployed function does). It is
+ *   idempotent on the Checkout Session: a replay reports `replayed` and credits nothing.
  * - `record_stripe_webhook_event` rejects a blank text argument or a null livemode with 22023 before
  *   claiming (migration 20260916157000), then inserts a receipt or reports a duplicate on
  *   `p_stripe_event_id`.
@@ -113,11 +114,12 @@ function postgrest(
       );
     }
 
-    if (rpc === 'apply_stripe_wallet_credit') {
-      if (!matchesSignature(args, WALLET_CREDIT_ARGUMENTS)) {
+    if (rpc === 'apply_stripe_wallet_top_up') {
+      if (!matchesSignature(args, WALLET_TOP_UP_ARGUMENTS)) {
         return answer(rpc, args, 'http_404', notFound());
       }
       if (
+        !isNonBlankText(args.p_stripe_checkout_session_id) ||
         !isNonBlankText(args.p_stripe_event_id) ||
         !isNonBlankText(args.p_event_type) ||
         !isNonBlankText(args.p_request_id) ||
@@ -126,8 +128,9 @@ function postgrest(
       ) {
         return answer(rpc, args, 'http_400', invalid());
       }
-      const replayed = walletCredits.has(args.p_stripe_event_id);
-      if (!replayed) walletCredits.set(args.p_stripe_event_id, BigInt(args.p_amount_micros));
+      const replayed = walletCredits.has(args.p_stripe_checkout_session_id);
+      if (!replayed)
+        walletCredits.set(args.p_stripe_checkout_session_id, BigInt(args.p_amount_micros));
       const balance = [...walletCredits.values()].reduce((sum, micros) => sum + micros, 0n);
       return answer(
         rpc,
@@ -258,7 +261,9 @@ describe('stripe webhook route through the real dedup and settlement ports', () 
       requestFailedLog('StripeWebhookDedupUnavailableError'),
     );
     // Settlement committed but the receipt did not, so Stripe's retry must not look like a duplicate.
-    expect([...database.walletCredits]).toStrictEqual([['evt_receipt_outage', 50_000_000n]]);
+    expect([...database.walletCredits]).toStrictEqual([
+      ['cs_test_evt_receipt_outage', 50_000_000n],
+    ]);
     expect(database.receipts.size).toBe(0);
 
     const retry = await deliver(app, body);
@@ -273,15 +278,17 @@ describe('stripe webhook route through the real dedup and settlement ports', () 
       persisted: true,
     });
     expect(payload.data).not.toHaveProperty('duplicate');
-    expect([...database.walletCredits]).toStrictEqual([['evt_receipt_outage', 50_000_000n]]);
+    expect([...database.walletCredits]).toStrictEqual([
+      ['cs_test_evt_receipt_outage', 50_000_000n],
+    ]);
     expect([...database.receipts.keys()]).toStrictEqual(['evt_receipt_outage']);
     expect(database.receipts.get('evt_receipt_outage')?.p_payload_hash).toBe(
       createHash('sha256').update(body).digest('hex'),
     );
     expect(database.outcomes()).toStrictEqual([
-      'apply_stripe_wallet_credit:credited',
+      'apply_stripe_wallet_top_up:credited',
       'record_stripe_webhook_event:http_503',
-      'apply_stripe_wallet_credit:replayed',
+      'apply_stripe_wallet_top_up:replayed',
       'record_stripe_webhook_event:inserted',
     ]);
   });
@@ -306,12 +313,14 @@ describe('stripe webhook route through the real dedup and settlement ports', () 
       duplicate: true,
       acknowledged: true,
     });
-    expect([...database.walletCredits]).toStrictEqual([['evt_receipt_response_lost', 50_000_000n]]);
+    expect([...database.walletCredits]).toStrictEqual([
+      ['cs_test_evt_receipt_response_lost', 50_000_000n],
+    ]);
     expect([...database.receipts.keys()]).toStrictEqual(['evt_receipt_response_lost']);
     expect(database.outcomes()).toStrictEqual([
-      'apply_stripe_wallet_credit:credited',
+      'apply_stripe_wallet_top_up:credited',
       'record_stripe_webhook_event:http_503',
-      'apply_stripe_wallet_credit:replayed',
+      'apply_stripe_wallet_top_up:replayed',
       'record_stripe_webhook_event:duplicate',
     ]);
   });
@@ -335,12 +344,12 @@ describe('stripe webhook route through the real dedup and settlement ports', () 
       duplicate: true,
       acknowledged: true,
     });
-    expect([...database.walletCredits]).toStrictEqual([['evt_redelivered', 50_000_000n]]);
+    expect([...database.walletCredits]).toStrictEqual([['cs_test_evt_redelivered', 50_000_000n]]);
     expect([...database.receipts.keys()]).toStrictEqual(['evt_redelivered']);
     expect(database.outcomes()).toStrictEqual([
-      'apply_stripe_wallet_credit:credited',
+      'apply_stripe_wallet_top_up:credited',
       'record_stripe_webhook_event:inserted',
-      'apply_stripe_wallet_credit:replayed',
+      'apply_stripe_wallet_top_up:replayed',
       'record_stripe_webhook_event:duplicate',
     ]);
   });
@@ -361,7 +370,7 @@ describe('stripe webhook route through the real dedup and settlement ports', () 
     );
     expect(database.walletCredits.size).toBe(0);
     expect(database.receipts.size).toBe(0);
-    expect(database.outcomes()).toStrictEqual(['apply_stripe_wallet_credit:http_401']);
+    expect(database.outcomes()).toStrictEqual(['apply_stripe_wallet_top_up:http_401']);
   });
 
   const GENERATED_REQUEST_ID =
@@ -407,7 +416,7 @@ describe('stripe webhook route through the real dedup and settlement ports', () 
     // Settlement receives the same id as the receipt and the response header.
     expect(
       database.calls
-        .filter((call) => call.rpc === 'apply_stripe_wallet_credit')
+        .filter((call) => call.rpc === 'apply_stripe_wallet_top_up')
         .map((call) => call.args.p_request_id),
     ).toStrictEqual([requestId]);
   });
