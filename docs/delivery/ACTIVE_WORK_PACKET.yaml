@@ -70,6 +70,29 @@ scope:
     # packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
     - governance/toolchain.yaml
     - packages/ui/**
+    # Scope amendment on explicit owner instruction, 2026-09-16: fix collaboration identity. The
+    # collaboration worker accepts WebSocket and snapshot requests without authentication and trusts
+    # the actor_id each client sends, and the web app gives every live user the same actor_id. The fix
+    # binds server-verified identity in apps/collaboration and its shared protocol and client in
+    # packages/collaboration, neither of which this packet admitted. The amendment does not change
+    # this packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
+    - apps/collaboration/**
+    - packages/collaboration/**
+    # Scope amendment on explicit owner instruction, 2026-09-16: fix Stripe wallet funding (issue
+    # 20). One Stripe payment can credit the prepaid usage wallet twice, because both
+    # checkout.session.completed and invoice.paid credit it under different event ids. The owner
+    # decided that only explicit wallet top-ups fund the wallet. The settlement plan that decides
+    # which Stripe events credit the wallet lives in packages/billing, which this packet did not
+    # admit. The amendment does not change this packet's objective, steps, acceptance criteria,
+    # quality gates or evidence requirements.
+    - packages/billing/**
+    # Scope amendment on explicit owner instruction, 2026-09-16: correct two stale references left by
+    # the SuperDesign removal and the WCAG AA colour fix. README.md still gates production UI on a
+    # SuperDesign artifact, and .superdesign/design-system.md still prescribes colours that fail WCAG
+    # AA. Only those two files are admitted. The amendment does not change this packet's objective,
+    # steps, acceptance criteria, quality gates or evidence requirements.
+    - README.md
+    - .superdesign/design-system.md
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**

@@ -8,20 +8,24 @@ export class StripeWebhookDedupForbiddenError extends Error {
   override readonly name = 'StripeWebhookDedupForbiddenError';
 }
 
-function isInsertResult(value: unknown): value is Readonly<{ inserted: boolean }> {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    !Array.isArray(value) &&
-    typeof (value as Readonly<Record<string, unknown>>).inserted === 'boolean'
-  );
+type StripeWebhookClaim = 'inserted' | 'duplicate';
+
+function isClaimResult(value: unknown): value is Readonly<{ claim: StripeWebhookClaim }> {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+  const claim = (value as Readonly<Record<string, unknown>>).claim;
+  return claim === 'inserted' || claim === 'duplicate';
 }
 
 /**
  * Privileged Stripe webhook dedup surface. Webhook requests have no user JWT.
+ *
+ * PostgREST matches an RPC by the exact set of named arguments, and
+ * `record_stripe_webhook_event` takes five, so `p_request_id` must always be sent. It returns
+ * `{ claim }`. A broken four-argument overload existed until migration 20260916155000 dropped it.
  */
 export function createStripeWebhookDedupPort(
   bindings: CoreBindings,
+  requestId: string,
   fetchImplementation?: typeof fetch,
 ): Readonly<{
   recordEvent(
@@ -94,13 +98,14 @@ export function createStripeWebhookDedupPort(
         p_event_type: input.eventType,
         p_livemode: input.livemode,
         p_payload_hash: input.payloadHash,
+        p_request_id: requestId,
       });
-      if (!isInsertResult(body)) {
+      if (!isClaimResult(body)) {
         throw new StripeWebhookDedupUnavailableError(
           'Stripe webhook dedup RPC returned an unexpected shape.',
         );
       }
-      return body.inserted;
+      return body.claim === 'inserted';
     },
   });
 }
@@ -116,7 +121,6 @@ export function createStripeWebhookRecordEvent(
     payloadHash: string;
   }>,
 ) => Promise<boolean> {
-  void requestId;
-  const dedup = createStripeWebhookDedupPort(bindings);
+  const dedup = createStripeWebhookDedupPort(bindings, requestId);
   return async (event) => dedup.recordEvent(event);
 }

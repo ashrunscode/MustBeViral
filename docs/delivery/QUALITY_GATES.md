@@ -33,7 +33,7 @@ running before `pnpm supabase:test`.
 
 ## D0 exit gates
 
-- Three SuperDesign branches rendered from the accepted design system; one direction explicitly approved by the user.
+- Three design branches rendered from the accepted design system; one direction explicitly approved by the user.
 - Campaign brief, canvas, quote/run, outputs, receipt, and responsive review flows have approved goldens.
 - Five to eight qualified users and 20 representative briefs are recruited/defined.
 - Enabled model catalog has current price, license, retention, moderation, and capability evidence.

@@ -36,7 +36,7 @@ If dependencies are not installed, use `corepack pnpm install --frozen-lockfile`
 Use `.agents/skills/build-mustbeviral/SKILL.md` when building, resuming, reviewing, or handing off this project. When available, select only the specialist skills relevant to the packet:
 
 - Architecture: `architect-prime`, then `think` for irreversible decisions.
-- UI: `superdesign`, then `frontend-master`; use `web-perf` for measured performance.
+- UI: `brand/BRAND.md` is the design brief and `docs/ux/EXPERIENCE_CONTRACT.md` the accepted UX authority; `frontend-design` to build, `web-design-guidelines` to review UI code, `design-qa-loop` before merging UI; use `core-web-vitals` for measured performance.
 - Data/auth/API: `data-architect`, `auth-fortress`, `api-craft`.
 - Cloudflare: `cloudflare`, `wrangler`, `workers-best-practices`, `file-forge`.
 - Billing/email/operations: `billing-engine`, `email-flow`, `observability-ops`.

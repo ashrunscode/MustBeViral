@@ -109,7 +109,7 @@ describe('P0 /v1 route boundary', () => {
 
   afterEach(() => vi.unstubAllGlobals());
 
-  it('maps all 18 authenticated operations through the shared handler table', async () => {
+  it('maps all 19 authenticated operations through the shared handler table', async () => {
     const calls: string[] = [];
     const handlers = Object.fromEntries(
       P0_REST_OPERATIONS.map((operation) => [

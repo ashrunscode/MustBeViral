@@ -213,11 +213,12 @@ export function createStripeWebhookSettlementHandler(
   return async ({ verified, requestId, operatorEmail }) => {
     const settlement = settleStripeWebhookEvent({ verified, requestId });
     let persisted = false;
+    let walletCreditReplayed = false;
 
     if (settlement.kind === 'wallet_credit') {
       const workspaceId = extractStripeWorkspaceId(verified.payload, verified.eventType);
       const stripeCustomerId = extractStripeCustomerId(verified.payload);
-      await persistence.applyWalletCredit({
+      const credit = await persistence.applyWalletCredit({
         workspaceId,
         stripeEventId: verified.eventId,
         stripeCustomerId,
@@ -227,6 +228,7 @@ export function createStripeWebhookSettlementHandler(
         metadata: settlement.plan.movement.metadata,
       });
       persisted = true;
+      walletCreditReplayed = credit.replayed;
     } else if (settlement.kind === 'subscription_update') {
       const workspaceId = extractStripeWorkspaceId(verified.payload, verified.eventType);
       const stripeCustomerId =
@@ -243,7 +245,13 @@ export function createStripeWebhookSettlementHandler(
       persisted = true;
     }
 
-    if (settlement.kind !== 'wallet_credit' || operatorEmail === undefined) {
+    // Stripe retries and redeliveries replay settlement, so only the delivery that credited the
+    // wallet notifies the operator.
+    if (
+      settlement.kind !== 'wallet_credit' ||
+      operatorEmail === undefined ||
+      walletCreditReplayed
+    ) {
       return Object.freeze({ settlement, emailStatus: 'not_requested' as const, persisted });
     }
 

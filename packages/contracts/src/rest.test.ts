@@ -85,6 +85,7 @@ const minimalInputs = {
     identity: { provider: 'fal', event_id: 'event-1', dedup_key: 'event-1' },
     event: {},
   },
+  create_collaboration_ticket: { context, canvas_id: 'canvas-1' },
 } as const satisfies Readonly<Record<P0RestOperation, unknown>>;
 
 describe('P0 REST handler binding', () => {
@@ -124,6 +125,7 @@ describe('P0 REST handler binding', () => {
       explainModel: resource('explain_model'),
       getReceipt: resource('get_receipt'),
       ingestFalWebhook: resource('ingest_fal_webhook'),
+      createCollaborationTicket: resource('create_collaboration_ticket'),
     };
     const handlers = createP0RestHandlers(commands, createP0ResourceHandlers(resources));
 

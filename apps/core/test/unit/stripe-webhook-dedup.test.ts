@@ -3,47 +3,67 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   createStripeWebhookDedupPort,
   StripeWebhookDedupForbiddenError,
+  StripeWebhookDedupUnavailableError,
 } from '../../src/composition/stripe-webhook-dedup';
 
+const bindings = {
+  SUPABASE_URL: 'https://example.supabase.co',
+  SUPABASE_SECRET_KEY: 'sb_secret_test',
+} as never;
+
+const event = {
+  eventId: 'evt_1',
+  eventType: 'checkout.session.completed',
+  livemode: false,
+  payloadHash: 'abc123',
+} as const;
+
+function respondWith(body: unknown) {
+  return vi.fn<typeof fetch>(async () => Response.json(body, { status: 200 }));
+}
+
 describe('stripe webhook dedup', () => {
-  it('records first-seen events through the privileged RPC', async () => {
-    const fetchMock = vi.fn(async () => Response.json({ inserted: true }, { status: 200 }));
-    const port = createStripeWebhookDedupPort(
-      {
-        SUPABASE_URL: 'https://example.supabase.co',
-        SUPABASE_SECRET_KEY: 'sb_secret_test',
-      } as never,
-      fetchMock,
-    );
-    await expect(
-      port.recordEvent({
-        eventId: 'evt_1',
-        eventType: 'checkout.session.completed',
-        livemode: false,
-        payloadHash: 'abc123',
-      }),
-    ).resolves.toBe(true);
+  it('claims first-seen events through the five-argument claim RPC', async () => {
+    const fetchMock = respondWith({ claim: 'inserted' });
+    const port = createStripeWebhookDedupPort(bindings, 'req-stripe-dedup-1', fetchMock);
+
+    await expect(port.recordEvent(event)).resolves.toBe(true);
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const [url, init] = fetchMock.mock.calls[0] ?? [];
+    expect(String(url)).toBe('https://example.supabase.co/rest/v1/rpc/record_stripe_webhook_event');
+    expect(init?.method).toBe('POST');
+    // PostgREST matches an RPC by the exact set of named arguments, and the function takes five, so
+    // dropping p_request_id would fail the call instead of recording the claim.
+    expect(JSON.parse(String(init?.body))).toStrictEqual({
+      p_stripe_event_id: 'evt_1',
+      p_event_type: 'checkout.session.completed',
+      p_livemode: false,
+      p_payload_hash: 'abc123',
+      p_request_id: 'req-stripe-dedup-1',
+    });
+  });
+
+  it('reports duplicate claims as false', async () => {
+    const fetchMock = respondWith({ claim: 'duplicate' });
+    const port = createStripeWebhookDedupPort(bindings, 'req-stripe-dedup-2', fetchMock);
+
+    await expect(port.recordEvent({ ...event, eventId: 'evt_dup' })).resolves.toBe(false);
     expect(fetchMock).toHaveBeenCalledOnce();
   });
 
-  it('records duplicate events as false', async () => {
-    const fetchMock = vi.fn(async () => Response.json({ inserted: false }, { status: 200 }));
-    const port = createStripeWebhookDedupPort(
-      {
-        SUPABASE_URL: 'https://example.supabase.co',
-        SUPABASE_SECRET_KEY: 'sb_secret_test',
-      } as never,
-      fetchMock,
+  it.each([
+    ['the retired four-argument overload shape', { inserted: true }],
+    ['a provider webhook claim value', { claim: 'claimed' }],
+    ['a non-string claim', { claim: true }],
+    ['an array', [{ claim: 'inserted' }]],
+    ['null', null],
+  ])('fails closed on %s', async (_label, body) => {
+    const port = createStripeWebhookDedupPort(bindings, 'req-stripe-dedup-3', respondWith(body));
+
+    await expect(port.recordEvent(event)).rejects.toBeInstanceOf(
+      StripeWebhookDedupUnavailableError,
     );
-    await expect(
-      port.recordEvent({
-        eventId: 'evt_dup',
-        eventType: 'invoice.paid',
-        livemode: false,
-        payloadHash: 'def456',
-      }),
-    ).resolves.toBe(false);
-    expect(fetchMock).toHaveBeenCalledOnce();
   });
 
   it('rejects forbidden privileged credentials', async () => {
@@ -53,6 +73,7 @@ describe('stripe webhook dedup', () => {
         SUPABASE_URL: 'https://example.supabase.co',
         SUPABASE_SECRET_KEY: 'bad',
       } as never,
+      'req-stripe-dedup-4',
       fetchMock,
     );
     await expect(

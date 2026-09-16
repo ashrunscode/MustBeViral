@@ -13,9 +13,9 @@ The user must always be able to answer five questions: Where am I? What is ready
 ## Lightfield paper-and-ink identity
 
 - Surfaces use paper `#fafafa` (`z0`) for the primary field, paper `#f5f5f5` (`z1`) for secondary fields and wells, and white `#ffffff` for cards and raised panels.
-- The black ink-alpha ladder is the neutral system: `t0 .02`, `t1 .04`, `t2 .06`, `t3 .08`, `t4 .12`, `t5 .16`, `t6 .25`, `t7 .35`, `t8 .50`, `t9 .60`, `t10 .75`, and `t11 .85`. Semantic mapping is primary `.85`, headings `.75`, body `.60`, captions `.50`, disabled `.25`, moderate borders `.12`, and subtle borders `.06`.
-- The single blue accent family is content-brand `#80bfff` and brand-strong `#3182d4`. Brand-strong marks the one primary action per screen. Selection uses a content-brand border with a 12% content-brand wash (`#80bfff1f`). Blue never becomes a section fill or a second competing action.
-- Status colors are success `#49bf4c`, error `#f55434`, and amber attention. They appear only as small icon-and-text chips; color is never the only status cue and status color never fills a large surface.
+- The black ink-alpha ladder is the neutral system: `t0 .02`, `t1 .04`, `t2 .06`, `t3 .08`, `t4 .12`, `t5 .16`, `t6 .25`, `t7 .35`, `t8 .50`, `t9 .60`, `t10 .75`, and `t11 .85`. Semantic mapping is primary `.85`, headings `.75`, body `.60`, captions `.50` only at WCAG large-text sizes (text below that uses at least `.60`, because `.50` measured 3.9:1 on paper and white and fails WCAG AA 4.5:1), disabled `.25`, moderate borders `.12`, and subtle borders `.06`.
+- The single blue accent family is content-brand `#80bfff` and brand-strong `#3182d4`. The one primary action per screen is the blue-filled control. White on `#3182d4` measured 3.98:1 and fails WCAG AA 4.5:1, so a filled primary button with white text uses the deeper fill `#2875c2` at rest (4.76:1), `#226bb3` on hover (5.49:1), and `#1d5f9f` when pressed (6.58:1), and small blue text uses `#226bb3`; brand-strong `#3182d4` remains the brand colour for the mark, borders, selection, and focus. Selection uses a content-brand border with a 12% content-brand wash (`#80bfff1f`). Blue never becomes a section fill or a second competing action.
+- Status colors are success `#49bf4c`, error `#f55434`, and amber attention. They appear only as small icon-and-text chips; the status color marks the dot or icon, and chip label text uses a darker text shade that meets WCAG AA 4.5:1 on its actual background (success `#187b4e` 5.27:1, attention `#8b5f0f` 5.61:1, error `#b73945` 5.70:1 on white). Those text shades derive from the shipped status tokens (`#1f9d63`, `#b87e14`, `#c4404d`), not from the success and error values above; that palette divergence is an open owner decision recorded in `brand/context.md` section 13. Color is never the only status cue and status color never fills a large surface.
 - The primary face is Untitled Sans (licensed target) with Geist Sans as the interim implementation face; the evidence face is DM Mono. Untitled Sans uses weight 400 throughout the product scale: h1 `28px/1.2` at `-.03em`, h2 `24px/1.25` at `-.02em`, h3 `21px/1.25` at `-.015em`, h4 `19px/1.3` at `-.01em`, large `17px/1.5`, body `15px/1.5`, small `13px/1.5`, xs `12px/1.45`, and xxs `11px/1.45`.
 - DM Mono monocaps carry all evidence, including identifiers, prices, timings, revisions, model routes, seeds, hashes, receipts, timestamps, counts, labels, and table headers. The two monocaps sizes are `10px/1em` and `9px/1em`, both with `+1px` tracking and weight 500.
 - Four pixels is the spacing base; common gaps are 8/12/16/24/32px. Compact controls are 32–36px tall, primary controls are at least 40px, and touch targets are at least 44×44px.
@@ -48,7 +48,7 @@ Every interactive component defines default, hover when applicable, focus-visibl
 
 ## Visual approval gate
 
-Lightfield tokens in `.superdesign/design-system.md` are the system. The SuperDesign CLI is optional tooling, not an authority.
+Lightfield tokens in `.superdesign/design-system.md` are the system. Design and mockup tools are optional tooling, not an authority.
 
 1. Preview fixture goldens (Review Approval / Lumen) stay locked for local-preview Playwright.
 2. Live product screens may diverge from those fixtures. They use Lightfield tokens and worker data.
