@@ -6,7 +6,7 @@ begin;
 -- differently on the replay, and that the operator reconciliation query finds receipts that
 -- have no settlement evidence.
 
-select plan(16);
+select plan(18);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -110,7 +110,7 @@ select is(
       'req_replay_explicit_2', '{}'::jsonb
     )
   $sql$),
-  '22023:STRIPE_EVENT_WORKSPACE_MISMATCH',
+  'P0001:STRIPE_EVENT_WORKSPACE_MISMATCH',
   'a Stripe wallet credit cannot be replayed into another workspace'
 );
 
@@ -218,7 +218,34 @@ select is(
   'the wallet_available ledger matches the profile balance after replays'
 );
 
--- 13-14: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
+-- 13-14: a first delivery must not credit an arbitrary workspace when the customer is shared.
+update public.workspace_billing_profiles
+set stripe_customer_id = 'cus_replay_shared'
+where workspace_id in (
+  '99921000-0000-4000-8000-00000000000a',
+  '99921000-0000-4000-8000-00000000000b'
+);
+
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_wallet_credit(
+      null,
+      'evt_replay_ambiguous', 'cus_replay_shared', 5000000, 'invoice.paid',
+      'req_replay_ambiguous', '{}'::jsonb
+    )
+  $sql$),
+  'P0001:STRIPE_CUSTOMER_AMBIGUOUS',
+  'a first delivery whose Stripe customer maps to several workspaces is rejected'
+);
+
+select is(
+  (select count(*)::integer from public.ledger_transactions
+   where causative_key = 'stripe:evt_replay_ambiguous'),
+  0,
+  'the ambiguous first delivery credits no workspace'
+);
+
+-- 15-16: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
 select public.apply_stripe_wallet_credit(
   '99921000-0000-4000-8000-00000000000a',
   'evt_replay_lock_credit', null, 1000000, 'checkout.session.completed',
@@ -241,7 +268,7 @@ select ok(
   'a subscription update holds a transaction-scoped per-event lock'
 );
 
--- 15: the replaced function keeps its security contract.
+-- 17: the replaced function keeps its security contract.
 select ok(
   (select proc.prosecdef
      and proc.proconfig = array['search_path=pg_catalog, public']
@@ -257,7 +284,7 @@ select ok(
   'apply_stripe_wallet_credit stays security definer, pinned search_path and service_role only'
 );
 
--- 16: the operator reconciliation query lists receipts that have no settlement evidence.
+-- 18: the operator reconciliation query lists receipts that have no settlement evidence.
 insert into public.stripe_webhook_events (
   stripe_event_id, event_type, livemode, payload_hash, processed_at, created_at
 ) values

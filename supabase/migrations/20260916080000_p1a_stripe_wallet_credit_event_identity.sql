@@ -8,8 +8,12 @@
 -- - a per-event advisory lock serializes concurrent deliveries;
 -- - a replay without a workspace id keeps the workspace the event first credited and does not
 --   touch the billing profile, so it neither credits again nor rewrites the customer mapping;
--- - a replay naming a different workspace raises STRIPE_EVENT_WORKSPACE_MISMATCH, matching
---   apply_stripe_subscription_update (20260910000000).
+-- - a replay naming a different workspace raises P0001 STRIPE_EVENT_WORKSPACE_MISMATCH;
+-- - a first delivery without a workspace id whose customer maps to several billing profiles
+--   raises P0001 STRIPE_CUSTOMER_AMBIGUOUS instead of crediting an arbitrary workspace;
+-- - the current_user guard is removed: inside a security definer function current_user is the
+--   owner, so it never fired. EXECUTE grants remain the access control.
+-- These match the subscription replay hardening prepared alongside this change.
 -- Signature, grants, search_path and the response shape are unchanged.
 begin;
 
@@ -36,15 +40,13 @@ as $$
 declare
   v_workspace_id uuid := p_workspace_id;
   v_credited_workspace_id uuid;
+  v_customer_workspace_ids uuid[];
   v_causative_key text;
   v_ledger_result jsonb;
   v_replayed boolean;
   v_transaction_id uuid;
   v_wallet_balance_micros bigint;
 begin
-  if current_user <> 'postgres' and session_user <> 'service_role' and current_user <> 'service_role' then
-    raise exception using errcode = '42501', message = 'FORBIDDEN';
-  end if;
   if p_stripe_event_id is null or length(trim(p_stripe_event_id)) = 0 then
     raise exception using errcode = '22023', message = 'stripe_event_id is required';
   end if;
@@ -76,16 +78,21 @@ begin
 
   if v_credited_workspace_id is not null then
     if p_workspace_id is not null and p_workspace_id <> v_credited_workspace_id then
-      raise exception using errcode = '22023', message = 'STRIPE_EVENT_WORKSPACE_MISMATCH';
+      raise exception using errcode = 'P0001', message = 'STRIPE_EVENT_WORKSPACE_MISMATCH';
     end if;
     -- A replay: record_ledger_movement below reports replayed and still rejects a changed amount.
     v_workspace_id := v_credited_workspace_id;
   else
     if v_workspace_id is null and p_stripe_customer_id is not null and length(trim(p_stripe_customer_id)) > 0 then
-      select profile.workspace_id
-      into v_workspace_id
+      select array_agg(profile.workspace_id)
+      into v_customer_workspace_ids
       from public.workspace_billing_profiles as profile
       where profile.stripe_customer_id = p_stripe_customer_id;
+
+      if cardinality(v_customer_workspace_ids) > 1 then
+        raise exception using errcode = 'P0001', message = 'STRIPE_CUSTOMER_AMBIGUOUS';
+      end if;
+      v_workspace_id := v_customer_workspace_ids[1];
     end if;
 
     if v_workspace_id is null then
