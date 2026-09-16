@@ -168,12 +168,19 @@
   background: #80bfff1f;
 }
 
-/* A node outside the selected lineage recedes through non-text chrome only: a dashed border (the
-   non-colour cue), the canvas-field fill instead of a raised card, and a quiet status icon. Every
-   text stays at an AA ink on that fill; opacity .5 left mono text at 2.14:1 and titles at 3.15:1. */
+/* A node outside the selected lineage recedes through non-text chrome only: a dashed --ink-muted
+   border (the non-colour cue, 3.9:1 against the canvas), the canvas-field fill instead of a raised
+   card, and a quiet status icon. Every text stays at an AA ink on that fill; opacity .5 left mono
+   text at 2.14:1 and titles at 3.15:1. */
 :global(.node-dim) {
   border-style: dashed;
+  border-color: var(--ink-muted);
   background: var(--paper-2);
+}
+
+/* The dashed border is the inactive cue, so it keeps at least 3:1 against the canvas on hover. */
+:global(.node-dim):hover {
+  border-color: var(--ink);
 }
 
 :global(.node-dim) .nodeTitle {
@@ -328,7 +335,11 @@
   grid-column: 2;
   grid-row: 1;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  /* The collaboration row is capped at 36% of the rail and its stack scrolls inside it. An auto row
+     sized to the stack's full content (547px) because a percentage cap on the stack cannot resolve
+     while tracks are sized, leaving the outline list 16px at 1280x800 and 77px at 1440x900 beside
+     empty rail. 36% keeps at least five outline rows in view from 1280x800 up. */
+  grid-template-rows: minmax(0, 1fr) fit-content(36%);
   overflow: hidden;
   border-left: 1px solid var(--line);
   background: var(--card);
@@ -338,20 +349,6 @@
   border-top: 1px solid var(--line);
   padding: 12px;
   overflow-y: auto;
-  max-height: 42%;
-}
-
-/* On a phone the auto row sized to the collaboration stack's full content (547px of a 659px rail),
-   because its 42% cap cannot resolve while tracks are sized, leaving the outline list 16px under
-   it. The row itself is capped at 42% of the rail instead and the stack scrolls inside it. */
-@media (max-width: 767px) {
-  .sideRail {
-    grid-template-rows: minmax(0, 1fr) fit-content(42%);
-  }
-
-  .sideRail > :last-child {
-    max-height: none;
-  }
 }
 
 .outlinePanel {

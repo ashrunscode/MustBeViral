@@ -514,12 +514,70 @@ test('keeps dimmed canvas node text at AA contrast with a non-colour inactive cu
   expect(report.cues.filter((cue) => !cue.endsWith(':dashed'))).toEqual([]);
 });
 
+test('keeps the dimmed-node dashed border at 3:1 against the canvas at rest, on hover and on focus', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const node = page.locator('[data-node-id].node-dim').first();
+  await expect(node).toBeVisible();
+  const borderContrast = () =>
+    node.evaluate((element) => {
+      type Rgba = [number, number, number, number];
+      const parse = (value: string): Rgba => {
+        const parts = (/rgba?\(([^)]+)\)/u.exec(value)?.[1] ?? '0 0 0 0')
+          .split(/[\s,/]+/u)
+          .filter(Boolean)
+          .map(Number);
+        return [parts[0] ?? 0, parts[1] ?? 0, parts[2] ?? 0, parts[3] ?? 1];
+      };
+      const over = (top: Rgba, bottom: Rgba): Rgba => [
+        top[0] * top[3] + bottom[0] * (1 - top[3]),
+        top[1] * top[3] + bottom[1] * (1 - top[3]),
+        top[2] * top[3] + bottom[2] * (1 - top[3]),
+        1,
+      ];
+      const luminance = (color: Rgba) =>
+        color
+          .slice(0, 3)
+          .map((channel) => channel / 255)
+          .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
+          .reduce((sum, c, index) => sum + c * ([0.2126, 0.7152, 0.0722][index] ?? 0), 0);
+      // The canvas field around the node: the page, the canvas page and the surface wash.
+      const surface = element.closest('[data-testid="canvas-surface"]');
+      const main = element.closest('main');
+      if (surface === null || main === null) throw new Error('Node outside the canvas surface.');
+      let canvas: Rgba = parse(getComputedStyle(document.body).backgroundColor);
+      canvas = over(parse(getComputedStyle(main).backgroundColor), canvas);
+      canvas = over(parse(getComputedStyle(surface).backgroundColor), canvas);
+      const style = getComputedStyle(element);
+      const border = over(parse(style.borderTopColor), over(parse(style.backgroundColor), canvas));
+      const [light = 0, dark = 0] = [luminance(border), luminance(canvas)].sort((a, b) => b - a);
+      return { style: style.borderTopStyle, ratio: (light + 0.05) / (dark + 0.05) };
+    });
+  const rest = await borderContrast();
+  await node.hover();
+  const hover = await borderContrast();
+  await page.mouse.move(1, 1);
+  await node.focus();
+  const focus = await borderContrast();
+  for (const state of [rest, hover, focus]) {
+    expect(state.style).toBe('dashed');
+    expect(state.ratio).toBeGreaterThanOrEqual(3);
+  }
+});
+
 for (const viewport of [
-  { width: 375, height: 812, actionInView: false },
-  { width: 768, height: 1024, actionInView: true },
-  { width: 1440, height: 900, actionInView: true },
+  { width: 320, height: 568 },
+  { width: 375, height: 667 },
+  { width: 375, height: 812 },
+  { width: 414, height: 896 },
+  { width: 768, height: 1024 },
+  { width: 1024, height: 768 },
+  { width: 1440, height: 900 },
 ]) {
-  test(`gives every API-key scope a clear 44px target${viewport.actionInView ? ' with Issue key in view' : ''} at ${String(viewport.width)}px`, async ({
+  test(`gives every API-key scope a clear 44px target with Issue key in view at ${String(viewport.width)}x${String(viewport.height)}`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -571,8 +629,41 @@ for (const viewport of [
     });
     expect(probe.count).toBe(11);
     expect(probe.faults).toEqual([]);
-    // Where the dialog is wide enough, the scopes must not push the primary action below the fold.
-    if (viewport.actionInView) expect(probe.actionInView).toBe(true);
+    // The scopes must never push the primary action out of view, on a phone included.
+    expect(probe.actionInView).toBe(true);
+
+    // Tabbing from the name field to Cancel: every focused control is in view and none sits under
+    // the action row.
+    await modal.getByRole('textbox', { name: 'Name' }).focus();
+    const hidden: string[] = [];
+    for (let step = 0; step < 16; step += 1) {
+      const state = await modal.evaluate((dialog) => {
+        const focused = document.activeElement;
+        const row = dialog.querySelector('.access-panel__actions');
+        if (!(focused instanceof HTMLElement) || !dialog.contains(focused) || row === null) {
+          return { done: true, fault: 'focus left the dialog' };
+        }
+        const name = (focused.closest('label')?.textContent ?? focused.textContent ?? '').trim();
+        const rect = focused.getBoundingClientRect();
+        const dialogRect = dialog.getBoundingClientRect();
+        const rowRect = row.getBoundingClientRect();
+        const underRow =
+          !row.contains(focused) && rect.bottom > rowRect.top + 0.5 && rect.top < rowRect.bottom;
+        const inView =
+          rect.top >= Math.max(dialogRect.top, 0) - 0.5 &&
+          rect.bottom <= Math.min(dialogRect.bottom, innerHeight) + 0.5;
+        const fault = underRow
+          ? `${name} under the action row`
+          : inView
+            ? ''
+            : `${name} out of view`;
+        return { done: name === 'Cancel', fault };
+      });
+      if (state.fault !== '') hidden.push(state.fault);
+      if (state.done) break;
+      await page.keyboard.press('Tab');
+    }
+    expect(hidden).toEqual([]);
   });
 }
 
@@ -630,6 +721,77 @@ for (const region of [
     }
   });
 }
+
+for (const region of [
+  { route: 'receipt', from: { width: 375, height: 812 }, to: { width: 768, height: 1200 } },
+  { route: 'billing', from: { width: 375, height: 812 }, to: { width: 768, height: 1024 } },
+  { route: 'billing', from: { width: 1440, height: 900 }, to: { width: 1440, height: 1100 } },
+]) {
+  test(`keeps focus on the ${region.route} scroll region when it stops overflowing at ${String(region.from.width)}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(region.from);
+    await page.goto(`/studio/lumen-skin/${region.route}`);
+    const scroller = page.locator('#main-content[tabindex="0"], #main-content [tabindex="0"]');
+    await expect(scroller).toHaveCount(1);
+    await scroller.focus();
+    await expect(scroller).toBeFocused();
+    // A larger window or a zoom-out: the region no longer overflows while it has focus.
+    await page.setViewportSize(region.to);
+    await expect
+      .poll(() =>
+        scroller.evaluate(
+          (element) =>
+            element.scrollHeight <= element.clientHeight + 1 &&
+            element.scrollWidth <= element.clientWidth + 1,
+        ),
+      )
+      .toBe(true);
+    await page.waitForTimeout(300);
+    await expect(scroller).toBeFocused();
+    // Sequential navigation continues from the region: the next control, or the previous one when
+    // the region is the last stop on the page.
+    const neighbour = await scroller.evaluate((element) => {
+      const focusable = [
+        ...document.querySelectorAll<Element>(
+          'a[href], button:not(:disabled), input:not(:disabled), select, textarea, [tabindex="0"]',
+        ),
+      ].filter((candidate) => candidate.getClientRects().length > 0);
+      const index = focusable.indexOf(element);
+      const next = focusable.slice(index + 1).find((candidate) => !element.contains(candidate));
+      const target = next ?? focusable[index - 1];
+      target?.setAttribute('data-expected-focus', 'true');
+      return { key: next === undefined ? 'Shift+Tab' : 'Tab', found: target !== undefined };
+    });
+    expect(neighbour.found).toBe(true);
+    await page.keyboard.press(neighbour.key);
+    await expect(page.locator('[data-expected-focus="true"]')).toBeFocused();
+    // Once focus has left, the region is measured again and, fitting, is no longer a tab stop.
+    await expect(page.locator('#main-content')).not.toHaveAttribute('tabindex');
+    await expect(page.locator('#main-content [tabindex]')).toHaveCount(0);
+  });
+}
+
+test('names the billing page and its introduction distinctly', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/studio/lumen-skin/billing');
+  await expect(page.getByRole('main')).toBeVisible();
+  const names = await page.evaluate(() => {
+    const nameOf = (element: Element) => {
+      const labelledBy = element.getAttribute('aria-labelledby');
+      return (
+        element.getAttribute('aria-label') ??
+        (labelledBy === null ? '' : (document.getElementById(labelledBy)?.textContent ?? ''))
+      ).trim();
+    };
+    const mainElement = document.querySelector('main');
+    const intro = mainElement?.querySelector('section');
+    return { main: mainElement ? nameOf(mainElement) : '', intro: intro ? nameOf(intro) : '' };
+  });
+  expect(names.main).not.toBe('');
+  expect(names.intro).not.toBe('');
+  expect(names.main).not.toBe(names.intro);
+});
 
 test('keeps adjacent canvas outline rows from sharing hit-test pixels', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -810,3 +972,33 @@ test('keeps every canvas outline row reachable and unclipped beside the collabor
   expect(report.faults).toEqual([]);
   expect(report.visibleListHeight).toBeGreaterThanOrEqual(104);
 });
+
+for (const viewport of [
+  { width: 768, height: 1024 },
+  { width: 1280, height: 800 },
+  { width: 1440, height: 900 },
+]) {
+  test(`shows at least five canvas outline rows beside the collaboration panel at ${String(viewport.width)}x${String(viewport.height)}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/studio/lumen-skin/canvas');
+    const list = page.locator('ol:has([data-outline-id])');
+    await expect(list.locator('[data-outline-id]')).toHaveCount(12);
+    const visibleRows = await list.evaluate((element) => {
+      const listRect = element.getBoundingClientRect();
+      // Rows fully inside the list without scrolling it, whose every sampled point reaches the row.
+      return [...element.querySelectorAll<HTMLElement>('[data-outline-id]')].filter((row) => {
+        const rect = row.getBoundingClientRect();
+        if (rect.top < listRect.top - 0.5 || rect.bottom > listRect.bottom + 0.5) return false;
+        for (let x = rect.left + 2; x < rect.right - 2; x += 24) {
+          for (let y = rect.top + 1; y < rect.bottom - 1; y += 6) {
+            if (document.elementFromPoint(x, y)?.closest('[data-outline-id]') !== row) return false;
+          }
+        }
+        return true;
+      }).length;
+    });
+    expect(visibleRows).toBeGreaterThanOrEqual(5);
+  });
+}

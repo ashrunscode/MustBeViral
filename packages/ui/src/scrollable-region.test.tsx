@@ -56,6 +56,28 @@ function Region() {
   );
 }
 
+function RegionThenButton() {
+  return (
+    <>
+      <Region />
+      <button type="button">Next control</button>
+    </>
+  );
+}
+
+const overflowing: Size = {
+  scrollHeight: 900,
+  clientHeight: 400,
+  scrollWidth: 320,
+  clientWidth: 320,
+};
+const fitting: Size = { scrollHeight: 400, clientHeight: 400, scrollWidth: 320, clientWidth: 320 };
+
+/** Lets the hook's deferred focus-settled check run. */
+async function settleFocus() {
+  await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+}
+
 beforeEach(() => {
   observers.length = 0;
   vi.stubGlobal('ResizeObserver', FakeResizeObserver);
@@ -99,6 +121,43 @@ describe('useScrollableRegion', () => {
     const targets = observers.flatMap((observer) => observer.targets);
     expect(targets).toContain(region);
     expect(targets).toContain(region.firstElementChild);
+  });
+
+  it('keeps the tab stop and focus while a focused region stops overflowing', async () => {
+    render(<RegionThenButton />);
+    const region = screen.getByTestId('region');
+    setSize(region, overflowing);
+    notifyResize();
+    act(() => region.focus());
+    expect(document.activeElement).toBe(region);
+
+    // A wider window or zooming out: the region fits while it holds focus.
+    setSize(region, fitting);
+    notifyResize();
+    await settleFocus();
+    expect(region.getAttribute('tabindex')).toBe('0');
+    expect(document.activeElement).toBe(region);
+
+    // Focus moves on (Tab), so the region is measured again and, fitting, stops being a tab stop.
+    act(() => screen.getByRole('button', { name: 'Next control' }).focus());
+    await settleFocus();
+    expect(region.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('keeps the tab stop when focus has not left the region, such as the window losing focus', async () => {
+    render(<RegionThenButton />);
+    const region = screen.getByTestId('region');
+    setSize(region, overflowing);
+    notifyResize();
+    act(() => region.focus());
+    setSize(region, fitting);
+    notifyResize();
+    act(() => {
+      region.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: null }));
+    });
+    await settleFocus();
+    expect(document.activeElement).toBe(region);
+    expect(region.getAttribute('tabindex')).toBe('0');
   });
 
   it('stays inert without ResizeObserver', () => {

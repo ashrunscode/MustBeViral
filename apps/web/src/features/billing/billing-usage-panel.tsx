@@ -125,7 +125,7 @@ export function BillingUsagePanel({
       ref={regionRef}
       className="internal-ops"
       id="main-content"
-      aria-labelledby="billing-heading"
+      aria-label="Usage and billing"
       tabIndex={regionTabIndex}
     >
       <div className="internal-ops__grid">
