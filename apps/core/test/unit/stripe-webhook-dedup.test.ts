@@ -131,8 +131,8 @@ describe('stripe webhook dedup', () => {
       expect(rejected.name).toBe('StripeWebhookDedupRejectedError');
       expect(rejected.status).toBe(status);
       expect(rejected.code).toBe(code);
-      // The message reaches logs and Sentry, so it carries only the status and the error code,
-      // never PostgREST's message or details, which can echo row values.
+      // The message is handed to exception telemetry, so it carries only the status and the error
+      // code, never PostgREST's message or details, which can echo row values.
       expect(rejected.message).toBe(
         `Stripe webhook dedup RPC rejected the event with HTTP ${status} (${code}).`,
       );
