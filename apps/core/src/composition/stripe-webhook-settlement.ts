@@ -1,6 +1,7 @@
 import {
   extractStripeCustomerId,
   extractStripeWorkspaceId,
+  type StripeSettlementRejectedPlan,
   settleStripeWebhookEvent,
   type StripeSettlementPlan,
   type VerifiedStripeWebhook,
@@ -15,6 +16,23 @@ export class StripeWebhookSettlementUnavailableError extends Error {
 
 export class StripeWebhookSettlementForbiddenError extends Error {
   override readonly name = 'StripeWebhookSettlementForbiddenError';
+}
+
+/**
+ * A paid wallet top-up that cannot be credited exactly (ADR-0007). Money was received, so this
+ * fails the delivery instead of acknowledging it; no receipt is written and Stripe retries.
+ */
+export class StripeWebhookSettlementRejectedError extends Error {
+  override readonly name = 'StripeWebhookSettlementRejectedError';
+
+  constructor(
+    readonly stripeEventId: string,
+    readonly settlement: StripeSettlementRejectedPlan,
+  ) {
+    super(
+      `Stripe ${settlement.eventType} ${stripeEventId} is a paid wallet top-up that cannot be credited: ${settlement.reason}.`,
+    );
+  }
 }
 
 export interface StripeWalletCreditPersistenceResult {
@@ -70,7 +88,8 @@ export function createStripeWebhookSettlementPort(
 ): Readonly<{
   applyWalletCredit(
     input: Readonly<{
-      workspaceId: string | null;
+      workspaceId: string;
+      stripeCheckoutSessionId: string;
       stripeEventId: string;
       stripeCustomerId: string | null;
       amountMicros: bigint;
@@ -145,8 +164,9 @@ export function createStripeWebhookSettlementPort(
 
   return Object.freeze({
     async applyWalletCredit(input) {
-      const body = await rpc('apply_stripe_wallet_credit', {
+      const body = await rpc('apply_stripe_wallet_top_up', {
         p_workspace_id: input.workspaceId,
+        p_stripe_checkout_session_id: input.stripeCheckoutSessionId,
         p_stripe_event_id: input.stripeEventId,
         p_stripe_customer_id: input.stripeCustomerId,
         p_amount_micros: input.amountMicros.toString(10),
@@ -156,7 +176,7 @@ export function createStripeWebhookSettlementPort(
       });
       if (!isWalletCreditResult(body)) {
         throw new StripeWebhookSettlementUnavailableError(
-          'apply_stripe_wallet_credit returned an unexpected shape.',
+          'apply_stripe_wallet_top_up returned an unexpected shape.',
         );
       }
       return Object.freeze({
@@ -215,13 +235,30 @@ export function createStripeWebhookSettlementHandler(
     let persisted = false;
     let walletCreditReplayed = false;
 
+    if (settlement.kind === 'rejected') {
+      // No receipt is written and the unchanged payload fails every Stripe retry, so this line is
+      // how an operator finds the payment and its reason (docs/operations runbook).
+      console.error(
+        JSON.stringify({
+          level: 'error',
+          event: 'core.stripe_webhook.wallet_top_up_rejected',
+          request_id: requestId,
+          stripe_event_id: verified.eventId,
+          stripe_event_type: settlement.eventType,
+          reason: settlement.reason,
+        }),
+      );
+      throw new StripeWebhookSettlementRejectedError(verified.eventId, settlement);
+    }
+
     if (settlement.kind === 'wallet_credit') {
-      const workspaceId = extractStripeWorkspaceId(verified.payload, verified.eventType);
-      const stripeCustomerId = extractStripeCustomerId(verified.payload);
+      // A top-up names its workspace itself: Stripe customers may be shared across workspaces, so
+      // a wallet credit is never resolved through the customer id.
       const credit = await persistence.applyWalletCredit({
-        workspaceId,
+        workspaceId: settlement.plan.workspaceId,
+        stripeCheckoutSessionId: settlement.plan.checkoutSessionId,
         stripeEventId: verified.eventId,
-        stripeCustomerId,
+        stripeCustomerId: extractStripeCustomerId(verified.payload),
         amountMicros: settlement.plan.walletCreditMicros,
         eventType: verified.eventType,
         requestId,
@@ -258,7 +295,7 @@ export function createStripeWebhookSettlementHandler(
     const emailStatus = await email.send({
       to: operatorEmail,
       subject: 'MustBeViral wallet credit received',
-      text: `Stripe event ${verified.eventId} credited ${settlement.plan.walletCreditMicros.toString()} micros.`,
+      text: `Stripe Checkout Session ${settlement.plan.checkoutSessionId} (event ${verified.eventId}) credited ${settlement.plan.walletCreditMicros.toString()} micros.`,
     });
     return Object.freeze({ settlement, emailStatus, persisted });
   };

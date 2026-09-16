@@ -235,6 +235,15 @@ documents:
     review_triggers: [credential_incident, publication_policy_change_requested]
     supersedes: []
 
+  - id: adr-0007-stripe-wallet-funding
+    path: docs/decisions/ADR-0007-STRIPE-WALLET-FUNDING.md
+    kind: decision
+    status: accepted
+    owner: execution-billing
+    authority_topics: [decision.0007]
+    review_triggers: [pricing_changed, stripe_checkout_flow_changed, stripe_tax_enabled]
+    supersedes: []
+
   - id: roadmap
     path: docs/delivery/ROADMAP.md
     kind: delivery

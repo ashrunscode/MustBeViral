@@ -3,15 +3,20 @@
 -- Before Core settled Stripe webhooks ahead of writing the receipt, a settlement failure after
 -- the receipt insert made every Stripe retry look like a duplicate, so the event was never
 -- applied. This lists receipts for settling event types that have no matching evidence:
---   wallet_credit        checkout.session.completed, invoice.paid
---                        evidence: a ledger credit with causative_key 'stripe:<event id>'
+--   wallet_credit        checkout.session.completed, checkout.session.async_payment_succeeded
+--                        evidence: a ledger credit whose metadata ->> 'stripe_event_id' is the
+--                        event id (credits are keyed on the Checkout Session, and credits from
+--                        before that change were keyed on the event; both record the event id)
 --   subscription_update  customer.subscription.created, .updated, .deleted
 --                        evidence: an audit_events stripe.subscription_update row whose
 --                        details ->> 'stripe_event_id' is the event id
--- A listed row is a candidate, not proof of loss: a checkout or invoice with a zero amount
--- settles as ignored and legitimately has no evidence. Confirm each event in the Stripe
--- dashboard, then repair by resending the event from Stripe (settlement is idempotent on the
--- event id) rather than editing rows. Events that never produced a receipt do not appear here.
+-- A listed row is a candidate, not proof of loss. Only a paid wallet top-up credits the wallet
+-- (ADR-0007), so these legitimately have no evidence: a Checkout Session that is not a top-up
+-- (for example subscription mode), a completed top-up still awaiting a delayed payment, and a
+-- second event for a session another event already credited. invoice.paid no longer settles and
+-- is not listed. Confirm each event in the Stripe dashboard, then repair by resending the event
+-- from Stripe (settlement is idempotent on the Checkout Session and the subscription event)
+-- rather than editing rows. Events that never produced a receipt do not appear here.
 --
 -- Run once per session, in a read-only session, as a role with BYPASSRLS and SELECT on these
 -- tables (for example postgres), for example:
@@ -41,19 +46,26 @@ select
   receipt.event_type,
   receipt.livemode,
   case
-    when receipt.event_type in ('checkout.session.completed', 'invoice.paid')
+    when receipt.event_type in (
+      'checkout.session.completed',
+      'checkout.session.async_payment_succeeded'
+    )
       then 'wallet_credit'
     else 'subscription_update'
   end as expected_settlement,
   receipt.created_at as received_at
 from public.stripe_webhook_events as receipt
 where (
-    receipt.event_type in ('checkout.session.completed', 'invoice.paid')
+    receipt.event_type in (
+      'checkout.session.completed',
+      'checkout.session.async_payment_succeeded'
+    )
     and not exists (
       select 1
       from public.ledger_transactions as ledger
       where ledger.entry_type = 'credit'
-        and ledger.causative_key = 'stripe:' || receipt.stripe_event_id
+        and ledger.causative_key like 'stripe:%'
+        and ledger.metadata ->> 'stripe_event_id' = receipt.stripe_event_id
     )
   )
   or (
