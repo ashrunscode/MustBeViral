@@ -397,8 +397,32 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
     return open;
   }
 
+  /**
+   * Actors with at least one open, unexpired socket carrying a valid bound identity that has joined
+   * presence. It is read from the sockets and their attachments, never from memory or a client
+   * message, so it is the same after hibernation and no member can put another in it.
+   */
+  #presentActorIds(nowMs: number): Set<string> {
+    const present = new Set<string>();
+    for (const { attachment } of this.#openBoundSockets(nowMs)) {
+      if (attachment.surface !== null) present.add(attachment.actor.actor_id);
+    }
+    return present;
+  }
+
+  /**
+   * Presence lasts exactly as long as a member's joined sockets: no timer or client heartbeat keeps
+   * it, so it needs no in-memory state and spends no rate-limit tokens. Run before every snapshot is
+   * encoded and before every join is counted against the presence caps.
+   */
+  #reconcilePresence(): void {
+    const nowMs = Date.now();
+    this.#store.reconcilePresence(this.#store.readCanvasId(), this.#presentActorIds(nowMs), nowMs);
+  }
+
   /** Encodes the current snapshot, refusing any encoding above the ceiling. */
   #encodeSnapshot(): EncodedSnapshot {
+    this.#reconcilePresence();
     const message = ServerMessageSchema.parse({
       type: 'snapshot',
       payload: this.#store.getSnapshot(this.#store.readCanvasId()),
@@ -643,6 +667,8 @@ export class CanvasCoordination extends DurableObject<CollaborationBindings> {
 
       switch (parsed.type) {
         case 'presence.join': {
+          // Rows without a joined socket must not count against the cap this join is checked by.
+          this.#reconcilePresence();
           this.#store.joinPresence(canvasId, actor, parsed.payload.surface);
           socket.serializeAttachment({ ...attachment, surface: parsed.payload.surface });
           this.#scheduleBroadcast();
