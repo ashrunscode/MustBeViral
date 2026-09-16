@@ -146,3 +146,95 @@ test('renders mobile review and export summary without horizontal scroll at 375x
     });
   }
 });
+
+test('keeps a 32px compact review control at a 44px touch target', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/studio/lumen-skin/review');
+  const control = page.getByRole('button', { name: 'Approve group as Maya Chen' }).first();
+  await expect(control).toBeVisible();
+  expect((await control.boundingBox())?.height).toBe(32);
+  // The bounding box stays compact; the pointer hit area extends to 44px, centred on the control.
+  const probes = await control.evaluate((element) => {
+    // elementFromPoint only resolves points inside the viewport.
+    element.scrollIntoView({ block: 'center' });
+    const rect = element.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const hits = (probeY: number) => {
+      const target = document.elementFromPoint(x, probeY);
+      return target !== null && element.contains(target);
+    };
+    return {
+      insideTop: hits(y - 21.5),
+      insideBottom: hits(y + 21.5),
+      outsideTop: hits(y - 23),
+      outsideBottom: hits(y + 23),
+    };
+  });
+  expect(probes).toEqual({
+    insideTop: true,
+    insideBottom: true,
+    outsideTop: false,
+    outsideBottom: false,
+  });
+});
+
+for (const dialog of [
+  { route: 'skills', opener: 'Publish Skill', field: 'textarea', action: 'Publish version' },
+  { route: 'access', opener: 'Create API key', field: 'fieldset', action: 'Issue key' },
+]) {
+  test(`keeps the ${dialog.action} hit area off the ${dialog.field} above it`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`/studio/lumen-skin/${dialog.route}`);
+    await page.getByRole('button', { name: dialog.opener }).click();
+    const modal = page.getByRole('dialog');
+    const action = modal.getByRole('button', { name: dialog.action });
+    await expect(action).toBeVisible();
+    const field = modal.locator(dialog.field);
+    // Every point on the field's last pixel row above the action button must reach the field.
+    const probe = await field.evaluate((element, actionName) => {
+      const button = [...document.querySelectorAll('[role="dialog"] button')].find(
+        (candidate) => candidate.textContent?.trim() === actionName,
+      );
+      if (button === undefined) throw new Error(`Missing ${actionName} button.`);
+      const fieldRect = element.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      const y = fieldRect.bottom - 1;
+      const stolen: number[] = [];
+      let probed = 0;
+      const left = Math.ceil(Math.max(buttonRect.left, fieldRect.left));
+      const right = Math.min(buttonRect.right, fieldRect.right);
+      for (let x = left; x < right; x += 2) {
+        probed += 1;
+        const target = document.elementFromPoint(x, y);
+        if (target === null || !element.contains(target)) stolen.push(x);
+      }
+      return { probed, stolen };
+    }, dialog.action);
+    expect(probe.probed).toBeGreaterThan(20);
+    expect(probe.stolen).toEqual([]);
+  });
+}
+
+test('keeps adjacent canvas toolbar buttons at a 44px hit width each', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const toolbar = page.getByRole('button', { name: 'Zoom in' }).locator('..');
+  await expect(toolbar).toBeVisible();
+  const shortfalls = await toolbar.evaluate((row) => {
+    const buttons = [...row.querySelectorAll('button')];
+    return buttons.flatMap((button) => {
+      const rect = button.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const reach = Math.max(rect.width, 44) / 2 - 0.5;
+      return [x - reach, x + reach]
+        .filter((probeX) => {
+          const target = document.elementFromPoint(probeX, y);
+          return target === null || !button.contains(target);
+        })
+        .map((probeX) => `${button.getAttribute('aria-label') ?? button.textContent}@${probeX}`);
+    });
+  });
+  expect(shortfalls).toEqual([]);
+});
