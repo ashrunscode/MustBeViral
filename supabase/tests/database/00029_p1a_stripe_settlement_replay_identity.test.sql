@@ -6,7 +6,7 @@ begin;
 -- differently on the replay, and that the operator reconciliation query finds receipts that
 -- have no settlement evidence.
 
-select plan(22);
+select plan(23);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -245,7 +245,7 @@ select is(
   'the ambiguous first delivery credits no workspace'
 );
 
--- 15-18: the replay and first-delivery failure paths stay closed.
+-- 15-19: the replay and first-delivery failure paths stay closed.
 select is(
   pg_temp.error_of($sql$
     select public.apply_stripe_wallet_credit(
@@ -304,7 +304,19 @@ select is(
   'a replay of an event already credited in two workspaces fails closed'
 );
 
--- 19-20: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_wallet_credit(
+      '99921000-0000-4000-8000-00000000000a',
+      'evt_replay_legacy_split', null, 1000000, 'invoice.paid',
+      'req_replay_legacy_split_explicit', '{}'::jsonb
+    )
+  $sql$),
+  'P0001:STRIPE_EVENT_WORKSPACE_MISMATCH',
+  'naming one of the credited workspaces does not make a split credit replayable'
+);
+
+-- 20-21: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
 select public.apply_stripe_wallet_credit(
   '99921000-0000-4000-8000-00000000000a',
   'evt_replay_lock_credit', null, 1000000, 'checkout.session.completed',
@@ -327,7 +339,7 @@ select ok(
   'a subscription update holds a transaction-scoped per-event lock'
 );
 
--- 21: the replaced function keeps its security contract.
+-- 22: the replaced function keeps its security contract.
 select ok(
   (select proc.prosecdef
      and proc.proconfig = array['search_path=pg_catalog, public']
@@ -343,7 +355,7 @@ select ok(
   'apply_stripe_wallet_credit stays security definer, pinned search_path and service_role only'
 );
 
--- 22: the operator reconciliation query lists receipts that have no settlement evidence.
+-- 23: the operator reconciliation query lists receipts that have no settlement evidence.
 insert into public.stripe_webhook_events (
   stripe_event_id, event_type, livemode, payload_hash, processed_at, created_at
 ) values
