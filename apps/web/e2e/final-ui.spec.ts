@@ -216,6 +216,80 @@ for (const dialog of [
   });
 }
 
+// 712dc4e replaced the brief's CSS module with one unrelated rule; the page rendered unstyled with
+// overlapping step buttons and the confirm actions clipped below the fold. Guard the layout itself.
+for (const viewport of [
+  { width: 1440, height: 900 },
+  { width: 375, height: 812 },
+]) {
+  test(`keeps the campaign brief laid out at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/studio/lumen-skin/brief');
+    const validate = page.getByRole('button', { name: 'Validate brief' });
+    await expect(validate).toBeVisible();
+
+    type Box = { x: number; y: number; width: number; height: number };
+    const boxOf = async (locator: ReturnType<typeof page.locator>): Promise<Box> => {
+      const box = await locator.boundingBox();
+      if (box === null) throw new Error('Expected a rendered box.');
+      return box;
+    };
+    const intersects = (a: Box, b: Box) =>
+      Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x) > 0.5 &&
+      Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y) > 0.5;
+
+    const steps = page.getByRole('navigation', { name: 'Brief sections' }).getByRole('button');
+    await expect(steps).toHaveCount(6);
+    const stepBoxes = await Promise.all((await steps.all()).map(boxOf));
+    for (const [index, box] of stepBoxes.entries()) {
+      expect(box.height, `step ${index + 1} height`).toBeGreaterThanOrEqual(44);
+      for (const other of stepBoxes.slice(index + 1)) expect(intersects(box, other)).toBe(false);
+    }
+
+    // Both confirm actions sit fully inside the viewport, apart from each other.
+    const save = await boxOf(page.getByRole('button', { name: 'Save draft' }));
+    const validateBox = await boxOf(validate);
+    for (const box of [save, validateBox]) {
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.y).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(viewport.width);
+      expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
+    }
+    expect(intersects(save, validateBox)).toBe(false);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      viewport.width,
+    );
+
+    const rail = await boxOf(page.getByRole('navigation', { name: 'Brief sections' }));
+    const form = await boxOf(page.locator('section[aria-labelledby="brief-title"]'));
+    const summary = await boxOf(page.getByRole('complementary', { name: 'Brief summary' }));
+    const evidence = page.locator('#evidence-source');
+    const evidenceBox = await boxOf(evidence);
+    const legalBox = await boxOf(page.locator('#legal-copy'));
+    await expect(evidence).toHaveCSS('height', '76px');
+    await expect(evidence).toHaveCSS('border-top-color', 'rgb(196, 64, 77)');
+
+    if (viewport.width >= 1280) {
+      // Approved frame: 228px rail, fluid form, 320px summary; paired fields side by side.
+      await expect(page.locator('#main-content')).toHaveCSS(
+        'grid-template-columns',
+        '228px 892px 320px',
+      );
+      expect([rail.x, rail.width, summary.x, summary.width]).toEqual([0, 228, 1120, 320]);
+      expect(stepBoxes.every((box) => box.x === stepBoxes[0]?.x)).toBe(true);
+      expect(legalBox.y).toBe(evidenceBox.y);
+      expect(legalBox.x).toBeGreaterThan(evidenceBox.x + evidenceBox.width);
+    } else {
+      // Narrow screens stack rail, form and summary, and paired fields, in one column.
+      expect(form.y).toBeGreaterThanOrEqual(rail.y + rail.height);
+      expect(summary.y).toBeGreaterThanOrEqual(form.y + form.height);
+      expect(legalBox.y).toBeGreaterThanOrEqual(evidenceBox.y + evidenceBox.height);
+    }
+  });
+}
+
 test('keeps adjacent canvas toolbar buttons at a 44px hit width each', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/canvas');
