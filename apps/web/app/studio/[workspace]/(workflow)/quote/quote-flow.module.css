@@ -24,7 +24,7 @@
 .eyebrow {
   display: block;
   margin-bottom: 8px;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .quoteCard h1 {
@@ -69,7 +69,7 @@
 
 .ledger th {
   height: 32px;
-  color: var(--ink-faint);
+  color: var(--ink);
 }
 
 .totalRow td {
@@ -126,6 +126,7 @@
 }
 
 .quietBack {
+  position: relative;
   min-height: 36px;
   display: inline-flex;
   align-items: center;
@@ -133,6 +134,11 @@
   color: var(--ink);
   font-size: 12px;
   text-underline-offset: 3px;
+}
+.quietBack::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
 }
 
 .notice {
@@ -156,7 +162,7 @@
 
 .noticeSuccess {
   border-left-color: var(--ok);
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 .noticeExpired,
 .noticeConflict {
@@ -165,7 +171,7 @@
 }
 .noticeError {
   border-left-color: var(--fail);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .sidePanel {
@@ -213,7 +219,7 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--card);
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .miniNode:nth-of-type(2) {
@@ -235,7 +241,7 @@
   display: grid;
   gap: 10px;
   margin-bottom: 26px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
 }
 
@@ -307,7 +313,7 @@
 }
 
 .barRoute > div > :first-child {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .footer {
@@ -319,7 +325,7 @@
   border-top: 1px solid var(--line);
   padding: 0 24px;
   background: var(--wash-faint);
-  color: var(--ink-faint);
+  color: var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
