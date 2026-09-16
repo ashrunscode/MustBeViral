@@ -25,7 +25,7 @@ Breaking schema work uses expand/backfill/contract across releases. Never make a
 - Model/provider: disable the route or restore the prior catalog version; do not rewrite historical runs.
 - Database: roll application behavior forward around additive schema, or execute a pre-tested repair migration. Restore is reserved for data-loss incidents.
 - Media: revoke signing path/route; private R2 objects remain intact during compute rollback.
-- Billing: stop new reservations/charges with kill switches, reconcile existing attempts, and preserve the immutable ledger.
+- Billing: stop new reservations/charges with kill switches, reconcile existing attempts, and preserve the immutable ledger. To find Stripe webhook receipts with no settlement evidence, run `supabase/tests/operator/stripe_webhook_settlement_gaps.psql` in a read-only session.
 
 Each production deployment records version identifiers, migration range, enabled catalog/policy versions, smoke evidence, operator, start/end time, and rollback target.
 

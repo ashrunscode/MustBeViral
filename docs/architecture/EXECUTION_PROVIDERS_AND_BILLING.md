@@ -80,6 +80,7 @@ Ledger transaction types are `credit`, `reserve`, `capture`, `release`, and `ref
 - Provider refusal creates no customer charge.
 - Partial success captures completed/accepted branch cost and releases the remainder.
 - Duplicate command, webhook, poll, or operator replay returns the existing ledger result.
+- A verified Stripe webhook settles before Core records its `stripe_webhook_events` receipt. A settlement failure records no receipt and returns 5xx, so Stripe retries. Settlement is idempotent on the Stripe event id across workspaces: a replay that resolves a different workspace fails with `STRIPE_EVENT_WORKSPACE_MISMATCH` and applies nothing.
 
 P0 exercises the complete semantic ledger without automated customer charging. P1a pilot pricing is $500 setup, $149/month, and a prepaid usage wallet. Usage begins at landed provider cost plus 25% with model-specific minimums; pricing is reconsidered only after 30 paid runs, targeting at least 60% blended gross margin without rewriting historical receipts.
 
