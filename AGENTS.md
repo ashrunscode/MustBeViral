@@ -46,6 +46,8 @@ Use `.agents/skills/build-mustbeviral/SKILL.md` when building, resuming, reviewi
 
 Skills accelerate work but never override repository authority. Retrieve current official provider documentation before using unstable APIs, limits, prices, model IDs, or CLI behavior.
 
+Brand and design context: read `brand/context.md` and `brand/BRAND.md` before customer-facing copy or UI work; repo-local agent skills live in `.agents/skills/` (Claude Code: `.claude/skills/`).
+
 ## Implementation discipline
 
 - Preserve strict TypeScript, explicit boundaries, deterministic state machines, immutable revisions, integer money, and private-by-default artifacts.
