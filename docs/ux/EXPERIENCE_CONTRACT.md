@@ -48,7 +48,7 @@ Every interactive component defines default, hover when applicable, focus-visibl
 
 ## Visual approval gate
 
-Lightfield tokens in `.superdesign/design-system.md` are the system. The SuperDesign CLI is optional tooling, not an authority.
+Lightfield tokens in `.superdesign/design-system.md` are the system. Design and mockup tools are optional tooling, not an authority.
 
 1. Preview fixture goldens (Review Approval / Lumen) stay locked for local-preview Playwright.
 2. Live product screens may diverge from those fixtures. They use Lightfield tokens and worker data.
