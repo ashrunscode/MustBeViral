@@ -280,7 +280,7 @@ for (const viewport of [
     });
 
     for (const [index, step] of layout.steps.entries()) {
-      expect(step.bottom - step.top, `step ${index + 1} height`).toBeGreaterThanOrEqual(40);
+      expect(step.bottom - step.top, `step ${index + 1} height`).toBeGreaterThanOrEqual(44);
       for (const other of layout.steps.slice(index + 1))
         expect(edgesOverlap(step, other)).toBe(false);
     }
