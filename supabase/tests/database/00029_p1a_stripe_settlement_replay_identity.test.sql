@@ -6,7 +6,7 @@ begin;
 -- differently on the replay, and that the operator reconciliation query finds receipts that
 -- have no settlement evidence.
 
-select plan(18);
+select plan(22);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -245,7 +245,66 @@ select is(
   'the ambiguous first delivery credits no workspace'
 );
 
--- 15-16: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
+-- 15-18: the replay and first-delivery failure paths stay closed.
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_wallet_credit(
+      null,
+      'evt_replay_lookup', 'cus_replay_drift', 20000001, 'invoice.paid',
+      'req_replay_changed_amount', '{}'::jsonb
+    )
+  $sql$),
+  'P0001:IDEMPOTENCY_CONFLICT',
+  'a replay without a workspace id still rejects a changed amount'
+);
+
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_wallet_credit(
+      null,
+      'evt_replay_unknown_customer', 'cus_replay_unknown', 5000000, 'invoice.paid',
+      'req_replay_unknown_customer', '{}'::jsonb
+    )
+  $sql$),
+  'P0002:WORKSPACE_NOT_FOUND',
+  'a first delivery whose Stripe customer maps to no workspace is rejected'
+);
+
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_wallet_credit(
+      null,
+      'evt_replay_no_customer', null, 5000000, 'invoice.paid',
+      'req_replay_no_customer', '{}'::jsonb
+    )
+  $sql$),
+  'P0002:WORKSPACE_NOT_FOUND',
+  'a first delivery with neither a workspace nor a customer is rejected'
+);
+
+-- Credits for one event in two workspaces can only predate this migration; replays must not pick one.
+select public.record_ledger_movement(
+  '99921000-0000-4000-8000-00000000000a', 'credit', 1000000, 'stripe:evt_replay_legacy_split',
+  null, null, 'req_replay_legacy_split_a', '{}'::jsonb
+);
+select public.record_ledger_movement(
+  '99921000-0000-4000-8000-00000000000b', 'credit', 1000000, 'stripe:evt_replay_legacy_split',
+  null, null, 'req_replay_legacy_split_b', '{}'::jsonb
+);
+
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_wallet_credit(
+      null,
+      'evt_replay_legacy_split', null, 1000000, 'invoice.paid',
+      'req_replay_legacy_split', '{}'::jsonb
+    )
+  $sql$),
+  'P0001:STRIPE_EVENT_WORKSPACE_MISMATCH',
+  'a replay of an event already credited in two workspaces fails closed'
+);
+
+-- 19-20: concurrent deliveries of one Stripe event serialize on a transaction-scoped lock.
 select public.apply_stripe_wallet_credit(
   '99921000-0000-4000-8000-00000000000a',
   'evt_replay_lock_credit', null, 1000000, 'checkout.session.completed',
@@ -268,7 +327,7 @@ select ok(
   'a subscription update holds a transaction-scoped per-event lock'
 );
 
--- 17: the replaced function keeps its security contract.
+-- 21: the replaced function keeps its security contract.
 select ok(
   (select proc.prosecdef
      and proc.proconfig = array['search_path=pg_catalog, public']
@@ -284,7 +343,7 @@ select ok(
   'apply_stripe_wallet_credit stays security definer, pinned search_path and service_role only'
 );
 
--- 18: the operator reconciliation query lists receipts that have no settlement evidence.
+-- 22: the operator reconciliation query lists receipts that have no settlement evidence.
 insert into public.stripe_webhook_events (
   stripe_event_id, event_type, livemode, payload_hash, processed_at, created_at
 ) values

@@ -39,7 +39,7 @@ set search_path = pg_catalog, public
 as $$
 declare
   v_workspace_id uuid := p_workspace_id;
-  v_credited_workspace_id uuid;
+  v_credited_workspace_ids uuid[];
   v_customer_workspace_ids uuid[];
   v_causative_key text;
   v_ledger_result jsonb;
@@ -69,19 +69,20 @@ begin
 
   v_causative_key := 'stripe:' || p_stripe_event_id;
 
-  select ledger.workspace_id
-  into v_credited_workspace_id
+  select array_agg(distinct ledger.workspace_id)
+  into v_credited_workspace_ids
   from public.ledger_transactions as ledger
   where ledger.causative_key = v_causative_key
-    and ledger.entry_type = 'credit'
-  limit 1;
+    and ledger.entry_type = 'credit';
 
-  if v_credited_workspace_id is not null then
-    if p_workspace_id is not null and p_workspace_id <> v_credited_workspace_id then
+  if v_credited_workspace_ids is not null then
+    -- More than one credited workspace can only predate this migration; never pick one.
+    if cardinality(v_credited_workspace_ids) > 1
+      or (p_workspace_id is not null and p_workspace_id <> v_credited_workspace_ids[1]) then
       raise exception using errcode = 'P0001', message = 'STRIPE_EVENT_WORKSPACE_MISMATCH';
     end if;
     -- A replay: record_ledger_movement below reports replayed and still rejects a changed amount.
-    v_workspace_id := v_credited_workspace_id;
+    v_workspace_id := v_credited_workspace_ids[1];
   else
     if v_workspace_id is null and p_stripe_customer_id is not null and length(trim(p_stripe_customer_id)) > 0 then
       select array_agg(profile.workspace_id)
