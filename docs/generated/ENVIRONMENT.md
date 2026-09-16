@@ -16,3 +16,4 @@ Source: `packages/config/environment.manifest.json`. Values are intentionally ex
 | `SUPABASE_URL` | core | local, staging, production | public | yes | Environment-specific Supabase issuer and Data API origin. |
 | `SUPABASE_JWT_AUDIENCE` | core | local, staging, production | public | yes | Expected audience for Supabase user JWT verification. |
 | `CORS_ALLOWED_ORIGINS` | core | local, staging, production | public | yes | Comma-separated exact web origins accepted by browser-facing Core routes. |
+| `COLLABORATION_TICKET_SECRET` | core and collaboration | local, staging, production | secret | yes | HMAC key Core signs collaboration tickets with and the collaboration Worker verifies them with; the same value on both Workers in one environment, at least 32 characters, installed with wrangler secret put. |

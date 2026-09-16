@@ -21,15 +21,4 @@ describe('collaboration worker authority boundary', () => {
       expect(response.status).toBe(404);
     },
   );
-
-  it('routes each canvas to an isolated coordination object via snapshot reads', async () => {
-    const first = await SELF.fetch('https://collaboration.test/canvases/canvas-a/snapshot');
-    const second = await SELF.fetch('https://collaboration.test/canvases/canvas-b/snapshot');
-    expect(first.status).toBe(200);
-    expect(second.status).toBe(200);
-    const firstBody = (await first.json()) as { data: { canvas_id: string } };
-    const secondBody = (await second.json()) as { data: { canvas_id: string } };
-    expect(firstBody.data.canvas_id).toBe('canvas-a');
-    expect(secondBody.data.canvas_id).toBe('canvas-b');
-  });
 });

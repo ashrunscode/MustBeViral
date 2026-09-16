@@ -44,6 +44,8 @@ Zod schemas are the source for TypeScript types and OpenAPI 3.1. Breaking wire c
 | `GET /runs/{id}/receipt`         | get usage receipt    | immutable provider/model/cost/lineage view              |
 | `POST /webhooks/fal`             | ingest fal event     | raw-body signature verification and deduplication       |
 
+Live collaboration adds `POST /canvases/{id}/collaboration-tickets`: a browser-session-only query that writes nothing, needs no `Idempotency-Key`, and returns a short-lived signed ticket for the collaboration Worker. The trust boundary is defined in `DATA_AUTH_AND_TENANCY.md`.
+
 Stripe webhook ingestion is added in P1a at `POST /webhooks/stripe`. Provider webhook endpoints acknowledge only after durable deduplication/evidence recording or return a retryable error.
 
 ## Stable error codes

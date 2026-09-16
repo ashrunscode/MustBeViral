@@ -37,6 +37,9 @@ const OPERATION_REQUIRED_SCOPES: Readonly<
   create_export: ['export:write'],
   explain_model: ['model:read'],
   get_receipt: ['receipt:read'],
+  // Present for type completeness only. Core refuses collaboration tickets to every credential
+  // except a Supabase browser session, whatever scopes the credential holds.
+  create_collaboration_ticket: ['canvas:read'],
 });
 
 export function requiredScopesForOperation(

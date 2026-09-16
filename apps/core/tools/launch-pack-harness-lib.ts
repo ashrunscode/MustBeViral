@@ -646,6 +646,9 @@ export function createInMemoryHarnessTransport(
     async ingestFalWebhook() {
       return { status: 'provider_unavailable' };
     },
+    async createCollaborationTicket() {
+      return { status: 'provider_unavailable' };
+    },
   });
   const handlers = createP0RestHandlers(createCommandHandlers(ports), resources);
   return new DirectHandlerTransport(handlers);

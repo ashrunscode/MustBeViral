@@ -14,10 +14,20 @@ export function leaseForNode(
   });
 }
 
+/**
+ * Identity of the draft for one node field. The JSON array encoding is injective: two different
+ * `(nodeId, fieldPath)` pairs never produce the same key, whatever characters either contains. A
+ * joined string such as `${nodeId}::${fieldPath}` is not, because node `n` with field
+ * `1::parameters.prompt` and node `n::1` with field `parameters.prompt` spell the same key.
+ */
 export function textDraftKey(nodeId: string, fieldPath: string): string {
-  return `${nodeId}::${fieldPath}`;
+  return JSON.stringify([nodeId, fieldPath]);
 }
 
+/**
+ * Lease id for a node and holder. This joined string is only a label: the collaboration Worker also
+ * refuses to store a lease under an id that already belongs to a different node or holder.
+ */
 export function leaseIdForActor(nodeId: string, actorId: string): string {
   return `lease-${nodeId}-${actorId}`;
 }

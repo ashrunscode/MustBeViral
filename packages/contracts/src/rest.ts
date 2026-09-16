@@ -33,6 +33,7 @@ export const P0_REST_OPERATIONS = [
   'explain_model',
   'get_receipt',
   'ingest_fal_webhook',
+  'create_collaboration_ticket',
 ] as const;
 
 export type P0RestOperation = (typeof P0_REST_OPERATIONS)[number];
@@ -56,6 +57,7 @@ export const P0_AUTHENTICATED_REST_OPERATIONS = [
   'create_export',
   'explain_model',
   'get_receipt',
+  'create_collaboration_ticket',
 ] as const satisfies readonly P0RestOperation[];
 export type P0AuthenticatedRestOperation = (typeof P0_AUTHENTICATED_REST_OPERATIONS)[number];
 
@@ -197,6 +199,14 @@ export const GetReceiptResourceInputSchema = ContextInputSchema.extend({
   run_id: IdentifierSchema,
 }).strict();
 
+/**
+ * Issues a short-lived collaboration ticket for one canvas. Browser-session only: Core refuses
+ * scoped API keys and OAuth tokens before this input is parsed. Minting writes nothing.
+ */
+export const CreateCollaborationTicketResourceInputSchema = ContextInputSchema.extend({
+  canvas_id: IdentifierSchema,
+}).strict();
+
 export const IngestFalWebhookResourceInputSchema = z
   .object({
     identity: z
@@ -223,6 +233,9 @@ export type CreateExportResourceInput = z.infer<typeof CreateExportResourceInput
 export type ApproveArtifactsResourceInput = z.infer<typeof ApproveArtifactsResourceInputSchema>;
 export type ExplainModelResourceInput = z.infer<typeof ExplainModelResourceInputSchema>;
 export type GetReceiptResourceInput = z.infer<typeof GetReceiptResourceInputSchema>;
+export type CreateCollaborationTicketResourceInput = z.infer<
+  typeof CreateCollaborationTicketResourceInputSchema
+>;
 export type IngestFalWebhookResourceInput = z.infer<typeof IngestFalWebhookResourceInputSchema>;
 
 export type P0HandlerResult = Readonly<{
@@ -286,6 +299,7 @@ export interface P0ResourceHandlers {
   readonly explainModel: P0RestHandler;
   readonly getReceipt: P0RestHandler;
   readonly ingestFalWebhook: P0RestHandler;
+  readonly createCollaborationTicket: P0RestHandler;
 }
 
 /** The thirteenth P0 handler port, covering resource operations outside graph execution. */
@@ -302,6 +316,7 @@ export interface P0ResourcePort {
   readonly explainModel: P0ResourceHandler<ExplainModelResourceInput>;
   readonly getReceipt: P0ResourceHandler<GetReceiptResourceInput>;
   readonly ingestFalWebhook: P0ResourceHandler<IngestFalWebhookResourceInput>;
+  readonly createCollaborationTicket: P0ResourceHandler<CreateCollaborationTicketResourceInput>;
 }
 
 export interface P0HandlerPorts extends HandlerPorts {
@@ -326,6 +341,8 @@ export function createP0ResourceHandlers(port: P0ResourcePort): P0ResourceHandle
     getReceipt: (input) => port.getReceipt(GetReceiptResourceInputSchema.parse(input)),
     ingestFalWebhook: (input) =>
       port.ingestFalWebhook(IngestFalWebhookResourceInputSchema.parse(input)),
+    createCollaborationTicket: (input) =>
+      port.createCollaborationTicket(CreateCollaborationTicketResourceInputSchema.parse(input)),
   };
 }
 
@@ -357,5 +374,6 @@ export function createP0RestHandlers(
     explain_model: resources.explainModel,
     get_receipt: resources.getReceipt,
     ingest_fal_webhook: resources.ingestFalWebhook,
+    create_collaboration_ticket: resources.createCollaborationTicket,
   };
 }

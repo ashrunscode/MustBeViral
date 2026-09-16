@@ -49,6 +49,11 @@
   padding: 0 10px;
 }
 
+/* An icon-only 32px button grows a 44px hit area; 12px to the next button keeps them apart. */
+.toolbarActions :global(.mbv-button)[aria-label] + :global(.mbv-button) {
+  margin-left: 4px;
+}
+
 .resultBanner {
   grid-row: 2;
   z-index: 5;
@@ -63,7 +68,7 @@
 }
 
 .resultSuccess {
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 
 .resultConflict {
@@ -74,7 +79,7 @@
 
 .resultInvalid {
   border-left: 2px solid var(--fail);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .canvasSurface {
@@ -246,7 +251,7 @@
 }
 
 .nodeEvidence {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .nodeEvidence > * {
@@ -263,7 +268,7 @@
   border-radius: 4px;
   padding: 6px;
   background: rgba(196, 64, 77, 0.08);
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 10px;
   line-height: 1.35;
 }
@@ -297,7 +302,7 @@
 }
 
 .quoteBar > div > :first-child {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .sideRail {
@@ -345,7 +350,7 @@
   margin: 0;
   border-bottom: 1px solid var(--line);
   padding: 10px 18px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
   line-height: 1.4;
 }
@@ -409,7 +414,7 @@
   border-top: 1px solid var(--line);
   padding: 0 20px;
   background: var(--wash-faint);
-  color: var(--ink-faint);
+  color: var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
