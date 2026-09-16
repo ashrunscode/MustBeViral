@@ -108,7 +108,7 @@ describe('stripe webhook dedup', () => {
     ['a not-null violation', 400, '23502', 'null value in column "event_type"'],
     ['an unparseable request body', 400, 'PGRST102', 'Empty or invalid json'],
     ['a unique violation', 409, '23505', 'duplicate key value'],
-    ['an unprocessable request', 422, '22P02', 'invalid input syntax'],
+    ['an HTTP 422', 422, '22P02', 'invalid input syntax'],
   ])(
     'reports %s as a permanent rejection, not an outage',
     async (_label, status, code, postgrestMessage) => {
@@ -150,22 +150,24 @@ describe('stripe webhook dedup', () => {
     ['a numeric code', { code: 22023 }],
     ['a null body', null],
     ['an array body', [{ code: '22023' }]],
-  ])('omits the error code for %s', async (_label, body) => {
-    const port = createStripeWebhookDedupPort(
-      bindings,
-      'req-stripe-dedup-7',
-      respondWithStatus(400, body),
-    );
+  ])(
+    'keeps a 400 with %s as unavailable: PostgREST always sends a well-formed code',
+    async (_label, body) => {
+      const port = createStripeWebhookDedupPort(
+        bindings,
+        'req-stripe-dedup-7',
+        respondWithStatus(400, body),
+      );
 
-    const error = await port.recordEvent(event).catch((caught: unknown) => caught);
+      const error = await port.recordEvent(event).catch((caught: unknown) => caught);
 
-    expect(error).toBeInstanceOf(StripeWebhookDedupRejectedError);
-    const rejected = error as StripeWebhookDedupRejectedError;
-    expect(rejected.code).toBeUndefined();
-    expect(rejected.message).toBe('Stripe webhook dedup RPC rejected the event with HTTP 400.');
-  });
+      expect(error).toBeInstanceOf(StripeWebhookDedupUnavailableError);
+      expect(error).not.toBeInstanceOf(StripeWebhookDedupRejectedError);
+    },
+  );
 
   it.each([
+    ['a retired RPC during a deploy', 400, { code: '0A000' }],
     ['a restricted project', 402, {}],
     ['a missing RPC after a deploy ahead of its migration', 404, { code: 'PGRST202' }],
     ['a read-only database with a nearly full disk', 405, { code: '25006' }],

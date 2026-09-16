@@ -1,4 +1,5 @@
 import type { CoreBindings } from '../bindings';
+import { readPermanentRejection } from './postgrest-rejection';
 
 export class StripeWebhookDedupUnavailableError extends Error {
   override readonly name = 'StripeWebhookDedupUnavailableError';
@@ -20,33 +21,9 @@ export class StripeWebhookDedupRejectedError extends Error {
 
   constructor(
     readonly status: number,
-    readonly code: string | undefined,
+    readonly code: string,
   ) {
-    super(
-      `Stripe webhook dedup RPC rejected the event with HTTP ${status}${
-        code === undefined ? '' : ` (${code})`
-      }.`,
-    );
-  }
-}
-
-// PostgREST answers 400 for invalid input (SQLSTATE class 22, 23502, P0001, PGRST1xx request
-// errors), 409 for unique and foreign-key violations and 422 for unprocessable requests. Every other
-// failure can clear without a change to the event, so it stays Unavailable: 402 (a restricted
-// project), 404 (the RPC is missing: a Worker deployed ahead of its migration, or a stale schema
-// cache), 405 (SQLSTATE 25006, a read-only database, for example with a nearly full disk), 408, 425
-// and 429 (timing and rate limits), and 5xx.
-const PERMANENT_REJECTION_STATUSES: ReadonlySet<number> = new Set([400, 409, 422]);
-
-const SAFE_ERROR_CODE = /^(?:[0-9A-Z]{5}|PGRST\d{3})$/u;
-
-async function safeErrorCode(response: Response): Promise<string | undefined> {
-  try {
-    const body = (await response.json()) as Readonly<{ code?: unknown }> | null;
-    const code = body?.code;
-    return typeof code === 'string' && SAFE_ERROR_CODE.test(code) ? code : undefined;
-  } catch {
-    return undefined;
+    super(`Stripe webhook dedup RPC rejected the event with HTTP ${status} (${code}).`);
   }
 }
 
@@ -115,8 +92,9 @@ export function createStripeWebhookDedupPort(
         'Stripe webhook dedup rejected the privileged credential.',
       );
     }
-    if (PERMANENT_REJECTION_STATUSES.has(response.status)) {
-      throw new StripeWebhookDedupRejectedError(response.status, await safeErrorCode(response));
+    const rejection = await readPermanentRejection(response);
+    if (rejection !== null) {
+      throw new StripeWebhookDedupRejectedError(response.status, rejection.code);
     }
     if (!response.ok) {
       throw new StripeWebhookDedupUnavailableError(
