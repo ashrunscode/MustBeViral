@@ -1,6 +1,6 @@
 begin;
 
-select plan(25);
+select plan(26);
 
 -- Discovered live: DROP FUNCTION (required to add OUT columns, which create-or-replace cannot do)
 -- clears every grant on the object. The default-privileges bootstrap
@@ -146,6 +146,13 @@ select ok(
     'public.apply_stripe_subscription_update(uuid, text, text, text, text, boolean, text)'::regprocedure,
     'execute'),
   'service_role can execute apply_stripe_subscription_update'
+);
+-- The Stripe dedup port sends p_request_id, so PostgREST resolves this five-argument overload.
+select ok(
+  has_function_privilege('service_role',
+    'public.record_stripe_webhook_event(text, text, boolean, text, text)'::regprocedure,
+    'execute'),
+  'service_role can execute the record_stripe_webhook_event overload the Worker calls'
 );
 
 select * from finish();
