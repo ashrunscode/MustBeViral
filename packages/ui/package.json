@@ -13,6 +13,9 @@
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@radix-ui/react-dialog": "1.1.23"
+  },
   "peerDependencies": {
     "react": "19.2.7",
     "react-dom": "19.2.7"
