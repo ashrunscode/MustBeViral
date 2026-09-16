@@ -65,6 +65,11 @@ const routeDefinitions = {
   create_export: { method: 'POST', path: '/runs/:id/exports', body: CreateExportBodySchema },
   explain_model: { method: 'GET', path: '/models/:id' },
   get_receipt: { method: 'GET', path: '/runs/:id/receipt' },
+  create_collaboration_ticket: {
+    method: 'POST',
+    path: '/canvases/:id/collaboration-tickets',
+    mutation: false,
+  },
 } as const satisfies Readonly<
   Record<
     P0AuthenticatedRestOperation,

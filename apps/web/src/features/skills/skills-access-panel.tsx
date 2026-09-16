@@ -32,6 +32,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
     'Write concise, benefit-led launch copy for a DTC product drop.',
   );
   const [busy, setBusy] = useState(false);
+  const [errorPredatesDialog, setErrorPredatesDialog] = useState(false);
   const [publishedVersion, setPublishedVersion] = useState<number | null>(null);
 
   useEffect(() => {
@@ -99,6 +100,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
   async function handlePublish() {
     setBusy(true);
     setError(null);
+    setErrorPredatesDialog(false);
     try {
       const client = await createP1bManagementClient();
       const published = await client.publishSkill(workspaceId, { name, title, instructions });
@@ -112,6 +114,17 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
       setBusy(false);
     }
   }
+
+  // While a dialog is open the page behind it is covered and hidden from assistive technology, so an
+  // error raised while it is open renders inside it instead of on the page, and is announced once.
+  // An error that was already on the page when the dialog opened stays on the page.
+  const errorInDialog = (publishOpen || publishedVersion !== null) && !errorPredatesDialog;
+  const errorAlert =
+    error === null ? null : (
+      <p className="access-panel__error" role="alert">
+        {error}
+      </p>
+    );
 
   const selectedVersion =
     versions.find((version) => version.skill_version_id === selectedVersionId) ?? null;
@@ -128,15 +141,18 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
           cannot access database, storage, or billing credentials.
         </p>
         <div className="access-panel__actions">
-          <Button type="button" onClick={() => setPublishOpen(true)} disabled={busy}>
+          <Button
+            type="button"
+            onClick={() => {
+              setErrorPredatesDialog(error !== null);
+              setPublishOpen(true);
+            }}
+            disabled={busy}
+          >
             Publish Skill
           </Button>
         </div>
-        {error === null ? null : (
-          <p className="access-panel__error" role="alert">
-            {error}
-          </p>
-        )}
+        {errorInDialog ? null : errorAlert}
       </section>
 
       <div className="skills-panel__grid">
@@ -252,6 +268,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
             rows={8}
           />
         </label>
+        {errorInDialog ? errorAlert : null}
         <div className="access-panel__actions">
           <Button
             type="button"
@@ -277,6 +294,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
             <p>
               Version <strong>v{publishedVersion}</strong> is now live for this Skill name.
             </p>
+            {errorInDialog ? errorAlert : null}
             <Button type="button" onClick={() => setPublishedVersion(null)}>
               Continue
             </Button>

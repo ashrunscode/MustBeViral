@@ -26,6 +26,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
   const [name, setName] = useState('Automation key');
   const [selectedScopes, setSelectedScopes] = useState<readonly ApiKeyScope[]>(DEFAULT_SCOPES);
   const [busy, setBusy] = useState(false);
+  const [errorPredatesDialog, setErrorPredatesDialog] = useState(false);
 
   const reload = useCallback(async () => {
     setLoading(true);
@@ -72,6 +73,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
   async function handleCreate() {
     setBusy(true);
     setError(null);
+    setErrorPredatesDialog(false);
     try {
       const client = await createP1bManagementClient();
       const created = await client.createApiKey(workspaceId, {
@@ -102,6 +104,17 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
     }
   }
 
+  // While a dialog is open the page behind it is covered and hidden from assistive technology, so an
+  // error raised while it is open renders inside it instead of on the page, and is announced once.
+  // An error that was already on the page when the dialog opened stays on the page.
+  const errorInDialog = (createOpen || createdSecret !== null) && !errorPredatesDialog;
+  const errorAlert =
+    error === null ? null : (
+      <p className="access-panel__error" role="alert">
+        {error}
+      </p>
+    );
+
   function toggleScope(scope: ApiKeyScope) {
     setSelectedScopes((current) =>
       current.includes(scope) ? current.filter((entry) => entry !== scope) : [...current, scope],
@@ -118,15 +131,18 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
           or spend autonomously. Revocation is immediate.
         </p>
         <div className="access-panel__actions">
-          <Button type="button" onClick={() => setCreateOpen(true)} disabled={busy}>
+          <Button
+            type="button"
+            onClick={() => {
+              setErrorPredatesDialog(error !== null);
+              setCreateOpen(true);
+            }}
+            disabled={busy}
+          >
             Create API key
           </Button>
         </div>
-        {error === null ? null : (
-          <p className="access-panel__error" role="alert">
-            {error}
-          </p>
-        )}
+        {errorInDialog ? null : errorAlert}
       </section>
 
       <section className="access-panel__card" aria-labelledby="keys-heading">
@@ -208,6 +224,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
             </label>
           ))}
         </fieldset>
+        {errorInDialog ? errorAlert : null}
         <div className="access-panel__actions">
           <Button
             type="button"
@@ -232,6 +249,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
           <>
             <code className="access-panel__secret">{createdSecret}</code>
             <p>Programmatic clients must still confirm quotes before any paid run.</p>
+            {errorInDialog ? errorAlert : null}
             <Button type="button" onClick={() => setCreatedSecret(null)}>
               I saved the secret
             </Button>

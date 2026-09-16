@@ -114,4 +114,63 @@ describe('stripe webhook settlement handler', () => {
     expect(result.emailStatus).toBe('not_requested');
     expect(fetchMock).toHaveBeenCalledOnce();
   });
+
+  // The route settles before recording the receipt, so Stripe retries and redeliveries replay
+  // settlement. Only the delivery that actually credited the wallet may notify the operator.
+  it.each([
+    [false, 'sent', 1],
+    [true, 'not_requested', 0],
+  ] as const)(
+    'with replayed=%s reports email %s and sends %i operator emails',
+    async (replayed, expectedEmailStatus, expectedEmails) => {
+      const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.endsWith('/rpc/apply_stripe_wallet_credit')) {
+          return Response.json({
+            workspace_id: '50000000-0000-4000-8000-000000000001',
+            transaction_id: '60000000-0000-4000-8000-000000000001',
+            replayed,
+            wallet_balance_micros: 50000000,
+          });
+        }
+        if (url === 'https://api.resend.com/emails') {
+          return Response.json({ id: 'email_1' });
+        }
+        throw new Error(`unexpected fetch: ${url}`);
+      });
+      const handler = createStripeWebhookSettlementHandler(
+        {
+          SUPABASE_URL: 'https://example.supabase.co',
+          SUPABASE_SECRET_KEY: 'sb_secret_test',
+          RESEND_API_KEY: 're_test',
+          RESEND_FROM_ADDRESS: 'billing@example.test',
+        } as never,
+        fetchMock,
+      );
+
+      const result = await handler({
+        verified: {
+          eventId: 'evt_wallet_credit_email',
+          eventType: 'invoice.paid',
+          livemode: false,
+          payload: {
+            data: {
+              object: {
+                amount_paid: 5000,
+                metadata: { workspace_id: '50000000-0000-4000-8000-000000000001' },
+              },
+            },
+          },
+        },
+        requestId: 'req-wallet-credit-email',
+        operatorEmail: 'operator@example.test',
+      });
+
+      expect(result.persisted).toBe(true);
+      expect(result.emailStatus).toBe(expectedEmailStatus);
+      expect(
+        fetchMock.mock.calls.filter(([input]) => String(input) === 'https://api.resend.com/emails'),
+      ).toHaveLength(expectedEmails);
+    },
+  );
 });

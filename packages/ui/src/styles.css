@@ -11,11 +11,18 @@
   --ink-faint: rgba(0, 0, 0, 0.25);
   --line: rgba(0, 0, 0, 0.12);
   --signal: #3182d4;
+  --signal-fill: #2875c2;
+  --signal-fill-hover: #226bb3;
+  --signal-fill-pressed: #1d5f9f;
+  --signal-ink: #226bb3;
   --signal-soft: #80bfff;
   --selection-wash: #80bfff1f;
   --ok: #1f9d63;
   --attention: #b87e14;
   --fail: #c4404d;
+  --ok-ink: #187b4e;
+  --attention-ink: #8b5f0f;
+  --fail-ink: #b73945;
   --radius-control: 4px;
   --radius-input: 6px;
   --radius-card: 8px;
@@ -32,6 +39,7 @@
 }
 
 .mbv-button {
+  position: relative;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -50,6 +58,13 @@
     transform var(--motion-local) var(--motion-ease);
 }
 
+/* Transparent hit area: compact 32–40px controls keep their visual size, the touch target grows
+   to at least 44×44px, centred on the control. Larger controls are unaffected. */
+.mbv-button::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
+}
 .mbv-button:hover:not(:disabled) {
   background: var(--wash);
 }
@@ -60,15 +75,16 @@
   cursor: not-allowed;
   color: var(--ink-faint);
 }
+/* White text needs the deeper signal fills: rest 4.76:1, hover 5.49:1, pressed 6.58:1. */
 .mbv-button--primary {
-  background: var(--signal);
+  background: var(--signal-fill);
   color: #fff;
 }
 .mbv-button--primary:hover:not(:disabled) {
-  background: #2875c2;
+  background: var(--signal-fill-hover);
 }
 .mbv-button--primary:active:not(:disabled) {
-  background: #226bb3;
+  background: var(--signal-fill-pressed);
 }
 .mbv-button--primary:disabled {
   background: var(--ink-faint);
@@ -98,18 +114,18 @@
 }
 .mbv-button[data-state='error'] {
   border-color: var(--fail);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 .mbv-button[data-state='success'] {
   border-color: var(--ok);
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 .mbv-button--primary[data-state='error'] {
-  background: var(--fail);
+  background: var(--fail-ink);
   color: #fff;
 }
 .mbv-button--primary[data-state='success'] {
-  background: var(--ok);
+  background: var(--ok-ink);
   color: #fff;
 }
 
@@ -130,16 +146,29 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+/* The status colour marks the icon; the label uses the AA status ink on the white chip. */
 .mbv-chip--verified {
+  color: var(--ok-ink);
+}
+.mbv-chip--verified .mbv-chip__icon {
   color: var(--ok);
 }
 .mbv-chip--running {
+  color: var(--attention-ink);
+}
+.mbv-chip--running .mbv-chip__icon {
   color: var(--attention);
 }
 .mbv-chip--queued {
+  color: var(--ink);
+}
+.mbv-chip--queued .mbv-chip__icon {
   color: var(--ink-muted);
 }
 .mbv-chip--failed {
+  color: var(--fail-ink);
+}
+.mbv-chip--failed .mbv-chip__icon {
   color: var(--fail);
 }
 .mbv-chip--notes {
@@ -199,7 +228,7 @@
   text-align: left;
 }
 .mbv-ledger th {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 1px;
@@ -226,11 +255,11 @@
 }
 .mbv-quote-pill[data-state='error'] {
   border-color: var(--fail);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 .mbv-quote-pill[data-state='success'] {
   border-color: var(--ok);
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 
 .mbv-drawer {
