@@ -177,6 +177,43 @@ describe('CanvasCoordination durable object', () => {
     });
   });
 
+  it("refuses a draft id that names another field, so the field's slot cannot be squatted", async () => {
+    await withStore('canvas-draft-slot-squat', (store) => {
+      const canvasId = 'canvas-draft-slot-squat';
+      const heroPrompt = textDraftKey('hero', 'parameters.prompt');
+
+      // B targets the key of hero's prompt field while drafting a different node.
+      expect(() =>
+        store.upsertTextDraft(canvasId, actor2, {
+          draft_id: heroPrompt,
+          node_id: 'other-node',
+          field_path: 'parameters.prompt',
+          body: 'Squatting the hero prompt slot',
+        }),
+      ).toThrow(OwnershipError);
+      expect(store.getSnapshot(canvasId).text_drafts).toHaveLength(0);
+
+      // A's legitimate write to the targeted field still succeeds.
+      expect(
+        store.upsertTextDraft(canvasId, actor1, {
+          draft_id: heroPrompt,
+          node_id: 'hero',
+          field_path: 'parameters.prompt',
+          body: 'Hero prompt from A',
+        }),
+      ).toEqual({ accepted: true, reason: 'ok' });
+      expect(store.getSnapshot(canvasId).text_drafts).toEqual([
+        expect.objectContaining({
+          draft_id: heroPrompt,
+          node_id: 'hero',
+          field_path: 'parameters.prompt',
+          body: 'Hero prompt from A',
+          author: actor1,
+        }),
+      ]);
+    });
+  });
+
   it('handles drafts stored under the earlier joined-string key without collisions', async () => {
     await withStore('canvas-legacy-drafts', (store, state) => {
       const canvasId = 'canvas-legacy-drafts';
