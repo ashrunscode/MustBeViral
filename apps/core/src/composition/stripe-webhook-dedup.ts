@@ -19,9 +19,9 @@ function isClaimResult(value: unknown): value is Readonly<{ claim: StripeWebhook
 /**
  * Privileged Stripe webhook dedup surface. Webhook requests have no user JWT.
  *
- * `record_stripe_webhook_event` has two overloads and PostgREST picks one by the named arguments
- * sent. The five-argument overload returns `{ claim }`; the four-argument overload fails at runtime
- * (boolean compared with integer), so `p_request_id` must always be sent.
+ * PostgREST matches an RPC by the exact set of named arguments, and
+ * `record_stripe_webhook_event` takes five, so `p_request_id` must always be sent. It returns
+ * `{ claim }`. A broken four-argument overload existed until migration 20260916155000 dropped it.
  */
 export function createStripeWebhookDedupPort(
   bindings: CoreBindings,
