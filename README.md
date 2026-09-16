@@ -34,4 +34,4 @@ pnpm supabase:start
 pnpm dev
 ```
 
-Replace the example publishable key with the local value reported by Supabase. Do not place a service-role key in the web environment. The current web page is intentionally a scaffold; production UI implementation remains blocked until a SuperDesign artifact is approved.
+Replace the example publishable key with the local value reported by Supabase. Do not place a service-role key in the web environment. A new live surface needs named HTML frames, desktop and mobile captures, and explicit operator approval before its production components ship, under the visual approval gate in `docs/ux/EXPERIENCE_CONTRACT.md`.
