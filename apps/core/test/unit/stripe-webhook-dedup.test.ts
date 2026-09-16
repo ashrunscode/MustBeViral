@@ -111,7 +111,7 @@ describe('stripe webhook dedup', () => {
     },
   ])('raises $error.name on $label', async ({ respond, error }) => {
     const fetchMock = vi.fn<typeof fetch>(async () => respond());
-    const port = createStripeWebhookDedupPort(bindings, 'req-stripe-dedup-5', fetchMock);
+    const port = createStripeWebhookDedupPort(bindings, 'req-stripe-dedup-failure', fetchMock);
 
     await expect(port.recordEvent(event)).rejects.toBeInstanceOf(error);
     expect(fetchMock).toHaveBeenCalledOnce();
