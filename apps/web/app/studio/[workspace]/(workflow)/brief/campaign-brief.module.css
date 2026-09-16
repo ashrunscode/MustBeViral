@@ -1,11 +1,15 @@
 /* Approved frame: .superdesign/hifi/campaign-brief.html. Restored from 549bd08 after 712dc4e
    replaced these rules; small text uses --ink and status text uses the *-ink shades (AA). */
+/* Rail and summary keep their content height: when the viewport is shorter, main scrolls instead
+   of clipping them. The optional first-use banner takes an auto row; the panels fill the rest. */
 .main {
   flex: 1;
   min-height: 0;
   display: grid;
   grid-template-columns: 228px minmax(0, 1fr) 320px;
-  overflow: hidden;
+  grid-template-rows: auto;
+  grid-auto-rows: 1fr;
+  overflow: auto;
 }
 .firstUseBanner {
   grid-column: 1 / -1;
@@ -51,13 +55,16 @@
   cursor: pointer;
   transition:
     background-color var(--motion-local) var(--motion-ease),
-    border-color var(--motion-local) var(--motion-ease);
+    border-color var(--motion-local) var(--motion-ease),
+    transform var(--motion-local) var(--motion-ease);
 }
 .step:hover {
   background: var(--wash);
 }
+/* No ink token sits between --wash (.04) and --line (.12); press like the shared Button. */
 .step:active {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--wash);
+  transform: translateY(1px);
 }
 .step.active {
   border-color: var(--signal-soft);
@@ -80,8 +87,9 @@
 }
 .stepMeta {
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
   color: var(--ink);
+  font-size: 9px;
 }
 .formField {
   overflow: auto;
@@ -216,7 +224,6 @@
   line-height: 1.45;
 }
 .summary {
-  overflow: hidden;
   border-left: 1px solid var(--line);
   padding: 28px 24px;
   background: var(--card);
@@ -336,20 +343,14 @@
   display: flex;
   gap: 24px;
 }
-@media (max-width: 1180px) {
-  .main {
-    grid-template-columns: 200px minmax(520px, 1fr) 280px;
-  }
-  .formField {
-    padding-inline: 28px;
-  }
-}
-/* No approved frame below 1024px: the three panels stack in one scroll container. */
-@media (max-width: 1023px) {
+/* Below 1280px the experience contract rules out simultaneous side panels. The brief has no
+   approved drawer frame, so rail, form and summary stack in main's single scroll container. */
+@media (max-width: 1279px) {
   .main {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-auto-rows: auto;
     align-content: start;
-    overflow-y: auto;
   }
   .rail {
     border-right: 0;

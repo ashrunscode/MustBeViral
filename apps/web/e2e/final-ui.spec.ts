@@ -216,76 +216,190 @@ for (const dialog of [
   });
 }
 
-// 712dc4e replaced the brief's CSS module with one unrelated rule; the page rendered unstyled with
-// overlapping step buttons and the confirm actions clipped below the fold. Guard the layout itself.
+// 712dc4e replaced the brief's CSS module with one unrelated rule (unstyled page, overlapping
+// steps), and e64eaa2's restore clipped the summary below 1024px. Guard layout and reachability,
+// not exact pixel values.
+const briefSections = [
+  'Product truth',
+  'Brand kit',
+  'Audience',
+  'Offer',
+  'Claims & legal',
+  'Assets',
+];
+
+type Edges = { top: number; right: number; bottom: number; left: number };
+
+const edgesOverlap = (a: Edges, b: Edges) =>
+  Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0.5 &&
+  Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5;
+
 for (const viewport of [
   { width: 1440, height: 900 },
+  { width: 1024, height: 600 },
+  { width: 768, height: 1024 },
   { width: 375, height: 812 },
 ]) {
-  test(`keeps the campaign brief laid out at ${viewport.width}x${viewport.height}`, async ({
+  test(`keeps the campaign brief laid out and unclipped at ${viewport.width}x${viewport.height}`, async ({
     page,
   }) => {
     await page.setViewportSize(viewport);
     await page.goto('/studio/lumen-skin/brief');
-    const validate = page.getByRole('button', { name: 'Validate brief' });
-    await expect(validate).toBeVisible();
-
-    type Box = { x: number; y: number; width: number; height: number };
-    const boxOf = async (locator: ReturnType<typeof page.locator>): Promise<Box> => {
-      const box = await locator.boundingBox();
-      if (box === null) throw new Error('Expected a rendered box.');
-      return box;
-    };
-    const intersects = (a: Box, b: Box) =>
-      Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x) > 0.5 &&
-      Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y) > 0.5;
-
+    await expect(page.getByRole('button', { name: 'Validate brief' })).toBeVisible();
     const steps = page.getByRole('navigation', { name: 'Brief sections' }).getByRole('button');
     await expect(steps).toHaveCount(6);
-    const stepBoxes = await Promise.all((await steps.all()).map(boxOf));
-    for (const [index, box] of stepBoxes.entries()) {
-      expect(box.height, `step ${index + 1} height`).toBeGreaterThanOrEqual(44);
-      for (const other of stepBoxes.slice(index + 1)) expect(intersects(box, other)).toBe(false);
+
+    // Measure every box in one pass, before anything scrolls.
+    const layout = await page.locator('#main-content').evaluate((main) => {
+      const edges = (element: Element | null) => {
+        if (element === null) throw new Error('Missing brief element.');
+        const { top, right, bottom, left } = element.getBoundingClientRect();
+        return { top, right, bottom, left };
+      };
+      const one = (selector: string) => edges(document.querySelector(selector));
+      const label = document.querySelector('label[for="legal-copy"]');
+      const marker = label?.querySelector('span');
+      if (!label || !marker) throw new Error('Missing required-field label.');
+      const border = (selector: string) =>
+        getComputedStyle(document.querySelector(selector) ?? main).borderTopColor;
+      return {
+        steps: [...main.querySelectorAll('nav[aria-label="Brief sections"] button')].map(edges),
+        rail: one('nav[aria-label="Brief sections"]'),
+        form: one('section[aria-labelledby="brief-title"]'),
+        summary: one('aside[aria-labelledby="summary-title"]'),
+        evidence: one('#evidence-source'),
+        legal: one('#legal-copy'),
+        actions: [...(main.nextElementSibling?.querySelectorAll('button') ?? [])].map(edges),
+        mainOverflowX: main.scrollWidth - main.clientWidth,
+        pageWidth: document.documentElement.scrollWidth,
+        labelColor: getComputedStyle(label).color,
+        markerColor: getComputedStyle(marker).color,
+        invalidBorder: border('#evidence-source'),
+        validBorder: border('#legal-copy'),
+      };
+    });
+
+    for (const [index, step] of layout.steps.entries()) {
+      expect(step.bottom - step.top, `step ${index + 1} height`).toBeGreaterThanOrEqual(40);
+      for (const other of layout.steps.slice(index + 1))
+        expect(edgesOverlap(step, other)).toBe(false);
     }
-
-    // Both confirm actions sit fully inside the viewport, apart from each other.
-    const save = await boxOf(page.getByRole('button', { name: 'Save draft' }));
-    const validateBox = await boxOf(validate);
-    for (const box of [save, validateBox]) {
-      expect(box.x).toBeGreaterThanOrEqual(0);
-      expect(box.y).toBeGreaterThanOrEqual(0);
-      expect(box.x + box.width).toBeLessThanOrEqual(viewport.width);
-      expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
+    // Save draft and Validate brief stay on screen, apart from each other.
+    expect(layout.actions).toHaveLength(2);
+    for (const action of layout.actions) {
+      expect(action.left).toBeGreaterThanOrEqual(0);
+      expect(action.top).toBeGreaterThanOrEqual(0);
+      expect(action.right).toBeLessThanOrEqual(viewport.width);
+      expect(action.bottom).toBeLessThanOrEqual(viewport.height);
     }
-    expect(intersects(save, validateBox)).toBe(false);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
-      viewport.width,
-    );
+    expect(edgesOverlap(layout.actions[0]!, layout.actions[1]!)).toBe(false);
+    expect(layout.pageWidth).toBeLessThanOrEqual(viewport.width);
+    expect(layout.mainOverflowX).toBeLessThanOrEqual(0);
+    // Required marks and the invalid field are styled apart from ordinary text and fields.
+    expect(layout.markerColor).not.toBe(layout.labelColor);
+    expect(layout.invalidBorder).not.toBe(layout.validBorder);
 
-    const rail = await boxOf(page.getByRole('navigation', { name: 'Brief sections' }));
-    const form = await boxOf(page.locator('section[aria-labelledby="brief-title"]'));
-    const summary = await boxOf(page.getByRole('complementary', { name: 'Brief summary' }));
-    const evidence = page.locator('#evidence-source');
-    const evidenceBox = await boxOf(evidence);
-    const legalBox = await boxOf(page.locator('#legal-copy'));
-    await expect(evidence).toHaveCSS('height', '76px');
-    await expect(evidence).toHaveCSS('border-top-color', 'rgb(196, 64, 77)');
-
+    const { rail, form, summary, evidence, legal } = layout;
     if (viewport.width >= 1280) {
-      // Approved frame: 228px rail, fluid form, 320px summary; paired fields side by side.
-      await expect(page.locator('#main-content')).toHaveCSS(
-        'grid-template-columns',
-        '228px 892px 320px',
-      );
-      expect([rail.x, rail.width, summary.x, summary.width]).toEqual([0, 228, 1120, 320]);
-      expect(stepBoxes.every((box) => box.x === stepBoxes[0]?.x)).toBe(true);
-      expect(legalBox.y).toBe(evidenceBox.y);
-      expect(legalBox.x).toBeGreaterThan(evidenceBox.x + evidenceBox.width);
+      // Three panels side by side in one row, the form the widest; paired fields side by side.
+      expect(rail.right).toBeLessThanOrEqual(form.left + 1);
+      expect(form.right).toBeLessThanOrEqual(summary.left + 1);
+      expect(Math.abs(rail.top - form.top)).toBeLessThanOrEqual(1);
+      expect(Math.abs(summary.top - form.top)).toBeLessThanOrEqual(1);
+      expect(form.right - form.left).toBeGreaterThan(rail.right - rail.left);
+      expect(form.right - form.left).toBeGreaterThan(summary.right - summary.left);
+      expect(Math.abs(legal.top - evidence.top)).toBeLessThanOrEqual(1);
+      expect(legal.left).toBeGreaterThanOrEqual(evidence.right);
     } else {
-      // Narrow screens stack rail, form and summary, and paired fields, in one column.
-      expect(form.y).toBeGreaterThanOrEqual(rail.y + rail.height);
-      expect(summary.y).toBeGreaterThanOrEqual(form.y + form.height);
-      expect(legalBox.y).toBeGreaterThanOrEqual(evidenceBox.y + evidenceBox.height);
+      // Below 1280px the panels stack; below 768px paired fields stack too.
+      expect(form.top).toBeGreaterThanOrEqual(rail.bottom - 1);
+      expect(summary.top).toBeGreaterThanOrEqual(form.bottom - 1);
+      if (viewport.width < 768) expect(legal.top).toBeGreaterThanOrEqual(evidence.bottom - 1);
+    }
+
+    // In every section, each step, field, summary item and confirm action must be fully inside
+    // its scroll range, never cut by an overflow-clipping ancestor, and hit at its centre once
+    // user-scrollable ancestors bring it into view.
+    const targets = page.locator(
+      [
+        '#main-content :is(nav button, h1, textarea, input[type="checkbox"])',
+        '#main-content aside :is([role="progressbar"], ul, [aria-live="polite"])',
+        '#main-content + div button',
+      ].join(', '),
+    );
+    for (const [index, section] of briefSections.entries()) {
+      // A synthetic click: Playwright's own click would scroll overflow-hidden ancestors first.
+      await steps.nth(index).dispatchEvent('click');
+      await expect(
+        page.getByRole('heading', { level: 1, name: section, exact: true }),
+      ).toBeVisible();
+      // Steps, heading, summary items and confirm actions at least; fields vary by section.
+      expect(await targets.count()).toBeGreaterThanOrEqual(12);
+      const unreachable = await targets.evaluateAll((elements) => {
+        const scrolls = (style: CSSStyleDeclaration) =>
+          ['auto', 'scroll'].includes(style.overflowY) ||
+          ['auto', 'scroll'].includes(style.overflowX);
+        const name = (element: Element) =>
+          `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''} "${(element.getAttribute('aria-label') ?? element.textContent ?? '').trim().slice(0, 32)}"`;
+        const problems: string[] = [];
+        elements: for (const element of elements) {
+          let subject = element.getBoundingClientRect();
+          for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+            const style = getComputedStyle(ancestor);
+            if (style.overflowX === 'visible' && style.overflowY === 'visible') continue;
+            const port = ancestor.getBoundingClientRect();
+            if (scrolls(style)) {
+              const top = subject.top - port.top - ancestor.clientTop + ancestor.scrollTop;
+              const left = subject.left - port.left - ancestor.clientLeft + ancestor.scrollLeft;
+              if (
+                top < -1 ||
+                left < -1 ||
+                top + subject.height > ancestor.scrollHeight + 1 ||
+                left + subject.width > ancestor.scrollWidth + 1
+              ) {
+                problems.push(
+                  `${name(element)} lies outside the scroll range of ${name(ancestor)}`,
+                );
+                continue elements;
+              }
+              subject = port;
+            } else if (
+              subject.top < port.top - 1 ||
+              subject.left < port.left - 1 ||
+              subject.bottom > port.bottom + 1 ||
+              subject.right > port.right + 1
+            ) {
+              problems.push(
+                `${name(element)} is clipped by overflow ${style.overflowY} on ${name(ancestor)}`,
+              );
+              continue elements;
+            }
+          }
+          for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+            if (!scrolls(getComputedStyle(ancestor))) continue;
+            const rect = element.getBoundingClientRect();
+            const port = ancestor.getBoundingClientRect();
+            ancestor.scrollTop +=
+              rect.top +
+              rect.height / 2 -
+              (port.top + ancestor.clientTop + ancestor.clientHeight / 2);
+            ancestor.scrollLeft +=
+              rect.left +
+              rect.width / 2 -
+              (port.left + ancestor.clientLeft + ancestor.clientWidth / 2);
+          }
+          const rect = element.getBoundingClientRect();
+          const hit = document.elementFromPoint(
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2,
+          );
+          if (hit === null || !element.contains(hit)) {
+            problems.push(`${name(element)} is covered or off screen at its centre`);
+          }
+        }
+        return problems;
+      });
+      expect(unreachable, `${section} at ${viewport.width}x${viewport.height}`).toEqual([]);
     }
   });
 }
