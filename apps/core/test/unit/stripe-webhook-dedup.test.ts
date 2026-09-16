@@ -66,6 +66,57 @@ describe('stripe webhook dedup', () => {
     );
   });
 
+  it.each([
+    {
+      label: 'HTTP 401',
+      respond: () => Response.json({ message: 'Invalid API key' }, { status: 401 }),
+      error: StripeWebhookDedupForbiddenError,
+    },
+    {
+      // The historical overload failure: the retired four-argument overload raised 42883 at RETURN
+      // and PostgREST answered HTTP 404, so no receipt was ever written.
+      label: 'HTTP 404',
+      respond: () =>
+        Response.json(
+          { code: '42883', message: 'operator does not exist: boolean > integer' },
+          { status: 404 },
+        ),
+      error: StripeWebhookDedupUnavailableError,
+    },
+    {
+      label: 'HTTP 500',
+      respond: () => Response.json({ code: 'XX000' }, { status: 500 }),
+      error: StripeWebhookDedupUnavailableError,
+    },
+    {
+      label: 'HTTP 503',
+      respond: () => new Response('upstream connect error', { status: 503 }),
+      error: StripeWebhookDedupUnavailableError,
+    },
+    {
+      label: 'a thrown fetch',
+      respond: (): Response => {
+        throw new TypeError('fetch failed');
+      },
+      error: StripeWebhookDedupUnavailableError,
+    },
+    {
+      label: 'invalid JSON',
+      respond: () =>
+        new Response('<html>gateway</html>', {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        }),
+      error: StripeWebhookDedupUnavailableError,
+    },
+  ])('raises $error.name on $label', async ({ respond, error }) => {
+    const fetchMock = vi.fn<typeof fetch>(async () => respond());
+    const port = createStripeWebhookDedupPort(bindings, 'req-stripe-dedup-5', fetchMock);
+
+    await expect(port.recordEvent(event)).rejects.toBeInstanceOf(error);
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
   it('rejects forbidden privileged credentials', async () => {
     const fetchMock = vi.fn(async () => new Response('nope', { status: 403 }));
     const port = createStripeWebhookDedupPort(

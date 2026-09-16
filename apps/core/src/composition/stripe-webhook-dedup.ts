@@ -113,6 +113,7 @@ export function createStripeWebhookDedupPort(
 export function createStripeWebhookRecordEvent(
   bindings: CoreBindings,
   requestId: string,
+  fetchImplementation?: typeof fetch,
 ): (
   event: Readonly<{
     eventId: string;
@@ -121,6 +122,6 @@ export function createStripeWebhookRecordEvent(
     payloadHash: string;
   }>,
 ) => Promise<boolean> {
-  const dedup = createStripeWebhookDedupPort(bindings, requestId);
+  const dedup = createStripeWebhookDedupPort(bindings, requestId, fetchImplementation);
   return async (event) => dedup.recordEvent(event);
 }
