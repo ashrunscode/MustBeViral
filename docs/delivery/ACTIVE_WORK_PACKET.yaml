@@ -78,6 +78,14 @@ scope:
     # this packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
     - apps/collaboration/**
     - packages/collaboration/**
+    # Scope amendment on explicit owner instruction, 2026-09-16: fix Stripe wallet funding (issue
+    # 20). One Stripe payment can credit the prepaid usage wallet twice, because both
+    # checkout.session.completed and invoice.paid credit it under different event ids. The owner
+    # decided that only explicit wallet top-ups fund the wallet. The settlement plan that decides
+    # which Stripe events credit the wallet lives in packages/billing, which this packet did not
+    # admit. The amendment does not change this packet's objective, steps, acceptance criteria,
+    # quality gates or evidence requirements.
+    - packages/billing/**
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
