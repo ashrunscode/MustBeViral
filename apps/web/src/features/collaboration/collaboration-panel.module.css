@@ -202,13 +202,13 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border: 1px solid var(--line);
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .collaborativeField[data-lease-state='held'] .leaseBadge,
 .leaseBadge[data-lease-state='held'] {
   border-color: var(--signal);
-  color: var(--signal);
+  color: var(--signal-ink);
 }
 
 .collaborativeField[data-lease-state='contested'] .leaseBadge,
@@ -243,7 +243,7 @@
 
 .collaborativeTextarea[aria-readonly='true'] {
   background: var(--wash-faint);
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .leaseActions {

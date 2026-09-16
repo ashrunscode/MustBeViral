@@ -42,7 +42,7 @@
   border: 1px solid rgba(196, 64, 77, 0.3);
   border-radius: 6px;
   padding: 10px;
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 12px;
 }
 .recoveryBanner {
@@ -59,13 +59,13 @@
   gap: 4px;
 }
 .recoveryBanner strong {
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 14px;
   font-weight: 400;
 }
 .recoveryBanner p {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -171,7 +171,7 @@
 .copyKicker {
   display: block;
   margin: 8px 0 2px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 9px;
   font-weight: 500;
@@ -220,7 +220,7 @@
 }
 .exportHero p {
   margin: 4px 0 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
 }
 .inspectOverlay {
@@ -313,7 +313,7 @@
   align-items: center;
   gap: 6px;
   margin-left: 8px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 12px;
 }
 .phone {
@@ -378,7 +378,7 @@
 }
 .adFoot p {
   margin: 4px 0 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 12px;
 }
 .adCta {
@@ -386,7 +386,7 @@
   margin-top: 10px;
   border-radius: 4px;
   padding: 8px 10px;
-  background: var(--signal);
+  background: var(--signal-fill);
   color: #fff;
   font-size: 12px;
 }
@@ -409,14 +409,14 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   background: #e7e7e7;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .prior {
   background: #eee;
 }
 .versionCaption {
   gap: 5px;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .mobileThumb {
   min-height: 90px;
@@ -426,7 +426,7 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   background: #e8e8e8;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .cardFoot {
   gap: 10px;
@@ -447,7 +447,7 @@
   display: grid;
   gap: 5px;
   margin-top: 9px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 10px;
 }
 .descriptionField textarea {
@@ -464,7 +464,7 @@
   display: grid;
   gap: 5px;
   margin-top: 9px;
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 10px;
 }
 .rejectionField textarea {
@@ -514,12 +514,19 @@
   line-height: 1.5;
 }
 .finding a {
+  position: relative;
   color: var(--ink-strong);
   font-family: var(--font-mono);
   font-size: 9px;
   text-transform: uppercase;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+/* 12px link, 44px touch target; findings sit 24px apart (padding plus list gap). */
+.finding a::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
 }
 .drawerSummary {
   border: 1px solid var(--line);
