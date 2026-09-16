@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { StrictMode, createRef, useState } from 'react';
+import { StrictMode, createRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -78,6 +78,35 @@ function PublishHarness() {
         </label>
         <button type="button" onClick={() => setOpen(false)}>
           Cancel
+        </button>
+      </Dialog>
+    </>
+  );
+}
+
+/** One dialog's action closes it and opens the next, like issuing an API key. */
+function ChainedHarness() {
+  const [createOpen, setCreateOpen] = useState(false);
+  const [secretOpen, setSecretOpen] = useState(false);
+  return (
+    <>
+      <button type="button" onClick={() => setCreateOpen(true)}>
+        Create API key
+      </button>
+      <Dialog open={createOpen} title="Create scoped API key" onClose={() => setCreateOpen(false)}>
+        <button
+          type="button"
+          onClick={() => {
+            setSecretOpen(true);
+            setCreateOpen(false);
+          }}
+        >
+          Issue key
+        </button>
+      </Dialog>
+      <Dialog open={secretOpen} title="Copy your API key now" onClose={() => setSecretOpen(false)}>
+        <button type="button" onClick={() => setSecretOpen(false)}>
+          I saved the secret
         </button>
       </Dialog>
     </>
@@ -416,41 +445,6 @@ describe('Dialog', () => {
   });
 
   it('returns focus to the first trigger when one dialog closes and opens the next', async () => {
-    function ChainedHarness() {
-      const [createOpen, setCreateOpen] = useState(false);
-      const [secretOpen, setSecretOpen] = useState(false);
-      return (
-        <>
-          <button type="button" onClick={() => setCreateOpen(true)}>
-            Create API key
-          </button>
-          <Dialog
-            open={createOpen}
-            title="Create scoped API key"
-            onClose={() => setCreateOpen(false)}
-          >
-            <button
-              type="button"
-              onClick={() => {
-                setSecretOpen(true);
-                setCreateOpen(false);
-              }}
-            >
-              Issue key
-            </button>
-          </Dialog>
-          <Dialog
-            open={secretOpen}
-            title="Copy your API key now"
-            onClose={() => setSecretOpen(false)}
-          >
-            <button type="button" onClick={() => setSecretOpen(false)}>
-              I saved the secret
-            </button>
-          </Dialog>
-        </>
-      );
-    }
     render(<ChainedHarness />);
     const trigger = screen.getByRole('button', { name: 'Create API key' });
     focus(trigger);
@@ -470,6 +464,32 @@ describe('Dialog', () => {
     await waitFor(() => expect(document.activeElement).toBe(trigger));
     await settle();
     expect(document.activeElement).toBe(trigger);
+  });
+
+  it('does not flash focus onto the page behind while the next dialog is open', async () => {
+    render(<ChainedHarness />);
+    const trigger = screen.getByRole('button', { name: 'Create API key' });
+    focus(trigger);
+    fireEvent.click(trigger);
+    focus(screen.getByRole('button', { name: 'Issue key' }));
+    const focusTargets: Element[] = [];
+    const recordFocus = (event: FocusEvent) => {
+      if (event.target instanceof Element) focusTargets.push(event.target);
+    };
+    document.addEventListener('focusin', recordFocus);
+
+    try {
+      fireEvent.click(screen.getByRole('button', { name: 'Issue key' }));
+      const secretDialog = screen.getByRole('dialog', { name: 'Copy your API key now' });
+      await settle();
+      await settle();
+
+      expect(secretDialog.contains(document.activeElement)).toBe(true);
+      expect(focusTargets.length).toBeGreaterThan(0);
+      expect(focusTargets.filter((target) => !secretDialog.contains(target))).toEqual([]);
+    } finally {
+      document.removeEventListener('focusin', recordFocus);
+    }
   });
 
   it('returns focus to the trigger under React StrictMode', async () => {
@@ -513,6 +533,50 @@ describe('Drawer', () => {
     fireEvent.keyDown(inside, { key: 'Enter' });
     expect(close).not.toHaveBeenCalled();
     fireEvent.keyDown(inside, { key: 'Escape' });
+    expect(close).toHaveBeenCalledOnce();
+  });
+
+  it('leaves Escape to an inner widget or consumer handler that already handled it', () => {
+    const close = vi.fn();
+    const consumerKeyDown = vi.fn((event: ReactKeyboardEvent<HTMLElement>) => {
+      const handledByConsumer =
+        event.target instanceof HTMLElement && event.target.dataset.consumerEscape === 'true';
+      if (event.key === 'Escape' && handledByConsumer) event.preventDefault();
+    });
+    render(
+      <Drawer open title="QA findings" onClose={close} onKeyDown={consumerKeyDown}>
+        <input
+          aria-label="Filter findings"
+          defaultValue="contrast"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape' && event.currentTarget.value !== '') {
+              event.preventDefault();
+              event.currentTarget.value = '';
+            }
+          }}
+        />
+        <button type="button" data-consumer-escape="true">
+          Pin finding
+        </button>
+        <button type="button">Inspect finding</button>
+      </Drawer>,
+    );
+
+    const filter = screen.getByRole('textbox', { name: 'Filter findings' }) as HTMLInputElement;
+    focus(filter);
+    fireEvent.keyDown(filter, { key: 'Escape' });
+    expect(filter.value).toBe('');
+    expect(close).not.toHaveBeenCalled();
+
+    const pin = screen.getByRole('button', { name: 'Pin finding' });
+    focus(pin);
+    fireEvent.keyDown(pin, { key: 'Escape' });
+    expect(close).not.toHaveBeenCalled();
+
+    const inside = screen.getByRole('button', { name: 'Inspect finding' });
+    focus(inside);
+    fireEvent.keyDown(inside, { key: 'Escape' });
+    expect(consumerKeyDown).toHaveBeenCalledTimes(3);
     expect(close).toHaveBeenCalledOnce();
   });
 
