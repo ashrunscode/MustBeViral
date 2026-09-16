@@ -1129,7 +1129,7 @@ test('gives Retry lease a 44px hit area clear of its textarea', async ({ page })
       const field = button.closest('[data-field-path]')?.querySelector('textarea');
       if (field) {
         const fieldRect = field.getBoundingClientRect();
-        const target = document.elementFromPoint(x, fieldRect.bottom - 1);
+        const target = document.elementFromPoint(x, fieldRect.bottom - 0.5);
         if (target !== field) found.push(`${String(index)} covers its textarea`);
       }
       return found;

@@ -255,13 +255,13 @@
   color: var(--ink);
 }
 
-/* 4px on top of the field's 6px gap leaves the 10px that Retry lease's hit area grows into. */
+/* 6px on top of the field's 6px gap leaves 12px: Retry lease's hit area grows about 10px upward, so it stays clear of the textarea above. */
 .leaseActions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .leaseRetry {
