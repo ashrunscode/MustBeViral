@@ -812,7 +812,6 @@ export function CampaignBrief({
         </div>
         <div className={styles.actions}>
           <Button
-            className={styles.saveDraft}
             variant="ghost"
             feedback={
               saveState === 'saving'

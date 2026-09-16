@@ -112,7 +112,11 @@ const worker = {
     if (!isSocket) headers.delete('Upgrade');
     headers.set(
       INTERNAL_IDENTITY_HEADER,
-      encodeVerifiedIdentity({ canvas_id: canvasId, actor: verification.actor }),
+      encodeVerifiedIdentity({
+        canvas_id: canvasId,
+        actor: verification.actor,
+        ticket_issued_at: verification.claims.iat,
+      }),
     );
 
     const target = new URL(url.origin);

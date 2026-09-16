@@ -5,13 +5,13 @@ import {
   type CommentDraft,
   type EditLease,
   type TextDraft,
-  type UpsertCommentInput,
   type UpsertTextDraftInput,
 } from './protocol';
 import {
   evaluateTextDraftUpsert,
   leaseAcquireVerdict,
   leaseForNode,
+  leaseIdForActor,
   textDraftKey,
 } from './conflict-resolution';
 
@@ -115,22 +115,29 @@ export class InMemoryCollaborationSession {
     };
   }
 
-  upsertComment(input: Omit<UpsertCommentInput, 'author'>): void {
+  /** Creates a comment under a generated id, mirroring the collaboration Worker. */
+  createComment(input: Readonly<{ body: string; anchor_node_id?: string }>): string {
     const timestamp = nowIso();
-    const existing = this.#comments.find((comment) => comment.comment_id === input.comment_id);
     const draft: CommentDraft = {
-      comment_id: input.comment_id,
+      comment_id: crypto.randomUUID(),
       author: this.#actor,
       body: input.body,
-      created_at: existing?.created_at ?? timestamp,
+      created_at: timestamp,
       updated_at: timestamp,
       ...(input.anchor_node_id === undefined ? {} : { anchor_node_id: input.anchor_node_id }),
     };
-    this.#comments = [
-      ...this.#comments.filter((comment) => comment.comment_id !== input.comment_id),
-      draft,
-    ];
+    this.#comments = [...this.#comments, draft];
     this.#emit();
+    return draft.comment_id;
+  }
+
+  /** Deletes a comment only when this session's actor wrote it. Returns whether one was deleted. */
+  deleteComment(commentId: string): boolean {
+    const comment = this.#comments.find((candidate) => candidate.comment_id === commentId);
+    if (comment === undefined || comment.author.actor_id !== this.#actor.actor_id) return false;
+    this.#comments = this.#comments.filter((candidate) => candidate.comment_id !== commentId);
+    this.#emit();
+    return true;
   }
 
   upsertTextDraft(input: Omit<UpsertTextDraftInput, 'author'>): void {
@@ -178,12 +185,9 @@ export class InMemoryCollaborationSession {
     }
   }
 
-  acquireLease(
-    nodeId: string,
-    leaseId = `lease-${nodeId}-${this.#actor.actor_id}`,
-    ttlSeconds = DEFAULT_LEASE_TTL_SECONDS,
-  ): void {
+  acquireLease(nodeId: string, ttlSeconds = DEFAULT_LEASE_TTL_SECONDS): void {
     this.#pruneExpiredLeases();
+    const leaseId = leaseIdForActor(nodeId, this.#actor.actor_id);
     const conflict = leaseForNode(this.#leases, nodeId);
     const accepted =
       leaseAcquireVerdict({
@@ -208,10 +212,13 @@ export class InMemoryCollaborationSession {
     }
   }
 
-  releaseLease(leaseId: string): void {
-    const lease = this.#leases.find((candidate) => candidate.lease_id === leaseId);
-    if (lease?.holder.actor_id === this.#actor.actor_id) {
-      this.#leases = this.#leases.filter((candidate) => candidate.lease_id !== leaseId);
+  releaseLease(nodeId: string): void {
+    const lease = this.#leases.find(
+      (candidate) =>
+        candidate.node_id === nodeId && candidate.holder.actor_id === this.#actor.actor_id,
+    );
+    if (lease !== undefined) {
+      this.#leases = this.#leases.filter((candidate) => candidate !== lease);
       this.#emit();
     }
   }
@@ -335,7 +342,7 @@ export function createPreviewCollaborationSnapshot(
       surface === 'canvas'
         ? [
             {
-              lease_id: 'lease-7-maya-chen',
+              lease_id: leaseIdForActor('7', 'maya-chen'),
               node_id: '7',
               holder: { actor_id: 'maya-chen', display_name: 'Maya Chen', color: '#3182d4' },
               acquired_at: timestamp,

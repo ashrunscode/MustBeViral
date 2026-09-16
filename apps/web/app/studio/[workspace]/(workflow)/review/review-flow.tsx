@@ -711,8 +711,8 @@ export function ReviewFlow({
 
   function submitCollaborationComment(body: string): void {
     if (commentAnchorId === null) return;
-    collaboration.upsertComment({
-      comment_id: `comment-${commentAnchorId}-${String(Date.now())}`,
+    // The collaboration Worker assigns the comment id.
+    collaboration.createComment({
       body,
       anchor_node_id: commentAnchorId,
     });
@@ -805,6 +805,9 @@ export function ReviewFlow({
           </Button>
         </div>
         <CollaborationSidebar
+          actorId={collaboration.actor?.actor_id ?? null}
+          onDeleteComment={collaboration.deleteComment}
+          refusal={collaboration.refusal}
           anchorId={commentAnchorId}
           anchorLabel={commentAnchorLabel}
           comments={anchoredComments}

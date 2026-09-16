@@ -266,6 +266,17 @@ export function Dialog({ children, description, onClose, open, title }: DialogPr
     if (target.isConnected) target.focus();
   }
 
+  // The focus trap moves focus with preventScroll, so Tab wrapping from the last control back to
+  // the first can leave the newly focused control outside a scrolled dialog. Bring whatever gains
+  // focus inside the dialog into view; 'nearest' leaves a control that is already visible alone.
+  function revealFocusedControl(event: FocusEvent<HTMLDivElement>) {
+    const target = event.target;
+    if (!(target instanceof HTMLElement) || target === event.currentTarget) return;
+    // Test environments without layout may not implement scrollIntoView.
+    if (typeof target.scrollIntoView !== 'function') return;
+    target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
+
   return (
     <RadixDialog.Root
       open={open}
@@ -281,6 +292,7 @@ export function Dialog({ children, description, onClose, open, title }: DialogPr
             onOpenAutoFocus={captureReturnFocus}
             onCloseAutoFocus={restoreFocus}
             onPointerDownOutside={(event) => event.preventDefault()}
+            onFocus={revealFocusedControl}
           >
             <div className="mbv-dialog__header">
               <RadixDialog.Title>{title}</RadixDialog.Title>
