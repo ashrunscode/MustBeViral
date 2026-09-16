@@ -28,8 +28,7 @@ async function withStore<T>(
 describe('CanvasCoordination durable object', () => {
   it('stores recoverable comment drafts without mutating revision authority', async () => {
     await withStore('canvas-comments', (store) => {
-      store.upsertComment('canvas-comments', actor1, {
-        comment_id: 'comment-1',
+      const created = store.createComment('canvas-comments', actor1, {
         body: 'Tighten the hook on frame two.',
         anchor_node_id: 'node-hook',
       });
@@ -41,8 +40,8 @@ describe('CanvasCoordination durable object', () => {
       expect(snapshot).not.toHaveProperty('revision_id');
       expect(snapshot).not.toHaveProperty('ledger');
       expect(() =>
-        store.upsertComment('canvas-comments', actor2, {
-          comment_id: 'comment-1',
+        store.updateComment('canvas-comments', actor2, {
+          comment_id: created.comment_id,
           body: 'Rewritten by someone else',
         }),
       ).toThrow('Only the author');
@@ -66,7 +65,7 @@ describe('CanvasCoordination durable object', () => {
           lease_id: leaseIdForActor('node-copy', actor1.actor_id),
           node_id: 'node-copy',
           ttl_seconds: 120,
-        }),
+        }).accepted,
       ).toBe(true);
       expect(
         store.acquireLease(canvasId, actor2, {
@@ -74,16 +73,21 @@ describe('CanvasCoordination durable object', () => {
           node_id: 'node-copy',
           ttl_seconds: 120,
         }),
-      ).toBe(false);
-      store.releaseLease(canvasId, actor2, leaseIdForActor('node-copy', actor1.actor_id));
+      ).toMatchObject({ accepted: false, reason: 'contested' });
+      store.releaseLease(canvasId, actor2, {
+        lease_id: leaseIdForActor('node-copy', actor1.actor_id),
+      });
+      store.releaseLease(canvasId, actor2, { node_id: 'node-copy' });
       expect(store.getSnapshot(canvasId).leases).toHaveLength(1);
-      store.releaseLease(canvasId, actor1, leaseIdForActor('node-copy', actor1.actor_id));
+      store.releaseLease(canvasId, actor1, {
+        lease_id: leaseIdForActor('node-copy', actor1.actor_id),
+      });
       expect(
         store.acquireLease(canvasId, actor2, {
           lease_id: leaseIdForActor('node-copy', actor2.actor_id),
           node_id: 'node-copy',
           ttl_seconds: 120,
-        }),
+        }).accepted,
       ).toBe(true);
     });
   });
@@ -96,7 +100,7 @@ describe('CanvasCoordination durable object', () => {
           node_id: 'node-copy',
           ttl_seconds: 120,
         }),
-      ).toBe(false);
+      ).toMatchObject({ accepted: false, reason: 'invalid_lease_id' });
       expect(store.getSnapshot('canvas-lease-ids').leases).toHaveLength(0);
     });
   });
@@ -287,6 +291,7 @@ describe('CanvasCoordination durable object', () => {
           [INTERNAL_IDENTITY_HEADER]: encodeVerifiedIdentity({
             canvas_id: 'canvas-elsewhere',
             actor: actor1,
+            ticket_issued_at: Math.floor(Date.now() / 1000),
           }),
         },
       }),
@@ -311,10 +316,9 @@ describe('CanvasCoordination durable object', () => {
       ['getSnapshot', [canvasId]],
       ['joinPresence', [canvasId, actor1, 'canvas']],
       ['leavePresence', [canvasId, actor1]],
-      [
-        'upsertComment',
-        [canvasId, actor1, { comment_id: 'rpc-comment', body: 'Written over RPC' }],
-      ],
+      ['createComment', [canvasId, actor1, { body: 'Written over RPC' }]],
+      ['updateComment', [canvasId, actor1, { comment_id: 'rpc-comment', body: 'RPC' }]],
+      ['deleteComment', [canvasId, actor1, { comment_id: 'rpc-comment' }]],
       [
         'upsertTextDraft',
         [
@@ -335,7 +339,7 @@ describe('CanvasCoordination durable object', () => {
           },
         ],
       ],
-      ['releaseLease', [canvasId, actor1, leaseIdForActor('node-1', actor1.actor_id)]],
+      ['releaseLease', [canvasId, actor1, { node_id: 'node-1' }]],
       [
         'clearCheckpointedDrafts',
         [canvasId, actor1, { draft_ids: [draftId], revision_id: 'revision-rpc' }],
@@ -353,6 +357,7 @@ describe('CanvasCoordination durable object', () => {
           [INTERNAL_IDENTITY_HEADER]: encodeVerifiedIdentity({
             canvas_id: canvasId,
             actor: actor1,
+            ticket_issued_at: Math.floor(Date.now() / 1000),
           }),
         },
       }),
@@ -364,6 +369,33 @@ describe('CanvasCoordination durable object', () => {
     expect(body.data.text_drafts).toHaveLength(0);
     expect(body.data.leases).toHaveLength(0);
     expect(body.data.presence).toHaveLength(0);
+  });
+
+  it('ignores frames that arrive after the object closed the socket', async () => {
+    const canvasId = 'canvas-closed-socket-frames';
+    await runInDurableObject(canvasStub(canvasId), async (instance, state) => {
+      const pair = new WebSocketPair();
+      state.acceptWebSocket(pair[1]);
+      pair[0].accept();
+      pair[1].serializeAttachment({
+        v: 2,
+        socket_id: 'closed-socket',
+        canvas_id: canvasId,
+        actor: actor1,
+        surface: null,
+        ticket_issued_at: Math.floor(Date.now() / 1000),
+        expires_at_ms: Date.now() + 60_000,
+      });
+      // As after an abuse or lifetime close: the object has closed its end, frames still arrive.
+      pair[1].close(1008, 'rate limit exceeded');
+      await instance.webSocketMessage(
+        pair[1],
+        JSON.stringify({ type: 'comment.create', payload: { body: 'In flight after close' } }),
+      );
+      const store = new CoordinationStore(state.storage.sql);
+      store.ensureCanvasId(canvasId);
+      expect(store.getSnapshot(canvasId).comments).toEqual([]);
+    });
   });
 
   it('broadcasts only to sockets with a bound identity and closes the others', async () => {
@@ -398,19 +430,21 @@ describe('CanvasCoordination durable object', () => {
       const bound = new WebSocketPair();
       state.acceptWebSocket(bound[1]);
       bound[1].serializeAttachment({
-        v: 1,
+        v: 2,
         socket_id: 'bound-socket',
         canvas_id: canvasId,
         actor: actor1,
         surface: null,
+        ticket_issued_at: Math.floor(Date.now() / 1000),
+        expires_at_ms: Date.now() + 60_000,
       });
       const boundClient = listen(bound[0]);
 
       await instance.webSocketMessage(
         bound[1],
         JSON.stringify({
-          type: 'comment.upsert',
-          payload: { comment_id: 'broadcast-comment', body: 'Only bound sockets see this.' },
+          type: 'comment.create',
+          payload: { body: 'Only bound sockets see this: broadcast-comment.' },
         }),
       );
       await delay(100);

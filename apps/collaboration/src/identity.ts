@@ -16,6 +16,12 @@ export const INTERNAL_IDENTITY_HEADER = 'x-mbv-collaboration-identity';
 export interface VerifiedIdentity {
   readonly canvas_id: string;
   readonly actor: CollaborationActor;
+  /**
+   * The verified ticket's `iat` in epoch seconds. The object closes a socket no later than
+   * `COLLABORATION_SOCKET_MAX_LIFETIME_SECONDS` after it, so Core re-authorizes every connection
+   * within a bounded time.
+   */
+  readonly ticket_issued_at: number;
 }
 
 function base64UrlEncodeUtf8(text: string): string {
@@ -41,9 +47,19 @@ export function parseVerifiedIdentity(value: unknown): VerifiedIdentity | null {
   const record = value as Readonly<Record<string, unknown>>;
   const canvasId = CollaborationCanvasIdSchema.safeParse(record.canvas_id);
   const actor = CollaborationActorSchema.safeParse(record.actor);
-  if (!canvasId.success || !actor.success) return null;
+  const issuedAt = record.ticket_issued_at;
+  if (
+    !canvasId.success ||
+    !actor.success ||
+    typeof issuedAt !== 'number' ||
+    !Number.isSafeInteger(issuedAt) ||
+    issuedAt <= 0
+  ) {
+    return null;
+  }
   return {
     canvas_id: canvasId.data,
+    ticket_issued_at: issuedAt,
     actor: {
       actor_id: actor.data.actor_id,
       display_name: actor.data.display_name,
