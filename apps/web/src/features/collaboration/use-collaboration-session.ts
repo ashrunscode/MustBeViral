@@ -69,6 +69,11 @@ export function useCollaborationSession(
   const clearCheckpointedDraftsRef =
     useRef<CollaborationSessionState['clearCheckpointedDrafts']>(noop);
 
+  // Callers build the actor inline on every render. Key the session on the actor's field values,
+  // not its object identity: every snapshot the session emits re-renders the caller, and a fresh
+  // actor object in the effect dependencies would restart the session and emit again, without end.
+  const { actor_id: actorId, display_name: actorDisplayName, color: actorColor } = options.actor;
+
   const collaborationBaseUrl = useMemo(() => {
     try {
       return readWebPublicEnvironment().NEXT_PUBLIC_COLLABORATION_API_URL ?? null;
@@ -90,6 +95,12 @@ export function useCollaborationSession(
       return undefined;
     }
 
+    const actor: CollaborationActor = {
+      actor_id: actorId,
+      display_name: actorDisplayName,
+      ...(actorColor === undefined ? {} : { color: actorColor }),
+    };
+
     if (options.transport === 'preview') {
       const previewSnapshot = createPreviewCollaborationSnapshot(
         options.canvasId!,
@@ -97,7 +108,7 @@ export function useCollaborationSession(
       );
       const session = new InMemoryCollaborationSession({
         canvasId: options.canvasId!,
-        actor: options.actor,
+        actor,
         surface: options.surface,
         seedPresence: previewSnapshot.presence,
         seedComments: previewSnapshot.comments,
@@ -119,10 +130,10 @@ export function useCollaborationSession(
         });
       };
       acquireLeaseRef.current = (nodeId) => {
-        session.acquireLease(nodeId, leaseIdForActor(nodeId, options.actor.actor_id));
+        session.acquireLease(nodeId, leaseIdForActor(nodeId, actor.actor_id));
       };
       releaseLeaseRef.current = (nodeId) => {
-        session.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
+        session.releaseLease(leaseIdForActor(nodeId, actor.actor_id));
       };
       clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
         session.clearCheckpointedDrafts({ draft_ids: draftIds, revision_id: revisionId });
@@ -141,7 +152,7 @@ export function useCollaborationSession(
     const client = new CollaborationClient({
       baseUrl: collaborationBaseUrl!,
       canvasId: options.canvasId!,
-      actor: options.actor,
+      actor,
       surface: options.surface,
       onSnapshot: setSnapshot,
       onStatus: setStatus,
@@ -157,10 +168,10 @@ export function useCollaborationSession(
       });
     };
     acquireLeaseRef.current = (nodeId) => {
-      client.acquireLease(nodeId, leaseIdForActor(nodeId, options.actor.actor_id));
+      client.acquireLease(nodeId, leaseIdForActor(nodeId, actor.actor_id));
     };
     releaseLeaseRef.current = (nodeId) => {
-      client.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
+      client.releaseLease(leaseIdForActor(nodeId, actor.actor_id));
     };
     clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
       client.clearCheckpointedDrafts(draftIds, revisionId);
@@ -174,10 +185,12 @@ export function useCollaborationSession(
       clearCheckpointedDraftsRef.current = noop;
     };
   }, [
+    actorColor,
+    actorDisplayName,
+    actorId,
     collaborationBaseUrl,
     configurationError,
     isActive,
-    options.actor,
     options.canvasId,
     options.surface,
     options.transport,
