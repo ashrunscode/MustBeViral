@@ -69,9 +69,9 @@ function isNonBlankText(value: unknown): value is string {
  * - `apply_stripe_wallet_credit` rejects a blank event id, event type or request id, or a
  *   non-positive amount, with 22023 (as the deployed function does). It is idempotent on the Stripe
  *   event id: a replay reports `replayed` and credits nothing.
- * - `record_stripe_webhook_event` inserts a receipt or reports a duplicate on `p_stripe_event_id`.
- *   It also rejects blank text arguments with 22023. The deployed function does not check them
- *   yet; draft PR 18 adds these checks.
+ * - `record_stripe_webhook_event` rejects a blank text argument or a null livemode with 22023 before
+ *   claiming (migration 20260916157000), then inserts a receipt or reports a duplicate on
+ *   `p_stripe_event_id`.
  * - `receiptOutages` answers HTTP 503 to that many receipt calls without writing anything.
  * - `lostReceiptResponses` commits that many receipts but answers HTTP 503, as when the response
  *   is lost after commit.
