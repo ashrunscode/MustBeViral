@@ -8,9 +8,35 @@ import {
 
 import type { CoreBindings } from '../bindings';
 import { createCoreEmailPort } from './core-email';
+import { readPermanentRejection } from './postgrest-rejection';
 
 export class StripeWebhookSettlementUnavailableError extends Error {
   override readonly name = 'StripeWebhookSettlementUnavailableError';
+}
+
+/**
+ * A settlement RPC refused this event, for example P0001 STRIPE_EVENT_WORKSPACE_MISMATCH or
+ * SQLSTATE 22023. Sending the same event again fails the same way until the data or the event
+ * changes, so this is not an outage. Core's error log records the RPC, status, code and reason, and
+ * the message is handed to exception telemetry, so both carry only the RPC name, the HTTP status, a
+ * well-formed error code and an upper-case reason token, never PostgREST's message or details,
+ * which can echo row values.
+ */
+export class StripeWebhookSettlementRpcRejectedError extends Error {
+  override readonly name = 'StripeWebhookSettlementRpcRejectedError';
+
+  constructor(
+    readonly rpc: string,
+    readonly status: number,
+    readonly code: string,
+    readonly reason: string | undefined,
+  ) {
+    super(
+      `Stripe webhook settlement RPC ${rpc} rejected the event with HTTP ${status} (${code})${
+        reason === undefined ? '' : `: ${reason}`
+      }.`,
+    );
+  }
 }
 
 export class StripeWebhookSettlementForbiddenError extends Error {
@@ -125,6 +151,15 @@ export function createStripeWebhookSettlementPort(
     if (response.status === 401 || response.status === 403) {
       throw new StripeWebhookSettlementForbiddenError(
         'Stripe webhook settlement rejected the privileged credential.',
+      );
+    }
+    const rejection = await readPermanentRejection(response);
+    if (rejection !== null) {
+      throw new StripeWebhookSettlementRpcRejectedError(
+        functionName,
+        response.status,
+        rejection.code,
+        rejection.reason,
       );
     }
     if (!response.ok) {
