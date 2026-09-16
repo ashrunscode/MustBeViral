@@ -1,6 +1,6 @@
 begin;
 
-select plan(18);
+select plan(19);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -232,7 +232,7 @@ select is(
   'a Stripe subscription event owns exactly one audit record across all workspaces'
 );
 
--- 14-15: a lookup matching several billing profiles is refused rather than picking one.
+-- 14: a lookup matching several billing profiles is refused rather than picking one.
 select is(
   pg_temp.error_of($sql$
     select public.apply_stripe_subscription_update(
@@ -244,36 +244,35 @@ select is(
   'a customer mapped to several workspaces is refused instead of resolved arbitrarily'
 );
 
-select ok(
-  not exists (
-    select 1 from public.audit_events
-    where action = 'stripe.subscription_update'
-      and details ->> 'stripe_event_id' = 'evt_sub_hardening_ambiguous'
-  )
-  and not exists (
-    select 1 from public.workspace_billing_profiles
-    where workspace_id in (
-        '99931000-0000-4000-8000-00000000000c',
-        '99931000-0000-4000-8000-00000000000d'
-      )
-      and subscription_status <> 'none'
+-- 15: the common metadata path, a replay naming the audited workspace, applies nothing.
+set local role service_role;
+select set_config(
+  'test.sub_replay_explicit',
+  (
+    select (result ->> 'workspace_id') || ':' || (result ->> 'replayed') || ':'
+      || (result ->> 'subscription_status')
+    from public.apply_stripe_subscription_update(
+      '99931000-0000-4000-8000-00000000000a',
+      'evt_sub_hardening_1', 'cus_sub_moved', 'sub_hardening', 'past_due', true,
+      'req_sub_hardening_5'
+    ) as result
   ),
-  'a refused ambiguous delivery writes no audit record or profile change'
+  true
+);
+reset role;
+
+select is(
+  current_setting('test.sub_replay_explicit'),
+  '99931000-0000-4000-8000-00000000000a:true:active',
+  'a replay naming the audited workspace reports replayed without applying its status'
 );
 
 -- 16-17: the database, not only the advisory lock, enforces one audit record per event.
 select ok(
-  exists (
-    select 1
-    from pg_index as idx
-    join pg_class as index_class on index_class.oid = idx.indexrelid
-    where index_class.relname = 'audit_events_stripe_subscription_event_key'
-      and idx.indisunique
-      and idx.indrelid = 'public.audit_events'::regclass
-      and pg_get_expr(idx.indpred, idx.indrelid) = '(action = ''stripe.subscription_update''::text)'
-  )
+  pg_get_indexdef(to_regclass('public.audit_events_stripe_subscription_event_key'))
+    = 'CREATE UNIQUE INDEX audit_events_stripe_subscription_event_key ON public.audit_events USING btree (((details ->> ''stripe_event_id''::text))) WHERE (action = ''stripe.subscription_update''::text)'
   and to_regclass('public.audit_events_stripe_subscription_event_idx') is null,
-  'a unique partial index replaces the non-unique Stripe subscription event index'
+  'a unique partial index on the lookup expression replaces the non-unique event index'
 );
 
 select is(
@@ -300,6 +299,29 @@ select is(
   $sql$),
   'P0002:WORKSPACE_NOT_FOUND',
   'an unknown customer without a workspace id still reports WORKSPACE_NOT_FOUND'
+);
+
+-- 19: a first delivery that names its workspace never consults the customer mapping.
+set local role service_role;
+select set_config(
+  'test.sub_explicit_first',
+  (
+    select (result ->> 'workspace_id') || ':' || (result ->> 'replayed') || ':'
+      || (result ->> 'subscription_status')
+    from public.apply_stripe_subscription_update(
+      '99931000-0000-4000-8000-00000000000c',
+      'evt_sub_hardening_explicit', 'cus_sub_shared', 'sub_shared_c', 'trialing', false,
+      'req_sub_hardening_explicit'
+    ) as result
+  ),
+  true
+);
+reset role;
+
+select is(
+  current_setting('test.sub_explicit_first'),
+  '99931000-0000-4000-8000-00000000000c:false:trialing',
+  'a first delivery naming its workspace applies even when its customer is shared'
 );
 
 select * from finish();

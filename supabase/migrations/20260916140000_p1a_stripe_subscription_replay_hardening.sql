@@ -16,10 +16,13 @@
 -- - a unique partial index makes the database enforce one audit record per Stripe event.
 -- Signature, grants, search_path, lock key, audit action and response shape are unchanged.
 --
--- Both index statements run inside the migration transaction, so they are not concurrent and hold
--- a SHARE lock on public.audit_events while scanning it. Check the audit_events row count before
--- applying this to an environment that is writing audit records.
+-- The index work runs inside the migration transaction and is not concurrent. audit_events is
+-- locked ACCESS EXCLUSIVE up front, so the preflight and both index statements see one state and
+-- the migration never upgrades a lock while a caller waits on it; callers queue until commit.
+-- Check the audit_events row count before applying this to an environment writing audit records.
 begin;
+
+lock table public.audit_events in access exclusive mode;
 
 do $$
 declare
@@ -99,19 +102,15 @@ begin
     v_replayed := true;
   else
     if v_workspace_id is null and p_stripe_customer_id is not null and length(trim(p_stripe_customer_id)) > 0 then
-      select count(*)::integer
-      into v_customer_matches
+      -- One statement, so the count and the chosen row come from the same snapshot.
+      select count(*)::integer, (array_agg(profile.workspace_id))[1]
+      into v_customer_matches, v_workspace_id
       from public.workspace_billing_profiles as profile
       where profile.stripe_customer_id = p_stripe_customer_id;
 
       if v_customer_matches > 1 then
         raise exception using errcode = 'P0001', message = 'STRIPE_CUSTOMER_AMBIGUOUS';
       end if;
-
-      select profile.workspace_id
-      into v_workspace_id
-      from public.workspace_billing_profiles as profile
-      where profile.stripe_customer_id = p_stripe_customer_id;
     end if;
 
     if v_workspace_id is null then
