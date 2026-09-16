@@ -326,37 +326,67 @@ test('keeps dimmed canvas node text at AA contrast with a non-colour inactive cu
   expect(report.cues.filter((cue) => !cue.endsWith(':dashed'))).toEqual([]);
 });
 
-test('gives every API-key scope checkbox a 44px hit area clear of its neighbours', async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('/studio/lumen-skin/access');
-  await page.getByRole('button', { name: 'Create API key' }).click();
-  const modal = page.getByRole('dialog');
-  await expect(modal.getByRole('button', { name: 'Issue key' })).toBeVisible();
-  const probe = await modal.evaluate((dialog) => {
-    const boxes = [
-      ...dialog.querySelectorAll<HTMLInputElement>('.access-panel__scope input[type="checkbox"]'),
-    ];
-    const faults: string[] = [];
-    for (const [index, box] of boxes.entries()) {
-      box.scrollIntoView({ block: 'center' });
-      const rect = box.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-      // A 44px target centred on the checkbox: both ends must still reach this checkbox.
-      for (const probeY of [y - 21.5, y + 21.5]) {
-        const target = document.elementFromPoint(x, probeY);
-        const owner =
-          target instanceof HTMLInputElement ? target : target?.closest('label')?.control;
-        if (owner !== box) faults.push(`${String(index)}@${(probeY - y).toFixed(1)}`);
+for (const viewport of [
+  { width: 375, height: 812, actionInView: false },
+  { width: 768, height: 1024, actionInView: true },
+  { width: 1440, height: 900, actionInView: true },
+]) {
+  test(`gives every API-key scope a clear 44px target${viewport.actionInView ? ' with Issue key in view' : ''} at ${String(viewport.width)}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto('/studio/lumen-skin/access');
+    await page.getByRole('button', { name: 'Create API key' }).click();
+    const modal = page.getByRole('dialog');
+    await expect(modal.getByRole('button', { name: 'Issue key' })).toBeAttached();
+    const probe = await modal.evaluate((dialog) => {
+      // The primary action, before anything scrolls the dialog.
+      const issue = [...dialog.querySelectorAll('button')].find(
+        (button) => button.textContent?.trim() === 'Issue key',
+      );
+      if (issue === undefined) throw new Error('Missing Issue key button.');
+      const dialogRect = dialog.getBoundingClientRect();
+      const issueRect = issue.getBoundingClientRect();
+      const hit = document.elementFromPoint(
+        issueRect.left + issueRect.width / 2,
+        issueRect.top + issueRect.height / 2,
+      );
+      const actionInView =
+        dialog.scrollTop === 0 &&
+        issueRect.top >= Math.max(dialogRect.top, 0) &&
+        issueRect.bottom <= Math.min(dialogRect.bottom, innerHeight) &&
+        hit !== null &&
+        issue.contains(hit);
+      const boxes = [
+        ...dialog.querySelectorAll<HTMLInputElement>('.access-panel__scope input[type="checkbox"]'),
+      ];
+      const faults: string[] = [];
+      for (const [index, box] of boxes.entries()) {
+        box.scrollIntoView({ block: 'center' });
+        const label = box.closest('label');
+        if (label === null) throw new Error('Scope checkbox without a label.');
+        const left = label.getBoundingClientRect().left;
+        const boxRect = box.getBoundingClientRect();
+        const centreY = boxRect.top + boxRect.height / 2;
+        // A 44x44 square from the label's left edge, centred on the checkbox: every sampled point must
+        // toggle this checkbox, so the target is 44px and no neighbouring scope or field reaches into it.
+        for (let dx = 0.5; dx <= 43.5; dx += 3) {
+          for (let dy = -21.5; dy <= 21.5; dy += 3) {
+            const target = document.elementFromPoint(left + dx, centreY + dy);
+            const owner =
+              target instanceof HTMLInputElement ? target : target?.closest('label')?.control;
+            if (owner !== box) faults.push(`${String(index)}@${String(dx)},${String(dy)}`);
+          }
+        }
       }
-    }
-    return { count: boxes.length, faults };
+      return { count: boxes.length, faults, actionInView };
+    });
+    expect(probe.count).toBe(11);
+    expect(probe.faults).toEqual([]);
+    // Where the dialog is wide enough, the scopes must not push the primary action below the fold.
+    if (viewport.actionInView) expect(probe.actionInView).toBe(true);
   });
-  expect(probe.count).toBe(11);
-  expect(probe.faults).toEqual([]);
-});
+}
 
 for (const region of [
   { route: 'receipt', width: 375, height: 812, scrolls: true },
@@ -557,4 +587,38 @@ test('keeps the quote acknowledgment checkbox clear of the side panel at 375px',
   expect(probe.visibleWidth).toBeGreaterThan(8);
   expect(probe.stolen).toEqual([]);
   expect(probe.stageRight).toBeLessThanOrEqual(probe.asideLeft + 0.5);
+});
+
+test('keeps every canvas outline row reachable and unclipped beside the collaboration panel at 375px', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const list = page.locator('ol:has([data-outline-id])');
+  await expect(list.locator('[data-outline-id]')).toHaveCount(12);
+  const report = await list.evaluate((element) => {
+    const faults: string[] = [];
+    for (const row of element.querySelectorAll<HTMLElement>('[data-outline-id]')) {
+      const name = `row ${row.dataset.outlineId ?? '?'}`;
+      // Scrolling the outline list must bring the whole row into view, and every point of it must
+      // reach the row rather than the collaboration panel or anything else in the rail.
+      row.scrollIntoView({ block: 'nearest' });
+      const listRect = element.getBoundingClientRect();
+      const rect = row.getBoundingClientRect();
+      if (rect.top < listRect.top - 0.5 || rect.bottom > listRect.bottom + 0.5) {
+        faults.push(`${name} clipped by the list`);
+      }
+      if (rect.top < 0 || rect.bottom > innerHeight) faults.push(`${name} outside the viewport`);
+      for (let x = rect.left + 2; x < rect.right - 2; x += 16) {
+        for (let y = rect.top + 1; y < rect.bottom - 1; y += 4) {
+          if (document.elementFromPoint(x, y)?.closest('[data-outline-id]') !== row) {
+            faults.push(`${name} covered`);
+          }
+        }
+      }
+    }
+    return { visibleListHeight: element.clientHeight, faults: [...new Set(faults)] };
+  });
+  expect(report.faults).toEqual([]);
+  expect(report.visibleListHeight).toBeGreaterThanOrEqual(104);
 });

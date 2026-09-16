@@ -757,9 +757,13 @@ a {
 }
 
 /* Scope rows are 24px tall on a 48px pitch. Each label's transparent hit area grows 12px each way
-   to meet its neighbour at the midpoint: a 48px target that never overlaps the next row. */
+   to meet its neighbour at the midpoint: a 48px target that never overlaps the next row. Columns
+   are at least 160px (the longest label is 148px) with 16px between them, so the eleven scopes take
+   two columns and six rows in the 520px dialog, keeping the action row in view, and one column on a
+   phone-width dialog. */
 .access-panel__scopes {
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 24px 16px;
 }
 
 .access-panel__scope {
