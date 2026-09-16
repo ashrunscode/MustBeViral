@@ -1,6 +1,6 @@
 'use client';
 
-import { LedgerTable, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
+import { LedgerTable, MonoCaps, formatUsdMicros, useScrollableRegion } from '@mustbeviral/ui';
 
 const catalogChargeMicros = 4_550_000n;
 const marginCapMicros = 1_820_000n;
@@ -118,8 +118,16 @@ function subscriptionStatusLabel(status: BillingUsageViewModel['subscriptionStat
 export function BillingUsagePanel({
   model = defaultBillingUsageViewModel(),
 }: Readonly<{ model?: BillingUsageViewModel }>) {
+  // The page scrolls inside the studio frame and holds no focusable content.
+  const { ref: regionRef, tabIndex: regionTabIndex } = useScrollableRegion<HTMLElement>();
   return (
-    <main className="internal-ops" id="main-content">
+    <main
+      ref={regionRef}
+      className="internal-ops"
+      id="main-content"
+      aria-labelledby="billing-heading"
+      tabIndex={regionTabIndex}
+    >
       <div className="internal-ops__grid">
         <section className="internal-ops__card" aria-labelledby="billing-heading">
           <MonoCaps>Usage and billing</MonoCaps>

@@ -7,10 +7,13 @@
   background: var(--paper);
 }
 
+/* One explicit column: the implicit auto column took the toolbar's 580.64px min-content width, so on
+   viewports under 901px the canvas surface ran under the side rail and nodes sat over its fields. */
 .workspace {
   min-width: 0;
   min-height: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 54px auto minmax(0, 1fr) 72px;
   overflow: hidden;
 }
@@ -152,8 +155,7 @@
   cursor: pointer;
   transition:
     border-color 120ms cubic-bezier(0.2, 0, 0, 1),
-    background-color 120ms cubic-bezier(0.2, 0, 0, 1),
-    opacity 120ms cubic-bezier(0.2, 0, 0, 1);
+    background-color 120ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .nodeCard:hover {
@@ -166,8 +168,24 @@
   background: #80bfff1f;
 }
 
+/* A node outside the selected lineage recedes through non-text chrome only: a dashed border (the
+   non-colour cue), the canvas-field fill instead of a raised card, and a quiet status icon. Every
+   text stays at an AA ink on that fill; opacity .5 left mono text at 2.14:1 and titles at 3.15:1. */
 :global(.node-dim) {
-  opacity: 0.5;
+  border-style: dashed;
+  background: var(--paper-2);
+}
+
+:global(.node-dim) .nodeTitle {
+  color: var(--ink);
+}
+
+:global(.node-dim) :global(.mbv-chip) {
+  background: transparent;
+}
+
+:global(.node-dim) :global(.mbv-chip) :global(.mbv-chip__icon) {
+  color: var(--ink-muted);
 }
 
 :global(.arrival-warm) {
@@ -364,11 +382,16 @@
   list-style: none;
 }
 
+/* Rows sit 4px apart: touching rows at fractional offsets shared up to 1.25px of hit-test pixels. */
+.outlineList > li + li {
+  margin-top: 4px;
+}
+
 .outlineRow {
   width: 100%;
-  min-height: 54px;
+  min-height: 52px;
   content-visibility: auto;
-  contain-intrinsic-size: 54px;
+  contain-intrinsic-size: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;

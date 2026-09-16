@@ -585,6 +585,12 @@ a {
   background: var(--paper);
 }
 
+/* When it scrolls, the panel is a tab stop that fills the studio frame, and the frame clips overflow:
+   a 2px outside offset would show only the top edge, so the same outline is drawn 2px inside. */
+.internal-ops:focus-visible {
+  outline-offset: -2px;
+}
+
 .internal-ops__grid {
   display: grid;
   gap: 16px;
@@ -750,18 +756,24 @@ a {
   gap: 8px;
 }
 
+/* Scope rows are 24px tall on a 48px pitch. Each label's transparent hit area grows 12px each way
+   to meet its neighbour at the midpoint: a 48px target that never overlaps the next row. */
+.access-panel__scopes {
+  gap: 24px;
+}
+
 .access-panel__scope {
   position: relative;
+  min-height: 24px;
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-/* Scope rows sit 8px apart, so each label's hit area grows only to the midpoint (4px). */
 .access-panel__scope::before {
   content: '';
   position: absolute;
-  inset: -4px 0;
+  inset: -12px 0;
 }
 
 /* Dialog forms: 12px between fields and 16px above the action row, so the 44px button hit
