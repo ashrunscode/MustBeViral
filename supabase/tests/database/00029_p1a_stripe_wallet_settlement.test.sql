@@ -204,7 +204,7 @@ select is(
       'evt_sub_active_1', 'cus_other', 'sub_other', 'active', true, 'req_cross_workspace'
     )
   $sql$),
-  '22023:STRIPE_EVENT_WORKSPACE_MISMATCH',
+  'P0001:STRIPE_EVENT_WORKSPACE_MISMATCH',
   'a Stripe subscription event cannot be replayed into another workspace'
 );
 
