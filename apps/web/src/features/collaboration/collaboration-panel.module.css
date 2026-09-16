@@ -255,14 +255,17 @@
   color: var(--ink);
 }
 
+/* 4px on top of the field's 6px gap leaves the 10px that Retry lease's hit area grows into. */
 .leaseActions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  margin-top: 4px;
 }
 
 .leaseRetry {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius-input);
   background: var(--paper);
@@ -270,6 +273,13 @@
   font-size: 11px;
   padding: 4px 8px;
   cursor: pointer;
+}
+
+/* The shared Button's rule: a transparent hit area that grows the 24px control to 44px. */
+.leaseRetry::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
 }
 
 .leaseRetry:focus-visible {

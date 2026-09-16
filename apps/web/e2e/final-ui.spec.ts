@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -568,16 +568,23 @@ test('keeps the dimmed-node dashed border at 3:1 against the canvas at rest, on 
   }
 });
 
+// Zoom is emulated through the CSS viewport: 375x812 at 200% is a 187x406 CSS px viewport.
 for (const viewport of [
-  { width: 320, height: 568 },
-  { width: 375, height: 667 },
-  { width: 375, height: 812 },
-  { width: 414, height: 896 },
-  { width: 768, height: 1024 },
-  { width: 1024, height: 768 },
-  { width: 1440, height: 900 },
+  { width: 320, height: 568, label: '320x568' },
+  { width: 375, height: 667, label: '375x667' },
+  { width: 375, height: 812, label: '375x812' },
+  { width: 414, height: 896, label: '414x896' },
+  { width: 768, height: 1024, label: '768x1024' },
+  { width: 1024, height: 768, label: '1024x768' },
+  { width: 1440, height: 900, label: '1440x900' },
+  { width: 256, height: 454, label: '320x568 at 125%' },
+  { width: 250, height: 541, label: '375x812 at 150%' },
+  { width: 187, height: 406, label: '375x812 at 200%' },
+  { width: 207, height: 448, label: '414x896 at 200%' },
 ]) {
-  test(`gives every API-key scope a clear 44px target with Issue key in view at ${String(viewport.width)}x${String(viewport.height)}`, async ({
+  // The action row sticks only where Issue key and Cancel fit on one line (see globals.css).
+  const actionRowSticks = viewport.width >= 300 && viewport.height >= 320;
+  test(`gives every API-key scope a clear 44px target and never hides the focused control at ${viewport.label}`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -625,44 +632,70 @@ for (const viewport of [
           }
         }
       }
+      // Back to the state the dialog opens in.
+      dialog.scrollTop = 0;
       return { count: boxes.length, faults, actionInView };
     });
     expect(probe.count).toBe(11);
     expect(probe.faults).toEqual([]);
-    // The scopes must never push the primary action out of view, on a phone included.
-    expect(probe.actionInView).toBe(true);
+    // Where the row sticks, the scopes never push the primary action out of view.
+    if (actionRowSticks) expect(probe.actionInView).toBe(true);
 
-    // Tabbing from the name field to Cancel: every focused control is in view and none sits under
-    // the action row.
-    await modal.getByRole('textbox', { name: 'Name' }).focus();
+    // Tab through every control from Close to Cancel and once more, wrapping back to Close. The
+    // focused control and its 2px focus ring (2px offset) must stay in view and clear of the action
+    // row (WCAG 2.4.11).
+    await modal.getByRole('button', { name: 'Close Create scoped API key' }).focus();
     const hidden: string[] = [];
-    for (let step = 0; step < 16; step += 1) {
+    const visited: string[] = [];
+    for (let step = 0; step < 20; step += 1) {
       const state = await modal.evaluate((dialog) => {
         const focused = document.activeElement;
         const row = dialog.querySelector('.access-panel__actions');
         if (!(focused instanceof HTMLElement) || !dialog.contains(focused) || row === null) {
-          return { done: true, fault: 'focus left the dialog' };
+          return { name: 'outside the dialog', fault: 'focus left the dialog' };
         }
-        const name = (focused.closest('label')?.textContent ?? focused.textContent ?? '').trim();
-        const rect = focused.getBoundingClientRect();
-        const dialogRect = dialog.getBoundingClientRect();
+        const name = (
+          focused.getAttribute('aria-label') ??
+          focused.closest('label')?.textContent ??
+          focused.textContent ??
+          ''
+        ).trim();
+        const box = focused.getBoundingClientRect();
+        const ring = {
+          top: box.top - 4,
+          bottom: box.bottom + 4,
+          left: box.left - 4,
+          right: box.right + 4,
+        };
         const rowRect = row.getBoundingClientRect();
+        const dialogRect = dialog.getBoundingClientRect();
         const underRow =
-          !row.contains(focused) && rect.bottom > rowRect.top + 0.5 && rect.top < rowRect.bottom;
+          !row.contains(focused) &&
+          ring.bottom > rowRect.top &&
+          ring.top < rowRect.bottom &&
+          ring.right > rowRect.left &&
+          ring.left < rowRect.right;
+        const visibleBottom = Math.min(
+          dialogRect.top + dialog.clientTop + dialog.clientHeight,
+          innerHeight,
+        );
         const inView =
-          rect.top >= Math.max(dialogRect.top, 0) - 0.5 &&
-          rect.bottom <= Math.min(dialogRect.bottom, innerHeight) + 0.5;
+          box.top >= Math.max(dialogRect.top, 0) - 0.5 && box.bottom <= visibleBottom + 0.5;
         const fault = underRow
           ? `${name} under the action row`
           : inView
             ? ''
             : `${name} out of view`;
-        return { done: name === 'Cancel', fault };
+        return { name, fault };
       });
+      visited.push(state.name);
       if (state.fault !== '') hidden.push(state.fault);
-      if (state.done) break;
+      if (visited.length > 1 && state.name === 'Close Create scoped API key') break;
       await page.keyboard.press('Tab');
     }
+    // Close, Name, eleven scopes, Issue key, Cancel, then Close again.
+    expect(visited).toHaveLength(16);
+    expect(visited.at(-1)).toBe('Close Create scoped API key');
     expect(hidden).toEqual([]);
   });
 }
@@ -1002,3 +1035,105 @@ for (const viewport of [
     expect(visibleRows).toBeGreaterThanOrEqual(5);
   });
 }
+
+async function selectFailedAsset(page: Page) {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  await page.locator('[data-outline-id="7"]').click();
+  const node = page.locator('[data-node-id="7"]');
+  await expect(node).toHaveAttribute('aria-pressed', 'true');
+  return node;
+}
+
+test('keeps the failure reason of a selected failed node at AA contrast', async ({ page }) => {
+  const node = await selectFailedAsset(page);
+  const reason = node.locator('[class*="invalidReason"]');
+  await expect(reason).toBeVisible();
+
+  // The failure reason keeps AA contrast on the selected node's wash.
+  const ratio = await reason.evaluate((element) => {
+    type Rgba = [number, number, number, number];
+    const parse = (value: string): Rgba => {
+      const srgb = /color\(srgb ([^)]+)\)/u.exec(value);
+      const rgb = /rgba?\(([^)]+)\)/u.exec(value);
+      const parts = (srgb?.[1] ?? rgb?.[1] ?? '0 0 0 / 0')
+        .split(/[\s,/]+/u)
+        .filter(Boolean)
+        .map(Number);
+      const scale = srgb === null ? 1 : 255;
+      return [
+        (parts[0] ?? 0) * scale,
+        (parts[1] ?? 0) * scale,
+        (parts[2] ?? 0) * scale,
+        parts[3] ?? 1,
+      ];
+    };
+    const over = (top: Rgba, bottom: Rgba): Rgba => [
+      top[0] * top[3] + bottom[0] * (1 - top[3]),
+      top[1] * top[3] + bottom[1] * (1 - top[3]),
+      top[2] * top[3] + bottom[2] * (1 - top[3]),
+      1,
+    ];
+    const luminance = (color: Rgba) =>
+      color
+        .slice(0, 3)
+        .map((channel) => channel / 255)
+        .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
+        .reduce((sum, c, index) => sum + c * ([0.2126, 0.7152, 0.0722][index] ?? 0), 0);
+    const chain: Element[] = [];
+    for (let current: Element | null = element; current; current = current.parentElement) {
+      chain.unshift(current);
+    }
+    let background: Rgba = [255, 255, 255, 1];
+    for (const ancestor of chain)
+      background = over(parse(getComputedStyle(ancestor).backgroundColor), background);
+    const text = over(parse(getComputedStyle(element).color), background);
+    const [light = 0, dark = 0] = [luminance(text), luminance(background)].sort((a, b) => b - a);
+    return (light + 0.05) / (dark + 0.05);
+  });
+  expect(ratio).toBeGreaterThanOrEqual(4.5);
+});
+
+test('keeps only list items in the selected node comment list', async ({ page }) => {
+  await selectFailedAsset(page);
+  // Every comment in the thread is an article inside a list item, not a list child itself.
+  const list = page.getByRole('list', { name: /^Comment thread for/u });
+  await expect(list).toBeVisible();
+  const childRoles = await list.evaluate((element) =>
+    [...element.children].map((child) => child.getAttribute('role') ?? child.tagName.toLowerCase()),
+  );
+  expect(childRoles.length).toBeGreaterThan(0);
+  expect(childRoles.every((role) => role === 'li')).toBe(true);
+  await expect(list.getByRole('article').first()).toBeVisible();
+});
+
+test('gives Retry lease a 44px hit area clear of its textarea', async ({ page }) => {
+  await selectFailedAsset(page);
+  // Retry lease keeps a 44px hit area that no neighbouring control or field reaches into.
+  const retries = page.getByRole('button', { name: 'Retry lease' });
+  await expect(retries.first()).toBeVisible();
+  const faults = await retries.evaluateAll((buttons) =>
+    buttons.flatMap((button, index) => {
+      button.scrollIntoView({ block: 'center' });
+      const rect = button.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const found: string[] = [];
+      for (const probeY of [y - 21.5, y + 21.5]) {
+        const target = document.elementFromPoint(x, probeY);
+        if (target === null || !button.contains(target))
+          found.push(`${String(index)}@${String(probeY - y)}`);
+      }
+      // The control above keeps its own last pixel row.
+      const field = button.closest('[data-field-path]')?.querySelector('textarea');
+      if (field) {
+        const fieldRect = field.getBoundingClientRect();
+        const target = document.elementFromPoint(x, fieldRect.bottom - 1);
+        if (target !== field) found.push(`${String(index)} covers its textarea`);
+      }
+      return found;
+    }),
+  );
+  expect(faults).toEqual([]);
+});

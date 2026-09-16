@@ -29,7 +29,9 @@ describe('collaboration panel', () => {
         onSubmit={() => undefined}
       />,
     );
-    expect(html).toContain('role="article"');
+    // Each comment is an article inside a plain list item, so the list keeps only listitem children.
+    expect(html).toMatch(/<ul[^>]*role="list"[^>]*><li><article[^>]*tabindex="0"/u);
+    expect(html).not.toContain('role="article"');
     expect(html).toContain('texture size');
     expect(html).toContain('Post draft comment');
     expect(html).toContain('data-comment-anchor="7"');

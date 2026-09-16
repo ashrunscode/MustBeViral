@@ -92,7 +92,7 @@ export function CommentThreadPanel({
   const listId = useId();
   const composerId = useId();
   const [draft, setDraft] = useState('');
-  const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const itemRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
     itemRefs.current = itemRefs.current.slice(0, comments.length);
@@ -159,29 +159,29 @@ export function CommentThreadPanel({
           onKeyDown={handleListKeyDown}
         >
           {comments.map((comment, index) => (
-            <li
-              key={comment.comment_id}
-              ref={(element) => {
-                itemRefs.current[index] = element;
-              }}
-              className={styles.commentItem}
-              tabIndex={0}
-              role="article"
-              aria-label={`Comment by ${comment.author.display_name}`}
-            >
-              <span className={styles.commentAuthor}>{comment.author.display_name}</span>
-              <p className={styles.commentBody}>{comment.body}</p>
-              {onDeleteComment !== undefined &&
-              actorId !== null &&
-              comment.author.actor_id === actorId ? (
-                <Button
-                  variant="quiet-link"
-                  onClick={() => onDeleteComment(comment.comment_id)}
-                  aria-label={`Delete your comment on ${anchorLabel}`}
-                >
-                  Delete
-                </Button>
-              ) : null}
+            <li key={comment.comment_id}>
+              <article
+                ref={(element) => {
+                  itemRefs.current[index] = element;
+                }}
+                className={styles.commentItem}
+                tabIndex={0}
+                aria-label={`Comment by ${comment.author.display_name}`}
+              >
+                <span className={styles.commentAuthor}>{comment.author.display_name}</span>
+                <p className={styles.commentBody}>{comment.body}</p>
+                {onDeleteComment !== undefined &&
+                actorId !== null &&
+                comment.author.actor_id === actorId ? (
+                  <Button
+                    variant="quiet-link"
+                    onClick={() => onDeleteComment(comment.comment_id)}
+                    aria-label={`Delete your comment on ${anchorLabel}`}
+                  >
+                    Delete
+                  </Button>
+                ) : null}
+              </article>
             </li>
           ))}
         </ul>

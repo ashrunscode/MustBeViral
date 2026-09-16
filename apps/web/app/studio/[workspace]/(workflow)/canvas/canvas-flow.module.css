@@ -288,11 +288,13 @@
   text-align: right;
 }
 
+/* The tint is mixed into the card, not layered over the node: over a selected node's blue wash the
+   translucent tint left --fail-ink at 4.40:1. */
 .invalidReason {
   border: 1px solid rgba(196, 64, 77, 0.3);
   border-radius: 4px;
   padding: 6px;
-  background: rgba(196, 64, 77, 0.08);
+  background: color-mix(in srgb, var(--fail) 8%, var(--card));
   color: var(--fail-ink);
   font-size: 10px;
   line-height: 1.35;
