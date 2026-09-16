@@ -1,6 +1,6 @@
 begin;
 
-select plan(19);
+select plan(20);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -250,7 +250,7 @@ select set_config(
   'test.sub_replay_explicit',
   (
     select (result ->> 'workspace_id') || ':' || (result ->> 'replayed') || ':'
-      || (result ->> 'subscription_status')
+      || (result ->> 'subscription_status') || ':' || (result ->> 'setup_fee_paid')
     from public.apply_stripe_subscription_update(
       '99931000-0000-4000-8000-00000000000a',
       'evt_sub_hardening_1', 'cus_sub_moved', 'sub_hardening', 'past_due', true,
@@ -263,16 +263,20 @@ reset role;
 
 select is(
   current_setting('test.sub_replay_explicit'),
-  '99931000-0000-4000-8000-00000000000a:true:active',
-  'a replay naming the audited workspace reports replayed without applying its status'
+  '99931000-0000-4000-8000-00000000000a:true:active:false',
+  'a replay naming the audited workspace applies neither its status nor its setup fee'
 );
 
--- 16-17: the database, not only the advisory lock, enforces one audit record per event.
+-- 16-18: the database, not only the advisory lock, enforces one audit record per event.
+select is(
+  pg_get_indexdef(to_regclass('public.audit_events_stripe_subscription_event_key')),
+  'CREATE UNIQUE INDEX audit_events_stripe_subscription_event_key ON public.audit_events USING btree (((details ->> ''stripe_event_id''::text))) WHERE (action = ''stripe.subscription_update''::text)',
+  'a unique partial index covers the Stripe subscription event lookup expression'
+);
+
 select ok(
-  pg_get_indexdef(to_regclass('public.audit_events_stripe_subscription_event_key'))
-    = 'CREATE UNIQUE INDEX audit_events_stripe_subscription_event_key ON public.audit_events USING btree (((details ->> ''stripe_event_id''::text))) WHERE (action = ''stripe.subscription_update''::text)'
-  and to_regclass('public.audit_events_stripe_subscription_event_idx') is null,
-  'a unique partial index on the lookup expression replaces the non-unique event index'
+  to_regclass('public.audit_events_stripe_subscription_event_idx') is null,
+  'the non-unique Stripe subscription event index is gone'
 );
 
 select is(
@@ -289,7 +293,7 @@ select is(
   'a second audit record for the same Stripe event is rejected by the database'
 );
 
--- 18: unchanged behaviour for an unknown customer.
+-- 19: unchanged behaviour for an unknown customer.
 select is(
   pg_temp.error_of($sql$
     select public.apply_stripe_subscription_update(
@@ -301,7 +305,7 @@ select is(
   'an unknown customer without a workspace id still reports WORKSPACE_NOT_FOUND'
 );
 
--- 19: a first delivery that names its workspace never consults the customer mapping.
+-- 20: a first delivery that names its workspace never consults the customer mapping.
 set local role service_role;
 select set_config(
   'test.sub_explicit_first',
@@ -319,9 +323,12 @@ select set_config(
 reset role;
 
 select is(
-  current_setting('test.sub_explicit_first'),
-  '99931000-0000-4000-8000-00000000000c:false:trialing',
-  'a first delivery naming its workspace applies even when its customer is shared'
+  current_setting('test.sub_explicit_first') || ':' || (
+    select subscription_status from public.workspace_billing_profiles
+    where workspace_id = '99931000-0000-4000-8000-00000000000d'
+  ),
+  '99931000-0000-4000-8000-00000000000c:false:trialing:none',
+  'a first delivery naming its workspace applies only there even when its customer is shared'
 );
 
 select * from finish();

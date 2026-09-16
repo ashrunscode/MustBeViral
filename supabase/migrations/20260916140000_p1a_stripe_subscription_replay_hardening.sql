@@ -19,8 +19,12 @@
 -- The index work runs inside the migration transaction and is not concurrent. audit_events is
 -- locked ACCESS EXCLUSIVE up front, so the preflight and both index statements see one state and
 -- the migration never upgrades a lock while a caller waits on it; callers queue until commit.
+-- The lock wait is capped at 5s: if a long transaction holds audit_events, the migration fails
+-- instead of queuing every audit read and write behind it, and can be retried once it ends.
 -- Check the audit_events row count before applying this to an environment writing audit records.
 begin;
+
+set local lock_timeout = '5s';
 
 lock table public.audit_events in access exclusive mode;
 
