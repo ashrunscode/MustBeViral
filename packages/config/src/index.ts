@@ -15,13 +15,44 @@ const HttpOriginSchema = HttpUrlSchema.refine(
   },
 );
 
+const LOOPBACK_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+// This package compiles without DOM or Node typings, but every runtime that loads it (Node, browsers,
+// Workers) has the WHATWG URL parser. Use it rather than a regex so the hostname checked here is the
+// hostname a client would actually connect to.
+const WhatwgUrl = (
+  globalThis as unknown as {
+    readonly URL: new (input: string) => Readonly<{ protocol: string; hostname: string }>;
+  }
+).URL;
+
+/**
+ * The collaboration API carries the ticket in the WebSocket handshake, so it must use TLS. Plain
+ * http is accepted only for loopback development hosts.
+ */
+const CollaborationApiUrlSchema = HttpUrlSchema.refine(
+  (value) => {
+    let url: Readonly<{ protocol: string; hostname: string }>;
+    try {
+      url = new WhatwgUrl(value);
+    } catch {
+      return false;
+    }
+    return (
+      url.protocol === 'https:' ||
+      (url.protocol === 'http:' && LOOPBACK_HOSTNAMES.has(url.hostname))
+    );
+  },
+  { message: 'must use https unless the host is localhost, 127.0.0.1 or [::1]' },
+);
+
 export const WebPublicEnvironmentSchema = z
   .object({
     NEXT_PUBLIC_APP_ORIGIN: HttpOriginSchema,
     NEXT_PUBLIC_SUPABASE_URL: HttpUrlSchema,
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(20),
     NEXT_PUBLIC_CORE_API_URL: HttpUrlSchema,
-    NEXT_PUBLIC_COLLABORATION_API_URL: HttpUrlSchema.optional(),
+    NEXT_PUBLIC_COLLABORATION_API_URL: CollaborationApiUrlSchema.optional(),
   })
   .strict();
 

@@ -35,13 +35,20 @@ a {
   transform: translateY(-160%);
   border-radius: var(--radius-control);
   padding: 8px 12px;
-  background: var(--signal);
+  background: var(--signal-fill);
   color: #fff;
   transition: transform var(--motion-local) var(--motion-ease);
 }
 
 .skip-link:focus {
   transform: translateY(0);
+}
+
+/* Transparent 44px touch target around the 35px link; the fixed link is its containing block. */
+.skip-link::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
 }
 
 .studio-app {
@@ -76,7 +83,7 @@ a {
 }
 .studio-system-row {
   gap: 10px;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .studio-wordmark {
   color: var(--ink-strong);
@@ -85,7 +92,7 @@ a {
   letter-spacing: -0.01em;
 }
 .studio-breadcrumb {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .studio-breadcrumb strong {
   color: var(--ink-strong);
@@ -216,8 +223,8 @@ a {
 }
 .auth-primary {
   margin-top: 16px;
-  border: 1px solid var(--signal);
-  background: var(--signal);
+  border: 1px solid var(--signal-fill);
+  background: var(--signal-fill);
   color: #fff;
 }
 .auth-primary--link {
@@ -266,7 +273,7 @@ a {
 }
 
 .auth-link {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 0.875rem;
   text-underline-offset: 0.2em;
 }
@@ -276,7 +283,7 @@ a {
 }
 
 .auth-policy {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 0.8125rem;
   line-height: 1.5;
   margin: -0.25rem 0 0;
@@ -288,11 +295,11 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--signal);
+  border: 1px solid var(--signal-fill);
   border-radius: 4px;
   margin-top: 8px;
   padding: 0 14px;
-  background: var(--signal);
+  background: var(--signal-fill);
   color: #fff;
   font-weight: 500;
   text-decoration: none;
@@ -331,7 +338,7 @@ a {
   border: 1px solid transparent;
   border-radius: var(--radius-control);
   padding: 0 14px;
-  color: var(--ink-muted);
+  color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
   transition:
@@ -383,7 +390,7 @@ a {
 }
 
 .landing-eyebrow {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .landing-hero h1 {
@@ -433,7 +440,7 @@ a {
 
 .landing-pilot {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -611,7 +618,7 @@ a {
 }
 
 .internal-ops__card dt {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
 }
 
@@ -631,12 +638,12 @@ a {
 
 .internal-kill-switch--on {
   background: var(--wash-faint);
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 
 .internal-kill-switch--off {
   background: color-mix(in srgb, var(--fail) 12%, transparent);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .billing-wallet-badge {
@@ -651,22 +658,22 @@ a {
 
 .billing-wallet-badge--funded {
   background: var(--wash-faint);
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 
 .billing-wallet-badge--low_balance {
   background: color-mix(in srgb, var(--attention) 14%, transparent);
-  color: var(--attention);
+  color: var(--attention-ink);
 }
 
 .billing-wallet-badge--blocked {
   background: color-mix(in srgb, var(--fail) 12%, transparent);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .billing-wallet-badge--closed {
   background: var(--wash-faint);
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .billing-wallet-details,
@@ -686,18 +693,18 @@ a {
 
 .billing-subscription-badge--active {
   background: var(--wash-faint);
-  color: var(--ok);
+  color: var(--ok-ink);
 }
 
 .billing-subscription-badge--past_due {
   background: color-mix(in srgb, var(--fail) 12%, transparent);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .billing-subscription-badge--canceled,
 .billing-subscription-badge--none {
   background: var(--wash-faint);
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 
 .access-panel {
@@ -734,7 +741,7 @@ a {
 }
 
 .access-panel__error {
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .access-panel__field,
@@ -744,9 +751,27 @@ a {
 }
 
 .access-panel__scope {
+  position: relative;
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+/* Scope rows sit 8px apart, so each label's hit area grows only to the midpoint (4px). */
+.access-panel__scope::before {
+  content: '';
+  position: absolute;
+  inset: -4px 0;
+}
+
+/* Dialog forms: 12px between fields and 16px above the action row, so the 44px button hit
+   areas never reach a field. */
+.mbv-dialog .access-panel__field + .access-panel__field,
+.mbv-dialog .access-panel__field + .access-panel__scopes {
+  margin-top: 12px;
+}
+.mbv-dialog .access-panel__actions {
+  margin-top: 16px;
 }
 
 .access-panel__secret {
@@ -766,12 +791,12 @@ a {
 
 .access-status--active {
   background: color-mix(in srgb, var(--signal) 12%, transparent);
-  color: var(--signal);
+  color: var(--signal-ink);
 }
 
 .access-status--revoked {
   background: color-mix(in srgb, var(--fail) 12%, transparent);
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 
 .skills-panel__grid {
@@ -787,7 +812,7 @@ a {
 
 .skills-panel__meta {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
 }
 

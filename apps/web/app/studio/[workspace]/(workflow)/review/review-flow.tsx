@@ -25,7 +25,7 @@ import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempo
 import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
 import { ReviewDraftPanel } from '../../../../../src/features/collaboration/draft-panels';
 import {
-  collaborationActorForReviewer,
+  previewCollaborationActor,
   commentsForAnchor,
   useCollaborationSession,
 } from '../../../../../src/features/collaboration/use-collaboration-session';
@@ -698,19 +698,14 @@ export function ReviewFlow({
     'Review output';
   const collaborationCanvasId =
     summary.canvasId ?? (dataMode === 'preview' ? 'preview-canvas' : null);
+  // Live collaboration acts as the identity Core binds into the ticket for the signed-in user. The
+  // reviewer label only names the local preview actor; it never becomes a live identity.
   const collaboration = useCollaborationSession({
     canvasId: collaborationCanvasId,
-    actor: collaborationActorForReviewer(
-      reviewer,
-      dataMode === 'preview' ? 'preview' : 'websocket',
-    ),
+    previewActor: previewCollaborationActor(reviewer),
     surface: 'review',
     transport: dataMode === 'preview' ? 'preview' : 'websocket',
   });
-  const collaborationActor = collaborationActorForReviewer(
-    reviewer,
-    dataMode === 'preview' ? 'preview' : 'websocket',
-  );
   const anchoredComments = commentsForAnchor(collaboration.snapshot, commentAnchorId);
   const reviewDrafts = commentAnchorId === null ? {} : (reviewTextDrafts[commentAnchorId] ?? {});
 
@@ -815,7 +810,7 @@ export function ReviewFlow({
           comments={anchoredComments}
           draftPanel={
             <ReviewDraftPanel
-              actorId={collaborationActor.actor_id}
+              actorId={collaboration.actor?.actor_id ?? ''}
               anchorId={commentAnchorId}
               anchorLabel={commentAnchorLabel}
               localDrafts={reviewDrafts}

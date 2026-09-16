@@ -59,8 +59,12 @@ export const CollaborationSnapshotSchema = z.object({
 
 export type CollaborationSnapshot = z.infer<typeof CollaborationSnapshotSchema>;
 
+// Client request payloads carry no identity. The collaboration Worker binds the actor from a
+// verified ticket, and these object schemas strip unknown keys, so a legacy or hostile client that
+// still sends `actor`, `author`, `holder` or `actor_id` parses, but those fields never reach the
+// server's handlers.
+
 export const JoinPresenceInputSchema = z.object({
-  actor: CollaborationActorSchema,
   surface: z.enum(['canvas', 'review']),
 });
 
@@ -68,7 +72,6 @@ export type JoinPresenceInput = z.infer<typeof JoinPresenceInputSchema>;
 
 export const UpsertCommentInputSchema = z.object({
   comment_id: z.string().min(1).max(128),
-  author: CollaborationActorSchema,
   body: z.string().min(1).max(8_000),
   anchor_node_id: z.string().min(1).max(128).optional(),
 });
@@ -78,7 +81,6 @@ export type UpsertCommentInput = z.infer<typeof UpsertCommentInputSchema>;
 export const AcquireLeaseInputSchema = z.object({
   lease_id: z.string().min(1).max(128),
   node_id: z.string().min(1).max(128),
-  holder: CollaborationActorSchema,
   ttl_seconds: z.number().int().min(5).max(900).default(120),
 });
 
@@ -86,7 +88,6 @@ export type AcquireLeaseInput = z.infer<typeof AcquireLeaseInputSchema>;
 
 export const ReleaseLeaseInputSchema = z.object({
   lease_id: z.string().min(1).max(128),
-  actor_id: z.string().min(1).max(128),
 });
 
 export type ReleaseLeaseInput = z.infer<typeof ReleaseLeaseInputSchema>;
@@ -96,14 +97,12 @@ export const UpsertTextDraftInputSchema = z.object({
   node_id: z.string().min(1).max(128),
   field_path: z.string().min(1).max(256),
   body: z.string().max(32_000),
-  author: CollaborationActorSchema,
 });
 
 export type UpsertTextDraftInput = z.infer<typeof UpsertTextDraftInputSchema>;
 
 export const ClearCheckpointedDraftsInputSchema = z.object({
   draft_ids: z.array(z.string().min(1).max(128)).min(1).max(64),
-  actor_id: z.string().min(1).max(128),
   revision_id: z.string().min(1).max(128),
 });
 
@@ -111,7 +110,7 @@ export type ClearCheckpointedDraftsInput = z.infer<typeof ClearCheckpointedDraft
 
 export const ClientMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('presence.join'), payload: JoinPresenceInputSchema }),
-  z.object({ type: z.literal('presence.leave'), payload: z.object({ actor_id: z.string() }) }),
+  z.object({ type: z.literal('presence.leave'), payload: z.object({}) }),
   z.object({ type: z.literal('comment.upsert'), payload: UpsertCommentInputSchema }),
   z.object({ type: z.literal('text.draft.upsert'), payload: UpsertTextDraftInputSchema }),
   z.object({ type: z.literal('lease.acquire'), payload: AcquireLeaseInputSchema }),

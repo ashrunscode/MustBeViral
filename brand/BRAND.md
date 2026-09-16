@@ -52,19 +52,26 @@ Paper and ink, not a theme. One ink at many pressures; grey hex values are never
 | Ink, strong      | `--ink-strong`                       | `rgba(0,0,0,0.85)`                      | titles, emphasised values                        |
 | Ink, heading     | `--ink-head`                         | `rgba(0,0,0,0.75)`                      | page and panel headings                          |
 | Ink, body        | `--ink`                              | `rgba(0,0,0,0.60)`                      | body and labels                                  |
-| Ink, muted       | `--ink-muted`                        | `rgba(0,0,0,0.50)`                      | captions, secondary meta                         |
+| Ink, muted       | `--ink-muted`                        | `rgba(0,0,0,0.50)`                      | large-text captions only (AA fails below)        |
 | Ink, faint       | `--ink-faint`                        | `rgba(0,0,0,0.25)`                      | placeholders, disabled                           |
 | Line             | `--line`                             | `rgba(0,0,0,0.12)`                      | hairline borders and dividers                    |
-| Signal           | `--signal`                           | `#3182d4`                               | THE one primary action of the current moment     |
+| Signal           | `--signal`                           | `#3182d4`                               | brand blue: mark, borders, focus, selection      |
+| Signal fill      | `--signal-fill`                      | `#2875c2`                               | THE one primary action, white text 4.76:1        |
+| Signal hover     | `--signal-fill-hover`                | `#226bb3`                               | primary action hover, white text 5.49:1          |
+| Signal pressed   | `--signal-fill-pressed`              | `#1d5f9f`                               | primary action pressed, white text 6.58:1        |
+| Signal text      | `--signal-ink`                       | `#226bb3`                               | small blue status text, 5.49:1 on white          |
 | Signal, soft     | `--signal-soft` · `--selection-wash` | `#80bfff` · `#80bfff1f`                 | selected border and its wash, active lineage     |
-| Success          | `--ok`                               | `#1f9d63`                               | small icon-and-text chips only                   |
-| Attention        | `--attention`                        | `#b87e14`                               | small icon-and-text chips, running edge filament |
-| Failure          | `--fail`                             | `#c4404d`                               | small chips and 2 px left edges only             |
+| Success          | `--ok`                               | `#1f9d63`                               | status dots and chip icons only, never text      |
+| Success text     | `--ok-ink`                           | `#187b4e`                               | chip labels and status text, 5.27:1 on white     |
+| Attention        | `--attention`                        | `#b87e14`                               | status dots, chip icons and the running filament |
+| Attention text   | `--attention-ink`                    | `#8b5f0f`                               | chip labels and status text, 5.61:1 on white     |
+| Failure          | `--fail`                             | `#c4404d`                               | status dots, chip icons and 2 px left edges      |
+| Failure text     | `--fail-ink`                         | `#b73945`                               | chip labels and status text, 5.70:1 on white     |
 
-- The one bold element allowed per screen: the `--signal` primary action, usually the confirm control that names the amount. Everything else is ink. Selected state uses a `--signal-soft` border over `--selection-wash`, not a second blue button.
+- The one bold element allowed per screen: the `--signal-fill` primary action, usually the confirm control that names the amount. Everything else is ink. Selected state uses a `--signal-soft` border over `--selection-wash`, not a second blue button.
 - Status colour is never the only cue and never fills a large surface; it marks chips, dots and edges (`docs/ux/EXPERIENCE_CONTRACT.md`).
-- White text appears only on a `--signal` or status fill.
-- **Recorded divergence — do not reconcile unilaterally.** The identity documents were written from the live study before the tokens were finalised and carry different values: `.superdesign/brand-detail.md` gives paper `#F4F4F2`, `.superdesign/brand-id.md` gives the accent as `#2E6BE6`, and `docs/ux/EXPERIENCE_CONTRACT.md` gives success `#49bf4c` and error `#f55434`. `packages/ui/src/tokens.ts` and `.superdesign/design-system.md` agree on the table above and are what actually ships, so build against the table. The divergence is logged in `brand/context.md` section 13 for the owner.
+- White text appears only on a `--signal-fill` or status-text (`--ok-ink`, `--fail-ink`) fill.
+- **Recorded divergence — do not reconcile unilaterally.** The identity documents were written from the live study before the tokens were finalised and carry different values: `.superdesign/brand-detail.md` gives paper `#F4F4F2`, `.superdesign/brand-id.md` gives the accent as `#2E6BE6`, and `docs/ux/EXPERIENCE_CONTRACT.md` gives success `#49bf4c` and error `#f55434`. `packages/ui/src/tokens.ts` is what actually ships and matches the table above, so build against the table. `.superdesign/design-system.md` was aligned with the WCAG AA colours on 2026-09-16. The identity-document divergence is logged in `brand/context.md` section 13 for the owner.
 
 ## Type (already shipped)
 

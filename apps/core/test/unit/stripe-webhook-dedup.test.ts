@@ -40,8 +40,8 @@ describe('stripe webhook dedup', () => {
     const [url, init] = fetchMock.mock.calls[0] ?? [];
     expect(String(url)).toBe('https://example.supabase.co/rest/v1/rpc/record_stripe_webhook_event');
     expect(init?.method).toBe('POST');
-    // PostgREST resolves overloads by named arguments. Dropping p_request_id would route to the
-    // four-argument overload, which returns a different shape and raises at runtime.
+    // PostgREST matches an RPC by the exact set of named arguments, and the function takes five, so
+    // dropping p_request_id would fail the call instead of recording the claim.
     expect(JSON.parse(String(init?.body))).toStrictEqual({
       p_stripe_event_id: 'evt_1',
       p_event_type: 'checkout.session.completed',
@@ -60,7 +60,7 @@ describe('stripe webhook dedup', () => {
   });
 
   it.each([
-    ['the four-argument overload shape', { inserted: true }],
+    ['the retired four-argument overload shape', { inserted: true }],
     ['a provider webhook claim value', { claim: 'claimed' }],
     ['a non-string claim', { claim: true }],
     ['an array', [{ claim: 'inserted' }]],

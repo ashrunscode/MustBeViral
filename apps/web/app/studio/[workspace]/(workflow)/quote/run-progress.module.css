@@ -30,7 +30,7 @@
 }
 .runHead p {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
 }
 
@@ -51,16 +51,22 @@
   color: var(--ink-head);
 }
 .reviewableMoment a {
+  position: relative;
   color: var(--ink-strong);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.reviewableMoment a::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
 }
 .runError {
   margin-bottom: 12px;
   border: 1px solid rgba(196, 64, 77, 0.3);
   border-radius: 6px;
   padding: 10px;
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 12px;
 }
 
@@ -77,13 +83,13 @@
   line-height: 1.5;
 }
 .recoveryMoment strong {
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 13px;
   font-weight: 400;
 }
 .recoveryMoment p {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 13px;
 }
 .recoveryMoment a {
@@ -127,7 +133,7 @@
   font-weight: 400;
 }
 .attemptCard > span:last-child {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 11px;
 }
 .attemptTopline {
@@ -176,7 +182,7 @@
   font-size: 11px;
 }
 .runAside dt {
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .runAside dd {
   margin: 0;
@@ -205,7 +211,7 @@
   text-transform: capitalize;
 }
 .cancelledCopy {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 12px;
 }
 .footer {
@@ -217,7 +223,7 @@
   border-top: 1px solid var(--line);
   padding: 0 20px;
   background: var(--wash-faint);
-  color: var(--ink-faint);
+  color: var(--ink);
 }
 
 :global(.flow-transfer).runTransfer {

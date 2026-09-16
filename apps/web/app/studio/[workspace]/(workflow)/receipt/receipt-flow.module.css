@@ -16,6 +16,9 @@
   display: flex;
   align-items: center;
   gap: 7px;
+  color: var(--ok-ink);
+}
+.receiptSeal > [aria-hidden='true'] {
   color: var(--ok);
 }
 .receiptCard {
@@ -50,14 +53,14 @@
 }
 .documentHead p {
   margin: 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 10px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .receiptNumber {
   text-align: right;
-  color: var(--ink-muted);
+  color: var(--ink);
 }
 .receiptNumber strong {
   display: block;
@@ -74,7 +77,7 @@
 }
 .sectionLabel {
   margin: 0 0 6px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -114,7 +117,7 @@
 .evidenceBlock h2,
 .exportStatus h2 {
   margin: 0 0 9px;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -126,7 +129,7 @@
   gap: 8px;
   border-top: 1px solid var(--wash);
   padding: 5px 0;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 9px;
   text-transform: uppercase;
 }
@@ -175,7 +178,7 @@
 }
 .exportDetail {
   overflow: hidden;
-  color: var(--ink-muted);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 9px;
   line-height: 1.35;
@@ -220,7 +223,7 @@
   border-radius: 6px;
   padding: 9px 12px;
   background: var(--card);
-  color: var(--fail);
+  color: var(--fail-ink);
   font-size: 11px;
 }
 .footer {
@@ -231,7 +234,7 @@
   border-top: 1px solid var(--line);
   padding: 0 24px;
   background: var(--wash-faint);
-  color: var(--ink-faint);
+  color: var(--ink);
 }
 .resultCard {
   width: min(620px, calc(100% - 32px));
@@ -242,10 +245,10 @@
   padding: 20px;
 }
 .resultCard strong {
-  color: var(--fail);
+  color: var(--fail-ink);
 }
 .resultCard span {
-  color: var(--ink-muted);
+  color: var(--ink);
   font-size: 12px;
 }
 .resultCard a {

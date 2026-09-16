@@ -27,6 +27,9 @@ MOONSHOT_API_KEY=replace-me
 OPENROUTER_API_KEY=replace-me
 CONFIRMATION_SIGNING_KEY=replace-me-with-32-or-more-random-bytes
 ARTIFACT_ACCESS_SIGNING_KEY=replace-me-with-32-or-more-random-bytes
+# Must equal apps/collaboration's COLLABORATION_TICKET_SECRET in the same environment. The placeholder
+# is deliberately shorter than the 32-character minimum, so a copied example fails closed.
+COLLABORATION_TICKET_SECRET=invalid-placeholder
 STRIPE_WEBHOOK_SECRET=replace-me
 RESEND_API_KEY=replace-me
 SENTRY_DSN=

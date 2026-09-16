@@ -34,6 +34,17 @@ function lease(holder: typeof actorA, expiresAt: string): EditLease {
 }
 
 describe('collaboration conflict resolution', () => {
+  it('keys drafts injectively on the node and field pair', () => {
+    expect(textDraftKey('n', '1::parameters.prompt')).not.toBe(
+      textDraftKey('n::1', 'parameters.prompt'),
+    );
+    expect(textDraftKey('a:', ':b')).not.toBe(textDraftKey('a', '::b'));
+    expect(JSON.parse(textDraftKey('n::1', 'parameters.prompt'))).toEqual([
+      'n::1',
+      'parameters.prompt',
+    ]);
+  });
+
   it('ignores expired leases when resolving active holders', () => {
     const active = leaseForNode(
       [lease(actorA, '2099-01-01T00:00:00.000Z'), lease(actorB, '2020-01-01T00:00:00.000Z')],

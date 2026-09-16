@@ -64,6 +64,14 @@
       "sensitivity": "public",
       "required": true,
       "description": "Comma-separated exact web origins accepted by browser-facing Core routes."
+    },
+    {
+      "name": "COLLABORATION_TICKET_SECRET",
+      "owner": "core and collaboration",
+      "environments": ["local", "staging", "production"],
+      "sensitivity": "secret",
+      "required": true,
+      "description": "HMAC key Core signs collaboration tickets with and the collaboration Worker verifies them with; the same value on both Workers in one environment, at least 32 characters, installed with wrangler secret put."
     }
   ]
 }

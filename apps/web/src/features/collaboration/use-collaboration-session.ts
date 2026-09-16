@@ -12,12 +12,17 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { readWebPublicEnvironment } from '../../config/public-environment';
+import { requestCollaborationTicket } from './collaboration-ticket';
 
 export type CollaborationTransport = 'preview' | 'websocket';
 
 export interface UseCollaborationSessionOptions {
   readonly canvasId: string | null;
-  readonly actor: CollaborationActor;
+  /**
+   * Local demo identity for the preview transport only. The websocket transport ignores it: its
+   * identity is the one Core binds into the collaboration ticket for the signed-in user.
+   */
+  readonly previewActor: CollaborationActor;
   readonly surface: 'canvas' | 'review';
   readonly transport: CollaborationTransport;
 }
@@ -25,6 +30,11 @@ export interface UseCollaborationSessionOptions {
 export interface CollaborationSessionState {
   readonly snapshot: CollaborationSnapshot | null;
   readonly status: 'idle' | 'connecting' | 'open' | 'closed' | 'error';
+  /**
+   * The identity this session acts as: the preview actor in preview, or the ticket-bound actor from
+   * Core in websocket transport. Null until Core has issued a ticket.
+   */
+  readonly actor: CollaborationActor | null;
   readonly upsertComment: (
     input: Readonly<{
       comment_id: string;
@@ -54,6 +64,15 @@ function emptySnapshot(canvasId: string): CollaborationSnapshot {
   };
 }
 
+function sameActor(left: CollaborationActor | null, right: CollaborationActor): boolean {
+  return (
+    left !== null &&
+    left.actor_id === right.actor_id &&
+    left.display_name === right.display_name &&
+    left.color === right.color
+  );
+}
+
 const noop = () => undefined;
 
 export function useCollaborationSession(
@@ -62,12 +81,31 @@ export function useCollaborationSession(
   const isActive = options.canvasId !== null && options.canvasId.length > 0;
   const [snapshot, setSnapshot] = useState<CollaborationSnapshot | null>(null);
   const [status, setStatus] = useState<CollaborationSessionState['status']>('connecting');
+  const [boundActor, setBoundActor] = useState<CollaborationActor | null>(null);
   const upsertCommentRef = useRef<CollaborationSessionState['upsertComment']>(noop);
   const upsertTextDraftRef = useRef<CollaborationSessionState['upsertTextDraft']>(noop);
   const acquireLeaseRef = useRef<CollaborationSessionState['acquireLease']>(noop);
   const releaseLeaseRef = useRef<CollaborationSessionState['releaseLease']>(noop);
   const clearCheckpointedDraftsRef =
     useRef<CollaborationSessionState['clearCheckpointedDrafts']>(noop);
+
+  // Callers build the preview actor inline on every render. Key the session on the actor's field
+  // values, not its object identity: every snapshot the session emits re-renders the caller, and a
+  // fresh actor object in the effect dependencies would restart the session and emit again, without
+  // end.
+  const {
+    actor_id: previewActorId,
+    display_name: previewActorDisplayName,
+    color: previewActorColor,
+  } = options.previewActor;
+  const previewActor = useMemo<CollaborationActor>(
+    () => ({
+      actor_id: previewActorId,
+      display_name: previewActorDisplayName,
+      ...(previewActorColor === undefined ? {} : { color: previewActorColor }),
+    }),
+    [previewActorColor, previewActorDisplayName, previewActorId],
+  );
 
   const collaborationBaseUrl = useMemo(() => {
     try {
@@ -97,7 +135,7 @@ export function useCollaborationSession(
       );
       const session = new InMemoryCollaborationSession({
         canvasId: options.canvasId!,
-        actor: options.actor,
+        actor: previewActor,
         surface: options.surface,
         seedPresence: previewSnapshot.presence,
         seedComments: previewSnapshot.comments,
@@ -119,10 +157,10 @@ export function useCollaborationSession(
         });
       };
       acquireLeaseRef.current = (nodeId) => {
-        session.acquireLease(nodeId, leaseIdForActor(nodeId, options.actor.actor_id));
+        session.acquireLease(nodeId, leaseIdForActor(nodeId, previewActor.actor_id));
       };
       releaseLeaseRef.current = (nodeId) => {
-        session.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
+        session.releaseLease(leaseIdForActor(nodeId, previewActor.actor_id));
       };
       clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
         session.clearCheckpointedDrafts({ draft_ids: draftIds, revision_id: revisionId });
@@ -138,11 +176,17 @@ export function useCollaborationSession(
       };
     }
 
+    const canvasId = options.canvasId!;
     const client = new CollaborationClient({
       baseUrl: collaborationBaseUrl!,
-      canvasId: options.canvasId!,
-      actor: options.actor,
+      canvasId,
       surface: options.surface,
+      // Called for the first connection and again for every reconnect: tickets are single-use in
+      // practice and expire within seconds.
+      ticketProvider: () => requestCollaborationTicket(canvasId),
+      onActor: (next) => {
+        setBoundActor((current) => (sameActor(current, next) ? current : next));
+      },
       onSnapshot: setSnapshot,
       onStatus: setStatus,
     });
@@ -157,10 +201,10 @@ export function useCollaborationSession(
       });
     };
     acquireLeaseRef.current = (nodeId) => {
-      client.acquireLease(nodeId, leaseIdForActor(nodeId, options.actor.actor_id));
+      client.acquireLease(nodeId);
     };
     releaseLeaseRef.current = (nodeId) => {
-      client.releaseLease(leaseIdForActor(nodeId, options.actor.actor_id));
+      client.releaseLease(nodeId);
     };
     clearCheckpointedDraftsRef.current = (draftIds, revisionId) => {
       client.clearCheckpointedDrafts(draftIds, revisionId);
@@ -177,16 +221,19 @@ export function useCollaborationSession(
     collaborationBaseUrl,
     configurationError,
     isActive,
-    options.actor,
     options.canvasId,
     options.surface,
     options.transport,
+    previewActor,
   ]);
+
+  const actor = options.transport === 'preview' ? previewActor : boundActor;
 
   if (!isActive) {
     return {
       snapshot: null,
       status: 'idle',
+      actor: null,
       upsertComment: noop,
       upsertTextDraft: noop,
       acquireLease: noop,
@@ -199,6 +246,7 @@ export function useCollaborationSession(
     return {
       snapshot: emptySnapshot(options.canvasId!),
       status: 'error',
+      actor: null,
       upsertComment: noop,
       upsertTextDraft: noop,
       acquireLease: noop,
@@ -210,6 +258,7 @@ export function useCollaborationSession(
   return {
     snapshot,
     status,
+    actor,
     upsertComment: (input) => {
       upsertCommentRef.current(input);
     },
@@ -228,18 +277,9 @@ export function useCollaborationSession(
   };
 }
 
-export function collaborationActorForReviewer(
-  reviewer: string,
-  transport: CollaborationTransport,
-): CollaborationActor {
-  if (transport === 'preview') {
-    return { actor_id: 'local-preview', display_name: reviewer, color: '#3182d4' };
-  }
-  return {
-    actor_id: reviewer.toLowerCase().replace(/\s+/gu, '-'),
-    display_name: reviewer,
-    color: '#3182d4',
-  };
+/** Local demo identity for preview collaboration. Never used for the live websocket transport. */
+export function previewCollaborationActor(reviewer: string): CollaborationActor {
+  return { actor_id: 'local-preview', display_name: reviewer, color: '#3182d4' };
 }
 
 export function commentsForAnchor(

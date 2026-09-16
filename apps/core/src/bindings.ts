@@ -15,6 +15,7 @@ export interface CoreBindings extends Omit<
   | 'OPENROUTER_API_KEY'
   | 'CONFIRMATION_SIGNING_KEY'
   | 'ARTIFACT_ACCESS_SIGNING_KEY'
+  | 'COLLABORATION_TICKET_SECRET'
   | 'MEDIA_BUCKET'
   | 'SUPABASE_SECRET_KEY'
   | 'SUPABASE_SERVICE_ROLE_KEY'
@@ -57,6 +58,13 @@ export interface CoreBindings extends Omit<
    * `wrangler secret put`, never in wrangler.jsonc.
    */
   readonly ARTIFACT_ACCESS_SIGNING_KEY?: string;
+  /**
+   * Signs short-lived collaboration tickets that the collaboration Worker verifies. It must equal the
+   * collaboration Worker's COLLABORATION_TICKET_SECRET in the same environment. Optional and
+   * fail-closed: without a value of at least 32 characters no ticket is minted, so no live
+   * collaboration connection can be authenticated. Installed via `wrangler secret put`.
+   */
+  readonly COLLABORATION_TICKET_SECRET?: string;
   readonly MEDIA_BUCKET: R2Bucket;
   readonly SUPABASE_SECRET_KEY?: string;
   readonly SUPABASE_SERVICE_ROLE_KEY?: string;

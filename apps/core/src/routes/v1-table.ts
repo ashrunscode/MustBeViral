@@ -19,7 +19,8 @@ export type V1Operation =
   | 'create_export'
   | 'explain_model'
   | 'get_receipt'
-  | 'ingest_fal_webhook';
+  | 'ingest_fal_webhook'
+  | 'create_collaboration_ticket';
 
 export interface V1RouteDefinition {
   readonly method: 'GET' | 'POST';
@@ -28,6 +29,8 @@ export interface V1RouteDefinition {
   readonly auth: V1RouteAuth;
   readonly mutation: boolean;
   readonly providerTouching: boolean;
+  /** Refuses scoped API keys and OAuth tokens: only a Supabase browser session may call it. */
+  readonly browserSessionOnly?: true;
 }
 
 export const V1_ROUTE_TABLE = [
@@ -182,6 +185,16 @@ export const V1_ROUTE_TABLE = [
     auth: 'fal_signature',
     mutation: true,
     providerTouching: true,
+  },
+  {
+    method: 'POST',
+    path: '/canvases/:id/collaboration-tickets',
+    operation: 'create_collaboration_ticket',
+    auth: 'supabase_jwt',
+    // Minting a ticket writes nothing, so no Idempotency-Key is required (like validate_graph).
+    mutation: false,
+    providerTouching: false,
+    browserSessionOnly: true,
   },
 ] as const satisfies readonly V1RouteDefinition[];
 

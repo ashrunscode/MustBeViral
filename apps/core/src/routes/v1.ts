@@ -7,12 +7,14 @@ import {
   CreateArtifactUploadResourceInputSchema,
   CreateCanvasBodySchema,
   CreateCanvasResourceInputSchema,
+  CreateCollaborationTicketResourceInputSchema,
   CreateExportBodySchema,
   CreateExportResourceInputSchema,
   CreateProjectBodySchema,
   CreateProjectResourceInputSchema,
   CreateWorkspaceBodySchema,
   CreateWorkspaceResourceInputSchema,
+  EmptyBodySchema,
   ExplainModelResourceInputSchema,
   GetArtifactResourceInputSchema,
   GetCanvasContextInputSchema,
@@ -30,6 +32,7 @@ import {
   type P1bHandlers,
 } from '@mustbeviral/contracts';
 import { Hono, type Context } from 'hono';
+import { CollaborationTicketSigningUnavailableError } from '../../../../packages/collaboration/src/ticket';
 import type { VerifiedFalWebhook } from '../../../../packages/provider/src/webhook';
 
 import type { AuthenticatedActor, SupabaseJwtVerifier } from '../auth/supabase-jwt';
@@ -269,6 +272,9 @@ function parseClientInput(
       return ExplainModelResourceInputSchema.parse({ context, model_id: id });
     case 'get_receipt':
       return GetReceiptResourceInputSchema.parse({ context, run_id: id });
+    case 'create_collaboration_ticket':
+      EmptyBodySchema.parse(body);
+      return CreateCollaborationTicketResourceInputSchema.parse({ context, canvas_id: id });
     case 'ingest_fal_webhook':
       throw new TypeError('Webhook input uses signed provider identity');
   }
@@ -503,6 +509,15 @@ async function handleClientRoute(
       403,
     );
   }
+  if (
+    route.browserSessionOnly === true &&
+    (actor.authenticationMethod !== 'supabase_jwt' || callerJwt === undefined)
+  ) {
+    return context.json(
+      safeError(context, 'FORBIDDEN', 'This operation requires a browser session.'),
+      403,
+    );
+  }
   if (actor.workspaceId !== undefined && route.operation === 'create_workspace') {
     return context.json(
       safeError(context, 'FORBIDDEN', 'Scoped credentials cannot create workspaces.'),
@@ -556,6 +571,13 @@ async function handleClientRoute(
     const result = await scopedDependencies.handlers[route.operation](input);
     return mapResult(context, route, result);
   } catch (error) {
+    if (error instanceof CollaborationTicketSigningUnavailableError) {
+      // Fail closed and say so: no ticket exists without the signing secret.
+      return context.json(
+        safeError(context, 'INTERNAL_ERROR', 'Collaboration is not configured.', false),
+        503,
+      );
+    }
     if (route.operation === 'create_export') {
       const persistentExportFailure =
         error instanceof RangeError ||
