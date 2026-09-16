@@ -1,6 +1,6 @@
 begin;
 
-select plan(8);
+select plan(12);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -163,6 +163,49 @@ select is(
   ),
   true,
   'duplicate subscription event id replays without duplicate audit'
+);
+
+select is(
+  (select count(*)::integer from public.audit_events
+   where action = 'stripe.subscription_update'
+     and details ->> 'stripe_event_id' = 'evt_sub_active_1'),
+  1,
+  'a repeated subscription event creates exactly one audit record'
+);
+
+select is(
+  (select entity_id from public.audit_events
+   where action = 'stripe.subscription_update'
+     and details ->> 'stripe_event_id' = 'evt_sub_active_1'),
+  '99910000-0000-4000-8000-000000000001'::uuid,
+  'subscription audit entity preserves the workspace UUID contract'
+);
+
+select is(
+  (select entity_type from public.audit_events
+   where action = 'stripe.subscription_update'
+     and details ->> 'stripe_event_id' = 'evt_sub_active_1'),
+  'workspace_billing_profile',
+  'the external event id remains audit detail of the billing profile'
+);
+
+insert into public.workspaces (id, name, slug, created_by)
+values (
+  '99910000-0000-4000-8000-000000000002',
+  'Unrelated subscription workspace',
+  'stripe-unrelated-workspace',
+  '99900000-0000-4000-8000-000000000001'
+);
+
+select is(
+  pg_temp.error_of($sql$
+    select public.apply_stripe_subscription_update(
+      '99910000-0000-4000-8000-000000000002',
+      'evt_sub_active_1', 'cus_other', 'sub_other', 'active', true, 'req_cross_workspace'
+    )
+  $sql$),
+  '22023:STRIPE_EVENT_WORKSPACE_MISMATCH',
+  'a Stripe subscription event cannot be replayed into another workspace'
 );
 
 select * from finish();
