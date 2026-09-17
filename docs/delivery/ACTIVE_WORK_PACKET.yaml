@@ -52,21 +52,16 @@ scope:
     - .superdesign/**
     - PROJECT_STATE.yaml
     - llms.txt
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    # Paths already admitted on origin/codex/viralgraph-cleanroom while this packet was private.
-    # Retained so the stacked branch can keep Stripe, collaboration, brand, and toolchain work.
+    # Paths already present on origin/codex/viralgraph-cleanroom while this packet was private.
     - brand/**
     - .agents/skills/**
     - .claude/skills/**
     - AGENTS.md
     - .prettierignore
-    - governance/toolchain.yaml
-    - packages/ui/**
     - apps/collaboration/**
     - packages/collaboration/**
     - packages/billing/**
     - README.md
-    - .superdesign/design-system.md
   forbidden_paths:
     - .github/workflows/**
     - docs/archive/**

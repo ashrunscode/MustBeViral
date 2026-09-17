@@ -28,6 +28,7 @@ Source: `packages/contracts/openapi/core.v1.json` (OpenAPI 3.1.0, contract 2026-
 | `GET` | `/v1/models/{id}` | `explain_model` | Explain model |
 | `GET` | `/v1/runs/{id}/receipt` | `get_receipt` | Get receipt |
 | `POST` | `/v1/webhooks/fal` | `ingest_fal_webhook` | Ingest fal webhook |
+| `POST` | `/v1/canvases/{id}/collaboration-tickets` | `create_collaboration_ticket` | Create collaboration ticket |
 | `POST` | `/v1/oauth/token` | `issue_oauth_token` | Issue oauth token |
 | `POST` | `/v1/workspaces/{id}/api-keys` | `create_api_key` | Create api key |
 | `GET` | `/v1/workspaces/{id}/api-keys` | `list_api_keys` | List api keys |
