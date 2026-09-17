@@ -93,6 +93,25 @@ scope:
     # steps, acceptance criteria, quality gates or evidence requirements.
     - README.md
     - .superdesign/design-system.md
+    # Scope amendment on explicit owner instruction, 2026-09-17: land the already-pushed
+    # private-platform-continuation-20260916 line onto origin through a follow-up PR. These
+    # paths exist on that line (CLI, domain extractors, SuperDesign hifi, platform evidence,
+    # supersession scripts/schemas) and were not admitted while WP-P3-009 continued on origin.
+    # This amendment does not change this packet's objective, steps, acceptance criteria,
+    # quality gates or evidence requirements, and it does not implement the private line.
+    - apps/cli/**
+    - apps/mcp/**
+    - packages/domain/**
+    - .superdesign/**
+    - governance/scripts/**
+    - governance/schemas/**
+    - governance/format-evidence.ignore
+    - governance/evidence/WP-P3-010/**
+    - governance/evidence/WP-PLATFORM-W0-001/**
+    - governance/evidence/WP-PLATFORM-W1-001/**
+    - governance/evidence/WP-PLATFORM-W1-002/**
+    - governance/evidence/WP-PLATFORM-W2-001/**
+    - governance/evidence/WP-PLATFORM-W2-002/**
   forbidden_paths:
     - docs/archive/**
     - legacy-exports/**
