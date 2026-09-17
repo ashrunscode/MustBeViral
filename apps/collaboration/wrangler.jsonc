@@ -52,6 +52,7 @@
     },
     "production": {
       "name": "mustbeviral-v2-production-collaboration",
+      "workers_dev": true,
       "durable_objects": {
         "bindings": [
           {
