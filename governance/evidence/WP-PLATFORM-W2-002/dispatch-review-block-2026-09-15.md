@@ -23,15 +23,15 @@ This is not `agent:finish` and not Wave 2 exit. Official `pnpm agent:handoff` ca
 
 ## Dispatch jobs
 
-| Job | Status | Notes |
-| --- | --- | --- |
-| mustbeviral-w2-002-20260915 | failed | worker grok native_envelope_cancelled; artifacts preserved |
-| mustbeviral-w2-002-20260915-recovery | failed | same envelope cancel from `16f7f325` |
-| mustbeviral-w2-002-20260915-r2 | failed | envelope cancelled |
-| mustbeviral-w2-002-20260915-r3 | failed | host check after early worker JSON |
-| mustbeviral-w2-002-20260915-r4 | failed | domain typecheck; later repaired on `5f641de` |
-| mustbeviral-w2-002-20260915-r5 | blocked | host `agent-verify` attempt 2 exit 0 on `acaa37e`; reviews empty |
-| mustbeviral-w2-002-20260915-r6 | blocked | worker returned blocked; check attempt 1 failed on `packet:verify` |
+| Job                                  | Status  | Notes                                                              |
+| ------------------------------------ | ------- | ------------------------------------------------------------------ |
+| mustbeviral-w2-002-20260915          | failed  | worker grok native_envelope_cancelled; artifacts preserved         |
+| mustbeviral-w2-002-20260915-recovery | failed  | same envelope cancel from `16f7f325`                               |
+| mustbeviral-w2-002-20260915-r2       | failed  | envelope cancelled                                                 |
+| mustbeviral-w2-002-20260915-r3       | failed  | host check after early worker JSON                                 |
+| mustbeviral-w2-002-20260915-r4       | failed  | domain typecheck; later repaired on `5f641de`                      |
+| mustbeviral-w2-002-20260915-r5       | blocked | host `agent-verify` attempt 2 exit 0 on `acaa37e`; reviews empty   |
+| mustbeviral-w2-002-20260915-r6       | blocked | worker returned blocked; check attempt 1 failed on `packet:verify` |
 
 r5 review block: Codex reviewer-1 read `C:\dev\tools\dispatch\src\process.mjs`. Host detector then treated a documented flag name in that file as a live permission prompt. Claude never started. No live approval prompt observed. Reviews were not waived, swapped, or downgraded. Dispatch was not modified.
 
