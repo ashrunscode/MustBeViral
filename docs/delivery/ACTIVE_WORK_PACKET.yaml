@@ -116,9 +116,10 @@ deliverables:
   - A separate traffic decision packet records owner go or no-go, rollback owner, exact DNS/routes,
     and current evidence; this packet performs no DNS, custom-domain, or public-traffic mutation.
 public_interfaces:
-  - Only the SSO-protected Vercel team alias and the workers.dev Core URL are in scope. Legacy V1,
-    MustBeViral custom domains, public signup, customer admission, provider execution, queues, and
-    charging remain unchanged.
+  - The SSO-protected Vercel team alias, the workers.dev Core URL, and (owner-authorized deviation,
+    governance/evidence/WP-P3-009/production-collaboration-traffic-decision-2026-09-16.md) the
+    workers.dev production collaboration URL are in scope. Legacy V1, MustBeViral custom domains,
+    public signup, customer admission, provider execution, queues, and charging remain unchanged.
 steps:
   - id: p3i-001-owner-identity-decision
     title: Obtain fresh explicit authorization for exactly one production owner identity.
