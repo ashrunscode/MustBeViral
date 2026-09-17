@@ -32,6 +32,7 @@ export class SupabaseDataApiError extends Error {
   constructor(
     readonly kind: SupabaseFailureKind,
     readonly safeDetails: Readonly<Record<string, unknown>> = {},
+    readonly databaseMessage?: string,
   ) {
     super(`Supabase Data API request failed: ${kind}`);
   }
@@ -100,13 +101,28 @@ function rpcFailureKind(error: SupabasePostgrestError): SupabaseFailureKind | nu
     return 'forbidden';
   }
   if (message.includes('NOT_FOUND')) return 'not_found';
-  if (message.includes('VALIDATION_FAILED') || error.code?.startsWith('22') === true) {
+  if (
+    message.includes('VALIDATION_FAILED') ||
+    message.includes('SOURCE_UNSAFE') ||
+    message.includes('SOURCE_UNSUPPORTED') ||
+    message.includes('SOURCE_MALFORMED') ||
+    message.includes('SOURCE_TOO_LARGE') ||
+    error.code?.startsWith('22') === true
+  ) {
     return 'validation';
+  }
+  if (
+    message.includes('SOURCE_TIMEOUT') ||
+    message.includes('SOURCE_UNREACHABLE') ||
+    message.includes('SOURCE_INTERRUPTED') ||
+    message.includes('SOURCE_EGRESS_UNAVAILABLE')
+  ) {
+    return 'internal';
   }
   return null;
 }
 
-export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataApiError {
+function mapSupabaseFailureKind(status: number, body: unknown): SupabaseDataApiError {
   const error = postgrestError(body);
   if (status === 401 || status === 403) return new SupabaseDataApiError('forbidden');
   if (error.code === 'PGRST116') return new SupabaseDataApiError('not_found');
@@ -127,6 +143,35 @@ export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataA
   const rpcKind = rpcFailureKind(error);
   if (rpcKind !== null) return new SupabaseDataApiError(rpcKind);
   return new SupabaseDataApiError(status >= 500 ? 'internal' : 'validation');
+}
+
+export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataApiError {
+  const mapped = mapSupabaseFailureKind(status, body);
+  const message = postgrestError(body).message;
+  // Preserve only known public contract codes, never raw SQL messages or details.
+  const publicCodes = new Set([
+    'UNAUTHENTICATED',
+    'FORBIDDEN',
+    'NOT_FOUND',
+    'VALIDATION_FAILED',
+    'IDEMPOTENCY_CONFLICT',
+    'REVISION_CONFLICT',
+    'RESOURCE_CONFLICT',
+    'RESOURCE_ARCHIVED',
+    'SOURCE_UNSAFE',
+    'SOURCE_UNSUPPORTED',
+    'SOURCE_MALFORMED',
+    'SOURCE_TOO_LARGE',
+    'SOURCE_TIMEOUT',
+    'SOURCE_UNREACHABLE',
+    'SOURCE_INTERRUPTED',
+    'SOURCE_EGRESS_UNAVAILABLE',
+  ]);
+  return new SupabaseDataApiError(
+    mapped.kind,
+    mapped.safeDetails,
+    message !== undefined && publicCodes.has(message) ? message : undefined,
+  );
 }
 
 export class SupabaseDataApiExecutor implements DatabaseExecutor {

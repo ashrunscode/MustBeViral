@@ -3,11 +3,11 @@
 project: MustBeViral Studio
 engine: ViralGraph
 generation: viralgraph-cleanroom-v2
-launch_customer: dtc_ecommerce_marketing_teams
-phase: P3
-active_packet: WP-P3-009
-current_step: p3i-003-private-72-hour-observation
-next_action: p3i-003: continue the replacement observation from 2026-09-08T03:18:11Z through at least 2026-09-11T03:18:11Z; hour-01 evidence is recorded, the next required daily capture is September 9 at 03:18:11Z plus or minus two hours, and the separate owner traffic ruling remains pending.
+launch_customer: brand_operators_and_multi_brand_studios
+phase: P4
+active_packet: WP-PLATFORM-W2-002
+current_step: w2b-001-representative-extraction
+next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

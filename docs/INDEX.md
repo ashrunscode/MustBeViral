@@ -21,7 +21,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `data-auth-tenancy` | [architecture/DATA_AUTH_AND_TENANCY.md](./architecture/DATA_AUTH_AND_TENANCY.md) | architecture | accepted | security-data |
 | `execution-providers-billing` | [architecture/EXECUTION_PROVIDERS_AND_BILLING.md](./architecture/EXECUTION_PROVIDERS_AND_BILLING.md) | architecture | accepted | execution-billing |
 | `api-mcp-cli` | [architecture/API_MCP_AND_CLI.md](./architecture/API_MCP_AND_CLI.md) | architecture | accepted | api |
-| `adr-0001-dtc-first` | [decisions/ADR-0001-DTC-FIRST.md](./decisions/ADR-0001-DTC-FIRST.md) | decision | accepted | product |
+| `adr-0001-dtc-first` | [decisions/ADR-0001-DTC-FIRST.md](./decisions/ADR-0001-DTC-FIRST.md) | decision | superseded | product |
 | `adr-0002-platform-boundaries` | [decisions/ADR-0002-PLATFORM-BOUNDARIES.md](./decisions/ADR-0002-PLATFORM-BOUNDARIES.md) | decision | accepted | architecture |
 | `adr-0003-fal-first` | [decisions/ADR-0003-FAL-FIRST.md](./decisions/ADR-0003-FAL-FIRST.md) | decision | accepted | execution |
 | `adr-0004-immutable-graph-revisions` | [decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md](./decisions/ADR-0004-IMMUTABLE-GRAPH-REVISIONS.md) | decision | accepted | architecture |
@@ -31,7 +31,7 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `roadmap` | [delivery/ROADMAP.md](./delivery/ROADMAP.md) | delivery | accepted | delivery |
 | `quality-gates` | [delivery/QUALITY_GATES.md](./delivery/QUALITY_GATES.md) | quality | accepted | quality |
 | `active-work-packet` | [delivery/ACTIVE_WORK_PACKET.yaml](./delivery/ACTIVE_WORK_PACKET.yaml) | work_packet | accepted | delivery |
-| `codex-finish-mega-prompt` | [delivery/CODEX_FINISH_MEGA_PROMPT.md](./delivery/CODEX_FINISH_MEGA_PROMPT.md) | delivery | accepted | delivery |
+| `codex-finish-mega-prompt` | [delivery/CODEX_FINISH_MEGA_PROMPT.md](./delivery/CODEX_FINISH_MEGA_PROMPT.md) | delivery | superseded | delivery |
 | `local-env-secrets` | [operations/LOCAL_ENV_AND_SECRETS.md](./operations/LOCAL_ENV_AND_SECRETS.md) | runbook | accepted | operations-security |
 | `toolchain-template-provenance` | [operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md](./operations/TOOLCHAIN_AND_TEMPLATE_PROVENANCE.md) | runbook | accepted | developer-experience |
 | `deploy-rollback-incidents` | [operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md](./operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md) | runbook | accepted | operations |
@@ -51,3 +51,5 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `gtm-hubspot-mapping` | [gtm/hubspot-mapping.md](./gtm/hubspot-mapping.md) | operations | draft | gtm |
 | `gtm-consent-and-suppression` | [gtm/consent-and-suppression.md](./gtm/consent-and-suppression.md) | operations | draft | gtm |
 | `gtm-legal-input-pack` | [gtm/legal-input-pack.md](./gtm/legal-input-pack.md) | operations | draft | gtm |
+| `adr-0008-packet-supersession` | [decisions/ADR-0008-PACKET-SUPERSESSION.md](./decisions/ADR-0008-PACKET-SUPERSESSION.md) | decision | accepted | delivery |
+| `adr-0007-full-platform` | [decisions/ADR-0007-FULL-PLATFORM.md](./decisions/ADR-0007-FULL-PLATFORM.md) | decision | accepted | product-architecture |

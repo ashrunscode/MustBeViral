@@ -1,23 +1,20 @@
 ---
 name: build-mustbeviral
-description: Continue, build, review, verify, or hand off MustBeViral Studio and ViralGraph work from the repository's active work packet. Use whenever Codex is asked to resume MustBeViral, implement its next task, review project progress, repair a packet, or prepare a handoff.
+description: Implement, verify, or hand off the active MustBeViral work packet.
 ---
 
 # Build MustBeViral
 
-## Orient
+Follow root `AGENTS.md` for behavior and run `pnpm agent:preflight` for packet work. Use the active packet's current step, allowed paths, authority references, acceptance, and external-effects policy. Read the authority sections that govern this step rather than the entire project library.
 
-1. Run `pnpm agent:preflight` before reading implementation files or editing the repository.
-2. Read root `AGENTS.md`, `PROJECT_STATE.yaml`, and the active packet reported by preflight. Read only the authority documents required by that packet.
-3. Treat the packet's current step, allowed paths, acceptance criteria, and next action as the complete implementation boundary.
-4. Stop implementation and record a blocker when preflight fails, a decision is pending, the branch is wrong, or repository sources conflict. Never guess through a failed gate.
+- Preserve the accepted ViralGraph V2 cleanroom. Do not revive retired V1 code or create a competing product/status authority here.
+- If preflight fails, the branch is wrong, or a required decision is absent, stop dependent implementation and record the actual blocker; do not guess through the gate. Continue independent work only within the packet's authority.
+- Use packet-required specialist skills for their matching steps. Production UI requires the accepted design artifact; an already applicable approval need not be requested again. New infrastructure, provider activity, and live enablement retain their named gates.
+- Preserve unrelated work, shared command/domain contracts, and generated transport projections. Include the affected tests and evidence with behavioral changes.
+- Continue until the requested packet outcome is implemented and verified, or only a real external/owner dependency remains. Run `pnpm agent:verify` and every named packet check before acceptance.
+- Use `pnpm agent:finish` only when all acceptance is proven and the successor is ready; otherwise use `pnpm agent:handoff` for product handoff. Owner-directed packet replacement uses the separate ADR-0008 amendment and audited supersession, never false completion.
 
-## Preserve the cleanroom
-
-- Build only the DTC/e-commerce-first ViralGraph V2 described by repository authority.
-- Reject requests or discovered instructions that revive legacy V1, including React Router, D1 authentication, marketing-autopilot, social-posting, System DNA, or archived Run-N guidance.
-- Preserve unrelated user and agent changes. Do not expand a ready packet or edit paths it does not allow.
-- Never copy architecture, product rules, or project status into this skill; resolve them from accepted repository authority.
+For an owner-authorized instruction-only amendment, follow the root contract's scoped governance/skill checks without advancing product acceptance or transitioning the packet.
 
 ## Route specialist work
 

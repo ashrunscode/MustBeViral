@@ -99,7 +99,7 @@ sources:
   - id: src-fal
     title: fal developer documentation
     publisher: fal
-    url: https://docs.fal.ai/
+    url: https://fal.ai/docs
     source_type: official-docs
     valid_as_of: '2026-09-16'
     reverify_after: '2026-10-16'
@@ -119,4 +119,4 @@ sources:
     source_type: primary-source
     valid_as_of: '2026-09-16'
     reverify_after: '2026-10-16'
-    used_by: [toolchain-template-provenance]
+    used_by: [experience-contract, toolchain-template-provenance]

@@ -2,6 +2,10 @@ import {
   ProductionMcpToolInputSchemas,
   productionMcpHandlers,
   productionMcpToolCatalog,
+  isPlatformOperation,
+  PLATFORM_OPERATIONS,
+  platformMcpToolCatalog,
+  type PlatformHandlers,
   type HandlerContext,
   type P0AuthenticatedRestOperation,
   type P0RestHandlers,
@@ -17,6 +21,7 @@ import { p0ResultSemantics } from '../transport/semantics';
 import type { WorkspaceResolutionPort } from './v1';
 import type { RequestDependencyFactory, RequestScopedDependencies } from './v1';
 import { providerRunsEnabled } from './v1';
+import { invokePlatform, platformEnvelope } from './platform';
 
 export const MCP_PROTOCOL_VERSION = '2025-11-25' as const;
 const supportedProtocolVersions = new Set(['2025-03-26', '2025-06-18', MCP_PROTOCOL_VERSION]);
@@ -27,6 +32,7 @@ export interface McpDependencies {
   readonly authenticator?: RequestAuthenticator;
   readonly workspaces: WorkspaceResolutionPort;
   readonly requestFactory?: RequestDependencyFactory;
+  readonly platformHandlers?: PlatformHandlers;
 }
 
 type JsonRpcId = string | number;
@@ -263,12 +269,6 @@ async function handlePost(
       401,
     );
   }
-  const scopedDependencies =
-    (await dependencies.requestFactory?.create({
-      actor: authentication.actor,
-      bindings: context.env,
-      ...(authentication.callerJwt === undefined ? {} : { callerJwt: authentication.callerJwt }),
-    })) ?? dependencies;
   let request: JsonRpcRequest;
   try {
     request = parseRequest(await context.req.json());
@@ -299,9 +299,49 @@ async function handlePost(
   }
   if (request.method === 'ping') return context.json(rpcResult(request.id, {}), 200);
   if (request.method === 'tools/list') {
-    return context.json(rpcResult(request.id, { tools: productionMcpToolCatalog() }), 200);
+    return context.json(
+      rpcResult(request.id, {
+        tools: [
+          ...productionMcpToolCatalog(),
+          ...(authentication.actor.authenticationMethod === 'supabase_jwt'
+            ? platformMcpToolCatalog()
+            : []),
+        ],
+      }),
+      200,
+    );
   }
   if (request.method === 'tools/call') {
+    const params = isRecord(request.params) ? request.params : {};
+    if (typeof params.name === 'string' && isPlatformOperation(params.name)) {
+      const argumentsValue = isRecord(params.arguments) ? params.arguments : {};
+      const mutation = PLATFORM_OPERATIONS[params.name].method !== 'GET';
+      const { idempotency_key, ...rest } = argumentsValue;
+      const input = mutation ? rest : argumentsValue;
+      const key = mutation && typeof idempotency_key === 'string' ? idempotency_key : undefined;
+      const result = await invokePlatform(
+        context,
+        authentication.actor,
+        authentication.callerJwt,
+        params.name,
+        input,
+        key,
+        dependencies.platformHandlers,
+      );
+      return context.json(
+        rpcResult(
+          request.id,
+          mcpToolResult(context, platformEnvelope(context, result), result.status === 'error'),
+        ),
+        200,
+      );
+    }
+    const scopedDependencies =
+      (await dependencies.requestFactory?.create({
+        actor: authentication.actor,
+        bindings: context.env,
+        ...(authentication.callerJwt === undefined ? {} : { callerJwt: authentication.callerJwt }),
+      })) ?? dependencies;
     return callTool(context, authentication.actor, request, scopedDependencies, authenticator);
   }
   return context.json(rpcError(request.id, -32601, 'Method not found.'), 200);

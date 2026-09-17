@@ -21,7 +21,7 @@ Zod schemas are the source for TypeScript types and OpenAPI 3.1. Breaking wire c
 - Errors never contain secrets, SQL, provider headers, internal stack traces, or another tenant’s identifiers.
 - List endpoints use opaque cursor pagination ordered by stable timestamp plus ID; default 20, maximum 100.
 
-## P0 command/query surface
+## Existing launch-pack command/query foundation
 
 | Method and path                  | Shared operation     | Notes                                                   |
 | -------------------------------- | -------------------- | ------------------------------------------------------- |
@@ -75,3 +75,29 @@ The CLI begins in P1b and is a thin API client. It supports machine-readable JSO
 ## Version and parity proof
 
 Every operation has one contract test vector executed against the handler and each shipped adapter. Parity covers success, validation, authorization, conflict, expiry, idempotent replay, rate limit, provider ambiguity, and safe error details. Generated OpenAPI and MCP catalogs must match registered handlers before merge.
+
+## Additive platform commands
+
+Introduce studio/grant, brand/location/knowledge, asset/rights, campaign/content/variant, approval, channel/publication, creator/partnership, conversation and metric operations through the same typed handlers. Generate every shipped transport from the contracts. Add actor/resource scope and expected versions where a command requires them. Cursor pagination and idempotency apply to new domains.
+
+Old campaign links resolve through authenticated durable project/brand mappings. No sentinel workspace value or browser-local resume record is an authority. Missing or ambiguous mappings yield a scoped recovery flow. Account connection OAuth is distinct from authorization to call MustBeViral APIs.
+
+The W1 studio, membership, workspace-grant, brand and location operations are registered in `packages/contracts/src/platform.ts`. That registry projects the REST routes, typed client, CLI commands, MCP tools and OpenAPI. These operations require a Supabase user session; existing workspace-scoped programmatic credentials do not acquire portfolio authority. Studio membership changes require the current studio version. Other edits and revocations require the exact resource version. Slugs are unique within their owning scope; display names may repeat without merging identities. `RESOURCE_CONFLICT` identifies a duplicate slug or active grant and `RESOURCE_ARCHIVED` rejects edits to archived or revoked resources; both are non-retryable 409 outcomes.
+
+Saved setup operations join that registry from `platform-setup.ts`. Starting onboarding allocates a brand, draft and explicit studio grant atomically, using a new tenant or a permitted existing workspace. Initializing an existing brand preserves its tenant and identity. Draft saves require `expected_version`; they persist operator input and progress without claiming extraction or approval. A missing draft is an explicit nullable read, distinct from an unavailable database. Workspace identity edits use `expected_updated_at` and retain the existing financial controls.
+
+Studio invitations require the current studio version at creation and the invitation version at acceptance or revocation. Creation records a seven-day invitation and sends no email. Only the exact normalized recipient with a verified current Supabase email can accept; editor/viewer roles confer only the studio's explicit workspace grants. Acceptance uses the caller identity, never a supplied recipient user ID. Pending invitations lose authority when their issuing owner or intended existing member is revoked. Replaying an accepted invitation cannot restore revoked membership. Portfolio search and access queries resolve the selected studio's grants; a membership in a different studio cannot substitute for that scope.
+
+W2.1 knowledge operations join the same registry from `platform-knowledge.ts` with
+`rpc: platform_knowledge`. User mutations are `start_website_capture`, `start_document_capture`,
+`start_manual_knowledge_draft`, and `correct_knowledge_candidate`. Reads are `get_source_job`,
+`list_brand_sources`, `get_brand_source`, and `get_knowledge_draft`. There is no user-registerable
+complete/capture-attestation operation. Binary document bytes use `PUT /v1/workspaces/{workspace_id}/brands/{brand_id}/source-jobs/{job_id}/content` as a thin adapter around the same machine persist path. Capture errors include `SOURCE_UNSAFE`, `SOURCE_UNSUPPORTED`, `SOURCE_MALFORMED`, `SOURCE_TOO_LARGE`, `SOURCE_TIMEOUT`, `SOURCE_UNREACHABLE`, `SOURCE_INTERRUPTED`, and `SOURCE_EGRESS_UNAVAILABLE`. Idempotency keys replay the live authorized job or draft; a changed canonical input is `IDEMPOTENCY_CONFLICT`. Corrections require `expected_version`.
+
+W2.2–W2.4 add `extract_brand_knowledge`, `propose_brand_knowledge`, `correct_brand_assertion`,
+`ask_brand_knowledge_questions`, `answer_brand_knowledge_question`, `approve_brand_version` and
+`pin_brand_version`, plus reads `get_knowledge_review`, `list_brand_versions`, `get_brand_version`
+and `get_brand_version_pin`. There is no user-registerable extraction-attestation, catalog-import or
+change-monitor operation. `record_brand_extraction` stays a machine RPC. Approve requires the
+current draft version and exact `draft_hash`. Additional errors are `EXPIRED_OFFER` and
+`CONTRADICTORY_KNOWLEDGE` (non-retryable 409). Proposal generation does not start a provider run.

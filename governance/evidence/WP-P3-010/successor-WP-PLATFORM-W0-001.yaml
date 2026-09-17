@@ -1,0 +1,169 @@
+schema_version: 1
+id: WP-PLATFORM-W0-001
+spec_revision: 1
+title: Platform baseline, prototypes and feasibility
+phase: P4
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Complete the Wave 0 baseline, failure reproduction, reviewable studio/brand prototypes
+  and bounded publishing/rendering feasibility evidence; prepare the durable portfolio foundation
+  packet while preserving unverified design/provider/release dependencies.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - execution-providers-billing
+  - api-mcp-cli
+  - experience-contract
+  - canvas-screen-states
+  - quality-gates
+  - roadmap
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - adr-0007-full-platform
+  - adr-0008-packet-supersession
+required_skills:
+  - build-mustbeviral
+  - superdesign
+  - frontend-master
+  - quality-check
+depends_on:
+  - WP-P3-010
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - .agents/**
+    - .superdesign/**
+    - docs/**
+    - governance/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - apps/**
+    - packages/**
+    - supabase/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - execution-providers-billing
+    - api-mcp-cli
+    - experience-contract
+    - canvas-screen-states
+    - quality-gates
+    - roadmap
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - adr-0007-full-platform
+deliverables:
+  - Feature inventory links existing routes, shared commands, contracts, database tables and test
+    evidence, separating specification from local, connected and production proof.
+  - Reproduce navigation context loss, campaign sentinel, closed billing model and styling failures
+    in a controlled browser; record exact triggers and regression acceptance. Reproduce inherited
+    database verification failures and repair underlying test/contract defects within the existing
+    implementation.
+  - Create named desktop/mobile HTML frames using approved Lightfield tokens and actual approved
+    brand materials where available; walkthrough covers studio, persistent brand draft, findings,
+    assets, campaign, review and recovery. Record missing visual approval explicitly; no unapproved
+    production UI is shipped.
+  - Use current official documentation to evaluate Postiz then Sendible then direct publishing, and
+    source-first composition/reference input/render execution. Record capability, isolation, rights,
+    retention, costs, ambiguity, quota and schedule ownership with unknowns explicit. No paid calls
+    or external writes.
+  - Prepare a ready W1 foundation packet with additive studio/grant/brand/location ownership,
+    resource-aware routes and billing read contracts, negative tests and rollback. Record
+    design/provider decisions as prerequisites of dependent work; do not mark unknown access or
+    visual approval passed.
+public_interfaces:
+  - No public runtime behavior is newly advertised. Existing interfaces may receive bounded baseline
+    repairs with tests; new product domains begin in the foundation successor. Prototype fixtures
+    are explicitly local and synthetic where not actual owner-approved assets.
+steps:
+  - id: w0-002-baseline-and-recovery
+    title:
+      Inventory existing capability/evidence and reproduce baseline UI and database failures with
+      bounded repairs.
+    status: pending
+  - id: w0-004-studio-brand-prototypes
+    title: Produce and inspect desktop/mobile studio-to-brand-to-review frames and record the visual
+      review state.
+    status: pending
+  - id: w0-005-integration-render-feasibility
+    title:
+      Record bounded publishing and source-first rendering feasibility, selected local approach and
+      external dependencies.
+    status: pending
+  - id: w0-006-foundation-handoff
+    title: Verify baseline evidence and ready W1 foundation successor without claiming missing
+      human/provider acceptance.
+    status: pending
+acceptance:
+  automated:
+    - id: baseline-traceability
+      criterion:
+        Every baseline capability and reported failure has concrete code/test/browser evidence
+        and a truthful evidence classification.
+      status: pending
+      evidence: []
+    - id: database-baseline
+      criterion: Run local migration/pgTAP verification; repair reproducible inherited failures and
+        document exact unavailable dependencies without replacing connected proof with fixtures.
+      status: pending
+      evidence: []
+    - id: reviewable-prototypes
+      criterion: Named HTML frames and desktop/mobile captures support the complete walkthrough with
+        loading, empty, error, recovery and cross-brand context; no approval is inferred.
+      status: pending
+      evidence: []
+    - id: feasibility-and-foundation
+      criterion:
+        Dated provider/render capability evidence and a ready W1 packet identify the selected
+        local approach, missing access and the exact prerequisites for dependent implementation.
+      status: pending
+      evidence: []
+  manual: []
+quality_gates:
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: repository
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy: Revert bounded baseline repairs and local prototype additions while preserving evidence
+    and immutable history. No production or provider mutations occur. New foundation migrations are
+    designed additively and applied only in their successor.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: read-only
+  destructive_remote_actions: false
+handoff:
+  current_step: w0-002-baseline-and-recovery
+  next_action: Run preflight, inventory existing routes and contracts, then reproduce
+    navigation/billing/styling and inherited database failures in the local test environment.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: null
+  evidence_paths: []
+  completed_at: null

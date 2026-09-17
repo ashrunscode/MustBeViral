@@ -30,6 +30,7 @@ import {
   type P0HandlerResult,
   type P0RestHandlers,
   type P1bHandlers,
+  type PlatformHandlers,
 } from '@mustbeviral/contracts';
 import { Hono, type Context } from 'hono';
 import { CollaborationTicketSigningUnavailableError } from '../../../../packages/collaboration/src/ticket';
@@ -81,6 +82,7 @@ export interface V1Dependencies {
   readonly authenticator?: RequestAuthenticator;
   readonly workspaces: WorkspaceResolutionPort;
   readonly p1bHandlers?: P1bHandlers;
+  readonly platformHandlers?: PlatformHandlers;
   readonly falWebhook?: FalWebhookVerifierPort;
   readonly falWebhookIngest?: (
     event: VerifiedFalWebhookIdentity,

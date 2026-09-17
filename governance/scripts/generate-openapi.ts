@@ -20,6 +20,10 @@ import {
   IssueOAuthTokenBodySchema,
   P0_OPERATION_DATA_SCHEMAS,
   P1B_OPERATION_DATA_SCHEMAS,
+  PLATFORM_OPERATIONS,
+  PLATFORM_OPERATION_NAMES,
+  SOURCE_DOCUMENT_UPLOAD_HTTP,
+  platformPathKeys,
   PublishSkillBodySchema,
   QuoteRunBodySchema,
   StartRunBodySchema,
@@ -271,12 +275,149 @@ function buildOpenApi() {
     (paths[path] ??= {})[route.method.toLowerCase()] = operation;
   }
 
+  for (const name of PLATFORM_OPERATION_NAMES) {
+    const definition = PLATFORM_OPERATIONS[name];
+    const requestName = `${schemaName(name)}PlatformRequest`;
+    const successName = `${schemaName(name)}PlatformResponse`;
+    const input = contractSchemaToJsonSchema(definition.input);
+    const properties = input.properties as Record<string, unknown>;
+    const required = (input.required ?? []) as string[];
+    const pathKeys = platformPathKeys(name);
+    const mutation = definition.method !== 'GET';
+    const parameters: Record<string, unknown>[] = Object.entries(properties)
+      .filter(([key]) => pathKeys.includes(key) || !mutation)
+      .map(([key, schema]) => ({
+        in: pathKeys.includes(key) ? 'path' : 'query',
+        name: key,
+        required: pathKeys.includes(key) || required.includes(key),
+        schema,
+      }));
+    if (mutation)
+      parameters.push({
+        in: 'header',
+        name: 'Idempotency-Key',
+        required: true,
+        schema: { type: 'string', minLength: 1, maxLength: 200 },
+      });
+    schemas[requestName] = {
+      ...input,
+      properties: Object.fromEntries(
+        Object.entries(properties).filter(([key]) => !pathKeys.includes(key)),
+      ),
+      required: required.filter((key) => !pathKeys.includes(key)),
+    };
+    schemas[successName] = contractSchemaToJsonSchema(
+      createApiSuccessEnvelopeSchema(definition.output),
+    );
+    const path = `/v1${definition.path}`;
+    (paths[path] ??= {})[definition.method.toLowerCase()] = {
+      operationId: name,
+      summary: summary(name),
+      ...(name === 'start_document_capture'
+        ? {
+            description:
+              'CLI and MCP send text_content up to 32768 characters. Larger documents use the REST PUT companion after claim_document_upload. CLI and MCP do not upload raw files.',
+          }
+        : {}),
+      security: [{ bearerAuth: [] }],
+      parameters,
+      ...(mutation
+        ? {
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': { schema: { $ref: `#/components/schemas/${requestName}` } },
+              },
+            },
+          }
+        : {}),
+      responses: {
+        [name.startsWith('create_') || name === 'grant_workspace_access' ? '201' : '200']: {
+          description: 'Operation completed.',
+          content: {
+            'application/json': { schema: { $ref: `#/components/schemas/${successName}` } },
+          },
+        },
+        default: {
+          description: 'Operation failed with a typed API error.',
+          content: {
+            'application/json': { schema: { $ref: '#/components/schemas/ApiErrorEnvelope' } },
+          },
+        },
+      },
+    };
+  }
+
+  const upload = SOURCE_DOCUMENT_UPLOAD_HTTP;
+  const uploadPath = `/v1${upload.path}`;
+  const uploadSuccess = 'PutSourceJobContentPlatformResponse';
+  schemas[uploadSuccess] = contractSchemaToJsonSchema(
+    createApiSuccessEnvelopeSchema(PLATFORM_OPERATIONS.start_website_capture.output),
+  );
+  (paths[uploadPath] ??= {}).put = {
+    operationId: 'put_source_job_content',
+    summary: 'Put source job document bytes',
+    description: `Authorized raw document upload after claim_document_upload. Bounded to ${String(upload.maxBytes)} bytes, ${upload.mediaTypes.join(', ')}, a ${String(upload.deadlineMs)} ms deadline, and a ${String(upload.leaseSeconds)}s lease. Available on REST and web only. CLI and MCP send start_document_capture.text_content up to ${String(upload.textContentMaxChars)} characters and do not upload raw files.`,
+    security: [{ bearerAuth: [] }],
+    parameters: [
+      {
+        in: 'path',
+        name: 'workspace_id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      },
+      {
+        in: 'path',
+        name: 'brand_id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      },
+      {
+        in: 'path',
+        name: 'job_id',
+        required: true,
+        schema: { type: 'string', format: 'uuid' },
+      },
+      {
+        in: 'header',
+        name: 'X-Request-Id',
+        required: false,
+        schema: { type: 'string', minLength: 8, maxLength: 128 },
+      },
+    ],
+    requestBody: {
+      required: true,
+      content: Object.fromEntries(
+        upload.mediaTypes.map((mediaType) => [
+          mediaType,
+          { schema: { type: 'string', format: 'binary', maxLength: upload.maxBytes } },
+        ]),
+      ),
+    },
+    responses: {
+      '200': {
+        description: 'Capture completed.',
+        content: {
+          'application/json': { schema: { $ref: `#/components/schemas/${uploadSuccess}` } },
+        },
+      },
+      default: {
+        description:
+          'Typed API error including SOURCE_TIMEOUT, SOURCE_TOO_LARGE, SOURCE_UNSUPPORTED, SOURCE_MALFORMED, SOURCE_INTERRUPTED, FORBIDDEN, and NOT_FOUND.',
+        content: {
+          'application/json': { schema: { $ref: '#/components/schemas/ApiErrorEnvelope' } },
+        },
+      },
+    },
+  };
+
   return {
     openapi: '3.1.0',
     info: {
       title: 'MustBeViral Core API',
       version: API_SCHEMA_VERSION,
-      description: 'Typed P0 and P1b REST contract for the ViralGraph cleanroom Core Worker.',
+      description:
+        'Typed execution, programmatic access and platform REST contracts for the ViralGraph cleanroom Core Worker.',
     },
     servers: [{ url: '/' }],
     paths,

@@ -1,0 +1,180 @@
+schema_version: 1
+id: WP-PLATFORM-W2-003
+spec_revision: 1
+title: Change detection, expiry lifecycle, contradiction handling and catalog import
+phase: P4
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Implement W2.5 change detection, expiry, contradiction lifecycle and manual/catalog
+  imports on owner-approved W2.4 brand versions so stale offers cannot become newly approved
+  content, conflicting facts request review, and a business can import a catalog or recapture a
+  changed source without mutating an approved snapshot. Preserve W1 studio, brand, invitation and
+  billing contracts and W2.1–W2.4 capture, extraction, proposals, questions, exact-hash approval
+  and campaign pins. No outreach, provider runs, charging or Stripe mutation. Do not claim Wave 2
+  exited or Wave 3 started.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - api-mcp-cli
+  - execution-providers-billing
+  - experience-contract
+  - quality-gates
+  - roadmap
+  - local-env-secrets
+  - adr-0007-full-platform
+required_skills:
+  - build-mustbeviral
+  - data-architect
+  - auth-fortress
+  - api-and-interface-design
+  - superdesign
+  - frontend-master
+  - quality-check
+depends_on:
+  - WP-PLATFORM-W2-002
+scope:
+  allowed_paths:
+    - apps/web/**
+    - apps/core/**
+    - apps/cli/**
+    - apps/mcp/**
+    - packages/contracts/**
+    - packages/domain/**
+    - packages/db/**
+    - packages/config/**
+    - packages/ui/**
+    - supabase/**
+    - governance/**
+    - docs/**
+    - .superdesign/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+  forbidden_paths:
+    - .github/workflows/**
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - api-mcp-cli
+    - execution-providers-billing
+    - experience-contract
+    - quality-gates
+    - roadmap
+    - local-env-secrets
+deliverables:
+  - >
+    Detect source and assertion changes against an approved brand version without silently replacing
+    owner-confirmed facts. Recapture and re-extraction produce a reviewable difference. Do not add a
+    scheduled recapture pipeline, new queue driver or live enablement flag in this packet.
+  - >
+    Add expiry lifecycle so an offer that becomes stale after approval cannot leak into a later
+    approved version or campaign pin without operator review. Preserve the W2.4 approve-time expired
+    offer and contradiction refusal.
+  - >
+    Handle contradictory facts as an operator review lifecycle, including disputed status and
+    required correction, without auto-resolving or mixing WashBodega and UnPile knowledge.
+  - >
+    Add manual/catalog import for bounded text, Markdown, HTML or spreadsheet-like catalogs using
+    the existing source/assertion pattern. Unknowns stay unknown. Do not add PDF/DOCX parsers, live
+    public crawlers, paid-provider inference or reusable campaign assets from website images.
+  - >
+    Verify desktop and mobile connected WashBodega and UnPile journeys for recapture difference,
+    expiry, contradiction review and catalog import, then stop. Do not claim Wave 2 exited or Wave 3
+    started.
+public_interfaces:
+  - >
+    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections for
+    change-diff, expiry-review, contradiction-review and catalog-import commands. Preserve W1
+    identity, setup, presentation and billing operations and W2.1–W2.4 capture, extract, propose,
+    question, approve-version and pin/read-version operations.
+  - >
+    Additive change, expiry and import persistence with explicit ownership, forced RLS, generated
+    database types and application rollback to the prior schema-compatible version. Reuse the W2.1
+    job/source/candidate and W2.4 assertion/version/pin pattern. Do not add a new queue driver or
+    live enablement flag.
+steps:
+  - id: w2c-001-change-detection
+    title: Detect source and assertion changes against an approved brand version.
+    status: pending
+  - id: w2c-002-expiry-lifecycle
+    title: Keep stale offers out of later approved versions without silent replacement.
+    status: pending
+  - id: w2c-003-contradiction-and-import
+    title: Review contradictory facts and import bounded manual catalogs.
+    status: pending
+  - id: w2c-004-journeys-and-wave-close
+    title: Verify two-brand change, expiry and import journeys without claiming Wave 3.
+    status: pending
+acceptance:
+  automated:
+    - id: change-detection-review
+      criterion: Recapture or re-extraction against an approved WashBodega or UnPile version
+        produces a reviewable difference with source, capture time, excerpt and method. Approved
+        snapshots stay immutable. Silent replacement of owner-confirmed facts is refused.
+      status: pending
+      evidence: []
+    - id: expiry-lifecycle
+      criterion: An offer that expires after approval cannot become newly approved content or leak
+        into a later campaign pin without operator review. The W2.4 approve-time expired-offer
+        refusal remains. This is expiry lifecycle, not only the W2.4 guard.
+      status: pending
+      evidence: []
+    - id: contradiction-and-catalog-import
+      criterion: Conflicting facts request review and cannot auto-resolve. Bounded text, Markdown,
+        HTML or spreadsheet-like catalog import persists typed assertions with provenance. Unknowns
+        stay unknown. PDF/DOCX, live crawls and paid inference remain refused. UnPile imports cannot
+        produce WashBodega facts and vice versa.
+      status: pending
+      evidence: []
+    - id: two-brand-change-journeys
+      criterion: Desktop and mobile connected WashBodega and UnPile journeys cover recapture
+        difference, expiry review, contradiction review and catalog import without mixing identity
+        or sources. Independent review evidence is recorded. No outreach, charging, provider run or
+        production remote write. UI stays on the accepted September 9 Lightfield studio direction.
+        Passing this packet is not a Wave 2 exit claim.
+      status: pending
+      evidence: []
+  manual: []
+quality_gates:
+  - id: database
+    command: pnpm supabase:test
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: repository
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy: Revert application changes while retaining additive change, expiry and import tables.
+    Confirm W1 studio, brand, invitation, mapping and billing commands and W2.1–W2.4 capture,
+    extraction, proposal, question, approval and pin commands still work. Do not delete tenant data,
+    weaken RLS, auto-approve knowledge, reuse website images as campaign assets or enable checkout
+    to simulate recovery.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: read-only
+  destructive_remote_actions: false
+handoff:
+  current_step: w2c-001-change-detection
+  next_action: Detect source and assertion changes against an approved brand version.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: WP-PLATFORM-W3-001
+  evidence_paths: []
+  completed_at: null

@@ -65,7 +65,7 @@ export function isAuthorityTransitionPath(relativePath) {
   return (
     normalized === 'PROJECT_STATE.yaml' ||
     normalized === PACKET_PATH ||
-    /^governance\/evidence\/[A-Z0-9][A-Z0-9._-]+\/(?:transition-receipt|completed-work-packet)\.yaml$/.test(
+    /^governance\/evidence\/[A-Z0-9][A-Z0-9._-]+\/(?:transition-receipt|completed-work-packet|superseded-work-packet)\.yaml$/.test(
       normalized,
     )
   );

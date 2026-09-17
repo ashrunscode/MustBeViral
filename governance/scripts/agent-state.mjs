@@ -27,6 +27,14 @@ import {
   evidencePathsForPacket,
 } from './packet-transition.mjs';
 import { validateTransitionReceipts } from './validate-transition-receipts.mjs';
+import {
+  buildSupersessionState,
+  collectSupersessionErrors,
+  collectSupersessionScopeErrors,
+  createSupersessionReceipt,
+  supersessionEvidencePaths,
+  supersessionWritePaths,
+} from './packet-supersession.mjs';
 import { collectPacketErrors, validateWorkPacket } from './validate-work-packet.mjs';
 
 const STATE_PATH = 'PROJECT_STATE.yaml';
@@ -78,7 +86,7 @@ function isAuthorityTransitionPath(relativePath) {
   return (
     normalized === STATE_PATH ||
     normalized === PACKET_PATH ||
-    /^governance\/evidence\/[A-Z0-9][A-Z0-9._-]+\/(?:transition-receipt|completed-work-packet)\.yaml$/.test(
+    /^governance\/evidence\/[A-Z0-9][A-Z0-9._-]+\/(?:transition-receipt|completed-work-packet|superseded-work-packet)\.yaml$/.test(
       normalized,
     )
   );
@@ -421,6 +429,110 @@ function finish() {
   return true;
 }
 
+function supersede() {
+  const successorPath = argument('--successor');
+  const decisionPath = argument('--decision');
+  if (!successorPath || !decisionPath) {
+    throw new Error(
+      'supersede requires --successor <relative-yaml-path> --decision <relative-yaml-path>',
+    );
+  }
+  const { state, packet, manifest, loadedAuthority } = load();
+  if (loadedAuthority.changedPaths.length)
+    throw new Error('supersede requires a clean committed predecessor');
+  if (!decisionPath.startsWith(`governance/evidence/${packet.id}/`)) {
+    throw new Error('owner decision must be inside predecessor evidence');
+  }
+  for (const inputPath of [successorPath, decisionPath]) {
+    const inspection = inspectEvidence(inputPath);
+    if (
+      !inspection.regularFile ||
+      inspection.symbolicLink ||
+      !inspection.headContained ||
+      !inspection.contentMatchesHead ||
+      !inspection.size
+    ) {
+      throw new Error(`supersession input must be a regular committed HEAD file: ${inputPath}`);
+    }
+    loadedAuthority.stableFiles.push({ path: inputPath, content: readText(inputPath) });
+  }
+  const successor = YAML.parse(readText(successorPath));
+  const decision = YAML.parse(readText(decisionPath));
+  const errors = [
+    ...collectSupersessionErrors({
+      state,
+      packet,
+      successor,
+      decision,
+      manifest,
+      branch: currentBranch(),
+    }),
+  ];
+  if (errors.length) throw new Error(errors.join('\n'));
+  errors.push(...collectSupersessionScopeErrors({ packet, successor }));
+  const evidenceEntries = supersessionEvidencePaths({
+    root: repoRoot,
+    packet,
+    decisionPath,
+    successorPath,
+    head: loadedAuthority.head,
+  }).map((evidencePath) => {
+    const inspection = inspectEvidence(evidencePath);
+    if (
+      !inspection.regularFile ||
+      inspection.symbolicLink ||
+      !inspection.headContained ||
+      !inspection.contentMatchesHead ||
+      !inspection.size
+    ) {
+      errors.push(`supersession evidence must be a regular committed HEAD file: ${evidencePath}`);
+    }
+    loadedAuthority.evidenceFiles.push({ path: evidencePath, sha256: inspection.sha256 });
+    return { path: evidencePath, sha256: inspection.sha256, git_blob_oid: inspection.gitBlobOid };
+  });
+  if (errors.length) throw new Error(errors.join('\n'));
+  const transitionedAt = new Date().toISOString();
+  const receipt = createSupersessionReceipt({
+    packet,
+    successor,
+    decisionPath,
+    successorPath,
+    predecessorHead: loadedAuthority.head,
+    evidenceEntries,
+    transitionedAt,
+  });
+  const receiptErrors = validateSchema(
+    'governance/schemas/packet-transition-receipt.schema.json',
+    receipt,
+    'supersession receipt',
+  );
+  if (receiptErrors.length) throw new Error(receiptErrors.join('\n'));
+  const nextState = buildSupersessionState({ state, successor, decisionPath, transitionedAt });
+  validateProspectiveAuthority({ state: nextState, packet: successor, manifest });
+  const [snapshotPath, receiptPath] = supersessionWritePaths(packet);
+  persistAuthority({
+    loadedAuthority,
+    writes: [
+      { path: snapshotPath, content: loadedAuthority.packetText, expected: expectedAbsent() },
+      { path: receiptPath, content: yaml(receipt), expected: expectedAbsent() },
+      {
+        path: PACKET_PATH,
+        content: yaml(successor),
+        expected: expectedExisting(loadedAuthority.packetText),
+      },
+      {
+        path: STATE_PATH,
+        content: yaml(nextState),
+        expected: expectedExisting(loadedAuthority.stateText),
+      },
+    ],
+  });
+  console.log(
+    `Superseded ${packet.id}; activated ${successor.id}. Unfinished acceptance remains unproved.`,
+  );
+  return true;
+}
+
 function recover() {
   recoverAuthorityTransition({
     root: repoRoot,
@@ -445,8 +557,9 @@ try {
   else if (action === 'verify') verify();
   else if (action === 'handoff') validated = handoff();
   else if (action === 'finish') validated = finish();
+  else if (action === 'supersede') validated = supersede();
   else if (action === 'recover') validated = recover();
-  else throw new Error('usage: agent-state.mjs <start|verify|handoff|finish|recover>');
+  else throw new Error('usage: agent-state.mjs <start|verify|handoff|finish|supersede|recover>');
   if (!validated) validateWorkPacket({ checkDiff: false });
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));

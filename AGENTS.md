@@ -1,66 +1,32 @@
 # MustBeViral agent contract
 
-This file is the sole authority for agent behavior in this repository. Product, UX, architecture, and operational behavior live in the documents registered by `docs/MANIFEST.yaml`.
+This file owns agent behavior. `PROJECT_STATE.yaml` owns current state and external-mutation policy; `docs/MANIFEST.yaml` assigns accepted product, UX, architecture, and operational authorities. Research is informative; Git/PRs hold history.
 
-## Start every task
+## Start governed work
 
-1. Use the repository-pinned Node and pnpm versions.
-2. Run `pnpm agent:preflight` before reading implementation files or making changes.
-3. Read the documents and active work packet printed by preflight, ending with `docs/delivery/ACTIVE_WORK_PACKET.yaml`.
-4. Confirm the active packet has no blocker or pending decision and that the current branch matches it.
-5. Work only on the packet's current step and allowed paths.
+- Use repository-pinned Node/pnpm and CLIs. If dependencies are needed, use `corepack pnpm install --frozen-lockfile`; do not substitute package managers.
+- Run `pnpm agent:preflight` before packet implementation or edits. A read-only explanation of a named document can use that document directly.
+- Read `PROJECT_STATE.yaml` and `docs/delivery/ACTIVE_WORK_PACKET.yaml`. Use preflight's document list as an authority map; read sections governing the current step and all applicable acceptance requirements before declaring completion.
+- Confirm the packet, branch, current step, allowed paths, blockers, and pending decisions. Work within that scope. Stop dependent implementation on failed preflight, conflicting authority, or a missing required decision; record the blocker and continue only independently authorized work.
 
-If dependencies are not installed, use `corepack pnpm install --frozen-lockfile`. Never substitute npm, Yarn, Bun, Deno, or an unpinned global platform CLI.
+## Preserve the architecture and controls
 
-## Authority and scope
+- Build MustBeViral Studio's full-platform scope accepted in ADR-0007 for brand operators and multi-brand studios using ViralGraph V2: Next.js/Vercel, Supabase, one Core Worker, private R2, and fal-first provider drivers.
+- Do not revive legacy React Router, D1-auth, marketing-autopilot, or System DNA. New publishing and portfolio work belongs in V2. Do not add a second documentation database, archive, progress diary, nested AGENTS.md, or competing status file.
+- Preserve strict TypeScript, explicit boundaries, deterministic state machines, immutable revisions, integer money, and private artifacts. Supabase/Postgres owns permissions, revisions, runs, and money; Durable Objects/caches must not become a second authority.
+- Migrations, Zod/OpenAPI contracts, environment schemas, and the model catalog own implemented contracts. Generate projections; keep browser/REST/CLI/MCP transports thin around shared command/query handlers.
+- Never expose secrets, raw environment values, account tokens, customer media, or signed URLs in docs, logs, fixtures, evidence, or messages. Remote destructive actions require state and packet authority naming exact resources and rollback evidence.
 
-- `PROJECT_STATE.yaml` owns current phase, active packet, next action, and external-mutation policy.
-- `docs/MANIFEST.yaml` assigns one accepted authority per topic.
-- Accepted product, UX, and architecture documents define intended behavior.
-- Migrations, Zod/OpenAPI contracts, typed environment schemas, and the model catalog define implemented contracts.
-- The active work packet authorizes one bounded slice. It cannot override accepted authority.
-- Research is informative only. Git and pull requests hold history.
-- If sources conflict or a required decision is absent, stop that packet and record a blocker. Do not invent a local convention.
+## Skills and verification
 
-## Mandatory cleanroom rules
+Use `.agents/skills/build-mustbeviral/SKILL.md` for active-packet implementation, verification, or handoff. Load packet-required specialists for their matching steps; other skills should supply needed, available expertise. Skills never override repository authority. New queues and live enablement retain architecture/environment gates. Verify mutable provider facts against current official documentation when relying on them.
 
-- MustBeViral Studio serves DTC/e-commerce marketing teams first. Agency workflows are deferred.
-- ViralGraph V2 uses Next.js/Vercel, Supabase, one Cloudflare Core Worker, private R2, and fal-first provider drivers.
-- Never revive the legacy React Router, D1-auth, marketing-autopilot, multi-brand social-posting, or System DNA implementation.
-- Do not add a second documentation database, `docs/archive`, progress diary, nested `AGENTS.md`, or competing status file.
-- Never expose secrets, raw environment values, account tokens, customer media, or signed URLs in docs, logs, evidence, fixtures, or messages.
-- Never perform a remote destructive action unless `PROJECT_STATE.yaml` and the active packet explicitly allow the exact resource IDs and rollback evidence.
+Use meaningful regression coverage for changed behavior and preserve every packet-required test. Continue through implementation, affected behavior, and repairs caused by the change. Product acceptance requires `pnpm agent:verify` and all packet checks. Update only mutable progress, evidence, blockers, and handoff fields; use `agent:handoff` when product work remains and `agent:finish` only when every criterion is proven and the successor is ready. Report results, evidence, remaining risks, and one next action.
 
-## Skills
+## Owner-directed authority changes
 
-Use `.agents/skills/build-mustbeviral/SKILL.md` when building, resuming, reviewing, or handing off this project. When available, select only the specialist skills relevant to the packet:
+Do not broaden a ready packet in the same change as implementation. Packet replacement follows ADR-0008: commit the authority-only amendment first, then use audited supersession; never claim unfinished acceptance passed.
 
-- Architecture: `architect-prime`, then `think` for irreversible decisions.
-- UI: `brand/BRAND.md` is the design brief and `docs/ux/EXPERIENCE_CONTRACT.md` the accepted UX authority; `frontend-design` to build, `web-design-guidelines` to review UI code, `design-qa-loop` before merging UI; use `core-web-vitals` for measured performance.
-- Data/auth/API: `data-architect`, `auth-fortress`, `api-craft`.
-- Cloudflare: `cloudflare`, `wrangler`, `workers-best-practices`, `file-forge`.
-- Billing/email/operations: `billing-engine`, `email-flow`, `observability-ops`.
-- Verification: `test-mastery`, then `quality-check`.
-- P2 only: `durable-objects` and `realtime-sync`.
-- Queues only after an accepted evidence gate: `queue-master`.
-
-Skills accelerate work but never override repository authority. Retrieve current official provider documentation before using unstable APIs, limits, prices, model IDs, or CLI behavior.
+An explicitly requested instruction-only amendment follows a separately committed authorization naming its exact paths and purpose. Preserve product steps, acceptance, required skills/checks, external-effects policy, state, and history. Validate documentation, governance, skill frontmatter, and references proportionally; do not use packet handoff/finish to count instruction editing as product progress.
 
 Brand and design context: read `brand/context.md` and `brand/BRAND.md` before customer-facing copy or UI work; repo-local agent skills live in `.agents/skills/` (Claude Code: `.claude/skills/`).
-
-## Implementation discipline
-
-- Preserve strict TypeScript, explicit boundaries, deterministic state machines, immutable revisions, integer money, and private-by-default artifacts.
-- Add or update tests with every behavioral change.
-- Use generated contracts instead of hand-maintained duplicates.
-- Keep browser, REST, CLI, and MCP transports thin; shared command/query handlers own behavior.
-- Keep Supabase/Postgres authoritative for permissions, revisions, runs, and money. Do not create a second authority in Durable Objects or local caches.
-- Do not broaden a ready packet's scope in the same change as implementation.
-
-## Finish or hand off
-
-1. Run `pnpm agent:verify` and the packet's named checks.
-2. Update only mutable packet progress, evidence, blockers, and handoff fields.
-3. Run `pnpm agent:handoff` when work remains.
-4. Run `pnpm agent:finish` only when every acceptance criterion is proven and the successor packet is ready.
-5. Report changed paths, checks, evidence, remaining risks, and exactly one next action.

@@ -19,8 +19,12 @@ const stepLabels: Readonly<Record<CampaignWorkflowStep, string>> = {
   receipt: 'Export and receipt',
 };
 
+export function isCampaignWorkflowStep(value: unknown): value is CampaignWorkflowStep {
+  return typeof value === 'string' && Object.hasOwn(stepLabels, value);
+}
+
 export function campaignResumeHref(workspace: string, step: CampaignWorkflowStep): string {
-  return `/studio/${workspace}/${step}`;
+  return `/studio/${encodeURIComponent(workspace)}/${step}`;
 }
 
 export function readCampaignProgress(): CampaignProgress | null {
@@ -28,15 +32,33 @@ export function readCampaignProgress(): CampaignProgress | null {
   try {
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     if (raw === null) return null;
-    const parsed = JSON.parse(raw) as CampaignProgress;
+    const parsed: unknown = JSON.parse(raw);
     if (
+      parsed === null ||
+      typeof parsed !== 'object' ||
+      !('workspace' in parsed) ||
       typeof parsed.workspace !== 'string' ||
-      typeof parsed.step !== 'string' ||
-      typeof parsed.resumeHref !== 'string'
+      !/^[a-z0-9_-]{1,100}$/iu.test(parsed.workspace) ||
+      !('step' in parsed) ||
+      !isCampaignWorkflowStep(parsed.step) ||
+      !('resumeHref' in parsed) ||
+      parsed.resumeHref !== campaignResumeHref(parsed.workspace, parsed.step) ||
+      !('savedAt' in parsed) ||
+      typeof parsed.savedAt !== 'string' ||
+      !Number.isFinite(Date.parse(parsed.savedAt)) ||
+      !('campaignLabel' in parsed) ||
+      typeof parsed.campaignLabel !== 'string'
     ) {
       return null;
     }
-    return parsed;
+    return {
+      workspace: parsed.workspace,
+      step: parsed.step,
+      stepLabel: stepLabels[parsed.step],
+      resumeHref: parsed.resumeHref,
+      savedAt: parsed.savedAt,
+      campaignLabel: parsed.campaignLabel,
+    };
   } catch {
     return null;
   }
@@ -56,12 +78,20 @@ export function writeCampaignProgress(input: {
     campaignLabel: input.campaignLabel ?? 'Current launch pack',
   });
   if (typeof window !== 'undefined') {
-    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    try {
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch {
+      // Optional browser resume must not break the active workflow when storage is denied/full.
+    }
   }
   return progress;
 }
 
 export function clearCampaignProgress(): void {
   if (typeof window === 'undefined') return;
-  window.sessionStorage.removeItem(STORAGE_KEY);
+  try {
+    window.sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Clearing unavailable browser storage does not affect authoritative campaign state.
+  }
 }

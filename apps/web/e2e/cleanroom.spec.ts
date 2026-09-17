@@ -17,6 +17,8 @@ async function screenshotPath(name: string) {
 test('renders the approved campaign brief golden at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio');
+  await expect(page).toHaveURL(/\/studio\/continue$/);
+  await page.getByRole('link', { name: 'Start campaign brief' }).click();
   await expect(page).toHaveURL(/\/studio\/lumen-skin\/brief$/);
   await expect(page.getByRole('heading', { name: 'Claims & legal' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Validate brief' })).toBeDisabled();

@@ -7,6 +7,13 @@ import YAML from 'yaml';
 import { inspectHeadEvidence } from './git-evidence.mjs';
 import { fail, listRepositoryFiles, repoRoot, toPosix, validateSchema } from './lib.mjs';
 import { canonicalPacketSha256, evidencePathsForPacket } from './packet-transition.mjs';
+import {
+  collectSupersessionErrors,
+  collectSupersessionScopeErrors,
+  supersessionEvidencePaths,
+  unfinishedStepIds,
+  unprovedAcceptanceIds,
+} from './packet-supersession.mjs';
 
 const TRANSITION_GENESIS_PACKET = 'WP-R0-002';
 
@@ -51,6 +58,112 @@ function sameValues(left, right) {
   return JSON.stringify([...left].sort()) === JSON.stringify([...right].sort());
 }
 
+function collectSupersededReceiptErrors({ root, receipt, receiptPath }) {
+  const errors = [];
+  try {
+    const expectedPath = `governance/evidence/${receipt.packet_id}/superseded-work-packet.yaml`;
+    if (receipt.closed_packet_path !== expectedPath)
+      return [`${receiptPath} superseded snapshot path is invalid`];
+    const snapshot = readYamlAt(root, expectedPath);
+    const decision = readYamlAt(root, receipt.decision_path);
+    const successor = readYamlAt(root, receipt.successor_packet_path);
+    const committedYaml = (p) =>
+      YAML.parse(
+        execFileSync('git', ['show', `${receipt.predecessor_head}:${p}`], {
+          cwd: root,
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+        }),
+      );
+    const predecessor = committedYaml('docs/delivery/ACTIVE_WORK_PACKET.yaml');
+    const state = committedYaml('PROJECT_STATE.yaml');
+    const manifest = committedYaml('docs/MANIFEST.yaml');
+    const inputErrors = collectSupersessionErrors({
+      state,
+      packet: snapshot,
+      successor,
+      decision,
+      manifest,
+      branch: receipt.branch,
+    });
+    errors.push(...inputErrors);
+    if (inputErrors.length) return errors;
+    errors.push(...collectSupersessionScopeErrors({ packet: snapshot, successor }));
+    if (
+      canonicalPacketSha256(snapshot) !== receipt.closed_packet_sha256 ||
+      canonicalPacketSha256(snapshot) !== canonicalPacketSha256(predecessor)
+    ) {
+      errors.push(`${receiptPath} superseded snapshot differs from committed predecessor`);
+    }
+    if (
+      snapshot.id !== receipt.packet_id ||
+      snapshot.spec_revision !== receipt.spec_revision ||
+      snapshot.phase !== receipt.phase ||
+      snapshot.branch !== receipt.branch
+    ) {
+      errors.push(`${receiptPath} superseded metadata differs from snapshot`);
+    }
+    if (
+      successor.id !== receipt.successor_packet_id ||
+      successor.spec_revision !== receipt.successor_spec_revision ||
+      canonicalPacketSha256(successor) !== receipt.successor_packet_sha256
+    ) {
+      errors.push(`${receiptPath} successor identity differs from receipt`);
+    }
+    if (
+      !sameValues(unfinishedStepIds(snapshot), receipt.unfinished_step_ids) ||
+      !sameValues(unprovedAcceptanceIds(snapshot), receipt.unproved_acceptance_ids)
+    ) {
+      errors.push(`${receiptPath} unfinished work differs from snapshot`);
+    }
+    if (!receipt.decision_path.startsWith(`governance/evidence/${snapshot.id}/`)) {
+      errors.push(`${receiptPath} decision is outside predecessor evidence`);
+    }
+    const authorizedAt = Date.parse(decision.authorized_at);
+    const supersededAt = Date.parse(receipt.superseded_at);
+    if (
+      !Number.isFinite(authorizedAt) ||
+      !Number.isFinite(supersededAt) ||
+      authorizedAt > supersededAt
+    ) {
+      errors.push(`${receiptPath} invalid supersession authorization time`);
+    }
+    const expectedEvidence = supersessionEvidencePaths({
+      root,
+      packet: snapshot,
+      decisionPath: receipt.decision_path,
+      successorPath: receipt.successor_packet_path,
+      head: receipt.predecessor_head,
+    });
+    if (
+      !sameValues(
+        expectedEvidence,
+        receipt.evidence_entries.map((e) => e.path),
+      )
+    )
+      errors.push(`${receiptPath} evidence does not cover predecessor history`);
+    for (const entry of receipt.evidence_entries) {
+      const inspection = inspectHeadEvidence({
+        root,
+        relativePath: entry.path,
+        head: receipt.predecessor_head,
+      });
+      if (
+        !inspection.regularFile ||
+        inspection.symbolicLink ||
+        !inspection.contentMatchesHead ||
+        inspection.headSha256 !== entry.sha256 ||
+        inspection.gitBlobOid !== entry.git_blob_oid
+      ) {
+        errors.push(`${receiptPath} superseded evidence is absent or changed: ${entry.path}`);
+      }
+    }
+  } catch (error) {
+    errors.push(`${receiptPath} invalid supersession evidence: ${String(error)}`);
+  }
+  return errors;
+}
+
 export function collectTransitionReceiptErrors({ root, receiptPath }) {
   const errors = [];
   let receipt;
@@ -75,6 +188,9 @@ export function collectTransitionReceiptErrors({ root, receiptPath }) {
     errors.push(`${receiptPath} predecessor_head is not available in Git history`);
   } else if (!commitIsAncestor(root, receipt.predecessor_head)) {
     errors.push(`${receiptPath} predecessor_head is not an ancestor of current HEAD`);
+  }
+  if (receipt.schema_version === 2) {
+    return [...errors, ...collectSupersededReceiptErrors({ root, receipt, receiptPath })];
   }
   const expectedSnapshotPath = `governance/evidence/${receipt.packet_id}/completed-work-packet.yaml`;
   if (receipt.closed_packet_path !== expectedSnapshotPath) {

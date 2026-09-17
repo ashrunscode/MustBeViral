@@ -1,0 +1,20 @@
+schema_version: 1
+action: supersede
+authorized_by: repository-owner
+authorization_source: explicit_user_instruction
+authorized_at: 2026-09-09T23:25:46.505Z
+authorization_statement: 'PLEASE IMPLEMENT THIS PLAN: Execute the MustBeViral full-platform plan.
+  Begin with the immediate rebaseline you selected.'
+selection_statement: Rebaseline now (Recommended)
+predecessor_packet_id: WP-P3-009
+predecessor_spec_revision: 2
+successor_packet_id: WP-P3-010
+successor_spec_revision: 2
+branch: codex/viralgraph-cleanroom
+source_plan_sha256: 6d998574ebc8d04af9de32a7aa6a1a6866cdf4eb12b2b7568eb0a5472bac3fee
+reason: Start the owner-approved full-platform program immediately without presenting unfinished
+  private observation or traffic approval as completed.
+carried_release_obligations:
+  - 'WP-P3-009 observation-window: pending, continuous private observation remains unproved.'
+  - 'WP-P3-009 fresh-traffic-decision: pending, no owner approval of public traffic.'
+external_effects: none

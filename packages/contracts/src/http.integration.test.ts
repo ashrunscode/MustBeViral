@@ -4,6 +4,11 @@ import openApi from '../openapi/core.v1.json';
 import { API_SCHEMA_VERSION, HealthResponseSchema, SERVICE_GENERATION } from './http';
 import { P0_AUTHENTICATED_REST_OPERATIONS, P0_REST_OPERATIONS } from './rest';
 import { P1B_JWT_MANAGEMENT_OPERATIONS } from './p1b';
+import {
+  PLATFORM_OPERATIONS,
+  PLATFORM_OPERATION_NAMES,
+  SOURCE_DOCUMENT_UPLOAD_HTTP,
+} from './platform';
 
 const P1B_REST_OPERATIONS = ['issue_oauth_token', ...P1B_JWT_MANAGEMENT_OPERATIONS] as const;
 
@@ -16,7 +21,7 @@ describe('Zod and OpenAPI integration', () => {
     expect(example.generation).toBe(SERVICE_GENERATION);
   });
 
-  it('publishes health and the complete P0/P1b Worker surface from the contract generator', () => {
+  it('publishes health, existing execution and registered platform operations from the contract generator', () => {
     const document = openApi as unknown as Readonly<{
       paths: Readonly<
         Record<
@@ -29,8 +34,26 @@ describe('Zod and OpenAPI integration', () => {
       .flatMap((path) => Object.values(path))
       .map((operation) => operation.operationId);
 
-    expect(Object.keys(document.paths)).toHaveLength(29);
-    expect(operations).toEqual(['get_health', ...P0_REST_OPERATIONS, ...P1B_REST_OPERATIONS]);
+    const extraCompanionPaths = [`/v1${SOURCE_DOCUMENT_UPLOAD_HTTP.path}`] as const;
+    expect(Object.keys(document.paths)).toHaveLength(
+      29 +
+        new Set(Object.values(PLATFORM_OPERATIONS).map((operation) => operation.path)).size +
+        extraCompanionPaths.length,
+    );
+    for (const companionPath of extraCompanionPaths) {
+      expect(Object.hasOwn(document.paths, companionPath)).toBe(true);
+    }
+    const companionOperationId = document.paths[extraCompanionPaths[0]]?.put?.operationId;
+    expect(companionOperationId).toBe('put_source_job_content');
+    expect([...operations].sort()).toEqual(
+      [
+        'get_health',
+        ...P0_REST_OPERATIONS,
+        ...P1B_REST_OPERATIONS,
+        ...PLATFORM_OPERATION_NAMES,
+        companionOperationId,
+      ].sort(),
+    );
     expect(
       operations.filter((operation) =>
         P0_AUTHENTICATED_REST_OPERATIONS.includes(
@@ -40,6 +63,44 @@ describe('Zod and OpenAPI integration', () => {
     ).toHaveLength(19);
     expect(operations).toContain('issue_oauth_token');
     expect(operations).toContain('publish_skill');
+  });
+
+  it('publishes the authorized binary document PUT companion from SOURCE_DOCUMENT_UPLOAD_HTTP', () => {
+    const upload = SOURCE_DOCUMENT_UPLOAD_HTTP;
+    const put = openApi.paths[`/v1${upload.path}`].put;
+    expect(put.operationId).toBe('put_source_job_content');
+    expect(put.security).toEqual([{ bearerAuth: [] }]);
+    expect(upload.method).toBe('PUT');
+    expect(upload.transports).toEqual(['rest', 'web']);
+    expect(put.requestBody.required).toBe(true);
+    expect(Object.keys(put.requestBody.content).sort()).toEqual([...upload.mediaTypes].sort());
+    for (const mediaType of upload.mediaTypes) {
+      expect(put.requestBody.content[mediaType].schema).toEqual({
+        type: 'string',
+        format: 'binary',
+        maxLength: upload.maxBytes,
+      });
+    }
+    expect(put.description).toContain(String(upload.maxBytes));
+    expect(put.description).toContain(String(upload.deadlineMs));
+    expect(put.description).toContain(`${String(upload.leaseSeconds)}s`);
+    expect(put.description).toContain(String(upload.textContentMaxChars));
+    expect(put.description).toMatch(/REST and web only/u);
+    expect(put.description).toMatch(/do not upload raw files/u);
+    expect(put.parameters).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ in: 'path', name: 'workspace_id', required: true }),
+        expect.objectContaining({ in: 'path', name: 'brand_id', required: true }),
+        expect.objectContaining({ in: 'path', name: 'job_id', required: true }),
+        expect.objectContaining({ in: 'header', name: 'X-Request-Id', required: false }),
+      ]),
+    );
+    expect(put.responses['200'].content['application/json'].schema).toEqual({
+      $ref: '#/components/schemas/PutSourceJobContentPlatformResponse',
+    });
+    expect(put.responses.default.content['application/json'].schema).toEqual({
+      $ref: '#/components/schemas/ApiErrorEnvelope',
+    });
   });
 
   it('publishes exact safe get_run recovery/spend and receipt provider-job lineage fields', () => {
