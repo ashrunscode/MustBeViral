@@ -1,0 +1,46 @@
+schema_version: 1
+packet_id: WP-PLATFORM-W0-001
+spec_revision: 1
+phase: P4
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-10T20:22:52.186Z
+successor_packet_id: WP-PLATFORM-W1-001
+predecessor_head: 0242cd26dd3e980774ee52cd0a3a447d10689eb7
+closed_packet_path: governance/evidence/WP-PLATFORM-W0-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
+  - governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
+  - governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
+  - governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
+  - governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
+  - governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
+  - governance/evidence/WP-PLATFORM-W0-001/database-baseline-2026-09-10.json
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-W0-001/baseline-2026-09-09.md
+    sha256: f22db5cdc88110d75522e76f8376cf88878534c876bb0b4534a778899ff28ea2
+    git_blob_oid: e48aaf580842ab5d6bceea320c43016e1c3a72ef
+  - path: governance/evidence/WP-PLATFORM-W0-001/database-baseline-2026-09-10.json
+    sha256: 024b547f8bd5baf516101e0bac7818f99ec675518ed8fb65806176e4fd298622
+    git_blob_oid: d37ffb97ae1d20b43a1e2e472a4557f5814625e0
+  - path: governance/evidence/WP-PLATFORM-W0-001/database-recovery-2026-09-10.md
+    sha256: 34ed933da52e3b293f4c57f73ef19d23d988916856d18b750f195b8332317419
+    git_blob_oid: a65fc0e7d14645fc181fd781a004cf01614f9b38
+  - path: governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md
+    sha256: bea39558e77bf96b624d45af9d3ee44177e225b11f4bf41775a06b31b46bf7de
+    git_blob_oid: 5a79122e075c09201f6105c7fcddd6b63e50f2ee
+  - path: governance/evidence/WP-PLATFORM-W0-001/publishing-render-feasibility-2026-09-09.md
+    sha256: 60532e171b1cedaa43ca89e89aed278ffca1286605b3345c48f04dd868dd3fc1
+    git_blob_oid: b66ab12d1a2f16adb444923ba3bd89082f0dc6e1
+  - path: governance/evidence/WP-PLATFORM-W0-001/successor-WP-PLATFORM-W1-001.yaml
+    sha256: 0c153f106f7baa049cb5018efab96bde05e26fd800c48363fcbc7f72c333b1af
+    git_blob_oid: a1b5c0459290a6ab962d776694ee241a1ef34557
+  - path: governance/evidence/WP-PLATFORM-W0-001/verification-2026-09-09.md
+    sha256: 6676ee8bfcb6b63103af48f2dd13bf7bf0da573cf7c058754243b40393a36898
+    git_blob_oid: cc49ca727ecc1d41b0defb5e4526c8cffa0a73a0
+completed_step_ids:
+  - w0-002-baseline-and-recovery
+  - w0-004-studio-brand-prototypes
+  - w0-005-integration-render-feasibility
+  - w0-006-foundation-handoff
+closed_packet_sha256: 2da315a4d882f5bf6858dd928c8c06294cdc9d1c492a93acf7f2150914d9a521

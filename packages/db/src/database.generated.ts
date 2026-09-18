@@ -1,13 +1,55 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: '14.5';
-  };
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          id: string;
+          last_used_at: string | null;
+          name: string;
+          prefix: string;
+          revoked_at: string | null;
+          scopes: string[];
+          secret_hash: string;
+          workspace_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          last_used_at?: string | null;
+          name: string;
+          prefix: string;
+          revoked_at?: string | null;
+          scopes: string[];
+          secret_hash: string;
+          workspace_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          last_used_at?: string | null;
+          name?: string;
+          prefix?: string;
+          revoked_at?: string | null;
+          scopes?: string[];
+          secret_hash?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'api_keys_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       artifact_lineage: {
         Row: {
           child_artifact_id: string;
@@ -277,6 +319,108 @@ export type Database = {
           },
         ];
       };
+      brand_assertions: {
+        Row: {
+          brand_id: string;
+          captured_at: string;
+          created_at: string;
+          created_by: string;
+          draft_id: string;
+          ends_at: string | null;
+          excerpt: string;
+          field_key: string;
+          id: string;
+          job_id: string | null;
+          kind: string;
+          locator: string;
+          method: string;
+          reusable: boolean;
+          source_id: string;
+          status: string;
+          supersedes_id: string | null;
+          value_text: string | null;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          captured_at: string;
+          created_at?: string;
+          created_by: string;
+          draft_id: string;
+          ends_at?: string | null;
+          excerpt: string;
+          field_key: string;
+          id?: string;
+          job_id?: string | null;
+          kind: string;
+          locator?: string;
+          method: string;
+          reusable?: boolean;
+          source_id: string;
+          status: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          captured_at?: string;
+          created_at?: string;
+          created_by?: string;
+          draft_id?: string;
+          ends_at?: string | null;
+          excerpt?: string;
+          field_key?: string;
+          id?: string;
+          job_id?: string | null;
+          kind?: string;
+          locator?: string;
+          method?: string;
+          reusable?: boolean;
+          source_id?: string;
+          status?: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_assertions_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_assertions_workspace_id_brand_id_fkey1';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_drafts';
+            referencedColumns: ['workspace_id', 'brand_id'];
+          },
+          {
+            foreignKeyName: 'brand_assertions_workspace_id_job_id_fkey';
+            columns: ['workspace_id', 'job_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_source_jobs';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_assertions_workspace_id_source_id_fkey';
+            columns: ['workspace_id', 'source_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_sources';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_assertions_workspace_id_supersedes_id_fkey';
+            columns: ['workspace_id', 'supersedes_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_assertions';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
       brand_kits: {
         Row: {
           created_at: string;
@@ -308,6 +452,689 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: 'brand_kits_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      brand_knowledge_candidates: {
+        Row: {
+          brand_id: string;
+          captured_at: string;
+          created_at: string;
+          created_by: string;
+          draft_id: string;
+          excerpt: string;
+          field_key: string;
+          id: string;
+          job_id: string | null;
+          locator: string;
+          method: string;
+          source_id: string;
+          status: string;
+          supersedes_id: string | null;
+          value_text: string | null;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          captured_at: string;
+          created_at?: string;
+          created_by: string;
+          draft_id: string;
+          excerpt: string;
+          field_key: string;
+          id?: string;
+          job_id?: string | null;
+          locator?: string;
+          method: string;
+          source_id: string;
+          status: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          captured_at?: string;
+          created_at?: string;
+          created_by?: string;
+          draft_id?: string;
+          excerpt?: string;
+          field_key?: string;
+          id?: string;
+          job_id?: string | null;
+          locator?: string;
+          method?: string;
+          source_id?: string;
+          status?: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_brand_id_fkey1';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_drafts';
+            referencedColumns: ['workspace_id', 'brand_id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_job_id_fkey';
+            columns: ['workspace_id', 'job_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_source_jobs';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_source_id_fkey';
+            columns: ['workspace_id', 'source_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_sources';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_candidates_workspace_id_supersedes_id_fkey';
+            columns: ['workspace_id', 'supersedes_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_candidates';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_knowledge_drafts: {
+        Row: {
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          updated_at: string;
+          updated_by: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          updated_at?: string;
+          updated_by: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          updated_at?: string;
+          updated_by?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_knowledge_drafts_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: true;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_knowledge_questions: {
+        Row: {
+          answer_text: string | null;
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          draft_id: string;
+          excerpt: string;
+          id: string;
+          prompt: string;
+          status: string;
+          target_kind: string;
+          workspace_id: string;
+        };
+        Insert: {
+          answer_text?: string | null;
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          draft_id: string;
+          excerpt: string;
+          id?: string;
+          prompt: string;
+          status: string;
+          target_kind: string;
+          workspace_id: string;
+        };
+        Update: {
+          answer_text?: string | null;
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          draft_id?: string;
+          excerpt?: string;
+          id?: string;
+          prompt?: string;
+          status?: string;
+          target_kind?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_knowledge_questions_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_knowledge_questions_workspace_id_brand_id_fkey1';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_drafts';
+            referencedColumns: ['workspace_id', 'brand_id'];
+          },
+        ];
+      };
+      brand_locations: {
+        Row: {
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          name: string;
+          slug: string;
+          status: string;
+          time_zone: string;
+          updated_at: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          name: string;
+          slug: string;
+          status?: string;
+          time_zone: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          name?: string;
+          slug?: string;
+          status?: string;
+          time_zone?: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_locations_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_locations_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      brand_onboarding_drafts: {
+        Row: {
+          audience: string;
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          current_step: string;
+          description: string;
+          goals: string;
+          id: string;
+          origin_studio_id: string;
+          updated_at: string;
+          updated_by: string;
+          version: number;
+          website_url: string;
+          workspace_id: string;
+        };
+        Insert: {
+          audience?: string;
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          current_step?: string;
+          description?: string;
+          goals?: string;
+          id?: string;
+          origin_studio_id: string;
+          updated_at?: string;
+          updated_by: string;
+          version?: number;
+          website_url?: string;
+          workspace_id: string;
+        };
+        Update: {
+          audience?: string;
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          current_step?: string;
+          description?: string;
+          goals?: string;
+          id?: string;
+          origin_studio_id?: string;
+          updated_at?: string;
+          updated_by?: string;
+          version?: number;
+          website_url?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_onboarding_drafts_origin_studio_id_fkey';
+            columns: ['origin_studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'brand_onboarding_drafts_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: true;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_proposals: {
+        Row: {
+          brand_id: string;
+          confidence: string | null;
+          created_at: string;
+          created_by: string;
+          draft_id: string;
+          evidence_field_keys: Json;
+          excerpt: string;
+          id: string;
+          kind: string;
+          status: string;
+          supersedes_id: string | null;
+          value_text: string | null;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          confidence?: string | null;
+          created_at?: string;
+          created_by: string;
+          draft_id: string;
+          evidence_field_keys?: Json;
+          excerpt: string;
+          id?: string;
+          kind: string;
+          status: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          confidence?: string | null;
+          created_at?: string;
+          created_by?: string;
+          draft_id?: string;
+          evidence_field_keys?: Json;
+          excerpt?: string;
+          id?: string;
+          kind?: string;
+          status?: string;
+          supersedes_id?: string | null;
+          value_text?: string | null;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_proposals_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_proposals_workspace_id_brand_id_fkey1';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_drafts';
+            referencedColumns: ['workspace_id', 'brand_id'];
+          },
+          {
+            foreignKeyName: 'brand_proposals_workspace_id_supersedes_id_fkey';
+            columns: ['workspace_id', 'supersedes_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_proposals';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_source_jobs: {
+        Row: {
+          attempt_count: number;
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          failure_code: string | null;
+          filename: string;
+          id: string;
+          kind: string;
+          lease_expires_at: string | null;
+          lease_owner: string | null;
+          media_type: string;
+          normalized_url: string;
+          request_url: string;
+          source_id: string | null;
+          status: string;
+          updated_at: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          attempt_count?: number;
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          failure_code?: string | null;
+          filename?: string;
+          id?: string;
+          kind: string;
+          lease_expires_at?: string | null;
+          lease_owner?: string | null;
+          media_type?: string;
+          normalized_url?: string;
+          request_url?: string;
+          source_id?: string | null;
+          status: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          attempt_count?: number;
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          failure_code?: string | null;
+          filename?: string;
+          id?: string;
+          kind?: string;
+          lease_expires_at?: string | null;
+          lease_owner?: string | null;
+          media_type?: string;
+          normalized_url?: string;
+          request_url?: string;
+          source_id?: string | null;
+          status?: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_source_jobs_source_fk';
+            columns: ['workspace_id', 'source_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_sources';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_source_jobs_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_sources: {
+        Row: {
+          brand_id: string;
+          byte_size: number;
+          captured_at: string;
+          content_sha256: string | null;
+          created_at: string;
+          created_by: string;
+          final_url: string;
+          http_status: number | null;
+          id: string;
+          job_id: string | null;
+          kind: string;
+          media_type: string;
+          method: string;
+          origin_url: string;
+          r2_key: string | null;
+          redirect_hops: Json;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          byte_size?: number;
+          captured_at: string;
+          content_sha256?: string | null;
+          created_at?: string;
+          created_by: string;
+          final_url?: string;
+          http_status?: number | null;
+          id?: string;
+          job_id?: string | null;
+          kind: string;
+          media_type?: string;
+          method: string;
+          origin_url?: string;
+          r2_key?: string | null;
+          redirect_hops?: Json;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          byte_size?: number;
+          captured_at?: string;
+          content_sha256?: string | null;
+          created_at?: string;
+          created_by?: string;
+          final_url?: string;
+          http_status?: number | null;
+          id?: string;
+          job_id?: string | null;
+          kind?: string;
+          media_type?: string;
+          method?: string;
+          origin_url?: string;
+          r2_key?: string | null;
+          redirect_hops?: Json;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_sources_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_sources_workspace_id_job_id_fkey';
+            columns: ['workspace_id', 'job_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_source_jobs';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_version_pins: {
+        Row: {
+          brand_id: string;
+          brand_version_id: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          pin_key: string;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          brand_version_id: string;
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          pin_key: string;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          brand_version_id?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          pin_key?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_version_pins_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_version_pins_workspace_id_brand_version_id_fkey';
+            columns: ['workspace_id', 'brand_version_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_versions';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      brand_versions: {
+        Row: {
+          approved_at: string;
+          approved_by: string;
+          brand_id: string;
+          created_at: string;
+          draft_hash: string;
+          draft_id: string;
+          id: string;
+          snapshot: Json;
+          status: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          approved_at?: string;
+          approved_by: string;
+          brand_id: string;
+          created_at?: string;
+          draft_hash: string;
+          draft_id: string;
+          id?: string;
+          snapshot: Json;
+          status: string;
+          version: number;
+          workspace_id: string;
+        };
+        Update: {
+          approved_at?: string;
+          approved_by?: string;
+          brand_id?: string;
+          created_at?: string;
+          draft_hash?: string;
+          draft_id?: string;
+          id?: string;
+          snapshot?: Json;
+          status?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_versions_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'brand_versions_workspace_id_brand_id_fkey1';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brand_knowledge_drafts';
+            referencedColumns: ['workspace_id', 'brand_id'];
+          },
+        ];
+      };
+      brands: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          id: string;
+          name: string;
+          slug: string;
+          status: string;
+          updated_at: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          name: string;
+          slug: string;
+          status?: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          name?: string;
+          slug?: string;
+          status?: string;
+          updated_at?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brands_workspace_id_fkey';
             columns: ['workspace_id'];
             isOneToOne: false;
             referencedRelation: 'workspaces';
@@ -732,6 +1559,91 @@ export type Database = {
           },
         ];
       };
+      oauth_access_tokens: {
+        Row: {
+          actor_id: string;
+          client_id: string;
+          created_at: string;
+          expires_at: string;
+          id: string;
+          revoked_at: string | null;
+          scopes: string[];
+          token_hash: string;
+        };
+        Insert: {
+          actor_id: string;
+          client_id: string;
+          created_at?: string;
+          expires_at: string;
+          id?: string;
+          revoked_at?: string | null;
+          scopes: string[];
+          token_hash: string;
+        };
+        Update: {
+          actor_id?: string;
+          client_id?: string;
+          created_at?: string;
+          expires_at?: string;
+          id?: string;
+          revoked_at?: string | null;
+          scopes?: string[];
+          token_hash?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'oauth_access_tokens_client_id_fkey';
+            columns: ['client_id'];
+            isOneToOne: false;
+            referencedRelation: 'oauth_clients';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      oauth_clients: {
+        Row: {
+          client_id: string;
+          client_secret_hash: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          name: string;
+          revoked_at: string | null;
+          scopes: string[];
+          workspace_id: string;
+        };
+        Insert: {
+          client_id: string;
+          client_secret_hash: string;
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          name: string;
+          revoked_at?: string | null;
+          scopes: string[];
+          workspace_id: string;
+        };
+        Update: {
+          client_id?: string;
+          client_secret_hash?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          name?: string;
+          revoked_at?: string | null;
+          scopes?: string[];
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'oauth_clients_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       outbox_events: {
         Row: {
           aggregate_id: string;
@@ -794,6 +1706,95 @@ export type Database = {
           },
         ];
       };
+      platform_owner_studio_mappings: {
+        Row: {
+          created_at: string;
+          owner_id: string;
+          studio_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          owner_id: string;
+          studio_id: string;
+        };
+        Update: {
+          created_at?: string;
+          owner_id?: string;
+          studio_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'platform_owner_studio_mappings_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: true;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      platform_workspace_mappings: {
+        Row: {
+          brand_id: string;
+          created_at: string;
+          grant_id: string;
+          owner_membership_id: string;
+          studio_id: string;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          created_at?: string;
+          grant_id: string;
+          owner_membership_id: string;
+          studio_id: string;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          created_at?: string;
+          grant_id?: string;
+          owner_membership_id?: string;
+          studio_id?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'platform_workspace_mappings_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'platform_workspace_mappings_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'platform_workspace_mappings_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: true;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'platform_workspace_mappings_workspace_id_grant_id_fkey';
+            columns: ['workspace_id', 'grant_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspace_access_grants';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'platform_workspace_mappings_workspace_id_owner_membership__fkey';
+            columns: ['workspace_id', 'owner_membership_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspace_memberships';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
       price_catalog_versions: {
         Row: {
           created_at: string;
@@ -838,6 +1839,42 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'provider_registrations';
             referencedColumns: ['id'];
+          },
+        ];
+      };
+      project_brand_mappings: {
+        Row: {
+          brand_id: string;
+          created_at: string;
+          project_id: string;
+          workspace_id: string;
+        };
+        Insert: {
+          brand_id: string;
+          created_at?: string;
+          project_id: string;
+          workspace_id: string;
+        };
+        Update: {
+          brand_id?: string;
+          created_at?: string;
+          project_id?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'project_brand_mappings_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'project_brand_mappings_workspace_id_project_id_fkey';
+            columns: ['workspace_id', 'project_id'];
+            isOneToOne: false;
+            referencedRelation: 'projects';
+            referencedColumns: ['workspace_id', 'id'];
           },
         ];
       };
@@ -1176,6 +2213,7 @@ export type Database = {
           confirmed_at: string;
           confirmed_by: string;
           created_at: string;
+          dispatch_epoch: number;
           dispatch_wave: number;
           id: string;
           project_id: string;
@@ -1191,6 +2229,7 @@ export type Database = {
           confirmed_at?: string;
           confirmed_by: string;
           created_at?: string;
+          dispatch_epoch?: number;
           dispatch_wave?: number;
           id?: string;
           project_id: string;
@@ -1206,6 +2245,7 @@ export type Database = {
           confirmed_at?: string;
           confirmed_by?: string;
           created_at?: string;
+          dispatch_epoch?: number;
           dispatch_wave?: number;
           id?: string;
           project_id?: string;
@@ -1242,6 +2282,393 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'projects';
             referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      skill_versions: {
+        Row: {
+          id: string;
+          instructions: string;
+          published_at: string;
+          published_by: string;
+          skill_id: string;
+          title: string;
+          version_number: number;
+        };
+        Insert: {
+          id?: string;
+          instructions: string;
+          published_at?: string;
+          published_by: string;
+          skill_id: string;
+          title: string;
+          version_number: number;
+        };
+        Update: {
+          id?: string;
+          instructions?: string;
+          published_at?: string;
+          published_by?: string;
+          skill_id?: string;
+          title?: string;
+          version_number?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'skill_versions_skill_id_fkey';
+            columns: ['skill_id'];
+            isOneToOne: false;
+            referencedRelation: 'skills';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      skills: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          id: string;
+          name: string;
+          workspace_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          name: string;
+          workspace_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          name?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'skills_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      stripe_webhook_events: {
+        Row: {
+          created_at: string;
+          event_type: string;
+          id: string;
+          livemode: boolean;
+          payload_hash: string;
+          processed_at: string | null;
+          stripe_event_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          event_type: string;
+          id?: string;
+          livemode?: boolean;
+          payload_hash: string;
+          processed_at?: string | null;
+          stripe_event_id: string;
+        };
+        Update: {
+          created_at?: string;
+          event_type?: string;
+          id?: string;
+          livemode?: boolean;
+          payload_hash?: string;
+          processed_at?: string | null;
+          stripe_event_id?: string;
+        };
+        Relationships: [];
+      };
+      studio_events: {
+        Row: {
+          action: string;
+          actor_id: string;
+          created_at: string;
+          entity_id: string;
+          id: string;
+          request_id: string;
+          studio_id: string;
+        };
+        Insert: {
+          action: string;
+          actor_id: string;
+          created_at?: string;
+          entity_id: string;
+          id?: string;
+          request_id: string;
+          studio_id: string;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string;
+          created_at?: string;
+          entity_id?: string;
+          id?: string;
+          request_id?: string;
+          studio_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'studio_events_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      studio_invitations: {
+        Row: {
+          accepted_at: string | null;
+          accepted_by: string | null;
+          accepted_membership_version: number | null;
+          created_at: string;
+          created_by: string;
+          expires_at: string;
+          id: string;
+          owner_membership_id: string;
+          recipient_email: string;
+          revoked_at: string | null;
+          role: string;
+          status: string;
+          studio_id: string;
+          version: number;
+        };
+        Insert: {
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          accepted_membership_version?: number | null;
+          created_at?: string;
+          created_by: string;
+          expires_at?: string;
+          id?: string;
+          owner_membership_id: string;
+          recipient_email: string;
+          revoked_at?: string | null;
+          role: string;
+          status?: string;
+          studio_id: string;
+          version?: number;
+        };
+        Update: {
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          accepted_membership_version?: number | null;
+          created_at?: string;
+          created_by?: string;
+          expires_at?: string;
+          id?: string;
+          owner_membership_id?: string;
+          recipient_email?: string;
+          revoked_at?: string | null;
+          role?: string;
+          status?: string;
+          studio_id?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'studio_invitations_owner_membership_id_fkey';
+            columns: ['owner_membership_id'];
+            isOneToOne: false;
+            referencedRelation: 'studio_memberships';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'studio_invitations_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      studio_memberships: {
+        Row: {
+          created_at: string;
+          id: string;
+          revoked_at: string | null;
+          role: string;
+          status: string;
+          studio_id: string;
+          user_id: string;
+          version: number;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          revoked_at?: string | null;
+          role: string;
+          status?: string;
+          studio_id: string;
+          user_id: string;
+          version?: number;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          revoked_at?: string | null;
+          role?: string;
+          status?: string;
+          studio_id?: string;
+          user_id?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'studio_memberships_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      studios: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          id: string;
+          name: string;
+          slug: string;
+          status: string;
+          updated_at: string;
+          version: number;
+        };
+        Insert: {
+          created_at?: string;
+          created_by: string;
+          id?: string;
+          name: string;
+          slug: string;
+          status?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          name?: string;
+          slug?: string;
+          status?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [];
+      };
+      workspace_access_grants: {
+        Row: {
+          actions: string[];
+          brand_id: string | null;
+          created_at: string;
+          granted_by: string;
+          id: string;
+          owner_membership_id: string;
+          revoked_at: string | null;
+          status: string;
+          studio_id: string;
+          version: number;
+          workspace_id: string;
+        };
+        Insert: {
+          actions: string[];
+          brand_id?: string | null;
+          created_at?: string;
+          granted_by: string;
+          id?: string;
+          owner_membership_id: string;
+          revoked_at?: string | null;
+          status?: string;
+          studio_id: string;
+          version?: number;
+          workspace_id: string;
+        };
+        Update: {
+          actions?: string[];
+          brand_id?: string | null;
+          created_at?: string;
+          granted_by?: string;
+          id?: string;
+          owner_membership_id?: string;
+          revoked_at?: string | null;
+          status?: string;
+          studio_id?: string;
+          version?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'workspace_access_grants_studio_id_fkey';
+            columns: ['studio_id'];
+            isOneToOne: false;
+            referencedRelation: 'studios';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'workspace_access_grants_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+          {
+            foreignKeyName: 'workspace_access_grants_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'workspace_access_grants_workspace_id_owner_membership_id_fkey';
+            columns: ['workspace_id', 'owner_membership_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspace_memberships';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
+      workspace_billing_profiles: {
+        Row: {
+          setup_fee_paid_at: string | null;
+          stripe_customer_id: string | null;
+          stripe_subscription_id: string | null;
+          subscription_status: string;
+          updated_at: string;
+          wallet_balance_micros: number;
+          workspace_id: string;
+        };
+        Insert: {
+          setup_fee_paid_at?: string | null;
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          subscription_status?: string;
+          updated_at?: string;
+          wallet_balance_micros?: number;
+          workspace_id: string;
+        };
+        Update: {
+          setup_fee_paid_at?: string | null;
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          subscription_status?: string;
+          updated_at?: string;
+          wallet_balance_micros?: number;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'workspace_billing_profiles_workspace_id_fkey';
+            columns: ['workspace_id'];
+            isOneToOne: true;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -1357,10 +2784,35 @@ export type Database = {
         };
         Returns: Json;
       };
+      apply_stripe_subscription_update: {
+        Args: {
+          p_request_id: string;
+          p_setup_fee_paid: boolean;
+          p_stripe_customer_id: string;
+          p_stripe_event_id: string;
+          p_stripe_subscription_id: string;
+          p_subscription_status: string;
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      apply_stripe_wallet_credit: {
+        Args: {
+          p_amount_micros: number;
+          p_event_type: string;
+          p_metadata?: Json;
+          p_request_id: string;
+          p_stripe_customer_id: string;
+          p_stripe_event_id: string;
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
       approve_run_artifacts: {
         Args: { p_approvals: Json; p_request_id: string; p_run_id: string };
         Returns: Json;
       };
+      arm_stranded_dispatch: { Args: { p_limit: number }; Returns: Json };
       claim_outbox_events: {
         Args: {
           p_lease_owner: string;
@@ -1395,6 +2847,18 @@ export type Database = {
         Args: { p_event_id: string; p_provider: string; p_request_id: string };
         Returns: Json;
       };
+      create_api_key: {
+        Args: {
+          p_idempotency_key: string;
+          p_name: string;
+          p_prefix: string;
+          p_request_id: string;
+          p_scopes: string[];
+          p_secret_hash: string;
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
       create_canvas_with_revision: {
         Args: {
           p_graph_schema_version: number;
@@ -1405,6 +2869,29 @@ export type Database = {
           p_reason: string;
           p_request_id: string;
           p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      create_oauth_client: {
+        Args: {
+          p_client_id: string;
+          p_client_secret_hash: string;
+          p_idempotency_key: string;
+          p_name: string;
+          p_request_id: string;
+          p_scopes: string[];
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      create_pending_input_artifact: {
+        Args: {
+          p_byte_size: number;
+          p_content_hash: string;
+          p_mime_type: string;
+          p_project_id: string;
+          p_purpose: string;
+          p_request_id: string;
         };
         Returns: Json;
       };
@@ -1427,6 +2914,15 @@ export type Database = {
         };
         Returns: Json;
       };
+      fail_brand_source_job: {
+        Args: {
+          p_expected_attempt_count: number;
+          p_failure_code: string;
+          p_job_id: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
       fail_outbox_event: {
         Args: {
           p_event_id: string;
@@ -1437,6 +2933,10 @@ export type Database = {
       };
       finalize_cancel_requested_runs: {
         Args: { p_limit: number };
+        Returns: Json;
+      };
+      finalize_input_artifact: {
+        Args: { p_artifact_id: string; p_content_hash: string };
         Returns: Json;
       };
       find_app_idempotency: {
@@ -1460,6 +2960,7 @@ export type Database = {
         Args: { p_provider_request_id: string };
         Returns: Json;
       };
+      get_global_spend_exposure: { Args: never; Returns: Json };
       get_outbox_dispatch_attempts: {
         Args: { p_event_id: string; p_lease_owner: string };
         Returns: {
@@ -1476,8 +2977,19 @@ export type Database = {
           workspace_id: string;
         }[];
       };
+      get_platform_kill_switches: { Args: never; Returns: Json };
       get_provider_artifact_context: {
         Args: { p_provider_key: string; p_provider_request_id: string };
+        Returns: Json;
+      };
+      get_run_execution_audit: { Args: { p_run_ids: string[] }; Returns: Json };
+      issue_oauth_access_token: {
+        Args: {
+          p_client_id: string;
+          p_client_secret_hash: string;
+          p_expires_at: string;
+          p_token_hash: string;
+        };
         Returns: Json;
       };
       list_provider_jobs_for_reconciliation: {
@@ -1494,8 +3006,79 @@ export type Database = {
         Args: { p_event_id: string; p_provider: string };
         Returns: Json;
       };
+      platform_billing_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
+      platform_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_knowledge_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_knowledge_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
+      platform_onboarding_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_presentation_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
+      platform_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
+      platform_setup_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_setup_query: {
+        Args: { p_input: Json; p_operation: string };
+        Returns: Json;
+      };
       publish_outbox_event: { Args: { p_event_id: string }; Returns: Json };
+      publish_skill: {
+        Args: {
+          p_idempotency_key: string;
+          p_instructions: string;
+          p_name: string;
+          p_request_id: string;
+          p_title: string;
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
       reap_dead_dispatch: { Args: { p_limit: number }; Returns: Json };
+      reap_stranded_synchronous_jobs: {
+        Args: { p_limit: number };
+        Returns: Json;
+      };
       record_app_idempotency: {
         Args: {
           p_idempotency_key: string;
@@ -1503,6 +3086,19 @@ export type Database = {
           p_request_hash: string;
           p_response: Json;
           p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      record_brand_extraction: {
+        Args: { p_assertions: Json; p_request_id: string; p_source_id: string };
+        Returns: Json;
+      };
+      record_brand_source_capture: {
+        Args: {
+          p_expected_attempt_count: number;
+          p_job_id: string;
+          p_payload: Json;
+          p_request_id: string;
         };
         Returns: Json;
       };
@@ -1528,6 +3124,10 @@ export type Database = {
         };
         Returns: Json;
       };
+      record_provider_job_error_code: {
+        Args: { p_provider_error_code: string; p_provider_request_id: string };
+        Returns: Json;
+      };
       record_provider_job_reconciliation: {
         Args: { p_evidence: Json; p_provider_job_id: string; p_status: string };
         Returns: Json;
@@ -1543,6 +3143,26 @@ export type Database = {
         };
         Returns: Json;
       };
+      record_stripe_webhook_event:
+        | {
+            Args: {
+              p_event_type: string;
+              p_livemode: boolean;
+              p_payload_hash: string;
+              p_stripe_event_id: string;
+            };
+            Returns: Json;
+          }
+        | {
+            Args: {
+              p_event_type: string;
+              p_livemode: boolean;
+              p_payload_hash: string;
+              p_request_id: string;
+              p_stripe_event_id: string;
+            };
+            Returns: Json;
+          };
       refund_run_capture: {
         Args: {
           p_amount_micros: number;
@@ -1575,6 +3195,18 @@ export type Database = {
         Args: { p_reason: string; p_request_id: string; p_run_id: string };
         Returns: Json;
       };
+      revoke_api_key: {
+        Args: { p_key_id: string; p_request_id: string };
+        Returns: Json;
+      };
+      revoke_oauth_access_token: {
+        Args: { p_request_id: string; p_token_id: string };
+        Returns: Json;
+      };
+      revoke_oauth_client: {
+        Args: { p_client_uuid: string; p_request_id: string };
+        Returns: Json;
+      };
       start_run_barrier: {
         Args: {
           p_canvas_id: string;
@@ -1585,6 +3217,11 @@ export type Database = {
           p_request_id: string;
           p_workspace_id: string;
         };
+        Returns: Json;
+      };
+      verify_api_key: { Args: { p_secret_hash: string }; Returns: Json };
+      verify_oauth_access_token: {
+        Args: { p_token_hash: string };
         Returns: Json;
       };
     };

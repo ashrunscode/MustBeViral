@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hour-observation`.
+Current packet: `WP-PLATFORM-W2-002` (ready). Current step: `w2b-001-representative-extraction`.
 
 | Authority topic | Document | Path |
 |---|---|---|
@@ -93,3 +93,5 @@ Current packet: `WP-P3-009` (in_progress). Current step: `p3i-003-private-72-hou
 | `gtm.crm_object_mapping` | `gtm-hubspot-mapping` | docs/gtm/hubspot-mapping.md |
 | `gtm.consent_and_suppression` | `gtm-consent-and-suppression` | docs/gtm/consent-and-suppression.md |
 | `gtm.legal_input_pack` | `gtm-legal-input-pack` | docs/gtm/legal-input-pack.md |
+| `delivery.owner_directed_supersession` | `adr-0008-packet-supersession` | docs/decisions/ADR-0008-PACKET-SUPERSESSION.md |
+| `decision.0007-full-platform` | `adr-0007-full-platform` | docs/decisions/ADR-0007-FULL-PLATFORM.md |

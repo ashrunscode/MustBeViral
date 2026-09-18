@@ -1,0 +1,26 @@
+schema_version: 1
+packet_id: WP-P3-010
+spec_revision: 2
+phase: P3
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-09T23:50:02.738Z
+successor_packet_id: WP-PLATFORM-W0-001
+predecessor_head: 444b70ed9a5462b54514203f0439125525dd5146
+closed_packet_path: governance/evidence/WP-P3-010/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
+  - governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
+evidence_entries:
+  - path: governance/evidence/WP-P3-010/authority-rebaseline-2026-09-09.md
+    sha256: 67320384f5428bc37c3f5253bef59f27d01ed247ea44f2b5cf593c2f5e726f9c
+    git_blob_oid: 2e36a42e4cc4ef9ed2a374690949d174f2f8cff7
+  - path: governance/evidence/WP-P3-010/successor-WP-PLATFORM-W0-001.yaml
+    sha256: 5c10549e5fbad9b2697409744e5d708aaaa0ae0c4500aa21595b789bda745e18
+    git_blob_oid: ee71b8b08a7b4b19e1cd342f110b0e4ddf8abfef
+completed_step_ids:
+  - p3j-001-full-platform-authorities
+  - p3j-002-scope-and-release-gates
+  - p3j-003-roadmap-and-successor
+  - p3j-004-rebaseline-verification
+closed_packet_sha256: 815cb0aa2f38ff12b7a783d78a4b342f324e1587cc3ef3360a584e351ea7e144

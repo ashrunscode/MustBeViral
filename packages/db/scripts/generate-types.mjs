@@ -3,6 +3,7 @@ import { renameSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { localSupabaseDatabase } from './local-supabase.mjs';
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const packageDirectory = resolve(scriptDirectory, '..');
@@ -22,6 +23,7 @@ const generated = spawnSync(
       ...process.env,
       DO_NOT_TRACK: '1',
       SUPABASE_TELEMETRY_DISABLED: '1',
+      SUPABASE_DB_PASSWORD: localSupabaseDatabase().password,
     },
   },
 );

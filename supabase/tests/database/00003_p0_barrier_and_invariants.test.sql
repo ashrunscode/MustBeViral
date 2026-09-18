@@ -694,6 +694,7 @@ select is(
     select sum(case direction when 'credit' then amount_micros else -amount_micros end)::bigint
     from public.ledger_transactions
     where account_code = 'wallet_available'
+      and workspace_id = '40000000-0000-4000-8000-000000000001'
   ),
   4000000::bigint,
   'wallet balance reflects credit minus the immutable reservation'

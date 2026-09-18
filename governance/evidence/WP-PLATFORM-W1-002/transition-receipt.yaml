@@ -1,0 +1,214 @@
+schema_version: 1
+packet_id: WP-PLATFORM-W1-002
+spec_revision: 2
+phase: P4
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-14T18:29:47.444Z
+successor_packet_id: WP-PLATFORM-W2-001
+predecessor_head: ff502fa9e4700f16eac2bcf4956103ef3ec9b710
+closed_packet_path: governance/evidence/WP-PLATFORM-W1-002/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+  - governance/evidence/WP-PLATFORM-W1-002/successor-WP-PLATFORM-W2-001.yaml
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-billing-seeded.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-brand-draft.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-forced-colors.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-reduced-motion.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-zoom-200.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-seeded.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-forced-colors-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-invitation-pending.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-unpile-saved.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-washbodega-saved.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/independent-review.md
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-billing-seeded.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-brand-draft.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-forced-colors.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-reduced-motion.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-zoom-200.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-seeded.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-forced-colors-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-invitation-pending.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-aria.txt
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-axe.json
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-unpile-saved.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-washbodega-saved.png
+  - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/stack-stop-receipt.json
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-billing-seeded.png
+    sha256: 979954b9967ab05c1beff2725d9ea4b05e5ee3184d6493f48204ccf19c0de7eb
+    git_blob_oid: 959d0567dec1efbc6b59ab89f3d095627d3e0c76
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-brand-draft.png
+    sha256: 21043f112fe8e33ea724d75affcb6e64229ad6891b1a217ed3c363a1dc85fa7e
+    git_blob_oid: 6a419e2938005126b4c0c89428a61ab80581b19c
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-forced-colors.png
+    sha256: 5a2bcc3874dcb65d05ee96ab37945df7b95b90d37d39d13fb82163f2171e60bf
+    git_blob_oid: edb220f4d35f5f231f427d7192eba49c9328fc01
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-reduced-motion.png
+    sha256: 4c027f36dd9a692fd378d0948e8ca3e7a218fe82e762932e2747d28041ef9205
+    git_blob_oid: 8215f71c87b011046616b4e6c0cb3c4977a824a0
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-zoom-200.png
+    sha256: a463cd1cdc5dcc8013a986dd8d0c4e827ffcd0c4be6d486aa9531a365ffb36a6
+    git_blob_oid: 679c2605fe766606fa3f257465a454761d9dc3d2
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-aria.txt
+    sha256: 79ee5785077fb03a76861007cb6dcf5e762863603eef688c39e1ef14c5872bc4
+    git_blob_oid: f33b09ca7f5465105c5e6755786b33913cbb908b
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-seeded.png
+    sha256: 2566eb83bc1ff48b520c0af8bd2de7a2986c7771d448d0380dab95e04a6d10fe
+    git_blob_oid: c43cf32a525f1750ac469d57da1f4304d0ddbdc9
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-aria.txt
+    sha256: 7c83c0fdb547333bc5782f7c9674a44b09f81372eadda4cd3a4ecbe7978ddd2a
+    git_blob_oid: e9ba4b88182e8ce6ff5a3b7df278f298d17d9c87
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-aria.txt
+    sha256: 8007bbda1845fa667075bd25616bddee2f29a46316d7412a06a4fa1f61ffbf31
+    git_blob_oid: ca43758e03c08bfbd6b3a19cc6f98403ffd913a1
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-aria.txt
+    sha256: 2f6aa41f6271e6f4d5c53623a086d2d7727f509445c9ef0b0175827510b44bc5
+    git_blob_oid: 83574da2cc78cb39131cf731b4efe77abf4113e6
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-axe.json
+    sha256: af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d
+    git_blob_oid: 588ad38fe707b8241d49d0a52e77323fa37b289b
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-forced-colors-aria.txt
+    sha256: 0005eeac046271e5ceee743d8d5adc74f601ff1a28e1ce4c1c90382afd132915
+    git_blob_oid: 5d970af4f914d632014c461cbb7ac73246200bf7
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-invitation-pending.png
+    sha256: 19d166dc2b6a3a9406431e88aab58efb87717e574ca3822e8ad351a28d046a36
+    git_blob_oid: c02ace438acc1e5f7cac573a38e2b91ceb8673fd
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-aria.txt
+    sha256: 63736266f941bf99d0aac4b3fa0da4f232b5409922c69e9d663da3a828aed612
+    git_blob_oid: af092b5983ff4144bba18e988e6cf1c1e4474288
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-axe.json
+    sha256: 1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784
+    git_blob_oid: 3a42fa77558241409468a8b79d90ba33456a2e42
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-aria.txt
+    sha256: 64e9ec0d325e6546a7a7d348c1d5b7e0a0faabe1e490b11aeda81e6b1ef6e160
+    git_blob_oid: 5d120800252d8d4bfaa808ba425c0360e74fde39
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-axe.json
+    sha256: 0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16
+    git_blob_oid: f2d3a53d79daf00f15af016eb96d780f29356029
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-unpile-saved.png
+    sha256: fa89bfbc9aa175f583e87cdeeb7a3744cb8519d565693a22d787de50d48f9fdd
+    git_blob_oid: 56c3f007862f9d7927fa100c470e44d4eb76ba38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-washbodega-saved.png
+    sha256: b3c0a67bf3e35b18f7c12b2a77ac2898e9badc593e7d0a38eae7bff1e5180645
+    git_blob_oid: ce0de462d0afd8371dbbcbe5325ccb7e628acfae
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/independent-review.md
+    sha256: 1836e3c64da039495a980048ad5107f6f1fd1810f269b75acfc605d80567ff96
+    git_blob_oid: cb818e6cc725e826f3cad0397d91b9898fe2e4ba
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-billing-seeded.png
+    sha256: db4ac0433ed49218ab13c7b6e01bcb964e7a8d424d4df398bf6c66e513b1ca65
+    git_blob_oid: 56e734ce3e2d518a59e1a4c1f679522c5bf1fd3c
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-brand-draft.png
+    sha256: 442577be3505dfc898f96285d9ce48326423bf4f8ef4e59df5a23eaba274a3ab
+    git_blob_oid: e26a6b8a94cfd0048185d827bf10696298bbed64
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-forced-colors.png
+    sha256: 03748e5cb5ca61b54a7bf59aec6ad56a62aa9c59f271ab97e1d542c3fdcb501b
+    git_blob_oid: 44e8269d521d669f63f4e688a43fec1260e91a34
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-reduced-motion.png
+    sha256: 13b4b8bf17bd734b236108e8bf59d83bad1c9692df8c805a3bf03bcd7fb79c5d
+    git_blob_oid: ca0f728d195bc5013c7eefffe7fb3f542d1c8c69
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-zoom-200.png
+    sha256: 53131006453879a61731236c2b030f23a331f9e4acd8a5e9936b5ac471867804
+    git_blob_oid: f731a58b0aadc76702499d93d4423c5a88e4cf3e
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-aria.txt
+    sha256: f2a6f277edf13d1ae59e238a9a0850af8ea0392a1b9bafe36d56ee1e1fb702d5
+    git_blob_oid: 2a533f1cee620f3398c511b35e30aac4659899fa
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-seeded.png
+    sha256: 8f58c6979fd1b26372c145bc89c9aaf24874dd0482ae244c61a4e6b7ea5c06c1
+    git_blob_oid: 9b4061103f84b1a95a89cf51e5f3451a5e6a15b1
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-aria.txt
+    sha256: 1c13bf4c108c967c480c2ef8f1cf98ae9133dd06f6a42149ddd6346ae19920e1
+    git_blob_oid: 70ed2dc1667a12c495651f5747b07ea936705f8a
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-aria.txt
+    sha256: efbaae1bd7f906ee99f9b140919c68ae39f217125ddccfe460574f8dc974fe89
+    git_blob_oid: 4a5f20f4ed489ae701cb9a9c60e6adb68ce2f636
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-aria.txt
+    sha256: 4b6e0aaab468497c335b082dc97efcc852014a8f150fe4286b3aa741925e33df
+    git_blob_oid: 409255106811c971b639e6ea74d22979efb62d8b
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-axe.json
+    sha256: af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d
+    git_blob_oid: 588ad38fe707b8241d49d0a52e77323fa37b289b
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-forced-colors-aria.txt
+    sha256: 2ff1d550dbf2502e058207ceb3721cec8e79d87baa91622af60829df5d659e9c
+    git_blob_oid: 1c3454842df098ab6a36222b38d0a402f15a2afa
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-invitation-pending.png
+    sha256: 43bfcc2a5779fb7d96b736f791477f0cfdc23d6a4a4a79238730f26eeb7bea50
+    git_blob_oid: 03e52cc11f09b106dec185aeac258a4d0b2eabbb
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-aria.txt
+    sha256: 2eff818eef0cafcd1e68b0bd808df931d4d48efe36362df605fff636ebef9697
+    git_blob_oid: 89245eaf5d887f30570a47fe100c08dffec1160f
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-axe.json
+    sha256: 1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784
+    git_blob_oid: 3a42fa77558241409468a8b79d90ba33456a2e42
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-aria.txt
+    sha256: 909c230aff46b3ec0ddb88c39c1a9d590e2372bdb1a887135a159481fa591d33
+    git_blob_oid: 69b487a68565a6cb62555e2b2aed84fe860eb64e
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-axe.json
+    sha256: 0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16
+    git_blob_oid: f2d3a53d79daf00f15af016eb96d780f29356029
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-unpile-saved.png
+    sha256: 6a7c04aa44921e9d2d11d5495492f0919f46ac366fa41c88fd090e9a0bc75f4e
+    git_blob_oid: d6a281b5090a09e96cd76dd90e6662e01f2965a8
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-washbodega-saved.png
+    sha256: 5bd92928058b9fa64131b0b178b6162c574911307fc492580d5b7616d485d1a9
+    git_blob_oid: e79ff720558a0b998ad40b76c75877c53ab093f2
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/stack-stop-receipt.json
+    sha256: d56d2a567e14717d690074e6d4eb96e73256e2c72fbe82cf5ecf6e2f8ce38a66
+    git_blob_oid: a4564382cc6745264e0eabc718b4b12fe38b42a1
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    sha256: a1f5623d4b5fa1c4b18dd7eaffd3e3d6eb3ad71c10195def338b78deae6e2a0e
+    git_blob_oid: ed911685ddb75ae4d9ef74b1cf4ee817c83797b2
+  - path: governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+    sha256: 679f21596307268d45a7d008b2eddc66369c1fce4a4a6132291dbd6127889282
+    git_blob_oid: 710c9f1dbedddb83dc4030a94c897dbc4f8b3da9
+  - path: governance/evidence/WP-PLATFORM-W1-002/successor-WP-PLATFORM-W2-001.yaml
+    sha256: 94ac4b1ff8e21d6c62c3d95ba0b54cdab25baba1b67be467c101236794ffc1f9
+    git_blob_oid: bd106f689ce887d2a80b885627b375fabd750e10
+completed_step_ids:
+  - w1b-001-durable-drafts-and-settings
+  - w1b-002-approved-studio-navigation
+  - w1b-003-actual-billing
+  - w1b-004-journeys-and-successor
+closed_packet_sha256: 40d2ef1def2326ac1918fefa07a3f9ca1bde3e397cc5c2c1e82209df047020de

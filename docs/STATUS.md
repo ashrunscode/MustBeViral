@@ -11,15 +11,15 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Product | MustBeViral Studio |
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
-| Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | P3 — Owner-only production observation and traffic decision (in_progress) |
-| Active packet | `WP-P3-009` |
-| Current step | `p3i-003-private-72-hour-observation` |
-| Release target | `P0` |
+| Launch customer | `brand_operators_and_multi_brand_studios` |
+| Phase | P4 — Representative extraction, voice proposals and owner-approved brand versions (planned) |
+| Active packet | `WP-PLATFORM-W2-002` |
+| Current step | `w2b-001-representative-extraction` |
+| Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-p3i-003: continue the replacement observation from 2026-09-08T03:18:11Z through at least 2026-09-11T03:18:11Z; hour-01 evidence is recorded, the next required daily capture is September 9 at 03:18:11Z plus or minus two hours, and the separate owner traffic ruling remains pending.
+Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.

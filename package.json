@@ -27,7 +27,7 @@
     "task-graph:check": "node governance/scripts/validate-task-graph.mjs",
     "governance:check": "npm run docs:check && npm run packet:verify && npm run transition:check && npm run cleanroom:check && npm run generated:check",
     "governance:test": "node --test governance/tests/**/*.test.mjs",
-    "format:check": "prettier --check .",
+    "format:check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path governance/format-evidence.ignore",
     "security:check": "npm run cleanroom:check",
     "lint:governance": "eslint governance/**/*.mjs --max-warnings=0",
     "lint": "node governance/scripts/with-pnpm-path.mjs turbo run lint",
@@ -40,7 +40,8 @@
     "supabase:stop": "supabase stop",
     "supabase:test": "supabase test db",
     "db:types": "pnpm --filter @mustbeviral/db generate:types",
-    "verify": "npm run format:check && npm run governance:check && npm run governance:test && npm run security:check && npm run task-graph:check && npm run lint:governance && npm run lint && npm run typecheck && npm run test && npm run test:integration && npm run build"
+    "verify": "npm run format:check && npm run governance:check && npm run governance:test && npm run security:check && npm run task-graph:check && npm run lint:governance && npm run lint && npm run typecheck && npm run test && npm run test:integration && npm run build",
+    "agent:supersede": "node governance/scripts/agent-state.mjs supersede"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

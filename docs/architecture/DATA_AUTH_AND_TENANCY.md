@@ -8,7 +8,7 @@ doc_id: data-auth-tenancy
 
 Supabase Auth issues user sessions and JWTs. The web application uses supported server/client Supabase helpers. Core validates bearer JWTs against Supabase JWKS, rejects unexpected issuer/audience/expiry, and carries a typed actor containing `user_id`, request ID, and authentication method.
 
-Workspace is the tenant, billing, spend-cap, and deletion boundary. Every tenant-owned row includes `workspace_id` directly or is reachable through a constrained parent with tested RLS. P0 enables one owner per workspace; later roles are additive and cannot weaken existing policies.
+Workspace is the tenant, billing, spend-cap, and deletion boundary. Every tenant-owned row includes `workspace_id` directly or is reachable through a constrained parent with tested RLS. The existing owner-only baseline is extended through additive, action-scoped roles and studio grants; brand/location restrictions intersect with workspace access and never weaken existing isolation.
 
 Unauthenticated access is limited to health, signed provider webhooks, explicit public marketing routes, and signed artifact-access capabilities. Webhook identity comes from provider signature verification, not a user claim. An artifact-access capability is a server-minted HMAC token naming exactly one object with its content hash, byte size, mime type, and expiry pinned inside the signed payload; it exists because provider image fetchers send no headers, it is short-lived, and the bucket itself keeps zero external readers - the Worker remains the only reader and serves bytes only against a valid capability.
 
@@ -89,7 +89,7 @@ Runs pin a revision ID and hash. Subsequent canvas edits cannot change an existi
 ## RLS contract
 
 - Enable and force RLS on every user-visible tenant table.
-- Authenticated policies derive actor identity from the validated Supabase JWT and require active workspace membership.
+- Authenticated policies derive actor identity from the validated Supabase JWT and require active workspace membership or an explicit owner-issued studio grant intersected with active studio membership and the requested brand action. Existing execution, media and billing policies retain their workspace permissions; portfolio grants do not implicitly extend them.
 - Reads outside membership return no row; mutations additionally enforce allowed role/action and immutable-column restrictions.
 - Users cannot insert or mutate ledger entries, provider jobs, audit events, outbox events, model prices, or machine-owned state directly.
 - Security-definer functions are exceptional, schema-qualified, use a fixed safe `search_path`, validate the actor and workspace inside the transaction, expose only necessary arguments, and revoke public execution.
@@ -131,3 +131,83 @@ Any failure rolls back every row. Duplicate idempotency keys with the same input
 - Staging runs the exact production migration sequence against representative data before production approval.
 - Deleting a workspace revokes access immediately, schedules policy-compliant artifact/data erasure, and preserves only legally required accounting/audit evidence in a de-identified form. Collaboration sockets that are already open are the one bounded exception; see "Collaboration revocation window".
 - Backups, exports, logs, and telemetry follow the same tenant and retention boundary and never contain secrets or provider payloads unnecessarily.
+
+## Full-platform persistence additions
+
+Introduce additive tables or equivalent normalized entities for:
+
+- `studios`, `studio_memberships`, `workspace_access_grants`, `invitations`.
+- `brands`, `brand_locations`, `brand_versions`, `brand_sources`, `brand_assertions`, `brand_policy_versions`.
+- `offerings`, `audience_segments`, `offers`, `offer_versions`, `destination_checks`.
+- `asset_collections`, `asset_metadata`, `asset_rights`, `asset_derivatives`, `asset_usage` linked to the existing artifact store.
+- `campaigns`, `campaign_versions`, `content_items`, `content_revisions`, `content_scenes`, `channel_variants`.
+- `approval_policies`, `review_requests`, `review_decisions`, `tasks`.
+- `social_connections`, `channel_capability_snapshots`, `publication_intents`, `publication_attempts`, `publication_events`.
+- `creator_profiles`, `creator_observations`, `creator_lists`, `creator_relationships`, `creator_deliverables`.
+- `partnership_campaigns`, `partnership_participants`, `campaign_asset_grants`.
+- `conversations`, `messages`, `conversation_assignments`, `reply_intents`.
+- `metric_observations`, `metric_definitions`, `conversion_events`, `attribution_links`, `report_definitions`.
+
+These names are proposals, not generated schema. Final migrations should reuse existing artifact, revision, job, audit, and ledger records where their meaning matches. Do not duplicate durable execution or financial authority merely to match this list.
+
+### Critical invariants
+
+1. Every business row carries or resolves its owning workspace and applicable brand. Composite foreign keys prevent attaching another tenant's record.
+2. Database RLS remains enforced. Adding member roles requires replacing owner-only assumptions deliberately, not relaxing authorization globally.
+3. An approved brand/content version is immutable. New edits produce a new version and approval consequences.
+4. Publication references the exact approved channel variant, selected account, rights version, and schedule policy.
+5. Background jobs carry a scoped actor and recheck current authority before an external effect. Revoked access must not remain valid because an old job was queued.
+6. Text search, embeddings, caches, metrics, and exported files obey the same tenant/resource permissions as the primary data.
+7. Partner sharing is selected, purpose-limited, time-bounded, and auditable. Revocation stops future use but does not promise recall of public posts.
+8. Money uses the existing integer accounting model. No agent may invent a balance, price, or successful charge.
+9. Original media remains private. External platforms receive only the specific approved deliverable through an appropriate bounded transfer mechanism.
+10. External submission ambiguity is explicit. Reconcile before retrying.
+
+## Platform migration and compatibility
+
+W1 saved onboarding uses `brand_onboarding_drafts` with a composite workspace/brand foreign key,
+versioned operator input and private-by-default reads. It is separate from approved brand versions.
+`studio_invitations` binds a normalized recipient, issuing owner membership, role, expiry and audited
+state. Both tables force RLS and deny direct client writes; shared authenticated commands perform
+locked permission checks before mutation or idempotent replay. Studio/member revocation and draft
+saves share the existing portfolio lock order. Invitation acceptance checks the current verified
+Supabase email while locking the user and studio; creation alone grants no access. Settings edit
+existing workspace/brand identities and do not create a second permissions or money authority.
+
+W2.1 brand knowledge persistence is additive. `brand_source_jobs` is the durable capture job with a
+lease/deadline so an interrupted `capturing` row becomes `queued` or `failed` rather than stuck.
+`brand_sources` are immutable evidence rows. Website and document HTTPS/R2 provenance is written only
+by `record_brand_source_capture`, a service_role machine RPC that rechecks
+`app_private.platform_can_for(original_actor, workspace, brand, 'brand:write')` inside the
+transaction. Authenticated clients cannot execute that function or `fail_brand_source_job`.
+`start_website_capture` / `start_document_capture` / `start_manual_knowledge_draft` /
+`correct_knowledge_candidate` are user-scoped `platform_knowledge_command` operations. Manual
+operator input is its own `method=manual` source; corrections append a new candidate with
+`supersedes_id` and a new manual source. `brand_knowledge_drafts` stay unapproved. Direct table
+writes are denied. Reads use forced RLS through `platform_can`. Revoked actors do not receive stored
+idempotent capture results. Same content hash is unique per brand; the same bytes on another brand
+remain a separate private source. R2 objects under `brand-sources/{workspace}/{brand}/{source}` are
+unlisted unless a source row exists. `get_knowledge_draft` pages current candidates (max 50 per
+response) with `next_cursor`; captures admit at most 40 candidates each. Results are not silently
+discarded.
+
+W2.2–W2.4 persistence is additive on that capture layer. `brand_assertions` store typed offerings,
+locations, facts, offers, visual candidates and language with source, capture time, excerpt and
+method. Visual candidates have `reusable=false`. `record_brand_extraction` is a service_role machine
+RPC over already captured private bytes; authenticated clients cannot execute it. User commands are
+`extract_brand_knowledge`, `propose_brand_knowledge`, `correct_brand_assertion`,
+`ask_brand_knowledge_questions`, `answer_brand_knowledge_question`, `approve_brand_version` and
+`pin_brand_version`. `brand_proposals` label observed, inferred or unknown voice, audience and
+positioning; inferred personas are not owner-confirmed until `approve_brand_version`.
+`brand_versions` are immutable approved snapshots of the exact draft hash. A later correction
+creates a new draft row, not a mutated snapshot. `brand_version_pins` return that approved snapshot
+after drafts change. Approve refuses `EXPIRED_OFFER` and `CONTRADICTORY_KNOWLEDGE`. That guard is not
+W2.5 change detection, expiry lifecycle or catalog import. Direct writes stay denied. Forced RLS
+still uses `platform_can`. Forged parent IDs and revoked grants resolve `NOT_FOUND` or `FORBIDDEN`.
+
+- Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
+- Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
+- Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.
+- Use expand/backfill/validate/switch/contract migrations. Keep application rollback compatible with the additive schema.
+- Reconcile any existing external schedules during connector import. Read-only discovery precedes adoption; importing a schedule must not recreate its post.
+- Preserve cleanroom architecture and all unrelated work. The broader product scope does not justify reviving the discarded legacy application.

@@ -16,6 +16,8 @@ import {
   type StripeWebhookDependencies,
 } from './routes/stripe-webhook';
 import { createP1bRoute } from './routes/p1b';
+import { createPlatformRoute } from './routes/platform';
+import { createSourceContentRoute } from './routes/source-content';
 import { createV1Route, type V1Dependencies } from './routes/v1';
 
 const unavailableHandlers = Object.fromEntries(
@@ -67,6 +69,8 @@ export function createCoreApp(
   app.use('*', requestIdMiddleware);
   app.route('/health', healthRoute);
   app.route('/v1', createV1Route(v1Dependencies));
+  app.route('/v1', createPlatformRoute(v1Dependencies));
+  app.route('/v1', createSourceContentRoute(v1Dependencies.jwt));
   app.route(
     '/v1',
     createP1bRoute({

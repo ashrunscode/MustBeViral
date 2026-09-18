@@ -1,0 +1,75 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys a72452d9-f463-4b85-8073-fa9196d8bc4d
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2&view=settings
+    - link "Billing":
+      - /url: /studio/ecdd573b-9388-4a0b-ac6b-06652adf96b5/billing?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/ecdd573b-9388-4a0b-ac6b-06652adf96b5/brands/491db544-15f3-4b9c-9aea-d82c69d07b42?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2&view=draft
+    - link "Findings":
+      - /url: /studio/ecdd573b-9388-4a0b-ac6b-06652adf96b5/brands/491db544-15f3-4b9c-9aea-d82c69d07b42?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2&view=findings
+    - link "Locations":
+      - /url: /studio/ecdd573b-9388-4a0b-ac6b-06652adf96b5/brands/491db544-15f3-4b9c-9aea-d82c69d07b42?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2&view=locations
+    - link "Settings":
+      - /url: /studio/ecdd573b-9388-4a0b-ac6b-06652adf96b5/brands/491db544-15f3-4b9c-9aea-d82c69d07b42?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2&view=settings
+    - link "Billing & usage":
+      - /url: /studio/ecdd573b-9388-4a0b-ac6b-06652adf96b5/billing?studio=d69e626c-10b5-4726-b9a8-38c6dd514cc2
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, or HTML documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "unknown gap · corrected"
+  - complementary:
+    - text: Unapproved draft
+    - heading "unknown gap" [level=2]
+    - paragraph: Keyboard hours stay 24/7 at 200 percent.
+    - paragraph: Source ae6507f6-0863-4d48-bf83-f4f3ea3eec65 · manual · captured 2026-09-14T23:35:26.902863+00:00
+    - paragraph: "Excerpt: Operator correction."
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 2
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: manual · manual · 2026-09-14T23:35:26.398532+00:00
+      - listitem: manual · manual · 2026-09-14T23:35:26.902863+00:00
+  - paragraph: Findings stay on this brand.

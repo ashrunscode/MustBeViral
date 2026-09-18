@@ -1,118 +1,69 @@
 schema_version: 1
-id: WP-P3-009
+id: WP-PLATFORM-W2-002
 spec_revision: 1
-title: Owner-only production observation and traffic decision
-phase: P3
-status: in_progress
+title: Representative extraction, voice proposals and owner-approved brand versions
+phase: P4
+status: ready
 priority: critical
 branch: codex/viralgraph-cleanroom
-objective: With fresh explicit operator authorization, prove exactly one approved owner session on
-  the SSO-protected provider surface, observe the disabled private foundation for 72 continuous
-  hours, and prepare a separate evidence-backed DNS/customer-traffic go or no-go decision without
-  performing cutover.
+objective: Implement W2.2 representative extraction quality, W2.3 voice/audience/positioning
+  proposals and W2.4 owner-approved brand versions on W2.1 captures so an operator can extract
+  offerings, locations, facts, offers, visual candidates and language, review
+  voice/audience/positioning proposals with evidence and confidence, and approve an exact immutable
+  brand version for WashBodega and UnPile. Preserve W1 studio, brand, invitation and billing
+  contracts and W2.1 source capture, provenance, unapproved drafts, manual/no-website parity and
+  immutable corrections. No outreach, provider runs, charging or Stripe mutation.
 authority_refs:
   - product-contract
   - release-scope
   - system-overview
   - data-auth-tenancy
+  - api-mcp-cli
+  - execution-providers-billing
+  - experience-contract
   - quality-gates
+  - roadmap
   - local-env-secrets
-  - deploy-rollback-incidents
-  - legacy-v1-retirement
-  - codex-finish-mega-prompt
+  - adr-0007-full-platform
 required_skills:
+  - build-mustbeviral
+  - data-architect
   - auth-fortress
-  - observability-ops
-  - cloudflare
-  - wrangler
-  - supabase
+  - api-and-interface-design
+  - superdesign
+  - frontend-master
   - quality-check
 depends_on:
-  - WP-P3-008
+  - WP-PLATFORM-W2-001
 scope:
   allowed_paths:
-    - apps/core/**
     - apps/web/**
-    - packages/config/**
+    - apps/core/**
+    - apps/cli/**
+    - apps/mcp/**
     - packages/contracts/**
+    - packages/domain/**
     - packages/db/**
+    - packages/config/**
+    - packages/ui/**
     - supabase/**
-    - governance/evidence/WP-P3-009/**
-    - governance/evidence/WP-P3-008/**
-    - governance/tests/**
+    - governance/**
     - docs/**
-    - package.json
-    - pnpm-lock.yaml
-    - pnpm-workspace.yaml
-    - turbo.json
-    - tsconfig.json
-    - tsconfig.base.json
-    - eslint.config.mjs
-    - vitest.config.ts
+    - .superdesign/**
     - PROJECT_STATE.yaml
     - llms.txt
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    # Scope amendment under the brand-context task authority, 2026-09-15 (WP-P3-009 lead). No owner
-    # decision authorises this amendment; the authority is the lead's task, and it is recorded here
-    # as such rather than as an owner decision. These five entries admit the brand/ folder, the
-    # repo-local agent skill copies, the agent contract file and the formatter ignore list. The
-    # amendment does not change this packet's objective, steps, acceptance criteria, quality gates
-    # or evidence requirements.
+    # Paths already present on origin/codex/viralgraph-cleanroom while this packet was private.
     - brand/**
     - .agents/skills/**
     - .claude/skills/**
     - AGENTS.md
     - .prettierignore
-    # Scope amendment on explicit owner instruction, 2026-09-16: remove the unused SuperDesign CLI
-    # dependency and back the shared Dialog primitive with an accessible headless library. The
-    # toolchain pin record lives in governance/toolchain.yaml and the shared primitives live in
-    # packages/ui, neither of which this packet admitted. The amendment does not change this
-    # packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
-    - governance/toolchain.yaml
-    - packages/ui/**
-    # Scope amendment on explicit owner instruction, 2026-09-16: fix collaboration identity. The
-    # collaboration worker accepts WebSocket and snapshot requests without authentication and trusts
-    # the actor_id each client sends, and the web app gives every live user the same actor_id. The fix
-    # binds server-verified identity in apps/collaboration and its shared protocol and client in
-    # packages/collaboration, neither of which this packet admitted. The amendment does not change
-    # this packet's objective, steps, acceptance criteria, quality gates or evidence requirements.
     - apps/collaboration/**
     - packages/collaboration/**
-    # Scope amendment on explicit owner instruction, 2026-09-16: fix Stripe wallet funding (issue
-    # 20). One Stripe payment can credit the prepaid usage wallet twice, because both
-    # checkout.session.completed and invoice.paid credit it under different event ids. The owner
-    # decided that only explicit wallet top-ups fund the wallet. The settlement plan that decides
-    # which Stripe events credit the wallet lives in packages/billing, which this packet did not
-    # admit. The amendment does not change this packet's objective, steps, acceptance criteria,
-    # quality gates or evidence requirements.
     - packages/billing/**
-    # Scope amendment on explicit owner instruction, 2026-09-16: correct two stale references left by
-    # the SuperDesign removal and the WCAG AA colour fix. README.md still gates production UI on a
-    # SuperDesign artifact, and .superdesign/design-system.md still prescribes colours that fail WCAG
-    # AA. Only those two files are admitted. The amendment does not change this packet's objective,
-    # steps, acceptance criteria, quality gates or evidence requirements.
     - README.md
-    - .superdesign/design-system.md
-    # Scope amendment on explicit owner instruction, 2026-09-17: land the already-pushed
-    # private-platform-continuation-20260916 line onto origin through a follow-up PR. These
-    # paths exist on that line (CLI, domain extractors, SuperDesign hifi, platform evidence,
-    # supersession scripts/schemas) and were not admitted while WP-P3-009 continued on origin.
-    # This amendment does not change this packet's objective, steps, acceptance criteria,
-    # quality gates or evidence requirements, and it does not implement the private line.
-    - apps/cli/**
-    - apps/mcp/**
-    - packages/domain/**
-    - .superdesign/**
-    - governance/scripts/**
-    - governance/schemas/**
-    - governance/format-evidence.ignore
-    - governance/evidence/WP-P3-010/**
-    - governance/evidence/WP-PLATFORM-W0-001/**
-    - governance/evidence/WP-PLATFORM-W1-001/**
-    - governance/evidence/WP-PLATFORM-W1-002/**
-    - governance/evidence/WP-PLATFORM-W2-001/**
-    - governance/evidence/WP-PLATFORM-W2-002/**
   forbidden_paths:
+    - .github/workflows/**
     - docs/archive/**
     - legacy-exports/**
   required_doc_ids:
@@ -120,115 +71,152 @@ scope:
     - release-scope
     - system-overview
     - data-auth-tenancy
+    - api-mcp-cli
+    - execution-providers-billing
+    - experience-contract
     - quality-gates
+    - roadmap
     - local-env-secrets
-    - deploy-rollback-incidents
-    - legacy-v1-retirement
-    - codex-finish-mega-prompt
 deliverables:
-  - Fresh explicit authorization names exactly one owner identity; provisioning and credentials stay
-    out of source and evidence, public signup remains disabled, and no customer is admitted.
-  - The approved owner proves sign-in, JWT validation, workspace-scoped RLS/database connectivity,
-    private artifact denial/access boundaries, and sign-out without generation, charging, or queues.
-  - The protected provider surface is observed for 72 continuous hours with all behavior gates off,
-    zero customer/provider/charge rows, private R2, and redacted error/latency evidence.
-  - A separate traffic decision packet records owner go or no-go, rollback owner, exact DNS/routes,
-    and current evidence; this packet performs no DNS, custom-domain, or public-traffic mutation.
+  - >
+    Extract typed offerings, locations, facts, offers, visual candidates and language from existing
+    W2.1 HTML, plaintext and Markdown captures plus deterministic synthetic fixtures. Every
+    assertion keeps source reference, capture time, excerpt, method and tenant/brand identity.
+    Unknowns stay unknown. Do not add PDF/DOCX parsers, live public crawlers, paid-provider
+    inference or reusable campaign assets from website images.
+  - >
+    Produce voice, audience and positioning proposals with evidence, confidence and status so a
+    reviewer can distinguish observed facts from hypotheses and correct them. Inferred personas stay
+    labeled. Missing audience or voice evidence is not filled with stereotypes. Proposal generation
+    must not start a provider run or spend.
+  - >
+    Deliver editable findings, source review, targeted questions and in-app owner-approved immutable
+    brand versions on existing WashBodega and UnPile brands. Approval is an authorized operator
+    command against one exact version, not a chat permission and not auto-approval. Corrections
+    create a new version. A later campaign pin/read reuses the approved snapshot. Approval must
+    refuse a version that already contains known expired offers or contradictory assertions. That
+    guard is required correctness for W2.4, not W2.5 change detection, expiry lifecycle or catalog
+    import. Preserve W2.1 manual/no-website drafts and immutable corrections.
+  - >
+    Preserve W1 resource and permission contracts and W2.1 capture, provenance, unapproved-draft,
+    manual/no-website and correction behavior. No new implicit execution, media, billing,
+    publishing, invitation-mail or queue-driver authority. Integer money and charging kill switches
+    stay unchanged. Images found on a website remain visual candidates until a later asset packet.
+  - >
+    Verify desktop and mobile connected WashBodega and UnPile journeys from capture or manual draft
+    through extraction, proposals, correction and owner approval, with independent review evidence,
+    then prepare WP-PLATFORM-W2-003 for W2.5 change detection, expiry, contradiction lifecycle and
+    manual/catalog imports. Do not claim Wave 2 exited or Wave 3 started.
 public_interfaces:
   - The SSO-protected Vercel team alias, the workers.dev Core URL, and (owner-authorized deviation,
     governance/evidence/WP-P3-009/production-collaboration-traffic-decision-2026-09-16.md) the
     workers.dev production collaboration URL are in scope. Legacy V1, MustBeViral custom domains,
     public signup, customer admission, provider execution, queues, and charging remain unchanged.
+  - >
+    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections for
+    extract, propose, correct, question, approve-version and pin/read-version commands. Preserve W1
+    identity, setup, presentation and billing operations and W2.1 capture, manual draft and
+    correction operations. Do not add catalog-import or change-monitor commands.
+  - >
+    Additive assertion, proposal, brand-version and pin persistence with explicit ownership, forced
+    RLS, generated database types and application rollback to the prior schema-compatible version.
+    Reuse the W2.1 job/source/candidate pattern. Do not add a new queue driver, live enablement
+    flag, scheduled recapture pipeline or catalog-import schema.
 steps:
-  - id: p3i-001-owner-identity-decision
-    title: Obtain fresh explicit authorization for exactly one production owner identity.
-    status: completed
-  - id: p3i-002-authenticated-zero-spend-smoke
-    title:
-      Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend
-      gates off.
-    status: completed
-  - id: p3i-003-private-72-hour-observation
-    title: Observe the protected provider surface and zero-mutation invariants for 72 continuous hours.
-    status: current
-  - id: p3i-004-traffic-go-no-go-packet
-    title: Prepare but do not execute a separate exact DNS/customer-traffic decision packet.
+  - id: w2b-001-representative-extraction
+    title: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+    status: pending
+  - id: w2b-002-voice-audience-positioning
+    title: Produce evidence-backed voice, audience and positioning proposals with labeled unknowns.
+    status: pending
+  - id: w2b-003-approved-brand-versions
+    title: Deliver targeted questions and in-app owner-approved immutable brand versions.
+    status: pending
+  - id: w2b-004-journeys-and-successor
+    title: Verify two-brand desktop/mobile approval journeys and prepare WP-PLATFORM-W2-003.
     status: pending
 acceptance:
   automated:
-    - id: owner-session-containment
+    - id: representative-extraction-quality
       criterion:
-        Provider and database evidence proves the one approved owner session was tenant scoped
-        and created no provider, queue, charge, signup, or customer activity.
-      status: passed
-      evidence:
-        - governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
-        - governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
-    - id: observation-window
-      criterion: A continuous 72-hour provider observation shows healthy private endpoints, redacted
-        telemetry, private storage, disabled gates, and no customer-impacting activity.
-      status: pending
-      evidence:
-        - governance/evidence/WP-P3-009/private-72-hour-observation-2026-09-07.md
-        - governance/evidence/WP-P3-009/replacement-observation-baseline-2026-09-08.md
-  manual:
-    - id: fresh-traffic-decision
-      criterion:
-        The owner explicitly records go or no-go after reading the exact smoke, observability,
-        rollback, capacity, and legacy evidence; silence is not approval.
+        Deterministic extractors over synthetic HTML/plaintext/Markdown fixtures for WashBodega,
+        UnPile and additional accepted-roadmap category samples persist typed offerings, locations,
+        facts, offers, visual candidates and language with source reference, capture time, excerpt
+        and method. Fields absent from the fixture remain unknown. Visual candidates are not marked
+        reusable. UnPile fixtures cannot produce WashBodega facts and vice versa. Extraction does
+        not call paid inference providers, perform live public crawls, parse PDF/DOCX or treat
+        prompt-injection text as approved knowledge or a permission change.
       status: pending
       evidence: []
+    - id: labeled-voice-audience-positioning
+      criterion:
+        Voice, audience and positioning proposals store evidence links, confidence and status so
+        tests can list observed facts versus inferred hypotheses. Inferred personas cannot become
+        owner-confirmed without the approval command. Missing audience or voice evidence stays
+        unknown rather than a demographic stereotype. Proposal generation does not start a provider
+        run, send outreach or spend.
+      status: pending
+      evidence: []
+    - id: owner-approved-immutable-versions
+      criterion:
+        An authorized in-app operator command against an exact draft hash creates an immutable
+        brand_version. A later correction creates a new version and does not mutate the approved
+        snapshot. A campaign pin or pin-read RPC returns that approved version's facts after drafts
+        change. Approve refuses a payload that already contains a known expired offer or
+        contradictory assertion. A brand without a website still reaches the same
+        unapproved-then-approved path through existing W2.1 manual draft and correction commands.
+        Direct table writes are denied. Knowledge, proposals and versions resolve only permitted W1
+        identities. Revoked grants, forged child IDs and stale responses cannot approve or display
+        another brand's knowledge. Passing this guard is not W2.5 change-detection, expiry-lifecycle
+        or catalog-import completeness.
+      status: pending
+      evidence: []
+    - id: two-brand-journeys-no-spend
+      criterion:
+        Desktop and mobile connected journeys for WashBodega and UnPile go from W2.1 capture or
+        manual draft through extraction, proposals, correction, targeted questions and owner
+        approval without mixing identity, offers, voice or sources. Independent review evidence is
+        recorded for this packet. Extraction never marks drafts approved by default, never sends
+        outreach, never enables charging, never starts a provider run and never writes production
+        remotes. UI stays on the accepted September 9 Lightfield studio direction.
+      status: pending
+      evidence: []
+  manual: []
 quality_gates:
-  - id: design-direction
-    command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
+  - id: database
+    command: pnpm supabase:test
+    status: pending
+    evidence: []
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
-  - id: repository-verification
+    status: pending
+    evidence: []
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: repository
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
+    status: pending
+    evidence: []
 rollback:
   strategy:
-    Keep all behavior gates false, leave the protected provider deployment in place, stop the
-    observation, revoke only the newly authorized owner session if compromised, and fix forward. Do
-    not alter DNS, legacy traffic, migration history, or production data in this packet.
-  remote_actions_required: true
+    Revert application changes while retaining additive assertion, proposal, brand-version and
+    pin tables. Confirm W1 studio, brand, invitation, mapping and billing commands and W2.1 capture,
+    provenance, unapproved-draft, manual/no-website and correction commands still work. Do not
+    delete tenant data, weaken RLS, auto-approve knowledge, reuse website images as campaign assets
+    or enable checkout to simulate recovery.
+  remote_actions_required: false
 external_effects:
-  remote_mutation: approval-required
+  remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: p3i-003-private-72-hour-observation
-  next_action: 'p3i-003: continue the replacement observation from 2026-09-08T03:18:11Z through at
-    least 2026-09-11T03:18:11Z; hour-01 evidence is recorded, the next required daily capture is
-    September 9 at 03:18:11Z plus or minus two hours, and the separate owner traffic ruling remains
-    pending.'
+  current_step: w2b-001-representative-extraction
+  next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
   blockers: []
-  changed_paths:
-    - governance/evidence/WP-P3-009/trunk-sync-2026-09-04.md
-    - governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
-    - governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
-    - governance/evidence/WP-P3-009/private-observation-2026-09-05.md
-    - governance/evidence/WP-P3-009/private-observation-2026-09-06.md
-    - governance/evidence/WP-P3-009/private-observation-2026-09-08.md
-    - governance/evidence/WP-P3-009/private-72-hour-observation-2026-09-07.md
-    - governance/evidence/WP-P3-009/replacement-observation-baseline-2026-09-08.md
-    - governance/evidence/WP-P3-009/replacement-observation-hour-01-2026-09-08.md
-    - governance/evidence/WP-P3-009/observation-recovery-procedure-2026-09-08.md
-    - governance/evidence/WP-P3-009/traffic-decision-draft.md
-    - governance/evidence/WP-P3-009/execution-recovery-review-2026-09-08.md
-    - governance/evidence/WP-P3-009/gate-run-2026-09-08.md
-    - governance/evidence/WP-P3-009/successor-WP-P3-010.yaml
-  last_green_checks:
-    - pnpm agent:preflight
-    - pnpm agent:verify
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: null
+  successor_packet_id: WP-PLATFORM-W2-003
   evidence_paths: []
   completed_at: null

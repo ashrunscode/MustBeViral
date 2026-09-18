@@ -1,25 +1,22 @@
 import type { ReactNode } from 'react';
 
 import { requireStudioSession } from '../../../src/lib/supabase/session-boundary';
-import { StudioWorkflowNav } from '../../../src/components/studio-workflow-nav';
-import { StudioHeader } from './studio-header';
+import { WorkspaceFrame } from '../../../src/features/platform/workspace-frame';
+import { isWorkspaceUuid } from '../../../src/lib/core/workspace-ref';
+import { redirect } from 'next/navigation';
 
 export default async function StudioWorkspaceLayout({
   children,
   params,
 }: Readonly<{ children: ReactNode; params: Promise<{ workspace: string }> }>) {
   const [{ workspace }, session] = await Promise.all([params, requireStudioSession()]);
+  if (session.mode === 'authenticated' && !isWorkspaceUuid(workspace)) redirect('/studio');
   return (
-    <div className="studio-app">
-      <a className="skip-link" href="#main-content">
-        Skip to main content
-      </a>
-      <StudioHeader
-        presentation={session.mode === 'local-preview' ? 'preview' : 'authenticated'}
-        workspace={workspace}
-      />
-      <StudioWorkflowNav workspace={workspace} />
+    <WorkspaceFrame
+      presentation={session.mode === 'local-preview' ? 'preview' : 'authenticated'}
+      workspace={workspace}
+    >
       {children}
-    </div>
+    </WorkspaceFrame>
   );
 }
