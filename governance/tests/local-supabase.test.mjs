@@ -9,7 +9,10 @@ const helperPath = path.join(process.cwd(), 'packages', 'db', 'scripts', 'local-
 const PROCESS_SECRET = 'FAKE_CANARY_FROM_PROCESS';
 const STATUS_SECRET = 'FAKE_CANARY_FROM_STATUS';
 
-function statusSnapshot(secret, { host = '127.0.0.1', port = '54322', role = 'local-operator' } = {}) {
+function statusSnapshot(
+  secret,
+  { host = '127.0.0.1', port = '54322', role = 'local-operator' } = {},
+) {
   const parsed = new URL('postgresql://127.0.0.1:54322/postgres');
   parsed.hostname = host;
   parsed.port = port;

@@ -79,10 +79,7 @@ function withOwn(target, key, value) {
 }
 
 /** Resolve only this repository's running local database, never global/cloud credentials. */
-export function localSupabaseDatabase({
-  env = process.env,
-  loadStatus = loadStatusDefault,
-} = {}) {
+export function localSupabaseDatabase({ env = process.env, loadStatus = loadStatusDefault } = {}) {
   const fromEnv = secretFromProcess(env);
   const fromStatus = fromEnv === undefined ? credentialFromStatus(loadStatus()) : undefined;
   const secret = fromEnv ?? fromStatus.secret;
