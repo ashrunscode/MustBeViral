@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 
 export const LOCAL_SUPABASE_CONTAINER = 'supabase_db_mustbeviral';
 
