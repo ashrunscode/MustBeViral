@@ -1,5 +1,3 @@
 .vercel
 .env*
-# The production file carries ONLY public NEXT_PUBLIC_* values (see its header);
-# every other .env variant stays local and ignored.
-!.env.production
+# Env files stay local and ignored, including production.
