@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-W2-002
-spec_revision: 1
+spec_revision: 2
 title: Representative extraction, voice proposals and owner-approved brand versions
 phase: P4
 status: ready
@@ -208,7 +208,7 @@ rollback:
     or enable checkout to simulate recovery.
   remote_actions_required: false
 external_effects:
-  remote_mutation: read-only
+  remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
   current_step: w2b-001-representative-extraction

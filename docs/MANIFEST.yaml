@@ -517,3 +517,12 @@ documents:
     authority_topics: [decision.0007-full-platform]
     review_triggers: [platform_scope_changed, platform_release_assessed]
     supersedes: [adr-0001-dtc-first, codex-finish-mega-prompt]
+
+  - id: adr-0009-standing-release-authority
+    path: docs/decisions/ADR-0009-STANDING-RELEASE-AUTHORITY.md
+    kind: decision
+    status: accepted
+    owner: operations-security
+    authority_topics: [operations.release_authority]
+    review_triggers: [owner_authority_changed, release_incident, github_protection_changed]
+    supersedes: []

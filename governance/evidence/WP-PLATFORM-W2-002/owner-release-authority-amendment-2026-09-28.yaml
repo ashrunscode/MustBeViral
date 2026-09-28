@@ -1,0 +1,82 @@
+schema_version: 1
+kind: owner-release-authority-amendment
+date: 2026-09-28
+packet_id: WP-PLATFORM-W2-002
+previous_spec_revision: 1
+spec_revision: 2
+branch: codex/viralgraph-cleanroom
+base_commit: 28bebfcc649599492349c499c91296a380e1822d
+owner_instruction:
+  # Three consecutive owner chat messages on 2026-09-28, verbatim.
+  - fix claude md  and agnet md in ths project and all others so claude and allo  other agnets can
+    push, merfge, commit deploy etc, just be mingful on not messging things up
+  - in this project and all other rojects
+  - globally as well
+context: >-
+  The owner granted local agents on the owner's workstation standing authority to commit, push,
+  open pull requests, merge and deploy the owner's repositories through each repository's guarded
+  procedure once its checks and required reviews pass. The workstation instructions already carry
+  that grant. In this repository PROJECT_STATE.yaml owns the external-mutation policy, and
+  WP-PLATFORM-W2-002 declares remote_mutation read-only, so merge and deploy stay restricted until
+  this repository records the grant.
+why_not_instruction_only: >-
+  AGENTS.md requires an instruction-only amendment to preserve the external-effects policy. This
+  amendment changes that policy, so it is an owner authority change. As ADR-0008 requires for
+  authority changes, this record and the revision increase are committed before any amended path
+  changes.
+purpose: >-
+  Record the owner's standing release authority. Let local agents merge reviewed pull requests and
+  deploy merged code to existing V2 targets through the guarded release procedure, once the
+  required checks and an independent review of the exact head pass.
+amended_paths:
+  - PROJECT_STATE.yaml
+  - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  - docs/decisions/ADR-0009-STANDING-RELEASE-AUTHORITY.md
+  - docs/MANIFEST.yaml
+  - docs/INDEX.md
+  - docs/generated/TRACEABILITY.md
+  - docs/delivery/QUALITY_GATES.md
+  - docs/operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md
+  - docs/operations/LOCAL_ENV_AND_SECRETS.md
+  - AGENTS.md
+changes:
+  - Accept ADR-0009 as the standing deployment approval for local agents. Register it in the
+    manifest and regenerate the documentation index and traceability projection.
+  - PROJECT_STATE.yaml gives staging the guarded_release mutation policy. Production notes state
+    what the standing authority covers and what stays owner-gated.
+  - ACTIVE_WORK_PACKET.yaml external_effects.remote_mutation changes from read-only to authorized,
+    limited by ADR-0009 to guarded releases unless the packet names other exact remote mutations.
+  - quality-gates defines the merge gates. deploy-rollback-incidents defines the guarded release and
+    replaces its stale "from protected main" source. local-env-secrets permits merging and CLI
+    deploys without secret access. AGENTS.md points agents to ADR-0009.
+preserved:
+  - PROJECT_STATE.yaml legacy.destructive_remote_action stays forbidden.
+  - PROJECT_STATE.yaml environments.production.mutation_policy stays preserve_until_v2_cutover.
+  - The packet's external_effects.destructive_remote_actions stays false.
+  - Remote destructive actions still require PROJECT_STATE.yaml and the active packet to name exact
+    resources and rollback evidence.
+  - Every W2-002 objective, deliverable, public interface, step, current step, acceptance criterion,
+    quality gate, required skill, scope list, rollback strategy, handoff field and successor.
+  - The WP-P3-009 carried release obligations, the owner traffic ruling before traffic activation,
+    and ADR-0006.
+still_owner_gated:
+  - Legacy V1 production, cutover, public traffic activation, DNS, custom domains, routes and
+    workers.dev reachability.
+  - Production database writes, including production migrations.
+  - Secrets, environment variables, provider and project settings, and enabling features, queues,
+    provider execution or charging.
+  - New cloud resources, spend, email or SMS, public posts, package or app-store publishing and
+    repository visibility.
+  - Deleting data, branches, backups, rollback material or other sessions' work. Force-push and
+    history rewrite.
+constraints:
+  - Commit this authority-only record and the revision increase before changing any amended path.
+  - These paths authorize only the release-authority change described here.
+  - This amendment makes no implementation change, merge, deployment, provider activation, spend,
+    send or GitHub settings change.
+  - Do not mark product acceptance passed or transition the packet for this amendment.
+verification:
+  - Run pnpm agent:preflight and the governance validators. Record any failure that comes from
+    workstation state, not from this change.
+  - Review the exact diff. Changes stay inside the amended paths and the packet's allowed paths.
+  - A different session independently reviews the exact pull request head before merge.
