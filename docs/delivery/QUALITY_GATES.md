@@ -20,7 +20,7 @@ Agents merge without asking again (`adr-0009-standing-release-authority`) once t
 - Required checks run in a fresh single-worktree clone of that head, with frozen dependencies. Check the head out as a local branch named after the pull request's target branch, so `packet:verify` runs its branch and single-worktree gates as it will after merge. Linked worktrees on the workstation otherwise fail those gates.
   - Governance or documentation changes need `pnpm agent:preflight`, `pnpm governance:check`, `pnpm governance:test` and `pnpm format:check`.
   - Product changes also need `pnpm verify` and `pnpm supabase:test`.
-  - Any validation error blocks the merge. If a tool crashes instead of reporting a result, rerun that validator alone at the same commit and record both runs.
+  - Any validation error blocks the merge. If a tool crashes instead of reporting a result, rerun that validator alone at the same commit and record both runs. If the rerun also produces no result, the merge is blocked until one does.
   - The pull request records the commit, commands and exit codes.
   - GitHub Actions is disabled, and neither `main` nor `codex/viralgraph-cleanroom` is protected or covered by a ruleset (checked 2026-09-28). Until that changes, these recorded local runs are the required checks. Do not describe them as CI.
 - Before merge, a reviewer independent of the author (a different agent session or a person) reviews the exact head of any change that touches authentication, billing or payments, consent, CRM, migrations or RLS, customer data, deployment configuration or governance authority, or more than 20 files. Other changes merge on the required checks alone. A new head needs a new review of what changed, and blocking findings are fixed before merging.

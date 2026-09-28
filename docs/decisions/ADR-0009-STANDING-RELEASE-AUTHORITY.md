@@ -22,10 +22,11 @@ approval that runbook requires. Cloud-hosted agents do not hold this authority a
 credentials.
 
 A deploy ships a commit already merged into the active packet branch to one of the existing V2
-targets named in the runbook. It ships code, plus Worker configuration identical to what is live. The
-runbook's pre-deploy comparison stops any deploy that would change live `vars`, bindings, triggers
-or `workers_dev`. The active packet's `external_effects.remote_mutation: authorized` means this
-guarded release. Any other remote mutation needs the packet to name it exactly.
+targets named in the runbook. It ships code and leaves live Worker settings as they are. The
+runbook's pre-deploy checks stop any deploy that would change vars, bindings, cron triggers, routes,
+`workers.dev` reachability or queue consumers. The active packet's
+`external_effects.remote_mutation: authorized` means this guarded release. Any other remote mutation
+needs the packet to name it exactly.
 
 ## Not covered
 
@@ -49,8 +50,9 @@ WP-P3-009 release obligations in `quality-gates`.
 
 ## Consequences
 
-- Every merge and deploy leaves evidence: the checked commit, commands and exit codes, reviewer and
-  reviewed head, rollback target, deployed version and smoke results.
+- Every merge and deploy leaves evidence: the checked commit, commands and exit codes, the reviewer
+  and reviewed head where `quality-gates` requires a review, the rollback target, the deployed version
+  and the smoke results.
 - On 2026-09-28, GitHub reported `protected: false` for `main` and `codex/viralgraph-cleanroom`,
   no repository rulesets, and Actions disabled. ADR-0006's consequence that `main` branch protection
   is the enforcement boundary does not hold today. Until protection and Actions are restored, the
