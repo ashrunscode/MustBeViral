@@ -28,10 +28,12 @@ environments:
       V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
       preserve_until_v2_cutover keeps legacy V1 unchanged. Under adr-0009-standing-release-authority,
-      agents may deploy code-only, staging-verified merged commits to the existing V2 production
-      Workers and web project through the guarded release in deploy-rollback-incidents. Production
-      database writes, secrets, environment variables, routes, DNS, traffic and feature, provider or
-      charge enablement still need a dated owner sentence.
+      agents may deploy staging-verified merged commits to the existing V2 production targets
+      mustbeviral-v2-production-core, mustbeviral-v2-production-collaboration and
+      mustbeviral-web-production through the guarded release in deploy-rollback-incidents, only when
+      the deployed Worker config matches what is live. Production database writes, secrets,
+      environment variables, routes, DNS, traffic, new resources and feature, provider or charge
+      enablement still need a dated owner sentence.
   staging:
     generation: viralgraph-cleanroom-v2
     state: ready
@@ -39,9 +41,11 @@ environments:
     cloudflare_worker: mustbeviral-v2-staging-core
     notes: Named staging outbox queue mustbeviral-v2-staging-outbox-dispatch. QUEUES_ENABLED is true
       after the event_id migration. Instant rollback is QUEUES_ENABLED=false. Destructive remote
-      action stays forbidden. guarded_release lets agents deploy merged commits and apply their
-      merged additive migrations through deploy-rollback-incidents under
-      adr-0009-standing-release-authority; secrets and environment variables stay owner-gated.
+      action stays forbidden. guarded_release lets agents deploy merged commits to
+      mustbeviral-v2-staging-core, mustbeviral-v2-staging-collaboration and mustbeviral-web-staging
+      and apply their merged additive migrations through deploy-rollback-incidents under
+      adr-0009-standing-release-authority. A deploy that would change live vars, bindings, triggers
+      or workers_dev, and any secret or environment variable change, stays owner-gated.
   preview:
     generation: viralgraph-cleanroom-v2
     state: not_created

@@ -21,11 +21,11 @@ follows the guarded release in `deploy-rollback-incidents`. This standing approv
 approval that runbook requires. Cloud-hosted agents do not hold this authority and never receive
 credentials.
 
-A deploy ships a commit already merged into the active packet branch to an existing V2 target. The
-existing targets are the staging and production Core and collaboration Workers and the staging and
-production web projects. A deploy changes code only. The active packet's
-`external_effects.remote_mutation: authorized` means this guarded release. Any other remote mutation
-needs the packet to name it exactly.
+A deploy ships a commit already merged into the active packet branch to one of the existing V2
+targets named in the runbook. It ships code, plus Worker configuration identical to what is live. The
+runbook's pre-deploy comparison stops any deploy that would change live `vars`, bindings, triggers
+or `workers_dev`. The active packet's `external_effects.remote_mutation: authorized` means this
+guarded release. Any other remote mutation needs the packet to name it exactly.
 
 ## Not covered
 
@@ -51,8 +51,10 @@ WP-P3-009 release obligations in `quality-gates`.
 
 - Every merge and deploy leaves evidence: the checked commit, commands and exit codes, reviewer and
   reviewed head, rollback target, deployed version and smoke results.
-- As of 2026-09-28, GitHub enforces no branch protection, rulesets or Actions checks on this
-  repository. The recorded local merge gates are the enforcement. Restoring protection or Actions is
-  a GitHub settings decision for the owner.
+- On 2026-09-28, GitHub reported `protected: false` for `main` and `codex/viralgraph-cleanroom`,
+  no repository rulesets, and Actions disabled. ADR-0006's consequence that `main` branch protection
+  is the enforcement boundary does not hold today. Until protection and Actions are restored, the
+  recorded merge gates in `quality-gates` are the enforcement. This decision does not change who may
+  administer branch protection or Actions.
 - A deploy whose smoke check fails is rolled back to its recorded target in the same release and
   recorded as an incident.
