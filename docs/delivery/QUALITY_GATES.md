@@ -11,7 +11,16 @@ doc_id: quality-gates
 - Formatting, linting, strict types, unit/integration tests, security checks, and affected builds pass from a clean checkout with frozen dependencies.
 - Changed behavior has contract and failure-path tests; changed authority has traceability updates.
 - Implementation diff stays inside the active packet and introduces no unresolved decision.
-- External mutations are explicitly permitted by packet and environment policy; otherwise they are absent.
+- External mutations are explicitly permitted by packet and environment policy; otherwise they are absent. A packet's `remote_mutation: authorized` covers only the guarded release in `deploy-rollback-incidents` under `adr-0009-standing-release-authority`, unless the packet names other exact remote mutations.
+
+## Merge gates under standing release authority
+
+Agents merge without asking again (`adr-0009-standing-release-authority`) once these gates pass for the exact pull request head:
+
+- Required checks run from a clean checkout of that head with frozen dependencies. Governance or documentation changes need `pnpm governance:check`, `pnpm governance:test` and `pnpm format:check`. Product changes also need `pnpm verify` and `pnpm supabase:test`. The pull request records the commit, commands and exit codes. While GitHub Actions is disabled and no branch is protected (both verified on 2026-09-28), these recorded local runs are the required checks. Do not describe them as CI.
+- A reviewer independent of the author (a different agent session or a person) reviews the exact head before merge. This is required for changes to authentication, billing or payments, consent, CRM, migrations or RLS, customer data, deployment configuration or governance authority, and for changes over 20 files. A new head needs a new review of what changed. Fix blocking findings before merging.
+- Merge with a merge commit into the target branch; never use an administrator bypass. Merging never deploys by itself.
+- Passing these gates does not approve any action `adr-0009-standing-release-authority` leaves owner-gated.
 
 ## Required coverage
 
@@ -151,4 +160,4 @@ Final release requires an executable user journey, working data and recovery pat
 
 ## Carried release obligations
 
-WP-P3-009 observation-window and fresh-traffic-decision are pending in its immutable supersession snapshot. Re-establish appropriate continuous observation for the eventual release deployment and record the owner ruling before traffic activation. Local platform work does not require those release checks to pass first. Existing production containment, actual required GitHub reviews, migration/RLS verification and exact-resource rollout/rollback gates remain in force.
+WP-P3-009 observation-window and fresh-traffic-decision are pending in its immutable supersession snapshot. Re-establish appropriate continuous observation for the eventual release deployment and record the owner ruling before traffic activation. Local platform work does not require those release checks to pass first. Existing production containment, actual required GitHub reviews, migration/RLS verification and exact-resource rollout/rollback gates remain in force. Standing release authority (`adr-0009-standing-release-authority`) does not satisfy these obligations; the traffic ruling still needs its own owner sentence.

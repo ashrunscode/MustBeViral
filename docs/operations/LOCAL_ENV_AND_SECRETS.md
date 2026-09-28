@@ -36,6 +36,7 @@ No database, bucket, webhook signing secret, provider key, auth redirect, email 
 - Validate environment variables through typed schemas at process start; missing or malformed values fail closed.
 - Use least-privilege scoped identities, short lifetimes where possible, and separate machine/user roles.
 - GitHub agents may use the operator-provisioned GitHub CLI credential to publish, push, administer branch protection, and manage GitHub Actions workflows for this repository (see `adr-0006-agent-publication-credentials`). Repository deletion and organization-level destructive actions still require an explicit, per-action operator authorization naming the exact resource; project-infrastructure destructive actions remain gated by `PROJECT_STATE.yaml` and the active packet.
+- Local agents may also use that credential to open and merge pull requests, and the operator's authenticated Wrangler and Vercel CLI sessions to deploy merged code, under `adr-0009-standing-release-authority` and the guarded release in `deploy-rollback-incidents`. That authority never covers reading, printing or changing secrets or environment variables.
 - Production secret reads and rotations require an audited operator action. Rotation updates staging first, verifies dual-key overlap when supported, promotes production, and revokes the old value.
 - Error reporting and traces redact authorization, cookies, signed URLs, prompts with sensitive customer data, provider payloads, and user-supplied personal data.
 

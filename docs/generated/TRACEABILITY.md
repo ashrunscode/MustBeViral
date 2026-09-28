@@ -95,3 +95,4 @@ Current packet: `WP-PLATFORM-W2-002` (ready). Current step: `w2b-001-representat
 | `gtm.legal_input_pack` | `gtm-legal-input-pack` | docs/gtm/legal-input-pack.md |
 | `delivery.owner_directed_supersession` | `adr-0008-packet-supersession` | docs/decisions/ADR-0008-PACKET-SUPERSESSION.md |
 | `decision.0007-full-platform` | `adr-0007-full-platform` | docs/decisions/ADR-0007-FULL-PLATFORM.md |
+| `operations.release_authority` | `adr-0009-standing-release-authority` | docs/decisions/ADR-0009-STANDING-RELEASE-AUTHORITY.md |

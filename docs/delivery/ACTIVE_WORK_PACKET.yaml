@@ -208,7 +208,7 @@ rollback:
     or enable checkout to simulate recovery.
   remote_actions_required: false
 external_effects:
-  remote_mutation: read-only
+  remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
   current_step: w2b-001-representative-extraction

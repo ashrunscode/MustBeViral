@@ -16,6 +16,7 @@ This file owns agent behavior. `PROJECT_STATE.yaml` owns current state and exter
 - Preserve strict TypeScript, explicit boundaries, deterministic state machines, immutable revisions, integer money, and private artifacts. Supabase/Postgres owns permissions, revisions, runs, and money; Durable Objects/caches must not become a second authority.
 - Migrations, Zod/OpenAPI contracts, environment schemas, and the model catalog own implemented contracts. Generate projections; keep browser/REST/CLI/MCP transports thin around shared command/query handlers.
 - Never expose secrets, raw environment values, account tokens, customer media, or signed URLs in docs, logs, fixtures, evidence, or messages. Remote destructive actions require state and packet authority naming exact resources and rollback evidence.
+- Commit, push, open pull requests, merge, and deploy without asking again under `adr-0009-standing-release-authority`: pass the merge gates in `quality-gates` and follow the guarded release in `deploy-rollback-incidents`. The actions that ADR leaves owner-gated still need a dated owner sentence.
 
 ## Skills and verification
 
