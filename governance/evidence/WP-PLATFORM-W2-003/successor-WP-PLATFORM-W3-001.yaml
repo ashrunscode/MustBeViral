@@ -98,7 +98,7 @@ public_interfaces:
 steps:
   - id: w3f-001-preflight
     title: Inventory source rights, exact runtime limits, budget and hosted benchmark permissions.
-    status: current
+    status: pending
   - id: w3f-002-local-static
     title: Measure deterministic source-faithful static composition and failure boundaries locally.
     status: pending

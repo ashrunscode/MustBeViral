@@ -53,5 +53,10 @@
     "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-full-db.log",
     "sha256": "a4f95d46fd918d1365d7f52be513e65f66df2c8e149948757f67cb4dd5aaaf5d",
     "disposition": "d6de38f: 61 files / 1180 assertions passed."
+  },
+  {
+    "file": "C:/dev/backups/MustBeViral/release-recovery-20260928/w2c-finish.log",
+    "sha256": "e84f45e281578190595022944d70261c5afb150dd6269c2edcfbff8f3e331262",
+    "disposition": "Initial agent:finish refused the ready successor because its first step was current. No transition occurred. Corrected that step to pending; scope, acceptance and external effects unchanged."
   }
 ]
