@@ -1,0 +1,42 @@
+schema_version: 1
+gate_id: separate_executor
+packet_id: WP-P3-001
+recorded_at: TBD
+branch: codex/viralgraph-cleanroom
+status: not_met
+operator_acceptance:
+  accepted_by: TBD
+  accepted_at: TBD
+  rollback_plan_acknowledged: false
+trigger:
+  description: >-
+    Measured fan-out and isolation benchmark proving Core Worker limits justify a separately
+    deployable executor without a second policy or billing authority.
+  threshold_met: false
+  isolation_claim: TBD
+  decisive_metrics:
+    concurrent_dispatch_fan_out: TBD
+    ingress_p95_ms_under_execution_load: TBD
+    execution_error_containment: TBD
+    worker_cpu_time_p95_ms: TBD
+    subrequests_p95: TBD
+measurement:
+  harness_command: TBD
+  staging_core_url: https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev
+  vu_tiers: [TBD]
+  dispatch_probe_only: TBD
+  provider_runs_executed: false
+  raw_artifact_paths: [TBD]
+  observability_exports: [TBD]
+rollback:
+  strategy: >-
+    Executor enablement requires route disable and Git revert. Postgres remains authoritative;
+    executor never owns ledger, membership, or canvas head.
+  executor_worker_deployed: false
+  kill_switch_path: TBD
+cleanroom_assertions:
+  separate_executor_deployed: false
+  postgres_remains_authority: true
+notes:
+  - Baseline measurements on single Core Worker are valid pre-executor evidence.
+  - Do not deploy executor Worker until this gate passes.

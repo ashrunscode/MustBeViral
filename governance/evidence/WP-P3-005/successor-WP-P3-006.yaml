@@ -1,0 +1,134 @@
+schema_version: 1
+id: WP-P3-006
+spec_revision: 1
+title: Fresh Supabase production project provisioning
+phase: P3
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective:
+  Create the cost-confirmed `mustbeviral-prod` Supabase project in the exact organization and
+  region, verify its identity and health without exposing credentials, and prepare the separately
+  governed migration and security-hardening slice.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
+  - codex-finish-mega-prompt
+required_skills:
+  - supabase
+  - data-architect
+  - auth-fortress
+  - quality-check
+depends_on:
+  - WP-P3-005
+scope:
+  allowed_paths:
+    - supabase/**
+    - governance/evidence/WP-P3-006/**
+    - governance/evidence/WP-P3-005/**
+    - governance/tests/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
+    - codex-finish-mega-prompt
+deliverables:
+  - Supabase project `mustbeviral-prod` created in organization `cwsipbaunvifcpgoygsc`, region
+    `us-east-1`, under the operator-approved USD 10 monthly recurring cost.
+  - Exact project ref, creation timestamp, Postgres version, API URL presence, publishable-key presence,
+    and healthy state recorded without secret or key values.
+  - Empty-project validation proves no MustBeViral application tables, users, storage objects, or
+    migration history were fabricated before the migration packet.
+  - A successor packet names the exact migration, RLS, Auth, Data API, Advisor, and rollback gates.
+public_interfaces:
+  - No production web/API deployment, DNS, signup, charging, provider run, invitation, migration,
+    application table, storage object, or customer access is enabled in this packet.
+steps:
+  - id: p3f-001-create-project
+    title: Create only the exact cost-confirmed Supabase production project and wait for healthy status.
+    status: pending
+  - id: p3f-002-verify-empty-identity
+    title: Verify project identity, API/key presence, default schema posture, and empty application state.
+    status: pending
+  - id: p3f-003-migration-successor
+    title: Author the exact migration and security-hardening successor from the new project ref.
+    status: pending
+acceptance:
+  automated:
+    - id: exact-healthy-project
+      criterion:
+        Authenticated provider reads prove one healthy `mustbeviral-prod` project at the exact
+        organization and region, with no credential values recorded.
+      status: pending
+      evidence: []
+    - id: empty-before-migration
+      criterion:
+        Read-only database and project inspection proves no MustBeViral application migration,
+        table, user, or storage payload exists before the successor packet.
+      status: pending
+      evidence: []
+  manual:
+    - id: cost-and-containment
+      criterion:
+        The operator approved the provider-reported recurring cost and no production traffic,
+        data, or unrelated resource was changed.
+      status: pending
+      evidence: []
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: repository-verification
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy:
+    Keep an unhealthy or unusable new project isolated and record the defect. Do not delete or
+    repurpose the project in this packet. No clients, Workers, DNS, or provider credentials may point
+    to it until the successor proves migrations and security.
+  remote_actions_required: true
+external_effects:
+  remote_mutation: authorized
+  destructive_remote_actions: false
+handoff:
+  current_step: p3f-001-create-project
+  next_action: Create the exact confirmed Supabase project and wait for authenticated healthy status.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: null
+  evidence_paths: []
+  completed_at: null

@@ -1,0 +1,63 @@
+{
+  "pnpm": "11.12.0",
+  "adapter_note": "Workstation-generated instruction adapters formatted temporarily and exact original bytes restored; product files checked normally.",
+  "node": "v24.18.0",
+  "ended": "2026-09-14T11:00:43.4416561-05:00",
+  "exit": 0,
+  "command": "pnpm agent:verify",
+  "started": "2026-09-14T10:56:59.9595367-05:00",
+  "git_base": "3ca1620c37796f611dc55ecad329a4843b998cd5",
+  "branch": "codex/viralgraph-cleanroom",
+  "source_sha256": {
+    "apps/core/.dev.vars.example": "9edd2dc7596b28e1540813f37a2268bf454feeb52286501aa667f62462e2ff46",
+    "apps/web/src/features/platform/brand-draft-editor.tsx": "f2b7995ce9a4d12f0c834548dded0760c557176323218c69d0972c123f8e445d",
+    "apps/web/src/features/platform/brand-locations.tsx": "0c1f0b93a0cd6a0704e17225d3642858a4766dcb955dd2c0a23cfc7054db1447",
+    "apps/web/src/features/platform/brand-settings.tsx": "14ba41b1eb6c2db87dd53a4488f3ba2c06a4714d942c16b195efa1be6ab86605",
+    "apps/web/src/features/platform/platform-client.test.ts": "e85d637dff4264a1b9f997e7bed92b7f1ae8ebd5b53460f75333235275de8aad",
+    "apps/web/src/features/platform/platform-client.ts": "c4c46bd378d3247ef1d4b1bc40866046978a8189bf168ff52eeb65703936e2e3",
+    "apps/web/src/features/platform/platform-frame.test.tsx": "acafdd36aa0ce9683e26f355023659dc60688be01b97c4e2b22dd65871295c05",
+    "apps/web/src/features/platform/studio-portfolio.tsx": "23bb6c4b4cc9a6c131151e5dac1863f099e36c6c7db8eb41bbfb50c20a80949e",
+    "apps/web/src/features/platform/studio-settings.tsx": "4a85ca5247924e602497dba178862a682f537f6cd6d33ba6ce1483639afc5c98",
+    "apps/web/src/features/platform/studio-team.tsx": "5b35d34589e817b5e58e017dffcab2fd59b0b12b63e5542fe390fc1facecf55d",
+    "apps/web/src/features/platform/workspace-billing.test.tsx": "b01bd1079e6e3a8b8112c89a3d8d8effb8c0fb9737872f944806391510e68609",
+    "apps/web/src/features/platform/workspace-billing.tsx": "c0c9648abc265fb2fd09b310dbeb81fdd36e9c88a79f6a2fe558a783c9f6f6b8",
+    "supabase/tests/database/00003_p0_barrier_and_invariants.test.sql": "95578cc00f0fc376e9bd07794d03aab45ab60c215cc97831185364b1dfedabce",
+    "supabase/tests/database/00037_platform_identity_and_backfill.test.sql": "6b5eb61edef23c8d8503e394fda21d34bdd6f2830c4e8ee0cac2bff815cf1449",
+    "supabase/tests/database/00039_platform_saved_setup.test.sql": "62781e687b4c97cf06e9d6f10c2697664a612ad5189b11c654b7a096f9676e7b",
+    "apps/web/e2e/platform-connected.spec.ts": "1ca32d5aaa26420e17d4976ea0d98a06dc38b2f2443917336a5329ac4d6d5c1a",
+    "packages/db/scripts/platform-journey-fixtures.ts": "1c18c1f3344ba7c246ed7da6922326a14274558cdcf890d590b099f1b545faad"
+  },
+  "log_sha256": "0cb35e1760c33dd2e8627960d37a96691bc42154bb1d9be08f60f9867a9f5f1b",
+  "connected_sql": {
+    "platform": {
+      "passed": 7,
+      "log_sha256": "41a2fabf27e484cf15a784e1972fe985f3ee3c73cff73c8d911a66e0a3428f20"
+    },
+    "setup": {
+      "passed": 7,
+      "log_sha256": "f406e92ce7e19d7d23f4ec0ad81d17c72b904d4127cb93c2648c5728f59507c5"
+    }
+  },
+  "database": {
+    "files": 44,
+    "assertions": 659,
+    "result": "passed",
+    "retained_browser_fixtures": true
+  },
+  "independent_review": {
+    "model": "Grok 4.6",
+    "reasoning": "high",
+    "cli_version": "1.0.30",
+    "session": "014370ed-8a48-4324-991a-cd7a72159ef4",
+    "report_sha256": "5cb2c24b296db175f20b06b09ee8914a702557a86505524f2ba91e21f01e22e1",
+    "verdict": "handoff; do not finish"
+  },
+  "stack_shutdown": {
+    "at": "2026-09-14T16:03:39.136Z",
+    "application_processes": "known task-owned process tree stopped",
+    "supabase": "stop exited 0",
+    "volume_preserved": "supabase_db_mustbeviral",
+    "ports_3111_8789": "no listeners at release",
+    "database_lane": "released to InvestInWash"
+  }
+}

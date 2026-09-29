@@ -18,6 +18,33 @@ The supported local path is Windows 11 with Git for Windows, PowerShell, nvm-win
 6. Copy `.env.example` to `apps/web/.env.local` and `.dev.vars.example` to `apps/core/.dev.vars`; replace only the local Supabase publishable value reported by `pnpm supabase:start`. Never use a service-role key in the web application or copy production values into local/preview environments.
 7. Run the packet’s checks before and after work.
 
+## Canonical main and packet publication
+
+`main` is the canonical source after the reviewed cleanroom promotion. Preserve the historical
+cleanroom and continuation branches and their receipts. Author one packet at a time in a clean,
+short-path independent clone on local `main`; linked checkouts elsewhere retain their owners. The
+packet branch must equal the local branch, and multiple linked worktrees still fail preflight.
+
+Start from current remote `main` and record that exact base before edits. Commit normally on local
+`main`, then publish with an explicit remote PR branch:
+
+```text
+git push origin HEAD:refs/heads/codex/<packet>
+gh pr create --base main --head codex/<packet>
+```
+
+Do not push directly to remote `main`. A fresh independent verification clone checks out the exact
+PR head on local `main`, with frozen dependencies, as required by `quality-gates`. Obtain current
+independent review where required and merge through the normal PR path using a merge commit. After
+merge, update the clean author clone with `git fetch origin` and `git merge --ff-only origin/main`.
+If another change intervened or the tree is dirty, inspect and preserve it before continuing; never
+force-push, reset unrelated work or bypass branch protection to advance the packet.
+
+The canonical workstation checkout may remain on its preserved continuation until its ignored
+environment bytes and local instruction overlay are backed up and safely restored. Its switch is
+separate from promotion. Continue packet execution in the independent clone while linked checkouts
+make canonical preflight fail. GitHub Actions remains disabled.
+
 ## Environment isolation
 
 | Environment | Data/providers                                                          | Allowed purpose                                |
@@ -35,7 +62,8 @@ No database, bucket, webhook signing secret, provider key, auth redirect, email 
 - Authenticate through provider CLI/browser flows or ignored local files. A secret pasted into chat is not assumed to exist in the shell.
 - Validate environment variables through typed schemas at process start; missing or malformed values fail closed.
 - Use least-privilege scoped identities, short lifetimes where possible, and separate machine/user roles.
-- GitHub agents cannot receive repository-admin, workflow-admin, production-deploy, or delete-repository credentials.
+- GitHub agents may use the operator-provisioned GitHub CLI credential to publish, push, administer branch protection, and manage GitHub Actions workflows for this repository (see `adr-0006-agent-publication-credentials`). Repository deletion and organization-level destructive actions still require an explicit, per-action operator authorization naming the exact resource; project-infrastructure destructive actions remain gated by `PROJECT_STATE.yaml` and the active packet.
+- Local agents may also use that credential to open and merge pull requests, and the operator's authenticated Wrangler and Vercel CLI sessions to deploy merged code, under `adr-0009-standing-release-authority` and the guarded release in `deploy-rollback-incidents`. That authority never covers reading, printing or changing secrets or environment variables.
 - Production secret reads and rotations require an audited operator action. Rotation updates staging first, verifies dual-key overlap when supported, promotes production, and revokes the old value.
 - Error reporting and traces redact authorization, cookies, signed URLs, prompts with sensitive customer data, provider payloads, and user-supplied personal data.
 

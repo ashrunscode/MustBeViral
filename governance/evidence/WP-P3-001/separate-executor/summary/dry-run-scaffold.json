@@ -1,0 +1,10 @@
+{
+  "gate": "separate_executor",
+  "mode": "dry-run",
+  "recorded_at": "2026-08-31T17:48:01.578Z",
+  "notes": [
+    "Dry-run validates arguments and output directories only.",
+    "Dispatch probe uses quote_run fan-out without provider completion.",
+    "Do not deploy separate executor Worker until evidence passes."
+  ]
+}

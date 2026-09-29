@@ -3,7 +3,9 @@
   "name": "mustbeviral-v2-development-core",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-12",
-  "compatibility_flags": ["nodejs_compat"],
+  // global_fetch_strictly_public applies on Cloudflare (staging/production). Local workerd does
+  // not honor it; website capture must use PUBLIC_EGRESS or fail closed, never unrestricted fetch.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": false,
   "preview_urls": false,
   "vars": {
@@ -38,15 +40,41 @@
   "env": {
     "staging": {
       "name": "mustbeviral-v2-staging-core",
-      "routes": [
-        {
-          "pattern": "api-staging.mustbeviral.com",
-          "custom_domain": true,
-        },
-      ],
+      "workers_dev": true,
       "vars": {
         "SERVICE_NAME": "mustbeviral-core",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+        "APP_ENV": "staging",
+        "CORS_ALLOWED_ORIGINS": "https://mustbeviral-web-staging.vercel.app",
+        "SUPABASE_URL": "https://lqvigvzqumpwfjikcvws.supabase.co",
+        "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_L06t0Y52MPKmhWtAHXm3FQ_2_b0-lMb",
+        "SUPABASE_JWT_AUDIENCE": "authenticated",
+        "FAL_WEBHOOK_URL": "https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev/v1/webhooks/fal",
+        "PROVIDER_RUNS_ENABLED": "true",
+        "QUEUES_ENABLED": "true",
+      },
+      // Staging-only wake queue. Created after PROJECT_STATE and the packet named
+      // mustbeviral-v2-staging-outbox-dispatch and mustbeviral-v2-staging-core.
+      // QUEUES_ENABLED is true after the event_id migration and no-op deploy.
+      // Instant rollback: set this var back to "false" and redeploy. Do not
+      // delete the queue. Producer sends { type: 'outbox.wake', event_id } only.
+      "queues": {
+        "producers": [
+          {
+            "binding": "OUTBOX_DISPATCH_QUEUE",
+            "queue": "mustbeviral-v2-staging-outbox-dispatch",
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "mustbeviral-v2-staging-outbox-dispatch",
+            "max_batch_size": 10,
+            "max_batch_timeout": 5,
+          },
+        ],
+      },
+      "triggers": {
+        "crons": ["* * * * *"],
       },
       "r2_buckets": [
         {
@@ -54,24 +82,25 @@
           "bucket_name": "mustbeviral-v2-staging-media",
         },
       ],
-      "hyperdrive": [
-        {
-          "binding": "HYPERDRIVE",
-          "id": "00000000000000000000000000000001",
-        },
-      ],
+      // Hyperdrive binding intentionally absent in staging: P0 uses the Supabase Data API
+      // unless the accepted G1-G6 Hyperdrive benchmark passes (rls-hyperdrive-benchmark-plan).
+      // The api-staging.mustbeviral.com custom domain attaches once the zone lands in this account.
     },
     "production": {
       "name": "mustbeviral-v2-production-core",
-      "routes": [
-        {
-          "pattern": "api.mustbeviral.com",
-          "custom_domain": true,
-        },
-      ],
+      // WP-P3-008 permits only this provider-generated URL for private operator smoke.
+      // No custom domain or route is attached, and preview URLs stay disabled.
+      "workers_dev": true,
+      "preview_urls": false,
       "vars": {
         "SERVICE_NAME": "mustbeviral-core",
         "SERVICE_GENERATION": "viralgraph-cleanroom-v2",
+        "APP_ENV": "production",
+        "CORS_ALLOWED_ORIGINS": "https://mustbeviral-web-production-ashrunscode-projects.vercel.app",
+        "SUPABASE_URL": "https://jjgtlfblsfobdhmtngbz.supabase.co",
+        "SUPABASE_JWT_AUDIENCE": "authenticated",
+        "PROVIDER_RUNS_ENABLED": "false",
+        "QUEUES_ENABLED": "false",
       },
       "r2_buckets": [
         {
@@ -79,12 +108,8 @@
           "bucket_name": "mustbeviral-v2-production-media",
         },
       ],
-      "hyperdrive": [
-        {
-          "binding": "HYPERDRIVE",
-          "id": "00000000000000000000000000000002",
-        },
-      ],
+      // Hyperdrive remains absent: WP-P3-002 kept G1-G6 deferred and the
+      // Supabase Data API/RPC path remains authoritative.
     },
   },
 }

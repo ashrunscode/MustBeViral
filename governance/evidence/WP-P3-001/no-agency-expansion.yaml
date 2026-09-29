@@ -1,0 +1,28 @@
+schema_version: 1
+acceptance_id: no-agency-expansion
+packet_id: WP-P3-001
+recorded_at: '2026-09-01T02:10:00.000Z'
+status: proven
+criterion: This packet did not add agency portals, white-labeling, multi-client reporting, or
+  connected social publishing.
+proofs:
+  - kind: authority
+    path: docs/product/RELEASE_SCOPE.md
+    assertions:
+      - P4 agency accounts, client portals, and auto-publishing remain deferred
+  - kind: authority
+    path: docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    assertions:
+      - finish sprint does not start P4 agency work
+  - kind: infrastructure
+    path: apps/core/wrangler.jsonc
+    assertions:
+      - staging queue bindings are outbox wake only
+      - no agency or social-publish Worker was added
+  - kind: evidence
+    path: governance/evidence/WP-P3-001/p3-infrastructure-gates-pending.yaml
+    assertions:
+      - cleanroom_negative_gates.agency_portal is not_present
+      - cleanroom_negative_gates.connected_social_publishing is not_present
+notes:
+  - Separate executor and BYOK remain not_met and were not implemented.

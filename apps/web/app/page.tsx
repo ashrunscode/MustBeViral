@@ -1,12 +1,12 @@
-export default function CleanroomPage() {
-  return (
-    <main>
-      <p>MustBeViral Studio</p>
-      <h1>Cleanroom application scaffold</h1>
-      <p>
-        Production interface work remains gated on the approved Precision Creative Studio design
-        artifact.
-      </p>
-    </main>
-  );
+import { redirect } from 'next/navigation';
+
+import { LandingPage } from '../src/components/landing-page';
+import { createServerSupabaseClient } from '../src/lib/supabase/server';
+
+export default async function HomePage() {
+  const supabase = await createServerSupabaseClient();
+  const { data } = await supabase.auth.getClaims();
+  if (typeof data?.claims?.sub === 'string') redirect('/studio');
+
+  return <LandingPage />;
 }

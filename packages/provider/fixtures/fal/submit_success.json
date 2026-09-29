@@ -1,0 +1,5 @@
+{
+  "status": 202,
+  "headers": { "x-fal-request-id": "fal-http-fixture-001" },
+  "body": { "request_id": "fal-job-fixture-001", "status": "IN_QUEUE" }
+}

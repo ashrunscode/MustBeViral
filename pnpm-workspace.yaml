@@ -5,7 +5,12 @@ packages:
 engineStrict: true
 nodeVersion: 24.18.0
 
+overrides:
+  vite: 8.1.4
+  yaml: 2.8.1
+
 allowBuilds:
+  '@modelcontextprotocol/inspector': true
   esbuild: true
   sharp: true
   unrs-resolver: true

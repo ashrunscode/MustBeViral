@@ -1,0 +1,47 @@
+schema_version: 1
+kind: owner-main-promotion-amendment
+date: 2026-09-28
+packet_id: WP-PLATFORM-W2-002
+previous_spec_revision: 3
+spec_revision: 4
+branch: codex/viralgraph-cleanroom
+base_commit: 88ca54cb73541fc3ebace6e6dad13fdb7f7ae22f
+target_branch: main
+target_base_commit: a11cecd225f4f32e63b5fc88e463efc5bb4943f6
+owner_instruction:
+  - PLEASE IMPLEMENT THIS PLAN
+  - >-
+    Construct the promotion candidate from the reviewed cleanroom tip. Put the separately
+    authorized `main` retargeting changes in explicit governance commits.
+  - >-
+    After promotion, author packet work in an independent clone on local `main`. Push its head to
+    an explicit remote `codex/<packet>` PR branch, targeting remote `main`.
+purpose: >-
+  Promote the reviewed cleanroom candidate through a merge-commit PR into main and retarget current
+  mutable execution authority to main. Commit this scoped authority record and active revision
+  first. The prepared successor stays inactive. This promotion does not release customer traffic.
+amended_paths:
+  - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  - governance/evidence/WP-PLATFORM-W2-002/successor-WP-PLATFORM-W2-003.yaml
+  - docs/operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md
+  - docs/operations/LOCAL_ENV_AND_SECRETS.md
+  - governance/evidence/WP-PLATFORM-W2-002/main-promotion-amendment-2026-09-28.yaml
+changes:
+  - Retarget only the current active packet branch and prepared successor branch to literal main.
+  - Increment the prepared successor specification revision to 3; do not activate or complete it.
+  - Make main the guarded-release source, preserving staging-first and exact-resource release gates.
+  - Document independent local-main authoring and explicit remote codex PR branches into main.
+preserved:
+  - Product code is byte-identical to the reviewed cleanroom base unless a separate repair is reviewed.
+  - Keep the existing CODEOWNERS change from main and every historical transition receipt unchanged.
+  - Every product step, current step, acceptance criterion, required skill/check and external-effect policy.
+  - Keep the current production traffic, environment files, continuation branch and other sessions intact.
+  - No direct push to main, force-push, ref deletion, squash/rebase merge or administrator bypass.
+  - GitHub Actions remains disabled; promotion does not authorize a deployment or capability enablement.
+verification:
+  - Run all required governance and product gates in a fresh single-worktree clone on local main.
+  - Enumerate governance-only differences against the reviewed cleanroom base.
+  - Check the prospective main merge tree equals the reviewed candidate tree.
+  - Confirm CODEOWNERS equality and no deployment-triggering Git link on the existing Vercel targets.
+  - Obtain independent review of exact candidate head, main base, source cleanroom base and gate evidence.
+  - Merge through the normal PR path using a merge commit; preserve all historical evidence identities.

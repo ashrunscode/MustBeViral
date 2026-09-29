@@ -1,0 +1,31 @@
+schema_version: 1
+kind: instruction-policy-amendment
+date: 2026-09-11
+packet_id: WP-PLATFORM-W1-002
+previous_spec_revision: 1
+spec_revision: 2
+branch: codex/viralgraph-cleanroom
+base_commit: 1a0b06d91c78769583e48b4401f9fcbf1845272a
+owner_instruction: >-
+  look at global ganets md and than look at my most worked on projects and implament this
+context: >-
+  Apply the OpenAI article on rethinking skills and prompts for GPT-6 Astra to global
+  instructions and the most active projects. This is an instruction-only amendment.
+source: https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra
+purpose: >-
+  Narrow unconditional reading and skill triggers, define task completion, and
+  retain packet, cleanroom, verification and external-action boundaries.
+instruction_paths:
+  - AGENTS.md
+  - .agents/skills/build-mustbeviral/SKILL.md
+constraints:
+  - Commit this authority-only amendment before changing the named instruction files.
+  - The added paths authorize only the instruction clarification described here.
+  - Preserve product steps, current step, acceptance, required skills and quality gates.
+  - Preserve external effects, release authority, project state and historical receipts.
+  - No implementation change, deployment, provider activation, spending or send is authorized.
+  - Do not mark product acceptance passed or transition the packet for this amendment.
+verification:
+  - Validate documentation, packet scope and transition receipts.
+  - Validate the skill frontmatter and changed Markdown references.
+  - Review the exact diff and preserve unrelated dirty work.

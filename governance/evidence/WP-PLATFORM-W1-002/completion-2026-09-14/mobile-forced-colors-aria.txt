@@ -1,0 +1,67 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 8440360f-1e9b-4159-9fd9-e168c115256d
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33&view=settings
+    - link "Billing":
+      - /url: /studio/d12f9cfc-daf5-43c5-80c9-9ad35bf8595b/billing?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/d12f9cfc-daf5-43c5-80c9-9ad35bf8595b/brands/3143b555-9d7f-4c22-980c-2b5d21d5f7eb?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33&view=draft
+    - link "Locations":
+      - /url: /studio/d12f9cfc-daf5-43c5-80c9-9ad35bf8595b/brands/3143b555-9d7f-4c22-980c-2b5d21d5f7eb?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33&view=locations
+    - link "Settings":
+      - /url: /studio/d12f9cfc-daf5-43c5-80c9-9ad35bf8595b/brands/3143b555-9d7f-4c22-980c-2b5d21d5f7eb?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33&view=settings
+    - link "Billing & usage":
+      - /url: /studio/d12f9cfc-daf5-43c5-80c9-9ad35bf8595b/billing?studio=9c3fb583-309d-4843-a3c9-b9dc7921fe33
+  - heading "Make WashBodega feel like itself." [level=1]
+  - paragraph: Save what you know now. Add sources and review the details as your brand takes shape.
+  - heading "Brand essentials" [level=2]
+  - status: Saved · version 3
+  - group "Brand essentials":
+    - text: Website Optional — you can enter details manually.
+    - textbox "Website Optional — you can enter details manually.":
+      - /placeholder: https://yourbrand.com
+    - text: What should we know?
+    - textbox "What should we know?":
+      - /placeholder: What you do, where you work, and the details that make this brand different.
+      - text: Keyboard save at 200 percent remains usable.
+    - text: Who are you trying to reach?
+    - textbox "Who are you trying to reach?":
+      - /placeholder: Describe your customers in your own words.
+    - text: What would you like to achieve?
+    - textbox "What would you like to achieve?":
+      - /placeholder: The next useful outcome for this brand.
+    - text: Where should we resume?
+    - combobox "Where should we resume?":
+      - option "Brand essentials" [selected]
+      - option "Audience and goals"
+      - option "Ready for source review"
+    - button "Save draft" [disabled]
+  - complementary:
+    - text: A brand you can reuse
+    - heading "Keep the meaning. Keep the source." [level=2]
+    - paragraph: These details are your input. They have not been extracted from a website or approved as a brand version.
+    - text: Entering a website saves its address. It does not run website analysis or approve claims.
+    - paragraph: Original assets, rights and source review will attach to this brand as those workflows become available.

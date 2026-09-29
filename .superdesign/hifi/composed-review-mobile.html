@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stillroom — Composed Review (mobile)</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Geist:wght@400;500&display=swap');
+      :root {
+        --paper: #fafafa;
+        --card: #ffffff;
+        --ink-head: rgba(0, 0, 0, 0.75);
+        --ink-strong: rgba(0, 0, 0, 0.85);
+        --ink: rgba(0, 0, 0, 0.6);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --line: rgba(0, 0, 0, 0.12);
+        --signal: #3182d4;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Geist, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      header,
+      footer {
+        background: var(--card);
+        border-color: var(--line);
+      }
+      header {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13px;
+      }
+      .mono {
+        font-family: 'DM Mono', monospace;
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 12px 12px 8px;
+        color: var(--ink-head);
+        font-size: 19px;
+        font-weight: 400;
+      }
+      .placements {
+        display: flex;
+        gap: 6px;
+        padding: 0 12px 12px;
+      }
+      .placements button {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 6px 7px;
+        background: var(--card);
+        font-size: 10px;
+      }
+      .phone {
+        margin: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--card);
+      }
+      .still {
+        height: 280px;
+        background: radial-gradient(circle at 40% 35%, #ece7df, #b7ad9f);
+      }
+      .ad-foot,
+      .primary {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      .primary {
+        margin: 0;
+        color: var(--ink-head);
+      }
+      .cta {
+        margin-top: 8px;
+        border: 0;
+        border-radius: 4px;
+        padding: 8px 10px;
+        background: var(--signal);
+        color: #fff;
+      }
+      footer {
+        position: sticky;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        border-top: 1px solid var(--line);
+        padding: 10px 12px;
+      }
+      .export {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        border-radius: 4px;
+        padding: 0 14px;
+        background: var(--signal);
+        color: #fff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>MustBeViral Studio</div>
+      <div class="mono">Stillroom · Review</div>
+    </header>
+    <h1>Keep the counter clear</h1>
+    <p class="mono" style="padding: 0 12px">Concept 1 · Feed 4:5 · Problem-recognition</p>
+    <div class="placements">
+      <button type="button">4:5</button>
+      <button type="button">1:1</button>
+      <button type="button">9:16</button>
+      <button type="button">Reels</button>
+    </div>
+    <article class="phone">
+      <p class="primary">Kitchen scraps do not need to sit in an open bin.</p>
+      <div class="still" role="img" aria-label="Stillroom caddy packshot"></div>
+      <div class="ad-foot">
+        <strong>Keep the counter clear</strong>
+        <div>Kitchen Reset Bundle · $129</div>
+        <button class="cta" type="button">Shop now</button>
+      </div>
+    </article>
+    <footer>
+      <span class="mono">16 / 16 approved</span>
+      <a class="export" href="#export">Export</a>
+    </footer>
+  </body>
+</html>

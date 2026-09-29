@@ -1,0 +1,1123 @@
+{
+  "schema_version": 1,
+  "packet": "WP-PLATFORM-W2-001",
+  "base_head": "ea835215e3bd4c028950005a1b55d3323d403261",
+  "branch": "codex/viralgraph-cleanroom",
+  "runtime": {
+    "node": "24.18.0",
+    "pnpm": "11.12.0"
+  },
+  "browsers": {
+    "w1": {
+      "label": "w1-regression",
+      "source_stable": true,
+      "command": "pnpm exec playwright test --config playwright.config.ts apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --project=mobile-chromium --reporter=list,json --output C:\\dev\\bootstrap\\mustbeviral-grok-w2a001-20260914\\w1-regression-artifacts",
+      "pnpm": "11.12.0",
+      "source_sha256": {
+        "apps/web/src/features/platform/brand-findings.tsx": "7fd746497b0d4ada5374834875c33164a88eeaa56b4516d9d08eb3a16727d473",
+        "apps/web/src/features/platform/brand-draft-editor.tsx": "e4be66a5822bac92c24032e422cf50bbbc8fc51f35bf1f61589498da10800ffa",
+        "apps/web/src/features/platform/brand-findings-page.test.ts": "786e6746163ea69b321800f5dcc34aa8eeb7b583dbd9243291fb329d67232891",
+        "apps/web/e2e/platform-connected.spec.ts": "51d0d7c03a865270665f6f4f174e0752afa9fac8bab28ac1bbebcf4fc4e67bb3",
+        "apps/web/e2e/platform-knowledge-connected.spec.ts": "9e1e28be09e52d6ce5a9b7821f8b69682b4233f527a31c67e66cecfafee85341",
+        "apps/web/e2e/platform-journey-helpers.ts": "c78a870d04cc22e8dcde2a3b0e41efa10440c001d7ec1a67a329538b6acc3d31",
+        "apps/web/src/features/platform/brand-workspace.tsx": "f3b28ab37ead29f17840e30c5c2255c041b82433f8f2b08f1b58ce6493d41751",
+        "apps/web/src/features/platform/platform-client.ts": "1aa834e31e536fb41e6fb7c5604cb0578682e89fa59a24392eb6b9afee7be28b"
+      },
+      "exit": 0,
+      "ended": "2026-09-14T17:37:24.4009468-05:00",
+      "started": "2026-09-14T17:33:20.3409925-05:00",
+      "node": "v24.18.0",
+      "stats": {
+        "startTime": "2026-09-14T22:33:21.636Z",
+        "duration": 242284.083,
+        "expected": 14,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "name": "keeps unauthenticated studio entry on the live sign-in path",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 3950,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 16993,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 22477,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 13294,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 12758,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 10583,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 13853,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "keeps unauthenticated studio entry on the live sign-in path",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 3953,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 14813,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 18897,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 13490,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 16645,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 13607,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 14674,
+              "retry": 0
+            }
+          ]
+        }
+      ],
+      "axe": [],
+      "authorized_hold_proofs": [],
+      "clock_readiness": [
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 1,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "desktop-chromium",
+          "case": "hides forged identities, recovers old links, archives, and invites without outreach",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 2,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        },
+        {
+          "project": "mobile-chromium",
+          "case": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+          "ahead_seconds": 3,
+          "ready": true
+        }
+      ],
+      "comparison_excluded_paths": ["apps/web/e2e/platform-knowledge-connected.spec.ts"],
+      "comparison_note": "W2-only test source changed after W1 regression; W1 specification, shared helpers and all application source remain identical."
+    },
+    "w2": {
+      "label": "knowledge-final2",
+      "source_stable": true,
+      "pnpm": "11.12.0",
+      "command": "pnpm exec playwright test --config playwright.config.ts apps/web/e2e/platform-knowledge-connected.spec.ts --project=desktop-chromium --project=mobile-chromium --reporter=list,json --output C:\\dev\\bootstrap\\mustbeviral-grok-w2a001-20260914\\knowledge-final2-artifacts",
+      "ended": "2026-09-14T18:36:51.1583454-05:00",
+      "started": "2026-09-14T18:34:32.8354239-05:00",
+      "node": "v24.18.0",
+      "exit": 0,
+      "source_sha256": {
+        "apps/web/src/features/platform/brand-workspace.tsx": "f3b28ab37ead29f17840e30c5c2255c041b82433f8f2b08f1b58ce6493d41751",
+        "apps/web/e2e/platform-knowledge-connected.spec.ts": "549e104a830aa9e52cfbedbaf2647f9d24f0fe46a385b78e6315e0b3c16f4ed4",
+        "apps/web/src/features/platform/brand-findings-page.test.ts": "786e6746163ea69b321800f5dcc34aa8eeb7b583dbd9243291fb329d67232891",
+        "apps/web/src/features/platform/brand-draft-editor.tsx": "e4be66a5822bac92c24032e422cf50bbbc8fc51f35bf1f61589498da10800ffa",
+        "apps/web/e2e/platform-journey-helpers.ts": "c78a870d04cc22e8dcde2a3b0e41efa10440c001d7ec1a67a329538b6acc3d31",
+        "apps/web/src/features/platform/platform-client.ts": "1aa834e31e536fb41e6fb7c5604cb0578682e89fa59a24392eb6b9afee7be28b",
+        "apps/web/src/features/platform/brand-findings.tsx": "7fd746497b0d4ada5374834875c33164a88eeaa56b4516d9d08eb3a16727d473",
+        "apps/web/e2e/platform-connected.spec.ts": "51d0d7c03a865270665f6f4f174e0752afa9fac8bab28ac1bbebcf4fc4e67bb3"
+      },
+      "stats": {
+        "startTime": "2026-09-14T23:34:34.405Z",
+        "duration": 136624.658,
+        "expected": 8,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "name": "captures website and document sources for both brands and keeps them after reload",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 12515,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 18498,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "hides delayed WashBodega findings and revoked editor access",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 13813,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "keeps findings usable at 200% zoom with keyboard and reduced motion",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 6899,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "captures website and document sources for both brands and keeps them after reload",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 11368,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 18361,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "hides delayed WashBodega findings and revoked editor access",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 13822,
+              "retry": 0
+            }
+          ]
+        },
+        {
+          "name": "keeps findings usable at 200% zoom with keyboard and reduced motion",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 6925,
+              "retry": 0
+            }
+          ]
+        }
+      ],
+      "axe": [
+        {
+          "project": "desktop-chromium",
+          "surface": "findings-washbodega-axe",
+          "violations": [],
+          "passes": 26
+        },
+        {
+          "project": "desktop-chromium",
+          "surface": "findings-a11y-axe",
+          "violations": [],
+          "passes": 26
+        },
+        {
+          "project": "mobile-chromium",
+          "surface": "findings-washbodega-axe",
+          "violations": [],
+          "passes": 26
+        },
+        {
+          "project": "mobile-chromium",
+          "surface": "findings-a11y-axe",
+          "violations": [],
+          "passes": 26
+        }
+      ],
+      "authorized_hold_proofs": [
+        {
+          "project": "desktop-chromium",
+          "status_ok": true,
+          "expected_brand": true
+        },
+        {
+          "project": "desktop-chromium",
+          "status_ok": true,
+          "expected_brand": true
+        },
+        {
+          "project": "mobile-chromium",
+          "status_ok": true,
+          "expected_brand": true
+        },
+        {
+          "project": "mobile-chromium",
+          "status_ok": true,
+          "expected_brand": true
+        }
+      ],
+      "clock_readiness": [],
+      "comparison_excluded_paths": [],
+      "comparison_note": null
+    }
+  },
+  "verification": {
+    "pnpm": "11.12.0",
+    "started": "2026-09-14T18:40:36.3374730-05:00",
+    "command": "pnpm agent:verify",
+    "ended": "2026-09-14T18:44:31.5986379-05:00",
+    "node": "v24.18.0",
+    "adapter_note": "Workstation-generated instruction adapters formatted temporarily and exact original bytes restored; product files checked normally.",
+    "exit": 0
+  },
+  "database": {
+    "pgtap": {
+      "files": 45,
+      "assertions": 722,
+      "result": "passed"
+    },
+    "connected_checks": 6,
+    "migrations": [
+      {
+        "time": "2026-09-14T22:23:48.721Z",
+        "container": "supabase_db_mustbeviral",
+        "preserved_existing_versions": 51,
+        "pending": ["20260914010000_platform_knowledge.sql"],
+        "sha256": "a40925ffbbe26c5f04ae8b90bfaa15f7b332b5fa0149000233a04fa1479adc9d",
+        "rehearsal_assertions": 63
+      },
+      {
+        "time": "2026-09-14T22:48:35.426Z",
+        "container": "supabase_db_mustbeviral",
+        "preserved_existing_versions": 52,
+        "pending": ["20260914020000_platform_knowledge_fk_indexes.sql"],
+        "sha256": "c0fbb048785eb70bf4a2d9b53ede421c0492411eeb65a8c3da54472114233815",
+        "rehearsal_assertions": 3
+      }
+    ]
+  },
+  "source": [
+    {
+      "path": "apps/cli/src/exit-codes.ts",
+      "sha256": "3eb4ac2d9960d823fe45ba9a21948b5195f974e811e3d79da0e5979f51d0622c",
+      "git_blob_oid": "b13db159521080c8cc569ad57f0594cf071abca4"
+    },
+    {
+      "path": "apps/core/src/app.ts",
+      "sha256": "ec36d08cdced6e34ca0033a69a3b962cf82d956779a0f66f391b568e5344011d",
+      "git_blob_oid": "e74e513f4107e80e6f4a513a4b3ab8def58831b0"
+    },
+    {
+      "path": "apps/core/src/bindings.ts",
+      "sha256": "12410d20e7d5e02e79ff8c37a27008620c3563dc5563f1f825679c35c6c577e1",
+      "git_blob_oid": "e94b00b7c35560c7da09cf1b541c05d624f7d4cc"
+    },
+    {
+      "path": "apps/core/src/composition/platform-knowledge.ts",
+      "sha256": "464cbef87b9ee7a5766ab75311cf87d4f18026e8ae61a714d5eb33dea54f37e1",
+      "git_blob_oid": "d61a33bd7220c28cd5cefe9e77d3775e370107d7"
+    },
+    {
+      "path": "apps/core/src/composition/source-capture.ts",
+      "sha256": "7738a59c6a4b45aa394d0dad9be2526f145302deb37fb159a827a74499a39ea5",
+      "git_blob_oid": "2916e676270a67a41bddfb6b513712442e16c4da"
+    },
+    {
+      "path": "apps/core/src/composition/source-egress.ts",
+      "sha256": "a449c1491e11afbd97a70581336e1d416fc1b41f01a575d89659ec2d180ff4b9",
+      "git_blob_oid": "210acb26f7e44515a36484f960b863706faef817"
+    },
+    {
+      "path": "apps/core/src/composition/source-extract.ts",
+      "sha256": "5c2961941e154a01341305e9ec8c7aecbf0aa830f1e6f3dbe8f3cf18adc29212",
+      "git_blob_oid": "4e4815e8e9ff78f4d78bfc23174a352e532cb86b"
+    },
+    {
+      "path": "apps/core/src/composition/source-machine.ts",
+      "sha256": "10ca523ea200fe693abbf47c006bba0501cf765bb90f8af01b3febd707d70ec5",
+      "git_blob_oid": "68a87af4c10767a174011bdde453f03782fccb31"
+    },
+    {
+      "path": "apps/core/src/data/supabase-data-api.ts",
+      "sha256": "489f26e6709f466d99394f2af9be1362019d717c2039144add9b1b0a7999afa4",
+      "git_blob_oid": "e198e0d5e846c67d77c6dd052dc45c9f1a2636e7"
+    },
+    {
+      "path": "apps/core/src/routes/mcp.ts",
+      "sha256": "ff1626cfd5f3e1eb865c00ebac419f31ee7428c55c21bb444cf22c46ef333f80",
+      "git_blob_oid": "46ed9491a2972df4561ddc13daa4ffce44eeed1c"
+    },
+    {
+      "path": "apps/core/src/routes/platform.ts",
+      "sha256": "0ef8f529802cfeaae0e97a96d8c6ab5ccaf5a84329d1fe31118903f8472ebc94",
+      "git_blob_oid": "c50cd49ed4933794f257edb40767c286a06f1b88"
+    },
+    {
+      "path": "apps/core/src/routes/source-content.ts",
+      "sha256": "96c289b8c2c3b8cf7c2c6454a8412bae38fa149b4d3630452748e92bb9df8e64",
+      "git_blob_oid": "c9f43a25dfe49bb841490db7dbfc6ab57e779360"
+    },
+    {
+      "path": "apps/core/test/unit/platform-knowledge-port.test.ts",
+      "sha256": "c646d064044b23c361c7c40776ac5c7ae60f6fd9228b0e815ac6f06c40148abd",
+      "git_blob_oid": "1c12984190d5e727127156e0b66380503063e76a"
+    },
+    {
+      "path": "apps/core/test/unit/platform-parity.test.ts",
+      "sha256": "55726811caf525c2e5a51afb4165ce403be74b74439952f7afc95ab3c5951c5a",
+      "git_blob_oid": "f7054e77f227953f42bf8c049093cf6941454244"
+    },
+    {
+      "path": "apps/core/test/unit/platform-port.test.ts",
+      "sha256": "a229448fd0efcfd510f062e96eb45af08339964ab2a19ae3d6278deb91e07a72",
+      "git_blob_oid": "97856e89311e3985d408ede9f707294f775f1acc"
+    },
+    {
+      "path": "apps/core/test/unit/source-capture.test.ts",
+      "sha256": "5933b7b36f38e693e604c89efc7867e7b6d24d815cee1b0fabd8cade16e9e48b",
+      "git_blob_oid": "c53e104abe52615ad5a48553926e3206b04da84c"
+    },
+    {
+      "path": "apps/core/test/unit/source-content-route.test.ts",
+      "sha256": "ded137413f24dba8c3865738a7cc07fed200c584ee5def21159f8bf685b7dac9",
+      "git_blob_oid": "67142e08cb7356625e026ba4395d008c4da7c2c7"
+    },
+    {
+      "path": "apps/core/test/unit/source-egress.test.ts",
+      "sha256": "8e869a567aa97451b70dc8f83bf1495081209421a2392c0ea56aab7967399801",
+      "git_blob_oid": "5b9b8d7e0e4856ed8e957f49781575a639b4f944"
+    },
+    {
+      "path": "apps/core/tools/source-public-egress-runner.mjs",
+      "sha256": "6794fb9cf48335a316fb877e49b7f6b8e9cba9e173c445e97b89b91e8d4eca1b",
+      "git_blob_oid": "3863a3b9d883a327d34dff5a44390e380141d191"
+    },
+    {
+      "path": "apps/core/worker-configuration.d.ts",
+      "sha256": "fa6fe2ef67e819afe2aec131a8d0ec2502f4f2b4c9ce95597ad5a09372ca9d34",
+      "git_blob_oid": "66a247f005c7820b60dde8c6da7c8a4ba1aebc15"
+    },
+    {
+      "path": "apps/core/wrangler.jsonc",
+      "sha256": "85cd509c2dd40f3ce61896675f87738269ac9e59ecce39cd5c3cfbf76ea2c2a1",
+      "git_blob_oid": "e4a4ce7e2efd8611f1b5144f9ca0852de9819a2f"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "51d0d7c03a865270665f6f4f174e0752afa9fac8bab28ac1bbebcf4fc4e67bb3",
+      "git_blob_oid": "a72cb76a9cb7e68571d5a98cf51a5a8c1b98fe27"
+    },
+    {
+      "path": "apps/web/e2e/platform-journey-helpers.ts",
+      "sha256": "c78a870d04cc22e8dcde2a3b0e41efa10440c001d7ec1a67a329538b6acc3d31",
+      "git_blob_oid": "2646bb2d5874af058d15e6b1012828647805048a"
+    },
+    {
+      "path": "apps/web/e2e/platform-knowledge-connected.spec.ts",
+      "sha256": "549e104a830aa9e52cfbedbaf2647f9d24f0fe46a385b78e6315e0b3c16f4ed4",
+      "git_blob_oid": "221e942f4dbdf5ccf781ec6ad1df8864298cf478"
+    },
+    {
+      "path": "apps/web/src/features/platform/brand-draft-editor.tsx",
+      "sha256": "e4be66a5822bac92c24032e422cf50bbbc8fc51f35bf1f61589498da10800ffa",
+      "git_blob_oid": "37b0e95bc6d71310ad47a3754bf7eca1e49e1cd3"
+    },
+    {
+      "path": "apps/web/src/features/platform/brand-findings-page.test.ts",
+      "sha256": "786e6746163ea69b321800f5dcc34aa8eeb7b583dbd9243291fb329d67232891",
+      "git_blob_oid": "43709a3a5907ebb421ce905dfab47110f3bedf6d"
+    },
+    {
+      "path": "apps/web/src/features/platform/brand-findings.tsx",
+      "sha256": "7fd746497b0d4ada5374834875c33164a88eeaa56b4516d9d08eb3a16727d473",
+      "git_blob_oid": "c67cb7f69c600e60aff3f83e33ce70ecf5a7e51d"
+    },
+    {
+      "path": "apps/web/src/features/platform/brand-workspace.tsx",
+      "sha256": "f3b28ab37ead29f17840e30c5c2255c041b82433f8f2b08f1b58ce6493d41751",
+      "git_blob_oid": "8fcd96547876861810312ef9f26651f8902149e0"
+    },
+    {
+      "path": "apps/web/src/features/platform/platform-client.ts",
+      "sha256": "1aa834e31e536fb41e6fb7c5604cb0578682e89fa59a24392eb6b9afee7be28b",
+      "git_blob_oid": "5e5919c10d9c248465fc0356f76c9e10a17d4366"
+    },
+    {
+      "path": "docs/architecture/API_MCP_AND_CLI.md",
+      "sha256": "a40d0b6e7672815cf380392fa052b363de1c22267c69dbbcbbf4592361624e41",
+      "git_blob_oid": "e321d5928e30688bc142f8b8d5d6fc204ead7535"
+    },
+    {
+      "path": "docs/architecture/DATA_AUTH_AND_TENANCY.md",
+      "sha256": "d18d2474679a039968f9111d34bb6753777021f4eec05219810e559ed15e5773",
+      "git_blob_oid": "7f1b868c9694a7aa7efc161b8e7f8e62330deee9"
+    },
+    {
+      "path": "docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md",
+      "sha256": "8a92bf677d11b1981cb824c69a3c3531a73def1082ec59d651937f03253c19d5",
+      "git_blob_oid": "8163bb5005ffb3bddbdd3f6bdac625040ab471e8"
+    },
+    {
+      "path": "docs/architecture/SYSTEM_OVERVIEW.md",
+      "sha256": "cc38cc35953618b45e3b71b5b92bb88b1e2f66a3df1678c6913d05fcf314da3f",
+      "git_blob_oid": "9282bc13125f2c590a969cfd44b14a1299d0c304"
+    },
+    {
+      "path": "docs/generated/DATABASE_SCHEMA.md",
+      "sha256": "7d8b92ca33d33da0d1398593dd9ba8f9a471aba65079f6848635db513d064b9d",
+      "git_blob_oid": "9da81a472b2ee56686df7e7096276e500bc8f807"
+    },
+    {
+      "path": "docs/generated/OPENAPI.md",
+      "sha256": "7c1540683f19f2167ff42ea6a30caffd5a9330426545a100dd9c17fd34f3da30",
+      "git_blob_oid": "b9c932987996b1ebb29aada4d6da9d19cc69724b"
+    },
+    {
+      "path": "governance/scripts/generate-openapi.ts",
+      "sha256": "1ef47d7698b7944a5d81221195dc0a4d888c614deaede4b074a6338eb247ede0",
+      "git_blob_oid": "213d1cacd1b0e4cfd32e941672922d6d82a841fd"
+    },
+    {
+      "path": "packages/contracts/openapi/core.v1.json",
+      "sha256": "16a1d5505fe2ed67fd8dd30a18b30786bb64a81fd77f415968827865fc15b8ed",
+      "git_blob_oid": "c8cd978d3ed5a596297dcd6f5940261c2ddda433"
+    },
+    {
+      "path": "packages/contracts/src/http.integration.test.ts",
+      "sha256": "5eda1c680fa088a418edc40dbe33f76d45809f0490ae8de2b9a672b0f012ed76",
+      "git_blob_oid": "e473096d0cf853ab2ec57d60d92c5f486e66cbdd"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "sha256": "e1a0e22b3bd2964cb46e31df33a7a2c8dbb5940ad062d98b066317e4d2aff2ec",
+      "git_blob_oid": "ed875f7a06484c823c45e321b81c3f438b8fa56a"
+    },
+    {
+      "path": "packages/contracts/src/platform-knowledge.test.ts",
+      "sha256": "507e7f4e60708163748eff1443c052a7a1570cd8ee7a8fe3b2dcf3ed98c09811",
+      "git_blob_oid": "7342ee91b3a7b5887e4f30309c3b94265b38a89b"
+    },
+    {
+      "path": "packages/contracts/src/platform-knowledge.ts",
+      "sha256": "f64d9768af0c87318287d393864955f581a125051530118ccef3103567992818",
+      "git_blob_oid": "084a6658e188fec2d49349b873e2b3e47c0d48d3"
+    },
+    {
+      "path": "packages/contracts/src/platform-transports.ts",
+      "sha256": "bd81fe16c6a9b39c4c8cb13986ed4fd1f49ce8d5e304ca586033ef2fe391418d",
+      "git_blob_oid": "988261c8e575c363713409c400fb7cb076dc3f9b"
+    },
+    {
+      "path": "packages/contracts/src/platform.ts",
+      "sha256": "f45bd096ee0735012d16e700fddb4c721ebca5a97c35708144f3f608d240b3ba",
+      "git_blob_oid": "2debe9d11db687411670ea9d22f6f95ba17cc3e8"
+    },
+    {
+      "path": "packages/contracts/src/source-policy.ts",
+      "sha256": "6201b0f9641bafa62147d6dfb92a247df68248e4cf642dbfafcc2a0d536ae366",
+      "git_blob_oid": "c5f5719f4e347afe67ace9451a0281f93f093a83"
+    },
+    {
+      "path": "packages/db/scripts/platform-knowledge-fixture-worker.mjs",
+      "sha256": "035a4e3266228bf3f3ee1647beefffc1e2b3fc6522cf6e8ddd5f091cf10be187",
+      "git_blob_oid": "06f38e1870146097cb7fb3b1c66bd599ce7480e3"
+    },
+    {
+      "path": "packages/db/scripts/start-platform-knowledge-local.mjs",
+      "sha256": "4b79dccb04e6c3813fab2924b78706f10ccd7722d503c89c62b7cc3e6cde94a5",
+      "git_blob_oid": "245fa11b12bff911fe423c0fbc1b132de93d0707"
+    },
+    {
+      "path": "packages/db/scripts/verify-platform-knowledge-connected.mjs",
+      "sha256": "384807b5ff15f6567eedc6de1e239c7d73e81a4a6e198417c404398461523852",
+      "git_blob_oid": "5f49261aacdde0d8ffeb43b28daaadfb0b10b8c9"
+    },
+    {
+      "path": "packages/db/scripts/verify-platform-knowledge-fixtures.mjs",
+      "sha256": "320907c803f44f32b6feee2eb9c782e764a6f877ffb0ec971fa22ed2cc662274",
+      "git_blob_oid": "ebb9b75b4e6be260ebf0684a40826c2c3218476b"
+    },
+    {
+      "path": "packages/db/src/database.generated.ts",
+      "sha256": "517426189007d7c2113721e484eaa205e7f386b6a09f526f3ef5b35c65134d46",
+      "git_blob_oid": "dc02684bed8edfc0ac9740f78a8430d091295c41"
+    },
+    {
+      "path": "packages/domain/src/index.ts",
+      "sha256": "3fd2ab07b5c39c5093b128bcaf69b728a50d32833c3d45f8f950ab4410eaa385",
+      "git_blob_oid": "0a83d071956f1d6c9d42afbb517950755fc062d8"
+    },
+    {
+      "path": "packages/domain/src/source-capture.test.ts",
+      "sha256": "7a570a49ca2570843671a617ebf25f373565b9aaefeebd966b69fc67e1fea02f",
+      "git_blob_oid": "07dd95ea9fc7fa721f02a3a0ff350b3ea2240fe8"
+    },
+    {
+      "path": "packages/domain/src/source-capture.ts",
+      "sha256": "0ec87f555bb61b384044b2294537167efdd05ed90758efa35e574ac88335d3ad",
+      "git_blob_oid": "63a0de575919ba1ed406afe7e54482b809e42494"
+    },
+    {
+      "path": "packages/domain/src/source-url.test.ts",
+      "sha256": "8a6a649f27a2e536b5bdb13f52c5649ff05af71ae6ec6639e31b822fa7bff149",
+      "git_blob_oid": "981646901f48ff8e1c34b35e850942a9b345a445"
+    },
+    {
+      "path": "packages/domain/src/source-url.ts",
+      "sha256": "2c2dc4bbbd91b2bceb5c7f7c2c73673ab64c316adcf0b449be7b0978b89b8153",
+      "git_blob_oid": "a688edd3ec3f9241a33fe9a1ef2c9b94ed676b1e"
+    },
+    {
+      "path": "packages/domain/tsconfig.json",
+      "sha256": "ceb566410f1de81bb4e69bb6cfd25bdd93fec8c5339d23f8a1b460fe81dc82f1",
+      "git_blob_oid": "f1dd3a9f6c726a2a6521244cc9e051b1b0553df2"
+    },
+    {
+      "path": "supabase/migrations/20260914010000_platform_knowledge.sql",
+      "sha256": "a40925ffbbe26c5f04ae8b90bfaa15f7b332b5fa0149000233a04fa1479adc9d",
+      "git_blob_oid": "76562ef016f2875c14dcf0f77801884f48893666"
+    },
+    {
+      "path": "supabase/migrations/20260914020000_platform_knowledge_fk_indexes.sql",
+      "sha256": "c0fbb048785eb70bf4a2d9b53ede421c0492411eeb65a8c3da54472114233815",
+      "git_blob_oid": "43b7629f00ca984a571a22c90ace4fdb342a9d74"
+    },
+    {
+      "path": "supabase/tests/database/00043_platform_knowledge.test.sql",
+      "sha256": "9b2365e3736b1cdcef60d70d24c098e5d4ecc4e374287d954835c719bde3fa57",
+      "git_blob_oid": "34b6a6124eee831c1aa283f031d47ac694b5e28d"
+    }
+  ],
+  "files": [
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt",
+      "sha256": "1829d4d8bd4dcf58bcc1b72c16a098653e2ff51af81a959175938f1c5dad334e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json",
+      "sha256": "d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt",
+      "sha256": "b1d7b91fedc4d0c9943b45b8ca6ef44eda8123c60e52cfba438c5d95b08ac7e7"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json",
+      "sha256": "d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt",
+      "sha256": "303d190f2f8168b7977fa325adbc0bdbf5b63858cdac7bcc5eb0979346d0a63f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json",
+      "sha256": "d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt",
+      "sha256": "1bd04ab3ba8f81d4e2fea381b8e981f12a72db22cd3c6b0799565fdca44f5bf4"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json",
+      "sha256": "d5c0a2dfd630c631408807c485c4aef86d6bde59f27bd97e2bd7382b4cf37182"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png",
+      "sha256": "0b034a1bbb1fd92c729970cc68fb8de07a2ecb088a5e5fbcf6f4a7891514e617"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png",
+      "sha256": "3965f982b99118561fb7df25ac7b6830d02624b4b32f46c00a369b52cfbc73eb"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md",
+      "sha256": "922e0924539726b4f82b64f68d317b9bcb2f157659a686e321fcad40bab7ed2b"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md",
+      "sha256": "95d6b72ec66ff1840e735929236a8779448bbd46a1ac3817006519271eb62c6c"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md",
+      "sha256": "78ead2bad0d9b1ae73acdd9c041eb24eb3553a76d36059ec85d07faaa90b1f24"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json",
+      "sha256": "44106f1ec5c4dffbf22663c81ae617b74c76bc01a03f56667488497e5fd6ab28"
+    }
+  ],
+  "logs": [
+    {
+      "name": "knowledge-final2.log",
+      "sha256": "b31eeadb99fa36a1e8c27a2b3aebcd715b72eee6f8c0785f1394a80b79d109f5"
+    },
+    {
+      "name": "knowledge-final2-results.json",
+      "sha256": "57b39f5080a8b2a61438122a6565ffc839614bdb96c0adc0211a755eac7f92b0"
+    },
+    {
+      "name": "w1-regression.log",
+      "sha256": "b05f93eb574ac8bcc4358f13f8569d35d9a6c52c4e98b102e6150909ab7910c1"
+    },
+    {
+      "name": "w1-regression-results.json",
+      "sha256": "0f28cbaa41be1de0cc62e17f80df65483a0a730a87ae44b1a46f7924ffb52da6"
+    },
+    {
+      "name": "agent-acceptance.log",
+      "sha256": "aa09bbd672d485526b1afa45b563fe9def59addce5ca80ce6edb010e8ce88f23"
+    },
+    {
+      "name": "pgtap-final.log",
+      "sha256": "620266a6810224fe40d2b35648ee5cf54a15ce796a66b143e7400f1803192b94"
+    },
+    {
+      "name": "grok-check-dbconnected.log",
+      "sha256": "d0e9ffd4e90b1a6fe6d756b59050a3f3ade9db993db1f58af1ab5709fb66e714"
+    },
+    {
+      "name": "grok-check-fixtures.log",
+      "sha256": "11be83daf330e24ff2f254ef170e7b9f077a97ad1f497b321763a244ca5ca0e1"
+    },
+    {
+      "name": "egress-final-source.log",
+      "sha256": "a0bafed6b83d0a4663c0cb67cab07d0aca8fb515731ee6665748f5672f13f75d"
+    }
+  ],
+  "independent_review": {
+    "model": "grok-4.6",
+    "reasoning": "high",
+    "session": "01a0a1b4-df74-7440-b3d9-3724078be456",
+    "report_sha256": "541b9600b5e339f7d3d4e1f4ec9e1b0a35c6bb411f4075bd9147e50a0449f6aa",
+    "stream_sha256": "8a5a3be99980a1c7fa764b9fef0f3f5f94510a25ae932be59ba2a1f008014d85"
+  },
+  "implementation": {
+    "model": "grok-4.6",
+    "reasoning": "high",
+    "session": "a16c038f-c6c9-4c22-b4c9-7671afae0d72"
+  },
+  "notes": [
+    "Synthetic loopback fixtures only. Real local Core auth, RPC, database and private R2; only outbound source HTTP fixtures are substituted.",
+    "No public push, remote writes, mail, provider runs, Stripe mutation or charging.",
+    "No browser auth storage, trace or video captured. Environment-bearing raw logs remain outside Git; hashes retained.",
+    "CSS zoom=2 verifies layout and keyboard reachability, not browser chrome zoom certification.",
+    "Per-file source hashes exclude mutable progress and this evidence bundle; the finish transition binds the entire committed predecessor."
+  ]
+}

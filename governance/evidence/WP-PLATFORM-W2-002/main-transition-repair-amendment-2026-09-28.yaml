@@ -1,0 +1,45 @@
+schema_version: 1
+kind: owner-main-transition-repair-amendment
+date: 2026-09-28
+packet_id: WP-PLATFORM-W2-002
+previous_spec_revision: 4
+spec_revision: 5
+branch: main
+base_commit: c082a6c676c514d184148588e70ee988742b9f1d
+owner_instruction:
+  - PLEASE IMPLEMENT THIS PLAN
+  - >-
+    Code/test defect: repair within the packet, rerun affected checks, then refresh invalidated
+    release evidence.
+  - >-
+    Product code matches the reviewed cleanroom candidate except for separately reviewed repairs.
+demonstrated_failure: >-
+  Full pnpm verify on the main promotion candidate exited 1: four existing governance integration
+  tests failed. The recovery fixture initialized codex/viralgraph-cleanroom while copying a main
+  packet, and supersession-decision/transition-receipt schemas still rejected literal main. The
+  missing schema support would also prevent real packet transitions on main. Preserve the failure
+  record and repair the implementation, not the tests' required assertions.
+purpose: >-
+  Complete the already authorized main prerequisite across packet lifecycle contracts, preserving
+  all authorization, source, evidence, readiness and branch-equality checks. Commit this scoped
+  authority record and revision before changing the named implementation paths.
+amended_paths:
+  - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  - governance/schemas/packet-supersession-decision.schema.json
+  - governance/schemas/packet-transition-receipt.schema.json
+  - governance/tests/agent-state.integration.test.mjs
+  - governance/tests/work-packet-branch.test.mjs
+  - governance/evidence/WP-PLATFORM-W2-002/main-transition-repair-amendment-2026-09-28.yaml
+changes:
+  - Accept literal main or the unchanged codex pattern in both receipt versions and owner decisions.
+  - Give isolated integration fixtures an explicit branch matching their copied packet.
+  - Exercise real audited supersession on main and codex, plus positive and negative schema cases.
+preserved:
+  - All historical receipt and decision bytes, IDs, hashes, commits and accepted review evidence.
+  - Exact branch equality, single-worktree checks, committed authorization and evidence integrity.
+  - Every existing failure-path assertion and unfinished acceptance requirement.
+  - Product code, production state, external-effect permissions and deployment/traffic gates.
+verification:
+  - Reproduce the main schema and fixture failures with the existing full gate.
+  - Run focused lifecycle and branch tests, then the full required promotion gates at the new head.
+  - Obtain a fresh independent review for the repaired head before merging.

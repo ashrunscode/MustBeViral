@@ -1,0 +1,34 @@
+schema_version: 1
+packet_id: WP-P3-007
+spec_revision: 1
+phase: P3
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-02T14:21:21.769Z
+successor_packet_id: WP-P3-008
+predecessor_head: 6b6a53eebd756f27f756ff8c09f25165b8611bdb
+closed_packet_path: governance/evidence/WP-P3-007/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+  - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+  - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+  - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
+evidence_entries:
+  - path: governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    sha256: c4d332c0d273504a936485fc8aeb5a6c1a041176b20bc56cde4d66ce415fe6b3
+    git_blob_oid: f431d5b970f0dab8c83bd3bfa9b9d9b215fbaf81
+  - path: governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    sha256: f940f9f15a01b6d57fd89a5e92d70ef2de0a7e2889683bb8b9edfa5d3e363334
+    git_blob_oid: 9f9fd5e32c6bbdf95055126aafe577c05bab9d00
+  - path: governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+    sha256: e5f26f2933e24dadca176615ec9c5638c4cc1234edc2f4c8b65873bb3924776e
+    git_blob_oid: 796671bc4373b6951f5075d80c44639107acae3c
+  - path: governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
+    sha256: de2df8bf07d96322c064317263ae012af541473a41d754a830adb3eda409fdcc
+    git_blob_oid: 2e0ac36fdad1e0cc8f7edc13f8fe18b9fbb777fd
+completed_step_ids:
+  - p3g-001-dry-run-and-manifest
+  - p3g-002-apply-exact-migrations
+  - p3g-003-security-and-auth-proof
+  - p3g-004-binding-successor
+closed_packet_sha256: c089daa91c5dfa6726310732faf8424abffdc55194e400012c4a36d4ecf5d1af

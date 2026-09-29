@@ -1,0 +1,752 @@
+{
+  "schema_version": 1,
+  "packet": "WP-PLATFORM-W1-002",
+  "base_head": "38a779372a9f1b27e0c0cfa98691f3fec0862b17",
+  "browser": {
+    "pnpm": "11.12.0",
+    "source_stable": true,
+    "started": "2026-09-14T13:18:44.8011706-05:00",
+    "exit": 0,
+    "ended": "2026-09-14T13:21:38.7904497-05:00",
+    "node": "v24.18.0",
+    "source_sha256": {
+      "apps/web/src/features/platform/brand-draft-editor.tsx": "0b0a35a0afd2d58efa5ce71c824b0578cc0b94cea16e842c1294c2f0b29cc45a",
+      "apps/web/app/studio/[workspace]/billing/page.tsx": "47a5f51fcb90bb4bc046b3046b78e0215f12f20463607d0db31e11e499c9d94d",
+      "apps/web/src/features/platform/platform.css": "9186a9a70fea60bf085317c804a991a3d7709baabcbb35985ba03e80ecfc91c8",
+      "apps/web/src/features/platform/workspace-billing.test.tsx": "6a1db379befe2ea736786e1437cb18da383264c3ed972a011adf3fa65561f847",
+      "apps/web/src/features/platform/brand-workspace.tsx": "b99e3e89030b69bfff0bc5ac32f523cb4ca0dfd9bc7e425952e92d29e7c28b7e",
+      "apps/web/e2e/platform-connected.spec.ts": "4747a7cb25c84df89cace5faf4f7cacd6bad198dcdf752e7748d7ac4f58aa1eb",
+      "apps/web/src/features/platform/platform-navigation.ts": "80ddfb434f643eaf181fcabb968a01c5e364566ad6fc2c9cb09edcd233a2c28d",
+      "apps/web/src/features/platform/platform-frame.test.tsx": "c328e84ce94325fa10a0846e0ce5ec850c870453e46aaf16b644e1dc3fe341f1",
+      "apps/web/src/features/platform/workspace-billing.tsx": "1bfc8d7e87be388fce4e8c1b5355d1e7e9c72f1f46c53c77e24c3d59a86b0eb6",
+      "apps/web/src/features/platform/platform-navigation.test.ts": "5eea70904aa054633c2b3c68ea21f56131d91debfc4d6fd61df85c5ac75a5f2e",
+      "apps/web/src/features/platform/platform-frame.tsx": "9734553dfd894cf2ce0b509225497e300fa7a1045698b32ce348a3d6eeb7dfaa",
+      "apps/web/app/globals.css": "0dc2d550de4ff9c53675d52af4642e58078feea726b6210b76f48882a05b88b7",
+      "packages/db/scripts/platform-journey-fixtures.ts": "2aafe885f025366ee8ffb3d30f7054d912b98bec0b1c60fc1611d502ac4513ef",
+      "apps/web/src/features/platform/workspace-frame.tsx": "204b30a3aaaf396a56bc60a49054044c18ec1145c7c610ac8df1ac4cbe0b148d"
+    },
+    "command": "pnpm exec playwright test --config playwright.config.ts apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --project=mobile-chromium --reporter=list,json --output C:\\dev\\bootstrap\\mustbeviral-grok-w1b004-20260914\\completion-browser-final5-artifacts",
+    "stats": {
+      "startTime": "2026-09-14T18:18:46.096Z",
+      "duration": 172586.335,
+      "expected": 14,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "name": "keeps unauthenticated studio entry on the live sign-in path",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 3343,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 11360,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 13779,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 8696,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 9208,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 7889,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 9160,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "keeps unauthenticated studio entry on the live sign-in path",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 3567,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 11688,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 14510,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 9690,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 9790,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 8184,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration_ms": 10110,
+            "retry": 0
+          }
+        ]
+      }
+    ],
+    "axe": [
+      {
+        "project": "desktop-chromium",
+        "surface": "portfolio-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 24
+      },
+      {
+        "project": "desktop-chromium",
+        "surface": "brand-draft-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [".platform-wordmark > span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 25
+      },
+      {
+        "project": "desktop-chromium",
+        "surface": "studio-team-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 25
+      },
+      {
+        "project": "desktop-chromium",
+        "surface": "billing-missing-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 21
+      },
+      {
+        "project": "desktop-chromium",
+        "surface": "billing-success-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 21
+      },
+      {
+        "project": "desktop-chromium",
+        "surface": "billing-unavailable-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 21
+      },
+      {
+        "project": "mobile-chromium",
+        "surface": "portfolio-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 24
+      },
+      {
+        "project": "mobile-chromium",
+        "surface": "brand-draft-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [".platform-wordmark > span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 25
+      },
+      {
+        "project": "mobile-chromium",
+        "surface": "studio-team-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 25
+      },
+      {
+        "project": "mobile-chromium",
+        "surface": "billing-missing-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 21
+      },
+      {
+        "project": "mobile-chromium",
+        "surface": "billing-success-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 21
+      },
+      {
+        "project": "mobile-chromium",
+        "surface": "billing-unavailable-axe",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": ["span[aria-hidden=\"true\"]"],
+                "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+              }
+            ]
+          }
+        ],
+        "passes": 21
+      }
+    ],
+    "clock_readiness": [
+      {
+        "project": "desktop-chromium",
+        "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "desktop-chromium",
+        "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "desktop-chromium",
+        "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "desktop-chromium",
+        "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "desktop-chromium",
+        "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "desktop-chromium",
+        "case": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "mobile-chromium",
+        "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "mobile-chromium",
+        "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "mobile-chromium",
+        "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "mobile-chromium",
+        "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "mobile-chromium",
+        "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "ahead_seconds": 1,
+        "ready": true
+      },
+      {
+        "project": "mobile-chromium",
+        "case": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+        "ahead_seconds": 1,
+        "ready": true
+      }
+    ]
+  },
+  "verification": {
+    "node": "v24.18.0",
+    "pnpm": "11.12.0",
+    "command": "pnpm agent:verify",
+    "adapter_note": "Workstation-generated instruction adapters formatted temporarily and exact original bytes restored; product files checked normally.",
+    "ended": "2026-09-14T13:24:44.9368926-05:00",
+    "exit": 0,
+    "started": "2026-09-14T13:21:55.7086400-05:00"
+  },
+  "logs": [
+    {
+      "name": "completion-browser-final5.log",
+      "sha256": "2d27a1094e79aef565b94297280980867b6e178107e2eb07b8702c948fc009c8"
+    },
+    {
+      "name": "completion-browser-final5-results.json",
+      "sha256": "88c2884826a68630e67a8c3b0f7c19f543fcfee0e55eb1214f43da8a2f425397"
+    },
+    {
+      "name": "completion-agent-verify-final.log",
+      "sha256": "672dd79406471bc4cc1050c2fe4c7f769b98e42f536ea8f755f1b3a751834fe2"
+    },
+    {
+      "name": "completion-sql-platform.log",
+      "sha256": "41a2fabf27e484cf15a784e1972fe985f3ee3c73cff73c8d911a66e0a3428f20"
+    },
+    {
+      "name": "completion-sql-setup.log",
+      "sha256": "f406e92ce7e19d7d23f4ec0ad81d17c72b904d4127cb93c2648c5728f59507c5"
+    }
+  ],
+  "files": [
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-seeded.png",
+      "sha256": "2566eb83bc1ff48b520c0af8bd2de7a2986c7771d448d0380dab95e04a6d10fe"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-seeded.png",
+      "sha256": "8f58c6979fd1b26372c145bc89c9aaf24874dd0482ae244c61a4e6b7ea5c06c1"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-unpile-saved.png",
+      "sha256": "fa89bfbc9aa175f583e87cdeeb7a3744cb8519d565693a22d787de50d48f9fdd"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-washbodega-saved.png",
+      "sha256": "b3c0a67bf3e35b18f7c12b2a77ac2898e9badc593e7d0a38eae7bff1e5180645"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-unpile-saved.png",
+      "sha256": "6a7c04aa44921e9d2d11d5495492f0919f46ac366fa41c88fd090e9a0bc75f4e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-washbodega-saved.png",
+      "sha256": "5bd92928058b9fa64131b0b178b6162c574911307fc492580d5b7616d485d1a9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-invitation-pending.png",
+      "sha256": "19d166dc2b6a3a9406431e88aab58efb87717e574ca3822e8ad351a28d046a36"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-invitation-pending.png",
+      "sha256": "43bfcc2a5779fb7d96b736f791477f0cfdc23d6a4a4a79238730f26eeb7bea50"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-billing-seeded.png",
+      "sha256": "979954b9967ab05c1beff2725d9ea4b05e5ee3184d6493f48204ccf19c0de7eb"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-brand-draft.png",
+      "sha256": "21043f112fe8e33ea724d75affcb6e64229ad6891b1a217ed3c363a1dc85fa7e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-forced-colors.png",
+      "sha256": "5a2bcc3874dcb65d05ee96ab37945df7b95b90d37d39d13fb82163f2171e60bf"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-reduced-motion.png",
+      "sha256": "4c027f36dd9a692fd378d0948e8ca3e7a218fe82e762932e2747d28041ef9205"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-zoom-200.png",
+      "sha256": "a463cd1cdc5dcc8013a986dd8d0c4e827ffcd0c4be6d486aa9531a365ffb36a6"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-billing-seeded.png",
+      "sha256": "db4ac0433ed49218ab13c7b6e01bcb964e7a8d424d4df398bf6c66e513b1ca65"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-brand-draft.png",
+      "sha256": "442577be3505dfc898f96285d9ce48326423bf4f8ef4e59df5a23eaba274a3ab"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-forced-colors.png",
+      "sha256": "03748e5cb5ca61b54a7bf59aec6ad56a62aa9c59f271ab97e1d542c3fdcb501b"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-reduced-motion.png",
+      "sha256": "13b4b8bf17bd734b236108e8bf59d83bad1c9692df8c805a3bf03bcd7fb79c5d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-zoom-200.png",
+      "sha256": "53131006453879a61731236c2b030f23a331f9e4acd8a5e9936b5ac471867804"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-aria.txt",
+      "sha256": "63736266f941bf99d0aac4b3fa0da4f232b5409922c69e9d663da3a828aed612"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-axe.json",
+      "sha256": "1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-aria.txt",
+      "sha256": "2f6aa41f6271e6f4d5c53623a086d2d7727f509445c9ef0b0175827510b44bc5"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-axe.json",
+      "sha256": "af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-aria.txt",
+      "sha256": "64e9ec0d325e6546a7a7d348c1d5b7e0a0faabe1e490b11aeda81e6b1ef6e160"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-axe.json",
+      "sha256": "0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-aria.txt",
+      "sha256": "79ee5785077fb03a76861007cb6dcf5e762863603eef688c39e1ef14c5872bc4"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-aria.txt",
+      "sha256": "7c83c0fdb547333bc5782f7c9674a44b09f81372eadda4cd3a4ecbe7978ddd2a"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-aria.txt",
+      "sha256": "8007bbda1845fa667075bd25616bddee2f29a46316d7412a06a4fa1f61ffbf31"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-forced-colors-aria.txt",
+      "sha256": "0005eeac046271e5ceee743d8d5adc74f601ff1a28e1ce4c1c90382afd132915"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-aria.txt",
+      "sha256": "2eff818eef0cafcd1e68b0bd808df931d4d48efe36362df605fff636ebef9697"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-axe.json",
+      "sha256": "1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-aria.txt",
+      "sha256": "4b6e0aaab468497c335b082dc97efcc852014a8f150fe4286b3aa741925e33df"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-axe.json",
+      "sha256": "af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-aria.txt",
+      "sha256": "909c230aff46b3ec0ddb88c39c1a9d590e2372bdb1a887135a159481fa591d33"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-axe.json",
+      "sha256": "0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-aria.txt",
+      "sha256": "f2a6f277edf13d1ae59e238a9a0850af8ea0392a1b9bafe36d56ee1e1fb702d5"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-aria.txt",
+      "sha256": "1c13bf4c108c967c480c2ef8f1cf98ae9133dd06f6a42149ddd6346ae19920e1"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-aria.txt",
+      "sha256": "efbaae1bd7f906ee99f9b140919c68ae39f217125ddccfe460574f8dc974fe89"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-forced-colors-aria.txt",
+      "sha256": "2ff1d550dbf2502e058207ceb3721cec8e79d87baa91622af60829df5d659e9c"
+    }
+  ],
+  "notes": [
+    "Synthetic loopback fixtures only; no email, Stripe mutation, charging or provider execution.",
+    "Trace/video/auth storage capture disabled. Raw environment-bearing logs remain outside Git.",
+    "CSS zoom=2 tests layout scaling and keyboard reachability, not browser chrome zoom certification.",
+    "Axe incomplete details retained; review dispositions are in completion-and-review-2026-09-14.md."
+  ],
+  "source_git_blobs": {
+    "apps/web/src/features/platform/brand-draft-editor.tsx": "b71fbb225de9c5cab5c6e4929883d7184fb0c586",
+    "apps/web/app/studio/[workspace]/billing/page.tsx": "2f8054bb3182bbef0740c43177d2ca7b4d73ad93",
+    "apps/web/src/features/platform/platform.css": "97d3a927d0fbc81f4a6c9827558aa808ec7efdfc",
+    "apps/web/src/features/platform/workspace-billing.test.tsx": "193ccd44d0ddef07801bc611f2160665b09690a2",
+    "apps/web/src/features/platform/brand-workspace.tsx": "d8ecd32ff65571b063fb495c2f557d11d2db0c17",
+    "apps/web/e2e/platform-connected.spec.ts": "ca64d702adcd8d180540dda12a52d46845682506",
+    "apps/web/src/features/platform/platform-navigation.ts": "9b0b57100c962d38deaf7f2b4f5f6e112e4a87c4",
+    "apps/web/src/features/platform/platform-frame.test.tsx": "b3e25f693a8c5d0356db1dc421afe5f4098d10f9",
+    "apps/web/src/features/platform/workspace-billing.tsx": "317e897c847eaf4cc0c9787dcf0a5b4194538cd2",
+    "apps/web/src/features/platform/platform-navigation.test.ts": "25dd22acf8de84cab552ee37dbe60d6b393b4bdd",
+    "apps/web/src/features/platform/platform-frame.tsx": "fe414ed041adcde322da7246a7f598ab9bd2ffdc",
+    "apps/web/app/globals.css": "2f31ae65534a3233e74f5b3892235c82183c2281",
+    "packages/db/scripts/platform-journey-fixtures.ts": "060523adebae37978eedb1ccbccee2129ee7efbf",
+    "apps/web/src/features/platform/workspace-frame.tsx": "439c197587b8261b63f6654a25c7d9e542c5164b"
+  },
+  "independent_review": {
+    "model": "grok-4.6",
+    "reasoning": "high",
+    "session": "48f549e9-654f-48a5-9d8b-25f2c72063f6",
+    "report_sha256": "edbbc659cbd73b0d8c40754884e7f14eb4a63e21c2fdb2313286984fc0a401e6",
+    "stream_sha256": "e9988b10f92e749994d6e7e2cbb8aeb60592e4587ec71656b9418708e17747d1",
+    "committed_report_path": "governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/independent-review.md",
+    "committed_report_sha256": "1836e3c64da039495a980048ad5107f6f1fd1810f269b75acfc605d80567ff96"
+  }
+}

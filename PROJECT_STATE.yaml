@@ -3,18 +3,17 @@ project_id: mustbeviral
 generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
-launch_customer: dtc_ecommerce_marketing_teams
-project_state: blocked
+launch_customer: brand_operators_and_multi_brand_studios
+project_state: active
 phase:
-  id: R0
-  title: Pinned monorepo and platform scaffold
-  state: blocked
-release_target: P0
-active_work_packet: WP-R0-002
-next_action: Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually.
+  id: P4
+  title: Representative extraction, voice proposals and owner-approved brand versions
+  state: planned
+release_target: full-platform
+active_work_packet: WP-PLATFORM-W2-002
+next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
 decisions_pending: []
-blockers:
-  - 'github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path'
+blockers: []
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21
@@ -25,13 +24,52 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
+    notes:
+      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+      workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
+      preserve_until_v2_cutover keeps legacy V1 unchanged. Under adr-0009-standing-release-authority,
+      agents may deploy staging-verified merged commits through the guarded release in
+      deploy-rollback-incidents to the existing V2 production Workers mustbeviral-v2-production-core
+      and mustbeviral-v2-production-collaboration, only when its pre-deploy checks find no Worker
+      setting change, and to mustbeviral-web-production once that runbook records a Vercel deploy
+      command. Production database writes, secrets,
+      environment variables, routes, DNS, traffic, new resources and feature, provider or charge
+      enablement still need a dated owner sentence.
   staging:
     generation: viralgraph-cleanroom-v2
-    state: not_created
+    state: ready
+    mutation_policy: guarded_release
+    cloudflare_worker: mustbeviral-v2-staging-core
+    notes: Named staging outbox queue mustbeviral-v2-staging-outbox-dispatch. QUEUES_ENABLED is true
+      after the event_id migration. Instant rollback is QUEUES_ENABLED=false. Destructive remote
+      action stays forbidden. guarded_release lets agents deploy merged commits to
+      mustbeviral-v2-staging-core and mustbeviral-v2-staging-collaboration, and to
+      mustbeviral-web-staging once that runbook records a Vercel deploy command. Agents may apply
+      their merged additive migrations through deploy-rollback-incidents under
+      adr-0009-standing-release-authority. A deploy that would change Worker vars, bindings, cron
+      triggers, routes, workers_dev or queue consumers, and any secret or environment variable
+      change, stays owner-gated.
   preview:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-07-12T00:00:00Z
-  by: user-approved-reset
-  evidence: clean orphan branch created after legacy active-tree deletion
+  at: 2026-09-14T23:51:02.177Z
+  by: pnpm agent:finish
+  evidence:
+    - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json

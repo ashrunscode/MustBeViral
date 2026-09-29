@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 2,
+  "currency": "USD",
+  "integerUnit": "micros",
+  "costSource": "openrouter_usage.cost",
+  "providerReportedEvalCostMicros": 90846,
+  "candidates": [
+    {
+      "label": "A",
+      "requests": [
+        {
+          "briefId": "GB-01",
+          "status": "SUCCEEDED",
+          "inputTokens": 1047,
+          "outputTokens": 1610,
+          "totalTokens": 2657,
+          "providerReportedCostMicros": 18194
+        },
+        {
+          "briefId": "GB-02",
+          "status": "SUCCEEDED",
+          "inputTokens": 1123,
+          "outputTokens": 1575,
+          "totalTokens": 2698,
+          "providerReportedCostMicros": 17996
+        },
+        {
+          "briefId": "GB-03",
+          "status": "SUCCEEDED",
+          "inputTokens": 1014,
+          "outputTokens": 1379,
+          "totalTokens": 2393,
+          "providerReportedCostMicros": 15818
+        }
+      ],
+      "totals": {
+        "successfulRequests": 3,
+        "failedRequests": 0,
+        "unreportedUsageRequests": 0,
+        "inputTokens": 3184,
+        "outputTokens": 4564,
+        "totalTokens": 7748,
+        "providerReportedCostMicros": 52008
+      },
+      "projection": {
+        "method": "mean provider-reported cost of a three-copy-set brief evaluation",
+        "projectedPerPackCopyCostMicros": 17336,
+        "copyPackRevenueMicros": 450000,
+        "marginMicros": 432664,
+        "marginBasisPoints": 9615,
+        "economicallyQualified": true,
+        "reliabilityQualified": true,
+        "disqualificationReason": null
+      }
+    },
+    {
+      "label": "B",
+      "requests": [
+        {
+          "briefId": "GB-01",
+          "status": "SUCCEEDED",
+          "inputTokens": 606,
+          "outputTokens": 645,
+          "totalTokens": 1251,
+          "providerReportedCostMicros": 11190
+        },
+        {
+          "briefId": "GB-02",
+          "status": "SUCCEEDED",
+          "inputTokens": 618,
+          "outputTokens": 811,
+          "totalTokens": 1429,
+          "providerReportedCostMicros": 13710
+        },
+        {
+          "briefId": "GB-03",
+          "status": "SUCCEEDED",
+          "inputTokens": 589,
+          "outputTokens": 831,
+          "totalTokens": 1420,
+          "providerReportedCostMicros": 13938
+        }
+      ],
+      "totals": {
+        "successfulRequests": 3,
+        "failedRequests": 0,
+        "unreportedUsageRequests": 0,
+        "inputTokens": 1813,
+        "outputTokens": 2287,
+        "totalTokens": 4100,
+        "providerReportedCostMicros": 38838
+      },
+      "projection": {
+        "method": "mean provider-reported cost of a three-copy-set brief evaluation",
+        "projectedPerPackCopyCostMicros": 12946,
+        "copyPackRevenueMicros": 450000,
+        "marginMicros": 437054,
+        "marginBasisPoints": 9712,
+        "economicallyQualified": true,
+        "reliabilityQualified": true,
+        "disqualificationReason": null
+      }
+    }
+  ]
+}

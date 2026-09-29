@@ -27,7 +27,7 @@ Ephemeral browser state, caches, collaboration drafts, and provider state are ne
 | Resend          | Supabase Auth SMTP and transactional delivery                                                                               | notification preferences or application truth                |
 | Sentry/OTel     | errors, traces, measurements, alerts                                                                                        | business state or audit authority                            |
 
-P0 contains one web app and one Core Worker. A collaboration Worker, queues, durable workflows, and a separate executor are prohibited until their named evidence gate passes.
+The platform retains the existing web app, Core Worker, collaboration Worker and measured outbox/queue mechanisms. Their current environment enablement is owned by project state and deployment evidence. A new executor or render runtime requires an explicit architecture decision and measured operational need.
 
 ## Monorepo boundaries
 
@@ -93,3 +93,29 @@ Secrets, buckets, database projects, signing keys, webhooks, and telemetry envir
 - Queue publication, when introduced, occurs after the Postgres transaction; the outbox bridges the atomicity boundary.
 - Public API, browser, MCP, and CLI adapters call the same command/query handlers.
 - Operational additions require measured evidence and an accepted decision, not anticipated scale.
+
+## Full-platform domain boundaries
+
+| Domain                      | Authoritative records and behaviors                                                                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity and portfolio      | Studios, workspace grants, members, roles, brand/location scopes, invitations, offboarding.                                                                                                     |
+| Brand knowledge             | Implemented W2.1: source jobs, immutable sources, unapproved knowledge drafts and append-only candidates with provenance. Approved versions, voice, offerings and audiences remain later waves. |
+| Assets and rights           | Originals, derivatives, collections, source references, consent/rights grants, usage and expiry.                                                                                                |
+| Campaigns and content       | Campaign versions, plans, tasks, content revisions, scenes, channel variants, experiment hypotheses.                                                                                            |
+| Creative execution          | Existing graph/run machinery, generation requests, compositor/render jobs, checks, receipts.                                                                                                    |
+| Approvals                   | Policies, review requests, decisions, comments, immutable approved revision hashes.                                                                                                             |
+| Connections and publication | External accounts, encrypted credentials, capability snapshots, schedules, attempts, external IDs, reconciliation.                                                                              |
+| Creators and partnerships   | Profiles, evidence, lists, relationships, agreements, deliverables, selected sharing grants.                                                                                                    |
+| Engagement                  | Conversations, messages, assignments, reply intents, permitted identity links.                                                                                                                  |
+| Measurement                 | Metric observations, first-party events, definitions, attribution records, aggregate reporting.                                                                                                 |
+| Commercial and operations   | Workspace ledgers, entitlements, budgets, subscription state, notification policies, operational incidents.                                                                                     |
+
+Use typed command/query handlers and generated transport contracts. The web, REST, CLI, and MCP clients call the same permissions, approvals, and idempotency logic. A chat or agent tool never creates a privileged alternate path.
+
+## Background processing and rendering
+
+Use the existing durable outbox/queue mechanisms after validating their current topology. Extend them for ingestion, analysis, rendering, scheduled publication, metric collection, notifications, and reconciliation. Queue adoption is already represented in the inspected composition; do not rebuild it under a second uncoordinated scheduler.
+
+Separate job classes by latency and cost. Interactive metadata reads should not wait behind video rendering. Apply per-workspace concurrency limits, fairness, provider budgets, cancellation, deadlines, and dead-letter repair. Persist job state and progress so reloads do not lose work.
+
+A Worker request is not a general-purpose long-running video renderer. Benchmark a supported render execution target for the required codecs, fonts, duration, and memory. Add a dedicated render runtime only through an explicit architecture decision with cost, failure, security, and deployment evidence. Keep orchestration and authoritative job state in the existing application.

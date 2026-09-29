@@ -1,0 +1,165 @@
+schema_version: 1
+id: WP-P3-007
+spec_revision: 1
+title: Production Supabase migrations and security hardening
+phase: P3
+status: complete
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Apply the exact reviewed repository migration sequence to the isolated production
+  Supabase project, prove RLS and Auth fail closed, and leave the database unbound from production
+  clients until a separate environment-binding packet.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
+  - codex-finish-mega-prompt
+required_skills:
+  - supabase
+  - data-architect
+  - auth-fortress
+  - quality-check
+depends_on:
+  - WP-P3-006
+scope:
+  allowed_paths:
+    - supabase/**
+    - governance/evidence/WP-P3-007/**
+    - governance/evidence/WP-P3-006/**
+    - governance/tests/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
+    - codex-finish-mega-prompt
+deliverables:
+  - A dry-run and immutable manifest prove the exact 37-file sequence from
+    `20260712000000_cleanroom_bootstrap.sql` through
+    `20260831140000_p3_start_run_barrier_outbox_event_id.sql`. The pre-apply aggregate SHA-256 is
+    `eeaa570ca92b98b071310f9ec1cfab361f620fa4e66daf820684077979f44fcd`; after the separately
+    committed, bounded PL/pgSQL repair recorded by the dry-run evidence, the required aggregate is
+    `2d4ff1beb167d69895ff97216ae42e8cf88d881a413127a84835ed53004ff73e`.
+  - The exact 37-file sequence and the separately authorized forward-only hardening migration
+    `20260902000000_production_rls_advisor_hardening.sql` are applied once to project
+    `jjgtlfblsfobdhmtngbz`; no ad hoc DDL, seed, unrecorded repair, imported history, or unrelated
+    project mutation is permitted.
+  - Authenticated reads prove migration history, expected schema, forced RLS, least-privilege
+    grants, hardened RPC search paths, immutable machine-owned tables, and zero cross-tenant access.
+  - Auth remains closed enrollment with `disable_signup=true`; production callback, SMTP, client,
+    and service-role bindings remain absent.
+  - Data API exposure and both Advisor classes are inspected after migration. Security Advisor has
+    zero errors and every remaining intentional finding is exactly allowlisted and explained;
+    performance notices are dispositioned.
+  - A ready successor names the exact production environment/secret binding, disabled-behavior
+    Worker deployment, web deployment, authenticated smoke, and rollback gates.
+public_interfaces:
+  - No production web/API deployment, DNS, signup, customer charging, provider run, invitation, seed
+    data, customer data, or legacy cutover is enabled in this packet.
+steps:
+  - id: p3g-001-dry-run-and-manifest
+    title: Re-prove the empty project and dry-run the exact pinned migration manifest.
+    status: completed
+  - id: p3g-002-apply-exact-migrations
+    title: Apply the exact 37-file forward-only migration sequence once to the production project.
+    status: completed
+  - id: p3g-003-security-and-auth-proof
+    title: Prove schema, RLS, grants, RPC, Auth, Data API, Advisor, and empty-customer invariants.
+    status: completed
+  - id: p3g-004-binding-successor
+    title: Prepare the exact disabled-behavior production environment-binding successor.
+    status: completed
+acceptance:
+  automated:
+    - id: exact-migration-history
+      criterion: Authenticated remote migration history exactly matches the authorized repository
+        migration versions and the project remains `ACTIVE_HEALTHY`.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - id: production-database-security
+      criterion:
+        Remote database checks prove forced RLS and least privilege for every user-visible table,
+        hardened RPCs, zero Security Advisor errors, no unclassified findings, closed enrollment,
+        and no customer rows.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+  manual:
+    - id: isolated-forward-only-release
+      criterion: Evidence proves only project `jjgtlfblsfobdhmtngbz` was mutated, the exact reviewed
+        sequence was used, and no application or traffic was bound to it.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+rollback:
+  strategy: Keep the production project isolated. Production migrations are forward-only; on any
+    defect, stop before client binding and apply a separately reviewed repair migration. Do not
+    delete the project, rewrite migration history, restore over the database, or touch legacy V1.
+  remote_actions_required: true
+external_effects:
+  remote_mutation: authorized
+  destructive_remote_actions: false
+handoff:
+  current_step: p3g-004-binding-successor
+  next_action: Verify the database release evidence and activate WP-P3-008 for disabled bindings.
+  blockers: []
+  changed_paths:
+    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - PROJECT_STATE.yaml
+  last_green_checks:
+    - pnpm exec supabase db push --linked --dry-run --include-all --yes
+    - pnpm exec supabase db push --linked --include-all --yes
+    - pnpm agent:verify
+completion:
+  successor_packet_id: WP-P3-008
+  evidence_paths:
+    - governance/evidence/WP-P3-007/migration-dry-run-and-defect-2026-09-02.md
+    - governance/evidence/WP-P3-007/security-advisor-pre-hardening-2026-09-02.md
+    - governance/evidence/WP-P3-007/production-database-verification-2026-09-02.md
+    - governance/evidence/WP-P3-007/successor-WP-P3-008.yaml
+  completed_at: 2026-09-02T14:21:21.769Z

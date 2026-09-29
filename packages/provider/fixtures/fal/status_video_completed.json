@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "headers": {},
+  "body": {
+    "status": "COMPLETED",
+    "response": { "video": { "url": "https://delivery.invalid/output.mp4" } }
+  }
+}

@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Skin - Output comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap');
+      :root {
+        --paper: #fafafa;
+        --paper-2: #f5f5f5;
+        --card: #ffffff;
+        --wash: rgba(0, 0, 0, 0.04);
+        --wash-faint: rgba(0, 0, 0, 0.02);
+        --ink-strong: rgba(0, 0, 0, 0.85);
+        --ink-head: rgba(0, 0, 0, 0.75);
+        --ink: rgba(0, 0, 0, 0.6);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --ink-faint: rgba(0, 0, 0, 0.25);
+        --line: rgba(0, 0, 0, 0.12);
+        --signal: #3182d4;
+        --signal-soft: #80bfff;
+        --ok: #1f9d63;
+        --attention: #b87e14;
+        --fail: #c4404d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Geist', sans-serif;
+        background-color: var(--paper);
+        color: var(--ink);
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        font: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid #3182d4;
+        outline-offset: 2px;
+      }
+      .focus-demo {
+        outline: 2px solid #3182d4;
+        outline-offset: 2px;
+      }
+      .mono {
+        font-family: 'DM+Mono', monospace;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .node-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        transition: all 120ms cubic-bezier(0.2, 0, 0, 1);
+      }
+      .node-card:hover {
+        border-color: var(--ink-faint);
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 22px;
+        padding: 4px 7px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--card);
+        font-family: 'DM+Mono', monospace;
+        font-size: 9px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .app {
+        width: 100vw;
+        height: 100vh;
+        min-width: 1180px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .app-header {
+        height: 60px;
+        flex: 0 0 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-bottom: 1px solid var(--line);
+        background: var(--card);
+        z-index: 50;
+      }
+      .brand-row,
+      .system-row,
+      .footer-meta,
+      .card-actions,
+      .batch-actions {
+        display: flex;
+        align-items: center;
+      }
+      .brand-row {
+        gap: 32px;
+      }
+      .brand {
+        color: var(--ink-strong);
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .breadcrumb {
+        color: var(--ink-muted);
+        font-size: 13px;
+      }
+      .breadcrumb strong {
+        color: var(--ink-strong);
+        font-weight: 400;
+      }
+      .system-row {
+        gap: 12px;
+      }
+      main {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        overflow: hidden;
+      }
+      .review-stage {
+        padding: 22px 24px;
+        overflow: hidden;
+        background: var(--paper-2);
+      }
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      h1 {
+        margin-bottom: 4px;
+        color: var(--ink-head);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+      }
+      .section-heading p {
+        margin: 0;
+        font-size: 12px;
+        color: var(--ink-muted);
+      }
+      .artifact-grid {
+        height: calc(100% - 51px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 14px;
+      }
+      .artifact-card {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 14px;
+      }
+      .artifact-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .artifact-head h2 {
+        margin: 0;
+        color: var(--ink-head);
+        font-size: 13px;
+        font-weight: 400;
+      }
+      .compare-pair {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .version {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .thumb {
+        flex: 1;
+        min-height: 88px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #e7e7e7;
+        color: var(--ink-muted);
+      }
+      .thumb.prior {
+        background: #eeeeee;
+      }
+      .version-caption {
+        display: flex;
+        justify-content: space-between;
+        color: var(--ink-muted);
+      }
+      .card-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--wash);
+      }
+      .card-actions {
+        gap: 6px;
+      }
+      .quiet-button {
+        min-height: 32px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0 11px;
+        background: var(--card);
+        color: var(--ink-strong);
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .chip.approved {
+        color: var(--ok);
+        border-color: rgba(31, 157, 99, 0.28);
+      }
+      .chip.pending {
+        color: var(--attention);
+        border-color: rgba(184, 126, 20, 0.28);
+      }
+      .chip.failed {
+        color: var(--fail);
+        border-color: rgba(196, 64, 77, 0.28);
+      }
+      .retry {
+        color: var(--ink);
+        font-size: 11px;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .qa-panel {
+        border-left: 1px solid var(--line);
+        background: var(--card);
+        padding: 26px 24px;
+        overflow: hidden;
+      }
+      .qa-panel h2 {
+        margin-bottom: 6px;
+        color: var(--ink-head);
+        font-size: 19px;
+        font-weight: 400;
+      }
+      .qa-panel > p {
+        margin-bottom: 20px;
+        color: var(--ink-muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .finding-list {
+        display: grid;
+        gap: 12px;
+      }
+      .finding {
+        padding: 13px;
+        border-left: 2px solid var(--attention);
+        border-radius: 0 6px 6px 0;
+        background: var(--wash-faint);
+      }
+      .finding.fail {
+        border-left-color: var(--fail);
+      }
+      .finding p {
+        margin: 7px 0 10px;
+        color: var(--ink-head);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .jump-link {
+        color: var(--ink-strong);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .qa-summary {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 10px;
+      }
+      .summary-line {
+        display: flex;
+        justify-content: space-between;
+        color: var(--ink-muted);
+      }
+      .summary-line strong {
+        color: var(--ink-strong);
+        font-weight: 400;
+      }
+      .confirm-bar {
+        height: 72px;
+        flex: 0 0 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        border-top: 1px solid var(--line);
+        background: var(--card);
+        z-index: 50;
+      }
+      .batch-progress {
+        min-width: 340px;
+      }
+      .batch-progress-head {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        color: var(--ink-strong);
+      }
+      .progress-track {
+        height: 5px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--paper-2);
+      }
+      .progress-fill {
+        width: 33.333%;
+        height: 100%;
+        background: var(--ink-head);
+      }
+      .batch-actions {
+        gap: 12px;
+      }
+      .ghost,
+      .primary {
+        min-height: 40px;
+        border-radius: 6px;
+        padding: 0 20px;
+        font-size: 13px;
+      }
+      .ghost {
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink-strong);
+      }
+      .primary {
+        border: 1px solid var(--signal);
+        background: var(--signal);
+        color: white;
+      }
+      .app-footer {
+        height: 32px;
+        flex: 0 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-top: 1px solid var(--line);
+        background: var(--wash-faint);
+        color: var(--ink-faint);
+      }
+      .footer-meta {
+        gap: 24px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand-row">
+          <span class="brand">MustBeViral Studio</span>
+          <span class="breadcrumb">Lumen Skin / Outputs / <strong>Compare</strong></span>
+        </div>
+        <div class="system-row">
+          <span class="mono">REV 7f3a</span
+          ><span class="chip pending"><span aria-hidden="true">◷</span> Review open</span>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <section class="review-stage" aria-labelledby="review-title">
+          <div class="section-heading">
+            <div>
+              <h1 id="review-title">Output comparison</h1>
+              <p>Compare current output to its prior pinned version before approval.</p>
+            </div>
+            <div class="mono">Showing 4 of 12 artifacts</div>
+          </div>
+          <div class="artifact-grid">
+            <article class="node-card artifact-card" id="asset-01">
+              <div class="artifact-head">
+                <h2>Asset 01 - Hero 4:5</h2>
+                <span class="chip approved"><span aria-hidden="true">✓</span> Approved</span>
+              </div>
+              <div class="compare-pair">
+                <div class="version">
+                  <div class="thumb"><span class="mono">Neutral image preview</span></div>
+                  <div class="version-caption mono">
+                    <span>Current (v2)</span><span>1080x1350</span>
+                  </div>
+                </div>
+                <div class="version">
+                  <div class="thumb prior"><span class="mono">Prior image preview</span></div>
+                  <div class="version-caption mono">
+                    <span>Prior (v1)</span><span>1080x1350</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-foot">
+                <div class="card-actions">
+                  <button class="quiet-button">Approve</button
+                  ><button class="quiet-button">Reject</button>
+                </div>
+                <span class="mono">By SC · 14:31</span>
+              </div>
+            </article>
+
+            <article class="node-card artifact-card" id="asset-02">
+              <div class="artifact-head">
+                <h2>Asset 02 - Detail 1:1</h2>
+                <span class="chip approved"><span aria-hidden="true">✓</span> Approved</span>
+              </div>
+              <div class="compare-pair">
+                <div class="version">
+                  <div class="thumb"><span class="mono">Neutral image preview</span></div>
+                  <div class="version-caption mono">
+                    <span>Current (v2)</span><span>1080x1080</span>
+                  </div>
+                </div>
+                <div class="version">
+                  <div class="thumb prior"><span class="mono">Prior image preview</span></div>
+                  <div class="version-caption mono">
+                    <span>Prior (v1)</span><span>1080x1080</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-foot">
+                <div class="card-actions">
+                  <button class="quiet-button">Approve</button
+                  ><button class="quiet-button">Reject</button>
+                </div>
+                <span class="mono">By SC · 14:34</span>
+              </div>
+            </article>
+
+            <article class="node-card artifact-card" id="asset-03">
+              <div class="artifact-head">
+                <h2>Asset 03 - Texture 9:16</h2>
+                <span class="chip pending"><span aria-hidden="true">◷</span> Pending</span>
+              </div>
+              <div class="compare-pair">
+                <div class="version">
+                  <div class="thumb"><span class="mono">Neutral image preview</span></div>
+                  <div class="version-caption mono">
+                    <span>Current (v2)</span><span>1080x1920</span>
+                  </div>
+                </div>
+                <div class="version">
+                  <div class="thumb prior"><span class="mono">Prior image preview</span></div>
+                  <div class="version-caption mono">
+                    <span>Prior (v1)</span><span>1080x1920</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-foot">
+                <div class="card-actions">
+                  <button class="quiet-button focus-demo">Approve</button
+                  ><button class="quiet-button">Reject</button>
+                </div>
+                <span class="mono">Needs alt text</span>
+              </div>
+            </article>
+
+            <article class="node-card artifact-card" id="motion-01">
+              <div class="artifact-head">
+                <h2>Motion 01 - Seedance 6s</h2>
+                <span class="chip failed"><span aria-hidden="true">×</span> Failed</span>
+              </div>
+              <div class="compare-pair">
+                <div class="version">
+                  <div class="thumb"><span class="mono">No verified frame</span></div>
+                  <div class="version-caption mono">
+                    <span>Current (v2)</span><span>9:16 · 6s</span>
+                  </div>
+                </div>
+                <div class="version">
+                  <div class="thumb prior"><span class="mono">Prior motion poster</span></div>
+                  <div class="version-caption mono">
+                    <span>Prior (v1)</span><span>9:16 · 6s</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-foot">
+                <div class="card-actions">
+                  <button class="quiet-button">Approve</button
+                  ><button class="quiet-button">Reject</button>
+                </div>
+                <a class="retry" href="#motion-01">Retry free - retains 11 verified</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <aside class="qa-panel" aria-labelledby="qa-title">
+          <h2 id="qa-title">QA findings</h2>
+          <p>
+            Two notes require review. Failed motion remains isolated from the verified static pack.
+          </p>
+          <div class="finding-list">
+            <article class="finding">
+              <div class="mono" style="color: var(--attention)">Contrast issue</div>
+              <p>Logo visibility on Asset 02 is below the 4.5:1 target.</p>
+              <a class="jump-link mono" href="#asset-02">JUMP_TO ASSET 02</a>
+            </article>
+            <article class="finding">
+              <div class="mono" style="color: var(--attention)">Legal disclaimer</div>
+              <p>Required “Results vary” line is missing from Asset 03.</p>
+              <a class="jump-link mono" href="#asset-03">JUMP_TO ASSET 03</a>
+            </article>
+            <article class="finding fail">
+              <div class="mono" style="color: var(--fail)">Provider output failed</div>
+              <p>Motion frame verification failed. No charge was accepted.</p>
+              <a class="jump-link mono" href="#motion-01">JUMP_TO MOTION 01</a>
+            </article>
+          </div>
+          <div class="qa-summary">
+            <div class="summary-line">
+              <span>Static pack</span><strong class="mono">11 verified</strong>
+            </div>
+            <div class="summary-line">
+              <span>Motion branch</span><strong class="mono">1 failed</strong>
+            </div>
+            <div class="summary-line"><span>Run cost</span><strong class="mono">$4.20</strong></div>
+          </div>
+        </aside>
+      </main>
+
+      <div class="confirm-bar">
+        <div class="batch-progress">
+          <div class="batch-progress-head">
+            <span>Batch approval</span><span class="mono">4 / 12 approved</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill"></div></div>
+        </div>
+        <div class="batch-actions">
+          <button class="ghost">Approve remaining</button
+          ><button class="primary">Export approved</button>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        <div class="footer-meta mono">
+          <span>Preview latency: 96ms</span><span>Artifacts: 12</span><span>Quote: $4.20</span>
+        </div>
+        <div class="mono">v2.0.4-studio</div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+schema_version: 1
+acceptance_id: no-queue-or-agency-expansion
+recorded_at: '2026-08-31T17:00:00.000Z'
+status: proven
+criterion: This packet did not add queues, a separate executor, agency portals, or connected social
+  publishing.
+proofs:
+  - kind: infrastructure
+    path: apps/core/wrangler.jsonc
+    assertions:
+      - no queues, queue_producers, or queue_consumers bindings
+      - Core Worker remains the sole execution ingress Worker
+  - kind: infrastructure
+    path: apps/collaboration/wrangler.jsonc
+    assertions:
+      - collaboration Worker binds only CANVAS_COORDINATION durable object
+      - no Cloudflare Queue bindings were added for P2 collaboration
+  - kind: repository-scan
+    path: apps/
+    assertions:
+      - no queue_producers, queue_consumers, or queues wrangler bindings in any app
+      - no agency portal, white-label, client-portal, or auto-publish implementation files
+  - kind: authority
+    path: docs/product/RELEASE_SCOPE.md
+    assertions:
+      - P3 queues, separate executor, and BYOK require measured evidence triggers
+      - P4 agency accounts, client portals, and auto-publishing remain deferred
+  - kind: authority
+    path: docs/architecture/SYSTEM_OVERVIEW.md
+    assertions:
+      - queues, durable workflows, and separate executor prohibited until named evidence gate passes
+      - P2 collaboration Worker is the only additional Worker authorized in this phase
+  - kind: authority
+    path: docs/delivery/CODEX_FINISH_MEGA_PROMPT.md
+    assertions:
+      - finish sprint stops before P3 scale/queues and P4 agency
+      - queue-master skill is not authorized in the P2 sprint
+  - kind: scope
+    path: docs/delivery/ACTIVE_WORK_PACKET.yaml
+    assertions:
+      - WP-P2-001 deliverables cover collaboration only
+      - forbidden_paths exclude legacy exports and archive drift
+      - completion successor is WP-P3-001 without implementing P3 infrastructure in this packet
+notes:
+  - UI and export row states use the word queued for local artifact readiness; these are not Cloudflare Queues.
+  - Provider fal queue endpoints referenced in P0 evidence are external transport URLs, not Cloudflare Queue products.
+  - No live remote queue namespaces were created or mutated while collecting this evidence.

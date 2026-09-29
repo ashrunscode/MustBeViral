@@ -1,0 +1,5 @@
+# Closed packet snapshots are machine-written, sealed transition evidence.
+# Receipt validation checks their structure and hashes; formatting must preserve them.
+# Keep implementation, authorities, receipts and mutable evidence in format:check.
+evidence/**/completed-work-packet.yaml
+evidence/**/superseded-work-packet.yaml

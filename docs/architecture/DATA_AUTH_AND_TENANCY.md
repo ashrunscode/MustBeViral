@@ -8,9 +8,53 @@ doc_id: data-auth-tenancy
 
 Supabase Auth issues user sessions and JWTs. The web application uses supported server/client Supabase helpers. Core validates bearer JWTs against Supabase JWKS, rejects unexpected issuer/audience/expiry, and carries a typed actor containing `user_id`, request ID, and authentication method.
 
-Workspace is the tenant, billing, spend-cap, and deletion boundary. Every tenant-owned row includes `workspace_id` directly or is reachable through a constrained parent with tested RLS. P0 enables one owner per workspace; later roles are additive and cannot weaken existing policies.
+Workspace is the tenant, billing, spend-cap, and deletion boundary. Every tenant-owned row includes `workspace_id` directly or is reachable through a constrained parent with tested RLS. The existing owner-only baseline is extended through additive, action-scoped roles and studio grants; brand/location restrictions intersect with workspace access and never weaken existing isolation.
 
-Unauthenticated access is limited to health, signed provider webhooks, and explicit public marketing routes. Webhook identity comes from provider signature verification, not a user claim.
+Unauthenticated access is limited to health, signed provider webhooks, explicit public marketing routes, and signed artifact-access capabilities. Webhook identity comes from provider signature verification, not a user claim. An artifact-access capability is a server-minted HMAC token naming exactly one object with its content hash, byte size, mime type, and expiry pinned inside the signed payload; it exists because provider image fetchers send no headers, it is short-lived, and the bucket itself keeps zero external readers - the Worker remains the only reader and serves bytes only against a valid capability.
+
+### Collaboration trust boundary
+
+The collaboration Worker has no database access and trusts no identity a client sends. Core issues a collaboration ticket at `POST /v1/canvases/{id}/collaboration-tickets` only to a Supabase browser session that passes the same checks as the other canvas endpoints: the canvas read through the caller's JWT and RLS, then an active workspace membership. Scoped API keys and OAuth tokens are refused. A ticket is `base64url(claims).base64url(HMAC-SHA256)` over canonical JSON claims `v`, `aud` (`collaboration`), `canvas_id`, `sub` (the Supabase user id), `name`, `color`, `iat` and `exp`. It lives 60 seconds; the verifier rejects any signed lifetime above 120 seconds and allows 15 seconds of clock skew. Core and the collaboration Worker share the signing key `COLLABORATION_TICKET_SECRET` per environment. The display name is a label derived from the user id, never an email address or provider profile field, because no profile or membership name exists yet.
+
+The Worker reads a ticket only from `Authorization: Bearer` on snapshot reads and from the WebSocket subprotocol offer `mbv-collab.v1, <ticket>` on upgrades, never from the URL, because invocation logs record URLs. It answers a missing, forged, expired, wrong-audience or other-canvas ticket with 401, and every canvas request with 503 when the key is absent or shorter than 32 characters; `/health` stays open. After verification it passes the identity to the canvas's coordination object in an internal header that it deletes from every incoming request first. The object stores that identity on the socket attachment, so it survives hibernation, and acts as that identity for presence, comment authorship, draft authorship, lease holding and release, and draft clearing, ignoring identity fields in message payloads. A ticket can be replayed until it expires.
+
+### Collaboration revocation window
+
+Core re-checks the canvas read and the active membership for every ticket, including every reconnect. An open socket is not re-checked, so the coordination object bounds how long one can live: 600 seconds after the `iat` of the ticket that opened it, taking the earlier of `iat` and the object's clock at acceptance, so an issuer clock running ahead within the 15-second skew allowance cannot extend it. The expiry is stored in the socket attachment, and a Durable Object alarm set for the earliest expiry closes the socket with close code `4401`, including after hibernation. Until the alarm runs, an expired socket's messages are not processed (the object closes it instead) and broadcasts skip it. The web client treats `4401` as "reconnect with a fresh ticket": it requests a new ticket at once, without backoff (a `4401` within 30 seconds of opening gets the normal backoff instead, so a faulty server cannot cause a request loop), keeps the last snapshot and queues up to 16 messages for at most 10 seconds meanwhile. If Core refuses that ticket the client stops. It treats close code `1008` (no valid identity, or sustained abuse) as final.
+
+The residual window is therefore bounded, not zero: after a member is removed or a workspace is deleted, a socket opened with a ticket issued just before that change keeps reading and writing drafts on that canvas for at most 600 seconds after the ticket's issue time, plus up to 15 seconds of clock skew between Core and the Worker. The same ticket can be used for snapshot reads or to open further sockets only until it expires, at most 75 seconds after issue. Ten minutes trades that window against reconnect cost (one Core ticket request and one full snapshot per member every ten minutes), and collaboration state is draft-only: it holds no revision, billing or provider authority. Drafts, comments and leases already written stay in the coordination object after removal or workspace deletion; nothing erases them yet, and no one can read them without a new ticket.
+
+Presence follows sockets, not a timer. A member is present while at least one of their sockets on the canvas is open, is within its lifetime, carries a valid bound identity and has sent an accepted `presence.join`. The object reads this from its sockets and their attachments each time it builds a snapshot and before it counts a join against the presence cap, so it holds across hibernation, needs no alarm or client heartbeat and spends no rate-limit tokens; a message can never place or keep another member in it. A member with two sockets stays present until both are gone. The member's row is removed when their last joined socket closes, errors, is closed for abuse or reaches its lifetime; an expired socket stops counting at once, before the alarm closes it with `4401`, so a member whose access was revoked stays present no longer than the socket lifetime above. Rows with no joined socket, such as rows left by a restart, are deleted before they are served or counted. Only the member's own accepted join creates a row, so a member refused at the 32-member cap stays absent after a slot frees until they join again, which the web client does on its next connection. A present member's `last_seen_at` is rewritten once it is 30 seconds old when a snapshot is built, and that write is held to the presence row cap and byte budget like any other. A connection that drops without a close stays present until the runtime reports the close or the socket's lifetime ends.
+
+### Collaboration limits and abuse resistance
+
+The collaboration Worker rejects over-limit input with a typed error and never truncates it. All values live in `packages/collaboration/src/limits.ts` and `apps/collaboration/src/rate-limit.ts`.
+
+| Limit                                                  | Value                                                | Reason                                                                                                       |
+| ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Comment body                                           | 1-4,000 characters                                   | A review note of about 600 words                                                                             |
+| Text draft body                                        | 0-4,000 characters                                   | A generation prompt or configuration note                                                                    |
+| Node, anchor, comment, revision and client request ids | 128 characters                                       | Existing id bound; server comment ids are 36-character UUIDs                                                 |
+| Field path                                             | 128 characters                                       | Paths such as `parameters.prompt`                                                                            |
+| Draft id and lease id                                  | 1,543 and 1,551 characters                           | The longest JSON keys `textDraftKey` and `leaseIdForActor` produce from ids at their limits                  |
+| Draft ids per checkpoint clear                         | 64                                                   | Equal to the per-canvas draft cap                                                                            |
+| Client WebSocket message                               | 32 KiB (UTF-8), checked before parsing               | A comment or draft at its field limits is under 28 KiB even with every character escaped                     |
+| Comments                                               | 200 per canvas and 192 KiB; 50 and 48 KiB per member | Review threads on one canvas; one member can use at most a quarter                                           |
+| Text drafts                                            | 64 per canvas and 192 KiB; 32 and 96 KiB per member  | Unsaved fields are meant to be checkpointed; one member can use at most half                                 |
+| Leases                                                 | 32 per canvas and 64 KiB; 4 and 8 KiB per member     | A member edits one leased node at a time; one member can use at most an eighth                               |
+| Presence                                               | 32 members, 48 KiB                                   | Concurrent viewers of one canvas; one row per member, so no per-member budget is needed                      |
+| Open sockets                                           | 64 per canvas, 4 per actor                           | A few tabs per member; refused with HTTP 429                                                                 |
+| Snapshot message                                       | 512 KiB                                              | Section budgets total 496 KiB; far below the 32 MiB Workers WebSocket limit, and under the earlier 1 MiB one |
+
+Byte budgets count the UTF-8 JSON of stored rows, so a snapshot at every cap stays under its ceiling even when every character escapes to six bytes. Every write is checked against the member's own row cap and byte budget before the canvas budget, and the per-member budgets are the same fraction of the canvas budget as the per-member row caps, so one member can never fill a section and deny it to everyone else: without them, 47 comments of 4,000 characters, or 9 escape-heavy drafts on a node the member leases (which no one else can clear), filled the canvas. Each member's share can still be used up only by that member, who can delete their own comments or checkpoint their own drafts; the object also refuses to send any snapshot above the ceiling (`SNAPSHOT_TOO_LARGE`). Errors are `FIELD_TOO_LARGE` (with field, limit and unit), `PAYLOAD_TOO_LARGE`, `CANVAS_LIMIT_REACHED` (with resource, scope, unit and limit), `RATE_LIMITED` (with scope and `retry_after_ms`), `FORBIDDEN`, `NOT_FOUND` and `VALIDATION_FAILED`; none echoes message content. Rows stored before these limits are checked once, when an object first loads schema version 2: rows that fail the current limits are dropped, every lease stored under the old joined id is dropped, and the rest are trimmed fairly, first each member to their own row cap and byte budget keeping their newest rows, then the canvas caps round-robin across members from each member's newest row, so one member's rows never evict another's. The check runs once; later wakes keep leases and rows. Every read also validates each stored row against the current schema and quarantines a row that fails, such as one an older Worker wrote after a rollback: it stays in storage but is never sent, counted or acted on, only a per-section count is logged, and a new write to the same draft or lease key replaces it, so one bad row cannot break a canvas.
+
+Every message spends one token (a snapshot request five) from its socket's bucket, 30 burst and 10 per second, and from its actor's bucket across that actor's sockets on the canvas, 60 burst and 20 per second; snapshot reads and socket opens spend five from the actor's bucket. A refused message returns `RATE_LIMITED` and adds one strike to the socket. Frames that fail before doing any work are not free: an oversized frame spends 10 tokens and adds 5 strikes, and a frame that is not JSON or fails the protocol schema spends 5 tokens and adds 2 strikes, even though it gets its typed error. Strikes drain at one per second and a socket with more than 20 undrained strikes is closed with `1008`, so one oversized frame a second closes a socket within five seconds. Clients check the same limits before sending and never send such frames. Broadcasts are coalesced to at most one full snapshot per canvas every 100 ms, so fan-out is bounded by 10 snapshots a second of at most 512 KiB to at most 64 sockets, whatever members send; sending changes instead of full snapshots would lower that bound further and is not built. The buckets live in object memory, so an eviction can hand a client one fresh burst; an object is evicted only after it is idle.
+
+The web client shows every refusal (limits, rate limit, a draft refused because another member holds the lease, and input over a limit it catches before sending) as a short alert in the collaboration panel until the next accepted change.
+
+Comment ids are generated by the object (`crypto.randomUUID()`) and returned in `comment.result`; a client-sent id is never used, including on the legacy `comment.upsert`, which is handled as a create. Only a comment's author can update or delete it. Lease ids are the injective `JSON.stringify(["lease", node_id, actor_id])` derived by the object from the bound actor, so no two node and actor pairs share an id; the legacy joined id is accepted only as a check against the caller's own node and releases only the caller's own lease.
+
+Deploy the collaboration Worker before the web app. The new web client sends `comment.create`, `comment.update`, `comment.delete` and node-only lease messages, which an older Worker rejects. An older web client still works against the new Worker (legacy `comment.upsert` and legacy lease ids are accepted, and `4401` is an ordinary reconnect for it), with these losses until it updates: comments of 4,001 to 8,000 characters and text drafts of 4,001 to 32,000 characters are refused, and because that client ignores `error` frames the text silently fails to sync; a client that keeps syncing such a draft sends invalid frames and is closed with `1008`, then reconnects with its own backoff; and a `text.draft.result` with reason `limit_reached` sets its status to error.
 
 ## Core relational model
 
@@ -45,7 +89,7 @@ Runs pin a revision ID and hash. Subsequent canvas edits cannot change an existi
 ## RLS contract
 
 - Enable and force RLS on every user-visible tenant table.
-- Authenticated policies derive actor identity from the validated Supabase JWT and require active workspace membership.
+- Authenticated policies derive actor identity from the validated Supabase JWT and require active workspace membership or an explicit owner-issued studio grant intersected with active studio membership and the requested brand action. Existing execution, media and billing policies retain their workspace permissions; portfolio grants do not implicitly extend them.
 - Reads outside membership return no row; mutations additionally enforce allowed role/action and immutable-column restrictions.
 - Users cannot insert or mutate ledger entries, provider jobs, audit events, outbox events, model prices, or machine-owned state directly.
 - Security-definer functions are exceptional, schema-qualified, use a fixed safe `search_path`, validate the actor and workspace inside the transaction, expose only necessary arguments, and revoke public execution.
@@ -85,5 +129,85 @@ Any failure rolls back every row. Duplicate idempotency keys with the same input
 
 - Migrations are forward-only in production with a tested restore/repair path; destructive changes use expand/backfill/contract phases.
 - Staging runs the exact production migration sequence against representative data before production approval.
-- Deleting a workspace revokes access immediately, schedules policy-compliant artifact/data erasure, and preserves only legally required accounting/audit evidence in a de-identified form.
+- Deleting a workspace revokes access immediately, schedules policy-compliant artifact/data erasure, and preserves only legally required accounting/audit evidence in a de-identified form. Collaboration sockets that are already open are the one bounded exception; see "Collaboration revocation window".
 - Backups, exports, logs, and telemetry follow the same tenant and retention boundary and never contain secrets or provider payloads unnecessarily.
+
+## Full-platform persistence additions
+
+Introduce additive tables or equivalent normalized entities for:
+
+- `studios`, `studio_memberships`, `workspace_access_grants`, `invitations`.
+- `brands`, `brand_locations`, `brand_versions`, `brand_sources`, `brand_assertions`, `brand_policy_versions`.
+- `offerings`, `audience_segments`, `offers`, `offer_versions`, `destination_checks`.
+- `asset_collections`, `asset_metadata`, `asset_rights`, `asset_derivatives`, `asset_usage` linked to the existing artifact store.
+- `campaigns`, `campaign_versions`, `content_items`, `content_revisions`, `content_scenes`, `channel_variants`.
+- `approval_policies`, `review_requests`, `review_decisions`, `tasks`.
+- `social_connections`, `channel_capability_snapshots`, `publication_intents`, `publication_attempts`, `publication_events`.
+- `creator_profiles`, `creator_observations`, `creator_lists`, `creator_relationships`, `creator_deliverables`.
+- `partnership_campaigns`, `partnership_participants`, `campaign_asset_grants`.
+- `conversations`, `messages`, `conversation_assignments`, `reply_intents`.
+- `metric_observations`, `metric_definitions`, `conversion_events`, `attribution_links`, `report_definitions`.
+
+These names are proposals, not generated schema. Final migrations should reuse existing artifact, revision, job, audit, and ledger records where their meaning matches. Do not duplicate durable execution or financial authority merely to match this list.
+
+### Critical invariants
+
+1. Every business row carries or resolves its owning workspace and applicable brand. Composite foreign keys prevent attaching another tenant's record.
+2. Database RLS remains enforced. Adding member roles requires replacing owner-only assumptions deliberately, not relaxing authorization globally.
+3. An approved brand/content version is immutable. New edits produce a new version and approval consequences.
+4. Publication references the exact approved channel variant, selected account, rights version, and schedule policy.
+5. Background jobs carry a scoped actor and recheck current authority before an external effect. Revoked access must not remain valid because an old job was queued.
+6. Text search, embeddings, caches, metrics, and exported files obey the same tenant/resource permissions as the primary data.
+7. Partner sharing is selected, purpose-limited, time-bounded, and auditable. Revocation stops future use but does not promise recall of public posts.
+8. Money uses the existing integer accounting model. No agent may invent a balance, price, or successful charge.
+9. Original media remains private. External platforms receive only the specific approved deliverable through an appropriate bounded transfer mechanism.
+10. External submission ambiguity is explicit. Reconcile before retrying.
+
+## Platform migration and compatibility
+
+W1 saved onboarding uses `brand_onboarding_drafts` with a composite workspace/brand foreign key,
+versioned operator input and private-by-default reads. It is separate from approved brand versions.
+`studio_invitations` binds a normalized recipient, issuing owner membership, role, expiry and audited
+state. Both tables force RLS and deny direct client writes; shared authenticated commands perform
+locked permission checks before mutation or idempotent replay. Studio/member revocation and draft
+saves share the existing portfolio lock order. Invitation acceptance checks the current verified
+Supabase email while locking the user and studio; creation alone grants no access. Settings edit
+existing workspace/brand identities and do not create a second permissions or money authority.
+
+W2.1 brand knowledge persistence is additive. `brand_source_jobs` is the durable capture job with a
+lease/deadline so an interrupted `capturing` row becomes `queued` or `failed` rather than stuck.
+`brand_sources` are immutable evidence rows. Website and document HTTPS/R2 provenance is written only
+by `record_brand_source_capture`, a service_role machine RPC that rechecks
+`app_private.platform_can_for(original_actor, workspace, brand, 'brand:write')` inside the
+transaction. Authenticated clients cannot execute that function or `fail_brand_source_job`.
+`start_website_capture` / `start_document_capture` / `start_manual_knowledge_draft` /
+`correct_knowledge_candidate` are user-scoped `platform_knowledge_command` operations. Manual
+operator input is its own `method=manual` source; corrections append a new candidate with
+`supersedes_id` and a new manual source. `brand_knowledge_drafts` stay unapproved. Direct table
+writes are denied. Reads use forced RLS through `platform_can`. Revoked actors do not receive stored
+idempotent capture results. Same content hash is unique per brand; the same bytes on another brand
+remain a separate private source. R2 objects under `brand-sources/{workspace}/{brand}/{source}` are
+unlisted unless a source row exists. `get_knowledge_draft` pages current candidates (max 50 per
+response) with `next_cursor`; captures admit at most 40 candidates each. Results are not silently
+discarded.
+
+W2.2–W2.4 persistence is additive on that capture layer. `brand_assertions` store typed offerings,
+locations, facts, offers, visual candidates and language with source, capture time, excerpt and
+method. Visual candidates have `reusable=false`. `record_brand_extraction` is a service_role machine
+RPC over already captured private bytes; authenticated clients cannot execute it. User commands are
+`extract_brand_knowledge`, `propose_brand_knowledge`, `correct_brand_assertion`,
+`ask_brand_knowledge_questions`, `answer_brand_knowledge_question`, `approve_brand_version` and
+`pin_brand_version`. `brand_proposals` label observed, inferred or unknown voice, audience and
+positioning; inferred personas are not owner-confirmed until `approve_brand_version`.
+`brand_versions` are immutable approved snapshots of the exact draft hash. A later correction
+creates a new draft row, not a mutated snapshot. `brand_version_pins` return that approved snapshot
+after drafts change. Approve refuses `EXPIRED_OFFER` and `CONTRADICTORY_KNOWLEDGE`. That guard is not
+W2.5 change detection, expiry lifecycle or catalog import. Direct writes stay denied. Forced RLS
+still uses `platform_can`. Forged parent IDs and revoked grants resolve `NOT_FOUND` or `FORBIDDEN`.
+
+- Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
+- Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
+- Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.
+- Use expand/backfill/validate/switch/contract migrations. Keep application rollback compatible with the additive schema.
+- Reconcile any existing external schedules during connector import. Read-only discovery precedes adoption; importing a schedule must not recreate its post.
+- Preserve cleanroom architecture and all unrelated work. The broader product scope does not justify reviving the discarded legacy application.

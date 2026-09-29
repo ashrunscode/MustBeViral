@@ -1,0 +1,98 @@
+{
+  "brief_id": "GB-02",
+  "outcome": "failed",
+  "workspace_id": "a858efb0-6bac-49a1-a747-74d91205f7a6",
+  "project_id": "ee17f398-8d8a-5b74-a49b-c58222a43b03",
+  "canvas_id": "f1428db4-e32e-4b2c-9976-804b82f5e275",
+  "revision_id": "e82ab46c-f963-43f6-870f-e59d440fb781",
+  "revision_hash": "d811c0518691f58ce168ab35f6004ae46283538fba09f7afad5daf1364d897ec",
+  "quote": {
+    "quote_id": "ad4de191-99fd-42fc-a260-64a833196430",
+    "quoted_micros": "4550000",
+    "expires_at": "2026-08-11T12:29:09.983568+00:00"
+  },
+  "run": {
+    "run_id": "103e7b53-fb8a-4364-b6ea-222eb5193528",
+    "reservation_id": "485cb40a-2b91-4cbe-bf3b-bc9d11d2f307",
+    "status": "partial_succeeded",
+    "confirmed_at": "2026-08-11T12:14:10.848859+00:00",
+    "terminal_at": "2026-08-11T12:16:16.228842+00:00",
+    "time_to_terminal_ms": 125380
+  },
+  "money": {
+    "reserved_micros": "4550000",
+    "captured_micros": "450000",
+    "released_micros": "4100000",
+    "refunded_micros": "0",
+    "residual_micros": "0",
+    "capture_ledger_micros": "450000",
+    "catalog_landed_cost_micros": "450000",
+    "external_provider_cost_micros": null,
+    "external_provider_cost_observability": "not_observable"
+  },
+  "providers": {
+    "jobs": 6,
+    "unique_attempts": 6,
+    "duplicate_attempts": 0,
+    "all_terminal_succeeded": false,
+    "routes": [
+      {
+        "provider": "openrouter",
+        "provider_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
+        "route_id": "openrouter/chat-completions/copy",
+        "attempts": 3,
+        "captured_micros": "450000"
+      },
+      {
+        "provider": "fal",
+        "provider_model_id": "fal-ai/flux-2-pro",
+        "route_id": "fal/flux-2-pro/masters",
+        "attempts": 3,
+        "captured_micros": "0"
+      }
+    ]
+  },
+  "artifacts": {
+    "customer_reads": 4,
+    "approved_outputs": 3,
+    "exports": 1,
+    "all_available": true,
+    "all_private_exact_key": true,
+    "all_content_addressed": true,
+    "export_content_hash": "c246b1ec2386089ef758fd587948382d04706b1561303a9566d95bf0b6de1e67",
+    "export_byte_size": 9443
+  },
+  "approval": {
+    "approved": 3,
+    "replayed": 3
+  },
+  "export": {
+    "deterministic": true,
+    "first_content_hash": "c246b1ec2386089ef758fd587948382d04706b1561303a9566d95bf0b6de1e67",
+    "second_content_hash": "c246b1ec2386089ef758fd587948382d04706b1561303a9566d95bf0b6de1e67"
+  },
+  "receipt": {
+    "customer_path_read": true,
+    "ledger_capture_rows": 3,
+    "ledger_artifact_links_complete": true,
+    "lineage_rows": 3,
+    "export_member_rows": 3,
+    "provider_model_cost_complete": true
+  },
+  "cap_observation": {
+    "observed_at": "2026-08-11T12:14:08.452375+00:00",
+    "utc_day_start": "2026-08-11T00:00:00+00:00",
+    "global_daily_cap_micros": "100000000",
+    "global_exposure_micros": "9100000",
+    "global_remaining_micros": "90900000",
+    "reservation_count": 2,
+    "unsettled_reservation_count": 0,
+    "status_counts": {
+      "captured": 2
+    }
+  },
+  "failure": {
+    "code": "PROVIDER_RUN_PARTIAL_SUCCEEDED",
+    "message": "All three OpenRouter copy jobs succeeded and captured 450000 micros; all three fal FLUX.2 master jobs reached failed with no normalized provider reason, so ten descendants were canceled or skipped and 4100000 micros were released."
+  }
+}

@@ -1,0 +1,176 @@
+schema_version: 1
+id: WP-PLATFORM-W2-001
+spec_revision: 1
+title: Bounded website and document sourcing with reviewable knowledge drafts
+phase: P4
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective:
+  Implement W2.1 sourcing plus provenance-backed unapproved brand knowledge drafts so an operator can
+  capture a website or document for WashBodega and UnPile, inspect where each finding came from, and
+  correct a reviewable draft without treating extraction as approved knowledge. Preserve W1 studio,
+  brand, invitation and billing contracts. No outreach, provider runs, charging or Stripe mutation.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - api-mcp-cli
+  - execution-providers-billing
+  - experience-contract
+  - quality-gates
+  - roadmap
+  - local-env-secrets
+  - adr-0007-full-platform
+required_skills:
+  - build-mustbeviral
+  - data-architect
+  - auth-fortress
+  - api-and-interface-design
+  - superdesign
+  - frontend-master
+  - quality-check
+depends_on:
+  - WP-PLATFORM-W1-002
+scope:
+  allowed_paths:
+    - apps/web/**
+    - apps/core/**
+    - apps/cli/**
+    - apps/mcp/**
+    - packages/contracts/**
+    - packages/domain/**
+    - packages/db/**
+    - packages/config/**
+    - packages/ui/**
+    - supabase/**
+    - governance/**
+    - docs/**
+    - .superdesign/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+  forbidden_paths:
+    - .github/workflows/**
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - api-mcp-cli
+    - execution-providers-billing
+    - experience-contract
+    - quality-gates
+    - roadmap
+    - local-env-secrets
+deliverables:
+  - >
+    Add bounded website and document ingestion with safe URL handling, private-network and unsafe
+    redirect denial, timeouts, duplicate capture detection, malformed-file rejection and
+    prompt-injection isolation. Treat fetched content as untrusted evidence.
+  - >
+    Persist source capture and extraction provenance for every factual candidate, including source
+    reference, capture time, excerpt, method and tenant/brand identity. Unknowns stay unknown. Images
+    found on a website do not become reusable campaign assets.
+  - >
+    Produce operator-reviewable, unapproved brand knowledge drafts on existing W1 brand records.
+    Manual correction and businesses without a usable website remain first-class. Do not auto-approve
+    knowledge or claim W2.2 representative-site completeness, W2.3 voice proposals or W2.4 approved
+    brand versions.
+  - >
+    Preserve W1 resource and permission contracts. No new implicit execution, media, billing,
+    publishing or invitation-mail authority. Integer money and charging kill switches stay unchanged.
+  - >
+    Prepare WP-PLATFORM-W2-002 for representative extraction quality, voice/audience/positioning
+    proposals and owner-approved brand versions.
+public_interfaces:
+  - >
+    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections.
+    Preserve W1 identity, setup, presentation and billing operations.
+  - >
+    Additive source/provenance/knowledge-draft persistence with explicit ownership, generated
+    database types and application rollback to the prior schema-compatible version.
+steps:
+  - id: w2a-001-source-ingestion-contracts
+    title: Implement safe website/document capture contracts and tenant-safe persistence.
+    status: pending
+  - id: w2a-002-extraction-provenance
+    title: Record source provenance for captured evidence without approving brand knowledge.
+    status: pending
+  - id: w2a-003-reviewable-knowledge-drafts
+    title: Deliver correctable unapproved knowledge drafts on existing WashBodega and UnPile brands.
+    status: pending
+  - id: w2a-004-journeys-and-successor
+    title: Verify two-brand sourcing journeys and prepare WP-PLATFORM-W2-002.
+    status: pending
+acceptance:
+  automated:
+    - id: safe-source-capture
+      criterion:
+        Synthetic WashBodega and UnPile website/document captures persist with bounded jobs.
+        Private-network destinations, unsafe redirects, timeouts, duplicates, malformed files and
+        prompt-injection payloads cannot change permissions, reveal other tenants or create approved
+        knowledge.
+      status: pending
+      evidence: []
+    - id: provenance-preserving-drafts
+      criterion:
+        Every factual candidate retains source reference, capture time, excerpt and method. Unknowns
+        remain unlabeled as facts. Manual correction survives reload. A brand without a website can
+        reach the same unapproved draft state.
+      status: pending
+      evidence: []
+    - id: tenant-safe-knowledge-reads
+      criterion:
+        Knowledge drafts and source captures resolve only permitted W1 identities. Revoked grants,
+        forged child IDs and stale responses cannot display another brand's captured evidence.
+      status: pending
+      evidence: []
+    - id: no-approval-or-spend
+      criterion:
+        Extraction never marks brand knowledge approved, never sends outreach, never enables charging
+        and never starts a provider run. Desktop/mobile review of captured evidence stays on the
+        approved studio direction.
+      status: pending
+      evidence: []
+  manual: []
+quality_gates:
+  - id: database
+    command: pnpm supabase:test
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: repository
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy:
+    Revert application changes while retaining additive source and knowledge-draft tables. Confirm
+    W1 studio, brand, invitation, mapping and billing commands still work. Do not delete tenant data,
+    weaken RLS, auto-approve knowledge or enable checkout to simulate recovery.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: read-only
+  destructive_remote_actions: false
+handoff:
+  current_step: w2a-001-source-ingestion-contracts
+  next_action:
+    After W1-002 completion, run preflight and implement bounded website/document capture contracts
+    with tenant-safe persistence and private-network denial.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: WP-PLATFORM-W2-002
+  evidence_paths: []
+  completed_at: null

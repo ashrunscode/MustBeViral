@@ -1,0 +1,43 @@
+schema_version: 1
+packet_id: WP-D0-001
+initial_draft:
+  name: Precision Studio Initial
+  rendered_artifact: governance/tests/design-direction/fixtures/files/initial-draft-render.fixture
+  desktop_capture: governance/tests/design-direction/fixtures/files/initial-draft-desktop.fixture
+  shared_content_id: representative-canvas-v1
+branches:
+  - name: Calm Density
+    focus: calm-density
+    rendered_artifact: governance/tests/design-direction/fixtures/files/calm-density-render.fixture
+    desktop_capture: governance/tests/design-direction/fixtures/files/calm-density-desktop.fixture
+    shared_content_id: representative-canvas-v1
+  - name: Canvas Legibility
+    focus: canvas-legibility
+    rendered_artifact: governance/tests/design-direction/fixtures/files/canvas-legibility-render.fixture
+    desktop_capture: governance/tests/design-direction/fixtures/files/canvas-legibility-desktop.fixture
+    shared_content_id: representative-canvas-v1
+  - name: Review Approval Confidence
+    focus: review-approval-confidence
+    rendered_artifact: governance/tests/design-direction/fixtures/files/review-approval-render.fixture
+    desktop_capture: governance/tests/design-direction/fixtures/files/review-approval-desktop.fixture
+    shared_content_id: representative-canvas-v1
+review:
+  findings:
+    - dimension: accessibility
+      status: pass
+      note: Status cues combine text and shape in the representative content.
+    - dimension: density
+      status: noted
+      note: Each branch preserves the same tools and output-review information.
+    - dimension: legibility
+      status: pass
+      note: Canvas labels and review evidence remain readable at desktop size.
+    - dimension: responsive
+      status: noted
+      note: Desktop direction is named and ready for later tablet and mobile review.
+approval:
+  state: user_selected
+  selected_branch: Canvas Legibility
+  selected_by: fixture-user
+  selected_at: 2026-07-18T12:00:00Z
+  selection_source: explicit_user_statement

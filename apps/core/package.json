@@ -6,15 +6,25 @@
   "scripts": {
     "dev": "wrangler dev",
     "build": "wrangler deploy --dry-run --env staging --outdir dist --x-provision=false --x-auto-create=false",
+    "canary:single-image": "tsx tools/single-image-canary.ts",
+    "launch-pack:harness": "tsx tools/launch-pack-harness.ts",
+    "backpressure:harness": "tsx tools/p3-backpressure-harness.ts",
+    "hyperdrive:benchmark": "tsx tools/p3-hyperdrive-benchmark-harness.ts",
+    "executor:isolation": "tsx tools/p3-executor-isolation-harness.ts",
+    "mcp:parity:staging": "tsx tools/mcp-parity-staging.ts --staging",
+    "openrouter:blind-eval": "tsx tools/openrouter-blind-eval.ts",
+    "self-session:provision": "tsx tools/self-session-kit.ts",
     "lint": "eslint . --max-warnings 0",
-    "types:generate": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings",
-    "types:check": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --check",
+    "types:generate": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --env-file .dev.vars.example",
+    "types:check": "wrangler types worker-configuration.d.ts --env-interface PlatformBindings --env-file .dev.vars.example --check",
     "typecheck": "pnpm types:check && tsc --noEmit && tsc -p test/tsconfig.json --noEmit && tsc -p tsconfig.tools.json --noEmit",
     "test": "vitest run --config vitest.config.ts test/unit",
     "test:integration": "vitest run --config vitest.config.ts test/integration"
   },
   "dependencies": {
+    "@mustbeviral/billing": "workspace:*",
     "@mustbeviral/contracts": "workspace:*",
+    "@mustbeviral/telemetry": "workspace:*",
     "hono": "4.12.29"
   },
   "devDependencies": {

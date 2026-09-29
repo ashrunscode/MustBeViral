@@ -1,0 +1,23 @@
+{
+  "environment": "local connected web3111 Core8789 MustBeViral Supabase54321",
+  "retries": 0,
+  "started": "2026-09-14T10:36:58.0117101-05:00",
+  "node": "v24.18.0",
+  "ended": "2026-09-14T10:38:33.2940327-05:00",
+  "command": "corepack pnpm exec playwright test --config playwright.config.ts apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --project=mobile-chromium --reporter=line",
+  "exit": 0,
+  "pnpm": "11.12.0",
+  "passed": 8,
+  "skipped": 0,
+  "git_base": "3ca1620c37796f611dc55ecad329a4843b998cd5",
+  "source_state": "Uncommitted task changes; exact relevant source hashes below. Commit identity is recorded in the final handoff.",
+  "source_sha256": {
+    "apps/web/src/features/platform/studio-team.tsx": "5b35d34589e817b5e58e017dffcab2fd59b0b12b63e5542fe390fc1facecf55d",
+    "apps/web/src/features/platform/platform-client.ts": "c4c46bd378d3247ef1d4b1bc40866046978a8189bf168ff52eeb65703936e2e3",
+    "packages/db/scripts/platform-journey-fixtures.ts": "1c18c1f3344ba7c246ed7da6922326a14274558cdcf890d590b099f1b545faad",
+    "apps/web/e2e/platform-connected.spec.ts": "1ca32d5aaa26420e17d4976ea0d98a06dc38b2f2443917336a5329ac4d6d5c1a",
+    "apps/web/src/features/platform/studio-portfolio.tsx": "23bb6c4b4cc9a6c131151e5dac1863f099e36c6c7db8eb41bbfb50c20a80949e",
+    "apps/web/src/features/platform/workspace-billing.tsx": "c0c9648abc265fb2fd09b310dbeb81fdd36e9c88a79f6a2fe558a783c9f6f6b8"
+  },
+  "log_sha256": "2f3d8310692d5310701a1848d8637c9716042309103fd91694c123a848aaaabe"
+}

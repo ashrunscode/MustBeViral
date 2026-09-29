@@ -1,0 +1,42 @@
+schema_version: 1
+packet_id: WP-P3-008
+spec_revision: 2
+phase: P3
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-04T00:19:01.495Z
+successor_packet_id: WP-P3-009
+predecessor_head: 94bb1068ab8cb803aad13f9505642553c785c09d
+closed_packet_path: governance/evidence/WP-P3-008/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+  - governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
+  - governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
+  - governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
+  - governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
+  - governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
+evidence_entries:
+  - path: governance/evidence/WP-P3-008/authenticated-rls-verification-2026-09-03.md
+    sha256: 39271d6fcfd29d57ff369ea0de342ab36cbf17a11b2f0cc6650eb9ce740910c7
+    git_blob_oid: 2d9e346be024f2b148fcd3749600668ced7cd469
+  - path: governance/evidence/WP-P3-008/before-after-inventory-2026-09-02.md
+    sha256: bc6cb6e16f80b72889b00ccea34b5770c802556fd8998cdb3cd75434564b6d64
+    git_blob_oid: 98e131b1fa172aceef9b4d20314d5d5f65f97a21
+  - path: governance/evidence/WP-P3-008/production-binding-and-smoke-2026-09-02.md
+    sha256: e069414f37f973a29b32f84c1ad3ace8ef053b94044b63c14f711402762c4e94
+    git_blob_oid: 8d773a5f03e3d36c2a871a1203ddf06f9fb19324
+  - path: governance/evidence/WP-P3-008/rollback-and-handoff-2026-09-02.md
+    sha256: 88987ee77a30ad5fa7090f085ca6e6e786ad3a17a00e5761f2121a002f982d3c
+    git_blob_oid: d27401bad52007ebe325e29d4948872d42ad9208
+  - path: governance/evidence/WP-P3-008/smtp-delivery-verification-2026-09-03.md
+    sha256: e61ba92119165dbf97651339df4e838a12f7452bc70283416993fc857633c784
+    git_blob_oid: f478ced1b48f75074b0e88647e41c321f7e24e18
+  - path: governance/evidence/WP-P3-008/successor-WP-P3-009.yaml
+    sha256: 4e2b243e554781aedf1747c34125a56a31cd51dc412b0b1027b3cb389fb86a76
+    git_blob_oid: 35275b8dc370fc6f2b0511992748eef446268e1b
+completed_step_ids:
+  - p3h-001-config-and-secret-preflight
+  - p3h-002-unrouted-core-deploy
+  - p3h-003-isolated-web-deploy
+  - p3h-004-private-smoke-and-cutover-gate
+closed_packet_sha256: 25f23b2daa18e932ad8616da5a05aa656893513b7445e5bd2b522795a0fca475

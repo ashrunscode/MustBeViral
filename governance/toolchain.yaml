@@ -17,7 +17,6 @@ tools:
   wrangler: 4.110.0
   vercel: 55.0.0
   supabase: 2.109.1
-  superdesign: 0.4.0
   typescript: 5.9.3
   vitest: 4.1.10
   playwright: 1.61.1

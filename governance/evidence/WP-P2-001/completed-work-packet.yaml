@@ -1,0 +1,191 @@
+schema_version: 1
+id: WP-P2-001
+spec_revision: 1
+title: Multiplayer collaboration and shared review
+phase: P2
+status: complete
+priority: high
+branch: codex/viralgraph-cleanroom
+objective: Add presence, comments, text collaboration, edit leases, and checkpointing through one
+  dedicated collaboration Worker and one coordination object per canvas, while Postgres remains the
+  only authority for permissions, revisions, runs, and money.
+authority_refs:
+  - product-contract
+  - release-scope
+  - experience-contract
+  - canvas-screen-states
+  - system-overview
+  - data-auth-tenancy
+  - adr-0002-platform-boundaries
+  - adr-0004-immutable-graph-revisions
+  - roadmap
+  - quality-gates
+  - codex-finish-mega-prompt
+required_skills:
+  - durable-objects
+  - realtime-sync
+  - cloudflare
+  - wrangler
+  - workers-best-practices
+  - data-architect
+  - frontend-master
+  - test-mastery
+depends_on:
+  - WP-P1B-001
+scope:
+  allowed_paths:
+    - apps/**
+    - packages/**
+    - supabase/**
+    - .superdesign/**
+    - governance/evidence/WP-P2-001/**
+    - governance/evidence/WP-P0-001/successor-WP-P3-001.yaml
+    - governance/evidence/WP-P1B-001/transition-receipt.yaml
+    - governance/evidence/WP-P1B-001/completed-work-packet.yaml
+    - governance/tests/**
+    - governance/schemas/**
+    - governance/scripts/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - playwright.config.ts
+    - wrangler.jsonc
+    - apps/core/wrangler.jsonc
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - experience-contract
+    - canvas-screen-states
+    - system-overview
+    - data-auth-tenancy
+    - adr-0002-platform-boundaries
+    - adr-0004-immutable-graph-revisions
+    - roadmap
+    - quality-gates
+    - codex-finish-mega-prompt
+deliverables:
+  - One collaboration Worker and one coordination object per canvas for presence, comments, text
+    drafts, and edit leases.
+  - Recoverable collaboration drafts that checkpoint into immutable Postgres revisions and never
+    become a second authority for money, permissions, or graph history.
+  - Tablet comment/review support within the accepted responsive contract; no mobile graph authoring.
+public_interfaces:
+  - Collaboration Worker realtime surface plus existing REST/MCP/CLI adapters remaining thin over
+    the same command layer. Collaboration drafts are not public API authority.
+steps:
+  - id: p2-001-collaboration-worker
+    title:
+      Add the dedicated collaboration Worker and one coordination object per canvas without moving
+      revision, permission, or money authority out of Postgres.
+    status: completed
+  - id: p2-002-presence-and-comments
+    title: Implement presence and comments on review and canvas surfaces with Lightfield states and
+      accessibility.
+    status: completed
+  - id: p2-003-text-sync-and-leases
+    title: Implement text collaboration and edit leases for expensive node configuration with
+      deterministic conflict recovery.
+    status: completed
+  - id: p2-004-revision-checkpoint-integrity
+    title:
+      Prove collaboration drafts checkpoint into new immutable Postgres revisions and never mutate
+      history or bypass expected_revision_id.
+    status: completed
+  - id: p2-005-phase-exit-handoff
+    title: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
+    status: completed
+acceptance:
+  automated:
+    - id: postgres-remains-authority
+      criterion:
+        Tests prove collaboration state cannot mutate ledger, membership, or canvas head except
+        through the existing revision/command barriers.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P2-001/postgres-remains-authority.yaml
+    - id: lease-and-checkpoint
+      criterion:
+        Tests prove edit leases expire, conflicts are recoverable, and checkpoints create new
+        immutable revisions rather than rewriting history.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P2-001/revision-checkpoint-integrity.yaml
+  manual:
+    - id: no-queue-or-agency-expansion
+      criterion:
+        This packet did not add queues, a separate executor, agency portals, or connected social
+        publishing.
+      status: passed
+      evidence:
+        - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
+        - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
+  - id: repository-verification
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
+rollback:
+  strategy: Revert collaboration Worker and client changes through Git. Disable the collaboration
+    Worker route rather than destroying namespaces unless exact IDs and rollback evidence are
+    authorized.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: approval-required
+  destructive_remote_actions: false
+handoff:
+  current_step: p2-005-phase-exit-handoff
+  next_action: Prove P2 implementable acceptance and hand off; do not start P3 queues or P4 agency work.
+  blockers: []
+  changed_paths:
+    - packages/collaboration/src/checkpoint.ts
+    - packages/collaboration/src/checkpoint.test.ts
+    - packages/collaboration/src/protocol.ts
+    - packages/collaboration/src/protocol.test.ts
+    - packages/collaboration/src/client.ts
+    - packages/collaboration/src/in-memory-session.ts
+    - packages/collaboration/src/in-memory-session.test.ts
+    - packages/collaboration/src/index.ts
+    - apps/collaboration/src/canvas-coordination.ts
+    - apps/collaboration/test/canvas-coordination.test.ts
+    - apps/web/src/features/collaboration/checkpoint-canvas-drafts.ts
+    - apps/web/src/features/collaboration/checkpoint-canvas-drafts.test.ts
+    - apps/web/src/features/collaboration/use-collaboration-session.ts
+    - apps/web/src/features/canvas/canvas-port.ts
+    - apps/web/app/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx
+    - apps/web/src/features/canvas/canvas-flow.test.tsx
+    - packages/contracts/src/handlers.test.ts
+    - supabase/tests/database/00034_p2_collaboration_checkpoint_revision.test.sql
+    - governance/evidence/WP-P2-001/**
+  last_green_checks:
+    - corepack pnpm agent:verify
+completion:
+  successor_packet_id: WP-P3-001
+  evidence_paths:
+    - governance/evidence/WP-P2-001/p2-implementable-acceptance-2026-08-31.md
+    - governance/evidence/WP-P2-001/revision-checkpoint-integrity.yaml
+    - governance/evidence/WP-P2-001/postgres-remains-authority.yaml
+    - governance/evidence/WP-P2-001/no-queue-or-agency-expansion.yaml
+  completed_at: 2026-08-31T16:13:59.327Z

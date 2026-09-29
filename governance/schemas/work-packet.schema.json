@@ -36,7 +36,7 @@
     "phase": { "enum": ["R0", "D0", "P0", "P1a", "P1b", "P2", "P3", "P4"] },
     "status": { "enum": ["ready", "in_progress", "blocked", "complete"] },
     "priority": { "enum": ["critical", "high", "medium", "low"] },
-    "branch": { "type": "string", "pattern": "^codex/[a-z0-9][a-z0-9._/-]*$" },
+    "branch": { "type": "string", "pattern": "^(?:main|codex/[a-z0-9][a-z0-9._/-]*)$" },
     "objective": { "type": "string", "minLength": 1 },
     "authority_refs": {
       "type": "array",

@@ -1,0 +1,290 @@
+# WP-P0-001 — fail-closed environment-provisioning evidence
+
+Date: 2026-07-19. Packet step: `p0-000-environment-provisioning`.
+
+This checklist records identifiers, readiness states, provenance, owners, and value-free
+verification commands only. It does not prove that any target has been provisioned and does not
+contain credential values, connection strings, or key fragments.
+
+Status meanings:
+
+- `MISSING (operator input)` means repository evidence does not prove the required external input
+  or resource. The dependent capability remains disabled.
+- `PRESENT-VIA-OPERATOR-CLI` means repository history records an established operator CLI
+  authentication path. It does not prove that a target resource exists or authorize mutations
+  outside this packet.
+- `CLOSED` means an enable gate is unresolved or unapproved; the dependent route stays disabled.
+- `OPEN` means the route's price and retention gates are evidence-cleared for the stated scope.
+
+Authority basis:
+
+- `docs/operations/LOCAL_ENV_AND_SECRETS.md` requires environment isolation, operator-owned
+  credential gates, ignored local secret storage, typed fail-closed validation, least privilege,
+  and no secret material in Git or evidence.
+- `docs/operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md` requires preview-to-staging promotion,
+  compatible deployment order, target/version records, staging smoke evidence, and verified
+  rollback before production.
+- `docs/architecture/SYSTEM_OVERVIEW.md` assigns relational truth to Supabase, rendering and
+  previews to Vercel, provider/webhook execution to Core, and canonical private media bytes to R2.
+- `docs/research/MODEL_CATALOG_EVIDENCE.md` defines the launch routes and their price and
+  retention enable gates.
+- `docs/research/RLS_HYPERDRIVE_BENCHMARK_PLAN.md` keeps Data API/RPC as the baseline and requires
+  a dedicated non-owner, non-superuser, non-service, non-`BYPASSRLS` login role before a pooled
+  candidate can be evaluated.
+
+## 1. TARGETS
+
+| P0 target                             | Intended identifier                                                                                                                         | Readiness                  | Requirements and fail-closed evidence                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Provenance                                                                                                                                | Owner                  |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| Staging Supabase project              | Logical name `mustbeviral-staging`; actual project ID and confirmed region are `MISSING (operator input)`                                   | `MISSING (operator input)` | Operator creates and names the isolated project and records its actual ID and region. The target must support CLI-applied forward-only migrations, forced RLS on tenant tables, and a dedicated pooled login role that is not an owner, superuser, service role, or `BYPASSRLS`. Sanitized catalog checks must prove the role owns no application object and `rolbypassrls` is false. Creating the role does not enable Hyperdrive; Data API/RPC remains the baseline until G1–G6 pass.        | `SYSTEM_OVERVIEW`; `LOCAL_ENV_AND_SECRETS`; `RLS_HYPERDRIVE_BENCHMARK_PLAN`                                                               | Data/platform operator |
+| Vercel project for `apps/web`         | Project name and team are `MISSING (operator input)`                                                                                        | `MISSING (operator input)` | Operator creates or links one isolated project and records project name, team, and deployment IDs. Preview and staging environments must use non-production data, environment-scoped values, and disabled or strictly capped providers. Promotion requires staging smoke and rollback evidence.                                                                                                                                                                                                | `SYSTEM_OVERVIEW`; `LOCAL_ENV_AND_SECRETS`; `DEPLOY_ROLLBACK_AND_INCIDENTS`                                                               | Web platform operator  |
+| Cloudflare Core Worker staging target | Account `d2897bdebfa128919bd89b265e6a712e`; proposed Worker name `mustbeviral-core-staging`; actual Worker ID is `MISSING (operator input)` | `MISSING (operator input)` | Deploy later through the repository-pinned Wrangler from `apps/core`. The account is shared with unrelated live businesses: every mutation must be scoped to newly created `mustbeviral-core-*` resources only. The current scaffold declares `mustbeviral-v2-staging-core`, so a later implementation commit must reconcile Wrangler configuration to the operator-created target before any deploy. Record deployed version, bindings, smoke evidence, and last-known-good rollback version. | Operator-supplied account boundary; `SYSTEM_OVERVIEW`; `DEPLOY_ROLLBACK_AND_INCIDENTS`; current `apps/core/wrangler.jsonc`                | Edge platform operator |
+| Private R2 artifact bucket            | Proposed bucket `mustbeviral-core-staging-artifacts`; actual bucket confirmation is `MISSING (operator input)`                              | `MISSING (operator input)` | Operator creates only the proposed new bucket in the scoped account. Public access, public development URLs, and bucket listing for product clients must remain disabled. Record the exact bucket name, Core binding, privacy proof, recovery/inventory procedure, and rollback dependency. The current scaffold declares `mustbeviral-v2-staging-media`, so a later implementation commit must reconcile the binding without mutating unrelated resources.                                    | Operator-supplied target; `SYSTEM_OVERVIEW`; `LOCAL_ENV_AND_SECRETS`; `DEPLOY_ROLLBACK_AND_INCIDENTS`; current `apps/core/wrangler.jsonc` | Edge/storage operator  |
+
+No target row may become ready from a proposed name, local placeholder, configuration declaration,
+or successful CLI login alone. A later commit must attach sanitized provider receipts and
+value-free verification evidence for the actual isolated resource.
+
+### AMENDMENT 2026-07-29 — §1 readiness states are STALE
+
+The four rows above still read `MISSING (operator input)`, but later evidence in this packet names
+live, exercised targets. Retained unedited for history; the operative state is:
+
+| P0 target                      | Actual identifier                                                           | Readiness                 | Proof                                                                                                                                                                    |
+| ------------------------------ | --------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Staging Supabase project       | `lqvigvzqumpwfjikcvws`                                                      | Provisioned and exercised | 22 migrations applied forward-only; 20/20 live quotes at 4,550,000 micros; RLS-scoped RPCs proven to refuse unauthenticated callers (`28000 UNAUTHENTICATED`)            |
+| Vercel project for `apps/web`  | `mustbeviral-web-staging` (team `team_A11dbY2xnTWzGL63IRBTWmLo`)            | Staging only              | `apps/web/.vercel/project.json`. **No production project exists**                                                                                                        |
+| Cloudflare Core Worker staging | `mustbeviral-v2-staging-core` in account `d2897bdebfa128919bd89b265e6a712e` | Deployed                  | Version `51f6acf0-f616-4590-b7ff-a73b455e009e`; cron `* * * * *` drives the provider outbox                                                                              |
+| Private R2 artifact bucket     | `mustbeviral-v2-staging-media`                                              | Provisioned, private      | One real generation copied server-side to private R2 with a verified content hash; no public bucket, no `r2.dev`, no custom domain; zero artifacts stored with a URL key |
+
+Two notes kept explicit rather than smoothed over. First, the operator-created names differ from the
+`mustbeviral-core-staging*` names §1 proposed; the deployed `mustbeviral-v2-*` names are the real
+ones and the reconciliation §1 anticipated is what actually happened. Second, none of this makes the
+**production** targets ready — production Supabase does not exist, the production Vercel project does
+not exist, and `apps/core/wrangler.jsonc` `env.production` is missing every Supabase variable and the
+cron trigger, so it would not function if deployed. Live production still serves the legacy v1 stack.
+
+## 2. CREDENTIALS
+
+All runtime credentials are external operator inputs. Local files named below are ignored
+developer-only storage; staging values belong only in the named provider secret store. A
+verification command may prove identity or secret-name presence, never reveal a value.
+
+| Credential or auth path                                                   | Readiness                                                                                                                                                                                                                                                                                           | Authorized storage location                                                                                                                                                               | Rotation owner               | Value-free verification                                                                                                                                     |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| fal API key for `flux-2-pro`, `flux-kontext-pro`, and `seedance-1.0-lite` | `PRESENT-VIA-OPERATOR-CLI` on staging Worker secret `FAL_KEY` and ignored local `apps/core/.dev.vars` (2026-07-27); `flux-2-pro` is enabled for one staging canary, while the other fal routes remain disabled behind their catalog gates                                                           | Local only: ignored `apps/core/.dev.vars`. Staging: Wrangler secret on `mustbeviral-v2-staging-core`. Never Vercel browser environment or Git.                                            | Provider operations owner    | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm name `FAL_KEY` only.                                              |
+| fal webhook signing secret                                                | `PRESENT-VIA-JWKS` (2026-07-27) — live fal uses public JWKS at `https://rest.fal.ai/.well-known/jwks.json` (no shareable HMAC secret). Core verifier accepts official `x-fal-webhook-*` headers via Ed25519 JWKS and keeps optional legacy HMAC only when `FAL_WEBHOOK_SECRET` is set for fixtures. | Staging Worker code path; no Wrangler secret required for live fal. Optional `FAL_WEBHOOK_SECRET` is fixture-only.                                                                        | Provider operations owner    | Unsigned `POST /v1/webhooks/fal` returns 401; JWKS endpoint reachable; unit tests cover JWKS + legacy HMAC.                                                 |
+| Moonshot API key for `kimi-k2.6`                                          | `PRESENT-VIA-OPERATOR-CLI` on staging Worker secret `MOONSHOT_API_KEY` and ignored local `apps/core/.dev.vars` (2026-07-27); retention/DPA gate remains `CLOSED` and the route stays disabled                                                                                                       | Local only: ignored `apps/core/.dev.vars`. Staging: Wrangler secret on `mustbeviral-v2-staging-core`. Never Vercel browser environment or Git.                                            | AI provider governance owner | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm name `MOONSHOT_API_KEY` only.                                     |
+| Supabase service-role key, staging                                        | `PRESENT-VIA-OPERATOR-CLI` (2026-07-27): staging Worker secrets `SUPABASE_SERVICE_ROLE_KEY` (legacy JWT) and `SUPABASE_SECRET_KEY` (`sb_secret_*`) installed from `supabase projects api-keys --reveal`; also written to ignored `apps/core/.dev.vars`                                              | Staging server-only: Wrangler secrets on `mustbeviral-v2-staging-core`. Local: ignored `apps/core/.dev.vars`. Prohibited from `apps/web`, browser bundles, and public Vercel environment. | Data/platform operator       | `pnpm exec wrangler secret list --config apps/core/wrangler.jsonc --env staging`; confirm names `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_SECRET_KEY` only. |
+| Supabase publishable key, preview and staging                             | `PRESENT` as public Worker var `SUPABASE_PUBLISHABLE_KEY` on staging Wrangler config and in ignored local Core `.dev.vars` (2026-07-27); web staging already used the same public publishable value                                                                                                 | Local web: ignored `apps/web/.env.local` as needed. Staging Worker: `apps/core/wrangler.jsonc` `env.staging.vars` (client-public by design). Never substitute a production-project value. | Data/platform operator       | Confirm `SUPABASE_PUBLISHABLE_KEY` in staging Wrangler vars and `pnpm exec vercel env ls` for web scopes.                                                   |
+| Vercel deploy authentication                                              | `PRESENT-VIA-OPERATOR-CLI` from established repository history; revalidation required before mutation                                                                                                                                                                                               | Operator CLI/browser credential store only. Do not copy deploy authentication into application runtime variables, Markdown, shell history, or Git.                                        | Web platform operator        | `pnpm exec vercel whoami`; record only the operator-approved identity/team result.                                                                          |
+| Cloudflare deploy authentication                                          | `PRESENT-VIA-OPERATOR-CLI` from established repository history; revalidation required before mutation                                                                                                                                                                                               | Operator Wrangler authentication store only. Do not copy deploy authentication into `.dev.vars`, Vercel, Markdown, shell history, or Git.                                                 | Edge platform operator       | `pnpm exec wrangler whoami`; verify the approved account identifier without printing auth material.                                                         |
+
+Credential rotation is staging-first: install the replacement through the provider secret store,
+verify dual-key overlap when supported, promote only after smoke evidence, and revoke the prior
+value. Missing or malformed runtime values must fail process-start validation. A missing credential
+must never be replaced with another account, an unrelated project, or a mock represented as real.
+
+## 3. WEBHOOK MATERIAL
+
+- Planned staging endpoint shape:
+  `POST https://api-staging.mustbeviral.com/webhooks/fal`.
+- The endpoint must authenticate the raw request bytes with the fal webhook signing material before
+  parsing or acting on the event. Missing or invalid signature evidence fails closed, performs no
+  run, artifact, or ledger transition, and emits only redacted diagnostics.
+- The verified provider event identity must be recorded under a durable unique key before
+  acknowledgement. Duplicate delivery or replay returns the existing idempotent result and cannot
+  duplicate provider submission, artifact acceptance, or money movement.
+- Provider events may append normalized evidence but cannot move terminal state backward. An
+  ambiguous or unverified event enters reconciliation rather than blind retry.
+- Webhook registration and signing material are `MISSING (operator input)`. Registration must occur
+  only after the isolated Worker target exists, TLS routing is verified, and the signing secret is
+  installed through Wrangler secret storage.
+
+## 4. PRICE + RETENTION ENABLE GATES
+
+Only `flux-2-pro` is enabled for real spend, and only for one staging canary. A catalog label,
+credential, or successful sandbox call cannot close an enable gate without accepted price and
+retention evidence.
+
+| Launch route                                             | Intended use                           | Live-page price confirmation                                                                                                                                                                                                                                                                           | Retention/DPA clearance                                                                                                                                        | Gate state | Real spend                                      |
+| -------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ----------------------------------------------- |
+| `flux-2-pro`                                             | Three master statics                   | **CONFIRMED 2026-07-26** — $0.03 first MP + $0.015/additional MP at `fal-ai/flux-2-pro`; the accepted pricing decision's SHA-256 is the seeded launch catalog `source_hash`                                                                                                                            | **CLEARED 2026-07-28, REDUCED-EXPOSURE** — one-hour unguessable delivery object, immediate private-R2 canonical copy, and no provider URL persisted or exposed | `OPEN`     | **ONE STAGING CANARY**                          |
+| `flux-kontext-pro`                                       | Nine adaptations/reframes              | `MISSING (operator input)` — record current official live-page price, source URL, retrieval time, billable unit, and exact pinned provider endpoint                                                                                                                                                    | Catalog fal retention rules remain binding; accepted output must be copied server-side to private R2                                                           | `CLOSED`   | `BLOCKED`                                       |
+| `seedance-1.0-lite` (route key; **provider = Pro Fast**) | Default 6–10 second 9:16 motion branch | **ENDPOINT REPOINTED 2026-07-28** — Lite is deprecated; driver + `model_routes.provider_model_id` now pin `fal-ai/bytedance/seedance/v1/pro/fast/image-to-video` at ~$0.022/s 720p ($1.00/1M video tokens; live fal page). Operator still records formal enable evidence before opening the spend gate | Catalog fal retention rules remain binding; accepted output must be copied server-side to private R2; do not call the retired Lite path                        | `CLOSED`   | `BLOCKED` (endpoint fixed; enable still closed) |
+| `kimi-k2.6`                                              | Planning and ad copy                   | `MISSING (operator input)` — resolve the official-price discrepancy and record the exact pinned model ID and current official price                                                                                                                                                                    | `MISSING (operator input)` — no-train retention/DPA clearance for client brand data is required                                                                | `CLOSED`   | `BLOCKED`                                       |
+
+The spend gate is open for the FLUX.2 [pro] master-static route only. FLUX Kontext [pro], Seedance
+motion (Pro Fast successor under the historical `seedance-1.0-lite` route key), and Moonshot Kimi
+K2.6 remain closed. Moonshot stays disabled pending exact official
+price/model evidence and accepted no-train retention/DPA clearance. Provider/model/price drift
+after enable disables new quotes until reviewed.
+
+### AMENDMENT 2026-07-29 — gate states above are SUPERSEDED
+
+**The table and paragraph above are the 2026-07-28 record and are retained unedited for history.
+They no longer describe the authorized state.** Operator ratified the wider spend scope on
+2026-07-29 after being shown that commit `9992209` had already opened these gates in code ahead of
+this evidence. That sequencing was wrong — the code led the authority instead of following it — and
+is recorded here rather than quietly corrected.
+
+| Launch route                                                            | Gate state | Real spend                           | Basis                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------- | ---------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `flux-2-pro` (masters)                                                  | `OPEN`     | Metered ladder, no longer one canary | Unchanged price/retention basis above; scope widened by operator 2026-07-29                                                                                                                                                                                                                |
+| `flux-kontext-pro` (adaptations)                                        | `OPEN`     | Metered ladder                       | Price $0.04 flat/image recorded in `pricing-decision.md` (hash-pinned as the catalog `source_hash`); fal catalog retention rules binding; reduced-exposure basis identical to `flux-2-pro`                                                                                                 |
+| `seedance-1.0-lite` route key → Pro Fast                                | `OPEN`     | Metered ladder                       | $1.00/1M video tokens ≈ $0.022/s at 720p 24fps, retrieved 2026-07-28, recorded in `pricing-decision.md`; endpoint pinned `fal-ai/bytedance/seedance/v1/pro/fast/image-to-video`                                                                                                            |
+| `openrouter/chat-completions/copy` → `qwen/qwen3-30b-a3b-instruct-2507` | `OPEN`     | Metered ladder                       | Retention enforced per request, not contracted: `zdr: true` + `data_collection: deny` + a jurisdiction allowlist proven to fail closed (HTTP 404, not silent fallback). Price confirmed against measured live `usage.cost`. Evidence: `openrouter-blind-eval/washbodega-trial/decision.md` |
+| `kimi-k2.6` (Moonshot)                                                  | `CLOSED`   | `BLOCKED`                            | Route retired by price catalog v2; superseded by the OpenRouter copy route above. Item 10 below is therefore moot rather than satisfied                                                                                                                                                    |
+
+**Metered ladder** bounds real spend for every route opened here: $0.04 (one Kontext probe) →
+$0.0004 (copy-only money-path proof) → $0.075 (master + adaptation + approval + export) → $0.67 (one
+full pack) → ~$13 (20 golden briefs). No rung may be climbed while a known money-path defect is open.
+
+**Residual gap, not closed by this amendment.** The Kontext $0.04 figure in `pricing-decision.md`
+carries no source URL and no retrieval timestamp — unlike the Seedance figure, which has both. fal's
+model pages were unreachable on 2026-07-29 (HTTP 429 behind a Vercel security checkpoint), so a live
+re-confirmation could not be obtained and has **not** been invented here. Recording the exact source
+URL and retrieval time for `flux-kontext-pro` remains an open operator input. The gate is open on the
+operator's ratification, not on a complete price record, and that distinction is deliberate.
+
+Provider/model/price drift after enable still disables new quotes until reviewed.
+
+### fal output-retention experiment (2026-07-28)
+
+One tiny object was uploaded for each lifecycle preference with account authentication. The returned
+`file_url` was then fetched both anonymously and with account-key authentication. Only HTTP status
+codes were recorded; no key values are present in this evidence.
+
+| `X-Fal-Object-Lifecycle-Preference`                                                  | Anonymous GET | Account-authenticated GET |
+| ------------------------------------------------------------------------------------ | ------------- | ------------------------- |
+| Header absent (control)                                                              | 200           | 200                       |
+| `{"expiration_duration_seconds":3600,"initial_acl":{"default":"hide","rules":[]}}`   | 404           | 404                       |
+| `{"expiration_duration_seconds":3600,"initial_acl":{"default":"forbid","rules":[]}}` | 403           | 403                       |
+| `{"expiration_duration_seconds":300}` (no `initial_acl`)                             | 200           | 200                       |
+
+A restrictive `initial_acl` is unusable for the paid ingest path because it also blocks our own
+account from downloading the output for canonical private-R2 storage. The resulting posture sends
+only `{"expiration_duration_seconds":3600}`: fal delivery objects are unguessable and short-lived,
+the canonical copy is private in R2, and no provider URL is persisted or exposed as a product
+artifact. The one-hour expiry preserves recovery time for webhook delay plus ingest failure,
+provider redelivery, and the five-minute stale-claim reclaim window. `x-fal-store-io` is deliberately
+deferred until its effect is re-tested after a full generation-to-private-R2 round trip is proven.
+
+This is a **REDUCED-EXPOSURE** posture, not a "never public" guarantee: during the expiry window,
+anyone holding the unguessable fal delivery URL can retrieve the object.
+
+### fal unrecognized-ACL experiment (second measured finding, 2026-07-28)
+
+fal silently ignored three `initial_acl` allow-rule shapes it did not recognize and left each
+uploaded object public. The results were identical to sending no ACL:
+
+| Unrecognized `initial_acl` allow-rule variant | Anonymous GET | Account-authenticated GET |
+| --------------------------------------------- | ------------- | ------------------------- |
+| Rule keyed by `user_id`                       | 200           | 200                       |
+| Rule keyed by `principal`                     | 200           | 200                       |
+| Rule with `user_id: "self"`                   | 200           | 200                       |
+
+This behavior fails open. An ACL setting cannot be trusted from configuration alone, so any future
+privacy claim about provider storage must be verified by a measured anonymous/authenticated probe,
+not by reading the configured rule shape. It does not change the evidence-backed lifecycle
+preference: send one-hour expiry with no `initial_acl`, copy immediately to private R2, and never
+persist or expose the provider URL.
+
+On this measured reduced-exposure basis, the operator opened the catalog and staging spend gates
+for the FLUX.2 [pro] master-static route only, for one approximately $0.03 image canary. FLUX
+Kontext [pro], Seedance 1.0 Lite, and Moonshot Kimi K2.6 remain closed.
+
+## 5. READINESS VERDICT
+
+**PARTIALLY READY as of 2026-07-28 — infrastructure targets are provisioned; staging provider and
+Supabase server credentials are installed; the FLUX.2 [pro] route is repository-enabled for one
+staging canary on the measured reduced-exposure basis.** The other three provider routes remain
+closed. Section 6 records infrastructure evidence; section 2 records credential name-presence.
+This configuration change does not itself prove a staging deployment or provider submission.
+
+Exact ordered operator-input list:
+
+1. Create and name the isolated staging Supabase project; record its actual project ID, confirmed
+   region, CLI migration capability, forced-RLS capability, and sanitized dedicated pooled-role
+   checks.
+2. ~~Supply the environment-scoped staging Supabase service-role and preview/staging publishable keys
+   through their authorized server-only and web-public stores.~~ **DONE 2026-07-27** — Worker
+   secrets `SUPABASE_SERVICE_ROLE_KEY` + `SUPABASE_SECRET_KEY` via Supabase CLI; publishable is a
+   public staging Wrangler var. **Verified 2026-07-27 against staging REST:** only the modern
+   `SUPABASE_SECRET_KEY` (`sb_secret_*`) authorizes the machine-only
+   `claim_provider_webhook_event` RPC (HTTP 200); the legacy service-role JWT is refused with HTTP
+   401 / SQLSTATE 42501 `permission denied for function`. The privileged webhook path therefore
+   selects `SUPABASE_SECRET_KEY` first, and a rejected credential now fails non-retryably so a
+   misconfiguration surfaces instead of causing unbounded provider redelivery. Status codes only
+   were recorded; no key value was printed or stored.
+3. Supply Vercel deploy authentication through the operator CLI/browser flow and prove the approved
+   identity/team with a value-free `whoami` result.
+4. Create or link the isolated Vercel project for `apps/web`; record project name, team, preview and
+   staging environment scopes, deployment identifier shape, and rollback target.
+5. In Cloudflare account `d2897bdebfa128919bd89b265e6a712e`, create only the new proposed
+   `mustbeviral-core-staging` Worker target; record its actual identifier and reconcile the staging
+   Wrangler configuration in a later authorized commit before deployment.
+6. In the same account, create only the new private
+   `mustbeviral-core-staging-artifacts` R2 bucket; record the exact binding, private-access proof,
+   inventory/recovery procedure, and config reconciliation needed before use.
+7. **PARTIAL 2026-07-28** — `flux-2-pro` price, billable unit, and exact pinned endpoint are accepted
+   and hashed into the seeded launch catalog evidence. Confirm the same live-page inputs for
+   `flux-kontext-pro` and `seedance-1.0-lite`; both remain disabled until accepted.
+   **RESOLVED-IN-PART 2026-07-29** — see the §4 amendment. Seedance Pro Fast has a price, unit and
+   retrieval date recorded in `pricing-decision.md`; Kontext has a price and unit but **no source URL
+   or retrieval timestamp**, which stays open. Both routes are nonetheless `OPEN` on the operator's
+   explicit 2026-07-29 ratification rather than on a complete price record.
+8. ~~Supply the fal API key through the authorized operator channel and install it only in ignored
+   local Core storage and the isolated staging Worker secret store.~~ **DONE 2026-07-27** —
+   staging secret `FAL_KEY` + ignored `apps/core/.dev.vars` (names only).
+9. ~~Align fal webhook verification with fal’s current JWKS model~~ **DONE 2026-07-27** for Core
+   verifier (JWKS Ed25519). Register per-request `webhook_url` /
+   `https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev/v1/webhooks/fal` only after
+   provider dispatch is enabled; full durable ingest still fail-closed until start_run wiring.
+10. Confirm the exact official `kimi-k2.6` price/model ID and obtain accepted no-train
+    retention/DPA clearance for client brand data; the retention gate remains `CLOSED` until both are
+    recorded.
+    **MOOT 2026-07-29** — the Moonshot direct copy route was retired by price catalog v2. Copy now
+    routes through OpenRouter, where retention is enforced per request (ZDR + `data_collection: deny`
+    - a fail-closed jurisdiction allowlist) instead of resting on a DPA negotiation, which removed
+      this item from the critical path rather than satisfying it. The Moonshot gate stays `CLOSED` and
+      its descriptor keeps its pinned price so historical quotes remain auditable.
+11. ~~Supply the Moonshot API key through the authorized operator channel and install it only in
+    ignored local Core storage and the isolated staging Worker secret store after the enable gates
+    close.~~ **DONE 2026-07-27 for material install** — staging secret `MOONSHOT_API_KEY` + ignored
+    `apps/core/.dev.vars` (names only). Route remains disabled until item 10 closes.
+
+Cloudflare deploy authentication is not on the missing-input list because it is recorded as
+`PRESENT-VIA-OPERATOR-CLI`; its approved account identity must still be revalidated before any
+later mutation. No destructive teardown is authorized by this evidence. If an isolated resource
+cannot be safely removed with exact identifiers and rollback evidence, leave it disabled and
+documented.
+
+## 6. PROVISIONING EXECUTION RECORD (2026-07-20)
+
+Operator authorized provisioning in-session (explicit $10/month Supabase cost confirmation
+recorded through the management-API confirmation flow). All values below are public identifiers;
+no credential value was read, printed, or stored by the agent.
+
+| Target                                | Actual identifier                                                                                                                                                                            | State            | Sanitized proof                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Staging Supabase project              | `mustbeviral-staging`, project ref `lqvigvzqumpwfjikcvws`, region `us-east-1`, Postgres 17.6                                                                                                 | `ACTIVE_HEALTHY` | All four repository migrations applied via the management API in order (`cleanroom_bootstrap`, `p0_authoritative_schema`, `p0_invariants_rls_and_grants`, `p0_hardened_rpcs`). Catalog verification: 5 hardened RPCs present, 23 public tables, forced RLS on all 19 tenant tables, 29 policies, 37 triggers. A transcription defect in `start_run_barrier` (`p_expexpected_revision_id`) was detected by post-apply catalog inspection and corrected with the exact repository text; zero occurrences remain.                                                                                                                                                          |
+| Vercel project for `apps/web`         | Project `mustbeviral-web-staging` (`prj_SVRV9Oh6J3lAi3muIbK9Mrtkvv6V`), team `ashrunscode-projects` (`team_A11dbY2xnTWzGL63IRBTWmLo`)                                                        | Deployed         | `vercel whoami` verified identity `ashrunscode`. Production deployment `Ready` at `https://mustbeviral-web-staging.vercel.app`; live smoke returned 200 with the signed-out gate ("Sign in to open your studio") rendered against the staging Supabase target. Monorepo deploys use the CLI with a local ignored builds config (`@vercel/next` on `apps/web`, corepack-enabled pnpm 10) because the local Windows prebuilt path cannot create symlinks; rollback target is the previous `Ready` deployment. Public browser configuration is versioned in `apps/web/.env.production` (Supabase URL, `sb_publishable_*` key, Core API URL — all client-public by design). |
+| Cloudflare Core Worker staging target | `mustbeviral-v2-staging-core` in account `d2897bdebfa128919bd89b265e6a712e`; version `612c321d-8950-4685-984f-0c00cf41f6b8`; `https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev` | Deployed         | Deployed through the repository-pinned Wrangler from `apps/core` with `--env staging`. Name reconciliation resolved in favor of the scaffold name declared in `apps/core/wrangler.jsonc` (this section supersedes the earlier proposed `mustbeviral-core-staging`). Live smoke: `/health` 200 with service identity; unauthenticated and invalid-bearer requests to `/v1` and `/mcp` return safe `UNAUTHENTICATED` 401 envelopes; unknown routes return the safe `NOT_FOUND` envelope. Only new `mustbeviral-*` resources were touched in the shared account.                                                                                                           |
+| Private R2 artifact bucket            | `mustbeviral-v2-staging-media`, bound as `MEDIA_BUCKET`                                                                                                                                      | Created, private | Created via Wrangler (default private access; no public development URL enabled, no custom domain attached). Name reconciliation as above (supersedes proposed `mustbeviral-core-staging-artifacts`).                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+
+Configuration reconciliation in the same change: the staging Wrangler environment drops the
+placeholder Hyperdrive binding (Data API/RPC remains the accepted baseline until the G1–G6
+benchmark passes), enables the `workers.dev` subdomain until the product zone lands in the
+account, and pins the public `SUPABASE_URL`/`SUPABASE_JWT_AUDIENCE`/`APP_ENV` vars. The
+`api-staging.mustbeviral.com` webhook endpoint shape in section 3 will follow the zone; until
+then the deployed `workers.dev` hostname is the staging endpoint.
+
+Remaining operator inputs after 2026-07-28 gate review: live-page price confirmations for
+`flux-kontext-pro` and `seedance-1.0-lite` (item 7), plus `kimi-k2.6`
+price/retention/DPA clearance (item 10). Items 2, 8, 9, and 11 (Supabase service/secret keys, fal
+API key, fal JWKS verification, and Moonshot API key) are installed or aligned as recorded above.
+The versioned staging configuration sets `PROVIDER_RUNS_ENABLED` true, and the catalog opens only
+`flux-2-pro`; the other three routes remain closed. The default and production configurations do
+not set the flag. Production Worker `mustbeviral-v2-production-core` does not exist yet; no
+production Supabase project exists.

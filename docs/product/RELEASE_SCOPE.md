@@ -2,50 +2,34 @@
 doc_id: release-scope
 ---
 
-# Release scope
+# Full-platform release scope
 
-## P0 private validation slice
+The owner accepted all 65 W0.1–W12.5 work units in the September 9 full-platform plan. ADR-0007 supersedes the DTC-only exclusion of portfolio operations, website understanding and connected publishing. Local-service businesses, e-commerce brands, client studios, creator collaboration and cross-brand campaigns are in scope.
 
-P0 includes only what is required to prove the Meta Campaign Launch Pack:
+## Delivery milestones
 
-- Marketing landing, authentication shell, structured onboarding, brand setup, project creation, and campaign brief.
-- Desktop graph canvas plus semantic outline, graph validation, planning-agent patches, revision history, quote, confirmation, execution, partial progress, review, affected-descendant rerun, approval, export, and receipt.
-- Initial node kinds: brief/input, brand context, planner/text, image generation/edit, video generation, QA, output/export, and non-executable group.
-- DAGs with at most 100 executable nodes and no arbitrary loop construct.
-- Supabase Auth/Postgres/RLS, one Core Worker, private R2, fal-first provider transport, immutable billing semantics without automated customer charging, and private five-operation MCP proof.
-- A curated 3–5 model catalog selected for the launch pack rather than arbitrary access to every provider model.
-- Internal operator visibility for runs, costs, reconciliation, and kill switches.
-- Desktop authoring; tablet review and limited parameter edits; mobile review, comment, approve, and export.
+1. W0: accepted authority, verified baseline, coherent prototypes and bounded integration/rendering feasibility.
+2. W1: durable portfolio, workspace grants, brands, locations, routing, saved onboarding and real billing reads.
+3. W2–W3: website/document evidence, approved knowledge, private original assets, rights and faithful composition.
+4. W4–W5: connections, publishing, campaign planning and creative production; two-brand operating pilot.
+5. W6–W10: client collaboration, creators, partnerships, engagement, measurement and learning.
+6. W11–W12: commercial operation, separately gated paid-media capabilities, scale, recovery and release acceptance.
 
-## P1a paid single-user product
+The roadmap owns the work-unit sequence. Quality gates own acceptance. No milestone may be inferred from a sidebar, successful build, elapsed observation period or an API connection alone.
 
-P1a adds the secure paid web product: production-grade identity and RLS, durable revisions, Stripe subscription and prepaid wallet, enforced entitlements and spend caps, transactional email, durable multi-step execution where proven necessary, expanded exports, operational reconciliation, and production deployment/rollback.
+## Explicit boundaries
 
-## P1b programmable surface
+- Preserve the V2 architecture; do not restore the retired application or its authentication/data model.
+- Evaluate managed publishing before direct network implementation: Postiz first, Sendible second, direct adapters if neither meets the recorded criteria. No provider purchase or commercial terms are accepted by this scope change.
+- Prioritize Facebook Pages, Instagram professional accounts, TikTok and Google Business Profile. Add YouTube/Shorts, LinkedIn, Pinterest, Threads and X through the same capability-specific evidence gates.
+- Paid-media execution, creator payouts, production traffic and customer charging have independent account, permissions, budget, legal/commercial and operational acceptance. Implementable local work continues while external acceptance is pending.
+- Broad enterprise identity, BYOK, new executor services and unrelated marketplace expansion require a later accepted decision. Regulated or political advertising requires its own policy and reviewer gate.
+- A feature blocked by missing access remains blocked. Manual handoff is labeled; test fixtures never establish live capability.
 
-P1b adds production OAuth/API-key authorization, supported public REST API, production MCP tools, CLI parity, user-authored Skills with immutable versions, and three-client semantic parity evidence.
+## Preserved release obligations
 
-## P2 collaboration
+WP-P3-009 was superseded, not completed. Its continuous private observation and owner traffic ruling remain unproved. Production promotion still requires exact resources, rollback, current migration/RLS checks and explicit traffic/deployment authorization. Existing public traffic and disabled private-foundation behavior are preserved. Historical DTC validation remains historical; its missing human evidence is not converted into platform success.
 
-P2 adds multiplayer presence, comments, text collaboration, edit leases for expensive node configuration, and checkpointing through a dedicated collaboration Worker and one coordination object per canvas. Postgres revisions remain durable authority; collaboration state is a recoverable draft.
+## Packet discipline
 
-## P3 scale and resilience
-
-P3 may add a separately deployable executor, queues, direct high-volume provider adapters, circuit breakers, canaries, disaster-recovery automation, stronger compliance controls, and BYOK only when measurements justify each addition.
-
-## P4 expansion
-
-P4 may introduce agency accounts, client approval portals, white-labeling, multi-client reporting, workflow marketplaces, enterprise identity, and internationalization after the DTC product demonstrates retention and viable economics.
-
-## Explicitly deferred before validation
-
-- Agency billing, white-labeling, client portals, complex approval hierarchies, and multi-client reporting.
-- Audio workflows, arbitrary graph loops, long-form video editing, and auto-publishing.
-- Website crawling and automatic Shopify catalog import.
-- Template marketplaces, public community sharing, and self-hosted control planes.
-- BYOK, enterprise SSO/SCIM, and internationalization.
-- Regulated or political advertising workflows.
-- Full multiplayer and mobile graph editing.
-- Multiple planning agents, autonomous provider access, or agent access to database, storage, and billing credentials.
-
-Scope can expand only through a product/architecture change linked to measured evidence and a new or superseding decision. An implementation packet cannot promote deferred work by convenience.
+One active packet and one current step own execution. Each packet names allowed paths, public contracts, tests, failure states, external dependencies, rollback and successor. Complete packets through verified receipts; replace unfinished ones only through ADR-0008. Prepare reviewable artifacts before requesting a design or external-action approval.

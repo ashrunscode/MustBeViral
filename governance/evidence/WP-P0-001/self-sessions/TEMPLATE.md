@@ -1,0 +1,127 @@
+# Operator self-session capture — [brief] / [run]
+
+Work packet: WP-P0-001, step p0-005-golden-launch-pack-runs
+Recorded [YYYY-MM-DD]
+
+Copy this file to `YYYY-MM-DD-GB-XX-NN.md` before the session. Do not edit the template in place.
+Never record an email, password, JWT, confirmation token, private object key, signed URL, raw
+provider payload, or customer media.
+
+## 1. Session identity and boundary
+
+- Session date/time UTC:
+- Operator: evaluator zero
+- Registered brief: [GB-02 / GB-04 / GB-10]
+- Product:
+- Workspace ID: `098356b4-190c-4273-bac3-df637c92a3c8`
+- Project ID:
+- Canvas ID:
+- Revision ID:
+- Quote ID:
+- Run ID:
+- Reservation ID:
+- Export ID:
+- Self-session counted toward qualified evaluator cohort: **No**
+- Self-session counted toward a P0 usability gate: **No**
+
+## 2. Timing
+
+Use UTC timestamps with milliseconds when available.
+
+| Event                    | Timestamp UTC | Source/observation |
+| ------------------------ | ------------- | ------------------ |
+| Sign-in submitted        |               |                    |
+| Brief validation clicked |               |                    |
+| Canvas became readable   |               |                    |
+| Quote became readable    |               |                    |
+| Confirm-click            |               |                    |
+| Run created              |               |                    |
+| First reviewable static  |               |                    |
+| Run terminal             |               |                    |
+| Approval completed       |               |                    |
+| Export Ready             |               |                    |
+| Receipt verified         |               |                    |
+
+- Confirm to first reviewable static (seconds):
+- Confirm to terminal (seconds):
+- Total sign-in to verified receipt (minutes):
+
+## 3. Completion and friction
+
+- Unassisted primary-flow completion: [yes / no]
+- Assistance received, if any:
+- Direct recovery link used: [yes / no]
+- Retries or duplicate-click concern:
+- Where I hesitated:
+- Labels or money language that reduced confidence:
+- Loading, error, empty, conflict, expired-quote, or cap state observed:
+- Media, comparison, approval, export, or receipt issue:
+- Friction notes in chronological order: 1. 2. 3.
+
+## 4. Concept judgment
+
+Registered rule: a concept is usable only if I would advance it in the current workflow without
+rebuilding its core idea.
+
+- Usable-concept result: [none / one / multiple]
+- Concept(s) I would advance and why:
+- What would have to be rebuilt before advancing:
+- Claims, evidence, brand, rights, or offer boundary failure:
+- Compare-mode observation:
+
+This operator judgment is diagnostic only. It does not enter the qualified-evaluator numerator or
+denominator and does not satisfy the 70% usable-concept gate.
+
+## 5. Money and settlement
+
+All values are integer USD micros. For a healthy full-pack success, quoted, reserved, and captured
+are each 4,550,000; residual is zero.
+
+| Money field                                         | Micros | Evidence source |
+| --------------------------------------------------- | -----: | --------------- |
+| Wallet before                                       |        |                 |
+| Quoted                                              |        |                 |
+| Reserved                                            |        |                 |
+| Captured                                            |        |                 |
+| Released                                            |        |                 |
+| Refunded                                            |        |                 |
+| Residual (`reserved - captured - released`)         |        |                 |
+| Wallet after                                        |        |                 |
+| Reconciled (`before - captured + refunded = after`) |        |                 |
+
+- Run cap shown:
+- Workspace/day cap shown:
+- Receipt quote vs actual:
+- Any unexplained micro:
+
+## 6. Screen-by-screen outcome
+
+| Screen       | Healthy / failed | What actually appeared |
+| ------------ | ---------------- | ---------------------- |
+| Sign-in      |                  |                        |
+| Brief        |                  |                        |
+| Canvas       |                  |                        |
+| Quote        |                  |                        |
+| Run progress |                  |                        |
+| Review       |                  |                        |
+| Export       |                  |                        |
+| Receipt      |                  |                        |
+
+- Provider nodes terminal-succeeded: [0-16]
+- Non-terminal nodes at run terminal:
+- First reviewable output usable at first sight: [yes / no]
+- Export deterministic/replay checked: [yes / no / not part of this session]
+- Receipt provider/model/cost/lineage complete: [yes / no]
+
+## 7. Outcome and follow-up
+
+- Session outcome: [complete / stopped]
+- Exact stop reason, if stopped:
+- Issue/evidence reference:
+- One product change worth considering before qualified evaluators:
+- Safe to begin another self-session: [yes / no]
+
+## 8. Left open
+
+- [List facts not proved by this session.]
+- Qualified evaluator sessions and P0 usability gates remain open regardless of this result.

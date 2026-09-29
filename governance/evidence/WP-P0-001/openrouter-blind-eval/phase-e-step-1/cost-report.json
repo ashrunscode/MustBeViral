@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 2,
+  "currency": "USD",
+  "integerUnit": "micros",
+  "costSource": "openrouter_usage.cost",
+  "providerReportedEvalCostMicros": 84069,
+  "candidates": [
+    {
+      "label": "A",
+      "requests": [
+        {
+          "briefId": "GB-01",
+          "status": "FAILED",
+          "reason": "ProviderError: openrouter rejected the payload"
+        },
+        {
+          "briefId": "GB-02",
+          "status": "FAILED",
+          "reason": "ProviderError: openrouter rejected the payload"
+        },
+        {
+          "briefId": "GB-03",
+          "status": "FAILED",
+          "reason": "ProviderError: openrouter rejected the payload"
+        }
+      ],
+      "totals": {
+        "successfulRequests": 0,
+        "failedRequests": 3,
+        "unreportedUsageRequests": 3,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "totalTokens": 0,
+        "providerReportedCostMicros": 0
+      },
+      "projection": {
+        "method": "mean provider-reported cost of a three-copy-set brief evaluation",
+        "projectedPerPackCopyCostMicros": null,
+        "copyPackRevenueMicros": 450000,
+        "marginMicros": null,
+        "marginBasisPoints": null,
+        "economicallyQualified": false,
+        "reliabilityQualified": false,
+        "disqualificationReason": "candidate_failed_one_or_more_requests"
+      }
+    },
+    {
+      "label": "B",
+      "requests": [
+        {
+          "briefId": "GB-01",
+          "status": "SUCCEEDED",
+          "inputTokens": 606,
+          "outputTokens": 705,
+          "totalTokens": 1311,
+          "providerReportedCostMicros": 2418
+        },
+        {
+          "briefId": "GB-02",
+          "status": "SUCCEEDED",
+          "inputTokens": 618,
+          "outputTokens": 848,
+          "totalTokens": 1466,
+          "providerReportedCostMicros": 2853
+        },
+        {
+          "briefId": "GB-03",
+          "status": "SUCCEEDED",
+          "inputTokens": 589,
+          "outputTokens": 764,
+          "totalTokens": 1353,
+          "providerReportedCostMicros": 2587
+        }
+      ],
+      "totals": {
+        "successfulRequests": 3,
+        "failedRequests": 0,
+        "unreportedUsageRequests": 0,
+        "inputTokens": 1813,
+        "outputTokens": 2317,
+        "totalTokens": 4130,
+        "providerReportedCostMicros": 7858
+      },
+      "projection": {
+        "method": "mean provider-reported cost of a three-copy-set brief evaluation",
+        "projectedPerPackCopyCostMicros": 2620,
+        "copyPackRevenueMicros": 450000,
+        "marginMicros": 447380,
+        "marginBasisPoints": 9942,
+        "economicallyQualified": true,
+        "reliabilityQualified": true,
+        "disqualificationReason": null
+      }
+    },
+    {
+      "label": "C",
+      "requests": [
+        {
+          "briefId": "GB-01",
+          "status": "SUCCEEDED",
+          "inputTokens": 606,
+          "outputTokens": 641,
+          "totalTokens": 1247,
+          "providerReportedCostMicros": 11130
+        },
+        {
+          "briefId": "GB-02",
+          "status": "SUCCEEDED",
+          "inputTokens": 618,
+          "outputTokens": 684,
+          "totalTokens": 1302,
+          "providerReportedCostMicros": 11805
+        },
+        {
+          "briefId": "GB-03",
+          "status": "SUCCEEDED",
+          "inputTokens": 589,
+          "outputTokens": 629,
+          "totalTokens": 1218,
+          "providerReportedCostMicros": 10908
+        }
+      ],
+      "totals": {
+        "successfulRequests": 3,
+        "failedRequests": 0,
+        "unreportedUsageRequests": 0,
+        "inputTokens": 1813,
+        "outputTokens": 1954,
+        "totalTokens": 3767,
+        "providerReportedCostMicros": 33843
+      },
+      "projection": {
+        "method": "mean provider-reported cost of a three-copy-set brief evaluation",
+        "projectedPerPackCopyCostMicros": 11281,
+        "copyPackRevenueMicros": 450000,
+        "marginMicros": 438719,
+        "marginBasisPoints": 9749,
+        "economicallyQualified": true,
+        "reliabilityQualified": true,
+        "disqualificationReason": null
+      }
+    },
+    {
+      "label": "D",
+      "requests": [
+        {
+          "briefId": "GB-01",
+          "status": "FAILED",
+          "reason": "OpenRouterCompletionTruncatedError: OpenRouter completion truncated for Candidate D: 0 reasoning tokens versus 1200 completion tokens",
+          "inputTokens": 1047,
+          "outputTokens": 1200,
+          "totalTokens": 2247,
+          "providerReportedCostMicros": 14094
+        },
+        {
+          "briefId": "GB-02",
+          "status": "FAILED",
+          "reason": "OpenRouterCompletionTruncatedError: OpenRouter completion truncated for Candidate D: 0 reasoning tokens versus 1200 completion tokens",
+          "inputTokens": 1123,
+          "outputTokens": 1200,
+          "totalTokens": 2323,
+          "providerReportedCostMicros": 14246
+        },
+        {
+          "briefId": "GB-03",
+          "status": "FAILED",
+          "reason": "OpenRouterCompletionTruncatedError: OpenRouter completion truncated for Candidate D: 0 reasoning tokens versus 1200 completion tokens",
+          "inputTokens": 1014,
+          "outputTokens": 1200,
+          "totalTokens": 2214,
+          "providerReportedCostMicros": 14028
+        }
+      ],
+      "totals": {
+        "successfulRequests": 0,
+        "failedRequests": 3,
+        "unreportedUsageRequests": 0,
+        "inputTokens": 3184,
+        "outputTokens": 3600,
+        "totalTokens": 6784,
+        "providerReportedCostMicros": 42368
+      },
+      "projection": {
+        "method": "mean provider-reported cost of a three-copy-set brief evaluation",
+        "projectedPerPackCopyCostMicros": null,
+        "copyPackRevenueMicros": 450000,
+        "marginMicros": null,
+        "marginBasisPoints": null,
+        "economicallyQualified": false,
+        "reliabilityQualified": false,
+        "disqualificationReason": "candidate_failed_one_or_more_requests"
+      }
+    }
+  ]
+}

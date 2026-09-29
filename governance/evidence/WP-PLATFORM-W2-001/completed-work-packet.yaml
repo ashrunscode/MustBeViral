@@ -1,0 +1,293 @@
+schema_version: 1
+id: WP-PLATFORM-W2-001
+spec_revision: 1
+title: Bounded website and document sourcing with reviewable knowledge drafts
+phase: P4
+status: complete
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Implement W2.1 sourcing plus provenance-backed unapproved brand knowledge drafts so an
+  operator can capture a website or document for WashBodega and UnPile, inspect where each finding
+  came from, and correct a reviewable draft without treating extraction as approved knowledge.
+  Preserve W1 studio, brand, invitation and billing contracts. No outreach, provider runs, charging
+  or Stripe mutation.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - api-mcp-cli
+  - execution-providers-billing
+  - experience-contract
+  - quality-gates
+  - roadmap
+  - local-env-secrets
+  - adr-0007-full-platform
+required_skills:
+  - build-mustbeviral
+  - data-architect
+  - auth-fortress
+  - api-and-interface-design
+  - superdesign
+  - frontend-master
+  - quality-check
+depends_on:
+  - WP-PLATFORM-W1-002
+scope:
+  allowed_paths:
+    - apps/web/**
+    - apps/core/**
+    - apps/cli/**
+    - apps/mcp/**
+    - packages/contracts/**
+    - packages/domain/**
+    - packages/db/**
+    - packages/config/**
+    - packages/ui/**
+    - supabase/**
+    - governance/**
+    - docs/**
+    - .superdesign/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+  forbidden_paths:
+    - .github/workflows/**
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - api-mcp-cli
+    - execution-providers-billing
+    - experience-contract
+    - quality-gates
+    - roadmap
+    - local-env-secrets
+deliverables:
+  - >
+    Add bounded website and document ingestion with safe URL handling, private-network and unsafe
+    redirect denial, timeouts, duplicate capture detection, malformed-file rejection and
+    prompt-injection isolation. Treat fetched content as untrusted evidence.
+  - >
+    Persist source capture and extraction provenance for every factual candidate, including source
+    reference, capture time, excerpt, method and tenant/brand identity. Unknowns stay unknown.
+    Images found on a website do not become reusable campaign assets.
+  - >
+    Produce operator-reviewable, unapproved brand knowledge drafts on existing W1 brand records.
+    Manual correction and businesses without a usable website remain first-class. Do not
+    auto-approve knowledge or claim W2.2 representative-site completeness, W2.3 voice proposals or
+    W2.4 approved brand versions.
+  - >
+    Preserve W1 resource and permission contracts. No new implicit execution, media, billing,
+    publishing or invitation-mail authority. Integer money and charging kill switches stay
+    unchanged.
+  - >
+    Prepare WP-PLATFORM-W2-002 for representative extraction quality, voice/audience/positioning
+    proposals and owner-approved brand versions.
+public_interfaces:
+  - >
+    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections.
+    Preserve W1 identity, setup, presentation and billing operations.
+  - >
+    Additive source/provenance/knowledge-draft persistence with explicit ownership, generated
+    database types and application rollback to the prior schema-compatible version.
+steps:
+  - id: w2a-001-source-ingestion-contracts
+    title: Implement safe website/document capture contracts and tenant-safe persistence.
+    status: completed
+  - id: w2a-002-extraction-provenance
+    title: Record source provenance for captured evidence without approving brand knowledge.
+    status: completed
+  - id: w2a-003-reviewable-knowledge-drafts
+    title: Deliver correctable unapproved knowledge drafts on existing WashBodega and UnPile brands.
+    status: completed
+  - id: w2a-004-journeys-and-successor
+    title: Verify two-brand sourcing journeys and prepare WP-PLATFORM-W2-002.
+    status: completed
+acceptance:
+  automated:
+    - id: safe-source-capture
+      criterion: Synthetic WashBodega and UnPile website/document captures persist with bounded jobs.
+        Private-network destinations, unsafe redirects, timeouts, duplicates, malformed files and
+        prompt-injection payloads cannot change permissions, reveal other tenants or create approved
+        knowledge.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    - id: provenance-preserving-drafts
+      criterion: Every factual candidate retains source reference, capture time, excerpt and method.
+        Unknowns remain unlabeled as facts. Manual correction survives reload. A brand without a
+        website can reach the same unapproved draft state.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    - id: tenant-safe-knowledge-reads
+      criterion: Knowledge drafts and source captures resolve only permitted W1 identities. Revoked
+        grants, forged child IDs and stale responses cannot display another brand's captured
+        evidence.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    - id: no-approval-or-spend
+      criterion: Extraction never marks brand knowledge approved, never sends outreach, never enables
+        charging and never starts a provider run. Desktop/mobile review of captured evidence stays
+        on the approved studio direction.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+  manual: []
+quality_gates:
+  - id: database
+    command: pnpm supabase:test
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+  - id: design
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+  - id: repository
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+rollback:
+  strategy: Revert application changes while retaining additive source and knowledge-draft tables.
+    Confirm W1 studio, brand, invitation, mapping and billing commands still work. Do not delete
+    tenant data, weaken RLS, auto-approve knowledge or enable checkout to simulate recovery.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: read-only
+  destructive_remote_actions: false
+handoff:
+  current_step: w2a-004-journeys-and-successor
+  next_action: Run the governed finish transition to activate the prepared WP-PLATFORM-W2-002.
+  blockers: []
+  changed_paths:
+    - PROJECT_STATE.yaml
+    - apps/cli/src/exit-codes.ts
+    - apps/core/src/app.ts
+    - apps/core/src/bindings.ts
+    - apps/core/src/composition/platform-knowledge.ts
+    - apps/core/src/composition/source-capture.ts
+    - apps/core/src/composition/source-egress.ts
+    - apps/core/src/composition/source-extract.ts
+    - apps/core/src/composition/source-machine.ts
+    - apps/core/src/data/supabase-data-api.ts
+    - apps/core/src/routes/mcp.ts
+    - apps/core/src/routes/platform.ts
+    - apps/core/src/routes/source-content.ts
+    - apps/core/test/unit/platform-knowledge-port.test.ts
+    - apps/core/test/unit/platform-parity.test.ts
+    - apps/core/test/unit/platform-port.test.ts
+    - apps/core/test/unit/source-capture.test.ts
+    - apps/core/test/unit/source-content-route.test.ts
+    - apps/core/test/unit/source-egress.test.ts
+    - apps/core/tools/source-public-egress-runner.mjs
+    - apps/core/worker-configuration.d.ts
+    - apps/core/wrangler.jsonc
+    - apps/web/e2e/platform-connected.spec.ts
+    - apps/web/e2e/platform-journey-helpers.ts
+    - apps/web/e2e/platform-knowledge-connected.spec.ts
+    - apps/web/src/features/platform/brand-draft-editor.tsx
+    - apps/web/src/features/platform/brand-findings-page.test.ts
+    - apps/web/src/features/platform/brand-findings.tsx
+    - apps/web/src/features/platform/brand-workspace.tsx
+    - apps/web/src/features/platform/platform-client.ts
+    - docs/STATUS.md
+    - docs/architecture/API_MCP_AND_CLI.md
+    - docs/architecture/DATA_AUTH_AND_TENANCY.md
+    - docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md
+    - docs/architecture/SYSTEM_OVERVIEW.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/generated/DATABASE_SCHEMA.md
+    - docs/generated/OPENAPI.md
+    - docs/generated/TRACEABILITY.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
+    - governance/scripts/generate-openapi.ts
+    - llms.txt
+    - packages/contracts/openapi/core.v1.json
+    - packages/contracts/src/http.integration.test.ts
+    - packages/contracts/src/index.ts
+    - packages/contracts/src/platform-knowledge.test.ts
+    - packages/contracts/src/platform-knowledge.ts
+    - packages/contracts/src/platform-transports.ts
+    - packages/contracts/src/platform.ts
+    - packages/contracts/src/source-policy.ts
+    - packages/db/scripts/platform-knowledge-fixture-worker.mjs
+    - packages/db/scripts/start-platform-knowledge-local.mjs
+    - packages/db/scripts/verify-platform-knowledge-connected.mjs
+    - packages/db/scripts/verify-platform-knowledge-fixtures.mjs
+    - packages/db/src/database.generated.ts
+    - packages/domain/src/index.ts
+    - packages/domain/src/source-capture.test.ts
+    - packages/domain/src/source-capture.ts
+    - packages/domain/src/source-url.test.ts
+    - packages/domain/src/source-url.ts
+    - packages/domain/tsconfig.json
+    - supabase/migrations/20260914010000_platform_knowledge.sql
+    - supabase/migrations/20260914020000_platform_knowledge_fk_indexes.sql
+    - supabase/tests/database/00043_platform_knowledge.test.sql
+  last_green_checks:
+    - pnpm agent:verify
+    - pnpm supabase:test
+    - pnpm governance:check
+    - pnpm design:check
+    - pnpm verify
+    - "W2 desktop/mobile connected journeys: 8 passed"
+    - "W1 desktop/mobile connected regression: 14 passed"
+    - "Connected knowledge database: 6 passed"
+    - "Public-only egress: private targets blocked"
+completion:
+  successor_packet_id: WP-PLATFORM-W2-002
+  evidence_paths:
+    - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
+    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
+  completed_at: 2026-09-14T23:51:02.177Z

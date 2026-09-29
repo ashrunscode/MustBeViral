@@ -1,0 +1,142 @@
+schema_version: 1
+id: WP-P3-009
+spec_revision: 1
+title: Owner-only production observation and traffic decision
+phase: P3
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: With fresh explicit operator authorization, prove exactly one approved owner session on
+  the SSO-protected provider surface, observe the disabled private foundation for 72 continuous
+  hours, and prepare a separate evidence-backed DNS/customer-traffic go or no-go decision without
+  performing cutover.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
+  - codex-finish-mega-prompt
+required_skills:
+  - auth-fortress
+  - observability-ops
+  - cloudflare
+  - wrangler
+  - supabase
+  - quality-check
+depends_on:
+  - WP-P3-008
+scope:
+  allowed_paths:
+    - apps/core/**
+    - apps/web/**
+    - packages/config/**
+    - packages/contracts/**
+    - packages/db/**
+    - supabase/**
+    - governance/evidence/WP-P3-009/**
+    - governance/evidence/WP-P3-008/**
+    - governance/tests/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
+    - codex-finish-mega-prompt
+deliverables:
+  - Fresh explicit authorization names exactly one owner identity; provisioning and credentials stay
+    out of source and evidence, public signup remains disabled, and no customer is admitted.
+  - The approved owner proves sign-in, JWT validation, workspace-scoped RLS/database connectivity,
+    private artifact denial/access boundaries, and sign-out without generation, charging, or queues.
+  - The protected provider surface is observed for 72 continuous hours with all behavior gates off,
+    zero customer/provider/charge rows, private R2, and redacted error/latency evidence.
+  - A separate traffic decision packet records owner go or no-go, rollback owner, exact DNS/routes,
+    and current evidence; this packet performs no DNS, custom-domain, or public-traffic mutation.
+public_interfaces:
+  - Only the SSO-protected Vercel team alias and the workers.dev Core URL are in scope. Legacy V1,
+    MustBeViral custom domains, public signup, customer admission, provider execution, queues, and
+    charging remain unchanged.
+steps:
+  - id: p3i-001-owner-identity-decision
+    title: Obtain fresh explicit authorization for exactly one production owner identity.
+    status: pending
+  - id: p3i-002-authenticated-zero-spend-smoke
+    title: Run the approved owner sign-in, RLS, database, artifact, and sign-out smoke with all spend gates off.
+    status: pending
+  - id: p3i-003-private-72-hour-observation
+    title: Observe the protected provider surface and zero-mutation invariants for 72 continuous hours.
+    status: pending
+  - id: p3i-004-traffic-go-no-go-packet
+    title: Prepare but do not execute a separate exact DNS/customer-traffic decision packet.
+    status: pending
+acceptance:
+  automated:
+    - id: owner-session-containment
+      criterion: Provider and database evidence proves the one approved owner session was tenant
+        scoped and created no provider, queue, charge, signup, or customer activity.
+      status: pending
+      evidence: []
+    - id: observation-window
+      criterion: A continuous 72-hour provider observation shows healthy private endpoints, redacted
+        telemetry, private storage, disabled gates, and no customer-impacting activity.
+      status: pending
+      evidence: []
+  manual:
+    - id: fresh-traffic-decision
+      criterion: The owner explicitly records go or no-go after reading the exact smoke,
+        observability, rollback, capacity, and legacy evidence; silence is not approval.
+      status: pending
+      evidence: []
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: repository-verification
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy: Keep all behavior gates false, leave the protected provider deployment in place, stop
+    the observation, revoke only the newly authorized owner session if compromised, and fix forward.
+    Do not alter DNS, legacy traffic, migration history, or production data in this packet.
+  remote_actions_required: true
+external_effects:
+  remote_mutation: approval-required
+  destructive_remote_actions: false
+handoff:
+  current_step: p3i-001-owner-identity-decision
+  next_action: Wait for fresh explicit authorization naming exactly one production owner identity.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: null
+  evidence_paths: []
+  completed_at: null

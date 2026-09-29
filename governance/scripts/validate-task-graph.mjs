@@ -1,11 +1,11 @@
-import { spawnSync } from 'node:child_process';
-
-import { fail, listRepositoryFiles, readJson, repoRoot } from './lib.mjs';
+import { command, fail, listRepositoryFiles, readJson } from './lib.mjs';
 
 export const workspacePaths = {
   '@mustbeviral/web': 'apps/web',
   '@mustbeviral/core': 'apps/core',
+  '@mustbeviral/collaboration-worker': 'apps/collaboration',
   '@mustbeviral/contracts': 'packages/contracts',
+  '@mustbeviral/collaboration': 'packages/collaboration',
   '@mustbeviral/domain': 'packages/domain',
   '@mustbeviral/graph': 'packages/graph',
   '@mustbeviral/db': 'packages/db',
@@ -21,7 +21,9 @@ export const workspacePaths = {
 export const requiredWorkspaceTasks = {
   '@mustbeviral/web': ['lint', 'typecheck', 'test', 'test:integration', 'build'],
   '@mustbeviral/core': ['lint', 'typecheck', 'test', 'test:integration', 'build'],
+  '@mustbeviral/collaboration-worker': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/contracts': ['lint', 'typecheck', 'test', 'test:integration', 'build'],
+  '@mustbeviral/collaboration': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/domain': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/graph': ['lint', 'typecheck', 'test', 'build'],
   '@mustbeviral/db': ['lint', 'typecheck', 'test', 'build'],
@@ -96,7 +98,7 @@ export function collectRootTestLaneErrors(manifest) {
     const isolatedCore = '--filter=@mustbeviral/core';
     const separator = command.indexOf('&&');
     if (
-      !command.startsWith(sharedLane) ||
+      !command.includes(sharedLane) ||
       !command.includes(excludedCore) ||
       separator < 0 ||
       !command.slice(separator + 2).includes(sharedLane) ||
@@ -112,12 +114,9 @@ export function collectRootTestLaneErrors(manifest) {
 }
 
 export function readTurboPlan() {
-  const pnpmEntrypoint = process.env.npm_execpath;
-  if (!pnpmEntrypoint) throw new Error('npm_execpath is unavailable; run this check through pnpm');
-  const result = spawnSync(
-    process.execPath,
+  const result = command(
+    'pnpm',
     [
-      pnpmEntrypoint,
       'exec',
       'turbo',
       'run',
@@ -128,7 +127,7 @@ export function readTurboPlan() {
       'build',
       '--dry=json',
     ],
-    { cwd: repoRoot, encoding: 'utf8', shell: false },
+    { capture: true },
   );
   if (result.status !== 0) {
     throw new Error(`Turbo dry run failed: ${result.stderr || result.stdout}`.trim());

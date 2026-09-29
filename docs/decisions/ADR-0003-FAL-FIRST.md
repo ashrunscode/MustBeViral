@@ -10,7 +10,7 @@ Accepted on 2026-07-12.
 
 ## Decision
 
-Implement `FalTransport` first. Preserve separate provider transport and model driver interfaces, and enable only 3–5 curated launch-pack models. Copy verified output immediately to private R2.
+Implement `FalTransport` first. Preserve separate provider transport and model driver interfaces, and preserve the curated launch-pack routes. Add full-platform reference/edit/render routes only after capability, fidelity, rights, retention and cost evidence passes. Copy verified output immediately to private R2.
 
 ## Rationale
 

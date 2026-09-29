@@ -1,0 +1,144 @@
+schema_version: 1
+id: WP-P3-008
+spec_revision: 1
+title: Disabled-behavior production environment binding
+phase: P3
+status: ready
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Bind the exact isolated V2 production resources, deploy Core and web with all customer,
+  provider, charging, and signup behavior disabled, verify private smoke paths, and keep legacy
+  traffic and DNS unchanged.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - quality-gates
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - legacy-v1-retirement
+  - codex-finish-mega-prompt
+required_skills:
+  - cloudflare
+  - wrangler
+  - workers-best-practices
+  - supabase
+  - auth-fortress
+  - observability-ops
+  - quality-check
+depends_on:
+  - WP-P3-007
+scope:
+  allowed_paths:
+    - apps/core/**
+    - apps/web/**
+    - packages/config/**
+    - packages/contracts/**
+    - packages/db/**
+    - supabase/**
+    - governance/evidence/WP-P3-008/**
+    - governance/evidence/WP-P3-007/**
+    - governance/tests/**
+    - docs/**
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - turbo.json
+    - tsconfig.json
+    - tsconfig.base.json
+    - eslint.config.mjs
+    - vitest.config.ts
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  forbidden_paths:
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - quality-gates
+    - local-env-secrets
+    - deploy-rollback-incidents
+    - legacy-v1-retirement
+    - codex-finish-mega-prompt
+deliverables:
+  - Production configuration names only Supabase `jjgtlfblsfobdhmtngbz`, R2
+    `mustbeviral-v2-production-media`, Core `mustbeviral-v2-production-core`, and Vercel project ID
+    `prj_oPGn8bYorRz0VvXhsWUnHhGN0vGj`; no legacy or placeholder target is accepted.
+  - Production secrets are transferred provider-to-provider without values entering source, docs,
+    logs, or messages; secret presence and environment separation are verified.
+  - Core and web deploy with signup, generation, provider routes, queues, and customer charging off;
+    no custom domain or DNS route changes.
+  - Authenticated smoke proves health, closed enrollment, private artifact denial, database/RLS
+    connectivity, and rollback identifiers without creating customer or provider work.
+  - Security/performance Advisor findings are rechecked; justified foreign-key and RLS-plan repairs
+    are forward-only and complete before traffic.
+public_interfaces:
+  - Provider-generated preview/worker URLs may be used for private smoke only. `mustbeviral.com`,
+    `api.mustbeviral.com`, legacy V1 traffic, public signup, charging, and generation remain unchanged.
+steps:
+  - id: p3h-001-config-and-secret-preflight
+    title: Validate exact resource identities, disabled flags, secrets, Advisor disposition, and rollback.
+    status: pending
+  - id: p3h-002-unrouted-core-deploy
+    title: Deploy production Core without a custom route and prove all costly behavior disabled.
+    status: pending
+  - id: p3h-003-isolated-web-deploy
+    title: Deploy the exact Vercel project without attaching MustBeViral production domains.
+    status: pending
+  - id: p3h-004-private-smoke-and-cutover-gate
+    title: Run private smoke checks and prepare a separate DNS/customer-traffic decision packet.
+    status: pending
+acceptance:
+  automated:
+    - id: exact-disabled-production
+      criterion: Provider reads and HTTP smoke prove exact bindings, healthy deployments, closed
+        enrollment, private media, and all spend/traffic feature gates disabled.
+      status: pending
+      evidence: []
+    - id: no-legacy-or-dns-mutation
+      criterion: Before/after inventory proves no legacy resource, custom domain, DNS record, route,
+        customer row, provider run, or charge changed.
+      status: pending
+      evidence: []
+  manual:
+    - id: private-production-containment
+      criterion: The deployments are usable only for operator smoke through provider URLs and are
+        not represented as a public launch or customer-ready release.
+      status: pending
+      evidence: []
+quality_gates:
+  - id: design-direction
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: repository-verification
+    command: pnpm verify
+    status: pending
+    evidence: []
+rollback:
+  strategy: Keep DNS and legacy traffic unchanged. Roll web back to its prior Vercel deployment or
+    remove the new alias; deploy the prior Core version/config; leave additive database migrations
+    intact and fix forward. Disable every behavior gate before investigating.
+  remote_actions_required: true
+external_effects:
+  remote_mutation: authorized
+  destructive_remote_actions: false
+handoff:
+  current_step: p3h-001-config-and-secret-preflight
+  next_action: Validate the exact production bindings, disabled flags, secrets, and rollback IDs.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: null
+  evidence_paths: []
+  completed_at: null

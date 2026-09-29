@@ -1,0 +1,287 @@
+.collaborationStack {
+  display: grid;
+  gap: 12px;
+}
+
+.collaborationRefusal {
+  margin: 0;
+  border-left: 2px solid var(--fail);
+  padding: 4px 10px;
+  color: var(--fail-ink);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.presenceBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  padding: 6px 10px;
+  background: var(--card);
+}
+
+.presenceAvatars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.presenceAvatar {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink-strong);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.presenceMeta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.presenceMeta strong {
+  color: var(--ink-head);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.presenceMeta span {
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.presenceStatus {
+  margin-left: auto;
+  color: var(--ink);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.commentPanel {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  background: var(--card);
+}
+
+.commentPanelHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.commentPanelHeader h3 {
+  margin: 0;
+  color: var(--ink-head);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.commentPanelHeader span {
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.commentList {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commentItem {
+  display: grid;
+  gap: 4px;
+  border-radius: var(--radius-input);
+  padding: 8px 10px;
+  background: var(--wash-faint);
+}
+
+.commentItem:focus-visible {
+  outline: 2px solid var(--signal-soft);
+  outline-offset: 1px;
+}
+
+.commentAuthor {
+  color: var(--ink-head);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.commentBody {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.commentEmpty {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.commentComposer {
+  display: grid;
+  gap: 8px;
+}
+
+.commentComposer label {
+  display: grid;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.commentComposer textarea {
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  padding: 8px 10px;
+  background: var(--paper);
+  color: var(--ink-strong);
+  font: inherit;
+  font-size: 12px;
+}
+
+.commentComposer textarea:focus-visible {
+  outline: 2px solid var(--signal-soft);
+  border-color: var(--signal);
+}
+
+.commentComposerActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.draftPanel {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  background: var(--card);
+}
+
+.draftFieldStack {
+  display: grid;
+  gap: 12px;
+}
+
+.collaborativeField {
+  display: grid;
+  gap: 6px;
+}
+
+.collaborativeFieldHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.collaborativeFieldHeader label {
+  color: var(--ink-head);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.leaseBadge {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.collaborativeField[data-lease-state='held'] .leaseBadge,
+.leaseBadge[data-lease-state='held'] {
+  border-color: var(--signal);
+  color: var(--signal-ink);
+}
+
+.collaborativeField[data-lease-state='contested'] .leaseBadge,
+.leaseBadge[data-lease-state='contested'] {
+  border-color: #c2410c;
+  color: #c2410c;
+}
+
+.leaseHelp {
+  margin: 0;
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.collaborativeTextarea {
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  padding: 8px 10px;
+  background: var(--paper);
+  color: var(--ink-strong);
+  font: inherit;
+  font-size: 12px;
+}
+
+.collaborativeTextarea:focus-visible {
+  outline: 2px solid var(--signal-soft);
+  border-color: var(--signal);
+}
+
+.collaborativeTextarea[aria-readonly='true'] {
+  background: var(--wash-faint);
+  color: var(--ink);
+}
+
+/* 6px on top of the field's 6px gap leaves 12px: Retry lease's hit area grows about 10px upward, so it stays clear of the textarea above. */
+.leaseActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.leaseRetry {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  background: var(--paper);
+  color: var(--ink-head);
+  font-size: 11px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+/* The shared Button's rule: a transparent hit area that grows the 24px control to 44px. */
+.leaseRetry::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2));
+}
+
+.leaseRetry:focus-visible {
+  outline: 2px solid var(--signal-soft);
+}

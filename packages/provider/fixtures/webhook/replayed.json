@@ -1,0 +1,6 @@
+{
+  "timestamp": 1784451600,
+  "eventId": "fal-event-fixture-replayed",
+  "signature": "sha256=3aea975a82fb4adf07b924b07e2ed1856139625b6d19c2d745955b61b2b60e4a",
+  "rawBody": "{\"request_id\":\"fal-job-fixture-001\",\"status\":\"COMPLETED\",\"payload\":{\"images\":[{\"url\":\"https://delivery.invalid/output.png\"}]}}"
+}

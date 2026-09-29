@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.4 75.4" role="img" aria-labelledby="mbv-lockup-h-title">
+  <title id="mbv-lockup-h-title">Must Be Viral horizontal lockup</title>
+  <!-- Clear space is baked in: 23.4 units on all four sides, equal to the height of the
+       mark's frame (the mark's cap height). It is part of the asset. Do not crop it.
+       Artwork bounds inside the file: x 23.4, y 23.4, width 179.6, height 28.6. -->
+  <g fill="currentColor" transform="translate(18.2 22.1) scale(1.3)">
+    <path fill-rule="evenodd" d="M4 1H20V19H10L4 23ZM6 3V17H18V3Z"/>
+    <path d="M9 6L16 10L9 14Z"/>
+  </g>
+  <g transform="translate(55.9 25.1)">
+  <g fill="currentColor">
+    <!-- M -->
+    <path d="M0 20V0H3.29L9 13.37L14.71 0H18V20H15.4V5L9 20L2.6 5V20Z"/>
+    <!-- V -->
+    <path transform="translate(99.5 0)" d="M0 0H2.73L6.5 11.59L10.27 0H13L6.5 20Z"/>
+    <!-- dot of the i -->
+    <circle cx="115.2" cy="2.3" r="1.3"/>
+  </g>
+  <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="8">
+    <!-- u -->
+    <path transform="translate(21.7 0)" d="M0 6V13A6 6 0 0 0 12 13V6"/>
+    <!-- s -->
+    <path transform="translate(38.3 0)" d="M8.53 9.48A4.3 3 0 1 0 4.3 13A4.3 3 0 1 1 0.07 16.52"/>
+    <!-- t -->
+    <path transform="translate(51.3 0)" d="M2.6 2V20"/>
+    <path transform="translate(51.3 0)" d="M0 6H6.8"/>
+    <!-- B -->
+    <path transform="translate(66.7 0)" d="M0 0V20"/>
+    <path transform="translate(66.7 0)" d="M0 1.3H4.5A4.1 4.1 0 0 1 4.5 9.5H0"/>
+    <path transform="translate(66.7 0)" d="M4.5 9.5A4.6 4.6 0 0 1 4.5 18.7H0"/>
+    <!-- e -->
+    <path transform="translate(80.2 0)" d="M-1.3 13H13.3"/>
+    <path transform="translate(80.2 0)" d="M12 13A6 6 0 1 0 10.24 17.24"/>
+    <!-- i -->
+    <path transform="translate(115.2 0)" d="M0 6V20"/>
+    <!-- r -->
+    <path transform="translate(120.2 0)" d="M0 6V20"/>
+    <path transform="translate(120.2 0)" d="M0 10.6A4.6 4.6 0 0 1 4.6 6"/>
+    <!-- a -->
+    <path transform="translate(128.8 0)" d="M11.64 10.95A6 6 0 1 0 11.64 15.05"/>
+    <path transform="translate(128.8 0)" d="M12 6V20"/>
+    <!-- l -->
+    <path transform="translate(145.8 0)" d="M0 0V20"/>
+  </g>
+  </g>
+</svg>

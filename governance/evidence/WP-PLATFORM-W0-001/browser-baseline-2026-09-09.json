@@ -1,0 +1,478 @@
+{
+  "observedAt": "2026-09-09T23:56:36.733Z",
+  "source": "localhost, fixture mode, external requests blocked",
+  "observations": [
+    {
+      "width": 1440,
+      "route": "canvas?canvas=11111111-1111-4111-8111-111111111111&revision=22222222-2222-4222-8222-222222222222",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": ["Graph outline"],
+      "text": "CANVAS REVISION 7F3A\nLumen Skin launch pack\n12 / 12 NODES MOUNTED\n2 LIVE\n−\n100%\n+\nFit\nValidate graph\nCheckpoint drafts\nINPUT NODE\n✓\nVERIFIED\nCampaign brief\nREV 7F3A\nBRIEF LOCKED\nCONCEPT LOGIC\n✓\nVERIFIED\nConcept A\nKIMI-2.6\nSELECTED\nCONCEPT LOGIC\n→\nRUNNING\nConcept B\nKIMI-2.6\nGENERATING 2/3\nCONCEPT LOGIC\n○\nQUEUED\nConcept C\nKIMI-2.6\nWAITING\nVISUAL GEN\n✓\nVERIFIED\nAsset 01 — Hero\nFLUX-2-KLEIN\nOUTPUT VERIFIED\nVISUAL GEN\n✓\nVERIFIED\nAsset 02 — Detail\nFLUX-2-KLEIN\nREADY\nVISUAL GEN\n!\nFAILED\nAsset 03 — Texture\nFLUX-2-KLEIN\nRETRY AVAILABLE\nSource texture is below the minimum 1024px input size.\nOUTPUT MATRIX\n○\nQUEUED\nAdaptations\nFLUX-KONTEXT-PRO\n9 RENDERS QUEUED\nCOPY GEN\n✓\nVERIFIED\nCopy set\nKIMI-2.6\n3 VARIANTS\nMOTION GEN\n○\nQUEUED\nMotion 9:16\nSEEDANCE-1.0\n6 SECOND RENDER\nREVIEW GATE\n◆\nNOTES\nQA review\nPOLICY-V2\n2 NOTES\nOUTPUT PACK\n○\nQUEUED\nExport bundle\nREV 7F3A\nMETA-READY\nPINNED REVISION\n7F3A\nROUTE\nKIMI-2.6 + FLUX-2-KLEIN\nQUOTE BASIS\n$4.20 TOTAL RUN\nReview $4.20 quote\nSEMANTIC PARITY\nGraph outline\n◆\n12 NODES\n\nTopological order. Use ↑ and ↓ to move between nodes.\n\nINPUT NODE\nCampaign brief\n✓\nVERIFIED\nCONCEPT LOGIC\nConcept A\n✓\nVERIFIED\nCONCEPT LOGIC\nConcept B\n→\nRUNNING\nCONCEPT LOGIC\nConcept C\n○\nQUEUED\nVISUAL GEN\nAsset 01 — Hero\n✓\nVERIFIED\nVISUAL GEN\nAsset 02 — Detail\n✓\nVERIFIED\nVISUAL GEN\nAsset 03 — Texture\n!\nFAILED\nOUTPUT MATRIX\nAdaptations\n○\nQUEUED\nCOPY GEN\nCopy set\n✓\nVERIFIED\nMOTION GEN\nMotion 9:16\n○\nQUEUED\nREVIEW GATE\nQA review\n◆\nNOTES\nOUTPUT PACK\nExport bundle\n○\nQUEUED\nMC\nMC\nLIVE PRESENCE\nMaya Chen, Maya Chen\nViewing graph · draft comments only\nOPEN\nDRAFT TEXT\nConcept A\n1 fields\nNode notes\n\nDraft text syncs to collaborators.\n\nDRAFT COMMENTS\nConcept A\n0 threads\n\nNo draft comments on this anchor yet.\n\nAdd a draft comment\nPost draft comment\nLATENCY: 142MS · NODE COUNT: 12 · REGION: US-EAST-1\nV2.0.4-STUDIO",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 1440,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": [
+        "/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css",
+        "/_next/static/chunks/apps_web_0s09o3_._.css",
+        "inline"
+      ],
+      "internalOps": null,
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "canvas",
+        "stepLabel": "Launch-pack canvas",
+        "resumeHref": "/studio/campaign/canvas",
+        "savedAt": "2026-09-09T23:56:25.338Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 1440,
+      "route": "billing",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": [
+        "Wallet and receipts",
+        "Balance and subscription",
+        "Immutable receipts",
+        "Maximum pack charge"
+      ],
+      "text": "USAGE AND BILLING\nWallet and receipts\n\nP1a adds the prepaid usage wallet, setup charge, and subscription on top of P0 named-price quotes. Charging remains disabled until Stripe test-mode credentials and operator authorization are recorded.\n\nPREPAID WALLET\nBalance and subscription\n\nClosed enrollment\n\nAvailable balance\n$0.00\nSubscription\nNone\n\nClosed enrollment — operator credit only until Stripe test mode is authorized.\n\nRECEIPT DETAIL\nImmutable receipts\n\nNo wallet-backed receipts yet.\n\nNAMED-PRICE QUOTE\nMaximum pack charge\nLAUNCH PACK CATALOG CHARGE\t$4.55\nP1A FULLY-LANDED MARGIN CAP\t$1.82\nRESERVATION HOLD\tAt explicit confirmation",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 1440,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": ["/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css", "inline"],
+      "internalOps": {
+        "display": "block",
+        "padding": "20px"
+      },
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "billing",
+        "resumeHref": "/studio/campaign/billing",
+        "savedAt": "2026-09-09T23:56:28.845Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 1440,
+      "route": "access",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": ["API keys and audit", "Issued credentials"],
+      "text": "PROGRAMMATIC ACCESS\nAPI keys and audit\n\nScoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n\nCreate API key\n\n[ { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_APP_ORIGIN\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_URL\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY\" ], \"message\": \"Invalid input: expected string, received undefined\" } ]\n\nWORKSPACE KEYS\nIssued credentials\n\nNo API keys yet. Create one for automation with explicit scopes.",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 1440,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": ["/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css", "inline"],
+      "internalOps": null,
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "access",
+        "resumeHref": "/studio/campaign/access",
+        "savedAt": "2026-09-09T23:56:30.632Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 1440,
+      "route": "skills",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": ["Skills and version history", "Published Skills", "Version history"],
+      "text": "USER-AUTHORED SKILLS\nSkills and version history\n\nPublish reusable workflow instructions for your team. Each publish creates an immutable version; edits always create a new version and never mutate a published snapshot. Skills cannot access database, storage, or billing credentials.\n\nPublish Skill\n\n[ { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_APP_ORIGIN\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_URL\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY\" ], \"message\": \"Invalid input: expected string, received undefined\" } ]\n\nWORKSPACE SKILLS\nPublished Skills\n\nNo Skills yet. Publish your first reusable workflow instruction.\n\nIMMUTABLE VERSIONS\nVersion history\n\nSelect a Skill to inspect its immutable published versions.",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 1440,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": ["/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css", "inline"],
+      "internalOps": null,
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "skills",
+        "resumeHref": "/studio/campaign/skills",
+        "savedAt": "2026-09-09T23:56:32.380Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 1440,
+      "route": "continue-after-skills",
+      "errors": ["Cannot read properties of undefined (reading 'toLowerCase')"],
+      "requestMethods": ["GET", "POST"],
+      "text": "This page couldn’t load\n\nReload to try again, or go back.\n\nReload\nBack"
+    },
+    {
+      "width": 390,
+      "route": "canvas?canvas=11111111-1111-4111-8111-111111111111&revision=22222222-2222-4222-8222-222222222222",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": ["Graph outline"],
+      "text": "CANVAS REVISION 7F3A\nLumen Skin launch pack\n9 / 12 NODES MOUNTED\n2 LIVE\n−\n100%\n+\nFit\nValidate graph\nCheckpoint drafts\nINPUT NODE\n✓\nVERIFIED\nCampaign brief\nREV 7F3A\nBRIEF LOCKED\nCONCEPT LOGIC\n✓\nVERIFIED\nConcept A\nKIMI-2.6\nSELECTED\nCONCEPT LOGIC\n→\nRUNNING\nConcept B\nKIMI-2.6\nGENERATING 2/3\nCONCEPT LOGIC\n○\nQUEUED\nConcept C\nKIMI-2.6\nWAITING\nVISUAL GEN\n✓\nVERIFIED\nAsset 01 — Hero\nFLUX-2-KLEIN\nOUTPUT VERIFIED\nVISUAL GEN\n✓\nVERIFIED\nAsset 02 — Detail\nFLUX-2-KLEIN\nREADY\nVISUAL GEN\n!\nFAILED\nAsset 03 — Texture\nFLUX-2-KLEIN\nRETRY AVAILABLE\nSource texture is below the minimum 1024px input size.\nOUTPUT MATRIX\n○\nQUEUED\nAdaptations\nFLUX-KONTEXT-PRO\n9 RENDERS QUEUED\nCOPY GEN\n✓\nVERIFIED\nCopy set\nKIMI-2.6\n3 VARIANTS\nPINNED REVISION\n7F3A\nROUTE\nKIMI-2.6 + FLUX-2-KLEIN\nQUOTE BASIS\n$4.20 TOTAL RUN\nReview $4.20 quote\nSEMANTIC PARITY\nGraph outline\n◆\n12 NODES\n\nTopological order. Use ↑ and ↓ to move between nodes.\n\nINPUT NODE\nCampaign brief\n✓\nVERIFIED\nCONCEPT LOGIC\nConcept A\n✓\nVERIFIED\nCONCEPT LOGIC\nConcept B\n→\nRUNNING\nCONCEPT LOGIC\nConcept C\n○\nQUEUED\nVISUAL GEN\nAsset 01 — Hero\n✓\nVERIFIED\nVISUAL GEN\nAsset 02 — Detail\n✓\nVERIFIED\nVISUAL GEN\nAsset 03 — Texture\n!\nFAILED\nOUTPUT MATRIX\nAdaptations\n○\nQUEUED\nCOPY GEN\nCopy set\n✓\nVERIFIED\nMOTION GEN\nMotion 9:16\n○\nQUEUED\nREVIEW GATE\nQA review\n◆\nNOTES\nOUTPUT PACK\nExport bundle\n○\nQUEUED\nMC\nMC\nLIVE PRESENCE\nMaya Chen, Maya Chen\nViewing graph · draft comments only\nOPEN\nDRAFT TEXT\nConcept A\n1 fields\nNode notes\n\nDraft text syncs to collaborators.\n\nDRAFT COMMENTS\nConcept A\n0 threads\n\nNo draft comments on this anchor yet.\n\nAdd a draft comment\nPost draft comment\nLATENCY: 142MS · NODE COUNT: 12 · REGION: US-EAST-1\nV2.0.4-STUDIO",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 390,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": [
+        "/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css",
+        "/_next/static/chunks/apps_web_0s09o3_._.css",
+        "inline"
+      ],
+      "internalOps": null,
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "canvas",
+        "stepLabel": "Launch-pack canvas",
+        "resumeHref": "/studio/campaign/canvas",
+        "savedAt": "2026-09-09T23:56:34.285Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 390,
+      "route": "billing",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": [
+        "Wallet and receipts",
+        "Balance and subscription",
+        "Immutable receipts",
+        "Maximum pack charge"
+      ],
+      "text": "USAGE AND BILLING\nWallet and receipts\n\nP1a adds the prepaid usage wallet, setup charge, and subscription on top of P0 named-price quotes. Charging remains disabled until Stripe test-mode credentials and operator authorization are recorded.\n\nPREPAID WALLET\nBalance and subscription\n\nClosed enrollment\n\nAvailable balance\n$0.00\nSubscription\nNone\n\nClosed enrollment — operator credit only until Stripe test mode is authorized.\n\nRECEIPT DETAIL\nImmutable receipts\n\nNo wallet-backed receipts yet.\n\nNAMED-PRICE QUOTE\nMaximum pack charge\nLAUNCH PACK CATALOG CHARGE\t$4.55\nP1A FULLY-LANDED MARGIN CAP\t$1.82\nRESERVATION HOLD\tAt explicit confirmation",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 390,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": ["/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css", "inline"],
+      "internalOps": {
+        "display": "block",
+        "padding": "20px"
+      },
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "billing",
+        "resumeHref": "/studio/campaign/billing",
+        "savedAt": "2026-09-09T23:56:34.725Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 390,
+      "route": "access",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": ["API keys and audit", "Issued credentials"],
+      "text": "PROGRAMMATIC ACCESS\nAPI keys and audit\n\nScoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n\nCreate API key\n\n[ { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_APP_ORIGIN\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_URL\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY\" ], \"message\": \"Invalid input: expected string, received undefined\" } ]\n\nWORKSPACE KEYS\nIssued credentials\n\nNo API keys yet. Create one for automation with explicit scopes.",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 390,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": ["/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css", "inline"],
+      "internalOps": null,
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "access",
+        "resumeHref": "/studio/campaign/access",
+        "savedAt": "2026-09-09T23:56:35.297Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 390,
+      "route": "skills",
+      "evidence": "LOCAL_SYNTHETIC_PREVIEW",
+      "heading": ["Skills and version history", "Published Skills", "Version history"],
+      "text": "USER-AUTHORED SKILLS\nSkills and version history\n\nPublish reusable workflow instructions for your team. Each publish creates an immutable version; edits always create a new version and never mutate a published snapshot. Skills cannot access database, storage, or billing credentials.\n\nPublish Skill\n\n[ { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_APP_ORIGIN\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_URL\" ], \"message\": \"Invalid input: expected string, received undefined\" }, { \"expected\": \"string\", \"code\": \"invalid_type\", \"path\": [ \"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY\" ], \"message\": \"Invalid input: expected string, received undefined\" } ]\n\nWORKSPACE SKILLS\nPublished Skills\n\nNo Skills yet. Publish your first reusable workflow instruction.\n\nIMMUTABLE VERSIONS\nVersion history\n\nSelect a Skill to inspect its immutable published versions.",
+      "links": [
+        {
+          "label": "Brief",
+          "href": "/studio/campaign/brief"
+        },
+        {
+          "label": "Canvas",
+          "href": "/studio/campaign/canvas"
+        },
+        {
+          "label": "Quote",
+          "href": "/studio/campaign/quote"
+        },
+        {
+          "label": "Review",
+          "href": "/studio/campaign/review"
+        },
+        {
+          "label": "Receipt",
+          "href": "/studio/campaign/receipt"
+        },
+        {
+          "label": "Billing",
+          "href": "/studio/campaign/billing"
+        },
+        {
+          "label": "Access",
+          "href": "/studio/campaign/access"
+        },
+        {
+          "label": "Skills",
+          "href": "/studio/campaign/skills"
+        }
+      ],
+      "documentWidth": 390,
+      "bodyFont": "Geist, \"Geist Fallback\", sans-serif",
+      "paper": "#fafafa",
+      "background": "rgb(250, 250, 250)",
+      "stylesheets": ["/_next/static/chunks/%5Broot-of-the-server%5D__1e_7_5n._.css", "inline"],
+      "internalOps": null,
+      "savedStep": {
+        "workspace": "campaign",
+        "step": "skills",
+        "resumeHref": "/studio/campaign/skills",
+        "savedAt": "2026-09-09T23:56:35.773Z",
+        "campaignLabel": "Current launch pack"
+      }
+    },
+    {
+      "width": 390,
+      "route": "continue-after-skills",
+      "errors": ["Cannot read properties of undefined (reading 'toLowerCase')"],
+      "requestMethods": ["GET", "POST"],
+      "text": "This page couldn’t load\n\nReload to try again, or go back.\n\nReload\nBack"
+    }
+  ]
+}

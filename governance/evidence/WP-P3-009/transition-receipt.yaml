@@ -1,0 +1,191 @@
+schema_version: 2
+status: superseded
+packet_id: WP-P3-009
+spec_revision: 2
+phase: P3
+branch: codex/viralgraph-cleanroom
+superseded_at: 2026-09-09T23:37:02.760Z
+successor_packet_id: WP-P3-010
+successor_spec_revision: 2
+successor_packet_path: governance/evidence/WP-P3-009/successor-WP-P3-010.yaml
+successor_packet_sha256: 71b99d85366ebf39a968007c3f81a49faaf96eda1bd639805d51b7a6d1a9f09e
+predecessor_head: 56203273427b1d9fb414d9c907ba875a46b67281
+closed_packet_path: governance/evidence/WP-P3-009/superseded-work-packet.yaml
+closed_packet_sha256: d1c28b23743e99417d2988df1b6fd280c0632aa3dffba7edce5d432b7f8097b5
+decision_path: governance/evidence/WP-P3-009/owner-supersession-decision-2026-09-09.yaml
+evidence_entries:
+  - path: governance/evidence/WP-P3-009/execution-recovery-review-2026-09-08.md
+    sha256: e2ae9e76630899d686904769254a4377043d26430d5e922a20b015ce36f10211
+    git_blob_oid: c28dcdabf9ccb30099e91fd3f355ed72c72ef28f
+  - path: governance/evidence/WP-P3-009/gate-run-2026-09-08.md
+    sha256: 1e9299a510857bff61b93d33b2ffa993c97b309caa69964bb0150990a1f23245
+    git_blob_oid: 2eb0cc81a7b5f63d51da0c3303e29f330f75f315
+  - path: governance/evidence/WP-P3-009/observation-recovery-procedure-2026-09-08.md
+    sha256: 98710b00a0ad0f0b0de91256d8674c259f5e883298d837d3a63aa340d3146e6f
+    git_blob_oid: 944f0c59af79fbc8179c8ed02c8daa3b82ee29ee
+  - path: governance/evidence/WP-P3-009/owner-identity-authorization-2026-09-04.md
+    sha256: c8f38cd0dfb4c7159945aa02625405381c81ece1247d5b7577b26d8d9972f0aa
+    git_blob_oid: 3a02c86705b52604a161e1860036aa93ae82c4dc
+  - path: governance/evidence/WP-P3-009/owner-session-zero-spend-smoke-2026-09-04.md
+    sha256: 91c4240269a12a86b6efbf9095275e79b2387055f81dff4a2f72ffa3841ebad2
+    git_blob_oid: 1f1a3f3c621368d023fb9b699039122c9aee3f43
+  - path: governance/evidence/WP-P3-009/owner-supersession-decision-2026-09-09.yaml
+    sha256: 123b24e13c7421142c73105239cdd2d501557a84d1b5767aae56cf749b95a76f
+    git_blob_oid: 120d37047b42cd9d37295d97dfd8a44a86b6c873
+  - path: governance/evidence/WP-P3-009/pre-supersession-work-packet.yaml
+    sha256: d8afa4ab9876c724b6fab818483c9cdfb2575eccc031b84c3b570aecc6937cb5
+    git_blob_oid: 389d55ee428225632516c3ffa7fab36d1d477b69
+  - path: governance/evidence/WP-P3-009/private-72-hour-observation-2026-09-07.md
+    sha256: 27295c9ed2d7a5f2e4b4162b0c2199fb4108f52931d12ef9fb855394c65fe467
+    git_blob_oid: 2b2b5a43082432bf5344b36519e2ac17c970764d
+  - path: governance/evidence/WP-P3-009/private-observation-2026-09-05.md
+    sha256: 41225b201e39313adf9eac105815dfd8ad9ad7fa302ef27e59c32159465b7fa4
+    git_blob_oid: e6ad3061178824c20fe2809a4ca8535fefc98e0b
+  - path: governance/evidence/WP-P3-009/private-observation-2026-09-06.md
+    sha256: 900b789f2f82b2b876eea2e3da23f20e53ed59c26fdd1d673725e5effbc51eb8
+    git_blob_oid: 8cf84db07b522e131276659b1258fc4d65a53425
+  - path: governance/evidence/WP-P3-009/private-observation-2026-09-08.md
+    sha256: d216d8a44d955e53a5e7f518d3502b1a874021b9bee429507fe6ff7fe40aecd8
+    git_blob_oid: 303edf7abddf5747348de2f03768607db2693094
+  - path: governance/evidence/WP-P3-009/replacement-observation-baseline-2026-09-08.md
+    sha256: 1e33a8d0778195cf0b7c6b63785138ef7d40b04d38c08d147d514b333031d724
+    git_blob_oid: 09b07aecefb36073aae3b45a6c2fa3f1b9193fae
+  - path: governance/evidence/WP-P3-009/replacement-observation-day-01-2026-09-09.md
+    sha256: 093bf9fb2df2666ef3829afaf104e02e6ce271732fea21ff3dc23ad72a6005ad
+    git_blob_oid: 82b7aefc36d734dd84710c053f77a46568c22287
+  - path: governance/evidence/WP-P3-009/replacement-observation-hour-01-2026-09-08.md
+    sha256: 1e5cab262b11f34ba0c0ce2f144acda746b6a7ed2de839cff34a4d16263bb964
+    git_blob_oid: c88050f51fb94fcc45f785cbedcb74192b656760
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-01-2026-09-08.md
+    sha256: 7cefd8b33b708e95d6a1372f5db910afa47fac3dfa71f6ac579ba6f81b0734f4
+    git_blob_oid: fa9e9e96967b574e8f4aeaa6a814f9ab7fe3c8e1
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-02-2026-09-08.md
+    sha256: 469dc59a8735b9b9ce078aed37936635ed1dee283afdc0e60adf121a49776365
+    git_blob_oid: b191a2a4822214ac0a2878ef254219efb6707129
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-03-2026-09-08.md
+    sha256: 53736a7a73af574f8b095efce3d27b0cbb700a14b1db972373147612037fbc72
+    git_blob_oid: 68870ca672a7864b9dd61e58c66d54c2a543874d
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-04-2026-09-08.md
+    sha256: b01c8b121297c65d9fd4c03d55fd7d824ef8e920e0472035d330a2512cec7290
+    git_blob_oid: 257d7dcdaa58af6f2d99a852d1a6867348498f20
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-05-2026-09-08.md
+    sha256: 3e6ab280cf2fe850bab782fd30b6a3ef7474a7cefe87fd9b650409f17dd67776
+    git_blob_oid: 897e185a47a7ccaa29608bbc41c76a252fce9386
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-06-2026-09-08.md
+    sha256: 230a480fd4ed447cfb3092cd0fc0ee3974128e6455688d013f7ede6d01a1c93b
+    git_blob_oid: 839a0c125c95447e6cd37f92aff9a968c1e9e6a7
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-07-2026-09-08.md
+    sha256: 6e1d2c5931ae7d5f9cdc8767f7de457cb936f3388947cf72274d86e36446ddf0
+    git_blob_oid: ab13bbd893acdc693aba7985356ba4f544773fa2
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-08-2026-09-08.md
+    sha256: a0b8fe8ae55ec6f44ac7dc96ed47a00238be41b7aae8ac5ee471a8add4c6b9ad
+    git_blob_oid: eced87de4bcbb76e30d9e62b30d4d669caefb4bb
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-09-2026-09-08.md
+    sha256: 62233253778675722c4bbee7be26febbc4cc1b6f186b908e041172ba5c5feec7
+    git_blob_oid: 9ce2e0cb82010a7f69ebdecbc388aba795babe7b
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-10-2026-09-08.md
+    sha256: 0539d1d8d183850e8f23b59a147afb805d163c8cc9f464f4abe685f742c28152
+    git_blob_oid: 73ca5b4b20ca6a798b7a4d4ac48a98afa513eccf
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-11-2026-09-08.md
+    sha256: e8a8d7c71af81a2cbe786175e0f16da286219ed87874a02c916ba2fcef31fe18
+    git_blob_oid: 120415a1689b9e5d44e133d5416d4dba45bb3358
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-12-2026-09-08.md
+    sha256: 0e0d271192535dbeb0bccc9f9ca32acefa0daad35705f20297e287f95b8a286c
+    git_blob_oid: 0ce86df4f48a41630b9cd4ccc3837c95c0484b54
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-13-2026-09-08.md
+    sha256: 79ee0b89c1681aa5cee6e1173e10eea7059449b4360ab8bb5a6825887ef7efc1
+    git_blob_oid: fda93c5abca19df80c4b8ab84421bafdf346c4a6
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-14-2026-09-08.md
+    sha256: 8f83d3de46e5847dad84cb623fe8abd19ed61469239ab64af69df4f887a94fb5
+    git_blob_oid: bf15d941091a2127d5d8d90134744ebb85143219
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-15-2026-09-08.md
+    sha256: 2d77a4eff41493bdc8fe967502db3bc168762979e3da9ec3b670210d1f7f46ef
+    git_blob_oid: 35f5d4814884c6eca9226e7a78f353f11af7438d
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-16-2026-09-08.md
+    sha256: ed8a5a2faa242c23178904d97b980a3f5c3c75bca360eedb5c295041e4d7f028
+    git_blob_oid: 086bca1f8cff6008e5fe28a87b9767d7c8d5f048
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-17-2026-09-09.md
+    sha256: 796ac35a0c42e32626163b5bf221f12006b2fca4492942c9e116fc1b3a73de5b
+    git_blob_oid: 0b5ad519726d599070451e974a73e257c7c32dbd
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-19-2026-09-09.md
+    sha256: 46bb5ecab11ad6a0e0cc46f1bbabda1e524e8660f1be512016a41270013ee2ad
+    git_blob_oid: 96367c5f655f0d800170b95047dc0d59a9c77f67
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-20-2026-09-09.md
+    sha256: 6e60cad3bf7b9c6d028ae37081d149f533c633a9e1837e372a99f227fd08b43c
+    git_blob_oid: 04c6b169f1de8050424193e4ab52f056a3100dfc
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-21-2026-09-09.md
+    sha256: 7542996f788dc9d4494c10103cfbe04590b850c11534feb1facb3121579768bf
+    git_blob_oid: aeb1aaa159ddc3135530dce9993a8b35e4f090e2
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-22-2026-09-09.md
+    sha256: 1ed2158fac3c84d7fd01aa48e1e67f2593dabf1a5454a822ca215747871025a3
+    git_blob_oid: 4692046bb06db562ca72c120cc805859c6f73529
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-23-2026-09-09.md
+    sha256: 6acf2e13d4fd1617f25d01678b9ea0e117027245a01a5ebf659d009c1189f48f
+    git_blob_oid: 24d8d587c8253aa202313f2fcb5bc13c6135cd0b
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-24-2026-09-09.md
+    sha256: 5609ec2d4dd02ed456088d8bf9dc13eb97c12b9bf93eeeeb4280cfe44bcec760
+    git_blob_oid: 357ce9f3184331f13e3dd7b6086eb4d05c9d213e
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-25-2026-09-09.md
+    sha256: 3afe27e3a807362833d46056bbb0f2e8e832d01a2e66d5b9a77a9ec8ea24c073
+    git_blob_oid: 81f3415c7289eaae3cb59cfddccb1ecd263dce7c
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-26-2026-09-09.md
+    sha256: 669826ed7a1048e619bc2b52b4d012e05374410e96c347b7f1771b07a854c434
+    git_blob_oid: 01669303886fe8c2d36d9628b7ef12c40c18055e
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-27-2026-09-09.md
+    sha256: b25e90990443e2ab44e60705cb4e03f19a3243dbc999b232c05a66079ad62bb2
+    git_blob_oid: a2a11fad0b3c2eb9c112a33cad6ad991db94fc6d
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-28-2026-09-09.md
+    sha256: a8f017795777d7f3b5cf937125eb9be62b9ef7c3c12c3139d9a46471e08f6774
+    git_blob_oid: b3790b2950b73c2a3a232240bbc6de454e797a83
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-29-2026-09-09.md
+    sha256: dc0ad5746f7654db340546685adefdbd05680b7a4bb2e67f597a15999e86fd03
+    git_blob_oid: eab2deb1e62b72a327a63199b54d9069f1b6b817
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-30-2026-09-09.md
+    sha256: bdcd2ecf180579c9b40d44298f592cf0cf85cfdd6b9d67f25803d14fa9aa6749
+    git_blob_oid: 93be40f88a097fb8a61f46b7a5a3f7e03bd13741
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-31-2026-09-09.md
+    sha256: 44a160ff0d9de58feb72ed238e3fbe899cb1cd560070d4cc5ce1b24c731f23c7
+    git_blob_oid: 4b94cc6d449e56c20557f3e6ecd945136cd9d7ff
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-32-2026-09-09.md
+    sha256: 652728601ece2193794720d8f75a0d009c898c828c5cd0e7da71936cee3ecff5
+    git_blob_oid: e8643828101bbffaf841130aa304cdfa1e6fb909
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-33-2026-09-09.md
+    sha256: 5d48f2ea3dcf281a4e5416b247517c2562fd638781c8294be65e9570708d1ee7
+    git_blob_oid: 076d69d5cb937608067b7db084748827d396800b
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-34-2026-09-09.md
+    sha256: 6bb198e6c5fd8be7c041046611c94459e86a46279115e49a47c411b473b3779d
+    git_blob_oid: a27ef9466ceace3f7f6a02a89922254e4feb5d73
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-35-2026-09-09.md
+    sha256: cb9f8d00d96d6ba61778c28855cb592f9c45c9f8ebb787c65f1e00e3f1c0d449
+    git_blob_oid: e96649ad83a5b665da257fe29db657a6a4b91fe1
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-36-2026-09-09.md
+    sha256: f5f15ca46989473ee02b50a6c5620ce66107aceadb16b03a8ecbf196b1e9d964
+    git_blob_oid: 85aa7782436d64acc7d87651d426dd3c4320923b
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-37-2026-09-09.md
+    sha256: ce8952d09708900ea5054e45d446619f786954ed2df84bc9a71ae41bcfd6d07b
+    git_blob_oid: 89354c8ed6a294fc6c133896b1ec916c177b5767
+  - path: governance/evidence/WP-P3-009/replacement-observation-scheduled-38-2026-09-09.md
+    sha256: 91aafd64519ef2455d112a73300d217e68ee7e737efbbded8c3d4a1085fe0e25
+    git_blob_oid: 2685fdc4de2ffbb2430ac78d30e6e6ab1513f730
+  - path: governance/evidence/WP-P3-009/successor-WP-P3-010.yaml
+    sha256: fabe8d060adf7f3b574808e575a71161ccde08bdf02b634f2d7608ab7fbfbe08
+    git_blob_oid: 3bda8086b0ed18304d58116b5826177a1aec46ed
+  - path: governance/evidence/WP-P3-009/supersession-amendment-2026-09-09.md
+    sha256: 2da582f1d23f65e2bb12619a82a0d6721ff4162c114d5564f17109266d20c4dd
+    git_blob_oid: 505d227d1df3dcb35065a012e2ae914b1092507a
+  - path: governance/evidence/WP-P3-009/supersession-verification-2026-09-09.md
+    sha256: fa1fbb5154f68e1b009f861f58faefd0cff4ae6283ad3fb2a8f21dacca083f3e
+    git_blob_oid: df4250e3bbe2c5f07d58ba8ce61cfb85d0223f71
+  - path: governance/evidence/WP-P3-009/traffic-decision-draft.md
+    sha256: 56a72f6d15c6c84407a3b0a03b7d0a66f4a5c9fd87f8ec9b5d8d209f8e8a1c94
+    git_blob_oid: 48646a7f19a9f59615f9e0d46e1398b517068a4b
+  - path: governance/evidence/WP-P3-009/trunk-sync-2026-09-04.md
+    sha256: ee4c84caaec18ead1a889e295743c76e59d71a88fbbb491cfadf28b4bc4732d7
+    git_blob_oid: 8091c9d6fe537a5ae314bf3521499628797b8a76
+unfinished_step_ids:
+  - p3i-003-private-72-hour-observation
+  - p3i-004-traffic-go-no-go-packet
+  - p3i-005-owner-directed-supersession
+unproved_acceptance_ids:
+  - observation-window
+  - fresh-traffic-decision

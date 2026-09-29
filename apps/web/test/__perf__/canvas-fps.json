@@ -1,0 +1,13 @@
+{
+  "fixtureNodes": 100,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "thresholdFps": 55,
+  "measuredFps": 60.16,
+  "frames": 181,
+  "durationMs": 3009,
+  "maxFrameDeltaMs": 16.8,
+  "passed": true
+}

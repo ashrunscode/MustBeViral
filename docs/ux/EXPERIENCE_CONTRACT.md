@@ -10,20 +10,33 @@ MustBeViral Studio should make a small growth team feel in control of a complex 
 
 The user must always be able to answer five questions: Where am I? What is ready? What is blocked? What will this action change or cost? How do I recover?
 
-## Precision Creative Studio direction
+## Lightfield paper-and-ink identity
 
-- Near-black neutral canvas and panels with restrained violet/blue emphasis; avoid decorative glass, noisy gradients, and ornamental glow.
-- Geist Sans for product text and Geist Mono for identifiers, prices, timings, model labels, and execution evidence.
-- Dense but calm layout: left tool rail, central infinite canvas, right inspector, top project/run controls, and collapsible bottom activity/output panel.
-- Semantic colors: violet/blue active, green verified success, amber attention or reconciliation, red destructive or failed. Color is never the only status cue.
-- Base palette for prototype exploration: background `#090A0D`, surface `#111318`, elevated `#171A21`, border `#292E39`, primary text `#F5F7FB`, secondary text `#A7AFBF`, violet `#806BFF`, blue `#5A96FF`, green `#35D08A`, amber `#F2B84B`, red `#F06B7A`. Final tokens must preserve contrast when approved through SuperDesign.
-- Four-pixel spacing base; common gaps 8/12/16/24/32; compact controls 32–36px tall; primary controls at least 40px; touch targets at least 44×44px.
-- Radius scale 6/8/12px. Use borders and surface hierarchy before shadow; reserve a soft shadow for transient overlays.
-- Motion durations 120ms for local feedback, 180ms for panel state, and 240ms for route/major layout transition. Motion communicates causality and never delays input.
+- Surfaces use paper `#fafafa` (`z0`) for the primary field, paper `#f5f5f5` (`z1`) for secondary fields and wells, and white `#ffffff` for cards and raised panels.
+- The black ink-alpha ladder is the neutral system: `t0 .02`, `t1 .04`, `t2 .06`, `t3 .08`, `t4 .12`, `t5 .16`, `t6 .25`, `t7 .35`, `t8 .50`, `t9 .60`, `t10 .75`, and `t11 .85`. Semantic mapping is primary `.85`, headings `.75`, body `.60`, captions `.50` only at WCAG large-text sizes (text below that uses at least `.60`, because `.50` measured 3.9:1 on paper and white and fails WCAG AA 4.5:1), disabled `.25`, moderate borders `.12`, and subtle borders `.06`.
+- The single blue accent family is content-brand `#80bfff` and brand-strong `#3182d4`. The one primary action per screen is the blue-filled control. White on `#3182d4` measured 3.98:1 and fails WCAG AA 4.5:1, so a filled primary button with white text uses the deeper fill `#2875c2` at rest (4.76:1), `#226bb3` on hover (5.49:1), and `#1d5f9f` when pressed (6.58:1), and small blue text uses `#226bb3`; brand-strong `#3182d4` remains the brand colour for the mark, borders, selection, and focus. Selection uses a content-brand border with a 12% content-brand wash (`#80bfff1f`). Blue never becomes a section fill or a second competing action.
+- Status colors are success `#49bf4c`, error `#f55434`, and amber attention. They appear only as small icon-and-text chips; the status color marks the dot or icon, and chip label text uses a darker text shade that meets WCAG AA 4.5:1 on its actual background (success `#187b4e` 5.27:1, attention `#8b5f0f` 5.61:1, error `#b73945` 5.70:1 on white). Those text shades derive from the shipped status tokens (`#1f9d63`, `#b87e14`, `#c4404d`), not from the success and error values above; that palette divergence is an open owner decision recorded in `brand/context.md` section 13. Color is never the only status cue and status color never fills a large surface.
+- The primary face is Untitled Sans (licensed target) with Geist Sans as the interim implementation face; the evidence face is DM Mono. Untitled Sans uses weight 400 throughout the product scale: h1 `28px/1.2` at `-.03em`, h2 `24px/1.25` at `-.02em`, h3 `21px/1.25` at `-.015em`, h4 `19px/1.3` at `-.01em`, large `17px/1.5`, body `15px/1.5`, small `13px/1.5`, xs `12px/1.45`, and xxs `11px/1.45`.
+- DM Mono monocaps carry all evidence, including identifiers, prices, timings, revisions, model routes, seeds, hashes, receipts, timestamps, counts, labels, and table headers. The two monocaps sizes are `10px/1em` and `9px/1em`, both with `+1px` tracking and weight 500.
+- Four pixels is the spacing base; common gaps are 8/12/16/24/32px. Compact controls are 32–36px tall, primary controls are at least 40px, and touch targets are at least 44×44px.
+- Radii are 4px for controls, 6px for inputs, 8px for cards, and 10px for floating panels, with pill geometry reserved for status dots. Use borders and surface hierarchy before shadows; reserve a soft, tight shadow for floating or transient layers.
+
+### Work-motion language
+
+- While a node executes, a 2px indeterminate filament travels along its top edge on a `1.6s ease-in-out` loop and remains paired with a text state.
+- While output moves between nodes, the connecting edge uses flowing brand-colored dashes animated through `stroke-dashoffset` travel. The edge settles to its static lineage state when transfer finishes.
+- On arrival, the receiving node's border warms for 180ms and then settles without bounce or scale.
+- Reduced motion replaces filament and edge travel with a static directional gradient plus a text state. Motion communicates causality only and never decorates or delays input.
+
+### Ratified directions
+
+**Preview fixtures** keep Review Approval: named-amount confirm bar; QA jump links; approve/reject; free-retry that names retained work; immutable receipt; version comparison; batch approvals. Watch items (1440px inspector overflow, 12-node density, quiet retry) remain obligations for those Lumen fixtures.
+
+**Live Review** is Composed Review. The buyer unit is one Meta ad, not an artifact card. Default view is three concepts. Each concept is a placement stage (Feed 4:5, Feed 1:1, Stories 9:16, Reels motion) with primary text, still or video, headline, description, and one primary action. Safe-zone overlay is a toggle. Approve applies to the concept’s adaptations and paired copy through the existing approval operation. Selection happens after seeing ads, not before spend.
 
 ## Interaction principles
 
-1. **Brief before canvas.** Onboarding progressively captures product truth, brand constraints, audience, offer, and claim rules; the system explains why each required field matters.
+1. **Brand before campaign.** Onboarding saves a durable brand draft, analyzes supplied sources, lets the owner correct findings, and reuses approved knowledge across campaigns. Advanced graph controls remain available without being required for ordinary work.
 2. **Plan before spend.** Agent-proposed graph changes appear as a readable patch with reasons. Provider spend begins only after validation, quote, and explicit confirmation.
 3. **Progressive disclosure.** Default views show task, outcome, status, and cost. Provider IDs, hashes, model versions, and lineage remain one action away.
 4. **Partial value is visible.** Completed static branches become reviewable while motion or a failed branch continues. Global progress never hides branch state.
@@ -33,28 +46,26 @@ The user must always be able to answer five questions: Where am I? What is ready
 
 Every interactive component defines default, hover when applicable, focus-visible, pressed, disabled, loading, error, and success states. Optimistic UI is allowed only when rollback is deterministic and no money/provider action is implied.
 
-## SuperDesign approval gate
+## Visual approval gate
 
-Production UI implementation is blocked until the clean Next scaffold exists and `.superdesign/init/` contains the required repository analysis. For this new product:
+Lightfield tokens in `.superdesign/design-system.md` are the system. Design and mockup tools are optional tooling, not an authority.
 
-1. Capture requirements from the accepted product and UX contracts.
-2. Search SuperDesign style prompts once, select the closest dark-studio foundation, and write `.superdesign/design-system.md` using the approved product constraints.
-3. Create the MustBeViral Studio project and one initial Precision Creative Studio draft.
-4. Create three explicit dark-studio branch variations focused on: calm density, canvas legibility, and review/approval confidence. All branches must preserve the design-system fonts, palette, spacing, and component rules.
-5. Extend the chosen branch into campaign brief, canvas, quote/run, output comparison, receipt, and responsive review flows.
-6. Present rendered URLs and named desktop/tablet/mobile captures to the user.
-7. Record explicit user approval before production components or pages are implemented.
-
-Approved visual goldens become test fixtures. Later changes branch from the approved draft; a replacement is reserved for a single small approved correction.
+1. Preview fixture goldens (Review Approval / Lumen) stay locked for local-preview Playwright.
+2. Live product screens may diverge from those fixtures. They use Lightfield tokens and worker data.
+3. A new live surface needs named HTML frames, desktop and mobile captures, and explicit operator approval before its production components ship.
+4. Composed Review frames at `.superdesign/hifi/composed-review-desktop.html` and `composed-review-mobile.html` were operator-approved on 2026-08-17. Live worker Review implements that layout. Preview fixtures stay on Review Approval.
+5. Do not require `.superdesign/init/` freshness as a production block; that analysis is historical.
+6. Full-platform frames `.superdesign/hifi/platform-studio-desktop.html` and `platform-studio-mobile.html`, using WashBodega and the owner-selected UnPile second brand, were operator-approved on 2026-09-09: “Approve revised visual direction”. Their studio, brand draft/findings, asset library, campaign, content review and recovery direction is accepted. The approval evidence and captures are in `governance/evidence/WP-PLATFORM-W0-001/design-review-2026-09-09.md`. Durable behavior, accessibility, connected data, publication rights and release checks still require their packet-specific proof.
 
 ## Accessibility contract
 
 - Meet WCAG 2.2 AA for every shipped flow; target 7:1 text contrast where practical.
-- Provide a skip link, logical headings and landmarks, persistent focus visibility, predictable tab order, and focus recovery after dialogs, node deletion, route changes, and errors.
+- Provide a skip link, logical headings and landmarks, a persistent 2px brand-strong `#3182d4` focus-visible outline with a 2px offset (drawn 2px inside instead on a scroll region that fills the clipped studio frame, so all four edges stay visible), predictable tab order, and focus recovery after dialogs, node deletion, route changes, and errors.
 - All essential canvas actions—select, inspect, connect, reorder, configure, validate, and delete—must be possible through the semantic outline/table without pointer gestures.
 - Announce agent patches, quote changes, run transitions, progress, partial results, and failures through appropriately scoped live regions without repeated noise.
 - Respect reduced motion, forced colors/high contrast, 200% zoom, browser text resizing, and screen magnification.
 - Icons have accessible names when actionable and are hidden when decorative. Status always includes text plus icon/shape.
+- An enabled, focusable control never shows an inactive or de-emphasised state through opacity, because opacity pulls its text below AA (a canvas node at opacity .5 measured 2.14:1 for mono text and 3.15:1 for its title). It recedes through non-text chrome only, keeps a non-colour cue that itself meets the WCAG 1.4.11 3:1 non-text contrast minimum, and every text keeps an AA ink. An inactive canvas node, outside the selected node's lineage, takes a dashed `--ink-muted` border as that cue (3.91:1 against the canvas at rest and with keyboard focus, `--ink` at 5.59:1 on hover), the canvas-field fill `--paper-2` instead of the raised card, a transparent status chip and an `--ink-muted` decorative status icon; its title steps down from `--ink-strong` to `--ink`, and on that fill its title and mono labels measure 5.59:1 and its status labels 4.84–5.59:1.
 - Generated images require user-editable descriptive text before approval/export.
 
 ## Responsive contract
@@ -71,3 +82,43 @@ Approved visual goldens become test fixtures. Later changes branch from the appr
 - p75 LCP ≤2.5s, INP ≤200ms, and CLS ≤0.1 on the agreed production measurement segment.
 - List and canvas views load thumbnails or metadata, not full-resolution media.
 - Route and panel skeletons reserve final geometry; no fake progress percentages are shown.
+
+## Full-platform experience
+
+The interface should feel like a production workspace with real media and clear next actions. The default interaction is selecting brands, reviewing work, editing content, and handling exceptions. AI assistance is available in context; the user should not need to converse with a blank chat to find basic controls.
+
+### Navigation
+
+| Scope             | Primary surfaces                                                                              |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| Studio            | Overview, Brands, Calendar, Approvals, Tasks, Creators/Partners, Reports, Team, Settings.     |
+| Brand             | Overview, Brand Intelligence, Assets, Channels, Campaigns, Content, Calendar, Inbox, Results. |
+| Campaign          | Overview/brief, Plan, Content, Collaborators, Approvals, Calendar, Results, Budget.           |
+| Content item      | Source/brief, Editor, Channel previews, QA, Comments, Approval, Publishing history.           |
+| Advanced settings | Billing, API access, reusable agent workflows, integrations, audit, export, ownership.        |
+
+Keep brand avatar/name and workspace context visible. Use breadcrumbs and real durable identifiers. Search and quick switching must handle many brands without accidental changes to the wrong account.
+
+### Key screens
+
+- **Studio overview:** attention list, scheduled work, pending approvals, disconnected channels, and a media-rich brand grid. Avoid empty revenue/follower charts before integrations exist.
+- **Brand onboarding:** website entry, staged analysis, editable findings with sources, identity preview, and targeted questions. Save continuously.
+- **Brand home:** identity preview, next campaign, current offers, recent assets, channel health, and suggested next work.
+- **Asset library:** visual browsing with usage/rights filters, real-media emphasis, and clear capture requests.
+- **Campaign planner:** objective and audience above a content board/calendar; every card shows selected assets, reason, owner, status, and channels.
+- **Composer:** editing and channel preview side by side; accessible modal/drawer behavior; save status; undo; version history; exact approval impact.
+- **Approvals:** media-first review, clear change requests, comparison to previous revision, and one decisive action per item.
+- **Creator discovery:** explainable filters and shortlist cards with actual supporting content and freshness, not decorative AI scores.
+- **Results:** answers to campaign questions, source freshness, and an actionable next experiment.
+
+### Design requirements
+
+Create a consistent type scale, spacing system, navigation hierarchy, buttons, forms, tables, cards, drawers, skeletons, notifications, and empty/error states. Use a restrained application palette while preserving each customer's identity inside creative previews. Do not recolor the entire studio to every active brand.
+
+Make desktop authoring strong; tablet/mobile support review, capture, approvals, scheduling, and exceptions. Require keyboard access, readable contrast, visible focus, non-color status cues, screen-reader labels, reduced motion, and zoom resilience.
+
+Replace internal copy such as “Core can pin the expected revision,” “P1a,” and “fully-landed margin cap” with user actions and understandable costs. Put diagnostic IDs and implementation details in support/admin views.
+
+Every empty or unavailable screen needs an appropriate recovery action: select a brand, add an asset, resume an existing item, reconnect an account, request approval, or retry a failed load. Unknown billing/metrics must not be rendered as zero. A session expiry should return the user to the same permitted content after sign-in.
+
+Postiz's calendar/composer and Sendible's workspace/campaign/inbox/report organization provide useful interaction references. Build an original coherent MustBeViral experience. The supplied guides explicitly leave some areas inferred or untested; neither guide proves that every observed menu has a working API.

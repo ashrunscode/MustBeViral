@@ -1,0 +1,24 @@
+schema_version: 1
+packet_id: WP-P1A-001
+spec_revision: 1
+phase: P1a
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-08-31T12:31:56.544Z
+successor_packet_id: WP-P1B-001
+predecessor_head: b5519570fcdd66a1330fdf43dd700f0aba94743f
+closed_packet_path: governance/evidence/WP-P1A-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+evidence_entries:
+  - path: governance/evidence/WP-P1A-001/p1a-implementable-acceptance-2026-08-31.md
+    sha256: edbd4b84ec12ac2d1f10dea7982dee49681084d88fb68eb6e18be46cc22741e9
+    git_blob_oid: ce1a0a13c728f9631ed5632656d01cd9035de087
+completed_step_ids:
+  - p1a-001-production-identity-and-rls
+  - p1a-002-stripe-wallet-entitlements
+  - p1a-003-transactional-email-and-telemetry
+  - p1a-004-billing-usage-ui
+  - p1a-005-production-deploy-rollback-and-vitals
+  - p1a-006-p1b-successor-handoff
+closed_packet_sha256: 7851635be1c408d80eaaf2d2f924d44c26f2d45ca0d5dd30bbb7be32f2e70908

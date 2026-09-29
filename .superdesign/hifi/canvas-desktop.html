@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap');
+      :root {
+        --paper: #fafafa;
+        --paper-2: #f5f5f5;
+        --card: #ffffff;
+        --wash: rgba(0, 0, 0, 0.04);
+        --wash-faint: rgba(0, 0, 0, 0.02);
+        --ink-strong: rgba(0, 0, 0, 0.85);
+        --ink-head: rgba(0, 0, 0, 0.75);
+        --ink: rgba(0, 0, 0, 0.6);
+        --ink-muted: rgba(0, 0, 0, 0.5);
+        --ink-faint: rgba(0, 0, 0, 0.25);
+        --line: rgba(0, 0, 0, 0.12);
+        --signal: #3182d4;
+        --signal-soft: #80bfff;
+        --ok: #1f9d63;
+        --attention: #b87e14;
+        --fail: #c4404d;
+      }
+      body {
+        font-family: 'Geist', sans-serif;
+        background-color: var(--paper);
+        color: var(--ink);
+        margin: 0;
+        padding: 0;
+      }
+      .mono {
+        font-family: 'DM+Mono', monospace;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .node-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        transition: all 120ms cubic-bezier(0.2, 0, 0, 1);
+      }
+      .node-card:hover {
+        border-color: var(--ink-faint);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      }
+      .node-selected {
+        border: 1.5px solid #80bfff;
+        background: #80bfff1f;
+      }
+      .node-dim {
+        opacity: 0.5;
+      }
+      .flow-line {
+        stroke: var(--line);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .flow-active {
+        stroke: var(--signal);
+      }
+      .flow-transfer {
+        stroke: #3182d4;
+        stroke-dasharray: 6 8;
+        animation: dash-flow 2s linear infinite;
+      }
+      @keyframes dash-flow {
+        to {
+          stroke-dashoffset: -56;
+        }
+      }
+      .filament-sweep {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: var(--attention);
+        width: 30%;
+        animation: sweep 1.6s ease-in-out infinite;
+      }
+      @keyframes sweep {
+        0% {
+          left: 0;
+          width: 0;
+        }
+        50% {
+          width: 40%;
+        }
+        100% {
+          left: 100%;
+          width: 0;
+        }
+      }
+      .canvas-bg {
+        background-image: radial-gradient(var(--line) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .filament-sweep {
+          left: 0;
+          width: 100%;
+          animation: none;
+          background: linear-gradient(90deg, var(--attention), var(--signal-soft));
+        }
+        .flow-transfer {
+          animation: none;
+          stroke-dasharray: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col overflow-hidden" data-sd-id="1">
+      <header
+        class="h-[60px] border-b border-[rgba(0,0,0,0.12)] bg-white z-50 flex items-center justify-between px-6"
+        data-sd-id="2"
+      >
+        <div class="flex items-center gap-8" data-sd-id="3">
+          <span
+            class="font-medium text-[15px] text-[rgba(0,0,0,0.85)] tracking-tight"
+            data-sd-id="4"
+            >MustBeViral Studio</span
+          >
+          <nav class="flex gap-6" data-sd-id="5">
+            <a
+              id="nav-canvas-link"
+              href="#"
+              class="text-[13px] text-[rgba(0,0,0,0.85)]"
+              data-sd-id="6"
+              >Canvas</a
+            ><a
+              id="nav-receipts-link"
+              href="#"
+              class="text-[13px] text-[rgba(0,0,0,0.60)]"
+              data-sd-id="7"
+              >Receipts</a
+            ><a
+              id="nav-assets-link"
+              href="#"
+              class="text-[13px] text-[rgba(0,0,0,0.60)]"
+              data-sd-id="8"
+              >Assets</a
+            >
+          </nav>
+        </div>
+        <div class="flex items-center gap-4" data-sd-id="9">
+          <div class="mono text-[rgba(0,0,0,0.50)]" data-sd-id="10">System Ready</div>
+          <div class="w-2 h-2 rounded-full bg-[#1F9D63]" data-sd-id="11"></div>
+        </div>
+      </header>
+      <main class="flex-1 relative overflow-hidden flex" data-sd-id="12">
+        <div
+          class="flex-1 min-w-0 relative canvas-bg overflow-hidden bg-[rgba(0,0,0,0.02)]"
+          data-sd-id="13"
+        >
+          <svg
+            class="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 1120 736"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            data-sd-id="14"
+          >
+            <defs>
+              <marker
+                id="arrow-default"
+                markerWidth="5"
+                markerHeight="5"
+                refX="4"
+                refY="2.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0 0 L5 2.5 L0 5 Z" fill="rgba(0,0,0,0.12)"></path>
+              </marker>
+              <marker
+                id="arrow-active"
+                markerWidth="5"
+                markerHeight="5"
+                refX="4"
+                refY="2.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0 0 L5 2.5 L0 5 Z" fill="#3182d4"></path>
+              </marker>
+            </defs>
+            <path
+              data-edge="1-2"
+              d="M200 348 C216 348 216 60 232 60"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="1-3"
+              d="M200 348 C216 348 216 320 232 320"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="1-4"
+              d="M200 348 C216 348 216 570 232 570"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="2-5"
+              d="M416 60 C432 60 432 196 448 196"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="2-6"
+              d="M416 60 C432 60 432 358 448 358"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="2-7"
+              d="M416 60 C432 60 432 548 448 548"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="3-6"
+              d="M416 320 C432 320 432 358 448 358"
+              class="flow-line flow-transfer"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="5-8"
+              d="M632 196 C648 196 648 358 664 358"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="6-8"
+              d="M632 358 C648 358 648 358 664 358"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="7-8"
+              d="M632 548 C648 548 648 358 664 358"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="2-9"
+              d="M416 60 C432 60 432 60 448 60"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="8-10"
+              d="M848 358 C864 358 864 86 880 86"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="9-10"
+              d="M632 60 C736 60 776 86 880 86"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="8-11"
+              d="M848 358 C864 358 864 348 880 348"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="9-11"
+              d="M632 60 C736 60 776 348 880 348"
+              class="flow-line flow-active"
+              marker-end="url(#arrow-active)"
+            ></path>
+            <path
+              data-edge="10-11"
+              d="M972 128 C1044 174 1044 260 972 306"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+            <path
+              data-edge="11-12"
+              d="M972 390 C1044 434 1044 522 972 566"
+              class="flow-line"
+              marker-end="url(#arrow-default)"
+            ></path>
+          </svg>
+          <div class="absolute inset-0" data-sd-id="15">
+            <div
+              class="node-card absolute left-[16px] top-[306px] w-[184px] p-3"
+              data-node-id="1"
+              data-sd-id="16"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Input Node</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Campaign Brief</h3>
+              <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span class="px-1.5 py-0.5 rounded bg-[rgba(0,0,0,0.04)] mono text-[9px]"
+                  >v1.2</span
+                >
+                <span class="text-[#1F9D63] mono">Verified</span>
+                <span class="text-[rgba(0,0,0,0.60)] mono">kimi-2.6</span>
+              </div>
+            </div>
+            <div
+              class="node-card node-selected absolute left-[232px] top-[18px] w-[184px] p-3"
+              data-node-id="2"
+              data-sd-id="22"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Concept Logic</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Concept A</h3>
+              <div class="flex items-center justify-between">
+                <span class="text-[rgba(0,0,0,0.60)] mono">kimi-2.6</span>
+                <span class="text-[#3182d4] mono">Selected</span>
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[232px] top-[270px] w-[184px] p-3 overflow-hidden"
+              data-node-id="3"
+              data-sd-id="28"
+            >
+              <div class="filament-sweep"></div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="mono text-[rgba(0,0,0,0.50)]">Concept Logic</span>
+                <span class="mono text-[#B87E14]">Running</span>
+              </div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Concept B</h3>
+              <div class="flex items-center justify-between">
+                <span class="text-[rgba(0,0,0,0.60)] mono">kimi-2.6</span>
+                <span class="text-[#B87E14] mono">Generating 2/3</span>
+              </div>
+            </div>
+            <div
+              class="node-card node-dim absolute left-[232px] top-[528px] w-[184px] p-3"
+              data-node-id="4"
+              data-sd-id="34"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Concept Logic</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Concept C</h3>
+              <div class="flex items-center justify-between">
+                <span class="text-[rgba(0,0,0,0.60)] mono">kimi-2.6</span>
+                <span class="text-[rgba(0,0,0,0.50)] mono">Idle</span>
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[448px] top-[154px] w-[184px] p-3"
+              data-node-id="5"
+              data-sd-id="41"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Visual Gen</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Asset 01 - Hero</h3>
+              <div class="flex items-center justify-between">
+                <span class="text-[rgba(0,0,0,0.60)] mono">flux-2-klein</span>
+                <span class="text-[#1F9D63] mono">Verified</span>
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[448px] top-[316px] w-[184px] p-3"
+              data-node-id="6"
+              data-sd-id="47"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Visual Gen</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">
+                Asset 02 - Detail
+              </h3>
+              <div class="flex items-center justify-between">
+                <span class="text-[rgba(0,0,0,0.60)] mono">flux-2-klein</span>
+                <span class="text-[#1F9D63] mono">Ready</span>
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[448px] top-[490px] w-[184px] p-3 border-[#C4404D]/30"
+              data-node-id="7"
+              data-sd-id="54"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Visual Gen</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">
+                Asset 03 - Texture
+              </h3>
+              <div class="flex flex-col items-start gap-2">
+                <span
+                  class="rounded border border-[#C4404D]/25 bg-[#C4404D]/[0.08] px-1.5 py-0.5 text-[#C4404D] mono text-[9px]"
+                  >Failed</span
+                >
+                <button
+                  id="btn-retry-node"
+                  class="text-[11px] text-[rgba(0,0,0,0.85)] underline text-left"
+                >
+                  Retry (no charge)
+                </button>
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[664px] top-[316px] w-[184px] p-3"
+              data-node-id="8"
+              data-sd-id="61"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Output Matrix</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Adaptations</h3>
+              <div class="mono text-[rgba(0,0,0,0.60)]">9 Renders Queued</div>
+            </div>
+            <div
+              class="node-card absolute left-[448px] top-[18px] w-[184px] p-3"
+              data-node-id="9"
+              data-sd-id="67"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Copy Gen</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Copy Set</h3>
+              <div class="flex items-center justify-between">
+                <span class="mono text-[rgba(0,0,0,0.60)]">3 Variants</span>
+                <span class="mono text-[#1F9D63]">Verified</span>
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[880px] top-[44px] w-[184px] p-3"
+              data-node-id="10"
+              data-sd-id="73"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Motion Gen</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Motion 9:16</h3>
+              <div class="flex items-center justify-between gap-2">
+                <span class="mono text-[rgba(0,0,0,0.60)]">SEEDANCE-1.0 - 6S</span>
+                <span class="rounded bg-[rgba(0,0,0,0.04)] px-1.5 py-0.5 mono text-[9px]"
+                  >Queued</span
+                >
+              </div>
+            </div>
+            <div
+              class="node-card absolute left-[880px] top-[306px] w-[184px] p-3"
+              data-node-id="11"
+              data-sd-id="79"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Review Gate</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">QA Review</h3>
+              <span
+                class="rounded border border-[#B87E14]/25 bg-[#B87E14]/[0.08] px-1.5 py-0.5 text-[#B87E14] mono text-[9px]"
+                >2 Notes</span
+              >
+            </div>
+            <div
+              class="node-card absolute left-[880px] top-[566px] w-[184px] p-3"
+              data-node-id="12"
+              data-sd-id="85"
+            >
+              <div class="mono mb-1 text-[rgba(0,0,0,0.50)]">Output Pack</div>
+              <h3 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)] mb-3">Export Bundle</h3>
+              <div class="flex items-center justify-between">
+                <span class="mono text-[rgba(0,0,0,0.60)]">Meta-ready</span>
+                <span class="mono rounded bg-[rgba(0,0,0,0.04)] px-1.5 py-0.5 text-[9px]"
+                  >REV 7f3a</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside
+          class="w-[320px] border-l border-[rgba(0,0,0,0.12)] bg-white flex flex-col z-40"
+          data-sd-id="64"
+        >
+          <div class="p-6 border-b border-[rgba(0,0,0,0.12)]" data-sd-id="65">
+            <div class="flex items-center justify-between mb-4" data-sd-id="66">
+              <h2 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)]" data-sd-id="67">
+                QA Report
+              </h2>
+              <span class="mono text-[#B87E14]" data-sd-id="68">2 Notes</span>
+            </div>
+            <div class="space-y-4" data-sd-id="69">
+              <div
+                class="p-3 rounded-lg border-l-2 border-[#B87E14] bg-[rgba(0,0,0,0.02)]"
+                data-sd-id="70"
+              >
+                <div class="mono text-[rgba(0,0,0,0.50)] mb-1" data-sd-id="71">Contrast Issue</div>
+                <p class="text-[12px] text-[rgba(0,0,0,0.75)] mb-2" data-sd-id="72">
+                  Logo visibility on Asset 02 below 4.5:1 ratio.
+                </p>
+                <a
+                  id="qa-jump-1"
+                  href="#"
+                  class="mono text-[#3182d4] hover:underline"
+                  data-sd-id="73"
+                  >Jump to Asset</a
+                >
+              </div>
+              <div
+                class="p-3 rounded-lg border-l-2 border-[#B87E14] bg-[rgba(0,0,0,0.02)]"
+                data-sd-id="74"
+              >
+                <div class="mono text-[rgba(0,0,0,0.50)] mb-1" data-sd-id="75">
+                  Legal Disclaimer
+                </div>
+                <p class="text-[12px] text-[rgba(0,0,0,0.75)] mb-2" data-sd-id="76">
+                  Missing T&amp;Cs on concept variant logic.
+                </p>
+                <a
+                  id="qa-jump-2"
+                  href="#"
+                  class="mono text-[#3182d4] hover:underline"
+                  data-sd-id="77"
+                  >Jump to Asset</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 overflow-y-auto p-6" data-sd-id="78">
+            <div class="flex items-center justify-between mb-4" data-sd-id="79">
+              <h2 class="text-[15px] font-normal text-[rgba(0,0,0,0.85)]" data-sd-id="80">
+                Ledger
+              </h2>
+              <a
+                id="view-statement-link"
+                href="#"
+                class="mono text-[rgba(0,0,0,0.50)] hover:underline"
+                data-sd-id="81"
+                >View Full</a
+              >
+            </div>
+            <table class="w-full mono text-[rgba(0,0,0,0.60)]" data-sd-id="82">
+              <thead class="text-[rgba(0,0,0,0.25)] text-left" data-sd-id="83">
+                <tr class="border-b border-[rgba(0,0,0,0.12)]" data-sd-id="84">
+                  <th class="pb-2 font-medium uppercase" data-sd-id="85">Event</th>
+                  <th class="pb-2 font-medium uppercase text-right" data-sd-id="86">Cost</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[rgba(0,0,0,0.04)]" data-sd-id="87">
+                <tr class="h-10" data-sd-id="88">
+                  <td data-sd-id="89">Brief Digest</td>
+                  <td class="text-right" data-sd-id="90">$0.40</td>
+                </tr>
+                <tr class="h-10" data-sd-id="91">
+                  <td data-sd-id="92">Concept Logic</td>
+                  <td class="text-right" data-sd-id="93">$1.20</td>
+                </tr>
+                <tr class="h-10" data-sd-id="94">
+                  <td data-sd-id="95">Asset Gen 01</td>
+                  <td class="text-right" data-sd-id="96">$0.80</td>
+                </tr>
+                <tr class="h-10" data-sd-id="97">
+                  <td data-sd-id="98">Asset Gen 02</td>
+                  <td class="text-right" data-sd-id="99">$0.80</td>
+                </tr>
+                <tr class="h-10 text-[rgba(0,0,0,0.25)]" data-sd-id="100">
+                  <td data-sd-id="101">Asset Gen 03</td>
+                  <td class="text-right" data-sd-id="102">$0.00</td>
+                </tr>
+                <tr class="h-10 font-medium text-[rgba(0,0,0,0.85)]" data-sd-id="103">
+                  <td data-sd-id="104">Current Total</td>
+                  <td class="text-right" data-sd-id="105">$3.20</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
+      </main>
+      <div
+        class="h-[72px] bg-white border-t border-[rgba(0,0,0,0.12)] flex items-center justify-between px-8 z-50"
+        data-sd-id="106"
+      >
+        <div class="flex items-center gap-8" data-sd-id="107">
+          <div class="flex flex-col" data-sd-id="108">
+            <span class="mono text-[rgba(0,0,0,0.50)]" data-sd-id="109">Pinned Revision</span
+            ><span class="mono text-[rgba(0,0,0,0.85)]" data-sd-id="110">7f3a</span>
+          </div>
+          <div class="flex flex-col" data-sd-id="111">
+            <span class="mono text-[rgba(0,0,0,0.50)]" data-sd-id="112">Route</span
+            ><span class="mono text-[rgba(0,0,0,0.85)]" data-sd-id="113"
+              >kimi-2.6 + flux-2-klein</span
+            >
+          </div>
+          <div class="flex flex-col" data-sd-id="114">
+            <span class="mono text-[rgba(0,0,0,0.50)]" data-sd-id="115">Estimated Expiry</span
+            ><span class="mono text-[rgba(0,0,0,0.85)]" data-sd-id="116">14:59</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-6" data-sd-id="117">
+          <div class="mono text-[rgba(0,0,0,0.85)] text-right" data-sd-id="118">
+            <div class="text-[rgba(0,0,0,0.50)]" data-sd-id="119">Quote Basis</div>
+            <div data-sd-id="120">$4.20 total run</div>
+          </div>
+          <button
+            id="btn-confirm-run"
+            class="bg-[#3182d4] hover:bg-[#2563a3] text-white px-8 py-3 rounded-[6px] text-[13px] font-medium transition-colors"
+            data-sd-id="121"
+          >
+            Confirm $4.20 run
+          </button>
+        </div>
+      </div>
+      <footer
+        class="h-[32px] bg-[rgba(0,0,0,0.02)] border-t border-[rgba(0,0,0,0.12)] flex items-center px-6 justify-between"
+        data-sd-id="122"
+      >
+        <div class="flex gap-6 mono text-[rgba(0,0,0,0.25)]" data-sd-id="123">
+          <span data-sd-id="124">LATENCY: 142MS</span><span data-sd-id="125">NODE_COUNT: 12</span
+          ><span data-sd-id="126">REGION: US-EAST-1</span>
+        </div>
+        <div class="mono text-[rgba(0,0,0,0.25)]" data-sd-id="127">v2.0.4-studio</div>
+      </footer>
+    </div>
+  </body>
+</html>

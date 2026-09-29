@@ -135,6 +135,51 @@ test('manual recovery rolls back an interrupted process from its durable journal
   assert.equal(existsSync(abandonedJournalTemp), false);
 });
 
+test('supersession history and active authority roll back together at every write boundary', async (t) => {
+  for (let boundary = 0; boundary < 4; boundary += 1) {
+    await t.test(`failure after supersession write ${boundary + 1}`, (child) => {
+      const { root, statePath, packetPath } = fixture(child);
+      const historyPaths = [
+        'governance/evidence/WP-R0-002/superseded-work-packet.yaml',
+        'governance/evidence/WP-R0-002/transition-receipt.yaml',
+      ];
+      const pendingWrites = [
+        ...historyPaths.map((p) => ({
+          path: p,
+          content: 'status: superseded\n',
+          expected: { existed: false, content: null },
+        })),
+        ...writes(),
+      ];
+      const permits = (p) => allowedPath(p) || historyPaths.includes(p);
+      assert.throws(
+        () =>
+          runAuthorityTransaction({
+            root,
+            writes: pendingWrites,
+            allowedPath: permits,
+            validate: () => {},
+            onAfterWrite: ({ index }) => {
+              if (index === boundary) throw new Error('supersession write failure');
+            },
+          }),
+        /supersession write failure/,
+      );
+      assert.equal(readFileSync(statePath, 'utf8'), 'state: original\n');
+      assert.equal(readFileSync(packetPath, 'utf8'), 'packet: original\n');
+      for (const p of historyPaths) assert.equal(existsSync(path.join(root, p)), false);
+      assert.equal(hasAuthorityTransitionJournal(root), false);
+      createAuthorityTransitionJournal({ root, writes: pendingWrites, allowedPath: permits });
+      applyAuthorityWrites({ root, writes: pendingWrites.slice(0, boundary + 1) });
+      recoverAuthorityTransition({ root, allowedPath: permits, validate: () => {} });
+      assert.equal(readFileSync(statePath, 'utf8'), 'state: original\n');
+      assert.equal(readFileSync(packetPath, 'utf8'), 'packet: original\n');
+      for (const p of historyPaths) assert.equal(existsSync(path.join(root, p)), false);
+      assert.equal(hasAuthorityTransitionJournal(root), false);
+    });
+  }
+});
+
 test('recovery refuses to erase an unknown third-party authority edit', (t) => {
   const { root, statePath, packetPath } = fixture(t);
   const pendingWrites = writes();

@@ -11,15 +11,15 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Product | MustBeViral Studio |
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
-| Launch customer | `dtc_ecommerce_marketing_teams` |
-| Phase | R0 — Pinned monorepo and platform scaffold (blocked) |
-| Active packet | `WP-R0-002` |
-| Current step | `r0-008-d0-handoff` |
-| Release target | `P0` |
+| Launch customer | `brand_operators_and_multi_brand_studios` |
+| Phase | P4 — Representative extraction, voice proposals and owner-approved brand versions (planned) |
+| Active packet | `WP-PLATFORM-W2-002` |
+| Current step | `w2b-001-representative-extraction` |
+| Release target | `full-platform` |
 | Pending decisions | None |
-| Blockers | github-auth-overprivileged: remote mutation is prohibited until an operator supplies a least-privilege publication path |
+| Blockers | None |
 | Remote destructive action | `forbidden` |
 
 ## One next action
 
-Replace the overprivileged GitHub CLI credential or perform the initial publication and branch-protection actions manually
+Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.

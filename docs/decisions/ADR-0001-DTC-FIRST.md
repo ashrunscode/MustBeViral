@@ -6,7 +6,7 @@ doc_id: adr-0001-dtc-first
 
 ## Status
 
-Accepted on 2026-07-12.
+Superseded by ADR-0007 on 2026-09-09. Originally accepted on 2026-07-12. The decision below is historical and does not define current product scope.
 
 ## Decision
 

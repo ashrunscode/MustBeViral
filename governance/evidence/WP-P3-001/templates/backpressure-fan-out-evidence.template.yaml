@@ -1,0 +1,42 @@
+schema_version: 1
+gate_id: queues_backpressure
+packet_id: WP-P3-001
+recorded_at: TBD
+branch: codex/viralgraph-cleanroom
+status: not_met
+operator_acceptance:
+  accepted_by: TBD
+  accepted_at: TBD
+  rollback_plan_acknowledged: false
+trigger:
+  description: >-
+    Measured Worker backpressure or fan-out on representative launch-pack workload at staging
+    concurrency.
+  threshold_met: false
+  decisive_metrics:
+    representative_vu_tier: TBD
+    baseline_p95_ms: TBD
+    saturated_p95_ms: TBD
+    unexpected_error_rate: TBD
+    subrequest_limit_observed: TBD
+    outbox_dispatch_p95_ms: TBD
+measurement:
+  harness_command: TBD
+  staging_core_url: https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev
+  vu_tiers: [TBD]
+  operations: [TBD]
+  measured_window_minutes: TBD
+  raw_artifact_paths: [TBD]
+  observability_exports: [TBD]
+rollback:
+  strategy: >-
+    Do not add queue bindings until this evidence passes. Future queue enablement disables consumers
+    via kill-switch before namespace destruction. Git revert is the code rollback path.
+  kill_switch_path: TBD
+  queue_bindings_added: false
+cleanroom_assertions:
+  wrangler_queue_bindings: none
+  postgres_remains_authority: true
+notes:
+  - Replace every TBD field before setting status to met.
+  - Default harness avoids provider spend; document any opt-in dispatch probes separately.

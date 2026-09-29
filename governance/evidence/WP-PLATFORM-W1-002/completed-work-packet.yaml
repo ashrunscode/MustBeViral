@@ -1,0 +1,359 @@
+schema_version: 1
+id: WP-PLATFORM-W1-002
+spec_revision: 2
+title: Saved onboarding, resource-aware navigation and actual billing
+phase: P4
+status: complete
+priority: critical
+branch: codex/viralgraph-cleanroom
+objective: Complete the W1.2 portfolio UI and W1.3-W1.5 so an operator can add and resume a durable
+  brand draft, switch WashBodega and UnPile safely in the approved studio interface, recover old
+  campaign links and see actual workspace billing without invented balances or implicit access.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - api-mcp-cli
+  - execution-providers-billing
+  - experience-contract
+  - quality-gates
+  - roadmap
+  - local-env-secrets
+  - adr-0007-full-platform
+required_skills:
+  - build-mustbeviral
+  - data-architect
+  - auth-fortress
+  - api-and-interface-design
+  - superdesign
+  - frontend-master
+  - billing-engine
+  - quality-check
+depends_on:
+  - WP-PLATFORM-W1-001
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - .agents/skills/build-mustbeviral/SKILL.md
+    - apps/web/**
+    - apps/core/**
+    - apps/cli/**
+    - apps/mcp/**
+    - packages/contracts/**
+    - packages/domain/**
+    - packages/db/**
+    - packages/config/**
+    - packages/ui/**
+    - supabase/**
+    - governance/**
+    - docs/**
+    - .superdesign/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+  forbidden_paths:
+    - .github/workflows/**
+    - docs/archive/**
+    - legacy-exports/**
+  required_doc_ids:
+    - product-contract
+    - release-scope
+    - system-overview
+    - data-auth-tenancy
+    - api-mcp-cli
+    - execution-providers-billing
+    - experience-contract
+    - quality-gates
+    - roadmap
+    - local-env-secrets
+deliverables:
+  - Implement the owner-approved September 9 WashBodega/UnPile desktop and mobile direction with
+    durable studio, brand and location selection, portfolio search and permission-aware
+    home/navigation, explicit empty, loading, revoked, archived and failure states, and accessible
+    keyboard and screen-reader flows.
+  - Persist a minimal brand onboarding draft immediately through shared commands. Website/manual
+    entry, operator corrections, draft progress and chosen workspace/studio survive reload and
+    reconnect. Do not claim website understanding or approved knowledge before W2 evidence exists.
+  - Resolve old campaign/project links through authenticated project-to-brand mappings. Missing or
+    ambiguous mappings show scoped recovery without sentinel IDs, name guessing, cross-tenant
+    fallback or browser storage as authority. Navigation must retain only the active resource scope.
+  - Add workspace and brand settings, team invitation/role presets and revocation behavior through
+    typed grants. Persist invitation state without sending mail or granting access before the
+    intended recipient accepts. No new implicit execution, media, billing or publishing authority.
+  - Read actual workspace ledger balances, usage and billing/subscription state. Loading,
+    unavailable, missing subscription and permission denial remain distinct. Preserve integer money
+    and existing charging/checkout kill switches; no customer charge, Stripe mutation or provider
+    run is authorized.
+  - Prepare WP-PLATFORM-W2-001 for bounded website/document sourcing, extraction provenance and
+    reviewable brand knowledge drafts, preserving W1 resource and permission contracts.
+public_interfaces:
+  - Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections.
+    Preserve the existing W1 identity operations and legacy supported routes.
+  - Additive onboarding/invitation persistence with explicit ownership and backfill mapping,
+    generated database types, and application rollback to the prior schema-compatible version.
+steps:
+  - id: w1b-001-durable-drafts-and-settings
+    title: Implement persistent onboarding, resource resolution and invitation/settings contracts with
+      tenant-safe database behavior.
+    status: completed
+  - id: w1b-002-approved-studio-navigation
+    title: Implement the approved studio and brand surfaces with saved draft progress and compatible
+      authenticated old links.
+    status: completed
+  - id: w1b-003-actual-billing
+    title: Connect actual workspace billing reads and distinct error/permission states without enabling
+      charging.
+    status: completed
+  - id: w1b-004-journeys-and-successor
+    title: Verify desktop/mobile two-brand onboarding, navigation and billing journeys and prepare the
+      bounded W2 sourcing successor.
+    status: completed
+acceptance:
+  automated:
+    - id: saved-two-brand-onboarding
+      criterion: WashBodega and UnPile synthetic drafts persist separately through reload, reconnect,
+        concurrent edits and interrupted saves; no browser-storage substitute or fabricated
+        analysis.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    - id: tenant-resource-navigation
+      criterion: Desktop/mobile navigation, brand switches, direct/old links, back/forward and archived or
+        missing resources resolve only permitted identities. Revoked grants, forged child IDs and
+        stale responses cannot display another brand or re-enable a forbidden action.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    - id: invitations-and-permissions
+      criterion: Invitation creation/replay, expiry, exact recipient acceptance, revoked membership, stale
+        role changes and unauthorized grant escalation are tested in handlers and pgTAP. Local
+        delivery uses explicit synthetic fixtures and sends no outreach.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    - id: truthful-billing-and-accessibility
+      criterion: Billing reads match actual seeded integer ledger balances and subscription records;
+        missing, unavailable and denied states are distinct. Desktop/mobile behavior, keyboard,
+        accessibility and approved visual direction pass without enabling spending or charging.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+        - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+  manual: []
+quality_gates:
+  - id: database
+    command: pnpm supabase:test
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+  - id: design
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+  - id: repository
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+      - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+rollback:
+  strategy: Revert application changes while retaining additive drafts, invitations and durable
+    mappings. Confirm old workspace, project, execution and ledger commands still work. Do not
+    delete tenant data, weaken RLS, discard old routes or enable checkout to simulate recovery.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: read-only
+  destructive_remote_actions: false
+handoff:
+  current_step: w1b-004-journeys-and-successor
+  next_action: All W1 acceptance is proven and independently reviewed. Commit the verified
+    predecessor, then run pnpm agent:finish with the prepared WP-PLATFORM-W2-001 successor.
+  blockers: []
+  changed_paths:
+    - apps/web/app/layout.tsx
+    - apps/web/app/studio
+    - apps/web/src/features/platform
+    - packages/contracts/src/platform-setup.ts
+    - packages/contracts/src/platform-setup.test.ts
+    - packages/contracts/openapi/core.v1.json
+    - packages/db/src/database.generated.ts
+    - packages/db/scripts/start-platform-local.mjs
+    - packages/db/scripts/verify-platform-setup-connected.mjs
+    - supabase/migrations/20260910180000_platform_studio_presentation.sql
+    - supabase/migrations/20260910190000_platform_context_directory.sql
+    - supabase/migrations/20260910200000_platform_workspace_billing.sql
+    - supabase/tests/database/00041_platform_presentation_directory.test.sql
+    - supabase/tests/database/00042_platform_workspace_billing.test.sql
+    - apps/core/test/unit/platform-port.test.ts
+    - governance/evidence/WP-PLATFORM-W1-002/studio-navigation-and-billing-2026-09-11.md
+    - apps/web/e2e/platform-connected.spec.ts
+    - apps/web/src/features/platform/platform-client.ts
+    - apps/web/src/features/platform/studio-team.tsx
+    - apps/web/src/features/platform/platform-client.test.ts
+    - apps/web/src/features/platform/platform-frame.test.tsx
+    - apps/web/src/features/platform/workspace-billing.test.tsx
+    - packages/db/scripts/platform-journey-fixtures.ts
+    - governance/evidence/WP-PLATFORM-W1-002/journeys-coverage-gap-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/journeys-harness-repair-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/successor-WP-PLATFORM-W2-001.yaml
+    - PROJECT_STATE.yaml
+    - apps/core/.dev.vars.example
+    - apps/web/src/features/platform/brand-draft-editor.tsx
+    - apps/web/src/features/platform/brand-locations.tsx
+    - apps/web/src/features/platform/brand-settings.tsx
+    - apps/web/src/features/platform/studio-portfolio.tsx
+    - apps/web/src/features/platform/studio-settings.tsx
+    - apps/web/src/features/platform/workspace-billing.tsx
+    - docs/STATUS.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - llms.txt
+    - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
+    - supabase/tests/database/00037_platform_identity_and_backfill.test.sql
+    - supabase/tests/database/00039_platform_saved_setup.test.sql
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/browser-receipt.json
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/desktop-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/mobile-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/verification-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/connected-journeys-2026-09-14/verification-receipt.json
+    - apps/web/app/globals.css
+    - apps/web/app/studio/[workspace]/billing/page.tsx
+    - apps/web/src/features/platform/brand-workspace.tsx
+    - apps/web/src/features/platform/platform-frame.tsx
+    - apps/web/src/features/platform/platform-navigation.test.ts
+    - apps/web/src/features/platform/platform-navigation.ts
+    - apps/web/src/features/platform/platform.css
+    - apps/web/src/features/platform/workspace-frame.tsx
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-brand-draft.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-reduced-motion.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-zoom-200.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-forced-colors-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/independent-review.md
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-brand-draft.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-reduced-motion.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-zoom-200.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-forced-colors-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/stack-stop-receipt.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+  last_green_checks:
+    - pnpm supabase:test
+    - pnpm --filter @mustbeviral/contracts test
+    - pnpm --filter @mustbeviral/web lint
+    - pnpm --filter @mustbeviral/web typecheck
+    - pnpm generated:check
+    - node packages/db/scripts/verify-platform-connected.mjs
+    - node packages/db/scripts/verify-platform-setup-connected.mjs
+    - pnpm agent:preflight
+    - pnpm governance:check
+    - pnpm design:check
+    - pnpm agent:verify
+    - pnpm verify
+    - pnpm exec playwright test --config playwright.config.ts
+      apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --project=mobile-chromium
+completion:
+  successor_packet_id: WP-PLATFORM-W2-001
+  evidence_paths:
+    - governance/evidence/WP-PLATFORM-W1-002/completion-and-review-2026-09-14.md
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W1-002/successor-WP-PLATFORM-W2-001.yaml
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-brand-draft.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-reduced-motion.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-a11y-zoom-200.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-missing-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-success-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-billing-unavailable-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-brand-draft-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-forced-colors-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-portfolio-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-studio-team-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/desktop-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/independent-review.md
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-brand-draft.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-reduced-motion.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-a11y-zoom-200.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-missing-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-seeded.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-success-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-billing-unavailable-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-brand-draft-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-forced-colors-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-invitation-pending.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-portfolio-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-aria.txt
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-studio-team-axe.json
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-unpile-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/mobile-washbodega-saved.png
+    - governance/evidence/WP-PLATFORM-W1-002/completion-2026-09-14/stack-stop-receipt.json
+  completed_at: 2026-09-14T18:29:47.444Z

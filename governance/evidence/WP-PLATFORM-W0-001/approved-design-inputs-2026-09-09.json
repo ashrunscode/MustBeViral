@@ -1,0 +1,40 @@
+{
+  "classification": "OWNER_VISUAL_DIRECTION_APPROVED",
+  "ownerResponse": "Approve revised visual direction",
+  "date": "2026-09-09",
+  "scope": "Local desktop/mobile WashBodega and UnPile walkthrough; no external execution authorization",
+  "inputs": [
+    {
+      "path": ".superdesign/hifi/platform-studio-desktop.html",
+      "sha256": "3f0b2c555397454015a0039d6ecc119a35f5975b105c9aa1c4b5ec15d2c6992b"
+    },
+    {
+      "path": ".superdesign/hifi/platform-studio-mobile.html",
+      "sha256": "3f84710954121ac32753c8d6ba723076005cea7c2b7273de4b161928219cfe78"
+    },
+    {
+      "path": ".superdesign/hifi/platform-studio.css",
+      "sha256": "9ab6c2748b9de6f8b93f632ecd1ce18d5a488311346ceb96ef59ef88b453c665"
+    },
+    {
+      "path": ".superdesign/hifi/platform-studio.js",
+      "sha256": "e5356dc02e0b4872160e22374b10857de067779a765c196ac6f37bf61b84dd4c"
+    },
+    {
+      "path": ".superdesign/hifi/platform-assets/washbodega-logo.webp",
+      "sha256": "d929e5a55c2cb35a18d78151384601d76188164b7cd9bb78a0901f5a53f8ce0d"
+    },
+    {
+      "path": ".superdesign/hifi/platform-assets/washbodega-storefront.webp",
+      "sha256": "85e514bf810d177eee8389f59f2cb25000174a1e0176caa5736392fcc3b484ab"
+    },
+    {
+      "path": ".superdesign/hifi/platform-assets/unpile-resolved-room.webp",
+      "sha256": "ee59ca62888ac0b1d5c8770aa37dcd348f438659a9223ce2c772b31ebf4bc00e"
+    },
+    {
+      "path": ".superdesign/hifi/platform-assets/unpile-display-latin-v1.woff2",
+      "sha256": "5d618c462b7a5b74f442e1548880086af71764d9cc7d35c16ab45353da934621"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+schema_version: 1
+packet_id: WP-P3-005
+spec_revision: 1
+phase: P3
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-09-02T13:40:52.866Z
+successor_packet_id: WP-P3-006
+predecessor_head: 5521ab99931ce79c93c07712563f43b5c2f68d48
+closed_packet_path: governance/evidence/WP-P3-005/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+  - governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
+  - governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+  - governance/evidence/WP-P3-005/successor-WP-P3-006.yaml
+evidence_entries:
+  - path: governance/evidence/WP-P3-005/successor-WP-P3-006.yaml
+    sha256: d60b1a17eb7e44b12619342ce70ef106e61e0a068587d8b8b620c0ca4044602e
+    git_blob_oid: 44828dc19018fde982249a714acff553a7d7a708
+  - path: governance/evidence/WP-P3-005/supabase-cost-approval-2026-09-02.md
+    sha256: 18885f9eae2b5d9e82865effc7fb8b5947696abfdef9b4e05a879fd8e8998e17
+    git_blob_oid: 89ddd30d3f2119e903227c34ef5508fcad59da9c
+  - path: governance/evidence/WP-P3-005/supabase-organization-confirmation-gate-2026-09-02.md
+    sha256: 0f2ab0cc6081f45018be8836a0f1065efcdc112dc711fbee0f5752e55918ae8f
+    git_blob_oid: d4259f45be01a7d4d1242025b3fca2b8e193e4b5
+  - path: governance/evidence/WP-P3-005/unrouted-production-foundation-2026-09-02.md
+    sha256: cf10557faa8338515d32ff8c9a13c919671f73032316ee43bbbf7366dfcf8d4c
+    git_blob_oid: 5c820e759be38f33b06eba9600e42868fe667f7b
+completed_step_ids:
+  - p3e-001-empty-storage-and-web-project
+  - p3e-002-unrouted-collaboration-worker
+  - p3e-003-supabase-cost-handoff
+closed_packet_sha256: 4ab1055453b0192e70b533fb470af8cee7e3fb4b981347febc9cb64d7181670e

@@ -15,6 +15,12 @@ describe('safe error handling', () => {
     expect(response.status).toBe(500);
     expect(body).not.toContain('sentinel-sensitive-message');
     expect(body).not.toContain('stack');
-    expect(JSON.parse(body)).toMatchObject({ code: 'INTERNAL_ERROR', retryable: true });
+    expect(JSON.parse(body)).toMatchObject({
+      error: {
+        code: 'INTERNAL_ERROR',
+        retryable: true,
+        details: { error_id: expect.any(String) },
+      },
+    });
   });
 });

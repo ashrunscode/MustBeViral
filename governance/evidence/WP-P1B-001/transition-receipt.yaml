@@ -1,0 +1,42 @@
+schema_version: 1
+packet_id: WP-P1B-001
+spec_revision: 1
+phase: P1b
+branch: codex/viralgraph-cleanroom
+status: complete
+completed_at: 2026-08-31T14:28:55.839Z
+successor_packet_id: WP-P2-001
+predecessor_head: 130b52fc14daedc1b0ec25abf358f04e905aee1f
+closed_packet_path: governance/evidence/WP-P1B-001/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+evidence_entries:
+  - path: governance/evidence/WP-P1B-001/immutable-skill-versions.yaml
+    sha256: aeea17411c2942ee1418982db8b76b854885545ef33b68e62ee38a999b72bfba
+    git_blob_oid: 53b1bb25e6d58132648ee42cfba0ed8fc5be1bd9
+  - path: governance/evidence/WP-P1B-001/no-autonomous-spend-surface.yaml
+    sha256: 79a6222075e4f451b43d329fb3b00dbb92c036109764baeb0da87fa82b39b8cc
+    git_blob_oid: 1c15aeedd81a46f6b17f610b9b9d0a2ebbcea02a
+  - path: governance/evidence/WP-P1B-001/oauth-scope-and-revocation.yaml
+    sha256: 1248bf33b65e62dc71fd3d6abf66fa513dc959f0bf2d7824d3444c7d7cd232f1
+    git_blob_oid: 8f5656417707f3c4217316d7757979faffe64d30
+  - path: governance/evidence/WP-P1B-001/p1b-implementable-acceptance-2026-08-31.md
+    sha256: 2669f02cf2048c9cec715f78652f7925f7981b914b279f4ae31ecb128e70a548
+    git_blob_oid: e64f32e8caecf09ca2c09a2434390e236e373935
+  - path: governance/evidence/WP-P1B-001/p1b-parity-vectors.json
+    sha256: e1471ef83f28e6b140c52e4e2f4f5d0745108d4c97e28250d094bb7ec6e85ff6
+    git_blob_oid: 1937d2707410daecdbbfbc1ec37b256d050b87fe
+  - path: governance/evidence/WP-P1B-001/rest-mcp-cli-parity.yaml
+    sha256: 7226cc9a35cbdbc1da1780547a052bd7564fe66b315d3eacdfcae7574ce75c6c
+    git_blob_oid: 93ef5058abf852f6357ee34595d8232cc1959898
+  - path: governance/evidence/WP-P1B-001/three-client-parity.yaml
+    sha256: e0be601f1ac15d5fc7a0473b1497566202e044bae1df4ccab75edf0ead1145ac
+    git_blob_oid: 8c152b9660d247d48ddd2cbe4b496d3486100b70
+completed_step_ids:
+  - p1b-001-oauth-api-keys
+  - p1b-002-public-rest-and-mcp
+  - p1b-003-cli-parity
+  - p1b-004-user-authored-skills
+  - p1b-005-three-client-parity
+  - p1b-006-p2-successor-handoff
+closed_packet_sha256: 865ef09e26aadc9fcb7feba184694dc5a9111f121566dc1253bf80670ce34316

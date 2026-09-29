@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "TBD",
+  "commit_sha": "TBD",
+  "staging_deployment_id": "TBD",
+  "randomized_cell_order": "TBD",
+  "supabase_region": "TBD",
+  "load_regions": ["TBD"],
+  "observed_worker_colos": ["TBD"],
+  "paths": ["baseline_data_api_rpc", "candidate_hyperdrive_pooled"],
+  "thermal_states": ["cold", "warm"],
+  "vu_tiers": [1, 10, 50, 200]
+}

@@ -54,3 +54,25 @@ jobs:
 
       - name: Prove fresh-agent orientation
         run: pnpm agent:preflight
+
+      # Scope amendments must be pushed separately before implementation that uses the widened scope.
+      - name: Validate pull request committed diff scope
+        if: github.event_name == 'pull_request'
+        run: >-
+          pnpm diff-scope:check
+          --base "${{ github.event.pull_request.base.sha }}"
+          --head HEAD
+
+      - name: Validate push committed diff scope
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          BASE_SHA="${{ github.event.before }}"
+          if [[ "$BASE_SHA" =~ ^0+$ ]]; then
+            if ! BASE_SHA="$(git merge-base origin/main HEAD 2>/dev/null)"; then
+              echo "::warning::Committed diff scope check skipped: push before SHA is all zeros and no merge base with origin/main could be determined."
+              exit 0
+            fi
+            echo "::notice::Push before SHA is all zeros; using merge base with origin/main: $BASE_SHA"
+          fi
+          pnpm diff-scope:check --base "$BASE_SHA" --head HEAD

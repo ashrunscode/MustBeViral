@@ -34,3 +34,12 @@ cases:
     expect:
       - do not run pnpm agent:finish
       - hand off with missing successor recorded as the sole next action or blocker
+  - id: owner-directed-supersession
+    prompt: Implement the accepted full-platform plan and rebaseline now.
+    state: the owner explicitly authorized supersession; observation acceptance is unfinished
+    expect:
+      - commit the bounded authority-only amendment before transition implementation
+      - require the committed owner decision and a valid ready successor
+      - preserve pending observation and traffic approval in immutable evidence
+      - use agent:supersede rather than claiming completion with agent:finish
+      - continue local implementation within the accepted platform scope

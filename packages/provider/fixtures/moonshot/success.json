@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "headers": { "x-request-id": "moonshot-request-fixture-001" },
+  "body": {
+    "id": "completion-fixture-001",
+    "choices": [{ "message": { "role": "assistant", "content": "Fixture copy output." } }],
+    "usage": { "prompt_tokens": 40000, "completion_tokens": 15000, "total_tokens": 55000 }
+  }
+}

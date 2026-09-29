@@ -1,0 +1,16 @@
+{
+  "gate": "queues_backpressure",
+  "recorded_at": "2026-08-31T17:54:56.352Z",
+  "brief_id": "GB-02",
+  "vu_tier": 1,
+  "duration_seconds": 60,
+  "ramp_seconds": 5,
+  "operations": ["quote_run", "validate_graph"],
+  "observation_count": 132,
+  "success_count": 132,
+  "unexpected_error_count": 0,
+  "unexpected_error_rate": 0,
+  "p50_ms": 361.42,
+  "p95_ms": 760.47,
+  "p99_ms": 773.6
+}
