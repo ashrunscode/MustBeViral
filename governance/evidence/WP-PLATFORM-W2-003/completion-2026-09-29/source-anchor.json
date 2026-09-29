@@ -1,0 +1,11 @@
+{
+  "head": "d6de38f3103e4306b4f76abcebb56dd3bbdf27aa",
+  "tree": "1057f52a9e054ae40aad55a049677e1a893d9e2b",
+  "base": "1834368d618418162f578f709881d828b0ea1752",
+  "branch": "main",
+  "implementation_checkout": "C:/dev/mbv-a",
+  "gate_checkout": "C:\\dev\\mbv-g16",
+  "browser_checkout": "C:/dev/mbv-g13",
+  "fingerprint_algorithm": "SHA256(base LF head LF tree LF)",
+  "fingerprint": "2d1e920d59d089c37aebe9748c44e215e29231b19a8744aba2658d0a45dc8a39"
+}

@@ -1,0 +1,26 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 221bebc7-2c86-4834-8b38-126bd8e99c9f Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=e90b4d29-c110-475a-b41b-542c234ee49a
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=e90b4d29-c110-475a-b41b-542c234ee49a&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=e90b4d29-c110-475a-b41b-542c234ee49a&view=settings
+  - text: One studio. Each brand, its own context.
+- main:
+  - alert:
+    - heading "Let’s get you back to your work." [level=1]
+    - paragraph: We could not confirm this request. Check your connection and retry.
+    - button "Try again"
+    - link "Choose a studio":
+      - /url: /studio

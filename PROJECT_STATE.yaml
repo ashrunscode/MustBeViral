@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W2-003
-next_action: Detect source and assertion changes against an approved brand version.
+next_action: Complete the proven W2-003 packet with agent:finish and its prepared render-feasibility successor.
 decisions_pending: []
 blockers: []
 legacy:

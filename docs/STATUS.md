@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `brand_operators_and_multi_brand_studios` |
 | Phase | P4 — Change detection, expiry lifecycle, contradiction handling and catalog import (in_progress) |
 | Active packet | `WP-PLATFORM-W2-003` |
-| Current step | `w2c-001-change-detection` |
+| Current step | `w2c-004-journeys-and-wave-close` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Detect source and assertion changes against an approved brand version.
+Complete the proven W2-003 packet with agent:finish and its prepared render-feasibility successor.

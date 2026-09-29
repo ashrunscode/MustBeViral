@@ -1,0 +1,91 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys bbe69c75-d304-4a47-af7d-75d38cc60f37
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=63ebc931-50d6-47e7-88e1-c415030548cd
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=63ebc931-50d6-47e7-88e1-c415030548cd&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=63ebc931-50d6-47e7-88e1-c415030548cd&view=settings
+    - link "Billing":
+      - /url: /studio/950c2f7d-9fb8-4b03-85ae-38bce18990b2/billing?studio=63ebc931-50d6-47e7-88e1-c415030548cd
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=63ebc931-50d6-47e7-88e1-c415030548cd
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/950c2f7d-9fb8-4b03-85ae-38bce18990b2/brands/0347f4f2-7085-4544-a10c-07b178c93dcc?studio=63ebc931-50d6-47e7-88e1-c415030548cd&view=draft
+    - link "Findings":
+      - /url: /studio/950c2f7d-9fb8-4b03-85ae-38bce18990b2/brands/0347f4f2-7085-4544-a10c-07b178c93dcc?studio=63ebc931-50d6-47e7-88e1-c415030548cd&view=findings
+    - link "Locations":
+      - /url: /studio/950c2f7d-9fb8-4b03-85ae-38bce18990b2/brands/0347f4f2-7085-4544-a10c-07b178c93dcc?studio=63ebc931-50d6-47e7-88e1-c415030548cd&view=locations
+    - link "Settings":
+      - /url: /studio/950c2f7d-9fb8-4b03-85ae-38bce18990b2/brands/0347f4f2-7085-4544-a10c-07b178c93dcc?studio=63ebc931-50d6-47e7-88e1-c415030548cd&view=settings
+    - link "Billing & usage":
+      - /url: /studio/950c2f7d-9fb8-4b03-85ae-38bce18990b2/billing?studio=63ebc931-50d6-47e7-88e1-c415030548cd
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group: Import a catalog
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "unknown gap · corrected"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: No approved version yet. Review these findings before approving the brand.
+    - paragraph: Checked 2026-09-29T07:52:53.312289+00:00
+    - button "Refresh comparison"
+    - paragraph: No changed findings or freshness issues were found.
+    - text: Unapproved draft
+    - heading "unknown gap" [level=2]
+    - paragraph: Keyboard hours stay 24/7 at 200 percent.
+    - paragraph: Source ad0f7948-c181-46eb-b5ef-d508df1a0093 · manual · captured 2026-09-29T07:52:52.599532+00:00
+    - paragraph: "Excerpt: Operator correction."
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 2
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: manual · manual · 2026-09-29T07:52:51.736444+00:00
+      - listitem: manual · manual · 2026-09-29T07:52:52.599532+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - paragraph: Extract a captured source to review typed findings.
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash a2eaff3d70780f37bf9bbc9ed83d18f0dca14b4c6da984edca74c00038b57664
+    - button "Approve this exact draft"
+    - paragraph: No owner-approved brand version yet.
+  - paragraph: Findings stay on this brand.

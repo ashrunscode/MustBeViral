@@ -1,0 +1,144 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 2ad36a64-7ed6-4631-976a-f6afbc0b6191
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=settings
+    - link "Billing":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/billing?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=draft
+    - link "Findings":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=findings
+    - link "Locations":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=locations
+    - link "Settings":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=settings
+    - link "Billing & usage":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/billing?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group: Import a catalog
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - alert: This draft still contains a known expired offer. Correct it before approving.
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "document filename · observed"
+    - listitem:
+      - button "document filename · observed"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: Compared with approved version 1. The approved snapshot is preserved.
+    - paragraph: Checked 2026-09-29T07:50:02.520786+00:00
+    - button "Refresh comparison"
+    - status: An offer in the approved version has expired. Review the offer and approve a new version before using it in a new campaign.
+    - group: hours · Changed finding
+    - group:
+      - text: sale · Unchanged finding · Expired offer
+      - heading "Approved finding" [level=4]
+      - paragraph: WashBodega launch offer
+      - paragraph: observed · Expires 2026-09-29T07:50:01.586+00:00
+      - group: Source evidence
+      - heading "Current evidence" [level=4]
+      - paragraph: WashBodega launch offer
+      - paragraph: observed · Expires 2026-09-29T07:50:01.586+00:00
+      - group: Source evidence
+      - group "Expiry review":
+        - text: Expiry review Review decision
+        - combobox "Review decision":
+          - option "Choose a decision"
+          - option "Use a reviewed value"
+          - option "Withdraw from future content" [selected]
+        - text: Reason for this review
+        - textbox "Reason for this review": The launch offer has ended.
+        - button "Record expiry review"
+    - text: Unapproved draft
+    - heading "document filename" [level=2]
+    - paragraph: WashBodega-catalog.csv
+    - paragraph: Source 47744e67-a459-4098-91bd-3e4b714e5f99 · document_text · captured 2026-09-29T07:49:36.665+00:00
+    - paragraph: "Excerpt: WashBodega-catalog.csv"
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 5
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: document_upload · document · 2026-09-29T07:49:36.665+00:00 · text/csv
+      - listitem: document_upload · document · 2026-09-29T07:49:37.475+00:00 · text/csv
+      - listitem: manual · manual · 2026-09-29T07:49:39.062403+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - list:
+      - listitem:
+        - button "language · spanish · unknown"
+      - listitem:
+        - button "location · location · unknown"
+      - listitem:
+        - button "visual candidate · visual candidate · unknown"
+      - listitem:
+        - button "offer · sale · observed"
+      - listitem:
+        - button "offering · pickup · observed"
+      - listitem:
+        - button "fact · hours · unknown"
+      - listitem:
+        - button "fact · hours · corrected"
+    - paragraph: Unknown — not supplied.
+    - paragraph: Source 47744e67-a459-4098-91bd-3e4b714e5f99 · plaintext_labeled · captured 2026-09-29T07:49:36.665+00:00
+    - blockquote: No value supplied.
+    - group:
+      - text: Correct this assertion
+      - textbox "Correct this assertion"
+      - paragraph: Leave the assertion empty to mark it unknown and clear its expiry.
+      - text: Why this assertion correction
+      - textbox "Why this assertion correction"
+      - button "Save assertion"
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash 961abc6c13d32d6b98c2f082768a15c699efa6ea1360682fdd381a8a64e50247
+    - button "Approve this exact draft"
+    - paragraph: Approved version 1 · d6e8287b0a0c57f2f9631b35e17525549ad0448c8bfc40558b36a899ac79e9aa
+    - text: Campaign pin
+    - textbox "Campaign pin": WashBodega-expired
+    - button "Pin approved version"
+    - paragraph: No pin stored for this campaign key.
+  - paragraph: Findings stay on this brand.

@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W2-003
-current_step: w2c-001-change-detection
-next_action: Detect source and assertion changes against an approved brand version.
+current_step: w2c-004-journeys-and-wave-close
+next_action: Complete the proven W2-003 packet with agent:finish and its prepared render-feasibility successor.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -1,0 +1,131 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 2ad36a64-7ed6-4631-976a-f6afbc0b6191
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=settings
+    - link "Billing":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/billing?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=draft
+    - link "Findings":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=findings
+    - link "Locations":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=locations
+    - link "Settings":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/brands/27dfb41a-8bf4-4c95-a895-a399278f1c3e?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=settings
+    - link "Billing & usage":
+      - /url: /studio/9c66c4a4-db6c-4a2a-80e8-89cd242d3202/billing?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group:
+    - text: Import a catalog
+    - paragraph: Choose a UTF-8 CSV file in the upload control. Up to 40 rows and 32,768 characters are supported. Import saves the source and extracts unapproved findings.
+    - paragraph:
+      - text: Use columns
+      - code: kind,field_key,value,ends_at
+      - text: ". Kinds: offering, location, fact, offer, language. Keep field keys stable when updating a catalog. Leave unknown values empty. Offer expiry uses an exact date, time and timezone."
+    - text: kind,field_key,value,ends_at offering,pickup,Pickup and delivery,
+    - paragraph: Text, Markdown and HTML catalogs can also use the document capture and extraction controls. PDF and Word are not supported.
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "document filename · observed"
+    - listitem:
+      - button "document filename · observed"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: Compared with approved version 2. The approved snapshot is preserved.
+    - paragraph: Checked 2026-09-29T07:50:04.394208+00:00
+    - button "Refresh comparison"
+    - paragraph: No changed findings or freshness issues were found.
+    - text: Unapproved draft
+    - heading "document filename" [level=2]
+    - paragraph: WashBodega-catalog.csv
+    - paragraph: Source 47744e67-a459-4098-91bd-3e4b714e5f99 · document_text · captured 2026-09-29T07:49:36.665+00:00
+    - paragraph: "Excerpt: WashBodega-catalog.csv"
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 6
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: document_upload · document · 2026-09-29T07:49:36.665+00:00 · text/csv
+      - listitem: document_upload · document · 2026-09-29T07:49:37.475+00:00 · text/csv
+      - listitem: manual · manual · 2026-09-29T07:49:39.062403+00:00
+      - listitem: manual · manual · 2026-09-29T07:50:03.077285+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - list:
+      - listitem:
+        - button "language · spanish · unknown"
+      - listitem:
+        - button "location · location · unknown"
+      - listitem:
+        - button "visual candidate · visual candidate · unknown"
+      - listitem:
+        - button "offering · pickup · observed"
+      - listitem:
+        - button "fact · hours · unknown"
+      - listitem:
+        - button "fact · hours · corrected"
+      - listitem:
+        - button "offer · sale · unknown"
+    - paragraph: Unknown — not supplied.
+    - paragraph: Source 47744e67-a459-4098-91bd-3e4b714e5f99 · plaintext_labeled · captured 2026-09-29T07:49:36.665+00:00
+    - blockquote: No value supplied.
+    - group:
+      - text: Correct this assertion
+      - textbox "Correct this assertion"
+      - paragraph: Leave the assertion empty to mark it unknown and clear its expiry.
+      - text: Why this assertion correction
+      - textbox "Why this assertion correction"
+      - button "Save assertion"
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash 5a4054ba78491ec571d2327625a54dafc4a37ca4dd0e20b36cb6c9896814e72b
+    - button "Approve this exact draft"
+    - paragraph: Approved version 2 · 5a4054ba78491ec571d2327625a54dafc4a37ca4dd0e20b36cb6c9896814e72b
+    - text: Campaign pin
+    - textbox "Campaign pin": campaign-preview
+    - button "Pin approved version"
+    - paragraph: No pin stored for this campaign key.
+  - paragraph: Findings stay on this brand.

@@ -1,0 +1,667 @@
+{
+  "head": "d6de38f3103e4306b4f76abcebb56dd3bbdf27aa",
+  "source_tree": "1057f52a9e054ae40aad55a049677e1a893d9e2b",
+  "exit": 0,
+  "command": "pnpm exec playwright test apps/web/e2e/platform-knowledge-connected.spec.ts apps/web/e2e/platform-connected.spec.ts --reporter=list,json",
+  "environment": "Owned loopback Supabase/Core, private local R2, test-only explicit-host website fixtures. No live provider or production acceptance.",
+  "passed": 34,
+  "failed": 0,
+  "skipped": 0,
+  "retries": 0,
+  "stats": {
+    "startTime": "2026-09-29T07:46:09.624Z",
+    "duration": 880178.458,
+    "expected": 34,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "report_sha256": "566f657a69df6e8a57e017d946687a102028c90cb98b25780a16c233a92094aa",
+  "tests": [
+    {
+      "name": "keeps unauthenticated studio entry on the live sign-in path",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 3529,
+      "started_at": "2026-09-29T07:46:10.022Z"
+    },
+    {
+      "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 27815,
+      "started_at": "2026-09-29T07:46:21.000Z"
+    },
+    {
+      "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 38779,
+      "started_at": "2026-09-29T07:46:48.832Z"
+    },
+    {
+      "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 25955,
+      "started_at": "2026-09-29T07:47:27.627Z"
+    },
+    {
+      "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24983,
+      "started_at": "2026-09-29T07:47:53.595Z"
+    },
+    {
+      "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24572,
+      "started_at": "2026-09-29T07:48:18.590Z"
+    },
+    {
+      "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 26704,
+      "started_at": "2026-09-29T07:48:43.179Z"
+    },
+    {
+      "name": "keeps unauthenticated studio entry on the live sign-in path",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 3646,
+      "started_at": "2026-09-29T07:53:35.202Z"
+    },
+    {
+      "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 29361,
+      "started_at": "2026-09-29T07:53:46.879Z"
+    },
+    {
+      "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 38473,
+      "started_at": "2026-09-29T07:54:16.253Z"
+    },
+    {
+      "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 26025,
+      "started_at": "2026-09-29T07:54:54.742Z"
+    },
+    {
+      "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24680,
+      "started_at": "2026-09-29T07:55:20.782Z"
+    },
+    {
+      "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 25279,
+      "started_at": "2026-09-29T07:55:45.473Z"
+    },
+    {
+      "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 27449,
+      "started_at": "2026-09-29T07:56:10.762Z"
+    },
+    {
+      "name": "imports two brand catalogs, reviews source changes and expiry, and preserves approved history",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 69565,
+      "started_at": "2026-09-29T07:49:17.569Z"
+    },
+    {
+      "name": "imports every record at the forty-row catalog boundary without truncation",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15711,
+      "started_at": "2026-09-29T07:50:34.298Z"
+    },
+    {
+      "name": "preserves blank catalog rows and requires review when a recapture removes a claim",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 20427,
+      "started_at": "2026-09-29T07:50:50.025Z"
+    },
+    {
+      "name": "restores the latest source when a recapture returns to earlier identical bytes",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 16750,
+      "started_at": "2026-09-29T07:51:10.468Z"
+    },
+    {
+      "name": "captures website and document sources for both brands and keeps them after reload",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 17291,
+      "started_at": "2026-09-29T07:51:27.228Z"
+    },
+    {
+      "name": "records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 26323,
+      "started_at": "2026-09-29T07:51:44.532Z"
+    },
+    {
+      "name": "hides delayed WashBodega findings and revoked editor access",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 28321,
+      "started_at": "2026-09-29T07:52:10.866Z"
+    },
+    {
+      "name": "keeps findings usable at 200% zoom with keyboard and reduced motion",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 14563,
+      "started_at": "2026-09-29T07:52:39.201Z"
+    },
+    {
+      "name": "reviews every proposal source and corrects offer expiry without losing text or approved history",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 17577,
+      "started_at": "2026-09-29T07:52:53.777Z"
+    },
+    {
+      "name": "extracts, proposes, questions and approves WashBodega and UnPile without mixing brands",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15475,
+      "started_at": "2026-09-29T07:53:11.367Z"
+    },
+    {
+      "name": "imports two brand catalogs, reviews source changes and expiry, and preserves approved history",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 69223,
+      "started_at": "2026-09-29T07:56:45.317Z"
+    },
+    {
+      "name": "imports every record at the forty-row catalog boundary without truncation",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 13431,
+      "started_at": "2026-09-29T07:58:01.077Z"
+    },
+    {
+      "name": "preserves blank catalog rows and requires review when a recapture removes a claim",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 17365,
+      "started_at": "2026-09-29T07:58:14.522Z"
+    },
+    {
+      "name": "restores the latest source when a recapture returns to earlier identical bytes",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15866,
+      "started_at": "2026-09-29T07:58:31.902Z"
+    },
+    {
+      "name": "captures website and document sources for both brands and keeps them after reload",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15578,
+      "started_at": "2026-09-29T07:58:47.770Z"
+    },
+    {
+      "name": "records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24842,
+      "started_at": "2026-09-29T07:59:03.359Z"
+    },
+    {
+      "name": "hides delayed WashBodega findings and revoked editor access",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 27327,
+      "started_at": "2026-09-29T07:59:28.214Z"
+    },
+    {
+      "name": "keeps findings usable at 200% zoom with keyboard and reduced motion",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 13790,
+      "started_at": "2026-09-29T07:59:55.558Z"
+    },
+    {
+      "name": "reviews every proposal source and corrects offer expiry without losing text or approved history",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 17476,
+      "started_at": "2026-09-29T08:00:09.360Z"
+    },
+    {
+      "name": "extracts, proposes, questions and approves WashBodega and UnPile without mixing brands",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15620,
+      "started_at": "2026-09-29T08:00:26.849Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "desktop-portfolio-aria.txt",
+      "sha256": "63736266f941bf99d0aac4b3fa0da4f232b5409922c69e9d663da3a828aed612",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-portfolio-axe.json",
+      "sha256": "1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-brand-draft-aria.txt",
+      "sha256": "96426ef446a7e701eaf9bcf249d1c0fe0f0a935b0e4cc7fb308546438f74acc8",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-brand-draft-axe.json",
+      "sha256": "af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-studio-team-aria.txt",
+      "sha256": "4265d056343a400b9dccb58afb1b9d171235b4f46ebfea10d2e8f6b4784b30f3",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-studio-team-axe.json",
+      "sha256": "0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-billing-missing-aria.txt",
+      "sha256": "25611f99b884f603e0ad86c4bb6cc21740be9bd21d82da393444aaf28c95e9e1",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-billing-missing-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-billing-success-aria.txt",
+      "sha256": "f287674540f35f8d957dbb0e37ad6f54fda5ee44af204ade4f2db01f62c16c89",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-billing-success-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-billing-unavailable-aria.txt",
+      "sha256": "bab07b772a8b4e98131d9c80818572ccda13d9b5da26a8ab063090eb98f7c959",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-billing-unavailable-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-forced-colors-aria.txt",
+      "sha256": "281c3d40a9528043bfc192a4110b7b5303bd214db63267aa81bed8eb571092a6",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-portfolio-aria.txt",
+      "sha256": "2eff818eef0cafcd1e68b0bd808df931d4d48efe36362df605fff636ebef9697",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-portfolio-axe.json",
+      "sha256": "1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-brand-draft-aria.txt",
+      "sha256": "ffe09f21dad45062bb379c87f5032540fd31836d61becd4b5309ba44efaa9715",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-brand-draft-axe.json",
+      "sha256": "af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-studio-team-aria.txt",
+      "sha256": "0cdf5282660d544d6e022de50b803b9d9a29b2209fe3af49dcbec9ca62748cee",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-studio-team-axe.json",
+      "sha256": "0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-billing-missing-aria.txt",
+      "sha256": "b78c8c2d8ae493619acdde4c5ef5ddb18dc51a04ebb9575569b15d7bbf8e35f4",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-billing-missing-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-billing-success-aria.txt",
+      "sha256": "8769b609a191e4816158a93e5659799379e35f92c39056ac1abc043cc311a69c",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-billing-success-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-billing-unavailable-aria.txt",
+      "sha256": "bee025523559806be1b0f4bab704dd80778ba9c4e1770b972706883deb0e15ec",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-billing-unavailable-axe.json",
+      "sha256": "1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-forced-colors-aria.txt",
+      "sha256": "a5c69ff72257ed0e527f09a28cc640036c0536ef9a376e2beae1de0c9f562f36",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-conflict-WashBodega-aria.txt",
+      "sha256": "9f6833b092631c0e07a5d617fcb218f82910e3a170a0a4dc919ed9537e89ebd9",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-conflict-WashBodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-catalog-expiry-WashBodega-aria.txt",
+      "sha256": "6c73afbb7e2350643219fd2732bec45f8f8062b8057d41a5da158d23c3d3bceb",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-expiry-WashBodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-catalog-lifecycle-WashBodega-aria.txt",
+      "sha256": "b0a840b5f5583bb7b20af2cecaf78adf5da052d17a827aa136410667df67e56b",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-lifecycle-WashBodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-catalog-conflict-UnPile-aria.txt",
+      "sha256": "c8befce142a6f4bac7a1603499636a5ef380b55281250bac97be4ade43fb0b5d",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-conflict-UnPile-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-catalog-expiry-UnPile-aria.txt",
+      "sha256": "990482bbded66290d2742485bb8b37f56e7d8323dacc985b52194dea264e86df",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-expiry-UnPile-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-catalog-lifecycle-UnPile-aria.txt",
+      "sha256": "288de31d5be9d684e348daf064049cb4303e3a47b3790318c3e0afdb16ab5ea5",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-catalog-lifecycle-UnPile-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-findings-washbodega-aria.txt",
+      "sha256": "467183b55f251724dd84602b5160b9e8e909c34b0ac8005859192139c4b1e337",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-findings-washbodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-findings-a11y-aria.txt",
+      "sha256": "470e6d262dc1910289f94564fb18e0ef93b38639bc2b184e9a563716e8c9cd4e",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-findings-a11y-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-knowledge-review-controls-aria.txt",
+      "sha256": "3a5adfb5f6eaa9d19005c95221a08c8adcaaf7c7b3e55e0c97c55ac15d073fd7",
+      "kind": "aria"
+    },
+    {
+      "file": "desktop-knowledge-review-controls-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-catalog-conflict-WashBodega-aria.txt",
+      "sha256": "ac6d4054bf733ccf6ecaa725d4c6f9513780b1d5212ab79ca4c662030b18f2f9",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-catalog-conflict-WashBodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-catalog-expiry-WashBodega-aria.txt",
+      "sha256": "edd7135501e1ee4d9467199662068738cd275b7cb421c820d007c928ab033d88",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-catalog-expiry-WashBodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-catalog-lifecycle-WashBodega-aria.txt",
+      "sha256": "9ff00250f6d1bcb59df47adf600fc9c12d4cb1e3044dca2ab45fdbf3d8ea9fc3",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-catalog-lifecycle-WashBodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-catalog-conflict-UnPile-aria.txt",
+      "sha256": "fd51c5032ce42c6a562c3ffae2bfd489dd5a708ef127eb42fa89e7d2e2180848",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-catalog-conflict-UnPile-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-catalog-expiry-UnPile-aria.txt",
+      "sha256": "d329653664ac9900a5e9778d3f315daf70199bf379a72a70cb59221a21fff6d0",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-catalog-expiry-UnPile-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-catalog-lifecycle-UnPile-aria.txt",
+      "sha256": "a970aa90bb2eccea90db5377ca4053a148597642b2d29f5c063579b53587f4d7",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-catalog-lifecycle-UnPile-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-findings-washbodega-aria.txt",
+      "sha256": "5d863acabd8b38d9023444713c1b375c66985964b0ead86e19a84ee5614cb55d",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-findings-washbodega-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-findings-a11y-aria.txt",
+      "sha256": "35bd0dcd5911f9e26b2cbdb977ade6fbd7c16f3344c22836b4c5d41a1c495167",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-findings-a11y-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "mobile-knowledge-review-controls-aria.txt",
+      "sha256": "e8883f339604da137ffec83e6ecc88aa8f97486061c60ee4484147ada1cd697b",
+      "kind": "aria"
+    },
+    {
+      "file": "mobile-knowledge-review-controls-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "kind": "axe"
+    },
+    {
+      "file": "desktop-catalog-conflict-UnPile.png",
+      "sha256": "e8096321d0c3510dd5261baefdbf59edfc947e0f050871519bd913ba0880fe7a",
+      "kind": "screenshot"
+    },
+    {
+      "file": "desktop-catalog-conflict-WashBodega.png",
+      "sha256": "f47b5b496e4478a0465ca23e6dee843a5b02addb77c56338e4e9b5902840e48d",
+      "kind": "screenshot"
+    },
+    {
+      "file": "desktop-catalog-expiry-UnPile.png",
+      "sha256": "9ff723488c0336ddbb176b4d068c3516583a381b0c8142f2208fa6bfedff9ace",
+      "kind": "screenshot"
+    },
+    {
+      "file": "desktop-catalog-expiry-WashBodega.png",
+      "sha256": "5f81e00311d33c7ee54367f56bbeb32005b064246fa1eb72c78c78180a61ce2b",
+      "kind": "screenshot"
+    },
+    {
+      "file": "desktop-catalog-lifecycle-UnPile.png",
+      "sha256": "2b2e4f17086fc02afb1d7c5b5a3f50c949cec0325691e16fa9bab5784c49dc3c",
+      "kind": "screenshot"
+    },
+    {
+      "file": "desktop-catalog-lifecycle-WashBodega.png",
+      "sha256": "35422ed9ec595635abb8c2fb6b317a890f117476c4248261cae72d8920e713e0",
+      "kind": "screenshot"
+    },
+    {
+      "file": "mobile-catalog-conflict-UnPile.png",
+      "sha256": "a5fc9725aae3248d146e2e6d3321ffab8c26d4ed010bd5787ab61c27ac837789",
+      "kind": "screenshot"
+    },
+    {
+      "file": "mobile-catalog-conflict-WashBodega.png",
+      "sha256": "ea99cc2d7b85e1dd05cf036ba02d9ff5c31c3f6e6521cee4683d29b1cc4f2658",
+      "kind": "screenshot"
+    },
+    {
+      "file": "mobile-catalog-expiry-UnPile.png",
+      "sha256": "70d5121aece259173265b1b8357cabac41a6c27461f5285db3f3f01480da5cc2",
+      "kind": "screenshot"
+    },
+    {
+      "file": "mobile-catalog-expiry-WashBodega.png",
+      "sha256": "c62e9821bea4e8ebcd0c415db9568811f0def6336ac29195633fc2d74dd568d0",
+      "kind": "screenshot"
+    },
+    {
+      "file": "mobile-catalog-lifecycle-UnPile.png",
+      "sha256": "efb8aca17bf1cf45d8ee52915813a03e8deba65aa3bb89d9ceb6bcfed8ea6788",
+      "kind": "screenshot"
+    },
+    {
+      "file": "mobile-catalog-lifecycle-WashBodega.png",
+      "sha256": "339c41050b7b8a70d1e18d0b92d2a20bc812d6e72595fa1b78938f6d408e42de",
+      "kind": "screenshot"
+    }
+  ],
+  "artifact_encoding": "Axe JSON normalized by repository Prettier before hashing; screenshots and aria text retain capture bytes."
+}
