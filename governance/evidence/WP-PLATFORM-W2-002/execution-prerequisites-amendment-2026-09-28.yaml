@@ -1,0 +1,55 @@
+schema_version: 1
+kind: owner-execution-prerequisites-amendment
+date: 2026-09-28
+packet_id: WP-PLATFORM-W2-002
+previous_spec_revision: 2
+spec_revision: 3
+branch: codex/viralgraph-cleanroom
+base_commit: 42923ff7ec22e91961b363cc6bf15e97ec884221
+owner_instruction:
+  - PLEASE IMPLEMENT THIS PLAN
+  - >-
+    The current packet schema accepts only `codex/...` branches. Update it to accept
+    **literal `main` or the existing `codex/...` pattern**
+  - >-
+    Commit the authority amendment before these changes. Keep the active branch on cleanroom
+    until this preparatory change is verified and merged.
+  - >-
+    Five specialist aliases were not located in the current local/shared catalog. Use a reviewed
+    amendment to replace those unresolved references with this explicit guidance map:
+purpose: >-
+  Permit only the main-branch schema prerequisite and replacement of five unresolved skill aliases
+  by the owner-approved available guidance. This is an authority amendment, not an instruction-only
+  edit or product implementation. Commit this record and active specification revision first.
+amended_paths:
+  - governance/schemas/work-packet.schema.json
+  - governance/tests/work-packet-branch.test.mjs
+  - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  - governance/evidence/WP-PLATFORM-W2-002/successor-WP-PLATFORM-W2-003.yaml
+  - .agents/skills/build-mustbeviral/SKILL.md
+  - governance/evidence/WP-PLATFORM-W2-002/execution-prerequisites-amendment-2026-09-28.yaml
+changes:
+  - Accept literal main and the existing codex branch pattern; reject every other branch shape.
+  - Keep current branch equality and the multiple-linked-worktree rejection intact.
+  - Replace data-architect with the vendored supabase-postgres-best-practices guidance.
+  - Replace auth-fortress with Supabase security guidance and api-webhook-contracts.
+  - Replace api-and-interface-design with api-webhook-contracts and shared command architecture.
+  - Replace frontend-master with vercel-react-best-practices and frontend-design.
+  - Replace quality-check with packet checks, design-qa-loop and git-release-quality.
+  - Document retained responsibilities and source discovery in build-mustbeviral.
+  - Apply the guidance map to the prepared W2-003 successor and increment its revision to 2.
+preserved:
+  - Active packet branch remains codex/viralgraph-cleanroom; main promotion is a later change.
+  - Every W2-002 and W2-003 product objective, deliverable, interface, step and acceptance criterion.
+  - All required automated, connected and independent auth/RLS/source reviews.
+  - Additive migrations, composite ownership keys, RLS and concurrency denial coverage.
+  - Approved Lightfield artifacts and the new-screen approval requirement.
+  - Superdesign guidance remains required; installed guidance does not prove external tool access.
+  - State, history, external-effects policy, rollback and carried release obligations.
+  - No product progress, acceptance pass, packet transition, deployment, spend or provider activation.
+verification:
+  - Test main, valid codex branches and rejected unrelated branches against the actual schema.
+  - Exercise the actual packet validator with matching and mismatched branches and linked worktrees.
+  - Run preflight, governance checks/tests, formatting, governance lint, design and diff-scope checks.
+  - Validate edited skill frontmatter and referenced guidance sources.
+  - Obtain independent review of the exact head and base before merging.
