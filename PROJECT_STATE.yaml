@@ -4,18 +4,21 @@ generation: viralgraph-cleanroom-v2
 product_name: MustBeViral Studio
 internal_engine_name: ViralGraph
 launch_customer: brand_operators_and_multi_brand_studios
-project_state: active
+project_state: blocked
 phase:
   id: P4
   title: Render feasibility and measured runtime decision
-  state: planned
+  state: blocked
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W3-001
-next_action: Inventory the existing artifact/provider paths, approved real-media references and
-  runtime limits; prepare any exact hosted benchmark permission still required before remote
-  effects.
+next_action: Complete the exact real-media fixture and rights manifest, then resolve the separately
+  reviewed packet-path and architecture-guidance prerequisites and seal the benchmark protocol
+  before implementation.
 decisions_pending: []
-blockers: []
+blockers:
+  - 'Real-media benchmark inputs and permitted use are unconfirmed: actual footage, approved font
+    and literal current offer are missing; the existing fixtures cover only the W0 local design
+    walkthrough. See governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/preflight.md.'
 legacy:
   active_tree_policy: prohibited
   rollback_tag: legacy-cloudflare-v1-run21

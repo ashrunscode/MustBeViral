@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "classification": "prerequisite-documentation-only",
+  "base_commit": "bdbdfe7d84e5226b23786d0fe842f85fe0001dd0",
+  "attempts": [
+    {
+      "command": "corepack pnpm agent:preflight",
+      "environment": "clean merged base in independent C:/dev/mbv-a clone, Node 24.18.0, pnpm 11.12.0",
+      "exit": 0,
+      "scope": "Before W3 edits; prerequisite discovery only."
+    },
+    {
+      "command": "corepack pnpm agent:start",
+      "exit": 0,
+      "scope": "Begin W3 preflight; all acceptance remains pending."
+    },
+    {
+      "command": "corepack pnpm agent:handoff --next-action <recorded next action> --blocker <recorded missing fixture input>",
+      "exit": 0,
+      "scope": "Official blocked handoff; no completion or successor transition."
+    },
+    {
+      "command": "corepack pnpm agent:preflight",
+      "environment": "Uncommitted W3 evidence and handoff changes in C:/dev/mbv-a",
+      "finished_at": "2026-09-29T08:41:41Z",
+      "exit": 1,
+      "failure": "Cleanroom scanner classified the null video quote metadata field's original provider-prefixed name as a credential fingerprint.",
+      "repair": "Renamed the field to video_quote_usd_micros. It contains null, not a credential. Scanner behavior and tests remain unchanged.",
+      "receipt": "C:/dev/backups/MustBeViral/release-recovery-20260928/w3-preflight-author-gates/receipt.json"
+    },
+    {
+      "command": "corepack pnpm agent:preflight; corepack pnpm governance:check; corepack pnpm governance:test",
+      "environment": "Uncommitted W3 evidence and blocked handoff in C:/dev/mbv-a after metadata field repair",
+      "finished_at": "2026-09-29T08:45:22Z",
+      "exits": [0, 0, 1],
+      "failure": "Three supersession integration cases inherited live project and packet blockers through copied test fixtures; 170 of 173 tests passed.",
+      "repair": "Give the isolated supersession fixture explicit active/unblocked setup, then separately test project, packet and successor blocker denial with unchanged authority and no receipt. Production validation is unchanged.",
+      "receipt": "C:/dev/backups/MustBeViral/release-recovery-20260928/w3-preflight-author-gates-rerun/receipt.json"
+    }
+  ],
+  "final_merge_evidence": "Exact final-head independent review, fresh-clone commands and actual exits are required in the PR before merge; this record does not claim them in advance.",
+  "product_acceptance": "All W3 acceptance and product quality gates remain pending."
+}

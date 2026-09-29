@@ -150,10 +150,19 @@ function supersessionFixture(t, branch) {
   const proofPath = `${prefix}observation.md`;
   const write = (p, value) => writeFileSync(path.join(root, p), YAML.stringify(value));
   mkdirSync(path.join(root, prefix), { recursive: true });
+  // Supersession scenarios own their readiness; the live packet may legitimately be blocked.
+  const state = YAML.parse(readFileSync(path.join(root, 'PROJECT_STATE.yaml'), 'utf8'));
+  state.project_state = 'active';
+  state.phase.state = 'in_progress';
+  state.blockers = [];
+  state.decisions_pending = [];
+  write('PROJECT_STATE.yaml', state);
   const packet = YAML.parse(readFileSync(path.join(root, packetPath), 'utf8'));
+  packet.status = 'in_progress';
   packet.scope.allowed_paths = ['governance/**', 'docs/delivery/**', 'PROJECT_STATE.yaml'];
   packet.steps = [{ id: 'observe', title: 'Observe before release', status: 'current' }];
   packet.handoff.current_step = 'observe';
+  packet.handoff.blockers = [];
   packet.handoff.changed_paths = [];
   packet.handoff.last_green_checks = [];
   packet.acceptance = {
@@ -255,6 +264,41 @@ for (const branch of ['main', 'codex/viralgraph-cleanroom']) {
     const duplicate = f.run();
     assert.notEqual(duplicate.status, 0);
     assert.deepEqual(collectTransitionReceiptErrors({ root: f.root, receiptPath }), []);
+  });
+}
+
+for (const blockedResource of ['project', 'packet', 'successor']) {
+  test(`actual supersession rejects ${blockedResource} blockers without changing authority`, (t) => {
+    const f = supersessionFixture(t);
+    if (blockedResource === 'project') {
+      const state = YAML.parse(readFileSync(path.join(f.root, 'PROJECT_STATE.yaml'), 'utf8'));
+      state.project_state = 'blocked';
+      state.phase.state = 'blocked';
+      state.blockers = ['Operator input is required.'];
+      f.write('PROJECT_STATE.yaml', state);
+    } else if (blockedResource === 'packet') {
+      f.packet.status = 'blocked';
+      f.packet.handoff.blockers = ['Operator input is required.'];
+      f.write(f.packetPath, f.packet);
+    } else {
+      f.successor.handoff.blockers = ['Operator input is required.'];
+      f.write(f.successorPath, f.successor);
+    }
+    git(f.root, ['add', '.']);
+    git(f.root, ['commit', '--quiet', '-m', 'record blocked supersession scenario']);
+    const beforeTree = git(f.root, ['rev-parse', 'HEAD^{tree}']);
+    const result = f.run();
+    assert.notEqual(result.status, 0);
+    assert.match(
+      result.stderr,
+      blockedResource === 'successor'
+        ? /successor must be ready with pending steps and no blockers/
+        : /resolve project blockers and pending decisions before supersession/,
+    );
+    assert.equal(git(f.root, ['status', '--porcelain']), '');
+    assert.equal(git(f.root, ['rev-parse', 'HEAD^{tree}']), beforeTree);
+    assert.equal(existsSync(path.join(f.root, f.prefix, 'transition-receipt.yaml')), false);
+    assertNoTransitionMetadata(f.root);
   });
 }
 
