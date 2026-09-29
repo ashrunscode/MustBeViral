@@ -5,7 +5,7 @@ import { extractionNeedsBytes, runBrandExtraction } from './brand-extraction';
 import { createPlatformPort } from './platform';
 import { runDocumentCapture, runWebsiteCapture } from './source-capture';
 import { createSourceCaptureEgress, type SourceCaptureEgress } from './source-egress';
-import { acquiredSourceAttemptCount } from './source-machine';
+import { acquiredSourceAttemptCount, SourceMachineError } from './source-machine';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -47,11 +47,13 @@ export function createKnowledgeAwarePlatformPort(
             workspaceId,
             brandId,
             sourceId,
+            actorId: request.context.actor_id,
             requestId: request.context.request_id,
             ...(options?.fetch === undefined ? {} : { dbFetch: options.fetch }),
           });
           return { status: 'ok', data: completed };
-        } catch {
+        } catch (error) {
+          if (error instanceof SourceMachineError) return { status: 'error', code: error.code };
           return { status: 'error', code: 'INTERNAL_ERROR' };
         }
       }

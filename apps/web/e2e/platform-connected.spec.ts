@@ -671,6 +671,21 @@ test.describe('connected platform journeys', () => {
     await expect(page.getByRole('status').filter({ hasText: /Saved/ })).toBeVisible();
     await expectNoHorizontalOverflow(page);
     await captureSignedInSurface(page, 'a11y-zoom-200.png');
+    const zoomLayout = await page.locator('.platform-split').evaluate((split) => {
+      const card = split.querySelector('.platform-card');
+      if (!(card instanceof HTMLElement)) throw new Error('Brand draft card is missing.');
+      return {
+        available: split.getBoundingClientRect().width,
+        card: card.getBoundingClientRect().width,
+        clipped: card.scrollWidth > card.clientWidth + 1,
+      };
+    });
+    expect(zoomLayout.clipped, 'Zoomed form must not hide overflowing controls or labels').toBe(
+      false,
+    );
+    expect(zoomLayout.card, 'Zoomed form must retain usable width').toBeGreaterThanOrEqual(
+      Math.min(320, zoomLayout.available) - 1,
+    );
     await page.evaluate(() => {
       document.documentElement.style.removeProperty('zoom');
     });

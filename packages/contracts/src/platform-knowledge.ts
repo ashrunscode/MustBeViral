@@ -217,7 +217,7 @@ export const BrandProposalRecordSchema = z
     status: proposalStatus,
     value_text: z.string().max(8000).nullable(),
     confidence: proposalConfidence,
-    evidence_field_keys: z.array(z.string().min(1).max(120)).max(8),
+    evidence_field_keys: z.array(z.string().min(1).max(120)).max(50),
     excerpt: z.string().max(2000),
     supersedes_id: uuid.nullable(),
     created_by: uuid,

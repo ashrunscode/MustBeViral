@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 
 import {
   createSyntheticUser,
-  deleteSyntheticUser,
+  deleteSyntheticUsers,
   requireLocalSupabaseIssuer,
   SYNTHETIC_JOURNEY_PASSWORD,
 } from '../../../packages/db/scripts/platform-journey-fixtures';
@@ -21,11 +21,8 @@ export async function registerSyntheticUser(
 }
 
 export async function cleanupSyntheticUsers(createdUsers: Array<{ id: string; email: string }>) {
-  const preserved: Array<{ id: string; email: string; status: number }> = [];
-  for (const user of createdUsers) {
-    const result = await deleteSyntheticUser(user.id);
-    if (!result.deleted) preserved.push({ ...user, status: result.status });
-  }
+  const results = await deleteSyntheticUsers(createdUsers);
+  const preserved = results.filter((result) => !result.deleted);
   if (preserved.length) {
     process.stderr.write(
       `Preserved ${preserved.length} synthetic users from this run because cleanup was blocked.\n`,

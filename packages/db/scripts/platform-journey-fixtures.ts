@@ -146,20 +146,48 @@ export async function createSyntheticUser(email: string) {
   return { id, email };
 }
 
-export async function deleteSyntheticUser(id: string) {
-  requireMustBeViralDatabase();
-  const { apiUrl, serviceRoleKey } = requireLocalSupabaseApi();
-  const response = await globalThis.fetch(`${apiUrl}/auth/v1/admin/users/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${serviceRoleKey}`,
-      apikey: serviceRoleKey,
-    },
-  });
-  if (!response.ok && response.status !== 404) {
-    return { deleted: false, status: response.status };
+export async function deleteSyntheticUsers(users: ReadonlyArray<{ id: string; email: string }>) {
+  if (users.length === 0) return [];
+  for (const user of users) {
+    if (
+      !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/iu.test(user.id) ||
+      !user.email.endsWith('@synthetic.example.test')
+    ) {
+      throw new Error('Cleanup accepts only recorded local synthetic user identities.');
+    }
   }
-  return { deleted: true, status: response.status };
+  // Resolve and verify once for this bounded batch; repeated CLI launches can exhaust teardown time.
+  const { apiUrl, serviceRoleKey } = requireLocalSupabaseApi();
+  const headers = { Authorization: `Bearer ${serviceRoleKey}`, apikey: serviceRoleKey };
+  const results: Array<{ id: string; email: string; deleted: boolean; status: number }> = [];
+  for (const user of users) {
+    const url = `${apiUrl}/auth/v1/admin/users/${user.id}`;
+    const current = await globalThis.fetch(url, {
+      method: 'GET',
+      headers,
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!current.ok) {
+      results.push({ ...user, deleted: current.status === 404, status: current.status });
+      continue;
+    }
+    const identity = (await current.json()) as { email?: string; user?: { email?: string } };
+    if ((identity.email ?? identity.user?.email) !== user.email) {
+      results.push({ ...user, deleted: false, status: 409 });
+      continue;
+    }
+    const response = await globalThis.fetch(url, {
+      method: 'DELETE',
+      headers,
+      signal: AbortSignal.timeout(5000),
+    });
+    results.push({
+      ...user,
+      deleted: response.ok || response.status === 404,
+      status: response.status,
+    });
+  }
+  return results;
 }
 
 export async function seedWorkspaceBilling(workspaceId: string) {

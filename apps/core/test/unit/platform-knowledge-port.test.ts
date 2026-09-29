@@ -405,7 +405,9 @@ describe('knowledge-aware platform port', () => {
       if (url.endsWith('/record_brand_extraction')) {
         const body = JSON.parse(String(init?.body)) as {
           p_assertions: Array<{ kind: string; reusable: boolean }>;
+          p_actor_id: string;
         };
+        expect(body.p_actor_id).toBe(context.actor_id);
         expect(body.p_assertions.some((item) => item.kind === 'offering')).toBe(true);
         expect(body.p_assertions.every((item) => item.reusable === false)).toBe(true);
         return Response.json(review);
@@ -437,4 +439,38 @@ describe('knowledge-aware platform port', () => {
     expect(get).toHaveBeenCalled();
     expect(Object.hasOwn(PLATFORM_OPERATIONS, 'record_brand_extraction')).toBe(false);
   });
+
+  it.each(['NOT_FOUND', 'VALIDATION_FAILED'] as const)(
+    'returns safe %s from machine completion without leaking its response',
+    async (code) => {
+      const db = vi.fn<typeof fetch>(async (input) =>
+        String(input).endsWith('/record_brand_extraction')
+          ? Response.json({ message: code, details: 'private diagnostic' }, { status: 400 })
+          : Response.json({ extract_pending: true }),
+      );
+      const port = createKnowledgeAwarePlatformPort(
+        {
+          SUPABASE_URL: 'http://127.0.0.1:54321',
+          SUPABASE_PUBLISHABLE_KEY: 'synthetic-publishable',
+          SUPABASE_SECRET_KEY: 'synthetic-secret',
+          MEDIA_BUCKET: {
+            get: async () => ({
+              arrayBuffer: async () => new TextEncoder().encode('Offering: Wash').buffer,
+              httpMetadata: { contentType: 'text/plain' },
+            }),
+          } as unknown as R2Bucket,
+        } as CoreBindings,
+        'synthetic-user-jwt',
+        { fetch: db },
+      );
+      expect(
+        await port.execute({
+          operation: 'extract_brand_knowledge',
+          input: { workspace_id: workspace, brand_id: brand, source_id: jobId },
+          context,
+          idempotencyKey: 'machine-failure',
+        }),
+      ).toEqual({ status: 'error', code });
+    },
+  );
 });

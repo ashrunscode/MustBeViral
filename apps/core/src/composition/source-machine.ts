@@ -30,6 +30,7 @@ export class SourceMachineError extends Error {
       | 'SOURCE_INTERRUPTED'
       | 'SOURCE_EGRESS_UNAVAILABLE'
       | 'NOT_FOUND'
+      | 'VALIDATION_FAILED'
       | 'INTERNAL_ERROR',
     readonly retryable: boolean,
     options?: ErrorOptions,
@@ -81,6 +82,7 @@ export class PrivilegedSourceMachinePort {
           ? String((payload as { message: unknown }).message)
           : '';
       if (message === 'NOT_FOUND') throw new SourceMachineError('NOT_FOUND', false);
+      if (message === 'VALIDATION_FAILED') throw new SourceMachineError('VALIDATION_FAILED', false);
       if (
         message === 'SOURCE_UNSAFE' ||
         message === 'SOURCE_UNSUPPORTED' ||
@@ -120,10 +122,12 @@ export class PrivilegedSourceMachinePort {
     sourceId: string,
     assertions: readonly RepresentativeAssertion[],
     requestId: string,
+    actorId: string,
   ): Promise<unknown> {
     return await this.#rpc('record_brand_extraction', {
       p_source_id: sourceId,
       p_assertions: assertions,
+      p_actor_id: actorId,
       p_request_id: requestId,
     });
   }
@@ -134,7 +138,11 @@ export class PrivilegedSourceMachinePort {
     requestId: string,
     expectedAttemptCount: number,
   ): Promise<unknown> {
-    if (failureCode === 'NOT_FOUND' || failureCode === 'INTERNAL_ERROR') {
+    if (
+      failureCode === 'NOT_FOUND' ||
+      failureCode === 'VALIDATION_FAILED' ||
+      failureCode === 'INTERNAL_ERROR'
+    ) {
       return await this.#rpc('fail_brand_source_job', {
         p_job_id: jobId,
         p_failure_code: 'SOURCE_UNREACHABLE',

@@ -35,7 +35,7 @@ function currentOf(kind: AssertionKind, items: readonly RepresentativeAssertion[
 }
 
 function evidenceKeys(items: readonly RepresentativeAssertion[]): string[] {
-  return items.map((item) => item.field_key).slice(0, 8);
+  return [...new Set(items.map((item) => item.field_key))];
 }
 
 export function proposeBrandKnowledge(
@@ -86,24 +86,35 @@ export function proposeBrandKnowledge(
           excerpt: 'Audience remains unknown. No demographic was assumed.',
         };
 
+  const positioningText = offerings.map((item) => item.value_text).join('; ');
   const positioning: BrandProposal =
-    offerings.length > 0
+    positioningText.length > 8000
       ? {
-          kind: 'positioning',
-          status: 'inferred',
-          value_text: offerings.map((item) => item.value_text).join('; '),
-          confidence: 'low',
-          evidence_field_keys: evidenceKeys(offerings),
-          excerpt: offerings[0]!.excerpt,
-        }
-      : {
           kind: 'positioning',
           status: 'unknown',
           value_text: null,
           confidence: null,
-          evidence_field_keys: [],
-          excerpt: 'Positioning remains unknown until offerings are observed.',
-        };
+          evidence_field_keys: evidenceKeys(offerings),
+          excerpt:
+            'Offerings exceed the summary limit. Review the linked evidence and supply a shorter positioning summary.',
+        }
+      : offerings.length > 0
+        ? {
+            kind: 'positioning',
+            status: 'inferred',
+            value_text: positioningText,
+            confidence: 'low',
+            evidence_field_keys: evidenceKeys(offerings),
+            excerpt: offerings[0]!.excerpt,
+          }
+        : {
+            kind: 'positioning',
+            status: 'unknown',
+            value_text: null,
+            confidence: null,
+            evidence_field_keys: [],
+            excerpt: 'Positioning remains unknown until offerings are observed.',
+          };
 
   return [voice, audience, positioning];
 }

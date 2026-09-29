@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   BrandAssertionRecordSchema,
+  BrandProposalRecordSchema,
   createPlatformHandlers,
   mapCompletedSourceCapture,
   PLATFORM_ERRORS,
@@ -19,6 +20,29 @@ const brand = {
 };
 
 describe('brand knowledge contracts', () => {
+  it('accepts full nine-offering provenance while retaining the 50-assertion boundary', () => {
+    const proposal = {
+      id: context.actor_id,
+      ...brand,
+      draft_id: context.actor_id,
+      kind: 'positioning',
+      status: 'inferred',
+      value_text: 'Nine offerings',
+      confidence: 'low',
+      evidence_field_keys: Array.from({ length: 9 }, (_, index) => `offering-${index}`),
+      excerpt: 'Source offerings',
+      supersedes_id: null,
+      created_by: context.actor_id,
+      created_at: '2026-09-29T00:00:00.000Z',
+    };
+    expect(BrandProposalRecordSchema.safeParse(proposal).success).toBe(true);
+    expect(
+      BrandProposalRecordSchema.safeParse({
+        ...proposal,
+        evidence_field_keys: Array.from({ length: 51 }, (_, index) => `offering-${index}`),
+      }).success,
+    ).toBe(false);
+  });
   it('registers knowledge operations on the shared platform_knowledge RPC', () => {
     expect(PLATFORM_OPERATIONS.start_website_capture.rpc).toBe('platform_knowledge');
     expect(PLATFORM_OPERATIONS.start_document_capture.rpc).toBe('platform_knowledge');

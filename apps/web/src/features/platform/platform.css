@@ -177,6 +177,7 @@
   overflow: visible;
 }
 .platform-main {
+  container: platform-main / inline-size;
   width: 100%;
   max-width: 1440px;
   min-width: 0;
@@ -326,6 +327,13 @@
 .platform-inline-input {
   flex: 1;
   min-width: 180px;
+}
+/* Reflow on available content width, including zoom, rather than only viewport width. */
+@container platform-main (max-width: 680px) {
+  .platform-split,
+  .platform-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 @media (max-width: 1000px) {
   .platform-main {

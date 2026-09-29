@@ -6,8 +6,8 @@ currency: USD
 unit: integer_usd_micros
 ceiling: 100000000
 settled: 0
-reserved: 0
-remaining: 100000000
+reserved: 19349741
+remaining: 80650259
 scope: September 28 full-platform recovery and implementation instruction across all successor packets.
 accounting:
   - Existing application daily limits are not this budget and never reset this cumulative balance.
@@ -15,5 +15,15 @@ accounting:
   - Record actual settlement and safe receipt reference; do not store credentials, signed URLs or customer media.
   - No ad spend is authorized from this budget; no new paid subscription is silently activated.
   - Preserve this receipt and carry its reference into successor evidence rather than creating a fresh ceiling.
-entries: []
-verification: No paid external-service calls have been made by this recovery execution through H5 authority preparation.
+entries:
+  - id: h6-claude-review-777384d
+    service: Claude Code opus high independent source review
+    authentication: Existing claude.ai Max subscription
+    native_budget_cap_micros: 20000000
+    pre_call_reservation_micros: 25000000
+    reported_list_price_micros: 19349741
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 19349741
+    receipt: Local recovery h6-review/claude-native.json; session 5cd7c9a6-a877-4110-99fb-7d49a5c82c0a
+    notes: Provider-reported list-price valuation is rounded up and reserved conservatively; it is not an invoice or proof of a separate charge.
+verification: No provider generation, publishing or deployment spending. The native review valuation remains reserved until incremental cash settlement is established. Codex review used existing ChatGPT authentication; no API billing receipt was emitted.
