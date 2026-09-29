@@ -146,6 +146,14 @@ never approve a brand or rewrite an approved snapshot. New approvals and new cam
 recheck offer expiry at the database clock; historical reads and successful idempotent pin
 replays retain their original meaning.
 
+Recapture compares the same website URL or document filename only after successful extraction.
+Changed source bytes expose the old/new source identities even when no new claim was recognized.
+A previously known claim missing from that replacement is labeled `source_missing` and requires
+operator review; absence is not treated as proof that the old claim was false. The contradiction
+review command can retain a verified value or withdraw it. New approval refuses unresolved missing
+claims. Explicit empty CSV fields retain their own identities and never become disposable
+missing-category placeholders. A new approval clears source-change notices already reviewed.
+
 Catalog import accepts bounded UTF-8 text, Markdown, HTML or CSV in the existing private capture
 path. CSV has exact columns `kind,field_key,value` with optional `ends_at`, at most 40 data records
 and 32,768 UTF-16 code units. Supported kinds are offering, location, fact, offer and language;

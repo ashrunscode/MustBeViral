@@ -182,6 +182,13 @@ export function KnowledgeChanges({
       <button type="button" onClick={refresh}>
         Refresh comparison
       </button>
+      {view.source_changes.map((change) => (
+        <p className="platform-note" key={change.previous_source_id}>
+          Source {change.previous_source_id} has changed. Replacement source{' '}
+          {change.latest_source_id} was captured {change.captured_at}. Review its evidence; the
+          approved snapshot remains preserved.
+        </p>
+      ))}
       {view.expired_baseline_assertion_ids.length > 0 ? (
         <p role="status">
           An offer in the approved version has expired. Review the offer and approve a new version
@@ -199,7 +206,11 @@ export function KnowledgeChanges({
           >
             <summary>
               {group.field_key.replaceAll('_', ' ')} · {labels[group.change]}
-              {group.conflicted ? ' · Conflicting facts — review required' : ''}
+              {group.source_missing
+                ? ' · Missing from latest source — review required'
+                : group.conflicted
+                  ? ' · Conflicting facts — review required'
+                  : ''}
               {group.expired ? ' · Expired offer' : ''}
             </summary>
             <div className="platform-stack">

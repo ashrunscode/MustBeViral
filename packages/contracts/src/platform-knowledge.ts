@@ -298,6 +298,18 @@ export const KnowledgeChangesViewSchema = z
     draft_version: version.nullable(),
     draft_hash: draftHash.nullable(),
     evaluated_at: WireTimestampSchema,
+    source_changes: z
+      .array(
+        z
+          .object({
+            previous_source_id: uuid,
+            latest_source_id: uuid,
+            captured_at: WireTimestampSchema,
+            kind: z.enum(['website', 'document']),
+          })
+          .strict(),
+      )
+      .max(50),
     groups: z
       .array(
         z
@@ -308,6 +320,7 @@ export const KnowledgeChangesViewSchema = z
             baseline_assertions: z.array(BrandAssertionRecordSchema).max(50),
             current_assertions: z.array(BrandAssertionRecordSchema).max(50),
             conflicted: z.boolean(),
+            source_missing: z.boolean(),
             expired: z.boolean(),
           })
           .strict(),

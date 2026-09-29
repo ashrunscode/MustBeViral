@@ -11539,6 +11539,32 @@
                 "type": "string",
                 "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
               },
+              "source_changes": {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "previous_source_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                    },
+                    "latest_source_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                    },
+                    "captured_at": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|[+-]\\d{2}:\\d{2})$"
+                    },
+                    "kind": { "type": "string", "enum": ["website", "document"] }
+                  },
+                  "required": ["previous_source_id", "latest_source_id", "captured_at", "kind"],
+                  "additionalProperties": false
+                }
+              },
               "groups": {
                 "maxItems": 100,
                 "type": "array",
@@ -11826,6 +11852,7 @@
                       }
                     },
                     "conflicted": { "type": "boolean" },
+                    "source_missing": { "type": "boolean" },
                     "expired": { "type": "boolean" }
                   },
                   "required": [
@@ -11835,6 +11862,7 @@
                     "baseline_assertions",
                     "current_assertions",
                     "conflicted",
+                    "source_missing",
                     "expired"
                   ],
                   "additionalProperties": false
@@ -11855,6 +11883,7 @@
               "draft_version",
               "draft_hash",
               "evaluated_at",
+              "source_changes",
               "groups",
               "expired_baseline_assertion_ids"
             ],

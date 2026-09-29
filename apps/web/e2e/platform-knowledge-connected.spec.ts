@@ -179,25 +179,22 @@ test.describe('connected brand knowledge journeys', () => {
     await signIn(page, owner.email);
     const brands = await createStudioAndBrands(page);
     await page.goto(findingsUrl(brands.unpileUrl));
-    await page
-      .locator('input[type="file"]')
-      .setInputFiles({
-        name: 'unpile-forty.csv',
-        mimeType: 'text/csv',
-        buffer: Buffer.from(
-          'kind,field_key,value\n' +
-            Array.from(
-              { length: 40 },
-              (_, i) => `offering,sku${i},UnPile catalog product ${i}`,
-            ).join('\n'),
-        ),
-      });
+    await page.locator('input[type="file"]').setInputFiles({
+      name: 'unpile-forty.csv',
+      mimeType: 'text/csv',
+      buffer: Buffer.from(
+        'kind,field_key,value\n' +
+          Array.from({ length: 40 }, (_, i) => `offering,sku${i},UnPile catalog product ${i}`).join(
+            '\n',
+          ),
+      ),
+    });
     await expectJobStatus(page, 'captured');
     await expect(page.getByTestId('assertion-offering')).toHaveCount(40);
     for (const index of [0, 39]) {
       await page
         .getByTestId('assertion-offering')
-          .filter({ hasText: new RegExp(`sku${index} ·`) })
+        .filter({ hasText: new RegExp(`sku${index} ·`) })
         .click();
       await expect(page.getByTestId('assertion-value')).toHaveText(
         `UnPile catalog product ${index}`,
@@ -210,6 +207,82 @@ test.describe('connected brand knowledge journeys', () => {
     await page.goto(findingsUrl(brands.washbodegaUrl));
     await expect(page.getByTestId('assertion-offering')).toHaveCount(0);
     await expect(page.getByText('UnPile catalog product 39')).toHaveCount(0);
+  });
+
+  test('preserves blank catalog rows and requires review when a recapture removes a claim', async ({
+    page,
+  }) => {
+    test.setTimeout(240_000);
+    const owner = await registerSyntheticUser(
+      `w2-catalog-gaps-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    for (const [name, url, blankFirst] of [
+      ['WashBodega', brands.washbodegaUrl, false],
+      ['UnPile', brands.unpileUrl, true],
+    ] as const) {
+      await page.goto(findingsUrl(url));
+      const known = `offering,sku_a,${name} product A`;
+      const blank = 'offering,sku_b,';
+      const file = { name: `${name}-rows.csv`, mimeType: 'text/csv' };
+      await page
+        .locator('input[type="file"]')
+        .setInputFiles({
+          ...file,
+          buffer: Buffer.from(
+            'kind,field_key,value\n' +
+              (blankFirst ? [blank, known] : [known, blank]).join('\n') +
+              '\noffering,sku_c,',
+          ),
+        });
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(3);
+      for (const key of ['sku b', 'sku c']) {
+        await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
+        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      }
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+      await page
+        .locator('input[type="file"]')
+        .setInputFiles({
+          name: `${name}-other.csv`,
+          mimeType: 'text/csv',
+          buffer: Buffer.from(`kind,field_key,value\noffering,sku_d,${name} product D`),
+        });
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
+      await page
+        .locator('input[type="file"]')
+        .setInputFiles({
+          ...file,
+          buffer: Buffer.from(`kind,field_key,value\nfact,about,${name} updated catalog`),
+        });
+      const changes = page.getByTestId('knowledge-changes');
+      const missing = changes
+        .getByTestId('knowledge-change-group')
+        .filter({ has: page.locator('summary', { hasText: /^sku a ·/ }) });
+      await expect(missing).toContainText('Missing from latest source');
+      await expect(changes).toContainText('Replacement source');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(findingsAlert(page)).toContainText('contradictory');
+      await missing.locator('summary').first().click();
+      await missing.getByLabel('Review decision').selectOption('withdraw');
+      await missing
+        .getByLabel('Reason for this review')
+        .fill('The replacement catalog no longer confirms this product.');
+      await missing.getByRole('button', { name: 'Record conflict review' }).click();
+      await expect(missing).not.toContainText('Missing from latest source');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await expect(changes).not.toContainText('Replacement source');
+      for (const key of ['sku b', 'sku c']) {
+        await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
+        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      }
+      await page.reload();
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
+    }
   });
 
   test('captures website and document sources for both brands and keeps them after reload', async ({
