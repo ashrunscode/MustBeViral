@@ -3,6 +3,32 @@ import { extractRepresentativeAssertions } from './representative-extract';
 import { approvalBlockReason } from './brand-version';
 
 describe('source offer expiry precision', () => {
+  for (const mediaType of ['text/plain', 'text/markdown'] as const) {
+    it.each(['2098-01-01 18:00:00-06:00', '2098-01-01 18:00:00.123456 -06:00'])(
+      `retains a complete spaced expiry in ${mediaType}: %s`,
+      (end) => {
+        const offer = extractRepresentativeAssertions({
+          mediaType,
+          text: `Offer: sale — Half price until ${end}`,
+        }).find((item) => item.kind === 'offer');
+        expect(offer?.ends_at).toBe(end.replace(' ', 'T').replace(' ', ''));
+        expect(offer?.status).toBe('observed');
+      },
+    );
+
+    it.each(['2098-01-01 18:00:00', '2098-01-01 at closing', '2098-01-01 25:00:00 -06:00'])(
+      `requires review of the entire unsupported expiry in ${mediaType}: %s`,
+      (end) => {
+        const offer = extractRepresentativeAssertions({
+          mediaType,
+          text: `Offer: sale — Half price until ${end}`,
+        }).find((item) => item.kind === 'offer');
+        expect(offer).toMatchObject({ ends_at: null, status: 'disputed' });
+        expect(offer?.excerpt).toContain(end);
+      },
+    );
+  }
+
   it.each(['text/html', 'text/plain', 'text/markdown'] as const)(
     'retains explicit times, offsets and microseconds in %s',
     (mediaType) => {

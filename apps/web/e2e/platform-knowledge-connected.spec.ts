@@ -244,6 +244,21 @@ test.describe('connected brand knowledge journeys', () => {
         'candidate-page_title',
         'UnPile Wash And Fold Hours',
       );
+      // The server completes capture/extraction with its service credential, not this editor JWT.
+      await editorPage.locator('input[type="file"]').setInputFiles({
+        name: 'unpile-editor-notes.md',
+        mimeType: 'text/markdown',
+        buffer: Buffer.from('Offering: pickup — UnPile pickup by appointment.', 'utf8'),
+      });
+      await expect(editorPage.getByTestId('candidate-document_filename')).toBeVisible({
+        timeout: 30_000,
+      });
+      await expectJobStatus(editorPage, 'captured');
+      await editorPage.getByTestId('extract-knowledge').click();
+      await expect(editorPage.getByTestId('assertion-offering').first()).toBeVisible();
+      await editorPage.getByTestId('assertion-offering').first().click();
+      await expect(editorPage.getByTestId('assertion-value')).toContainText('UnPile');
+      await expect(editorPage.getByTestId('assertion-value')).not.toContainText('WashBodega');
       await heldEditor.install();
       await editorPage.reload();
       await expect(editorPage.getByText('Loading brand findings')).toBeVisible();

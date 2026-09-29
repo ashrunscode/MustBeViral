@@ -109,9 +109,15 @@ function attributeValue(attrs: string, name: string): string {
 
 function parseOfferEnd(raw: string): string | null {
   const value = raw.trim();
+  // Accept an explicit date/time/zone separated by whitespace, without accepting a date prefix
+  // from an otherwise unsupported expression. The original expression remains in the excerpt.
+  const spaced = value.match(
+    /^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?)\s*(Z|[+-]\d{2}:\d{2})$/u,
+  );
+  const timestamp = spaced ? `${spaced[1]}T${spaced[2]}${spaced[3]}` : value;
   // Date-only evidence retains the existing conservative, exclusive start-of-day UTC boundary.
   return parseKnowledgeExpiry(
-    /^\d{4}-\d{2}-\d{2}$/u.test(value) ? `${value}T00:00:00.000Z` : value,
+    /^\d{4}-\d{2}-\d{2}$/u.test(value) ? `${value}T00:00:00.000Z` : timestamp,
   );
 }
 
@@ -205,7 +211,7 @@ function labeledLines(
       let ends: string | null = null;
       let suppliedEnd = '';
       if (kind === 'offer') {
-        const endMatch = raw.match(/\buntil\s+(\S+)/iu);
+        const endMatch = raw.match(/\buntil\s+(.+)$/iu);
         suppliedEnd = endMatch?.[1]?.replace(/[.,;]$/u, '') ?? '';
         ends = parseOfferEnd(suppliedEnd);
       }
