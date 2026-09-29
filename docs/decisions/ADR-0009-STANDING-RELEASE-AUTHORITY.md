@@ -54,9 +54,12 @@ WP-P3-009 release obligations in `quality-gates`.
   and reviewed head where `quality-gates` requires a review, the rollback target, the deployed version
   and the smoke results.
 - On 2026-09-28, GitHub reported `protected: false` for `main` and `codex/viralgraph-cleanroom`,
-  no repository rulesets, and Actions disabled. ADR-0006's consequence that `main` branch protection
-  is the enforcement boundary does not hold today. Until protection and Actions are restored, the
-  recorded merge gates in `quality-gates` are the enforcement. This decision does not change who may
-  administer branch protection or Actions.
+  no repository rulesets, and Actions disabled. The owner retained the Actions restriction on that
+  date. The exact proposed protections and pending authorization are recorded in
+  `governance/evidence/WP-PLATFORM-W2-002/github-branch-protection-2026-09-28.md`; they are not applied
+  settings. ADR-0006's consequence that `main` branch protection is the enforcement boundary does
+  not hold in this readback. The recorded merge gates in `quality-gates` remain required regardless
+  of protection or Actions availability. This decision does not change who may administer branch
+  protection or Actions.
 - A deploy whose smoke check fails is rolled back to its recorded target in the same release and
   recorded as an incident.

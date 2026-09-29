@@ -28,10 +28,11 @@ environments:
       V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
       preserve_until_v2_cutover keeps legacy V1 unchanged. Under adr-0009-standing-release-authority,
-      agents may deploy staging-verified merged commits to the existing V2 production targets
-      mustbeviral-v2-production-core, mustbeviral-v2-production-collaboration and
-      mustbeviral-web-production through the guarded release in deploy-rollback-incidents, only when
-      its pre-deploy checks find no Worker setting change. Production database writes, secrets,
+      agents may deploy staging-verified merged commits through the guarded release in
+      deploy-rollback-incidents to the existing V2 production Workers mustbeviral-v2-production-core
+      and mustbeviral-v2-production-collaboration, only when its pre-deploy checks find no Worker
+      setting change, and to mustbeviral-web-production once that runbook records a Vercel deploy
+      command. Production database writes, secrets,
       environment variables, routes, DNS, traffic, new resources and feature, provider or charge
       enablement still need a dated owner sentence.
   staging:
@@ -42,8 +43,9 @@ environments:
     notes: Named staging outbox queue mustbeviral-v2-staging-outbox-dispatch. QUEUES_ENABLED is true
       after the event_id migration. Instant rollback is QUEUES_ENABLED=false. Destructive remote
       action stays forbidden. guarded_release lets agents deploy merged commits to
-      mustbeviral-v2-staging-core, mustbeviral-v2-staging-collaboration and mustbeviral-web-staging
-      and apply their merged additive migrations through deploy-rollback-incidents under
+      mustbeviral-v2-staging-core and mustbeviral-v2-staging-collaboration, and to
+      mustbeviral-web-staging once that runbook records a Vercel deploy command. Agents may apply
+      their merged additive migrations through deploy-rollback-incidents under
       adr-0009-standing-release-authority. A deploy that would change Worker vars, bindings, cron
       triggers, routes, workers_dev or queue consumers, and any secret or environment variable
       change, stays owner-gated.
