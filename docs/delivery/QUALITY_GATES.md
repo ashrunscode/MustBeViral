@@ -22,7 +22,7 @@ Agents merge without asking again (`adr-0009-standing-release-authority`) once t
   - Product changes also need `pnpm verify` and `pnpm supabase:test`.
   - Any validation error blocks the merge. If a tool crashes instead of reporting a result, rerun that validator alone at the same commit and record both runs. If the rerun also produces no result, the merge is blocked until one does.
   - The pull request records the commit, commands and exit codes.
-  - GitHub Actions is disabled, and neither `main` nor `codex/viralgraph-cleanroom` is protected or covered by a ruleset (checked 2026-09-28). Until that changes, these recorded local runs are the required checks. Do not describe them as CI.
+  - GitHub Actions is disabled; the owner retained that restriction on 2026-09-28. Neither `main` nor `codex/viralgraph-cleanroom` is protected or covered by a ruleset in the current readback. The exact proposed protections and pending authorization are recorded in `governance/evidence/WP-PLATFORM-W2-002/github-branch-protection-2026-09-28.md`. Do not describe proposed settings as applied. The recorded local runs remain the required checks; do not describe them as CI.
 - Before merge, a reviewer independent of the author (a different agent session or a person) reviews the exact head of any change that touches authentication, billing or payments, consent, CRM, migrations or RLS, customer data, deployment configuration or governance authority, or more than 20 files. Other changes merge on the required checks alone. A new head needs a new review of what changed, and blocking findings are fixed before merging.
 - Merge with a merge commit into the target branch; never use an administrator bypass. Merging never deploys by itself.
 - Passing these gates does not approve any action `adr-0009-standing-release-authority` leaves owner-gated.
@@ -40,9 +40,9 @@ Agents merge without asking again (`adr-0009-standing-release-authority`) once t
 
 Tests favor behavior and invariants over raw coverage percentages. Unit tests cover pure domain/graph/billing logic; integration tests cover database, HTTP, provider, and storage boundaries; end-to-end tests cover the golden launch-pack flow and critical recovery paths.
 
-Database RLS/RPC suites live under `supabase/tests/database` (pgTAP). CI runs them in the
-`database-pgtap` job of `.github/workflows/quality.yml` (`pnpm supabase:start` →
-`pnpm supabase:test`) on the ashrunscode GitHub account. Local operators need Docker Desktop
+Database RLS/RPC suites live under `supabase/tests/database` (pgTAP). The disabled workflow defines
+them in the `database-pgtap` job of `.github/workflows/quality.yml` (`pnpm supabase:start` →
+`pnpm supabase:test`); it does not currently execute. Required local runs need Docker Desktop
 running before `pnpm supabase:test`.
 
 ## D0 exit gates
