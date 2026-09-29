@@ -133,6 +133,33 @@ select lives_ok($$select public.platform_knowledge_lifecycle_command('resolve_br
 select lives_ok($$select public.platform_knowledge_command('approve_brand_version',pg_temp.exact(),current_setting('test.kind')||':reviewed','req')$$,'document: reviewed source change can be approved');
 select is(jsonb_array_length(pg_temp.changes()->'source_changes'),0,'document: reviewed occurrence notices clear after new approval');
 select is((select snapshot::text from public.brand_versions where id=current_setting('test.approved')::uuid),current_setting('test.snapshot'),'document: original approval bytes remain immutable');
+-- Cached sources retain current nonmatching assertions, so the Core command
+-- skips extraction. Only the new occurrence changes the review evidence.
+select set_config('test.brand',public.platform_command('create_brand',jsonb_build_object('workspace_id',current_setting('test.ws'),'name','Stale review','slug','stale-review'),'stale-review','req')->'record'->>'id',true);
+create function pg_temp.extract_field(p_source uuid,p_field text) returns jsonb language sql as $$
+ select public.record_brand_extraction(p_source,jsonb_build_array(jsonb_build_object('kind','fact','field_key',p_field,'value_text',p_field,
+  'status','observed','excerpt',p_field,'locator',p_field,'method','plaintext_labeled','ends_at',null,'reusable',false)),
+  'extract','b0000000-0000-4000-8000-000000000001');
+$$;
+select set_config('test.a',pg_temp.capture('review.txt','a')->'job'->>'source_id',true);
+select pg_temp.extract(current_setting('test.a')::uuid,true);
+select set_config('test.b',pg_temp.capture('cached-b.txt','b')->'job'->>'source_id',true);
+select pg_temp.extract_field(current_setting('test.b')::uuid,'about_b');
+select set_config('test.c',pg_temp.capture('cached-c.txt','c')->'job'->>'source_id',true);
+select pg_temp.extract_field(current_setting('test.c')::uuid,'about_c');
+select public.platform_knowledge_command('approve_brand_version',pg_temp.exact(),'stale-baseline','req');
+select pg_temp.capture('review.txt','b');
+select is(public.platform_knowledge_command('extract_brand_knowledge',pg_temp.scope()||jsonb_build_object('source_id',current_setting('test.b')),'cached-b','req')->>'extract_pending','false','cached B needs no extraction rerun');
+select set_config('test.review_b',pg_temp.exact()::text,true);
+select pg_temp.capture('review.txt','c');
+select is(public.platform_knowledge_command('extract_brand_knowledge',pg_temp.scope()||jsonb_build_object('source_id',current_setting('test.c')),'cached-c','req')->>'extract_pending','false','cached C needs no extraction rerun');
+select is(pg_temp.exact()->>'expected_version',current_setting('test.review_b')::jsonb->>'expected_version','duplicate recapture does not manufacture a new assertion revision');
+select isnt(pg_temp.exact()->>'draft_hash',current_setting('test.review_b')::jsonb->>'draft_hash','available occurrence changes the exact review hash');
+select is(pg_temp.error_of($$select public.platform_knowledge_lifecycle_command('resolve_brand_contradiction',current_setting('test.review_b')::jsonb||'{"kind":"fact","field_key":"hours","value_text":null,"ends_at":null,"excerpt":"Reviewed cached B."}','stale-decision','req')$$),'P0001:REVISION_CONFLICT','review of cached B cannot submit after cached C replaces it');
+select is(pg_temp.error_of($$select public.platform_knowledge_command('approve_brand_version',current_setting('test.review_b')::jsonb,'stale-approval','req')$$),'P0001:REVISION_CONFLICT','approval also binds available capture evidence');
+select is((select count(*)::integer from public.brand_knowledge_reviews where brand_id=current_setting('test.brand')::uuid),0,'stale review creates no decision record');
+select is((select value_text from app_private.current_assertions(current_setting('test.ws')::uuid,current_setting('test.brand')::uuid) where field_key='hours'),'Open daily','stale review preserves the current claim');
+select lives_ok($$select public.platform_knowledge_lifecycle_command('resolve_brand_contradiction',pg_temp.exact()||'{"kind":"fact","field_key":"hours","value_text":null,"ends_at":null,"excerpt":"Reviewed current cached C."}','fresh-decision','req')$$,'refreshed exact evidence permits the explicit decision');
 select ok(not has_function_privilege('authenticated','app_private.latest_knowledge_source_captures(public.brand_sources)','execute'),'occurrence helper is private');
 select ok(not has_sequence_privilege('authenticated','app_private.knowledge_event_sequence','usage'),'browser cannot assign logical evidence order');
 select * from finish();

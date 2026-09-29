@@ -155,6 +155,8 @@ approved source. Inspect source history and all affected findings when more than
 New capture completions, extraction evidence and approvals receive a database-assigned logical
 sequence so wall-clock corrections cannot reorder them. Historical rows without that sequence
 retain their recorded timestamp order until a new capture supersedes them; no old receipt is rewritten.
+The draft hash includes the private available-capture watermark. A cached recapture therefore
+invalidates an open review or approval even when extraction and assertion revisions are unchanged.
 Changed source bytes expose the old/new source identities even when no new claim was recognized.
 A previously known claim missing from that replacement is labeled `source_missing` and requires
 operator review; absence is not treated as proof that the old claim was false. The contradiction
