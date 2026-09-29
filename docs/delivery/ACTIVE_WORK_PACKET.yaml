@@ -27,12 +27,13 @@ authority_refs:
   - adr-0007-full-platform
 required_skills:
   - build-mustbeviral
-  - data-architect
-  - auth-fortress
-  - api-and-interface-design
+  - supabase-postgres-best-practices
+  - api-webhook-contracts
   - superdesign
-  - frontend-master
-  - quality-check
+  - vercel-react-best-practices
+  - frontend-design
+  - design-qa-loop
+  - git-release-quality
 depends_on:
   - WP-PLATFORM-W2-001
 scope:
