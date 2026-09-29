@@ -23,29 +23,46 @@ function findRepoRoot(): string {
   }
 }
 
-function localSupabaseDatabase() {
+type LocalDatabase = {
+  host: string;
+  port: number;
+  username: string;
+  database: string;
+  password: string;
+};
+
+type LocalRuntime = {
+  database: LocalDatabase;
+  api: { url: string; anonKey: string; serviceRoleKey: string };
+};
+
+function readLocalHelper(operation: 'localSupabaseDatabase' | 'localSupabaseRuntime'): unknown {
   const helper = pathToFileURL(join(findRepoRoot(), 'packages/db/scripts/local-supabase.mjs')).href;
-  const raw = execFileSync(
-    process.execPath,
-    [
-      '--input-type=module',
-      '-e',
-      `import { localSupabaseDatabase } from ${JSON.stringify(helper)}; process.stdout.write(JSON.stringify(localSupabaseDatabase()));`,
-    ],
-    { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] },
-  );
-  const connection = JSON.parse(raw) as {
-    host: string;
-    port: number;
-    username: string;
-    database: string;
-    password: string;
-  };
+  try {
+    const raw = execFileSync(
+      process.execPath,
+      [
+        '--input-type=module',
+        '-e',
+        `import { ${operation} } from ${JSON.stringify(helper)}; process.stdout.write(JSON.stringify(${operation}()));`,
+      ],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true },
+    );
+    return JSON.parse(raw) as unknown;
+  } catch {
+    throw new Error('The verified MustBeViral local runtime is unavailable.');
+  }
+}
+
+function validateLocalDatabase(connection: LocalDatabase) {
   if (
     connection.host !== '127.0.0.1' ||
-    connection.port !== 54322 ||
+    !Number.isSafeInteger(connection.port) ||
+    connection.port < 1 ||
+    connection.port > 65535 ||
     connection.database !== 'postgres' ||
-    typeof connection.password !== 'string'
+    typeof connection.password !== 'string' ||
+    !connection.password
   ) {
     throw new Error('MustBeViral local database identity did not match the expected loopback pin.');
   }
@@ -57,48 +74,34 @@ export const PLATFORM_CORE_ORIGIN = 'http://127.0.0.1:8789';
 export const SYNTHETIC_JOURNEY_PASSWORD = 'Synthetic.Local-Journeys-24';
 export const SEEDED_WALLET_MICROS = '250000000';
 
-function parseJsonObject(text: string): Record<string, unknown> {
-  const start = text.indexOf('{');
-  const end = text.lastIndexOf('}');
-  if (start < 0 || end <= start) {
-    throw new Error('Expected local Supabase status JSON is unavailable.');
-  }
-  return JSON.parse(text.slice(start, end + 1)) as Record<string, unknown>;
-}
-
 export function requireMustBeViralDatabase() {
-  const connection = localSupabaseDatabase();
-  if (
-    connection.host !== '127.0.0.1' ||
-    connection.port !== 54322 ||
-    connection.database !== 'postgres'
-  ) {
-    throw new Error('MustBeViral local database identity did not match the expected loopback pin.');
-  }
-  return connection;
+  // The shared helper checks the named running Docker container and its published port each time.
+  return validateLocalDatabase(readLocalHelper('localSupabaseDatabase') as LocalDatabase);
 }
 
 function requireLocalSupabaseApi() {
-  requireMustBeViralDatabase();
-  const raw = execFileSync(
-    process.platform === 'win32' ? 'corepack.cmd' : 'corepack',
-    ['pnpm', 'exec', 'supabase', 'status', '--output', 'json'],
-    {
-      cwd: findRepoRoot(),
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'pipe'],
-      shell: process.platform === 'win32',
-      env: { ...process.env, WRANGLER_SEND_METRICS: 'false', DO_NOT_TRACK: '1' },
-    },
-  );
-  const status = parseJsonObject(raw);
+  const runtime = readLocalHelper('localSupabaseRuntime') as LocalRuntime;
+  validateLocalDatabase(runtime.database);
+  const apiUrl = new URL(runtime.api.url);
   if (
-    status['API_URL'] !== 'http://127.0.0.1:54321' ||
-    typeof status['SERVICE_ROLE_KEY'] !== 'string'
+    apiUrl.protocol !== 'http:' ||
+    apiUrl.hostname !== '127.0.0.1' ||
+    !apiUrl.port ||
+    apiUrl.username ||
+    apiUrl.password ||
+    apiUrl.pathname !== '/' ||
+    apiUrl.search ||
+    apiUrl.hash ||
+    typeof runtime.api.serviceRoleKey !== 'string' ||
+    !runtime.api.serviceRoleKey
   ) {
     throw new Error('Expected MustBeViral local Supabase API is unavailable.');
   }
-  return { apiUrl: status['API_URL'] as string, serviceRoleKey: status['SERVICE_ROLE_KEY'] };
+  return { apiUrl: apiUrl.origin, serviceRoleKey: runtime.api.serviceRoleKey };
+}
+
+export function requireLocalSupabaseIssuer() {
+  return `${requireLocalSupabaseApi().apiUrl}/auth/v1`;
 }
 
 export async function requireConnectedPlatformServers() {

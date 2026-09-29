@@ -1,11 +1,11 @@
-import { execFileSync, spawn } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { createWriteStream, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath, URL } from 'node:url';
 import process from 'node:process';
 
-import { localSupabaseDatabase } from './local-supabase.mjs';
+import { localSupabaseRuntime } from './local-supabase.mjs';
 
 function requiredPath() {
   const value = process.env.PATH;
@@ -42,35 +42,19 @@ function localChildEnv(extra) {
   return { ...env, ...extra };
 }
 
-function parseJsonObject(text) {
-  const start = text.indexOf('{');
-  const end = text.lastIndexOf('}');
-  if (start < 0 || end <= start)
-    throw new Error('Expected local Supabase status JSON is unavailable.');
-  return JSON.parse(text.slice(start, end + 1));
-}
-
-localSupabaseDatabase();
+const runtime = localSupabaseRuntime();
 const root = fileURLToPath(new URL('../../../', import.meta.url));
-const status = parseJsonObject(
-  execFileSync('corepack.cmd', ['pnpm', 'exec', 'supabase', 'status', '--output', 'json'], {
-    cwd: root,
-    shell: true,
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-    env: localChildEnv({}),
-  }),
-);
-if (status.API_URL !== 'http://127.0.0.1:54321' || typeof status.ANON_KEY !== 'string') {
-  throw new Error('Expected local Supabase API is unavailable.');
-}
+const databaseUrl = new URL('postgres://127.0.0.1/postgres');
+databaseUrl.port = String(runtime.database.port);
+databaseUrl.username = runtime.database.username;
+databaseUrl.password = runtime.database.password;
 const coreVars = resolve(root, 'apps/core/.dev.vars.platform-local');
 writeFileSync(
   coreVars,
   [
     'APP_ENV=development',
-    'SUPABASE_URL=http://127.0.0.1:54321',
-    `SUPABASE_PUBLISHABLE_KEY=${status.ANON_KEY}`,
+    `SUPABASE_URL=${runtime.api.url}`,
+    `SUPABASE_PUBLISHABLE_KEY=${runtime.api.anonKey}`,
     'SUPABASE_JWT_AUDIENCE=authenticated',
     'CORS_ALLOWED_ORIGINS=http://127.0.0.1:3111',
     'PROVIDER_RUNS_ENABLED=false',
@@ -115,7 +99,7 @@ launch(
     '--env-file',
     '.dev.vars.platform-local',
   ],
-  {},
+  { CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE: databaseUrl.href },
   'platform-local-core.log',
 );
 launch(
@@ -123,8 +107,8 @@ launch(
   ['pnpm', 'exec', 'next', 'dev', '--hostname', '127.0.0.1', '--port', '3111'],
   {
     NEXT_PUBLIC_APP_ORIGIN: 'http://127.0.0.1:3111',
-    NEXT_PUBLIC_SUPABASE_URL: status.API_URL,
-    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: status.ANON_KEY,
+    NEXT_PUBLIC_SUPABASE_URL: runtime.api.url,
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: runtime.api.anonKey,
     NEXT_PUBLIC_CORE_API_URL: 'http://127.0.0.1:8789',
     MBV_LOCAL_GOLDEN_PREVIEW: '0',
     MBV_PLAYWRIGHT_DIST_DIR: '.next/platform-local',

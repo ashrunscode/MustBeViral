@@ -1,9 +1,10 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page, type Route } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 
 import {
   createSyntheticUser,
   deleteSyntheticUser,
+  requireLocalSupabaseIssuer,
   SYNTHETIC_JOURNEY_PASSWORD,
 } from '../../../packages/db/scripts/platform-journey-fixtures';
 
@@ -33,6 +34,7 @@ export async function cleanupSyntheticUsers(createdUsers: Array<{ id: string; em
 }
 
 export async function signIn(page: Page, email: string) {
+  const expectedIssuer = requireLocalSupabaseIssuer();
   await page.route('**/api/core/v1/**', async (route) => {
     const authorization = route.request().headers()['authorization'];
     if (authorization?.startsWith('Bearer ')) {
@@ -42,7 +44,7 @@ export async function signIn(page: Page, email: string) {
         iat?: number;
       };
       if (
-        claims.iss !== 'http://127.0.0.1:54321/auth/v1' ||
+        claims.iss !== expectedIssuer ||
         typeof claims.iat !== 'number' ||
         !Number.isSafeInteger(claims.iat)
       ) {
@@ -147,7 +149,7 @@ export async function revalidateOnFocus(page: Page) {
 export function holdBrandPathGets(page: Page, brandId: string, leaf: string) {
   const held: Array<{ release: () => void; completed: Promise<void> }> = [];
   const match = (url: URL) => url.pathname.includes(`/brands/${brandId}/${leaf}`);
-  const handler = async (route: import('@playwright/test').Route) => {
+  const handler = async (route: Route) => {
     if (route.request().method() !== 'GET') {
       await route.continue();
       return;
