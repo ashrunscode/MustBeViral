@@ -1,0 +1,56 @@
+schema_version: 1
+kind: owner-expanded-product-authority-amendment
+date: 2026-09-28
+packet_id: WP-PLATFORM-W2-002
+previous_spec_revision: 6
+spec_revision: 7
+branch: main
+base_commit: 8bc575778ac2afe54a81b4fe310a84dd2a23a481
+owner_instruction:
+  - PLEASE IMPLEMENT THIS PLAN
+  - Complete the accepted W0–W12 roadmap, recover unfinished work, and deploy the studio service and SaaS product publicly.
+  - Separately amend the relevant product, architecture, UX, commercial, and roadmap authorities for Drive synchronization, autopilot, SaaS, and the selected integration/rendering approach.
+purpose: >-
+  Record the September 28 detailed execution plan in the existing topic authorities before future
+  implementation. Commit this scope authorization first. Keep W2-002 acceptance intact and prepare
+  bounded successor packets only through the existing governance process.
+amended_paths:
+  - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  - docs/product/PRODUCT_CONTRACT.md
+  - docs/product/RELEASE_SCOPE.md
+  - docs/architecture/SYSTEM_OVERVIEW.md
+  - docs/architecture/DATA_AUTH_AND_TENANCY.md
+  - docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md
+  - docs/architecture/API_MCP_AND_CLI.md
+  - docs/ux/EXPERIENCE_CONTRACT.md
+  - docs/delivery/ROADMAP.md
+  - docs/delivery/QUALITY_GATES.md
+  - docs/operations/DEPLOY_ROLLBACK_AND_INCIDENTS.md
+  - docs/decisions/ADR-0010-DRIVE-AUTOPILOT-SAAS.md
+  - docs/MANIFEST.yaml
+  - docs/INDEX.md
+  - docs/generated/TRACEABILITY.md
+  - brand/context.md
+  - governance/evidence/WP-PLATFORM-W2-002/expanded-product-amendment-2026-09-28.yaml
+  - governance/evidence/WP-PLATFORM-W2-002/development-spend-2026-09-28.yaml
+changes:
+  - Separate studio service and SaaS surfaces while preserving approved studio offers and voice.
+  - Record direct Drive synchronization, original-media fidelity and policy-approved automation.
+  - Select hosted Treg with isolation acceptance and direct-adapter fallback; direct Drive, Pinterest and Threads.
+  - Record the bounded sharp Node/fal rendering candidate and mandatory measured architecture gate.
+  - Record provisional Solo/Studio/Portfolio catalog, prepaid credits, entitlements and commercial acceptance.
+  - Expand the existing roadmap with the owner's bounded sequence, regression scenarios and release evidence.
+  - Track the owner's cumulative 100 USD external-service ceiling separately from application daily limits.
+preserved:
+  - All existing W0–W12 scope, current W2 steps, acceptance, required skills/checks and successor activation rules.
+  - No product implementation, new approved design, provider activation or customer connection is claimed.
+  - No changes to PROJECT_STATE environment policy or packet external-effect permissions.
+  - No new standing release grants, social/outreach send permission, production database authorization or public traffic ruling.
+  - No render executor implementation before measured feasibility and its committed architecture decision.
+  - Existing customer price mappings, immutable receipts, production containment and legal/human acceptance gates.
+verification:
+  - Registered topic authorities remain unique; generate projections rather than hand-editing them.
+  - Refresh mutable provider facts against official sources without paid calls or credential exposure.
+  - Run fresh-clone preflight, governance checks/tests, formatting, design, lint and scope validation.
+  - Independent review of the exact authority-only head before a merge-commit PR into main.
+  - Do not use agent:finish or count these authority amendments as product progress.
