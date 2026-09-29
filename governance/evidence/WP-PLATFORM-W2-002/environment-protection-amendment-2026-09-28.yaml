@@ -1,0 +1,44 @@
+schema_version: 1
+kind: owner-environment-protection-amendment
+date: 2026-09-28
+packet_id: WP-PLATFORM-W2-002
+previous_spec_revision: 5
+spec_revision: 6
+branch: main
+base_commit: 30bf3e9de309b48403641cd983e72b523d091c25
+owner_instruction:
+  - PLEASE IMPLEMENT THIS PLAN
+  - Port only the environment-file protection from 92277af; do not merge the old continuation branch wholesale.
+  - Preserve ignored environment bytes, port the useful protection from 92277af, switch the canonical checkout safely, and retire only released, preserved worktrees.
+purpose: >-
+  Commit this scoped authorization before removing the web production environment file from Git
+  tracking, retaining local bytes and enforcing that it stays ignored. Then safely normalize the
+  canonical checkout after merge. This does not change product acceptance or provider configuration.
+amended_paths:
+  - docs/delivery/ACTIVE_WORK_PACKET.yaml
+  - apps/web/.gitignore
+  - apps/web/.env.production
+  - governance/legacy-fingerprints.yaml
+  - governance/scripts/scan-cleanroom.mjs
+  - governance/tests/secret-canary.test.mjs
+  - docs/operations/LOCAL_ENV_AND_SECRETS.md
+  - governance/evidence/WP-PLATFORM-W2-002/environment-protection-amendment-2026-09-28.yaml
+changes:
+  - Remove only the web production environment exception; the root environment ignore rule already applies.
+  - Untrack the production environment file with git rm --cached, preserving its local bytes.
+  - Skip local production environment contents while rejecting any force-added tracked copy.
+  - Prove both ignored local use and forced-tracking denial with synthetic nested-file canaries.
+  - Document private byte-verified backup, instruction-overlay preservation and safe canonical switching.
+preserved:
+  - Do not merge unrelated continuation code or change its branch or commit history.
+  - Preserve the canonical environment bytes and local shared-memory instruction block outside Git.
+  - Keep all product steps, acceptance, required skills/checks, current step and external-effect policy.
+  - No provider environment changes, credential reads, rotations, deployments, database writes or traffic changes.
+  - No new root allowed path, weakened scanner rule, linked-worktree bypass or premature packet completion.
+  - Keep other sessions and the Claude-owned checkout until their owners release them.
+verification:
+  - Fresh single-worktree clone on local main with frozen dependencies and all governance merge gates.
+  - Focused canaries prove local production environment files stay ignored and tracked copies fail closed.
+  - Run the web build without a tracked production environment file.
+  - Review the exact head independently and merge through the normal merge-commit PR path.
+  - Verify canonical branch, preserved continuation commit, environment bytes and local instruction block after switching.

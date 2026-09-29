@@ -14,8 +14,7 @@ import {
  * break the scan. That skip is only safe while such a file is never committed: a tracked one would
  * be silently exempt from every secret pattern below. A file is therefore dangerous to track
  * precisely because the scanner skips it, so this guard is derived from the ignore list itself and
- * stays in lockstep with it. Env files that are NOT ignored (for example the deliberately tracked,
- * client-public `apps/web/.env.production`) keep receiving full content scanning and need no guard.
+ * stays in lockstep with it. Other non-ignored environment files receive full content scanning.
  * Template files carry no live credentials.
  */
 const SECRET_BEARING_FILE = /(^|\/)\.(?:dev\.vars|env)(?:\.[^/]+)?$/u;
