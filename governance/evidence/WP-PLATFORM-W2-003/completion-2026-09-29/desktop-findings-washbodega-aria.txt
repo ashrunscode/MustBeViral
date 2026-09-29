@@ -1,0 +1,104 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys c02a37f8-360a-4e75-858d-7f85c148df2f
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=285d4698-b91a-47b0-ae63-d8527dacddbe
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=285d4698-b91a-47b0-ae63-d8527dacddbe&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=285d4698-b91a-47b0-ae63-d8527dacddbe&view=settings
+    - link "Billing":
+      - /url: /studio/5ff35863-b980-453a-a8b2-acb3c8c0b762/billing?studio=285d4698-b91a-47b0-ae63-d8527dacddbe
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=285d4698-b91a-47b0-ae63-d8527dacddbe
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/5ff35863-b980-453a-a8b2-acb3c8c0b762/brands/b9d35677-d3b0-43bf-bdf1-8e300e120188?studio=285d4698-b91a-47b0-ae63-d8527dacddbe&view=draft
+    - link "Findings":
+      - /url: /studio/5ff35863-b980-453a-a8b2-acb3c8c0b762/brands/b9d35677-d3b0-43bf-bdf1-8e300e120188?studio=285d4698-b91a-47b0-ae63-d8527dacddbe&view=findings
+    - link "Locations":
+      - /url: /studio/5ff35863-b980-453a-a8b2-acb3c8c0b762/brands/b9d35677-d3b0-43bf-bdf1-8e300e120188?studio=285d4698-b91a-47b0-ae63-d8527dacddbe&view=locations
+    - link "Settings":
+      - /url: /studio/5ff35863-b980-453a-a8b2-acb3c8c0b762/brands/b9d35677-d3b0-43bf-bdf1-8e300e120188?studio=285d4698-b91a-47b0-ae63-d8527dacddbe&view=settings
+    - link "Billing & usage":
+      - /url: /studio/5ff35863-b980-453a-a8b2-acb3c8c0b762/billing?studio=285d4698-b91a-47b0-ae63-d8527dacddbe
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group: Import a catalog
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "visible excerpt · observed"
+    - listitem:
+      - button "page title · observed"
+    - listitem:
+      - button "heading · observed"
+    - listitem:
+      - button "jsonld text · observed"
+    - listitem:
+      - button "meta description · observed"
+    - listitem:
+      - button "document filename · observed"
+    - listitem:
+      - button "visible excerpt · observed"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: No approved version yet. Review these findings before approving the brand.
+    - paragraph: Checked 2026-09-29T07:51:43.406203+00:00
+    - button "Refresh comparison"
+    - paragraph: No changed findings or freshness issues were found.
+    - text: Unapproved draft
+    - heading "page title" [level=2]
+    - paragraph: WashBodega Laundromat Hours
+    - paragraph: Source 1d15518b-2f9f-406d-a086-f17a077bce41 · html_title · captured 2026-09-29T07:51:39.996+00:00
+    - paragraph: "Excerpt: WashBodega Laundromat Hours"
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 2
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: https_get · website · 2026-09-29T07:51:39.996+00:00 · https://washbodega.mbv-source.test/
+      - listitem: document_upload · document · 2026-09-29T07:51:40.365+00:00 · text/markdown
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - paragraph: Extract a captured source to review typed findings.
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash 15745ffa25c548a20e623299fca7dad28386353f90be838c4a843e2bc5075072
+    - button "Approve this exact draft"
+    - paragraph: No owner-approved brand version yet.
+  - paragraph: Findings stay on this brand.

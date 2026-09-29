@@ -58,6 +58,9 @@ const fields: Record<string, unknown> = {
   value_text: 'Corrected unknown',
   excerpt: 'Operator correction excerpt',
   locator: 'manual',
+  kind: 'fact',
+  field_key: 'hours',
+  ends_at: null,
 };
 
 function inputFor(operation: PlatformOperation): PlatformInput<PlatformOperation> {

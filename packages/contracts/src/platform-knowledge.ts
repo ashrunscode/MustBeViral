@@ -23,7 +23,7 @@ const url = z
     if (classifyPublicHttpsUrl(value).ok) return;
     context.addIssue({ code: z.ZodIssueCode.custom, message: 'SOURCE_UNSAFE' });
   });
-const mediaType = z.enum(['text/plain', 'text/markdown', 'text/html']);
+const mediaType = z.enum(['text/plain', 'text/markdown', 'text/html', 'text/csv']);
 const jobStatus = z.enum([
   'queued',
   'capturing',
@@ -292,9 +292,105 @@ export const BrandVersionPinViewSchema = z
   })
   .strict();
 
+export const KnowledgeChangesViewSchema = z
+  .object({
+    baseline: BrandVersionRecordSchema.nullable(),
+    draft_version: version.nullable(),
+    draft_hash: draftHash.nullable(),
+    evaluated_at: WireTimestampSchema,
+    source_changes: z
+      .array(
+        z
+          .object({
+            previous_source_id: uuid,
+            latest_source_id: uuid,
+            captured_at: WireTimestampSchema,
+            kind: z.enum(['website', 'document']),
+            capture_job_id: uuid.nullable(),
+            changed_origin_count: z.number().int().positive(),
+          })
+          .strict(),
+      )
+      .max(50),
+    groups: z
+      .array(
+        z
+          .object({
+            kind: assertionKind,
+            field_key: z.string().min(1).max(120),
+            change: z.enum(['added', 'removed', 'changed', 'evidence_changed', 'unchanged']),
+            baseline_assertions: z.array(BrandAssertionRecordSchema).max(50),
+            current_assertions: z.array(BrandAssertionRecordSchema).max(50),
+            conflicted: z.boolean(),
+            source_missing: z.boolean(),
+            expired: z.boolean(),
+          })
+          .strict(),
+      )
+      .max(100),
+    expired_baseline_assertion_ids: z.array(uuid).max(50),
+  })
+  .strict();
+
 const rpc = 'platform_knowledge' as const;
 
 export const PLATFORM_KNOWLEDGE_OPERATIONS = {
+  import_brand_catalog: {
+    rpc: 'platform_knowledge_lifecycle' as const,
+    method: 'POST',
+    path: '/workspaces/{workspace_id}/brands/{brand_id}/knowledge/catalog-imports',
+    input: z
+      .object({
+        ...brand,
+        filename: z.string().min(1).max(200),
+        media_type: mediaType,
+        text_content: z.string().min(1).max(32_768),
+      })
+      .strict(),
+    output: SourceCaptureViewSchema,
+  },
+  review_expired_offer: {
+    rpc: 'platform_knowledge_lifecycle' as const,
+    method: 'POST',
+    path: '/workspaces/{workspace_id}/brands/{brand_id}/knowledge/expiry-reviews',
+    input: z
+      .object({
+        ...brand,
+        ...assertion,
+        ...expected,
+        draft_hash: draftHash,
+        value_text: z.string().min(1).max(4000).nullable(),
+        ends_at: KnowledgeExpiryInputSchema.nullable(),
+        excerpt: z.string().min(1).max(2000),
+      })
+      .strict(),
+    output: KnowledgeReviewViewSchema,
+  },
+  resolve_brand_contradiction: {
+    rpc: 'platform_knowledge_lifecycle' as const,
+    method: 'POST',
+    path: '/workspaces/{workspace_id}/brands/{brand_id}/knowledge/contradiction-reviews',
+    input: z
+      .object({
+        ...brand,
+        ...expected,
+        draft_hash: draftHash,
+        kind: assertionKind,
+        field_key: z.string().min(1).max(120),
+        value_text: z.string().min(1).max(4000).nullable(),
+        ends_at: KnowledgeExpiryInputSchema.nullable(),
+        excerpt: z.string().min(1).max(2000),
+      })
+      .strict(),
+    output: KnowledgeReviewViewSchema,
+  },
+  get_brand_knowledge_changes: {
+    rpc: 'platform_knowledge_lifecycle' as const,
+    method: 'GET',
+    path: '/workspaces/{workspace_id}/brands/{brand_id}/knowledge/changes',
+    input: z.object({ ...brand, brand_version_id: uuid.optional() }).strict(),
+    output: KnowledgeChangesViewSchema,
+  },
   start_website_capture: {
     rpc,
     method: 'POST',

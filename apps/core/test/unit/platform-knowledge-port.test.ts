@@ -3,6 +3,7 @@ import { createPlatformHandlers, PLATFORM_OPERATIONS } from '@mustbeviral/contra
 
 import { createKnowledgeAwarePlatformPort } from '../../src/composition/platform-knowledge';
 import { acquiredSourceAttemptCount } from '../../src/composition/source-machine';
+import { runBrandExtraction } from '../../src/composition/brand-extraction';
 import type { CoreBindings } from '../../src/bindings';
 
 const context = {
@@ -36,6 +37,140 @@ function jobRecord(pending: boolean) {
 }
 
 describe('knowledge-aware platform port', () => {
+  it('sends every explicit record in a forty-row catalog without overflowing the machine RPC', async () => {
+    const csv =
+      'kind,field_key,value\n' +
+      Array.from({ length: 40 }, (_, i) => `offering,sku${i},Product ${i}`).join('\n');
+    const db = vi.fn<typeof fetch>(async (_url, init) => {
+      const body = JSON.parse(String(init?.body));
+      expect(body.p_assertions).toHaveLength(40);
+      expect(body.p_assertions.map((item: { field_key: string }) => item.field_key)).toEqual(
+        Array.from({ length: 40 }, (_, i) => `sku${i}`),
+      );
+      return Response.json({ recorded: true });
+    });
+    await runBrandExtraction({
+      bindings: {
+        SUPABASE_URL: 'http://127.0.0.1:54321',
+        SUPABASE_SECRET_KEY: 'synthetic-secret',
+        MEDIA_BUCKET: {
+          get: async () => ({
+            arrayBuffer: async () => new TextEncoder().encode(csv).buffer,
+            httpMetadata: { contentType: 'text/csv' },
+          }),
+        } as unknown as R2Bucket,
+      } as CoreBindings,
+      workspaceId: workspace,
+      brandId: brand,
+      sourceId: jobId,
+      actorId: context.actor_id,
+      requestId: context.request_id,
+      dbFetch: db,
+    });
+    expect(db).toHaveBeenCalledTimes(1);
+  });
+  it.each(['new', 'replay', 'denied', 'revoked-completion', 'missing-bytes'] as const)(
+    'imports a catalog through private capture and actor-bound extraction: %s',
+    async (scenario) => {
+      const csv = 'kind,field_key,value\nfact,hours,WashBodega opens daily';
+      let sourceId = jobId;
+      const view = (pending: boolean) => ({
+        job: {
+          ...jobRecord(pending),
+          kind: 'document',
+          request_url: '',
+          normalized_url: '',
+          filename: 'catalog.csv',
+          media_type: 'text/csv',
+          source_id: pending ? null : sourceId,
+        },
+        draft: null,
+        current_candidates: [],
+        next_cursor: null,
+        capture_pending: pending,
+      });
+      const db = vi.fn<typeof fetch>(async (input, init) => {
+        const body = JSON.parse(String(init?.body));
+        const url = String(input);
+        if (url.endsWith('/platform_knowledge_lifecycle_command'))
+          return Response.json(view(scenario === 'new'));
+        if (url.endsWith('/record_brand_source_capture')) {
+          sourceId = body.p_payload.source_id;
+          return Response.json(view(false));
+        }
+        if (url.endsWith('/platform_knowledge_command')) {
+          expect(body).toMatchObject({
+            p_operation: 'extract_brand_knowledge',
+            p_idempotency_key: `catalog-extract:${sourceId}`,
+          });
+          expect(body.p_input).toEqual({
+            workspace_id: workspace,
+            brand_id: brand,
+            source_id: sourceId,
+          });
+          expect(new Headers(init?.headers).get('authorization')).toBe('Bearer synthetic-user-jwt');
+          return scenario === 'denied'
+            ? Response.json({ message: 'NOT_FOUND', code: 'P0002' }, { status: 404 })
+            : Response.json({ extract_pending: true });
+        }
+        if (url.endsWith('/record_brand_extraction')) {
+          expect(body.p_actor_id).toBe(context.actor_id);
+          expect(body.p_assertions).toContainEqual(
+            expect.objectContaining({
+              kind: 'fact',
+              field_key: 'hours',
+              value_text: 'WashBodega opens daily',
+              locator: 'csv:record:2;column:value',
+              reusable: false,
+            }),
+          );
+          return scenario === 'revoked-completion'
+            ? Response.json({ message: 'NOT_FOUND', code: 'P0002' }, { status: 404 })
+            : Response.json({ recorded: true });
+        }
+        throw new Error('Unexpected catalog RPC');
+      });
+      const put = vi.fn(async () => undefined);
+      const get = vi.fn(async (key: string) => {
+        expect(key).toBe(`brand-sources/${workspace}/${brand}/${sourceId}`);
+        return scenario === 'missing-bytes'
+          ? null
+          : {
+              arrayBuffer: async () => new TextEncoder().encode(csv).buffer,
+              httpMetadata: { contentType: 'text/csv' },
+            };
+      });
+      const port = createKnowledgeAwarePlatformPort(
+        {
+          SUPABASE_URL: 'http://127.0.0.1:54321',
+          SUPABASE_PUBLISHABLE_KEY: 'synthetic-publishable',
+          SUPABASE_SECRET_KEY: 'synthetic-secret',
+          MEDIA_BUCKET: { get, put, delete: vi.fn() } as unknown as R2Bucket,
+        } as CoreBindings,
+        'synthetic-user-jwt',
+        { fetch: db },
+      );
+      const result = await port.execute({
+        operation: 'import_brand_catalog',
+        input: {
+          workspace_id: workspace,
+          brand_id: brand,
+          filename: 'catalog.csv',
+          media_type: 'text/csv',
+          text_content: csv,
+        },
+        context,
+        idempotencyKey: 'catalog-import',
+      });
+      if (scenario === 'denied' || scenario === 'revoked-completion')
+        expect(result).toEqual({ status: 'error', code: 'NOT_FOUND' });
+      else if (scenario === 'missing-bytes')
+        expect(result).toEqual({ status: 'error', code: 'INTERNAL_ERROR' });
+      else expect(result.status).toBe('ok');
+      expect(put).toHaveBeenCalledTimes(scenario === 'new' ? 1 : 0);
+      expect(get).toHaveBeenCalledTimes(scenario === 'denied' ? 0 : 1);
+    },
+  );
   it('accepts only an acquired live attempt generation', () => {
     expect(acquiredSourceAttemptCount({ attempt_count: 1 })).toBe(1);
     expect(acquiredSourceAttemptCount({ attempt_count: 2 })).toBe(2);

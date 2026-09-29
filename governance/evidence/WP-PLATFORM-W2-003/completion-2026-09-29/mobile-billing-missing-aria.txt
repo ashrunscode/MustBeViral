@@ -1,0 +1,32 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys eceeacfb-3df3-4267-ad1d-24265cc5b9b4 Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0&view=settings
+    - link "Billing":
+      - /url: /studio/ad715ffa-ce73-4b4b-8917-48ccf3f1f93a/billing?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0
+- main:
+  - heading "Workspace billing." [level=1]
+  - paragraph: These totals come from this workspace’s saved wallet and ledger. Charging stays off until it is separately authorized.
+  - status: Charging is turned off. That is not a wallet balance of zero.
+  - status: No billing profile is on file for this workspace, so we cannot show a saved wallet balance.
+  - heading "Saved wallet" [level=2]
+  - paragraph: Missing profile
+  - paragraph: Not available
+  - paragraph: "Subscription: none on file"
+  - heading "Ledger" [level=2]
+  - paragraph: "Available: $0.00"
+  - paragraph: "Recorded usage: $0.00"
+  - paragraph: Usage is the sum of usage ledger rows. It is not an estimate and it is not a second wallet.

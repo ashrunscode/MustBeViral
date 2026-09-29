@@ -1,0 +1,154 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 2ad36a64-7ed6-4631-976a-f6afbc0b6191
+  - strong: UnPile
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=settings
+    - link "Billing":
+      - /url: /studio/f306ec1c-5d33-4ca7-985f-71ea4b81ac6d/billing?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "UnPile" [selected]
+    - option "WashBodega"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/f306ec1c-5d33-4ca7-985f-71ea4b81ac6d/brands/0db49992-547b-4beb-832e-1d3c8180c492?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=draft
+    - link "Findings":
+      - /url: /studio/f306ec1c-5d33-4ca7-985f-71ea4b81ac6d/brands/0db49992-547b-4beb-832e-1d3c8180c492?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=findings
+    - link "Locations":
+      - /url: /studio/f306ec1c-5d33-4ca7-985f-71ea4b81ac6d/brands/0db49992-547b-4beb-832e-1d3c8180c492?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=locations
+    - link "Settings":
+      - /url: /studio/f306ec1c-5d33-4ca7-985f-71ea4b81ac6d/brands/0db49992-547b-4beb-832e-1d3c8180c492?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32&view=settings
+    - link "Billing & usage":
+      - /url: /studio/f306ec1c-5d33-4ca7-985f-71ea4b81ac6d/billing?studio=1a6cb98a-bbd8-4d21-b7c9-769d01f05e32
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group: Import a catalog
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - alert: This draft still contains contradictory assertions. Correct them before approving.
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "document filename · observed"
+    - listitem:
+      - button "document filename · observed"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: Compared with approved version 1. The approved snapshot is preserved.
+    - paragraph: Checked 2026-09-29T07:50:07.127217+00:00
+    - button "Refresh comparison"
+    - group:
+      - text: hours · Changed finding · Conflicting facts — review required
+      - heading "Approved finding" [level=4]
+      - paragraph: UnPile opens daily
+      - paragraph: observed
+      - group: Source evidence
+      - heading "Current evidence" [level=4]
+      - paragraph: UnPile opens daily
+      - paragraph: observed
+      - group: Source evidence
+      - paragraph: UnPile closed Sunday
+      - paragraph: observed
+      - group: Source evidence
+      - group "Conflict review":
+        - text: Conflict review Review decision
+        - combobox "Review decision":
+          - option "Choose a decision"
+          - option "Use a reviewed value" [selected]
+          - option "Withdraw from future content"
+        - text: Reviewed value
+        - textbox "Reviewed value": UnPile closed Sunday
+        - text: Reason for this review
+        - textbox "Reason for this review": Operator checked the new catalog with the business.
+        - button "Record conflict review"
+    - text: Unapproved draft
+    - heading "document filename" [level=2]
+    - paragraph: UnPile-catalog.csv
+    - paragraph: Source dac68a2e-74d6-4a06-bcbc-9de7dd745440 · document_text · captured 2026-09-29T07:50:05.419+00:00
+    - paragraph: "Excerpt: UnPile-catalog.csv"
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 4
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: document_upload · document · 2026-09-29T07:50:05.419+00:00 · text/csv
+      - listitem: document_upload · document · 2026-09-29T07:50:06.33+00:00 · text/csv
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - list:
+      - listitem:
+        - button "offering · pickup · observed"
+      - listitem:
+        - button "visual candidate · visual candidate · unknown"
+      - listitem:
+        - button "fact · hours · observed"
+      - listitem:
+        - button "language · spanish · unknown"
+      - listitem:
+        - button "location · location · unknown"
+      - listitem:
+        - button "offer · sale · observed"
+      - listitem:
+        - button "fact · hours · observed"
+    - paragraph: Unknown — not supplied.
+    - paragraph: Source dac68a2e-74d6-4a06-bcbc-9de7dd745440 · plaintext_labeled · captured 2026-09-29T07:50:05.419+00:00
+    - blockquote: No value supplied.
+    - group:
+      - text: Correct this assertion
+      - textbox "Correct this assertion"
+      - paragraph: Leave the assertion empty to mark it unknown and clear its expiry.
+      - text: Why this assertion correction
+      - textbox "Why this assertion correction"
+      - button "Save assertion"
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash 6925086cd3ff24f96616383f3949a7d54f9f7b9af8989a0e6b62fe0a562a04b8
+    - button "Approve this exact draft"
+    - paragraph: Approved version 1 · 645e03f46d8ce8169bcff26e51039c8e296dff1247508a71f7fb42281e6155e8
+    - text: Campaign pin
+    - textbox "Campaign pin": UnPile-original
+    - button "Pin approved version"
+    - paragraph: Pinned version 1 · 645e03f46d8ce8169bcff26e51039c8e296dff1247508a71f7fb42281e6155e8
+    - list:
+      - listitem: offering · UnPile pickup
+      - listitem: visual_candidate · Unknown — not supplied.
+      - listitem: fact · UnPile opens daily
+      - listitem: language · Unknown — not supplied.
+      - listitem: location · Unknown — not supplied.
+      - listitem: offer · UnPile launch offer · expires 2026-09-29T07:50:30.362+00:00
+    - list "Pinned proposals"
+  - paragraph: Findings stay on this brand.

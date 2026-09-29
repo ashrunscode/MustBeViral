@@ -1,0 +1,52 @@
+{
+  "head": "d6de38f3103e4306b4f76abcebb56dd3bbdf27aa",
+  "tree": "1057f52a9e054ae40aad55a049677e1a893d9e2b",
+  "base": "1834368d618418162f578f709881d828b0ea1752",
+  "checkout": "C:\\dev\\mbv-g16",
+  "node": "v24.18.0",
+  "pnpm": "11.12.0",
+  "environment": "owned loopback Supabase mustbeviral on 56321/56322; no remote effects",
+  "checks": [
+    {
+      "exit": 0,
+      "started_at": "2026-09-29T07:45:37.7326513Z",
+      "command": "corepack pnpm agent:preflight",
+      "finished_at": "2026-09-29T07:46:29.3186896Z",
+      "log": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-gates\\preflight.log",
+      "log_sha256": "9f89cb4a4f0c0befb8810b26790b06fac8a61c2aa78a3f70c667a65e82da07dc"
+    },
+    {
+      "exit": 0,
+      "started_at": "2026-09-29T07:46:29.3463931Z",
+      "command": "corepack pnpm agent:verify",
+      "finished_at": "2026-09-29T07:54:57.3185869Z",
+      "log": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-gates\\agent-verify.log",
+      "log_sha256": "d8338ce0f60d3c4d0de1be4be948305dbabbae49a4bf4f57d252a22c897d2479"
+    },
+    {
+      "exit": 0,
+      "started_at": "2026-09-29T07:54:57.3214667Z",
+      "command": "node packages/db/scripts/verify-platform-knowledge-fixtures.mjs",
+      "finished_at": "2026-09-29T07:54:59.6605571Z",
+      "log": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-gates\\fixtures.log",
+      "log_sha256": "ef6ac7429db0f3548d856eeda9b1c9494a5370d69940d06c87dd2a66f6b72f73"
+    },
+    {
+      "exit": 0,
+      "started_at": "2026-09-29T07:54:59.6632399Z",
+      "command": "node packages/db/scripts/verify-platform-knowledge-connected.mjs",
+      "finished_at": "2026-09-29T07:55:05.7089269Z",
+      "log": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-gates\\connected.log",
+      "log_sha256": "3ff13b1ddf582636ca7861f196b8f008cbd7d536af9bea59bfb71a2c12b7c9c5"
+    },
+    {
+      "exit": 0,
+      "started_at": "2026-09-29T07:55:05.7118003Z",
+      "command": "corepack pnpm diff-scope:check --base 1834368d618418162f578f709881d828b0ea1752",
+      "finished_at": "2026-09-29T07:55:06.8833630Z",
+      "log": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-gates\\diff-scope.log",
+      "log_sha256": "839e09ea73408c42c73419ddf4a65ccb7a9aacc698d3ec5555c113f3ec70e1df"
+    }
+  ],
+  "clean_after": true
+}

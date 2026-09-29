@@ -53,6 +53,274 @@ test.describe('connected brand knowledge journeys', () => {
     );
   });
 
+  test('imports two brand catalogs, reviews source changes and expiry, and preserves approved history', async ({
+    page,
+  }) => {
+    test.setTimeout(300_000);
+    const owner = await registerSyntheticUser(
+      `w2-lifecycle-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    for (const [name, other, url] of [
+      ['WashBodega', 'UnPile', brands.washbodegaUrl],
+      ['UnPile', 'WashBodega', brands.unpileUrl],
+    ] as const) {
+      await page.goto(findingsUrl(url));
+      await expect(page.getByTestId('knowledge-changes')).toBeVisible();
+      const expiry = new Date(Date.now() + 25_000).toISOString();
+      const csv = `kind,field_key,value,ends_at\nfact,hours,${name} opens daily,\noffering,pickup,${name} pickup,\noffer,sale,${name} launch offer,${expiry}\nlanguage,spanish,,`;
+      await page.locator('input[type="file"]').setInputFiles({
+        name: `${name}-catalog.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(csv),
+      });
+      await expectJobStatus(page, 'captured');
+      await expect(page.getByTestId('assertion-fact')).toHaveCount(1);
+      await page.getByTestId('assertion-fact').click();
+      await expect(page.getByTestId('assertion-value')).toHaveText(`${name} opens daily`);
+      await page.getByTestId('assertion-language').click();
+      await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+      await page.getByLabel('Campaign pin').fill(`${name}-original`);
+      await page.getByTestId('pin-brand-version').click();
+      await expect(page.getByTestId('pinned-version')).toContainText(`${name} opens daily`);
+      const history = await page.getByTestId('pinned-version').textContent();
+      await page.locator('input[type="file"]').setInputFiles({
+        name: `${name}-changed.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(`kind,field_key,value\nfact,hours,${name} closed Sunday`),
+      });
+      await expect(page.getByTestId('assertion-fact')).toHaveCount(2);
+      const changes = page.getByTestId('knowledge-changes');
+      const hours = changes
+        .getByTestId('knowledge-change-group')
+        .filter({ has: page.locator('summary', { hasText: /^hours ·/ }) });
+      await expect(hours).toContainText('Conflicting facts');
+      await hours.locator('summary').first().click();
+      await expect(hours).toContainText(`${name} opens daily`);
+      await expect(hours).toContainText(`${name} closed Sunday`);
+      await hours.getByText('Source evidence', { exact: true }).last().click();
+      await expect(hours).toContainText('plaintext_labeled');
+      await expect(hours).toContainText('csv:record:2;column:value');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(findingsAlert(page)).toContainText(/contradict|conflict|expired/i);
+      if (!(await hours.getByLabel('Review decision').isVisible()))
+        await hours.locator('summary').first().click();
+      await hours.getByLabel('Review decision').selectOption('replace');
+      await hours
+        .getByRole('textbox', { name: 'Reviewed value', exact: true })
+        .fill(`${name} closed Sunday`);
+      await hours
+        .getByLabel('Reason for this review')
+        .fill('Operator checked the new catalog with the business.');
+      await attachAxeAndAria(page, `catalog-conflict-${name}`);
+      await hours.screenshot({ path: test.info().outputPath(`catalog-conflict-${name}.png`) });
+      await hours.getByRole('button', { name: 'Record conflict review' }).click();
+      await expect(hours).not.toContainText('Conflicting facts');
+      await expect(page.getByTestId('pinned-version')).toHaveText(history ?? '');
+      await expect
+        .poll(() => Date.now(), { timeout: 35_000, intervals: [1000] })
+        .toBeGreaterThan(Date.parse(expiry));
+      await expect(async () => {
+        await changes.getByRole('button', { name: 'Refresh comparison' }).click();
+        await expect(changes).toContainText('An offer in the approved version has expired', {
+          timeout: 1500,
+        });
+      }).toPass({ timeout: 15_000, intervals: [1000] });
+      await page.getByLabel('Campaign pin').fill(`${name}-expired`);
+      await page.getByTestId('pin-brand-version').click();
+      await expect(findingsAlert(page)).toContainText('expired offer');
+      const sale = changes
+        .getByTestId('knowledge-change-group')
+        .filter({ has: page.locator('summary', { hasText: /^sale ·/ }) });
+      await sale.locator('summary').first().click();
+      await sale.getByLabel('Review decision').selectOption('withdraw');
+      await sale.getByLabel('Reason for this review').fill('The launch offer has ended.');
+      await attachAxeAndAria(page, `catalog-expiry-${name}`);
+      await sale.screenshot({ path: test.info().outputPath(`catalog-expiry-${name}.png`) });
+      await sale.getByRole('button', { name: 'Record expiry review' }).click();
+      await expect(sale).not.toContainText('Expired offer');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await page.getByLabel('Campaign pin').fill(`${name}-reviewed`);
+      await page.getByTestId('pin-brand-version').click();
+      await expect(page.getByTestId('pinned-version')).toContainText(`${name} closed Sunday`);
+      await expect(page.getByTestId('pinned-version')).not.toContainText(`${name} launch offer`);
+      await page.reload();
+      await expect(changes).toContainText('No changed findings or freshness issues');
+      await expect(page.getByTestId('approved-version')).not.toContainText(other);
+      await page.getByText('Import a catalog', { exact: true }).click();
+      expect(
+        await page
+          .locator('.platform-card')
+          .evaluateAll(
+            (cards) => cards.filter((card) => card.scrollWidth > card.clientWidth + 1).length,
+          ),
+      ).toBe(0);
+      await attachAxeAndAria(page, `catalog-lifecycle-${name}`);
+      await page.screenshot({
+        path: test.info().outputPath(`catalog-lifecycle-${name}.png`),
+        fullPage: true,
+      });
+    }
+  });
+
+  test('imports every record at the forty-row catalog boundary without truncation', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerSyntheticUser(
+      `w2-catalog-limit-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    await page.goto(findingsUrl(brands.unpileUrl));
+    await page.locator('input[type="file"]').setInputFiles({
+      name: 'unpile-forty.csv',
+      mimeType: 'text/csv',
+      buffer: Buffer.from(
+        'kind,field_key,value\n' +
+          Array.from({ length: 40 }, (_, i) => `offering,sku${i},UnPile catalog product ${i}`).join(
+            '\n',
+          ),
+      ),
+    });
+    await expectJobStatus(page, 'captured');
+    await expect(page.getByTestId('assertion-offering')).toHaveCount(40);
+    for (const index of [0, 39]) {
+      await page
+        .getByTestId('assertion-offering')
+        .filter({ hasText: new RegExp(`sku${index} ·`) })
+        .click();
+      await expect(page.getByTestId('assertion-value')).toHaveText(
+        `UnPile catalog product ${index}`,
+      );
+    }
+    await page.getByTestId('approve-brand-version').click();
+    await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+    await page.reload();
+    await expect(page.getByTestId('assertion-offering')).toHaveCount(40);
+    await page.goto(findingsUrl(brands.washbodegaUrl));
+    await expect(page.getByTestId('assertion-offering')).toHaveCount(0);
+    await expect(page.getByText('UnPile catalog product 39')).toHaveCount(0);
+  });
+
+  test('preserves blank catalog rows and requires review when a recapture removes a claim', async ({
+    page,
+  }) => {
+    test.setTimeout(240_000);
+    const owner = await registerSyntheticUser(
+      `w2-catalog-gaps-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    for (const [name, url, blankFirst] of [
+      ['WashBodega', brands.washbodegaUrl, false],
+      ['UnPile', brands.unpileUrl, true],
+    ] as const) {
+      await page.goto(findingsUrl(url));
+      const known = `offering,sku_a,${name} product A`;
+      const blank = 'offering,sku_b,';
+      const file = { name: `${name}-rows.csv`, mimeType: 'text/csv' };
+      await page.locator('input[type="file"]').setInputFiles({
+        ...file,
+        buffer: Buffer.from(
+          'kind,field_key,value\n' +
+            (blankFirst ? [blank, known] : [known, blank]).join('\n') +
+            '\noffering,sku_c,',
+        ),
+      });
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(3);
+      for (const key of ['sku b', 'sku c']) {
+        await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
+        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      }
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+      await page.locator('input[type="file"]').setInputFiles({
+        name: `${name}-other.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(`kind,field_key,value\noffering,sku_d,${name} product D`),
+      });
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
+      await page.locator('input[type="file"]').setInputFiles({
+        ...file,
+        buffer: Buffer.from(`kind,field_key,value\nfact,about,${name} updated catalog`),
+      });
+      const changes = page.getByTestId('knowledge-changes');
+      const missing = changes
+        .getByTestId('knowledge-change-group')
+        .filter({ has: page.locator('summary', { hasText: /^sku a ·/ }) });
+      await expect(missing).toContainText('Missing from latest source');
+      await expect(changes).toContainText('Replacement source');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(findingsAlert(page)).toContainText('contradictory');
+      await missing.locator('summary').first().click();
+      await missing.getByLabel('Review decision').selectOption('withdraw');
+      await missing
+        .getByLabel('Reason for this review')
+        .fill('The replacement catalog no longer confirms this product.');
+      await missing.getByRole('button', { name: 'Record conflict review' }).click();
+      await expect(missing).not.toContainText('Missing from latest source');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await expect(changes).not.toContainText('Replacement source');
+      for (const key of ['sku b', 'sku c']) {
+        await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
+        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      }
+      await page.reload();
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
+    }
+  });
+
+  test('restores the latest source when a recapture returns to earlier identical bytes', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerSyntheticUser(
+      `w2-recapture-return-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    for (const [name, url] of [
+      ['WashBodega', brands.washbodegaUrl],
+      ['UnPile', brands.unpileUrl],
+    ] as const) {
+      await page.goto(findingsUrl(url));
+      const original = {
+        name: `${name}-return.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(`kind,field_key,value\noffering,sku_a,${name} product A`),
+      };
+      await page.locator('input[type="file"]').setInputFiles(original);
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(1);
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+      await page.locator('input[type="file"]').setInputFiles({
+        ...original,
+        buffer: Buffer.from('kind,field_key,value\nfact,unconfirmed,'),
+      });
+      const changes = page.getByTestId('knowledge-changes');
+      await expect(changes).toContainText('Missing from latest source');
+      await page.locator('input[type="file"]').setInputFiles(original);
+      await expectJobStatus(page, 'duplicate');
+      await expect(changes).not.toContainText('Missing from latest source');
+      await expect(changes).not.toContainText('Replacement source');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await page.reload();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await expect(changes).not.toContainText('Missing from latest source');
+    }
+  });
+
   test('captures website and document sources for both brands and keeps them after reload', async ({
     page,
   }) => {
@@ -88,7 +356,14 @@ test.describe('connected brand knowledge journeys', () => {
     await expect(page.getByTestId('candidate-document_filename')).toBeVisible({ timeout: 30_000 });
     await page.getByTestId('candidate-document_filename').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('washbodega-notes.md');
-    await page.getByTestId('candidate-visible_excerpt').last().click();
+    const washDocumentSource = await page
+      .getByTestId('candidate-document_filename')
+      .getAttribute('data-source-id');
+    expect(washDocumentSource).toMatch(/^[0-9a-f-]{36}$/);
+    await page
+      .getByTestId('candidate-visible_excerpt')
+      .and(page.locator(`[data-source-id="${washDocumentSource}"]`))
+      .click();
     await expect(page.getByTestId('candidate-value')).toContainText('WASHBODEGA_DOC_NOTES');
     await expect(page.getByTestId('source-document-document_upload')).toBeVisible();
     await page.reload();
@@ -114,7 +389,14 @@ test.describe('connected brand knowledge journeys', () => {
     await expect(page.getByTestId('candidate-document_filename')).toBeVisible({ timeout: 30_000 });
     await page.getByTestId('candidate-document_filename').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('unpile-large.txt');
-    await page.getByTestId('candidate-visible_excerpt').last().click();
+    const unpileDocumentSource = await page
+      .getByTestId('candidate-document_filename')
+      .getAttribute('data-source-id');
+    expect(unpileDocumentSource).toMatch(/^[0-9a-f-]{36}$/);
+    await page
+      .getByTestId('candidate-visible_excerpt')
+      .and(page.locator(`[data-source-id="${unpileDocumentSource}"]`))
+      .click();
     await expect(page.getByTestId('candidate-value')).toContainText('UNPILE_DOC_LARGE');
     await page.reload();
     await page.getByTestId('candidate-page_title').click();

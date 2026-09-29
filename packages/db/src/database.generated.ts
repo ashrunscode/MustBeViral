@@ -282,6 +282,7 @@ export type Database = {
           entity_id: string;
           entity_type: string;
           id: string;
+          knowledge_sequence: number | null;
           request_id: string;
           workspace_id: string;
         };
@@ -294,6 +295,7 @@ export type Database = {
           entity_id: string;
           entity_type: string;
           id?: string;
+          knowledge_sequence?: number | null;
           request_id: string;
           workspace_id: string;
         };
@@ -306,6 +308,7 @@ export type Database = {
           entity_id?: string;
           entity_type?: string;
           id?: string;
+          knowledge_sequence?: number | null;
           request_id?: string;
           workspace_id?: string;
         };
@@ -650,6 +653,59 @@ export type Database = {
           },
         ];
       };
+      brand_knowledge_reviews: {
+        Row: {
+          after_assertion_ids: string[];
+          before_assertion_ids: string[];
+          brand_id: string;
+          created_at: string;
+          created_by: string;
+          draft_hash_before: string;
+          draft_version_before: number;
+          field_key: string;
+          id: string;
+          reason: string;
+          review_kind: string;
+          workspace_id: string;
+        };
+        Insert: {
+          after_assertion_ids: string[];
+          before_assertion_ids: string[];
+          brand_id: string;
+          created_at?: string;
+          created_by: string;
+          draft_hash_before: string;
+          draft_version_before: number;
+          field_key: string;
+          id?: string;
+          reason: string;
+          review_kind: string;
+          workspace_id: string;
+        };
+        Update: {
+          after_assertion_ids?: string[];
+          before_assertion_ids?: string[];
+          brand_id?: string;
+          created_at?: string;
+          created_by?: string;
+          draft_hash_before?: string;
+          draft_version_before?: number;
+          field_key?: string;
+          id?: string;
+          reason?: string;
+          review_kind?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'brand_knowledge_reviews_workspace_id_brand_id_fkey';
+            columns: ['workspace_id', 'brand_id'];
+            isOneToOne: false;
+            referencedRelation: 'brands';
+            referencedColumns: ['workspace_id', 'id'];
+          },
+        ];
+      };
       brand_locations: {
         Row: {
           brand_id: string;
@@ -847,6 +903,7 @@ export type Database = {
         Row: {
           attempt_count: number;
           brand_id: string;
+          completion_sequence: number | null;
           created_at: string;
           created_by: string;
           failure_code: string | null;
@@ -867,6 +924,7 @@ export type Database = {
         Insert: {
           attempt_count?: number;
           brand_id: string;
+          completion_sequence?: number | null;
           created_at?: string;
           created_by: string;
           failure_code?: string | null;
@@ -887,6 +945,7 @@ export type Database = {
         Update: {
           attempt_count?: number;
           brand_id?: string;
+          completion_sequence?: number | null;
           created_at?: string;
           created_by?: string;
           failure_code?: string | null;
@@ -1050,6 +1109,7 @@ export type Database = {
           draft_hash: string;
           draft_id: string;
           id: string;
+          knowledge_sequence: number | null;
           snapshot: Json;
           status: string;
           version: number;
@@ -1063,6 +1123,7 @@ export type Database = {
           draft_hash: string;
           draft_id: string;
           id?: string;
+          knowledge_sequence?: number | null;
           snapshot: Json;
           status: string;
           version: number;
@@ -1076,6 +1137,7 @@ export type Database = {
           draft_hash?: string;
           draft_id?: string;
           id?: string;
+          knowledge_sequence?: number | null;
           snapshot?: Json;
           status?: string;
           version?: number;
@@ -3063,6 +3125,19 @@ export type Database = {
           p_operation: string;
           p_request_id: string;
         };
+        Returns: Json;
+      };
+      platform_knowledge_lifecycle_command: {
+        Args: {
+          p_idempotency_key: string;
+          p_input: Json;
+          p_operation: string;
+          p_request_id: string;
+        };
+        Returns: Json;
+      };
+      platform_knowledge_lifecycle_query: {
+        Args: { p_input: Json; p_operation: string };
         Returns: Json;
       };
       platform_knowledge_query: {

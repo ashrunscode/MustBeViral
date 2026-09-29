@@ -122,7 +122,7 @@ complete/capture-attestation operation. Binary document bytes use `PUT /v1/works
 W2.2–W2.4 add `extract_brand_knowledge`, `propose_brand_knowledge`, `correct_brand_assertion`, `correct_brand_proposal`,
 `ask_brand_knowledge_questions`, `answer_brand_knowledge_question`, `approve_brand_version` and
 `pin_brand_version`, plus reads `get_knowledge_review`, `list_brand_versions`, `get_brand_version`
-and `get_brand_version_pin`. There is no user-registerable extraction-attestation, catalog-import or
+and `get_brand_version_pin`. There is no user-registerable extraction-attestation or scheduled
 change-monitor operation. `record_brand_extraction` stays a machine RPC. Approve requires the
 current draft version and exact `draft_hash`. Additional errors are `EXPIRED_OFFER` and
 `CONTRADICTORY_KNOWLEDGE` (non-retryable 409). Proposal generation does not start a provider run.
@@ -135,3 +135,41 @@ Offer expiry accepts only finite ISO timestamps with an explicit timezone and up
 digits. Extraction preserves explicit times and offsets. A date-only source keeps the conservative
 exclusive start-of-day UTC boundary; invalid supplied expiry remains disputed. An omitted expiry
 in a correction preserves it, explicit null clears it, and withdrawing the assertion clears it.
+
+W2.5 registers `get_brand_knowledge_changes`, `review_expired_offer`,
+`resolve_brand_contradiction` and `import_brand_catalog` with `rpc: platform_knowledge_lifecycle`.
+Comparisons use the latest approved version, or an explicitly requested authorized version, and
+retain source identities, capture times, excerpts and methods on both sides. Equal values with
+new provenance are evidence changes; conflicting values need an explicit operator decision.
+Review commands pin both draft version and hash and append an immutable decision record. They
+never approve a brand or rewrite an approved snapshot. New approvals and new campaign pins
+recheck offer expiry at the database clock; historical reads and successful idempotent pin
+replays retain their original meaning.
+
+Recapture compares the same website URL or document filename only after successful extraction.
+Successful capture jobs, including deduplicated captures, own occurrence identity and ordering;
+canonical source creation and extraction retries do not. Identical bytes captured at different
+URLs or filenames retain those separate origins. Source-change summaries include the latest
+capture job and completion time plus the changed-origin count, bounded to one summary per
+approved source. Inspect source history and all affected findings when more than one origin changed.
+New capture completions, extraction evidence and approvals receive a database-assigned logical
+sequence so wall-clock corrections cannot reorder them. Historical rows without that sequence
+retain their recorded timestamp order until a new capture supersedes them; no old receipt is rewritten.
+The draft hash includes the private available-capture watermark. A cached recapture therefore
+invalidates an open review or approval even when extraction and assertion revisions are unchanged.
+Changed source bytes expose the old/new source identities even when no new claim was recognized.
+A previously known claim missing from that replacement is labeled `source_missing` and requires
+operator review; absence is not treated as proof that the old claim was false. The contradiction
+review command can retain a verified value or withdraw it. New approval refuses unresolved missing
+claims. Explicit empty CSV fields retain their own identities and never become disposable
+missing-category placeholders. A new approval clears source-change notices already reviewed.
+
+Catalog import accepts bounded UTF-8 text, Markdown, HTML or CSV in the existing private capture
+path. CSV has exact columns `kind,field_key,value` with optional `ends_at`, at most 40 data records
+and 32,768 UTF-16 code units. Supported kinds are offering, location, fact, offer and language;
+field keys remain stable across revisions. Quoted commas, quotes and multiline values are
+supported. Missing values remain unknown, invalid expiry is disputed, and formula expressions or
+malformed columns are rejected. CSV provenance identifies its record and value column. The Core
+composition resumes capture/extraction on retry, rechecks the current caller before reading
+private bytes, and binds machine completion to that actor. A captured source alone is not an
+approved catalog. There is no PDF/DOCX parser, public crawler, provider inference or new queue.

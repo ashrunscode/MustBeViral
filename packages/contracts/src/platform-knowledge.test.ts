@@ -286,6 +286,45 @@ describe('brand knowledge contracts', () => {
       }).status,
     ).toBe('ok');
   });
+  it('requires exact review identity and bounded catalog content at every transport', () => {
+    const input = {
+      ...brand,
+      assertion_id: brand.brand_id,
+      expected_version: 2,
+      draft_hash: 'a'.repeat(64),
+      value_text: null,
+      ends_at: null,
+      excerpt: 'Withdraw the expired offer.',
+    };
+    const review = PLATFORM_OPERATIONS.review_expired_offer.input;
+    expect(review.safeParse(input).success).toBe(true);
+    for (const changed of [
+      { draft_hash: '' },
+      { expected_version: 0 },
+      { excerpt: '' },
+      { ends_at: '2027-02-30T10:00:00Z' },
+      { actor_id: context.actor_id },
+    ]) {
+      expect(review.safeParse({ ...input, ...changed }).success).toBe(false);
+    }
+    const catalog = PLATFORM_OPERATIONS.import_brand_catalog.input;
+    const csv = {
+      ...brand,
+      filename: 'catalog.csv',
+      media_type: 'text/csv',
+      text_content: 'kind,field_key,value\nfact,hours,Open',
+    };
+    expect(catalog.safeParse(csv).success).toBe(true);
+    for (const changed of [
+      { media_type: 'application/pdf' },
+      { text_content: '' },
+      { text_content: 'x'.repeat(32769) },
+      { source_id: brand.brand_id },
+      { approved: true },
+    ]) {
+      expect(catalog.safeParse({ ...csv, ...changed }).success).toBe(false);
+    }
+  });
   it('registers extract, propose, question, approve and pin operations without capture completion', () => {
     expect(PLATFORM_OPERATIONS.extract_brand_knowledge.rpc).toBe('platform_knowledge');
     expect(PLATFORM_OPERATIONS.propose_brand_knowledge.rpc).toBe('platform_knowledge');
@@ -295,7 +334,7 @@ describe('brand knowledge contracts', () => {
     expect(PLATFORM_OPERATIONS.approve_brand_version.rpc).toBe('platform_knowledge');
     expect(PLATFORM_OPERATIONS.pin_brand_version.rpc).toBe('platform_knowledge');
     expect(PLATFORM_OPERATIONS.get_brand_version_pin.rpc).toBe('platform_knowledge');
-    expect(Object.hasOwn(PLATFORM_OPERATIONS, 'import_brand_catalog')).toBe(false);
+    expect(PLATFORM_OPERATIONS.import_brand_catalog.rpc).toBe('platform_knowledge_lifecycle');
     expect(Object.hasOwn(PLATFORM_OPERATIONS, 'monitor_brand_changes')).toBe(false);
     expect(PLATFORM_ERRORS.EXPIRED_OFFER.httpStatus).toBe(409);
     expect(PLATFORM_ERRORS.CONTRADICTORY_KNOWLEDGE.httpStatus).toBe(409);

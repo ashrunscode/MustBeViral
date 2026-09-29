@@ -3,6 +3,7 @@ export {
   proposeBrandKnowledge,
   targetedKnowledgeQuestions,
   approvalBlockReason,
+  knowledgeExpiryInstant,
 } from '@mustbeviral/domain';
 export type { RepresentativeAssertion } from '@mustbeviral/domain';
 export * from './commands';

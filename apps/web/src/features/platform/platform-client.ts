@@ -63,7 +63,7 @@ export function platformErrorMessage(error: unknown): string {
     if (error.code === 'SOURCE_UNSAFE')
       return 'That destination is not a permitted public website.';
     if (error.code === 'SOURCE_UNSUPPORTED')
-      return 'Use a text, Markdown, or HTML file. PDF and Word files are not supported yet.';
+      return 'Use a text, Markdown, HTML or supported CSV file. PDF and Word files are not supported yet.';
     if (error.code === 'SOURCE_MALFORMED')
       return 'That file could not be read as a supported document.';
     if (error.code === 'SOURCE_TOO_LARGE') return 'That source is larger than the capture limit.';

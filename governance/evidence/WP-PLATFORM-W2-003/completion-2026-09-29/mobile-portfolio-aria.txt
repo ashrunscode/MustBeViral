@@ -1,0 +1,30 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Your studios Your portfolio
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio
+    - link "Switch studio":
+      - /url: /studio
+- main:
+  - heading "Good work starts with the right context." [level=1]
+  - paragraph: Choose your studio, then pick the brand you want to work on.
+  - region "Your studios":
+    - status:
+      - text: Just a moment
+      - paragraph: Loading your studio…
+  - heading "Create a studio" [level=2]
+  - group:
+    - text: Studio name
+    - textbox "Studio name":
+      - /placeholder: Your studio or business
+    - button "Create studio"
+  - heading "Invitations" [level=2]
+  - status:
+    - text: Just a moment
+    - paragraph: Checking your invitations…

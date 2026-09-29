@@ -1,4 +1,5 @@
 import { parseKnowledgeExpiry } from './knowledge-expiry';
+import { parseCatalogCsv } from './catalog-csv';
 
 export const assertionKinds = [
   'offering',
@@ -237,10 +238,34 @@ function withUnknowns(found: RepresentativeAssertion[]): RepresentativeAssertion
 }
 
 export function extractRepresentativeAssertions(input: {
-  readonly mediaType: 'text/html' | 'text/markdown' | 'text/plain';
+  readonly mediaType: 'text/html' | 'text/markdown' | 'text/plain' | 'text/csv';
   readonly text: string;
 }): readonly RepresentativeAssertion[] {
   const text = input.text;
+  if (input.mediaType === 'text/csv') {
+    return withUnknowns(
+      parseCatalogCsv(text).map((row): RepresentativeAssertion => {
+        const unsafe = isUntrustedInstruction(row.value) || isUntrustedInstruction(row.field);
+        const missing = row.value.trim().length === 0 || unsafe;
+        const ends = row.kind === 'offer' && row.endsAt ? parseKnowledgeExpiry(row.endsAt) : null;
+        return {
+          kind: row.kind,
+          field_key: row.field,
+          value_text: missing ? null : row.value,
+          status: missing ? 'unknown' : row.endsAt && ends === null ? 'disputed' : 'observed',
+          excerpt: unsafe
+            ? 'Untrusted instructions were not imported as brand facts.'
+            : quote(
+                row.value + (row.endsAt ? `; ends_at: ${row.endsAt}` : '') || 'No value supplied.',
+              ),
+          locator: `csv:record:${row.row};column:value`,
+          method: 'plaintext_labeled',
+          ends_at: missing ? null : ends,
+          reusable: false,
+        };
+      }),
+    );
+  }
   if (input.mediaType === 'text/html') {
     return withUnknowns([
       ...htmlLanguage(text),

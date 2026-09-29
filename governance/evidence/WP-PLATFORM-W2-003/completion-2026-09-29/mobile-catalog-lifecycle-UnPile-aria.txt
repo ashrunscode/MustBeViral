@@ -1,0 +1,129 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys f611928f-cc5b-4e7e-9d69-cd55359e73e2
+  - strong: UnPile
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff&view=settings
+    - link "Billing":
+      - /url: /studio/ba26e742-bca8-4adb-944e-650cb7665c6e/billing?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "UnPile" [selected]
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/ba26e742-bca8-4adb-944e-650cb7665c6e/brands/bbfb958d-cbc2-4d0d-bcf2-9b0d55fb30c6?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff&view=draft
+    - link "Findings":
+      - /url: /studio/ba26e742-bca8-4adb-944e-650cb7665c6e/brands/bbfb958d-cbc2-4d0d-bcf2-9b0d55fb30c6?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff&view=findings
+    - link "Locations":
+      - /url: /studio/ba26e742-bca8-4adb-944e-650cb7665c6e/brands/bbfb958d-cbc2-4d0d-bcf2-9b0d55fb30c6?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff&view=locations
+    - link "Settings":
+      - /url: /studio/ba26e742-bca8-4adb-944e-650cb7665c6e/brands/bbfb958d-cbc2-4d0d-bcf2-9b0d55fb30c6?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff&view=settings
+    - link "Billing & usage":
+      - /url: /studio/ba26e742-bca8-4adb-944e-650cb7665c6e/billing?studio=6ca80f6b-7ae8-4acc-9370-a79e069396ff
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group:
+    - text: Import a catalog
+    - paragraph: Choose a UTF-8 CSV file in the upload control. Up to 40 rows and 32,768 characters are supported. Import saves the source and extracts unapproved findings.
+    - paragraph:
+      - text: Use columns
+      - code: kind,field_key,value,ends_at
+      - text: ". Kinds: offering, location, fact, offer, language. Keep field keys stable when updating a catalog. Leave unknown values empty. Offer expiry uses an exact date, time and timezone."
+    - text: kind,field_key,value,ends_at offering,pickup,Pickup and delivery,
+    - paragraph: Text, Markdown and HTML catalogs can also use the document capture and extraction controls. PDF and Word are not supported.
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "document filename · observed"
+    - listitem:
+      - button "document filename · observed"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: Compared with approved version 2. The approved snapshot is preserved.
+    - paragraph: Checked 2026-09-29T07:58:00.227555+00:00
+    - button "Refresh comparison"
+    - paragraph: No changed findings or freshness issues were found.
+    - text: Unapproved draft
+    - heading "document filename" [level=2]
+    - paragraph: UnPile-catalog.csv
+    - paragraph: Source 104f72f5-de7e-49dd-8154-615553bba22b · document_text · captured 2026-09-29T07:57:32.741+00:00
+    - paragraph: "Excerpt: UnPile-catalog.csv"
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 6
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: document_upload · document · 2026-09-29T07:57:32.741+00:00 · text/csv
+      - listitem: document_upload · document · 2026-09-29T07:57:33.594+00:00 · text/csv
+      - listitem: manual · manual · 2026-09-29T07:57:34.933486+00:00
+      - listitem: manual · manual · 2026-09-29T07:57:58.946881+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - list:
+      - listitem:
+        - button "visual candidate · visual candidate · unknown"
+      - listitem:
+        - button "language · spanish · unknown"
+      - listitem:
+        - button "location · location · unknown"
+      - listitem:
+        - button "offering · pickup · observed"
+      - listitem:
+        - button "fact · hours · corrected"
+      - listitem:
+        - button "fact · hours · unknown"
+      - listitem:
+        - button "offer · sale · unknown"
+    - paragraph: Unknown — not supplied.
+    - paragraph: Source 104f72f5-de7e-49dd-8154-615553bba22b · manual · captured 2026-09-29T07:57:32.741+00:00
+    - blockquote: No visual candidate was supplied.
+    - group:
+      - text: Correct this assertion
+      - textbox "Correct this assertion"
+      - paragraph: Leave the assertion empty to mark it unknown and clear its expiry.
+      - text: Why this assertion correction
+      - textbox "Why this assertion correction"
+      - button "Save assertion"
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash c6ffebfe9d101436c3ee0db9e78e17a450f00aa824333d788719d5bf9c2bb32d
+    - button "Approve this exact draft"
+    - paragraph: Approved version 2 · c6ffebfe9d101436c3ee0db9e78e17a450f00aa824333d788719d5bf9c2bb32d
+    - text: Campaign pin
+    - textbox "Campaign pin": campaign-preview
+    - button "Pin approved version"
+    - paragraph: No pin stored for this campaign key.
+  - paragraph: Findings stay on this brand.

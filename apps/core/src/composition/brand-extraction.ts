@@ -25,7 +25,13 @@ export async function runBrandExtraction(input: {
   const sniff = sniffDocumentMediaType(bytes, declared);
   if (sniff === 'unsupported' || sniff === 'malformed') throw new Error('SOURCE_MALFORMED');
   const text = new TextDecoder('utf-8', { fatal: false, ignoreBOM: true }).decode(bytes);
-  const assertions = extractRepresentativeAssertions({ mediaType: sniff, text });
+  const extracted = extractRepresentativeAssertions({ mediaType: sniff, text });
+  // CSV admits forty explicit records. Postgres adds missing-kind placeholders
+  // itself; sending the domain preview placeholders would exceed that RPC bound.
+  const assertions =
+    sniff === 'text/csv'
+      ? extracted.filter((assertion) => assertion.locator.startsWith('csv:record:'))
+      : extracted;
   const machine = new PrivilegedSourceMachinePort(input.bindings, input.dbFetch);
   return await machine.recordExtraction(input.sourceId, assertions, input.requestId, input.actorId);
 }

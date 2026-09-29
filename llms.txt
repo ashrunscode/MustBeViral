@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
-active_packet: WP-PLATFORM-W2-003
-current_step: w2c-001-change-detection
-next_action: Detect source and assertion changes against an approved brand version.
+active_packet: WP-PLATFORM-W3-001
+current_step: w3f-001-preflight
+next_action: Inventory the existing artifact/provider paths, approved real-media references and runtime limits; prepare any exact hosted benchmark permission still required before remote effects.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

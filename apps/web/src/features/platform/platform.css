@@ -240,6 +240,12 @@
   gap: 18px;
   align-content: start;
 }
+
+.platform-catalog-example {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
 .platform-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -1,0 +1,37 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys eceeacfb-3df3-4267-ad1d-24265cc5b9b4 Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=eddf5ecd-ceaa-47f1-a6ad-114a8dc092a0&view=settings
+- main:
+  - heading "Your studio team." [level=1]
+  - paragraph: Invite the people who work across this studio’s shared brands.
+  - text: Editors can update brand details and locations where the workspace grant permits it. Viewers can read shared brand context. These roles do not authorize billing, provider spending or publication.
+  - heading "Invite a teammate" [level=2]
+  - group:
+    - text: Verified email
+    - textbox "Verified email"
+    - text: Studio role
+    - combobox "Studio role":
+      - option "Viewer — shared brand context" [selected]
+      - option "Editor — permitted brand edits"
+    - button "Save invitation"
+  - text: This saves an in-app invitation for seven days. No email is sent.
+  - heading "Members" [level=2]
+  - article:
+    - heading "w1b004-a11y-d6449ae9-eaaf-4178-b630-c835ae816f42@synthetic.example.test" [level=3]
+    - text: Studio owner owner
+  - heading "Invitations" [level=2]
+  - paragraph: No invitations yet.

@@ -1,0 +1,62 @@
+[
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-source-gates\\receipt.json",
+    "sha256": "9fcd4667b65d58314542dc090e080b357954aa9a51756f335767aa3f838f7d74",
+    "disposition": "Initial d187e31 source checks passed; later review required repairs."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-repair-gates\\receipt.json",
+    "sha256": "de6816a67bd832f0d9f305ac4a84b9ec448b052ec90b0804abd2794c2ea1707b",
+    "disposition": "030fb80 failed formatting; formatting repaired."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-final-browser.log",
+    "sha256": "09593ab8f3c85ddfa0cbaacfcae245fe2a7b870203d97c1c6796586f07419376",
+    "disposition": "030fb80: 30 passed, 2 failed. Source clock ordering and source-specific selector repaired."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-clock-order-observation.json",
+    "sha256": "b281fb58b80a30455fc60ad810bea28c221e840ffdafdc283fce80ef7e6f2488",
+    "disposition": "Synthetic capture metadata proves local database timestamps moved backward; new evidence uses logical sequencing."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-occurrence-db.log",
+    "sha256": "e61333162abcb5c428b43d2d3791ed386cdf62b3db323615ee63c0d9834da8eb",
+    "disposition": "Fixture reused an approval idempotency key across brands; isolated keys repaired."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-occurrence-db-rerun.log",
+    "sha256": "729da789c4a336d202b88f2c1197eee47d678f1c8baebc07ae2562dd6e706db2",
+    "disposition": "Occurrence focused SQL passed after fixture repair."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-occurrence-browser.log",
+    "sha256": "2b52dba13b3ccbd9e3f5a23c1908171a9f497b7a17a006e357a8d2cf5e6005fc",
+    "disposition": "38429c2: three focused browser journeys passed."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-occurrence-gates\\receipt.json",
+    "sha256": "615249d7a48ccf648913237eb43e00071c63b0f4237f54fc6edad795c76c2763",
+    "disposition": "38429c2 intentionally stopped after stale capture identity finding; not a full pass."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-reviewed-browser.log",
+    "sha256": "ae63a9aea21a99d2947a42ad550bd7e6ce7add80a55dff218281f5d54a19450a",
+    "disposition": "38429c2 intentionally stopped for the same repair; not browser acceptance."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-review-identity-db.log",
+    "sha256": "b112dd1df571393afe4a1d9e8979fddce40901197b903c6f5583a3463897b4f5",
+    "disposition": "d6de38f: 65 focused assertions passed."
+  },
+  {
+    "file": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\w2c-hash-full-db.log",
+    "sha256": "a4f95d46fd918d1365d7f52be513e65f66df2c8e149948757f67cb4dd5aaaf5d",
+    "disposition": "d6de38f: 61 files / 1180 assertions passed."
+  },
+  {
+    "file": "C:/dev/backups/MustBeViral/release-recovery-20260928/w2c-finish.log",
+    "sha256": "e84f45e281578190595022944d70261c5afb150dd6269c2edcfbff8f3e331262",
+    "disposition": "Initial agent:finish refused the ready successor because its first step was current. No transition occurred. Corrected that step to pending; scope, acceptance and external effects unchanged."
+  }
+]

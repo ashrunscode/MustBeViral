@@ -1,0 +1,90 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 9a8b4667-44ef-40a4-a5ed-d3fb0c6f1285
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=71545603-4406-4685-b084-e78c7a116e1e
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=71545603-4406-4685-b084-e78c7a116e1e&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=71545603-4406-4685-b084-e78c7a116e1e&view=settings
+    - link "Billing":
+      - /url: /studio/88027f86-61c1-4303-8807-6b40d628a711/billing?studio=71545603-4406-4685-b084-e78c7a116e1e
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=71545603-4406-4685-b084-e78c7a116e1e
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/88027f86-61c1-4303-8807-6b40d628a711/brands/c8aa64ca-af5b-4472-b7ad-e38bf7246fcc?studio=71545603-4406-4685-b084-e78c7a116e1e&view=draft
+    - link "Findings":
+      - /url: /studio/88027f86-61c1-4303-8807-6b40d628a711/brands/c8aa64ca-af5b-4472-b7ad-e38bf7246fcc?studio=71545603-4406-4685-b084-e78c7a116e1e&view=findings
+    - link "Locations":
+      - /url: /studio/88027f86-61c1-4303-8807-6b40d628a711/brands/c8aa64ca-af5b-4472-b7ad-e38bf7246fcc?studio=71545603-4406-4685-b084-e78c7a116e1e&view=locations
+    - link "Settings":
+      - /url: /studio/88027f86-61c1-4303-8807-6b40d628a711/brands/c8aa64ca-af5b-4472-b7ad-e38bf7246fcc?studio=71545603-4406-4685-b084-e78c7a116e1e&view=settings
+    - link "Billing & usage":
+      - /url: /studio/88027f86-61c1-4303-8807-6b40d628a711/billing?studio=71545603-4406-4685-b084-e78c7a116e1e
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - group: Import a catalog
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "unknown gap · corrected"
+  - complementary:
+    - heading "Changes and freshness" [level=2]
+    - paragraph: No approved version yet. Review these findings before approving the brand.
+    - paragraph: Checked 2026-09-29T08:00:07.841016+00:00
+    - button "Refresh comparison"
+    - paragraph: No changed findings or freshness issues were found.
+    - text: Unapproved draft
+    - heading "unknown gap" [level=2]
+    - paragraph: Keyboard hours stay 24/7 at 200 percent.
+    - paragraph: Source 9d81b98a-1d58-4dcf-b8fe-9614f56565a6 · manual · captured 2026-09-29T08:00:07.174866+00:00
+    - paragraph: "Excerpt: Operator correction."
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 2
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: manual · manual · 2026-09-29T08:00:06.301286+00:00
+      - listitem: manual · manual · 2026-09-29T08:00:07.174866+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - paragraph: Extract a captured source to review typed findings.
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash 917bcf506548bdb393acfdafa70488c3e2bc3c91bafd12f24d022260b482e3ef
+    - button "Approve this exact draft"
+    - paragraph: No owner-approved brand version yet.
+  - paragraph: Findings stay on this brand.
