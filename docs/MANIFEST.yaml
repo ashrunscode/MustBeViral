@@ -526,3 +526,13 @@ documents:
     authority_topics: [operations.release_authority]
     review_triggers: [owner_authority_changed, release_incident, github_protection_changed]
     supersedes: []
+
+  - id: adr-0010-drive-autopilot-saas
+    path: docs/decisions/ADR-0010-DRIVE-AUTOPILOT-SAAS.md
+    kind: decision
+    status: accepted
+    owner: product-architecture
+    authority_topics: [decision.0010-drive-autopilot-saas]
+    review_triggers:
+      [integration_transport_changed, render_benchmark_completed, commercial_catalog_changed]
+    supersedes: []

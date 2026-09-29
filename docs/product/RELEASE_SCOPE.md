@@ -20,11 +20,27 @@ The roadmap owns the work-unit sequence. Quality gates own acceptance. No milest
 ## Explicit boundaries
 
 - Preserve the V2 architecture; do not restore the retired application or its authentication/data model.
-- Evaluate managed publishing before direct network implementation: Postiz first, Sendible second, direct adapters if neither meets the recorded criteria. No provider purchase or commercial terms are accepted by this scope change.
+- Use direct Drive ingestion and the hosted Treg/direct social matrix selected in ADR-0010, subject to account isolation and capability acceptance. A failing Treg path has a direct-adapter fallback; Postiz and Sendible are excluded launch dependencies.
 - Prioritize Facebook Pages, Instagram professional accounts, TikTok and Google Business Profile. Add YouTube/Shorts, LinkedIn, Pinterest, Threads and X through the same capability-specific evidence gates.
 - Paid-media execution, creator payouts, production traffic and customer charging have independent account, permissions, budget, legal/commercial and operational acceptance. Implementable local work continues while external acceptance is pending.
 - Broad enterprise identity, BYOK, new executor services and unrelated marketplace expansion require a later accepted decision. Regulated or political advertising requires its own policy and reviewer gate.
 - A feature blocked by missing access remains blocked. Manual handoff is labeled; test fixtures never establish live capability.
+
+The September 28 owner instruction includes both the public studio service and SaaS product.
+Preserve approved studio offers/voice; add SaaS marketing at `/software` and `/software/pricing`
+with the existing authenticated `/studio` routes. The primary SaaS journey is signup → business →
+Drive/folders → approved identity/rights → connected accounts → budget/publishing policy →
+automatically produced and confirmed content. Routine compliant automation follows exact policy
+approval; per-post platform consent and exception recovery remain mandatory. Authentic premises,
+products and people are acceptance requirements, with capture requests for missing material.
+
+The provisional Solo/Studio/Portfolio subscriptions and separate prepaid credits are implementation
+inputs, not live charging approval. Initial creator settlement is recorded externally; no payout
+rail or creator wallet is implied. All W0–W12 work remains required, including collaboration,
+creators, partnerships, engagement, analytics and separately gated paid media. The cumulative $100
+external-service development ceiling is distinct from product daily spend limits and excludes ads.
+No packet or integration may be called complete while its required connected or release evidence
+is missing.
 
 ## Preserved release obligations
 

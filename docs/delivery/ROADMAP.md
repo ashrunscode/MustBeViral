@@ -114,7 +114,7 @@ Dependency: W2 brand/audience model, W1 access. Provider licensing spike starts 
 
 | ID   | Deliverable                                                                                 | Proof required                                                                         |
 | ---- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| W7.1 | Add imported/opt-in creators and one approved discovery adapter.                            | Source, permitted use, freshness, and missing data are retained.                       |
+| W7.1 | Add imported/opt-in creators and a direct YouTube discovery adapter.                        | Source, permitted use, freshness, and missing data are retained.                       |
 | W7.2 | Build explainable search, suitability filters, and campaign shortlists.                     | Local/language/style fit has evidence; missing geography is not fabricated.            |
 | W7.3 | Add creator CRM, relationship history, authorized outreach drafts, and contact preferences. | No outbound action without the configured authorization; opt-outs respected.           |
 | W7.4 | Deliver briefs, creator portal, draft uploads, revision feedback, rights, and deadlines.    | Creator sees only assigned work; exact deliverable versions are reviewed.              |
@@ -145,7 +145,7 @@ Dependency: W4 connectors, W2 knowledge, W6 assignments.
 | W9.1 | Ingest supported messages/comments/reviews with cursor checkpoints and deduplication. | Replay and outages recover without duplicate conversation records.                        |
 | W9.2 | Build triage, assignment, internal notes, supported replies, and human escalation.    | Correct account/permission/window checked before send; concurrent reply conflict handled. |
 | W9.3 | Add knowledge-grounded response drafts and narrow opt-in automation policies.         | Wrong-brand facts and expired offers rejected; human takeover works.                      |
-| W9.4 | Add approved RSS/catalog/storage/design connectors and content opportunity queues.    | Freshness, provenance, permissions, and rights survive import into creative work.         |
+| W9.4 | Add RSS, CSV catalog, Drive and official Canva OAuth/design-export import.            | Private copied exports retain freshness, provenance, permissions and rights.              |
 | W9.5 | Add brand crisis pause, listening coverage indicators, and operational notifications. | Scope is accurate; pauses contain pending activity without rewriting history.             |
 
 Exit: the operator can manage supported customer engagement and turn legitimate content inputs into relevant campaigns.
@@ -168,13 +168,13 @@ Exit: users can see what performed, what is uncertain, and what to change next w
 
 Dependency: W6 multi-client operation and W10 measurement. Existing billing data connection is already required in W1.
 
-| ID    | Deliverable                                                                                          | Proof required                                                                           |
-| ----- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| W11.1 | Implement current subscription/entitlement product and transparent metered usage.                    | Test-mode purchase, renewal, failure, cancellation, credit, and receipt flows reconcile. |
-| W11.2 | Add studio sponsorship, client allocation, delegated budgets, and cost reporting.                    | Workspace and aggregate limits remain consistent under concurrent jobs.                  |
-| W11.3 | Deliver read-only ad-account/measurement audit and approved campaign drafts.                         | Account relationships and permissions are verified; diagnostics distinguish data gaps.   |
-| W11.4 | Implement separately authorized paid-media publication/optimization controls.                        | Exact budget/target account confirmation, limits, pause, and reconciliation tests pass.  |
-| W11.5 | Add provider-backed creator payouts and affiliate settlements if the commercial model requires them. | Identity/settlement/reversal failure paths and accounting pass before activation.        |
+| ID    | Deliverable                                                                                           | Proof required                                                                               |
+| ----- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| W11.1 | Implement the versioned Solo/Studio/Portfolio subscription catalog, prepaid credits and entitlements. | Purchases, lifecycle, Stripe ordering repair, receipts, cancellation and recovery reconcile. |
+| W11.2 | Add studio sponsorship, client allocation, delegated budgets, and cost reporting.                     | Workspace and aggregate limits remain consistent under concurrent jobs.                      |
+| W11.3 | Deliver read-only ad-account/measurement audit and approved campaign drafts.                          | Account relationships and permissions are verified; diagnostics distinguish data gaps.       |
+| W11.4 | Implement separately authorized paid-media publication/optimization controls.                         | Exact budget/target account confirmation, limits, pause, and reconciliation tests pass.      |
+| W11.5 | Record initial external creator settlement and the selected model's payout applicability.             | Preserve actual/estimated settlement evidence; no creator wallet or untested payout claim.   |
 
 Exit: the selected paid product operates with real entitlements and reconciled money; optional payouts/ads remain explicitly unavailable until their separate acceptance passes.
 
@@ -198,7 +198,83 @@ The critical path is accepted product/data scope → durable portfolio/brands �
 
 One active packet owns one bounded slice. Every packet includes user outcomes, allowed paths, data/contracts, failure states, tests, external dependencies, rollback and successor. Continue implementable successors after truthful completion. Do not add a competing ship plan or status database. Product, architecture, UX and quality documents remain the accepted topic authorities.
 
-Use current official documentation for provider feasibility. Postiz is evaluated first, Sendible second and direct adapters follow if neither passes. Missing commercial access, real accounts, paid-provider budgets or a required visual approval must remain explicit. Produce concrete review artifacts before requesting an owner decision.
+Use current official documentation for provider feasibility. ADR-0010 selects direct Drive and the
+hosted Treg/direct social matrix, with direct fallback for failed Treg paths. Postiz and Sendible
+are excluded launch dependencies. Missing access, customer accounts, budget, legal/human evidence
+or required visual approval remains explicit. Prepare concrete review artifacts before requesting
+the missing decision; the $100 development ceiling does not waive provider approval or assessment.
+
+### Bounded execution sequence after recovery
+
+The September 28 instruction refines packet size and order without removing any W0–W12 unit.
+Preserve and revalidate existing work instead of rebuilding it. H1–H4 recover release controls,
+schema/skill prerequisites, main promotion and local environment protection. H5 records these
+decisions; H6 closes existing W2-002 only after its specified evidence/reviews, then activates the
+prepared W2-003. These governance changes do not count as product acceptance.
+
+| Order | Bounded implementation unit            | Required acceptance                                                                                                                                           |
+| ----- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | W0/W1 baseline reconciliation          | Link completed claims to actual code/evidence; navigation, identity, access and billing regressions pass.                                                     |
+| 2     | Existing W2-002                        | Traceable extraction, labeled proposals, exact-hash immutable approval, two-brand journeys and required independent reviews.                                  |
+| 3     | Existing W2-003                        | Source differences, expiry, contradictions and manual/CSV catalog import; approved snapshots remain immutable.                                                |
+| 4     | Render feasibility                     | Actual source image and exact logo/text, real-footage reel, private transfer, runtime bounds, cancellation, cost receipt and committed architecture decision. |
+| 5     | Asset originals and rights             | Hash/MIME verification, interrupted upload recovery, rights/release/expiry and cross-tenant denial.                                                           |
+| 6     | Drive authorization and roots          | Consent/account identity, scope explanation, selected roots, shared drives, reconnect and revocation.                                                         |
+| 7     | Drive initial import                   | Resumable listing/download, quota handling, deduplication and accurate progress/error UI.                                                                     |
+| 8     | Drive ongoing synchronization          | New/change/move/delete, expired cursors, duplicate/missed notifications, watch renewal and root reconciliation.                                               |
+| 9     | Asset organization and identity        | Collections/search/transcripts, usage/lineage, approved logos/fonts/colors and protected regions.                                                             |
+| 10    | Static production and capture recovery | Source-faithful templates, exact offer text, expiry, missing-media requests and lineage inspection.                                                           |
+| 11    | Social connection foundation           | Shared adapter contract, credential transport, exact account binding, capability snapshots and isolation suite.                                               |
+| 12    | Publication domain                     | Immutable intents/attempts/events, dispatch leases, deduplication and unknown-outcome reconciliation.                                                         |
+| 13    | Facebook and Instagram                 | Each claimed format posts/confirms/reads available metrics; wrong-account and reconnect cases pass per adapter.                                               |
+| 14    | Google Business Profile                | Correct location, supported post types/expiry, confirmation and available metrics.                                                                            |
+| 15    | YouTube and LinkedIn                   | Upload/status and account-specific capabilities; LinkedIn organization access proven separately.                                                              |
+| 16    | TikTok                                 | Required per-post consent UX, processing/status, rejection and reconnect; no unsupported autonomous claim.                                                    |
+| 17    | Pinterest, Threads and X               | Each adapter independently tested; X costs and rate limits enforced.                                                                                          |
+| 18    | Composer and basic calendar            | Durable drafts, per-channel preview, schedule/cancel, DST and partial-success recovery.                                                                       |
+| 19    | Campaign and seven-day planning        | Approved facts/assets pinned; editable reasons, gaps and estimates; no invented offers.                                                                       |
+| 20    | Reel/carousel production               | Timeline/scenes, captions, audio rights, covers, actual sources and verified private output.                                                                  |
+| 21    | Creative QA and languages              | Identity, facts, offers, rights, typography, EN/ES meaning and destination checked.                                                                           |
+| 22    | Automation policy and budgets          | Exact-policy approval, atomic reservations, revision invalidation and pause controls.                                                                         |
+| 23    | Autonomous orchestration               | Browser-closed execution, restart recovery, fairness, deduplication and actionable exceptions.                                                                |
+| 24    | Two-brand operating pilot              | WashBodega and UnPile complete Drive → production → confirmed publication → metrics → next plan without identity leakage.                                     |
+
+Where a row covers multiple adapters, use independently scoped packets/PRs as needed; one failing
+adapter cannot be marked passed because another works. Conditional external acceptance stays open
+while independently authorized local work proceeds through an audited packet transition. Do not
+broaden a ready packet or falsely complete a blocked one to reach the next row.
+
+W6.1–W12.5 remain separate bounded work units in the tables above: invitations/roles/revocation;
+reviews/annotations/approval chains; tasks/views/bulk operations/preferences; evergreen/import/location
+variants; client portal/export/offboarding; creator discovery/relationships/deliverables/settlement;
+partnership grants/approvals/coordinated publishing/reporting/withdrawal; inbox/response controls and
+content imports; defined observations/reporting/outcomes/experiments/recommendations; subscriptions,
+sponsored budgets and separately gated ads; scale/failure/UX/retention/release acceptance. Their
+rights, review, consent, cross-brand and recovery requirements are not optional. Billing foundations
+needed by earlier automation retain existing containment until W11 commercial acceptance; a pilot
+does not establish new-price production charging readiness.
+
+### Packet preparation contract
+
+Before activation, instantiate the existing packet schema with the exact base/local branch, allowed
+files, dependencies, named skill sources, user outcome, contracts/migrations, deterministic fixture
+paths, negative/recovery cases, connected evidence, rollback and one named successor. Follow existing
+package boundaries: contracts/domain/database/billing/artifacts/providers, Core composition and
+platform UI; transports call shared handlers. Do not put business logic in browser route handlers.
+
+Record the literal commands applicable to that slice. Standard release gates include preflight,
+governance checks/tests, formatting, governance lint, design and scope; product slices also run
+`pnpm verify` and `pnpm supabase:test`. Acceptance additionally requires `pnpm agent:verify` and
+all packet-specific connected checks. Pin Node 24.18.0, pnpm 11.12.0 and frozen dependencies. Use
+the owned local Supabase lane only; never reset or stop another project's database. Historical
+totals, OAuth success, fixtures and elapsed time do not replace a fresh required result.
+
+For existing W2, retain both knowledge verifier scripts and the connected knowledge/platform
+Playwright suites with `MBV_PLATFORM_CONNECTED=1`, `MBV_PLAYWRIGHT_EXTERNAL=1` and
+`PLAYWRIGHT_BASE_URL=http://127.0.0.1:3111`. Preserve its exact required independent review workflow.
+New screenshots/prototypes are prepared before visual approval requests. Produce the finished
+release/application/legal evidence pack before requesting missing external decisions. Paid calls
+reserve against the cumulative development receipt; no packet creates a new $100 allowance.
 
 ## Current evidence and carried release obligations
 
@@ -208,4 +284,8 @@ WP-P3-009 is superseded with its evidence and pending acceptance preserved. Cont
 
 The five golden journeys and mandatory negative/recovery cases in quality-gates define acceptance. A two-brand pilot is the first complete core operating milestone; W6–W12 remain required for full-platform completion. Use specified, implemented, locally verified, connected staging verified and authorized production verified evidence levels. Unsupported or unavailable integrations stay explicit.
 
-Load tiers are 1, 10, 100 and 1,000 synthetic brands, with dataset size/concurrency defined before measuring. Common portfolio/brand reads target p95 under two seconds at the agreed load. At least 20 varied briefs and a defined pilot cohort are required for usefulness/fidelity/usability evidence; do not invent human evaluations. Re-estimate after W0/W1 rather than promise an unmeasured launch date.
+Load tiers are 1, 10, 100 and 1,000 synthetic brands, with 100 asset metadata rows, 50 content
+revisions and 30 publications per brand; 50 concurrent readers and 10 command clients include a
+noisy tenant. Common portfolio/brand reads target p95 under two seconds. Quality gates define the
+20-brief, at-least-five-operator human assessment and 80% unassisted onboarding threshold. Preserve
+failed sessions in the denominator; do not invent evaluations or an unmeasured launch date.

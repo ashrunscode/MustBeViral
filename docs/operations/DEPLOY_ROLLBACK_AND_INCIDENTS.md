@@ -32,7 +32,7 @@ Local agents merge and deploy under `adr-0009-standing-release-authority` withou
 5. Use only these routine release commands for the target being released:
    - Worker: `pnpm exec wrangler deploy --config apps/<worker>/wrangler.jsonc --env <environment> --keep-vars`.
    - Staging migrations: only merged, additive migrations, applied in order through the Supabase MCP `list_migrations` then `apply_migration` path. Use a connection confirmed to target `mustbeviral-staging`, as in `governance/evidence/WP-P3-001/queues/start-run-barrier-event-id-staging-apply-2026-08-31.md`. Do not use `supabase db push`.
-   - Web: no Vercel deploy command is recorded yet. Before the first web deploy, ask the owner for the exact invocation and record it. Later web deploys reuse the recorded command.
+   - Web: no Vercel deploy command is recorded yet. Before the first web deploy, prepare and validate the exact existing-project-scoped invocation, obtain the required owner approval, and record it. Later web deploys reuse the recorded command. Do not invent an unreviewed first deployment procedure.
 
    The read-only commands in step 3 and the rollback commands in step 6 are also permitted. A command recorded for another purpose, such as creating a queue, is not a routine release command. No command may produce an effect that `adr-0009-standing-release-authority` leaves owner-gated. If a step has no routine command, stop and ask.
 
@@ -80,3 +80,35 @@ Page immediately on cross-tenant access, public artifact exposure, unbounded spe
 7. Complete a blameless review with root cause, detection gap, corrective owner/date, tests, runbook changes, and recurrence proof.
 
 Disaster-recovery rehearsals prove database restore, R2 inventory/recovery, configuration recreation, secret rotation, DNS rollback, and receipt reconciliation before paid launch.
+
+## Full-platform release evidence
+
+Complete the reviewed implementation and local gates first. Apply approved additive staging
+migrations in order and deploy existing staging Core, collaboration and web targets through this
+runbook. Prove authenticated journeys, private media, account isolation, actual provider behavior,
+test-mode billing and rollback. Assemble one production release packet naming exact commits,
+migration range, configuration changes, credential references (never values), deployment commands,
+rollback targets and remaining specific approvals. No deployment command grants missing authority
+for settings, credentials, production database writes, public posts or feature enablement.
+
+After authorized compatible production migration/deployment, run **72 continuous hours of private
+production observation**. Record actual start/end, monitored deployment identities, incidents and
+any interruption; elapsed time alone is not acceptance. Obtain a fresh evidence-based owner traffic
+ruling, then perform only the approved existing-domain cutover and progressive capability enablement.
+Verify real customer onboarding, publication IDs/status, metrics, credit settlement and stop
+controls. Preserve legacy rollback resources through the required observation and retention periods.
+
+Google scope verification/security assessment, social provider approval, customer OAuth, render
+feasibility, approved new-screen captures, attorney/legal review, SaaS economics and real operator
+acceptance are separate evidence gates. Prepare concrete applications, facts-only legal packs,
+prototypes and release packets before requesting missing inputs. Stop dependent work when a gate
+is absent and continue independently authorized work. A blocked integration stays blocked and a
+manual path stays labeled; no mocked evidence substitutes for connected acceptance.
+
+The completion handoff records implemented and unavailable capabilities, each packet's acceptance
+and independent review, PR/review/merge/deployed identities, migration/deployment receipts,
+connected journeys and actual publication confirmations, human evaluation and continuous
+observation, cumulative development spend, operational ownership/alerts, pause controls and rollback.
+Use existing project state, active packet and governance evidence; do not create a competing status
+database. Record only verified outcomes in the shared-memory release note. Do not mark the overall
+project complete while a required product or public-release gate remains open.

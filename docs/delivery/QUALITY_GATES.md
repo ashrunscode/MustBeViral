@@ -104,6 +104,13 @@ The following supersedes the historical launch-pack scope as the full-platform r
 
 Test content and any actual publication require the relevant execution authorization when this journey is run. This document has not posted or changed accounts.
 
+The September 28 extension also requires the primary SaaS onboarding path through the customer's
+own Drive account and selected folders, import preview, rights/identity approval, social account
+binding, budget and exact policy approval. The WashBodega and UnPile operating pilot must complete
+Drive → production → confirmed publication → metrics → next plan with no identity leakage. General
+policy approval may authorize routine compliant content, but channel-required per-post consent is
+still exercised. W2's narrower current journey remains unchanged until its own acceptance closes.
+
 ### Golden journey B: independent second brand (UnPile pilot)
 
 Repeat the journey with UnPile, explicitly selected by the owner on September 9, in its own workspace with distinct identity, voice, service context and assets. Switch frequently between brands. Reuse the same operator but test a separate client reviewer. WashBodega and UnPile are both laundry businesses; this pilot does not establish unrelated-industry coverage. The broader local-service and e-commerce brief rubric below still requires separate varied-category cases.
@@ -162,6 +169,51 @@ Use the existing governance evidence mechanism to record:
 Record unsupported, blocked, or not configured explicitly. These states are evidence classifications, not user-facing marketing badges. Mark a full feature complete only at the evidence level required by its release contract.
 
 Final release requires an executable user journey, working data and recovery paths, relevant behavioral tests, connected evidence, accessible responsive UX, truthful copy, support/rollback procedures, and owner acceptance. Keep local test success separate from provider activation, deployment, public traffic, and actual live behavior.
+
+### Drive, automation and commercial regression contract
+
+Prepare deterministic fixtures and failure injection in each bounded packet; run provider-connected
+cases separately and label their environment. Required scenarios are:
+
+| Area               | Required proof                                                                                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Drive ownership    | Two tenants with separate accounts; forged connection/root/file IDs denied; partial scopes, shared-drive discovery, reconnect and revocation.                                                     |
+| Initial import     | File arrives during listing; resumable pages/downloads; duplicates, quota/backoff, unsupported MIME, storage full and changed revision mid-transfer.                                              |
+| Ongoing sync       | Duplicated/missed notifications, cursor expiry, watch overlap/renewal, polling and daily reconciliation recover without duplicate assets.                                                         |
+| Source authority   | Moves, deletion, lost permission and shortcuts outside roots block future automatic use; rights expiry after scheduling blocks dispatch while history remains.                                    |
+| Identity/content   | Wrong-brand logo/photo rejected; real premises recognizable with source lineage; changed prices, expired offers, missing releases and unsupported claims blocked.                                 |
+| Language/injection | English/Spanish meaning and destination match; malicious source text, filenames, captions or provider responses cannot alter permissions/policies.                                                |
+| Durable automation | Browser closes, worker restarts and jobs duplicate without duplicate plans, renders, reservations, charging or publication; noisy tenants cannot starve others.                                   |
+| Approval/stops     | Exact policy hashes, edits, emergency pauses and access revocation take effect before the next external submission; no fabricated human approval.                                                 |
+| Publication        | Timeout before send and after acceptance, duplicate notification, missing status, partial success, account-change reconnect, cancel/submit race, DST gaps/overlaps and required per-post consent. |
+| Billing            | Concurrent wallet/client/workspace/program caps, duplicate Stripe credit, out-of-order subscription resurrection, changed metadata and ambiguous customer mapping.                                |
+| Offboarding        | Reviewer revocation, client offboarding and partnership withdrawal stop affected queued access/use without deleting evidence.                                                                     |
+
+Publication requires provider post identity and confirmation evidence. A passing transport call,
+OAuth login, UI status or mock response is insufficient. Treg customer activation separately proves
+account/tool binding and cross-tenant selection/read/invoke/refresh/revoke denial, outage recovery
+and transactionally enforced Must Be Viral budgets. A failed path stays unavailable until its direct
+fallback meets the same contract.
+
+Render feasibility uses a real source image with exact logo/text and a real-footage reel, including
+captions, fonts, cover, audio rights, private transfer, cancellation and a cost receipt. Predeclare
+memory/duration/cost thresholds against the selected runtime and record measured results before
+committing its implementation decision. HEIC/HEIF support needs real-fixture normalization proof.
+
+### Defined scale and human acceptance
+
+Use synthetic tiers of 1, 10, 100 and 1,000 brands, each with 100 asset metadata records, 50 content
+revisions and 30 publication records per brand. At every tier run 50 concurrent readers and 10
+concurrent command clients, including a noisy tenant. Measure common portfolio/brand reads against
+p95 under two seconds, fairness, backlog, storage and cost. Preserve existing dispatch/recovery
+targets. Measure video work separately so it cannot conceal interactive latency.
+
+Use 20 varied briefs covering local services, hospitality, fitness/beauty, professional services
+and e-commerce, with at least five qualified real operators. At least 80% must complete onboarding
+through approval without assistance; failed sessions stay in the denominator. Assess factual
+correctness, recognizable identity, relevance, natural appearance, editing burden and willingness
+to publish. A polished generic scene fails fidelity. Missing evaluators leave human acceptance
+incomplete; agents or synthetic personas cannot substitute for these operators.
 
 ## Carried release obligations
 

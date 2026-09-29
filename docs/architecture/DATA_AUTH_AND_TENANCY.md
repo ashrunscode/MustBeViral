@@ -143,6 +143,8 @@ Introduce additive tables or equivalent normalized entities for:
 - `campaigns`, `campaign_versions`, `content_items`, `content_revisions`, `content_scenes`, `channel_variants`.
 - `approval_policies`, `review_requests`, `review_decisions`, `tasks`.
 - `social_connections`, `channel_capability_snapshots`, `publication_intents`, `publication_attempts`, `publication_events`.
+- Drive connection roots, user/shared-drive cursors, watch leases, synchronization events and source-revision-to-artifact mappings.
+- Immutable automation policy versions/approvals, plan windows, scoped exceptions and workspace/brand/account pause state.
 - `creator_profiles`, `creator_observations`, `creator_lists`, `creator_relationships`, `creator_deliverables`.
 - `partnership_campaigns`, `partnership_participants`, `campaign_asset_grants`.
 - `conversations`, `messages`, `conversation_assignments`, `reply_intents`.
@@ -162,6 +164,36 @@ These names are proposals, not generated schema. Final migrations should reuse e
 8. Money uses the existing integer accounting model. No agent may invent a balance, price, or successful charge.
 9. Original media remains private. External platforms receive only the specific approved deliverable through an appropriate bounded transfer mechanism.
 10. External submission ambiguity is explicit. Reconcile before retrying.
+
+### Drive, assets and automation ownership
+
+Each connection and every child root/file mapping resolves through constrained workspace/brand
+relationships. A caller-supplied provider ID, folder ID, file ID or Treg tool ID confers no authority.
+Queries and commands validate the owned connection before resolving its external binding. Two
+tenants cannot select, inspect, invoke, refresh or revoke each other's accounts. Browser clients
+cannot read encrypted refresh credentials or backend transport tokens. OAuth callbacks verify
+single-use state and bind the initiating actor/brand/account; provider notifications validate their
+own nonce/signature and durable deduplication identity.
+
+Every usable asset records workspace/brand, source identity/revision, original hash, MIME,
+dimensions/duration, capture/import time, rights basis/permitted use/expiry/releases, approved
+brand/location/product associations, derivatives and publication usage. Extend the existing
+artifact store; do not create a second media library. Immutable originals and revisions preserve
+lineage across source changes, source removal and disconnect. Rights changes and lost source
+permission invalidate future automatic use when authority is uncertain.
+
+Automation approval pins the exact policy hash and authenticated actor. Policy approvals are
+distinct from human content decisions and reference the policy that authorized the exact revision.
+Background commands recheck current actor/resource permissions before any side effect. Policy
+changes, reviewer revocation, client offboarding and partnership withdrawal affect queued work;
+historical evidence remains immutable. Enforce direct-write denial for protected state, forced RLS,
+composite ownership keys and consistent lock ordering across permissions, reservations and dispatch.
+
+Owner, administrator, editor, reviewer and viewer roles resolve explicit actions. Billing management
+and enabling automation are separate privileges. Brand-scoped client reviewers consume no operator
+seat and cannot browse another client's portfolio. Creators/partners receive only assigned or
+purpose-granted resources. Sponsored spending pins both funding workspace and client allocation;
+permissions and both budget boundaries are checked atomically, with no cross-tenant pooled balance.
 
 ## Platform migration and compatibility
 

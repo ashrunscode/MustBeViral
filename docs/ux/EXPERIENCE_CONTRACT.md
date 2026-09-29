@@ -122,3 +122,46 @@ Replace internal copy such as “Core can pin the expected revision,” “P1a,�
 Every empty or unavailable screen needs an appropriate recovery action: select a brand, add an asset, resume an existing item, reconnect an account, request approval, or retry a failed load. Unknown billing/metrics must not be rendered as zero. A session expiry should return the user to the same permitted content after sign-in.
 
 Postiz's calendar/composer and Sendible's workspace/campaign/inbox/report organization provide useful interaction references. Build an original coherent MustBeViral experience. The supplied guides explicitly leave some areas inferred or untested; neither guide proves that every observed menu has a working API.
+
+### Drive and SaaS journey
+
+Use **Must Be Viral** in public/app copy while preserving internal identifiers. Keep the approved
+studio homepage/sales voice and Spanish marketing separate from `/software` and
+`/software/pricing`. Authenticated navigation retains `/studio`, workspace and brand identities;
+the application UI is English and content may have English/Spanish variants.
+
+Show the customer's own consenting Drive account, permission explanation and selectable roots.
+Preview counts, unsupported types, estimated storage and rights acknowledgement before import.
+Display resumable import progress, individual failures/retry, last successful synchronization and
+specific reconnect or conversion actions. No fake progress, silent broad-folder access or automatic
+deletion of copies on disconnect. A file being imported is distinct from being eligible for use.
+
+Onboarding carries a visible brand identity through Drive selection, source review, exact social
+account binding and policy approval. Customer accounts are never replaced with the workstation
+operator's accounts. Preview the proposed seven-day plan and show the default reel/carousel/static
+cadence at Monday/Wednesday/Friday 10:00 in the customer-confirmed timezone before activation.
+Resolve DST ambiguity explicitly. Unknown timezone, missing rights, absent footage or inadequate
+budget offers a clear next action and cannot appear as an enabled autopilot.
+
+The automation approval view shows channels, identity/rights, transformations, language, dates,
+spending limits, approvals and pause conditions for the exact policy being approved. Editing the
+policy produces a visible new version. Activity distinguishes automatic policy approval, human
+review and platform-required consent. A channel waiting for consent is shown independently of
+successful channels. Workspace, brand and account pause controls remain easy to reach; accepted
+work's reconciliation continues visibly.
+
+Plans and previews use the customer's real assets and expose source/rights/lineage on demand.
+Capture requests specify the missing shot, release or fact. English/Spanish previews preserve the
+offer and destination. TikTok's required consent view includes the exact account, content preview,
+privacy choice, disclosures and applicable controls; general autopilot consent cannot skip it.
+
+Pricing and billing separate subscription fees from prepaid production balance. Show included
+resource limits, no included production allowance, credit purchase, and estimated/actual usage.
+Upgrade/downgrade screens disclose effective dates and charges. Over-limit downgrade selection
+preserves customer assets/history; failed payment retains history/export and explains paused work.
+Brand-scoped reviewers do not consume operator seats. Do not advertise a capability, format or price
+as available before its release acceptance.
+
+Produce desktop/mobile prototypes and populated/empty/error captures for new screens before their
+required approval. Preserve the accepted Lightfield artifacts if external design tooling is
+unavailable. Approval of this product specification does not itself approve unshown production UI.

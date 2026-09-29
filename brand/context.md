@@ -1,8 +1,8 @@
 ---
 brand: Must Be Viral
 schema: brand-context/v1
-version: 2
-updated: 2026-09-15
+version: 3
+updated: 2026-09-28
 owner: operator (role-only; never named in public copy). Named public face: Ashley Ansons.
 languages: [en, es]
 approval_required: true
@@ -14,7 +14,13 @@ status: draft
 Single source of truth for marketing, copy, email, social, SEO and sales work in this repository.
 Rules: cite a repo file or a dated owner decision for every fact; write `[OWNER-INPUT-NEEDED]` where neither exists and log it in section 13; never invent addresses, hours, prices, claims, ratings, reach figures or consent states. The design brief is `brand/BRAND.md`.
 
-**Two surfaces, one company.** Must Be Viral sells done-for-you content production and social management to Houston businesses (the **studio** surface). The agentic software in this repository — the `apps/web` studio workflow of brief → quote → run → review → receipt — is the **operations backbone behind that service**, not the thing being sold to those customers (owner decision, 2026-09-15). Both are described accurately and are never blended into one pitch. Every rule below is tagged **[studio]**, **[product]** or **[both]**.
+**Two surfaces, one company.** Must Be Viral sells done-for-you content production and social
+management to Houston businesses (the **studio** surface). The September 28 owner execution plan
+also selects the software as a separate SaaS offer at `/software` and `/software/pricing`, while
+retaining it as the studio's operations backbone (ADR-0010). This supersedes the September 15
+backbone-only positioning. Preserve approved studio offers, voice and Spanish marketing; the SaaS
+surface uses its own product journey and provisional catalog. Both are described accurately and
+remain separate pitches. Every rule below is tagged **[studio]**, **[product]** or **[both]**.
 
 **Deliberate deviation from the four-file `brand/` contract.** This repository already owns its design tokens (`packages/ui/src/tokens.ts`, emitted as CSS custom properties in `packages/ui/src/styles.css`) and its font loaders (`apps/web/app/layout.tsx`, `next/font/google`). Duplicating those values into `brand/tokens.css` and `brand/fonts.ts` would create a second source of truth, so those two files are deliberately absent; `brand/BRAND.md` points at the live files instead.
 
@@ -41,11 +47,11 @@ Rules: cite a repo file or a dated owner decision for every fact; write `[OWNER-
   3. **Local and on site.** We come to the business in the Houston metro; direction happens on set.
 - Business model: retail service packages, priced in section 7. One flagship monthly package plus a one-time test shoot; nothing below the flagship is published.
 
-## 1b. Product surface (the software backbone)
+## 1b. Product surface (SaaS and the studio software backbone)
 
 - **Locked tagline, unchanged: "You brief. Agents produce. You approve every dollar."** (`.superdesign/brand-id.md`). Exact wording and punctuation, never paraphrased. This is the **software** tagline and belongs on the app UI, product docs and investor/product pages — never on the studio surface.
 - Essence: "Quiet authority that spends your money carefully." (`.superdesign/brand-id.md`).
-- What it is: an agentic creative-operations workflow — brief → quote → run → review → receipt — that produces composed Meta ad concepts with a named price before any provider spend begins (`docs/product/PRODUCT_CONTRACT.md`; `apps/web/src/components/landing-page.tsx`).
+- What it is: the specified SaaS journey adds a business, connects customer Drive folders, confirms real identity/rights, connects social accounts and approves a production budget/publishing policy, then produces and publishes compliant content with exceptions and receipts (`docs/product/PRODUCT_CONTRACT.md`; ADR-0010). The existing brief → quote → run → review → receipt engine remains reusable. Market only capabilities whose required acceptance has passed.
 - Enemy: the black-box credit burner (`.superdesign/brand-id.md`). Hero: the accountable operator.
 - Differentiators: quote before spend; lineage and an immutable receipt; review composed ads, not files (`docs/product/PRODUCT_CONTRACT.md`; `docs/ux/EXPERIENCE_CONTRACT.md`).
 - Internal engine name: **ViralGraph** — an engine, not a customer-facing product (`PROJECT_STATE.yaml`).
@@ -56,7 +62,7 @@ The two voices never appear on one surface (owner decision, 2026-09-15).
 
 - A studio page, ad, email, DM, flyer or Spanish landing page uses the studio voice only: warm, local, concrete, priced. It does not mention agents, runs, receipts, quotes-as-artifacts or the software workflow.
 - A product page, app screen, product doc or investor page uses the quiet-authority register from `.superdesign/brand-id.md`. It does not use the studio headline, studio pricing or "We film Houston."
-- The software may be described to a studio client only as how we run the work internally, never as a product they are buying. If a surface needs both, it needs two surfaces.
+- The studio sales surface sells the approved service; the separate SaaS surface sells software under its own subscription/credit terms. A customer may choose either, without silently bundling software charges into a studio package. If a pitch needs both, use clearly separate surfaces and choices (owner execution plan, 2026-09-28).
 
 # 2. ICP & personas
 
@@ -252,7 +258,7 @@ Only what it can show, on request, from delivered work:
 - Secondary CTA [studio] EN: "Call 713-899-9346." ES: "Llame al 713-899-9346."
 - Primary CTA [product], unchanged and shipped: "Sign in to Studio" (`apps/web/src/components/landing-page.tsx`).
 - **Recorded defect — "Request access".** The shipped secondary CTA "Request access" links to `/signup`, a page that states enrollment is closed and **collects nothing** (`apps/web/src/components/landing-page.tsx`; `apps/web/app/signup/page.tsx`). Fix, owner's choice of one: (a) replace the target with a real form that writes a consent record per section 8 and returns a confirmation, or (b) remove the CTA until that form exists. **Do not build the form under this packet.** No copy may promise that a request will be received until one of the two lands. Logged in section 13.
-- Software pilot pricing recorded in `docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md` ($500 setup, $149/month, prepaid usage wallet) is **product-surface only** and must never appear on a studio surface. `[OWNER-INPUT-NEEDED]` — is that pilot offer still live after the studio pivot?
+- Software uses the provisional Solo $49/month, Studio $149/month and Portfolio $399/month catalog plus separate prepaid production credits in `docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md` (owner execution plan, 2026-09-28). Historical pilot setup fees are not inherited by new subscriptions; existing customer mappings remain intact. These prices are **product-surface only** and remain gated on measured economics/commercial release acceptance before live charging. They never replace or alter the approved studio offers.
 
 # 8. Legal & consent
 
@@ -432,7 +438,7 @@ Each item: the question, and who must answer.
 - 2026-09-15 **Google Business Profile** — does one exist for the studio, and is it verified as a service-area business? — **owner** — open
 - 2026-09-15 **Add-on range rule** — what determines the point inside $200–$400 (24-hour turnaround) and $300–$600 (drone)? — **owner** — open
 - 2026-09-15 **Contracted crew paperwork** — is there a standard contractor agreement covering IP assignment, usage rights and model releases for videographers and photographers? Portfolio and delivery claims depend on it — **owner** — open
-- 2026-09-15 **Software pilot offer after the pivot** — is the $500 setup / $149-per-month / prepaid-wallet pilot in `docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md` still live, and do studio clients ever receive a login to the backbone? — **owner** — open
+- 2026-09-15 **Software pilot offer after the pivot** — **resolved by the owner's September 28 execution plan**: offer SaaS separately using the provisional catalog and prepaid credits in `docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md`; no inherited setup fee for new subscriptions, no silent migration of existing mappings and no live charging before commercial acceptance. Studio clients receive only their permitted workflow/review access.
 - 2026-09-15 **Stale shipped name form** — `README.md`, `PROJECT_STATE.yaml`, `apps/web/src/components/landing-page.tsx` and `.studio-wordmark` in `apps/web/app/globals.css` still render the one-word "MustBeViral Studio" in public-facing strings; UI strings must move to "Must Be Viral" while code identifiers stay unchanged — **owner to schedule a packet** — open
 - 2026-09-15 **KPI targets for the two funnel metrics** — what monthly target for test shoots booked, and what target test-shoot → Full Package conversion rate? — **owner** — open
 - 2026-09-15 **Approved reference examples** — one per channel (studio landing, Spanish landing, cold email, IG caption, GBP post) once drafted — **owner** — open

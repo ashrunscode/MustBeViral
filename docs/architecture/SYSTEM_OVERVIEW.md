@@ -119,3 +119,72 @@ Use the existing durable outbox/queue mechanisms after validating their current 
 Separate job classes by latency and cost. Interactive metadata reads should not wait behind video rendering. Apply per-workspace concurrency limits, fairness, provider budgets, cancellation, deadlines, and dead-letter repair. Persist job state and progress so reloads do not lose work.
 
 A Worker request is not a general-purpose long-running video renderer. Benchmark a supported render execution target for the required codecs, fonts, duration, and memory. Add a dedicated render runtime only through an explicit architecture decision with cost, failure, security, and deployment evidence. Keep orchestration and authoritative job state in the existing application.
+
+### Selected render candidate
+
+ADR-0010 selects `sharp` (initially the existing pinned 0.34.5) for deterministic static composition
+and overlays in an internal stateless Node function within the existing Vercel project. fal remains
+the first AI transport and first video-composition adapter. This is a feasibility direction, not
+permission to implement or enable an unbenchmarked executor. The render packet must prove actual
+source-image fidelity, exact logo/text placement, a real-footage reel, captions/fonts/overlays,
+memory/duration bounds, cost, cancellation and private transfer; commit the measured architecture
+decision before dependent implementation. If it fails, preserve evidence and obtain the concrete
+architecture correction. Do not invent another executor.
+
+Core authorizes an expiring job capability for exact approved asset references and an immutable
+typed composition. The composition pins source hashes, placements/crops, text, approved fonts,
+colors, timings, dimensions and output format. The stateless function owns no permissions,
+scheduling, billing or durable job state. It redeems the capability through Core, which atomically
+claims its nonce in the existing job record and rechecks current authority. Expired, replayed or
+mismatched capabilities cannot start another render. Core verifies returned media and registers
+its private R2 object and lineage. No customer-supplied fetch URL, provider credential or full
+library grant crosses this boundary.
+
+### Direct Drive synchronization
+
+Use server-side Google OAuth, minimum necessary scopes, encrypted refresh credentials, expiring
+single-use state and PKCE where supported. Bind the connection to an exact workspace and brand;
+record the external account and granted scopes. Folder selection and rights acknowledgement precede
+import. Drive uses its direct adapter and never depends on Treg.
+
+The resumable synchronization algorithm is:
+
+1. Resolve permitted selected roots, including supported shared-drive roots, and obtain a changes
+   cursor **before** initial listing. Store user/shared-drive cursors independently.
+2. Page recursively through selected roots. Persist listing checkpoints and per-file work; recheck
+   membership, permissions, revision, supported MIME, quota and rights before download.
+3. Stream verified bytes to private R2 without buffering a large video in Worker memory. Verify
+   original hash/media metadata and source revision after transfer. A changed mid-transfer file is
+   retried as its new revision; incomplete bytes never become a usable asset.
+4. Apply changes since the saved cursor after listing, preventing a listing/watch gap. Deduplicate
+   on connection, provider file identity and source revision. Advance the cursor transactionally
+   with durable work creation, not before work is recorded.
+5. Treat verified notification channels as wake-up signals; fetch authoritative changes. Renew
+   expiring channels with safe overlap, deduplicate notifications and tolerate late/out-of-order
+   deliveries. Poll every 15 minutes for recovery; reconcile selected roots daily.
+6. Recover expired cursors through a new bounded reconciliation without duplicating assets.
+   Rate limits honor provider backoff; interrupted listing/download resumes from durable state.
+7. Re-evaluate root membership for moved/deleted files, permission loss and shortcuts. A shortcut
+   cannot silently escape selected roots. Invalidate future automatic use when authority is
+   uncertain, including already scheduled content; preserve historical lineage and publication.
+
+Postgres owns connection state, selected roots, cursors, leases, sync events, import progress and
+source-to-asset mappings. Existing outbox/queues wake work; caches and Durable Objects are not a
+second authority. Disconnect revokes future synchronization/use as applicable without silently
+deleting customer-owned copies or history. Permission restoration requires a fresh eligibility
+check, not reuse of an old successful fetch.
+
+`drive.file` grants per-file access, not arbitrary access to all future files in a folder. Broad
+folder synchronization must pass applicable Google restricted-scope verification and security
+assessment before public activation. [Google scope requirements](https://developers.google.com/workspace/drive/api/guides/api-specific-auth).
+
+### Autonomous job boundaries
+
+Asset changes may trigger plan eligibility, not unconditional publication. A rolling seven-day plan
+pins approved knowledge/assets. Distinct durable job classes cover planning, production, QA,
+scheduling, dispatch, reconciliation and metrics, with per-workspace fairness and deadlines. Use
+stable unique keys including brand, policy revision, planning window, content revision and channel
+where relevant. Browser closure, restarts and duplicate outbox delivery cannot duplicate plans,
+renders, reservations or publication intents. Each external effect rechecks current authorization,
+pause state, subscription and atomic budget reservation. Accepted work continues reconciliation
+and correct settlement after a pause; new submissions stop.
