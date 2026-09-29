@@ -168,6 +168,50 @@ test.describe('connected brand knowledge journeys', () => {
     }
   });
 
+  test('imports every record at the forty-row catalog boundary without truncation', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerSyntheticUser(
+      `w2-catalog-limit-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    await page.goto(findingsUrl(brands.unpileUrl));
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles({
+        name: 'unpile-forty.csv',
+        mimeType: 'text/csv',
+        buffer: Buffer.from(
+          'kind,field_key,value\n' +
+            Array.from(
+              { length: 40 },
+              (_, i) => `offering,sku${i},UnPile catalog product ${i}`,
+            ).join('\n'),
+        ),
+      });
+    await expectJobStatus(page, 'captured');
+    await expect(page.getByTestId('assertion-offering')).toHaveCount(40);
+    for (const index of [0, 39]) {
+      await page
+        .getByTestId('assertion-offering')
+          .filter({ hasText: new RegExp(`sku${index} ·`) })
+        .click();
+      await expect(page.getByTestId('assertion-value')).toHaveText(
+        `UnPile catalog product ${index}`,
+      );
+    }
+    await page.getByTestId('approve-brand-version').click();
+    await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+    await page.reload();
+    await expect(page.getByTestId('assertion-offering')).toHaveCount(40);
+    await page.goto(findingsUrl(brands.washbodegaUrl));
+    await expect(page.getByTestId('assertion-offering')).toHaveCount(0);
+    await expect(page.getByText('UnPile catalog product 39')).toHaveCount(0);
+  });
+
   test('captures website and document sources for both brands and keeps them after reload', async ({
     page,
   }) => {

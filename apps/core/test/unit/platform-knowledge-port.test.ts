@@ -3,6 +3,7 @@ import { createPlatformHandlers, PLATFORM_OPERATIONS } from '@mustbeviral/contra
 
 import { createKnowledgeAwarePlatformPort } from '../../src/composition/platform-knowledge';
 import { acquiredSourceAttemptCount } from '../../src/composition/source-machine';
+import { runBrandExtraction } from '../../src/composition/brand-extraction';
 import type { CoreBindings } from '../../src/bindings';
 
 const context = {
@@ -36,6 +37,38 @@ function jobRecord(pending: boolean) {
 }
 
 describe('knowledge-aware platform port', () => {
+  it('sends every explicit record in a forty-row catalog without overflowing the machine RPC', async () => {
+    const csv =
+      'kind,field_key,value\n' +
+      Array.from({ length: 40 }, (_, i) => `offering,sku${i},Product ${i}`).join('\n');
+    const db = vi.fn<typeof fetch>(async (_url, init) => {
+      const body = JSON.parse(String(init?.body));
+      expect(body.p_assertions).toHaveLength(40);
+      expect(body.p_assertions.map((item: { field_key: string }) => item.field_key)).toEqual(
+        Array.from({ length: 40 }, (_, i) => `sku${i}`),
+      );
+      return Response.json({ recorded: true });
+    });
+    await runBrandExtraction({
+      bindings: {
+        SUPABASE_URL: 'http://127.0.0.1:54321',
+        SUPABASE_SECRET_KEY: 'synthetic-secret',
+        MEDIA_BUCKET: {
+          get: async () => ({
+            arrayBuffer: async () => new TextEncoder().encode(csv).buffer,
+            httpMetadata: { contentType: 'text/csv' },
+          }),
+        } as unknown as R2Bucket,
+      } as CoreBindings,
+      workspaceId: workspace,
+      brandId: brand,
+      sourceId: jobId,
+      actorId: context.actor_id,
+      requestId: context.request_id,
+      dbFetch: db,
+    });
+    expect(db).toHaveBeenCalledTimes(1);
+  });
   it.each(['new', 'replay', 'denied', 'revoked-completion', 'missing-bytes'] as const)(
     'imports a catalog through private capture and actor-bound extraction: %s',
     async (scenario) => {

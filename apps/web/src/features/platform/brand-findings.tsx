@@ -862,7 +862,8 @@ export function BrandFindings({
                       aria-current={selectedAssertion?.id === item.id ? 'true' : undefined}
                       onClick={() => setSelectedAssertionId(item.id)}
                     >
-                      {item.kind.replaceAll('_', ' ')} · {item.status}
+                      {item.kind.replaceAll('_', ' ')} · {item.field_key.replaceAll('_', ' ')} ·{' '}
+                      {item.status}
                     </button>
                   </li>
                 ))}
