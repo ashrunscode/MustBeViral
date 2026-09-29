@@ -1,0 +1,85 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 787de039-0375-4a5c-a8ae-d9871bba142f
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=10652f44-2fd5-49b3-a930-269f079d4dc8
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=10652f44-2fd5-49b3-a930-269f079d4dc8&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=10652f44-2fd5-49b3-a930-269f079d4dc8&view=settings
+    - link "Billing":
+      - /url: /studio/c5be6f64-e35d-42bc-81f9-8c45a0c793b8/billing?studio=10652f44-2fd5-49b3-a930-269f079d4dc8
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=10652f44-2fd5-49b3-a930-269f079d4dc8
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/c5be6f64-e35d-42bc-81f9-8c45a0c793b8/brands/36f2a900-efde-4759-830b-a988aed78078?studio=10652f44-2fd5-49b3-a930-269f079d4dc8&view=draft
+    - link "Findings":
+      - /url: /studio/c5be6f64-e35d-42bc-81f9-8c45a0c793b8/brands/36f2a900-efde-4759-830b-a988aed78078?studio=10652f44-2fd5-49b3-a930-269f079d4dc8&view=findings
+    - link "Locations":
+      - /url: /studio/c5be6f64-e35d-42bc-81f9-8c45a0c793b8/brands/36f2a900-efde-4759-830b-a988aed78078?studio=10652f44-2fd5-49b3-a930-269f079d4dc8&view=locations
+    - link "Settings":
+      - /url: /studio/c5be6f64-e35d-42bc-81f9-8c45a0c793b8/brands/36f2a900-efde-4759-830b-a988aed78078?studio=10652f44-2fd5-49b3-a930-269f079d4dc8&view=settings
+    - link "Billing & usage":
+      - /url: /studio/c5be6f64-e35d-42bc-81f9-8c45a0c793b8/billing?studio=10652f44-2fd5-49b3-a930-269f079d4dc8
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, or HTML documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "unknown gap · corrected"
+  - complementary:
+    - text: Unapproved draft
+    - heading "unknown gap" [level=2]
+    - paragraph: Keyboard hours stay 24/7 at 200 percent.
+    - paragraph: Source a3b79451-7bda-49f3-a580-527b6237eb86 · manual · captured 2026-09-29T05:31:25.583578+00:00
+    - paragraph: "Excerpt: Operator correction."
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 2
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: manual · manual · 2026-09-29T05:31:24.689665+00:00
+      - listitem: manual · manual · 2026-09-29T05:31:25.583578+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - paragraph: Extract a captured source to review typed findings.
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash f1a0b0672ce65c721c2393b00039e84e5a1db730034cbaaf0fbdf85edf6247fb
+    - button "Approve this exact draft"
+    - paragraph: No owner-approved brand version yet.
+  - paragraph: Findings stay on this brand.

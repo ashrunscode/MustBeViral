@@ -8,10 +8,10 @@ project_state: active
 phase:
   id: P4
   title: Representative extraction, voice proposals and owner-approved brand versions
-  state: planned
+  state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W2-002
-next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+next_action: Review and commit the W2-002 evidence, then run agent:finish with the ready W2-003 successor.
 decisions_pending: []
 blockers: []
 legacy:
@@ -27,14 +27,14 @@ environments:
     notes:
       V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
-      preserve_until_v2_cutover keeps legacy V1 unchanged. Under adr-0009-standing-release-authority,
-      agents may deploy staging-verified merged commits through the guarded release in
-      deploy-rollback-incidents to the existing V2 production Workers mustbeviral-v2-production-core
-      and mustbeviral-v2-production-collaboration, only when its pre-deploy checks find no Worker
-      setting change, and to mustbeviral-web-production once that runbook records a Vercel deploy
-      command. Production database writes, secrets,
-      environment variables, routes, DNS, traffic, new resources and feature, provider or charge
-      enablement still need a dated owner sentence.
+      preserve_until_v2_cutover keeps legacy V1 unchanged. Under
+      adr-0009-standing-release-authority, agents may deploy staging-verified merged commits through
+      the guarded release in deploy-rollback-incidents to the existing V2 production Workers
+      mustbeviral-v2-production-core and mustbeviral-v2-production-collaboration, only when its
+      pre-deploy checks find no Worker setting change, and to mustbeviral-web-production once that
+      runbook records a Vercel deploy command. Production database writes, secrets, environment
+      variables, routes, DNS, traffic, new resources and feature, provider or charge enablement
+      still need a dated owner sentence.
   staging:
     generation: viralgraph-cleanroom-v2
     state: ready

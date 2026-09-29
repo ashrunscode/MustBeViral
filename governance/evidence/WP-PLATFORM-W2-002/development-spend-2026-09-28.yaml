@@ -6,8 +6,8 @@ currency: USD
 unit: integer_usd_micros
 ceiling: 100000000
 settled: 0
-reserved: 47956734
-remaining: 52043266
+reserved: 41443313
+remaining: 58556687
 scope: September 28 full-platform recovery and implementation instruction across all successor packets.
 accounting:
   - Existing application daily limits are not this budget and never reset this cumulative balance.
@@ -61,8 +61,9 @@ entries:
     authentication: Existing claude.ai Max subscription
     native_budget_cap_micros: 5000000
     pre_call_reservation_micros: 10000000
-    status: reserved_before_call
-    reserved_micros: 10000000
-    receipt: Pending local recovery h6-review-machine-actor native receipt
-    notes: Includes headroom for the soft native budget check. Review must inspect the entire initiating-actor grant chain and the complete source expiry expression.
-verification: No provider generation, publishing or deployment spending. Reported review valuations total 37956734 micros remain reserved until incremental cash settlement is established; another 10000000 micros is reserved before final repair review. Codex review used existing ChatGPT authentication; no API billing receipt was emitted.
+    reported_list_price_micros: 3486579
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 3486579
+    receipt: Local recovery h6-review-machine-actor/claude-native.json; session a1f77e85-31a9-40df-8c0f-df34b13c0e79
+    notes: Native source review passed at 7cbead99df4fadce4b6cb8739ca159b134fa0707. Reported valuation 3.4865785000000007 USD is rounded up to integer micros; no separate cash charge is proven.
+verification: No provider generation, publishing or deployment spending. Cumulative reported review valuations of 41443313 micros remain reserved until incremental cash settlement is established. Codex review used existing ChatGPT authentication; no API billing receipt was emitted.

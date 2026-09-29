@@ -1,0 +1,11 @@
+{
+  "checkout": "C:\\dev\\mbv-g10",
+  "tree": "a15e171802a3936ca41efd93ffb0e3e9963119ab",
+  "pr_base": "87b2e14cce4ddd5f41aafe621321c88bea38164f",
+  "fingerprint_algorithm": "SHA256(frozen_base LF head LF tree LF)",
+  "branch": "main",
+  "fingerprint": "8ff8a4bea849f8462f802807e7669ce74b85e9af68d22a080b4deb70c536b884",
+  "repair_base": "c81bcc289ccd1d837c69fabca56cd4cb6cbf9452",
+  "frozen_base": "f49bd5b22fd839ec900b270cb4a0063b6735d059",
+  "head": "7cbead99df4fadce4b6cb8739ca159b134fa0707"
+}

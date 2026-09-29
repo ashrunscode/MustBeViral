@@ -3,7 +3,7 @@ id: WP-PLATFORM-W2-002
 spec_revision: 7
 title: Representative extraction, voice proposals and owner-approved brand versions
 phase: P4
-status: ready
+status: in_progress
 priority: critical
 branch: main
 objective: Implement W2.2 representative extraction quality, W2.3 voice/audience/positioning
@@ -53,7 +53,6 @@ scope:
     - .superdesign/**
     - PROJECT_STATE.yaml
     - llms.txt
-    # Paths already present on origin/codex/viralgraph-cleanroom while this packet was private.
     - brand/**
     - .agents/skills/**
     - .claude/skills/**
@@ -126,16 +125,16 @@ public_interfaces:
 steps:
   - id: w2b-001-representative-extraction
     title: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
-    status: pending
+    status: completed
   - id: w2b-002-voice-audience-positioning
     title: Produce evidence-backed voice, audience and positioning proposals with labeled unknowns.
-    status: pending
+    status: completed
   - id: w2b-003-approved-brand-versions
     title: Deliver targeted questions and in-app owner-approved immutable brand versions.
-    status: pending
+    status: completed
   - id: w2b-004-journeys-and-successor
     title: Verify two-brand desktop/mobile approval journeys and prepare WP-PLATFORM-W2-003.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: representative-extraction-quality
@@ -147,8 +146,13 @@ acceptance:
         reusable. UnPile fixtures cannot produce WashBodega facts and vice versa. Extraction does
         not call paid inference providers, perform live public crawls, parse PDF/DOCX or treat
         prompt-injection text as approved knowledge or a permission change.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
     - id: labeled-voice-audience-positioning
       criterion:
         Voice, audience and positioning proposals store evidence links, confidence and status so
@@ -156,8 +160,13 @@ acceptance:
         owner-confirmed without the approval command. Missing audience or voice evidence stays
         unknown rather than a demographic stereotype. Proposal generation does not start a provider
         run, send outreach or spend.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
     - id: owner-approved-immutable-versions
       criterion:
         An authorized in-app operator command against an exact draft hash creates an immutable
@@ -170,8 +179,13 @@ acceptance:
         identities. Revoked grants, forged child IDs and stale responses cannot approve or display
         another brand's knowledge. Passing this guard is not W2.5 change-detection, expiry-lifecycle
         or catalog-import completeness.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
     - id: two-brand-journeys-no-spend
       criterion:
         Desktop and mobile connected journeys for WashBodega and UnPile go from W2.1 capture or
@@ -180,26 +194,39 @@ acceptance:
         recorded for this packet. Extraction never marks drafts approved by default, never sends
         outreach, never enables charging, never starts a provider run and never writes production
         remotes. UI stays on the accepted September 9 Lightfield studio direction.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+        - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
   manual: []
 quality_gates:
   - id: database
     command: pnpm supabase:test
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
   - id: governance
     command: pnpm governance:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
   - id: design
     command: pnpm design:check
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
   - id: repository
     command: pnpm verify
-    status: pending
-    evidence: []
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+      - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
 rollback:
   strategy:
     Revert application changes while retaining additive assertion, proposal, brand-version and
@@ -212,12 +239,118 @@ external_effects:
   remote_mutation: authorized
   destructive_remote_actions: false
 handoff:
-  current_step: w2b-001-representative-extraction
-  next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+  current_step: w2b-004-journeys-and-successor
+  next_action: Review and commit the W2-002 evidence, then run agent:finish with the ready W2-003 successor.
   blockers: []
-  changed_paths: []
-  last_green_checks: []
+  changed_paths:
+    - PROJECT_STATE.yaml
+    - apps/core/src/composition/brand-extraction.ts
+    - apps/core/src/composition/platform-knowledge.ts
+    - apps/core/src/composition/source-machine.ts
+    - apps/core/src/data/supabase-data-api.ts
+    - apps/core/test/unit/platform-knowledge-port.test.ts
+    - apps/core/test/unit/platform-parity.test.ts
+    - apps/core/test/unit/platform-port.test.ts
+    - apps/core/test/unit/supabase-data-api.test.ts
+    - apps/web/e2e/platform-connected.spec.ts
+    - apps/web/e2e/platform-journey-helpers.ts
+    - apps/web/e2e/platform-knowledge-connected.spec.ts
+    - apps/web/src/features/platform/brand-findings.tsx
+    - apps/web/src/features/platform/knowledge-review-controls.tsx
+    - apps/web/src/features/platform/platform.css
+    - docs/architecture/API_MCP_AND_CLI.md
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/generated/OPENAPI.md
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser.log
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/source-anchor.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/development-spend-2026-09-28.yaml
+    - governance/tests/local-supabase.test.mjs
+    - packages/contracts/openapi/core.v1.json
+    - packages/contracts/src/platform-knowledge.test.ts
+    - packages/contracts/src/platform-knowledge.ts
+    - packages/db/scripts/local-supabase.mjs
+    - packages/db/scripts/platform-journey-fixtures.ts
+    - packages/db/scripts/start-platform-knowledge-local.mjs
+    - packages/db/scripts/start-platform-local.mjs
+    - packages/db/src/database.generated.ts
+    - packages/db/src/local-fixture-cleanup.test.ts
+    - packages/domain/src/brand-version.ts
+    - packages/domain/src/index.ts
+    - packages/domain/src/knowledge-expiry.test.ts
+    - packages/domain/src/knowledge-expiry.ts
+    - packages/domain/src/knowledge-proposals.test.ts
+    - packages/domain/src/knowledge-proposals.ts
+    - packages/domain/src/representative-extract.ts
+    - supabase/migrations/20260929000000_platform_knowledge_review_correctness.sql
+    - supabase/migrations/20260929001000_platform_knowledge_wire_limits.sql
+    - supabase/migrations/20260929002000_platform_knowledge_review_controls.sql
+    - supabase/migrations/20260929002100_platform_knowledge_question_order.sql
+    - supabase/migrations/20260929003000_platform_knowledge_machine_actor.sql
+    - supabase/tests/database/00044_platform_knowledge_extraction.test.sql
+    - supabase/tests/database/00045_platform_knowledge_review_correctness.test.sql
+    - supabase/tests/database/00046_platform_knowledge_review_controls.test.sql
+    - supabase/tests/database/00047_platform_knowledge_machine_actor.test.sql
+  last_green_checks:
+    - pnpm agent:preflight
+    - pnpm agent:verify
+    - 'pnpm supabase:test: 55 files / 1002 assertions'
+    - pnpm governance:check
+    - 'pnpm governance:test: 173 passed'
+    - pnpm format:check
+    - pnpm lint:governance
+    - pnpm design:check
+    - pnpm verify
+    - 'Knowledge fixture probe: passed'
+    - 'Connected knowledge probe: 8 passed'
+    - 'Connected desktop/mobile browsers: 26 passed, no retries or skips'
+    - 'Native Codex/high and Claude/high source reviews: PASS at
+      7cbead99df4fadce4b6cb8739ca159b134fa0707'
 completion:
   successor_packet_id: WP-PLATFORM-W2-003
-  evidence_paths: []
+  evidence_paths:
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser.log
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/source-anchor.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/successor-WP-PLATFORM-W2-003.yaml
   completed_at: null

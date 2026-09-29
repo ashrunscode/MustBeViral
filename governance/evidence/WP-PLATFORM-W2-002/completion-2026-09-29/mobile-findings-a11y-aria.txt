@@ -1,0 +1,84 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys beea1c8b-3402-4845-8822-3717c805d76b
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=38a05727-8523-438d-b699-3473368912e1
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=38a05727-8523-438d-b699-3473368912e1&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=38a05727-8523-438d-b699-3473368912e1&view=settings
+    - link "Billing":
+      - /url: /studio/da0d811e-eb23-4cd9-8756-3e1a64275d77/billing?studio=38a05727-8523-438d-b699-3473368912e1
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=38a05727-8523-438d-b699-3473368912e1
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/da0d811e-eb23-4cd9-8756-3e1a64275d77/brands/0d723d6c-bbf7-4268-b16a-d425558ae79c?studio=38a05727-8523-438d-b699-3473368912e1&view=draft
+    - link "Findings":
+      - /url: /studio/da0d811e-eb23-4cd9-8756-3e1a64275d77/brands/0d723d6c-bbf7-4268-b16a-d425558ae79c?studio=38a05727-8523-438d-b699-3473368912e1&view=findings
+    - link "Locations":
+      - /url: /studio/da0d811e-eb23-4cd9-8756-3e1a64275d77/brands/0d723d6c-bbf7-4268-b16a-d425558ae79c?studio=38a05727-8523-438d-b699-3473368912e1&view=locations
+    - link "Settings":
+      - /url: /studio/da0d811e-eb23-4cd9-8756-3e1a64275d77/brands/0d723d6c-bbf7-4268-b16a-d425558ae79c?studio=38a05727-8523-438d-b699-3473368912e1&view=settings
+    - link "Billing & usage":
+      - /url: /studio/da0d811e-eb23-4cd9-8756-3e1a64275d77/billing?studio=38a05727-8523-438d-b699-3473368912e1
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, or HTML documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "unknown gap · corrected"
+  - complementary:
+    - text: Unapproved draft
+    - heading "unknown gap" [level=2]
+    - paragraph: Keyboard hours stay 24/7 at 200 percent.
+    - paragraph: Source 626dee79-9715-4e2c-9b42-9cd6a5f7c602 · manual · captured 2026-09-29T05:36:48.444132+00:00
+    - paragraph: "Excerpt: Operator correction."
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 2
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: manual · manual · 2026-09-29T05:36:47.704628+00:00
+      - listitem: manual · manual · 2026-09-29T05:36:48.444132+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - paragraph: Extract a captured source to review typed findings.
+    - button "Propose voice, audience and positioning"
+    - list
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash c944ae62c9200837498c33c7c82d0bde4d1047fd0c24d4ac9228b67be13af165
+    - button "Approve this exact draft"
+    - paragraph: No owner-approved brand version yet.
+  - paragraph: Findings stay on this brand.

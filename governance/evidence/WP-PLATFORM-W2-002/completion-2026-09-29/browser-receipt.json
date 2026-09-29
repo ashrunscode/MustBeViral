@@ -1,0 +1,310 @@
+{
+  "exit": 0,
+  "environment": "owned local Supabase; synthetic fixture-only egress; private local R2; web 3111/Core 8789",
+  "command": "pnpm exec playwright test apps/web/e2e/platform-knowledge-connected.spec.ts apps/web/e2e/platform-connected.spec.ts --config playwright.config.ts",
+  "head": "7cbead99df4fadce4b6cb8739ca159b134fa0707",
+  "ended_at": "2026-09-29T05:37:28.2500826Z",
+  "passed": 26,
+  "failed": 0,
+  "skipped": 0,
+  "retries": 0,
+  "source_tree": "a15e171802a3936ca41efd93ffb0e3e9963119ab",
+  "tests": [
+    {
+      "name": "keeps unauthenticated studio entry on the live sign-in path",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 3608,
+      "started_at": "2026-09-29T05:26:54.212Z"
+    },
+    {
+      "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 26684,
+      "started_at": "2026-09-29T05:27:05.758Z"
+    },
+    {
+      "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 37502,
+      "started_at": "2026-09-29T05:27:32.461Z"
+    },
+    {
+      "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24738,
+      "started_at": "2026-09-29T05:28:09.978Z"
+    },
+    {
+      "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 23672,
+      "started_at": "2026-09-29T05:28:34.731Z"
+    },
+    {
+      "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 23551,
+      "started_at": "2026-09-29T05:28:58.414Z"
+    },
+    {
+      "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+      "project": "desktop-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 25284,
+      "started_at": "2026-09-29T05:29:21.979Z"
+    },
+    {
+      "name": "keeps unauthenticated studio entry on the live sign-in path",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 3644,
+      "started_at": "2026-09-29T05:32:16.041Z"
+    },
+    {
+      "name": "saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 27154,
+      "started_at": "2026-09-29T05:32:27.925Z"
+    },
+    {
+      "name": "hides forged identities, recovers old links, archives, and invites without outreach",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 37166,
+      "started_at": "2026-09-29T05:32:55.100Z"
+    },
+    {
+      "name": "reads seeded integer billing, missing profile, unavailable, and keyboard skip targets",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24442,
+      "started_at": "2026-09-29T05:33:32.283Z"
+    },
+    {
+      "name": "retries an aborted in-flight save without mixing a deferred UnPile commit",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 23740,
+      "started_at": "2026-09-29T05:33:56.737Z"
+    },
+    {
+      "name": "holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 23863,
+      "started_at": "2026-09-29T05:34:20.487Z"
+    },
+    {
+      "name": "keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio",
+      "project": "mobile-chromium",
+      "file": "platform-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 28770,
+      "started_at": "2026-09-29T05:34:44.363Z"
+    },
+    {
+      "name": "captures website and document sources for both brands and keeps them after reload",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 17002,
+      "started_at": "2026-09-29T05:29:54.484Z"
+    },
+    {
+      "name": "records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 25054,
+      "started_at": "2026-09-29T05:30:18.120Z"
+    },
+    {
+      "name": "hides delayed WashBodega findings and revoked editor access",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 28672,
+      "started_at": "2026-09-29T05:30:43.185Z"
+    },
+    {
+      "name": "keeps findings usable at 200% zoom with keyboard and reduced motion",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15315,
+      "started_at": "2026-09-29T05:31:11.870Z"
+    },
+    {
+      "name": "reviews every proposal source and corrects offer expiry without losing text or approved history",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 20636,
+      "started_at": "2026-09-29T05:31:27.199Z"
+    },
+    {
+      "name": "extracts, proposes, questions and approves WashBodega and UnPile without mixing brands",
+      "project": "desktop-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 18443,
+      "started_at": "2026-09-29T05:31:47.850Z"
+    },
+    {
+      "name": "captures website and document sources for both brands and keeps them after reload",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 15926,
+      "started_at": "2026-09-29T05:35:20.296Z"
+    },
+    {
+      "name": "records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 24990,
+      "started_at": "2026-09-29T05:35:42.643Z"
+    },
+    {
+      "name": "hides delayed WashBodega findings and revoked editor access",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 28064,
+      "started_at": "2026-09-29T05:36:07.644Z"
+    },
+    {
+      "name": "keeps findings usable at 200% zoom with keyboard and reduced motion",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 13871,
+      "started_at": "2026-09-29T05:36:35.719Z"
+    },
+    {
+      "name": "reviews every proposal source and corrects offer expiry without losing text or approved history",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 17198,
+      "started_at": "2026-09-29T05:36:49.600Z"
+    },
+    {
+      "name": "extracts, proposes, questions and approves WashBodega and UnPile without mixing brands",
+      "project": "mobile-chromium",
+      "file": "platform-knowledge-connected.spec.ts",
+      "status": "passed",
+      "duration_ms": 14283,
+      "started_at": "2026-09-29T05:37:06.809Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "desktop-findings-washbodega-aria.txt",
+      "sha256": "83a8daeeeb0172038c4a90ce684d453f3d4f14f9d7c440075ab83dd1a6b425ca",
+      "bytes": 4521
+    },
+    {
+      "path": "desktop-findings-washbodega-axe.json",
+      "sha256": "37175a33621d269deb16af2b88cb1d5e54e4b4dddf6cd166d18f0427bba75333",
+      "bytes": 39
+    },
+    {
+      "path": "desktop-findings-a11y-aria.txt",
+      "sha256": "098a6941123ae996edc61919aa224381c162ef411575b07204804ef1c92837fd",
+      "bytes": 4107
+    },
+    {
+      "path": "desktop-findings-a11y-axe.json",
+      "sha256": "37175a33621d269deb16af2b88cb1d5e54e4b4dddf6cd166d18f0427bba75333",
+      "bytes": 39
+    },
+    {
+      "path": "desktop-knowledge-review-controls-aria.txt",
+      "sha256": "8c0bd4385764da1f7dd8a4dc4ea8bbc629511c1a47c9f83418bd3e333e67b3a9",
+      "bytes": 7369
+    },
+    {
+      "path": "desktop-knowledge-review-controls-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "bytes": 39
+    },
+    {
+      "path": "mobile-findings-washbodega-aria.txt",
+      "sha256": "f944d9ff71a110a3454120191049a04e6063b4f7b2c7f01baba45ec657ef4123",
+      "bytes": 4450
+    },
+    {
+      "path": "mobile-findings-washbodega-axe.json",
+      "sha256": "37175a33621d269deb16af2b88cb1d5e54e4b4dddf6cd166d18f0427bba75333",
+      "bytes": 39
+    },
+    {
+      "path": "mobile-findings-a11y-aria.txt",
+      "sha256": "77e1f7ef8367574eb7472aef100a0df29ddc90f10e74cd58a394a666c5d6260b",
+      "bytes": 4058
+    },
+    {
+      "path": "mobile-findings-a11y-axe.json",
+      "sha256": "37175a33621d269deb16af2b88cb1d5e54e4b4dddf6cd166d18f0427bba75333",
+      "bytes": 39
+    },
+    {
+      "path": "mobile-knowledge-review-controls-aria.txt",
+      "sha256": "268b355de22b422b955962fbcb2304a3348eadb21d8fe22105760be6c5ac0fcc",
+      "bytes": 7300
+    },
+    {
+      "path": "mobile-knowledge-review-controls-axe.json",
+      "sha256": "9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4",
+      "bytes": 39
+    },
+    {
+      "path": "desktop-knowledge-review-controls.png",
+      "sha256": "592b94cbf7fc6e13a33715fcd853ef3e3612d9315d61c3ffa4e87340c7ed28dd",
+      "bytes": 291403
+    },
+    {
+      "path": "desktop-findings-forced-colors.png",
+      "sha256": "5c6ebe47011a5fe6ac4704c480ccbf6835eb5438021c24f86d06f5abf2472f02",
+      "bytes": 140875
+    },
+    {
+      "path": "mobile-knowledge-review-controls.png",
+      "sha256": "db7b82452e15389d784ed1778facbcdb2a1943fd9d49e768878bcf056ff80173",
+      "bytes": 838615
+    },
+    {
+      "path": "mobile-findings-forced-colors.png",
+      "sha256": "3ede89993478b082375ee8d439d5065826a12f5c6168b49b53c57b12e42458e5",
+      "bytes": 459748
+    }
+  ],
+  "limits": [
+    "Only synthetic source hosts replace outbound capture HTTP.",
+    "Core, Postgres and private local storage are real local components.",
+    "Synthetic users blocked from cleanup by audit references were preserved.",
+    "This is local connected acceptance, not public provider or production acceptance."
+  ]
+}
