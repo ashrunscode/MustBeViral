@@ -54,3 +54,4 @@ Start with root `AGENTS.md`, run `pnpm agent:preflight`, and follow the one acti
 | `adr-0008-packet-supersession` | [decisions/ADR-0008-PACKET-SUPERSESSION.md](./decisions/ADR-0008-PACKET-SUPERSESSION.md) | decision | accepted | delivery |
 | `adr-0007-full-platform` | [decisions/ADR-0007-FULL-PLATFORM.md](./decisions/ADR-0007-FULL-PLATFORM.md) | decision | accepted | product-architecture |
 | `adr-0009-standing-release-authority` | [decisions/ADR-0009-STANDING-RELEASE-AUTHORITY.md](./decisions/ADR-0009-STANDING-RELEASE-AUTHORITY.md) | decision | accepted | operations-security |
+| `adr-0010-drive-autopilot-saas` | [decisions/ADR-0010-DRIVE-AUTOPILOT-SAAS.md](./decisions/ADR-0010-DRIVE-AUTOPILOT-SAAS.md) | decision | accepted | product-architecture |

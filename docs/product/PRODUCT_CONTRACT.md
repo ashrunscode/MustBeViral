@@ -8,6 +8,14 @@ Accepted September 9, 2026 by the owner's full-platform implementation instructi
 
 Product promise: add a business, understand its approved identity and evidence, connect its channels, then plan, create, approve, publish, collaborate and measure brand-faithful content across a portfolio.
 
+The owner's September 28 execution instruction adds the studio-plus-SaaS offer and Drive-first
+automation described below (ADR-0010). Public copy uses **Must Be Viral**; repository/package names
+and internal identifiers remain unchanged. The public homepage and studio sales flow retain the
+approved studio voice and offers. SaaS marketing belongs at `/software` and `/software/pricing`;
+the authenticated product retains `/studio` and durable workspace/brand routes. English is the
+application language, with English/Spanish creative variants and separately approved Spanish studio
+marketing. These are required outcomes, not claims that the current application has shipped them.
+
 Architecture, transport schemas and deployment permissions remain owned by their registered authorities. The historical Meta launch-pack implementation is reusable engine functionality, not the full-platform definition of done.
 
 ## The product model
@@ -53,16 +61,76 @@ flowchart LR
 
 ### First-run journey
 
-1. **Add brand:** enter a website, upload a brand guide, or start a business without a website. Create a durable draft immediately.
-2. **Understand and confirm:** show what was found, where it came from, the proposed brand identity, and a small number of important unknowns. The owner corrects the findings rather than filling out a long blank brief.
-3. **Connect channels:** authorize accounts, select exact profiles, and map each to the correct brand/location. Account connection is separate from signing into MustBeViral.
-4. **Confirm real assets:** review discovered asset candidates and upload original logos, storefronts, product images, team footage, and prior work. Confirm ownership/usage rights and preferred treatments.
-5. **Set the objective:** choose the service/product, audience, goal, destination, frequency, approval rules, and budget.
-6. **Receive a useful plan:** present a week of specific content ideas with chosen source assets, reasons, missing shots, channel variants, and estimated creation cost.
-7. **Create, edit, approve, schedule:** a coherent workspace carries all context automatically.
-8. **See what happened:** publication evidence, engagement, business outcomes where connected, and recommendations for the next cycle.
+1. **Sign up and add a business:** create a durable workspace/brand draft from a website, brand guide or manual entry. Preserve no-website parity and resume after session expiry.
+2. **Connect Google Drive:** show the consenting account, requested access and selected folder roots; support eligible shared drives. Preview file counts, unsupported files and storage before importing.
+3. **Confirm identity and rights:** review sourced business facts, real logos, locations, products, people and media. Correct unknowns and approve the exact brand version, source permissions and releases.
+4. **Connect social accounts:** authorize and select the exact profiles/location for each brand. Display verified formats and any remaining provider review or consent requirement.
+5. **Set production budget and publishing policy:** present channels, language, transformations, cadence, timezone, spending limits, stop conditions and required approvals. Obtain approval of the exact policy before enabling automation.
+6. **Receive a rolling seven-day plan:** show selected actual assets, reasons, gaps, capture requests, variants and estimates. Routine policy-compliant work proceeds through production, QA and scheduling automatically.
+7. **Handle exceptions:** request human review or channel-required per-post consent when needed. Continue eligible channels independently; a blocked channel does not claim publication or cause successful channels to repeat.
+8. **See confirmed results:** publication IDs/status, actual costs, available metrics and the next evidence-based plan; clear workspace, brand and account pause controls stay available.
 
 Website analysis continues asynchronously and survives closing the browser. Missing social credentials do not prevent building the brand or drafting content. Missing critical brand assets produce a useful capture request, not unrelated generated substitutes.
+
+### Drive library and authentic production
+
+Drive connects directly to Google; Treg is not an ingestion prerequisite. Selecting folders is
+explicit authorization of source roots, not a promise to publish every upload. Initial ingestion
+and later synchronization survive browser closure and restart. Show per-file progress, errors,
+retry, account health, selected roots, storage use and the consequences of disconnecting. The
+architecture authority defines the gap-free cursor algorithm and permission checks.
+
+Use the business's actual premises, products, staff and original media. Preserve buildings,
+logos, products and people through permitted crop, trim, stabilization, approved color treatment,
+graphics and captions. Generative replacement of identity-bearing content needs review. A generic
+shop depicted as the customer's facility fails acceptance. Missing footage, release, fact or valid
+offer produces an actionable capture/review request with the needed shot or correction.
+
+Validate JPEG, PNG, WebP, MP4 and MOV, including phone orientation metadata. HEIC/HEIF normalization
+is advertised only after real-fixture acceptance; otherwise retain the original and offer a
+specific conversion action. Changed source bytes create a new immutable asset revision. Originals,
+rights, transformations and publication usage remain inspectable through the existing asset store.
+
+Default deliverables are a 1080×1350 static (1080×1080 when required), five 1080×1350 carousel slides,
+and a 1080×1920 reel normally 15–30 seconds with readable captions and a checked cover. Account/channel
+capabilities override these defaults. English/Spanish variants preserve meaning, approved offers,
+dates and the appropriate destination; they are not approved merely because translation succeeded.
+
+### Approved automation
+
+Default cadence is three items per brand each week: one reel, one carousel and one static, adapted
+to eligible channels. Show Monday, Wednesday and Friday at 10:00 in the customer's confirmed IANA
+timezone before activation. Do not infer a timezone or resolve a daylight-saving gap/overlap silently.
+
+An immutable policy pins the brand version, authorized folders, channels, content categories,
+language, cadence, scheduling windows, rights/releases, transformations, per-job and recurring
+spend limits, prohibited claims, required approvals and pause conditions. Approval requires the
+exact policy hash. An edit creates a new version and invalidates affected queued authorizations.
+Record human approval and policy approval distinctly; never manufacture a human approval event.
+
+The durable pipeline is eligible assets → seven-day plan → revisions/variants → quote and budget
+reservation → production → QA → policy/human approval → schedule → dispatch → confirmation → metrics
+→ next-plan recommendations. A confirmed timezone and nonzero approved production budget are
+required before paid automation. Avoid repeating an asset on the same channel within seven days
+unless explicitly allowed. Uploads replenish the eligible library rather than triggering one post
+per file. Jobs run through the existing outbox, with stable unique keys for plans, renders,
+reservations and publication intents.
+
+Pause affected work for missing rights, identity mismatch, expired facts/offers, required consent,
+lost access, insufficient balance, failed subscription payment or uncertain publication. Recheck
+these conditions immediately before any external submission, including jobs queued before a
+revocation or emergency pause. Keep direct-message and review auto-replies off until separately
+enabled. Platform-required per-post consent, including TikTok's preview/account/privacy/disclosure
+flow, cannot be replaced by general autopilot approval.
+
+### SaaS offer
+
+Monthly subscriptions and dollar-denominated prepaid production credits are separate products.
+The versioned Solo/Studio/Portfolio catalog and lifecycle acceptance belong to
+`execution-providers-billing`. No included production allowance, automatic top-up or surprise
+overage is enabled by default. Reviewer access is brand-scoped and does not consume operator seats.
+Provisional prices are approved implementation inputs; live charging still requires measured
+economics and commercial release acceptance. Existing customer price mappings stay intact.
 
 ## Brand Intelligence: the most important subsystem
 
@@ -214,11 +282,12 @@ Prioritize Facebook Pages, Instagram professional accounts, TikTok, and Google B
 
 ### Build versus integrate
 
-**Recommendation:** own brand knowledge, media, approvals, campaign state, and analytics semantics. Evaluate a managed publishing adapter before implementing every network directly. Postiz is the first technical candidate because its public documentation exposes connection, posts, and analytics operations. Sendible is a second candidate where an appropriate integrator agreement and required API capabilities are available. Do not commit the platform to either from screenshots alone.
-
-Postiz currently documents API-key/OAuth access and channel connection operations. That establishes a plausible integration path, not approved embedded rights, private-media suitability, contractual SLA, or tested coverage for our accounts. [Postiz API](https://docs.postiz.com/public-api/introduction), [channel connection](https://docs.postiz.com/public-api/integrations/connect).
-
-Sendible describes API/automation and white-label/SSO integration options. Actual endpoint access, account model, pricing, data rights, and embedding terms need verification during the adapter spike. [Sendible integrator options](https://www.sendible.com/solutions/software-integrators).
+**Selected September 28:** Must Be Viral owns knowledge, assets, budgets, approvals, schedules and
+analytics semantics. Use hosted Treg for the selected social transports, with direct Google Drive,
+Pinterest and Threads adapters. The exact platform matrix and isolation contract are in
+`execution-providers-billing`. If a Treg path fails acceptance, implement the prescribed direct
+adapter behind the same domain interface. Postiz and Sendible are excluded as launch dependencies
+under the approved budget/access conditions. This selection does not claim connected acceptance.
 
 The spike must prove:
 
@@ -231,9 +300,15 @@ The spike must prove:
 7. Throughput, quota, and outage behavior support the portfolio target.
 8. Existing scheduled items can be reconciled during adapter changes without double publication.
 
-If neither candidate passes, implement direct adapters for the initial channels. Self-hosting a publisher is a separate operational and licensing decision; it does not automatically provide platform approvals or remove network rules.
+Hosted Treg is a transport, not a customer-facing credential vault or an authorization authority.
+Customers never receive the backend token or membership in its service team. Customer tags and
+pinned tokens alone do not establish isolation of connected provider accounts. No embedding or
+self-hosting of Treg source under an assumed unrestricted license is selected (ADR-0010).
 
-**One dispatch authority per publication.** If an adapter owns a future schedule, MustBeViral records its provider schedule ID and reconciles it. MustBeViral must not also fire a competing delayed job for the same publication. Adapter migration requires freezing and reconciling outstanding schedules before ownership changes.
+**One dispatch authority per publication.** Must Be Viral owns scheduling; providers receive the
+approved immediate submission when due. Existing connections remain pinned to their transport
+until explicit reconnect/migration. Freeze and reconcile outstanding schedules before migration;
+never switch transports automatically during an uncertain publication attempt.
 
 ### Platform constraints that affect the plan
 

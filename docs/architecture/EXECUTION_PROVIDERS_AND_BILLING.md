@@ -84,7 +84,11 @@ Ledger transaction types are `credit`, `reserve`, `capture`, `release`, and `ref
 - Duplicate command, webhook, poll, or operator replay returns the existing ledger result.
 - A verified Stripe webhook settles before Core records its `stripe_webhook_events` receipt. A settlement failure records no receipt and returns 5xx, so Stripe retries. A wallet top-up credit is idempotent on the Checkout Session across workspaces, and a subscription update is idempotent on the Stripe event id. A replay that names or resolves a different workspace fails with `STRIPE_EVENT_WORKSPACE_MISMATCH` and applies nothing. That failure, a subscription event whose Stripe customer maps to several workspaces (`STRIPE_CUSTOMER_AMBIGUOUS`), and an event whose workspace cannot be resolved (`WORKSPACE_NOT_FOUND`) return 5xx on every Stripe retry until an operator resolves them. A paid top-up that cannot be credited exactly also returns 5xx, but its payload never changes, so it fails every retry; `deploy-rollback-incidents` describes the operator repair.
 
-Historical launch-pack quotes and price versions remain immutable. The full-platform commercial offer is selected in W11 from measured unit costs and customer evidence; historical pilot prices are not the default platform offer. Until an accepted billing packet implements and validates a new offer, retain existing configured charging containment.
+Historical launch-pack quotes and price versions remain immutable. The September 28 provisional
+catalog below is the selected implementation input; W11 must validate its economics and commercial
+acceptance before live charging. Historical pilot prices are not the default platform offer. Keep
+existing customer price mappings and configured charging containment until the accepted billing
+packet and release procedure explicitly change them.
 
 Only an explicit wallet top-up funds the prepaid usage wallet (ADR-0007): a paid `payment`-mode Checkout Session marked `metadata.purpose = "wallet_top_up"` that names its workspace, credited once per Checkout Session in USD micros. The setup fee and subscription invoices never credit the wallet, and `invoice.paid` does not settle. A Stripe customer may be shared across workspaces, so every settled Stripe event names its workspace instead of relying on the customer id.
 
@@ -93,6 +97,76 @@ Stripe does not deliver webhook events in order, and a settlement that failed is
 ## Spend and safety controls
 
 P0 default caps are $8 per run, $25 per workspace per day, and $100 globally per day. Core enforces caps transactionally before reservation and again before provider submission. Operations has environment, provider, model, workspace, and global kill switches. Catalog canaries precede model changes; drift in price, license, retention, or moderation disables new quotes until reviewed.
+
+The owner's **$100 total external-service development budget** is separate from those daily product
+limits. Track cumulative settled and reserved USD micros in the existing governance evidence
+receipt `governance/evidence/WP-PLATFORM-W2-002/development-spend-2026-09-28.yaml`. Before a paid call,
+record its purpose, provider quote, bounded maximum and remaining ceiling; uncertain costs remain
+reserved until reconciled. Never reset this budget at midnight or when a packet changes. Record
+actual cost and safe receipt references afterward, without credentials, signed URLs or customer
+media. Stop further paid calls at the ceiling and continue zero-additional-spend work. Ad spend is
+not authorized from this budget. Applicable packet/provider external-effect gates still apply.
+
+Customer automation uses an explicitly approved immutable budget policy in place of repeated human
+confirmation only for work covered by that exact policy. The shared command still pins a current
+quote/revision/price snapshot and reserves integer money transactionally; policy authority does not
+waive quote expiry, policy limits, rights, subscription health or emergency stops. Record the policy
+approval identity rather than creating a fictitious human confirmation.
+
+## Social adapter and credential transport
+
+Keep the network-specific adapter separate from HTTP/credential transport. Every channel adapter
+implements this capability-aware interface:
+
+```text
+authorize
+discoverAccounts
+getCapabilities
+validateVariant
+prepareMedia
+submit
+getStatus
+cancelWhenSupported
+readMetrics
+verifyNotification
+revoke
+```
+
+| Platform                | Selected initial transport | Required initial target                                                       |
+| ----------------------- | -------------------------- | ----------------------------------------------------------------------------- |
+| Google Drive            | Direct Google OAuth        | Selected-folder ingestion and synchronization.                                |
+| Facebook                | Hosted Treg                | Page posts, images and supported videos/reels.                                |
+| Instagram               | Hosted Treg                | Professional-account images, carousels and reels.                             |
+| Google Business Profile | Hosted Treg                | Supported location posts and available metrics.                               |
+| YouTube                 | Hosted Treg                | Video/Shorts upload and status.                                               |
+| LinkedIn                | Hosted Treg                | Authorized member posts; organization publishing needs its own proven access. |
+| TikTok                  | Hosted Treg                | Prepared content with required per-post user consent.                         |
+| X                       | Hosted Treg                | Supported posts/media within metered budgets and rate limits.                 |
+| Pinterest               | Direct OAuth/API           | Supported pins.                                                               |
+| Threads                 | Direct OAuth/API           | Supported text/media posts.                                                   |
+
+Selection is not production acceptance. Before customer activation prove exact provider-account
+and brand binding, two-tenant selection/read/invoke/refresh/revoke denial, partial-scope and consent
+denial, refresh, revocation, reconnect, outage and uncertainty handling. Server-controlled
+connection/tool bindings select the account; customers supply neither arbitrary tool IDs nor
+upstream URLs. A host-based default credential lookup must not select a different customer's
+account. Backend tokens and service-team membership never reach customers.
+
+Treg's hosted integration guidance permits a SaaS backend integration but describes customer tags
+as accounting metadata and does not make connected-account isolation a consequence of pinned
+customer tokens. Its advisory caps do not replace Must Be Viral's atomic customer budgets.
+Therefore prove isolation and persist provider IDs/unknown outcomes independently of transport
+success. [Treg hosted integration guidance](https://treg.to/llms.txt).
+
+If that proof or commercial suitability fails for a platform, keep the path disabled and implement
+its direct adapter behind this interface. Pin existing connections to their transport until an
+explicit reconnect/migration; never switch transports during a publication attempt. Treg billing
+idempotency alone does not prove that a social post was published once. Postiz/Sendible are excluded
+launch dependencies; source embedding/self-hosting is not selected.
+
+Canva import uses official OAuth and design-export APIs; copy completed exports into private R2
+and preserve rights/provenance. Temporary export URLs never become canonical assets.
+[Canva REST APIs](https://www.canva.dev/docs/apps/rest-apis/).
 
 ## Publication and commercial boundaries
 
@@ -108,12 +182,63 @@ Use transactional intent/outbox records, stable idempotency keys, deduplication,
 
 Changing media, caption, destination, account, or material offer terms invalidates the relevant approval. Define whether a timing-only change requires reapproval per workspace policy. Store both local scheduling intent and resolved UTC time; daylight-saving ambiguities must be shown and resolved.
 
+Each delivery pins content revision, approval/policy hash, media hashes, destination, exact account
+and schedule. Must Be Viral owns the timer. Acquire a per-account dispatch lease, persist attempt
+identity before calling the provider, then recheck permissions, rights, offer validity, subscription,
+budget, account health and workspace/brand/account stop controls immediately before submission.
+Unknown outcomes block resubmission until reconciliation proves failure or identifies the existing
+post. Honor `Retry-After`; retry confirmed transient failures with bounded backoff and visible
+exceptions after repeated failure. Successful channels are not resubmitted because another failed.
+Cancellation after submission remains requested until confirmed; never automatically delete public
+posts. Reconnect to a different account invalidates affected approvals instead of silently rebinding.
+
+TikTok requires the applicable per-post account identity, preview, privacy choice, disclosures and
+controls. General automation approval does not replace platform consent. Preserve a manual-completion
+state where the permitted integration requires it, with the customer action clearly shown.
+[TikTok content-sharing requirements](https://developers.tiktok.com/docs/en/content-sharing-guidelines).
+
 ## Platform commercial model
 
 ### Commercial model
 
-Provide plans appropriate to one brand, a studio portfolio, and larger organizations. Entitlements may cover active brands, channels, seats, storage, reporting history, and automation. Meter costly generation/discovery/rendering transparently. Choose actual prices after measured unit costs and customer evaluation; do not inherit old pilot pricing as the new platform's business model.
+The owner approved these provisional implementation inputs on September 28. Store them as a
+versioned catalog with stable internal IDs, effective dates, integer prices and entitlements; do
+not scatter constants across UI and server code. Monthly subscription fees are separate from
+dollar-denominated prepaid production credits. No included production allowance, automatic top-up
+or surprise overage is enabled by default.
+
+| Plan      | Monthly subscription | Active brands | Operator seats | Connected accounts | Storage |
+| --------- | -------------------- | ------------- | -------------- | ------------------ | ------- |
+| Solo      | $49                  | 1             | 2              | 9                  | 10 GB   |
+| Studio    | $149                 | 5             | 5              | 45                 | 50 GB   |
+| Portfolio | $399                 | 20            | 15             | 180                | 200 GB  |
+
+Brand-scoped client reviewers consume no operator seat. Storage is measured consistently in
+decimal GB (1,000,000,000 bytes) and the UI shows the quota basis. Preserve existing customer price
+and subscription mappings. New subscriptions do not inherit historical pilot setup fees. Live
+activation requires measured production/operating costs against this catalog, commercial acceptance
+and the existing release gates; provisional prices do not authorize silently changing any customer.
+
+Checkout and each verified webhook bind to one exact workspace. Only a paid top-up credits the
+wallet, once under the existing Checkout Session settlement identity; subscriptions never fund
+production. Duplicate/reordered events cannot duplicate funds or resurrect an obsolete subscription.
+The currently documented same-second/overlapping-subscription limitation above is a required W11.1
+repair: reconcile ambiguous updates against Stripe's current authoritative state, preserve event
+deduplication and reject changed workspace metadata or ambiguous customer mapping.
+
+Upgrade/downgrade screens show effective dates and any charge before confirmation. Downgrades
+retain brands/media/history and require the customer to select active resources rather than
+deleting them. Failed payment stops new paid production and automatic dispatch while retaining
+history/export access; accepted external work continues reconciliation and correct settlement.
+Studio sponsorship pins the funding workspace and client allocation, with both limits and current
+permissions checked atomically under concurrency. Keep platform, workspace, client, program and
+per-job boundaries explicit instead of treating a portfolio total as a spendable balance.
 
 Show a clear quote or approved budget policy before paid creation. Allow owner-set recurring budgets and delegated spend limits with receipts and stop controls, so the mature product does not require approving every inexpensive background step individually. Keep provider usage, subscription fees, advertising spend, and creator fees separate.
 
 Support real invoices/receipts, cancellations, credits/refunds, failed payments, entitlements, low-balance recovery, and client-level usage allocation. Display operational charging status truthfully. No live money movement is part of writing this plan.
+
+The selected initial creator model records externally settled payments, agreements, deliverables
+and actual versus estimated costs. W11.5 records this applicability decision; it does not create a
+creator wallet or money-transfer service or claim an untested payout rail. Paid-media submission in
+W11.4 remains separately gated by exact ad-account/budget authority, outside the development budget.

@@ -1,0 +1,19 @@
+schema_version: 1
+kind: development-external-service-spend
+authorized_at: 2026-09-28
+owner_instruction: $100 total external-service spending, tracked cumulatively.
+currency: USD
+unit: integer_usd_micros
+ceiling: 100000000
+settled: 0
+reserved: 0
+remaining: 100000000
+scope: September 28 full-platform recovery and implementation instruction across all successor packets.
+accounting:
+  - Existing application daily limits are not this budget and never reset this cumulative balance.
+  - Record a bounded quote and reserve before each paid external-service call; unknown cost stays reserved.
+  - Record actual settlement and safe receipt reference; do not store credentials, signed URLs or customer media.
+  - No ad spend is authorized from this budget; no new paid subscription is silently activated.
+  - Preserve this receipt and carry its reference into successor evidence rather than creating a fresh ceiling.
+entries: []
+verification: No paid external-service calls have been made by this recovery execution through H5 authority preparation.

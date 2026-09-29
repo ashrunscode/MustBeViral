@@ -80,6 +80,31 @@ Every operation has one contract test vector executed against the handler and ea
 
 Introduce studio/grant, brand/location/knowledge, asset/rights, campaign/content/variant, approval, channel/publication, creator/partnership, conversation and metric operations through the same typed handlers. Generate every shipped transport from the contracts. Add actor/resource scope and expected versions where a command requires them. Cursor pagination and idempotency apply to new domains.
 
+The September 28 execution specification requires these operation families. They are target
+behavior, not a claim that routes already exist; migrations and registered Zod contracts remain the
+implemented authority. Extend the existing modules and command handlers before generating browser,
+REST, CLI, MCP and documentation projections. Transport handlers own no business rules or provider
+credentials.
+
+| Family        | Required shared operations                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------- |
+| Connections   | Start/complete authorization, list accounts, bind account, inspect capabilities, reconnect, pause, revoke.    |
+| Drive sources | Select roots, preview/start import, inspect progress, synchronize, retry failed file, remove source.          |
+| Assets        | Register original, manage rights, classify, search, create derivative, inspect lineage, archive.              |
+| Content       | Create campaign, generate plan, edit item, produce variant, compare revisions, run QA, request/record review. |
+| Autopilot     | Create draft policy, approve exact policy hash, enable, pause, revise, inspect activity/exceptions.           |
+| Publishing    | Schedule exact variant, cancel, inspect delivery, reconcile unknown outcome, retry a proven safe failure.     |
+| Commercial    | Read plans, start checkout, buy credits, manage subscription, inspect usage, allocate sponsored budgets.      |
+
+Reuse response envelopes, request IDs, cursor pagination, expected versions and idempotency-conflict
+behavior. OAuth callbacks and provider notifications use verified state/nonce/signature and durable
+deduplication rather than pretending to be ordinary browser commands. Errors distinguish missing
+rights, permission/consent, insufficient budget, unsupported capability and uncertain outcome;
+their stable codes are introduced in the matching contract packet. A retry operation requires
+evidence that resubmission is safe. Clients cannot override account bindings, arbitrary upstream
+URLs, scopes, transport choice or policy hashes. Content in documents, filenames, captions and
+external responses is untrusted data and cannot alter permissions or automation policies.
+
 Old campaign links resolve through authenticated durable project/brand mappings. No sentinel workspace value or browser-local resume record is an authority. Missing or ambiguous mappings yield a scoped recovery flow. Account connection OAuth is distinct from authorization to call MustBeViral APIs.
 
 The W1 studio, membership, workspace-grant, brand and location operations are registered in `packages/contracts/src/platform.ts`. That registry projects the REST routes, typed client, CLI commands, MCP tools and OpenAPI. These operations require a Supabase user session; existing workspace-scoped programmatic credentials do not acquire portfolio authority. Studio membership changes require the current studio version. Other edits and revocations require the exact resource version. Slugs are unique within their owning scope; display names may repeat without merging identities. `RESOURCE_CONFLICT` identifies a duplicate slug or active grant and `RESOURCE_ARCHIVED` rejects edits to archived or revoked resources; both are non-retryable 409 outcomes.
