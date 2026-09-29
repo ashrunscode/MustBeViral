@@ -6,7 +6,7 @@ doc_id: deploy-rollback-incidents
 
 ## Promotion model
 
-Changes flow preview → staging → production from a commit merged into the active packet's branch (`codex/viralgraph-cleanroom`). `main` is not a deploy source. The preview environment is not created yet, so releases start at staging. Workflows pin allowed actions by full commit SHA, but GitHub Actions is disabled (checked 2026-09-28), so no CI runs until it is re-enabled. Production requires approved migrations, all quality gates, a staging smoke test, rollback evidence, environment/secret validation, and explicit deployment approval. For deploys to existing V2 targets that follow the guarded release below, `adr-0009-standing-release-authority` is that approval.
+Changes flow preview → staging → production from a commit merged into `main`, the active packet's canonical branch. The reviewed cleanroom promotion preserves historical receipts and does not itself deploy or enable customer traffic. The preview environment is not created yet, so releases start at staging. Workflows pin allowed actions by full commit SHA, but GitHub Actions remains disabled by the owner's September 28 instruction. Production requires approved migrations, all quality gates, a staging smoke test, rollback evidence, environment/secret validation, and explicit deployment approval. For deploys to existing V2 targets that follow the guarded release below, `adr-0009-standing-release-authority` is that approval.
 
 Deployment order for compatible releases:
 

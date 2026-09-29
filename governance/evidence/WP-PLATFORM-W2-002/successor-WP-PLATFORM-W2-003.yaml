@@ -1,11 +1,11 @@
 schema_version: 1
 id: WP-PLATFORM-W2-003
-spec_revision: 2
+spec_revision: 3
 title: Change detection, expiry lifecycle, contradiction handling and catalog import
 phase: P4
 status: ready
 priority: critical
-branch: codex/viralgraph-cleanroom
+branch: main
 objective: Implement W2.5 change detection, expiry, contradiction lifecycle and manual/catalog
   imports on owner-approved W2.4 brand versions so stale offers cannot become newly approved
   content, conflicting facts request review, and a business can import a catalog or recapture a

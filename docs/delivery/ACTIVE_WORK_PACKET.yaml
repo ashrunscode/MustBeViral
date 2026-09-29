@@ -5,7 +5,7 @@ title: Representative extraction, voice proposals and owner-approved brand versi
 phase: P4
 status: ready
 priority: critical
-branch: codex/viralgraph-cleanroom
+branch: main
 objective: Implement W2.2 representative extraction quality, W2.3 voice/audience/positioning
   proposals and W2.4 owner-approved brand versions on W2.1 captures so an operator can extract
   offerings, locations, facts, offers, visual candidates and language, review
