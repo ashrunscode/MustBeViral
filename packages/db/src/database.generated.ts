@@ -282,6 +282,7 @@ export type Database = {
           entity_id: string;
           entity_type: string;
           id: string;
+          knowledge_sequence: number | null;
           request_id: string;
           workspace_id: string;
         };
@@ -294,6 +295,7 @@ export type Database = {
           entity_id: string;
           entity_type: string;
           id?: string;
+          knowledge_sequence?: number | null;
           request_id: string;
           workspace_id: string;
         };
@@ -306,6 +308,7 @@ export type Database = {
           entity_id?: string;
           entity_type?: string;
           id?: string;
+          knowledge_sequence?: number | null;
           request_id?: string;
           workspace_id?: string;
         };
@@ -900,6 +903,7 @@ export type Database = {
         Row: {
           attempt_count: number;
           brand_id: string;
+          completion_sequence: number | null;
           created_at: string;
           created_by: string;
           failure_code: string | null;
@@ -920,6 +924,7 @@ export type Database = {
         Insert: {
           attempt_count?: number;
           brand_id: string;
+          completion_sequence?: number | null;
           created_at?: string;
           created_by: string;
           failure_code?: string | null;
@@ -940,6 +945,7 @@ export type Database = {
         Update: {
           attempt_count?: number;
           brand_id?: string;
+          completion_sequence?: number | null;
           created_at?: string;
           created_by?: string;
           failure_code?: string | null;
@@ -1103,6 +1109,7 @@ export type Database = {
           draft_hash: string;
           draft_id: string;
           id: string;
+          knowledge_sequence: number | null;
           snapshot: Json;
           status: string;
           version: number;
@@ -1116,6 +1123,7 @@ export type Database = {
           draft_hash: string;
           draft_id: string;
           id?: string;
+          knowledge_sequence?: number | null;
           snapshot: Json;
           status: string;
           version: number;
@@ -1129,6 +1137,7 @@ export type Database = {
           draft_hash?: string;
           draft_id?: string;
           id?: string;
+          knowledge_sequence?: number | null;
           snapshot?: Json;
           status?: string;
           version?: number;

@@ -227,16 +227,14 @@ test.describe('connected brand knowledge journeys', () => {
       const known = `offering,sku_a,${name} product A`;
       const blank = 'offering,sku_b,';
       const file = { name: `${name}-rows.csv`, mimeType: 'text/csv' };
-      await page
-        .locator('input[type="file"]')
-        .setInputFiles({
-          ...file,
-          buffer: Buffer.from(
-            'kind,field_key,value\n' +
-              (blankFirst ? [blank, known] : [known, blank]).join('\n') +
-              '\noffering,sku_c,',
-          ),
-        });
+      await page.locator('input[type="file"]').setInputFiles({
+        ...file,
+        buffer: Buffer.from(
+          'kind,field_key,value\n' +
+            (blankFirst ? [blank, known] : [known, blank]).join('\n') +
+            '\noffering,sku_c,',
+        ),
+      });
       await expect(page.getByTestId('assertion-offering')).toHaveCount(3);
       for (const key of ['sku b', 'sku c']) {
         await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
@@ -244,20 +242,16 @@ test.describe('connected brand knowledge journeys', () => {
       }
       await page.getByTestId('approve-brand-version').click();
       await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
-      await page
-        .locator('input[type="file"]')
-        .setInputFiles({
-          name: `${name}-other.csv`,
-          mimeType: 'text/csv',
-          buffer: Buffer.from(`kind,field_key,value\noffering,sku_d,${name} product D`),
-        });
+      await page.locator('input[type="file"]').setInputFiles({
+        name: `${name}-other.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(`kind,field_key,value\noffering,sku_d,${name} product D`),
+      });
       await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
-      await page
-        .locator('input[type="file"]')
-        .setInputFiles({
-          ...file,
-          buffer: Buffer.from(`kind,field_key,value\nfact,about,${name} updated catalog`),
-        });
+      await page.locator('input[type="file"]').setInputFiles({
+        ...file,
+        buffer: Buffer.from(`kind,field_key,value\nfact,about,${name} updated catalog`),
+      });
       const changes = page.getByTestId('knowledge-changes');
       const missing = changes
         .getByTestId('knowledge-change-group')
@@ -282,6 +276,48 @@ test.describe('connected brand knowledge journeys', () => {
       }
       await page.reload();
       await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
+    }
+  });
+
+  test('restores the latest source when a recapture returns to earlier identical bytes', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerSyntheticUser(
+      `w2-recapture-return-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    for (const [name, url] of [
+      ['WashBodega', brands.washbodegaUrl],
+      ['UnPile', brands.unpileUrl],
+    ] as const) {
+      await page.goto(findingsUrl(url));
+      const original = {
+        name: `${name}-return.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(`kind,field_key,value\noffering,sku_a,${name} product A`),
+      };
+      await page.locator('input[type="file"]').setInputFiles(original);
+      await expect(page.getByTestId('assertion-offering')).toHaveCount(1);
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+      await page.locator('input[type="file"]').setInputFiles({
+        ...original,
+        buffer: Buffer.from('kind,field_key,value\nfact,unconfirmed,'),
+      });
+      const changes = page.getByTestId('knowledge-changes');
+      await expect(changes).toContainText('Missing from latest source');
+      await page.locator('input[type="file"]').setInputFiles(original);
+      await expectJobStatus(page, 'duplicate');
+      await expect(changes).not.toContainText('Missing from latest source');
+      await expect(changes).not.toContainText('Replacement source');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await page.reload();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await expect(changes).not.toContainText('Missing from latest source');
     }
   });
 
@@ -320,7 +356,14 @@ test.describe('connected brand knowledge journeys', () => {
     await expect(page.getByTestId('candidate-document_filename')).toBeVisible({ timeout: 30_000 });
     await page.getByTestId('candidate-document_filename').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('washbodega-notes.md');
-    await page.getByTestId('candidate-visible_excerpt').last().click();
+    const washDocumentSource = await page
+      .getByTestId('candidate-document_filename')
+      .getAttribute('data-source-id');
+    expect(washDocumentSource).toMatch(/^[0-9a-f-]{36}$/);
+    await page
+      .getByTestId('candidate-visible_excerpt')
+      .and(page.locator(`[data-source-id="${washDocumentSource}"]`))
+      .click();
     await expect(page.getByTestId('candidate-value')).toContainText('WASHBODEGA_DOC_NOTES');
     await expect(page.getByTestId('source-document-document_upload')).toBeVisible();
     await page.reload();
@@ -346,7 +389,14 @@ test.describe('connected brand knowledge journeys', () => {
     await expect(page.getByTestId('candidate-document_filename')).toBeVisible({ timeout: 30_000 });
     await page.getByTestId('candidate-document_filename').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('unpile-large.txt');
-    await page.getByTestId('candidate-visible_excerpt').last().click();
+    const unpileDocumentSource = await page
+      .getByTestId('candidate-document_filename')
+      .getAttribute('data-source-id');
+    expect(unpileDocumentSource).toMatch(/^[0-9a-f-]{36}$/);
+    await page
+      .getByTestId('candidate-visible_excerpt')
+      .and(page.locator(`[data-source-id="${unpileDocumentSource}"]`))
+      .click();
     await expect(page.getByTestId('candidate-value')).toContainText('UNPILE_DOC_LARGE');
     await page.reload();
     await page.getByTestId('candidate-page_title').click();

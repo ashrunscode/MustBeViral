@@ -699,6 +699,7 @@ export function BrandFindings({
                     <button
                       type="button"
                       data-testid={`candidate-${item.field_key}`}
+                      data-source-id={item.source_id}
                       data-candidate-id={item.id}
                       aria-current={current?.id === item.id ? 'true' : undefined}
                       onClick={() => setSelectedId(item.id)}

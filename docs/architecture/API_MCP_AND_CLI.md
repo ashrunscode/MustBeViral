@@ -147,6 +147,14 @@ recheck offer expiry at the database clock; historical reads and successful idem
 replays retain their original meaning.
 
 Recapture compares the same website URL or document filename only after successful extraction.
+Successful capture jobs, including deduplicated captures, own occurrence identity and ordering;
+canonical source creation and extraction retries do not. Identical bytes captured at different
+URLs or filenames retain those separate origins. Source-change summaries include the latest
+capture job and completion time plus the changed-origin count, bounded to one summary per
+approved source. Inspect source history and all affected findings when more than one origin changed.
+New capture completions, extraction evidence and approvals receive a database-assigned logical
+sequence so wall-clock corrections cannot reorder them. Historical rows without that sequence
+retain their recorded timestamp order until a new capture supersedes them; no old receipt is rewritten.
 Changed source bytes expose the old/new source identities even when no new claim was recognized.
 A previously known claim missing from that replacement is labeled `source_missing` and requires
 operator review; absence is not treated as proof that the old claim was false. The contradiction

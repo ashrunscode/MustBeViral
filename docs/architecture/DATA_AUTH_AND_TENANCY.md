@@ -237,6 +237,12 @@ after drafts change. Approve refuses `EXPIRED_OFFER` and `CONTRADICTORY_KNOWLEDG
 W2.5 change detection, expiry lifecycle or catalog import. Direct writes stay denied. Forced RLS
 still uses `platform_can`. Forged parent IDs and revoked grants resolve `NOT_FOUND` or `FORBIDDEN`.
 
+W2.5 retains each completed capture job as an occurrence, including duplicate bytes and their
+separate URL/filename origins. Private sequence assignment adds logical ordering to new capture
+completions, extraction audit evidence and approvals; extraction replay cannot reorder captures.
+Those metadata columns preserve all existing permission and immutable-history controls. Old rows
+retain their original timestamp evidence, and existing approved snapshots are never backfilled.
+
 W2.5 adds `brand_knowledge_reviews` for explicit expiry/contradiction decisions. Composite
 workspace/brand ownership, forced RLS and direct-write denial apply; update/delete are refused.
 Each record pins the prior draft version/hash, affected assertion identities, replacements, reason

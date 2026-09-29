@@ -184,9 +184,11 @@ export function KnowledgeChanges({
       </button>
       {view.source_changes.map((change) => (
         <p className="platform-note" key={change.previous_source_id}>
-          Source {change.previous_source_id} has changed. Replacement source{' '}
-          {change.latest_source_id} was captured {change.captured_at}. Review its evidence; the
-          approved snapshot remains preserved.
+          Source {change.previous_source_id} has changed at {change.changed_origin_count}{' '}
+          {change.changed_origin_count === 1 ? 'origin' : 'origins'}. Replacement source{' '}
+          {change.latest_source_id} is the latest capture, completed {change.captured_at}.
+          {change.capture_job_id ? ` Capture reference: ${change.capture_job_id}.` : ''} Review the
+          source history and affected findings; the approved snapshot remains preserved.
         </p>
       ))}
       {view.expired_baseline_assertion_ids.length > 0 ? (

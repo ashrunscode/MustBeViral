@@ -306,6 +306,8 @@ export const KnowledgeChangesViewSchema = z
             latest_source_id: uuid,
             captured_at: WireTimestampSchema,
             kind: z.enum(['website', 'document']),
+            capture_job_id: uuid.nullable(),
+            changed_origin_count: z.number().int().positive(),
           })
           .strict(),
       )
