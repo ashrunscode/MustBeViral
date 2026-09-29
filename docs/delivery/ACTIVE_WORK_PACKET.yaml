@@ -3,7 +3,7 @@ id: WP-PLATFORM-W2-003
 spec_revision: 3
 title: Change detection, expiry lifecycle, contradiction handling and catalog import
 phase: P4
-status: ready
+status: in_progress
 priority: critical
 branch: main
 objective: Implement W2.5 change detection, expiry, contradiction lifecycle and manual/catalog
@@ -102,7 +102,7 @@ public_interfaces:
 steps:
   - id: w2c-001-change-detection
     title: Detect source and assertion changes against an approved brand version.
-    status: pending
+    status: current
   - id: w2c-002-expiry-lifecycle
     title: Keep stale offers out of later approved versions without silent replacement.
     status: pending

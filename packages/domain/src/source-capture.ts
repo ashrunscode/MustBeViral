@@ -1,3 +1,5 @@
+import { parseCatalogCsv } from './catalog-csv';
+
 export const sourceJobKinds = ['website', 'document', 'manual'] as const;
 export const sourceJobStatuses = [
   'queued',
@@ -30,7 +32,12 @@ export const knowledgeCandidateMethods = [
   'document_text',
   'manual',
 ] as const;
-export const supportedDocumentMediaTypes = ['text/plain', 'text/markdown', 'text/html'] as const;
+export const supportedDocumentMediaTypes = [
+  'text/plain',
+  'text/markdown',
+  'text/html',
+  'text/csv',
+] as const;
 export const sourceFailureCodes = [
   'SOURCE_UNSAFE',
   'SOURCE_UNSUPPORTED',
@@ -130,6 +137,13 @@ export function sniffDocumentMediaType(
   if (containsForbiddenControl(decoded)) return 'malformed';
   if (type === 'text/html' && !/<[A-Za-z!/]/u.test(decoded.slice(0, 1024))) return 'malformed';
   if (decoded.trim().length === 0) return 'malformed';
+  if (type === 'text/csv') {
+    try {
+      parseCatalogCsv(decoded);
+    } catch {
+      return 'malformed';
+    }
+  }
   return type;
 }
 

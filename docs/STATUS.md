@@ -12,7 +12,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Change detection, expiry lifecycle, contradiction handling and catalog import (planned) |
+| Phase | P4 — Change detection, expiry lifecycle, contradiction handling and catalog import (in_progress) |
 | Active packet | `WP-PLATFORM-W2-003` |
 | Current step | `w2c-001-change-detection` |
 | Release target | `full-platform` |

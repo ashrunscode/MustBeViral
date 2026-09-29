@@ -8,6 +8,7 @@ import {
   sniffDocumentMediaType,
 } from '@mustbeviral/contracts';
 import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
+import { KnowledgeChanges, type LifecycleReview } from './knowledge-changes';
 import {
   PlatformRequestError,
   platformErrorMessage,
@@ -157,6 +158,13 @@ export function BrandFindings({
     true,
   );
   const website = usePlatformMutation();
+  const lifecycle = usePlatformMutation();
+  const changesQuery = usePlatformQuery(
+    'get_brand_knowledge_changes',
+    { workspace_id: brand.workspace_id, brand_id: brand.id },
+    true,
+    true,
+  );
   const documentCapture = usePlatformMutation();
   const manual = usePlatformMutation();
   const correction = usePlatformMutation();
@@ -188,6 +196,8 @@ export function BrandFindings({
     isDenied(draftQuery.error) ||
     isDenied(sourcesQuery.error) ||
     isDenied(reviewQuery.error) ||
+    isDenied(changesQuery.error) ||
+    isDenied(lifecycle.error) ||
     isDenied(liveJob.error) ||
     isDenied(latestJob.error) ||
     isDenied(website.error) ||
@@ -223,6 +233,8 @@ export function BrandFindings({
           liveJob.error ??
           latestJob.error ??
           website.error ??
+          changesQuery.error ??
+          lifecycle.error ??
           documentCapture.error ??
           manual.error ??
           correction.error ??
@@ -254,6 +266,7 @@ export function BrandFindings({
   const job = liveJob.data?.record ?? null;
   const current = currentCandidate(candidates, selectedId);
   const mutationError =
+    lifecycle.error ??
     website.error ??
     documentCapture.error ??
     manual.error ??
@@ -268,6 +281,7 @@ export function BrandFindings({
     pin.error ??
     uploadError;
   const busy =
+    lifecycle.pending ||
     website.pending ||
     documentCapture.pending ||
     manual.pending ||
@@ -291,6 +305,7 @@ export function BrandFindings({
     draftQuery.refresh();
     sourcesQuery.refresh();
     reviewQuery.refresh();
+    changesQuery.refresh();
     latestJob.refresh();
   }
 
@@ -302,6 +317,26 @@ export function BrandFindings({
       url: url.trim(),
     });
     if (result?.job) setSessionJobId(result.job.id);
+    resetPages();
+  }
+
+  async function reviewLifecycle(input: LifecycleReview) {
+    const view = changesQuery.data;
+    if (!view?.draft_hash || !view.draft_version) return;
+    approve.clearError();
+    pin.clearError();
+    const { operation, ...fields } = input;
+    const exact = {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      expected_version: view.draft_version,
+      draft_hash: view.draft_hash,
+    };
+    if (operation === 'review_expired_offer' && 'assertion_id' in fields) {
+      await lifecycle.mutate(operation, { ...exact, ...fields });
+    } else if (operation === 'resolve_brand_contradiction' && 'kind' in fields) {
+      await lifecycle.mutate(operation, { ...exact, ...fields });
+    }
     resetPages();
   }
 
@@ -323,17 +358,34 @@ export function BrandFindings({
         throw new PlatformRequestError('SOURCE_TOO_LARGE', 'SOURCE_TOO_LARGE');
       const bytes = new Uint8Array(await file.arrayBuffer());
       const declared =
-        file.type === 'text/markdown' || file.name.endsWith('.md')
-          ? 'text/markdown'
-          : file.type === 'text/html' || file.name.endsWith('.html')
-            ? 'text/html'
-            : 'text/plain';
+        file.type === 'text/csv' || file.name.toLowerCase().endsWith('.csv')
+          ? 'text/csv'
+          : file.type === 'text/markdown' || file.name.endsWith('.md')
+            ? 'text/markdown'
+            : file.type === 'text/html' || file.name.endsWith('.html')
+              ? 'text/html'
+              : 'text/plain';
       const sniff = sniffDocumentMediaType(bytes, declared);
       if (sniff === 'unsupported')
         throw new PlatformRequestError('SOURCE_UNSUPPORTED', 'SOURCE_UNSUPPORTED');
       if (sniff === 'malformed')
         throw new PlatformRequestError('SOURCE_MALFORMED', 'SOURCE_MALFORMED');
       const filename = file.name.slice(0, 200);
+      if (sniff === 'text/csv') {
+        const text_content = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+        if (text_content.length > SOURCE_DOCUMENT_TEXT_MAX_CHARS)
+          throw new PlatformRequestError('SOURCE_TOO_LARGE', 'SOURCE_TOO_LARGE');
+        const result = await documentCapture.mutate('import_brand_catalog', {
+          workspace_id: brand.workspace_id,
+          brand_id: brand.id,
+          filename,
+          media_type: sniff,
+          text_content,
+        });
+        if (result?.job) setSessionJobId(result.job.id);
+        resetPages();
+        return;
+      }
       if (bytes.byteLength <= SOURCE_DOCUMENT_TEXT_MAX_CHARS) {
         let text_content: string;
         try {
@@ -549,8 +601,8 @@ export function BrandFindings({
             >
               <h2>Capture a source</h2>
               <p className="platform-note">
-                HTTPS websites and text, Markdown, or HTML documents only. PDF and Word files are
-                not supported. Images found on a page are not imported as campaign assets.
+                HTTPS websites and text, Markdown, HTML or CSV documents only. PDF and Word files
+                are not supported. Images found on a page are not imported as campaign assets.
               </p>
               <fieldset disabled={busy}>
                 <label>
@@ -575,7 +627,7 @@ export function BrandFindings({
                 Upload a text document
                 <input
                   type="file"
-                  accept=".txt,.md,.html,text/plain,text/markdown,text/html"
+                  accept=".txt,.md,.html,.csv,text/plain,text/markdown,text/html,text/csv"
                   disabled={busy}
                   onChange={(event) => {
                     const file = event.target.files?.[0];
@@ -584,6 +636,25 @@ export function BrandFindings({
                   }}
                 />
               </label>
+              <details>
+                <summary>Import a catalog</summary>
+                <p>
+                  Choose a UTF-8 CSV file in the upload control. Up to 40 rows and 32,768 characters
+                  are supported. Import saves the source and extracts unapproved findings.
+                </p>
+                <p>
+                  Use columns <code>kind,field_key,value,ends_at</code>. Kinds: offering, location,
+                  fact, offer, language. Keep field keys stable when updating a catalog. Leave
+                  unknown values empty. Offer expiry uses an exact date, time and timezone.
+                </p>
+                <pre className="platform-catalog-example">
+                  kind,field_key,value,ends_at{'\n'}offering,pickup,Pickup and delivery,
+                </pre>
+                <p className="platform-note">
+                  Text, Markdown and HTML catalogs can also use the document capture and extraction
+                  controls. PDF and Word are not supported.
+                </p>
+              </details>
               <button type="button" disabled={busy} onClick={() => void startManual()}>
                 Continue without a website
               </button>
@@ -664,6 +735,19 @@ export function BrandFindings({
           </div>
         </section>
         <aside className="platform-stack">
+          {changesQuery.error ? (
+            <PlatformRecovery error={changesQuery.error} retry={changesQuery.refresh} />
+          ) : changesQuery.data ? (
+            <KnowledgeChanges
+              view={changesQuery.data}
+              refresh={changesQuery.refresh}
+              canWrite={canWrite}
+              busy={busy}
+              onReview={reviewLifecycle}
+            />
+          ) : (
+            <PlatformLoading label="Comparing brand findings…" />
+          )}
           <div className="platform-card platform-pad platform-stack">
             <span className="platform-eyebrow">Unapproved draft</span>
             {current ? (

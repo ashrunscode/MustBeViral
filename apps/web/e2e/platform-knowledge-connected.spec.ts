@@ -53,6 +53,121 @@ test.describe('connected brand knowledge journeys', () => {
     );
   });
 
+  test('imports two brand catalogs, reviews source changes and expiry, and preserves approved history', async ({
+    page,
+  }) => {
+    test.setTimeout(300_000);
+    const owner = await registerSyntheticUser(
+      `w2-lifecycle-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    for (const [name, other, url] of [
+      ['WashBodega', 'UnPile', brands.washbodegaUrl],
+      ['UnPile', 'WashBodega', brands.unpileUrl],
+    ] as const) {
+      await page.goto(findingsUrl(url));
+      await expect(page.getByTestId('knowledge-changes')).toBeVisible();
+      const expiry = new Date(Date.now() + 25_000).toISOString();
+      const csv = `kind,field_key,value,ends_at\nfact,hours,${name} opens daily,\noffering,pickup,${name} pickup,\noffer,sale,${name} launch offer,${expiry}\nlanguage,spanish,,`;
+      await page.locator('input[type="file"]').setInputFiles({
+        name: `${name}-catalog.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(csv),
+      });
+      await expectJobStatus(page, 'captured');
+      await expect(page.getByTestId('assertion-fact')).toHaveCount(1);
+      await page.getByTestId('assertion-fact').click();
+      await expect(page.getByTestId('assertion-value')).toHaveText(`${name} opens daily`);
+      await page.getByTestId('assertion-language').click();
+      await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
+      await page.getByLabel('Campaign pin').fill(`${name}-original`);
+      await page.getByTestId('pin-brand-version').click();
+      await expect(page.getByTestId('pinned-version')).toContainText(`${name} opens daily`);
+      const history = await page.getByTestId('pinned-version').textContent();
+      await page.locator('input[type="file"]').setInputFiles({
+        name: `${name}-changed.csv`,
+        mimeType: 'text/csv',
+        buffer: Buffer.from(`kind,field_key,value\nfact,hours,${name} closed Sunday`),
+      });
+      await expect(page.getByTestId('assertion-fact')).toHaveCount(2);
+      const changes = page.getByTestId('knowledge-changes');
+      const hours = changes
+        .getByTestId('knowledge-change-group')
+        .filter({ has: page.locator('summary', { hasText: /^hours ·/ }) });
+      await expect(hours).toContainText('Conflicting facts');
+      await hours.locator('summary').first().click();
+      await expect(hours).toContainText(`${name} opens daily`);
+      await expect(hours).toContainText(`${name} closed Sunday`);
+      await hours.getByText('Source evidence', { exact: true }).last().click();
+      await expect(hours).toContainText('plaintext_labeled');
+      await expect(hours).toContainText('csv:record:2;column:value');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(findingsAlert(page)).toContainText(/contradict|conflict|expired/i);
+      if (!(await hours.getByLabel('Review decision').isVisible()))
+        await hours.locator('summary').first().click();
+      await hours.getByLabel('Review decision').selectOption('replace');
+      await hours
+        .getByRole('textbox', { name: 'Reviewed value', exact: true })
+        .fill(`${name} closed Sunday`);
+      await hours
+        .getByLabel('Reason for this review')
+        .fill('Operator checked the new catalog with the business.');
+      await attachAxeAndAria(page, `catalog-conflict-${name}`);
+      await hours.screenshot({ path: test.info().outputPath(`catalog-conflict-${name}.png`) });
+      await hours.getByRole('button', { name: 'Record conflict review' }).click();
+      await expect(hours).not.toContainText('Conflicting facts');
+      await expect(page.getByTestId('pinned-version')).toHaveText(history ?? '');
+      await expect
+        .poll(() => Date.now(), { timeout: 35_000, intervals: [1000] })
+        .toBeGreaterThan(Date.parse(expiry));
+      await expect(async () => {
+        await changes.getByRole('button', { name: 'Refresh comparison' }).click();
+        await expect(changes).toContainText('An offer in the approved version has expired', {
+          timeout: 1500,
+        });
+      }).toPass({ timeout: 15_000, intervals: [1000] });
+      await page.getByLabel('Campaign pin').fill(`${name}-expired`);
+      await page.getByTestId('pin-brand-version').click();
+      await expect(findingsAlert(page)).toContainText('expired offer');
+      const sale = changes
+        .getByTestId('knowledge-change-group')
+        .filter({ has: page.locator('summary', { hasText: /^sale ·/ }) });
+      await sale.locator('summary').first().click();
+      await sale.getByLabel('Review decision').selectOption('withdraw');
+      await sale.getByLabel('Reason for this review').fill('The launch offer has ended.');
+      await attachAxeAndAria(page, `catalog-expiry-${name}`);
+      await sale.screenshot({ path: test.info().outputPath(`catalog-expiry-${name}.png`) });
+      await sale.getByRole('button', { name: 'Record expiry review' }).click();
+      await expect(sale).not.toContainText('Expired offer');
+      await page.getByTestId('approve-brand-version').click();
+      await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+      await page.getByLabel('Campaign pin').fill(`${name}-reviewed`);
+      await page.getByTestId('pin-brand-version').click();
+      await expect(page.getByTestId('pinned-version')).toContainText(`${name} closed Sunday`);
+      await expect(page.getByTestId('pinned-version')).not.toContainText(`${name} launch offer`);
+      await page.reload();
+      await expect(changes).toContainText('No changed findings or freshness issues');
+      await expect(page.getByTestId('approved-version')).not.toContainText(other);
+      await page.getByText('Import a catalog', { exact: true }).click();
+      expect(
+        await page
+          .locator('.platform-card')
+          .evaluateAll(
+            (cards) => cards.filter((card) => card.scrollWidth > card.clientWidth + 1).length,
+          ),
+      ).toBe(0);
+      await attachAxeAndAria(page, `catalog-lifecycle-${name}`);
+      await page.screenshot({
+        path: test.info().outputPath(`catalog-lifecycle-${name}.png`),
+        fullPage: true,
+      });
+    }
+  });
+
   test('captures website and document sources for both brands and keeps them after reload', async ({
     page,
   }) => {

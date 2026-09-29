@@ -237,6 +237,21 @@ after drafts change. Approve refuses `EXPIRED_OFFER` and `CONTRADICTORY_KNOWLEDG
 W2.5 change detection, expiry lifecycle or catalog import. Direct writes stay denied. Forced RLS
 still uses `platform_can`. Forged parent IDs and revoked grants resolve `NOT_FOUND` or `FORBIDDEN`.
 
+W2.5 adds `brand_knowledge_reviews` for explicit expiry/contradiction decisions. Composite
+workspace/brand ownership, forced RLS and direct-write denial apply; update/delete are refused.
+Each record pins the prior draft version/hash, affected assertion identities, replacements, reason
+and actor. Corrections retain original observations and use the existing manual-source pattern.
+All mutations share the portfolio/workspace lock order and recheck current write authority before
+idempotent replay. New approvals and new pins have database-clock expiry guards after lock waits;
+existing approved snapshots and historical pins remain immutable and readable.
+
+Change comparisons are derived from the authorized immutable baseline and current assertions;
+there is no second knowledge authority or scheduled monitor. CSV catalogs extend the same source
+job, private object, content-hash deduplication and actor-bound extraction path. They do not create
+assets, approval events or provider jobs. Application rollback retains these additive tables and
+guards; it must retain the W2-002 actor-aware extraction caller. Catalog and lifecycle controls may
+be hidden during rollback, but old clients cannot bypass expiry, RLS or immutable history.
+
 - Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
 - Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
 - Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.
