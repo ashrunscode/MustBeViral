@@ -64,7 +64,7 @@
     },
     "branch": {
       "type": "string",
-      "pattern": "^codex/[a-z0-9][a-z0-9._/-]*$"
+      "pattern": "^(?:main|codex/[a-z0-9][a-z0-9._/-]*)$"
     },
     "source_plan_sha256": {
       "type": "string",

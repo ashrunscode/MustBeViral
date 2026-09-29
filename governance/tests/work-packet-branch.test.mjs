@@ -13,6 +13,40 @@ const packetPath = 'docs/delivery/ACTIVE_WORK_PACKET.yaml';
 const schemaPath = 'governance/schemas/work-packet.schema.json';
 const validator = path.join(repoRoot, 'governance/scripts/validate-work-packet.mjs');
 
+const lifecycleContracts = [
+  {
+    label: 'completion receipt',
+    schema: 'governance/schemas/packet-transition-receipt.schema.json',
+    fixture: 'governance/evidence/WP-PLATFORM-W2-001/transition-receipt.yaml',
+  },
+  {
+    label: 'supersession receipt',
+    schema: 'governance/schemas/packet-transition-receipt.schema.json',
+    fixture: 'governance/evidence/WP-P3-009/transition-receipt.yaml',
+  },
+  {
+    label: 'owner supersession decision',
+    schema: 'governance/schemas/packet-supersession-decision.schema.json',
+    fixture: 'governance/evidence/WP-P3-009/owner-supersession-decision-2026-09-09.yaml',
+  },
+];
+
+for (const contract of lifecycleContracts) {
+  test(`${contract.label} accepts main and codex without rewriting historical evidence`, () => {
+    for (const branch of ['main', 'codex/viralgraph-cleanroom']) {
+      const value = { ...readYaml(contract.fixture), branch };
+      assert.deepEqual(validateSchema(contract.schema, value, contract.label), [], branch);
+    }
+  });
+
+  test(`${contract.label} still rejects unrelated branches`, () => {
+    for (const branch of ['Main', 'main/feature', 'feature/w2', 'refs/heads/main']) {
+      const value = { ...readYaml(contract.fixture), branch };
+      assert.ok(validateSchema(contract.schema, value, contract.label).length > 0, branch);
+    }
+  });
+}
+
 test('packet schema accepts literal main and existing codex branch forms', () => {
   for (const branch of [
     'main',

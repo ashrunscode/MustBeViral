@@ -39,7 +39,7 @@
         },
         "branch": {
           "type": "string",
-          "pattern": "^codex/[a-z0-9][a-z0-9._/-]*$"
+          "pattern": "^(?:main|codex/[a-z0-9][a-z0-9._/-]*)$"
         },
         "status": {
           "const": "complete"
@@ -148,7 +148,7 @@
         },
         "branch": {
           "type": "string",
-          "pattern": "^codex/[a-z0-9][a-z0-9._/-]*$"
+          "pattern": "^(?:main|codex/[a-z0-9][a-z0-9._/-]*)$"
         },
         "superseded_at": {
           "type": "string",

@@ -24,7 +24,7 @@ function git(root, args) {
   return execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: 'pipe' }).trim();
 }
 
-function fixture(t) {
+function fixture(t, branch = 'codex/viralgraph-cleanroom') {
   const root = mkdtempSync(path.join(tmpdir(), 'mustbeviral-agent-state-'));
   mkdirSync(path.join(root, 'docs', 'delivery'), { recursive: true });
   mkdirSync(path.join(root, 'governance'), { recursive: true });
@@ -44,6 +44,7 @@ function fixture(t) {
   // Keep the isolated fixture at receipt-chain genesis as repository authority advances.
   state.active_work_packet = 'WP-R0-002';
   packet.id = 'WP-R0-002';
+  packet.branch = branch;
   packet.depends_on = [];
   writeFileSync(statePath, YAML.stringify(state, { lineWidth: 100 }), 'utf8');
   writeFileSync(packetPath, YAML.stringify(packet, { lineWidth: 100 }), 'utf8');
@@ -53,7 +54,7 @@ function fixture(t) {
     "import { writeFileSync } from 'node:fs';\nwriteFileSync('source.txt', 'after verification\\n', 'utf8');\n",
     'utf8',
   );
-  git(root, ['init', '--quiet', '-b', 'codex/viralgraph-cleanroom']);
+  git(root, ['init', '--quiet', '-b', branch]);
   git(root, ['config', 'user.email', 'tests@mustbeviral.invalid']);
   git(root, ['config', 'user.name', 'MustBeViral Tests']);
   git(root, ['add', '.']);
@@ -140,8 +141,8 @@ test('actual agent verification rejects source changes made by a gate', (t) => {
   assertNoTransitionMetadata(root);
 });
 
-function supersessionFixture(t) {
-  const root = fixture(t);
+function supersessionFixture(t, branch) {
+  const root = fixture(t, branch);
   const packetPath = 'docs/delivery/ACTIVE_WORK_PACKET.yaml';
   const prefix = 'governance/evidence/WP-R0-002/';
   const decisionPath = `${prefix}decision.yaml`;
@@ -224,36 +225,38 @@ function supersessionFixture(t) {
   };
 }
 
-test('actual supersession preserves incomplete acceptance and validates the version 2 receipt', (t) => {
-  const f = supersessionFixture(t);
-  const original = readFileSync(path.join(f.root, f.packetPath), 'utf8');
-  const finish = runAgent(f.root, 'finish', '--successor', f.successorPath);
-  assert.notEqual(finish.status, 0);
-  assert.match(finish.stderr, /automated acceptance is incomplete/);
-  const result = f.run();
-  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
-  const receiptPath = `${f.prefix}transition-receipt.yaml`;
-  assert.equal(
-    readFileSync(path.join(f.root, `${f.prefix}superseded-work-packet.yaml`), 'utf8'),
-    original,
-  );
-  const receipt = YAML.parse(readFileSync(path.join(f.root, receiptPath), 'utf8'));
-  assert.equal(receipt.status, 'superseded');
-  assert.deepEqual(receipt.unfinished_step_ids, ['observe']);
-  assert.deepEqual(receipt.unproved_acceptance_ids, ['observation', 'traffic']);
-  assert.equal(receipt.completed_at, undefined);
-  assert.equal(
-    YAML.parse(readFileSync(path.join(f.root, f.packetPath), 'utf8')).id,
-    f.successor.id,
-  );
-  assert.deepEqual(collectTransitionReceiptErrors({ root: f.root, receiptPath }), []);
-  assertNoTransitionMetadata(f.root);
-  git(f.root, ['add', '.']);
-  git(f.root, ['commit', '--quiet', '-m', 'retain supersession receipt']);
-  const duplicate = f.run();
-  assert.notEqual(duplicate.status, 0);
-  assert.deepEqual(collectTransitionReceiptErrors({ root: f.root, receiptPath }), []);
-});
+for (const branch of ['main', 'codex/viralgraph-cleanroom']) {
+  test(`actual supersession on ${branch} preserves incomplete acceptance and validates the version 2 receipt`, (t) => {
+    const f = supersessionFixture(t, branch);
+    const original = readFileSync(path.join(f.root, f.packetPath), 'utf8');
+    const finish = runAgent(f.root, 'finish', '--successor', f.successorPath);
+    assert.notEqual(finish.status, 0);
+    assert.match(finish.stderr, /automated acceptance is incomplete/);
+    const result = f.run();
+    assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+    const receiptPath = `${f.prefix}transition-receipt.yaml`;
+    assert.equal(
+      readFileSync(path.join(f.root, `${f.prefix}superseded-work-packet.yaml`), 'utf8'),
+      original,
+    );
+    const receipt = YAML.parse(readFileSync(path.join(f.root, receiptPath), 'utf8'));
+    assert.equal(receipt.status, 'superseded');
+    assert.deepEqual(receipt.unfinished_step_ids, ['observe']);
+    assert.deepEqual(receipt.unproved_acceptance_ids, ['observation', 'traffic']);
+    assert.equal(receipt.completed_at, undefined);
+    assert.equal(
+      YAML.parse(readFileSync(path.join(f.root, f.packetPath), 'utf8')).id,
+      f.successor.id,
+    );
+    assert.deepEqual(collectTransitionReceiptErrors({ root: f.root, receiptPath }), []);
+    assertNoTransitionMetadata(f.root);
+    git(f.root, ['add', '.']);
+    git(f.root, ['commit', '--quiet', '-m', 'retain supersession receipt']);
+    const duplicate = f.run();
+    assert.notEqual(duplicate.status, 0);
+    assert.deepEqual(collectTransitionReceiptErrors({ root: f.root, receiptPath }), []);
+  });
+}
 
 test('supersession rejects missing or uncommitted owner authorization without changing authority', (t) => {
   const f = supersessionFixture(t);
