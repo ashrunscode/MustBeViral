@@ -3,7 +3,7 @@ id: WP-PLATFORM-W3-001
 spec_revision: 1
 title: Render feasibility and measured runtime decision
 phase: P4
-status: ready
+status: blocked
 priority: critical
 branch: main
 objective: Prove the conditional sharp 0.34.5 and fal-first rendering direction in ADR-0010 before
@@ -91,7 +91,7 @@ public_interfaces:
 steps:
   - id: w3f-001-preflight
     title: Inventory source rights, exact runtime limits, budget and hosted benchmark permissions.
-    status: pending
+    status: current
   - id: w3f-002-local-static
     title: Measure deterministic source-faithful static composition and failure boundaries locally.
     status: pending
@@ -158,12 +158,30 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: w3f-001-preflight
-  next_action: Inventory the existing artifact/provider paths, approved real-media references and
-    runtime limits; prepare any exact hosted benchmark permission still required before remote
-    effects.
-  blockers: []
-  changed_paths: []
-  last_green_checks: []
+  next_action:
+    Complete the exact real-media fixture and rights manifest, then resolve the separately
+    reviewed packet-path and architecture-guidance prerequisites and seal the benchmark protocol
+    before implementation.
+  blockers:
+    - 'Real-media benchmark inputs and permitted use are unconfirmed: actual footage, approved font
+      and literal current offer are missing; the existing fixtures cover only the W0 local design
+      walkthrough. See governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/preflight.md.'
+  changed_paths:
+    - PROJECT_STATE.yaml
+    - docs/delivery/ACTIVE_WORK_PACKET.yaml
+    - docs/STATUS.md
+    - docs/generated/TRACEABILITY.md
+    - llms.txt
+    - governance/tests/agent-state.integration.test.mjs
+    - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/preflight.md
+    - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/fixture-inventory.json
+    - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/vercel-project-readback.json
+    - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/vercel-team-readback.json
+    - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/prerequisite-manifest.json
+    - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/verification-attempts.json
+  last_green_checks:
+    - pnpm agent:preflight exit 0 at merged base bdbdfe7d84e5226b23786d0fe842f85fe0001dd0; discovery
+      only, no W3 acceptance.
 completion:
   successor_packet_id: WP-PLATFORM-W3-002
   evidence_paths: []

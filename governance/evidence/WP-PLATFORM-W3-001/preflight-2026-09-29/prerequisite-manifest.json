@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "classification": "pending-prerequisite-template-not-benchmark-acceptance",
+  "packet": "WP-PLATFORM-W3-001",
+  "spec_revision": 1,
+  "base_commit": "bdbdfe7d84e5226b23786d0fe842f85fe0001dd0",
+  "runtime": {
+    "node_local": "24.18.0",
+    "pnpm": "11.12.0",
+    "sharp": "0.34.5",
+    "vips_local": "8.17.3",
+    "hosted_node_major": "24.x",
+    "hosted_patch": null
+  },
+  "target": {
+    "project": "mustbeviral-web-staging",
+    "project_id": "prj_SVRV9Oh6J3lAi3muIbK9Mrtkvv6V",
+    "region": "iad1",
+    "plan": "pro",
+    "function_memory_mb": null,
+    "hosted_invocation_authorized": false
+  },
+  "real_media": {
+    "manifest_accepted": false,
+    "brand_id": null,
+    "source_photo_sha256": null,
+    "orientation_fixture_sha256": null,
+    "logo_sha256": null,
+    "font_sha256": null,
+    "font_license_reference": null,
+    "exact_offer_text": null,
+    "offer_valid_until": null,
+    "approved_destination": null,
+    "real_footage_sha256": null,
+    "audio_sha256": null,
+    "rights_and_releases_reference": null,
+    "private_provider_processing_authorized": false,
+    "fidelity_operator_reference": null
+  },
+  "limits_proposed_not_measured": {
+    "output_sizes": [
+      [1080, 1350],
+      [1080, 1080]
+    ],
+    "repetitions_per_size": {
+      "fresh_process_local": 10,
+      "warm_local": 10
+    },
+    "total_local_repetitions": 40,
+    "fresh_process_local_is_not_hosted_cold_start_proof": true,
+    "warm_p95_ms": 5000,
+    "cold_p95_ms": 10000,
+    "total_job_ms": 60000,
+    "peak_rss_mib": 512,
+    "maximum_photo_mib": 20,
+    "maximum_photo_pixels": 25000000,
+    "aggregate_source_mib": 64,
+    "aggregate_decoded_pixels": 40000000,
+    "maximum_raster_layers": 8,
+    "maximum_text_overlays": 16,
+    "request_or_response_metadata_kib": 32,
+    "maximum_static_job_usd_micros": 10000,
+    "video_quote_usd_micros": null,
+    "experiment_reservation_usd_micros": 0
+  },
+  "budget": {
+    "limit_usd_micros": 100000000,
+    "conservative_prior_reservations_usd_micros": 41443313,
+    "remaining_usd_micros": 58556687,
+    "new_paid_calls": 0,
+    "new_spending_usd_micros": 0,
+    "ledger": "governance/evidence/WP-PLATFORM-W2-002/development-spend-2026-09-28.yaml"
+  },
+  "unresolved": [
+    "Identify owned or licensed real media, approved typography, literal current offer and private processing rights.",
+    "Separately reviewed packet path correction for existing singular packages/provider and exact pnpm-lock.yaml.",
+    "Restore architect-prime and think guidance or obtain a separately authorized replacement before the measured architecture decision.",
+    "Seal completed fixture manifest and measurement protocol before implementation.",
+    "After reviewable implementation, obtain the exact first Vercel invocation approval and separately required remote benchmark permissions."
+  ]
+}

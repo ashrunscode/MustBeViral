@@ -1,0 +1,40 @@
+{
+  "read_at": "2026-09-29T08:18:16.0962206Z",
+  "command": "vercel api /v9/projects/<verified-staging-project-id> --method GET --scope ashrunscode-projects --raw",
+  "exit": 0,
+  "id": "prj_SVRV9Oh6J3lAi3muIbK9Mrtkvv6V",
+  "name": "mustbeviral-web-staging",
+  "accountId": "team_A11dbY2xnTWzGL63IRBTWmLo",
+  "nodeVersion": "24.x",
+  "rootDirectory": "apps/web",
+  "framework": "nextjs",
+  "resourceConfig": {
+    "fluid": true,
+    "functionDefaultRegions": ["iad1"],
+    "elasticConcurrencyEnabled": true,
+    "buildMachineType": "standard",
+    "buildMachineSelection": "elastic"
+  },
+  "serverlessFunctionRegion": "iad1",
+  "ssoProtection": {
+    "deploymentType": "all_except_custom_domains"
+  },
+  "latestDeployments": [
+    {
+      "id": "dpl_7RSv8TA8tzmY9MFc2Vgj7wwLQZCm",
+      "url": "mustbeviral-web-staging-f0jq7t45j-ashrunscode-projects.vercel.app",
+      "target": "production",
+      "readyState": "READY",
+      "regions": null,
+      "sourceSha": null
+    },
+    {
+      "id": "dpl_GSb4yM98dNCW1wkoismePuhGxqds",
+      "url": "mustbeviral-web-staging-cqew86wi5-ashrunscode-projects.vercel.app",
+      "target": "production",
+      "readyState": "READY",
+      "regions": null,
+      "sourceSha": null
+    }
+  ]
+}
