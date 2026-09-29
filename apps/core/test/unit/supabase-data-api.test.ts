@@ -77,6 +77,8 @@ describe('Supabase Data API executor', () => {
     [409, { code: '23505', message: 'duplicate key' }, 'conflict'],
     [400, { code: 'P0001', message: 'IDEMPOTENCY_CONFLICT' }, 'conflict'],
     [400, { code: 'P0001', message: 'REVISION_CONFLICT' }, 'conflict'],
+    [400, { code: 'P0001', message: 'EXPIRED_OFFER' }, 'conflict'],
+    [400, { code: 'P0001', message: 'CONTRADICTORY_KNOWLEDGE' }, 'conflict'],
     [400, { code: 'P0001', message: 'QUOTE_STALE' }, 'conflict'],
     [400, { code: 'P0001', message: 'QUOTE_ALREADY_USED' }, 'conflict'],
     [400, { code: '22023', message: 'QUOTE_PLAN_HAS_NO_READY_ATTEMPT' }, 'conflict'],

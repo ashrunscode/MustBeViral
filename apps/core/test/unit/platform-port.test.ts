@@ -162,6 +162,8 @@ describe('platform user-scoped database port', () => {
     'IDEMPOTENCY_CONFLICT',
     'RESOURCE_ARCHIVED',
     'RESOURCE_CONFLICT',
+    'EXPIRED_OFFER',
+    'CONTRADICTORY_KNOWLEDGE',
   ] as const)('preserves the safe database %s outcome', async (code) => {
     const fetcher = vi
       .fn<typeof fetch>()

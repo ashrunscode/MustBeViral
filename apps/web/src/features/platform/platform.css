@@ -94,6 +94,11 @@
   margin: 0;
   padding: 0;
 }
+.platform-review-details > summary {
+  min-height: 44px;
+  padding: 10px 0;
+  cursor: pointer;
+}
 .platform-topbar {
   min-height: 76px;
   padding: 16px 32px;
@@ -224,12 +229,14 @@
   background: var(--card);
   overflow: hidden;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 .platform-pad {
   padding: 24px;
 }
 .platform-stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   align-content: start;
 }

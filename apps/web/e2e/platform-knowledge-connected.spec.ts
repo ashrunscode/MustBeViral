@@ -328,6 +328,117 @@ test.describe('connected brand knowledge journeys', () => {
     await attachAxeAndAria(page, 'findings-a11y');
   });
 
+  test('reviews every proposal source and corrects offer expiry without losing text or approved history', async ({
+    page,
+  }) => {
+    test.setTimeout(240_000);
+    const owner = await registerSyntheticUser(
+      `w2-controls-${randomUUID()}@synthetic.example.test`,
+      createdUsers,
+    );
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    await page.goto(findingsUrl(brands.washbodegaUrl));
+    await page.locator('input[type="file"]').setInputFiles({
+      name: 'washbodega-review-controls.html',
+      mimeType: 'text/html',
+      buffer: Buffer.from(
+        '<html lang="en"><body><p data-offering="service">WashBodega pickup service</p><p data-offering="service">WashBodega pickup service</p><p data-offer="sale" data-offer-ends="2098-01-01T12:00:00.123456Z">WashBodega half price</p><p data-offer="sale" data-offer-ends="2098-01-01T13:00:00.123456Z">WashBodega half price</p></body></html>',
+      ),
+    });
+    await expectJobStatus(page, 'captured');
+    await page.getByTestId('extract-knowledge').click();
+    await expect(page.getByTestId('assertion-offer')).toHaveCount(2);
+    await page.getByRole('button', { name: 'Propose voice, audience and positioning' }).click();
+    const positioning = page.getByTestId('proposal-positioning');
+    await positioning.getByText('Evidence for positioning', { exact: true }).click();
+    await expect(positioning.getByTestId('proposal-evidence')).toHaveCount(2);
+    await expect(positioning.getByTestId('proposal-evidence').first()).toContainText(
+      'data_attribute',
+    );
+    await positioning.getByText('Correct positioning proposal', { exact: true }).click();
+    await positioning
+      .getByLabel('Revised positioning proposal')
+      .fill('WashBodega pickup with friendly service.');
+    await positioning
+      .getByLabel('Why this proposal correction')
+      .fill('Operator checked both source observations.');
+    await positioning.getByRole('button', { name: 'Save positioning proposal' }).click();
+    await expect(positioning).toContainText('corrected');
+    await expect(positioning).toContainText('WashBodega pickup with friendly service.');
+    await positioning.getByText('Evidence for positioning', { exact: true }).click();
+    await expect(positioning.getByTestId('proposal-evidence')).toHaveCount(2);
+    await page.getByTestId('approve-brand-version').click();
+    await expect(findingsAlert(page)).toContainText(/contradict|conflict/i);
+    await page.getByTestId('assertion-offer').first().click();
+    if (!(await page.getByTestId('assertion-expiry').textContent())?.includes('T12:00:00')) {
+      await page.getByTestId('assertion-offer').nth(1).click();
+    }
+    await expect(page.getByTestId('assertion-expiry')).toContainText('T12:00:00');
+    await expect(page.getByLabel('Correct this assertion')).toHaveValue('WashBodega half price');
+    await page.getByLabel('Offer expiry action').selectOption('change');
+    await page.getByLabel('Offer expiry with timezone').fill('2098-01-01T13:00:00.123456Z');
+    await page.getByLabel('Why this assertion correction').fill('Matched verified offer end.');
+    await page.getByRole('button', { name: 'Save assertion' }).click();
+    await expect(page.getByTestId('assertion-expiry')).toContainText('2098-01-01T13:00:00.123456');
+    await expect(page.getByTestId('assertion-value')).toHaveText('WashBodega half price');
+    await page.getByTestId('approve-brand-version').click();
+    await expect(page.getByTestId('approved-version')).toContainText('Approved version');
+    await page.getByLabel('Campaign pin').fill('controls-original');
+    await page.getByTestId('pin-brand-version').click();
+    await expect(page.getByTestId('pinned-version')).toContainText(
+      'WashBodega pickup with friendly service.',
+    );
+    await positioning.getByText('Correct positioning proposal', { exact: true }).click();
+    await positioning
+      .getByLabel('Revised positioning proposal')
+      .fill('Updated WashBodega positioning.');
+    await positioning.getByRole('button', { name: 'Save positioning proposal' }).click();
+    await expect(positioning).toContainText('Updated WashBodega positioning.');
+    await expect(page.getByTestId('pinned-version')).not.toContainText(
+      'Updated WashBodega positioning.',
+    );
+    await page.getByLabel('Offer expiry action').selectOption('clear');
+    await page.getByRole('button', { name: 'Save assertion' }).click();
+    await expect(page.getByTestId('assertion-expiry')).toContainText('Not supplied');
+    await expect(page.getByTestId('assertion-value')).toHaveText('WashBodega half price');
+    await page.getByLabel('Correct this assertion').fill('');
+    await page.getByRole('button', { name: 'Save assertion' }).click();
+    await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+    await page.getByTestId('approve-brand-version').click();
+    await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
+    const clippedCards = await page
+      .locator('.platform-card')
+      .evaluateAll(
+        (cards) => cards.filter((card) => card.scrollWidth > card.clientWidth + 1).length,
+      );
+    expect(
+      clippedCards,
+      'Populated findings cards must not hide overflowing evidence or controls',
+    ).toBe(0);
+    await attachAxeAndAria(page, 'knowledge-review-controls');
+    await page.screenshot({
+      path: test.info().outputPath('knowledge-review-controls.png'),
+      fullPage: true,
+    });
+    await page.goto(findingsUrl(brands.unpileUrl));
+    await expect(page.getByText('Updated WashBodega positioning.')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Continue without a website' }).click();
+    await expect(page.getByTestId('candidate-unknown_gap')).toBeVisible();
+    await page.getByTestId('extract-knowledge').click();
+    await expect(page.getByTestId('assertion-offering')).toBeVisible();
+    await page.getByRole('button', { name: 'Propose voice, audience and positioning' }).click();
+    const voice = page.getByTestId('proposal-voice');
+    await voice.getByText('Correct voice proposal', { exact: true }).click();
+    await expect(voice.getByLabel('Revised voice proposal')).toHaveValue('');
+    await voice.getByLabel('Revised voice proposal').fill('UnPile calm, direct service voice.');
+    await voice.getByRole('button', { name: 'Save voice proposal' }).click();
+    await expect(voice).toContainText('UnPile calm, direct service voice.');
+    await page.reload();
+    await expect(voice).toContainText('UnPile calm, direct service voice.');
+    await expect(voice).not.toContainText('WashBodega');
+  });
+
   test('extracts, proposes, questions and approves WashBodega and UnPile without mixing brands', async ({
     page,
   }) => {

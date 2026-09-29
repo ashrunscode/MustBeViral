@@ -1,4 +1,5 @@
 import type { RepresentativeAssertion } from './representative-extract';
+import { knowledgeExpiryInstant } from './knowledge-expiry';
 
 export const brandVersionStatuses = ['approved'] as const;
 export type BrandVersionStatus = (typeof brandVersionStatuses)[number];
@@ -7,13 +8,16 @@ export function expiredOfferFieldKeys(
   assertions: readonly RepresentativeAssertion[],
   nowIso: string,
 ): readonly string[] {
+  const now = knowledgeExpiryInstant(nowIso);
+  if (now === null) throw new Error('Invalid review instant');
   return assertions
     .filter(
       (item) =>
         item.kind === 'offer' &&
         item.status !== 'unknown' &&
         item.ends_at !== null &&
-        item.ends_at < nowIso,
+        (knowledgeExpiryInstant(item.ends_at) === null ||
+          knowledgeExpiryInstant(item.ends_at)! < now),
     )
     .map((item) => item.field_key);
 }
@@ -29,7 +33,10 @@ export function contradictoryAssertionKeys(
       (other) =>
         other.kind === item.kind &&
         other.field_key === item.field_key &&
-        other.value_text !== item.value_text,
+        (other.value_text !== item.value_text ||
+          (item.kind === 'offer' &&
+            (other.ends_at === null ? null : knowledgeExpiryInstant(other.ends_at)) !==
+              (item.ends_at === null ? null : knowledgeExpiryInstant(item.ends_at)))),
     );
     if (conflict) keys.push(`${item.kind}:${item.field_key}`);
   }
