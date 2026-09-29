@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
-active_packet: WP-PLATFORM-W2-003
-current_step: w2c-004-journeys-and-wave-close
-next_action: Complete the proven W2-003 packet with agent:finish and its prepared render-feasibility successor.
+active_packet: WP-PLATFORM-W3-001
+current_step: w3f-001-preflight
+next_action: Inventory the existing artifact/provider paths, approved real-media references and runtime limits; prepare any exact hosted benchmark permission still required before remote effects.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -1,18 +1,16 @@
 schema_version: 1
-id: WP-PLATFORM-W2-003
-spec_revision: 3
-title: Change detection, expiry lifecycle, contradiction handling and catalog import
+id: WP-PLATFORM-W3-001
+spec_revision: 1
+title: Render feasibility and measured runtime decision
 phase: P4
-status: in_progress
+status: ready
 priority: critical
 branch: main
-objective: Implement W2.5 change detection, expiry, contradiction lifecycle and manual/catalog
-  imports on owner-approved W2.4 brand versions so stale offers cannot become newly approved
-  content, conflicting facts request review, and a business can import a catalog or recapture a
-  changed source without mutating an approved snapshot. Preserve W1 studio, brand, invitation and
-  billing contracts and W2.1–W2.4 capture, extraction, proposals, questions, exact-hash approval and
-  campaign pins. No outreach, provider runs, charging or Stripe mutation. Do not claim Wave 2 exited
-  or Wave 3 started.
+objective: Prove the conditional sharp 0.34.5 and fal-first rendering direction in ADR-0010 before
+  implementing customer rendering. Benchmark exact source imagery, logos, text, typography and
+  real-footage video, private transfer, bounded resource use, cancellation and cost. Record a
+  measured architecture decision. A local benchmark alone does not establish Vercel or fal connected
+  acceptance. Preserve W1 and W2 behavior; do not claim Wave 2 or Wave 3 exited.
 authority_refs:
   - product-contract
   - release-scope
@@ -25,340 +23,148 @@ authority_refs:
   - roadmap
   - local-env-secrets
   - adr-0007-full-platform
+  - adr-0010-drive-autopilot-saas
 required_skills:
   - build-mustbeviral
-  - supabase-postgres-best-practices
   - api-webhook-contracts
-  - superdesign
-  - vercel-react-best-practices
-  - frontend-design
-  - design-qa-loop
   - git-release-quality
 depends_on:
-  - WP-PLATFORM-W2-002
+  - WP-PLATFORM-W2-003
 scope:
   allowed_paths:
+    - packages/artifacts/**
+    - packages/providers/**
+    - packages/contracts/**
+    - packages/config/**
     - apps/web/**
     - apps/core/**
-    - apps/cli/**
-    - apps/mcp/**
-    - packages/contracts/**
-    - packages/domain/**
-    - packages/db/**
-    - packages/config/**
-    - packages/ui/**
-    - supabase/**
     - governance/**
     - docs/**
-    - .superdesign/**
     - PROJECT_STATE.yaml
     - llms.txt
   forbidden_paths:
     - .github/workflows/**
     - docs/archive/**
     - legacy-exports/**
+    - supabase/migrations/**
   required_doc_ids:
     - product-contract
-    - release-scope
     - system-overview
-    - data-auth-tenancy
-    - api-mcp-cli
     - execution-providers-billing
-    - experience-contract
     - quality-gates
     - roadmap
     - local-env-secrets
+    - adr-0010-drive-autopilot-saas
 deliverables:
-  - >
-    Detect source and assertion changes against an approved brand version without silently replacing
-    owner-confirmed facts. Recapture and re-extraction produce a reviewable difference. Do not add a
-    scheduled recapture pipeline, new queue driver or live enablement flag in this packet.
-  - >
-    Add expiry lifecycle so an offer that becomes stale after approval cannot leak into a later
-    approved version or campaign pin without operator review. Preserve the W2.4 approve-time expired
-    offer and contradiction refusal.
-  - >
-    Handle contradictory facts as an operator review lifecycle, including disputed status and
-    required correction, without auto-resolving or mixing WashBodega and UnPile knowledge.
-  - >
-    Add manual/catalog import for bounded text, Markdown, HTML or spreadsheet-like catalogs using
-    the existing source/assertion pattern. Unknowns stay unknown. Do not add PDF/DOCX parsers, live
-    public crawlers, paid-provider inference or reusable campaign assets from website images.
-  - >
-    Verify desktop and mobile connected WashBodega and UnPile journeys for recapture difference,
-    expiry, contradiction review and catalog import, then stop. Do not claim Wave 2 exited or Wave 3
-    started.
+  - Before benchmark implementation, inspect the merged base and existing artifacts/provider
+    drivers. Declare exact fixture references and rights, runtime versions, project/region/plan,
+    documented memory/duration/input/output limits, repetition count and cost ceiling in the
+    existing evidence directory. Use current official documentation. Resolve build-skill
+    architecture specialist guidance before an irreversible architecture decision. Do not install
+    another executor or create infrastructure.
+  - Build a bounded local benchmark under packages/artifacts using the already pinned sharp 0.34.5.
+    Test one actual premises/product photograph, exact logo, approved font and literal price/offer
+    text at 1080x1350 and 1080x1080, with orientation metadata. Use private local inputs with
+    explicit rights; repository evidence contains hashes and measurements, not customer media or
+    signed URLs. Synthetic fixtures prove mechanics only, never real-asset fidelity.
+  - Prepare a project-scoped stateless Vercel Node benchmark and fal composition request for a 15-30
+    second 1080x1920 real-footage reel with captions, graphics, audio rights and checked cover.
+    Reuse the existing project and provider drivers. Core owns permissions, durable jobs, money and
+    private R2 registration. Demonstrate short-lived capability validation, wrong-tenant,
+    expired/replayed capability denial, output verification and cancellation behavior.
+  - Predeclare at least 20 static repetitions including cold and warm samples, report p50/p95, peak
+    memory, output bytes, failures and integer USD micros. Pass only within the declared documented
+    runtime ceilings with resource headroom and a bounded per-job cost. Video timing is separate.
+    Record actual provider receipts and failed attempts; do not infer cost from a schema or count an
+    API login as a render. Enforce the owner's cumulative $100 development ceiling after deducting
+    all previous reserved/actual usage. No ads, public posts or charging.
+  - Commit the measured architecture decision before dependent production rendering. A failed or
+    unavailable hosted benchmark remains a named blocker with a concrete correction/approval
+    request. Preserve source/output hashes, exact commit and environment, fidelity comparison,
+    privacy/cancellation proof and independent review. Prepare WP-PLATFORM-W3-002 for asset
+    originals/rights without implementing it here. Full product checks remain required.
 public_interfaces:
-  - >
-    Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections for
-    change-diff, expiry-review, contradiction-review and catalog-import commands. Preserve W1
-    identity, setup, presentation and billing operations and W2.1–W2.4 capture, extract, propose,
-    question, approve-version and pin/read-version operations.
-  - >
-    Additive change, expiry and import persistence with explicit ownership, forced RLS, generated
-    database types and application rollback to the prior schema-compatible version. Reuse the W2.1
-    job/source/candidate and W2.4 assertion/version/pin pattern. Do not add a new queue driver or
-    live enablement flag.
+  - No customer-visible route, subscription change or live renderer is enabled in this packet.
+    Benchmark-only interfaces remain private and use typed immutable composition inputs and
+    Core-authorized capabilities. Thin transport code must not acquire scheduling, billing or
+    permission authority. No new database, media library, queue or durable job authority.
 steps:
-  - id: w2c-001-change-detection
-    title: Detect source and assertion changes against an approved brand version.
-    status: completed
-  - id: w2c-002-expiry-lifecycle
-    title: Keep stale offers out of later approved versions without silent replacement.
-    status: completed
-  - id: w2c-003-contradiction-and-import
-    title: Review contradictory facts and import bounded manual catalogs.
-    status: completed
-  - id: w2c-004-journeys-and-wave-close
-    title: Verify two-brand change, expiry and import journeys without claiming Wave 3.
-    status: current
+  - id: w3f-001-preflight
+    title: Inventory source rights, exact runtime limits, budget and hosted benchmark permissions.
+    status: pending
+  - id: w3f-002-local-static
+    title: Measure deterministic source-faithful static composition and failure boundaries locally.
+    status: pending
+  - id: w3f-003-connected-render
+    title: Prove the approved Vercel and fal paths with real media, privacy and cost receipts.
+    status: pending
+  - id: w3f-004-decision
+    title: Independently review the measured decision and prepare the asset originals successor.
+    status: pending
 acceptance:
   automated:
-    - id: change-detection-review
+    - id: benchmark-integrity
       criterion:
-        Recapture or re-extraction against an approved WashBodega or UnPile version produces a
-        reviewable difference with source, capture time, excerpt and method. Approved snapshots stay
-        immutable. Silent replacement of owner-confirmed facts is refused.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
-    - id: expiry-lifecycle
+        Exact inputs, immutable composition, original/output hashes, deterministic static results
+        and resource measurements are reproducible; invalid capabilities and oversized inputs fail
+        closed.
+      status: pending
+      evidence: []
+    - id: connected-runtime
+      criterion: Existing Vercel Node and fal composition paths demonstrate real-media static/reel
+        fidelity, captions/fonts/overlays, private transfer, cancellation, documented bounds and
+        actual costs within the remaining cumulative budget.
+      status: pending
+      evidence: []
+    - id: regression-and-decision
       criterion:
-        An offer that expires after approval cannot become newly approved content or leak into a
-        later campaign pin without operator review. The W2.4 approve-time expired-offer refusal
-        remains. This is expiry lifecycle, not only the W2.4 guard.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
-    - id: contradiction-and-catalog-import
-      criterion:
-        Conflicting facts request review and cannot auto-resolve. Bounded text, Markdown, HTML or
-        spreadsheet-like catalog import persists typed assertions with provenance. Unknowns stay
-        unknown. PDF/DOCX, live crawls and paid inference remain refused. UnPile imports cannot
-        produce WashBodega facts and vice versa.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
-    - id: two-brand-change-journeys
-      criterion:
-        Desktop and mobile connected WashBodega and UnPile journeys cover recapture difference,
-        expiry review, contradiction review and catalog import without mixing identity or sources.
-        Independent review evidence is recorded. No outreach, charging, provider run or production
-        remote write. UI stays on the accepted September 9 Lightfield studio direction. Passing this
-        packet is not a Wave 2 exit claim.
-      status: passed
-      evidence:
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-        - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
-  manual: []
+        Existing product regressions pass and independent review covers the measured architecture
+        decision; failed or unavailable requirements remain unaccepted and dependent rendering
+        remains disabled.
+      status: pending
+      evidence: []
+  manual:
+    - id: source-fidelity
+      criterion: An authorized operator compares actual source and outputs, confirms recognizable
+        premises/product, exact logo/text/font, readable reel captions and a correct cover, with
+        rights provenance recorded.
+      status: pending
+      evidence: []
 quality_gates:
-  - id: database
-    command: pnpm supabase:test
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
   - id: governance
     command: pnpm governance:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
+    status: pending
+    evidence: []
   - id: design
     command: pnpm design:check
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
+    status: pending
+    evidence: []
   - id: repository
     command: pnpm verify
-    status: passed
-    evidence:
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-      - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
+    status: pending
+    evidence: []
+  - id: database-regression
+    command: pnpm supabase:test
+    status: pending
+    evidence: []
 rollback:
-  strategy: Revert application changes while retaining additive change, expiry and import tables.
-    Confirm W1 studio, brand, invitation, mapping and billing commands and W2.1–W2.4 capture,
-    extraction, proposal, question, approval and pin commands still work. Do not delete tenant data,
-    weaken RLS, auto-approve knowledge, reuse website images as campaign assets or enable checkout
-    to simulate recovery.
+  strategy: Retain benchmark evidence and source hashes; keep customer rendering disabled. Revert
+    benchmark application code through a reviewed PR if necessary. Preserve existing
+    artifact/provider contracts and all rollback material. No infrastructure, data or provider
+    output deletion is authorized by this packet.
   remote_actions_required: false
 external_effects:
-  remote_mutation: read-only
+  remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: w2c-004-journeys-and-wave-close
-  next_action:
-    Complete the proven W2-003 packet with agent:finish and its prepared render-feasibility
-    successor.
+  current_step: w3f-001-preflight
+  next_action: Inventory the existing artifact/provider paths, approved real-media references and
+    runtime limits; prepare any exact hosted benchmark permission still required before remote
+    effects.
   blockers: []
-  changed_paths:
-    - PROJECT_STATE.yaml
-    - apps/core/src/composition/brand-extraction.ts
-    - apps/core/src/composition/platform-knowledge.ts
-    - apps/core/test/unit/platform-knowledge-port.test.ts
-    - apps/core/test/unit/platform-parity.test.ts
-    - apps/web/e2e/platform-knowledge-connected.spec.ts
-    - apps/web/src/features/platform/brand-findings.tsx
-    - apps/web/src/features/platform/knowledge-changes.test.ts
-    - apps/web/src/features/platform/knowledge-changes.tsx
-    - apps/web/src/features/platform/platform-client.ts
-    - apps/web/src/features/platform/platform.css
-    - docs/STATUS.md
-    - docs/architecture/API_MCP_AND_CLI.md
-    - docs/architecture/DATA_AUTH_AND_TENANCY.md
-    - docs/delivery/ACTIVE_WORK_PACKET.yaml
-    - docs/generated/DATABASE_SCHEMA.md
-    - docs/generated/OPENAPI.md
-    - docs/generated/TRACEABILITY.md
-    - governance/evidence/WP-PLATFORM-W2-003/implementation-map-2026-09-29.md
-    - governance/evidence/WP-PLATFORM-W2-003/successor-WP-PLATFORM-W3-001.yaml
-    - packages/contracts/openapi/core.v1.json
-    - packages/contracts/src/index.ts
-    - packages/contracts/src/platform-knowledge.test.ts
-    - packages/contracts/src/platform-knowledge.ts
-    - packages/db/src/database.generated.ts
-    - packages/domain/src/catalog-csv.test.ts
-    - packages/domain/src/catalog-csv.ts
-    - packages/domain/src/index.ts
-    - packages/domain/src/representative-extract.ts
-    - packages/domain/src/source-capture.ts
-    - supabase/migrations/20260929010000_platform_knowledge_changes.sql
-    - supabase/migrations/20260929011000_platform_knowledge_lifecycle.sql
-    - supabase/migrations/20260929012000_platform_catalog_import.sql
-    - supabase/migrations/20260929013000_platform_catalog_unknown_records.sql
-    - supabase/migrations/20260929014000_platform_recapture_missing_claims.sql
-    - supabase/migrations/20260929015000_platform_reviewed_source_baseline.sql
-    - supabase/migrations/20260929016000_platform_capture_occurrences.sql
-    - supabase/migrations/20260929017000_platform_capture_review_identity.sql
-    - supabase/tests/database/00048_platform_knowledge_changes.test.sql
-    - supabase/tests/database/00049_platform_knowledge_lifecycle.test.sql
-    - supabase/tests/database/00050_platform_catalog_import.test.sql
-    - supabase/tests/database/00051_platform_catalog_unknown_records.test.sql
-    - supabase/tests/database/00052_platform_recapture_disappearance.test.sql
-    - supabase/tests/database/00053_platform_capture_occurrences.test.sql
-  last_green_checks:
-    - corepack pnpm agent:preflight
-    - corepack pnpm agent:verify
-    - node packages/db/scripts/verify-platform-knowledge-fixtures.mjs
-    - node packages/db/scripts/verify-platform-knowledge-connected.mjs
-    - corepack pnpm diff-scope:check --base 1834368d618418162f578f709881d828b0ea1752
+  changed_paths: []
+  last_green_checks: []
 completion:
-  successor_packet_id: WP-PLATFORM-W3-001
-  evidence_paths:
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-forced-colors-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-forced-colors-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega.png
+  successor_packet_id: WP-PLATFORM-W3-002
+  evidence_paths: []
   completed_at: null

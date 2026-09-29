@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-W2-003` (in_progress). Current step: `w2c-004-journeys-and-wave-close`.
+Current packet: `WP-PLATFORM-W3-001` (ready). Current step: `w3f-001-preflight`.
 
 | Authority topic | Document | Path |
 |---|---|---|

@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Change detection, expiry lifecycle, contradiction handling and catalog import (in_progress) |
-| Active packet | `WP-PLATFORM-W2-003` |
-| Current step | `w2c-004-journeys-and-wave-close` |
+| Phase | P4 — Render feasibility and measured runtime decision (planned) |
+| Active packet | `WP-PLATFORM-W3-001` |
+| Current step | `w3f-001-preflight` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Complete the proven W2-003 packet with agent:finish and its prepared render-feasibility successor.
+Inventory the existing artifact/provider paths, approved real-media references and runtime limits; prepare any exact hosted benchmark permission still required before remote effects.

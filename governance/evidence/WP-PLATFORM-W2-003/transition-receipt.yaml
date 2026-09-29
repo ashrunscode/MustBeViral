@@ -1,0 +1,338 @@
+schema_version: 1
+packet_id: WP-PLATFORM-W2-003
+spec_revision: 3
+phase: P4
+branch: main
+status: complete
+completed_at: 2026-09-29T08:08:07.845Z
+successor_packet_id: WP-PLATFORM-W3-001
+predecessor_head: d1e7860174a9be51bf00f564ae4bb6c9c9e90752
+closed_packet_path: governance/evidence/WP-PLATFORM-W2-003/completed-work-packet.yaml
+completion_evidence_paths:
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-forced-colors-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-forced-colors-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile.png
+  - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega.png
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
+    sha256: c87018d3f8e7bd93874762ac2f1e72aa1052e0deb97ac8b8f824c12033cef5fc
+    git_blob_oid: 901b0eca4facf99a21295f530177cd9b146964c4
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
+    sha256: ff52c5ba78c71fd53bdb5fc76b07b716c2a6aeba3f6ac93f5e6cf547faa20d1f
+    git_blob_oid: fd9cd6c29f75f717dab3b88d36bcc2ea05346cd9
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-aria.txt
+    sha256: 25611f99b884f603e0ad86c4bb6cc21740be9bd21d82da393444aaf28c95e9e1
+    git_blob_oid: 3d68432b2602223494a28ac01cd5629d8a7721f1
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-aria.txt
+    sha256: f287674540f35f8d957dbb0e37ad6f54fda5ee44af204ade4f2db01f62c16c89
+    git_blob_oid: a58f9d056b79167a894931953d2255ae32efabc0
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-aria.txt
+    sha256: bab07b772a8b4e98131d9c80818572ccda13d9b5da26a8ab063090eb98f7c959
+    git_blob_oid: efbb9a6dc4a34ceeef407d03779ad69065f57f56
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-aria.txt
+    sha256: 96426ef446a7e701eaf9bcf249d1c0fe0f0a935b0e4cc7fb308546438f74acc8
+    git_blob_oid: 11e541b569b2e17b713beeb43ac2d444904c0607
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-axe.json
+    sha256: af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d
+    git_blob_oid: 588ad38fe707b8241d49d0a52e77323fa37b289b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-aria.txt
+    sha256: c8befce142a6f4bac7a1603499636a5ef380b55281250bac97be4ade43fb0b5d
+    git_blob_oid: f929fa4d6bc27a50d5ae4e5342a759fa18fb6d21
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile.png
+    sha256: e8096321d0c3510dd5261baefdbf59edfc947e0f050871519bd913ba0880fe7a
+    git_blob_oid: 419d47d0a870d3a85ba27a48ebcb2bf341ea0c9d
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-aria.txt
+    sha256: 9f6833b092631c0e07a5d617fcb218f82910e3a170a0a4dc919ed9537e89ebd9
+    git_blob_oid: ebf5933dfb7e91ca6bbc11188dbd7d77e8ded958
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega.png
+    sha256: f47b5b496e4478a0465ca23e6dee843a5b02addb77c56338e4e9b5902840e48d
+    git_blob_oid: 98fb948a463d8f561e1e61cb175b533c9d854ab0
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-aria.txt
+    sha256: 990482bbded66290d2742485bb8b37f56e7d8323dacc985b52194dea264e86df
+    git_blob_oid: 0d984f12c49705009b24150e3195457016dd03fe
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile.png
+    sha256: 9ff723488c0336ddbb176b4d068c3516583a381b0c8142f2208fa6bfedff9ace
+    git_blob_oid: 8f67b6a20a2febda4532b2f94e548a5802457db5
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-aria.txt
+    sha256: 6c73afbb7e2350643219fd2732bec45f8f8062b8057d41a5da158d23c3d3bceb
+    git_blob_oid: 25d09892a94a62295621799be51ab69901cb1578
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega.png
+    sha256: 5f81e00311d33c7ee54367f56bbeb32005b064246fa1eb72c78c78180a61ce2b
+    git_blob_oid: d91723fe6042fdb779aff0b7c583d457fc305bda
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-aria.txt
+    sha256: 288de31d5be9d684e348daf064049cb4303e3a47b3790318c3e0afdb16ab5ea5
+    git_blob_oid: e76d2e351c7435b03f207d73577df0b6e29f0ccd
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile.png
+    sha256: 2b2e4f17086fc02afb1d7c5b5a3f50c949cec0325691e16fa9bab5784c49dc3c
+    git_blob_oid: 92d96c1e162a44d9a3b472b58a23f6f1fc5c3cd4
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-aria.txt
+    sha256: b0a840b5f5583bb7b20af2cecaf78adf5da052d17a827aa136410667df67e56b
+    git_blob_oid: 9303e5a8bc308ed9fa30871a8ffde9d6151159f9
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega.png
+    sha256: 35422ed9ec595635abb8c2fb6b317a890f117476c4248261cae72d8920e713e0
+    git_blob_oid: 185ae95e7640d1f2a56c862bfe787e18e1bbde9c
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-aria.txt
+    sha256: 470e6d262dc1910289f94564fb18e0ef93b38639bc2b184e9a563716e8c9cd4e
+    git_blob_oid: 7c41d1780f101444b3be06047dec1427ed79a21b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-aria.txt
+    sha256: 467183b55f251724dd84602b5160b9e8e909c34b0ac8005859192139c4b1e337
+    git_blob_oid: b454a8df9b03cdf4c8d9375b5c0e14ce2f98c4b5
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-forced-colors-aria.txt
+    sha256: 281c3d40a9528043bfc192a4110b7b5303bd214db63267aa81bed8eb571092a6
+    git_blob_oid: 0dccc93b422a787dbf64150a054345e8f952843d
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
+    sha256: 3a5adfb5f6eaa9d19005c95221a08c8adcaaf7c7b3e55e0c97c55ac15d073fd7
+    git_blob_oid: adca03e2cbb3a017ebf2d9a73907d6dd811f4b84
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-aria.txt
+    sha256: 63736266f941bf99d0aac4b3fa0da4f232b5409922c69e9d663da3a828aed612
+    git_blob_oid: af092b5983ff4144bba18e988e6cf1c1e4474288
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-axe.json
+    sha256: 1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784
+    git_blob_oid: 3a42fa77558241409468a8b79d90ba33456a2e42
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-aria.txt
+    sha256: 4265d056343a400b9dccb58afb1b9d171235b4f46ebfea10d2e8f6b4784b30f3
+    git_blob_oid: e065a2cc71b49e8a6acb3afd204e3dc37cd7a841
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-axe.json
+    sha256: 0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16
+    git_blob_oid: f2d3a53d79daf00f15af016eb96d780f29356029
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
+    sha256: 0cb5ac776d8a170786111a3e68305396c8c276307e1958de13296224fe07a253
+    git_blob_oid: e0109787ca8b13cc835b400460a405d6d2445515
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-aria.txt
+    sha256: b78c8c2d8ae493619acdde4c5ef5ddb18dc51a04ebb9575569b15d7bbf8e35f4
+    git_blob_oid: 2391fbe8af16a395eda62de5b62748f71260d98e
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-aria.txt
+    sha256: 8769b609a191e4816158a93e5659799379e35f92c39056ac1abc043cc311a69c
+    git_blob_oid: e21c98e575139b67ec22125d674ec361b0cbb398
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-aria.txt
+    sha256: bee025523559806be1b0f4bab704dd80778ba9c4e1770b972706883deb0e15ec
+    git_blob_oid: 13e16bbf57647a59dde339b1fbd51c2118b53b62
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-axe.json
+    sha256: 1206a31b0f086858d700e851d24b1b4e2e8ba485e398255e8e3f5f1c26e50930
+    git_blob_oid: 3225bc92b5885e7a637fcc4d8b64253326c01f38
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-aria.txt
+    sha256: ffe09f21dad45062bb379c87f5032540fd31836d61becd4b5309ba44efaa9715
+    git_blob_oid: d8f956bb830336a8b6962aa72f4146d6d6505364
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-axe.json
+    sha256: af0885ddd19be15b6d82d5217284d3f6163be5c9ab483d5f56546562a3fad28d
+    git_blob_oid: 588ad38fe707b8241d49d0a52e77323fa37b289b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-aria.txt
+    sha256: fd51c5032ce42c6a562c3ffae2bfd489dd5a708ef127eb42fa89e7d2e2180848
+    git_blob_oid: 091fbca087be400b27171206b653c62b8d311342
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile.png
+    sha256: a5fc9725aae3248d146e2e6d3321ffab8c26d4ed010bd5787ab61c27ac837789
+    git_blob_oid: 063e88a6a17fd4b2f36a150b84b7f173375c0548
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-aria.txt
+    sha256: ac6d4054bf733ccf6ecaa725d4c6f9513780b1d5212ab79ca4c662030b18f2f9
+    git_blob_oid: a54698e0ee559ca4b51fa057b983e75df3301d50
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega.png
+    sha256: ea99cc2d7b85e1dd05cf036ba02d9ff5c31c3f6e6521cee4683d29b1cc4f2658
+    git_blob_oid: 538b1204548e5ab6b35dceb14f8ec9d9e9f75e8b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-aria.txt
+    sha256: d329653664ac9900a5e9778d3f315daf70199bf379a72a70cb59221a21fff6d0
+    git_blob_oid: 110038309682a3debba7f7ea57eed3e59863bbce
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile.png
+    sha256: 70d5121aece259173265b1b8357cabac41a6c27461f5285db3f3f01480da5cc2
+    git_blob_oid: 4dba9b070f39a6a8041a4bf62e6b1250554e5aa9
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-aria.txt
+    sha256: edd7135501e1ee4d9467199662068738cd275b7cb421c820d007c928ab033d88
+    git_blob_oid: f4a09ec7351dac7f12473be18e4f6681f7e84b84
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega.png
+    sha256: c62e9821bea4e8ebcd0c415db9568811f0def6336ac29195633fc2d74dd568d0
+    git_blob_oid: 6b6131352994fa346108c81fc2abf93f64771359
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-aria.txt
+    sha256: a970aa90bb2eccea90db5377ca4053a148597642b2d29f5c063579b53587f4d7
+    git_blob_oid: d852123fa4545241321908e2353651799743780a
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile.png
+    sha256: efb8aca17bf1cf45d8ee52915813a03e8deba65aa3bb89d9ceb6bcfed8ea6788
+    git_blob_oid: 25e40a3e4a64de4bb94ec1ca2ad5050f914b9d91
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-aria.txt
+    sha256: 9ff00250f6d1bcb59df47adf600fc9c12d4cb1e3044dca2ab45fdbf3d8ea9fc3
+    git_blob_oid: ea42175053017c9d7531919f8e34bde486ff1293
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega.png
+    sha256: 339c41050b7b8a70d1e18d0b92d2a20bc812d6e72595fa1b78938f6d408e42de
+    git_blob_oid: 585b1b852dc13a446489e572f0cbdb407ef5e95b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-aria.txt
+    sha256: 35bd0dcd5911f9e26b2cbdb977ade6fbd7c16f3344c22836b4c5d41a1c495167
+    git_blob_oid: e87e86c093b7d5b1a4617ceb331107f12779b390
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-aria.txt
+    sha256: 5d863acabd8b38d9023444713c1b375c66985964b0ead86e19a84ee5614cb55d
+    git_blob_oid: a954fcea122fc8a02e0fad8e68fd3f53ba53c98b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-forced-colors-aria.txt
+    sha256: a5c69ff72257ed0e527f09a28cc640036c0536ef9a376e2beae1de0c9f562f36
+    git_blob_oid: 9f32e6f15d30a6cd478ec2f38a86a528ae7604dd
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
+    sha256: e8883f339604da137ffec83e6ecc88aa8f97486061c60ee4484147ada1cd697b
+    git_blob_oid: deb192ce83f23b5d4f0fa21e1532c423f6fa968b
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
+    sha256: 9547681c9f5f1e3ffbe6a198625ae308aad1d1ec5685642a28e84bf9dce6fad4
+    git_blob_oid: 9c7de60492e74450e03040c31feb4d7ba9dd61db
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-aria.txt
+    sha256: 2eff818eef0cafcd1e68b0bd808df931d4d48efe36362df605fff636ebef9697
+    git_blob_oid: 89245eaf5d887f30570a47fe100c08dffec1160f
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-axe.json
+    sha256: 1f1772790a0919475e3df9561541b0a79f8e1f00a63b53e5bd3da69dcf3ea784
+    git_blob_oid: 3a42fa77558241409468a8b79d90ba33456a2e42
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-aria.txt
+    sha256: 0cdf5282660d544d6e022de50b803b9d9a29b2209fe3af49dcbec9ca62748cee
+    git_blob_oid: 384b21c3041b3346b55dc68c871a702c23f5c404
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-axe.json
+    sha256: 0004fba743e721b2e1b151cd970ac3ddfc69c94ea8cec42670d824690b2d3c16
+    git_blob_oid: f2d3a53d79daf00f15af016eb96d780f29356029
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
+    sha256: 802142fa334aafd24e03fd7df6614b725615ea2109184cbb9b6fc145e45967b4
+    git_blob_oid: a3e6a6c1e93e665ff8ecc6d7710dd8cbd1763e20
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
+    sha256: 97062c285970113d6171dc93ae4fd5684d918e8c7a898b7b67d2775e16ddd273
+    git_blob_oid: e264e419c3522ad4bfa778325aa1220f8e393662
+  - path: governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
+    sha256: 190de9440d360526e1ea144f793866ef815dff3b6d6e99d41c60774febadccd3
+    git_blob_oid: f390a7854df89efb5c8afa247fe74a6f54054349
+completed_step_ids:
+  - w2c-001-change-detection
+  - w2c-002-expiry-lifecycle
+  - w2c-003-contradiction-and-import
+  - w2c-004-journeys-and-wave-close
+closed_packet_sha256: a39f4c8e9fc12cddc319222959e84b02b8c828ab8ed15a90b53ed1ed4629ad78
