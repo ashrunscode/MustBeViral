@@ -23,6 +23,31 @@ For an owner-authorized instruction-only amendment, follow the root contract's s
 - Use the data, auth, API, Cloudflare, billing, email, observability, and testing skills selected by root `AGENTS.md` only when the current packet requires them.
 - Do not use P2 collaboration skills or queue infrastructure before the accepted evidence gate and phase authorize them.
 
+## Available specialist guidance
+
+The owner-approved execution-prerequisites amendment of September 28, 2026 replaces five
+unresolved specialist aliases for W2-002 and its prepared W2-003 successor. It changes guidance
+resolution, not acceptance, review independence or release permissions.
+
+| Responsibility                                             | Guidance to read                                                                                  | Requirements retained                                                                                                                        |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Database architecture (formerly `data-architect`)          | `../supabase-postgres-best-practices/SKILL.md` and its security, schema and locking references    | Additive migrations, composite ownership keys, forced RLS, cross-tenant denial and concurrency tests.                                        |
+| Authentication/security (formerly `auth-fortress`)         | The same Supabase security guidance plus installed `api-webhook-contracts`                        | Independent auth/RLS review and the complete denial suite, including revoked grants, forged child IDs and queued work after permission loss. |
+| API/interface design (formerly `api-and-interface-design`) | Installed `api-webhook-contracts` and `docs/architecture/API_MCP_AND_CLI.md` from repository root | Shared command/query handlers, generated contracts, thin transports, authorization, idempotency and failure semantics.                       |
+| Frontend implementation (formerly `frontend-master`)       | Installed `vercel-react-best-practices` and `frontend-design`                                     | Approved Lightfield direction, durable state, accessible responsive behavior and applicable design approvals.                                |
+| Quality verification (formerly `quality-check`)            | The active packet's checks, installed `design-qa-loop` and `git-release-quality`                  | Every required local and connected check, current independent review, exact-source evidence and truthful acceptance.                         |
+
+Supabase guidance is vendored in this repository with pinned provenance. Resolve the other named
+skills through the installed/shared skill catalog and read their actual `SKILL.md` sources before
+matching work; their availability was verified on September 28, 2026. Do not silently omit a missing
+source or treat the map as a substitute for reading it. The repository authorities take precedence
+over generic guidance.
+
+`superdesign` remains required and was located in the shared catalog. Installed guidance is not
+proof that its external service or tools are callable. When those tools are unavailable, preserve
+the accepted design artifacts and use the repository's existing render/QA path; new screens still
+require approved desktop/mobile artifacts before production implementation.
+
 ## Complete one packet
 
 1. Work on one bounded packet and its current step; do not start its successor early.

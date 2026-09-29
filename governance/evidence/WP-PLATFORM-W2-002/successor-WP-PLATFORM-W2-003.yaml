@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-W2-003
-spec_revision: 1
+spec_revision: 2
 title: Change detection, expiry lifecycle, contradiction handling and catalog import
 phase: P4
 status: ready
@@ -27,12 +27,13 @@ authority_refs:
   - adr-0007-full-platform
 required_skills:
   - build-mustbeviral
-  - data-architect
-  - auth-fortress
-  - api-and-interface-design
+  - supabase-postgres-best-practices
+  - api-webhook-contracts
   - superdesign
-  - frontend-master
-  - quality-check
+  - vercel-react-best-practices
+  - frontend-design
+  - design-qa-loop
+  - git-release-quality
 depends_on:
   - WP-PLATFORM-W2-002
 scope:
