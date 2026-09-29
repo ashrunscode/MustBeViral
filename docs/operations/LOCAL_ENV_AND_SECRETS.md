@@ -47,6 +47,21 @@ make canonical preflight fail. GitHub Actions remains disabled.
 
 ## Environment isolation
 
+Environment files, including `apps/web/.env.production`, stay local and ignored. Do not force-add
+them even when the current values appear public. The cleanroom scanner skips local production
+environment contents and rejects any tracked copy. Configure deployed environments only through
+the separately authorized provider procedure; removing a tracked file changes no provider values.
+
+Before switching an existing canonical checkout, privately back up its needed ignored environment
+files and `AGENTS.md`; verify equal byte hashes without displaying contents. Record its branch,
+commit and instruction skip-worktree flag. Preserve any local shared-memory instruction block when
+adopting the current tracked agent contract. Clear a skip-worktree flag only after its hidden local
+changes are accounted for, and preserve the overlay and its original flag after the switch.
+Switch only a clean, available checkout after the environment protection is merged; verify the
+target branch, environment bytes and overlay again. Keep continuation commits and other sessions'
+checkouts. Retirement requires owner release and preservation of tracked, untracked and needed
+ignored work, using managed archival where applicable. Clean Git status alone is not owner release.
+
 | Environment | Data/providers                                                          | Allowed purpose                                |
 | ----------- | ----------------------------------------------------------------------- | ---------------------------------------------- |
 | Local/test  | local Supabase, fake or provider sandbox credentials                    | development and automated tests                |

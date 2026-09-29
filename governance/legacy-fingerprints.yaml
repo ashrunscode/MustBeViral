@@ -15,6 +15,7 @@ scan:
     - '**/.dev.vars'
     - '**/.env'
     - '**/.env.local'
+    - '**/.env.production'
     - governance/tests/**
   content_allowlist:
     - AGENTS.md

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -214,6 +214,7 @@ function gitFixture(t, files) {
   });
   spawnSync('git', ['init', '-q'], { cwd: root, encoding: 'utf8' });
   for (const [name, content] of Object.entries(files)) {
+    mkdirSync(path.dirname(path.join(root, name)), { recursive: true });
     writeFileSync(path.join(root, name), `${content}\n`, 'utf8');
   }
   t.after(() => {
@@ -253,4 +254,32 @@ test('a tracked credential template stays allowed', (t) => {
   const result = runScanner(root);
 
   assert.equal(result.status, 0, output(result));
+});
+
+test('the web production environment stays local and ignored', (t) => {
+  const file = 'apps/web/.env.production';
+  const root = gitFixture(t, { [file]: DUMMY_SECRET });
+  for (const ignore of ['.gitignore', 'apps/web/.gitignore']) {
+    cpSync(path.join(sourceRoot, ignore), path.join(root, ignore));
+  }
+
+  const ignored = spawnSync('git', ['check-ignore', '--', file], { cwd: root, encoding: 'utf8' });
+  assert.equal(ignored.status, 0, output(ignored));
+  assert.equal(ignored.stdout.trim(), file);
+
+  const result = runScanner(root);
+  assert.equal(result.status, 0, output(result));
+});
+
+test('force-adding a production environment fails even without a known secret pattern', (t) => {
+  const file = 'apps/web/.env.production';
+  const root = gitFixture(t, { [file]: 'NEXT_PUBLIC_APP_URL=https://example.invalid' });
+  track(root, file);
+
+  const result = runScanner(root);
+  assert.notEqual(result.status, 0, output(result));
+  assert.match(
+    result.stderr,
+    /scanner-skipped secret file must never be tracked: apps\/web\/\.env\.production/,
+  );
 });
