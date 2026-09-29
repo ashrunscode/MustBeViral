@@ -1,9 +1,10 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page, type Route } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 
 import {
   createSyntheticUser,
-  deleteSyntheticUser,
+  deleteSyntheticUsers,
+  requireLocalSupabaseIssuer,
   SYNTHETIC_JOURNEY_PASSWORD,
 } from '../../../packages/db/scripts/platform-journey-fixtures';
 
@@ -20,11 +21,8 @@ export async function registerSyntheticUser(
 }
 
 export async function cleanupSyntheticUsers(createdUsers: Array<{ id: string; email: string }>) {
-  const preserved: Array<{ id: string; email: string; status: number }> = [];
-  for (const user of createdUsers) {
-    const result = await deleteSyntheticUser(user.id);
-    if (!result.deleted) preserved.push({ ...user, status: result.status });
-  }
+  const results = await deleteSyntheticUsers(createdUsers);
+  const preserved = results.filter((result) => !result.deleted);
   if (preserved.length) {
     process.stderr.write(
       `Preserved ${preserved.length} synthetic users from this run because cleanup was blocked.\n`,
@@ -33,6 +31,7 @@ export async function cleanupSyntheticUsers(createdUsers: Array<{ id: string; em
 }
 
 export async function signIn(page: Page, email: string) {
+  const expectedIssuer = requireLocalSupabaseIssuer();
   await page.route('**/api/core/v1/**', async (route) => {
     const authorization = route.request().headers()['authorization'];
     if (authorization?.startsWith('Bearer ')) {
@@ -42,7 +41,7 @@ export async function signIn(page: Page, email: string) {
         iat?: number;
       };
       if (
-        claims.iss !== 'http://127.0.0.1:54321/auth/v1' ||
+        claims.iss !== expectedIssuer ||
         typeof claims.iat !== 'number' ||
         !Number.isSafeInteger(claims.iat)
       ) {
@@ -147,7 +146,7 @@ export async function revalidateOnFocus(page: Page) {
 export function holdBrandPathGets(page: Page, brandId: string, leaf: string) {
   const held: Array<{ release: () => void; completed: Promise<void> }> = [];
   const match = (url: URL) => url.pathname.includes(`/brands/${brandId}/${leaf}`);
-  const handler = async (route: import('@playwright/test').Route) => {
+  const handler = async (route: Route) => {
     if (route.request().method() !== 'GET') {
       await route.continue();
       return;

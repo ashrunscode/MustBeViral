@@ -6,7 +6,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath, URL } from 'node:url';
 import process from 'node:process';
 
-import { localSupabaseDatabase } from './local-supabase.mjs';
+import { localSupabaseRuntime } from './local-supabase.mjs';
 import { PLATFORM_KNOWLEDGE_FIXTURE_WORKER } from './platform-knowledge-fixture-worker.mjs';
 
 const requireFromRoot = createRequire(new URL('../../../package.json', import.meta.url));
@@ -48,32 +48,12 @@ function localChildEnv(extra) {
   return { ...env, ...extra };
 }
 
-function parseJsonObject(text) {
-  const start = text.indexOf('{');
-  const end = text.lastIndexOf('}');
-  if (start < 0 || end <= start)
-    throw new Error('Expected local Supabase status JSON is unavailable.');
-  return JSON.parse(text.slice(start, end + 1));
-}
-
-localSupabaseDatabase();
+const runtime = localSupabaseRuntime();
 const root = fileURLToPath(new URL('../../../', import.meta.url));
-const status = parseJsonObject(
-  execFileSync('corepack.cmd', ['pnpm', 'exec', 'supabase', 'status', '--output', 'json'], {
-    cwd: root,
-    shell: true,
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-    env: localChildEnv({}),
-  }),
-);
-if (
-  status.API_URL !== 'http://127.0.0.1:54321' ||
-  typeof status.ANON_KEY !== 'string' ||
-  typeof status.SERVICE_ROLE_KEY !== 'string'
-) {
-  throw new Error('Expected local Supabase API and service role names are unavailable.');
-}
+const databaseUrl = new URL('postgres://127.0.0.1/postgres');
+databaseUrl.port = String(runtime.database.port);
+databaseUrl.username = runtime.database.username;
+databaseUrl.password = runtime.database.password;
 
 const coreRoot = resolve(root, 'apps/core');
 const localPersist = resolve(coreRoot, '.wrangler', 'knowledge-local');
@@ -118,9 +98,9 @@ const mf = new Miniflare({
         APP_ENV: 'development',
         SERVICE_NAME: 'mustbeviral-core',
         SERVICE_GENERATION: 'viralgraph-cleanroom-v2',
-        SUPABASE_URL: 'http://127.0.0.1:54321',
-        SUPABASE_PUBLISHABLE_KEY: status.ANON_KEY,
-        SUPABASE_SECRET_KEY: status.SERVICE_ROLE_KEY,
+        SUPABASE_URL: runtime.api.url,
+        SUPABASE_PUBLISHABLE_KEY: runtime.api.anonKey,
+        SUPABASE_SECRET_KEY: runtime.api.serviceRoleKey,
         SUPABASE_JWT_AUDIENCE: 'authenticated',
         CORS_ALLOWED_ORIGINS: 'http://127.0.0.1:3111',
         PROVIDER_RUNS_ENABLED: 'false',
@@ -128,7 +108,7 @@ const mf = new Miniflare({
       },
       r2Buckets: { MEDIA_BUCKET: 'mustbeviral-v2-development-media' },
       hyperdrives: {
-        HYPERDRIVE: 'postgres://postgres:postgres@127.0.0.1:54322/postgres',
+        HYPERDRIVE: databaseUrl.href,
       },
       serviceBindings: {
         PUBLIC_EGRESS: 'source-fixture-egress',
@@ -161,8 +141,8 @@ const web = spawn(
     stdio: ['ignore', 'pipe', 'pipe'],
     env: localChildEnv({
       NEXT_PUBLIC_APP_ORIGIN: 'http://127.0.0.1:3111',
-      NEXT_PUBLIC_SUPABASE_URL: status.API_URL,
-      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: status.ANON_KEY,
+      NEXT_PUBLIC_SUPABASE_URL: runtime.api.url,
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: runtime.api.anonKey,
       NEXT_PUBLIC_CORE_API_URL: 'http://127.0.0.1:8789',
       MBV_LOCAL_GOLDEN_PREVIEW: '0',
       MBV_PLAYWRIGHT_DIST_DIR: '.next/platform-knowledge-local',

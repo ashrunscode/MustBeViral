@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-W2-002` (ready). Current step: `w2b-001-representative-extraction`.
+Current packet: `WP-PLATFORM-W2-003` (ready). Current step: `w2c-001-change-detection`.
 
 | Authority topic | Document | Path |
 |---|---|---|

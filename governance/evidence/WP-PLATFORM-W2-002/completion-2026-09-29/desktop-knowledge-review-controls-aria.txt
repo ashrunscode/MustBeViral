@@ -1,0 +1,152 @@
+- link "Skip to content":
+  - /url: "#platform-main"
+- banner:
+  - link "MustBeViral Studio":
+    - /url: /studio
+  - text: Synthetic W1 journeys 3ee74954-4962-497f-904d-23cdfa6a341c
+  - strong: WashBodega
+  - text: Owner
+  - button "Sign out"
+- complementary "Workspace":
+  - text: Workspace
+  - navigation "Studio navigation":
+    - link "Overview":
+      - /url: /studio?studio=39725f94-b205-46c7-82ae-87a36fcc7989
+    - link "Switch studio":
+      - /url: /studio
+    - link "Studio team":
+      - /url: /studio?studio=39725f94-b205-46c7-82ae-87a36fcc7989&view=team
+    - link "Studio settings":
+      - /url: /studio?studio=39725f94-b205-46c7-82ae-87a36fcc7989&view=settings
+    - link "Billing":
+      - /url: /studio/b6645875-1092-4c0a-b997-2305ece337fe/billing?studio=39725f94-b205-46c7-82ae-87a36fcc7989
+  - text: One studio. Each brand, its own context.
+- main:
+  - link "← All brands":
+    - /url: /studio?studio=39725f94-b205-46c7-82ae-87a36fcc7989
+  - text: Switch brand
+  - combobox "Switch brand":
+    - option "WashBodega" [selected]
+    - option "UnPile"
+  - navigation "Brand navigation":
+    - link "Brand draft":
+      - /url: /studio/b6645875-1092-4c0a-b997-2305ece337fe/brands/e0b668d3-9463-460f-ba7f-0a69a28516fd?studio=39725f94-b205-46c7-82ae-87a36fcc7989&view=draft
+    - link "Findings":
+      - /url: /studio/b6645875-1092-4c0a-b997-2305ece337fe/brands/e0b668d3-9463-460f-ba7f-0a69a28516fd?studio=39725f94-b205-46c7-82ae-87a36fcc7989&view=findings
+    - link "Locations":
+      - /url: /studio/b6645875-1092-4c0a-b997-2305ece337fe/brands/e0b668d3-9463-460f-ba7f-0a69a28516fd?studio=39725f94-b205-46c7-82ae-87a36fcc7989&view=locations
+    - link "Settings":
+      - /url: /studio/b6645875-1092-4c0a-b997-2305ece337fe/brands/e0b668d3-9463-460f-ba7f-0a69a28516fd?studio=39725f94-b205-46c7-82ae-87a36fcc7989&view=settings
+    - link "Billing & usage":
+      - /url: /studio/b6645875-1092-4c0a-b997-2305ece337fe/billing?studio=39725f94-b205-46c7-82ae-87a36fcc7989
+  - heading "Review the source. Keep the meaning." [level=1]
+  - paragraph: These findings are unapproved. They are not brand knowledge until you correct and later approve them.
+  - heading "Capture a source" [level=2]
+  - paragraph: HTTPS websites and text, Markdown, or HTML documents only. PDF and Word files are not supported. Images found on a page are not imported as campaign assets.
+  - group:
+    - text: Website
+    - textbox "Website":
+      - /placeholder: https://example.com
+    - button "Capture website"
+  - text: Upload a text document
+  - button "Upload a text document"
+  - button "Continue without a website"
+  - status: Source captured. Review the unapproved findings.
+  - button "Extract typed findings"
+  - heading "Current findings" [level=2]
+  - list:
+    - listitem:
+      - button "visible excerpt · observed"
+    - listitem:
+      - button "document filename · observed"
+  - complementary:
+    - text: Unapproved draft
+    - heading "visible excerpt" [level=2]
+    - paragraph: WashBodega pickup service WashBodega pickup service WashBodega half price WashBodega half price
+    - paragraph: Source 0f51405f-8df0-4086-b1e1-bb62e445d709 · visible_text · captured 2026-09-29T05:31:41.94+00:00
+    - paragraph: "Excerpt: WashBodega pickup service WashBodega pickup service WashBodega half price WashBodega half price"
+    - text: Correct this finding
+    - textbox "Correct this finding"
+    - text: Why this correction
+    - textbox "Why this correction"
+    - button "Save correction"
+    - paragraph: Draft version 8
+    - heading "Captured sources" [level=2]
+    - list:
+      - listitem: document_upload · document · 2026-09-29T05:31:41.94+00:00 · text/html
+      - listitem: manual · manual · 2026-09-29T05:31:42.745747+00:00
+      - listitem: manual · manual · 2026-09-29T05:31:43.754551+00:00
+      - listitem: manual · manual · 2026-09-29T05:31:44.052068+00:00
+    - heading "Typed findings" [level=2]
+    - paragraph: Offerings, locations, facts, offers, language and visual candidates stay unapproved. Images are not reusable campaign assets.
+    - list:
+      - listitem:
+        - button "location · unknown"
+      - listitem:
+        - button "offering · observed"
+      - listitem:
+        - button "visual candidate · unknown"
+      - listitem:
+        - button "language · observed"
+      - listitem:
+        - button "fact · unknown"
+      - listitem:
+        - button "offer · observed"
+      - listitem:
+        - button "offering · observed"
+      - listitem:
+        - button "offer · unknown"
+    - paragraph: Unknown — not supplied.
+    - paragraph: Source d6abdb13-4c46-4de9-bdd7-a7735eec2586 · manual · captured 2026-09-29T05:31:44.052068+00:00
+    - blockquote: Operator assertion correction.
+    - paragraph: "Offer expiry: Not supplied — review before using a time-limited offer."
+    - group:
+      - text: Correct this assertion
+      - textbox "Correct this assertion"
+      - paragraph: Leave the assertion empty to mark it unknown and clear its expiry.
+      - text: Offer expiry action
+      - combobox "Offer expiry action":
+        - option "Keep current expiry" [selected]
+        - option "Change expiry"
+        - option "Clear expiry"
+      - paragraph: Use an exact date and time with Z or a timezone offset. A date-only source expires at the start of that UTC date; review it here before approval.
+      - text: Why this assertion correction
+      - textbox "Why this assertion correction"
+      - button "Save assertion"
+    - button "Propose voice, audience and positioning"
+    - list:
+      - listitem:
+        - paragraph: voice · observed · medium · en
+        - group: Evidence for voice
+        - group: Correct voice proposal
+      - listitem:
+        - paragraph: audience · unknown · Unknown — not supplied.
+        - group: Evidence for audience
+        - group: Correct audience proposal
+      - listitem:
+        - paragraph: positioning · corrected · medium · Updated WashBodega positioning.
+        - group: Evidence for positioning
+        - group: Correct positioning proposal
+    - button "Ask targeted questions"
+    - list
+    - paragraph: Draft hash 0b9a6b6b1096e47475cef95dab51d74658af03391c2beea07e3e9107e2e93e50
+    - button "Approve this exact draft"
+    - paragraph: Approved version 2 · 0b9a6b6b1096e47475cef95dab51d74658af03391c2beea07e3e9107e2e93e50
+    - text: Campaign pin
+    - textbox "Campaign pin": controls-original
+    - button "Pin approved version"
+    - paragraph: Pinned version 1 · 309b07a4f0d354aa701cac4f05cf8dfdfb0201a45fb62caad7dff33c9cf61245
+    - list:
+      - listitem: location · Unknown — not supplied.
+      - listitem: offering · WashBodega pickup service
+      - listitem: visual_candidate · Unknown — not supplied.
+      - listitem: language · en
+      - listitem: fact · Unknown — not supplied.
+      - listitem: offer · WashBodega half price · expires 2098-01-01T13:00:00.123456+00:00
+      - listitem: offering · WashBodega pickup service
+      - listitem: offer · WashBodega half price · expires 2098-01-01T13:00:00.123456+00:00
+    - list "Pinned proposals":
+      - listitem: voice · observed · en
+      - listitem: audience · unknown · Unknown — not supplied.
+      - listitem: positioning · corrected · WashBodega pickup with friendly service.
+  - paragraph: Findings stay on this brand.

@@ -1,0 +1,39 @@
+
+Running 26 tests using 1 worker
+
+(node:47372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:67:7 › connected platform journeys › keeps unauthenticated studio entry on the live sign-in path (3.6s)
+  ok  2 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:76:7 › connected platform journeys › saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave (26.7s)
+  ok  3 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:186:7 › connected platform journeys › hides forged identities, recovers old links, archives, and invites without outreach (37.5s)
+  ok  4 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:301:7 › connected platform journeys › reads seeded integer billing, missing profile, unavailable, and keyboard skip targets (24.7s)
+  ok  5 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:382:7 › connected platform journeys › retries an aborted in-flight save without mixing a deferred UnPile commit (23.7s)
+  ok  6 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:517:7 › connected platform journeys › holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage (23.6s)
+Preserved 7 synthetic users from this run because cleanup was blocked.
+  ok  7 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:585:7 › connected platform journeys › keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio (25.3s)
+  ok  8 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:56:7 › connected brand knowledge journeys › captures website and document sources for both brands and keeps them after reload (17.0s)
+  ok  9 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:130:7 › connected brand knowledge journeys › records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures (25.1s)
+  ok 10 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:190:7 › connected brand knowledge journeys › hides delayed WashBodega findings and revoked editor access (28.7s)
+  ok 11 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:289:7 › connected brand knowledge journeys › keeps findings usable at 200% zoom with keyboard and reduced motion (15.3s)
+  ok 12 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:346:7 › connected brand knowledge journeys › reviews every proposal source and corrects offer expiry without losing text or approved history (20.6s)
+Preserved 7 synthetic users from this run because cleanup was blocked.
+  ok 13 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:457:7 › connected brand knowledge journeys › extracts, proposes, questions and approves WashBodega and UnPile without mixing brands (18.4s)
+(node:50992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:67:7 › connected platform journeys › keeps unauthenticated studio entry on the live sign-in path (3.6s)
+  ok 15 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:76:7 › connected platform journeys › saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave (27.2s)
+  ok 16 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:186:7 › connected platform journeys › hides forged identities, recovers old links, archives, and invites without outreach (37.2s)
+  ok 17 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:301:7 › connected platform journeys › reads seeded integer billing, missing profile, unavailable, and keyboard skip targets (24.4s)
+  ok 18 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:382:7 › connected platform journeys › retries an aborted in-flight save without mixing a deferred UnPile commit (23.7s)
+  ok 19 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:517:7 › connected platform journeys › holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage (23.9s)
+Preserved 7 synthetic users from this run because cleanup was blocked.
+  ok 20 [mobile-chromium] › apps\web\e2e\platform-connected.spec.ts:585:7 › connected platform journeys › keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio (28.8s)
+  ok 21 [mobile-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:56:7 › connected brand knowledge journeys › captures website and document sources for both brands and keeps them after reload (15.9s)
+  ok 22 [mobile-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:130:7 › connected brand knowledge journeys › records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures (25.0s)
+  ok 23 [mobile-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:190:7 › connected brand knowledge journeys › hides delayed WashBodega findings and revoked editor access (28.1s)
+  ok 24 [mobile-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:289:7 › connected brand knowledge journeys › keeps findings usable at 200% zoom with keyboard and reduced motion (13.9s)
+  ok 25 [mobile-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:346:7 › connected brand knowledge journeys › reviews every proposal source and corrects offer expiry without losing text or approved history (17.2s)
+Preserved 7 synthetic users from this run because cleanup was blocked.
+  ok 26 [mobile-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:457:7 › connected brand knowledge journeys › extracts, proposes, questions and approves WashBodega and UnPile without mixing brands (14.3s)
+
+  26 passed (10.6m)

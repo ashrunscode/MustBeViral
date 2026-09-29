@@ -18,6 +18,12 @@ import { usePlatformMutation } from './platform-mutation';
 import { readWebPublicEnvironment } from '../../config/public-environment';
 import { resolveBrowserCoreBaseUrl } from '../../lib/core/browser-client';
 import { createBrowserSupabaseClient } from '../../lib/supabase/client';
+import {
+  AssertionCorrectionForm,
+  ProposalReview,
+  type AssertionCorrection,
+  type ProposalCorrection,
+} from './knowledge-review-controls';
 
 type Brand = PlatformOutput<'get_brand'>['record'];
 type Candidate = PlatformOutput<'get_knowledge_draft'>['current_candidates'][number];
@@ -159,11 +165,10 @@ export function BrandFindings({
   const ask = usePlatformMutation();
   const answer = usePlatformMutation();
   const assertionCorrection = usePlatformMutation();
+  const proposalCorrection = usePlatformMutation();
   const approve = usePlatformMutation();
   const pin = usePlatformMutation();
   const [selectedAssertionId, setSelectedAssertionId] = useState<string | null>(null);
-  const [assertionText, setAssertionText] = useState('');
-  const [assertionExcerpt, setAssertionExcerpt] = useState('');
   const [questionAnswers, setQuestionAnswers] = useState<Record<string, string>>({});
   const [pinKey, setPinKey] = useState('campaign-preview');
   const [pinGeneration, setPinGeneration] = useState(0);
@@ -194,6 +199,7 @@ export function BrandFindings({
     isDenied(ask.error) ||
     isDenied(answer.error) ||
     isDenied(assertionCorrection.error) ||
+    isDenied(proposalCorrection.error) ||
     isDenied(approve.error) ||
     isDenied(pin.error) ||
     isDenied(uploadError);
@@ -225,6 +231,7 @@ export function BrandFindings({
           ask.error ??
           answer.error ??
           assertionCorrection.error ??
+          proposalCorrection.error ??
           approve.error ??
           pin.error ??
           uploadError
@@ -256,6 +263,7 @@ export function BrandFindings({
     ask.error ??
     answer.error ??
     assertionCorrection.error ??
+    proposalCorrection.error ??
     approve.error ??
     pin.error ??
     uploadError;
@@ -269,6 +277,7 @@ export function BrandFindings({
     ask.pending ||
     answer.pending ||
     assertionCorrection.pending ||
+    proposalCorrection.pending ||
     approve.pending ||
     pin.pending ||
     uploadBusy;
@@ -456,27 +465,35 @@ export function BrandFindings({
     resetPages();
   }
 
-  async function saveAssertion(event: FormEvent) {
-    event.preventDefault();
+  async function saveAssertion(correctionInput: AssertionCorrection) {
     if (!selectedAssertion || draftVersion === null) return;
     const result = await assertionCorrection.mutate('correct_brand_assertion', {
       workspace_id: brand.workspace_id,
       brand_id: brand.id,
       assertion_id: selectedAssertion.id,
       expected_version: draftVersion,
-      value_text: assertionText.trim() === '' ? null : assertionText,
-      excerpt: assertionExcerpt.trim() || 'Operator assertion correction.',
+      ...correctionInput,
     });
     if (!result) {
       reviewQuery.refresh();
       return;
     }
-    setAssertionText('');
-    setAssertionExcerpt('');
     const next = result.current_assertions.find(
       (item) => item.supersedes_id === selectedAssertion.id,
     );
     if (next) setSelectedAssertionId(next.id);
+    resetPages();
+  }
+
+  async function saveProposal(proposalId: string, correctionInput: ProposalCorrection) {
+    if (draftVersion === null) return;
+    await proposalCorrection.mutate('correct_brand_proposal', {
+      workspace_id: brand.workspace_id,
+      brand_id: brand.id,
+      proposal_id: proposalId,
+      expected_version: draftVersion,
+      ...correctionInput,
+    });
     resetPages();
   }
 
@@ -776,30 +793,22 @@ export function BrandFindings({
                   Source {selectedAssertion.source_id} · {selectedAssertion.method} · captured{' '}
                   {selectedAssertion.captured_at}
                 </p>
+                <blockquote data-testid="assertion-excerpt">{selectedAssertion.excerpt}</blockquote>
+                {selectedAssertion.kind === 'offer' ? (
+                  <p data-testid="assertion-expiry">
+                    Offer expiry:{' '}
+                    {selectedAssertion.ends_at ??
+                      'Not supplied — review before using a time-limited offer.'}
+                  </p>
+                ) : null}
                 {canWrite ? (
-                  <form className="platform-stack" onSubmit={(event) => void saveAssertion(event)}>
-                    <label>
-                      Correct this assertion
-                      <textarea
-                        value={assertionText}
-                        maxLength={4000}
-                        disabled={busy}
-                        onChange={(event) => setAssertionText(event.target.value)}
-                      />
-                    </label>
-                    <label>
-                      Why this assertion correction
-                      <input
-                        value={assertionExcerpt}
-                        maxLength={2000}
-                        disabled={busy}
-                        onChange={(event) => setAssertionExcerpt(event.target.value)}
-                      />
-                    </label>
-                    <button className="platform-primary" type="submit" disabled={busy}>
-                      {assertionCorrection.pending ? 'Saving assertion…' : 'Save assertion'}
-                    </button>
-                  </form>
+                  <AssertionCorrectionForm
+                    key={selectedAssertion.id}
+                    assertion={selectedAssertion}
+                    busy={busy}
+                    pending={assertionCorrection.pending}
+                    onSave={saveAssertion}
+                  />
                 ) : null}
               </>
             ) : null}
@@ -810,11 +819,14 @@ export function BrandFindings({
             ) : null}
             <ul className="platform-stack" data-testid="proposal-list">
               {proposals.map((item) => (
-                <li key={item.id} data-testid={`proposal-${item.kind}`}>
-                  {item.kind} · {item.status}
-                  {item.confidence ? ` · ${item.confidence}` : ''} ·{' '}
-                  {item.value_text ?? 'Unknown — not supplied.'}
-                </li>
+                <ProposalReview
+                  key={item.id}
+                  proposal={item}
+                  assertions={assertions}
+                  canWrite={canWrite}
+                  busy={busy}
+                  onSave={(input) => saveProposal(item.id, input)}
+                />
               ))}
             </ul>
             {canWrite ? (
@@ -942,6 +954,7 @@ function PinnedVersion({
     return <p className="platform-muted">No pin stored for this campaign key.</p>;
   if (query.error !== undefined) return <p role="alert">{platformErrorMessage(query.error)}</p>;
   const snapshot = query.data?.brand_version.snapshot.assertions ?? [];
+  const proposals = query.data?.brand_version.snapshot.proposals ?? [];
   return (
     <div data-testid="pinned-version">
       <p>
@@ -951,6 +964,14 @@ function PinnedVersion({
         {snapshot.map((item) => (
           <li key={item.id}>
             {item.kind} · {item.value_text ?? 'Unknown — not supplied.'}
+            {item.ends_at ? ` · expires ${item.ends_at}` : ''}
+          </li>
+        ))}
+      </ul>
+      <ul aria-label="Pinned proposals">
+        {proposals.map((item) => (
+          <li key={item.id}>
+            {item.kind} · {item.status} · {item.value_text ?? 'Unknown — not supplied.'}
           </li>
         ))}
       </ul>

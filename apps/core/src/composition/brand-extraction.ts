@@ -12,6 +12,7 @@ export async function runBrandExtraction(input: {
   readonly workspaceId: string;
   readonly brandId: string;
   readonly sourceId: string;
+  readonly actorId: string;
   readonly requestId: string;
   readonly dbFetch?: typeof fetch;
 }): Promise<unknown> {
@@ -26,7 +27,7 @@ export async function runBrandExtraction(input: {
   const text = new TextDecoder('utf-8', { fatal: false, ignoreBOM: true }).decode(bytes);
   const assertions = extractRepresentativeAssertions({ mediaType: sniff, text });
   const machine = new PrivilegedSourceMachinePort(input.bindings, input.dbFetch);
-  return await machine.recordExtraction(input.sourceId, assertions, input.requestId);
+  return await machine.recordExtraction(input.sourceId, assertions, input.requestId, input.actorId);
 }
 
 export function extractionNeedsBytes(data: unknown): boolean {

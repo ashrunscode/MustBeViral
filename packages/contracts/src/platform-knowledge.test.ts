@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   BrandAssertionRecordSchema,
+  BrandProposalRecordSchema,
   createPlatformHandlers,
   mapCompletedSourceCapture,
   PLATFORM_ERRORS,
@@ -19,6 +20,75 @@ const brand = {
 };
 
 describe('brand knowledge contracts', () => {
+  it.each([
+    'infinity',
+    'tomorrow',
+    '2026-02-30T10:00:00Z',
+    '2098-01-01T24:00:00Z',
+    '2098-01-01T12:00:00',
+    '9999-12-31T23:59:59-14:00',
+  ])('rejects invalid offer expiry %s before transport', (ends_at) => {
+    expect(
+      PLATFORM_OPERATIONS.correct_brand_assertion.input.safeParse({
+        ...brand,
+        assertion_id: context.actor_id,
+        expected_version: 1,
+        value_text: 'Sale',
+        excerpt: 'Reviewed expiry',
+        ends_at,
+      }).success,
+    ).toBe(false);
+  });
+  it('accepts exact proposal corrections while refusing client-controlled evidence and status', () => {
+    const input = {
+      ...brand,
+      proposal_id: context.actor_id,
+      expected_version: 1,
+      value_text: 'Reviewed voice',
+      excerpt: 'Owner statement',
+    };
+    expect(PLATFORM_OPERATIONS.correct_brand_proposal.input.safeParse(input).success).toBe(true);
+    expect(
+      PLATFORM_OPERATIONS.correct_brand_proposal.input.safeParse({ ...input, value_text: null })
+        .success,
+    ).toBe(true);
+    expect(
+      PLATFORM_OPERATIONS.correct_brand_proposal.input.safeParse({
+        ...input,
+        evidence_field_keys: [],
+      }).success,
+    ).toBe(false);
+    expect(
+      PLATFORM_OPERATIONS.correct_brand_proposal.input.safeParse({ ...input, status: 'approved' })
+        .success,
+    ).toBe(false);
+    expect(platformMcpToolCatalog().some((tool) => tool.name === 'correct_brand_proposal')).toBe(
+      true,
+    );
+  });
+  it('accepts full nine-offering provenance while retaining the 50-assertion boundary', () => {
+    const proposal = {
+      id: context.actor_id,
+      ...brand,
+      draft_id: context.actor_id,
+      kind: 'positioning',
+      status: 'inferred',
+      value_text: 'Nine offerings',
+      confidence: 'low',
+      evidence_field_keys: Array.from({ length: 9 }, (_, index) => `offering-${index}`),
+      excerpt: 'Source offerings',
+      supersedes_id: null,
+      created_by: context.actor_id,
+      created_at: '2026-09-29T00:00:00.000Z',
+    };
+    expect(BrandProposalRecordSchema.safeParse(proposal).success).toBe(true);
+    expect(
+      BrandProposalRecordSchema.safeParse({
+        ...proposal,
+        evidence_field_keys: Array.from({ length: 51 }, (_, index) => `offering-${index}`),
+      }).success,
+    ).toBe(false);
+  });
   it('registers knowledge operations on the shared platform_knowledge RPC', () => {
     expect(PLATFORM_OPERATIONS.start_website_capture.rpc).toBe('platform_knowledge');
     expect(PLATFORM_OPERATIONS.start_document_capture.rpc).toBe('platform_knowledge');

@@ -7,11 +7,11 @@ launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P4
-  title: Representative extraction, voice proposals and owner-approved brand versions
+  title: Change detection, expiry lifecycle, contradiction handling and catalog import
   state: planned
 release_target: full-platform
-active_work_packet: WP-PLATFORM-W2-002
-next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+active_work_packet: WP-PLATFORM-W2-003
+next_action: Detect source and assertion changes against an approved brand version.
 decisions_pending: []
 blockers: []
 legacy:
@@ -27,14 +27,14 @@ environments:
     notes:
       V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
-      preserve_until_v2_cutover keeps legacy V1 unchanged. Under adr-0009-standing-release-authority,
-      agents may deploy staging-verified merged commits through the guarded release in
-      deploy-rollback-incidents to the existing V2 production Workers mustbeviral-v2-production-core
-      and mustbeviral-v2-production-collaboration, only when its pre-deploy checks find no Worker
-      setting change, and to mustbeviral-web-production once that runbook records a Vercel deploy
-      command. Production database writes, secrets,
-      environment variables, routes, DNS, traffic, new resources and feature, provider or charge
-      enablement still need a dated owner sentence.
+      preserve_until_v2_cutover keeps legacy V1 unchanged. Under
+      adr-0009-standing-release-authority, agents may deploy staging-verified merged commits through
+      the guarded release in deploy-rollback-incidents to the existing V2 production Workers
+      mustbeviral-v2-production-core and mustbeviral-v2-production-collaboration, only when its
+      pre-deploy checks find no Worker setting change, and to mustbeviral-web-production once that
+      runbook records a Vercel deploy command. Production database writes, secrets, environment
+      variables, routes, DNS, traffic, new resources and feature, provider or charge enablement
+      still need a dated owner sentence.
   staging:
     generation: viralgraph-cleanroom-v2
     state: ready
@@ -53,23 +53,30 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-14T23:51:02.177Z
+  at: 2026-09-29T05:50:12.750Z
   by: pnpm agent:finish
   evidence:
-    - governance/evidence/WP-PLATFORM-W2-001/completion-and-review-2026-09-14.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/verification-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-001/successor-WP-PLATFORM-W2-002.yaml
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/desktop-findings-forced-colors.png
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/mobile-findings-forced-colors.png
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-source-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-db-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/independent-final-review.md
-    - governance/evidence/WP-PLATFORM-W2-001/completion-2026-09-14/stack-stop-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/acceptance.md
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/browser.log
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/claude-review.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/codex-review.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/desktop-knowledge-review-controls.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-a11y-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-a11y-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-forced-colors.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-washbodega-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-findings-washbodega-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/mobile-knowledge-review-controls.png
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/source-anchor.json
+    - governance/evidence/WP-PLATFORM-W2-002/completion-2026-09-29/verification-receipt.json
+    - governance/evidence/WP-PLATFORM-W2-002/successor-WP-PLATFORM-W2-003.yaml

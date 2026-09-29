@@ -1,3 +1,5 @@
+import { parseKnowledgeExpiry } from './knowledge-expiry';
+
 export const assertionKinds = [
   'offering',
   'location',
@@ -106,9 +108,29 @@ function attributeValue(attrs: string, name: string): string {
 }
 
 function parseOfferEnd(raw: string): string | null {
-  const match = raw.trim().match(/^(\d{4}-\d{2}-\d{2})(?:[T\s].*)?$/u);
-  if (!match) return null;
-  return `${match[1]}T00:00:00.000Z`;
+  const value = raw.trim();
+  // Accept an explicit date/time/zone separated by whitespace, without accepting a date prefix
+  // from an otherwise unsupported expression. The original expression remains in the excerpt.
+  const spaced = value.match(
+    /^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?)\s*(Z|[+-]\d{2}:\d{2})$/u,
+  );
+  const timestamp = spaced ? `${spaced[1]}T${spaced[2]}${spaced[3]}` : value;
+  // Date-only evidence retains the existing conservative, exclusive start-of-day UTC boundary.
+  return parseKnowledgeExpiry(
+    /^\d{4}-\d{2}-\d{2}$/u.test(value) ? `${value}T00:00:00.000Z` : timestamp,
+  );
+}
+
+function requireValidOfferEnd(
+  item: RepresentativeAssertion,
+  supplied: string,
+): RepresentativeAssertion {
+  if (supplied.trim() === '' || item.ends_at !== null) return item;
+  return {
+    ...item,
+    status: 'disputed',
+    excerpt: quote(`Expiry requires review (${supplied}). ${item.excerpt}`),
+  };
 }
 
 function labeledHtml(html: string, attr: string, kind: AssertionKind): RepresentativeAssertion[] {
@@ -123,7 +145,8 @@ function labeledHtml(html: string, attr: string, kind: AssertionKind): Represent
     const attrs = match[2] ?? '';
     const name = match[3] ?? '';
     const body = (match[4] ?? '').replaceAll(/<[^>]+>/gu, ' ');
-    const ends = kind === 'offer' ? parseOfferEnd(attributeValue(attrs, 'data-offer-ends')) : null;
+    const suppliedEnd = kind === 'offer' ? attributeValue(attrs, 'data-offer-ends') : '';
+    const ends = kind === 'offer' ? parseOfferEnd(suppliedEnd) : null;
     const item = observed(
       kind,
       name,
@@ -132,7 +155,7 @@ function labeledHtml(html: string, attr: string, kind: AssertionKind): Represent
       'data_attribute',
       ends,
     );
-    if (item) items.push(item);
+    if (item) items.push(kind === 'offer' ? requireValidOfferEnd(item, suppliedEnd) : item);
     index += 1;
   }
   return items;
@@ -186,9 +209,11 @@ function labeledLines(
       const raw = match[1] ?? '';
       const [name, rest] = raw.split(/\s+—\s+|\s+-\s+/u, 2);
       let ends: string | null = null;
+      let suppliedEnd = '';
       if (kind === 'offer') {
-        const endMatch = raw.match(/\buntil\s+(\d{4}-\d{2}-\d{2})/iu);
-        ends = endMatch ? parseOfferEnd(endMatch[1] ?? '') : null;
+        const endMatch = raw.match(/\buntil\s+(.+)$/iu);
+        suppliedEnd = endMatch?.[1]?.replace(/[.,;]$/u, '') ?? '';
+        ends = parseOfferEnd(suppliedEnd);
       }
       const item = observed(
         kind,
@@ -198,7 +223,7 @@ function labeledLines(
         method,
         ends,
       );
-      if (item) items.push(item);
+      if (item) items.push(kind === 'offer' ? requireValidOfferEnd(item, suppliedEnd) : item);
       break;
     }
   }

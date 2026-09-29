@@ -94,6 +94,11 @@
   margin: 0;
   padding: 0;
 }
+.platform-review-details > summary {
+  min-height: 44px;
+  padding: 10px 0;
+  cursor: pointer;
+}
 .platform-topbar {
   min-height: 76px;
   padding: 16px 32px;
@@ -177,6 +182,7 @@
   overflow: visible;
 }
 .platform-main {
+  container: platform-main / inline-size;
   width: 100%;
   max-width: 1440px;
   min-width: 0;
@@ -223,12 +229,14 @@
   background: var(--card);
   overflow: hidden;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 .platform-pad {
   padding: 24px;
 }
 .platform-stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   align-content: start;
 }
@@ -326,6 +334,13 @@
 .platform-inline-input {
   flex: 1;
   min-width: 180px;
+}
+/* Reflow on available content width, including zoom, rather than only viewport width. */
+@container platform-main (max-width: 680px) {
+  .platform-split,
+  .platform-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 @media (max-width: 1000px) {
   .platform-main {

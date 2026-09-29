@@ -2638,6 +2638,9 @@ export type Database = {
         Row: {
           setup_fee_paid_at: string | null;
           stripe_customer_id: string | null;
+          stripe_subscription_event_created_at: string | null;
+          stripe_subscription_event_id: string | null;
+          stripe_subscription_event_type: string | null;
           stripe_subscription_id: string | null;
           subscription_status: string;
           updated_at: string;
@@ -2647,6 +2650,9 @@ export type Database = {
         Insert: {
           setup_fee_paid_at?: string | null;
           stripe_customer_id?: string | null;
+          stripe_subscription_event_created_at?: string | null;
+          stripe_subscription_event_id?: string | null;
+          stripe_subscription_event_type?: string | null;
           stripe_subscription_id?: string | null;
           subscription_status?: string;
           updated_at?: string;
@@ -2656,6 +2662,9 @@ export type Database = {
         Update: {
           setup_fee_paid_at?: string | null;
           stripe_customer_id?: string | null;
+          stripe_subscription_event_created_at?: string | null;
+          stripe_subscription_event_id?: string | null;
+          stripe_subscription_event_type?: string | null;
           stripe_subscription_id?: string | null;
           subscription_status?: string;
           updated_at?: string;
@@ -2784,24 +2793,52 @@ export type Database = {
         };
         Returns: Json;
       };
-      apply_stripe_subscription_update: {
-        Args: {
-          p_request_id: string;
-          p_setup_fee_paid: boolean;
-          p_stripe_customer_id: string;
-          p_stripe_event_id: string;
-          p_stripe_subscription_id: string;
-          p_subscription_status: string;
-          p_workspace_id: string;
-        };
-        Returns: Json;
-      };
+      apply_stripe_subscription_update:
+        | {
+            Args: {
+              p_request_id: string;
+              p_setup_fee_paid: boolean;
+              p_stripe_customer_id: string;
+              p_stripe_event_id: string;
+              p_stripe_subscription_id: string;
+              p_subscription_status: string;
+              p_workspace_id: string;
+            };
+            Returns: Json;
+          }
+        | {
+            Args: {
+              p_request_id: string;
+              p_setup_fee_paid: boolean;
+              p_stripe_customer_id: string;
+              p_stripe_event_created: number;
+              p_stripe_event_id: string;
+              p_stripe_event_type: string;
+              p_stripe_subscription_id: string;
+              p_subscription_status: string;
+              p_workspace_id: string;
+            };
+            Returns: Json;
+          };
       apply_stripe_wallet_credit: {
         Args: {
           p_amount_micros: number;
           p_event_type: string;
           p_metadata?: Json;
           p_request_id: string;
+          p_stripe_customer_id: string;
+          p_stripe_event_id: string;
+          p_workspace_id: string;
+        };
+        Returns: Json;
+      };
+      apply_stripe_wallet_top_up: {
+        Args: {
+          p_amount_micros: number;
+          p_event_type: string;
+          p_metadata?: Json;
+          p_request_id: string;
+          p_stripe_checkout_session_id: string;
           p_stripe_customer_id: string;
           p_stripe_event_id: string;
           p_workspace_id: string;
@@ -3089,10 +3126,24 @@ export type Database = {
         };
         Returns: Json;
       };
-      record_brand_extraction: {
-        Args: { p_assertions: Json; p_request_id: string; p_source_id: string };
-        Returns: Json;
-      };
+      record_brand_extraction:
+        | {
+            Args: {
+              p_assertions: Json;
+              p_request_id: string;
+              p_source_id: string;
+            };
+            Returns: Json;
+          }
+        | {
+            Args: {
+              p_actor_id: string;
+              p_assertions: Json;
+              p_request_id: string;
+              p_source_id: string;
+            };
+            Returns: Json;
+          };
       record_brand_source_capture: {
         Args: {
           p_expected_attempt_count: number;
@@ -3143,26 +3194,16 @@ export type Database = {
         };
         Returns: Json;
       };
-      record_stripe_webhook_event:
-        | {
-            Args: {
-              p_event_type: string;
-              p_livemode: boolean;
-              p_payload_hash: string;
-              p_stripe_event_id: string;
-            };
-            Returns: Json;
-          }
-        | {
-            Args: {
-              p_event_type: string;
-              p_livemode: boolean;
-              p_payload_hash: string;
-              p_request_id: string;
-              p_stripe_event_id: string;
-            };
-            Returns: Json;
-          };
+      record_stripe_webhook_event: {
+        Args: {
+          p_event_type: string;
+          p_livemode: boolean;
+          p_payload_hash: string;
+          p_request_id: string;
+          p_stripe_event_id: string;
+        };
+        Returns: Json;
+      };
       refund_run_capture: {
         Args: {
           p_amount_micros: number;

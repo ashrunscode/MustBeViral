@@ -6,8 +6,8 @@ currency: USD
 unit: integer_usd_micros
 ceiling: 100000000
 settled: 0
-reserved: 0
-remaining: 100000000
+reserved: 41443313
+remaining: 58556687
 scope: September 28 full-platform recovery and implementation instruction across all successor packets.
 accounting:
   - Existing application daily limits are not this budget and never reset this cumulative balance.
@@ -15,5 +15,55 @@ accounting:
   - Record actual settlement and safe receipt reference; do not store credentials, signed URLs or customer media.
   - No ad spend is authorized from this budget; no new paid subscription is silently activated.
   - Preserve this receipt and carry its reference into successor evidence rather than creating a fresh ceiling.
-entries: []
-verification: No paid external-service calls have been made by this recovery execution through H5 authority preparation.
+entries:
+  - id: h6-claude-review-777384d
+    service: Claude Code opus high independent source review
+    authentication: Existing claude.ai Max subscription
+    native_budget_cap_micros: 20000000
+    pre_call_reservation_micros: 25000000
+    reported_list_price_micros: 19349741
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 19349741
+    receipt: Local recovery h6-review/claude-native.json; session 5cd7c9a6-a877-4110-99fb-7d49a5c82c0a
+    notes: Provider-reported list-price valuation is rounded up and reserved conservatively; it is not an invoice or proof of a separate charge.
+  - id: h6-claude-review-55c9571-budget-stop
+    service: Claude Code opus high independent source review
+    authentication: Existing claude.ai Max subscription
+    native_budget_cap_micros: 10000000
+    pre_call_reservation_micros: 10000000
+    reported_list_price_micros: 10530822
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 10530822
+    receipt: Local recovery h6-review-corrected/claude-native.json; session a133beb5-928b-4d10-ba66-b5610cf2eaf1
+    notes: Native budget check stopped the attempt without a verdict. Its soft cap was exceeded by 530822 micros; the complete reported valuation remains reserved.
+  - id: h6-claude-review-55c9571-scoped
+    service: Claude Code opus high independent source review
+    authentication: Existing claude.ai Max subscription
+    native_budget_cap_micros: 5000000
+    pre_call_reservation_micros: 10000000
+    reported_list_price_micros: 3525145
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 3525145
+    receipt: Local recovery h6-review-corrected/claude-scoped-native.json; session d8352dfb-b578-4b54-b717-a9bcd73c2f48
+    notes: Read-only review passed its stated source scope. Invocation excluded unused MCP connectors while retaining existing settings, hooks and plan permissions. No separate cash charge is proven.
+  - id: h6-claude-review-controls
+    service: Claude Code opus high independent review of the W2 controls repair
+    authentication: Existing claude.ai Max subscription
+    native_budget_cap_micros: 5000000
+    pre_call_reservation_micros: 10000000
+    reported_list_price_micros: 4551026
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 4551026
+    receipt: Local recovery h6-review-controls/claude-native.json; session 566ccb8e-c02c-4e1f-ae3c-9ab6661b9a40
+    notes: Static review passed its stated scope; an independent Codex review found two further blockers. The complete reported valuation remains reserved, with no separate cash charge proven.
+  - id: h6-claude-review-machine-actor
+    service: Claude Code opus high independent review of final W2 actor and expiry repairs
+    authentication: Existing claude.ai Max subscription
+    native_budget_cap_micros: 5000000
+    pre_call_reservation_micros: 10000000
+    reported_list_price_micros: 3486579
+    status: incremental_cash_settlement_unverified
+    reserved_micros: 3486579
+    receipt: Local recovery h6-review-machine-actor/claude-native.json; session a1f77e85-31a9-40df-8c0f-df34b13c0e79
+    notes: Native source review passed at 7cbead99df4fadce4b6cb8739ca159b134fa0707. Reported valuation 3.4865785000000007 USD is rounded up to integer micros; no separate cash charge is proven.
+verification: No provider generation, publishing or deployment spending. Cumulative reported review valuations of 41443313 micros remain reserved until incremental cash settlement is established. Codex review used existing ChatGPT authentication; no API billing receipt was emitted.

@@ -82,6 +82,8 @@ function rpcFailureKind(error: SupabasePostgrestError): SupabaseFailureKind | nu
   if (message.includes('GRAPH_INVALID')) return 'graph_invalid';
   if (
     message.includes('REVISION_CONFLICT') ||
+    message.includes('EXPIRED_OFFER') ||
+    message.includes('CONTRADICTORY_KNOWLEDGE') ||
     message.includes('IDEMPOTENCY_CONFLICT') ||
     message.includes('QUOTE_STALE') ||
     message.includes('QUOTE_ALREADY_USED') ||
@@ -156,6 +158,8 @@ export function mapSupabaseFailure(status: number, body: unknown): SupabaseDataA
     'VALIDATION_FAILED',
     'IDEMPOTENCY_CONFLICT',
     'REVISION_CONFLICT',
+    'EXPIRED_OFFER',
+    'CONTRADICTORY_KNOWLEDGE',
     'RESOURCE_CONFLICT',
     'RESOURCE_ARCHIVED',
     'SOURCE_UNSAFE',

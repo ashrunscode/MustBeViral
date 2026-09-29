@@ -45,6 +45,7 @@ const fields: Record<string, unknown> = {
   source_id: location,
   candidate_id: location,
   assertion_id: location,
+  proposal_id: location,
   question_id: location,
   brand_version_id: location,
   answer_text: 'Operator answer',

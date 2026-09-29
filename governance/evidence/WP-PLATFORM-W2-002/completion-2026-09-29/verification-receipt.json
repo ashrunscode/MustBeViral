@@ -1,0 +1,80 @@
+{
+  "branch": "main",
+  "results": [
+    {
+      "ended_at": "2026-09-29T05:27:16.7170137Z",
+      "command": "corepack pnpm install --frozen-lockfile",
+      "log": "install.log",
+      "exit": 0,
+      "started_at": "2026-09-29T05:26:52.4207871Z"
+    },
+    {
+      "ended_at": "2026-09-29T05:28:02.306883Z",
+      "command": "corepack pnpm agent:preflight",
+      "log": "preflight.log",
+      "exit": 0,
+      "started_at": "2026-09-29T05:27:16.9152506Z"
+    },
+    {
+      "ended_at": "2026-09-29T05:36:14.3590953Z",
+      "command": "corepack pnpm agent:verify",
+      "log": "agent-verify.log",
+      "exit": 0,
+      "started_at": "2026-09-29T05:28:02.4337436Z"
+    },
+    {
+      "ended_at": "2026-09-29T05:36:17.1467196Z",
+      "command": "node packages/db/scripts/verify-platform-knowledge-fixtures.mjs",
+      "log": "knowledge-fixtures.log",
+      "exit": 0,
+      "started_at": "2026-09-29T05:36:14.5363875Z"
+    },
+    {
+      "ended_at": "2026-09-29T05:36:23.5138084Z",
+      "command": "node packages/db/scripts/verify-platform-knowledge-connected.mjs",
+      "log": "knowledge-connected.log",
+      "exit": 0,
+      "started_at": "2026-09-29T05:36:17.2949558Z"
+    },
+    {
+      "ended_at": "2026-09-29T05:36:24.4230164Z",
+      "command": "node governance/scripts/validate-diff-scope.mjs --base 87b2e14cce4ddd5f41aafe621321c88bea38164f --head HEAD",
+      "log": "diff-scope.log",
+      "exit": 0,
+      "started_at": "2026-09-29T05:36:23.7227175Z"
+    }
+  ],
+  "tree": "a15e171802a3936ca41efd93ffb0e3e9963119ab",
+  "checkout": "C:\\dev\\mbv-g10",
+  "head": "7cbead99df4fadce4b6cb8739ca159b134fa0707",
+  "node": "v24.18.0",
+  "source_base": "87b2e14cce4ddd5f41aafe621321c88bea38164f",
+  "external_log_directory": "C:\\dev\\backups\\MustBeViral\\release-recovery-20260928\\h6-final-gates",
+  "log_hashes": [
+    {
+      "file": "install.log",
+      "sha256": "b2964944778eb171733888227638358932d04c217c4e62c84a4877f116bb2a52"
+    },
+    {
+      "file": "preflight.log",
+      "sha256": "c240322fc3563c32205146529f1195e727fff44c9a77f1818074f34916de5a01"
+    },
+    {
+      "file": "agent-verify.log",
+      "sha256": "ca3128829e553585c19ea9983725bd4fd3f0bc1f621f4a7d1987b61b4057f55c"
+    },
+    {
+      "file": "knowledge-fixtures.log",
+      "sha256": "f02401b8d00c74bd18f358a16e09ab1eb277934d30f78ae9d714fd343abe28cf"
+    },
+    {
+      "file": "knowledge-connected.log",
+      "sha256": "7346c7c76ae06edaaa6dbc6dcc5148e2940e6d1f10026e84d7cf9b6afb966a0f"
+    },
+    {
+      "file": "diff-scope.log",
+      "sha256": "d32b8c043344be5bb063e0563f498069b3d757d1eaf40cb19f45ed8bd1495c76"
+    }
+  ],
+  "pnpm": "11.12.0"
+}

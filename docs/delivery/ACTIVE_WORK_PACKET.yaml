@@ -1,18 +1,18 @@
 schema_version: 1
-id: WP-PLATFORM-W2-002
-spec_revision: 7
-title: Representative extraction, voice proposals and owner-approved brand versions
+id: WP-PLATFORM-W2-003
+spec_revision: 3
+title: Change detection, expiry lifecycle, contradiction handling and catalog import
 phase: P4
 status: ready
 priority: critical
 branch: main
-objective: Implement W2.2 representative extraction quality, W2.3 voice/audience/positioning
-  proposals and W2.4 owner-approved brand versions on W2.1 captures so an operator can extract
-  offerings, locations, facts, offers, visual candidates and language, review
-  voice/audience/positioning proposals with evidence and confidence, and approve an exact immutable
-  brand version for WashBodega and UnPile. Preserve W1 studio, brand, invitation and billing
-  contracts and W2.1 source capture, provenance, unapproved drafts, manual/no-website parity and
-  immutable corrections. No outreach, provider runs, charging or Stripe mutation.
+objective: Implement W2.5 change detection, expiry, contradiction lifecycle and manual/catalog
+  imports on owner-approved W2.4 brand versions so stale offers cannot become newly approved
+  content, conflicting facts request review, and a business can import a catalog or recapture a
+  changed source without mutating an approved snapshot. Preserve W1 studio, brand, invitation and
+  billing contracts and W2.1–W2.4 capture, extraction, proposals, questions, exact-hash approval and
+  campaign pins. No outreach, provider runs, charging or Stripe mutation. Do not claim Wave 2 exited
+  or Wave 3 started.
 authority_refs:
   - product-contract
   - release-scope
@@ -35,7 +35,7 @@ required_skills:
   - design-qa-loop
   - git-release-quality
 depends_on:
-  - WP-PLATFORM-W2-001
+  - WP-PLATFORM-W2-002
 scope:
   allowed_paths:
     - apps/web/**
@@ -53,16 +53,6 @@ scope:
     - .superdesign/**
     - PROJECT_STATE.yaml
     - llms.txt
-    # Paths already present on origin/codex/viralgraph-cleanroom while this packet was private.
-    - brand/**
-    - .agents/skills/**
-    - .claude/skills/**
-    - AGENTS.md
-    - .prettierignore
-    - apps/collaboration/**
-    - packages/collaboration/**
-    - packages/billing/**
-    - README.md
   forbidden_paths:
     - .github/workflows/**
     - docs/archive/**
@@ -80,106 +70,79 @@ scope:
     - local-env-secrets
 deliverables:
   - >
-    Extract typed offerings, locations, facts, offers, visual candidates and language from existing
-    W2.1 HTML, plaintext and Markdown captures plus deterministic synthetic fixtures. Every
-    assertion keeps source reference, capture time, excerpt, method and tenant/brand identity.
-    Unknowns stay unknown. Do not add PDF/DOCX parsers, live public crawlers, paid-provider
-    inference or reusable campaign assets from website images.
+    Detect source and assertion changes against an approved brand version without silently replacing
+    owner-confirmed facts. Recapture and re-extraction produce a reviewable difference. Do not add a
+    scheduled recapture pipeline, new queue driver or live enablement flag in this packet.
   - >
-    Produce voice, audience and positioning proposals with evidence, confidence and status so a
-    reviewer can distinguish observed facts from hypotheses and correct them. Inferred personas stay
-    labeled. Missing audience or voice evidence is not filled with stereotypes. Proposal generation
-    must not start a provider run or spend.
+    Add expiry lifecycle so an offer that becomes stale after approval cannot leak into a later
+    approved version or campaign pin without operator review. Preserve the W2.4 approve-time expired
+    offer and contradiction refusal.
   - >
-    Deliver editable findings, source review, targeted questions and in-app owner-approved immutable
-    brand versions on existing WashBodega and UnPile brands. Approval is an authorized operator
-    command against one exact version, not a chat permission and not auto-approval. Corrections
-    create a new version. A later campaign pin/read reuses the approved snapshot. Approval must
-    refuse a version that already contains known expired offers or contradictory assertions. That
-    guard is required correctness for W2.4, not W2.5 change detection, expiry lifecycle or catalog
-    import. Preserve W2.1 manual/no-website drafts and immutable corrections.
+    Handle contradictory facts as an operator review lifecycle, including disputed status and
+    required correction, without auto-resolving or mixing WashBodega and UnPile knowledge.
   - >
-    Preserve W1 resource and permission contracts and W2.1 capture, provenance, unapproved-draft,
-    manual/no-website and correction behavior. No new implicit execution, media, billing,
-    publishing, invitation-mail or queue-driver authority. Integer money and charging kill switches
-    stay unchanged. Images found on a website remain visual candidates until a later asset packet.
+    Add manual/catalog import for bounded text, Markdown, HTML or spreadsheet-like catalogs using
+    the existing source/assertion pattern. Unknowns stay unknown. Do not add PDF/DOCX parsers, live
+    public crawlers, paid-provider inference or reusable campaign assets from website images.
   - >
-    Verify desktop and mobile connected WashBodega and UnPile journeys from capture or manual draft
-    through extraction, proposals, correction and owner approval, with independent review evidence,
-    then prepare WP-PLATFORM-W2-003 for W2.5 change detection, expiry, contradiction lifecycle and
-    manual/catalog imports. Do not claim Wave 2 exited or Wave 3 started.
+    Verify desktop and mobile connected WashBodega and UnPile journeys for recapture difference,
+    expiry, contradiction review and catalog import, then stop. Do not claim Wave 2 exited or Wave 3
+    started.
 public_interfaces:
-  - The SSO-protected Vercel team alias, the workers.dev Core URL, and (owner-authorized deviation,
-    governance/evidence/WP-P3-009/production-collaboration-traffic-decision-2026-09-16.md) the
-    workers.dev production collaboration URL are in scope. Legacy V1, MustBeViral custom domains,
-    public signup, customer admission, provider execution, queues, and charging remain unchanged.
   - >
     Extend authoritative Zod operations and generate REST, typed client, MCP and CLI projections for
-    extract, propose, correct, question, approve-version and pin/read-version commands. Preserve W1
-    identity, setup, presentation and billing operations and W2.1 capture, manual draft and
-    correction operations. Do not add catalog-import or change-monitor commands.
+    change-diff, expiry-review, contradiction-review and catalog-import commands. Preserve W1
+    identity, setup, presentation and billing operations and W2.1–W2.4 capture, extract, propose,
+    question, approve-version and pin/read-version operations.
   - >
-    Additive assertion, proposal, brand-version and pin persistence with explicit ownership, forced
-    RLS, generated database types and application rollback to the prior schema-compatible version.
-    Reuse the W2.1 job/source/candidate pattern. Do not add a new queue driver, live enablement
-    flag, scheduled recapture pipeline or catalog-import schema.
+    Additive change, expiry and import persistence with explicit ownership, forced RLS, generated
+    database types and application rollback to the prior schema-compatible version. Reuse the W2.1
+    job/source/candidate and W2.4 assertion/version/pin pattern. Do not add a new queue driver or
+    live enablement flag.
 steps:
-  - id: w2b-001-representative-extraction
-    title: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+  - id: w2c-001-change-detection
+    title: Detect source and assertion changes against an approved brand version.
     status: pending
-  - id: w2b-002-voice-audience-positioning
-    title: Produce evidence-backed voice, audience and positioning proposals with labeled unknowns.
+  - id: w2c-002-expiry-lifecycle
+    title: Keep stale offers out of later approved versions without silent replacement.
     status: pending
-  - id: w2b-003-approved-brand-versions
-    title: Deliver targeted questions and in-app owner-approved immutable brand versions.
+  - id: w2c-003-contradiction-and-import
+    title: Review contradictory facts and import bounded manual catalogs.
     status: pending
-  - id: w2b-004-journeys-and-successor
-    title: Verify two-brand desktop/mobile approval journeys and prepare WP-PLATFORM-W2-003.
+  - id: w2c-004-journeys-and-wave-close
+    title: Verify two-brand change, expiry and import journeys without claiming Wave 3.
     status: pending
 acceptance:
   automated:
-    - id: representative-extraction-quality
+    - id: change-detection-review
       criterion:
-        Deterministic extractors over synthetic HTML/plaintext/Markdown fixtures for WashBodega,
-        UnPile and additional accepted-roadmap category samples persist typed offerings, locations,
-        facts, offers, visual candidates and language with source reference, capture time, excerpt
-        and method. Fields absent from the fixture remain unknown. Visual candidates are not marked
-        reusable. UnPile fixtures cannot produce WashBodega facts and vice versa. Extraction does
-        not call paid inference providers, perform live public crawls, parse PDF/DOCX or treat
-        prompt-injection text as approved knowledge or a permission change.
+        Recapture or re-extraction against an approved WashBodega or UnPile version produces a
+        reviewable difference with source, capture time, excerpt and method. Approved snapshots stay
+        immutable. Silent replacement of owner-confirmed facts is refused.
       status: pending
       evidence: []
-    - id: labeled-voice-audience-positioning
+    - id: expiry-lifecycle
       criterion:
-        Voice, audience and positioning proposals store evidence links, confidence and status so
-        tests can list observed facts versus inferred hypotheses. Inferred personas cannot become
-        owner-confirmed without the approval command. Missing audience or voice evidence stays
-        unknown rather than a demographic stereotype. Proposal generation does not start a provider
-        run, send outreach or spend.
+        An offer that expires after approval cannot become newly approved content or leak into a
+        later campaign pin without operator review. The W2.4 approve-time expired-offer refusal
+        remains. This is expiry lifecycle, not only the W2.4 guard.
       status: pending
       evidence: []
-    - id: owner-approved-immutable-versions
+    - id: contradiction-and-catalog-import
       criterion:
-        An authorized in-app operator command against an exact draft hash creates an immutable
-        brand_version. A later correction creates a new version and does not mutate the approved
-        snapshot. A campaign pin or pin-read RPC returns that approved version's facts after drafts
-        change. Approve refuses a payload that already contains a known expired offer or
-        contradictory assertion. A brand without a website still reaches the same
-        unapproved-then-approved path through existing W2.1 manual draft and correction commands.
-        Direct table writes are denied. Knowledge, proposals and versions resolve only permitted W1
-        identities. Revoked grants, forged child IDs and stale responses cannot approve or display
-        another brand's knowledge. Passing this guard is not W2.5 change-detection, expiry-lifecycle
-        or catalog-import completeness.
+        Conflicting facts request review and cannot auto-resolve. Bounded text, Markdown, HTML or
+        spreadsheet-like catalog import persists typed assertions with provenance. Unknowns stay
+        unknown. PDF/DOCX, live crawls and paid inference remain refused. UnPile imports cannot
+        produce WashBodega facts and vice versa.
       status: pending
       evidence: []
-    - id: two-brand-journeys-no-spend
+    - id: two-brand-change-journeys
       criterion:
-        Desktop and mobile connected journeys for WashBodega and UnPile go from W2.1 capture or
-        manual draft through extraction, proposals, correction, targeted questions and owner
-        approval without mixing identity, offers, voice or sources. Independent review evidence is
-        recorded for this packet. Extraction never marks drafts approved by default, never sends
-        outreach, never enables charging, never starts a provider run and never writes production
-        remotes. UI stays on the accepted September 9 Lightfield studio direction.
+        Desktop and mobile connected WashBodega and UnPile journeys cover recapture difference,
+        expiry review, contradiction review and catalog import without mixing identity or sources.
+        Independent review evidence is recorded. No outreach, charging, provider run or production
+        remote write. UI stays on the accepted September 9 Lightfield studio direction. Passing this
+        packet is not a Wave 2 exit claim.
       status: pending
       evidence: []
   manual: []
@@ -201,23 +164,22 @@ quality_gates:
     status: pending
     evidence: []
 rollback:
-  strategy:
-    Revert application changes while retaining additive assertion, proposal, brand-version and
-    pin tables. Confirm W1 studio, brand, invitation, mapping and billing commands and W2.1 capture,
-    provenance, unapproved-draft, manual/no-website and correction commands still work. Do not
-    delete tenant data, weaken RLS, auto-approve knowledge, reuse website images as campaign assets
-    or enable checkout to simulate recovery.
+  strategy: Revert application changes while retaining additive change, expiry and import tables.
+    Confirm W1 studio, brand, invitation, mapping and billing commands and W2.1–W2.4 capture,
+    extraction, proposal, question, approval and pin commands still work. Do not delete tenant data,
+    weaken RLS, auto-approve knowledge, reuse website images as campaign assets or enable checkout
+    to simulate recovery.
   remote_actions_required: false
 external_effects:
-  remote_mutation: authorized
+  remote_mutation: read-only
   destructive_remote_actions: false
 handoff:
-  current_step: w2b-001-representative-extraction
-  next_action: Extract offerings, locations, facts, offers, visual candidates and language from W2.1 captures.
+  current_step: w2c-001-change-detection
+  next_action: Detect source and assertion changes against an approved brand version.
   blockers: []
   changed_paths: []
   last_green_checks: []
 completion:
-  successor_packet_id: WP-PLATFORM-W2-003
+  successor_packet_id: WP-PLATFORM-W3-001
   evidence_paths: []
   completed_at: null

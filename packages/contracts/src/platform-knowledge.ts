@@ -1,4 +1,4 @@
-import { classifyPublicHttpsUrl } from '@mustbeviral/domain';
+import { classifyPublicHttpsUrl, parseKnowledgeExpiry } from '@mustbeviral/domain';
 import { z } from 'zod';
 
 import { WireTimestampSchema } from './http';
@@ -9,6 +9,11 @@ import {
   SOURCE_CAPTURE_MAX_BYTES,
   SOURCE_DOCUMENT_TEXT_MAX_CHARS,
 } from './source-policy';
+
+export const KnowledgeExpiryInputSchema = WireTimestampSchema.refine(
+  (value) => parseKnowledgeExpiry(value) !== null,
+  'Invalid offer expiry',
+);
 
 const url = z
   .string()
@@ -67,6 +72,7 @@ const job = { job_id: uuid };
 const source = { source_id: uuid };
 const candidate = { candidate_id: uuid };
 const assertion = { assertion_id: uuid };
+const proposal = { proposal_id: uuid };
 const question = { question_id: uuid };
 const brandVersion = { brand_version_id: uuid };
 const assertionKind = z.enum([
@@ -217,7 +223,7 @@ export const BrandProposalRecordSchema = z
     status: proposalStatus,
     value_text: z.string().max(8000).nullable(),
     confidence: proposalConfidence,
-    evidence_field_keys: z.array(z.string().min(1).max(120)).max(8),
+    evidence_field_keys: z.array(z.string().min(1).max(120)).max(50),
     excerpt: z.string().max(2000),
     supersedes_id: uuid.nullable(),
     created_by: uuid,
@@ -401,7 +407,22 @@ export const PLATFORM_KNOWLEDGE_OPERATIONS = {
         value_text: z.string().max(4000).nullable(),
         excerpt: z.string().min(1).max(2000),
         locator: z.string().max(500).optional(),
-        ends_at: WireTimestampSchema.nullable().optional(),
+        ends_at: KnowledgeExpiryInputSchema.nullable().optional(),
+      })
+      .strict(),
+    output: KnowledgeReviewViewSchema,
+  },
+  correct_brand_proposal: {
+    rpc,
+    method: 'PATCH',
+    path: '/workspaces/{workspace_id}/brands/{brand_id}/proposals/{proposal_id}',
+    input: z
+      .object({
+        ...brand,
+        ...proposal,
+        ...expected,
+        value_text: z.string().max(4000).nullable(),
+        excerpt: z.string().min(1).max(2000),
       })
       .strict(),
     output: KnowledgeReviewViewSchema,
