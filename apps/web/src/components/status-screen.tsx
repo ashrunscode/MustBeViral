@@ -1,4 +1,3 @@
-import { MonoCaps } from '@mustbeviral/ui';
 import type { ReactNode } from 'react';
 
 export interface StatusScreenAction {
@@ -10,7 +9,7 @@ export interface StatusScreenAction {
 export function StatusScreen({
   actions,
   children,
-  eyebrow = 'MustBeViral Studio',
+  eyebrow = 'Must Be Viral',
   title,
 }: Readonly<{
   actions: readonly StatusScreenAction[];
@@ -24,7 +23,7 @@ export function StatusScreen({
         Skip to page content
       </a>
       <section aria-labelledby="status-heading" className="status-card">
-        <MonoCaps>{eyebrow}</MonoCaps>
+        <span className="pub-wordmark">{eyebrow}</span>
         <h1 id="status-heading">{title}</h1>
         <div className="status-body">{children}</div>
         <div className="status-actions">

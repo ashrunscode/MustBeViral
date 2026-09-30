@@ -57,7 +57,7 @@ export function StudioHeader({
   return (
     <header className="studio-header">
       <div className="studio-brand-row">
-        <span className="studio-wordmark">MustBeViral Studio</span>
+        <span className="studio-wordmark">Must Be Viral</span>
         <nav aria-label="Project breadcrumb" className="studio-breadcrumb">
           <MonoCaps>
             Campaigns / {workspaceName ?? titleCaseWorkspace(workspace)} /{' '}

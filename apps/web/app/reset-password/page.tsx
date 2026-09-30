@@ -1,4 +1,3 @@
-import { MonoCaps } from '@mustbeviral/ui';
 import { redirect } from 'next/navigation';
 
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
@@ -31,7 +30,7 @@ export default async function ResetPasswordPage({
         Skip to new password
       </a>
       <section aria-labelledby="auth-heading" className="auth-card">
-        <MonoCaps>MustBeViral Studio</MonoCaps>
+        <span className="pub-wordmark">Must Be Viral</span>
         <h1 id="auth-heading">Choose a new password</h1>
         <p className="auth-intro">
           Set a new password for this recovery session. Studio signs out every session after the
