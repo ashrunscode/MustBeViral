@@ -1,12 +1,27 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-import { LandingPage } from '../src/components/landing-page';
+import { StudioLanding } from '../src/components/studio-landing';
 import { createServerSupabaseClient } from '../src/lib/supabase/server';
 
-export default async function HomePage() {
-  const supabase = await createServerSupabaseClient();
-  const { data } = await supabase.auth.getClaims();
-  if (typeof data?.claims?.sub === 'string') redirect('/studio');
+export const metadata: Metadata = {
+  title: 'Must Be Viral',
+  description:
+    'Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.',
+};
 
-  return <LandingPage />;
+function canReadSession() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  );
+}
+
+export default async function HomePage() {
+  if (canReadSession()) {
+    const supabase = await createServerSupabaseClient();
+    const { data } = await supabase.auth.getClaims();
+    if (typeof data?.claims?.sub === 'string') redirect('/studio');
+  }
+
+  return <StudioLanding locale="en" />;
 }

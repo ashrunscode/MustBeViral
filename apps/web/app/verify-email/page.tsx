@@ -1,5 +1,3 @@
-import { MonoCaps } from '@mustbeviral/ui';
-
 import { readVerifyEmailPrefill } from '../../src/lib/auth/verify-email';
 import { VerifyEmailForm } from './verify-email-form';
 
@@ -17,7 +15,7 @@ export default async function VerifyEmailPage({
         Skip to verification
       </a>
       <section aria-labelledby="verify-heading" className="auth-card">
-        <MonoCaps>MustBeViral Studio</MonoCaps>
+        <span className="pub-wordmark">Must Be Viral</span>
         <h1 id="verify-heading">Verify your email</h1>
         <p className="auth-intro">
           Invited accounts must verify email before Studio access. Open the newest verification link
@@ -27,10 +25,6 @@ export default async function VerifyEmailPage({
         <div className="auth-links">
           <a className="auth-link" href={`/login?${new URLSearchParams({ next }).toString()}`}>
             Back to sign in
-          </a>
-          <span aria-hidden="true">·</span>
-          <a className="auth-link" href="/signup">
-            Request access
           </a>
         </div>
       </section>

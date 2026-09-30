@@ -10,8 +10,8 @@ const geistSans = Geist({ subsets: ['latin'], variable: '--font-sans' });
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
-  title: 'MustBeViral Studio',
-  description: 'A shared studio for brands, creative work and reviewed campaigns.',
+  title: 'Must Be Viral',
+  description: 'Must Be Viral',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

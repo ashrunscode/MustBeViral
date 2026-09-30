@@ -1,6 +1,5 @@
 'use client';
 
-import { MonoCaps } from '@mustbeviral/ui';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -22,7 +21,7 @@ export function ContinueCampaignScreen({
   return (
     <main className="continue-page" id="main-content">
       <section aria-labelledby="continue-heading" className="continue-card">
-        <MonoCaps>MustBeViral Studio</MonoCaps>
+        <span className="studio-wordmark">Must Be Viral</span>
         <h1 id="continue-heading">Continue this campaign</h1>
         <p className="continue-lede">
           Pick up where you left off or start a fresh launch pack. Studio remembers your last

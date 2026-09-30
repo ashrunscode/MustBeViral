@@ -1,5 +1,3 @@
-import { MonoCaps } from '@mustbeviral/ui';
-
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { ForgotPasswordForm } from './forgot-password-form';
 
@@ -26,7 +24,7 @@ export default async function ForgotPasswordPage({
         Skip to password recovery
       </a>
       <section aria-labelledby="auth-heading" className="auth-card">
-        <MonoCaps>MustBeViral Studio</MonoCaps>
+        <span className="pub-wordmark">Must Be Viral</span>
         <h1 id="auth-heading">Reset your password</h1>
         <p className="auth-intro">
           Enter the email associated with your invited Studio workspace. We will send a single-use
@@ -41,10 +39,6 @@ export default async function ForgotPasswordPage({
         <div className="auth-links">
           <a className="auth-link" href={signInUrl}>
             Return to sign in
-          </a>
-          <span aria-hidden="true">·</span>
-          <a className="auth-link" href="/signup">
-            Request access
           </a>
         </div>
       </section>

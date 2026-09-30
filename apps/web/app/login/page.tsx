@@ -1,5 +1,3 @@
-import { MonoCaps } from '@mustbeviral/ui';
-
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { createServerSupabaseClient } from '../../src/lib/supabase/server';
 import { signOut } from './actions';
@@ -37,7 +35,7 @@ export default async function LoginPage({
         Skip to sign in
       </a>
       <section aria-labelledby="auth-heading" className="auth-card">
-        <MonoCaps>MustBeViral Studio</MonoCaps>
+        <span className="pub-wordmark">Must Be Viral</span>
         <h1 id="auth-heading">{signedIn ? 'Your session is active' : 'Sign in'}</h1>
         <p className="auth-intro">
           {signedIn
@@ -67,11 +65,6 @@ export default async function LoginPage({
               <a className="auth-link" href={forgotPasswordUrl}>
                 Forgot password?
               </a>
-              <span aria-hidden="true">·</span>
-              <a className="auth-link" href="/signup">
-                Request access
-              </a>
-              <span aria-hidden="true">·</span>
               <a
                 className="auth-link"
                 href={`/verify-email?${new URLSearchParams({ next }).toString()}`}
