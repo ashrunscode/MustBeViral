@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { createServerSupabaseClient } from '../../src/lib/supabase/server';
 import { ResetPasswordForm } from './reset-password-form';
+import { PublicFooter } from '../../src/components/public-footer';
 
 export const metadata: Metadata = {
   title: 'Choose a new password',
@@ -31,21 +32,24 @@ export default async function ResetPasswordPage({
   }
 
   return (
-    <main className="auth-page">
-      <a className="skip-link" href="#auth-heading">
-        Skip to new password
-      </a>
-      <section aria-labelledby="auth-heading" className="auth-card">
-        <span className="pub-wordmark" translate="no">
-          {'Must\u00a0Be\u00a0Viral'}
-        </span>
-        <h1 id="auth-heading">Choose a new password</h1>
-        <p className="auth-intro">
-          Set a new password for this recovery session. Studio signs out every session after the
-          update so you can sign in again safely.
-        </p>
-        <ResetPasswordForm next={next} />
-      </section>
-    </main>
+    <div className="auth-layout">
+      <main className="auth-page">
+        <a className="skip-link" href="#auth-heading">
+          Skip to new password
+        </a>
+        <section aria-labelledby="auth-heading" className="auth-card">
+          <span className="pub-wordmark" translate="no">
+            {'Must\u00a0Be\u00a0Viral'}
+          </span>
+          <h1 id="auth-heading">Choose a new password</h1>
+          <p className="auth-intro">
+            Set a new password for this recovery session. Studio signs out every session after the
+            update so you can sign in again safely.
+          </p>
+          <ResetPasswordForm next={next} />
+        </section>
+      </main>
+      <PublicFooter compact surface="legal" />
+    </div>
   );
 }

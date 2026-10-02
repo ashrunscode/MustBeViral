@@ -1,3 +1,6 @@
+import Link from 'next/link';
+
+import { PublicFooter } from './public-footer';
 import { PublicHeader } from './public-header';
 import {
   phoneHref,
@@ -8,18 +11,15 @@ import {
 } from './public-copy';
 import { StructuredData, studioStructuredData } from './structured-data';
 import { StudioHeroMedia } from './studio-hero-media';
-
-function slug(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/gu, '-');
-}
+import { StudioOffers } from './studio-offers';
 
 /**
- * The studio page is a frame at screen width, designed at 375 first. The frame holds the whole
- * decision with no footage: the locked lines, the two offers with their prices in the evidence
- * face, and one action with the phone as the only secondary. When a rights-cleared poster and clip
- * exist they take their own block above the lead, with the geometry reserved; nothing ever sits
- * over the native video controls. Below the frame: the cadence, the six kinds of work in the owner's
- * words, the objection with its answer under them, and how to book.
+ * The studio page is a frame at screen width, designed at 375 first. The first screen is the
+ * decision: the locked line, the two prices as titles, one action with the phone as the only
+ * secondary. When a rights-cleared poster and clip exist they take their own block above the lead
+ * with the geometry reserved. Below the frame, type and space carry the rank: the two offers in
+ * full, the cadence, six composed rows in the owner's words, the objection with its answer, the
+ * close, and the one footer.
  */
 export function StudioLanding({
   locale,
@@ -62,46 +62,40 @@ export function StudioLanding({
                 </a>
               </div>
             </div>
-            <div className="studio-frame__offers">
-              {copy.offers.map((offer) => {
-                const id = `offer-${slug(offer.name)}`;
-                return (
-                  <section aria-labelledby={id} className="studio-offer" key={offer.name}>
-                    <h2 id={id} translate="no">
-                      {offer.name}
-                    </h2>
-                    <p className="studio-offer__price">
-                      <span className="pub-price">{offer.price}</span>
-                      <span className="pub-price-unit">{offer.unit}</span>
-                    </p>
-                    {offer.includes.length > 1 ? (
-                      <ul className="studio-offer__includes">
-                        {offer.includes.map((line) => (
-                          <li key={line}>{line}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      offer.includes.map((line) => <p key={line}>{line}</p>)
-                    )}
-                  </section>
-                );
-              })}
-            </div>
+            <dl className="studio-frame__prices">
+              {copy.offers.map((offer) => (
+                <div className="studio-price" key={offer.name}>
+                  <dt translate="no">{offer.name}</dt>
+                  <dd>
+                    <span className="pub-price">{offer.price}</span>
+                    <span className="pub-price-unit">{offer.unit}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </section>
 
           <div className="studio-body">
-            <p className="studio-cadence">{copy.cadence}</p>
+            <StudioOffers offers={copy.offers} />
+
+            {copy.pricing === undefined ? null : (
+              <p className="studio-pricing-link">
+                <Link href={copy.pricing.href}>{copy.pricing.label}</Link>
+              </p>
+            )}
+
+            {copy.cadence === undefined ? null : <p className="studio-cadence">{copy.cadence}</p>}
 
             {copy.kinds === undefined ? null : (
               <section aria-labelledby="studio-kinds" className="studio-kinds">
                 <h2 id="studio-kinds">{copy.kinds.heading}</h2>
-                <dl className="studio-kinds__list">
+                <dl className="studio-rows">
                   {copy.kinds.items.map((kind) => (
-                    <div className="studio-kind" key={kind.name}>
+                    <div className="studio-row" key={kind.name}>
                       <dt>{kind.name}</dt>
                       <dd>
-                        <p className="studio-kind__situation">{kind.situation}</p>
-                        <p className="studio-kind__line">{kind.line}</p>
+                        <p className="studio-row__situation">{kind.situation}</p>
+                        <p className="studio-row__line">{kind.line}</p>
                       </dd>
                     </div>
                   ))}
@@ -133,6 +127,7 @@ export function StudioLanding({
         </main>
       </div>
       <StructuredData data={studioStructuredData(copy, origin)} />
+      <PublicFooter locale={locale} surface="studio" />
     </div>
   );
 }

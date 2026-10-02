@@ -52,7 +52,10 @@ export interface StudioCopy {
   readonly cta: string;
   readonly phone: string;
   readonly offers: readonly [StudioOffer, StudioOffer];
-  readonly cadence: string;
+  /** EN: the approved cadence sentence under the frame. ES carries its approved sentence inside the Full Package offer instead. */
+  readonly cadence?: string;
+  /** EN only: the pricing page, which holds the add-on ranges. */
+  readonly pricing?: { readonly href: string; readonly label: string };
   /** EN only: the six kinds of work in the owner's words (directive of 2026-10-02). No Spanish exists for them yet. */
   readonly kinds?: { readonly heading: string; readonly items: readonly StudioKind[] };
   /** EN: the approved objection pair. ES: the approved results pair, which has no question. */
@@ -65,10 +68,7 @@ export interface StudioCopy {
 export const studioEn: StudioCopy = {
   locale: 'en',
   homeHref: '/',
-  nav: [
-    { href: '/es', label: 'Español' },
-    { href: '/software', label: 'Software' },
-  ],
+  nav: [{ href: '/es', label: 'Español' }],
   skip: 'Skip to main content',
   h1: 'We film Houston.',
   sub: 'Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.',
@@ -95,13 +95,23 @@ export const studioEn: StudioCopy = {
         '4–8 shoots per month, 2–3 hours each',
         '12–16+ edited Reels',
         '120–200 edited photos',
+        'Lifestyle, branding, product and team photography',
+        'Cinematic brand content',
+        'Full creative direction',
         'Monthly content strategy and calendar',
+        'Hook and caption assistance',
+        'Trend research',
+        'Instagram and TikTok optimisation',
+        'Behind-the-scenes and story content',
+        'Monthly strategy meeting',
+        'Priority editing',
         'Drone / aerial included where applicable',
       ],
     },
   ],
   cadence:
     'On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.',
+  pricing: { href: '/pricing', label: 'Pricing, with the add-ons' },
   kinds: {
     heading: 'Your kind of work.',
     items: [
@@ -147,10 +157,7 @@ export const studioEn: StudioCopy = {
 export const studioEs: StudioCopy = {
   locale: 'es',
   homeHref: '/es',
-  nav: [
-    { href: '/', label: 'English' },
-    { href: '/software', label: 'Software' },
-  ],
+  nav: [{ href: '/', label: 'English' }],
   skip: 'Saltar al contenido',
   h1: 'Filmamos Houston.',
   sub: 'Contenido semanal para negocios de Houston: Reels, fotos y un calendario de publicación que sí se cumple.',
@@ -169,11 +176,12 @@ export const studioEs: StudioCopy = {
       name: 'Full Package',
       price: '$3,500',
       unit: 'al mes',
-      includes: [],
+      // The one approved Spanish sentence that states the Full Package deliverables (section 3e, pair 3).
+      includes: [
+        'Con el Full Package vamos a su negocio de cuatro a ocho veces al mes, grabamos, editamos y le entregamos las publicaciones con su calendario.',
+      ],
     },
   ],
-  cadence:
-    'Con el Full Package vamos a su negocio de cuatro a ocho veces al mes, grabamos, editamos y le entregamos las publicaciones con su calendario.',
   answer:
     'Le entregamos el material listo para publicar. El alcance depende de su cuenta y de su mercado.',
   close: 'Agende un test shoot. Dos horas, dos Reels y de 15 a 25 fotos, $700.',
@@ -261,3 +269,46 @@ export const pricingCopy = {
 
 /** Mail link for invited-access requests. Nothing is collected on the site. */
 export const requestAccessHref = `mailto:${studioEmail}?subject=${encodeURIComponent('Request access')}`;
+
+/** Studio add-ons, brand/context.md section 7a and the range rule in 7b. English only. */
+export const studioAddOns = [
+  { name: '24-hour turnaround', price: '+$200–$400 per shoot' },
+  {
+    name: 'Drone',
+    price: '+$300–$600 per shoot',
+    note: 'Included in the Full Package where applicable.',
+  },
+] as const;
+
+/** The studio pricing page: the two offers in full, the add-on ranges, the same one action. */
+export const studioPricingCopy = {
+  skip: 'Skip to main content',
+  h1: 'Pricing',
+  sub: 'Two offers. The price is the price, and no tier below the Full Package is sold.',
+  addOnsHeading: 'Add-ons',
+  addOnsRule: 'The exact figure inside each range is confirmed at booking.',
+  turnaround:
+    'Standard edits come back on the schedule we agree at booking; 24-hour turnaround is an add-on.',
+} as const;
+
+/** The one footer on every public page: the entity, the contact, the place, the legal routes. */
+export const siteFooter = {
+  entity: 'ERLV INC, DBA Must Be Viral',
+  place: 'Houston, Texas',
+  /** brand/context.md section 6: the street address is an open owner item, so the footer says so. */
+  address: 'Street address not yet published.',
+  legal: [
+    { href: '/privacy', label: 'Privacy' },
+    { href: '/terms', label: 'Terms' },
+    { href: '/advertising', label: 'Advertising and AI disclosure' },
+  ],
+  pricing: { href: '/pricing', label: 'Pricing' },
+  studio: { href: '/', label: 'Houston studio' },
+  software: { href: '/software', label: 'Software' },
+  /** On the Spanish page the legal pages are linked in English and said to be in English. */
+  englishNote: 'These pages are in English.',
+  otherSurface: {
+    studio: 'Must Be Viral also makes software.',
+    software: 'Must Be Viral is also a Houston content studio.',
+  },
+} as const;

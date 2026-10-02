@@ -1,11 +1,14 @@
 import {
   phoneDisplay,
   pricingCopy,
+  siteFooter,
   softwareCopy,
   softwarePlans,
+  studioAddOns,
   studioEmail,
   studioEn,
   studioEs,
+  studioPricingCopy,
 } from '../components/public-copy';
 
 /**
@@ -32,12 +35,18 @@ export function buildLlmsText(origin: string | undefined): string {
     `- ${studioEn.sub}`,
     '- Service area: Houston metro. We come to the business.',
     ...offers,
-    '- No tier below the Full Package is sold. No discounts.',
-    `- ${studioEn.cadence}`,
+    ...studioAddOns.map(
+      (addOn) =>
+        `- Add-on, ${addOn.name}: ${addOn.price}.${'note' in addOn ? ` ${addOn.note}` : ''}`,
+    ),
+    `- ${studioPricingCopy.addOnsRule}`,
+    '- No tier below the Full Package is sold. The price is the price.',
+    `- ${studioEn.cadence ?? ''}`,
     `- ${studioEn.close}`,
     `- Phone: ${phoneDisplay}. Email: ${studioEmail}.`,
     '- We make no claim about reach, views, followers or results.',
     `- English page: ${at('/')}`,
+    `- Pricing page: ${at('/pricing')}`,
     `- Spanish page: ${at('/es')} (${studioEs.h1} ${studioEs.sub})`,
     '',
     '## Software',
@@ -54,11 +63,13 @@ export function buildLlmsText(origin: string | undefined): string {
     `- Software page: ${at('/software')}`,
     `- Plans page: ${at('/software/pricing')}`,
     '',
-    '## Contact',
+    '## Contact and legal',
     '',
+    `- ${siteFooter.entity}`,
     `- Phone: ${phoneDisplay}`,
     `- Email: ${studioEmail}`,
-    '- Houston, Texas. Timezone America/Chicago.',
+    '- Houston, Texas. The street address is not yet published. Timezone America/Chicago.',
+    ...siteFooter.legal.map((page) => `- ${page.label}: ${at(page.href)}`),
     '',
   ].join('\n');
 }

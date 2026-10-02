@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { PublicFooter } from './public-footer';
 import { PublicHeader } from './public-header';
 import { pricingCopy, softwarePlans } from './public-copy';
 
@@ -14,10 +15,7 @@ export function SoftwarePricing() {
         <PublicHeader
           currentHref="/software/pricing"
           homeHref="/software"
-          links={[
-            { href: '/software', label: 'Software' },
-            { href: '/', label: 'Houston studio' },
-          ]}
+          links={[{ href: '/software', label: 'Software' }]}
         />
         <main id="pricing-main">
           <header className="pub-hero">
@@ -57,6 +55,7 @@ export function SoftwarePricing() {
           </div>
         </main>
       </div>
+      <PublicFooter surface="software" />
     </div>
   );
 }
