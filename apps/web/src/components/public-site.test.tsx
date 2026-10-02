@@ -107,6 +107,10 @@ describe('legal pages', () => {
     expect(body).toContain('set no cookie, run no analytics and load no advertising tag');
     expect(body).toContain('The request-access page collects nothing and creates no account.');
     expect(body).toContain('Supabase Auth');
+    expect(body).toContain(
+      'or asking for a recovery or verification email sets cookies that Supabase Auth uses',
+    );
+    expect(body).not.toContain('A visitor who does neither receives none.');
     expect(body).toContain('In production nothing sends them anywhere.');
     expect(body).toContain('An invitation can be accepted for seven days');
     expect(body).toContain('Nothing on this site deletes a record held in the database today.');

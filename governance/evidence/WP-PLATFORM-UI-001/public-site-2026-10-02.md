@@ -108,7 +108,7 @@ the composed frame. The one remaining sentence: save `HF_API_KEY_ID` and `HF_API
   record says. Erratum: `films-program-2026-10-02.md`, `release-films-2026-10-02.md` and the
   packet's next action written the same day still said the Core config differed from the deployed
   sources by that flag; that was true of the shas they compared against (`7d740ae`, `fe36f20`), not
-  of the live Workers after the cutover. The next action is corrected in this change.
+  of the live Workers after the cutover. The next action is corrected in the docs change that records the release, after the merge.
 
 ## Gates
 

@@ -58,7 +58,9 @@ export const privacyCopy: LegalPageCopy = {
     {
       // apps/web/app/login/actions.ts, forgot-password/actions.ts, verify-email/actions.ts,
       // reset-password/actions.ts and app/auth/callback (Supabase Auth calls); src/lib/supabase/
-      // proxy.ts (session cookies set only through Supabase Auth); apps/web/app/signup/page.tsx
+      // proxy.ts (cookies set only through Supabase Auth, including the PKCE code verifier that
+      // forgot-password/actions.ts and verify-email/actions.ts store before any link is opened);
+      // apps/web/app/signup/page.tsx
       // (enrollment closed); src/features/platform/platform-frame.tsx (studio sign-out with the
       // default global scope); brand/context.md section 9 and docs/architecture/SYSTEM_OVERVIEW.md
       // (Resend as the Supabase Auth mail relay).
@@ -66,7 +68,7 @@ export const privacyCopy: LegalPageCopy = {
       paragraphs: [
         'People sign in with an email and a password handled by Supabase Auth. Accounts are not created on this site; enrollment is closed.',
         'The sign-in, password-recovery and verification screens each take an email address and pass it to Supabase Auth, and nowhere else. Supabase Auth sends a recovery or verification message to that address when an account exists, and delivers it through Resend.',
-        'Signing in, or opening a recovery or verification link, sets the session cookies that Supabase Auth uses. A visitor who does neither receives none. Signing out from the studio ends the session on every device where that account was signed in.',
+        'Signing in, opening a recovery or verification link, or asking for a recovery or verification email sets cookies that Supabase Auth uses: a session, or the code verifier that the link will need. A visitor who does none of these receives none. Signing out from the studio ends the session on every device where that account was signed in.',
       ],
     },
     {
