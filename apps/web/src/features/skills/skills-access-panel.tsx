@@ -3,6 +3,8 @@
 import { Button, Dialog, LedgerTable, MonoCaps } from '@mustbeviral/ui';
 import { useEffect, useState } from 'react';
 
+import { SessionExpiredAction } from '../../components/session-expired-action';
+import { P1B_SESSION_ENDED } from '../../lib/core/p1b-session';
 import {
   createP1bManagementClient,
   type SkillListItem,
@@ -120,7 +122,9 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
   // An error that was already on the page when the dialog opened stays on the page.
   const errorInDialog = (publishOpen || publishedVersion !== null) && !errorPredatesDialog;
   const errorAlert =
-    error === null ? null : (
+    error === null ? null : error === P1B_SESSION_ENDED ? (
+      <SessionExpiredAction className="access-panel__error" />
+    ) : (
       <p className="access-panel__error" role="alert">
         {error}
       </p>

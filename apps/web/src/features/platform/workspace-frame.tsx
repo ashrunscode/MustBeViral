@@ -13,24 +13,11 @@ import {
   type CampaignContext,
   type CampaignStep,
 } from './platform-navigation';
+import { readCampaignContext } from './campaign-context';
 import { usePlatformQuery } from './use-platform-query';
 
 /** Workflow segments that fill the main region edge to edge. */
 const APP_HEIGHT_SEGMENTS = new Set(['brief', 'canvas', 'quote', 'review', 'compare', 'receipt']);
-
-function readContext(params: URLSearchParams): CampaignContext {
-  const pick = (key: string) => {
-    const value = params.get(key);
-    return value === null || value === '' ? undefined : value;
-  };
-  return {
-    studio: pick('studio'),
-    brand: pick('brand'),
-    canvas: pick('canvas'),
-    revision: pick('revision'),
-    run: pick('run'),
-  };
-}
 
 /**
  * Frames every route under /studio/[workspace] that is not a brand, project or owner billing
@@ -54,7 +41,7 @@ export function WorkspaceFrame({
   )
     return children;
   const segment = pathname.split('/').filter(Boolean).at(-1) ?? 'brief';
-  const context = readContext(searchParams);
+  const context = readCampaignContext(searchParams);
   const step = campaignStepForSegment(segment);
   return (
     <CampaignShell

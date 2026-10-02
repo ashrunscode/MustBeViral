@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  Button,
-  Card,
-  Chip,
-  LedgerTable,
-  MonoCaps,
-  QuotePill,
-  formatUsdMicros,
-} from '@mustbeviral/ui';
+import { Button, Card, LedgerTable, MonoCaps, QuotePill, formatUsdMicros } from '@mustbeviral/ui';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -30,21 +22,91 @@ import {
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
 import { WorkerRunStartPort, type RunStartPort } from '../../../../../src/features/run/run-port';
+import { useCampaignContext } from '../../../../../src/features/platform/campaign-context';
+import {
+  campaignHref,
+  isResourceId,
+  workspaceBillingHref,
+  type CampaignContext,
+} from '../../../../../src/features/platform/platform-navigation';
 import styles from './quote-flow.module.css';
+
+function billingBlockTitle(reason: string | null): string {
+  if (reason === 'charging_disabled') return 'Charging is turned off';
+  if (reason === 'setup_fee_unpaid') return 'The setup fee is unpaid';
+  if (reason === 'subscription_inactive') return 'The subscription is not active';
+  if (reason === 'insufficient_wallet') return 'The saved wallet cannot cover this run';
+  return 'Billing blocks this run';
+}
+
+function providerSwitchSentence(reason: string | null): string {
+  if (reason === 'generation_disabled') return 'Generation is switched off in this environment.';
+  if (reason === 'provider_routes_disabled')
+    return 'Provider routes are switched off in this environment.';
+  return 'Provider runs are switched off in this environment.';
+}
+
+export function BlockedRunNotice({
+  context,
+  result,
+  workspace,
+}: Readonly<{
+  context: CampaignContext;
+  result:
+    | { readonly type: 'billing_blocked'; readonly reason: string | null; readonly message: string }
+    | {
+        readonly type: 'provider_unavailable';
+        readonly reason: string | null;
+        readonly message: string;
+      };
+  workspace: string;
+}>) {
+  const billing = result.type === 'billing_blocked';
+  return (
+    <div
+      className={`${styles.notice} ${styles.noticeError}`}
+      role="alert"
+      data-result={result.type}
+      data-reason={result.reason ?? undefined}
+    >
+      <strong>
+        {billing ? billingBlockTitle(result.reason) : 'Runs are turned off right now'}
+      </strong>
+      <span>
+        {billing
+          ? `${result.message} Nothing was charged and no provider work started. Your plan and this quote are saved.`
+          : `${providerSwitchSentence(result.reason)} This is a setting, not an outage. Nothing starts and nothing is charged. Your plan and this quote are saved.`}
+      </span>
+      {billing && isResourceId(context.studio) ? (
+        <Link
+          className="mbv-button mbv-button--ghost"
+          href={workspaceBillingHref(workspace, context.studio, context.brand)}
+        >
+          Open workspace billing
+        </Link>
+      ) : null}
+    </div>
+  );
+}
 import { RunProgress } from './run-progress';
 
 export function QuoteResultNotice({
   canvasId,
+  context = {},
   onRequote,
   result,
   workspace,
 }: Readonly<{
   onRequote?: () => void;
   canvasId?: string;
+  context?: CampaignContext;
   result: QuoteConfirmResult | null;
   workspace: string;
 }>) {
   if (result === null) return null;
+  if (result.type === 'billing_blocked' || result.type === 'provider_unavailable') {
+    return <BlockedRunNotice context={context} result={result} workspace={workspace} />;
+  }
   if (result.type === 'ok') {
     return (
       <div className={`${styles.notice} ${styles.noticeSuccess}`} role="status" data-result="ok">
@@ -103,7 +165,12 @@ export function QuoteResultNotice({
           href={
             canvasId === undefined
               ? `/studio/${workspace}/canvas?state=conflict`
-              : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+              : campaignHref(workspace, 'plan', {
+                  ...context,
+                  canvas: canvasId,
+                  revision: undefined,
+                  run: undefined,
+                })
           }
         >
           Open canvas recovery
@@ -147,21 +214,50 @@ export function QuoteResultNotice({
 
 function QuoteLoadState({
   canvasId,
+  context = {},
   result,
   workspace,
 }: Readonly<{
   canvasId?: string;
+  context?: CampaignContext;
   result: Exclude<QuoteReadResult, { type: 'ok' }> | null;
   workspace: string;
 }>) {
   if (result?.type === 'session_expired') {
     return (
-      <div id="main-content" className={styles.quotePage}>
+      <div id="main-content" className={`${styles.quotePage} ${styles.single}`}>
         <section className={styles.quoteStage} aria-labelledby="quote-title">
           <Card className={styles.quoteCard} feedback="error">
             <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
             <h1 id="quote-title">Review this run before spending</h1>
             <SessionExpiredAction className={`${styles.notice} ${styles.noticeError}`} />
+          </Card>
+        </section>
+      </div>
+    );
+  }
+  if (result?.type === 'billing_blocked' || result?.type === 'provider_unavailable') {
+    return (
+      <div id="main-content" className={`${styles.quotePage} ${styles.single}`}>
+        <section className={styles.quoteStage} aria-labelledby="quote-title">
+          <Card className={styles.quoteCard} feedback="error">
+            <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
+            <h1 id="quote-title">Review this run before spending</h1>
+            <BlockedRunNotice context={context} result={result} workspace={workspace} />
+            <Link
+              className={styles.quietBack}
+              href={
+                canvasId === undefined
+                  ? `/studio/${workspace}/canvas`
+                  : campaignHref(workspace, 'plan', {
+                      ...context,
+                      canvas: canvasId,
+                      run: undefined,
+                    })
+              }
+            >
+              Back to the plan
+            </Link>
           </Card>
         </section>
       </div>
@@ -180,7 +276,7 @@ function QuoteLoadState({
               ? `Canvas ${result.canvas_id} was not found.`
               : result.message;
   return (
-    <div id="main-content" className={styles.quotePage}>
+    <div id="main-content" className={`${styles.quotePage} ${styles.single}`}>
       <section className={styles.quoteStage} aria-labelledby="quote-title">
         <Card className={styles.quoteCard} feedback={result === null ? 'loading' : 'error'}>
           <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
@@ -198,7 +294,12 @@ function QuoteLoadState({
                 href={
                   canvasId === undefined
                     ? `/studio/${workspace}/canvas`
-                    : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+                    : campaignHref(workspace, 'plan', {
+                        ...context,
+                        canvas: canvasId,
+                        revision: undefined,
+                        run: undefined,
+                      })
                 }
               >
                 Open canvas recovery
@@ -277,6 +378,7 @@ export function QuoteFlow({
   const [acknowledged, setAcknowledged] = useState(false);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<QuoteConfirmResult | null>(null);
+  const context = useCampaignContext();
 
   useEffect(() => {
     if (startInRunStage) return;
@@ -325,6 +427,7 @@ export function QuoteFlow({
     return (
       <QuoteLoadState
         {...(canvasId === undefined ? {} : { canvasId })}
+        context={context}
         result={loadResult}
         workspace={workspace}
       />
@@ -372,6 +475,19 @@ export function QuoteFlow({
     const next = await runStartPort.confirm({ quote, acknowledged, nowMs });
     setResult(next);
     setPending(false);
+    // The run id joins the link so a refresh, a shared link or the step nav lands on this run.
+    if (next.type === 'ok' && dataMode === 'worker' && canvasId !== undefined) {
+      window.history.replaceState(
+        window.history.state,
+        '',
+        campaignHref(workspace, 'budget', {
+          ...context,
+          canvas: canvasId,
+          revision: quote.revision,
+          run: next.runId,
+        }),
+      );
+    }
   }
 
   async function requote() {
@@ -412,6 +528,7 @@ export function QuoteFlow({
 
           <QuoteResultNotice
             {...(canvasId === undefined ? {} : { canvasId })}
+            context={context}
             result={result}
             workspace={workspace}
             onRequote={() => void requote()}
@@ -462,7 +579,8 @@ export function QuoteFlow({
 
           <div className={styles.impact}>
             <span>
-              <span aria-hidden="true">↳</span> rerun affects 4 nodes
+              {quote.lineItems.length} {quote.lineItems.length === 1 ? 'node' : 'nodes'} priced in
+              this quote
             </span>
             <span className={styles.countdown}>
               <MonoCaps>
@@ -472,9 +590,9 @@ export function QuoteFlow({
           </div>
           <div className={styles.capsRow}>
             <MonoCaps>
-              Run cap {formatUsdMicros(quote.runCapMicros)} · Day cap{' '}
-              {formatUsdMicros(quote.workspaceDayCapMicros)} (used{' '}
-              {formatUsdMicros(quote.workspaceDayUsedMicros)})
+              Run cap {formatUsdMicros(quote.runCapMicros)}. Day cap{' '}
+              {formatUsdMicros(quote.workspaceDayCapMicros)}, used{' '}
+              {formatUsdMicros(quote.workspaceDayUsedMicros)}.
             </MonoCaps>
           </div>
           <label className={styles.acknowledgment} htmlFor="quote-acknowledgment">
@@ -495,52 +613,53 @@ export function QuoteFlow({
             href={
               canvasId === undefined
                 ? `/studio/${workspace}/canvas`
-                : `/studio/${workspace}/canvas?canvas=${encodeURIComponent(canvasId)}`
+                : campaignHref(workspace, 'plan', {
+                    ...context,
+                    canvas: canvasId,
+                    revision: quote.revision,
+                    run: undefined,
+                  })
             }
           >
-            Back to canvas
+            Back to the plan
           </Link>
         </Card>
       </section>
 
       <aside className={styles.sidePanel} aria-labelledby="impact-title">
-        <h2 id="impact-title">Run impact</h2>
-        <div className={styles.miniGraph} aria-label="Mini graph of affected descendants">
-          <span className={styles.miniLine} />
-          <span className={styles.miniNode}>
-            <MonoCaps>Brief</MonoCaps>
-          </span>
-          <span className={`${styles.miniNode} ${styles.miniAffected}`}>
-            <MonoCaps>Logic</MonoCaps>
-          </span>
-          <span className={styles.miniNode}>
-            <MonoCaps>Pack</MonoCaps>
-          </span>
-        </div>
-        <div className={styles.legend}>
-          <span>
-            <i className={`${styles.legendSwatch} ${styles.miniAffected}`} />
-            Affected descendant
-          </span>
-          <span>
-            <i className={styles.legendSwatch} />
-            Retained node
-          </span>
-        </div>
-        <div className={styles.prechecks}>
-          <h3>QA pre-checks</h3>
-          <div className={styles.checkList}>
-            <span>
-              Claims boundary <Chip status="verified">Pass</Chip>
-            </span>
-            <span>
-              Asset rights <Chip status="verified">Pass</Chip>
-            </span>
-            <span>
-              Motion safe area <Chip status="running">Pending</Chip>
-            </span>
+        <h2 id="impact-title">What this run covers</h2>
+        <dl className={styles.coverage}>
+          <div>
+            <dt>Nodes priced</dt>
+            <dd>{quote.lineItems.length}</dd>
           </div>
-        </div>
+          <div>
+            <dt>Route</dt>
+            <dd>{quote.route}</dd>
+          </div>
+          <div>
+            <dt>Pinned revision</dt>
+            <dd>{quote.revision}</dd>
+          </div>
+          <div>
+            <dt>Maximum charge</dt>
+            <dd>{total}</dd>
+          </div>
+          <div>
+            <dt>Run cap</dt>
+            <dd>{formatUsdMicros(quote.runCapMicros)}</dd>
+          </div>
+          <div>
+            <dt>Day cap used</dt>
+            <dd>
+              {formatUsdMicros(quote.workspaceDayUsedMicros)} of{' '}
+              {formatUsdMicros(quote.workspaceDayCapMicros)}
+            </dd>
+          </div>
+        </dl>
+        <p className={styles.coverageNote}>
+          The charge can only be lower than the maximum. Nothing starts until you confirm.
+        </p>
       </aside>
 
       <div className={styles.confirmBar}>
@@ -578,10 +697,6 @@ export function QuoteFlow({
           </Button>
         )}
       </div>
-      <footer className={styles.footer}>
-        <MonoCaps>Quote latency: 142ms · Affected nodes: 4 · Region: us-east-1</MonoCaps>
-        <MonoCaps>v2.0.4-studio</MonoCaps>
-      </footer>
     </div>
   );
 }

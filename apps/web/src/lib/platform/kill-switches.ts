@@ -25,6 +25,15 @@ function parseKillSwitchPayload(value: unknown): PlatformKillSwitchSnapshot {
   });
 }
 
+/** The read result keeps whether the switches were actually read; a failure is not "closed". */
+export async function readPlatformKillSwitches(
+  supabase: SupabaseClient,
+): Promise<Readonly<{ known: boolean; snapshot: PlatformKillSwitchSnapshot }>> {
+  const { data, error } = await supabase.rpc('get_platform_kill_switches');
+  if (error !== null) return { known: false, snapshot: DEFAULT_PLATFORM_KILL_SWITCHES };
+  return { known: true, snapshot: parseKillSwitchPayload(data) };
+}
+
 export async function fetchPlatformKillSwitches(
   supabase: SupabaseClient,
 ): Promise<PlatformKillSwitchSnapshot> {

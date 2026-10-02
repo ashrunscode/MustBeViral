@@ -194,7 +194,7 @@
   flex-direction: column;
   gap: 24px;
 }
-.platform-rail-toggle {
+.platform-app .platform-rail-toggle {
   display: none;
 }
 .platform-wordmark {
@@ -793,7 +793,7 @@
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
-  .platform-rail-toggle {
+  .platform-app .platform-rail-toggle {
     display: inline-flex;
     min-height: 44px;
   }

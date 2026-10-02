@@ -105,6 +105,11 @@ const mf = new Miniflare({
         CORS_ALLOWED_ORIGINS: 'http://127.0.0.1:3111',
         PROVIDER_RUNS_ENABLED: 'false',
         QUEUES_ENABLED: 'false',
+        // A fixed local-only signing key so packshot uploads and artifact reads work in the harness.
+        ARTIFACT_ACCESS_SIGNING_KEY:
+          'local-knowledge-harness-artifact-access-key-not-a-secret-0000',
+        // The upload URL's public origin derives from this fixture URL; the webhook route stays closed.
+        FAL_WEBHOOK_URL: 'http://127.0.0.1:8789/v1/webhooks/fal',
       },
       r2Buckets: { MEDIA_BUCKET: 'mustbeviral-v2-development-media' },
       hyperdrives: {

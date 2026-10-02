@@ -1,4 +1,5 @@
 import type { ApiKeyScope } from '@mustbeviral/contracts';
+import { P1B_SESSION_ENDED } from './p1b-session';
 
 import { createBrowserSupabaseClient } from '../supabase/client';
 import { resolveBrowserCoreBaseUrl } from './browser-client';
@@ -59,7 +60,7 @@ async function accessToken(): Promise<string> {
   const supabase = createBrowserSupabaseClient();
   const { data, error } = await supabase.auth.getSession();
   if (error !== null || data.session?.access_token === undefined) {
-    throw new Error('Sign in is required to manage API keys.');
+    throw new Error(P1B_SESSION_ENDED);
   }
   return data.session.access_token;
 }

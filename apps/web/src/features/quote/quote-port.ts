@@ -35,6 +35,12 @@ export type QuoteReadResult =
       readonly actual_revision_id: string;
     }
   | { readonly type: 'graph_invalid'; readonly message: string }
+  | { readonly type: 'billing_blocked'; readonly reason: string | null; readonly message: string }
+  | {
+      readonly type: 'provider_unavailable';
+      readonly reason: string | null;
+      readonly message: string;
+    }
   | { readonly type: 'forbidden' }
   | SessionExpiredResult
   | { readonly type: 'not_found'; readonly canvas_id: string }
@@ -68,6 +74,12 @@ export type QuoteConfirmResult =
       readonly type: 'conflict';
       readonly expected_revision_id: string;
       readonly actual_revision_id: string;
+    }
+  | { readonly type: 'billing_blocked'; readonly reason: string | null; readonly message: string }
+  | {
+      readonly type: 'provider_unavailable';
+      readonly reason: string | null;
+      readonly message: string;
     }
   | { readonly type: 'forbidden' }
   | SessionExpiredResult
@@ -216,6 +228,20 @@ export class WorkerQuotePort implements QuoteReadPort {
     }
     if (error.code === 'GRAPH_INVALID') {
       return { type: 'graph_invalid', message: error.message };
+    }
+    if (error.code === 'BILLING_BLOCKED') {
+      return {
+        type: 'billing_blocked',
+        reason: detailString(error.details, 'reason') ?? null,
+        message: error.message,
+      };
+    }
+    if (error.code === 'MODEL_UNAVAILABLE') {
+      return {
+        type: 'provider_unavailable',
+        reason: detailString(error.details, 'reason') ?? null,
+        message: error.message,
+      };
     }
     if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
     if (error.code === 'NOT_FOUND') return { type: 'not_found', canvas_id: this.canvasId };

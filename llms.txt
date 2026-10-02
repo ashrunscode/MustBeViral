@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
-current_step: ui-004-flows
-next_action: Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team and settings against the existing handlers.
+current_step: ui-005-sweep
+next_action: Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and Core.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

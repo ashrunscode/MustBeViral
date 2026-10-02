@@ -190,6 +190,8 @@ async function callTool(
         context,
         'MODEL_UNAVAILABLE',
         'Provider-backed execution is not enabled.',
+        false,
+        { reason: 'provider_runs_disabled' },
       );
       return context.json(rpcResult(id, mcpToolResult(context, envelope, true)), 200);
     }

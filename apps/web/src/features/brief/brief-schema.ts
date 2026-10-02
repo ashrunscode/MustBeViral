@@ -203,14 +203,7 @@ export function emptyBriefDraft(): BriefDraft {
 
 /** Worker self-session draft. Synthetic staging assets are selectable; claim chips stay editable. */
 export function stagingWorkerDraft(): BriefDraft {
-  return {
-    ...emptyBriefDraft(),
-    assets: {
-      packshots: [...STAGING_SYNTHETIC_PACKSHOTS],
-      squarePackshotReady: false,
-      rightsAttested: false,
-    },
-  };
+  return emptyBriefDraft();
 }
 
 export function briefSectionState(

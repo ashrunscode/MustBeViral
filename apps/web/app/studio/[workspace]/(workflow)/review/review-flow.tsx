@@ -22,6 +22,11 @@ import {
 } from '../../../../../src/features/review/review-port';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
+import { useCampaignContext } from '../../../../../src/features/platform/campaign-context';
+import {
+  campaignHref,
+  type CampaignContext,
+} from '../../../../../src/features/platform/platform-navigation';
 import { CollaborationSidebar } from '../../../../../src/features/collaboration/collaboration-panel';
 import { ReviewDraftPanel } from '../../../../../src/features/collaboration/draft-panels';
 import {
@@ -87,10 +92,16 @@ export function ReviewResultNotice({
 }
 
 export function ReviewRecoveryNotice({
+  context = {},
   runId,
   summary,
   workspace,
-}: Readonly<{ runId: string | undefined; summary: ReviewSummary; workspace: string }>) {
+}: Readonly<{
+  context?: CampaignContext;
+  runId: string | undefined;
+  summary: ReviewSummary;
+  workspace: string;
+}>) {
   if (summary.recovery === null) return null;
   return (
     <div
@@ -104,11 +115,12 @@ export function ReviewRecoveryNotice({
       </div>
       <p>{summary.recovery.whatFailed}</p>
       <p data-review-settlement="true">
-        Run settlement: {formatUsdMicros(summary.authorizedMicros)} authorized ·{' '}
-        {formatUsdMicros(summary.capturedMicros)} captured ·{' '}
-        {formatUsdMicros(summary.releasedMicros)} released ·{' '}
-        {formatUsdMicros(summary.refundedMicros)} refunded · {formatUsdMicros(summary.netMicros)}{' '}
-        net · {summary.settlementStatus} · {formatUsdMicros(summary.pendingMicros)} pending.
+        Run settlement: {formatUsdMicros(summary.authorizedMicros)} authorized,{' '}
+        {formatUsdMicros(summary.capturedMicros)} captured,{' '}
+        {formatUsdMicros(summary.releasedMicros)} released,{' '}
+        {formatUsdMicros(summary.refundedMicros)} refunded, {formatUsdMicros(summary.netMicros)}{' '}
+        net, {summary.settlementStatus.replaceAll('_', ' ')},{' '}
+        {formatUsdMicros(summary.pendingMicros)} pending.
       </p>
       <p>
         {summary.recovery.retained}{' '}
@@ -118,15 +130,9 @@ export function ReviewRecoveryNotice({
       </p>
       <p>{summary.recovery.nextAction}</p>
       <div className={styles.recoveryActions}>
-        <Link href={`/studio/${workspace}/brief`}>Edit campaign brief</Link>
-        <Link
-          href={
-            runId === undefined
-              ? `/studio/${workspace}/receipt`
-              : `/studio/${workspace}/receipt?run=${encodeURIComponent(runId)}`
-          }
-        >
-          Open receipt
+        <Link href={campaignHref(workspace, 'brief', context)}>Edit the campaign brief</Link>
+        <Link href={campaignHref(workspace, 'results', { ...context, run: runId ?? context.run })}>
+          Open the receipt
         </Link>
       </div>
     </div>
@@ -142,12 +148,14 @@ function mediaForPlacement(
 }
 
 export function ComposedReview({
+  approvingId = null,
   campaignName,
   concepts,
   onApprove,
   onDescribe,
   onInspect,
 }: Readonly<{
+  approvingId?: string | null;
   campaignName: string;
   concepts: readonly ReviewConcept[];
   onApprove: (concept: ReviewConcept) => void;
@@ -181,7 +189,7 @@ export function ComposedReview({
             onClick={() => setSelectedId(candidate.id)}
           >
             <MonoCaps>
-              Concept {String(candidate.index)} · {candidate.title}
+              Concept {String(candidate.index)}: {candidate.title}
             </MonoCaps>
             <span>{candidate.angle}</span>
           </button>
@@ -212,7 +220,7 @@ export function ComposedReview({
         </div>
         <article className={`${styles.phone} ${stageClass}`} id={concept.id}>
           <div className={styles.adHead}>
-            <span>{campaignName} · Sponsored</span>
+            <span>{campaignName}, sponsored</span>
             <MonoCaps>{placement === 'reels' ? 'Reels 9:16' : placement}</MonoCaps>
           </div>
           {copy ? <p className={styles.adPrimary}>{copy.primaryText}</p> : null}
@@ -224,8 +232,8 @@ export function ComposedReview({
                   src={media.previewUrl}
                   controls
                   playsInline
-                  autoPlay
                   muted
+                  preload="metadata"
                 />
               ) : (
                 // Private capability URLs expire; next/image cannot cache or optimize them.
@@ -272,9 +280,19 @@ export function ComposedReview({
                   placeholder="Describe this concept before approval"
                 />
               </label>
-              <Button variant="primary" onClick={() => onApprove(concept)}>
+              <Button
+                variant="primary"
+                disabled={approvingId !== null}
+                feedback={approvingId === concept.id ? 'loading' : 'default'}
+                loadingLabel="Approving"
+                onClick={() => onApprove(concept)}
+              >
                 Approve this concept
               </Button>
+              <p className={styles.decisionNote}>
+                Leaving a concept unapproved keeps it out of the export. Sending it back with a
+                reason arrives with the content contract, which is not registered in this release.
+              </p>
             </>
           )}
         </div>
@@ -600,6 +618,9 @@ export function ReviewFlow({
   );
   const [loading, setLoading] = useState(dataMode === 'worker' && readPort !== null);
   const [rejectingId, setRejectingId] = useState<string | null>(null);
+  const [approvingId, setApprovingId] = useState<string | null>(null);
+  const context = useCampaignContext();
+  const receiptHref = campaignHref(workspace, 'results', { ...context, run: runId ?? context.run });
   const [rejectionReason, setRejectionReason] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [inspected, setInspected] = useState<ReviewVariant | null>(null);
@@ -668,12 +689,14 @@ export function ReviewFlow({
 
   async function approveGroup(group: ArtifactGroupReview) {
     const target = readPort ?? previewPort;
-    if (target === null) return;
+    if (target === null || approvingId !== null) return;
+    setApprovingId(group.id);
     const next = await target.approveGroup({
       groupId: group.id,
       reviewer,
       expectedRevisionId: group.revision,
     });
+    setApprovingId(null);
     setResult(next);
     if (next.type === 'ok') setGroups(next.groups);
   }
@@ -738,11 +761,13 @@ export function ReviewFlow({
   }
 
   async function approveConcept(concept: ReviewConcept) {
-    if (readPort === null) return;
+    if (readPort === null || approvingId !== null) return;
+    setApprovingId(concept.id);
     const next = await readPort.approveMembers({
       variantIds: concept.members.map((member) => member.id),
       expectedRevisionId: groups[0]?.revision ?? 'current revision',
     });
+    setApprovingId(null);
     setResult(next);
     if (next.type === 'ok') setGroups(next.groups);
   }
@@ -777,13 +802,14 @@ export function ReviewFlow({
     >
       <section className={styles.reviewStage} aria-labelledby="review-title">
         <div className={styles.desktopBanner}>
-          <span>Graph authoring is desktop-only · Continue on desktop</span>
-          <span aria-hidden="true">↗</span>
+          <span>Plan editing needs a desktop. Review and approve here.</span>
         </div>
         <div className={styles.sectionHeading}>
           <div>
             <MonoCaps>
-              Rev {groups[0]?.revision ?? 'pending'} · Reviewer {reviewer}
+              {dataMode === 'worker'
+                ? `Revision ${groups[0]?.revision ?? 'pending'}. Reviewer: you.`
+                : `Rev ${groups[0]?.revision ?? 'pending'} · Reviewer ${reviewer}`}
             </MonoCaps>
             <h1 id="review-title">
               {mode === 'compare'
@@ -833,7 +859,12 @@ export function ReviewFlow({
           result={result}
           {...(groups.length === 0 ? { onRetryRead: () => void retryRead() } : {})}
         />
-        <ReviewRecoveryNotice runId={runId} summary={summary} workspace={workspace} />
+        <ReviewRecoveryNotice
+          context={context}
+          runId={runId}
+          summary={summary}
+          workspace={workspace}
+        />
         {dataMode === 'worker' &&
         !loading &&
         variants.length > 0 &&
@@ -843,14 +874,7 @@ export function ReviewFlow({
               <MonoCaps>Pack approved</MonoCaps>
               <p>Every artifact on this receipt is approved. Export is the next step.</p>
             </div>
-            <Link
-              className="mbv-button mbv-button--primary"
-              href={
-                runId === undefined
-                  ? `/studio/${workspace}/receipt`
-                  : `/studio/${workspace}/receipt?run=${encodeURIComponent(runId)}`
-              }
-            >
+            <Link className="mbv-button mbv-button--primary" href={receiptHref}>
               Export approved
             </Link>
           </div>
@@ -862,12 +886,17 @@ export function ReviewFlow({
         ) : null}
         {!loading && result === null && groups.length === 0 ? (
           <div className={styles.reviewError} role="status" data-result="empty">
-            <span>This run has no reviewable provider outputs yet.</span>
-            <Link href={`/studio/${workspace}/quote`}>Return to quote and run progress</Link>
+            <span>This run has no reviewable outputs yet.</span>
+            <Link
+              href={campaignHref(workspace, 'budget', { ...context, run: runId ?? context.run })}
+            >
+              Back to the run
+            </Link>
           </div>
         ) : null}
         {composed ? (
           <ComposedReview
+            approvingId={approvingId}
             campaignName={summary.campaignName ?? 'Campaign'}
             concepts={concepts}
             onApprove={(concept) => void approveConcept(concept)}
@@ -886,15 +915,23 @@ export function ReviewFlow({
                 <div className={styles.groupHead}>
                   <div>
                     <h2 id={`${group.id}-title`}>{group.name}</h2>
-                    <MonoCaps>Reviewer · {group.reviewer}</MonoCaps>
+                    <MonoCaps>Reviewer: {group.reviewer}</MonoCaps>
                   </div>
                   <div className={styles.groupApproval}>
                     <Chip status={decisionChip[group.decision].status}>
                       {decisionChip[group.decision].label}
                     </Chip>
                     {group.decision === 'approved' ? null : (
-                      <Button variant="primary" onClick={() => void approveGroup(group)}>
-                        {dataMode === 'preview' ? 'Approve group as Maya Chen' : 'Approve group'}
+                      <Button
+                        variant="primary"
+                        disabled={approvingId !== null}
+                        feedback={approvingId === group.id ? 'loading' : 'default'}
+                        loadingLabel="Approving"
+                        onClick={() => void approveGroup(group)}
+                      >
+                        {dataMode === 'preview'
+                          ? 'Approve group as Maya Chen'
+                          : `Approve ${group.name}`}
                       </Button>
                     )}
                   </div>
@@ -1009,35 +1046,17 @@ export function ReviewFlow({
           {mode === 'compare' ? (
             <Link
               className="mbv-button mbv-button--primary"
-              href={
-                runId === undefined
-                  ? `/studio/${workspace}/review`
-                  : `/studio/${workspace}/review?run=${encodeURIComponent(runId)}`
-              }
+              href={campaignHref(workspace, 'content', { ...context, run: runId ?? context.run })}
             >
-              Continue named review
+              Continue to approval
             </Link>
           ) : (
-            <Link
-              className="mbv-button mbv-button--primary"
-              href={
-                runId === undefined
-                  ? `/studio/${workspace}/receipt`
-                  : `/studio/${workspace}/receipt?run=${encodeURIComponent(runId)}`
-              }
-            >
+            <Link className="mbv-button mbv-button--primary" href={receiptHref}>
               Export approved
             </Link>
           )}
         </div>
       </div>
-      <footer className={styles.footer}>
-        <MonoCaps>
-          Artifacts: {variants.length} · QA notes: {summary.qaNoteCount} · Quote:{' '}
-          {formatUsdMicros(summary.quotedMicros)}
-        </MonoCaps>
-        <MonoCaps>v2.0.4-studio</MonoCaps>
-      </footer>
       {inspected !== null && dataMode === 'worker' ? (
         <div
           className={styles.inspectOverlay}
@@ -1060,8 +1079,8 @@ export function ReviewFlow({
                   className={styles.inspectMedia}
                   src={inspected.previewUrl}
                   controls
-                  autoPlay
                   playsInline
+                  preload="metadata"
                 />
               ) : (
                 // Private capability URLs expire; next/image cannot cache or optimize them.

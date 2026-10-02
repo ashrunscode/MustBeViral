@@ -2,7 +2,7 @@
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template: minmax(0, 1fr) 72px 32px / minmax(0, 1fr) 320px;
+  grid-template: minmax(0, 1fr) 72px / minmax(0, 1fr) 320px;
   overflow: hidden;
   background: var(--paper-2);
 }
@@ -101,6 +101,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+}
+.recoveryActions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .attemptList {
@@ -252,14 +257,24 @@
   }
 }
 
+/* Phone and small tablet: the settlement summary stacks under the attempts instead of hiding. */
 @media (max-width: 800px) {
   .runPage {
-    grid-template: minmax(0, 1fr) 72px 32px / 1fr;
+    grid-template: minmax(0, 1fr) auto auto / 1fr;
+    overflow-y: auto;
   }
   .quoteStage {
+    overflow: visible;
     padding: 18px 14px;
   }
   .runAside {
-    display: none;
+    grid-column: 1;
+    grid-row: 2;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 20px 14px;
+  }
+  .runBar {
+    grid-row: 3;
   }
 }

@@ -67,7 +67,7 @@ test('keeps comparison feedback static under reduced motion', async ({ page }) =
 test('renders named review at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/review');
-  await expect(page.getByText('Reviewer · Maya Chen').first()).toBeVisible();
+  await expect(page.getByText('Reviewer: Maya Chen').first()).toBeVisible();
   await expect(
     page.getByRole('button', { name: 'Approve group as Maya Chen' }).first(),
   ).toBeVisible();

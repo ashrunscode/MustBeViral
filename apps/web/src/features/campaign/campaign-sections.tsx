@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { Calendar, SCHEDULE_CONTRACT_MISSING } from '../platform/calendar';
 import {
   PlatformEmptySection,
@@ -9,28 +8,9 @@ import {
   PlatformRecovery,
 } from '../platform/platform-frame';
 import { PlatformRequestError } from '../platform/platform-client';
-import {
-  campaignHref,
-  isResourceId,
-  studioHref,
-  type CampaignContext,
-} from '../platform/platform-navigation';
+import { campaignHref, isResourceId, studioHref } from '../platform/platform-navigation';
+import { useCampaignContext } from '../platform/campaign-context';
 import { usePlatformQuery } from '../platform/use-platform-query';
-
-function useCampaignContext(): CampaignContext {
-  const params = useSearchParams();
-  const pick = (key: string) => {
-    const value = params.get(key);
-    return value === null || value === '' ? undefined : value;
-  };
-  return {
-    studio: pick('studio'),
-    brand: pick('brand'),
-    canvas: pick('canvas'),
-    revision: pick('revision'),
-    run: pick('run'),
-  };
-}
 
 export function CampaignCalendar({ workspace }: Readonly<{ workspace: string }>) {
   const context = useCampaignContext();

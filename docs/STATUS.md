@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `brand_operators_and_multi_brand_studios` |
 | Phase | P4 — V2 interface program across public, studio, brand, campaign and content surfaces (in_progress) |
 | Active packet | `WP-PLATFORM-UI-001` |
-| Current step | `ui-004-flows` |
+| Current step | `ui-005-sweep` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team and settings against the existing handlers.
+Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and Core.

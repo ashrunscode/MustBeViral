@@ -35,6 +35,8 @@ import {
   uploadPackshot,
 } from '../../../../../src/features/brief/packshot-upload';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
+import { useCampaignContext } from '../../../../../src/features/platform/campaign-context';
+import { campaignHref } from '../../../../../src/features/platform/platform-navigation';
 import styles from './campaign-brief.module.css';
 
 type SectionId = BriefSectionId;
@@ -56,8 +58,8 @@ const sectionDescriptions: Readonly<Record<SectionId, string>> = {
   audience: 'Describe the buyer context the campaign must recognize without inventing intent.',
   offer: 'Pin price presentation, urgency boundaries, and destination metadata before planning.',
   claimsLegal:
-    'Define the approved facts and boundaries the launch pack may use. Generated copy will use only supplied or explicitly approved claims.',
-  assets: 'Confirm the launch pack has the required source media and documented usage rights.',
+    'Define the approved facts and boundaries the campaign may use. Generated copy uses only supplied or explicitly approved claims.',
+  assets: 'Confirm the campaign has the required source media and documented usage rights.',
 };
 
 function complete(value: string) {
@@ -113,7 +115,7 @@ function SectionFields({
   dataMode: 'preview' | 'worker';
   draft: BriefDraft;
   onUploadPackshot?: (file: File) => Promise<void>;
-  packshotStatus?: 'none' | 'uploading' | 'ready' | 'quarantined' | 'missing_rights';
+  packshotStatus?: 'none' | 'uploading' | 'ready' | 'quarantined' | 'missing_rights' | 'disabled';
   section: SectionId;
   setDraft: (updater: (current: BriefDraft) => BriefDraft) => void;
   uploadBusy?: boolean;
@@ -307,10 +309,15 @@ function SectionFields({
                 </div>
               ) : null}
               {packshotStatus === 'quarantined' ? (
-                <Chip status="failed">Packshot quarantined — resolve upload before planning</Chip>
+                <Chip status="failed">
+                  Packshot quarantined. Resolve the upload before planning.
+                </Chip>
+              ) : null}
+              {packshotStatus === 'disabled' ? (
+                <Chip status="notes">Uploads are turned off here. The brief still saves.</Chip>
               ) : null}
               {packshotStatus === 'missing_rights' ? (
-                <Chip status="failed">Missing rights attestation — execution blocked</Chip>
+                <Chip status="failed">Rights attestation missing. Planning stays blocked.</Chip>
               ) : null}
             </label>
           ) : null}
@@ -355,8 +362,8 @@ function SectionFields({
         <div className={styles.explainer}>
           <MonoCaps>Why this matters</MonoCaps>
           <br />
-          These statements become the factual boundary for concept, copy, and QA. Evidence is
-          preserved with revision 7f3a.
+          These statements become the factual boundary for concept, copy, and QA. Evidence stays
+          attached to the plan revision it was captured in.
         </div>
       </div>
       <TextField
@@ -445,6 +452,7 @@ export function CampaignBrief({
   workspace: string;
 }>) {
   const router = useRouter();
+  const context = useCampaignContext();
   const [bootstrapPort] = useState<BriefBootstrapPort | null>(() =>
     dataMode === 'worker'
       ? (suppliedBootstrapPort ?? new WorkerBriefBootstrapPort(createBrowserCoreClient()))
@@ -472,7 +480,7 @@ export function CampaignBrief({
   const [uploadBusy, setUploadBusy] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const [packshotStatus, setPackshotStatus] = useState<
-    'none' | 'uploading' | 'ready' | 'quarantined' | 'missing_rights'
+    'none' | 'uploading' | 'ready' | 'quarantined' | 'missing_rights' | 'disabled'
   >('none');
   const [firstUse, setFirstUse] = useState(dataMode === 'worker');
   const validation = useMemo(() => BriefDraftSchema.safeParse(draft), [draft]);
@@ -566,7 +574,7 @@ export function CampaignBrief({
     setBootstrapResult(null);
     const next = await bootstrapPort.bootstrap({
       workspaceRef: workspace,
-      campaignName: `${draft.productTruth.productName} launch pack`,
+      campaignName: `${draft.productTruth.productName} campaign`,
       graph: buildGoldenLaunchPackGraph(launchPackBriefFromDraft(draft)),
     });
     setBootstrapResult(next);
@@ -585,7 +593,12 @@ export function CampaignBrief({
     }
     setValidated(true);
     router.push(
-      `/studio/${encodeURIComponent(next.workspaceId)}/canvas?canvas=${encodeURIComponent(next.canvasId)}`,
+      campaignHref(next.workspaceId, 'plan', {
+        ...context,
+        canvas: next.canvasId,
+        revision: next.revisionId,
+        run: undefined,
+      }),
     );
   }
 
@@ -599,7 +612,7 @@ export function CampaignBrief({
       if (projectId === undefined) {
         const ready = await bootstrapPort.bootstrap({
           workspaceRef: workspace,
-          campaignName: `${draft.productTruth.productName.trim() || 'Campaign'} launch pack`,
+          campaignName: `${draft.productTruth.productName.trim() || 'Campaign'} campaign`,
         });
         setBootstrapResult(ready);
         if (ready.type !== 'ok') {
@@ -628,12 +641,17 @@ export function CampaignBrief({
       }));
       setPackshotStatus('ready');
       setUploadMessage(
-        'Packshot stored privately. Bytes are shown in the brief but do not ride flux-2-pro as image_url.',
+        'Packshot stored privately. It appears in the brief and is never sent to a provider as a public link.',
       );
     } catch (error) {
-      const quarantined =
-        error instanceof PackshotUploadError && (error.code === 'sign' || error.code === 'put');
-      setPackshotStatus(quarantined ? 'quarantined' : 'missing_rights');
+      const code = error instanceof PackshotUploadError ? error.code : null;
+      setPackshotStatus(
+        code === 'disabled'
+          ? 'disabled'
+          : code === 'sign' || code === 'put'
+            ? 'quarantined'
+            : 'missing_rights',
+      );
       setUploadMessage(
         error instanceof PackshotUploadError
           ? error.message
@@ -802,8 +820,12 @@ export function CampaignBrief({
             </span>
           </div>
           <div>
-            <MonoCaps>Revision</MonoCaps>
-            <MonoCaps>7f3a draft</MonoCaps>
+            <MonoCaps>Plan</MonoCaps>
+            <MonoCaps>
+              {bootstrapResult?.type === 'ok'
+                ? `Revision ${bootstrapResult.revisionId}`
+                : 'Not planned yet'}
+            </MonoCaps>
           </div>
           <div>
             <MonoCaps>Required</MonoCaps>
@@ -856,31 +878,6 @@ export function CampaignBrief({
           </Button>
         </div>
       </div>
-
-      <footer className={styles.footer}>
-        <div>
-          <MonoCaps>
-            {dataMode === 'preview'
-              ? 'Autosave: 18ms'
-              : `Session draft: ${
-                  draftLoadState === 'loading'
-                    ? 'loading'
-                    : saveState === 'saving'
-                      ? 'saving'
-                      : saveState === 'saved'
-                        ? 'saved'
-                        : saveState === 'error' || draftLoadState === 'error'
-                          ? 'error'
-                          : 'not saved'
-                }`}
-          </MonoCaps>
-          <MonoCaps>
-            Fields: {flags.filter(Boolean).length + 7} / {flags.length + 7}
-          </MonoCaps>
-          <MonoCaps>Region: us-east-1</MonoCaps>
-        </div>
-        <MonoCaps>v2.0.4-studio</MonoCaps>
-      </footer>
     </>
   );
 }

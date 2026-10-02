@@ -25,8 +25,8 @@ describe('ReceiptFlow', () => {
       <ReceiptFlow workspace="lumen-skin" scenario="review_incomplete" />,
     );
     expect(html).toContain('data-result="review_incomplete"');
-    expect(html).toContain('Launch pack is incomplete');
-    expect(html).toContain('Return to named review');
+    expect(html).toContain('This campaign’s content is not fully approved');
+    expect(html).toContain('Back to content review');
     expect(html).not.toContain('Create immutable export');
   });
 

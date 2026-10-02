@@ -2,7 +2,7 @@
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template-rows: 38px minmax(0, 1fr) 72px 32px;
+  grid-template-rows: 38px minmax(0, 1fr) 72px;
   overflow: hidden;
   padding: 0 40px;
   background: var(--paper-2);
@@ -259,7 +259,7 @@
 
 @media (max-width: 600px) {
   .receiptPage {
-    grid-template-rows: 30px minmax(0, 1fr) 72px 32px;
+    grid-template-rows: 30px minmax(0, 1fr) 72px;
     padding: 0 10px;
   }
   .receiptCard {
@@ -325,9 +325,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .footer > :last-child {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -335,4 +332,9 @@
     animation: none;
     transition: none;
   }
+}
+
+.exportRecorded {
+  color: var(--ink);
+  font-size: 13px;
 }

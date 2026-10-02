@@ -152,6 +152,24 @@ export function p0ResultSemantics(result: P0HandlerResult): P0SemanticResult {
       },
     };
   }
+  // Generation and provider-route switches are product settings, not billing: they keep the
+  // provider code so the interface names the switch instead of asking for payment.
+  if (
+    result.status === 'billing_blocked' &&
+    result.reason !== 'generation_disabled' &&
+    result.reason !== 'provider_routes_disabled'
+  ) {
+    return {
+      ok: false,
+      error: {
+        code: 'BILLING_BLOCKED',
+        message: billingBlockedMessage(result.reason),
+        retryable: false,
+        httpStatus: 402,
+        ...(result.reason === undefined ? {} : { details: { reason: result.reason } }),
+      },
+    };
+  }
   return {
     ok: false,
     error: {
@@ -159,6 +177,18 @@ export function p0ResultSemantics(result: P0HandlerResult): P0SemanticResult {
       message: 'Provider-backed execution is not enabled.',
       retryable: false,
       httpStatus: 503,
+      ...(result.reason === undefined ? {} : { details: { reason: result.reason } }),
     },
   };
+}
+
+/** Names the billing condition without exposing balances or account identifiers. */
+function billingBlockedMessage(reason: P0HandlerResult['reason']): string {
+  if (reason === 'charging_disabled') return 'Charging is turned off, so no run can be started.';
+  if (reason === 'setup_fee_unpaid') return 'The setup fee is unpaid, so no run can be started.';
+  if (reason === 'subscription_inactive')
+    return 'The subscription is not active, so no run can be started.';
+  if (reason === 'insufficient_wallet')
+    return 'The saved wallet cannot cover this run, so it was not started.';
+  return 'Billing blocks this run.';
 }

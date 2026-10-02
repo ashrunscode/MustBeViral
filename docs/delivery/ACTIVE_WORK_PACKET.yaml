@@ -140,12 +140,12 @@ steps:
   - id: ui-004-flows
     title: Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer,
       team and settings against the handlers.
-    status: current
+    status: completed
   - id: ui-005-sweep
     title:
       Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and
       handlers.
-    status: pending
+    status: current
   - id: ui-006-browser-proof
     title:
       Prove each changed journey in the browser at 375, 768, 1280 and the wide studio page across
@@ -238,8 +238,8 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: ui-004-flows
-  next_action: Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team and settings against the existing handlers.
+  current_step: ui-005-sweep
+  next_action: Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and Core.
   blockers: []
   changed_paths: []
   last_green_checks: []

@@ -222,8 +222,8 @@
 
 .collaborativeField[data-lease-state='contested'] .leaseBadge,
 .leaseBadge[data-lease-state='contested'] {
-  border-color: #c2410c;
-  color: #c2410c;
+  border-color: var(--attention);
+  color: var(--attention-ink);
 }
 
 .leaseHelp {

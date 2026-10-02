@@ -32,6 +32,24 @@ export function studioDirectoryOwnsWorkspace(
   return items.some((item) => item.workspace_id === workspaceId);
 }
 
+/** Plain words for the subscription state; the raw value never reaches the screen. */
+export function subscriptionLabel(status: string | null | undefined): string {
+  switch (status) {
+    case 'active':
+      return 'active';
+    case 'trialing':
+      return 'trial';
+    case 'past_due':
+      return 'past due';
+    case 'canceled':
+      return 'cancelled';
+    case 'none':
+      return 'none attached';
+    default:
+      return 'none on file';
+  }
+}
+
 export function WorkspaceBilling({
   workspaceId,
   studioId,
@@ -207,7 +225,7 @@ export function WorkspaceBillingView({ data }: Readonly<{ data: Billing }>) {
         )}
         {data.subscription_status === 'past_due' || data.subscription_status === 'canceled' ? (
           <p role="status" className="platform-note">
-            The subscription is not active ({data.subscription_status.replace('_', ' ')}).
+            The subscription is not active ({subscriptionLabel(data.subscription_status)}).
           </p>
         ) : null}
         {data.balances_match === false && (
@@ -220,7 +238,7 @@ export function WorkspaceBillingView({ data }: Readonly<{ data: Billing }>) {
           <p className="platform-tag">{data.profile_present ? 'On file' : 'Missing profile'}</p>
           <p>{walletLabel}</p>
           <p className="platform-muted">
-            Subscription: {data.subscription_status ?? 'none on file'}
+            Subscription: {subscriptionLabel(data.subscription_status)}
           </p>
         </section>
         <section className="platform-card platform-pad platform-stack">

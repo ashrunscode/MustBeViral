@@ -16,7 +16,31 @@ import {
 } from '../../../../../src/features/run/run-port';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
+import { useCampaignContext } from '../../../../../src/features/platform/campaign-context';
+import { campaignHref } from '../../../../../src/features/platform/platform-navigation';
 import styles from './run-progress.module.css';
+
+/** Plain words for a run state; the raw value never reaches the screen. */
+export function runStateLabel(state: string): string {
+  switch (state) {
+    case 'queued':
+      return 'Queued';
+    case 'running':
+      return 'Running';
+    case 'reviewable':
+      return 'Partly ready to review';
+    case 'complete':
+      return 'Complete';
+    case 'failed':
+      return 'Stopped';
+    case 'cancelled':
+      return 'Cancelled';
+    case 'reconciliation_required':
+      return 'Needs verification';
+    default:
+      return state.replaceAll('_', ' ');
+  }
+}
 
 const stateChip = {
   queued: { status: 'queued', label: 'Queued' },
@@ -110,6 +134,11 @@ export function RunProgress({
   const [result, setResult] = useState<RunPortResult | null>(
     initial === null || initial.type === 'ok' ? null : initial,
   );
+  const [cancelling, setCancelling] = useState(false);
+  const context = useCampaignContext();
+  const briefHref = campaignHref(workspace, 'brief', context);
+  const receiptHref = (id: string) => campaignHref(workspace, 'results', { ...context, run: id });
+  const reviewHref = (id: string) => campaignHref(workspace, 'content', { ...context, run: id });
 
   useEffect(() => previewPort?.subscribe(setSnapshot), [previewPort]);
 
@@ -154,11 +183,19 @@ export function RunProgress({
   }, [readPort, result?.type, runId, snapshot?.state]);
 
   async function cancel() {
-    if (snapshot === null) return;
+    if (snapshot === null || cancelling) return;
+    if (
+      !window.confirm(
+        'Cancel this run? Completed branches stay reviewable. Nothing new starts and no further spend is accepted.',
+      )
+    )
+      return;
+    setCancelling(true);
     const next =
       readPort === null
         ? previewPort?.cancel(snapshot.runId, snapshot.sequence)
         : await readPort.cancel(snapshot.runId);
+    setCancelling(false);
     if (next === undefined) return;
     setResult(next.type === 'ok' ? null : next);
     if (next.type === 'ok') setSnapshot(next.snapshot);
@@ -182,10 +219,10 @@ export function RunProgress({
     snapshot.state === 'complete' || snapshot.state === 'failed' || snapshot.state === 'cancelled';
   const activityLabel =
     snapshot.state === 'reconciliation_required'
-      ? 'Reconciliation pending'
+      ? 'Verification pending'
       : terminal
-        ? 'Terminal state'
-        : 'Providers active';
+        ? 'Finished'
+        : 'In progress';
   const settlement = snapshot.settlement;
   return (
     <div id="main-content" className={styles.runPage} data-run-state={snapshot.state}>
@@ -193,14 +230,18 @@ export function RunProgress({
         <header className={styles.runHead}>
           <div>
             <MonoCaps>
-              Run {snapshot.runId} · Rev {snapshot.revision}
+              Run {snapshot.runId}, revision {snapshot.revision}
             </MonoCaps>
             <h1 id="run-title">
               {snapshot.state === 'failed'
-                ? 'This launch pack stopped'
+                ? 'This run stopped'
                 : snapshot.state === 'reconciliation_required'
-                  ? 'This launch pack needs verification'
-                  : 'Generating the launch pack'}
+                  ? 'This run needs verification'
+                  : snapshot.state === 'complete'
+                    ? 'Your content is ready to review'
+                    : snapshot.state === 'cancelled'
+                      ? 'This run was cancelled'
+                      : 'Generating your content'}
             </h1>
             <p>
               {snapshot.state === 'failed' || snapshot.state === 'reconciliation_required'
@@ -221,7 +262,7 @@ export function RunProgress({
                       : 'running'
             }
           >
-            {snapshot.state === 'reviewable' ? 'Partial completion' : snapshot.state}
+            {runStateLabel(snapshot.state)}
           </Chip>
         </header>
         {snapshot.firstReviewable ? (
@@ -231,11 +272,7 @@ export function RunProgress({
               <strong>First reviewable output is ready.</strong> Review can begin without waiting
               for every branch.
             </span>
-            <Link
-              href={`/studio/${workspace}/review/compare?run=${encodeURIComponent(snapshot.runId)}`}
-            >
-              Review available outputs
-            </Link>
+            <Link href={reviewHref(snapshot.runId)}>Review available outputs</Link>
           </div>
         ) : null}
         {snapshot.recovery !== null ? (
@@ -249,7 +286,7 @@ export function RunProgress({
             <p data-recovery-settlement="true">
               {settlement === null
                 ? snapshot.recovery.spend
-                : `Run settlement: ${formatUsdMicros(settlement.capturedMicros)} captured · ${formatUsdMicros(settlement.releasedMicros)} released · ${formatUsdMicros(settlement.refundedMicros)} refunded · ${formatUsdMicros(settlement.pendingMicros)} pending.`}
+                : `Run settlement: ${formatUsdMicros(settlement.capturedMicros)} captured, ${formatUsdMicros(settlement.releasedMicros)} released, ${formatUsdMicros(settlement.refundedMicros)} refunded, ${formatUsdMicros(settlement.pendingMicros)} pending.`}
             </p>
             <p>
               {snapshot.recovery.retained}{' '}
@@ -259,10 +296,8 @@ export function RunProgress({
             </p>
             <p>{snapshot.recovery.nextAction}</p>
             <div className={styles.recoveryActions}>
-              <Link href={`/studio/${workspace}/brief`}>Edit campaign brief</Link>
-              <Link href={`/studio/${workspace}/receipt?run=${encodeURIComponent(snapshot.runId)}`}>
-                Open receipt
-              </Link>
+              <Link href={briefHref}>Edit the campaign brief</Link>
+              <Link href={receiptHref(snapshot.runId)}>Open the receipt</Link>
             </div>
           </div>
         ) : null}
@@ -271,8 +306,8 @@ export function RunProgress({
           {snapshot.attempts.length === 0 ? (
             <Card className={styles.attemptCard}>
               <MonoCaps>Run queued</MonoCaps>
-              <strong>Waiting for the first dispatch wave</strong>
-              <span>Core has not exposed a runnable node yet.</span>
+              <strong>Waiting for the first branch to start</strong>
+              <span>No branch has started yet. This page updates on its own.</span>
             </Card>
           ) : null}
           {snapshot.attempts.map((attempt, index) => {
@@ -358,24 +393,18 @@ export function RunProgress({
       <div className={styles.runBar}>
         <div>
           <MonoCaps>{activityLabel}</MonoCaps>
-          <strong>{snapshot.state}</strong>
+          <strong>{runStateLabel(snapshot.state)}</strong>
         </div>
         {snapshot.state === 'reconciliation_required' ? (
-          <Link
-            className="mbv-button mbv-button--primary"
-            href={`/studio/${workspace}/receipt?run=${encodeURIComponent(snapshot.runId)}`}
-          >
-            Open receipt
+          <Link className="mbv-button mbv-button--primary" href={receiptHref(snapshot.runId)}>
+            Open the receipt
           </Link>
         ) : snapshot.state === 'failed' && !snapshot.firstReviewable ? (
-          <Link className="mbv-button mbv-button--primary" href={`/studio/${workspace}/brief`}>
-            Edit campaign brief
+          <Link className="mbv-button mbv-button--primary" href={briefHref}>
+            Edit the campaign brief
           </Link>
         ) : snapshot.state === 'complete' || snapshot.state === 'failed' ? (
-          <Link
-            className="mbv-button mbv-button--primary"
-            href={`/studio/${workspace}/review/compare?run=${encodeURIComponent(snapshot.runId)}`}
-          >
+          <Link className="mbv-button mbv-button--primary" href={reviewHref(snapshot.runId)}>
             Open output review
           </Link>
         ) : snapshot.state === 'cancelled' ? (
@@ -383,18 +412,17 @@ export function RunProgress({
             Run cancelled. Completed outputs were retained.
           </span>
         ) : result?.type === 'session_expired' ? null : (
-          <Button variant="ghost" onClick={() => void cancel()}>
+          <Button
+            variant="ghost"
+            disabled={cancelling}
+            feedback={cancelling ? 'loading' : 'default'}
+            loadingLabel="Cancelling"
+            onClick={() => void cancel()}
+          >
             Cancel run
           </Button>
         )}
       </div>
-      <footer className={styles.footer}>
-        <MonoCaps>
-          Attempt stream ·{' '}
-          {dataMode === 'preview' ? 'deterministic fixture' : 'authenticated Worker'} · us-east-1
-        </MonoCaps>
-        <MonoCaps>v2.0.4-studio</MonoCaps>
-      </footer>
     </div>
   );
 }

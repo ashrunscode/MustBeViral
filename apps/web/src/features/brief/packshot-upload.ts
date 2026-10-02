@@ -12,7 +12,7 @@ export class PackshotUploadError extends Error {
   override readonly name = 'PackshotUploadError';
 
   constructor(
-    readonly code: 'type' | 'size' | 'sign' | 'put',
+    readonly code: 'type' | 'size' | 'sign' | 'put' | 'disabled',
     message: string,
   ) {
     super(message);
@@ -86,7 +86,16 @@ export async function uploadPackshot(
   }
   if ('error' in created) {
     if (isSessionExpiredFailure(created.error)) return SESSION_EXPIRED_RESULT;
-    throw new PackshotUploadError('sign', 'Core could not prepare a private upload.');
+    if (created.error.code === 'MODEL_UNAVAILABLE') {
+      throw new PackshotUploadError(
+        'disabled',
+        'Packshot uploads are turned off in this environment. Your brief still saves here; planning waits until uploads are allowed.',
+      );
+    }
+    throw new PackshotUploadError(
+      'sign',
+      'The upload could not be prepared. Try again in a moment.',
+    );
   }
   const put = await fetchImplementation(sameOriginUploadUrl(created.data.upload_url), {
     method: 'PUT',
