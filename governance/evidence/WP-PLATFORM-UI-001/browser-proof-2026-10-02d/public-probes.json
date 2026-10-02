@@ -1,0 +1,96 @@
+{
+  "harness": "http://127.0.0.1:3111",
+  "date": "2026-10-02",
+  "widths": [375, 768, 1280, 1920],
+  "routes": {
+    "/": {
+      "hScroll": false,
+      "h1Px": 28,
+      "ctaTop375": 227,
+      "framePrices375": [398, 473],
+      "framePrices1280": [143, 227],
+      "rows": 6,
+      "header": ["/", "/es"],
+      "footer": ["/pricing", "/privacy", "/terms", "/advertising", "/software"],
+      "ld": 1
+    },
+    "/es": {
+      "hScroll": false,
+      "h1Px": 28,
+      "lang": "es",
+      "framePrices375": [398, 473],
+      "rows": 0,
+      "header": ["/es", "/"],
+      "footer": ["/pricing", "/privacy", "/terms", "/advertising", "/software"],
+      "englishNote": true,
+      "ld": 1
+    },
+    "/pricing": {
+      "hScroll": false,
+      "h1Px": 28,
+      "header": ["/", "/es"],
+      "footer": ["/pricing", "/privacy", "/terms", "/advertising", "/software"],
+      "ld": 1
+    },
+    "/software": {
+      "hScroll": false,
+      "h1Px": 28,
+      "header": ["/software", "/software/pricing"],
+      "footer": ["/privacy", "/terms", "/advertising", "/"],
+      "ld": 1
+    },
+    "/software/pricing": {
+      "hScroll": false,
+      "h1Px": 28,
+      "header": ["/software", "/software"],
+      "footer": ["/privacy", "/terms", "/advertising", "/"],
+      "ld": 0
+    },
+    "/privacy": {
+      "hScroll": false,
+      "h1Px": 28,
+      "header": ["/"],
+      "footer": ["/privacy", "/terms", "/advertising", "/", "/software"]
+    },
+    "/terms": {
+      "hScroll": false,
+      "h1Px": 28,
+      "header": ["/"],
+      "footer": ["/privacy", "/terms", "/advertising", "/", "/software"]
+    },
+    "/advertising": {
+      "hScroll": false,
+      "h1Px": 28,
+      "header": ["/"],
+      "footer": ["/privacy", "/terms", "/advertising", "/", "/software"]
+    },
+    "/login": {
+      "hScroll": false,
+      "h1Px": 28,
+      "footer": ["/privacy", "/terms", "/advertising", "/", "/software"]
+    },
+    "/signup": {
+      "hScroll": false,
+      "h1Px": 28,
+      "footer": ["/privacy", "/terms", "/advertising", "/", "/software"]
+    }
+  },
+  "offersPacked": {
+    "home1920": { "offerTop": 408, "priceTop": 459, "listTop": 500 },
+    "pricing1280": { "offerTop": 190, "priceTop": 241, "listTop": 282 }
+  },
+  "reducedMotion": {
+    "studioTextLengthNormal": 2266,
+    "studioTextLengthReduced": 2266,
+    "runningAnimations": 0
+  },
+  "forcedColors": { "addOnBorder": "rgb(0, 0, 0)", "footerBorder": "rgb(0, 0, 0)" },
+  "keyboard": {
+    "/": { "stops": 15, "withoutRing": 0 },
+    "/pricing": { "stops": 12, "withoutRing": 0 },
+    "/privacy": { "stops": 9, "withoutRing": 0 }
+  },
+  "smallFooterLinks": 0,
+  "sitemapUrls": 8,
+  "consoleErrors": 0
+}
