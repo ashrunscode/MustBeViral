@@ -154,9 +154,7 @@
       "before": "3",
       "after": "4",
       "created": 1,
-      "posts": [
-        "/api/core/v1/studios/17a2495f-77a3-4d31-9897-fc8f0d3d5dfb/brand-drafts"
-      ]
+      "posts": ["/api/core/v1/studios/17a2495f-77a3-4d31-9897-fc8f0d3d5dfb/brand-drafts"]
     }
   },
   "cells": [
@@ -205,9 +203,7 @@
       "h1": "Filmamos Houston.",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "A:Saltar al contenido:163x42"
-      ],
+      "smallTargets": ["A:Saltar al contenido:163x42"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": []
@@ -217,9 +213,7 @@
       "h1": "Filmamos Houston.",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "A:Saltar al contenido:163x42"
-      ],
+      "smallTargets": ["A:Saltar al contenido:163x42"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": "not run"
@@ -229,9 +223,7 @@
       "h1": "Filmamos Houston.",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "A:Saltar al contenido:163x42"
-      ],
+      "smallTargets": ["A:Saltar al contenido:163x42"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": []
@@ -461,10 +453,7 @@
       "h1": "Calendar",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Week:71x40",
-        "BUTTON:Month:77x40"
-      ],
+      "smallTargets": ["BUTTON:Week:71x40", "BUTTON:Month:77x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": []
@@ -474,10 +463,7 @@
       "h1": "Calendar",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Week:71x40",
-        "BUTTON:Month:77x40"
-      ],
+      "smallTargets": ["BUTTON:Week:71x40", "BUTTON:Month:77x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": "not run"
@@ -487,10 +473,7 @@
       "h1": "Calendar",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Week:71x40",
-        "BUTTON:Month:77x40"
-      ],
+      "smallTargets": ["BUTTON:Week:71x40", "BUTTON:Month:77x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": []
@@ -1207,9 +1190,7 @@
       "h1": "API keys and audit",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Create API key:129x40"
-      ],
+      "smallTargets": ["BUTTON:Create API key:129x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": [],
@@ -1220,9 +1201,7 @@
       "h1": "API keys and audit",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Create API key:129x40"
-      ],
+      "smallTargets": ["BUTTON:Create API key:129x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": [],
@@ -1233,9 +1212,7 @@
       "h1": "Skills and version history",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Publish Skill:114x40"
-      ],
+      "smallTargets": ["BUTTON:Publish Skill:114x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": [],
@@ -1246,9 +1223,7 @@
       "h1": "Skills and version history",
       "hScroll": false,
       "mains": 1,
-      "smallTargets": [
-        "BUTTON:Publish Skill:114x40"
-      ],
+      "smallTargets": ["BUTTON:Publish Skill:114x40"],
       "glyphs": 0,
       "killList": [],
       "axeSeriousOrCritical": [],
