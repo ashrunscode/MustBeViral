@@ -71,6 +71,10 @@ Verdict: **FAIL**. Item 13 confirmed repaired; one new P1 finding.
 | --- | ---------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | 14  | P1, blocks merge | `apps/web/src/features/platform/workspace-frame.tsx` | The workspace tools (API access, skills, internal operations) attached any studio the member could open as their label, so workspace B's tools could stand under studio A's name. | `studio-workspace.ts` pages through the studio's brand directory, as billing already did, and the frame attaches a studio's name only once that studio owns a brand in the route workspace; an unassociated studio is refused, and a link without a studio gets a neutral frame. | `workspace-frame.test.tsx`: tool route with an unassociated studio, a pending read, an associated studio, no studio. |
 
-## Review 7
+## Review 7: sha `c19e920a7195f8d095d2f8b07b8b2a3350ae8f80`
 
-Recorded in the pull request against the sha that carries the repairs above.
+Verdict: **PASS**. Item 14 confirmed repaired: "Studio labels and tools are withheld until
+paginated brand-directory reads prove the workspace association. Unassociated scopes are refused;
+links without a studio remain neutral." No new merge-blocking findings. Reviewer note: unmapped
+projects cannot prove brand ownership beyond workspace membership, a registered-contract limit.
+This sha was merged as `59a36185df4d6a198ca5691db8023890ab66d3a7`; see `release-2026-10-02.md`.

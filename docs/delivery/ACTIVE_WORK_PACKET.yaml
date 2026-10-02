@@ -154,12 +154,12 @@ steps:
   - id: ui-007-gates
     title: Pass agent:verify and the packet governance, design, repository and database gates on the
       merge candidate.
-    status: current
+    status: completed
   - id: ui-008-release
     title:
       Release the merged commit through the guarded staging and production procedure or record the
       one hard stop.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: public-surfaces
@@ -238,8 +238,8 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: ui-007-gates
-  next_action: Pass agent:verify and the packet governance, design, repository and database gates on the exact merge candidate from a fresh clone.
+  current_step: ui-008-release
+  next_action: Staging cannot serve the merge commit until NEXT_PUBLIC_APP_ORIGIN, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY and NEXT_PUBLIC_CORE_API_URL exist on mustbeviral-web-staging; the sentence that clears it is permission to set those four names on mustbeviral-web-staging from the values already on production, after which the staging deploy, smoke and production promotion of 59a3618 proceed through the guarded procedure.
   blockers: []
   changed_paths: []
   last_green_checks: []

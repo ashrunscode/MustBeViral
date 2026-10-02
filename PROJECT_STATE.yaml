@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Pass agent:verify and the packet governance, design, repository and database gates on the exact merge candidate from a fresh clone.
+next_action: Staging cannot serve the merge commit until NEXT_PUBLIC_APP_ORIGIN, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY and NEXT_PUBLIC_CORE_API_URL exist on mustbeviral-web-staging; the sentence that clears it is permission to set those four names on mustbeviral-web-staging from the values already on production, after which the staging deploy, smoke and production promotion of 59a3618 proceed through the guarded procedure.
 decisions_pending: []
 blockers: []
 legacy:
