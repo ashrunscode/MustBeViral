@@ -1,17 +1,33 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
-test('workspace settings preserve the last campaign step without crashing resume', async ({
+const savedStep = (page: Page) =>
+  page.evaluate(
+    () => JSON.parse(sessionStorage.getItem('mbv.campaign.progress') ?? 'null')?.step as unknown,
+  );
+
+test('workspace tools preserve the last campaign step without crashing resume', async ({
   page,
 }) => {
   await page.goto('/studio/lumen-skin/canvas');
   await expect(page.getByRole('navigation', { name: 'Campaign workflow' })).toBeVisible();
-  await expect
-    .poll(() =>
-      page.evaluate(
-        () => JSON.parse(sessionStorage.getItem('mbv.campaign.progress') ?? 'null')?.step,
-      ),
-    )
-    .toBe('canvas');
+  await expect.poll(() => savedStep(page)).toBe('canvas');
+  for (const tool of ['billing', 'access', 'skills']) {
+    await page.goto(`/studio/lumen-skin/${tool}`);
+    await expect(page).toHaveURL(new RegExp(`/${tool}$`, 'u'));
+    await expect(page.locator('h1, h2').first()).toBeVisible();
+    expect(await savedStep(page)).toBe('canvas');
+  }
+  await page.goto('/studio/continue');
+  await expect(page.getByRole('link', { name: 'Resume campaign plan' })).toHaveAttribute(
+    'href',
+    '/studio/lumen-skin/canvas',
+  );
+});
+
+test('campaign steps advance the saved step and resume at the latest one', async ({ page }) => {
+  await page.goto('/studio/lumen-skin/canvas');
+  await expect(page.getByRole('navigation', { name: 'Campaign workflow' })).toBeVisible();
+  await expect.poll(() => savedStep(page)).toBe('canvas');
   for (const [step, path] of [
     ['Budget', 'quote'],
     ['Content', 'review'],

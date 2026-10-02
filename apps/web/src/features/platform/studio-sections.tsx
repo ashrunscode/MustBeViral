@@ -120,6 +120,48 @@ interface AttentionItem {
   readonly action: string;
 }
 
+/** Brands whose knowledge could not be read. Their questions and approvals are not counted. */
+function BrandReadFailures({
+  studioId,
+  failures,
+  retry,
+}: Readonly<{ studioId: string; failures: readonly BrandReview[]; retry: () => void }>) {
+  if (failures.length === 0) return null;
+  return (
+    <section className="platform-card platform-pad platform-stack" role="alert">
+      <h2>
+        {failures.length === 1
+          ? 'One brand could not be read.'
+          : `${failures.length} brands could not be read.`}
+      </h2>
+      <p>
+        Their open questions and approvals are not counted on this page. Nothing changed. Try again,
+        or open the brand directly.
+      </p>
+      <ul className="platform-attention">
+        {failures.map(({ brand }) => (
+          <li key={brand.id}>
+            <div className="platform-attention__text">
+              <strong>{brand.name}</strong>
+            </div>
+            <Link
+              className="platform-button"
+              href={brandHref(studioId, brand.workspace_id, brand.id)}
+            >
+              Open brand
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="platform-row">
+        <button type="button" className="platform-primary" onClick={retry}>
+          Try again
+        </button>
+      </div>
+    </section>
+  );
+}
+
 function attentionItems(
   studioId: string,
   reviews: readonly BrandReview[] | undefined,
@@ -195,6 +237,7 @@ export function StudioOverview({
   const invitations = usePlatformQuery('list_my_invitations', {});
   const { reviews, loading: reviewing, truncated } = useBrandReviews(brands.data?.items);
   const items = attentionItems(studio.id, reviews, invitations.data?.items);
+  const invitationsFailed = invitations.error !== undefined;
   const approvable = (reviews ?? []).filter((entry) => draftIsApprovable(entry.review)).length;
   return (
     <>
@@ -221,6 +264,8 @@ export function StudioOverview({
           <PlatformLoading label="Reading what is open across your brands…" rows={2} />
         ) : brands.error !== undefined ? (
           <PlatformRecovery error={brands.error} retry={brands.refresh} />
+        ) : invitationsFailed && items.length === 0 ? (
+          <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
         ) : items.length === 0 ? (
           <p>
             Nothing needs a decision right now.{' '}
@@ -429,8 +474,9 @@ export function StudioBrands({
 
 export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
   const brands = usePlatformQuery('list_studio_brands', { studio_id: studio.id, limit: 20 });
-  const { reviews, loading, truncated } = useBrandReviews(brands.data?.items);
+  const { reviews, loading, truncated, refresh } = useBrandReviews(brands.data?.items);
   const ready = (reviews ?? []).filter((entry) => draftIsApprovable(entry.review));
+  const failed = (reviews ?? []).filter((entry) => entry.error !== undefined);
   const waiting = (reviews ?? []).filter(
     (entry) =>
       !draftIsApprovable(entry.review) &&
@@ -453,7 +499,8 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
           Showing the first {BRAND_REVIEW_LIMIT} brands. Open a brand directly for the rest.
         </p>
       ) : null}
-      {reviews && ready.length === 0 && !loading ? (
+      <BrandReadFailures studioId={studio.id} failures={failed} retry={refresh} />
+      {reviews && ready.length === 0 && failed.length === 0 && !loading ? (
         <PlatformEmptySection
           title="No brand version is waiting for approval."
           body="A version becomes approvable once its draft has findings, no open questions and no pending extraction."
@@ -527,12 +574,19 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
 export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
   const brands = usePlatformQuery('list_studio_brands', { studio_id: studio.id, limit: 20 });
   const invitations = usePlatformQuery('list_my_invitations', {});
-  const { reviews, loading, truncated } = useBrandReviews(brands.data?.items);
+  const { reviews, loading, truncated, refresh } = useBrandReviews(brands.data?.items);
   const questions = (reviews ?? []).flatMap(({ brand, review }) =>
     openQuestions(review).map((question) => ({ brand, question })),
   );
+  const failed = (reviews ?? []).filter((entry) => entry.error !== undefined);
   const busy = brands.loading || loading || invitations.loading;
-  const empty = !busy && questions.length === 0 && (invitations.data?.items.length ?? 0) === 0;
+  const empty =
+    !busy &&
+    brands.error === undefined &&
+    invitations.error === undefined &&
+    failed.length === 0 &&
+    questions.length === 0 &&
+    (invitations.data?.items.length ?? 0) === 0;
   return (
     <>
       <PlatformHeading
@@ -543,6 +597,10 @@ export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
       {brands.error !== undefined ? (
         <PlatformRecovery error={brands.error} retry={brands.refresh} />
       ) : null}
+      {invitations.error !== undefined ? (
+        <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
+      ) : null}
+      <BrandReadFailures studioId={studio.id} failures={failed} retry={refresh} />
       {truncated ? (
         <p className="platform-note" role="status">
           Showing the first {BRAND_REVIEW_LIMIT} brands.

@@ -20,6 +20,7 @@ import {
   type CampaignStep,
 } from './platform-navigation';
 import { readCampaignContext } from './campaign-context';
+import { useCampaignScope } from './campaign-scope';
 import { usePlatformQuery } from './use-platform-query';
 
 /** Workflow segments that fill the main region edge to edge. */
@@ -91,15 +92,37 @@ function CampaignShell({
     authenticated && studioId !== undefined && brandId !== undefined && isResourceId(workspace),
   );
   const brandName = brand.data?.brand.name;
-  // One scope: the studio must open, the brand must belong to the route's workspace, and nothing
-  // renders or saves until that is confirmed. A link that mixes two workspaces is refused.
-  const scopeError = studio.error ?? brand.error;
-  const scopeMismatch = brand.data !== undefined && brand.data.brand.workspace_id !== workspace;
+  // One scope: a campaign step needs its studio and brand in the link, the studio must open, the
+  // brand must belong to the route workspace, and the plan and run the link names must belong to
+  // that workspace, to each other and to the brand where Core has mapped them. Nothing renders or
+  // saves until that is confirmed; a link that mixes scopes is refused with none of its data.
+  const missingScope =
+    authenticated && step !== null && (studioId === undefined || brandId === undefined);
+  // The preview fixtures never reach Core; the resource proof runs only for a signed-in scope.
+  const accessConfirmed =
+    authenticated &&
+    studio.data !== undefined &&
+    brand.data !== undefined &&
+    brand.data.brand.workspace_id === workspace;
+  const resources = useCampaignScope(workspace, context, brandId, accessConfirmed);
+  const scopeError =
+    studio.error ?? brand.error ?? (resources.status === 'error' ? resources.error : undefined);
+  const scopeMismatch =
+    brand.data !== undefined && brand.data.brand.workspace_id !== workspace
+      ? 'The brand in this link belongs to another workspace.'
+      : resources.status === 'mismatch'
+        ? resources.reason
+        : undefined;
   const scopePending =
     authenticated &&
+    !missingScope &&
+    scopeError === undefined &&
+    scopeMismatch === undefined &&
     ((studioId !== undefined && studio.loading) ||
-      (studioId !== undefined && brandId !== undefined && brand.loading));
-  const scopeConfirmed = scopeError === undefined && !scopeMismatch && !scopePending;
+      (studioId !== undefined && brandId !== undefined && brand.loading) ||
+      resources.status === 'pending');
+  const scopeConfirmed =
+    !missingScope && scopeError === undefined && scopeMismatch === undefined && !scopePending;
   useEffect(() => {
     if (!scopeConfirmed) return;
     const workflowStep = segment === 'compare' ? 'review' : segment;
@@ -117,7 +140,7 @@ function CampaignShell({
     ? { id: studio.data.studio.id, name: studio.data.studio.name, role: studio.data.role }
     : undefined;
   const brandContext =
-    brand.data && studioId
+    brand.data && studioId && scopeConfirmed
       ? { id: brand.data.brand.id, name: brand.data.brand.name, workspaceId: workspace }
       : undefined;
   const label = step
@@ -149,21 +172,32 @@ function CampaignShell({
         />
       ) : null}
       <div className="platform-fill">
-        {scopeError !== undefined ? (
+        {missingScope ? (
+          <section className="platform-card platform-pad platform-stack" role="alert">
+            <h2>Open this campaign from its brand.</h2>
+            <p>
+              A campaign step needs its studio and brand in the link, so nothing is shown here.
+              Nothing changed.
+            </p>
+            <div className="platform-row">
+              <Link className="platform-button platform-primary" href={studioHref(studioId)}>
+                {studioId === undefined ? 'Choose a studio' : 'Open the studio'}
+              </Link>
+            </div>
+          </section>
+        ) : scopeError !== undefined ? (
           <PlatformRecovery
             error={scopeError}
             retry={() => {
               studio.refresh();
               brand.refresh();
+              resources.retry();
             }}
           />
-        ) : scopeMismatch ? (
+        ) : scopeMismatch !== undefined ? (
           <section className="platform-card platform-pad platform-stack" role="alert">
             <h2>This link mixes two workspaces.</h2>
-            <p>
-              The brand in this link belongs to another workspace, so nothing from it is shown here.
-              Nothing changed. Open the campaign from its brand.
-            </p>
+            <p>{scopeMismatch} Nothing from it is shown here. Nothing changed.</p>
             <div className="platform-row">
               <Link className="platform-button platform-primary" href={studioHref(studioId)}>
                 Open the studio

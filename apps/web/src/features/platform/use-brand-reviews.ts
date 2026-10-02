@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
 import { platformRequest } from './platform-client';
 
@@ -24,10 +24,11 @@ export function useBrandReviews(brands: readonly BrandRecord[] | undefined) {
     key: string;
     reviews: readonly BrandReview[];
   } | null>(null);
-  const ids = (brands ?? [])
+  const [attempt, setAttempt] = useState(0);
+  const ids = `${attempt}|${(brands ?? [])
     .slice(0, BRAND_REVIEW_LIMIT)
     .map((brand) => `${brand.workspace_id}:${brand.id}:${brand.version}`)
-    .join(',');
+    .join(',')}`;
   useEffect(() => {
     if (brands === undefined) return;
     let current = true;
@@ -54,10 +55,12 @@ export function useBrandReviews(brands: readonly BrandRecord[] | undefined) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids, brands === undefined]);
   const matching = state?.key === ids ? state.reviews : undefined;
+  const refresh = useCallback(() => setAttempt((value) => value + 1), []);
   return {
     reviews: matching,
     loading: brands !== undefined && matching === undefined,
     truncated: (brands?.length ?? 0) > BRAND_REVIEW_LIMIT,
+    refresh,
   };
 }
 

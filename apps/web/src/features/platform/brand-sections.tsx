@@ -121,7 +121,7 @@ export function BrandOverview({ studioId, brand, canWrite }: Readonly<BrandScope
           aria-labelledby="bo-campaigns"
         >
           <h2 id="bo-campaigns">Campaigns</h2>
-          <SavedCampaignStep studioId={studioId} brand={brand} compact />
+          <SavedCampaignStep brand={brand} compact />
           <p className="platform-muted">
             A campaign keeps its brand, brief, plan, budget and content in one link. The brief saves
             as you go.
@@ -155,33 +155,30 @@ export function BrandOverview({ studioId, brand, canWrite }: Readonly<BrandScope
   );
 }
 
-/** The step this browser last saved for the brand’s workspace; session only, never a record. */
-function SavedCampaignStep({
-  studioId,
+/** The step this browser last saved for this brand; session only, never a record. */
+export function SavedCampaignStep({
   brand,
   compact = false,
-}: Readonly<Pick<BrandScope, 'studioId' | 'brand'> & { compact?: boolean }>) {
+}: Readonly<Pick<BrandScope, 'brand'> & { compact?: boolean }>) {
   const saved = useSyncExternalStore(
     subscribeCampaignProgress,
     campaignProgressSnapshot,
     () => null,
   );
-  // The saved step must belong to this brand's workspace and, when it names a brand, to this brand.
+  // The saved step must name this brand in this workspace. A step saved without a brand, or for
+  // another brand of the same workspace, is not this brand's work and is not shown here.
   const progress =
     saved !== null &&
     saved.workspace === brand.workspace_id &&
-    (saved.context.brand === undefined || saved.context.brand === brand.id)
+    saved.context.brand === brand.id &&
+    saved.context.studio !== undefined
       ? saved
       : null;
   if (progress === null) {
     return compact ? <p>No campaign step is saved in this browser.</p> : null;
   }
-  // Resume with the saved plan and run, and with this studio and brand when the record lacks them.
-  const href = campaignResumeHref(progress.workspace, progress.step, {
-    ...progress.context,
-    studio: progress.context.studio ?? studioId,
-    brand: progress.context.brand ?? brand.id,
-  });
+  // Resume exactly what was saved: the studio, brand, plan, revision and run of that step.
+  const href = campaignResumeHref(progress.workspace, progress.step, progress.context);
   return (
     <p>
       This browser paused at <strong>{progress.stepLabel}</strong>.{' '}
@@ -205,7 +202,7 @@ export function BrandCampaigns({ studioId, brand, canWrite }: Readonly<BrandScop
       </PlatformHeading>
       <section className="platform-card platform-pad platform-stack" role="status">
         <h2>No campaign list yet.</h2>
-        <SavedCampaignStep studioId={studioId} brand={brand} compact />
+        <SavedCampaignStep brand={brand} compact />
         <p>
           A campaign is reachable from its own link, which carries the brand, plan and run it
           belongs to.
