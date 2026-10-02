@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `brand_operators_and_multi_brand_studios` |
 | Phase | P4 — V2 interface program across public, studio, brand, campaign and content surfaces (in_progress) |
 | Active packet | `WP-PLATFORM-UI-001` |
-| Current step | `ui-001-preflight` |
+| Current step | `ui-002-public` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Confirm a clean legal branch and write the wired, fake or missing inventory for every listed surface.
+Finish the public studio and software pages in both studio languages with the auth and status screens.

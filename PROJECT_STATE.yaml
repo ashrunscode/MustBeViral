@@ -11,8 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Confirm a clean legal branch and write the wired, fake or missing inventory for every
-  listed surface.
+next_action: Finish the public studio and software pages in both studio languages with the auth and status screens.
 decisions_pending: []
 blockers: []
 legacy:
@@ -25,7 +24,8 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+    notes:
+      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
       preserve_until_v2_cutover keeps legacy V1 unchanged. Under
       adr-0009-standing-release-authority, agents may deploy staging-verified merged commits through

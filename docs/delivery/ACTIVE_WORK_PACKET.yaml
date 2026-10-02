@@ -85,7 +85,7 @@ deliverables:
     product voice and the provisional catalog with no buy control. /login, /signup,
     /forgot-password, /reset-password, /verify-email, /maintenance, /unauthorized and not-found use
     the three-word name, the approved voice and no kill-list word; /signup collects nothing.'
-  - "Signed-in shell: one navigation for studio (overview, brands, calendar, approvals, tasks,
+  - 'Signed-in shell: one navigation for studio (overview, brands, calendar, approvals, tasks,
     creators and partners, reports, team, settings), brand (overview, intelligence with editable
     sourced findings, assets with rights, channels, campaigns, content, calendar, inbox, results),
     campaign (brief, plan, content, collaborators, approvals, calendar, results, budget) and content
@@ -93,7 +93,7 @@ deliverables:
     workspace stay visible; search and switching never touch another account. Each route reads the
     registered Core command and query handlers. Where no accepted command exists the route ships an
     honest empty state that names the one legal action and records the missing contract; no fake
-    rows, dead controls, placeholders or internal words on user surfaces."
+    rows, dead controls, placeholders or internal words on user surfaces.'
   - "Existing flows stay real and are repaired where they fail the finish line: portfolio, brand
     draft, brief, canvas, quote, run, composed review, compare, receipt, billing, API keys, skills,
     continue and internal operations, plus team and settings. Confirm controls name the amount the
@@ -125,13 +125,15 @@ public_interfaces:
     renderer. Thin transports only; business rules stay in shared handlers and Postgres.
 steps:
   - id: ui-001-preflight
-    title: Confirm a clean legal branch and write the wired, fake or missing inventory for every listed
+    title:
+      Confirm a clean legal branch and write the wired, fake or missing inventory for every listed
       surface.
-    status: current
+    status: completed
   - id: ui-002-public
-    title: Finish the public studio and software pages in both studio languages with the auth and status
+    title:
+      Finish the public studio and software pages in both studio languages with the auth and status
       screens.
-    status: pending
+    status: current
   - id: ui-003-shell
     title: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
     status: pending
@@ -140,11 +142,13 @@ steps:
       team and settings against the handlers.
     status: pending
   - id: ui-005-sweep
-    title: Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and
+    title:
+      Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and
       handlers.
     status: pending
   - id: ui-006-browser-proof
-    title: Prove each changed journey in the browser at 375, 768, 1280 and the wide studio page across
+    title:
+      Prove each changed journey in the browser at 375, 768, 1280 and the wide studio page across
       every state.
     status: pending
   - id: ui-007-gates
@@ -152,21 +156,24 @@ steps:
       merge candidate.
     status: pending
   - id: ui-008-release
-    title: Release the merged commit through the guarded staging and production procedure or record the
+    title:
+      Release the merged commit through the guarded staging and production procedure or record the
       one hard stop.
     status: pending
 acceptance:
   automated:
     - id: public-surfaces
-      criterion: "Every public route meets the finish line: five questions answered, one primary action
+      criterion:
+        'Every public route meets the finish line: five questions answered, one primary action
         naming the outcome, locked studio lines and prices only from brand/context.md, product voice
         only on /software routes, the three-word name everywhere, no kill-list word, the studio
         poster frame as the LCP element with reserved geometry, and /signup collecting nothing.
-        Rendered-output tests lock the copy separation and the structure."
+        Rendered-output tests lock the copy separation and the structure.'
       status: pending
       evidence: []
     - id: signed-in-surfaces
-      criterion: Each studio, brand, campaign and content route in the directive's surface list loads the
+      criterion:
+        Each studio, brand, campaign and content route in the directive's surface list loads the
         server's data through registered handlers or an honest empty state naming the one legal
         action and the missing contract. Brand and workspace stay visible, switching cannot show
         another account's data, and session expiry, wrong tenant, revoked grant and kill switches
@@ -174,28 +181,32 @@ acceptance:
       status: pending
       evidence: []
     - id: primary-flows
-      criterion: Brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team
+      criterion:
+        Brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team
         and settings complete their primary task against the existing handlers, including an
         idempotent repeated submit and a forced stale-revision failure with recovery, with
         regression tests that fail if the defect returns.
       status: pending
       evidence: []
     - id: regression-gates
-      criterion: Typecheck, lint, unit, integration, governance, design and database gates pass on the
+      criterion:
+        Typecheck, lint, unit, integration, governance, design and database gates pass on the
         exact merge candidate from a fresh single-worktree clone with frozen dependencies, and every
         repaired defect has a failing-then-passing test recorded in the repair log.
       status: pending
       evidence: []
   manual:
     - id: browser-proof
-      criterion: Browser evidence exists at 375, 768 and 1280 plus the wide studio page for each changed
+      criterion:
+        Browser evidence exists at 375, 768 and 1280 plus the wide studio page for each changed
         journey across empty, loading, error, denied, stale and success, with keyboard-only
         completion, reduced motion and forced colors checked, and the five questions still answered
         after refresh.
       status: pending
       evidence: []
     - id: release-smoke
-      criterion: Staging serves the merge commit with every public route and one signed-in journey smoked,
+      criterion:
+        Staging serves the merge commit with every public route and one signed-in journey smoked,
         then production serves the same commit on its alias; or the single hard stop that prevented
         it is recorded with the one sentence that clears it and nothing was crossed.
       status: pending
@@ -227,9 +238,8 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: ui-001-preflight
-  next_action: Confirm a clean legal branch and write the wired, fake or missing inventory for every
-    listed surface.
+  current_step: ui-002-public
+  next_action: Finish the public studio and software pages in both studio languages with the auth and status screens.
   blockers: []
   changed_paths: []
   last_green_checks: []
