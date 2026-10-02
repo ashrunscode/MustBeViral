@@ -55,6 +55,14 @@ Verdict: **FAIL**. Items 9, 7b, 10 and 11 confirmed repaired; one new P2 finding
 | --- | -------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | 12  | P2       | `apps/web/src/features/platform/studio-sections.tsx` | When the brand list itself failed, the overview's approval card still said "0 brand versions ready to approve". | The card says "Approvals could not be read" while the brand list is failed or unread, and "Checking…" while it loads. | `studio-sections.test.tsx`: a failed brand list never renders a count. |
 
-## Review 5
+## Review 5: sha `abd357b780466034e524e97e8e5143545391399f`
+
+Verdict: **FAIL**. Item 12 confirmed repaired; one new P2 finding.
+
+| #   | Severity | File                                                 | Finding                                                                                                                                                   | Repair                                                                                                                                                                                                              | Regression test                                                                                                      |
+| --- | -------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 13  | P2       | `apps/web/src/features/platform/studio-sections.tsx` | Only the first 12 brands were read, yet Tasks, Approvals and the overview stated studio-wide clears; a thirteenth brand's open work would go unmentioned. | One pass now reads the whole first page of brands, and whenever the studio has more brands than were read, every clear and count names the brands read ("in the first N brands") and says the rest are not counted. | `studio-sections.test.tsx`: with a further page of brands, Tasks, Approvals and the overview scope their statements. |
+
+## Review 6
 
 Recorded in the pull request against the sha that carries the repairs above.

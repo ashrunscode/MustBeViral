@@ -120,6 +120,11 @@ interface AttentionItem {
   readonly action: string;
 }
 
+/** Names the subset that was read when the studio has more brands than one pass covers. */
+function readScope(count: number): string {
+  return count === 1 ? 'the first brand' : `the first ${count} brands`;
+}
+
 /** Brands whose knowledge could not be read. Their questions and approvals are not counted. */
 function BrandReadFailures({
   studioId,
@@ -240,6 +245,10 @@ export function StudioOverview({
   const invitationsFailed = invitations.error !== undefined;
   const approvable = (reviews ?? []).filter((entry) => draftIsApprovable(entry.review)).length;
   const unread = (reviews ?? []).filter((entry) => entry.error !== undefined).length;
+  // A studio with more brands than one pass reads gets statements about the brands read, never
+  // about the studio as a whole.
+  const inspected = Math.min(brands.data?.items.length ?? 0, BRAND_REVIEW_LIMIT);
+  const partial = truncated || Boolean(brands.data?.next_cursor);
   return (
     <>
       <PlatformHeading
@@ -255,9 +264,9 @@ export function StudioOverview({
       <section className="platform-card platform-pad platform-stack" aria-labelledby="attention">
         <div className="platform-row platform-between">
           <h2 id="attention">Needs a decision</h2>
-          {truncated ? (
+          {partial ? (
             <span className="platform-muted">
-              Checked the first {BRAND_REVIEW_LIMIT} brands. Open Approvals or Tasks for the rest.
+              Only {readScope(inspected)} were read. Open Brands for the rest.
             </span>
           ) : null}
         </div>
@@ -268,7 +277,9 @@ export function StudioOverview({
         ) : items.length === 0 ? (
           invitationsFailed ? null : (
             <p>
-              Nothing needs a decision right now.{' '}
+              {partial
+                ? `Nothing needs a decision in ${readScope(inspected)}. `
+                : 'Nothing needs a decision right now. '}
               {brands.data?.items.length === 0
                 ? 'Add a brand to begin.'
                 : 'Open a brand to capture sources or start a campaign brief.'}
@@ -323,7 +334,9 @@ export function StudioOverview({
                 ? 'Approvals could not be read'
                 : unread > 0
                   ? `${approvable} ready to approve, ${unread} ${unread === 1 ? 'brand' : 'brands'} not read`
-                  : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
+                  : partial
+                    ? `${approvable} ready to approve in ${readScope(inspected)}`
+                    : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
           </h3>
           <p className="platform-muted">Approving pins the exact draft campaigns will use.</p>
           <Link href={studioHref(studio.id, 'approvals')}>Open approvals</Link>
@@ -485,6 +498,8 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
   const { reviews, loading, truncated, refresh } = useBrandReviews(brands.data?.items);
   const ready = (reviews ?? []).filter((entry) => draftIsApprovable(entry.review));
   const failed = (reviews ?? []).filter((entry) => entry.error !== undefined);
+  const inspected = Math.min(brands.data?.items.length ?? 0, BRAND_REVIEW_LIMIT);
+  const partial = truncated || Boolean(brands.data?.next_cursor);
   const waiting = (reviews ?? []).filter(
     (entry) =>
       !draftIsApprovable(entry.review) &&
@@ -502,15 +517,20 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
       {brands.error !== undefined ? (
         <PlatformRecovery error={brands.error} retry={brands.refresh} />
       ) : null}
-      {truncated ? (
+      {partial ? (
         <p className="platform-note" role="status">
-          Showing the first {BRAND_REVIEW_LIMIT} brands. Open a brand directly for the rest.
+          Only {readScope(inspected)} were read. Brands beyond them are not counted here; open them
+          directly.
         </p>
       ) : null}
       <BrandReadFailures studioId={studio.id} failures={failed} retry={refresh} />
       {reviews && ready.length === 0 && failed.length === 0 && !loading ? (
         <PlatformEmptySection
-          title="No brand version is waiting for approval."
+          title={
+            partial
+              ? `No brand version is waiting for approval in ${readScope(inspected)}.`
+              : 'No brand version is waiting for approval.'
+          }
           body="A version becomes approvable once its draft has findings, no open questions and no pending extraction."
           missing="Content approvals happen on each campaign’s Content step. A studio-wide list of content and publication approvals across campaigns arrives with the content contract, which is not registered in this release."
           action={{ href: studioHref(studio.id, 'brands'), label: 'Open a brand' }}
@@ -587,6 +607,8 @@ export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
     openQuestions(review).map((question) => ({ brand, question })),
   );
   const failed = (reviews ?? []).filter((entry) => entry.error !== undefined);
+  const inspected = Math.min(brands.data?.items.length ?? 0, BRAND_REVIEW_LIMIT);
+  const partial = truncated || Boolean(brands.data?.next_cursor);
   const busy = brands.loading || loading || invitations.loading;
   const empty =
     !busy &&
@@ -609,15 +631,20 @@ export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
         <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
       ) : null}
       <BrandReadFailures studioId={studio.id} failures={failed} retry={refresh} />
-      {truncated ? (
+      {partial ? (
         <p className="platform-note" role="status">
-          Showing the first {BRAND_REVIEW_LIMIT} brands.
+          Only {readScope(inspected)} were read. Brands beyond them are not counted here; open them
+          directly.
         </p>
       ) : null}
       {empty ? (
         <PlatformEmptySection
-          title="No open tasks."
-          body="Every brand question is answered and no invitation is waiting."
+          title={partial ? `No open tasks in ${readScope(inspected)}.` : 'No open tasks.'}
+          body={
+            partial
+              ? `Every question in ${readScope(inspected)} is answered and no invitation is waiting.`
+              : 'Every brand question is answered and no invitation is waiting.'
+          }
           missing="Assignments, bulk actions and reminders arrive with the task contract, which is not registered in this release."
           action={{ href: studioHref(studio.id, 'brands'), label: 'Open a brand' }}
         />

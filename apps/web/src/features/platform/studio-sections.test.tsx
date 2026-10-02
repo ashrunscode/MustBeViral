@@ -174,6 +174,43 @@ describe('studio sections and failed reads', () => {
     expect(screen.queryByText(/ready to approve/u)).toBeNull();
   });
 
+  it('scopes every clear to the brands that were read when the studio has more', () => {
+    const clear = (id: string, name: string) => ({
+      brand: brand(id, name),
+      review: { record: null, current_questions: [], findings: [] },
+      error: undefined,
+    });
+    state.brands = {
+      data: { items: [brand('b1', 'UnPile'), brand('b2', 'WashBodega')], next_cursor: 'page-2' },
+      error: undefined,
+      loading: false,
+    };
+    state.invitations = { data: { items: [] }, error: undefined, loading: false };
+    state.reviews = {
+      reviews: [clear('b1', 'UnPile'), clear('b2', 'WashBodega')],
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    render(<StudioTasks studio={studio} />);
+    expect(screen.getByText('No open tasks in the first 2 brands.')).toBeTruthy();
+    expect(screen.queryByText('No open tasks.')).toBeNull();
+    expect(
+      screen.queryByText('Every brand question is answered and no invitation is waiting.'),
+    ).toBeNull();
+    cleanup();
+    render(<StudioApprovals studio={studio} />);
+    expect(
+      screen.getByText('No brand version is waiting for approval in the first 2 brands.'),
+    ).toBeTruthy();
+    cleanup();
+    render(<StudioOverview studio={studio} canWrite={false} />);
+    expect(screen.getByText('0 ready to approve in the first 2 brands')).toBeTruthy();
+    expect(
+      screen.getByText('Only the first 2 brands were read. Open Brands for the rest.'),
+    ).toBeTruthy();
+  });
+
   it('withholds the approvals clear while a brand read failed', () => {
     state.brands = { data: { items: [brand('b1', 'UnPile')] }, error: undefined, loading: false };
     state.reviews = {

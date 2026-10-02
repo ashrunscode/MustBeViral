@@ -12,8 +12,11 @@ export interface BrandReview {
   readonly error: unknown;
 }
 
-/** How many brands the studio sections read in one pass; the rest are named, not guessed. */
-export const BRAND_REVIEW_LIMIT = 12;
+/**
+ * How many brands the studio sections read in one pass: the whole first page. Anything beyond it
+ * is named as unread, never counted as clear.
+ */
+export const BRAND_REVIEW_LIMIT = 20;
 
 /**
  * Reads each brand's knowledge review so studio sections can list real open questions and
