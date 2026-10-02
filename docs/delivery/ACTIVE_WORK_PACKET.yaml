@@ -58,6 +58,9 @@ scope:
     - docs/**
     - PROJECT_STATE.yaml
     - llms.txt
+    # Owner directive 2026-10-02: the barrier test aborts after any canvas has existed; this one
+    # file joins the packet so the test can be fixed with a regression. No other test path joins.
+    - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
   forbidden_paths:
     - .github/workflows/**
     - docs/archive/**
