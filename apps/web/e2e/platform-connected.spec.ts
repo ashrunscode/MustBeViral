@@ -343,9 +343,7 @@ test.describe('connected platform journeys', () => {
     expect(SEEDED_WALLET_MICROS).toBe('250000000');
 
     await page.getByRole('link', { name: 'Switch studio' }).click();
-    await expect(
-      page.getByRole('heading', { name: 'Good work starts with the right context.' }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Choose a studio.' })).toBeVisible();
     const unrelatedName = `Unrelated studio ${randomUUID()}`;
     await page.getByLabel('Studio name').fill(unrelatedName);
     await page.getByRole('button', { name: 'Create studio' }).click();
@@ -389,9 +387,7 @@ test.describe('connected platform journeys', () => {
       .getByRole('navigation', { name: 'Studio navigation' })
       .getByRole('link', { name: 'Overview' })
       .click();
-    await expect(
-      page.getByRole('heading', { name: 'Good work starts with the right brand.' }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Studio overview' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Open WashBodega' })).toBeVisible();
   });
 
@@ -766,9 +762,7 @@ async function expectReconnectedSavedDrafts(
   const context = await browser.newContext();
   const page = await context.newPage();
   await signIn(page, email);
-  await expect(
-    page.getByRole('heading', { name: 'Good work starts with the right context.' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Choose a studio.' })).toBeVisible();
   await page.goto(brands.washbodegaUrl);
   await expect(
     page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),

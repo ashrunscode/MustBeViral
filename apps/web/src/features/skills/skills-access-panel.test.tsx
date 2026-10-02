@@ -68,11 +68,26 @@ function alertsInDocument() {
   return document.querySelectorAll('[role="alert"]');
 }
 
+/** The form starts empty; a test that publishes fills the three fields first. */
+function fillPublishDialog(dialog: HTMLElement) {
+  fireEvent.change(within(dialog).getByLabelText('Skill name'), {
+    target: { value: 'launch-copy' },
+  });
+  fireEvent.change(within(dialog).getByLabelText('Version title'), {
+    target: { value: 'Launch copy' },
+  });
+  fireEvent.change(within(dialog).getByLabelText('Instructions'), {
+    target: { value: 'Write concise, benefit-led launch copy for a DTC product drop.' },
+  });
+}
+
 async function openPublishDialog() {
   render(<SkillsAccessPanel workspaceId="workspace-1" />);
   await screen.findByRole('button', { name: 'View history' });
   fireEvent.click(screen.getByRole('button', { name: 'Publish Skill' }));
-  return screen.getByRole('dialog', { name: 'Publish a Skill version' });
+  const dialog = screen.getByRole('dialog', { name: 'Publish a Skill version' });
+  fillPublishDialog(dialog);
+  return dialog;
 }
 
 describe('SkillsAccessPanel', () => {
@@ -132,6 +147,7 @@ describe('SkillsAccessPanel', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Publish Skill' }));
 
     const dialog = screen.getByRole('dialog', { name: 'Publish a Skill version' });
+    fillPublishDialog(dialog);
     expect(within(dialog).queryByRole('alert')).toBeNull();
     expect(pageAlert.isConnected).toBe(true);
     expect(alertsInDocument()).toHaveLength(1);

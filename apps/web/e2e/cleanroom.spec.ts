@@ -21,7 +21,7 @@ test('renders the approved campaign brief golden at 1440x900', async ({ page }, 
   await page.getByRole('link', { name: 'Start campaign brief' }).click();
   await expect(page).toHaveURL(/\/studio\/lumen-skin\/brief$/);
   await expect(page.getByRole('heading', { name: 'Claims & legal' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Validate brief' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Validate and open the plan' })).toBeDisabled();
   if (testInfo.project.name === 'desktop-chromium') {
     await page.screenshot({
       path: await screenshotPath('campaign-brief-1440x900.png'),

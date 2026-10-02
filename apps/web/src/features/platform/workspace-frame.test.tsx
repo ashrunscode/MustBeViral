@@ -104,7 +104,7 @@ describe('WorkspaceFrame scope', () => {
     state.scope = { status: 'error', error: new PlatformRequestError('NOT_FOUND', 'gone') };
     const html = render();
     expect(html).not.toContain('campaign-content');
-    expect(html).toContain('Let’s get you back to your work.');
+    expect(html).toContain('This request did not complete. Nothing changed.');
   });
 
   it('holds the campaign while the scope is still being confirmed', () => {

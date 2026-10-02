@@ -64,7 +64,15 @@ export function ReviewResultNotice({
   if (result.type === 'conflict') {
     return (
       <div className={styles.reviewError} role="alert" data-result="conflict">
-        Review revision changed. Current revision is {result.actual_revision_id}.
+        <span>
+          Revision {result.actual_revision_id} is now current. Nothing was approved. Reload the
+          review before deciding again.
+        </span>
+        {onRetryRead !== undefined ? (
+          <Button variant="ghost" onClick={onRetryRead}>
+            Reload the review
+          </Button>
+        ) : null}
       </div>
     );
   }
@@ -253,7 +261,6 @@ export function ComposedReview({
           <div className={styles.adFoot}>
             <strong>{copy?.headline ?? concept.title}</strong>
             {copy?.description ? <p>{copy.description}</p> : null}
-            <span className={styles.adCta}>Shop now</span>
           </div>
         </article>
         <div className={styles.conceptActions}>
@@ -411,7 +418,13 @@ function VariantCard({
           <div className={styles.version}>
             <div className={`${styles.thumb} ${styles.prior}`}>
               <MonoCaps>
-                {variant.hasPrior ? 'Prior pinned, v1' : 'No prior pinned output'}
+                {dataMode === 'preview'
+                  ? variant.hasPrior
+                    ? 'Prior pinned, v1'
+                    : 'No prior pinned output'
+                  : variant.hasPrior
+                    ? 'Prior output recorded in lineage'
+                    : 'No prior output'}
               </MonoCaps>
             </div>
             <div className={styles.versionCaption}>
@@ -617,7 +630,11 @@ export function ReviewFlow({
       : null,
   );
   const [loading, setLoading] = useState(dataMode === 'worker' && readPort !== null);
+  // The receipt summary shows figures only after a read has returned them; a failed read leaves
+  // the default summary in place and the summary stays off screen.
+  const [summaryRead, setSummaryRead] = useState(dataMode === 'preview');
   const [rejectingId, setRejectingId] = useState<string | null>(null);
+  const decidingRef = useRef(false);
   const [approvingId, setApprovingId] = useState<string | null>(null);
   const context = useCampaignContext();
   const receiptHref = campaignHref(workspace, 'results', { ...context, run: runId ?? context.run });
@@ -638,6 +655,7 @@ export function ReviewFlow({
       if (next.type === 'ok') {
         setGroups(next.groups);
         setSummary(next.summary);
+        setSummaryRead(true);
         setResult(null);
       } else {
         setResult(next);
@@ -671,19 +689,25 @@ export function ReviewFlow({
       return;
     }
     const target = readPort ?? previewPort;
-    if (target === null) return;
-    const next = await target.decideVariant({
-      variantId: variant.id,
-      decision,
-      reason: rejectionReason,
-      expectedRevisionId:
-        groups.find((group) => group.id === variant.groupId)?.revision ?? 'current revision',
-    });
-    setResult(next);
-    if (next.type === 'ok') {
-      setGroups(next.groups);
-      setRejectingId(null);
-      setRejectionReason('');
+    // One decision at a time: a second click while the first is in flight does nothing.
+    if (target === null || decidingRef.current) return;
+    decidingRef.current = true;
+    try {
+      const next = await target.decideVariant({
+        variantId: variant.id,
+        decision,
+        reason: rejectionReason,
+        expectedRevisionId:
+          groups.find((group) => group.id === variant.groupId)?.revision ?? 'current revision',
+      });
+      setResult(next);
+      if (next.type === 'ok') {
+        setGroups(next.groups);
+        setRejectingId(null);
+        setRejectionReason('');
+      }
+    } finally {
+      decidingRef.current = false;
     }
   }
 
@@ -779,6 +803,7 @@ export function ReviewFlow({
     if (next.type === 'ok') {
       setGroups(next.groups);
       setSummary(next.summary);
+      setSummaryRead(true);
       setResult(null);
     } else {
       setResult(next);
@@ -857,7 +882,7 @@ export function ReviewFlow({
         />
         <ReviewResultNotice
           result={result}
-          {...(groups.length === 0 ? { onRetryRead: () => void retryRead() } : {})}
+          {...(readPort === null ? {} : { onRetryRead: () => void retryRead() })}
         />
         <ReviewRecoveryNotice
           context={context}
@@ -881,7 +906,7 @@ export function ReviewFlow({
         ) : null}
         {loading ? (
           <div className={styles.reviewError} role="status" data-result="loading">
-            Reading authoritative artifacts and approvals from Core.
+            Reading outputs and approvals…
           </div>
         ) : null}
         {!loading && result === null && groups.length === 0 ? (
@@ -964,45 +989,57 @@ export function ReviewFlow({
             ))}
         {mode === 'approval' ? (
           <>
-            <section
-              className={`${styles.receiptSummary} receipt-summary`}
-              aria-labelledby="receipt-summary-title"
-            >
-              <h2 id="receipt-summary-title">Receipt summary</h2>
-              <div>
-                <MonoCaps>Run total</MonoCaps>
-                <strong>{formatUsdMicros(summary.capturedMicros)}</strong>
-              </div>
-              <div>
-                <MonoCaps>Route</MonoCaps>
-                <strong>{summary.route}</strong>
-              </div>
-              <div>
-                <MonoCaps>{dataMode === 'preview' ? 'Budget used' : 'Captured / quoted'}</MonoCaps>
-                <strong>
-                  {formatUsdMicros(summary.budgetUsedMicros)} /{' '}
-                  {formatUsdMicros(summary.budgetCapMicros)}
-                </strong>
-              </div>
-              {dataMode === 'worker' ? (
-                <>
-                  <div>
-                    <MonoCaps>Released / refunded / net</MonoCaps>
-                    <strong>
-                      {formatUsdMicros(summary.releasedMicros)} /{' '}
-                      {formatUsdMicros(summary.refundedMicros)} /{' '}
-                      {formatUsdMicros(summary.netMicros)}
-                    </strong>
-                  </div>
-                  <div>
-                    <MonoCaps>Settlement / pending</MonoCaps>
-                    <strong>
-                      {summary.settlementStatus} / {formatUsdMicros(summary.pendingMicros)}
-                    </strong>
-                  </div>
-                </>
-              ) : null}
-            </section>
+            {!summaryRead ? null : summary.reservationRecorded === false ? (
+              <section
+                className={`${styles.receiptSummary} receipt-summary`}
+                aria-labelledby="receipt-summary-title"
+              >
+                <h2 id="receipt-summary-title">Receipt summary</h2>
+                <p>No reservation is recorded for this run. Nothing was charged.</p>
+              </section>
+            ) : (
+              <section
+                className={`${styles.receiptSummary} receipt-summary`}
+                aria-labelledby="receipt-summary-title"
+              >
+                <h2 id="receipt-summary-title">Receipt summary</h2>
+                <div>
+                  <MonoCaps>Run total</MonoCaps>
+                  <strong>{formatUsdMicros(summary.capturedMicros)}</strong>
+                </div>
+                <div>
+                  <MonoCaps>Route</MonoCaps>
+                  <strong>{summary.route}</strong>
+                </div>
+                <div>
+                  <MonoCaps>
+                    {dataMode === 'preview' ? 'Budget used' : 'Captured / quoted'}
+                  </MonoCaps>
+                  <strong>
+                    {formatUsdMicros(summary.budgetUsedMicros)} /{' '}
+                    {formatUsdMicros(summary.budgetCapMicros)}
+                  </strong>
+                </div>
+                {dataMode === 'worker' ? (
+                  <>
+                    <div>
+                      <MonoCaps>Released / refunded / net</MonoCaps>
+                      <strong>
+                        {formatUsdMicros(summary.releasedMicros)} /{' '}
+                        {formatUsdMicros(summary.refundedMicros)} /{' '}
+                        {formatUsdMicros(summary.netMicros)}
+                      </strong>
+                    </div>
+                    <div>
+                      <MonoCaps>Settlement / pending</MonoCaps>
+                      <strong>
+                        {summary.settlementStatus} / {formatUsdMicros(summary.pendingMicros)}
+                      </strong>
+                    </div>
+                  </>
+                ) : null}
+              </section>
+            )}
             <section
               className={`${styles.exportStatus} export-status`}
               aria-labelledby="mobile-export-title"

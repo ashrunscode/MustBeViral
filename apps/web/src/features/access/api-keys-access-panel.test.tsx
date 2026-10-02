@@ -66,7 +66,7 @@ async function openCreateDialog() {
 describe('ApiKeysAccessPanel', () => {
   it('renders audit shell and non-autonomous spend copy', () => {
     const html = renderToStaticMarkup(<ApiKeysAccessPanel workspaceId="workspace-1" />);
-    expect(html).toContain('API keys and audit');
+    expect(html).toContain('API keys');
     expect(html).toContain('Loading keys');
     expect(html).toContain('cannot bypass quote confirmation');
     expect(html).toContain('Create API key');

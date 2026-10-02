@@ -92,6 +92,11 @@ export interface ReviewSummary {
   readonly route: string;
   readonly campaignName: string | null;
   readonly recovery: RunRecoveryView | null;
+  /**
+   * Whether the receipt carries a reservation. False means the run has no reservation on record,
+   * which is the only state in which the summary may say that nothing was charged.
+   */
+  readonly reservationRecorded?: boolean;
 }
 
 export type ReviewPortResult =
@@ -568,6 +573,7 @@ function reviewFromReceipt(
       route: routeLabel,
       campaignName: null,
       recovery: null,
+      reservationRecorded: Boolean(receipt.reservation),
     },
   };
 }
@@ -620,6 +626,7 @@ export class WorkerReviewPort implements ReviewReadPort {
                 settlementStatus: runContext.settlement.settlementStatus,
                 budgetUsedMicros: runContext.settlement.capturedMicros,
                 budgetCapMicros: runContext.settlement.reservationMicros,
+                reservationRecorded: true,
               }),
           campaignName,
           recovery: runContext.recovery,
@@ -627,7 +634,11 @@ export class WorkerReviewPort implements ReviewReadPort {
       };
     } catch (error) {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
-      return { type: 'error', message: 'Core could not read review artifacts.', retryable: true };
+      return {
+        type: 'error',
+        message: 'The review could not be loaded. Nothing changed.',
+        retryable: true,
+      };
     }
   }
 
@@ -716,7 +727,12 @@ export class WorkerReviewPort implements ReviewReadPort {
       return { type: 'ok', groups: this.#groups };
     } catch (error) {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
-      return { type: 'error', message: 'Core could not record this approval.', retryable: false };
+      return {
+        type: 'error',
+        message:
+          'This approval could not be confirmed. Reload the review to see its current state.',
+        retryable: false,
+      };
     }
   }
 
@@ -823,7 +839,13 @@ export class WorkerReviewPort implements ReviewReadPort {
     if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
     if (error.code === 'NOT_FOUND') return { type: 'not_found', artifact_id: resourceId };
     if (error.code === 'RUN_NOT_APPROVABLE') {
-      return { type: 'conflict', actual_revision_id: 'run state' };
+      return {
+        type: 'error',
+        message:
+          'This run is no longer approvable. Nothing was approved. Reload to see its current state.',
+        retryable: true,
+        request_id: error.request_id,
+      };
     }
     return {
       type: 'error',

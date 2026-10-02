@@ -34,7 +34,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain('billing-wallet-badge--funded');
       expect(html).toContain('Funded');
       expect(html).toContain(formatUsdMicros(model.walletBalanceMicros));
-      expect(html).toContain('Funded — wallet covers upcoming named-price reservations.');
+      expect(html).toContain('Funded. The wallet covers the next named-price reservation.');
       expect(html).toContain('billing-subscription-badge--active');
       expect(html).toContain('Launch pack receipt, GB-04');
       expect(html).toContain('Catalog charge');
@@ -48,7 +48,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain('billing-wallet-badge--low_balance');
       expect(html).toContain('Low balance');
       expect(html).toContain(formatUsdMicros(model.walletBalanceMicros));
-      expect(html).toContain('add prepaid credit before the next pack confirmation');
+      expect(html).toContain('Add prepaid credit before the next confirmation');
       expect(html).toContain('Launch pack receipt, GB-02');
     });
 
@@ -63,7 +63,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain('Past due');
       expect(html).toContain('Refund / release');
       expect(html).toContain('Reservation release, GB-01 partial');
-      expect(html).toContain('no hidden mock charge');
+      expect(html).toContain('No hidden charge');
     });
 
     it('renders receipt detail with explicit catalog charge — no hidden mock charge', () => {
@@ -74,7 +74,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain('Catalog charge');
       expect(html).toContain(catalogChargeLabel);
       expect(html).toContain('Launch pack catalog charge');
-      expect(html).toContain('P1a fully-landed margin cap');
+      expect(html).toContain('Reserved margin');
       expect(html).toContain(formatUsdMicros(1_820_000n));
       expect(html).toContain('At explicit confirmation');
     });

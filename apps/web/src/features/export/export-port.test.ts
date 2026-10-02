@@ -595,7 +595,7 @@ describe('WorkerExportPort', () => {
 
     await expect(port.remintDownload('artifact-export')).resolves.toEqual({
       type: 'error',
-      message: 'Core did not return a customer download link.',
+      message: 'No customer download link was returned.',
       retryable: true,
     });
     expect(exportCalls).toBe(0);
@@ -803,7 +803,7 @@ describe('WorkerExportPort', () => {
 
     await expect(port.create()).resolves.toMatchObject({
       type: 'export_failed',
-      message: 'Core did not prove whether this export was created.',
+      message: 'Whether this export was created is not proven.',
     });
     expect(exportCalls).toBe(1);
     await expect(port.read()).resolves.toMatchObject({

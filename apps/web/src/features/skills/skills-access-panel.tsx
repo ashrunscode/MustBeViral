@@ -28,11 +28,9 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
   const [versionsLoading, setVersionsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [publishOpen, setPublishOpen] = useState(false);
-  const [name, setName] = useState('launch-copy');
-  const [title, setTitle] = useState('Launch copy');
-  const [instructions, setInstructions] = useState(
-    'Write concise, benefit-led launch copy for a DTC product drop.',
-  );
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [instructions, setInstructions] = useState('');
   const [busy, setBusy] = useState(false);
   const [errorPredatesDialog, setErrorPredatesDialog] = useState(false);
   const [publishedVersion, setPublishedVersion] = useState<number | null>(null);
@@ -182,11 +180,13 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
                   <tr key={skill.id}>
                     <td>{skill.name}</td>
                     <td>
-                      {skill.latest_version === null ? '—' : versionLabel(skill.latest_version)}
+                      {skill.latest_version === null
+                        ? 'Not published'
+                        : versionLabel(skill.latest_version)}
                     </td>
                     <td>
                       {skill.latest_version === null
-                        ? '—'
+                        ? 'Not published'
                         : formatTimestamp(skill.latest_version.published_at)}
                     </td>
                     <td>

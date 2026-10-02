@@ -3,8 +3,13 @@ import Link from 'next/link';
 import { PublicHeader } from './public-header';
 import { requestAccessHref, softwareCopy } from './public-copy';
 import { SoftwareFilm } from './software-film';
+import { softwareStructuredData, StructuredData } from './structured-data';
 
-export function SoftwareLanding() {
+/**
+ * The software page is the path: the tagline, the film with its four beats beside it, then the one
+ * action. Enrollment is closed, so the only other link is mail, and it says so.
+ */
+export function SoftwareLanding({ origin }: Readonly<{ origin?: string | undefined }>) {
   return (
     <div className="pub-page pub-page--product" lang="en">
       <a className="skip-link" href="#software-heading">
@@ -26,11 +31,6 @@ export function SoftwareLanding() {
           </div>
           <SoftwareFilm />
           <div className="pub-copy">
-            <ol className="pub-path">
-              {softwareCopy.path.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ol>
             <p>{softwareCopy.enrollment}</p>
             <div className="pub-actions">
               <Link className="pub-cta" href="/login">
@@ -43,6 +43,7 @@ export function SoftwareLanding() {
           </div>
         </main>
       </div>
+      <StructuredData data={softwareStructuredData(origin)} />
     </div>
   );
 }

@@ -190,7 +190,7 @@ export function ReceiptFlow({
       <div id="main-content" className={styles.receiptPage}>
         <Card className={styles.resultCard} feedback="loading" role="status" data-result="loading">
           <strong>Reading immutable receipt</strong>
-          <span>Core is reading approved artifacts without creating or replaying an export.</span>
+          <span>Reading approved outputs. This read creates no export and replays none.</span>
         </Card>
       </div>
     );

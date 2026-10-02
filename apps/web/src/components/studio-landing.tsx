@@ -6,6 +6,7 @@ import {
   type StudioHeroMedia as StudioHeroMediaRecord,
   type StudioLocale,
 } from './public-copy';
+import { StructuredData, studioStructuredData } from './structured-data';
 import { StudioHeroMedia } from './studio-hero-media';
 
 function slug(value: string) {
@@ -17,12 +18,18 @@ function slug(value: string) {
  * decision with no footage: the locked lines, the two offers with their prices in the evidence
  * face, and one action with the phone as the only secondary. When a rights-cleared poster and clip
  * exist they take their own block above the lead, with the geometry reserved; nothing ever sits
- * over the native video controls. Below the frame: the cadence, the objection, how to book.
+ * over the native video controls. Below the frame: the cadence, the six kinds of work in the owner's
+ * words, the objection with its answer under them, and how to book.
  */
 export function StudioLanding({
   locale,
   media = studioHeroMedia,
-}: Readonly<{ locale: StudioLocale; media?: StudioHeroMediaRecord | null }>) {
+  origin,
+}: Readonly<{
+  locale: StudioLocale;
+  media?: StudioHeroMediaRecord | null;
+  origin?: string | undefined;
+}>) {
   const copy = studioCopy[locale];
 
   return (
@@ -85,6 +92,23 @@ export function StudioLanding({
           <div className="studio-body">
             <p className="studio-cadence">{copy.cadence}</p>
 
+            {copy.kinds === undefined ? null : (
+              <section aria-labelledby="studio-kinds" className="studio-kinds">
+                <h2 id="studio-kinds">{copy.kinds.heading}</h2>
+                <dl className="studio-kinds__list">
+                  {copy.kinds.items.map((kind) => (
+                    <div className="studio-kind" key={kind.name}>
+                      <dt>{kind.name}</dt>
+                      <dd>
+                        <p className="studio-kind__situation">{kind.situation}</p>
+                        <p className="studio-kind__line">{kind.line}</p>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            )}
+
             {copy.question === undefined ? (
               <p className="studio-answer">{copy.answer}</p>
             ) : (
@@ -108,6 +132,7 @@ export function StudioLanding({
           </div>
         </main>
       </div>
+      <StructuredData data={studioStructuredData(copy, origin)} />
     </div>
   );
 }

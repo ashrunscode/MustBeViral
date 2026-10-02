@@ -203,10 +203,7 @@ export function BrandCampaigns({ studioId, brand, canWrite }: Readonly<BrandScop
 export function BrandCalendar({ studioId, brand }: Readonly<BrandScope>) {
   return (
     <>
-      <PlatformHeading
-        title="Calendar"
-        description={`Scheduled revisions for ${brand.name}, in the workspace time zone.`}
-      />
+      <PlatformHeading title="Calendar" description={`Scheduled revisions for ${brand.name}.`} />
       <Calendar
         scope={brand.name}
         items={[]}

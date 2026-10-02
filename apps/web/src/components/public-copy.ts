@@ -21,6 +21,13 @@ export interface StudioOffer {
   readonly includes: readonly string[];
 }
 
+/** One kind of Houston business: the situation its owner recognises, then what we do about it. */
+export interface StudioKind {
+  readonly name: string;
+  readonly situation: string;
+  readonly line: string;
+}
+
 export interface StudioHeroMedia {
   readonly poster: { readonly src: string; readonly width: number; readonly height: number };
   readonly video?: { readonly src: string; readonly captions: string };
@@ -46,6 +53,8 @@ export interface StudioCopy {
   readonly phone: string;
   readonly offers: readonly [StudioOffer, StudioOffer];
   readonly cadence: string;
+  /** EN only: the six kinds of work in the owner's words (directive of 2026-10-02). No Spanish exists for them yet. */
+  readonly kinds?: { readonly heading: string; readonly items: readonly StudioKind[] };
   /** EN: the approved objection pair. ES: the approved results pair, which has no question. */
   readonly question?: string;
   readonly answer: string;
@@ -93,6 +102,41 @@ export const studioEn: StudioCopy = {
   ],
   cadence:
     'On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.',
+  kinds: {
+    heading: 'Your kind of work.',
+    items: [
+      {
+        name: 'Med spa',
+        situation: 'The treatment menu changed and the page still shows last season.',
+        line: 'We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.',
+      },
+      {
+        name: 'Restaurant',
+        situation: 'The special is gone and the photo of it is still up, shot in bad light.',
+        line: 'We film the dish and the room on a schedule, so the feed matches the menu.',
+      },
+      {
+        name: 'Gym',
+        situation: 'One member films, and the class looks empty.',
+        line: 'We film the week of classes in the room, with people who have said yes.',
+      },
+      {
+        name: 'Auto',
+        situation: 'The build is finished and the footage is still on a phone.',
+        line: 'We walk the car and cut the Reels.',
+      },
+      {
+        name: 'Home services',
+        situation: 'The before-and-after is the proof, and nobody shot it.',
+        line: 'We document the job from start to finish and turn it into the month.',
+      },
+      {
+        name: 'Real estate team',
+        situation: 'Every listing has photos. The team itself has no face.',
+        line: 'We film the team, on a week that is not a listing.',
+      },
+    ],
+  },
   question: 'Already posting?',
   answer:
     'You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.',
@@ -141,21 +185,33 @@ export const studioCopy: Readonly<Record<StudioLocale, StudioCopy>> = {
   es: studioEs,
 };
 
+/**
+ * The four beats of the software film, at the second each one starts. The times are the cue times
+ * of the caption file, so the list beside the film, the captions and the picture name the same
+ * beat at the same moment. Each beat continues the same photo.
+ */
+export const softwareBeats = [
+  { at: 0, line: 'photo.jpg arrives from the Google Drive folder you selected.' },
+  { at: 4, line: 'The same photo is cropped and captioned from the approved offer.' },
+  {
+    at: 8,
+    line: 'The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.',
+  },
+  {
+    at: 13,
+    line: 'The receipt shows the provider id and the actual cost for that photo. Pause stays available.',
+  },
+] as const;
+
 export const softwareCopy = {
   skip: 'Skip to main content',
   tagline: 'You brief. Agents produce. You approve every dollar.',
   filmFact: 'The film follows one photo from a Drive folder to a receipt.',
   label: 'One photo, from Drive to receipt',
+  pathLabel: 'The path, in four beats',
   alt: 'Film frame. A photo arrives from a Google Drive folder, is cropped and captioned from the approved offer, publishes to the eligible channels, and ends in a receipt that shows the cost.',
-  /** One photo, witnessed from the folder to the receipt. Each step continues the same photo. */
-  path: [
-    'photo.jpg arrives from the Google Drive folder you selected.',
-    'The same photo is cropped and captioned from the approved offer.',
-    'The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.',
-    'The receipt shows the provider id and the actual cost for that photo. Pause stays available.',
-  ],
   enrollment: 'Enrollment is closed.',
-  requestAccess: 'Request access',
+  requestAccess: 'Request access by email',
   cta: 'Sign in to Studio',
   play: 'Play the film',
 } as const;
@@ -172,17 +228,20 @@ export const softwarePlans = [
   {
     name: 'Solo',
     price: '$49',
-    detail: ['1 brand, 2 seats', '9 accounts, 10\u00a0GB'],
+    detail: ['1 active brand, 2 operator seats', '9 connected accounts, 10\u00a0GB of storage'],
   },
   {
     name: 'Studio',
     price: '$149',
-    detail: ['5 brands, 5 seats', '45 accounts, 50\u00a0GB'],
+    detail: ['5 active brands, 5 operator seats', '45 connected accounts, 50\u00a0GB of storage'],
   },
   {
     name: 'Portfolio',
     price: '$399',
-    detail: ['20 brands, 15 seats', '180 accounts, 200\u00a0GB'],
+    detail: [
+      '20 active brands, 15 operator seats',
+      '180 connected accounts, 200\u00a0GB of storage',
+    ],
   },
 ] as const;
 
@@ -190,7 +249,9 @@ export const pricingCopy = {
   skip: 'Skip to main content',
   h1: 'Software plans',
   provisional: 'These prices are the provisional catalog.',
+  charging: 'Charging is not on.',
   signIn: 'Signing in does not start a subscription.',
+  reviewers: 'A reviewer invited to one brand does not use an operator seat.',
   storage: 'Storage is decimal gigabytes: 1,000,000,000 bytes.',
   allowance:
     'The subscription does not include a production allowance. Studio quotes production spend before it runs.',

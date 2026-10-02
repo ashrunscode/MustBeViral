@@ -509,6 +509,7 @@ export function QuoteFlow({
   }
 
   async function requote() {
+    if (pending) return;
     setPending(true);
     const next =
       quotePort === null ? await previewPort?.requote(Date.now()) : await quotePort.requote();

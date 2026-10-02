@@ -88,13 +88,13 @@ function walletStateLabel(state: BillingWalletState): string {
 function walletStateCopy(state: BillingWalletState): string {
   switch (state) {
     case 'funded':
-      return 'Funded — wallet covers upcoming named-price reservations.';
+      return 'Funded. The wallet covers the next named-price reservation.';
     case 'low_balance':
-      return 'Low balance — add prepaid credit before the next pack confirmation.';
+      return 'Low balance. Add prepaid credit before the next confirmation.';
     case 'blocked':
-      return 'Blocked — subscription or wallet balance prevents new reservations.';
+      return 'Blocked. The subscription or the balance prevents new reservations.';
     case 'closed':
-      return 'Closed enrollment — operator credit only until Stripe test mode is authorized.';
+      return 'Closed enrollment. Charging is turned off.';
   }
 }
 
@@ -133,9 +133,8 @@ export function BillingUsagePanel({
           <MonoCaps>Usage and billing</MonoCaps>
           <h1 id="billing-heading">Wallet and receipts</h1>
           <p>
-            P1a adds the prepaid usage wallet, setup charge, and subscription on top of P0
-            named-price quotes. Charging remains disabled until Stripe test-mode credentials and
-            operator authorization are recorded.
+            Charging is turned off. Every run is quoted at a named maximum before it starts, and
+            nothing is charged in this preview.
           </p>
         </section>
 
@@ -199,7 +198,7 @@ export function BillingUsagePanel({
               </div>
               <div>
                 <dt>Ledger effect</dt>
-                <dd>Prepaid balance restored — no hidden mock charge</dd>
+                <dd>Prepaid balance restored. No hidden charge.</dd>
               </div>
             </dl>
           </section>
@@ -215,7 +214,7 @@ export function BillingUsagePanel({
                 <td>{formatUsdMicros(catalogChargeMicros)}</td>
               </tr>
               <tr>
-                <th scope="row">P1a fully-landed margin cap</th>
+                <th scope="row">Reserved margin</th>
                 <td>{formatUsdMicros(marginCapMicros)}</td>
               </tr>
               <tr>

@@ -78,7 +78,7 @@ describe('studio sections and failed reads', () => {
     state.reviews = { reviews: [], loading: false, truncated: false, refresh: () => undefined };
     render(<StudioTasks studio={studio} />);
     expect(screen.queryByText('No open tasks.')).toBeNull();
-    expect(screen.getByText('Let’s get you back to your work.')).toBeTruthy();
+    expect(screen.getByText('This request did not complete. Nothing changed.')).toBeTruthy();
   });
 
   it('names where content approvals happen when no brand version is waiting', () => {
@@ -131,7 +131,7 @@ describe('studio sections and failed reads', () => {
     };
     render(<StudioOverview studio={studio} canWrite={false} />);
     expect(screen.getByText('Open question')).toBeTruthy();
-    expect(screen.getByText('Let’s get you back to your work.')).toBeTruthy();
+    expect(screen.getByText('This request did not complete. Nothing changed.')).toBeTruthy();
     expect(screen.queryByText(/Nothing needs a decision right now/u)).toBeNull();
   });
 

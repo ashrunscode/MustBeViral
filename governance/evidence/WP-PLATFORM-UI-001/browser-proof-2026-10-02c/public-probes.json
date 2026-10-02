@@ -1,0 +1,237 @@
+{
+  "harness": "http://127.0.0.1:3111",
+  "date": "2026-10-02",
+  "cells": [
+    {
+      "route": "/",
+      "width": 375,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 227,
+      "priceTop": 406,
+      "innerHeight": 812,
+      "kinds": 6,
+      "telLinks": 4,
+      "ld": "LocalBusiness offers=2 address=false",
+      "hreflang": ["en", "es", "x-default"]
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 239,
+      "priceTop": 143,
+      "innerHeight": 1024,
+      "kinds": 6,
+      "telLinks": 4
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 223,
+      "priceTop": 167,
+      "innerHeight": 800,
+      "kinds": 6,
+      "telLinks": 4
+    },
+    {
+      "route": "/",
+      "width": 1920,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 223,
+      "priceTop": 167,
+      "innerHeight": 1080,
+      "kinds": 6,
+      "telLinks": 4
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 227,
+      "priceTop": 406,
+      "innerHeight": 812,
+      "kinds": 0,
+      "telLinks": 4,
+      "lang": "es",
+      "ld": "LocalBusiness offers=2 address=false",
+      "hreflang": ["en", "es", "x-default"]
+    },
+    {
+      "route": "/es",
+      "width": 768,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 239,
+      "priceTop": 143,
+      "innerHeight": 1024,
+      "kinds": 0,
+      "telLinks": 4
+    },
+    {
+      "route": "/es",
+      "width": 1280,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 247,
+      "priceTop": 151,
+      "innerHeight": 800,
+      "kinds": 0,
+      "telLinks": 4
+    },
+    {
+      "route": "/es",
+      "width": 1920,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 247,
+      "priceTop": 151,
+      "innerHeight": 1080,
+      "kinds": 0,
+      "telLinks": 4
+    },
+    {
+      "route": "/software",
+      "width": 375,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 901,
+      "innerHeight": 812,
+      "beats": 4,
+      "preload": true,
+      "ld": "SoftwareApplication",
+      "ogImage": "/og/software.png",
+      "twitterCard": "summary_large_image"
+    },
+    {
+      "route": "/software",
+      "width": 768,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 910,
+      "innerHeight": 1024,
+      "beats": 4,
+      "preload": true
+    },
+    {
+      "route": "/software",
+      "width": 1280,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 667,
+      "innerHeight": 800,
+      "beats": 4,
+      "preload": true
+    },
+    {
+      "route": "/software",
+      "width": 1920,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 667,
+      "innerHeight": 1080,
+      "beats": 4,
+      "preload": true
+    },
+    {
+      "route": "/software/pricing",
+      "width": 375,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 867,
+      "priceTop": 254,
+      "innerHeight": 812,
+      "ogImage": "/og/software-pricing.png",
+      "twitterCard": "summary_large_image"
+    },
+    {
+      "route": "/software/pricing",
+      "width": 768,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 709,
+      "priceTop": 232,
+      "innerHeight": 1024
+    },
+    {
+      "route": "/software/pricing",
+      "width": 1280,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 709,
+      "priceTop": 232,
+      "innerHeight": 800
+    },
+    {
+      "route": "/software/pricing",
+      "width": 1920,
+      "hScroll": false,
+      "mains": 1,
+      "h1Px": 28,
+      "ctaTop": 709,
+      "priceTop": 232,
+      "innerHeight": 1080
+    }
+  ],
+  "film": {
+    "autoplay": { "videoShown": true, "running": "0:00" },
+    "afterChoosingBeat3": { "currentTime": 8.7, "running": "0:08", "done": 2 },
+    "reducedMotionBefore": { "video": false, "playVisible": true, "runningAnimations": 0 },
+    "reducedMotionAfterChoosingBeat2": { "video": true, "currentTime": 5.1, "running": "0:04" },
+    "studioReducedMotionRunningAnimations": 0
+  },
+  "forcedColors": {
+    "ctaBackground": "rgb(255, 255, 255)",
+    "ctaBorder": "rgb(0, 0, 0)",
+    "frameBorder": "rgb(0, 0, 0)"
+  },
+  "keyboard": {
+    "/": { "stops": 8, "withoutRing": 0 },
+    "/es": { "stops": 8, "withoutRing": 0 },
+    "/software": { "stops": 15, "withoutRing": 0, "nativeVideoControlStops": 5 }
+  },
+  "endpoints": {
+    "/robots.txt": [200, "text/plain"],
+    "/sitemap.xml": [200, "application/xml"],
+    "/llms.txt": [200, "text/plain; charset=utf-8"],
+    "/og/studio-en.png": [200, "image/png"],
+    "/og/software.png": [200, "image/png"]
+  },
+  "consoleErrors": 0,
+  "signedIn": {
+    "studios": { "h1": "Choose a studio." },
+    "studioOverview": { "h1": "Studio overview", "slogan": false },
+    "studioCalendar": { "workspaceTimeZoneClaim": false, "timesIn": true },
+    "brief": {
+      "primaryAction": "Validate and open the plan",
+      "oldLabel": false,
+      "hScroll375": false
+    },
+    "canvas": { "coreInCopy": false },
+    "access": { "h1": "API keys", "audit": false },
+    "skills": { "dialogFields": ["", "", ""], "publishDisabled": true },
+    "billing": { "chargingOff": true, "p1a": false },
+    "consoleErrors": 0
+  },
+  "journeys": { "preview": { "passed": 112, "skipped": 40 }, "connected": { "passed": 17 } }
+}

@@ -788,7 +788,7 @@ export function CampaignBrief({
             </MonoCaps>
             <br />
             {validation.success
-              ? 'The brief meets the required field, rights, and asset gates.'
+              ? 'The brief meets the required field, rights, and asset gates. Validating creates the campaign project and its first plan revision. Nothing is quoted or charged.'
               : 'Validation and planning remain unavailable until all required fields and rights attestations pass.'}
           </div>
           {bootstrapMessage === null ? null : (
@@ -871,10 +871,10 @@ export function CampaignBrief({
                     ? 'default'
                     : 'error'
             }
-            loadingLabel="Opening canvas"
+            loadingLabel="Opening the plan"
             onClick={() => void validateBrief()}
           >
-            Validate brief
+            Validate and open the plan
           </Button>
         </div>
       </div>

@@ -278,7 +278,7 @@ export function PlatformRecovery({
   }
   return (
     <section className="platform-card platform-pad platform-stack" role="alert">
-      <h2>Let’s get you back to your work.</h2>
+      <h2>This request did not complete. Nothing changed.</h2>
       <p>{platformErrorMessage(error)}</p>
       <div className="platform-row">
         {retry ? (
