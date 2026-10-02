@@ -150,10 +150,14 @@ detached clone of tracked files only), is recorded with its sha and verdict in
 
 ## Release
 
-The staging and production deployments from a clean clone of the merge commit, their smoke checks,
-the served `data-dpl-id` values and the rollback targets are recorded in
-`release-films-2026-10-02.md` after the merge. Until then production serves `0b9f578`
-(`dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj`) and staging `dpl_5skrFZb2nnZSog6DYhCd82pB7phL`.
+Recorded in `release-films-2026-10-02.md`. The pull request merged as `95deda5` at
+2026-10-02T18:05:39Z. From a clean clone of that commit, staging received
+`dpl_HK4J6VQAPKx8Hp8ymxjGUwsLfXbg` and passed its twelve route checks, eighteen build markers,
+Core health and a browser pass; production then received `dpl_Bw8Txy9Atvk8yoBocUxv3AEZW5EN` and
+passed the same. `https://mustbeviral.com` and `https://www.mustbeviral.com` answer with that
+production deployment; the domain was already attached to the production project and nothing about
+it was changed. Rollback targets `dpl_5skrFZb2nnZSog6DYhCd82pB7phL` (staging) and
+`dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj` (production) stay Ready and unused.
 
 ## Not crossed
 
