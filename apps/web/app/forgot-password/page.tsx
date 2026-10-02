@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { authMessageClassName, authMessageRole } from '../../src/lib/auth/auth-message';
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { ForgotPasswordForm } from './forgot-password-form';
+import { PublicFooter } from '../../src/components/public-footer';
 
 export const metadata: Metadata = {
   title: 'Reset your password',
@@ -27,31 +28,34 @@ export default async function ForgotPasswordPage({
   const signInUrl = `/login?${new URLSearchParams({ next }).toString()}`;
 
   return (
-    <main className="auth-page">
-      <a className="skip-link" href="#auth-heading">
-        Skip to password recovery
-      </a>
-      <section aria-labelledby="auth-heading" className="auth-card">
-        <span className="pub-wordmark" translate="no">
-          {'Must\u00a0Be\u00a0Viral'}
-        </span>
-        <h1 id="auth-heading">Reset your password</h1>
-        <p className="auth-intro">
-          Enter the email for your Studio workspace. If the account exists, a single-use recovery
-          link is on the way.
-        </p>
-        {notice === undefined ? null : (
-          <p className={authMessageClassName(noticeKey)} role={authMessageRole(noticeKey)}>
-            {notice}
+    <div className="auth-layout">
+      <main className="auth-page">
+        <a className="skip-link" href="#auth-heading">
+          Skip to password recovery
+        </a>
+        <section aria-labelledby="auth-heading" className="auth-card">
+          <span className="pub-wordmark" translate="no">
+            {'Must\u00a0Be\u00a0Viral'}
+          </span>
+          <h1 id="auth-heading">Reset your password</h1>
+          <p className="auth-intro">
+            Enter the email for your Studio workspace. If the account exists, a single-use recovery
+            link is on the way.
           </p>
-        )}
-        <ForgotPasswordForm next={next} />
-        <div className="auth-links">
-          <a className="auth-link" href={signInUrl}>
-            Return to sign in
-          </a>
-        </div>
-      </section>
-    </main>
+          {notice === undefined ? null : (
+            <p className={authMessageClassName(noticeKey)} role={authMessageRole(noticeKey)}>
+              {notice}
+            </p>
+          )}
+          <ForgotPasswordForm next={next} />
+          <div className="auth-links">
+            <a className="auth-link" href={signInUrl}>
+              Return to sign in
+            </a>
+          </div>
+        </section>
+      </main>
+      <PublicFooter compact surface="legal" />
+    </div>
   );
 }

@@ -1,0 +1,70 @@
+{
+  "codeHead": "043c13338c6eba4ed0d9457662c1840240b4db15",
+  "harness": "http://127.0.0.1:3111",
+  "date": "2026-10-02",
+  "widths": [375, 768, 1280, 1920],
+  "routes": [
+    "/",
+    "/es",
+    "/pricing",
+    "/software",
+    "/software/pricing",
+    "/privacy",
+    "/terms",
+    "/advertising",
+    "/login",
+    "/signup"
+  ],
+  "cells": 40,
+  "cellsWithHorizontalScroll": 0,
+  "cellsWithoutOneMain": 0,
+  "cellsWithH1NotTwentyEight": 0,
+  "cellsWithoutFooterEntityAndAddress": 0,
+  "controlsUnder44pxBeyondSkipLinks": 0,
+  "home375": { "ctaTop": 227, "framePrices": [398, 473], "rows": 6, "ld": 1 },
+  "es375": { "ctaTop": 227, "framePrices": [398, 473], "rows": 0, "ld": 1 },
+  "headers": {
+    "/": ["/", "/es"],
+    "/es": ["/es", "/"],
+    "/pricing": ["/", "/es"],
+    "/software": ["/software", "/software/pricing"],
+    "/software/pricing": ["/software", "/software"],
+    "/privacy": ["/"],
+    "/terms": ["/"],
+    "/advertising": ["/"],
+    "/login": [],
+    "/signup": []
+  },
+  "footers": {
+    "/": ["/pricing", "/privacy", "/terms", "/advertising", "/software"],
+    "/es": ["/pricing", "/privacy", "/terms", "/advertising", "/software"],
+    "/pricing": ["/pricing", "/privacy", "/terms", "/advertising", "/software"],
+    "/software": ["/privacy", "/terms", "/advertising", "/"],
+    "/software/pricing": ["/privacy", "/terms", "/advertising", "/"],
+    "/privacy": ["/privacy", "/terms", "/advertising", "/", "/software"],
+    "/terms": ["/privacy", "/terms", "/advertising", "/", "/software"],
+    "/advertising": ["/privacy", "/terms", "/advertising", "/", "/software"],
+    "/login": ["/privacy", "/terms", "/advertising", "/", "/software"],
+    "/signup": ["/privacy", "/terms", "/advertising", "/", "/software"]
+  },
+  "reducedMotion": {
+    "studioTextLengthNormal": 2300,
+    "studioTextLengthReduced": 2300,
+    "runningAnimations": 0
+  },
+  "forcedColors": { "addOnBorder": "rgb(0, 0, 0)", "footerBorder": "rgb(0, 0, 0)" },
+  "keyboard": {
+    "/": { "stops": 15, "withoutRing": 0 },
+    "/pricing": { "stops": 12, "withoutRing": 0 },
+    "/privacy": { "stops": 9, "withoutRing": 0 }
+  },
+  "consoleErrors": 0,
+  "earlierPass": {
+    "offersPacked": {
+      "home1920": { "offerTop": 408, "priceTop": 459, "listTop": 500 },
+      "pricing1280": { "offerTop": 190, "priceTop": 241, "listTop": 282 }
+    },
+    "sitemapUrls": 8,
+    "journeys": { "preview": { "passed": 112, "skipped": 40 }, "connected": { "passed": 17 } }
+  }
+}

@@ -11,7 +11,19 @@ export function parseDocumentLang(value: string | null | undefined): DocumentLan
   return value === 'es' ? 'es' : 'en';
 }
 
-const PUBLIC_MARKETING_PATHS = new Set(['/', '/es', '/software', '/software/pricing']);
+const PUBLIC_MARKETING_PATHS = new Set([
+  '/',
+  '/es',
+  '/pricing',
+  '/software',
+  '/software/pricing',
+  '/privacy',
+  '/terms',
+  '/advertising',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/llms.txt',
+]);
 
 /** Static sales pages need no session refresh and must render without a Supabase configuration. */
 export function isPublicMarketingPath(pathname: string): boolean {

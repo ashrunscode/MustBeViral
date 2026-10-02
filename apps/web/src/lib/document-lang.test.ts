@@ -22,8 +22,21 @@ describe('documentLangForPath', () => {
 });
 
 describe('isPublicMarketingPath', () => {
-  it('names the four sales pages and nothing under studio or auth', () => {
-    for (const path of ['/', '/es', '/software', '/software/pricing', '/software/pricing/']) {
+  it('names the public pages and the text routes, and nothing under studio or auth', () => {
+    for (const path of [
+      '/',
+      '/es',
+      '/pricing',
+      '/software',
+      '/software/pricing',
+      '/software/pricing/',
+      '/privacy',
+      '/terms',
+      '/advertising',
+      '/robots.txt',
+      '/sitemap.xml',
+      '/llms.txt',
+    ]) {
       expect(isPublicMarketingPath(path)).toBe(true);
     }
     for (const path of ['/login', '/signup', '/studio', '/studio/abc', '/software/other']) {

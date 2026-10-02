@@ -10,6 +10,10 @@ import { metadata as loginMetadata } from '../../app/login/page';
 import { metadata as spanishMetadata } from '../../app/es/page';
 import { metadata as softwareMetadata } from '../../app/software/page';
 import { metadata as pricingMetadata } from '../../app/software/pricing/page';
+import { metadata as studioPricingMetadata } from '../../app/pricing/page';
+import { metadata as privacyMetadata } from '../../app/privacy/page';
+import { metadata as termsMetadata } from '../../app/terms/page';
+import { metadata as advertisingMetadata } from '../../app/advertising/page';
 import { studioEn, studioEs, studioHeroMedia, type StudioHeroMedia } from './public-copy';
 import { SoftwareLanding } from './software-landing';
 import { SoftwarePricing } from './software-pricing';
@@ -88,8 +92,43 @@ describe('StudioLanding', () => {
     expect(html.indexOf('Already posting?')).toBeLessThan(
       html.indexOf('Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.'),
     );
-    expect(html.match(/class="studio-kind"/g)).toHaveLength(6);
+    // Six composed rows, not a stack of cards.
+    expect(html.match(/class="studio-row"/g)).toHaveLength(6);
+    expect(html).not.toContain('studio-kind"');
     expect(html).toContain('<dt>Med spa</dt>');
+    // The whole section 7 Full Package list is on the page.
+    for (const line of [
+      'Lifestyle, branding, product and team photography',
+      'Cinematic brand content',
+      'Full creative direction',
+      'Hook and caption assistance',
+      'Trend research',
+      'Instagram and TikTok optimisation',
+      'Behind-the-scenes and story content',
+      'Monthly strategy meeting',
+      'Priority editing',
+    ]) {
+      expect(html).toContain(line);
+    }
+    // Both prices sit in the frame, before any included line.
+    expect(html.indexOf('>$3,500<')).toBeLessThan(html.indexOf('One shoot, up to 2 hours'));
+    // The studio header keeps Español only; the software is named once, in the footer.
+    const header = html.slice(0, html.indexOf('</header>'));
+    expect(header).toContain('Español');
+    expect(header).not.toContain('/software');
+    expect(header).not.toContain('/pricing');
+    const footer = html.slice(html.indexOf('<footer'));
+    expect(footer).toContain('ERLV INC, DBA Must Be Viral');
+    expect(footer).toContain('href="tel:+17138999346"');
+    expect(footer).toContain('href="mailto:studio@mustbeviral.com"');
+    expect(footer).toContain('Houston, Texas');
+    expect(footer).toContain('href="/pricing"');
+    expect(footer).toContain('href="/privacy"');
+    expect(footer).toContain('href="/terms"');
+    expect(footer).toContain('href="/advertising"');
+    expect(footer).toContain('Must Be Viral also makes software.');
+    expect(footer).toContain('href="/software"');
+    expect(html).toContain('href="/pricing">Pricing, with the add-ons</a>');
     expect(html).toContain('The treatment menu changed and the page still shows last season.');
     expect(html).toContain('We walk the car and cut the Reels.');
     expect(html).toContain('We film the team, on a week that is not a listing.');
@@ -131,8 +170,25 @@ describe('StudioLanding', () => {
     expect(html).toContain('una sola vez');
     expect(html).toContain('>$3,500<');
     expect(html).toContain('al mes');
-    expect(html).toContain('de cuatro a ocho veces al mes');
+    // The Full Package carries the one approved Spanish sentence that states its deliverables.
+    const fullPackage = html.slice(
+      html.indexOf('id="offer-full-package"'),
+      html.indexOf('class="studio-cadence"') < 0
+        ? undefined
+        : html.indexOf('class="studio-cadence"'),
+    );
+    expect(fullPackage).toContain('de cuatro a ocho veces al mes');
+    expect(html).not.toContain('class="studio-cadence"');
     expect(html).toContain('El alcance depende de su cuenta y de su mercado.');
+    // The legal pages are linked in English and said to be in English; the studio header keeps English only.
+    const esHeader = html.slice(0, html.indexOf('</header>'));
+    expect(esHeader).toContain('English');
+    expect(esHeader).not.toContain('/software');
+    const esFooter = html.slice(html.indexOf('<footer'));
+    expect(esFooter).toContain('lang="en"');
+    expect(esFooter).toContain('These pages are in English.');
+    expect(esFooter).toContain('href="/privacy"');
+    expect(esFooter).toContain('ERLV INC, DBA Must Be Viral');
     expect(html).toContain('data-media="none"');
     expect(html.match(/class="pub-cta"/g)).toHaveLength(2);
     expect(html.match(/class="studio-offer"/g)).toHaveLength(2);
@@ -168,7 +224,7 @@ describe('StudioLanding', () => {
       studioEs.cta,
       studioEs.phone,
       ...studioEs.offers.flatMap((offer) => [offer.unit, ...offer.includes]),
-      studioEs.cadence,
+      ...(studioEs.cadence === undefined ? [] : [studioEs.cadence]),
       studioEs.answer,
       studioEs.close,
       studioEs.skip,
@@ -257,6 +313,14 @@ describe('SoftwareLanding', () => {
     expect(html).not.toContain('We film Houston.');
     expect(html).not.toContain('$700');
     expect(html).not.toContain('$3,500');
+    // The software header has no studio link; the studio is named once, in the footer.
+    const header = html.slice(0, html.indexOf('</header>'));
+    expect(header).toContain('Plans');
+    expect(header).not.toContain('Houston studio');
+    const footer = html.slice(html.indexOf('<footer'));
+    expect(footer).toContain('Must Be Viral is also a Houston content studio.');
+    expect(footer).toContain('href="/privacy"');
+    expect(footer).toContain('ERLV INC, DBA Must Be Viral');
     expectCleanVoice(html);
   });
 });
@@ -279,6 +343,9 @@ describe('SoftwarePricing', () => {
     expect(html).not.toContain('$700');
     expect(html).not.toContain('$3,500');
     expect(html).not.toContain('We film Houston.');
+    const header = html.slice(0, html.indexOf('</header>'));
+    expect(header).not.toContain('Houston studio');
+    expect(html.slice(html.indexOf('<footer'))).toContain('href="/terms"');
     expectCleanVoice(html);
   });
 });
@@ -293,6 +360,7 @@ describe('SignUpPage', () => {
     expect(html).not.toContain('<input');
     expect(html).not.toContain('<form');
     expect(html).not.toContain('Create account');
+    expect(html).toContain('href="/privacy"');
     expectCleanVoice(html);
   });
 });
@@ -303,6 +371,10 @@ describe('route metadata', () => {
       spanishMetadata.title,
       softwareMetadata.title,
       pricingMetadata.title,
+      studioPricingMetadata.title,
+      privacyMetadata.title,
+      termsMetadata.title,
+      advertisingMetadata.title,
       loginMetadata.title,
       signupMetadata.title,
     ].map((title) => (typeof title === 'string' ? title : JSON.stringify(title)));

@@ -38,8 +38,12 @@ describe('robots and sitemap', () => {
     expect(entries.map((entry) => entry.url)).toEqual([
       'https://example.test/',
       'https://example.test/es',
+      'https://example.test/pricing',
       'https://example.test/software',
       'https://example.test/software/pricing',
+      'https://example.test/privacy',
+      'https://example.test/terms',
+      'https://example.test/advertising',
     ]);
     expect(entries[1]?.alternates?.languages).toEqual({
       en: 'https://example.test/',
@@ -75,7 +79,9 @@ describe('structured data', () => {
     expect(data.description).toBe(studioEs.sub);
     expect(data).not.toHaveProperty('url');
     const offers = data.makesOffer as readonly Record<string, unknown>[];
-    expect(offers[1]).not.toHaveProperty('description');
+    // The only Spanish in the offer descriptions is the two approved sentences.
+    expect(offers[0]?.description).toBe(studioEs.offers[0].includes[0]);
+    expect(offers[1]?.description).toBe(studioEs.offers[1].includes[0]);
   });
 
   it('declares no software offer while the catalog is provisional', () => {
@@ -100,6 +106,11 @@ describe('llms.txt', () => {
     expect(text).toContain('These prices are the provisional catalog. Charging is not on.');
     expect(text).toContain('- Solo: $49 a month. 1 active brand, 2 operator seats.');
     expect(text).toContain('Enrollment is closed.');
+    expect(text).toContain('- Pricing page: https://example.test/pricing');
+    expect(text).toContain('- Add-on, 24-hour turnaround: +$200–$400 per shoot.');
+    expect(text).toContain('- Privacy: https://example.test/privacy');
+    expect(text).toContain('- ERLV INC, DBA Must Be Viral');
+    expect(text).toContain('The street address is not yet published.');
     expect(text).not.toContain('viral guaranteed');
     expect(text).not.toContain('!');
     expect(text).not.toContain('→');

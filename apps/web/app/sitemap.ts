@@ -10,7 +10,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${origin}/`, alternates: { languages: studio } },
     { url: `${origin}/es`, alternates: { languages: studio } },
+    { url: `${origin}/pricing` },
     { url: `${origin}/software` },
     { url: `${origin}/software/pricing` },
+    { url: `${origin}/privacy` },
+    { url: `${origin}/terms` },
+    { url: `${origin}/advertising` },
   ];
 }

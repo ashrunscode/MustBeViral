@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
 current_step: ui-008-release
-next_action: mustbeviral.com and www.mustbeviral.com serve production web dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj (merge 0b9f578, record 20b6e1e). Staging web remains dpl_5skrFZb2nnZSog6DYhCd82pB7phL. Core staging 8c90ddc3-d5da-49ef-9d96-31e5ceda04c6 and Core production d69e987c-90a6-43f5-ae45-a397c206ddf3 were deployed from 20b6e1e on 2026-10-02 and both /health routes return ok. Collaboration was not deployed. Still open are one signed-in journey on staging and production, which needs a founder@mustbeviral.com password and the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke", and a rights-cleared studio still or clip for the poster frame. Evidence is governance/evidence/WP-PLATFORM-UI-001/cutover-2026-10-02.md.
+next_action: Production serves 95deda5 (dpl_Bw8Txy9Atvk8yoBocUxv3AEZW5EN) and staging serves it too (dpl_HK4J6VQAPKx8Hp8ymxjGUwsLfXbg); mustbeviral.com answers with the same production deployment. Still open are the Higgsfield films, which wait for HF_API_KEY_ID and HF_API_KEY_SECRET in the vault inbox; the studio hero poster, which waits for a rights-cleared still or clip; one signed-in journey on staging and production, which needs the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke"; and the Workers, whose config differs from the deployed sources by a compatibility flag.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

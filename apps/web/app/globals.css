@@ -1073,17 +1073,27 @@ a.pub-wordmark:hover {
   }
 }
 
-/* Studio page: a frame at screen width, designed at 375 first. The frame holds the decision with
-   no footage: the locked lines, the two offers with their prices in the evidence face, and one
-   action. When a rights-cleared poster and clip exist they take their own block above the lead with
-   the geometry reserved, so nothing shifts and nothing sits over the native video controls. */
+/* Studio pages: a frame at screen width, designed at 375 first. The first screen is the decision:
+   the locked line, the two prices as titles, one action with the phone as the only secondary. When
+   a rights-cleared poster and clip exist they take their own block above the lead with the geometry
+   reserved, so nothing shifts and nothing sits over the native video controls. Below the frame,
+   type and space carry the rank: the two offers in full, the cadence, six composed rows, the
+   objection, the close. One action colour; motion only when a film plays. */
+.pub-page--studio {
+  --pub-width: min(1200px, 100%);
+}
+
+.pub-page--film {
+  --pub-width: min(960px, 100%);
+}
+
 .pub-shell--studio {
   width: min(1200px, 100%);
   gap: 16px;
 }
 
 .pub-shell--studio > main {
-  gap: 32px;
+  gap: 40px;
 }
 
 .studio-frame {
@@ -1150,12 +1160,54 @@ a.pub-wordmark:hover {
   max-width: 44ch;
 }
 
-.studio-frame__offers {
+/* The two prices as titles, in the frame at every width. */
+.studio-frame__prices {
   display: grid;
-  gap: 20px;
+  gap: 16px;
+  margin: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.studio-price {
+  align-content: start;
+  display: grid;
+  gap: 2px;
+}
+
+.studio-price dt {
+  color: var(--ink-strong);
+}
+
+.studio-price dd {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+}
+
+.studio-price .pub-price,
+.studio-price .pub-price-unit,
+.studio-offer__price .pub-price,
+.studio-offer__price .pub-price-unit {
+  display: inline;
+  margin: 0;
+}
+
+.studio-body,
+.studio-pricing {
+  width: 100%;
+  display: grid;
+  gap: 40px;
+}
+
+.studio-offers {
+  display: grid;
+  gap: 24px;
 }
 
 .studio-offer {
+  align-content: start;
   display: grid;
   gap: 8px;
   border-top: 1px solid var(--line);
@@ -1165,7 +1217,9 @@ a.pub-wordmark:hover {
 .studio-offer h2,
 .studio-kinds h2,
 .studio-objection h2,
-.studio-book h2 {
+.studio-book h2,
+.studio-addons h2,
+.legal-page h2 {
   margin: 0;
   color: var(--ink-head);
   font-size: 21px;
@@ -1181,23 +1235,26 @@ a.pub-wordmark:hover {
   gap: 12px;
 }
 
-.studio-offer__price .pub-price,
-.studio-offer__price .pub-price-unit {
-  display: inline;
-  margin: 0;
-}
-
-.studio-offer__includes {
+.studio-offer__includes,
+.legal-page ul {
   margin: 0;
   padding-left: 1.25rem;
   display: grid;
   gap: 4px;
 }
 
-.studio-body {
-  width: 100%;
-  display: grid;
-  gap: 32px;
+.studio-pricing-link {
+  margin: 0;
+}
+
+.studio-pricing-link a,
+.legal-page a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-strong);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .studio-cadence,
@@ -1205,11 +1262,190 @@ a.pub-wordmark:hover {
   margin: 0;
 }
 
+/* The six kinds of work: six composed rows, not a stack of cards. The trade on the left, the
+   situation the owner recognises and then what we do on the right, a hairline between rows. */
+.studio-kinds {
+  display: grid;
+  gap: 8px;
+}
+
+.studio-rows {
+  display: grid;
+  margin: 0;
+}
+
+.studio-row {
+  display: grid;
+  gap: 6px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.studio-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.studio-row dt {
+  color: var(--ink-strong);
+}
+
+.studio-row dd {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.studio-row__line {
+  color: var(--ink-head);
+}
+
 .studio-objection,
 .studio-book {
   display: grid;
   gap: 12px;
   justify-items: start;
+}
+
+/* The add-ons on the pricing page: the two ranges as rows, then the rule that sets the figure. */
+.studio-addons {
+  display: grid;
+  gap: 12px;
+}
+
+.studio-addons dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.studio-addon {
+  align-content: start;
+  display: grid;
+  gap: 2px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.studio-addon dt {
+  color: var(--ink-strong);
+}
+
+.studio-addon dd {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+}
+
+.studio-addon__price {
+  color: var(--ink-strong);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The legal pages: one column of 70ch, the date in the evidence face. */
+.legal-page {
+  display: grid;
+  gap: 32px;
+}
+
+.legal-page section {
+  display: grid;
+  gap: 12px;
+}
+
+.legal-updated {
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 13px;
+}
+
+/* The one footer on every public page. */
+.pub-footer {
+  width: 100%;
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  padding: 24px 0 8px;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pub-footer__inner {
+  width: var(--pub-width, min(70ch, 100%));
+  margin: 0 auto;
+  display: grid;
+  gap: 8px;
+}
+
+.pub-footer p {
+  margin: 0;
+  max-width: none;
+}
+
+.pub-footer__entity {
+  color: var(--ink-strong);
+}
+
+.pub-footer__contact,
+.pub-footer__links,
+.pub-footer__other {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 20px;
+}
+
+.pub-footer__links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pub-footer a {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-strong);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.pub-footer a:focus-visible,
+.studio-pricing-link a:focus-visible,
+.legal-page a:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.pub-footer__note {
+  color: var(--ink);
+}
+
+.pub-footer--compact {
+  font-size: 13px;
+}
+
+/* Signed-out screens keep their centred card; the footer takes the row beneath it. */
+.auth-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  background: var(--paper);
+}
+
+.auth-layout .auth-page,
+.auth-layout .status-page {
+  min-height: 0;
+}
+
+.auth-layout .pub-footer {
+  margin-top: 0;
+  padding: 16px 24px 24px;
+}
+
+.auth-layout .pub-footer__inner {
+  width: min(520px, 100%);
 }
 
 @media (min-width: 768px) {
@@ -1227,19 +1463,32 @@ a.pub-wordmark:hover {
     max-height: min(60vh, 560px);
   }
 
-  .studio-frame__offers {
+  .studio-frame__prices {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    padding-top: 0;
+    padding-left: 32px;
+    gap: 24px;
+  }
+
+  .studio-offers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  .studio-offer + .studio-offer {
     border-left: 1px solid var(--line);
     padding-left: 32px;
   }
 
-  .studio-offer {
-    border-top: 0;
-    padding-top: 0;
+  .studio-row {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    column-gap: 32px;
   }
 
-  .studio-offer + .studio-offer {
-    border-top: 1px solid var(--line);
-    padding-top: 20px;
+  .studio-addons dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
   }
 
   .studio-hero__play {
@@ -1249,75 +1498,10 @@ a.pub-wordmark:hover {
 }
 
 @media (min-width: 1280px) {
-  .studio-frame {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    padding: 40px 36px;
+  .pub-page--film {
+    --pub-width: min(1200px, 100%);
   }
 
-  .studio-frame__offers {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 32px;
-  }
-
-  .studio-offer + .studio-offer {
-    border-top: 0;
-    border-left: 1px solid var(--line);
-    padding-top: 0;
-    padding-left: 32px;
-  }
-}
-
-@media (forced-colors: active) {
-  .studio-frame,
-  .studio-frame__media,
-  .studio-frame__offers,
-  .studio-offer {
-    border-color: CanvasText;
-  }
-}
-
-/* The six kinds of work under the studio frame: the situation the owner recognises, then what we
-   do. One column on a phone, two from 768px, three from 1280px. */
-.studio-kinds {
-  display: grid;
-  gap: 16px;
-}
-
-.studio-kinds__list {
-  display: grid;
-  gap: 20px;
-  margin: 0;
-}
-
-.studio-kind {
-  display: grid;
-  gap: 6px;
-  border-top: 1px solid var(--line);
-  padding-top: 12px;
-}
-
-.studio-kind dt {
-  color: var(--ink-strong);
-}
-
-.studio-kind dd {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-}
-
-.studio-kind__line {
-  color: var(--ink-head);
-}
-
-@media (min-width: 768px) {
-  .studio-kinds__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 32px;
-  }
-}
-
-@media (min-width: 1280px) {
   .pub-shell--film {
     width: min(1200px, 100%);
   }
@@ -1331,15 +1515,27 @@ a.pub-wordmark:hover {
     max-width: none;
   }
 
-  .studio-kinds__list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .studio-frame {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    padding: 40px 36px;
+  }
+
+  .studio-row dd {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 32px;
   }
 }
 
 @media (forced-colors: active) {
+  .studio-frame,
+  .studio-frame__media,
+  .studio-frame__prices,
+  .studio-offer,
+  .studio-row,
+  .studio-addon,
+  .pub-footer,
   .pub-path,
-  .pub-beat,
-  .studio-kind {
+  .pub-beat {
     border-color: CanvasText;
   }
 
