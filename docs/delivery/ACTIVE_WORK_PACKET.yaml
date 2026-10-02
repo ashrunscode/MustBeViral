@@ -1,16 +1,20 @@
 schema_version: 1
 id: WP-PLATFORM-W3-001
-spec_revision: 1
+spec_revision: 2
 title: Render feasibility and measured runtime decision
 phase: P4
-status: blocked
+status: in_progress
 priority: critical
 branch: main
 objective: Prove the conditional sharp 0.34.5 and fal-first rendering direction in ADR-0010 before
   implementing customer rendering. Benchmark exact source imagery, logos, text, typography and
   real-footage video, private transfer, bounded resource use, cancellation and cost. Record a
   measured architecture decision. A local benchmark alone does not establish Vercel or fal connected
-  acceptance. Preserve W1 and W2 behavior; do not claim Wave 2 or Wave 3 exited.
+  acceptance. Preserve W1 and W2 behavior; do not claim Wave 2 or Wave 3 exited. Revision 2 records
+  the owner's 2026-10-01 directive, which authorizes only an audited ADR-0008 supersession into
+  WP-PLATFORM-UI-001; the real-media benchmark blocker is carried as an obligation in that decision
+  and remains unresolved, unaccepted and unrun. See
+  governance/evidence/WP-PLATFORM-W3-001/interface-program-amendment-2026-10-01.md.
 authority_refs:
   - product-contract
   - release-scope
@@ -23,6 +27,8 @@ authority_refs:
   - roadmap
   - local-env-secrets
   - adr-0007-full-platform
+  - adr-0008-packet-supersession
+  - adr-0009-standing-release-authority
   - adr-0010-drive-autopilot-saas
 required_skills:
   - build-mustbeviral
@@ -159,19 +165,20 @@ external_effects:
 handoff:
   current_step: w3f-001-preflight
   next_action:
-    Complete the exact real-media fixture and rights manifest, then resolve the separately
-    reviewed packet-path and architecture-guidance prerequisites and seal the benchmark protocol
-    before implementation.
-  blockers:
-    - 'Real-media benchmark inputs and permitted use are unconfirmed: actual footage, approved font
-      and literal current offer are missing; the existing fixtures cover only the W0 local design
-      walkthrough. See governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/preflight.md.'
+    Supersede WP-PLATFORM-W3-001 into WP-PLATFORM-UI-001 under the owner's 2026-10-01 directive
+    through pnpm agent:supersede; the real-media render blocker is carried in that decision as an
+    unresolved obligation, not cleared.
+  blockers: []
   changed_paths:
     - PROJECT_STATE.yaml
     - docs/delivery/ACTIVE_WORK_PACKET.yaml
     - docs/STATUS.md
     - docs/generated/TRACEABILITY.md
     - llms.txt
+    - governance/evidence/WP-PLATFORM-W3-001/owner-directive-2026-10-01.md
+    - governance/evidence/WP-PLATFORM-W3-001/owner-supersession-decision-2026-10-01.yaml
+    - governance/evidence/WP-PLATFORM-W3-001/successor-WP-PLATFORM-UI-001.yaml
+    - governance/evidence/WP-PLATFORM-W3-001/interface-program-amendment-2026-10-01.md
     - governance/tests/agent-state.integration.test.mjs
     - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/preflight.md
     - governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/fixture-inventory.json

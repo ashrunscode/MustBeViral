@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W3-001
 current_step: w3f-001-preflight
-next_action: Complete the exact real-media fixture and rights manifest, then resolve the separately reviewed packet-path and architecture-guidance prerequisites and seal the benchmark protocol before implementation.
+next_action: Supersede WP-PLATFORM-W3-001 into WP-PLATFORM-UI-001 under the owner's 2026-10-01 directive through pnpm agent:supersede; the real-media render blocker is carried in that decision as an unresolved obligation, not cleared.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -1,0 +1,39 @@
+schema_version: 1
+action: supersede
+authorized_by: repository-owner
+authorization_source: explicit_user_instruction
+authorized_at: 2026-10-02T03:35:03Z
+authorization_statement: >-
+  OWNER DIRECTIVE 2026-10-01. MustBeViral Studio, ViralGraph V2. You will finish this program in
+  one continuous run. The owner has approved the program, the copy and visual direction already
+  written in the repo, the bug repairs, the commit, the push, the pull request, the merge, and the
+  deploy to the existing V2 targets.
+selection_statement: >-
+  If the active packet is WP-PLATFORM-W3-001 or any packet that does not allow this scope, the
+  first commit is an authority-only amendment under ADR-0008, committed alone, naming these paths
+  and this directive. Then supersede and implement. Do not mark the render benchmark accepted. Do
+  not claim Wave 3 exited. Do not widen a packet inside an implementation commit.
+predecessor_packet_id: WP-PLATFORM-W3-001
+predecessor_spec_revision: 2
+successor_packet_id: WP-PLATFORM-UI-001
+successor_spec_revision: 1
+branch: main
+source_plan_sha256: 55dfdf6ed0dde7c5262fef6e309a7631eb5e99126ba1892334bcf7ee07bc0c77
+reason: >-
+  The owner re-sequenced the program on 2026-10-01: the V2 interface surfaces listed in the
+  directive come before the render feasibility benchmark, whose real-media inputs and rights are
+  still missing. WP-PLATFORM-W3-001 forbids customer-visible routes and does not allow
+  packages/ui, so its scope cannot host the interface program. The render packet is superseded
+  without any claim that its benchmark, acceptance or Wave 3 exit passed.
+carried_release_obligations:
+  - >-
+    WP-PLATFORM-W3-001 render feasibility is unaccepted. Real-media benchmark inputs and permitted
+    use remain unconfirmed: actual footage, approved font and literal current offer are missing;
+    the existing fixtures cover only the W0 local design walkthrough. Dependent customer rendering
+    stays disabled and the measured architecture decision is still owed under ADR-0010.
+  - >-
+    WP-PLATFORM-W3-002 asset originals and rights, and the remaining bounded execution rows 4
+    through 24 in the roadmap, stay owed after the interface program.
+  - 'WP-P3-009 observation-window: pending, continuous private observation remains unproved.'
+  - 'WP-P3-009 fresh-traffic-decision: pending, no owner approval of public traffic.'
+external_effects: none
