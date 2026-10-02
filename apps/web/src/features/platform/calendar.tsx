@@ -14,7 +14,17 @@ export interface CalendarItem {
 
 export type CalendarRange = 'week' | 'month';
 
-const DAY_MS = 86_400_000;
+/** The same local calendar day shifted by whole days, safe across daylight-saving changes. */
+export function addDays(date: Date, days: number): Date {
+  const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  copy.setDate(copy.getDate() + days);
+  return copy;
+}
+
+/** The first day of the month `direction` months away, so no month is skipped from a 31st. */
+export function shiftMonth(anchor: Date, direction: -1 | 1): Date {
+  return new Date(anchor.getFullYear(), anchor.getMonth() + direction, 1);
+}
 
 export function startOfWeek(date: Date): Date {
   const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -25,17 +35,17 @@ export function startOfWeek(date: Date): Date {
 
 export function weekDays(anchor: Date): Date[] {
   const start = startOfWeek(anchor);
-  return Array.from({ length: 7 }, (_, index) => new Date(start.getTime() + index * DAY_MS));
+  return Array.from({ length: 7 }, (_, index) => addDays(start, index));
 }
 
 export function monthGrid(anchor: Date): Date[] {
   const first = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
   const start = startOfWeek(first);
   const last = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
-  const end = startOfWeek(last);
+  const end = addDays(startOfWeek(last), 6);
   const days: Date[] = [];
-  for (let time = start.getTime(); time <= end.getTime() + 6 * DAY_MS; time += DAY_MS) {
-    days.push(new Date(time));
+  for (let day = start; day.getTime() <= end.getTime(); day = addDays(day, 1)) {
+    days.push(day);
   }
   return days;
 }
@@ -85,10 +95,7 @@ export function Calendar({
   );
   const dayLabel = new Intl.DateTimeFormat('en', { weekday: 'short', day: 'numeric' });
   const move = (direction: -1 | 1) => {
-    const next = new Date(anchor);
-    if (range === 'week') next.setDate(next.getDate() + 7 * direction);
-    else next.setMonth(next.getMonth() + direction);
-    setAnchor(next);
+    setAnchor(range === 'week' ? addDays(anchor, 7 * direction) : shiftMonth(anchor, direction));
   };
   return (
     <section className="platform-calendar" aria-label={`${scope} calendar`}>

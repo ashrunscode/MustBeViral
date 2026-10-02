@@ -2,7 +2,8 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { Calendar, monthGrid, startOfWeek, weekDays } from './calendar';
+import { fireEvent } from '@testing-library/react';
+import { Calendar, monthGrid, shiftMonth, startOfWeek, weekDays } from './calendar';
 
 afterEach(cleanup);
 
@@ -19,6 +20,40 @@ describe('calendar grid', () => {
     expect(grid.length % 7).toBe(0);
     expect(grid[0]?.getDay()).toBe(1);
     expect(grid.at(-1)?.getDay()).toBe(0);
+  });
+
+  it.each([
+    [new Date(2026, 10, 1), 'November 2026'],
+    [new Date(2026, 2, 8), 'March 2026'],
+    [new Date(2026, 9, 25), 'October 2026'],
+  ])('advances by one calendar day across daylight-saving changes (%s)', (anchor) => {
+    const grid = monthGrid(anchor);
+    const keys = grid.map((day) => `${day.getFullYear()}-${day.getMonth()}-${day.getDate()}`);
+    expect(new Set(keys).size).toBe(keys.length);
+    for (let index = 1; index < grid.length; index += 1) {
+      const previous = grid[index - 1];
+      const current = grid[index];
+      if (previous === undefined || current === undefined) throw new Error('gap');
+      const expected = new Date(
+        previous.getFullYear(),
+        previous.getMonth(),
+        previous.getDate() + 1,
+      );
+      expect([current.getFullYear(), current.getMonth(), current.getDate()]).toEqual([
+        expected.getFullYear(),
+        expected.getMonth(),
+        expected.getDate(),
+      ]);
+    }
+    const week = weekDays(anchor).map((day) => day.getDate());
+    expect(new Set(week).size).toBe(7);
+  });
+
+  it('moves whole months from a month end without skipping one', () => {
+    const later = shiftMonth(new Date(2026, 0, 31), 1);
+    expect([later.getFullYear(), later.getMonth(), later.getDate()]).toEqual([2026, 1, 1]);
+    const earlier = shiftMonth(new Date(2026, 2, 31), -1);
+    expect([earlier.getFullYear(), earlier.getMonth(), earlier.getDate()]).toEqual([2026, 1, 1]);
   });
 });
 
@@ -43,6 +78,24 @@ describe('Calendar', () => {
     );
     expect(screen.getByRole('button', { name: 'Week' }).getAttribute('aria-pressed')).toBe('true');
     expect(document.body.textContent).not.toMatch(/\b0 posts\b|\b0 scheduled\b/);
+  });
+
+  it('steps month by month from the 31st', () => {
+    render(
+      <Calendar
+        scope="North Studio"
+        items={[]}
+        timeZone="America/Chicago"
+        missing="No schedule command is registered."
+        today={new Date(2026, 0, 31)}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Month' }));
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('January 2026');
+    fireEvent.click(screen.getByRole('button', { name: 'Later' }));
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('February 2026');
+    fireEvent.click(screen.getByRole('button', { name: 'Later' }));
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('March 2026');
   });
 
   it('lists a scheduled item on its day with brand, channel, status, owner and revision', () => {

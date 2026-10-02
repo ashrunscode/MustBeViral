@@ -391,9 +391,15 @@ export function QuoteFlow({
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<QuoteConfirmResult | null>(null);
   const context = useCampaignContext();
+  // A confirmed run joins the link. If this screen remounts afterwards, for example while the
+  // frame re-proves the scope, the run in the link wins: no second quote is created and no second
+  // confirmation is offered.
+  const linkedRunId = dataMode === 'worker' && isResourceId(context.run) ? context.run : undefined;
+  const runStage = startInRunStage || linkedRunId !== undefined;
+  const runStageId = existingRunId ?? linkedRunId;
 
   useEffect(() => {
-    if (startInRunStage) return;
+    if (runStage) return;
     let active = true;
     if (quotePort !== null) {
       void quotePort.read().then((next) => {
@@ -416,20 +422,20 @@ export function QuoteFlow({
     return () => {
       active = false;
     };
-  }, [initialNowMs, previewPort, quotePort, startInRunStage, suppliedPort]);
+  }, [initialNowMs, previewPort, quotePort, runStage, suppliedPort]);
 
   useEffect(() => {
-    if (startInRunStage) return;
+    if (runStage) return;
     const timer = window.setInterval(() => setNowMs(Date.now()), 1000);
     return () => window.clearInterval(timer);
-  }, [startInRunStage]);
+  }, [runStage]);
 
-  if (startInRunStage) {
+  if (runStage) {
     return (
       <RunProgress
         dataMode={dataMode}
         workspace={workspace}
-        runId={existingRunId ?? 'run-lumen-0007'}
+        runId={runStageId ?? 'run-lumen-0007'}
         scenario={runScenario}
       />
     );

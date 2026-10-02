@@ -5,11 +5,11 @@
     "height": 900
   },
   "thresholdFps": 30,
-  "measuredFps": 60.18,
+  "measuredFps": 60.15,
   "frames": 181,
-  "durationMs": 3007,
+  "durationMs": 3009,
   "maxFrameDeltaMs": 16.8,
   "domNodeCount": 12,
-  "selectionLatencyMs": 20.4,
+  "selectionLatencyMs": 19.7,
   "passed": true
 }

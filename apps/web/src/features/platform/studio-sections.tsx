@@ -239,6 +239,7 @@ export function StudioOverview({
   const items = attentionItems(studio.id, reviews, invitations.data?.items);
   const invitationsFailed = invitations.error !== undefined;
   const approvable = (reviews ?? []).filter((entry) => draftIsApprovable(entry.review)).length;
+  const unread = (reviews ?? []).filter((entry) => entry.error !== undefined).length;
   return (
     <>
       <PlatformHeading
@@ -264,15 +265,15 @@ export function StudioOverview({
           <PlatformLoading label="Reading what is open across your brands…" rows={2} />
         ) : brands.error !== undefined ? (
           <PlatformRecovery error={brands.error} retry={brands.refresh} />
-        ) : invitationsFailed && items.length === 0 ? (
-          <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
         ) : items.length === 0 ? (
-          <p>
-            Nothing needs a decision right now.{' '}
-            {brands.data?.items.length === 0
-              ? 'Add a brand to begin.'
-              : 'Open a brand to capture sources or start a campaign brief.'}
-          </p>
+          invitationsFailed ? null : (
+            <p>
+              Nothing needs a decision right now.{' '}
+              {brands.data?.items.length === 0
+                ? 'Add a brand to begin.'
+                : 'Open a brand to capture sources or start a campaign brief.'}
+            </p>
+          )
         ) : (
           <ol className="platform-attention">
             {items.map((item) => (
@@ -299,6 +300,9 @@ export function StudioOverview({
             ))}
           </ol>
         )}
+        {invitationsFailed && !invitations.loading ? (
+          <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
+        ) : null}
       </section>
       <div className="platform-grid platform-grid--three" style={undefined}>
         <section className="platform-card platform-pad platform-stack">
@@ -315,7 +319,9 @@ export function StudioOverview({
           <h3>
             {reviewing
               ? 'Checking…'
-              : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
+              : unread > 0
+                ? `${approvable} ready to approve, ${unread} ${unread === 1 ? 'brand' : 'brands'} not read`
+                : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
           </h3>
           <p className="platform-muted">Approving pins the exact draft campaigns will use.</p>
           <Link href={studioHref(studio.id, 'approvals')}>Open approvals</Link>

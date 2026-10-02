@@ -32,7 +32,7 @@ vi.mock('./use-brand-reviews', async (importOriginal) => {
   return { ...original, useBrandReviews: () => state.reviews };
 });
 
-import { StudioApprovals, StudioTasks } from './studio-sections';
+import { StudioApprovals, StudioOverview, StudioTasks } from './studio-sections';
 
 const studio = { id: STUDIO, name: 'North Studio' } as never;
 const brand = (id: string, name: string) => ({
@@ -104,6 +104,60 @@ describe('studio sections and failed reads', () => {
     expect(
       screen.getByText(/Content approvals happen on each campaign’s Content step/u),
     ).toBeTruthy();
+  });
+
+  it('keeps the invitation failure visible on the overview beside other decisions', () => {
+    state.brands = {
+      data: { items: [brand('b2', 'WashBodega')] },
+      error: undefined,
+      loading: false,
+    };
+    state.invitations = { data: undefined, error: new Error('offline'), loading: false };
+    state.reviews = {
+      reviews: [
+        {
+          brand: brand('b2', 'WashBodega'),
+          review: {
+            record: { id: 'k1' },
+            current_questions: [{ id: 'q1', status: 'open', text: 'Which price?' }],
+            findings: [],
+          },
+          error: undefined,
+        },
+      ],
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    render(<StudioOverview studio={studio} canWrite={false} />);
+    expect(screen.getByText('Open question')).toBeTruthy();
+    expect(screen.getByText('Let’s get you back to your work.')).toBeTruthy();
+    expect(screen.queryByText(/Nothing needs a decision right now/u)).toBeNull();
+  });
+
+  it('labels the approval count as incomplete while a brand read failed', () => {
+    state.brands = {
+      data: { items: [brand('b1', 'UnPile'), brand('b2', 'WashBodega')] },
+      error: undefined,
+      loading: false,
+    };
+    state.invitations = { data: { items: [] }, error: undefined, loading: false };
+    state.reviews = {
+      reviews: [
+        { brand: brand('b1', 'UnPile'), review: null, error: new Error('timeout') },
+        {
+          brand: brand('b2', 'WashBodega'),
+          review: { record: null, current_questions: [], findings: [] },
+          error: undefined,
+        },
+      ],
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    render(<StudioOverview studio={studio} canWrite={false} />);
+    expect(screen.getByText('0 ready to approve, 1 brand not read')).toBeTruthy();
+    expect(screen.queryByText(/brand versions ready to approve/u)).toBeNull();
   });
 
   it('withholds the approvals clear while a brand read failed', () => {
