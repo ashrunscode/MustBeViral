@@ -202,7 +202,7 @@ export class WorkerQuotePort implements QuoteReadPort {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
-        message: 'Core could not create a quote for this canvas.',
+        message: 'A quote could not be created for this plan. Nothing was charged.',
         retryable: true,
       };
     }

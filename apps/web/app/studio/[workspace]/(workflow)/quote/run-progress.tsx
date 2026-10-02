@@ -207,7 +207,7 @@ export function RunProgress({
         <RunResultNotice result={result} />
         {result === null ? (
           <div className={styles.runError} role="status" data-result="loading">
-            Reading authoritative run progress from Core.
+            Reading run progress…
           </div>
         ) : null}
       </div>

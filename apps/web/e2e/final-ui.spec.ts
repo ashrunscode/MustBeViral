@@ -245,7 +245,7 @@ for (const viewport of [
   }) => {
     await page.setViewportSize(viewport);
     await page.goto('/studio/lumen-skin/brief');
-    await expect(page.getByRole('button', { name: 'Validate brief' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Validate and open the plan' })).toBeVisible();
     const steps = page.getByRole('navigation', { name: 'Brief sections' }).getByRole('button');
     await expect(steps).toHaveCount(6);
 
@@ -284,7 +284,7 @@ for (const viewport of [
       for (const other of layout.steps.slice(index + 1))
         expect(edgesOverlap(step, other)).toBe(false);
     }
-    // Save draft and Validate brief stay on screen, apart from each other.
+    // Save draft and Validate and open the plan stay on screen, apart from each other.
     expect(layout.actions).toHaveLength(2);
     for (const action of layout.actions) {
       expect(action.left).toBeGreaterThanOrEqual(0);

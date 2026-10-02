@@ -279,7 +279,7 @@ export class WorkerRunPort implements RunReadPort {
       return { type: 'ok', snapshot: runSnapshot(result.data) };
     } catch (error) {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
-      return { type: 'error', message: 'Core could not read this run.', retryable: true };
+      return { type: 'error', message: 'This run could not be read.', retryable: true };
     }
   }
 
@@ -294,7 +294,11 @@ export class WorkerRunPort implements RunReadPort {
       return this.read(runId);
     } catch (error) {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
-      return { type: 'error', message: 'Core could not cancel this run.', retryable: true };
+      return {
+        type: 'error',
+        message: 'This cancel could not be confirmed. The run state above refreshes on its own.',
+        retryable: true,
+      };
     }
   }
 

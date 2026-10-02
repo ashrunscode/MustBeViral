@@ -80,9 +80,25 @@ describe('StudioLanding', () => {
     expect(html.indexOf('One shoot, up to 2 hours')).toBeLessThan(
       html.indexOf('four to eight times a month'),
     );
+    // The six kinds of work follow the cadence; the objection and its answer sit under all six.
     expect(html.indexOf('four to eight times a month')).toBeLessThan(
+      html.indexOf('Your kind of work.'),
+    );
+    expect(html.indexOf('Your kind of work.')).toBeLessThan(html.indexOf('Already posting?'));
+    expect(html.indexOf('Already posting?')).toBeLessThan(
       html.indexOf('Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.'),
     );
+    expect(html.match(/class="studio-kind"/g)).toHaveLength(6);
+    expect(html).toContain('<dt>Med spa</dt>');
+    expect(html).toContain('The treatment menu changed and the page still shows last season.');
+    expect(html).toContain('We walk the car and cut the Reels.');
+    expect(html).toContain('We film the team, on a week that is not a listing.');
+    // The studio is machine-readable with its exact prices and no invented address.
+    expect(html).toContain('application/ld+json');
+    expect(html).toContain('"@type":"LocalBusiness"');
+    expect(html).toContain('"price":"700"');
+    expect(html).toContain('"price":"3500"');
+    expect(html).not.toContain('"address"');
     expect(html).toContain('>$700<');
     expect(html).toContain('one time');
     expect(html).toContain('>$3,500<');
@@ -123,6 +139,8 @@ describe('StudioLanding', () => {
     expect(html).not.toContain('Buenos días');
     expect(html).not.toContain('We film Houston.');
     expect(html).not.toContain('Already posting?');
+    expect(html).not.toContain('Your kind of work');
+    expect(html).not.toContain('Med spa');
     expect(html).not.toContain('turnaround');
     expect(html).not.toContain('$149');
     expectCleanVoice(html);
@@ -213,10 +231,20 @@ describe('SoftwareLanding', () => {
     expect(html).toContain('The film follows one photo from a Drive folder to a receipt.');
     expect(html).toContain('photo.jpg arrives from the Google Drive folder you selected.');
     // The four steps stay one ordered path, not a feature grid.
-    const pathStart = html.indexOf('<ol class="pub-path">');
+    const pathStart = html.indexOf('<ol class="pub-path"');
     const path = html.slice(pathStart, html.indexOf('</ol>', pathStart));
     expect(pathStart).toBeGreaterThan(-1);
-    expect(path.match(/<li>/g)).toHaveLength(4);
+    expect(path.match(/<li /g)).toHaveLength(4);
+    // Nothing runs on the server: every beat waits, and each one is a control that seeks the film.
+    expect(path.match(/data-beat="waiting"/g)).toHaveLength(4);
+    expect(path).not.toContain('aria-current');
+    expect(path.match(/<button class="pub-beat" type="button">/g)).toHaveLength(4);
+    expect(path).toContain('>0:13<');
+    expect(html).toContain('aria-label="The path, in four beats"');
+    expect(html).toContain('Request access by email');
+    expect(html).toContain('application/ld+json');
+    expect(html).toContain('"@type":"SoftwareApplication"');
+    expect(html).not.toContain('"@type":"Offer"');
     expect(html).toContain('Enrollment is closed.');
     expect(html).toContain('href="/login"');
     expect(html).toContain('Sign in to Studio');
@@ -241,8 +269,10 @@ describe('SoftwarePricing', () => {
     expect(html).toContain('$49');
     expect(html).toContain('$149');
     expect(html).toContain('$399');
-    expect(html).toContain('1 brand, 2 seats');
-    expect(html).toContain('9 accounts, 10\u00a0GB');
+    expect(html).toContain('Charging is not on.');
+    expect(html).toContain('1 active brand, 2 operator seats');
+    expect(html).toContain('9 connected accounts, 10\u00a0GB of storage');
+    expect(html).toContain('A reviewer invited to one brand does not use an operator seat.');
     expect(html).toContain('1,000,000,000 bytes');
     expect(html).toContain('href="/login"');
     expect(html).not.toContain('Buy');

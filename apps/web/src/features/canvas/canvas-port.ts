@@ -538,7 +538,7 @@ export class WorkerCanvasReadPort implements CanvasReadPort {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
-        message: 'The canvas could not be loaded from Core.',
+        message: 'The plan could not be loaded. Nothing changed.',
         retryable: true,
       };
     }

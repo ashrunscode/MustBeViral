@@ -959,12 +959,73 @@ a.pub-wordmark:hover {
   outline-offset: 2px;
 }
 
+/* The film and its four beats. The beats are an ordered list beside the film; the running beat
+   carries the 2px attention edge while it runs, and each beat is a control that seeks the film. */
+.pub-stage {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+
 .pub-path {
   display: grid;
-  gap: 8px;
+  gap: 0;
   margin: 0;
-  padding-left: 1.25rem;
+  padding: 0;
   max-width: 70ch;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.pub-beat {
+  display: grid;
+  grid-template-columns: 4ch minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: baseline;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 12px 10px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-left: 2px solid transparent;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color var(--motion-local) var(--motion-ease),
+    background-color var(--motion-local) var(--motion-ease);
+}
+
+.pub-beat:hover {
+  background: var(--wash-faint);
+  color: var(--ink-strong);
+}
+
+.pub-beat:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.pub-beat__time {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pub-beat__line {
+  text-wrap: pretty;
+}
+
+.pub-path li[data-beat='done'] .pub-beat {
+  color: var(--ink-head);
+}
+
+.pub-path li[aria-current='step'] .pub-beat {
+  border-left-color: var(--attention);
+  color: var(--ink-strong);
 }
 
 .pub-film {
@@ -1102,6 +1163,7 @@ a.pub-wordmark:hover {
 }
 
 .studio-offer h2,
+.studio-kinds h2,
 .studio-objection h2,
 .studio-book h2 {
   margin: 0;
@@ -1133,8 +1195,7 @@ a.pub-wordmark:hover {
 }
 
 .studio-body {
-  width: min(70ch, 100%);
-  margin: 0 auto;
+  width: 100%;
   display: grid;
   gap: 32px;
 }
@@ -1212,5 +1273,77 @@ a.pub-wordmark:hover {
   .studio-frame__offers,
   .studio-offer {
     border-color: CanvasText;
+  }
+}
+
+/* The six kinds of work under the studio frame: the situation the owner recognises, then what we
+   do. One column on a phone, two from 768px, three from 1280px. */
+.studio-kinds {
+  display: grid;
+  gap: 16px;
+}
+
+.studio-kinds__list {
+  display: grid;
+  gap: 20px;
+  margin: 0;
+}
+
+.studio-kind {
+  display: grid;
+  gap: 6px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.studio-kind dt {
+  color: var(--ink-strong);
+}
+
+.studio-kind dd {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.studio-kind__line {
+  color: var(--ink-head);
+}
+
+@media (min-width: 768px) {
+  .studio-kinds__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pub-shell--film {
+    width: min(1200px, 100%);
+  }
+
+  .pub-stage {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: 32px;
+  }
+
+  .pub-path {
+    max-width: none;
+  }
+
+  .studio-kinds__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  .pub-path,
+  .pub-beat,
+  .studio-kind {
+    border-color: CanvasText;
+  }
+
+  .pub-path li[aria-current='step'] .pub-beat {
+    border-left-color: Highlight;
   }
 }

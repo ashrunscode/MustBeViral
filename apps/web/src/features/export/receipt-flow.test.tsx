@@ -49,7 +49,7 @@ describe('ReceiptFlow', () => {
     const port: ExportPort = {
       create: () => ({
         type: 'export_failed',
-        message: 'Core did not prove whether this export was created.',
+        message: 'Whether this export was created is not proven.',
         rows: base.rows.map((row) => ({ ...row, state: 'failed' as const })),
         receipt: base.receipt,
       }),

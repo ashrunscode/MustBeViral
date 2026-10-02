@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PublicHeader } from './public-header';
 import { pricingCopy, softwarePlans } from './public-copy';
 
+/** The provisional catalog, charging named as off, and sign in as the one action. No buy button. */
 export function SoftwarePricing() {
   return (
     <div className="pub-page pub-page--product" lang="en">
@@ -21,7 +22,9 @@ export function SoftwarePricing() {
         <main id="pricing-main">
           <header className="pub-hero">
             <h1 id="pricing-heading">{pricingCopy.h1}</h1>
-            <p>{pricingCopy.provisional}</p>
+            <p>
+              {pricingCopy.provisional} {pricingCopy.charging}
+            </p>
             <p>{pricingCopy.signIn}</p>
           </header>
           <dl className="pub-offers">
@@ -43,6 +46,7 @@ export function SoftwarePricing() {
             ))}
           </dl>
           <div className="pub-story">
+            <p>{pricingCopy.reviewers}</p>
             <p>{pricingCopy.storage}</p>
             <p>{pricingCopy.allowance}</p>
           </div>

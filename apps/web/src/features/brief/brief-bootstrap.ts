@@ -107,7 +107,7 @@ export class WorkerBriefBootstrapPort implements BriefBootstrapPort {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
-        message: 'Core could not bootstrap this campaign workspace.',
+        message: 'The campaign project could not be confirmed. Try again.',
         retryable: true,
       };
     }

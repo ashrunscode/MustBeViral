@@ -70,9 +70,7 @@ export async function signIn(page: Page, email: string) {
   await page.getByLabel('Password').fill(SYNTHETIC_JOURNEY_PASSWORD);
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect(page).toHaveURL((url) => url.pathname === '/studio');
-  await expect(
-    page.getByRole('heading', { name: 'Good work starts with the right context.' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Choose a studio.' })).toBeVisible();
 }
 
 export function parseBrandLocation(url: string) {

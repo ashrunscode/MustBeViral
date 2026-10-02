@@ -587,7 +587,7 @@ export class WorkerExportPort implements ExportReadPort {
           if (mapped.type !== 'error') return mapped;
           return {
             type: 'export_failed',
-            message: 'Core created the export, but its receipt could not be verified.',
+            message: 'The export was created, but its receipt could not be verified.',
             ...(mapped.request_id === undefined ? {} : { request_id: mapped.request_id }),
             rows: failedExportRows(readiness.rows),
             receipt: immutableReceipt(receipt),
@@ -624,8 +624,8 @@ export class WorkerExportPort implements ExportReadPort {
         return {
           type: 'export_failed',
           message: creationProven
-            ? 'Core created the export, but its receipt could not be verified.'
-            : 'Core did not prove whether this export was created.',
+            ? 'The export was created, but its receipt could not be verified.'
+            : 'Whether this export was created is not proven.',
           rows: failedExportRows(creationContext.readiness.rows),
           receipt: immutableReceipt(creationContext.receipt),
         };
@@ -633,8 +633,8 @@ export class WorkerExportPort implements ExportReadPort {
       return {
         type: 'error',
         message: allowCreate
-          ? 'Core could not create this export.'
-          : 'Core could not read this export receipt.',
+          ? 'This export could not be created.'
+          : 'This export receipt could not be read.',
         retryable: !allowCreate,
       };
     }
@@ -649,7 +649,7 @@ export class WorkerExportPort implements ExportReadPort {
         if (mapped.type === 'conflict') {
           return {
             type: 'error',
-            message: 'Core could not mint this download link.',
+            message: 'A download link could not be issued.',
             retryable: false,
           };
         }
@@ -661,7 +661,7 @@ export class WorkerExportPort implements ExportReadPort {
       ) {
         return {
           type: 'error',
-          message: 'Core did not return a customer download link.',
+          message: 'No customer download link was returned.',
           retryable: true,
         };
       }
@@ -669,7 +669,7 @@ export class WorkerExportPort implements ExportReadPort {
       if (url === null) {
         return {
           type: 'error',
-          message: 'Core returned an invalid customer download link.',
+          message: 'The download link returned was not valid.',
           retryable: false,
         };
       }
@@ -685,7 +685,7 @@ export class WorkerExportPort implements ExportReadPort {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
-        message: 'Core could not mint this download link.',
+        message: 'A download link could not be issued.',
         retryable: true,
       };
     }

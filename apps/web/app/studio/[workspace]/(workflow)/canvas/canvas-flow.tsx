@@ -270,7 +270,7 @@ export function CanvasLoadNotice({
   if (result === null) {
     return (
       <div className={styles.resultBanner} role="status" data-result="loading">
-        Loading canvas from Core…
+        Loading the plan…
       </div>
     );
   }
@@ -693,7 +693,7 @@ export function CanvasFlow({
   if (model === null) {
     return (
       <div id="main-content" className={styles.canvasPage}>
-        <section className={styles.workspace} aria-label="ViralGraph canvas">
+        <section className={styles.workspace} aria-label="Campaign plan">
           <CanvasLoadNotice result={loadResult} onRetry={() => void reloadLatest()} />
         </section>
       </div>
@@ -702,7 +702,7 @@ export function CanvasFlow({
 
   return (
     <div id="main-content" className={styles.canvasPage}>
-      <section className={styles.workspace} aria-label="ViralGraph canvas">
+      <section className={styles.workspace} aria-label="Campaign plan">
         <div className={styles.toolbar}>
           <div>
             <MonoCaps title={model.revision}>
@@ -715,9 +715,9 @@ export function CanvasFlow({
               {visibleNodes.length} / {model.nodes.length} nodes mounted
             </MonoCaps>
             <MonoCaps data-collaboration-status={collaboration.status}>
-              {collaboration.snapshot?.presence.filter((entry) => entry.surface === 'canvas')
-                .length ?? 0}{' '}
-              live
+              {collaboration.snapshot
+                ? `${collaboration.snapshot.presence.filter((entry) => entry.surface === 'canvas').length} live`
+                : 'Presence unknown'}
             </MonoCaps>
             <Button aria-label="Zoom out" onClick={() => setZoomClamped(zoom - 0.1)}>
               −

@@ -175,7 +175,7 @@ test('operator proves the GB-04 buyer entry and quote path on deployed staging w
       request.method() === 'POST' && new URL(response.url()).pathname === '/api/core/v1/workspaces'
     );
   });
-  await page.getByRole('button', { name: 'Validate brief' }).click();
+  await page.getByRole('button', { name: 'Validate and open the plan' }).click();
   const replayedWorkspaceResponse = await replayedSentinelWorkspace;
   const replayedWorkspace = (await replayedWorkspaceResponse.json()) as Readonly<{
     data?: Readonly<{ workspace_id?: string }>;

@@ -80,7 +80,7 @@ function StudioChooser() {
   return (
     <PlatformFrame>
       <PlatformHeading
-        title="Good work starts with the right context."
+        title="Choose a studio."
         description="Choose your studio, then pick the brand you want to work on."
       />
       <div className="platform-split">

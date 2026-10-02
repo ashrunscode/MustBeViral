@@ -19,6 +19,15 @@ import {
 import styles from './collaboration-panel.module.css';
 import { presenceLabel } from './use-collaboration-session';
 
+/** The transport state in words a reviewer can act on, never the raw socket status. */
+const STATUS_LABELS: Record<'idle' | 'connecting' | 'open' | 'closed' | 'error', string> = {
+  idle: 'Not connected',
+  connecting: 'Connecting',
+  open: 'Live',
+  closed: 'Disconnected',
+  error: 'Unavailable',
+};
+
 function initials(displayName: string): string {
   const parts = displayName.trim().split(/\s+/u).filter(Boolean);
   if (parts.length === 0) return '?';
@@ -66,7 +75,7 @@ export function PresenceBar({
           {surface === 'canvas' ? 'Viewing graph' : 'Reviewing outputs'}. Draft comments only.
         </span>
       </div>
-      <span className={styles.presenceStatus}>{status}</span>
+      <span className={styles.presenceStatus}>{STATUS_LABELS[status]}</span>
     </section>
   );
 }

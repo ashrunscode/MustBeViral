@@ -131,7 +131,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
     <div className="access-panel" id="main-content">
       <section className="access-panel__card" aria-labelledby="access-heading">
         <MonoCaps>Programmatic access</MonoCaps>
-        <h1 id="access-heading">API keys and audit</h1>
+        <h1 id="access-heading">API keys</h1>
         <p>
           Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation
           or spend autonomously. Revocation is immediate.

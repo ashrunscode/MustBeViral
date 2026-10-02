@@ -252,7 +252,7 @@ export function StudioOverview({
   return (
     <>
       <PlatformHeading
-        title="Good work starts with the right brand."
+        title="Studio overview"
         description="What needs a decision across this studio, then the brands themselves."
       >
         {canWrite ? (
@@ -688,7 +688,7 @@ export function StudioCalendar({ studio }: Readonly<{ studio: Studio }>) {
     <>
       <PlatformHeading
         title="Calendar"
-        description="Scheduled revisions across every brand in this studio, in the workspace time zone."
+        description="Scheduled revisions across every brand in this studio."
       />
       <Calendar
         scope={studio.name}

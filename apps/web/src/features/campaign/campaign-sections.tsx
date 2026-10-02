@@ -18,7 +18,7 @@ export function CampaignCalendar({ workspace }: Readonly<{ workspace: string }>)
     <>
       <PlatformHeading
         title="Campaign calendar"
-        description="When each approved revision of this campaign is due to publish."
+        description="When each approved revision of this campaign would publish, once scheduling is part of a release."
       />
       <Calendar
         scope="this campaign"
@@ -45,8 +45,8 @@ export function CampaignApprovals({ workspace }: Readonly<{ workspace: string }>
         <section className="platform-card platform-pad platform-stack" role="status">
           <h2>Approvals for this run happen on the Content step.</h2>
           <p>
-            Each piece is approved or sent back with a reason there. The receipt records every
-            decision with the brand version it used.
+            Each concept is approved there. Sending a concept back with a reason is not part of this
+            release yet. The receipt records every approval with the brand version it used.
           </p>
           <Link
             className="platform-button platform-primary"
