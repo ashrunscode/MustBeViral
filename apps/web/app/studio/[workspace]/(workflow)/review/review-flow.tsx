@@ -630,6 +630,9 @@ export function ReviewFlow({
       : null,
   );
   const [loading, setLoading] = useState(dataMode === 'worker' && readPort !== null);
+  // The receipt summary shows figures only after a read has returned them; a failed read leaves
+  // the default summary in place and the summary stays off screen.
+  const [summaryRead, setSummaryRead] = useState(dataMode === 'preview');
   const [rejectingId, setRejectingId] = useState<string | null>(null);
   const decidingRef = useRef(false);
   const [approvingId, setApprovingId] = useState<string | null>(null);
@@ -652,6 +655,7 @@ export function ReviewFlow({
       if (next.type === 'ok') {
         setGroups(next.groups);
         setSummary(next.summary);
+        setSummaryRead(true);
         setResult(null);
       } else {
         setResult(next);
@@ -799,6 +803,7 @@ export function ReviewFlow({
     if (next.type === 'ok') {
       setGroups(next.groups);
       setSummary(next.summary);
+      setSummaryRead(true);
       setResult(null);
     } else {
       setResult(next);
@@ -877,7 +882,7 @@ export function ReviewFlow({
         />
         <ReviewResultNotice
           result={result}
-          {...(groups.length === 0 ? { onRetryRead: () => void retryRead() } : {})}
+          {...(readPort === null ? {} : { onRetryRead: () => void retryRead() })}
         />
         <ReviewRecoveryNotice
           context={context}
@@ -984,10 +989,7 @@ export function ReviewFlow({
             ))}
         {mode === 'approval' ? (
           <>
-            {loading ? null : dataMode === 'worker' &&
-              summary.quotedMicros === 0n &&
-              summary.capturedMicros === 0n &&
-              summary.settlementStatus === 'active' ? (
+            {!summaryRead ? null : summary.reservationRecorded === false ? (
               <section
                 className={`${styles.receiptSummary} receipt-summary`}
                 aria-labelledby="receipt-summary-title"

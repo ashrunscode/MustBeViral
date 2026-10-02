@@ -92,6 +92,11 @@ export interface ReviewSummary {
   readonly route: string;
   readonly campaignName: string | null;
   readonly recovery: RunRecoveryView | null;
+  /**
+   * Whether the receipt carries a reservation. False means the run has no reservation on record,
+   * which is the only state in which the summary may say that nothing was charged.
+   */
+  readonly reservationRecorded?: boolean;
 }
 
 export type ReviewPortResult =
@@ -568,6 +573,7 @@ function reviewFromReceipt(
       route: routeLabel,
       campaignName: null,
       recovery: null,
+      reservationRecorded: Boolean(receipt.reservation),
     },
   };
 }
@@ -620,6 +626,7 @@ export class WorkerReviewPort implements ReviewReadPort {
                 settlementStatus: runContext.settlement.settlementStatus,
                 budgetUsedMicros: runContext.settlement.capturedMicros,
                 budgetCapMicros: runContext.settlement.reservationMicros,
+                reservationRecorded: true,
               }),
           campaignName,
           recovery: runContext.recovery,
