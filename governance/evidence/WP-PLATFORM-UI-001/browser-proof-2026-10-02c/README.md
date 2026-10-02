@@ -68,3 +68,13 @@ console or page error.
 
 Preview journeys, desktop and mobile projects (`PLAYWRIGHT_PORT=3113`): 112 passed, 40 skipped.
 Connected journeys against this harness, desktop project: 17 passed.
+
+## Staging and production after the release
+
+The same public pass at 375, 1280 and 1920 on `https://mustbeviral-web-staging.vercel.app`
+(`dpl_HK4J6VQAPKx8Hp8ymxjGUwsLfXbg`) and `https://mustbeviral-web-production.vercel.app`
+(`dpl_Bw8Txy9Atvk8yoBocUxv3AEZW5EN`): no horizontal scroll, one `main`, h1 28px, the studio action
+and price in the first fold, six kinds on `/` and none on `/es`, JSON-LD and `og:image` on every
+page that declares them, the film starting muted with its first beat marked and seeking to the beat
+chosen, no video and no animation under reduced motion, the signed-out studio entry answering 307 to
+sign-in, no console error. Captures `staging-*.jpg` and `production-*.jpg`.
