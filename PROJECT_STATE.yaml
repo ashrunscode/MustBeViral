@@ -7,13 +7,12 @@ launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P4
-  title: Render feasibility and measured runtime decision
-  state: in_progress
+  title: V2 interface program across public, studio, brand, campaign and content surfaces
+  state: planned
 release_target: full-platform
-active_work_packet: WP-PLATFORM-W3-001
-next_action: Supersede WP-PLATFORM-W3-001 into WP-PLATFORM-UI-001 under the owner's 2026-10-01
-  directive through pnpm agent:supersede; the real-media render blocker is carried in that decision
-  as an unresolved obligation, not cleared.
+active_work_packet: WP-PLATFORM-UI-001
+next_action: Confirm the clean legal branch, write the wired, fake or missing inventory for every
+  listed surface, then finish the public pages first.
 decisions_pending: []
 blockers: []
 legacy:
@@ -26,8 +25,7 @@ environments:
     generation: legacy-v1
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes:
-      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
+    notes: V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
       workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
       preserve_until_v2_cutover keeps legacy V1 unchanged. Under
       adr-0009-standing-release-authority, agents may deploy staging-verified merged commits through
@@ -55,86 +53,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-09-29T08:08:07.845Z
-  by: pnpm agent:finish
+  at: 2026-10-02T03:39:40.622Z
+  by: pnpm agent:supersede
   evidence:
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/acceptance.md
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/source-anchor.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/verification-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/browser-receipt.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/independent-review.md
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/repair-attempts.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-portfolio-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-brand-draft-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-studio-team-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-missing-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-success-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-billing-unavailable-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-forced-colors-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-portfolio-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-brand-draft-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-studio-team-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-missing-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-success-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-billing-unavailable-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-forced-colors-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-knowledge-review-controls-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-washbodega-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-findings-a11y-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-aria.txt
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-knowledge-review-controls-axe.json
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-conflict-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-expiry-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/desktop-catalog-lifecycle-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-conflict-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-expiry-WashBodega.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-UnPile.png
-    - governance/evidence/WP-PLATFORM-W2-003/completion-2026-09-29/mobile-catalog-lifecycle-WashBodega.png
+    - governance/evidence/WP-PLATFORM-W3-001/owner-supersession-decision-2026-10-01.yaml

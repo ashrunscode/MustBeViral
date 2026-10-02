@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
-active_packet: WP-PLATFORM-W3-001
-current_step: w3f-001-preflight
-next_action: Supersede WP-PLATFORM-W3-001 into WP-PLATFORM-UI-001 under the owner's 2026-10-01 directive through pnpm agent:supersede; the real-media render blocker is carried in that decision as an unresolved obligation, not cleared.
+active_packet: WP-PLATFORM-UI-001
+current_step: ui-001-preflight
+next_action: Confirm the clean legal branch, write the wired, fake or missing inventory for every listed surface, then finish the public pages first.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
