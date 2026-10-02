@@ -207,8 +207,9 @@ acceptance:
         Typecheck, lint, unit, integration, governance, design and database gates pass on the
         exact merge candidate from a fresh single-worktree clone with frozen dependencies, and every
         repaired defect has a failing-then-passing test recorded in the repair log.
-      status: pending
+      status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
@@ -230,31 +231,36 @@ acceptance:
         it is recorded with the one sentence that clears it and nothing was crossed.
       status: pending
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
 quality_gates:
   - id: governance
     command: pnpm governance:check
-    status: pending
+    status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: design
     command: pnpm design:check
-    status: pending
+    status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: repository
     command: pnpm verify
-    status: pending
+    status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: database-regression
     command: pnpm supabase:test
-    status: pending
+    status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
 rollback:
@@ -268,7 +274,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Production serves 59a3618 (dpl_54BQjPtj67Zfm2ew4nNzEoFWaW2j) and staging serves it too (dpl_2ebacK4izKJh79BBFdXBgFh3Dkt1); the release step closes once one signed-in journey is smoked on staging and production, which needs a test account on the shared Supabase project named by the owner, and the Workers stay undeployed until an owner sentence covers their changed compatibility flag.
+  next_action: Production serves 0b9f578 (dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj) and staging serves it too (dpl_5skrFZb2nnZSog6DYhCd82pB7phL). Still open are one signed-in journey on staging and production, which needs the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke", the studio poster frame, which needs a rights-cleared studio still or clip, and the Workers, whose config differs from the deployed sources by a compatibility flag.
   blockers: []
   changed_paths: []
   last_green_checks: []
