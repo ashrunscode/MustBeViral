@@ -3,7 +3,7 @@ id: WP-PLATFORM-UI-001
 spec_revision: 2
 title: V2 interface program across public, studio, brand, campaign and content surfaces
 phase: P4
-status: ready
+status: in_progress
 priority: critical
 branch: main
 objective: Make every surface in the owner's 2026-10-01 directive read and write the real backend or
@@ -127,7 +127,7 @@ steps:
   - id: ui-001-preflight
     title: Confirm a clean legal branch and write the wired, fake or missing inventory for every listed
       surface.
-    status: pending
+    status: current
   - id: ui-002-public
     title: Finish the public studio and software pages in both studio languages with the auth and status
       screens.
@@ -228,8 +228,8 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-001-preflight
-  next_action: Confirm the clean legal branch, write the wired, fake or missing inventory for every
-    listed surface, then finish the public pages first.
+  next_action: Confirm a clean legal branch and write the wired, fake or missing inventory for every
+    listed surface.
   blockers: []
   changed_paths: []
   last_green_checks: []

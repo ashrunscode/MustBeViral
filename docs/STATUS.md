@@ -12,7 +12,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — V2 interface program across public, studio, brand, campaign and content surfaces (planned) |
+| Phase | P4 — V2 interface program across public, studio, brand, campaign and content surfaces (in_progress) |
 | Active packet | `WP-PLATFORM-UI-001` |
 | Current step | `ui-001-preflight` |
 | Release target | `full-platform` |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Confirm the clean legal branch, write the wired, fake or missing inventory for every listed surface, then finish the public pages first.
+Confirm a clean legal branch and write the wired, fake or missing inventory for every listed surface.

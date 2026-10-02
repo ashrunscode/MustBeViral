@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
 current_step: ui-001-preflight
-next_action: Confirm the clean legal branch, write the wired, fake or missing inventory for every listed surface, then finish the public pages first.
+next_action: Confirm a clean legal branch and write the wired, fake or missing inventory for every listed surface.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
