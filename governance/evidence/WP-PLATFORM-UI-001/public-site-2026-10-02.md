@@ -113,7 +113,11 @@ the composed frame. The one remaining sentence: save `HF_API_KEY_ID` and `HF_API
 ## Gates
 
 Code head `79134f9fd78510f0dcc6db71a9559592a4cb6c18` on branch `codex/public-site-finish` (pull request
-ashrunscode/MustBeViral#63, base `e058983`). Every commit after it changes only evidence.
+ashrunscode/MustBeViral#63, base `e058983`). The review repair `043c133` changes one privacy sentence after it; every other later commit
+changes only evidence. The root `llms.txt` and `docs/STATUS.md` in the first commit are the
+generator's output (`pnpm docs:generate`); `llms.txt` is listed in the packet's allowed paths, and
+`origin/main` at `e058983` failed `generated:check` on both files because the previous merge
+updated the next action without regenerating them.
 
 | Gate                                                                                                                                                 | Environment                                                                                        | Exit                                                                                                                                                                                                                                                 |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -125,7 +129,9 @@ ashrunscode/MustBeViral#63, base `e058983`). Every commit after it changes only 
 
 ## Browser proof
 
-`browser-proof-2026-10-02d/README.md` and `public-probes.json`, on the local harness, signed out.
+`browser-proof-2026-10-02d/README.md` and `public-probes.json`, on the local harness, signed out,
+taken against code head `043c133` (the last source commit, with the footer line and the final
+legal copy).
 Ten routes (`/`, `/es`, `/pricing`, `/software`, `/software/pricing`, `/privacy`, `/terms`,
 `/advertising`, `/login`, `/signup`) at 375, 768, 1280 and 1920: no horizontal scroll in any of
 the forty cells, one `main`, h1 28px, the footer with the three legal links and the unpublished
