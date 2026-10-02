@@ -1012,11 +1012,12 @@ a.pub-wordmark:hover {
   }
 }
 
-/* Studio page: a frame at screen width, designed at 375 first. Order: the work, the price, what
-   is included, the cadence, how to book. The frame reserves its geometry whether or not the
-   rights-cleared poster is on file, so the asset drops in with no layout shift. */
+/* Studio page: a frame at screen width, designed at 375 first. The frame holds the decision with
+   no footage: the locked lines, the two offers with their prices in the evidence face, and one
+   action. When a rights-cleared poster and clip exist they take their own block above the lead with
+   the geometry reserved, so nothing shifts and nothing sits over the native video controls. */
 .pub-shell--studio {
-  width: 100%;
+  width: min(1200px, 100%);
   gap: 16px;
 }
 
@@ -1024,20 +1025,24 @@ a.pub-wordmark:hover {
   gap: 32px;
 }
 
-.studio-hero__frame {
+.studio-frame {
+  display: grid;
+  gap: 24px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 20px 16px 24px;
+  background: var(--card);
+}
+
+.studio-frame__media {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
   max-height: 72vh;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  background: var(--paper-2);
-}
-
-.studio-hero__field {
-  position: absolute;
-  inset: 0;
+  border-radius: var(--radius-control);
   background: var(--paper-2);
 }
 
@@ -1060,6 +1065,7 @@ a.pub-wordmark:hover {
   visibility: visible;
 }
 
+/* The play control sits at the top of the media block, clear of the native controls at its foot. */
 .studio-hero__play {
   position: absolute;
   top: 12px;
@@ -1073,34 +1079,19 @@ a.pub-wordmark:hover {
   }
 }
 
-.studio-hero__panel {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  left: 12px;
+.studio-frame__lead {
   display: grid;
   gap: 12px;
   justify-items: start;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  padding: 20px;
-  background: var(--card);
 }
 
-.studio-hero__sub {
+.studio-frame__sub {
   max-width: 44ch;
 }
 
-.studio-body {
-  width: min(70ch, 100%);
-  margin: 0 auto;
+.studio-frame__offers {
   display: grid;
-  gap: 32px;
-}
-
-.studio-offers {
-  display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .studio-offer {
@@ -1141,6 +1132,13 @@ a.pub-wordmark:hover {
   gap: 4px;
 }
 
+.studio-body {
+  width: min(70ch, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 32px;
+}
+
 .studio-cadence,
 .studio-answer {
   margin: 0;
@@ -1154,43 +1152,65 @@ a.pub-wordmark:hover {
 }
 
 @media (min-width: 768px) {
-  .studio-hero__frame {
-    aspect-ratio: 16 / 9;
-    max-height: min(72vh, 820px);
+  .studio-frame {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 32px;
+    row-gap: 28px;
+    align-items: start;
+    padding: 32px 28px;
   }
 
-  /* Until the rights-cleared poster drops in, the empty field stays shorter than the footage will be. */
-  .studio-hero__frame[data-media='none'] {
+  .studio-frame__media {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
     max-height: min(60vh, 560px);
   }
 
-  .studio-hero__panel {
-    right: auto;
-    bottom: 24px;
-    left: 24px;
-    max-width: 520px;
-    padding: 24px;
+  .studio-frame__offers {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
   }
 
-  .studio-hero__panel h1 {
-    font-size: 32px;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
+  .studio-offer {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .studio-offer + .studio-offer {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
   }
 
   .studio-hero__play {
     top: 24px;
     right: 24px;
   }
+}
 
-  .studio-offers {
+@media (min-width: 1280px) {
+  .studio-frame {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    padding: 40px 36px;
+  }
+
+  .studio-frame__offers {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  .studio-offer + .studio-offer {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    padding-top: 0;
+    padding-left: 32px;
   }
 }
 
 @media (forced-colors: active) {
-  .studio-hero__frame,
-  .studio-hero__panel {
+  .studio-frame,
+  .studio-frame__media,
+  .studio-frame__offers,
+  .studio-offer {
     border-color: CanvasText;
   }
 }

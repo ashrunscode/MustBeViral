@@ -315,21 +315,14 @@ export function StudioOverview({
           <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
         ) : null}
       </section>
-      <div className="platform-grid platform-grid--three" style={undefined}>
-        <section className="platform-card platform-pad platform-stack">
-          <span className="platform-eyebrow">Scheduled work</span>
-          <h3>Nothing scheduled</h3>
-          <p className="platform-muted">
-            Scheduling starts after a channel is connected. No channel can be connected in this
-            release.
-          </p>
-          <Link href={studioHref(studio.id, 'calendar')}>Open the calendar</Link>
-        </section>
-        <section className="platform-card platform-pad platform-stack">
-          <span className="platform-eyebrow">Pending approvals</span>
-          <h3>
+      <section
+        className="platform-card platform-pad platform-stack"
+        aria-labelledby="approvals-now"
+      >
+        <div className="platform-row platform-between">
+          <h2 id="approvals-now">
             {brands.loading || reviewing
-              ? 'Checking…'
+              ? 'Checking approvals…'
               : brands.error !== undefined || reviews === undefined
                 ? 'Approvals could not be read'
                 : unread > 0
@@ -337,19 +330,14 @@ export function StudioOverview({
                   : partial
                     ? `${approvable} ready to approve in ${readScope(inspected)}`
                     : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
-          </h3>
-          <p className="platform-muted">Approving pins the exact draft campaigns will use.</p>
+          </h2>
           <Link href={studioHref(studio.id, 'approvals')}>Open approvals</Link>
-        </section>
-        <section className="platform-card platform-pad platform-stack">
-          <span className="platform-eyebrow">Channels</span>
-          <h3>No channels connected</h3>
-          <p className="platform-muted">
-            Account connections are not registered in this release. Nothing publishes.
-          </p>
-          <Link href={studioHref(studio.id, 'brands')}>Keep working in Brands</Link>
-        </section>
-      </div>
+        </div>
+        <p className="platform-muted">
+          Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel is
+          connected: neither is part of this release yet.
+        </p>
+      </section>
       <div className="platform-section">
         <h2>Your brands</h2>
         <Link href={studioHref(studio.id, 'brands')}>All brands and search</Link>
@@ -532,7 +520,7 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
               : 'No brand version is waiting for approval.'
           }
           body="A version becomes approvable once its draft has findings, no open questions and no pending extraction."
-          missing="Content approvals happen on each campaign’s Content step. A studio-wide list of content and publication approvals across campaigns arrives with the content contract, which is not registered in this release."
+          missing="Content approvals happen on each campaign’s Content step. A studio-wide list of them is not part of this release yet."
           action={{ href: studioHref(studio.id, 'brands'), label: 'Open a brand' }}
         />
       ) : null}
@@ -645,7 +633,7 @@ export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
               ? `Every question in ${readScope(inspected)} is answered and no invitation is waiting.`
               : 'Every brand question is answered and no invitation is waiting.'
           }
-          missing="Assignments, bulk actions and reminders arrive with the task contract, which is not registered in this release."
+          missing="Assignments and reminders are not part of this release yet."
           action={{ href: studioHref(studio.id, 'brands'), label: 'Open a brand' }}
         />
       ) : null}
@@ -722,7 +710,7 @@ export function StudioCreators({ studio }: Readonly<{ studio: Studio }>) {
       <PlatformEmptySection
         title="No creators or partners yet."
         body="Creator discovery, outreach and partnership agreements are later roadmap waves."
-        missing="No creator, partnership or outreach command is registered in this release, so nothing can be added here yet."
+        missing="Creator and partner lists are not part of this release yet."
         action={{ href: studioHref(studio.id, 'brands'), label: 'Back to brands' }}
       />
     </>
@@ -739,7 +727,7 @@ export function StudioReports({ studio }: Readonly<{ studio: Studio }>) {
       <PlatformEmptySection
         title="No results to report."
         body="Nothing has published, so there are no metrics. The only measured records are run receipts, which live on each campaign’s results page."
-        missing="No metrics or reporting command is registered in this release. Unknown numbers are never shown as zero."
+        missing="Reports and measurements are not part of this release yet. Unknown numbers are never shown as zero."
         action={{ href: studioHref(studio.id, 'brands'), label: 'Open a brand' }}
       />
     </>

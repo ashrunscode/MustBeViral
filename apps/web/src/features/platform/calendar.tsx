@@ -177,4 +177,4 @@ export function Calendar({
 }
 
 export const SCHEDULE_CONTRACT_MISSING =
-  'No schedule or publication command is registered in this release, so there is nothing to create, move or cancel here yet.';
+  'Scheduling and publishing are not part of this release yet, so there is nothing to create, move or cancel here.';

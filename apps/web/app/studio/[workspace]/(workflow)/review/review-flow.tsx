@@ -291,7 +291,7 @@ export function ComposedReview({
               </Button>
               <p className={styles.decisionNote}>
                 Leaving a concept unapproved keeps it out of the export. Sending it back with a
-                reason arrives with the content contract, which is not registered in this release.
+                reason is not part of this release yet.
               </p>
             </>
           )}
@@ -611,7 +611,7 @@ export function ReviewFlow({
     dataMode === 'worker' && readPort === null
       ? {
           type: 'error',
-          message: 'Open review from a run so Core can load its artifacts.',
+          message: 'Open this review from its run so its outputs can be loaded.',
           retryable: false,
         }
       : null,

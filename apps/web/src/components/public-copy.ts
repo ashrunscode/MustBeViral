@@ -147,11 +147,12 @@ export const softwareCopy = {
   filmFact: 'The film follows one photo from a Drive folder to a receipt.',
   label: 'One photo, from Drive to receipt',
   alt: 'Film frame. A photo arrives from a Google Drive folder, is cropped and captioned from the approved offer, publishes to the eligible channels, and ends in a receipt that shows the cost.',
+  /** One photo, witnessed from the folder to the receipt. Each step continues the same photo. */
   path: [
-    'photo.jpg arrives from a selected Google Drive folder.',
+    'photo.jpg arrives from the Google Drive folder you selected.',
     'The same photo is cropped and captioned from the approved offer.',
-    'Eligible channels publish. TikTok waits for per-post privacy. Google Business Profile waits for access. YouTube stays private until the project is approved.',
-    'The receipt shows the provider id and the actual cost. Pause remains available.',
+    'The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.',
+    'The receipt shows the provider id and the actual cost for that photo. Pause stays available.',
   ],
   enrollment: 'Enrollment is closed.',
   requestAccess: 'Request access',

@@ -645,7 +645,7 @@ export class WorkerCanvasMutationPort implements CanvasMutationPort {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
       return {
         type: 'error',
-        message: 'The canvas could not be validated by Core.',
+        message: 'The plan could not be saved. Nothing changed. Try again, or reload the plan.',
         retryable: true,
       };
     }

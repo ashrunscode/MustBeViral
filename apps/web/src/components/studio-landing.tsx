@@ -13,8 +13,11 @@ function slug(value: string) {
 }
 
 /**
- * The studio page is a frame at screen width, designed at 375 first. Order: the work, the price,
- * what is included, the cadence, how to book. One primary action, the phone as the only secondary.
+ * The studio page is a frame at screen width, designed at 375 first. The frame holds the whole
+ * decision with no footage: the locked lines, the two offers with their prices in the evidence
+ * face, and one action with the phone as the only secondary. When a rights-cleared poster and clip
+ * exist they take their own block above the lead, with the geometry reserved; nothing ever sits
+ * over the native video controls. Below the frame: the cadence, the objection, how to book.
  */
 export function StudioLanding({
   locale,
@@ -30,30 +33,29 @@ export function StudioLanding({
       <div className="pub-shell pub-shell--studio">
         <PublicHeader homeHref={copy.homeHref} links={copy.nav} />
         <main id="studio-main">
-          <section className="studio-hero" aria-labelledby="studio-heading">
-            <div className="studio-hero__frame" data-media={media === null ? 'none' : 'poster'}>
-              {media === null ? (
-                <div className="studio-hero__field" aria-hidden="true" />
-              ) : (
+          <section
+            className="studio-frame"
+            aria-labelledby="studio-heading"
+            data-media={media === null ? 'none' : 'poster'}
+          >
+            {media === null ? null : (
+              <div className="studio-frame__media">
                 <StudioHeroMedia alt={media.alt[locale]} media={media} playLabel={copy.playFilm} />
-              )}
-              <div className="studio-hero__panel">
-                <h1 id="studio-heading">{copy.h1}</h1>
-                <p className="studio-hero__sub">{copy.sub}</p>
-                <div className="pub-actions">
-                  <a className="pub-cta" href={phoneHref}>
-                    {copy.cta}
-                  </a>
-                  <a className="pub-phone" href={phoneHref}>
-                    {copy.phone}
-                  </a>
-                </div>
+              </div>
+            )}
+            <div className="studio-frame__lead">
+              <h1 id="studio-heading">{copy.h1}</h1>
+              <p className="studio-frame__sub">{copy.sub}</p>
+              <div className="pub-actions">
+                <a className="pub-cta" href={phoneHref}>
+                  {copy.cta}
+                </a>
+                <a className="pub-phone" href={phoneHref}>
+                  {copy.phone}
+                </a>
               </div>
             </div>
-          </section>
-
-          <div className="studio-body">
-            <div className="studio-offers">
+            <div className="studio-frame__offers">
               {copy.offers.map((offer) => {
                 const id = `offer-${slug(offer.name)}`;
                 return (
@@ -78,7 +80,9 @@ export function StudioLanding({
                 );
               })}
             </div>
+          </section>
 
+          <div className="studio-body">
             <p className="studio-cadence">{copy.cadence}</p>
 
             {copy.question === undefined ? (

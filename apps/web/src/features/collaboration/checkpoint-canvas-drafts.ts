@@ -51,8 +51,18 @@ export async function checkpointCanvasDrafts(input: {
   }
   const checkpointedModel = canvasModelWithCheckpointDrafts(input.model, input.drafts);
   const patchedIds = new Set(patch.upsert_nodes.map((node) => node.id));
+  // Core's patch contract is the graph node alone. The canvas model carries screen fields beside
+  // it (labels, status, position), and sending those fails the strict contract before the request
+  // leaves the browser, so only the graph fields travel.
   const graphPatch = {
-    upsert_nodes: checkpointedModel.nodes.filter((node) => patchedIds.has(node.id)),
+    upsert_nodes: checkpointedModel.nodes
+      .filter((node) => patchedIds.has(node.id))
+      .map(({ id, kind, parameter_schema_version, parameters }) => ({
+        id,
+        kind,
+        parameter_schema_version,
+        parameters,
+      })),
     remove_node_ids: [] as string[],
     upsert_edges: [] as CanvasModel['edges'][number][],
     remove_edge_ids: [] as string[],

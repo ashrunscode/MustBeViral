@@ -59,7 +59,7 @@ export function CampaignApprovals({ workspace }: Readonly<{ workspace: string }>
         <PlatformEmptySection
           title="Nothing to approve yet."
           body="Content to approve appears after the budget is confirmed and the run completes."
-          missing="Approval policies, delegated approvers and approval history across campaigns arrive with the content contract, which is not registered in this release."
+          missing="Approval policies and a history across campaigns are not part of this release yet."
           action={{ href: campaignHref(workspace, 'brief', context), label: 'Open the brief' }}
         />
       )}
@@ -88,7 +88,7 @@ export function CampaignCollaborators({
         <PlatformEmptySection
           title="Open this campaign from its brand to see collaborators."
           body="Collaborators are the studio team members who can open this brand. Without a studio in the link, nothing can be listed."
-          missing="Per-campaign assignments and reviewers arrive with the collaborator contract, which is not registered in this release."
+          missing="Per-campaign assignments are not part of this release yet."
           action={{ href: studioHref(), label: 'Choose a studio' }}
         />
       ) : members.loading ? (
@@ -103,7 +103,7 @@ export function CampaignCollaborators({
           <h2>Studio team</h2>
           <p className="platform-muted">
             Every active member below can open this brand with their studio role. Per-campaign
-            assignments are not registered in this release.
+            assignments are not part of this release yet.
           </p>
           <ul className="platform-list">
             {members.data?.items.map((member) => (
