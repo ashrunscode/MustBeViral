@@ -207,7 +207,7 @@ acceptance:
         Typecheck, lint, unit, integration, governance, design and database gates pass on the
         exact merge candidate from a fresh single-worktree clone with frozen dependencies, and every
         repaired defect has a failing-then-passing test recorded in the repair log.
-      status: passed
+      status: pending
       evidence:
         - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
@@ -235,25 +235,25 @@ acceptance:
 quality_gates:
   - id: governance
     command: pnpm governance:check
-    status: passed
+    status: pending
     evidence:
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: design
     command: pnpm design:check
-    status: passed
+    status: pending
     evidence:
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: repository
     command: pnpm verify
-    status: passed
+    status: pending
     evidence:
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: database-regression
     command: pnpm supabase:test
-    status: passed
+    status: pending
     evidence:
       - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
       - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
