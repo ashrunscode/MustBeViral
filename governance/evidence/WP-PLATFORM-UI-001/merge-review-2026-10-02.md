@@ -47,6 +47,14 @@ project case is a limit of the registered contracts, not a blocking finding.
 | 10  | P2               | `apps/web/src/features/platform/calendar.tsx`                     | Dates advanced by fixed 24-hour steps, duplicating a date across a daylight-saving change.                                                                                                       | Days advance by calendar day.                                                                                                                                                                        | `calendar.test.tsx`: every grid day is unique and exactly one day after the previous, across three months. |
 | 11  | P2               | `apps/web/src/features/platform/calendar.tsx`                     | Month navigation kept the anchor's day, so "Later" from January 31 skipped February.                                                                                                             | Month navigation lands on the first of the month.                                                                                                                                                    | `calendar.test.tsx`: `shiftMonth` from a 31st and the rendered Later button month by month.                |
 
-## Review 4
+## Review 4: sha `532968702d9ad4b5f76e8aafa0fd791358971b3c`
+
+Verdict: **FAIL**. Items 9, 7b, 10 and 11 confirmed repaired; one new P2 finding.
+
+| #   | Severity | File                                                 | Finding                                                                                                         | Repair                                                                                                                | Regression test                                                        |
+| --- | -------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 12  | P2       | `apps/web/src/features/platform/studio-sections.tsx` | When the brand list itself failed, the overview's approval card still said "0 brand versions ready to approve". | The card says "Approvals could not be read" while the brand list is failed or unread, and "Checking…" while it loads. | `studio-sections.test.tsx`: a failed brand list never renders a count. |
+
+## Review 5
 
 Recorded in the pull request against the sha that carries the repairs above.

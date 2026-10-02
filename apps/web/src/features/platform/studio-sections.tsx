@@ -317,11 +317,13 @@ export function StudioOverview({
         <section className="platform-card platform-pad platform-stack">
           <span className="platform-eyebrow">Pending approvals</span>
           <h3>
-            {reviewing
+            {brands.loading || reviewing
               ? 'Checking…'
-              : unread > 0
-                ? `${approvable} ready to approve, ${unread} ${unread === 1 ? 'brand' : 'brands'} not read`
-                : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
+              : brands.error !== undefined || reviews === undefined
+                ? 'Approvals could not be read'
+                : unread > 0
+                  ? `${approvable} ready to approve, ${unread} ${unread === 1 ? 'brand' : 'brands'} not read`
+                  : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
           </h3>
           <p className="platform-muted">Approving pins the exact draft campaigns will use.</p>
           <Link href={studioHref(studio.id, 'approvals')}>Open approvals</Link>

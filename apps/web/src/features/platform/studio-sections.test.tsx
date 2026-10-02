@@ -160,6 +160,20 @@ describe('studio sections and failed reads', () => {
     expect(screen.queryByText(/brand versions ready to approve/u)).toBeNull();
   });
 
+  it('does not count approvals when the brand list itself could not be read', () => {
+    state.brands = { data: undefined, error: new Error('offline'), loading: false };
+    state.invitations = { data: { items: [] }, error: undefined, loading: false };
+    state.reviews = {
+      reviews: undefined,
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    render(<StudioOverview studio={studio} canWrite={false} />);
+    expect(screen.getByText('Approvals could not be read')).toBeTruthy();
+    expect(screen.queryByText(/ready to approve/u)).toBeNull();
+  });
+
   it('withholds the approvals clear while a brand read failed', () => {
     state.brands = { data: { items: [brand('b1', 'UnPile')] }, error: undefined, loading: false };
     state.reviews = {
