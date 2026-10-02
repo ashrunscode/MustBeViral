@@ -105,8 +105,20 @@ stay on the list.
 
 ## Gates
 
-Code head `95cacc6c71acac0638a0686bff9fc6629e50cbc0` on branch `codex/platform-ui-003` (pull
-request ashrunscode/MustBeViral#61, base `20b6e1e`). The commit after it changes only evidence.
+Branch `codex/platform-ui-003`, pull request ashrunscode/MustBeViral#61, base `20b6e1e`. The first
+code head was `95cacc6c71acac0638a0686bff9fc6629e50cbc0`; the review repair is
+`76245d1ae5709192f81dab6d99c2bfa18b397491`, which changes `review-flow.tsx`, `review-port.ts` and
+adds `review-flow.worker.test.tsx`. Every commit after `76245d1` changes only evidence.
+
+On `76245d1`:
+
+| Gate                                                                           | Environment                                                                         | Exit                                                                                                       |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Web unit tests                                                                 | author clone `C:\dev\mbv-ui-20261001`                                               | 349 passed (61 files)                                                                                      |
+| Web typecheck, lint, repository `format:check`                                 | author clone                                                                        | 0                                                                                                          |
+| `corepack pnpm install --frozen-lockfile`, `pnpm verify`, `pnpm supabase:test` | fresh single-worktree clone `C:\dev\mbv-verify-76245d1` at `76245d1`, branch `main` | 0, 0 and 0; database tests 61 files, 1181 tests, against the local database that holds canvases, not reset |
+
+On `95cacc6`, which differs from `76245d1` only by the repair above:
 
 | Gate                                                                                                                                                 | Environment                                                                           | Exit                                                                                                       |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
