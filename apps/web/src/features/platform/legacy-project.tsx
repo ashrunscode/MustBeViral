@@ -80,7 +80,7 @@ export function BrandStudioChoices({
           href={brandHref(studio.id, workspaceId, brandId)}
         >
           <h3>{studio.name}</h3>
-          <span>Open brand →</span>
+          <span>Open brand</span>
         </Link>
       ))}
       <div className="platform-row">

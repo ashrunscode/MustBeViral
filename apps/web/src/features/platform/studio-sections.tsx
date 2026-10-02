@@ -457,7 +457,7 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
         <PlatformEmptySection
           title="No brand version is waiting for approval."
           body="A version becomes approvable once its draft has findings, no open questions and no pending extraction."
-          missing="Content and publication approvals arrive with the content contract, which is not registered in this release; only brand knowledge is approvable today."
+          missing="Content approvals happen on each campaign’s Content step. A studio-wide list of content and publication approvals across campaigns arrives with the content contract, which is not registered in this release."
           action={{ href: studioHref(studio.id, 'brands'), label: 'Open a brand' }}
         />
       ) : null}

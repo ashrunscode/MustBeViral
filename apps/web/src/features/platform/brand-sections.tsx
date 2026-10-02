@@ -13,7 +13,7 @@ import {
   PlatformLoading,
   PlatformRecovery,
 } from './platform-frame';
-import { brandHref, campaignContextQuery, campaignHref } from './platform-navigation';
+import { brandHref, campaignHref } from './platform-navigation';
 import { usePlatformQuery } from './use-platform-query';
 import { draftIsApprovable, openQuestions, type BrandRecord } from './use-brand-reviews';
 
@@ -166,12 +166,22 @@ function SavedCampaignStep({
     campaignProgressSnapshot,
     () => null,
   );
-  const progress = saved !== null && saved.workspace === brand.workspace_id ? saved : null;
+  // The saved step must belong to this brand's workspace and, when it names a brand, to this brand.
+  const progress =
+    saved !== null &&
+    saved.workspace === brand.workspace_id &&
+    (saved.context.brand === undefined || saved.context.brand === brand.id)
+      ? saved
+      : null;
   if (progress === null) {
     return compact ? <p>No campaign step is saved in this browser.</p> : null;
   }
-  const query = campaignContextQuery({ studio: studioId, brand: brand.id });
-  const href = `${campaignResumeHref(progress.workspace, progress.step)}?${query}`;
+  // Resume with the saved plan and run, and with this studio and brand when the record lacks them.
+  const href = campaignResumeHref(progress.workspace, progress.step, {
+    ...progress.context,
+    studio: progress.context.studio ?? studioId,
+    brand: progress.context.brand ?? brand.id,
+  });
   return (
     <p>
       This browser paused at <strong>{progress.stepLabel}</strong>.{' '}

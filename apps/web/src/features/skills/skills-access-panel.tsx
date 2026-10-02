@@ -16,7 +16,7 @@ function formatTimestamp(value: string): string {
 }
 
 function versionLabel(version: Readonly<{ version_number: number; title: string }>): string {
-  return `v${version.version_number} · ${version.title}`;
+  return `v${version.version_number}: ${version.title}`;
 }
 
 export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: string }>) {
@@ -238,7 +238,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
               {selectedVersion === null ? null : (
                 <div className="skills-panel__snapshot">
                   <p className="skills-panel__meta">
-                    Published {formatTimestamp(selectedVersion.published_at)} · immutable snapshot
+                    Published {formatTimestamp(selectedVersion.published_at)}. Immutable snapshot
                   </p>
                   <h3>{selectedVersion.title}</h3>
                   <pre className="skills-panel__instructions">{selectedVersion.instructions}</pre>

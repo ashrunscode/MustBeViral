@@ -399,7 +399,7 @@ function VariantCard({
                 <ReviewCopyPreview copy={variant.copy} />
               ) : (
                 <MonoCaps>
-                  {dataMode === 'preview' ? 'Current output · v2' : 'Artifact · private preview'}
+                  {dataMode === 'preview' ? 'Current output, v2' : 'Artifact: private preview'}
                 </MonoCaps>
               )}
             </div>
@@ -411,7 +411,7 @@ function VariantCard({
           <div className={styles.version}>
             <div className={`${styles.thumb} ${styles.prior}`}>
               <MonoCaps>
-                {variant.hasPrior ? 'Prior pinned · v1' : 'No prior pinned output'}
+                {variant.hasPrior ? 'Prior pinned, v1' : 'No prior pinned output'}
               </MonoCaps>
             </div>
             <div className={styles.versionCaption}>
@@ -442,7 +442,7 @@ function VariantCard({
           ) : dataMode === 'worker' && variant.copy ? (
             <ReviewCopyPreview copy={variant.copy} />
           ) : (
-            <MonoCaps>Current v2 · {variant.model}</MonoCaps>
+            <MonoCaps>Current v2, {variant.model}</MonoCaps>
           )}
         </div>
       )}
@@ -809,7 +809,7 @@ export function ReviewFlow({
             <MonoCaps>
               {dataMode === 'worker'
                 ? `Revision ${groups[0]?.revision ?? 'pending'}. Reviewer: you.`
-                : `Rev ${groups[0]?.revision ?? 'pending'} · Reviewer ${reviewer}`}
+                : `Rev ${groups[0]?.revision ?? 'pending'}. Reviewer ${reviewer}`}
             </MonoCaps>
             <h1 id="review-title">
               {mode === 'compare'

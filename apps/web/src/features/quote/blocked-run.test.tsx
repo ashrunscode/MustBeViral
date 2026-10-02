@@ -2,7 +2,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 
-import { QuoteResultNotice } from '../../../app/studio/[workspace]/(workflow)/quote/quote-flow';
+import {
+  BlockedRunNotice,
+  QuoteResultNotice,
+} from '../../../app/studio/[workspace]/(workflow)/quote/quote-flow';
 import { WorkerRunStartPort } from '../run/run-port';
 import { WorkerQuotePort, createGoldenQuote } from './quote-port';
 
@@ -113,5 +116,23 @@ describe('kill switches and billing blocks are named, not generic outages', () =
     expect(html).toContain('a setting, not an outage');
     expect(html).toContain('Your plan and this quote are saved');
     expect(html).not.toContain('Open workspace billing');
+  });
+
+  it('never claims a saved quote when the quote itself was refused', () => {
+    const html = renderToStaticMarkup(
+      <BlockedRunNotice
+        context={{}}
+        stage="read"
+        result={{
+          type: 'billing_blocked',
+          reason: 'charging_disabled',
+          message: 'Charging is turned off, so no run can be started.',
+        }}
+        workspace={workspace}
+      />,
+    );
+    expect(html).toContain('No quote was created');
+    expect(html).toContain('Your plan is saved');
+    expect(html).not.toContain('this quote are saved');
   });
 });

@@ -437,7 +437,7 @@ export function ReceiptFlow({
         <footer className={styles.documentFoot}>
           <MonoCaps>
             {dataMode === 'preview'
-              ? 'Immutable · Ledger entry 0042'
+              ? 'Immutable. Ledger entry 0042'
               : `Run ${receipt.receiptNumber}`}
           </MonoCaps>
           {dataMode === 'preview' ? <MonoCaps>Signer: mbv-ledger-v2 / us-east-1</MonoCaps> : null}

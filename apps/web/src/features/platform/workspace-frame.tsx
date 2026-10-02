@@ -3,13 +3,19 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { isCampaignWorkflowStep, writeCampaignProgress } from '../campaign/campaign-progress';
-import { PlatformFrame, type PlatformPresentation } from './platform-frame';
+import {
+  PlatformFrame,
+  PlatformLoading,
+  PlatformRecovery,
+  type PlatformPresentation,
+} from './platform-frame';
 import {
   CAMPAIGN_STEPS,
   campaignHref,
   campaignStepAvailable,
   campaignStepForSegment,
   isResourceId,
+  studioHref,
   type CampaignContext,
   type CampaignStep,
 } from './platform-navigation';
@@ -85,15 +91,28 @@ function CampaignShell({
     authenticated && studioId !== undefined && brandId !== undefined && isResourceId(workspace),
   );
   const brandName = brand.data?.brand.name;
+  // One scope: the studio must open, the brand must belong to the route's workspace, and nothing
+  // renders or saves until that is confirmed. A link that mixes two workspaces is refused.
+  const scopeError = studio.error ?? brand.error;
+  const scopeMismatch = brand.data !== undefined && brand.data.brand.workspace_id !== workspace;
+  const scopePending =
+    authenticated &&
+    ((studioId !== undefined && studio.loading) ||
+      (studioId !== undefined && brandId !== undefined && brand.loading));
+  const scopeConfirmed = scopeError === undefined && !scopeMismatch && !scopePending;
   useEffect(() => {
+    if (!scopeConfirmed) return;
     const workflowStep = segment === 'compare' ? 'review' : segment;
     if (!isCampaignWorkflowStep(workflowStep)) return;
     writeCampaignProgress({
       workspace,
       step: workflowStep,
+      context,
       ...(brandName ? { campaignLabel: `${brandName} campaign` } : {}),
     });
-  }, [segment, workspace, brandName]);
+    // The context's identity is its serialized values.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segment, workspace, brandName, scopeConfirmed, JSON.stringify(context)]);
   const studioContext = studio.data
     ? { id: studio.data.studio.id, name: studio.data.studio.name, role: studio.data.role }
     : undefined;
@@ -129,7 +148,34 @@ function CampaignShell({
           preview={!authenticated}
         />
       ) : null}
-      <div className="platform-fill">{children}</div>
+      <div className="platform-fill">
+        {scopeError !== undefined ? (
+          <PlatformRecovery
+            error={scopeError}
+            retry={() => {
+              studio.refresh();
+              brand.refresh();
+            }}
+          />
+        ) : scopeMismatch ? (
+          <section className="platform-card platform-pad platform-stack" role="alert">
+            <h2>This link mixes two workspaces.</h2>
+            <p>
+              The brand in this link belongs to another workspace, so nothing from it is shown here.
+              Nothing changed. Open the campaign from its brand.
+            </p>
+            <div className="platform-row">
+              <Link className="platform-button platform-primary" href={studioHref(studioId)}>
+                Open the studio
+              </Link>
+            </div>
+          </section>
+        ) : scopePending ? (
+          <PlatformLoading label="Confirming the studio and brand for this campaign…" />
+        ) : (
+          children
+        )}
+      </div>
     </PlatformFrame>
   );
 }

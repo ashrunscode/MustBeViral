@@ -241,7 +241,7 @@ function nodeDetail(
         : classifyProviderErrorCode(node.providerErrorCode));
     return runFailureRecoveryCopyForKind(kind).attemptDetail;
   }
-  return `Dispatch wave ${String(node.dispatchWave)} · ${node.status.replaceAll('_', ' ')}`;
+  return `Dispatch wave ${String(node.dispatchWave)}, ${node.status.replaceAll('_', ' ')}`;
 }
 
 function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {

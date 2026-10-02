@@ -65,7 +65,7 @@ export type ChipStatus = 'verified' | 'running' | 'queued' | 'failed' | 'notes';
 
 const chipIcons: Record<ChipStatus, string> = {
   verified: '✓',
-  running: '→',
+  running: '•',
   queued: '○',
   failed: '!',
   notes: '◆',

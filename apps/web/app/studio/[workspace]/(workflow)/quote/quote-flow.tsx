@@ -49,9 +49,12 @@ function providerSwitchSentence(reason: string | null): string {
 export function BlockedRunNotice({
   context,
   result,
+  stage = 'confirm',
   workspace,
 }: Readonly<{
   context: CampaignContext;
+  /** `read`: the quote could not be created; `confirm`: a quote exists and the run was refused. */
+  stage?: 'read' | 'confirm';
   result:
     | { readonly type: 'billing_blocked'; readonly reason: string | null; readonly message: string }
     | {
@@ -62,6 +65,10 @@ export function BlockedRunNotice({
   workspace: string;
 }>) {
   const billing = result.type === 'billing_blocked';
+  const kept =
+    stage === 'read'
+      ? 'No quote was created and nothing was charged. Your plan is saved.'
+      : 'Nothing was charged and no provider work started. Your plan and this quote are saved.';
   return (
     <div
       className={`${styles.notice} ${styles.noticeError}`}
@@ -74,8 +81,8 @@ export function BlockedRunNotice({
       </strong>
       <span>
         {billing
-          ? `${result.message} Nothing was charged and no provider work started. Your plan and this quote are saved.`
-          : `${providerSwitchSentence(result.reason)} This is a setting, not an outage. Nothing starts and nothing is charged. Your plan and this quote are saved.`}
+          ? `${result.message} ${kept}`
+          : `${providerSwitchSentence(result.reason)} This is a setting, not an outage. ${kept}`}
       </span>
       {billing && isResourceId(context.studio) ? (
         <Link
@@ -112,7 +119,7 @@ export function QuoteResultNotice({
       <div className={`${styles.notice} ${styles.noticeSuccess}`} role="status" data-result="ok">
         <strong>Run confirmed</strong>
         <span>
-          Maximum charge {formatUsdMicros(result.acceptedMaximumMicros)} · {result.runId}
+          Maximum charge {formatUsdMicros(result.acceptedMaximumMicros)}, run {result.runId}
         </span>
       </div>
     );
@@ -143,7 +150,7 @@ export function QuoteResultNotice({
         <strong>Spend cap blocked confirmation</strong>
         <span>{result.explanation}</span>
         <MonoCaps>
-          Cap {formatUsdMicros(result.capMicros)} · Attempted{' '}
+          Cap {formatUsdMicros(result.capMicros)}, attempted{' '}
           {formatUsdMicros(result.attemptedMicros)}
         </MonoCaps>
       </div>
@@ -190,7 +197,7 @@ export function QuoteResultNotice({
       >
         <strong>Confirmation requires reconciliation</strong>
         <span>{result.message}</span>
-        <MonoCaps>Quote {result.quoteId} · confirmation locked</MonoCaps>
+        <MonoCaps>Quote {result.quoteId}: confirmation locked</MonoCaps>
       </div>
     );
   }
@@ -243,7 +250,12 @@ function QuoteLoadState({
           <Card className={styles.quoteCard} feedback="error">
             <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
             <h1 id="quote-title">Review this run before spending</h1>
-            <BlockedRunNotice context={context} result={result} workspace={workspace} />
+            <BlockedRunNotice
+              context={context}
+              result={result}
+              stage="read"
+              workspace={workspace}
+            />
             <Link
               className={styles.quietBack}
               href={
