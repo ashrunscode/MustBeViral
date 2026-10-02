@@ -1,17 +1,25 @@
+import type { Metadata } from 'next';
+
 import { StatusScreen } from '../../src/components/status-screen';
+
+export const metadata: Metadata = {
+  title: 'Temporarily unavailable',
+  description: 'Must Be Viral Studio is paused for maintenance. Saved work is kept.',
+};
 
 export default function MaintenancePage() {
   return (
     <StatusScreen
       title="Studio is temporarily unavailable"
-      actions={[{ href: '/', label: 'Return home', variant: 'primary' }]}
+      actions={[
+        { href: '/login', label: 'Sign in to Studio', variant: 'primary' },
+        { href: '/', label: 'Must Be Viral home', variant: 'secondary' },
+      ]}
     >
-      <p>
-        Must Be Viral is undergoing maintenance. Campaign data is preserved. Provider work and new
-        confirmations stay paused until service returns.
-      </p>
+      <p>Studio is paused for maintenance. It keeps your saved brands, drafts and approvals.</p>
       <p className="auth-policy">
-        Try again shortly. If you were mid-run, open Receipt after service resumes.
+        Nothing new starts until service returns. If you were mid-run, open its results page after
+        service resumes.
       </p>
     </StatusScreen>
   );

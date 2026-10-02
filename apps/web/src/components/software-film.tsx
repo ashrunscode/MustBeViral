@@ -5,6 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 
 import { softwareCopy, softwareFilm } from './public-copy';
 
+/**
+ * The poster is the one priority image on the route. The clip mounts after it, muted and inline,
+ * and stays out of the tab order until it is actually showing. Under reduced motion the film waits
+ * for the visitor to press play; that button is part of the server HTML so nothing shifts.
+ */
 export function SoftwareFilm() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reduced, setReduced] = useState(false);
@@ -64,11 +69,14 @@ export function SoftwareFilm() {
         ) : null}
       </div>
       <figcaption>{softwareCopy.label}</figcaption>
-      {checked && reduced && !armed ? (
-        <button className="pub-play" type="button" onClick={() => setArmed(true)}>
-          {softwareCopy.play}
-        </button>
-      ) : null}
+      <button
+        className="pub-play pub-play--reduced-motion"
+        hidden={armed}
+        type="button"
+        onClick={() => setArmed(true)}
+      >
+        {softwareCopy.play}
+      </button>
     </figure>
   );
 }

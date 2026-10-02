@@ -11,8 +11,8 @@ export function PublicHeader({
 }>) {
   return (
     <header className="pub-header">
-      <Link className="pub-wordmark" href={homeHref}>
-        Must Be Viral
+      <Link className="pub-wordmark" href={homeHref} translate="no">
+        {'Must\u00a0Be\u00a0Viral'}
       </Link>
       <nav aria-label="Site">
         <ul className="pub-nav">

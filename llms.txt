@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
-current_step: ui-002-public
-next_action: Finish the public studio and software pages in both studio languages with the auth and status screens.
+current_step: ui-003-shell
+next_action: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

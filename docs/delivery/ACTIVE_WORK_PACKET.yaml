@@ -133,10 +133,10 @@ steps:
     title:
       Finish the public studio and software pages in both studio languages with the auth and status
       screens.
-    status: current
+    status: completed
   - id: ui-003-shell
     title: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
-    status: pending
+    status: current
   - id: ui-004-flows
     title: Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer,
       team and settings against the handlers.
@@ -238,8 +238,8 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: ui-002-public
-  next_action: Finish the public studio and software pages in both studio languages with the auth and status screens.
+  current_step: ui-003-shell
+  next_action: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
   blockers: []
   changed_paths: []
   last_green_checks: []

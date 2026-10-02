@@ -1,15 +1,23 @@
+import type { Metadata } from 'next';
+
+import { requestAccessHref, studioEmail } from '../../src/components/public-copy';
 import { StatusScreen } from '../../src/components/status-screen';
+
+export const metadata: Metadata = {
+  title: 'Request access',
+  description: 'Enrollment is closed. Request access by email; this page collects nothing.',
+};
 
 export default function SignUpPage() {
   return (
     <StatusScreen
-      title="Enrollment is closed"
+      title="Request access"
       actions={[
-        { href: '/login', label: 'Sign in to Studio', variant: 'primary' },
-        { href: '/', label: 'Return home', variant: 'secondary' },
+        { href: requestAccessHref, label: 'Request access by email', variant: 'primary' },
+        { href: '/login', label: 'Sign in to Studio', variant: 'secondary' },
       ]}
     >
-      <p>Sign in if you were invited.</p>
+      <p>Enrollment is closed. Write to {studioEmail} and say which brand you run.</p>
       <p className="auth-policy">This screen collects nothing. No account is created here.</p>
     </StatusScreen>
   );

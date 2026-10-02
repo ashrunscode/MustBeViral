@@ -3,8 +3,9 @@ import type { Metadata } from 'next';
 import { SoftwarePricing } from '../../../src/components/software-pricing';
 
 export const metadata: Metadata = {
-  title: 'Software plans — Must Be Viral',
+  title: 'Software plans',
   description: 'Provisional software plans: Solo $49, Studio $149, and Portfolio $399 a month.',
+  alternates: { canonical: '/software/pricing' },
 };
 
 export default function SoftwarePricingPage() {

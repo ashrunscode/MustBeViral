@@ -3,21 +3,20 @@
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
-import { INITIAL_SIGN_IN_STATE, type SignInStatus } from '../../src/lib/auth/sign-in';
+import { authMessageClassName, authMessageRole } from '../../src/lib/auth/auth-message';
+import { INITIAL_SIGN_IN_STATE } from '../../src/lib/auth/sign-in';
+import { useFocusInvalid } from '../../src/lib/auth/use-focus-invalid';
 import { signInWithPassword } from './actions';
-
-function authMessageClass(status: SignInStatus): string {
-  if (status === 'idle') return 'auth-message';
-  if (status === 'verification_required' || status === 'rate_limited') {
-    return 'auth-message auth-message--notice';
-  }
-  return 'auth-message';
-}
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <button className="auth-primary" disabled={pending} type="submit">
+    <button
+      aria-busy={pending || undefined}
+      className="auth-primary"
+      disabled={pending}
+      type="submit"
+    >
       {pending ? 'Signing in…' : 'Sign in'}
     </button>
   );
@@ -25,21 +24,39 @@ function SubmitButton() {
 
 export function LoginForm({ next }: Readonly<{ next: string }>) {
   const [state, action] = useActionState(signInWithPassword, INITIAL_SIGN_IN_STATE);
+  const formRef = useFocusInvalid<HTMLFormElement>(state);
+  const hasMessage = state.message !== undefined;
+  const describedBy = hasMessage ? 'sign-in-message' : undefined;
   return (
-    <form action={action} className="auth-form">
+    <form action={action} className="auth-form" ref={formRef}>
       <input name="next" type="hidden" value={next} />
       <label htmlFor="email">Email</label>
-      <input autoComplete="email" id="email" name="email" required type="email" />
+      <input
+        aria-describedby={describedBy}
+        aria-invalid={state.status === 'invalid_credentials' || undefined}
+        autoComplete="email"
+        id="email"
+        name="email"
+        required
+        spellCheck={false}
+        type="email"
+      />
       <label htmlFor="password">Password</label>
       <input
+        aria-describedby={describedBy}
+        aria-invalid={state.status === 'invalid_credentials' || undefined}
         autoComplete="current-password"
         id="password"
         name="password"
         required
         type="password"
       />
-      {state.message === undefined ? null : (
-        <p className={authMessageClass(state.status)} role="alert">
+      {hasMessage ? (
+        <p
+          className={authMessageClassName(state.status)}
+          id="sign-in-message"
+          role={authMessageRole(state.status)}
+        >
           {state.message}
           {state.status === 'verification_required' ? (
             <>
@@ -53,7 +70,7 @@ export function LoginForm({ next }: Readonly<{ next: string }>) {
             </>
           ) : null}
         </p>
-      )}
+      ) : null}
       <SubmitButton />
     </form>
   );

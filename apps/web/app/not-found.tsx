@@ -1,4 +1,11 @@
+import type { Metadata } from 'next';
+
 import { StatusScreen } from '../src/components/status-screen';
+
+export const metadata: Metadata = {
+  title: 'Page not found',
+  description: 'The page you asked for is not here.',
+};
 
 export default function NotFoundPage() {
   return (

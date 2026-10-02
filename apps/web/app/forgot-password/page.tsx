@@ -1,5 +1,13 @@
+import type { Metadata } from 'next';
+
+import { authMessageClassName, authMessageRole } from '../../src/lib/auth/auth-message';
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { ForgotPasswordForm } from './forgot-password-form';
+
+export const metadata: Metadata = {
+  title: 'Reset your password',
+  description: 'Request a single-use recovery link for your Must Be Viral Studio account.',
+};
 
 const notices: Readonly<Record<string, string>> = {
   expired_link: 'That recovery link expired. Request a new link.',
@@ -24,14 +32,16 @@ export default async function ForgotPasswordPage({
         Skip to password recovery
       </a>
       <section aria-labelledby="auth-heading" className="auth-card">
-        <span className="pub-wordmark">Must Be Viral</span>
+        <span className="pub-wordmark" translate="no">
+          {'Must\u00a0Be\u00a0Viral'}
+        </span>
         <h1 id="auth-heading">Reset your password</h1>
         <p className="auth-intro">
-          Enter the email associated with your invited Studio workspace. We will send a single-use
-          recovery link if the account exists.
+          Enter the email for your Studio workspace. If the account exists, a single-use recovery
+          link is on the way.
         </p>
         {notice === undefined ? null : (
-          <p className="auth-message auth-message--notice" role="status">
+          <p className={authMessageClassName(noticeKey)} role={authMessageRole(noticeKey)}>
             {notice}
           </p>
         )}

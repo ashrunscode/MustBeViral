@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Finish the public studio and software pages in both studio languages with the auth and status screens.
+next_action: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
 decisions_pending: []
 blockers: []
 legacy:

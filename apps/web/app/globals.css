@@ -40,7 +40,7 @@ a {
   border-radius: var(--radius-control);
   padding: 8px 12px;
   background: var(--signal-fill);
-  color: #fff;
+  color: var(--card);
   white-space: nowrap;
   transition: transform var(--motion-local) var(--motion-ease);
 }
@@ -199,7 +199,7 @@ a {
 .auth-card {
   width: min(440px, 100%);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-card);
   padding: 32px;
   background: var(--card);
 }
@@ -227,10 +227,13 @@ a {
 .auth-form input {
   min-height: 44px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: var(--radius-input);
   padding: 0 12px;
   background: var(--card);
   color: var(--ink-strong);
+}
+.auth-form input[aria-invalid='true'] {
+  border-color: var(--fail);
 }
 .auth-form input:focus-visible,
 .auth-primary:focus-visible,
@@ -241,15 +244,27 @@ a {
 .auth-primary,
 .auth-secondary {
   min-height: 44px;
-  border-radius: 4px;
+  border-radius: var(--radius-control);
   padding: 0 16px;
   cursor: pointer;
+  transition:
+    background-color var(--motion-local) var(--motion-ease),
+    border-color var(--motion-local) var(--motion-ease),
+    color var(--motion-local) var(--motion-ease);
 }
 .auth-primary {
   margin-top: 16px;
   border: 1px solid var(--signal-fill);
   background: var(--signal-fill);
-  color: #fff;
+  color: var(--card);
+}
+.auth-primary:hover:not(:disabled) {
+  border-color: var(--signal-fill-hover);
+  background: var(--signal-fill-hover);
+}
+.auth-primary:active:not(:disabled) {
+  border-color: var(--signal-fill-pressed);
+  background: var(--signal-fill-pressed);
 }
 .auth-primary--link {
   display: inline-flex;
@@ -257,16 +272,32 @@ a {
   justify-content: center;
   text-decoration: none;
 }
-.auth-primary:disabled {
+/* Loading keeps the signal fill and changes the label. A disabled control recedes to paper with
+   body ink, which stays above AA, instead of fading through opacity. */
+.auth-primary[aria-busy='true'] {
   cursor: wait;
-  opacity: 0.65;
+}
+.auth-primary:disabled:not([aria-busy='true']) {
+  border-color: var(--line);
+  background: var(--paper-2);
+  color: var(--ink);
+  cursor: not-allowed;
 }
 .auth-secondary {
   border: 1px solid var(--line);
   background: var(--card);
   color: var(--ink-strong);
 }
+.auth-secondary:hover:not(:disabled) {
+  background: var(--wash);
+}
+.auth-secondary:active:not(:disabled) {
+  background: var(--wash-faint);
+}
+/* Status is text plus an edge and a mark: the mark differs by kind, the edge colour only confirms. */
 .auth-message {
+  display: flex;
+  gap: 8px;
   margin: 12px 0 0;
   border-left: 2px solid var(--fail);
   padding: 8px 12px;
@@ -275,8 +306,24 @@ a {
   font-size: 13px;
   line-height: 1.5;
 }
+.auth-message::before {
+  flex: none;
+  font-family: var(--font-mono), monospace;
+  font-weight: 500;
+}
+.auth-message--error {
+  border-left-color: var(--fail);
+}
+.auth-message--error::before {
+  content: '!' / '';
+  color: var(--fail-ink);
+}
 .auth-message--notice {
   border-left-color: var(--ok);
+}
+.auth-message--notice::before {
+  content: '✓' / '';
+  color: var(--ok-ink);
 }
 .auth-session-actions {
   display: grid;
@@ -318,18 +365,26 @@ a {
 
 .session-expired-link {
   width: fit-content;
-  min-height: 40px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--signal-fill);
-  border-radius: 4px;
+  border-radius: var(--radius-control);
   margin-top: 8px;
   padding: 0 14px;
   background: var(--signal-fill);
-  color: #fff;
-  font-weight: 500;
+  color: var(--card);
   text-decoration: none;
+  transition: background-color var(--motion-local) var(--motion-ease);
+}
+
+.session-expired-link:hover {
+  background: var(--signal-fill-hover);
+}
+
+.session-expired-link:active {
+  background: var(--signal-fill-pressed);
 }
 
 .session-expired-link:focus-visible {
@@ -652,8 +707,11 @@ a {
 .access-panel__card h1,
 .access-panel__card h2 {
   margin: 0;
-  font-size: 22px;
-  font-weight: 600;
+  color: var(--ink-head);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
 }
 
 .access-panel__actions {
@@ -817,6 +875,11 @@ a {
   width: min(960px, 100%);
 }
 
+.pub-shell > main {
+  display: grid;
+  gap: 24px;
+}
+
 .pub-header {
   display: flex;
   flex-wrap: wrap;
@@ -834,6 +897,11 @@ a {
   font-weight: 500;
   letter-spacing: -0.01em;
   text-decoration: none;
+  white-space: nowrap;
+}
+a.pub-wordmark:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .pub-nav {
@@ -855,6 +923,16 @@ a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 0.2em;
+  transition: color var(--motion-local) var(--motion-ease);
+}
+
+.pub-nav a:hover,
+.pub-nav a[aria-current='page'] {
+  color: var(--ink-strong);
+}
+
+.pub-nav a[aria-current='page'] {
+  text-decoration-color: var(--signal);
 }
 
 .pub-hero,
@@ -918,6 +996,7 @@ a {
   display: block;
   color: var(--ink-strong);
   font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
   font-size: 28px;
   font-weight: 500;
   line-height: 1.2;
@@ -972,6 +1051,11 @@ a {
 .pub-phone {
   color: var(--ink-strong);
   text-underline-offset: 0.2em;
+  transition: color var(--motion-local) var(--motion-ease);
+}
+
+.pub-phone:hover {
+  color: var(--signal-ink);
 }
 
 .pub-play {
@@ -983,6 +1067,26 @@ a {
   color: var(--ink-strong);
   font: inherit;
   cursor: pointer;
+  transition: background-color var(--motion-local) var(--motion-ease);
+}
+
+.pub-play:hover {
+  background: var(--wash);
+}
+
+.pub-play:active {
+  background: var(--wash-faint);
+}
+
+/* The play control is server-rendered so nothing shifts; it shows only when motion is reduced. */
+.pub-play--reduced-motion {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pub-play--reduced-motion:not([hidden]) {
+    display: inline-flex;
+  }
 }
 
 .pub-wordmark:focus-visible,
@@ -1017,6 +1121,7 @@ a {
   background: var(--paper-2);
 }
 
+/* Hidden until it is actually showing, so the native controls never sit invisible in the tab order. */
 .pub-film video {
   position: absolute;
   inset: 0;
@@ -1024,10 +1129,12 @@ a {
   height: 100%;
   object-fit: contain;
   opacity: 0;
+  visibility: hidden;
 }
 
 .pub-film video.is-shown {
   opacity: 1;
+  visibility: visible;
 }
 
 .pub-film figcaption {
@@ -1041,5 +1148,188 @@ a {
     background: ButtonFace;
     color: ButtonText;
     border: 1px solid ButtonText;
+  }
+}
+
+/* Studio page: a frame at screen width, designed at 375 first. Order: the work, the price, what
+   is included, the cadence, how to book. The frame reserves its geometry whether or not the
+   rights-cleared poster is on file, so the asset drops in with no layout shift. */
+.pub-shell--studio {
+  width: 100%;
+  gap: 16px;
+}
+
+.pub-shell--studio > main {
+  gap: 32px;
+}
+
+.studio-hero__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 72vh;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--paper-2);
+}
+
+.studio-hero__field {
+  position: absolute;
+  inset: 0;
+  background: var(--paper-2);
+}
+
+.studio-hero__poster {
+  object-fit: cover;
+}
+
+.studio-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.studio-hero__video.is-shown {
+  opacity: 1;
+  visibility: visible;
+}
+
+.studio-hero__play {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-hero__play:not([hidden]) {
+    display: inline-flex;
+  }
+}
+
+.studio-hero__panel {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  background: var(--card);
+}
+
+.studio-hero__sub {
+  max-width: 44ch;
+}
+
+.studio-body {
+  width: min(70ch, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 32px;
+}
+
+.studio-offers {
+  display: grid;
+  gap: 24px;
+}
+
+.studio-offer {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.studio-offer h2,
+.studio-objection h2,
+.studio-book h2 {
+  margin: 0;
+  color: var(--ink-head);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.studio-offer__price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.studio-offer__price .pub-price,
+.studio-offer__price .pub-price-unit {
+  display: inline;
+  margin: 0;
+}
+
+.studio-offer__includes {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 4px;
+}
+
+.studio-cadence,
+.studio-answer {
+  margin: 0;
+}
+
+.studio-objection,
+.studio-book {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+@media (min-width: 768px) {
+  .studio-hero__frame {
+    aspect-ratio: 16 / 9;
+    max-height: min(72vh, 820px);
+  }
+
+  /* Until the rights-cleared poster drops in, the empty field stays shorter than the footage will be. */
+  .studio-hero__frame[data-media='none'] {
+    max-height: min(60vh, 560px);
+  }
+
+  .studio-hero__panel {
+    right: auto;
+    bottom: 24px;
+    left: 24px;
+    max-width: 520px;
+    padding: 24px;
+  }
+
+  .studio-hero__panel h1 {
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .studio-hero__play {
+    top: 24px;
+    right: 24px;
+  }
+
+  .studio-offers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  .studio-hero__frame,
+  .studio-hero__panel {
+    border-color: CanvasText;
   }
 }

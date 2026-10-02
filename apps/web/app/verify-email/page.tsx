@@ -1,5 +1,12 @@
+import type { Metadata } from 'next';
+
 import { readVerifyEmailPrefill } from '../../src/lib/auth/verify-email';
 import { VerifyEmailForm } from './verify-email-form';
+
+export const metadata: Metadata = {
+  title: 'Verify your email',
+  description: 'Request a new verification email for your Must Be Viral Studio account.',
+};
 
 export default async function VerifyEmailPage({
   searchParams,
@@ -15,11 +22,13 @@ export default async function VerifyEmailPage({
         Skip to verification
       </a>
       <section aria-labelledby="verify-heading" className="auth-card">
-        <span className="pub-wordmark">Must Be Viral</span>
+        <span className="pub-wordmark" translate="no">
+          {'Must\u00a0Be\u00a0Viral'}
+        </span>
         <h1 id="verify-heading">Verify your email</h1>
         <p className="auth-intro">
-          Invited accounts must verify email before Studio access. Open the newest verification link
-          or request another message below.
+          Invited accounts verify their email before Studio opens. Open the newest verification
+          link, or request another message below.
         </p>
         <VerifyEmailForm email={email} next={next} />
         <div className="auth-links">
