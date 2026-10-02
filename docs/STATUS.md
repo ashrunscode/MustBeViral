@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Production serves 59a3618 (dpl_54BQjPtj67Zfm2ew4nNzEoFWaW2j) and staging serves it too (dpl_2ebacK4izKJh79BBFdXBgFh3Dkt1); the release step closes once one signed-in journey is smoked on staging and production, which needs a test account on the shared Supabase project named by the owner, and the Workers stay undeployed until an owner sentence covers their changed compatibility flag.
+Production serves 0b9f578 (dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj) and staging serves it too (dpl_5skrFZb2nnZSog6DYhCd82pB7phL). Still open are one signed-in journey on staging and production, which needs the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke", the studio poster frame, which needs a rights-cleared studio still or clip, and the Workers, whose config differs from the deployed sources by a compatibility flag.
