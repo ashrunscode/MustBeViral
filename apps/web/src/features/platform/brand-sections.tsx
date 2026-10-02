@@ -130,27 +130,11 @@ export function BrandOverview({ studioId, brand, canWrite }: Readonly<BrandScope
             Open campaigns
           </Link>
         </section>
-        <section
-          className="platform-card platform-pad platform-stack"
-          aria-labelledby="bo-calendar"
-        >
-          <h2 id="bo-calendar">Calendar</h2>
-          <p>Nothing scheduled. Scheduling starts after a channel is connected.</p>
-          <Link href={brandHref(studioId, brand.workspace_id, brand.id, 'calendar')}>
-            Open the calendar
-          </Link>
-        </section>
-        <section
-          className="platform-card platform-pad platform-stack"
-          aria-labelledby="bo-channels"
-        >
-          <h2 id="bo-channels">Channels</h2>
-          <p>No channels connected. Nothing publishes from this brand.</p>
-          <Link href={brandHref(studioId, brand.workspace_id, brand.id, 'channels')}>
-            About channels
-          </Link>
-        </section>
       </div>
+      <p className="platform-muted">
+        Nothing is scheduled and no channel is connected for this brand: neither is part of this
+        release yet, so nothing publishes from here.
+      </p>
     </>
   );
 }
@@ -243,7 +227,7 @@ export function BrandAssets({ studioId, brand }: Readonly<BrandScope>) {
       <PlatformEmptySection
         title="No assets yet."
         body="Assets arrive through the brief’s source folder once Drive is connected. Nothing is uploaded from this screen."
-        missing="No asset library or Drive connection command is registered in this release, so there is nothing to upload, tag or expire here yet."
+        missing="Uploads and Drive connections are not part of this release yet."
         action={{
           href: brandHref(studioId, brand.workspace_id, brand.id, 'findings'),
           label: 'Capture brand findings instead',
@@ -263,7 +247,7 @@ export function BrandChannels({ studioId, brand }: Readonly<BrandScope>) {
       <PlatformEmptySection
         title="No channels connected."
         body="Nothing publishes from this brand until an account is connected and a revision is approved."
-        missing="No channel connection command is registered in this release, so no account can be connected here yet."
+        missing="Account connections are not part of this release yet."
         action={{
           href: brandHref(studioId, brand.workspace_id, brand.id, 'draft'),
           label: 'Work on the brand draft',
@@ -283,7 +267,7 @@ export function BrandContent({ studioId, brand }: Readonly<BrandScope>) {
       <PlatformEmptySection
         title="No content library yet."
         body="Content you review today lives on each campaign’s Content step, with its approvals and receipt."
-        missing="No command lists a brand’s revisions across campaigns in this release, so nothing is listed here."
+        missing="A brand-wide list of revisions is not part of this release yet."
         action={{ href: briefHref({ studioId, brand }), label: 'Start a campaign brief' }}
       />
     </>
@@ -300,7 +284,7 @@ export function BrandInbox({ studioId, brand }: Readonly<BrandScope>) {
       <PlatformEmptySection
         title="No messages."
         body="Messages arrive only from connected channels, and none is connected."
-        missing="No inbox or channel command is registered in this release, so there is nothing to read or reply to here yet."
+        missing="An inbox and account connections are not part of this release yet."
         action={{
           href: brandHref(studioId, brand.workspace_id, brand.id, 'channels'),
           label: 'About channels',
@@ -320,7 +304,7 @@ export function BrandResults({ studioId, brand }: Readonly<BrandScope>) {
       <PlatformEmptySection
         title="No results yet."
         body="Nothing has published from this brand. Run receipts, the only measured records today, live on each campaign’s Results step."
-        missing="No metrics command is registered in this release. Unknown numbers are never shown as zero."
+        missing="Measurements are not part of this release yet. Unknown numbers are never shown as zero."
         action={{ href: briefHref({ studioId, brand }), label: 'Start a campaign brief' }}
       />
     </>

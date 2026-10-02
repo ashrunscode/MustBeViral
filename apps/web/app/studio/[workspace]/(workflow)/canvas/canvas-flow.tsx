@@ -396,6 +396,20 @@ export function CanvasFlow({
   const [result, setResult] = useState<CanvasPortResult | null>(null);
   const [validating, setValidating] = useState(false);
   const [checkpointing, setCheckpointing] = useState(false);
+  // The link follows the revision on screen, so a refresh, a shared link or the step nav lands on
+  // the revision that was just saved or reloaded instead of the one that is now stale.
+  const liveRevision = dataMode === 'worker' ? (model?.revision ?? null) : null;
+  useEffect(() => {
+    if (liveRevision === null || canvasId === undefined || typeof window === 'undefined') return;
+    if (context.revision === liveRevision) return;
+    window.history.replaceState(
+      window.history.state,
+      '',
+      campaignHref(workspace, 'plan', { ...context, canvas: canvasId, revision: liveRevision }),
+    );
+    // `context` is read from the URL this effect rewrites; its identity is its serialized values.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [liveRevision, canvasId, workspace, JSON.stringify(context)]);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [viewport, setViewport] = useState({ width: 1120, height: 620 });

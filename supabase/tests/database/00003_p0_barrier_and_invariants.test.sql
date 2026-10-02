@@ -1,6 +1,6 @@
 begin;
 
-select plan(40);
+select plan(41);
 
 create or replace function pg_temp.error_of(p_sql text)
 returns text
@@ -81,6 +81,64 @@ values (
   'cccccccc-cccc-4ccc-8ccc-ccccccccccc1'
 );
 
+-- A database that has held a canvas before this test runs. The barrier fixtures below must
+-- leave it alone: their head-revision update is scoped to their own canvases, because setting
+-- another canvas's head to a revision it does not own violates canvases_head_revision_fk and
+-- aborts the whole file ("planned 40 ran 0" was the symptom on any database with a canvas).
+insert into public.workspaces (
+  id, name, slug, created_by, per_run_spend_cap_micros, daily_spend_cap_micros
+) values (
+  '40000000-0000-4000-8000-000000000009',
+  'Elsewhere Workspace',
+  'elsewhere-workspace',
+  'cccccccc-cccc-4ccc-8ccc-ccccccccccc1',
+  8000000,
+  25000000
+);
+
+insert into public.projects (id, workspace_id, name, status, created_by)
+values (
+  '41000000-0000-4000-8000-000000000009',
+  '40000000-0000-4000-8000-000000000009',
+  'Elsewhere Project',
+  'active',
+  'cccccccc-cccc-4ccc-8ccc-ccccccccccc1'
+);
+
+insert into public.canvases (id, workspace_id, project_id, name, created_by) values (
+  '42000000-0000-4000-8000-000000000009',
+  '40000000-0000-4000-8000-000000000009',
+  '41000000-0000-4000-8000-000000000009',
+  'Elsewhere Canvas',
+  'cccccccc-cccc-4ccc-8ccc-ccccccccccc1'
+);
+
+insert into public.canvas_revisions (
+  id,
+  workspace_id,
+  canvas_id,
+  graph_schema_version,
+  graph_snapshot,
+  canonical_hash,
+  actor_type,
+  actor_id,
+  reason
+) values (
+  '42100000-0000-4000-8000-000000000009',
+  '40000000-0000-4000-8000-000000000009',
+  '42000000-0000-4000-8000-000000000009',
+  1,
+  '{"nodes":[],"edges":[]}'::jsonb,
+  repeat('9', 64),
+  'user',
+  'cccccccc-cccc-4ccc-8ccc-ccccccccccc1',
+  'elsewhere root'
+);
+
+update public.canvases
+set head_revision_id = '42100000-0000-4000-8000-000000000009'
+where id = '42000000-0000-4000-8000-000000000009';
+
 insert into public.projects (id, workspace_id, name, status, created_by)
 values (
   '41000000-0000-4000-8000-000000000001',
@@ -140,12 +198,18 @@ insert into public.canvas_revisions (
     'other root'
   );
 
+-- Scoped to this test's two canvases. An unscoped update would reach every canvas in the
+-- database and fail canvases_head_revision_fk on the first one that is not ours.
 update public.canvases
 set head_revision_id = case id
   when '42000000-0000-4000-8000-000000000001'::uuid
     then '42100000-0000-4000-8000-000000000001'::uuid
   else '42100000-0000-4000-8000-000000000002'::uuid
-end;
+end
+where id in (
+  '42000000-0000-4000-8000-000000000001',
+  '42000000-0000-4000-8000-000000000002'
+);
 
 insert into public.provider_registrations (
   id, provider_key, display_name, transport_version, status, evidence_ref
@@ -708,6 +772,15 @@ select is(
   (select count(*)::integer from public.audit_events where action = 'run.started'),
   1,
   'successful barrier emits one append-only audit event'
+);
+
+select is(
+  (
+    select head_revision_id from public.canvases
+    where id = '42000000-0000-4000-8000-000000000009'
+  ),
+  '42100000-0000-4000-8000-000000000009'::uuid,
+  'a canvas that existed before the barrier fixtures keeps its own head revision'
 );
 
 select * from finish();

@@ -643,9 +643,12 @@ export class WorkerCanvasMutationPort implements CanvasMutationPort {
       return { type: 'ok', model: { ...model, revision: applied.data.revisionId } };
     } catch (error) {
       if (isSessionExpiredFailure(error)) return SESSION_EXPIRED_RESULT;
+      // The request may have failed before it left or after Core committed it, so the save is
+      // unconfirmed rather than undone: reloading shows which revision is current.
       return {
         type: 'error',
-        message: 'The canvas could not be validated by Core.',
+        message:
+          'This save could not be confirmed. Reload the plan to see the current revision before trying again.',
         retryable: true,
       };
     }

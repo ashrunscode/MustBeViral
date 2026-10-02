@@ -64,10 +64,18 @@ describe('StudioLanding', () => {
       'Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.',
     );
     expect(html.indexOf('</header>')).toBeLessThan(html.indexOf('<main'));
-    expect(html).toContain('class="studio-hero__frame" data-media="none"');
+    expect(html).toContain('data-media="none"');
+    expect(html).not.toContain('studio-frame__media');
     expect(html).not.toContain('<img');
     expect(html).not.toContain('<video');
-    expect(html.indexOf('studio-hero__frame')).toBeLessThan(html.indexOf('>$700<'));
+    // The frame holds the decision: the locked lines, the action, then both offers inside it.
+    const frameStart = html.indexOf('class="studio-frame"');
+    const frameEnd = html.indexOf('class="studio-body"');
+    expect(frameStart).toBeGreaterThan(-1);
+    expect(html.indexOf('We film Houston.')).toBeGreaterThan(frameStart);
+    expect(html.indexOf('>$700<')).toBeGreaterThan(frameStart);
+    expect(html.indexOf('>$3,500<')).toBeLessThan(frameEnd);
+    expect(html.indexOf('class="pub-cta"')).toBeLessThan(html.indexOf('>$700<'));
     expect(html.indexOf('>$700<')).toBeLessThan(html.indexOf('One shoot, up to 2 hours'));
     expect(html.indexOf('One shoot, up to 2 hours')).toBeLessThan(
       html.indexOf('four to eight times a month'),
@@ -109,7 +117,7 @@ describe('StudioLanding', () => {
     expect(html).toContain('al mes');
     expect(html).toContain('de cuatro a ocho veces al mes');
     expect(html).toContain('El alcance depende de su cuenta y de su mercado.');
-    expect(html).toContain('class="studio-hero__frame" data-media="none"');
+    expect(html).toContain('data-media="none"');
     expect(html.match(/class="pub-cta"/g)).toHaveLength(2);
     expect(html.match(/class="studio-offer"/g)).toHaveLength(2);
     expect(html).not.toContain('Buenos días');
@@ -170,6 +178,28 @@ describe('StudioLanding', () => {
     expect(html).toContain('Play the film');
   });
 
+  it('keeps the type and the actions out of the media block, clear of the native controls', () => {
+    const media: StudioHeroMedia = {
+      poster: { src: '/studio/hero-poster.jpg', width: 1080, height: 1350 },
+      video: { src: '/studio/hero.mp4', captions: '/studio/hero.vtt' },
+      alt: { en: 'A Houston crew films a storefront.', es: 'Un equipo filma un local en Houston.' },
+    };
+    const html = renderToStaticMarkup(<StudioLanding locale="en" media={media} />);
+    const mediaStart = html.indexOf('class="studio-frame__media"');
+    const mediaEnd = html.indexOf('class="studio-frame__lead"');
+    expect(mediaStart).toBeGreaterThan(-1);
+    expect(mediaEnd).toBeGreaterThan(mediaStart);
+    // Nothing but the poster, the clip mount point and the play control lives inside the media block.
+    const mediaBlock = html.slice(mediaStart, mediaEnd);
+    expect(mediaBlock).not.toContain('<h1');
+    expect(mediaBlock).not.toContain('pub-cta');
+    expect(mediaBlock).not.toContain('$700');
+    expect(html).not.toContain('studio-hero__panel');
+    // The heading and the offers follow the media block instead of overlaying it.
+    expect(html.indexOf('<h1')).toBeGreaterThan(mediaEnd);
+    expect(html.indexOf('>$700<')).toBeGreaterThan(mediaEnd);
+  });
+
   it('ships without studio footage until permission is on file', () => {
     expect(studioHeroMedia).toBeNull();
     expect(studioEn.offers.map((offer) => offer.name)).toEqual(['Test Shoot', 'Full Package']);
@@ -181,7 +211,12 @@ describe('SoftwareLanding', () => {
     const html = renderToStaticMarkup(<SoftwareLanding />);
     expect(html).toContain(productLine);
     expect(html).toContain('The film follows one photo from a Drive folder to a receipt.');
-    expect(html).toContain('photo.jpg arrives from a selected Google Drive folder.');
+    expect(html).toContain('photo.jpg arrives from the Google Drive folder you selected.');
+    // The four steps stay one ordered path, not a feature grid.
+    const pathStart = html.indexOf('<ol class="pub-path">');
+    const path = html.slice(pathStart, html.indexOf('</ol>', pathStart));
+    expect(pathStart).toBeGreaterThan(-1);
+    expect(path.match(/<li>/g)).toHaveLength(4);
     expect(html).toContain('Enrollment is closed.');
     expect(html).toContain('href="/login"');
     expect(html).toContain('Sign in to Studio');

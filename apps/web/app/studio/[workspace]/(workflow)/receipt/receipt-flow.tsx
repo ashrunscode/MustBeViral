@@ -159,7 +159,7 @@ export function ReceiptFlow({
       (readPort === null
         ? {
             type: 'error',
-            message: 'Open receipt from a run so Core can read its export state.',
+            message: 'Open this receipt from its run so its export state can be read.',
             retryable: false,
           }
         : null),

@@ -381,7 +381,7 @@ export function QuoteFlow({
       dataMode === 'worker' && quotePort === null
         ? {
             type: 'error',
-            message: 'Open this quote from a canvas so Core can pin the expected revision.',
+            message: 'Open this quote from its plan so the revision it prices is known.',
             retryable: false,
           }
         : null,

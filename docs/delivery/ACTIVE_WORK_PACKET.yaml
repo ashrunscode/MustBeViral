@@ -58,6 +58,9 @@ scope:
     - docs/**
     - PROJECT_STATE.yaml
     - llms.txt
+    # Owner directive 2026-10-02: the barrier test aborts after any canvas has existed; this one
+    # file joins the packet so the test can be fixed with a regression. No other test path joins.
+    - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
   forbidden_paths:
     - .github/workflows/**
     - docs/archive/**
@@ -170,7 +173,10 @@ acceptance:
         poster frame as the LCP element with reserved geometry, and /signup collecting nothing.
         Rendered-output tests lock the copy separation and the structure.'
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02b/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
     - id: signed-in-surfaces
       criterion:
         Each studio, brand, campaign and content route in the directive's surface list loads the
@@ -178,8 +184,13 @@ acceptance:
         action and the missing contract. Brand and workspace stay visible, switching cannot show
         another account's data, and session expiry, wrong tenant, revoked grant and kill switches
         render their states. Component and integration tests cover each state.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/inventory-2026-10-01.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02b/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
     - id: primary-flows
       criterion:
         Brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team
@@ -187,14 +198,20 @@ acceptance:
         idempotent repeated submit and a forced stale-revision failure with recovery, with
         regression tests that fail if the defect returns.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
     - id: regression-gates
       criterion:
         Typecheck, lint, unit, integration, governance, design and database gates pass on the
         exact merge candidate from a fresh single-worktree clone with frozen dependencies, and every
         repaired defect has a failing-then-passing test recorded in the repair log.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   manual:
     - id: browser-proof
       criterion:
@@ -202,32 +219,44 @@ acceptance:
         journey across empty, loading, error, denied, stale and success, with keyboard-only
         completion, reduced motion and forced colors checked, and the five questions still answered
         after refresh.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02b/README.md
     - id: release-smoke
       criterion:
         Staging serves the merge commit with every public route and one signed-in journey smoked,
         then production serves the same commit on its alias; or the single hard stop that prevented
         it is recorded with the one sentence that clears it and nothing was crossed.
       status: pending
-      evidence: []
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
 quality_gates:
   - id: governance
     command: pnpm governance:check
     status: pending
-    evidence: []
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: design
     command: pnpm design:check
     status: pending
-    evidence: []
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: repository
     command: pnpm verify
     status: pending
-    evidence: []
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
   - id: database-regression
     command: pnpm supabase:test
     status: pending
-    evidence: []
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
 rollback:
   strategy: Revert the interface pull request through a reviewed merge commit if needed. Web rolls
     back by promoting the recorded prior Vercel deployment in each project; Workers roll back to the

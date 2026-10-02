@@ -186,6 +186,40 @@ describe('WorkerCanvasMutationPort', () => {
   });
 });
 
+describe('WorkerCanvasMutationPort when the patch request is lost', () => {
+  it('reports an unconfirmed save and never claims nothing changed', async () => {
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      fetch: async (input) => {
+        const url = String(input);
+        if (url.endsWith('/validate')) {
+          return new Response(
+            JSON.stringify({
+              data: { canvasId: 'canvas-live', valid: true, issues: [] },
+              meta: { request_id: 'request-mutation-0002' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        // The connection drops after the patch request leaves: Core may or may not have committed.
+        throw new TypeError('network error');
+      },
+    });
+    const model = { ...createCanvasFixture(), revision: 'revision-live' };
+    const result = await new WorkerCanvasMutationPort(
+      client,
+      'canvas-live',
+      () => 'canvas-idem-0002',
+    ).validateAndApply(model);
+    expect(result.type).toBe('error');
+    if (result.type !== 'error') throw new Error('expected an error result');
+    expect(result.message).toContain('could not be confirmed');
+    expect(result.message).toContain('Reload the plan');
+    expect(result.message).not.toContain('Nothing changed');
+  });
+});
+
 describe('WorkerCanvasReadPort', () => {
   const context = {
     canvasId: 'canvas-live',
