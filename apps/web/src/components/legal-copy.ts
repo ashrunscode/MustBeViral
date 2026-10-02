@@ -75,14 +75,15 @@ export const privacyCopy: LegalPageCopy = {
       // supabase/migrations/20260910150000_platform_saved_setup.sql (invitations expire after seven
       // days and stay on the list); src/features/platform/studio-team.tsx (no email);
       // src/features/brief/brief-schema.ts and src/features/campaign/campaign-progress.ts (session
-      // storage); src/features/platform/brand-settings.tsx and brand-workspace.tsx (archive on
+      // storage; src/features/brief/brief-bootstrap.ts sends the validated brief to Core);
+      // src/features/platform/brand-settings.tsx and brand-workspace.tsx (archive on
       // write access; archive only changes a status); no delete operation exists in the contracts.
       heading: 'What a signed-in studio keeps',
       paragraphs: [
         'A signed-in studio’s records include its studios with their members and access grants, brands and brand knowledge, brand locations and onboarding drafts, campaign briefs, uploaded packshots, plans and their revisions, quotes, reservations and ledger entries, runs, receipts, exports, API keys, invitations, the comments and text drafts made on a plan, and an audit log of who did what.',
         'Media is private. It is kept in private object storage and opened through short-lived signed operations, never through a public bucket.',
         'An invitation can be accepted for seven days; after that it is shown as expired and the record stays on the studio’s list. No email is sent for an invitation.',
-        'While someone works, the browser keeps the brief draft and the last campaign step, with the identifiers of the records it belonged to, in its session storage; the site never sends that to a server. The sales and legal pages use no browser storage.',
+        'While someone works, the browser keeps the brief draft and the last campaign step, with the identifiers of the records it belonged to, in its session storage. Validating a brief sends its contents to the Core service, which creates the campaign project and its first plan revision from it; the saved step itself is never sent. The sales and legal pages use no browser storage.',
         `Nothing on this site deletes a record held in the database today. A person can delete their own comment, or clear their own text draft, on a plan; that removes it from the collaboration service. A brand or a location can be archived by anyone with write access to it, and its saved records remain available for reference; an invitation or an access grant can be revoked. Plan revisions are immutable records of each plan, and receipts are immutable records of what ran. Questions about the records a studio holds: write to ${studioEmail}.`,
       ],
     },
