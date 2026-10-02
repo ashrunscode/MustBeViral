@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Production serves 95deda5 (dpl_Bw8Txy9Atvk8yoBocUxv3AEZW5EN) and staging serves it too (dpl_HK4J6VQAPKx8Hp8ymxjGUwsLfXbg); mustbeviral.com answers with the same production deployment. Still open are the Higgsfield films, which wait for HF_API_KEY_ID and HF_API_KEY_SECRET in the vault inbox; the studio hero poster, which waits for a rights-cleared still or clip; one signed-in journey on staging and production, which needs the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke"; and the Workers, whose config differs from the deployed sources by a compatibility flag.
+next_action: Production serves 1db863c (dpl_96beiXaCW9ZCL4HxAa3EG7GqCpyC) and staging serves it too (dpl_FP3cE5nNaBoAxiFCCeLvVjCJ8uJW); mustbeviral.com and www answer with the production deployment, carrying the three legal pages, the footer, the full Full Package list and the pricing page. Still open are the Higgsfield films, which wait for HF_API_KEY_ID and HF_API_KEY_SECRET in the vault inbox; the one read-only signed-in smoke on staging and production, which is granted for founder@mustbeviral.com but waits for that credential in the vault; and brand/context.md sections 8b and 13, which still call the legal pages blocked and sit outside this packet's paths, for the owner to close.
 decisions_pending: []
 blockers: []
 legacy:
