@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-UI-001
-spec_revision: 1
+spec_revision: 2
 title: V2 interface program across public, studio, brand, campaign and content surfaces
 phase: P4
 status: ready
@@ -110,6 +110,12 @@ deliverables:
     independent review of the exact head, merge commit, staging deploy and smoke, production
     promotion only after staging passes, Workers only when the pre-deploy checks show no setting
     change. A hard stop is recorded with the one sentence that clears it and never crossed."
+  - "Specification revision 2 records external_effects.remote_mutation approval-required: the
+    recorded approval is the owner's 2026-10-01 directive
+    (governance/evidence/WP-PLATFORM-W3-001/owner-directive-2026-10-01.md), which approves the
+    guarded release of the merged commit to the existing V2 web targets under
+    adr-0009-standing-release-authority; every action the directive lists as a hard stop stays
+    owner-gated."
 public_interfaces:
   - Public routes /, /es, /software, /software/pricing, /login, /signup, /forgot-password,
     /reset-password, /verify-email, /maintenance, /unauthorized and not-found. Authenticated routes
@@ -218,7 +224,7 @@ rollback:
     or other session's work is deleted, and no provider, route, secret or environment value changes.
   remote_actions_required: false
 external_effects:
-  remote_mutation: none
+  remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
   current_step: ui-001-preflight
