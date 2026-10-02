@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
-current_step: ui-005-sweep
-next_action: Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and Core.
+current_step: ui-007-gates
+next_action: Pass agent:verify and the packet governance, design, repository and database gates on the exact merge candidate from a fresh clone.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

@@ -1,9 +1,9 @@
 'use client';
 
 import { MonoCaps } from '@mustbeviral/ui';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 
-import { readCampaignProgress, type CampaignProgress } from '../campaign/campaign-progress';
+import { campaignProgressSnapshot, subscribeCampaignProgress } from '../campaign/campaign-progress';
 import { createBrowserCoreClient } from '../../lib/core/browser-client';
 import { createBrowserSupabaseClient } from '../../lib/supabase/client';
 import {
@@ -29,8 +29,10 @@ function toKillSwitchSnapshot(snapshot: PlatformKillSwitchSnapshot): KillSwitchS
 }
 
 export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: string }>) {
-  const [progress] = useState<CampaignProgress | null>(() =>
-    typeof window === 'undefined' ? null : readCampaignProgress(),
+  const progress = useSyncExternalStore(
+    subscribeCampaignProgress,
+    campaignProgressSnapshot,
+    () => null,
   );
   const [workspaceLabel, setWorkspaceLabel] = useState<string>(workspace);
   const [killSwitches, setKillSwitches] = useState<KillSwitchSnapshot>(() =>

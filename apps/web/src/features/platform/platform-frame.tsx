@@ -81,6 +81,11 @@ export function PlatformFrame({
     }
   }
   const roleLabel = studio?.role ? roleName(studio.role) : null;
+  const mainLabel =
+    campaignLabel ??
+    (brand ? brand.name : undefined) ??
+    STUDIO_SECTIONS.find((entry) => entry.key === section)?.label ??
+    'Your studios';
   return (
     <div className={flush ? 'platform-app platform-app--flush' : 'platform-app'}>
       <a className="skip-link" href="#platform-main" onClick={focusPlatformMain}>
@@ -193,6 +198,7 @@ export function PlatformFrame({
         ) : null}
         <main
           id="platform-main"
+          aria-label={mainLabel}
           className={flush ? 'platform-main platform-main--flush' : 'platform-main'}
           tabIndex={-1}
         >

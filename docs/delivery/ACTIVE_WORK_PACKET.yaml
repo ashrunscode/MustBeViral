@@ -145,16 +145,16 @@ steps:
     title:
       Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and
       handlers.
-    status: current
+    status: completed
   - id: ui-006-browser-proof
     title:
       Prove each changed journey in the browser at 375, 768, 1280 and the wide studio page across
       every state.
-    status: pending
+    status: completed
   - id: ui-007-gates
     title: Pass agent:verify and the packet governance, design, repository and database gates on the
       merge candidate.
-    status: pending
+    status: current
   - id: ui-008-release
     title:
       Release the merged commit through the guarded staging and production procedure or record the
@@ -238,8 +238,8 @@ external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
-  current_step: ui-005-sweep
-  next_action: Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and Core.
+  current_step: ui-007-gates
+  next_action: Pass agent:verify and the packet governance, design, repository and database gates on the exact merge candidate from a fresh clone.
   blockers: []
   changed_paths: []
   last_green_checks: []

@@ -289,7 +289,7 @@ describe('WorkerReviewPort', () => {
           revision: 'revision-live',
           variants: [
             {
-              label: 'Master · Packshot',
+              label: 'Master, Packshot',
               format: 'Master still',
               nodeKey: 'master-1',
               previewUrl:
@@ -872,7 +872,7 @@ describe('WorkerReviewPort', () => {
           name: 'Copy system',
           variants: [
             {
-              label: 'Copy · Problem-recognition',
+              label: 'Copy, Problem-recognition',
               format: 'Copy set',
               nodeKey: 'copy-1',
               copy: {

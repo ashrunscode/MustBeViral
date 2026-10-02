@@ -64,6 +64,41 @@ export function readCampaignProgress(): CampaignProgress | null {
   }
 }
 
+/*
+ * A tiny external store so screens can read the saved step with useSyncExternalStore: the server
+ * snapshot is null, the client snapshot is cached by the raw stored string, and every write or
+ * clear notifies subscribers.
+ */
+const listeners = new Set<() => void>();
+let cachedRaw: string | null | undefined;
+let cachedProgress: CampaignProgress | null = null;
+
+export function subscribeCampaignProgress(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function notifyCampaignProgress(): void {
+  for (const listener of listeners) listener();
+}
+
+export function campaignProgressSnapshot(): CampaignProgress | null {
+  if (typeof window === 'undefined') return null;
+  let raw: string | null = null;
+  try {
+    raw = window.sessionStorage.getItem(STORAGE_KEY);
+  } catch {
+    raw = null;
+  }
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+    cachedProgress = readCampaignProgress();
+  }
+  return cachedProgress;
+}
+
 export function writeCampaignProgress(input: {
   readonly workspace: string;
   readonly step: CampaignWorkflowStep;
@@ -84,6 +119,7 @@ export function writeCampaignProgress(input: {
       // Optional browser resume must not break the active workflow when storage is denied/full.
     }
   }
+  notifyCampaignProgress();
   return progress;
 }
 
@@ -94,4 +130,5 @@ export function clearCampaignProgress(): void {
   } catch {
     // Clearing unavailable browser storage does not affect authoritative campaign state.
   }
+  notifyCampaignProgress();
 }

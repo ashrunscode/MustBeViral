@@ -139,9 +139,9 @@ export function ProposalReview({
   return (
     <li data-testid={`proposal-${proposal.kind}`}>
       <p>
-        {proposal.kind} · {proposal.status}
-        {proposal.confidence ? ` · ${proposal.confidence}` : ''} ·{' '}
-        {proposal.value_text ?? 'Unknown — not supplied.'}
+        {proposal.kind}, {proposal.status}
+        {proposal.confidence ? `, ${proposal.confidence}` : ''},{' '}
+        {proposal.value_text ?? 'Unknown: not supplied.'}
       </p>
       <details className="platform-review-details">
         <summary>Evidence for {proposal.kind}</summary>
@@ -163,12 +163,11 @@ export function ProposalReview({
                     linked.map((item) => (
                       <div key={item.id} data-testid="proposal-evidence">
                         <p>
-                          {item.kind} · {item.status} ·{' '}
-                          {item.value_text ?? 'Unknown — not supplied.'}
+                          {item.kind}, {item.status}, {item.value_text ?? 'Unknown: not supplied.'}
                         </p>
                         <blockquote>{item.excerpt}</blockquote>
                         <p className="platform-muted">
-                          Source {item.source_id} · {item.method} · captured {item.captured_at}
+                          Source {item.source_id}, {item.method}, captured {item.captured_at}
                         </p>
                         {item.ends_at ? <p>Expires {item.ends_at}</p> : null}
                       </div>

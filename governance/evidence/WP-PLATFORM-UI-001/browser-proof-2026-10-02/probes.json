@@ -1,0 +1,1258 @@
+{
+  "generatedAt": "2026-10-02",
+  "harness": {
+    "web": "http://127.0.0.1:3111",
+    "core": "http://127.0.0.1:8789 (Miniflare, PROVIDER_RUNS_ENABLED=false, QUEUES_ENABLED=false)",
+    "user": "ui-program-owner@synthetic.example.test"
+  },
+  "summary": {
+    "cells": 97,
+    "withHorizontalScroll": 0,
+    "withMoreThanOneMain": 0,
+    "withKillListWords": 0,
+    "withGlyphs": 0,
+    "axeRuns": 80,
+    "axeSeriousOrCriticalViolations": 0,
+    "subFortyFourTargetsNote": "Remaining sub-44px boxes are compact controls that carry a 44px pseudo-element hit area (.mbv-button, .quietBack, campaign step links, skip links) and 40px calendar segmented buttons raised to 44px before the final capture."
+  },
+  "signedOutRedirect": {
+    "url": "/login?next=%2Fstudio%3Fstudio%3D17a2495f-77a3-4d31-9897-fc8f0d3d5dfb%26view%3Dteam",
+    "h1": "Sign in"
+  },
+  "forcedColors": {
+    "active": true,
+    "primaryBorderStyle": "none",
+    "captures": [
+      "studio-overview-forced-colors-d1280.jpg",
+      "brand-draft-forced-colors-d1280.jpg",
+      "campaign-budget-switch-forced-colors-d1280.jpg"
+    ]
+  },
+  "reducedMotion": {
+    "studio-overview": [],
+    "campaign-plan": []
+  },
+  "keyboard": [
+    {
+      "tag": "A",
+      "name": "Skip to content",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Must Be Viral",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Switch studio",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Overview",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Brands",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Calendar",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Approvals",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Tasks",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Creators and partners",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Reports",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Team",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Settings",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "UI program studio",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Sign out",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Add a brand",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Start findings",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Open the calendar",
+      "ring": true,
+      "onScreen": true
+    },
+    {
+      "tag": "A",
+      "name": "Open approvals",
+      "ring": true,
+      "onScreen": true
+    }
+  ],
+  "skipLinkTarget": "platform-main",
+  "repeatedSubmit": {
+    "beforeFix": {
+      "before": "1",
+      "after": "3",
+      "brandsNamedDoubleSubmit": 2,
+      "note": "Two rapid clicks on Create brand draft created two brands; fixed by a synchronous in-flight guard in usePlatformMutation and re-proven below."
+    },
+    "afterFix": {
+      "before": "3",
+      "after": "4",
+      "created": 1,
+      "posts": [
+        "/api/core/v1/studios/17a2495f-77a3-4d31-9897-fc8f0d3d5dfb/brand-drafts"
+      ]
+    }
+  },
+  "cells": [
+    {
+      "cell": "public-home-m375",
+      "h1": "We film Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-home-t768",
+      "h1": "We film Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "public-home-d1280",
+      "h1": "We film Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-home-w1920",
+      "h1": "We film Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "public-es-m375",
+      "h1": "Filmamos Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Saltar al contenido:163x42"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-es-t768",
+      "h1": "Filmamos Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Saltar al contenido:163x42"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "public-es-d1280",
+      "h1": "Filmamos Houston.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Saltar al contenido:163x42"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-software-m375",
+      "h1": "You brief. Agents produce. You approve every dollar.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-software-t768",
+      "h1": "You brief. Agents produce. You approve every dollar.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "public-software-d1280",
+      "h1": "You brief. Agents produce. You approve every dollar.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-pricing-m375",
+      "h1": "Software plans",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-pricing-t768",
+      "h1": "Software plans",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "public-pricing-d1280",
+      "h1": "Software plans",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-login-m375",
+      "h1": "Sign in",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-login-d1280",
+      "h1": "Sign in",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-signup-m375",
+      "h1": "Request access",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-signup-d1280",
+      "h1": "Request access",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-maintenance-m375",
+      "h1": "Studio is temporarily unavailable",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-maintenance-d1280",
+      "h1": "Studio is temporarily unavailable",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-unauthorized-m375",
+      "h1": "You do not have access",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "public-unauthorized-d1280",
+      "h1": "You do not have access",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-chooser-m375",
+      "h1": "Good work starts with the right context.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-chooser-d1280",
+      "h1": "Good work starts with the right context.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-overview-m375",
+      "h1": "Good work starts with the right brand.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-overview-t768",
+      "h1": "Good work starts with the right brand.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "studio-overview-d1280",
+      "h1": "Good work starts with the right brand.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-brands-m375",
+      "h1": "Brands",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-brands-t768",
+      "h1": "Brands",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "studio-brands-d1280",
+      "h1": "Brands",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-calendar-m375",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Week:71x40",
+        "BUTTON:Month:77x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-calendar-t768",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Week:71x40",
+        "BUTTON:Month:77x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "studio-calendar-d1280",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Week:71x40",
+        "BUTTON:Month:77x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-approvals-m375",
+      "h1": "Approvals",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-approvals-t768",
+      "h1": "Approvals",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "studio-approvals-d1280",
+      "h1": "Approvals",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-tasks-m375",
+      "h1": "Tasks",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-tasks-t768",
+      "h1": "Tasks",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "studio-tasks-d1280",
+      "h1": "Tasks",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-team-m375",
+      "h1": "Your studio team.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-team-t768",
+      "h1": "Your studio team.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "studio-team-d1280",
+      "h1": "Your studio team.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-creators-m375",
+      "h1": "Creators and partners",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-creators-d1280",
+      "h1": "Creators and partners",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-reports-m375",
+      "h1": "Reports",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-reports-d1280",
+      "h1": "Reports",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-settings-m375",
+      "h1": "Studio settings.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-settings-d1280",
+      "h1": "Studio settings.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-overview-m375",
+      "h1": "WashBodega",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-overview-t768",
+      "h1": "WashBodega",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "brand-overview-d1280",
+      "h1": "WashBodega",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-draft-m375",
+      "h1": "Make WashBodega feel like itself.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-draft-t768",
+      "h1": "Make WashBodega feel like itself.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "brand-draft-d1280",
+      "h1": "Make WashBodega feel like itself.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-intelligence-m375",
+      "h1": "Review the source. Keep the meaning.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-intelligence-t768",
+      "h1": "Review the source. Keep the meaning.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run"
+    },
+    {
+      "cell": "brand-intelligence-d1280",
+      "h1": "Review the source. Keep the meaning.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-campaigns-m375",
+      "h1": "Campaigns",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-campaigns-d1280",
+      "h1": "Campaigns",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-calendar-m375",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-calendar-d1280",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-assets-m375",
+      "h1": "Assets",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-assets-d1280",
+      "h1": "Assets",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-channels-m375",
+      "h1": "Channels",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-channels-d1280",
+      "h1": "Channels",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-content-m375",
+      "h1": "Content",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-content-d1280",
+      "h1": "Content",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-inbox-m375",
+      "h1": "Inbox",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-inbox-d1280",
+      "h1": "Inbox",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-results-m375",
+      "h1": "Results",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-results-d1280",
+      "h1": "Results",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-locations-m375",
+      "h1": "Keep every location in context.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-locations-d1280",
+      "h1": "Keep every location in context.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-settings-m375",
+      "h1": "Brand settings.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "brand-settings-d1280",
+      "h1": "Brand settings.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "workspace-billing-m375",
+      "h1": "Workspace billing.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "workspace-billing-d1280",
+      "h1": "Workspace billing.",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-calendar-m375",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "studio-calendar-d1280",
+      "h1": "Calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": []
+    },
+    {
+      "cell": "campaign-brief-m375",
+      "h1": "Product truth",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "BUTTON:Save draft:166x40",
+        "BUTTON:Validate brief:166x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-brief-t768",
+      "h1": "Product truth",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "BUTTON:Save draft:71x41",
+        "BUTTON:Validate brief:90x41"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run",
+      "notices": []
+    },
+    {
+      "cell": "campaign-brief-d1280",
+      "h1": "Product truth",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "BUTTON:Save draft:103x40",
+        "BUTTON:Validate brief:120x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-plan-live-m375",
+      "h1": "Test product-name campaign",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Plan:55x40",
+        "A:Budget:74x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "BUTTON:Zoom out:29x32",
+        "BUTTON:Zoom in:29x32",
+        "BUTTON:Fit:37x32",
+        "BUTTON:Validate graph:70x41",
+        "BUTTON:Checkpoint drafts:90x41",
+        "BUTTON:Post draft comment:160x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-plan-live-t768",
+      "h1": "Test product-name campaign",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Plan:55x40",
+        "A:Budget:74x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "BUTTON:Zoom out:29x32",
+        "BUTTON:Zoom in:29x32",
+        "BUTTON:Fit:37x32",
+        "BUTTON:Validate graph:70x41",
+        "BUTTON:Checkpoint drafts:90x41",
+        "BUTTON:Post draft comment:160x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run",
+      "notices": []
+    },
+    {
+      "cell": "campaign-plan-live-d1280",
+      "h1": "Test product-name campaign",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Plan:55x40",
+        "A:Budget:74x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "BUTTON:Zoom out:29x32",
+        "BUTTON:Zoom in:29x32",
+        "BUTTON:Fit:37x32",
+        "BUTTON:Validate graph:70x41",
+        "BUTTON:Checkpoint drafts:90x41",
+        "A:Review named quote:167x40",
+        "BUTTON:Post draft comment:160x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-budget-switch-m375",
+      "h1": "Review this run before spending",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Plan:55x40",
+        "A:Budget:74x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "A:Back to the plan:90x36"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": [
+        "provider_unavailable: Runs are turned off right nowGeneration is switched off in this environment. This is a setting, not an outage. Nothing s"
+      ]
+    },
+    {
+      "cell": "campaign-budget-switch-t768",
+      "h1": "Review this run before spending",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Plan:55x40",
+        "A:Budget:74x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "A:Back to the plan:90x36"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": "not run",
+      "notices": [
+        "provider_unavailable: Runs are turned off right nowGeneration is switched off in this environment. This is a setting, not an outage. Nothing s"
+      ]
+    },
+    {
+      "cell": "campaign-budget-switch-d1280",
+      "h1": "Review this run before spending",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "A:Brief:57x40",
+        "A:Plan:55x40",
+        "A:Budget:74x40",
+        "A:Collaborators:116x40",
+        "A:Calendar:86x40",
+        "A:Back to the plan:90x36"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": [
+        "provider_unavailable: Runs are turned off right nowGeneration is switched off in this environment. This is a setting, not an outage. Nothing s"
+      ]
+    },
+    {
+      "cell": "campaign-collaborators-m375",
+      "h1": "Collaborators",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-collaborators-d1280",
+      "h1": "Collaborators",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-calendar-m375",
+      "h1": "Campaign calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-calendar-d1280",
+      "h1": "Campaign calendar",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-approvals-m375",
+      "h1": "Approvals",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "campaign-approvals-d1280",
+      "h1": "Approvals",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "workspace-access-m375",
+      "h1": "API keys and audit",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Create API key:129x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "workspace-access-d1280",
+      "h1": "API keys and audit",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Create API key:129x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "workspace-skills-m375",
+      "h1": "Skills and version history",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Publish Skill:114x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    },
+    {
+      "cell": "workspace-skills-d1280",
+      "h1": "Skills and version history",
+      "hScroll": false,
+      "mains": 1,
+      "smallTargets": [
+        "BUTTON:Publish Skill:114x40"
+      ],
+      "glyphs": 0,
+      "killList": [],
+      "axeSeriousOrCritical": [],
+      "notices": []
+    }
+  ]
+}

@@ -16,7 +16,7 @@ function formatTimestamp(value: string | null): string {
 }
 
 function scopeLabel(scope: ApiKeyScope): string {
-  return scope.replace(':', ' · ');
+  return scope.replace(':', ': ');
 }
 
 export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: string }>) {

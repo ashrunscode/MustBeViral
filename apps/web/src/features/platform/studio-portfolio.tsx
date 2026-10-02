@@ -63,14 +63,19 @@ function StudioChooser() {
     true,
   );
   const invitations = usePlatformQuery('list_my_invitations', {});
+  const [created, setCreated] = useState(false);
   const mutation = usePlatformMutation();
   const router = useRouter();
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (created) return;
     const values = new FormData(event.currentTarget);
     const name = String(values.get('name')).trim();
     const result = await mutation.mutate('create_studio', { name, slug: newSlug });
-    if (result) router.push(studioHref(result.record.id));
+    if (result) {
+      setCreated(true);
+      router.push(studioHref(result.record.id));
+    }
   }
   return (
     <PlatformFrame>
@@ -123,7 +128,7 @@ function StudioChooser() {
           className="platform-card platform-pad platform-stack"
         >
           <h2>Create a studio</h2>
-          <fieldset disabled={mutation.pending}>
+          <fieldset disabled={mutation.pending || created}>
             <label>
               Studio name
               <input
@@ -139,7 +144,7 @@ function StudioChooser() {
               type="submit"
               aria-busy={mutation.pending || undefined}
             >
-              {mutation.pending ? 'Creating…' : 'Create studio'}
+              {mutation.pending ? 'Creating…' : created ? 'Opening your studio…' : 'Create studio'}
             </button>
           </fieldset>
           {mutation.error !== undefined && (

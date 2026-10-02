@@ -14,7 +14,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Launch customer | `brand_operators_and_multi_brand_studios` |
 | Phase | P4 — V2 interface program across public, studio, brand, campaign and content surfaces (in_progress) |
 | Active packet | `WP-PLATFORM-UI-001` |
-| Current step | `ui-005-sweep` |
+| Current step | `ui-007-gates` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and Core.
+Pass agent:verify and the packet governance, design, repository and database gates on the exact merge candidate from a fresh clone.

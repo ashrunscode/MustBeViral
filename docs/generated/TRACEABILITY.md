@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-UI-001` (in_progress). Current step: `ui-005-sweep`.
+Current packet: `WP-PLATFORM-UI-001` (in_progress). Current step: `ui-007-gates`.
 
 | Authority topic | Document | Path |
 |---|---|---|

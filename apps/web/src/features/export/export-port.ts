@@ -405,7 +405,7 @@ export function composeGb04ExportReadiness(
     if (nodeKey !== undefined && findGb04ExpectedExportMember(nodeKey) !== undefined) continue;
     rows.push({
       id: artifact.id,
-      label: nodeKey === undefined ? 'Unmapped approved output' : `Unexpected output · ${nodeKey}`,
+      label: nodeKey === undefined ? 'Unmapped approved output' : `Unexpected output: ${nodeKey}`,
       format: artifact.mime_type,
       state: 'failed',
       detail: 'This output is not part of the exact GB-04 archive member set.',

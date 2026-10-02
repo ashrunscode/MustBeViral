@@ -138,8 +138,7 @@ export function QuotePill({
   return (
     <div className={classes('mbv-quote-pill', className)} data-state={feedback} {...props}>
       <MonoCaps>Quote {amount}</MonoCaps>
-      <span aria-hidden="true">·</span>
-      <MonoCaps>Rev {revision}</MonoCaps>
+      <MonoCaps>Revision {revision}</MonoCaps>
     </div>
   );
 }

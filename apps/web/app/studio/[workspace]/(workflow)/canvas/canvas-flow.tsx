@@ -120,9 +120,7 @@ const CanvasOutlinePanel = memo(function CanvasOutlinePanel({
         </div>
         <Chip status="notes">{nodeCount} nodes</Chip>
       </div>
-      <p className={styles.outlineHelp}>
-        Topological order. Use the up and down arrow keys to move between nodes.
-      </p>
+      <p className={styles.outlineHelp}>In order. Arrow keys move between nodes.</p>
       <ol className={styles.outlineList}>
         {outline.map((row, index) => (
           <OutlineRow

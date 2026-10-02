@@ -197,7 +197,8 @@ test.describe('connected platform journeys', () => {
     const editor = await registerUser(`w1b004-editor-${randomUUID()}@synthetic.example.test`);
     await signIn(page, owner.email);
     const brands = await createStudioAndBrands(page);
-    const studioQuery = new URL(brands.washbodegaUrl).search;
+    // The brand link now carries its own view; the studio query is built from the studio id.
+    const studioQuery = `?studio=${brands.studioId}`;
     await page.goto(`/studio/${FORGED_ID}/brands/${FORGED_ID}${studioQuery}`);
     await expect(page.getByText(NOT_FOUND_COPY)).toBeVisible();
     await expect(page.getByText('do not have permission')).toHaveCount(0);
@@ -242,7 +243,7 @@ test.describe('connected platform journeys', () => {
     await expect(page.getByRole('status').filter({ hasText: 'Invitation saved' })).toBeVisible();
     const pendingInvite = page.getByRole('article').filter({ hasText: editor.email });
     await expect(pendingInvite.getByRole('heading', { name: editor.email })).toBeVisible();
-    await expect(pendingInvite.getByText(/editor · pending/)).toBeVisible();
+    await expect(pendingInvite.getByText(/Editor, pending/)).toBeVisible();
     await expect(page.getByLabel('Verified email')).toHaveValue('');
     await expect(page.getByLabel('Studio role')).toHaveValue('viewer');
     await expect(page.getByText('No email is sent')).toBeVisible();
@@ -278,6 +279,7 @@ test.describe('connected platform journeys', () => {
       await editorPage.getByRole('link', { name: 'Brand draft' }).click();
       await expect(editorPage.getByText('Loading your saved draft')).toBeVisible();
       await page.reload();
+      page.once('dialog', (dialog) => void dialog.accept());
       await page.getByRole('button', { name: 'Revoke access' }).click();
       await expect(
         page.getByRole('status').filter({ hasText: 'Studio access revoked' }),
@@ -442,7 +444,7 @@ test.describe('connected platform journeys', () => {
       await route.fulfill({ status: response.status(), contentType: 'application/json', body });
     });
     await page.getByRole('button', { name: 'Retry the same save' }).click();
-    await expect(page.getByRole('status').filter({ hasText: /Saved · version / })).toBeVisible();
+    await expect(page.getByRole('status').filter({ hasText: /Saved, version / })).toBeVisible();
     await expect(page.getByLabel('What should we know?')).toHaveValue(interrupted);
     expect(capturedKeys).toHaveLength(2);
     expect(capturedKeys[0]).toMatch(
@@ -454,12 +456,12 @@ test.describe('connected platform journeys', () => {
     const savedVersion = capturedVersions[1];
     if (savedVersion === undefined) throw new Error('Retry did not return a server version.');
     await expect(
-      page.getByRole('status').filter({ hasText: `Saved · version ${savedVersion}` }),
+      page.getByRole('status').filter({ hasText: `Saved, version ${savedVersion}` }),
     ).toBeVisible();
     await page.reload();
     await expect(page.getByLabel('What should we know?')).toHaveValue(interrupted);
     await expect(
-      page.getByRole('status').filter({ hasText: `Saved · version ${savedVersion}` }),
+      page.getByRole('status').filter({ hasText: `Saved, version ${savedVersion}` }),
     ).toBeVisible();
     const context = await browser.newContext();
     const reconnected = await context.newPage();
@@ -467,7 +469,7 @@ test.describe('connected platform journeys', () => {
     await reconnected.goto(brands.unpileUrl);
     await expect(reconnected.getByLabel('What should we know?')).toHaveValue(interrupted);
     await expect(
-      reconnected.getByRole('status').filter({ hasText: `Saved · version ${savedVersion}` }),
+      reconnected.getByRole('status').filter({ hasText: `Saved, version ${savedVersion}` }),
     ).toBeVisible();
     await context.close();
     await page.unroute(saveUrl);
@@ -578,6 +580,11 @@ test.describe('connected platform journeys', () => {
       page.getByRole('heading', { name: 'This project needs a brand mapping.' }),
     ).toHaveCount(0);
     await page.getByRole('link', { name: /Open brand/ }).click();
+    // The mapped link lands on the brand overview; the draft is one tab away.
+    await page
+      .getByRole('navigation', { name: 'Brand navigation' })
+      .getByRole('link', { name: 'Brand draft' })
+      .click();
     await expect(
       page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
     ).toBeVisible({ timeout: 15_000 });
@@ -626,7 +633,7 @@ test.describe('connected platform journeys', () => {
     await keyboardSave.focus();
     await expect(keyboardSave).toBeFocused();
     await page.keyboard.press('Enter');
-    await expect(page.getByRole('status').filter({ hasText: 'Saved · version 2' })).toBeVisible();
+    await expect(page.getByRole('status').filter({ hasText: 'Saved, version 2' })).toBeVisible();
     await captureSignedInSurface(page, 'a11y-brand-draft.png');
     await attachAxeAndAria(page, 'brand-draft');
     await expectNoHorizontalOverflow(page);

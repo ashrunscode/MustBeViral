@@ -24,9 +24,9 @@ test('workspace settings preserve the last campaign step without crashing resume
     await expect(page).toHaveURL(new RegExp(`/${path}$`, 'u'));
   }
   await page.goto('/studio/continue');
-  await expect(page.getByRole('link', { name: 'Resume launch-pack canvas' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Resume export and receipt' })).toHaveAttribute(
     'href',
-    '/studio/lumen-skin/canvas',
+    '/studio/lumen-skin/receipt',
   );
 });
 

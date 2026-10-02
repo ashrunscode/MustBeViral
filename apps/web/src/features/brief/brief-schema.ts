@@ -422,7 +422,7 @@ export const lumenSkinDraft: BriefDraft = {
     objections: 'Concern about irritation and unsupported skincare promises',
   },
   offer: {
-    pricePresentation: '$42 · free shipping over $60',
+    pricePresentation: '$42, free shipping over $60',
     urgencyConstraints: 'No countdowns, false scarcity, or pressure language',
     destinationUrl: 'https://example.com/products/barrier-serum',
   },

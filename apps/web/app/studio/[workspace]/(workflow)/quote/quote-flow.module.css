@@ -377,7 +377,8 @@
 /* Phone: the card, the coverage list and the confirm bar stack in one column. */
 @media (max-width: 767px) {
   .quotePage {
-    grid-template: minmax(0, 1fr) auto auto / minmax(0, 1fr);
+    grid-template: auto auto auto / minmax(0, 1fr);
+    align-content: start;
     overflow-y: auto;
   }
   .quoteStage {

@@ -52,10 +52,12 @@ export function BrandCard({
 
 export function NewBrandForm({ studioId }: Readonly<{ studioId: string }>) {
   const [newSlug] = useState(() => `brand-${crypto.randomUUID()}`);
+  const [created, setCreated] = useState(false);
   const mutation = usePlatformMutation();
   const router = useRouter();
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (created) return;
     const data = new FormData(event.currentTarget);
     const name = String(data.get('name')).trim();
     // The slug is an identity, not a guess about another workspace with the same name.
@@ -64,8 +66,10 @@ export function NewBrandForm({ studioId }: Readonly<{ studioId: string }>) {
       name,
       slug: newSlug,
     });
-    if (result)
+    if (result) {
+      setCreated(true);
       router.push(brandHref(studioId, result.brand.workspace_id, result.brand.id, 'draft'));
+    }
   }
   return (
     <form
@@ -75,7 +79,7 @@ export function NewBrandForm({ studioId }: Readonly<{ studioId: string }>) {
     >
       <h2>Start with the essentials.</h2>
       <p>A new brand gets its own workspace. The draft is saved the moment you create it.</p>
-      <fieldset disabled={mutation.pending}>
+      <fieldset disabled={mutation.pending || created}>
         <label>
           Brand name
           <input
@@ -91,7 +95,11 @@ export function NewBrandForm({ studioId }: Readonly<{ studioId: string }>) {
           type="submit"
           aria-busy={mutation.pending || undefined}
         >
-          {mutation.pending ? 'Saving your new brand…' : 'Create brand draft'}
+          {mutation.pending
+            ? 'Saving your new brand…'
+            : created
+              ? 'Opening your new brand…'
+              : 'Create brand draft'}
         </button>
       </fieldset>
       {mutation.error !== undefined && (

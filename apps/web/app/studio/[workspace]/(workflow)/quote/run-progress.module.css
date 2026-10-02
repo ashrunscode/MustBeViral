@@ -260,7 +260,8 @@
 /* Phone and small tablet: the settlement summary stacks under the attempts instead of hiding. */
 @media (max-width: 800px) {
   .runPage {
-    grid-template: minmax(0, 1fr) auto auto / 1fr;
+    grid-template: auto auto auto / 1fr;
+    align-content: start;
     overflow-y: auto;
   }
   .quoteStage {

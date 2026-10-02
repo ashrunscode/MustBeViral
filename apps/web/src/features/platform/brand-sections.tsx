@@ -1,10 +1,10 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import {
+  campaignProgressSnapshot,
   campaignResumeHref,
-  readCampaignProgress,
-  type CampaignProgress,
+  subscribeCampaignProgress,
 } from '../campaign/campaign-progress';
 import { Calendar, SCHEDULE_CONTRACT_MISSING } from './calendar';
 import {
@@ -161,10 +161,12 @@ function SavedCampaignStep({
   brand,
   compact = false,
 }: Readonly<Pick<BrandScope, 'studioId' | 'brand'> & { compact?: boolean }>) {
-  const [progress] = useState<CampaignProgress | null>(() => {
-    const saved = readCampaignProgress();
-    return saved !== null && saved.workspace === brand.workspace_id ? saved : null;
-  });
+  const saved = useSyncExternalStore(
+    subscribeCampaignProgress,
+    campaignProgressSnapshot,
+    () => null,
+  );
+  const progress = saved !== null && saved.workspace === brand.workspace_id ? saved : null;
   if (progress === null) {
     return compact ? <p>No campaign step is saved in this browser.</p> : null;
   }

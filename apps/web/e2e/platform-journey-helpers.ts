@@ -124,7 +124,8 @@ export async function switchToBrand(page: Page, name: string) {
   await expect(select).toBeVisible({ timeout: 15_000 });
   await expect(select.locator('option', { hasText: name })).toHaveCount(1, { timeout: 15_000 });
   await select.selectOption({ label: name });
-  await expect(page.getByRole('heading', { name: `Make ${name} feel like itself.` })).toBeVisible({
+  // Switching keeps the current section, so the breadcrumb, not the draft heading, proves the brand.
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText(name, {
     timeout: 15_000,
   });
 }

@@ -127,15 +127,15 @@ function Evidence({
       ) : (
         assertions.map((item) => (
           <div key={item.id} className="platform-stack">
-            <p>{item.value_text ?? 'Unknown — not supplied.'}</p>
+            <p>{item.value_text ?? 'Unknown: not supplied.'}</p>
             <p className="platform-note">
               {item.status}
-              {item.ends_at ? ` · Expires ${item.ends_at}` : ''}
+              {item.ends_at ? `, Expires ${item.ends_at}` : ''}
             </p>
             <details className="platform-review-details">
               <summary>Source evidence</summary>
               <p className="platform-muted">
-                Source {item.source_id} · {item.method} · captured {item.captured_at}
+                Source {item.source_id}, {item.method}, captured {item.captured_at}
               </p>
               <blockquote>{item.excerpt}</blockquote>
               <p className="platform-note">{item.locator}</p>
@@ -207,13 +207,13 @@ export function KnowledgeChanges({
             data-testid="knowledge-change-group"
           >
             <summary>
-              {group.field_key.replaceAll('_', ' ')} · {labels[group.change]}
+              {group.field_key.replaceAll('_', ' ')}, {labels[group.change]}
               {group.source_missing
-                ? ' · Missing from latest source — review required'
+                ? '. Missing from the latest source: review required'
                 : group.conflicted
-                  ? ' · Conflicting facts — review required'
+                  ? '. Conflicting facts: review required'
                   : ''}
-              {group.expired ? ' · Expired offer' : ''}
+              {group.expired ? '. Expired offer' : ''}
             </summary>
             <div className="platform-stack">
               <Evidence title="Approved finding" assertions={group.baseline_assertions} />

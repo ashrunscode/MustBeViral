@@ -133,7 +133,7 @@ test('renders mobile review and export summary without horizontal scroll at 375x
 }, testInfo) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/studio/lumen-skin/review');
-  await expect(page.getByText(/Graph authoring is desktop-only/u)).toBeVisible();
+  await expect(page.getByText(/Plan editing needs a desktop/u)).toBeVisible();
   await expect(page.locator('[data-variant-id]:visible')).toHaveCount(2);
   await expect(page.locator('.receipt-summary')).toBeVisible();
   await expect(page.locator('.export-status')).toBeVisible();
@@ -700,10 +700,12 @@ for (const viewport of [
   });
 }
 
+// The receipt is an app-height surface with its own scroll region; billing is a document page
+// inside the studio frame, so the page scrolls and no inner region becomes a tab stop.
 for (const region of [
   { route: 'receipt', width: 375, height: 812, scrolls: true },
-  { route: 'billing', width: 375, height: 812, scrolls: true },
-  { route: 'billing', width: 1440, height: 900, scrolls: true },
+  { route: 'billing', width: 375, height: 812, scrolls: false },
+  { route: 'billing', width: 1440, height: 900, scrolls: false },
   { route: 'billing', width: 768, height: 1024, scrolls: false },
 ]) {
   test(`makes the ${region.route} scroll region a named tab stop only while it scrolls at ${String(region.width)}px`, async ({
@@ -756,9 +758,8 @@ for (const region of [
 }
 
 for (const region of [
-  { route: 'receipt', from: { width: 375, height: 812 }, to: { width: 768, height: 1200 } },
-  { route: 'billing', from: { width: 375, height: 812 }, to: { width: 768, height: 1024 } },
-  { route: 'billing', from: { width: 1440, height: 900 }, to: { width: 1440, height: 1100 } },
+  // A window tall enough that the receipt no longer overflows beside the studio rail.
+  { route: 'receipt', from: { width: 375, height: 812 }, to: { width: 1440, height: 1700 } },
 ]) {
   test(`keeps focus on the ${region.route} scroll region when it stops overflowing at ${String(region.from.width)}px`, async ({
     page,
@@ -963,13 +964,14 @@ test('keeps the quote acknowledgment checkbox clear of the side panel at 375px',
     return {
       visibleWidth,
       stolen: [...new Set(stolen)],
-      stageRight: stage.getBoundingClientRect().right,
-      asideLeft: aside.getBoundingClientRect().left,
+      stageBottom: stage.getBoundingClientRect().bottom,
+      asideTop: aside.getBoundingClientRect().top,
     };
   });
   expect(probe.visibleWidth).toBeGreaterThan(8);
   expect(probe.stolen).toEqual([]);
-  expect(probe.stageRight).toBeLessThanOrEqual(probe.asideLeft + 0.5);
+  // On a phone the side panel stacks below the stage instead of sharing its row.
+  expect(probe.asideTop).toBeGreaterThanOrEqual(probe.stageBottom - 0.5);
 });
 
 test('keeps every canvas outline row reachable and unclipped beside the collaboration panel at 375px', async ({

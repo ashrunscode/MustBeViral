@@ -66,7 +66,7 @@ function CandidateValue({ candidate }: Readonly<{ candidate: Candidate }>) {
   if (candidate.value_text === null)
     return (
       <p className="platform-muted" data-testid="candidate-value">
-        Unknown — not supplied.
+        Unknown: not supplied.
       </p>
     );
   if (candidate.field_key === 'canonical_url' && classifyPublicHttpsUrl(candidate.value_text).ok) {
@@ -704,7 +704,7 @@ export function BrandFindings({
                       aria-current={current?.id === item.id ? 'true' : undefined}
                       onClick={() => setSelectedId(item.id)}
                     >
-                      {item.field_key.replaceAll('_', ' ')} · {item.status}
+                      {item.field_key.replaceAll('_', ' ')}, {item.status}
                     </button>
                   </li>
                 ))}
@@ -756,7 +756,7 @@ export function BrandFindings({
                 <h2>{current.field_key.replaceAll('_', ' ')}</h2>
                 <CandidateValue candidate={current} />
                 <p className="platform-muted" data-testid="candidate-provenance">
-                  Source {current.source_id} · {current.method} · captured {current.captured_at}
+                  Source {current.source_id}, {current.method}, captured {current.captured_at}
                 </p>
                 <p data-testid="candidate-excerpt">Excerpt: {current.excerpt}</p>
                 {canWrite ? (
@@ -810,11 +810,11 @@ export function BrandFindings({
               <ul>
                 {sources.map((source) => (
                   <li key={source.id} data-testid={`source-${source.kind}-${source.method}`}>
-                    {source.method} · {source.kind} · {source.captured_at}
+                    {source.method}, {source.kind}, {source.captured_at}
                     {source.origin_url && classifyPublicHttpsUrl(source.origin_url).ok
-                      ? ` · ${source.origin_url}`
+                      ? `, ${source.origin_url}`
                       : source.kind === 'document'
-                        ? ` · ${source.media_type}`
+                        ? `, ${source.media_type}`
                         : ''}
                   </li>
                 ))}
@@ -863,7 +863,7 @@ export function BrandFindings({
                       aria-current={selectedAssertion?.id === item.id ? 'true' : undefined}
                       onClick={() => setSelectedAssertionId(item.id)}
                     >
-                      {item.kind.replaceAll('_', ' ')} · {item.field_key.replaceAll('_', ' ')} ·{' '}
+                      {item.kind.replaceAll('_', ' ')}, {item.field_key.replaceAll('_', ' ')},{' '}
                       {item.status}
                     </button>
                   </li>
@@ -873,10 +873,10 @@ export function BrandFindings({
             {selectedAssertion ? (
               <>
                 <p data-testid="assertion-value">
-                  {selectedAssertion.value_text ?? 'Unknown — not supplied.'}
+                  {selectedAssertion.value_text ?? 'Unknown: not supplied.'}
                 </p>
                 <p className="platform-muted" data-testid="assertion-provenance">
-                  Source {selectedAssertion.source_id} · {selectedAssertion.method} · captured{' '}
+                  Source {selectedAssertion.source_id}, {selectedAssertion.method}, captured{' '}
                   {selectedAssertion.captured_at}
                 </p>
                 <blockquote data-testid="assertion-excerpt">{selectedAssertion.excerpt}</blockquote>
@@ -974,7 +974,7 @@ export function BrandFindings({
             ) : null}
             {approvedVersion ? (
               <p data-testid="approved-version">
-                Approved version {approvedVersion.version} · {approvedVersion.draft_hash}
+                Approved version {approvedVersion.version}, {approvedVersion.draft_hash}
               </p>
             ) : (
               <p className="platform-muted">No owner-approved brand version yet.</p>
@@ -1044,20 +1044,20 @@ function PinnedVersion({
   return (
     <div data-testid="pinned-version">
       <p>
-        Pinned version {query.data?.brand_version.version} · {query.data?.brand_version.draft_hash}
+        Pinned version {query.data?.brand_version.version}, {query.data?.brand_version.draft_hash}
       </p>
       <ul>
         {snapshot.map((item) => (
           <li key={item.id}>
-            {item.kind} · {item.value_text ?? 'Unknown — not supplied.'}
-            {item.ends_at ? ` · expires ${item.ends_at}` : ''}
+            {item.kind}, {item.value_text ?? 'Unknown: not supplied.'}
+            {item.ends_at ? `, expires ${item.ends_at}` : ''}
           </li>
         ))}
       </ul>
       <ul aria-label="Pinned proposals">
         {proposals.map((item) => (
           <li key={item.id}>
-            {item.kind} · {item.status} · {item.value_text ?? 'Unknown — not supplied.'}
+            {item.kind}, {item.status}, {item.value_text ?? 'Unknown: not supplied.'}
           </li>
         ))}
       </ul>

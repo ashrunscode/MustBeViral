@@ -386,13 +386,13 @@ function reviewLabel(kindId: string, indexInGroup: number): string {
 }
 
 const NAMED_NODE_LABELS: Readonly<Record<string, string>> = {
-  'copy-1': 'Copy · Problem-recognition',
-  'copy-2': 'Copy · Proof-first',
-  'copy-3': 'Copy · Offer-clarity',
-  'master-1': 'Master · Packshot',
-  'master-2': 'Master · Material',
-  'master-3': 'Master · Proof-forward',
-  'motion-1': 'Motion · 9:16',
+  'copy-1': 'Copy, Problem-recognition',
+  'copy-2': 'Copy, Proof-first',
+  'copy-3': 'Copy, Offer-clarity',
+  'master-1': 'Master, Packshot',
+  'master-2': 'Master, Material',
+  'master-3': 'Master, Proof-forward',
+  'motion-1': 'Motion, 9:16',
 };
 
 const ADAPTATION_RATIOS = ['4:5', '1:1', '9:16'] as const;
@@ -408,7 +408,7 @@ function reviewLabelFromNodeKey(
   const adaptation = /^adaptation-(\d+)-(\d+)$/u.exec(nodeKey ?? '');
   if (adaptation !== null) {
     const ratio = ADAPTATION_RATIOS[Number(adaptation[2]) - 1] ?? '4:5';
-    return `Adaptation · Master ${adaptation[1]} · ${ratio}`;
+    return `Adaptation, Master ${adaptation[1]}, ${ratio}`;
   }
   return reviewLabel(kindId, indexInGroup);
 }
@@ -419,7 +419,7 @@ function reviewFormat(nodeKey: string | undefined, kindId: string, mimeType: str
     return `${ADAPTATION_RATIOS[Number(adaptation[1]) - 1] ?? '4:5'} placement`;
   }
   if (nodeKey?.startsWith('master-')) return 'Master still';
-  if (nodeKey?.startsWith('motion-')) return '9:16 · 8s';
+  if (nodeKey?.startsWith('motion-')) return '9:16, 8s';
   if (kindId === 'copy') return 'Copy set';
   if (mimeType.startsWith('image/')) return 'Still';
   if (mimeType.startsWith('video/')) return 'Motion';
