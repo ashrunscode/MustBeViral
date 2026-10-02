@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Staging cannot serve the merge commit until NEXT_PUBLIC_APP_ORIGIN, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY and NEXT_PUBLIC_CORE_API_URL exist on mustbeviral-web-staging; the sentence that clears it is permission to set those four names on mustbeviral-web-staging from the values already on production, after which the staging deploy, smoke and production promotion of 59a3618 proceed through the guarded procedure.
+Production serves 59a3618 (dpl_54BQjPtj67Zfm2ew4nNzEoFWaW2j) and staging serves it too (dpl_2ebacK4izKJh79BBFdXBgFh3Dkt1); the release step closes once one signed-in journey is smoked on staging and production, which needs a test account on the shared Supabase project named by the owner, and the Workers stay undeployed until an owner sentence covers their changed compatibility flag.
