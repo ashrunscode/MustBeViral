@@ -234,6 +234,7 @@ acceptance:
         - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/cutover-2026-10-02.md
 quality_gates:
   - id: governance
     command: pnpm governance:check
@@ -274,7 +275,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Production serves 0b9f578 (dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj) and staging serves it too (dpl_5skrFZb2nnZSog6DYhCd82pB7phL). Still open are one signed-in journey on staging and production, which needs the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke", the studio poster frame, which needs a rights-cleared studio still or clip, and the Workers, whose config differs from the deployed sources by a compatibility flag.
+  next_action: mustbeviral.com and www.mustbeviral.com serve production web dpl_3atvTZx8YU5ioq4rkvskGyKvxoVj (merge 0b9f578, record 20b6e1e). Staging web remains dpl_5skrFZb2nnZSog6DYhCd82pB7phL. Core staging 8c90ddc3-d5da-49ef-9d96-31e5ceda04c6 and Core production d69e987c-90a6-43f5-ae45-a397c206ddf3 were deployed from 20b6e1e on 2026-10-02 and both /health routes return ok. Collaboration was not deployed. Still open are one signed-in journey on staging and production, which needs a founder@mustbeviral.com password and the sentence "Use founder@mustbeviral.com for the production and staging signed-in smoke", and a rights-cleared studio still or clip for the poster frame. Evidence is governance/evidence/WP-PLATFORM-UI-001/cutover-2026-10-02.md.
   blockers: []
   changed_paths: []
   last_green_checks: []
