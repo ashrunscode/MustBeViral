@@ -19,6 +19,7 @@ import {
   revalidateOnFocus,
   signIn,
   switchToBrand,
+  openBrandDraft,
 } from './platform-journey-helpers';
 
 const connected =
@@ -81,7 +82,7 @@ test.describe('connected brand knowledge journeys', () => {
       await page.getByTestId('assertion-fact').click();
       await expect(page.getByTestId('assertion-value')).toHaveText(`${name} opens daily`);
       await page.getByTestId('assertion-language').click();
-      await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+      await expect(page.getByTestId('assertion-value')).toHaveText('Unknown: not supplied.');
       await page.getByTestId('approve-brand-version').click();
       await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
       await page.getByLabel('Campaign pin').fill(`${name}-original`);
@@ -97,7 +98,7 @@ test.describe('connected brand knowledge journeys', () => {
       const changes = page.getByTestId('knowledge-changes');
       const hours = changes
         .getByTestId('knowledge-change-group')
-        .filter({ has: page.locator('summary', { hasText: /^hours ·/ }) });
+        .filter({ has: page.locator('summary', { hasText: /^hours,/ }) });
       await expect(hours).toContainText('Conflicting facts');
       await hours.locator('summary').first().click();
       await expect(hours).toContainText(`${name} opens daily`);
@@ -135,7 +136,7 @@ test.describe('connected brand knowledge journeys', () => {
       await expect(findingsAlert(page)).toContainText('expired offer');
       const sale = changes
         .getByTestId('knowledge-change-group')
-        .filter({ has: page.locator('summary', { hasText: /^sale ·/ }) });
+        .filter({ has: page.locator('summary', { hasText: /^sale,/ }) });
       await sale.locator('summary').first().click();
       await sale.getByLabel('Review decision').selectOption('withdraw');
       await sale.getByLabel('Reason for this review').fill('The launch offer has ended.');
@@ -194,7 +195,7 @@ test.describe('connected brand knowledge journeys', () => {
     for (const index of [0, 39]) {
       await page
         .getByTestId('assertion-offering')
-        .filter({ hasText: new RegExp(`sku${index} ·`) })
+        .filter({ hasText: new RegExp(`sku${index},`) })
         .click();
       await expect(page.getByTestId('assertion-value')).toHaveText(
         `UnPile catalog product ${index}`,
@@ -238,7 +239,7 @@ test.describe('connected brand knowledge journeys', () => {
       await expect(page.getByTestId('assertion-offering')).toHaveCount(3);
       for (const key of ['sku b', 'sku c']) {
         await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
-        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown: not supplied.');
       }
       await page.getByTestId('approve-brand-version').click();
       await expect(page.getByTestId('approved-version')).toContainText('Approved version 1');
@@ -255,8 +256,8 @@ test.describe('connected brand knowledge journeys', () => {
       const changes = page.getByTestId('knowledge-changes');
       const missing = changes
         .getByTestId('knowledge-change-group')
-        .filter({ has: page.locator('summary', { hasText: /^sku a ·/ }) });
-      await expect(missing).toContainText('Missing from latest source');
+        .filter({ has: page.locator('summary', { hasText: /^sku a,/ }) });
+      await expect(missing).toContainText('Missing from the latest source');
       await expect(changes).toContainText('Replacement source');
       await page.getByTestId('approve-brand-version').click();
       await expect(findingsAlert(page)).toContainText('contradictory');
@@ -266,13 +267,13 @@ test.describe('connected brand knowledge journeys', () => {
         .getByLabel('Reason for this review')
         .fill('The replacement catalog no longer confirms this product.');
       await missing.getByRole('button', { name: 'Record conflict review' }).click();
-      await expect(missing).not.toContainText('Missing from latest source');
+      await expect(missing).not.toContainText('Missing from the latest source');
       await page.getByTestId('approve-brand-version').click();
       await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
       await expect(changes).not.toContainText('Replacement source');
       for (const key of ['sku b', 'sku c']) {
         await page.getByTestId('assertion-offering').filter({ hasText: key }).click();
-        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+        await expect(page.getByTestId('assertion-value')).toHaveText('Unknown: not supplied.');
       }
       await page.reload();
       await expect(page.getByTestId('assertion-offering')).toHaveCount(4);
@@ -308,16 +309,16 @@ test.describe('connected brand knowledge journeys', () => {
         buffer: Buffer.from('kind,field_key,value\nfact,unconfirmed,'),
       });
       const changes = page.getByTestId('knowledge-changes');
-      await expect(changes).toContainText('Missing from latest source');
+      await expect(changes).toContainText('Missing from the latest source');
       await page.locator('input[type="file"]').setInputFiles(original);
       await expectJobStatus(page, 'duplicate');
-      await expect(changes).not.toContainText('Missing from latest source');
+      await expect(changes).not.toContainText('Missing from the latest source');
       await expect(changes).not.toContainText('Replacement source');
       await page.getByTestId('approve-brand-version').click();
       await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
       await page.reload();
       await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
-      await expect(changes).not.toContainText('Missing from latest source');
+      await expect(changes).not.toContainText('Missing from the latest source');
     }
   });
 
@@ -342,7 +343,7 @@ test.describe('connected brand knowledge journeys', () => {
     await expect(page.getByTestId('candidate-value')).toHaveText('WashBodega Laundromat Hours');
     await expect(page.getByTestId('candidate-provenance')).toContainText('html_title');
     await expect(page.getByTestId('candidate-provenance')).toHaveText(
-      /Source [0-9a-f-]{36} · html_title · captured .+/iu,
+      /Source [0-9a-f-]{36}, html_title, captured .+/iu,
     );
     await page.getByTestId('candidate-heading').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('24-hour machine access');
@@ -402,7 +403,7 @@ test.describe('connected brand knowledge journeys', () => {
     await page.getByTestId('candidate-page_title').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('UnPile Wash And Fold Hours');
     await switchToBrand(page, 'WashBodega');
-    await page.getByRole('link', { name: 'Findings' }).click();
+    await page.getByRole('link', { name: 'Intelligence' }).click();
     await page.getByTestId('candidate-page_title').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('WashBodega Laundromat Hours');
     await expect(page.getByText('UNPILE_DOC_LARGE')).toHaveCount(0);
@@ -423,7 +424,7 @@ test.describe('connected brand knowledge journeys', () => {
     await page.getByRole('button', { name: 'Continue without a website' }).click();
     await expect(page.getByTestId('candidate-unknown_gap')).toBeVisible({ timeout: 20_000 });
     await page.getByTestId('candidate-unknown_gap').click();
-    await expect(page.getByTestId('candidate-value')).toHaveText('Unknown — not supplied.');
+    await expect(page.getByTestId('candidate-value')).toHaveText('Unknown: not supplied.');
     await page
       .getByLabel('Correct this finding')
       .fill('Customer access is 24/7 for machines only.');
@@ -497,7 +498,7 @@ test.describe('connected brand knowledge journeys', () => {
       await expect(page.getByText('Loading brand findings')).toBeVisible();
       await held.waitForAuthorizedCapture();
       await switchToBrand(page, 'UnPile');
-      await page.getByRole('link', { name: 'Findings' }).click();
+      await page.getByRole('link', { name: 'Intelligence' }).click();
       await expectSelectedCandidate(page, 'candidate-page_title', 'UnPile Wash And Fold Hours');
       await held.release();
       await expectSelectedCandidate(page, 'candidate-page_title', 'UnPile Wash And Fold Hours');
@@ -519,8 +520,8 @@ test.describe('connected brand knowledge journeys', () => {
     try {
       await signIn(editorPage, editor.email);
       await editorPage.getByRole('button', { name: 'Accept invitation' }).click();
-      await editorPage.getByRole('link', { name: 'Open UnPile →' }).click();
-      await editorPage.getByRole('link', { name: 'Findings' }).click();
+      await openBrandDraft(editorPage, 'UnPile');
+      await editorPage.getByRole('link', { name: 'Intelligence' }).click();
       await expectSelectedCandidate(
         editorPage,
         'candidate-page_title',
@@ -551,6 +552,7 @@ test.describe('connected brand knowledge journeys', () => {
       const editorMember = page.getByRole('article').filter({ hasText: editor.email });
       await expect(editorMember.getByText('Studio teammate')).toBeVisible();
       await expect(editorMember.getByRole('button', { name: 'Revoke access' })).toBeVisible();
+      page.once('dialog', (dialog) => void dialog.accept());
       await editorMember.getByRole('button', { name: 'Revoke access' }).click();
       await expect(
         page.getByRole('status').filter({ hasText: 'Studio access revoked' }),
@@ -701,7 +703,7 @@ test.describe('connected brand knowledge journeys', () => {
     await expect(page.getByTestId('assertion-value')).toHaveText('WashBodega half price');
     await page.getByLabel('Correct this assertion').fill('');
     await page.getByRole('button', { name: 'Save assertion' }).click();
-    await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+    await expect(page.getByTestId('assertion-value')).toHaveText('Unknown: not supplied.');
     await page.getByTestId('approve-brand-version').click();
     await expect(page.getByTestId('approved-version')).toContainText('Approved version 2');
     const clippedCards = await page
@@ -795,7 +797,7 @@ test.describe('connected brand knowledge journeys', () => {
     await page.getByTestId('extract-knowledge').click();
     await expect(page.getByTestId('assertion-offering').first()).toBeVisible({ timeout: 20_000 });
     await page.getByTestId('assertion-offering').first().click();
-    await expect(page.getByTestId('assertion-value')).toHaveText('Unknown — not supplied.');
+    await expect(page.getByTestId('assertion-value')).toHaveText('Unknown: not supplied.');
     await page.getByLabel('Correct this assertion').fill('UnPile wash-and-fold pickup.');
     await page.getByLabel('Why this assertion correction').fill('Operator UnPile offering.');
     await page.getByRole('button', { name: 'Save assertion' }).click();

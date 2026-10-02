@@ -36,7 +36,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain(formatUsdMicros(model.walletBalanceMicros));
       expect(html).toContain('Funded — wallet covers upcoming named-price reservations.');
       expect(html).toContain('billing-subscription-badge--active');
-      expect(html).toContain('Launch pack receipt · GB-04');
+      expect(html).toContain('Launch pack receipt, GB-04');
       expect(html).toContain('Catalog charge');
       expect(html).not.toContain('Refund / release');
     });
@@ -49,7 +49,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain('Low balance');
       expect(html).toContain(formatUsdMicros(model.walletBalanceMicros));
       expect(html).toContain('add prepaid credit before the next pack confirmation');
-      expect(html).toContain('Launch pack receipt · GB-02');
+      expect(html).toContain('Launch pack receipt, GB-02');
     });
 
     it('renders blocked state with past-due subscription and refund section', () => {
@@ -62,7 +62,7 @@ describe('BillingUsagePanel', () => {
       expect(html).toContain('billing-subscription-badge--past_due');
       expect(html).toContain('Past due');
       expect(html).toContain('Refund / release');
-      expect(html).toContain('Reservation release · GB-01 partial');
+      expect(html).toContain('Reservation release, GB-01 partial');
       expect(html).toContain('no hidden mock charge');
     });
 

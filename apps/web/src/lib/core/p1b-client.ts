@@ -1,4 +1,5 @@
 import type { ApiKeyScope } from '@mustbeviral/contracts';
+import { P1B_SESSION_ENDED } from './p1b-session';
 
 import { createBrowserSupabaseClient } from '../supabase/client';
 import { resolveBrowserCoreBaseUrl } from './browser-client';
@@ -59,7 +60,7 @@ async function accessToken(): Promise<string> {
   const supabase = createBrowserSupabaseClient();
   const { data, error } = await supabase.auth.getSession();
   if (error !== null || data.session?.access_token === undefined) {
-    throw new Error('Sign in is required to manage API keys.');
+    throw new Error(P1B_SESSION_ENDED);
   }
   return data.session.access_token;
 }
@@ -93,8 +94,11 @@ async function request<T>(
     },
     ...(init.body === undefined ? {} : { body: JSON.stringify(init.body) }),
   });
-  const payload = (await response.json()) as ApiEnvelope<T> | { error: { message: string } };
+  const payload = (await response.json()) as
+    ApiEnvelope<T> | { error: { code?: string; message: string } };
   if (!response.ok) {
+    const code = 'error' in payload ? payload.error.code : undefined;
+    if (response.status === 401 || code === 'UNAUTHENTICATED') throw new Error(P1B_SESSION_ENDED);
     const message = 'error' in payload ? payload.error.message : 'Request failed.';
     throw new Error(message);
   }

@@ -23,6 +23,11 @@ import {
 } from '../../../../../src/features/export/export-port';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
+import { useCampaignContext } from '../../../../../src/features/platform/campaign-context';
+import {
+  campaignHref,
+  type CampaignContext,
+} from '../../../../../src/features/platform/platform-navigation';
 import styles from './receipt-flow.module.css';
 
 const exportChip = {
@@ -36,16 +41,19 @@ const exportChip = {
 >;
 
 export function ExportResultNotice({
+  context = {},
   onRetryRead,
   result,
   runId,
   workspace,
 }: Readonly<{
+  context?: CampaignContext;
   onRetryRead?: () => void;
   result: ExportPortResult;
   runId?: string;
   workspace: string;
 }>) {
+  const reviewHref = campaignHref(workspace, 'content', { ...context, run: runId ?? context.run });
   if (
     result.type === 'ok' ||
     result.type === 'export_required' ||
@@ -60,20 +68,12 @@ export function ExportResultNotice({
         role="alert"
         data-result="review_incomplete"
       >
-        <strong>Launch pack is incomplete</strong>
+        <strong>This campaign’s content is not fully approved</strong>
         <span>
-          Resolve required members: {result.pending_group_ids.join(', ')} before creating an export.
-          The checklist below names every expected file and its current state.
+          Approve or finish {result.pending_group_ids.join(', ')} before creating an export. The
+          checklist below names every expected file and its current state.
         </span>
-        <Link
-          href={
-            runId === undefined
-              ? `/studio/${workspace}/review`
-              : `/studio/${workspace}/review?run=${encodeURIComponent(runId)}`
-          }
-        >
-          Return to named review
-        </Link>
+        <Link href={reviewHref}>Back to content review</Link>
       </Card>
     );
   }
@@ -96,7 +96,9 @@ export function ExportResultNotice({
           The immutable receipt cannot be issued against stale revision{' '}
           {result.expected_revision_id}. Current revision is {result.actual_revision_id}.
         </span>
-        <Link href={`/studio/${workspace}/canvas?state=conflict`}>Open canvas recovery</Link>
+        <Link href={campaignHref(workspace, 'plan', { ...context, run: undefined })}>
+          Open the plan to recover
+        </Link>
       </Card>
     );
   }
@@ -166,6 +168,8 @@ export function ReceiptFlow({
   const [creatingExport, setCreatingExport] = useState(false);
   const [lastOperation, setLastOperation] = useState<'read' | 'create'>('read');
   const [downloadError, setDownloadError] = useState<string | null>(null);
+  const context = useCampaignContext();
+  const reviewHref = campaignHref(workspace, 'content', { ...context, run: runId ?? context.run });
   // The receipt card scrolls inside the page on narrow screens and holds no focusable content there.
   const { ref: receiptRegionRef, tabIndex: receiptRegionTabIndex } =
     useScrollableRegion<HTMLElement>();
@@ -183,12 +187,12 @@ export function ReceiptFlow({
 
   if (result === null) {
     return (
-      <main id="main-content" className={styles.receiptPage}>
+      <div id="main-content" className={styles.receiptPage}>
         <Card className={styles.resultCard} feedback="loading" role="status" data-result="loading">
           <strong>Reading immutable receipt</strong>
           <span>Core is reading approved artifacts without creating or replaying an export.</span>
         </Card>
-      </main>
+      </div>
     );
   }
 
@@ -200,14 +204,16 @@ export function ReceiptFlow({
     result.type !== 'export_failed'
   ) {
     return (
-      <main id="main-content" className={styles.receiptPage}>
+      <div id="main-content" className={styles.receiptPage}>
+        <h1 className={styles.sectionLabel}>Receipt</h1>
         <ExportResultNotice
+          context={context}
           {...(runId === undefined ? {} : { runId })}
           result={result}
           workspace={workspace}
           {...(lastOperation === 'read' ? { onRetryRead: () => void retryRead() } : {})}
         />
-      </main>
+      </div>
     );
   }
 
@@ -281,11 +287,20 @@ export function ReceiptFlow({
     receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros - receipt.actualMicros : 0n;
   const issuedDate = receipt.issuedAt.slice(0, 10);
   return (
-    <main id="main-content" className={styles.receiptPage}>
+    <div id="main-content" className={styles.receiptPage}>
       <div className={styles.sealRow}>
-        <span className={`${styles.receiptSeal} receipt-seal`}>
-          <span aria-hidden="true">◆</span>
-          <MonoCaps>Receipt verified</MonoCaps>
+        <span className={`${styles.receiptSeal} receipt-seal`} data-seal={result.type}>
+          <MonoCaps>
+            {result.type === 'ok'
+              ? 'Receipt verified'
+              : result.type === 'review_incomplete'
+                ? 'Approval incomplete'
+                : result.type === 'export_failed'
+                  ? 'Export failed'
+                  : result.type === 'rebuild_required'
+                    ? 'Export needs rebuilding'
+                    : 'Export not created yet'}
+          </MonoCaps>
         </span>
       </div>
       <article
@@ -296,6 +311,7 @@ export function ReceiptFlow({
       >
         {result.type === 'review_incomplete' || result.type === 'export_failed' ? (
           <ExportResultNotice
+            context={context}
             {...(runId === undefined ? {} : { runId })}
             result={result}
             workspace={workspace}
@@ -304,12 +320,12 @@ export function ReceiptFlow({
         <header className={styles.documentHead}>
           <div>
             <h1 id="receipt-title">
-              Receipt · Rev {receipt.revision} · {issuedDate}
+              Receipt for revision {receipt.revision}, issued {issuedDate}
             </h1>
             <p>
               {dataMode === 'preview'
                 ? 'Lumen Skin / Meta Campaign Launch Pack / Immutable settlement record'
-                : `Run ${receipt.receiptNumber} / Immutable settlement record`}
+                : `Run ${receipt.receiptNumber}. This settlement record does not change.`}
             </p>
           </div>
           <div className={`${styles.receiptNumber} receipt-number`}>
@@ -320,7 +336,7 @@ export function ReceiptFlow({
         <div className={styles.documentBody}>
           <section aria-labelledby="lineage-title">
             <h2 id="lineage-title" className={styles.sectionLabel}>
-              Provider-job capture lineage
+              What was charged, by attempt
             </h2>
             <LedgerTable className={styles.ledger} aria-label="Receipt lineage rows">
               <thead>
@@ -336,9 +352,7 @@ export function ReceiptFlow({
               <tbody>
                 {receipt.lineage.length === 0 ? (
                   <tr>
-                    <td colSpan={6}>
-                      No provider-job lineage rows were returned for this receipt.
-                    </td>
+                    <td colSpan={6}>No charged attempts are recorded on this receipt.</td>
                   </tr>
                 ) : null}
                 {receipt.lineage.map((row) => (
@@ -388,10 +402,12 @@ export function ReceiptFlow({
                 <span>Issued</span>
                 <strong>{receipt.issuedAt}</strong>
               </div>
-              <div>
-                <span>Region</span>
-                <strong>{dataMode === 'preview' ? 'us-east-1' : 'Core receipt'}</strong>
-              </div>
+              {dataMode === 'preview' ? (
+                <div>
+                  <span>Region</span>
+                  <strong>us-east-1</strong>
+                </div>
+              ) : null}
             </section>
           </aside>
         </div>
@@ -421,34 +437,23 @@ export function ReceiptFlow({
         <footer className={styles.documentFoot}>
           <MonoCaps>
             {dataMode === 'preview'
-              ? 'Immutable · Ledger entry 0042'
-              : `Immutable · Run ${receipt.receiptNumber}`}
+              ? 'Immutable. Ledger entry 0042'
+              : `Run ${receipt.receiptNumber}`}
           </MonoCaps>
-          <MonoCaps>
-            {dataMode === 'preview'
-              ? 'Signer: mbv-ledger-v2 / us-east-1'
-              : 'Authority: Supabase ledger / Core Worker'}
-          </MonoCaps>
+          {dataMode === 'preview' ? <MonoCaps>Signer: mbv-ledger-v2 / us-east-1</MonoCaps> : null}
         </footer>
       </article>
       <div className={styles.confirmBar}>
         <div>
-          <MonoCaps>Immutable record</MonoCaps>
+          <MonoCaps>Settled</MonoCaps>
           <span>
-            Quote {formatUsdMicros(receipt.quoteMicros)} · Actual{' '}
-            {formatUsdMicros(receipt.actualMicros)} · {formatUsdMicros(varianceMicros)} retained
+            Quoted {formatUsdMicros(receipt.quoteMicros)}, charged{' '}
+            {formatUsdMicros(receipt.actualMicros)}, {formatUsdMicros(varianceMicros)} under quote
           </span>
         </div>
         {result.type === 'review_incomplete' ? (
-          <Link
-            className="mbv-button mbv-button--primary"
-            href={
-              runId === undefined
-                ? `/studio/${workspace}/review`
-                : `/studio/${workspace}/review?run=${encodeURIComponent(runId)}`
-            }
-          >
-            Return to named review
+          <Link className="mbv-button mbv-button--primary" href={reviewHref}>
+            Back to content review
           </Link>
         ) : result.type === 'export_failed' ? (
           <Button variant="ghost" disabled={readPort === null} onClick={() => void retryRead()}>
@@ -471,9 +476,11 @@ export function ReceiptFlow({
             {refreshingDownload ? 'Minting download' : 'Download pack'}
           </Button>
         ) : (
-          <Button disabled={dataMode === 'worker'}>
-            {dataMode === 'preview' ? 'Download PDF' : 'Export recorded'}
-          </Button>
+          <span className={styles.exportRecorded}>
+            {dataMode === 'preview'
+              ? 'Export recorded. No download in this preview.'
+              : 'Export recorded'}
+          </span>
         )}
       </div>
       {downloadError === null ? null : (
@@ -481,14 +488,6 @@ export function ReceiptFlow({
           {downloadError}
         </p>
       )}
-      <footer className={styles.footer}>
-        <MonoCaps>
-          {dataMode === 'preview'
-            ? 'Ledger read: 22ms · Entry: 0042'
-            : `Ledger read · Capture rows: ${String(receipt.lineage.length)}`}
-        </MonoCaps>
-        <MonoCaps>v2.0.4-studio</MonoCaps>
-      </footer>
-    </main>
+    </div>
   );
 }

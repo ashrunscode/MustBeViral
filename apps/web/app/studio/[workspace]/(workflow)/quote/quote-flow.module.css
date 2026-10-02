@@ -2,9 +2,14 @@
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template: minmax(0, 1fr) 72px 32px / minmax(0, 1fr) 320px;
+  grid-template: minmax(0, 1fr) 72px / minmax(0, 1fr) 320px;
   overflow: hidden;
   background: var(--paper);
+}
+
+/* Load, blocked and session-ended states have no side column. */
+.single {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .quoteStage {
@@ -338,5 +343,67 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+.coverage {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+.coverage div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--wash);
+  padding: 10px 0;
+  font-size: 13px;
+}
+.coverage dt {
+  color: var(--ink);
+}
+.coverage dd {
+  margin: 0;
+  color: var(--ink-strong);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.coverageNote {
+  margin: 16px 0 0;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.5;
+}
+/* Phone: the card, the coverage list and the confirm bar stack in one column. */
+@media (max-width: 767px) {
+  .quotePage {
+    grid-template: auto auto auto / minmax(0, 1fr);
+    align-content: start;
+    overflow-y: auto;
+  }
+  .quoteStage {
+    overflow: visible;
+    padding: 16px 0;
+  }
+  .quoteCard {
+    width: calc(100% - 32px);
+    margin-inline: 16px;
+    padding: 20px 16px;
+  }
+  .sidePanel {
+    grid-column: 1;
+    grid-row: 2;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 20px 16px;
+  }
+  .confirmBar {
+    grid-row: 3;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    padding: 12px 16px;
+  }
+  .confirmBar > :last-child {
+    flex: 1 1 100%;
   }
 }

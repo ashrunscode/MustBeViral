@@ -49,6 +49,8 @@ import {
 } from '../../../../../src/features/collaboration/checkpoint-canvas-drafts';
 import { createBrowserCoreClient } from '../../../../../src/lib/core/browser-client';
 import { createMutationIdempotencyKey } from '../../../../../src/lib/core/idempotency';
+import { useCampaignContext } from '../../../../../src/features/platform/campaign-context';
+import { campaignHref } from '../../../../../src/features/platform/platform-navigation';
 import styles from './canvas-flow.module.css';
 
 const NODE_HEIGHT = 94;
@@ -113,12 +115,12 @@ const CanvasOutlinePanel = memo(function CanvasOutlinePanel({
     <aside className={styles.outlinePanel} aria-labelledby="outline-title">
       <div className={styles.outlineHeader}>
         <div>
-          <MonoCaps>Semantic parity</MonoCaps>
+          <MonoCaps>Outline</MonoCaps>
           <h2 id="outline-title">Graph outline</h2>
         </div>
         <Chip status="notes">{nodeCount} nodes</Chip>
       </div>
-      <p className={styles.outlineHelp}>Topological order. Use ↑ and ↓ to move between nodes.</p>
+      <p className={styles.outlineHelp}>In order. Arrow keys move between nodes.</p>
       <ol className={styles.outlineList}>
         {outline.map((row, index) => (
           <OutlineRow
@@ -148,12 +150,17 @@ function edgePath(edge: CanvasEdge, nodes: ReadonlyMap<string, CanvasNode>): str
   return `M${String(startX)} ${String(startY)} C${String(startX + control)} ${String(startY)} ${String(endX - control)} ${String(endY)} ${String(endX)} ${String(endY)}`;
 }
 
+/** A revision id is a UUID; the screen shows its first block and keeps the whole id for tools. */
+function shortRevision(revision: string): string {
+  return revision.length > 12 ? revision.slice(0, 8) : revision;
+}
+
 function campaignTitleFromModel(model: CanvasModel, dataMode: 'preview' | 'worker'): string {
   if (dataMode === 'preview') return 'Lumen Skin launch pack';
   const brief = model.nodes.find((node) => node.id === 'brief');
   const product =
     typeof brief?.parameters.product === 'string' ? brief.parameters.product.trim() : '';
-  return product.length > 0 ? `${product} launch pack` : 'Launch pack';
+  return product.length > 0 ? `${product} campaign` : 'Campaign';
 }
 
 function lineageFor(model: CanvasModel, selectedId: string): ReadonlySet<string> {
@@ -294,14 +301,12 @@ export function CanvasLoadNotice({
 }
 
 function NodeCard({
-  arrival,
   dimmed,
   node,
   selected,
   simplified,
   onSelect,
 }: Readonly<{
-  arrival: boolean;
   dimmed: boolean;
   node: CanvasNode;
   selected: boolean;
@@ -312,7 +317,7 @@ function NodeCard({
   return (
     <button
       type="button"
-      className={`${styles.nodeCard} ${selected ? 'node-selected' : ''} ${dimmed ? 'node-dim' : ''} ${arrival ? 'arrival-warm' : ''} ${simplified ? styles.nodeSimplified : ''}`}
+      className={`${styles.nodeCard} ${selected ? 'node-selected' : ''} ${dimmed ? 'node-dim' : ''} ${simplified ? styles.nodeSimplified : ''}`}
       style={{ left: node.x, top: node.y }}
       data-node-id={node.id}
       data-node-status={node.status}
@@ -385,14 +390,15 @@ export function CanvasFlow({
           }
         : null,
   );
-  const [selectedId, setSelectedId] = useState('2');
+  // The preview fixture selects its sample node; a live canvas selects its first node on load.
+  const [selectedId, setSelectedId] = useState(dataMode === 'preview' ? '2' : '');
+  const context = useCampaignContext();
   const [result, setResult] = useState<CanvasPortResult | null>(null);
   const [validating, setValidating] = useState(false);
   const [checkpointing, setCheckpointing] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [viewport, setViewport] = useState({ width: 1120, height: 620 });
-  const [arrivalNodeId, setArrivalNodeId] = useState<string | null>(null);
   const [textDrafts, setTextDrafts] = useState<Record<string, Record<string, string>>>({});
   const surfaceRef = useRef<HTMLDivElement>(null);
   const graphPlaneRef = useRef<HTMLDivElement>(null);
@@ -414,6 +420,7 @@ export function CanvasFlow({
       if (!active) return;
       if (next.type === 'ok') {
         setModel(next.model);
+        setSelectedId((current) => current || (next.model.nodes[0]?.id ?? ''));
         setLoadResult(null);
       } else {
         setLoadResult(next);
@@ -434,18 +441,6 @@ export function CanvasFlow({
     });
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    let settleTimer: number | undefined;
-    const arrivalTimer = window.setTimeout(() => {
-      setArrivalNodeId('6');
-      settleTimer = window.setTimeout(() => setArrivalNodeId(null), 180);
-    }, 2000);
-    return () => {
-      window.clearTimeout(arrivalTimer);
-      if (settleTimer !== undefined) window.clearTimeout(settleTimer);
-    };
   }, []);
 
   const nodesById = useMemo(
@@ -502,8 +497,14 @@ export function CanvasFlow({
     });
   }
 
+  // Nothing recedes until a node is selected.
   const lineage = useMemo(
-    () => (model === null ? new Set<string>() : lineageFor(model, selectedId)),
+    () =>
+      model === null
+        ? new Set<string>()
+        : selectedId === ''
+          ? new Set(model.nodes.map((node) => node.id))
+          : lineageFor(model, selectedId),
     [model, selectedId],
   );
   const simplified = isSimplifiedCanvasLod(zoom);
@@ -677,21 +678,23 @@ export function CanvasFlow({
 
   if (model === null) {
     return (
-      <main id="main-content" className={styles.canvasPage}>
+      <div id="main-content" className={styles.canvasPage}>
         <section className={styles.workspace} aria-label="ViralGraph canvas">
           <CanvasLoadNotice result={loadResult} onRetry={() => void reloadLatest()} />
         </section>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main id="main-content" className={styles.canvasPage}>
+    <div id="main-content" className={styles.canvasPage}>
       <section className={styles.workspace} aria-label="ViralGraph canvas">
         <div className={styles.toolbar}>
           <div>
-            <MonoCaps>Canvas revision {model.revision}</MonoCaps>
-            <span className={styles.toolbarTitle}>{campaignTitleFromModel(model, dataMode)}</span>
+            <MonoCaps title={model.revision}>
+              Canvas revision {shortRevision(model.revision)}
+            </MonoCaps>
+            <h1 className={styles.toolbarTitle}>{campaignTitleFromModel(model, dataMode)}</h1>
           </div>
           <div className={styles.toolbarActions}>
             <MonoCaps data-testid="virtualized-count">
@@ -787,7 +790,7 @@ export function CanvasFlow({
                   orient="auto"
                   markerUnits="strokeWidth"
                 >
-                  <path d="M0 0 L5 2.5 L0 5 Z" fill="rgba(0,0,0,0.25)" />
+                  <path d="M0 0 L5 2.5 L0 5 Z" style={{ fill: 'var(--ink-faint)' }} />
                 </marker>
                 <marker
                   id="canvas-arrow-transfer"
@@ -798,7 +801,7 @@ export function CanvasFlow({
                   orient="auto"
                   markerUnits="strokeWidth"
                 >
-                  <path d="M0 0 L5 2.5 L0 5 Z" fill="#3182d4" />
+                  <path d="M0 0 L5 2.5 L0 5 Z" style={{ fill: 'var(--signal)' }} />
                 </marker>
               </defs>
               {visibleEdges.map((edge) => (
@@ -822,7 +825,6 @@ export function CanvasFlow({
                 selected={selectedId === node.id}
                 dimmed={!lineage.has(node.id)}
                 simplified={simplified}
-                arrival={arrivalNodeId === node.id}
                 onSelect={() => selectNode(node.id)}
               />
             ))}
@@ -831,7 +833,7 @@ export function CanvasFlow({
         <div className={styles.quoteBar}>
           <div>
             <MonoCaps>Pinned revision</MonoCaps>
-            <MonoCaps>{model.revision}</MonoCaps>
+            <MonoCaps title={model.revision}>{shortRevision(model.revision)}</MonoCaps>
           </div>
           <div>
             <MonoCaps>Route</MonoCaps>
@@ -847,7 +849,12 @@ export function CanvasFlow({
               href={
                 canvasId === undefined
                   ? `/studio/${workspace}/quote`
-                  : `/studio/${workspace}/quote?canvas=${encodeURIComponent(canvasId)}&revision=${encodeURIComponent(model.revision)}`
+                  : campaignHref(workspace, 'budget', {
+                      ...context,
+                      canvas: canvasId,
+                      revision: model.revision,
+                      run: undefined,
+                    })
               }
             >
               {canvasQuotePresentation(dataMode).cta}
@@ -891,10 +898,6 @@ export function CanvasFlow({
           surface="canvas"
         />
       </div>
-      <footer className={styles.footer}>
-        <MonoCaps>Latency: 142ms · Node count: {model.nodes.length} · Region: us-east-1</MonoCaps>
-        <MonoCaps>v2.0.4-studio</MonoCaps>
-      </footer>
-    </main>
+    </div>
   );
 }

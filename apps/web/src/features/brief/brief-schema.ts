@@ -203,14 +203,7 @@ export function emptyBriefDraft(): BriefDraft {
 
 /** Worker self-session draft. Synthetic staging assets are selectable; claim chips stay editable. */
 export function stagingWorkerDraft(): BriefDraft {
-  return {
-    ...emptyBriefDraft(),
-    assets: {
-      packshots: [...STAGING_SYNTHETIC_PACKSHOTS],
-      squarePackshotReady: false,
-      rightsAttested: false,
-    },
-  };
+  return emptyBriefDraft();
 }
 
 export function briefSectionState(
@@ -429,7 +422,7 @@ export const lumenSkinDraft: BriefDraft = {
     objections: 'Concern about irritation and unsupported skincare promises',
   },
   offer: {
-    pricePresentation: '$42 · free shipping over $60',
+    pricePresentation: '$42, free shipping over $60',
     urgencyConstraints: 'No countdowns, false scarcity, or pressure language',
     destinationUrl: 'https://example.com/products/barrier-serum',
   },

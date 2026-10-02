@@ -148,6 +148,20 @@ export class WorkerRunStartPort implements RunStartPort {
             actual_revision_id: detailString(error.details, 'actual') ?? 'current revision',
           };
         }
+        if (error.code === 'BILLING_BLOCKED') {
+          return {
+            type: 'billing_blocked',
+            reason: detailString(error.details, 'reason') ?? null,
+            message: error.message,
+          };
+        }
+        if (error.code === 'MODEL_UNAVAILABLE') {
+          return {
+            type: 'provider_unavailable',
+            reason: detailString(error.details, 'reason') ?? null,
+            message: error.message,
+          };
+        }
         if (error.code === 'FORBIDDEN') return { type: 'forbidden' };
         if (error.code === 'NOT_FOUND') return { type: 'not_found', quote_id: input.quote.id };
         return {
@@ -227,7 +241,7 @@ function nodeDetail(
         : classifyProviderErrorCode(node.providerErrorCode));
     return runFailureRecoveryCopyForKind(kind).attemptDetail;
   }
-  return `Dispatch wave ${String(node.dispatchWave)} · ${node.status.replaceAll('_', ' ')}`;
+  return `Dispatch wave ${String(node.dispatchWave)}, ${node.status.replaceAll('_', ' ')}`;
 }
 
 function runSnapshot(data: P0OperationData<'get_run'>): RunSnapshot {

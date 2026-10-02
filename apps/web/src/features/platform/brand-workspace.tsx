@@ -3,19 +3,31 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
+import { PlatformFrame, PlatformLoading, PlatformRecovery } from './platform-frame';
 import {
-  PlatformFrame,
-  PlatformHeading,
-  PlatformLoading,
-  PlatformRecovery,
-} from './platform-frame';
-import { brandHref, isResourceId, studioHref, workspaceBillingHref } from './platform-navigation';
+  BRAND_SECTIONS,
+  brandHref,
+  isResourceId,
+  resolveBrandSection,
+  studioHref,
+  workspaceBillingHref,
+} from './platform-navigation';
 import { PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { BrandDraftEditor } from './brand-draft-editor';
 import { BrandFindings } from './brand-findings';
 import { BrandLocations } from './brand-locations';
 import { BrandSettings } from './brand-settings';
+import {
+  BrandAssets,
+  BrandCalendar,
+  BrandCampaigns,
+  BrandChannels,
+  BrandContent,
+  BrandInbox,
+  BrandOverview,
+  BrandResults,
+} from './brand-sections';
 import { BrandStudioChoices } from './legacy-project';
 import { UNSAVED_LEAVE_MESSAGE } from './unsaved-navigation';
 
@@ -57,11 +69,12 @@ export function BrandWorkspace({
     />
   );
 }
+
 function BrandResource({
   studioId,
   workspaceId,
   brandId,
-  view = 'draft',
+  view,
   locationId,
 }: Readonly<{
   studioId: string;
@@ -109,9 +122,10 @@ function BrandResource({
     refreshStudio();
   }, [refreshAccess, refreshStudio]);
   const router = useRouter();
+  const { section, unknown } = resolveBrandSection(view);
   if (studio.error !== undefined || access.error !== undefined)
     return (
-      <PlatformFrame>
+      <PlatformFrame section="brands">
         <PlatformRecovery
           error={access.error ?? studio.error}
           retry={() => {
@@ -123,7 +137,7 @@ function BrandResource({
     );
   if (!confirmed)
     return (
-      <PlatformFrame>
+      <PlatformFrame section="brands">
         <PlatformLoading label="Opening the selected brand…" />
       </PlatformFrame>
     );
@@ -132,14 +146,51 @@ function BrandResource({
   const waiting = studio.loading || access.loading || !studio.data || !access.data;
   const canWrite = !waiting && current.actions.includes('brand:write');
   const confirmLeave = () => !dirty || window.confirm(UNSAVED_LEAVE_MESSAGE);
+  const scope = { studioId, brand: current.brand, canWrite };
+  const switcher = (
+    <>
+      <label>
+        Switch brand
+        <select
+          value={brandId}
+          disabled={waiting}
+          onChange={(event) => {
+            const next = brands.data?.items.find((b) => b.id === event.target.value);
+            if (next && confirmLeave())
+              router.push(brandHref(studioId, next.workspace_id, next.id, section));
+          }}
+        >
+          <option value={brandId}>{current.brand.name}</option>
+          {brands.data?.items
+            .filter((b) => b.id !== brandId)
+            .map((b) => (
+              <option key={b.id} value={b.id}>
+                {b.name}
+              </option>
+            ))}
+        </select>
+      </label>
+      {brands.data?.next_cursor ? (
+        <button
+          type="button"
+          onClick={() => setSwitchCursor(brands.data?.next_cursor ?? undefined)}
+        >
+          More brands
+        </button>
+      ) : null}
+    </>
+  );
   return (
     <PlatformFrame
-      studioId={studioId}
-      studioName={currentStudio.studio.name}
-      brandName={current.brand.name}
-      workspaceId={workspaceId}
-      {...(!waiting ? { role: currentStudio.role } : {})}
-      {...(!waiting && current.workspace_owner ? { showBilling: true } : {})}
+      studio={{
+        id: studioId,
+        name: currentStudio.studio.name,
+        ...(waiting ? {} : { role: currentStudio.role }),
+      }}
+      brand={{ id: brandId, name: current.brand.name, workspaceId }}
+      section="brands"
+      contextControls={switcher}
+      showBilling={!waiting && current.workspace_owner}
     >
       {waiting ? (
         <p role="status" aria-live="polite" className="platform-note">
@@ -147,86 +198,47 @@ function BrandResource({
         </p>
       ) : null}
       <div hidden={waiting} inert={waiting}>
-        <div
-          className="platform-row platform-between"
-          style={{ marginBottom: 24 }}
-          {...(waiting ? { 'aria-busy': true } : {})}
-        >
-          <Link href={studioHref(studioId)}>← All brands</Link>
-          <label>
-            Switch brand
-            <select
-              value={brandId}
-              onChange={(event) => {
-                const next = brands.data?.items.find((b) => b.id === event.target.value);
-                if (next && confirmLeave())
-                  router.push(brandHref(studioId, next.workspace_id, next.id));
-              }}
-            >
-              <option value={brandId}>{current.brand.name}</option>
-              {brands.data?.items
-                .filter((b) => b.id !== brandId)
-                .map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.name}
-                  </option>
-                ))}
-            </select>
-          </label>
-          {brands.data?.next_cursor && (
-            <button
-              type="button"
-              onClick={() => setSwitchCursor(brands.data?.next_cursor ?? undefined)}
-            >
-              More brands
-            </button>
-          )}
+        <div className="platform-row platform-between" style={{ marginBottom: 16 }}>
+          <Link href={studioHref(studioId, 'brands')}>All brands</Link>
         </div>
-        {brands.error !== undefined && (
-          <p role="status">
+        {brands.error !== undefined ? (
+          <p role="status" className="platform-note">
             Brand switching is temporarily unavailable.{' '}
-            <Link href={studioHref(studioId)}>Return to the portfolio.</Link>
+            <Link href={studioHref(studioId, 'brands')}>Return to all brands.</Link>
           </p>
-        )}
-        {current.brand.status === 'archived' && (
+        ) : null}
+        {current.brand.status === 'archived' ? (
           <p role="status" className="platform-note">
             This brand is archived. Its saved details remain available for reference.
           </p>
-        )}
+        ) : null}
+        {unknown !== null ? (
+          <p role="status" className="platform-note">
+            There is no “{unknown}” section for a brand. Showing the overview.
+          </p>
+        ) : null}
         <nav className="platform-tabs" aria-label="Brand navigation">
-          {(['draft', 'findings', 'locations', 'settings'] as const).map((tab) => (
+          {BRAND_SECTIONS.map((tab) => (
             <Link
-              key={tab}
-              href={brandHref(studioId, workspaceId, brandId, tab)}
-              aria-current={view === tab ? 'page' : undefined}
+              key={tab.key}
+              href={brandHref(studioId, workspaceId, brandId, tab.key)}
+              aria-current={section === tab.key ? 'page' : undefined}
             >
-              {
-                {
-                  draft: 'Brand draft',
-                  findings: 'Findings',
-                  locations: 'Locations',
-                  settings: 'Settings',
-                }[tab]
-              }
+              {tab.label}
             </Link>
           ))}
-          {current.workspace_owner && (
-            <Link
-              href={workspaceBillingHref(workspaceId, studioId)}
-              aria-current={view === 'billing' ? 'page' : undefined}
-            >
-              Billing & usage
-            </Link>
-          )}
+          {current.workspace_owner ? (
+            <Link href={workspaceBillingHref(workspaceId, studioId, brandId)}>Billing</Link>
+          ) : null}
         </nav>
-        {view === 'findings' ? (
+        {section === 'findings' ? (
           <BrandFindings
             studioId={studioId}
             brand={current.brand}
             canWrite={canWrite}
             onAuthorityLost={onAuthorityLost}
           />
-        ) : view === 'locations' ? (
+        ) : section === 'locations' ? (
           <BrandLocations
             workspaceId={workspaceId}
             brandId={brandId}
@@ -235,7 +247,7 @@ function BrandResource({
             canRead={!waiting && current.actions.includes('location:read')}
             canWrite={!waiting && current.actions.includes('location:write')}
           />
-        ) : view === 'settings' ? (
+        ) : section === 'settings' ? (
           <BrandSettings
             studioId={studioId}
             brand={current.brand}
@@ -243,23 +255,29 @@ function BrandResource({
             canWrite={canWrite}
             refresh={access.refresh}
           />
-        ) : view === 'billing' ? (
-          <>
-            <PlatformHeading
-              title="Workspace billing."
-              description="Billing belongs to this workspace and is available to its owner."
-            />
-            <Link className="platform-button" href={workspaceBillingHref(workspaceId, studioId)}>
-              Open workspace billing
-            </Link>
-          </>
-        ) : (
+        ) : section === 'draft' ? (
           <BrandDraftEditor
             studioId={studioId}
             brand={current.brand}
             canWrite={canWrite}
             onDirty={setDirty}
           />
+        ) : section === 'campaigns' ? (
+          <BrandCampaigns {...scope} />
+        ) : section === 'calendar' ? (
+          <BrandCalendar {...scope} />
+        ) : section === 'assets' ? (
+          <BrandAssets {...scope} />
+        ) : section === 'channels' ? (
+          <BrandChannels {...scope} />
+        ) : section === 'content' ? (
+          <BrandContent {...scope} />
+        ) : section === 'inbox' ? (
+          <BrandInbox {...scope} />
+        ) : section === 'results' ? (
+          <BrandResults {...scope} />
+        ) : (
+          <BrandOverview {...scope} />
         )}
       </div>
     </PlatformFrame>

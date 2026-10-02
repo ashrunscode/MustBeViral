@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, type FormEvent } from 'react';
 import type { PlatformOutput } from '@mustbeviral/contracts';
-import { PlatformHeading, PlatformLoading, PlatformRecovery } from './platform-frame';
+import { PlatformHeading, PlatformLoading, PlatformRecovery, roleName } from './platform-frame';
 import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
@@ -88,8 +88,8 @@ export function StudioTeam({
             <label>
               Studio role
               <select name="role" defaultValue="viewer">
-                <option value="viewer">Viewer — shared brand context</option>
-                <option value="editor">Editor — permitted brand edits</option>
+                <option value="viewer">Viewer: reads shared brand context</option>
+                <option value="editor">Editor: edits permitted brands</option>
               </select>
             </label>
             <button className="platform-primary" type="submit">
@@ -125,7 +125,7 @@ export function StudioTeam({
                 <h3>{member.display_label}</h3>
                 <small>{member.role === 'owner' ? 'Studio owner' : 'Studio teammate'}</small>
               </div>
-              <span className="platform-tag">{member.role}</span>
+              <span className="platform-tag">{roleName(member.role)}</span>
             </div>
             {member.role !== 'owner' && (
               <div className="platform-row">
@@ -149,6 +149,12 @@ export function StudioTeam({
                 <button
                   disabled={mutation.pending || studio.status !== 'active'}
                   onClick={() => {
+                    if (
+                      !window.confirm(
+                        `Remove ${member.display_label} from ${studio.name}? They lose access to every brand shared with this studio.`,
+                      )
+                    )
+                      return;
                     void mutation
                       .mutate('revoke_studio_member', {
                         studio_id: studio.id,
@@ -192,7 +198,7 @@ export function StudioTeam({
             <div>
               <h3>{invitation.recipient_email}</h3>
               <p>
-                {invitation.role} ·{' '}
+                {roleName(invitation.role)},{' '}
                 {invitation.status === 'pending' && new Date(invitation.expires_at).getTime() <= now
                   ? 'expired'
                   : invitation.status}
@@ -203,6 +209,8 @@ export function StudioTeam({
               <button
                 disabled={mutation.pending || studio.status !== 'active'}
                 onClick={() => {
+                  if (!window.confirm(`Revoke the invitation for ${invitation.recipient_email}?`))
+                    return;
                   void mutation
                     .mutate('revoke_studio_invitation', {
                       studio_id: studio.id,

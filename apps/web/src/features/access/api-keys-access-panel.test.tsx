@@ -2,7 +2,7 @@
 
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ApiKeysAccessPanel } from './api-keys-access-panel';
 
@@ -47,6 +47,10 @@ vi.mock('../../lib/core/p1b-client', () => ({
 }));
 
 afterEach(cleanup);
+// Revoking asks first; the tests answer yes.
+beforeEach(() => {
+  vi.spyOn(window, 'confirm').mockReturnValue(true);
+});
 
 function alertsInDocument() {
   return document.querySelectorAll('[role="alert"]');

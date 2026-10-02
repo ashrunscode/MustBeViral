@@ -5,9 +5,9 @@ engine: ViralGraph
 generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
-active_packet: WP-PLATFORM-W3-001
-current_step: w3f-001-preflight
-next_action: Complete the exact real-media fixture and rights manifest, then resolve the separately reviewed packet-path and architecture-guidance prerequisites and seal the benchmark protocol before implementation.
+active_packet: WP-PLATFORM-UI-001
+current_step: ui-007-gates
+next_action: Pass agent:verify and the packet governance, design, repository and database gates on the exact merge candidate from a fresh clone.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

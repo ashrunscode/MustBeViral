@@ -23,7 +23,9 @@ export function StatusScreen({
         Skip to page content
       </a>
       <section aria-labelledby="status-heading" className="status-card">
-        <span className="pub-wordmark">{eyebrow}</span>
+        <span className="pub-wordmark" translate="no">
+          {eyebrow}
+        </span>
         <h1 id="status-heading">{title}</h1>
         <div className="status-body">{children}</div>
         <div className="status-actions">

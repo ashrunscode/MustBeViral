@@ -289,7 +289,9 @@ async function handleFalWebhook(
 ): Promise<Response> {
   if (!providerRunsEnabled(context.env)) {
     return context.json(
-      safeError(context, 'MODEL_UNAVAILABLE', 'Provider-backed execution is not enabled.'),
+      safeError(context, 'MODEL_UNAVAILABLE', 'Provider-backed execution is not enabled.', false, {
+        reason: 'provider_runs_disabled',
+      }),
       503,
     );
   }
@@ -560,7 +562,15 @@ async function handleClientRoute(
     }
     if (route.providerTouching && !providerRunsEnabled(context.env)) {
       return context.json(
-        safeError(context, 'MODEL_UNAVAILABLE', 'Provider-backed execution is not enabled.'),
+        safeError(
+          context,
+          'MODEL_UNAVAILABLE',
+          'Provider-backed execution is not enabled.',
+          false,
+          {
+            reason: 'provider_runs_disabled',
+          },
+        ),
         503,
       );
     }

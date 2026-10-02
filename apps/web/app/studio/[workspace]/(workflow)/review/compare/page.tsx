@@ -17,7 +17,7 @@ export default async function ComparePage({
     <ReviewFlow
       {...(query.run === undefined ? {} : { runId: query.run })}
       dataMode={session.mode === 'local-preview' ? 'preview' : 'worker'}
-      reviewer={session.mode === 'local-preview' ? 'Maya Chen' : 'You'}
+      reviewer={session.mode === 'local-preview' ? 'Maya Chen' : session.subject}
       workspace={workspace}
       mode="compare"
     />

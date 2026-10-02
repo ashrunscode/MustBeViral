@@ -88,18 +88,18 @@ export function parseBrandLocation(url: string) {
 export async function createStudioAndBrands(page: Page) {
   await page.getByLabel('Studio name').fill(`Synthetic W1 journeys ${randomUUID()}`);
   await page.getByRole('button', { name: 'Create studio' }).click();
-  await expect(page.getByRole('button', { name: '+ Add a brand' })).toBeVisible({
+  await expect(page.getByRole('link', { name: 'Add a brand' })).toBeVisible({
     timeout: 60_000,
   });
-  await page.getByRole('button', { name: '+ Add a brand' }).click();
+  await page.getByRole('link', { name: 'Add a brand' }).click();
   await page.getByLabel('Brand name').fill('WashBodega');
   await page.getByRole('button', { name: 'Create brand draft' }).click();
   await expect(
     page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
   ).toBeVisible();
   const washbodega = parseBrandLocation(page.url());
-  await page.getByRole('link', { name: '← All brands' }).click();
-  await page.getByRole('button', { name: '+ Add a brand' }).click();
+  await page.getByRole('link', { name: 'All brands' }).click();
+  await page.getByRole('link', { name: 'Add a brand' }).click();
   await page.getByLabel('Brand name').fill('UnPile');
   await page.getByRole('button', { name: 'Create brand draft' }).click();
   await expect(page.getByRole('heading', { name: 'Make UnPile feel like itself.' })).toBeVisible();
@@ -124,7 +124,8 @@ export async function switchToBrand(page: Page, name: string) {
   await expect(select).toBeVisible({ timeout: 15_000 });
   await expect(select.locator('option', { hasText: name })).toHaveCount(1, { timeout: 15_000 });
   await select.selectOption({ label: name });
-  await expect(page.getByRole('heading', { name: `Make ${name} feel like itself.` })).toBeVisible({
+  // Switching keeps the current section, so the breadcrumb, not the draft heading, proves the brand.
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText(name, {
     timeout: 15_000,
   });
 }
@@ -199,4 +200,13 @@ export function holdBrandPathGets(page: Page, brandId: string, leaf: string) {
       }
     },
   };
+}
+
+/** Open a brand card from the studio overview or brands list and move to its draft. */
+export async function openBrandDraft(page: Page, name: string) {
+  await page.getByRole('link', { name: `Open ${name}` }).click();
+  await page
+    .getByRole('navigation', { name: 'Brand navigation' })
+    .getByRole('link', { name: 'Brand draft' })
+    .click();
 }

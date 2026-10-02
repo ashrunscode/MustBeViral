@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import { createP1bManagementClient } from './p1b-client';
+import { P1B_SESSION_ENDED } from './p1b-session';
 
 const sessionToken = 'browser-session-jwt';
 
@@ -75,6 +76,32 @@ describe('P1b browser management client REST parity', () => {
     expect(headers.get('idempotency-key')).toMatch(
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/u,
     );
+  });
+
+  it("turns Core's UNAUTHENTICATED envelope into the session-ended signal", async () => {
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockResolvedValue(
+      Response.json(
+        { error: { code: 'UNAUTHENTICATED', message: 'A valid bearer token is required.' } },
+        { status: 401 },
+      ),
+    );
+
+    const client = await createP1bManagementClient();
+    await expect(client.listApiKeys('workspace-1')).rejects.toThrow(P1B_SESSION_ENDED);
+  });
+
+  it('keeps other Core error messages as they are', async () => {
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockResolvedValue(
+      Response.json(
+        { error: { code: 'FORBIDDEN', message: 'Owner role required.' } },
+        { status: 403 },
+      ),
+    );
+
+    const client = await createP1bManagementClient();
+    await expect(client.listApiKeys('workspace-1')).rejects.toThrow('Owner role required.');
   });
 
   it('targets skill management routes that are not exposed on CLI or MCP', async () => {

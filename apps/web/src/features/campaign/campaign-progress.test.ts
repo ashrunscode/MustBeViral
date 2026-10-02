@@ -28,6 +28,57 @@ describe('campaign progress', () => {
   it('builds resume hrefs for each workflow step', () => {
     expect(campaignResumeHref('campaign', 'brief')).toBe('/studio/campaign/brief');
     expect(campaignResumeHref('campaign', 'review')).toBe('/studio/campaign/review');
+    expect(
+      campaignResumeHref('campaign', 'review', {
+        studio: 's1',
+        brand: 'b1',
+        canvas: 'c1',
+        revision: 'r1',
+        run: 'run1',
+      }),
+    ).toBe('/studio/campaign/review?studio=s1&brand=b1&canvas=c1&revision=r1&run=run1');
+  });
+
+  it('keeps the studio, brand, plan and run with the saved step', () => {
+    const saved = writeCampaignProgress({
+      workspace: 'campaign',
+      step: 'quote',
+      context: { studio: 's1', brand: 'b1', canvas: 'c1', revision: 'r1', run: 'run1' },
+    });
+    expect(saved.context).toEqual({
+      studio: 's1',
+      brand: 'b1',
+      canvas: 'c1',
+      revision: 'r1',
+      run: 'run1',
+    });
+    expect(saved.resumeHref).toBe(
+      '/studio/campaign/quote?studio=s1&brand=b1&canvas=c1&revision=r1&run=run1',
+    );
+    expect(readCampaignProgress()).toEqual(saved);
+  });
+
+  it('drops identifiers that are not well formed instead of trusting them', () => {
+    const saved = writeCampaignProgress({
+      workspace: 'campaign',
+      step: 'canvas',
+      context: { studio: 's1', brand: '<script>', canvas: 'c1' },
+    });
+    expect(saved.context).toEqual({ studio: 's1', canvas: 'c1' });
+    expect(saved.resumeHref).toBe('/studio/campaign/canvas?studio=s1&canvas=c1');
+  });
+
+  it('rejects a stored record whose link disagrees with its context', () => {
+    const saved = writeCampaignProgress({
+      workspace: 'campaign',
+      step: 'review',
+      context: { studio: 's1', brand: 'b1', canvas: 'c1' },
+    });
+    window.sessionStorage.setItem(
+      'mbv.campaign.progress',
+      JSON.stringify({ ...saved, context: { ...saved.context, brand: 'b2' } }),
+    );
+    expect(readCampaignProgress()).toBeNull();
   });
 
   it('persists and reads progress from session storage', () => {

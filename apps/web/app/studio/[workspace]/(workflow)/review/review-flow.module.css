@@ -2,7 +2,7 @@
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template: minmax(0, 1fr) 72px 32px / minmax(0, 1fr) 300px;
+  grid-template: minmax(0, 1fr) 72px / minmax(0, 1fr) 300px;
   overflow: hidden;
   background: var(--paper-2);
 }
@@ -75,6 +75,9 @@
   gap: 14px;
 }
 .recoveryActions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--ink-strong);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -277,7 +280,7 @@
 }
 .conceptTab[aria-selected='true'] {
   border-color: var(--signal-soft);
-  background: #80bfff1f;
+  background: var(--selection-wash);
 }
 .conceptTab span {
   display: block;
@@ -387,7 +390,7 @@
   border-radius: 4px;
   padding: 8px 10px;
   background: var(--signal-fill);
-  color: #fff;
+  color: var(--card);
   font-size: 12px;
 }
 .conceptActions {
@@ -408,11 +411,11 @@
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: #e7e7e7;
+  background: var(--paper-2);
   color: var(--ink);
 }
 .prior {
-  background: #eee;
+  background: var(--wash);
 }
 .versionCaption {
   gap: 5px;
@@ -425,7 +428,7 @@
   margin-top: 10px;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: #e8e8e8;
+  background: var(--paper-2);
   color: var(--ink);
 }
 .cardFoot {
@@ -616,7 +619,7 @@
 
 @media (max-width: 600px) {
   .reviewPage {
-    grid-template: minmax(0, 1fr) 72px 32px / 1fr;
+    grid-template: minmax(0, 1fr) 72px / 1fr;
   }
   .reviewStage {
     padding: 10px;
@@ -763,4 +766,11 @@
     animation: none;
     transition: none;
   }
+}
+
+.decisionNote {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.5;
 }

@@ -86,9 +86,17 @@
 .mbv-button--primary:active:not(:disabled) {
   background: var(--signal-fill-pressed);
 }
-.mbv-button--primary:disabled {
-  background: var(--ink-faint);
-  color: rgba(255, 255, 255, 0.92);
+/* Loading keeps the signal fill with a changed label; a disabled primary recedes to paper with
+   body ink (above AA) instead of white on a faint fill. */
+.mbv-button--primary:disabled:not([data-state='loading']) {
+  border-color: var(--line);
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.mbv-button--primary[data-state='loading'] {
+  border-color: var(--signal-fill);
+  background: var(--signal-fill);
+  color: #fff;
 }
 .mbv-button--ghost {
   border-color: var(--line);

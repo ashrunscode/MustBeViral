@@ -21,7 +21,7 @@ describe('ReviewFlow', () => {
   it('renders comparison pairs, named reviewer, and approval controls', () => {
     const html = renderToStaticMarkup(<ReviewFlow workspace="lumen-skin" mode="compare" />);
     expect(html.match(/compare-pair/gu)?.length).toBe(4);
-    expect(html).toContain('Reviewer · Maya Chen');
+    expect(html).toContain('Reviewer: Maya Chen');
     expect(html).toContain('Approve group as Maya Chen');
     expect(html).toContain('Review drafts');
     expect(html).toContain('Accessibility description');
@@ -89,7 +89,7 @@ describe('ReviewFlow', () => {
       />,
     );
     expect(html).toContain('Composed review');
-    expect(html).toContain('Stillroom pack · Sponsored');
+    expect(html).toContain('Stillroom pack, sponsored');
     expect(html).toContain('Feed 4:5');
     expect(html).toContain('Keep nights simple');
     expect(html).toContain('Countertop compost without the smell.');
@@ -152,11 +152,11 @@ describe('ReviewFlow', () => {
     );
     expect(html).toContain('data-review-recovery="ambiguous"');
     expect(html).toContain(
-      'Run settlement: $4.55 authorized · $0.15 captured · $3.00 released · $0.13 refunded · $0.03 net · partially_captured · $1.40 pending',
+      'Run settlement: $4.55 authorized, $0.15 captured, $3.00 released, $0.13 refunded, $0.03 net, partially captured, $1.40 pending',
     );
     expect(html).toContain('1 completed branch is available below');
-    expect(html).toContain('Edit campaign brief');
-    expect(html).toContain('Open receipt');
+    expect(html).toContain('Edit the campaign brief');
+    expect(html).toContain('Open the receipt');
     expect(html).not.toMatch(/retry now|provider payload|signed url|token=/iu);
   });
 

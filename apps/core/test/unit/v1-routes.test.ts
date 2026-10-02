@@ -347,6 +347,10 @@ describe('P0 /v1 route boundary', () => {
     [{ status: 'cap_exceeded', tier: 'run' }, 409, 'BUDGET_EXCEEDED'],
     [{ status: 'graph_invalid' }, 422, 'GRAPH_INVALID'],
     [{ status: 'provider_unavailable' }, 503, 'MODEL_UNAVAILABLE'],
+    [{ status: 'billing_blocked', reason: 'charging_disabled' }, 402, 'BILLING_BLOCKED'],
+    [{ status: 'billing_blocked', reason: 'insufficient_wallet' }, 402, 'BILLING_BLOCKED'],
+    [{ status: 'billing_blocked', reason: 'generation_disabled' }, 503, 'MODEL_UNAVAILABLE'],
+    [{ status: 'billing_blocked', reason: 'provider_routes_disabled' }, 503, 'MODEL_UNAVAILABLE'],
   ] as const)('maps result union %o to safe HTTP %s', async (result, status, code) => {
     const app = createCoreApp(
       dependencies({ handlers: handlersWith('get_run', result as P0HandlerResult) }),
@@ -355,7 +359,7 @@ describe('P0 /v1 route boundary', () => {
     expect(response.status).toBe(status);
     const error = ApiErrorEnvelopeSchema.parse(await response.json()).error;
     expect(error.code).toBe(code);
-    if (result.status === 'conflict') {
+    if (result.status === 'conflict' || result.status === 'billing_blocked') {
       expect(error.details).toEqual({ reason: result.reason });
     } else {
       expect(error.details).toBeUndefined();

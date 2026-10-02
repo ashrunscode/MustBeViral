@@ -145,7 +145,7 @@ function DraftForm({
                 ? 'Saving…'
                 : dirty
                   ? 'Unsaved changes'
-                  : `Saved · version ${saved.version}`}
+                  : `Saved, version ${saved.version}`}
             </span>
           </div>
           <fieldset

@@ -2,14 +2,26 @@ import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { readWebPublicEnvironment } from '../../config/public-environment';
+import { DOCUMENT_LANG_HEADER, documentLangForPath, isPublicMarketingPath } from '../document-lang';
+
+/** Forward the request with the document language the root layout renders on `<html>`. */
+function nextWithDocumentLang(request: NextRequest): NextResponse {
+  const headers = new Headers(request.headers);
+  headers.set(DOCUMENT_LANG_HEADER, documentLangForPath(request.nextUrl.pathname));
+  return NextResponse.next({ request: { headers } });
+}
 
 export async function refreshSupabaseSession(request: NextRequest): Promise<NextResponse> {
   if (process.env.NODE_ENV !== 'production' && process.env.MBV_LOCAL_GOLDEN_PREVIEW === '1') {
-    return NextResponse.next({ request });
+    return nextWithDocumentLang(request);
+  }
+  // Sales pages carry no session work: they render even when the public configuration is absent.
+  if (isPublicMarketingPath(request.nextUrl.pathname)) {
+    return nextWithDocumentLang(request);
   }
 
   const environment = readWebPublicEnvironment();
-  let response = NextResponse.next({ request });
+  let response = nextWithDocumentLang(request);
   const supabase = createServerClient(
     environment.NEXT_PUBLIC_SUPABASE_URL,
     environment.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
@@ -18,7 +30,7 @@ export async function refreshSupabaseSession(request: NextRequest): Promise<Next
         getAll: () => request.cookies.getAll(),
         setAll: (cookiesToSet) => {
           for (const { name, value } of cookiesToSet) request.cookies.set(name, value);
-          response = NextResponse.next({ request });
+          response = nextWithDocumentLang(request);
           for (const { name, value, options } of cookiesToSet) {
             response.cookies.set(name, value, options);
           }

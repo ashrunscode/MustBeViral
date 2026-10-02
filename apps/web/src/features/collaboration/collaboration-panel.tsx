@@ -52,7 +52,7 @@ export function PresenceBar({
                   ? undefined
                   : { background: `${entry.actor.color}22`, borderColor: entry.actor.color }
               }
-              title={`${entry.actor.display_name} · ${entry.surface}`}
+              title={`${entry.actor.display_name}, ${entry.surface}`}
             >
               {initials(entry.actor.display_name)}
             </span>
@@ -63,7 +63,7 @@ export function PresenceBar({
         <MonoCaps>Live presence</MonoCaps>
         <strong>{presenceLabel(snapshot, surface)}</strong>
         <span>
-          {surface === 'canvas' ? 'Viewing graph' : 'Reviewing outputs'} · draft comments only
+          {surface === 'canvas' ? 'Viewing graph' : 'Reviewing outputs'}. Draft comments only.
         </span>
       </div>
       <span className={styles.presenceStatus}>{status}</span>

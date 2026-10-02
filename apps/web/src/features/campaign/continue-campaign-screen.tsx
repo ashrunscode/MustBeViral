@@ -1,19 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 import {
+  campaignProgressSnapshot,
   clearCampaignProgress,
-  readCampaignProgress,
-  type CampaignProgress,
+  subscribeCampaignProgress,
 } from '../../features/campaign/campaign-progress';
 
 export function ContinueCampaignScreen({
   defaultWorkspace,
 }: Readonly<{ defaultWorkspace: string }>) {
-  const [progress, setProgress] = useState<CampaignProgress | null>(() =>
-    typeof window === 'undefined' ? null : readCampaignProgress(),
+  // The server renders no saved step; the client subscribes to the stored one after hydration.
+  const progress = useSyncExternalStore(
+    subscribeCampaignProgress,
+    campaignProgressSnapshot,
+    () => null,
   );
 
   const startHref = `/studio/${defaultWorkspace}/brief`;
@@ -21,7 +24,9 @@ export function ContinueCampaignScreen({
   return (
     <main className="continue-page" id="main-content">
       <section aria-labelledby="continue-heading" className="continue-card">
-        <span className="studio-wordmark">Must Be Viral</span>
+        <span className="pub-wordmark" translate="no">
+          {'Must\u00a0Be\u00a0Viral'}
+        </span>
         <h1 id="continue-heading">Continue this campaign</h1>
         <p className="continue-lede">
           Pick up where you left off or start a fresh launch pack. Studio remembers your last
@@ -59,7 +64,6 @@ export function ContinueCampaignScreen({
                 type="button"
                 onClick={() => {
                   clearCampaignProgress();
-                  setProgress(null);
                 }}
               >
                 Forget saved step

@@ -1,11 +1,19 @@
+import type { Metadata } from 'next';
+
+import { authMessageClassName, authMessageRole } from '../../src/lib/auth/auth-message';
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { createServerSupabaseClient } from '../../src/lib/supabase/server';
+import { PendingSubmit } from '../../src/components/pending-submit';
 import { signOut } from './actions';
 import { LoginForm } from './login-form';
 
+export const metadata: Metadata = {
+  title: 'Sign in',
+  description: 'Sign in to your Must Be Viral Studio workspace.',
+};
+
 const notices: Readonly<Record<string, string>> = {
   signed_out: 'You are signed out.',
-  verified: 'Email verified. Sign in to continue.',
   expired_link: 'That sign-in link expired. Request a new link before trying again.',
   auth_link_failed: 'That sign-in link could not be verified. Sign in to continue.',
   password_updated: 'Password updated. Sign in with your new password.',
@@ -35,15 +43,17 @@ export default async function LoginPage({
         Skip to sign in
       </a>
       <section aria-labelledby="auth-heading" className="auth-card">
-        <span className="pub-wordmark">Must Be Viral</span>
+        <span className="pub-wordmark" translate="no">
+          {'Must\u00a0Be\u00a0Viral'}
+        </span>
         <h1 id="auth-heading">{signedIn ? 'Your session is active' : 'Sign in'}</h1>
         <p className="auth-intro">
           {signedIn
-            ? 'Continue to your authenticated Studio workspace or end this browser session.'
-            : 'Use the email and password associated with your Studio workspace.'}
+            ? 'Continue to your Studio workspace or end this browser session.'
+            : 'Use the email and password for your Studio workspace.'}
         </p>
         {notice === undefined ? null : (
-          <p className="auth-message auth-message--notice" role="status">
+          <p className={authMessageClassName(noticeKey)} role={authMessageRole(noticeKey)}>
             {notice}
           </p>
         )}
@@ -53,9 +63,11 @@ export default async function LoginPage({
               Continue to Studio
             </a>
             <form action={signOut}>
-              <button className="auth-secondary" type="submit">
-                Sign out
-              </button>
+              <PendingSubmit
+                className="auth-secondary"
+                label="Sign out"
+                pendingLabel="Signing out…"
+              />
             </form>
           </div>
         ) : (
@@ -64,6 +76,9 @@ export default async function LoginPage({
             <div className="auth-links">
               <a className="auth-link" href={forgotPasswordUrl}>
                 Forgot password?
+              </a>
+              <a className="auth-link" href="/signup">
+                Request access
               </a>
               <a
                 className="auth-link"

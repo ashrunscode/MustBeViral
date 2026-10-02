@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-W3-001` (blocked). Current step: `w3f-001-preflight`.
+Current packet: `WP-PLATFORM-UI-001` (in_progress). Current step: `ui-007-gates`.
 
 | Authority topic | Document | Path |
 |---|---|---|

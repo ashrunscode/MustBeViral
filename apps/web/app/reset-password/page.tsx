@@ -1,8 +1,14 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { createServerSupabaseClient } from '../../src/lib/supabase/server';
 import { ResetPasswordForm } from './reset-password-form';
+
+export const metadata: Metadata = {
+  title: 'Choose a new password',
+  description: 'Set a new password for your Must Be Viral Studio account.',
+};
 
 export default async function ResetPasswordPage({
   searchParams,
@@ -30,7 +36,9 @@ export default async function ResetPasswordPage({
         Skip to new password
       </a>
       <section aria-labelledby="auth-heading" className="auth-card">
-        <span className="pub-wordmark">Must Be Viral</span>
+        <span className="pub-wordmark" translate="no">
+          {'Must\u00a0Be\u00a0Viral'}
+        </span>
         <h1 id="auth-heading">Choose a new password</h1>
         <p className="auth-intro">
           Set a new password for this recovery session. Studio signs out every session after the

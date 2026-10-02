@@ -143,10 +143,10 @@ describe('campaign brief validation', () => {
     );
   });
 
-  it('gives the worker draft synthetic staging packshots so Validate is reachable', () => {
+  it('starts the worker draft without invented packshots, so a real upload is required', () => {
     const draft = stagingWorkerDraft();
-    expect(draft.assets.packshots).toEqual([...STAGING_SYNTHETIC_PACKSHOTS]);
-    expect(missingBriefItems(draft)).not.toContain('At least one product packshot');
+    expect(draft.assets.packshots).toEqual([]);
+    expect(missingBriefItems(draft)).toContain('At least one product packshot');
     expect(missingBriefItems(draft)).toEqual(
       expect.arrayContaining(['At least one prohibited claim', 'Creative constraints']),
     );

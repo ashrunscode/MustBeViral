@@ -4,6 +4,8 @@ import { API_KEY_SCOPES, type ApiKeyScope } from '@mustbeviral/contracts';
 import { Button, Dialog, LedgerTable, MonoCaps } from '@mustbeviral/ui';
 import { useCallback, useEffect, useState } from 'react';
 
+import { SessionExpiredAction } from '../../components/session-expired-action';
+import { P1B_SESSION_ENDED } from '../../lib/core/p1b-session';
 import { createP1bManagementClient, type ApiKeyListItem } from '../../lib/core/p1b-client';
 
 const DEFAULT_SCOPES: readonly ApiKeyScope[] = ['run:read', 'canvas:read'];
@@ -14,7 +16,7 @@ function formatTimestamp(value: string | null): string {
 }
 
 function scopeLabel(scope: ApiKeyScope): string {
-  return scope.replace(':', ' · ');
+  return scope.replace(':', ': ');
 }
 
 export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: string }>) {
@@ -91,6 +93,8 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
   }
 
   async function handleRevoke(keyId: string) {
+    if (!window.confirm('Revoke this API key? Anything using it stops working immediately.'))
+      return;
     setBusy(true);
     setError(null);
     try {
@@ -109,7 +113,9 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
   // An error that was already on the page when the dialog opened stays on the page.
   const errorInDialog = (createOpen || createdSecret !== null) && !errorPredatesDialog;
   const errorAlert =
-    error === null ? null : (
+    error === null ? null : error === P1B_SESSION_ENDED ? (
+      <SessionExpiredAction className="access-panel__error" />
+    ) : (
       <p className="access-panel__error" role="alert">
         {error}
       </p>
@@ -122,7 +128,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
   }
 
   return (
-    <main className="access-panel" id="main-content">
+    <div className="access-panel" id="main-content">
       <section className="access-panel__card" aria-labelledby="access-heading">
         <MonoCaps>Programmatic access</MonoCaps>
         <h1 id="access-heading">API keys and audit</h1>
@@ -256,6 +262,6 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
           </>
         )}
       </Dialog>
-    </main>
+    </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
+import { readWebPublicEnvironment } from '../../src/config/public-environment';
 import { classifyRecoveryRequestError, normalizedRecoveryEmail } from '../../src/lib/auth/recovery';
 import { safeStudioRedirectPath } from '../../src/lib/auth/sign-in';
 import { createServerSupabaseClient } from '../../src/lib/supabase/server';
@@ -25,12 +26,15 @@ export async function resendVerificationEmail(
     return { status: 'invalid_email', message: 'Enter the email address awaiting verification.' };
   }
 
+  // The validated public origin, never a loopback fallback: a production build without the
+  // variable fails closed instead of mailing a link to 127.0.0.1.
+  const environment = readWebPublicEnvironment();
   const supabase = await createServerSupabaseClient();
   const { error } = await supabase.auth.resend({
     type: 'signup',
     email,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_ORIGIN ?? 'http://127.0.0.1:3000'}/auth/callback?next=${encodeURIComponent(next)}`,
+      emailRedirectTo: `${environment.NEXT_PUBLIC_APP_ORIGIN}/auth/callback?next=${encodeURIComponent(next)}`,
     },
   });
 

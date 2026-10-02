@@ -3,6 +3,8 @@
 import { Button, Dialog, LedgerTable, MonoCaps } from '@mustbeviral/ui';
 import { useEffect, useState } from 'react';
 
+import { SessionExpiredAction } from '../../components/session-expired-action';
+import { P1B_SESSION_ENDED } from '../../lib/core/p1b-session';
 import {
   createP1bManagementClient,
   type SkillListItem,
@@ -14,7 +16,7 @@ function formatTimestamp(value: string): string {
 }
 
 function versionLabel(version: Readonly<{ version_number: number; title: string }>): string {
-  return `v${version.version_number} · ${version.title}`;
+  return `v${version.version_number}: ${version.title}`;
 }
 
 export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: string }>) {
@@ -120,7 +122,9 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
   // An error that was already on the page when the dialog opened stays on the page.
   const errorInDialog = (publishOpen || publishedVersion !== null) && !errorPredatesDialog;
   const errorAlert =
-    error === null ? null : (
+    error === null ? null : error === P1B_SESSION_ENDED ? (
+      <SessionExpiredAction className="access-panel__error" />
+    ) : (
       <p className="access-panel__error" role="alert">
         {error}
       </p>
@@ -131,7 +135,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
   const selectedSkill = skills.find((skill) => skill.id === selectedSkillId) ?? null;
 
   return (
-    <main className="access-panel skills-panel" id="main-content">
+    <div className="access-panel skills-panel" id="main-content">
       <section className="access-panel__card" aria-labelledby="skills-heading">
         <MonoCaps>User-authored Skills</MonoCaps>
         <h1 id="skills-heading">Skills and version history</h1>
@@ -234,7 +238,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
               {selectedVersion === null ? null : (
                 <div className="skills-panel__snapshot">
                   <p className="skills-panel__meta">
-                    Published {formatTimestamp(selectedVersion.published_at)} · immutable snapshot
+                    Published {formatTimestamp(selectedVersion.published_at)}. Immutable snapshot
                   </p>
                   <h3>{selectedVersion.title}</h3>
                   <pre className="skills-panel__instructions">{selectedVersion.instructions}</pre>
@@ -301,6 +305,6 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
           </>
         )}
       </Dialog>
-    </main>
+    </div>
   );
 }

@@ -1,0 +1,59 @@
+schema_version: 2
+status: superseded
+packet_id: WP-PLATFORM-W3-001
+spec_revision: 2
+phase: P4
+branch: main
+superseded_at: 2026-10-02T03:39:40.622Z
+successor_packet_id: WP-PLATFORM-UI-001
+successor_spec_revision: 1
+successor_packet_path: governance/evidence/WP-PLATFORM-W3-001/successor-WP-PLATFORM-UI-001.yaml
+successor_packet_sha256: fe28f21b83bcded37036760623858dd4d6aac1be5ac2a2c5363846e93d7bb9cc
+predecessor_head: 445b715b61754009b0d934cdceb5db73f3f42ca5
+closed_packet_path: governance/evidence/WP-PLATFORM-W3-001/superseded-work-packet.yaml
+closed_packet_sha256: ef0f28cde956013589ae7e868acdbd31a3f3f6ee7bdaacd9381830d19a3222ac
+decision_path: governance/evidence/WP-PLATFORM-W3-001/owner-supersession-decision-2026-10-01.yaml
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-W3-001/interface-program-amendment-2026-10-01.md
+    sha256: 54bcb80fbcb13769ee3e1188e83dda72ca157ccfe949dce915b89edf26da5f21
+    git_blob_oid: fd5bf48a527df4d6a5466f26a3b5fc1caf2dfafe
+  - path: governance/evidence/WP-PLATFORM-W3-001/owner-directive-2026-10-01.md
+    sha256: 55dfdf6ed0dde7c5262fef6e309a7631eb5e99126ba1892334bcf7ee07bc0c77
+    git_blob_oid: e35e5ecf6c44bb33188a4a85bc124d9207417292
+  - path: governance/evidence/WP-PLATFORM-W3-001/owner-supersession-decision-2026-10-01.yaml
+    sha256: a0818d82e20e0775e5137fe64ef48601d1f021ddc4b1b3644acbaed7dd32282b
+    git_blob_oid: a5ccd57099dd06d6f65c1082c23c8cc7cd2bd04d
+  - path: governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/fixture-inventory.json
+    sha256: a732defc6d430cfa065b0eee32d405ad7263cab27744209781aabba0537b19ce
+    git_blob_oid: 63f63c6f2349c7478f2f445d15d15a552202d1e5
+  - path: governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/preflight.md
+    sha256: 29914f3612cb9156f0783817b918be98a81ad56705bd45c691bea5a019b4b2f8
+    git_blob_oid: 101cfa0625d8037d5fd1d0b886b0df6812846b14
+  - path: governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/prerequisite-manifest.json
+    sha256: 846acf79ff6ac59255d5d460826fe70ef9ea4908c5b5c9535fb660bf661b8e26
+    git_blob_oid: 94c5dd110bdb3bbd9bac470d6284c7121e90b1c2
+  - path: governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/vercel-project-readback.json
+    sha256: da00885cfe3e495158fba3d597ddcfebe911a2928790969371c265f657470c3e
+    git_blob_oid: 6dbfa59f707348af019f7b963e2be7021f446229
+  - path: governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/vercel-team-readback.json
+    sha256: 2a02f26cfee906d154902c7d30da65e36bc5ad520d0876cd485f358f5fb923ce
+    git_blob_oid: 3e82b8922ff87cdcc847bda5114122c8308f0dc1
+  - path: governance/evidence/WP-PLATFORM-W3-001/preflight-2026-09-29/verification-attempts.json
+    sha256: 6485e82e46fc5f26967c14210d3fc534bbca68fda61672bea15e52cc29017e00
+    git_blob_oid: 442f8de8dbe622c470f04cfc01eedc5dc2f86705
+  - path: governance/evidence/WP-PLATFORM-W3-001/public-web-release-2026-09-30.md
+    sha256: 3dc36efaa8f6deec51e5359f3bd65807fda2ec9c48a3716f6acfeb91edb6925a
+    git_blob_oid: 4d5000352513622fa8e9770b78addd06484dbee1
+  - path: governance/evidence/WP-PLATFORM-W3-001/successor-WP-PLATFORM-UI-001.yaml
+    sha256: f849f63f550e35a362f097007832beb018c24240cc0b5b40d944a5443aeb28d1
+    git_blob_oid: 12a1e2debd7985d5d93f0f4f6cd1a66e983c6713
+unfinished_step_ids:
+  - w3f-001-preflight
+  - w3f-002-local-static
+  - w3f-003-connected-render
+  - w3f-004-decision
+unproved_acceptance_ids:
+  - benchmark-integrity
+  - connected-runtime
+  - regression-and-decision
+  - source-fidelity

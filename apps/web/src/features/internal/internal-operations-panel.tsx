@@ -1,14 +1,14 @@
 'use client';
 
 import { MonoCaps } from '@mustbeviral/ui';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 
-import { readCampaignProgress, type CampaignProgress } from '../campaign/campaign-progress';
+import { campaignProgressSnapshot, subscribeCampaignProgress } from '../campaign/campaign-progress';
 import { createBrowserCoreClient } from '../../lib/core/browser-client';
 import { createBrowserSupabaseClient } from '../../lib/supabase/client';
 import {
   DEFAULT_PLATFORM_KILL_SWITCHES,
-  fetchPlatformKillSwitches,
+  readPlatformKillSwitches,
   type PlatformKillSwitchSnapshot,
 } from '../../lib/platform/kill-switches';
 
@@ -29,14 +29,17 @@ function toKillSwitchSnapshot(snapshot: PlatformKillSwitchSnapshot): KillSwitchS
 }
 
 export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: string }>) {
-  const [progress] = useState<CampaignProgress | null>(() =>
-    typeof window === 'undefined' ? null : readCampaignProgress(),
+  const progress = useSyncExternalStore(
+    subscribeCampaignProgress,
+    campaignProgressSnapshot,
+    () => null,
   );
   const [workspaceLabel, setWorkspaceLabel] = useState<string>(workspace);
   const [killSwitches, setKillSwitches] = useState<KillSwitchSnapshot>(() =>
     toKillSwitchSnapshot(DEFAULT_PLATFORM_KILL_SWITCHES),
   );
   const [error, setError] = useState<string | null>(null);
+  const [switchesState, setSwitchesState] = useState<'loading' | 'known' | 'unknown'>('loading');
 
   useEffect(() => {
     let cancelled = false;
@@ -65,10 +68,14 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
     async function loadKillSwitches() {
       try {
         const supabase = createBrowserSupabaseClient();
-        const snapshot = await fetchPlatformKillSwitches(supabase);
-        if (!cancelled) setKillSwitches(toKillSwitchSnapshot(snapshot));
+        const read = await readPlatformKillSwitches(supabase);
+        if (cancelled) return;
+        setKillSwitches(toKillSwitchSnapshot(read.snapshot));
+        setSwitchesState(read.known ? 'known' : 'unknown');
       } catch {
-        if (!cancelled) setKillSwitches(toKillSwitchSnapshot(DEFAULT_PLATFORM_KILL_SWITCHES));
+        if (cancelled) return;
+        setKillSwitches(toKillSwitchSnapshot(DEFAULT_PLATFORM_KILL_SWITCHES));
+        setSwitchesState('unknown');
       }
     }
     void loadKillSwitches();
@@ -78,7 +85,7 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
   }, []);
 
   return (
-    <main className="internal-ops" id="main-content">
+    <div className="internal-ops" id="main-content">
       <div className="internal-ops__grid">
         <section className="internal-ops__card" aria-labelledby="internal-heading">
           <MonoCaps>Operator / internal</MonoCaps>
@@ -122,17 +129,23 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
                 <dt>{label}</dt>
                 <dd>
                   <span
-                    className={`internal-kill-switch ${enabled ? 'internal-kill-switch--on' : 'internal-kill-switch--off'}`}
+                    className={`internal-kill-switch ${switchesState === 'known' && enabled ? 'internal-kill-switch--on' : 'internal-kill-switch--off'}`}
                   >
-                    {enabled ? 'Enabled' : 'Disabled / closed'}
+                    {switchesState === 'loading'
+                      ? 'Reading…'
+                      : switchesState === 'unknown'
+                        ? 'Unknown. The switch state could not be read.'
+                        : enabled
+                          ? 'Enabled'
+                          : 'Disabled'}
                   </span>
                 </dd>
               </div>
             ))}
           </dl>
           <p className="auth-policy">
-            P0 keeps charging and signup closed. P1a extends these switches to Stripe settlement and
-            enrollment without enabling public signup by default.
+            Charging and self-service signup stay closed in this release. These switches are read
+            from the platform; this page never changes them.
           </p>
         </section>
 
@@ -140,8 +153,8 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
           <MonoCaps>Reconciliation</MonoCaps>
           <h2 id="reconciliation-heading">Landed cost honesty</h2>
           <p>
-            Catalog capture remains 4,550,000 micros per complete pack — the customer charge, not a
-            provider invoice. Fully landed cost instrumentation sums immutable provider, storage,
+            Catalog capture remains 4,550,000 micros per complete pack: the customer charge, not a
+            provider invoice. Landed cost instrumentation sums immutable provider, storage,
             execution, and artifact evidence when observable.
           </p>
           <p className="auth-policy">
@@ -150,6 +163,6 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
           </p>
         </section>
       </div>
-    </main>
+    </div>
   );
 }
