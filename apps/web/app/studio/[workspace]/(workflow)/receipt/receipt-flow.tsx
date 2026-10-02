@@ -183,12 +183,12 @@ export function ReceiptFlow({
 
   if (result === null) {
     return (
-      <main id="main-content" className={styles.receiptPage}>
+      <div id="main-content" className={styles.receiptPage}>
         <Card className={styles.resultCard} feedback="loading" role="status" data-result="loading">
           <strong>Reading immutable receipt</strong>
           <span>Core is reading approved artifacts without creating or replaying an export.</span>
         </Card>
-      </main>
+      </div>
     );
   }
 
@@ -200,14 +200,14 @@ export function ReceiptFlow({
     result.type !== 'export_failed'
   ) {
     return (
-      <main id="main-content" className={styles.receiptPage}>
+      <div id="main-content" className={styles.receiptPage}>
         <ExportResultNotice
           {...(runId === undefined ? {} : { runId })}
           result={result}
           workspace={workspace}
           {...(lastOperation === 'read' ? { onRetryRead: () => void retryRead() } : {})}
         />
-      </main>
+      </div>
     );
   }
 
@@ -281,7 +281,7 @@ export function ReceiptFlow({
     receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros - receipt.actualMicros : 0n;
   const issuedDate = receipt.issuedAt.slice(0, 10);
   return (
-    <main id="main-content" className={styles.receiptPage}>
+    <div id="main-content" className={styles.receiptPage}>
       <div className={styles.sealRow}>
         <span className={`${styles.receiptSeal} receipt-seal`}>
           <span aria-hidden="true">◆</span>
@@ -489,6 +489,6 @@ export function ReceiptFlow({
         </MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
-    </main>
+    </div>
   );
 }

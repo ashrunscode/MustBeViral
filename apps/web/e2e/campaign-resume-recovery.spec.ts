@@ -12,12 +12,16 @@ test('workspace settings preserve the last campaign step without crashing resume
       ),
     )
     .toBe('canvas');
-  for (const step of ['Billing', 'Access', 'Skills']) {
+  for (const [step, path] of [
+    ['Budget', 'quote'],
+    ['Content', 'review'],
+    ['Results', 'receipt'],
+  ] as const) {
     await page
       .getByRole('navigation', { name: 'Campaign workflow' })
       .getByRole('link', { name: step, exact: true })
       .click();
-    await expect(page).toHaveURL(new RegExp(`/${step.toLowerCase()}$`, 'u'));
+    await expect(page).toHaveURL(new RegExp(`/${path}$`, 'u'));
   }
   await page.goto('/studio/continue');
   await expect(page.getByRole('link', { name: 'Resume launch-pack canvas' })).toHaveAttribute(

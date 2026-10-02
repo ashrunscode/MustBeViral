@@ -131,7 +131,7 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
   const selectedSkill = skills.find((skill) => skill.id === selectedSkillId) ?? null;
 
   return (
-    <main className="access-panel skills-panel" id="main-content">
+    <div className="access-panel skills-panel" id="main-content">
       <section className="access-panel__card" aria-labelledby="skills-heading">
         <MonoCaps>User-authored Skills</MonoCaps>
         <h1 id="skills-heading">Skills and version history</h1>
@@ -301,6 +301,6 @@ export function SkillsAccessPanel({ workspaceId }: Readonly<{ workspaceId: strin
           </>
         )}
       </Dialog>
-    </main>
+    </div>
   );
 }

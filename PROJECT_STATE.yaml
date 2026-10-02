@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
+next_action: Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team and settings against the existing handlers.
 decisions_pending: []
 blockers: []
 legacy:

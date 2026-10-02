@@ -156,7 +156,7 @@ function QuoteLoadState({
 }>) {
   if (result?.type === 'session_expired') {
     return (
-      <main id="main-content" className={styles.quotePage}>
+      <div id="main-content" className={styles.quotePage}>
         <section className={styles.quoteStage} aria-labelledby="quote-title">
           <Card className={styles.quoteCard} feedback="error">
             <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
@@ -164,7 +164,7 @@ function QuoteLoadState({
             <SessionExpiredAction className={`${styles.notice} ${styles.noticeError}`} />
           </Card>
         </section>
-      </main>
+      </div>
     );
   }
   const message =
@@ -180,7 +180,7 @@ function QuoteLoadState({
               ? `Canvas ${result.canvas_id} was not found.`
               : result.message;
   return (
-    <main id="main-content" className={styles.quotePage}>
+    <div id="main-content" className={styles.quotePage}>
       <section className={styles.quoteStage} aria-labelledby="quote-title">
         <Card className={styles.quoteCard} feedback={result === null ? 'loading' : 'error'}>
           <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
@@ -207,7 +207,7 @@ function QuoteLoadState({
           </div>
         </Card>
       </section>
-    </main>
+    </div>
   );
 }
 
@@ -401,7 +401,7 @@ export function QuoteFlow({
   }
 
   return (
-    <main id="main-content" className={styles.quotePage}>
+    <div id="main-content" className={styles.quotePage}>
       <section className={styles.quoteStage} aria-labelledby="quote-title">
         <Card className={styles.quoteCard} feedback={feedback === 'error' ? 'error' : feedback}>
           <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
@@ -582,6 +582,6 @@ export function QuoteFlow({
         <MonoCaps>Quote latency: 142ms · Affected nodes: 4 · Region: us-east-1</MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
-    </main>
+    </div>
   );
 }

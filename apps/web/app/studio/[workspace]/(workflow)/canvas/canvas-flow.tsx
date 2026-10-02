@@ -677,16 +677,16 @@ export function CanvasFlow({
 
   if (model === null) {
     return (
-      <main id="main-content" className={styles.canvasPage}>
+      <div id="main-content" className={styles.canvasPage}>
         <section className={styles.workspace} aria-label="ViralGraph canvas">
           <CanvasLoadNotice result={loadResult} onRetry={() => void reloadLatest()} />
         </section>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main id="main-content" className={styles.canvasPage}>
+    <div id="main-content" className={styles.canvasPage}>
       <section className={styles.workspace} aria-label="ViralGraph canvas">
         <div className={styles.toolbar}>
           <div>
@@ -895,6 +895,6 @@ export function CanvasFlow({
         <MonoCaps>Latency: 142ms · Node count: {model.nodes.length} · Region: us-east-1</MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
-    </main>
+    </div>
   );
 }

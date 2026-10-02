@@ -2,19 +2,32 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
-import type { PlatformOutput } from '@mustbeviral/contracts';
 import {
   PlatformFrame,
   PlatformHeading,
   PlatformLoading,
   PlatformRecovery,
 } from './platform-frame';
-import { brandHref, isResourceId, studioHref } from './platform-navigation';
+import {
+  isResourceId,
+  isStudioSection,
+  studioHref,
+  type StudioSection,
+} from './platform-navigation';
 import { platformMutationErrorMessage, PlatformRequestError } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
 import { StudioTeam } from './studio-team';
 import { StudioSettings } from './studio-settings';
+import {
+  StudioApprovals,
+  StudioBrands,
+  StudioCalendar,
+  StudioCreators,
+  StudioOverview,
+  StudioReports,
+  StudioTasks,
+} from './studio-sections';
 
 export function StudioPortfolio({
   studioId,
@@ -23,7 +36,14 @@ export function StudioPortfolio({
   if (studioId && !isResourceId(studioId))
     return (
       <PlatformFrame>
-        <PlatformRecovery error={new PlatformRequestError('NOT_FOUND', 'Invalid studio')} />
+        <PlatformRecovery
+          error={
+            new PlatformRequestError(
+              'NOT_FOUND',
+              'That studio link is not valid. Choose a studio from the list.',
+            )
+          }
+        />
       </PlatformFrame>
     );
   return studioId ? (
@@ -32,6 +52,7 @@ export function StudioPortfolio({
     <StudioChooser />
   );
 }
+
 function StudioChooser() {
   const [newSlug] = useState(() => `studio-${crypto.randomUUID()}`);
   const [cursor, setCursor] = useState<string | undefined>();
@@ -63,14 +84,16 @@ function StudioChooser() {
           {studios.error !== undefined && (
             <PlatformRecovery error={studios.error} retry={studios.refresh} />
           )}
-          {studios.data?.items.map((s) => (
+          {studios.data?.items.map((studio) => (
             <Link
               className="platform-card platform-pad platform-row platform-between"
-              href={studioHref(s.id)}
-              key={s.id}
+              href={studioHref(studio.id)}
+              key={studio.id}
             >
-              <h2>{s.name}</h2>
-              <span>Open studio →</span>
+              <h2>{studio.name}</h2>
+              <span className="platform-tag">
+                {studio.status === 'archived' ? 'Archived' : 'Open studio'}
+              </span>
             </Link>
           ))}
           {studios.data?.items.length === 0 && (
@@ -80,9 +103,16 @@ function StudioChooser() {
             </div>
           )}
           <div className="platform-row">
-            {cursor && <button onClick={() => setCursor(undefined)}>First page</button>}
+            {cursor && (
+              <button type="button" onClick={() => setCursor(undefined)}>
+                First page
+              </button>
+            )}
             {studios.data?.next_cursor && (
-              <button onClick={() => setCursor(studios.data?.next_cursor ?? undefined)}>
+              <button
+                type="button"
+                onClick={() => setCursor(studios.data?.next_cursor ?? undefined)}
+              >
                 More studios
               </button>
             )}
@@ -104,7 +134,11 @@ function StudioChooser() {
                 placeholder="Your studio or business"
               />
             </label>
-            <button className="platform-primary" type="submit">
+            <button
+              className="platform-primary"
+              type="submit"
+              aria-busy={mutation.pending || undefined}
+            >
               {mutation.pending ? 'Creating…' : 'Create studio'}
             </button>
           </fieldset>
@@ -118,27 +152,32 @@ function StudioChooser() {
       <div className="platform-section">
         <h2>Invitations</h2>
       </div>
-      {invitations.loading && <PlatformLoading label="Checking your invitations…" />}
+      {invitations.loading && <PlatformLoading label="Checking your invitations…" rows={1} />}
       {invitations.error !== undefined && (
         <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
       )}
       {invitations.data?.items.length === 0 && (
         <p>No pending invitations for your verified email.</p>
       )}
-      <div className="platform-stack">
+      <ul className="platform-stack" style={undefined}>
         {invitations.data?.items.map(({ invitation, studio_name }) => (
-          <div
+          <li
             className="platform-card platform-pad platform-row platform-between"
             key={invitation.id}
           >
             <div>
               <h3>{studio_name}</h3>
               <p>
-                {invitation.role} · Expires {new Date(invitation.expires_at).toLocaleDateString()}
+                {invitation.role === 'editor' ? 'Editor' : 'Viewer'}. Expires{' '}
+                <time dateTime={invitation.expires_at}>
+                  {new Date(invitation.expires_at).toLocaleDateString()}
+                </time>
+                .
               </p>
               <small>Access covers the workspaces explicitly shared with this studio.</small>
             </div>
             <button
+              type="button"
               disabled={mutation.pending}
               onClick={() => {
                 void mutation
@@ -153,56 +192,49 @@ function StudioChooser() {
             >
               Accept invitation
             </button>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </PlatformFrame>
   );
 }
+
 function SelectedStudio({
   studioId,
   view,
 }: Readonly<{ studioId: string; view?: string | undefined }>) {
-  const access = usePlatformQuery('get_studio_access', { studio_id: studioId });
-  const [search, setSearch] = useState('');
-  const [cursor, setCursor] = useState<string | undefined>();
-  const [archives, setArchives] = useState(false);
-  const brands = usePlatformQuery(
-    'list_studio_brands',
-    {
-      studio_id: studioId,
-      search,
-      limit: 20,
-      include_archived: archives,
-      ...(cursor ? { cursor } : {}),
-    },
-    access.data !== undefined,
-    true,
-  );
-  const [adding, setAdding] = useState(false);
+  const access = usePlatformQuery('get_studio_access', { studio_id: studioId }, true, true);
   const [teamNotice, setTeamNotice] = useState('');
+  const section: StudioSection = isStudioSection(view) ? view : 'overview';
+  const unknownView = view !== undefined && view !== '' && !isStudioSection(view);
   if (access.loading)
     return (
-      <PlatformFrame>
+      <PlatformFrame section={section}>
         <PlatformLoading />
       </PlatformFrame>
     );
   if (access.error !== undefined || !access.data)
     return (
-      <PlatformFrame>
+      <PlatformFrame section={section}>
         <PlatformRecovery error={access.error} retry={access.refresh} />
       </PlatformFrame>
     );
   const { studio, role } = access.data;
   const canWrite = role !== 'viewer' && studio.status === 'active';
+  const context = { id: studio.id, name: studio.name, role };
   return (
-    <PlatformFrame studioId={studio.id} studioName={studio.name} role={role}>
+    <PlatformFrame studio={context} section={section}>
       {studio.status === 'archived' && (
-        <div role="status" className="platform-note">
+        <p role="status" className="platform-note">
           This studio is archived. Its identity is retained; new work is unavailable.
-        </div>
+        </p>
       )}
-      {view === 'team' ? (
+      {unknownView && (
+        <p role="status" className="platform-note">
+          There is no “{view}” section. Showing the overview.
+        </p>
+      )}
+      {section === 'team' ? (
         <StudioTeam
           studio={studio}
           role={role}
@@ -210,149 +242,23 @@ function SelectedStudio({
           notice={teamNotice}
           onNotice={setTeamNotice}
         />
-      ) : view === 'settings' ? (
+      ) : section === 'settings' ? (
         <StudioSettings studio={studio} role={role} refresh={access.refresh} />
+      ) : section === 'brands' ? (
+        <StudioBrands studio={studio} canWrite={canWrite} />
+      ) : section === 'calendar' ? (
+        <StudioCalendar studio={studio} />
+      ) : section === 'approvals' ? (
+        <StudioApprovals studio={studio} />
+      ) : section === 'tasks' ? (
+        <StudioTasks studio={studio} />
+      ) : section === 'creators' ? (
+        <StudioCreators studio={studio} />
+      ) : section === 'reports' ? (
+        <StudioReports studio={studio} />
       ) : (
-        <>
-          <PlatformHeading
-            title="Good work starts with the right context."
-            description="Choose a brand. Keep its voice, original assets and approvals together."
-          >
-            {canWrite && (
-              <button className="platform-primary" onClick={() => setAdding((value) => !value)}>
-                {adding ? 'Close new brand' : '+ Add a brand'}
-              </button>
-            )}
-          </PlatformHeading>
-          {adding && <NewBrand studioId={studio.id} />}
-          <div className="platform-section">
-            <h2>Your brands</h2>
-            <div className="platform-row">
-              <label className="platform-search">
-                Find a brand
-                <input
-                  type="search"
-                  value={search}
-                  placeholder="Search this studio"
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                    setCursor(undefined);
-                  }}
-                />
-              </label>
-              <label>
-                Show
-                <select
-                  value={archives ? 'all' : 'active'}
-                  onChange={(e) => {
-                    setArchives(e.target.value === 'all');
-                    setCursor(undefined);
-                  }}
-                >
-                  <option value="active">Active brands</option>
-                  <option value="all">Include archived</option>
-                </select>
-              </label>
-            </div>
-          </div>
-          {brands.loading && <PlatformLoading label="Finding your brands…" />}
-          {brands.error !== undefined && (
-            <PlatformRecovery error={brands.error} retry={brands.refresh} />
-          )}
-          {brands.data?.items.length === 0 && (
-            <div className="platform-card platform-pad platform-stack">
-              <h2>{search ? 'No brands match this search.' : 'Make room for your first brand.'}</h2>
-              <p>
-                {search
-                  ? 'Try another name or clear the search.'
-                  : canWrite
-                    ? 'Start with a name. You can add the website and details as you go.'
-                    : 'A workspace owner needs to share a brand with this studio.'}
-              </p>
-            </div>
-          )}
-          <div className="platform-grid">
-            {brands.data?.items.map((b) => (
-              <BrandCard key={b.id} brand={b} studioId={studio.id} />
-            ))}
-          </div>
-          <div className="platform-section">
-            {cursor && <button onClick={() => setCursor(undefined)}>First page</button>}
-            {brands.data?.next_cursor && (
-              <button onClick={() => setCursor(brands.data?.next_cursor ?? undefined)}>
-                More brands
-              </button>
-            )}
-          </div>
-        </>
+        <StudioOverview studio={studio} canWrite={canWrite} />
       )}
     </PlatformFrame>
-  );
-}
-function BrandCard({
-  brand,
-  studioId,
-}: Readonly<{ brand: PlatformOutput<'get_brand'>['record']; studioId: string }>) {
-  return (
-    <article className="platform-card">
-      <div className="platform-brand-mark" aria-hidden="true">
-        {brand.name.slice(0, 2).toUpperCase()}
-      </div>
-      <div className="platform-pad platform-stack">
-        <div className="platform-row platform-between">
-          <h2>{brand.name}</h2>
-          <span className="platform-tag">
-            {brand.status === 'archived' ? 'Archived' : 'Brand workspace'}
-          </span>
-        </div>
-        <p>Brand essentials, locations and saved setup.</p>
-        <Link className="platform-button" href={brandHref(studioId, brand.workspace_id, brand.id)}>
-          Open {brand.name} →
-        </Link>
-      </div>
-    </article>
-  );
-}
-function NewBrand({ studioId }: Readonly<{ studioId: string }>) {
-  const [newSlug] = useState(() => `brand-${crypto.randomUUID()}`);
-  const mutation = usePlatformMutation();
-  const router = useRouter();
-  async function create(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get('name')).trim();
-    // The slug is an identity, not a guess about another workspace with the same name.
-    const result = await mutation.mutate('start_brand_draft', {
-      studio_id: studioId,
-      name,
-      slug: newSlug,
-    });
-    if (result) router.push(brandHref(studioId, result.brand.workspace_id, result.brand.id));
-  }
-  return (
-    <form className="platform-card platform-pad platform-stack" onSubmit={(e) => void create(e)}>
-      <h2>Start with the essentials.</h2>
-      <p>A new brand gets its own workspace. We save the draft as soon as you create it.</p>
-      <fieldset disabled={mutation.pending}>
-        <label>
-          Brand name
-          <input
-            name="name"
-            required
-            maxLength={120}
-            autoComplete="organization"
-            placeholder="What is the brand called?"
-          />
-        </label>
-        <button className="platform-primary" type="submit">
-          {mutation.pending ? 'Saving your new brand…' : 'Create brand draft'}
-        </button>
-      </fieldset>
-      {mutation.error !== undefined && (
-        <p role="alert" className="platform-error">
-          {platformMutationErrorMessage(mutation.error)}
-        </p>
-      )}
-    </form>
   );
 }

@@ -166,14 +166,14 @@ export function RunProgress({
 
   if (snapshot === null) {
     return (
-      <main id="main-content" className={styles.runPage}>
+      <div id="main-content" className={styles.runPage}>
         <RunResultNotice result={result} />
         {result === null ? (
           <div className={styles.runError} role="status" data-result="loading">
             Reading authoritative run progress from Core.
           </div>
         ) : null}
-      </main>
+      </div>
     );
   }
 
@@ -188,7 +188,7 @@ export function RunProgress({
         : 'Providers active';
   const settlement = snapshot.settlement;
   return (
-    <main id="main-content" className={styles.runPage} data-run-state={snapshot.state}>
+    <div id="main-content" className={styles.runPage} data-run-state={snapshot.state}>
       <section className={`${styles.quoteStage} quote-stage`} aria-labelledby="run-title">
         <header className={styles.runHead}>
           <div>
@@ -395,6 +395,6 @@ export function RunProgress({
         </MonoCaps>
         <MonoCaps>v2.0.4-studio</MonoCaps>
       </footer>
-    </main>
+    </div>
   );
 }

@@ -52,9 +52,7 @@ export function WorkspaceBilling({
       />
     );
   }
-  return (
-    <BillingShell workspaceId={workspaceId} validWorkspace={validWorkspace} billing={billing} />
-  );
+  return <BillingShell validWorkspace={validWorkspace} billing={billing} />;
 }
 
 function StudioAssociatedBilling({
@@ -70,26 +68,16 @@ function StudioAssociatedBilling({
 }>) {
   const studio = usePlatformQuery('get_studio_access', { studio_id: studioId });
   if (studio.loading) {
-    return (
-      <BillingShell
-        workspaceId={workspaceId}
-        validWorkspace={validWorkspace}
-        billing={billing}
-        waiting
-      />
-    );
+    return <BillingShell validWorkspace={validWorkspace} billing={billing} waiting />;
   }
   if (studio.error !== undefined || !studio.data) {
-    return (
-      <BillingShell workspaceId={workspaceId} validWorkspace={validWorkspace} billing={billing} />
-    );
+    return <BillingShell validWorkspace={validWorkspace} billing={billing} />;
   }
   const scoped = studio.data;
   return (
     <StudioWorkspacePages studioId={studioId} workspaceId={workspaceId}>
       {({ loading, associated }) => (
         <BillingShell
-          workspaceId={workspaceId}
           validWorkspace={validWorkspace}
           billing={billing}
           waiting={loading}
@@ -145,7 +133,6 @@ function StudioWorkspacePages({
 }
 
 function BillingShell({
-  workspaceId,
   studioId,
   studioName,
   role,
@@ -153,7 +140,6 @@ function BillingShell({
   billing,
   waiting = false,
 }: Readonly<{
-  workspaceId: string;
   studioId?: string;
   studioName?: string;
   role?: string;
@@ -163,12 +149,14 @@ function BillingShell({
 }>) {
   const frame = (children: ReactNode) => (
     <PlatformFrame
-      workspaceId={workspaceId}
-      showBilling={billing.data !== undefined}
+      studio={
+        studioId && studioName
+          ? { id: studioId, name: studioName, ...(role ? { role } : {}) }
+          : undefined
+      }
+      section="brands"
+      campaignLabel="Workspace billing"
       billingCurrent
-      {...(studioId ? { studioId } : {})}
-      {...(studioName ? { studioName } : {})}
-      {...(role ? { role } : {})}
     >
       {children}
     </PlatformFrame>

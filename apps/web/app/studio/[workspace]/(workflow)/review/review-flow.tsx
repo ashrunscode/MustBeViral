@@ -763,15 +763,15 @@ export function ReviewFlow({
 
   if (result?.type === 'session_expired') {
     return (
-      <main id="main-content" className={styles.reviewPage}>
+      <div id="main-content" className={styles.reviewPage}>
         <section className={styles.reviewStage} aria-label="Session expired">
           <SessionExpiredAction className={styles.reviewError} />
         </section>
-      </main>
+      </div>
     );
   }
   return (
-    <main
+    <div
       id="main-content"
       className={`${styles.reviewPage} ${mode === 'compare' ? styles.compareMode : styles.approvalMode}`}
     >
@@ -1080,6 +1080,6 @@ export function ReviewFlow({
           </div>
         </div>
       ) : null}
-    </main>
+    </div>
   );
 }

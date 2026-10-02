@@ -121,7 +121,7 @@ export function BillingUsagePanel({
   // The page scrolls inside the studio frame and holds no focusable content.
   const { ref: regionRef, tabIndex: regionTabIndex } = useScrollableRegion<HTMLElement>();
   return (
-    <main
+    <div
       ref={regionRef}
       className="internal-ops"
       id="main-content"
@@ -226,6 +226,6 @@ export function BillingUsagePanel({
           </LedgerTable>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

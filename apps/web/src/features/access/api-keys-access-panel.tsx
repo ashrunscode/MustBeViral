@@ -122,7 +122,7 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
   }
 
   return (
-    <main className="access-panel" id="main-content">
+    <div className="access-panel" id="main-content">
       <section className="access-panel__card" aria-labelledby="access-heading">
         <MonoCaps>Programmatic access</MonoCaps>
         <h1 id="access-heading">API keys and audit</h1>
@@ -256,6 +256,6 @@ export function ApiKeysAccessPanel({ workspaceId }: Readonly<{ workspaceId: stri
           </>
         )}
       </Dialog>
-    </main>
+    </div>
   );
 }

@@ -29,6 +29,7 @@ import {
   registerSyntheticUser,
   signIn,
   switchToBrand,
+  openBrandDraft,
 } from './platform-journey-helpers';
 
 const connected =
@@ -167,16 +168,14 @@ test.describe('connected platform journeys', () => {
     await page.getByLabel('What should we know?').fill('Interrupted UnPile edit must not save.');
     await expect(page.getByRole('status').filter({ hasText: 'Unsaved changes' })).toBeVisible();
     page.once('dialog', (dialog) => void dialog.dismiss());
-    await page.getByRole('link', { name: '← All brands' }).click();
+    await page.getByRole('link', { name: 'All brands' }).click();
     await expect(page.getByLabel('What should we know?')).toHaveValue(
       'Interrupted UnPile edit must not save.',
     );
     page.once('dialog', (dialog) => void dialog.accept());
-    await page.getByRole('link', { name: '← All brands' }).click();
-    await expect(
-      page.getByRole('heading', { name: 'Good work starts with the right context.' }),
-    ).toBeVisible();
-    await page.getByRole('link', { name: 'Open UnPile →' }).click();
+    await page.getByRole('link', { name: 'All brands' }).click();
+    await expect(page.getByRole('heading', { name: 'Brands', exact: true })).toBeVisible();
+    await openBrandDraft(page, 'UnPile');
     await expect(page.getByLabel('What should we know?')).not.toHaveValue(
       'Interrupted UnPile edit must not save.',
     );
@@ -220,15 +219,18 @@ test.describe('connected platform journeys', () => {
     await expect(page.getByRole('heading', { name: /WashBodega|UnPile/ })).toHaveCount(0);
 
     await page.goto(brands.washbodegaUrl);
-    await page.getByRole('link', { name: 'Settings', exact: true }).click();
+    await page
+      .getByRole('navigation', { name: 'Brand navigation' })
+      .getByRole('link', { name: 'Settings' })
+      .click();
     await expect(page.getByRole('button', { name: 'Archive brand' })).toBeVisible();
     page.once('dialog', (dialog) => void dialog.accept());
     await page.getByRole('button', { name: 'Archive brand' }).click();
     await expect(page.getByText('This brand is archived')).toBeVisible({ timeout: 20_000 });
-    await page.getByRole('link', { name: '← All brands' }).click();
-    await expect(page.getByRole('link', { name: 'Open WashBodega →' })).toHaveCount(0);
+    await page.getByRole('link', { name: 'All brands' }).click();
+    await expect(page.getByRole('link', { name: 'Open WashBodega' })).toHaveCount(0);
     await page.getByLabel('Show').selectOption('all');
-    await expect(page.getByRole('link', { name: 'Open WashBodega →' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Open WashBodega' })).toBeVisible();
     await page.goto(brands.washbodegaUrl);
     await expect(page.getByText('This brand is archived')).toBeVisible();
 
@@ -252,8 +254,8 @@ test.describe('connected platform journeys', () => {
     await signIn(editorPage, editor.email);
     await expect(editorPage.getByRole('button', { name: 'Accept invitation' })).toBeVisible();
     await editorPage.getByRole('button', { name: 'Accept invitation' }).click();
-    await expect(editorPage.getByRole('link', { name: 'Open UnPile →' })).toBeVisible();
-    await editorPage.getByRole('link', { name: 'Open UnPile →' }).click();
+    await expect(editorPage.getByRole('link', { name: 'Open UnPile' })).toBeVisible();
+    await openBrandDraft(editorPage, 'UnPile');
     await expect(
       editorPage.getByRole('heading', { name: 'Make UnPile feel like itself.' }),
     ).toBeVisible({ timeout: 15_000 });
@@ -268,7 +270,10 @@ test.describe('connected platform journeys', () => {
     const heldDraft = holdBrandOnboardingGets(editorPage, brands.unpileBrandId);
     await heldDraft.install();
     try {
-      await editorPage.getByRole('link', { name: 'Settings', exact: true }).click();
+      await editorPage
+        .getByRole('navigation', { name: 'Brand navigation' })
+        .getByRole('link', { name: 'Settings' })
+        .click();
       await expect(editorPage.getByRole('heading', { name: 'Brand settings.' })).toBeVisible();
       await editorPage.getByRole('link', { name: 'Brand draft' }).click();
       await expect(editorPage.getByText('Loading your saved draft')).toBeVisible();
@@ -310,7 +315,10 @@ test.describe('connected platform journeys', () => {
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
     await expect(page.locator('.skip-link')).toBeVisible();
 
-    await page.getByRole('link', { name: 'Billing & usage' }).click();
+    await page
+      .getByRole('navigation', { name: 'Brand navigation' })
+      .getByRole('link', { name: 'Billing' })
+      .click();
     await expect(page.getByRole('heading', { name: 'Workspace billing.' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Campaign workflow' })).toHaveCount(0);
     await expect(
@@ -339,7 +347,7 @@ test.describe('connected platform journeys', () => {
     const unrelatedName = `Unrelated studio ${randomUUID()}`;
     await page.getByLabel('Studio name').fill(unrelatedName);
     await page.getByRole('button', { name: 'Create studio' }).click();
-    await expect(page.getByRole('button', { name: '+ Add a brand' })).toBeVisible({
+    await expect(page.getByRole('link', { name: 'Add a brand' })).toBeVisible({
       timeout: 60_000,
     });
     const unrelatedStudioId = new URL(page.url()).searchParams.get('studio');
@@ -347,18 +355,21 @@ test.describe('connected platform journeys', () => {
     await page.goto(`/studio/${brands.workspaceId}/billing?studio=${unrelatedStudioId}`);
     await expect(page.getByRole('heading', { name: 'Workspace billing.' })).toBeVisible();
     await expect(page.getByText('$250.00', { exact: true })).toBeVisible();
-    await expect(page.locator('.platform-breadcrumb')).toHaveText('Your studios');
+    await expect(page.locator('.platform-breadcrumb')).toContainText('Your studios');
     await expect(page.getByText(unrelatedName)).toHaveCount(0);
-    await expect(page.getByRole('link', { name: 'Studio team' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Team', exact: true })).toHaveCount(0);
     await page.goto(`/studio/${brands.workspaceId}/billing`);
     await expect(page.getByRole('heading', { name: 'Workspace billing.' })).toBeVisible();
-    await expect(page.locator('.platform-breadcrumb')).toHaveText('Your studios');
-    await expect(page.getByRole('link', { name: 'Studio team' })).toHaveCount(0);
+    await expect(page.locator('.platform-breadcrumb')).toContainText('Your studios');
+    await expect(page.getByRole('link', { name: 'Team', exact: true })).toHaveCount(0);
 
     await page.goto(brands.washbodegaUrl);
-    await page.getByRole('link', { name: 'Billing & usage' }).click();
+    await page
+      .getByRole('navigation', { name: 'Brand navigation' })
+      .getByRole('link', { name: 'Billing' })
+      .click();
     await expect(page.getByRole('heading', { name: 'Workspace billing.' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Studio team' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Team', exact: true })).toBeVisible();
 
     await page.route('**/api/core/v1/workspaces/*/billing', async (route) => {
       await route.fulfill({
@@ -372,11 +383,14 @@ test.describe('connected platform journeys', () => {
     await expect(page.getByText('not marked as saved')).toHaveCount(0);
     await expect(page.getByText('$250.00')).toHaveCount(0);
     await page.unroute('**/api/core/v1/workspaces/*/billing');
-    await page.getByRole('link', { name: 'Overview' }).click();
+    await page
+      .getByRole('navigation', { name: 'Studio navigation' })
+      .getByRole('link', { name: 'Overview' })
+      .click();
     await expect(
-      page.getByRole('heading', { name: 'Good work starts with the right context.' }),
+      page.getByRole('heading', { name: 'Good work starts with the right brand.' }),
     ).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Open WashBodega →' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Open WashBodega' })).toBeVisible();
   });
 
   test('retries an aborted in-flight save without mixing a deferred UnPile commit', async ({
@@ -485,11 +499,9 @@ test.describe('connected platform journeys', () => {
     await page.getByRole('button', { name: 'Save draft' }).click();
     await expect(page.getByRole('status').filter({ hasText: 'Saving' })).toBeVisible();
     page.once('dialog', (dialog) => void dialog.accept());
-    await page.getByRole('link', { name: '← All brands' }).click();
-    await expect(
-      page.getByRole('heading', { name: 'Good work starts with the right context.' }),
-    ).toBeVisible();
-    await page.getByRole('link', { name: 'Open WashBodega →' }).click();
+    await page.getByRole('link', { name: 'All brands' }).click();
+    await expect(page.getByRole('heading', { name: 'Brands', exact: true })).toBeVisible();
+    await openBrandDraft(page, 'WashBodega');
     await expect(
       page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
     ).toBeVisible({ timeout: 15_000 });
@@ -504,8 +516,8 @@ test.describe('connected platform journeys', () => {
       page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
     ).toBeVisible();
     await expect(page.getByLabel('What should we know?')).not.toHaveValue(/UnPile deferred/);
-    await page.getByRole('link', { name: '← All brands' }).click();
-    await page.getByRole('link', { name: 'Open UnPile →' }).click();
+    await page.getByRole('link', { name: 'All brands' }).click();
+    await openBrandDraft(page, 'UnPile');
     await expect(page.getByRole('heading', { name: 'Make UnPile feel like itself.' })).toBeVisible({
       timeout: 15_000,
     });
@@ -532,7 +544,10 @@ test.describe('connected platform journeys', () => {
     const heldWashbodega = holdBrandOnboardingGets(page, brands.washbodegaBrandId);
     await heldWashbodega.install();
     try {
-      await page.getByRole('link', { name: 'Settings', exact: true }).click();
+      await page
+        .getByRole('navigation', { name: 'Brand navigation' })
+        .getByRole('link', { name: 'Settings' })
+        .click();
       await expect(page.getByRole('heading', { name: 'Brand settings.' })).toBeVisible();
       await page.getByRole('link', { name: 'Brand draft' }).click();
       await expect(page.getByText('Loading your saved draft')).toBeVisible();
@@ -588,13 +603,13 @@ test.describe('connected platform journeys', () => {
     test.setTimeout(240_000);
     const owner = await registerUser(`w1b004-a11y-${randomUUID()}@synthetic.example.test`);
     await signIn(page, owner.email);
-    await expect(page.getByRole('navigation', { name: 'Studio navigation' })).toBeVisible();
     await expectPlatformLandmarks(page);
     await expectNoHorizontalOverflow(page);
     await attachAxeAndAria(page, 'portfolio');
 
     const brands = await createStudioAndBrands(page);
     await expectPlatformLandmarks(page);
+    await expect(page.getByRole('navigation', { name: 'Studio navigation' })).toBeVisible();
     await expectSkipKeyboard(page);
     const reached = await tabActionableNames(page, 16);
     expect(reached.join(' ')).toMatch(/All brands|Switch brand|Brand draft|Save draft|Billing/i);
@@ -616,18 +631,24 @@ test.describe('connected platform journeys', () => {
     await attachAxeAndAria(page, 'brand-draft');
     await expectNoHorizontalOverflow(page);
 
-    await page.getByRole('link', { name: 'Studio team' }).click();
+    await page.getByRole('link', { name: 'Team', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Your studio team.' })).toBeVisible({
       timeout: 15_000,
     });
     await attachAxeAndAria(page, 'studio-team');
 
-    await page.getByRole('link', { name: 'Overview' }).click();
-    await page.getByRole('link', { name: 'Open WashBodega →' }).click();
+    await page
+      .getByRole('navigation', { name: 'Studio navigation' })
+      .getByRole('link', { name: 'Overview' })
+      .click();
+    await openBrandDraft(page, 'WashBodega');
     await expect(
       page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
     ).toBeVisible({ timeout: 15_000 });
-    await page.getByRole('link', { name: 'Billing & usage' }).click();
+    await page
+      .getByRole('navigation', { name: 'Brand navigation' })
+      .getByRole('link', { name: 'Billing' })
+      .click();
     await expect(page.getByRole('heading', { name: 'Workspace billing.' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Campaign workflow' })).toHaveCount(0);
     await expectSkipKeyboard(page);
@@ -651,8 +672,11 @@ test.describe('connected platform journeys', () => {
     await attachAxeAndAria(page, 'billing-unavailable');
     await page.unroute('**/api/core/v1/workspaces/*/billing');
 
-    await page.getByRole('link', { name: 'Overview' }).click();
-    await page.getByRole('link', { name: 'Open WashBodega →' }).click();
+    await page
+      .getByRole('navigation', { name: 'Studio navigation' })
+      .getByRole('link', { name: 'Overview' })
+      .click();
+    await openBrandDraft(page, 'WashBodega');
     await expect(
       page.getByRole('heading', { name: 'Make WashBodega feel like itself.' }),
     ).toBeVisible({ timeout: 15_000 });
@@ -868,7 +892,8 @@ async function captureSignedInSurface(page: Page, name: string) {
 
 async function expectPlatformLandmarks(page: Page) {
   await expect(page.getByRole('banner')).toBeVisible();
-  await expect(page.getByRole('navigation', { name: 'Studio navigation' })).toBeVisible();
+  await expect(page.getByRole('complementary', { name: 'Studio' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toBeVisible();
   await expect(page.getByRole('main')).toBeVisible();
 }
 

@@ -78,7 +78,7 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
   }, []);
 
   return (
-    <main className="internal-ops" id="main-content">
+    <div className="internal-ops" id="main-content">
       <div className="internal-ops__grid">
         <section className="internal-ops__card" aria-labelledby="internal-heading">
           <MonoCaps>Operator / internal</MonoCaps>
@@ -150,6 +150,6 @@ export function InternalOperationsPanel({ workspace }: Readonly<{ workspace: str
           </p>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

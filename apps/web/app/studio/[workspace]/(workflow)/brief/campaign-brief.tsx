@@ -655,7 +655,7 @@ export function CampaignBrief({
 
   return (
     <>
-      <main id="main-content" className={styles.main}>
+      <div id="main-content" className={styles.main}>
         {firstUse ? (
           <div className={styles.firstUseBanner} role="status">
             <MonoCaps>First use</MonoCaps>
@@ -789,7 +789,7 @@ export function CampaignBrief({
             </div>
           )}
         </aside>
-      </main>
+      </div>
 
       <div className={styles.confirmBar}>
         <div className={styles.barEvidence}>
