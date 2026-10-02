@@ -113,8 +113,8 @@ the composed frame. The one remaining sentence: save `HF_API_KEY_ID` and `HF_API
 ## Gates
 
 Code head `79134f9fd78510f0dcc6db71a9559592a4cb6c18` on branch `codex/public-site-finish` (pull request
-ashrunscode/MustBeViral#63, base `e058983`). The review repair `043c133` changes one privacy sentence after it; every other later commit
-changes only evidence. The root `llms.txt` and `docs/STATUS.md` in the first commit are the
+ashrunscode/MustBeViral#63, base `e058983`). The review repairs `043c133` and `b58ec3c` each change one privacy sentence after it, the
+second with its unit test; every other later commit changes only evidence. The root `llms.txt` and `docs/STATUS.md` in the first commit are the
 generator's output (`pnpm docs:generate`); `llms.txt` is listed in the packet's allowed paths, and
 `origin/main` at `e058983` failed `generated:check` on both files because the previous merge
 updated the next action without regenerating them.
@@ -126,13 +126,16 @@ updated the next action without regenerating them.
 | Preview journeys, desktop and mobile projects                                                                                                        | author clone, `PLAYWRIGHT_PORT=3113`                                                                           | 112 passed, 40 skipped (connected specs skip there)                                                                                                                                                                                                  |
 | Connected journeys                                                                                                                                   | author clone against the local harness                                                                         | 17 passed                                                                                                                                                                                                                                            |
 | `corepack pnpm install --frozen-lockfile`, `pnpm verify`, `pnpm supabase:test`                                                                       | fresh single-worktree clone `C:\dev\mbv-verify-79134f9` at `79134f9`, branch `main`                            | 0, 0 and 0; database tests 61 files, 1181 tests, against the local database that holds canvases, not reset                                                                                                                                           |
+| Web typecheck and lint, then `pnpm verify` (format, governance, lint, typecheck, unit, integration, build, design) on the second review repair       | author clone at `b58ec3c`                                                                                      | 0, 0 and 0; web unit 356 passed (62 files); the database and Core paths are unchanged since `00e1991`, so `supabase:test` was not rerun                                                                                                              |
 | `corepack pnpm install --frozen-lockfile`, `pnpm verify`, `pnpm supabase:test` on the review repair                                                  | fresh single-worktree clone `C:\dev\mbv-verify-043c133` at `00e1991`, whose source is `043c133`, branch `main` | 0, 0 and 0; database tests 61 files, 1181 tests                                                                                                                                                                                                      |
 
 ## Browser proof
 
 `browser-proof-2026-10-02d/README.md` and `public-probes.json`, on the local harness, signed out,
-taken against code head `043c133` (the last source commit, with the footer line and the final
-legal copy).
+taken against code head `043c133` (the source commit with the footer line and the legal copy; the
+later repair `b58ec3c` changes one sentence of `/privacy` and no layout, and the staging and
+production smokes in `release-site-2026-10-02.md` check that sentence and the width of `/privacy`
+at 375px).
 Ten routes (`/`, `/es`, `/pricing`, `/software`, `/software/pricing`, `/privacy`, `/terms`,
 `/advertising`, `/login`, `/signup`) at 375, 768, 1280 and 1920: no horizontal scroll in any of
 the forty cells, one `main`, h1 28px, the footer with the three legal links and the unpublished
@@ -150,11 +153,11 @@ passed.
 
 ## Independent review
 
-The read-only Codex review of the exact pull-request head, isolated as before (fresh shell with credential-like variables removed, every tool and network surface disabled, a detached clone of tracked files only), is recorded with its sha and verdict in `merge-review-site-2026-10-02.md` once it has run. Nothing merges before a PASS.
+The read-only Codex review of the exact pull-request head, isolated as before (fresh shell with credential-like variables removed, every tool and network surface disabled, a detached clone of tracked files only), ran three times, recorded in `merge-review-site-2026-10-02.md`: round 1 on `ba80956` FAIL with three P2, repaired in `043c133`; round 2 on `8c989a5` FAIL with one P2 and one P3, repaired in `b58ec3c`; round 3 on `b58ec3c` PASS, with one P3 on this record's description of the commits after `043c133`, corrected in this docs change. The pull request merged at that head as `1db863c7dac147da044a60b802e37f4f8415d819` at 2026-10-02T20:24:48Z.
 
 ## Release
 
-The staging and production deployments from a clean clone of the merge commit, the smoke of every public route including the three legal pages and both pricing pages, the production response headers for the eight public paths, the served `data-dpl-id` values and the rollback targets are recorded in `release-site-2026-10-02.md` after the merge. Until then production serves `95deda5` (`dpl_Bw8Txy9Atvk8yoBocUxv3AEZW5EN`) and staging `dpl_HK4J6VQAPKx8Hp8ymxjGUwsLfXbg`.
+The staging and production deployments from a clean clone of the merge commit, the smoke of every public route including the three legal pages and both pricing pages, the production response headers for the eight public paths, the served `data-dpl-id` values and the rollback targets are recorded in `release-site-2026-10-02.md`. Before the release production served `95deda5` (`dpl_Bw8Txy9Atvk8yoBocUxv3AEZW5EN`) and staging `dpl_HK4J6VQAPKx8Hp8ymxjGUwsLfXbg`; both remain Ready as the rollback targets. The merge commit is `1db863c`.
 
 ## Not crossed
 
