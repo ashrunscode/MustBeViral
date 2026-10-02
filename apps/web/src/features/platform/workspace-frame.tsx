@@ -21,6 +21,7 @@ import {
 } from './platform-navigation';
 import { readCampaignContext } from './campaign-context';
 import { useCampaignScope } from './campaign-scope';
+import { useStudioWorkspaceAssociation } from './studio-workspace';
 import { usePlatformQuery } from './use-platform-query';
 
 /** Workflow segments that fill the main region edge to edge. */
@@ -105,14 +106,26 @@ function CampaignShell({
     brand.data !== undefined &&
     brand.data.brand.workspace_id === workspace;
   const resources = useCampaignScope(workspace, context, brandId, accessConfirmed);
+  // Workspace tools carry no brand. A studio named in their link must own a brand in this
+  // workspace before its name stands over the tools; without a studio the frame stays neutral.
+  const association = useStudioWorkspaceAssociation(
+    studioId,
+    workspace,
+    authenticated && step === null && brandId === undefined && studio.data !== undefined,
+  );
   const scopeError =
-    studio.error ?? brand.error ?? (resources.status === 'error' ? resources.error : undefined);
+    studio.error ??
+    brand.error ??
+    (resources.status === 'error' ? resources.error : undefined) ??
+    (association.status === 'error' ? association.error : undefined);
   const scopeMismatch =
     brand.data !== undefined && brand.data.brand.workspace_id !== workspace
       ? 'The brand in this link belongs to another workspace.'
       : resources.status === 'mismatch'
         ? resources.reason
-        : undefined;
+        : association.status === 'unassociated'
+          ? 'This studio has no brand in this workspace.'
+          : undefined;
   const scopePending =
     authenticated &&
     !missingScope &&
@@ -120,7 +133,8 @@ function CampaignShell({
     scopeMismatch === undefined &&
     ((studioId !== undefined && studio.loading) ||
       (studioId !== undefined && brandId !== undefined && brand.loading) ||
-      resources.status === 'pending');
+      resources.status === 'pending' ||
+      association.status === 'pending');
   const scopeConfirmed =
     !missingScope && scopeError === undefined && scopeMismatch === undefined && !scopePending;
   useEffect(() => {
@@ -136,9 +150,11 @@ function CampaignShell({
     // The context's identity is its serialized values.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segment, workspace, brandName, scopeConfirmed, JSON.stringify(context)]);
-  const studioContext = studio.data
-    ? { id: studio.data.studio.id, name: studio.data.studio.name, role: studio.data.role }
-    : undefined;
+  // The studio's name stands over a screen only once the whole scope is confirmed.
+  const studioContext =
+    studio.data && scopeConfirmed
+      ? { id: studio.data.studio.id, name: studio.data.studio.name, role: studio.data.role }
+      : undefined;
   const brandContext =
     brand.data && studioId && scopeConfirmed
       ? { id: brand.data.brand.id, name: brand.data.brand.name, workspaceId: workspace }
@@ -192,6 +208,7 @@ function CampaignShell({
               studio.refresh();
               brand.refresh();
               resources.retry();
+              association.retry();
             }}
           />
         ) : scopeMismatch !== undefined ? (

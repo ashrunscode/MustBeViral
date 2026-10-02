@@ -7,15 +7,20 @@ const STUDIO = '11111111-1111-4111-8111-111111111111';
 const BRAND = '33333333-3333-4333-8333-333333333333';
 
 const state = vi.hoisted(() => ({
+  path: '',
   search: '',
   studio: { data: undefined as unknown, error: undefined as unknown, loading: false },
   brand: { data: undefined as unknown, error: undefined as unknown, loading: false },
   scope: { status: 'ok' } as Record<string, unknown>,
+  association: { status: 'idle' } as Record<string, unknown>,
 }));
 
 vi.mock('next/navigation', () => ({
-  usePathname: () => `/studio/${WORKSPACE}/review`,
+  usePathname: () => state.path,
   useSearchParams: () => new URLSearchParams(state.search),
+}));
+vi.mock('./studio-workspace', () => ({
+  useStudioWorkspaceAssociation: () => ({ ...state.association, retry: () => undefined }),
 }));
 vi.mock('./use-platform-query', () => ({
   usePlatformQuery: (operation: string) => ({
@@ -46,6 +51,8 @@ const brandAccess = (workspaceId: string, name: string) => ({
 });
 
 beforeEach(() => {
+  state.path = `/studio/${WORKSPACE}/review`;
+  state.association = { status: 'idle' };
   state.search = `studio=${STUDIO}&brand=${BRAND}&canvas=c1&run=r1`;
   state.studio = { data: studioAccess, error: undefined, loading: false };
   state.brand = { data: brandAccess(WORKSPACE, 'UnPile'), error: undefined, loading: false };
@@ -116,5 +123,44 @@ describe('WorkspaceFrame scope', () => {
     const html = render();
     expect(html).not.toContain('campaign-content');
     expect(html).toContain('Open this campaign from its brand.');
+  });
+
+  describe('workspace tools', () => {
+    beforeEach(() => {
+      state.path = `/studio/${WORKSPACE}/access`;
+      state.search = `studio=${STUDIO}`;
+      state.brand = { data: undefined, error: undefined, loading: false };
+    });
+
+    it('refuses a studio that owns no brand in this workspace and never shows its name', () => {
+      state.association = { status: 'unassociated' };
+      const html = render();
+      expect(html).not.toContain('campaign-content');
+      expect(html).not.toContain('North Studio');
+      expect(html).toContain('This studio has no brand in this workspace.');
+    });
+
+    it('holds the tools while the association is being read', () => {
+      state.association = { status: 'pending' };
+      const html = render();
+      expect(html).not.toContain('campaign-content');
+      expect(html).not.toContain('North Studio');
+    });
+
+    it('shows the tools under the studio once the studio owns a brand here', () => {
+      state.association = { status: 'associated' };
+      const html = render();
+      expect(html).toContain('campaign-content');
+      expect(html).toContain('North Studio');
+    });
+
+    it('shows the tools in a neutral frame when the link names no studio', () => {
+      state.search = '';
+      state.studio = { data: undefined, error: undefined, loading: false };
+      const html = render();
+      expect(html).toContain('campaign-content');
+      expect(html).not.toContain('North Studio');
+      expect(html).toContain('Your studios');
+    });
   });
 });
