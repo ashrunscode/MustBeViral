@@ -1,0 +1,36 @@
+{
+  "observedUtc": "2026-10-03T09:16:16.439Z",
+  "environment": "staging",
+  "versionId": "9606b8bb-01fe-454a-99f6-8ec3c882f6e9",
+  "checkedConfiguredNames": [
+    "APP_ENV",
+    "CORS_ALLOWED_ORIGINS",
+    "FAL_WEBHOOK_URL",
+    "MEDIA_BUCKET",
+    "OUTBOX_DISPATCH_QUEUE",
+    "PROVIDER_RUNS_ENABLED",
+    "QUEUES_ENABLED",
+    "SERVICE_GENERATION",
+    "SERVICE_NAME",
+    "SUPABASE_JWT_AUDIENCE",
+    "SUPABASE_PUBLISHABLE_KEY",
+    "SUPABASE_URL"
+  ],
+  "retainedSecretNames": [
+    "ARTIFACT_ACCESS_SIGNING_KEY",
+    "COLLABORATION_TICKET_SECRET",
+    "CONFIRMATION_SIGNING_KEY",
+    "FAL_KEY",
+    "MOONSHOT_API_KEY",
+    "OPENROUTER_API_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "SUPABASE_SECRET_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY"
+  ],
+  "differingNames": [],
+  "namesAndTypesMatch": true,
+  "allOtherValuesMatch": true,
+  "runtimeCompatibilityMatches": true,
+  "providerRunsDisabled": false,
+  "queuesDisabled": false
+}

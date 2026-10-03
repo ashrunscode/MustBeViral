@@ -1,0 +1,29 @@
+{
+  "observedUtc": "2026-10-03T09:21:07.236Z",
+  "environment": "production",
+  "versionId": "3f62d101-8169-47f0-9c60-22311106b3a0",
+  "checkedConfiguredNames": [
+    "APP_ENV",
+    "CORS_ALLOWED_ORIGINS",
+    "MEDIA_BUCKET",
+    "PROVIDER_RUNS_ENABLED",
+    "QUEUES_ENABLED",
+    "SERVICE_GENERATION",
+    "SERVICE_NAME",
+    "SUPABASE_JWT_AUDIENCE",
+    "SUPABASE_URL"
+  ],
+  "retainedSecretNames": [
+    "ARTIFACT_ACCESS_SIGNING_KEY",
+    "COLLABORATION_TICKET_SECRET",
+    "CONFIRMATION_SIGNING_KEY",
+    "SUPABASE_PUBLISHABLE_KEY",
+    "SUPABASE_SECRET_KEY"
+  ],
+  "differingNames": [],
+  "namesAndTypesMatch": true,
+  "allOtherValuesMatch": true,
+  "runtimeCompatibilityMatches": true,
+  "providerRunsDisabled": true,
+  "queuesDisabled": true
+}

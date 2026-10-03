@@ -1,0 +1,36 @@
+{
+  "observedUtc": "2026-10-03T09:16:17.258Z",
+  "environment": "staging",
+  "workerOrigin": "https://mustbeviral-v2-staging-core.ernijs-ansons.workers.dev",
+  "proxyOrigin": null,
+  "results": [
+    {
+      "label": "direct-health",
+      "status": 200,
+      "code": "ok",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-approved-1",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-unapproved",
+      "status": 403,
+      "code": "FORBIDDEN",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-no-origin",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "observedUtc": "2026-10-03T09:21:09.231Z",
+  "environment": "production",
+  "workerOrigin": "https://mustbeviral-v2-production-core.ernijs-ansons.workers.dev",
+  "proxyOrigin": "https://mustbeviral.com",
+  "results": [
+    {
+      "label": "direct-health",
+      "status": 200,
+      "code": "ok",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-approved-1",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-approved-2",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-approved-3",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-unapproved",
+      "status": 403,
+      "code": "FORBIDDEN",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "direct-no-origin",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "proxy-approved-1",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "proxy-approved-2",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "proxy-approved-3",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    },
+    {
+      "label": "proxy-unapproved",
+      "status": 403,
+      "code": "FORBIDDEN",
+      "corsHeaderPresent": false,
+      "publicCookie": false
+    }
+  ]
+}

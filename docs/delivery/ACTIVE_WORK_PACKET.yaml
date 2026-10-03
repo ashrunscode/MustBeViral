@@ -309,7 +309,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Release the two authorized production Core origin additions under A6.
+  next_action: Ship the approved S0 English wordless plate under D2.
   blockers: []
   changed_paths: []
   last_green_checks: []
