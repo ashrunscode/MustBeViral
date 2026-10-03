@@ -1,0 +1,22 @@
+{
+  "checkedUtc": "2026-10-03T11:58:18.558Z",
+  "driver": "Supabase MCP list_migrations; read only",
+  "projects": [
+    {
+      "name": "mustbeviral-staging",
+      "count": 50,
+      "newest": "20260917223105",
+      "readOnly": true
+    },
+    {
+      "name": "mustbeviral-prod",
+      "count": 39,
+      "newest": "20260902154759",
+      "readOnly": true
+    }
+  ],
+  "mainCount": 75,
+  "mainNewest": "20260929017000",
+  "semanticStagingParityClaimed": false,
+  "remoteDatabaseWrite": false
+}

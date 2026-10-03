@@ -1,0 +1,290 @@
+{
+  "observedUtc": "2026-10-03T12:34:30.196Z",
+  "origin": "https://mustbeviral-web-staging.vercel.app",
+  "deploymentId": "dpl_vHurZJBF5kKQ9Jum6sTN6MhTFhDn",
+  "signedOutFreshContext": true,
+  "formsSubmitted": 0,
+  "consoleErrors": 0,
+  "cells": [
+    {
+      "route": "/",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/pricing",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/software",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/software/pricing",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/privacy",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/terms",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/advertising",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/login",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/signup",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/forgot-password",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/verify-email",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/maintenance",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/unauthorized",
+      "width": 375,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/es",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/pricing",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/software",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/software/pricing",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/privacy",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/terms",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/advertising",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/login",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/signup",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/verify-email",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/maintenance",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    },
+    {
+      "route": "/unauthorized",
+      "width": 1280,
+      "status": 200,
+      "expectedDeployment": true,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Size": 28,
+      "overflow": false
+    }
+  ]
+}

@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
 current_step: ui-008-release
-next_action: Ship the approved S0 English wordless plate under D2.
+next_action: Reverify official research sources under L2.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

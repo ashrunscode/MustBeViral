@@ -1,0 +1,146 @@
+{
+  "timestamp": "2026-10-03T12:43:01.402Z",
+  "origin": "https://mustbeviral-web-production.vercel.app",
+  "deploymentId": "dpl_HCxas3BjbcANLZoVVQh68q1EcHoL",
+  "healthy": true,
+  "results": [
+    {
+      "route": "/",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 5
+    },
+    {
+      "route": "/es",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 5
+    },
+    {
+      "route": "/pricing",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 5
+    },
+    {
+      "route": "/software",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 5
+    },
+    {
+      "route": "/software/pricing",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 3
+    },
+    {
+      "route": "/privacy",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/terms",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/advertising",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/signup",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/forgot-password",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/verify-email",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/maintenance",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/unauthorized",
+      "status": 200,
+      "expectedDeployment": true,
+      "publicCookie": false,
+      "checkedUrls": 0
+    },
+    {
+      "route": "/og/studio-en.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "route": "/og/studio-es.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "route": "/og/software.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "route": "/og/software-pricing.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "route": "/reset-password",
+      "status": 307,
+      "expectedDestination": true
+    },
+    {
+      "route": "/studio",
+      "status": 307,
+      "expectedDestination": true
+    },
+    {
+      "route": "/auth/callback",
+      "status": 307,
+      "expectedDestination": true
+    },
+    {
+      "route": "/mbv-read-only-not-found-probe",
+      "status": 404,
+      "expectedDestination": true
+    }
+  ]
+}

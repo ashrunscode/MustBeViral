@@ -1,0 +1,20 @@
+[
+  {
+    "Identical": true,
+    "ProductionSha256": "59b2223d870a087e7828a079d83e3cedf1b6f70192cb3bd7e44e28c504abd686",
+    "Name": "home",
+    "StagingSha256": "59b2223d870a087e7828a079d83e3cedf1b6f70192cb3bd7e44e28c504abd686"
+  },
+  {
+    "Identical": true,
+    "ProductionSha256": "1d45b7399e44dbc0eaa6789abde5894c6954a39228ece7a7c546adced536b0da",
+    "Name": "es",
+    "StagingSha256": "1d45b7399e44dbc0eaa6789abde5894c6954a39228ece7a7c546adced536b0da"
+  },
+  {
+    "Identical": true,
+    "ProductionSha256": "820c1ed5dd1d06608fabc46b5237b0bfb6ccfacda68d3d4b26dc1d51dbd6b618",
+    "Name": "advertising",
+    "StagingSha256": "820c1ed5dd1d06608fabc46b5237b0bfb6ccfacda68d3d4b26dc1d51dbd6b618"
+  }
+]

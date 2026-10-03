@@ -1,0 +1,90 @@
+{
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "Checks": [
+    {
+      "StartedUtc": "2026-10-03T11:44:45.3165170Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-install.log",
+      "FinishedUtc": "2026-10-03T11:45:06.2243013Z",
+      "Command": "corepack pnpm install --frozen-lockfile",
+      "Label": "install",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T11:45:06.2472877Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-agent-preflight.log",
+      "FinishedUtc": "2026-10-03T11:48:26.4539834Z",
+      "Command": "corepack pnpm agent:preflight",
+      "Label": "agent-preflight",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T11:48:26.4565736Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-governance-check.log",
+      "FinishedUtc": "2026-10-03T11:51:16.9304652Z",
+      "Command": "corepack pnpm governance:check",
+      "Label": "governance-check",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T11:51:16.9338738Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-governance-test.log",
+      "FinishedUtc": "2026-10-03T11:55:36.7765243Z",
+      "Command": "corepack pnpm governance:test",
+      "Label": "governance-test",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T11:55:36.7891940Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-format-check.log",
+      "FinishedUtc": "2026-10-03T11:55:52.0916435Z",
+      "Command": "corepack pnpm format:check",
+      "Label": "format-check",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T11:55:52.0935956Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-verify.log",
+      "FinishedUtc": "2026-10-03T12:07:28.2958411Z",
+      "Command": "corepack pnpm verify",
+      "Label": "verify",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T12:07:28.2977716Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-migration-up.log",
+      "FinishedUtc": "2026-10-03T12:07:31.0823165Z",
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Label": "migration-up",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T12:07:31.0841273Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-migration-list.log",
+      "FinishedUtc": "2026-10-03T12:07:33.9101440Z",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Label": "migration-list",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T12:07:34.0518815Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-supabase-test.log",
+      "FinishedUtc": "2026-10-03T12:07:49.2529845Z",
+      "Command": "corepack pnpm supabase:test",
+      "Label": "supabase-test",
+      "Exit": 0
+    },
+    {
+      "StartedUtc": "2026-10-03T12:07:50.9534477Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-preview-journeys.log",
+      "FinishedUtc": "2026-10-03T12:09:04.5202193Z",
+      "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts apps/web/e2e/campaign-resume-recovery.spec.ts apps/web/e2e/cleanroom.spec.ts apps/web/e2e/operator-self-session.spec.ts apps/web/e2e/canvas-stress.spec.ts apps/web/e2e/canvas-perf.spec.ts --project=desktop-chromium",
+      "Label": "preview-journeys",
+      "Exit": 0
+    }
+  ],
+  "Head": "56abd4b9c100f98a1ea06835c7aeee2a32acd511",
+  "Root": "C:/dev/mbv-verify-56abd4b"
+}

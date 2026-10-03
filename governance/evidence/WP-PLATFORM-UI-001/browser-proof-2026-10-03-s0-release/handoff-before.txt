@@ -1,0 +1,9 @@
+$ node governance/scripts/agent-state.mjs handoff "--next-action" "Reverify official research sources under L2."
+Active packet valid: WP-PLATFORM-UI-001 / ui-008-release
+Transition receipts valid: 24 found.
+Active packet valid: WP-PLATFORM-UI-001 / ui-008-release
+Transition receipts valid: 24 found.
+Active packet valid: WP-PLATFORM-UI-001 / ui-008-release
+Transition receipts valid: 24 found.
+non-authority worktree content changed during the authority transition
+[ELIFECYCLE] Command failed with exit code 1.

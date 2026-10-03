@@ -1,0 +1,15 @@
+{
+  "Rollback": "dpl_CHf1B4RTTcHMRVpAkSvjKQPuQx9b",
+  "Pnpm": "11.12.0",
+  "Node": "v24.18.0",
+  "Exit": 0,
+  "Command": "vercel deploy --prod --yes --scope ashrunscode-projects --project mustbeviral-web-production --json",
+  "Reviewed": "56abd4b9c100f98a1ea06835c7aeee2a32acd511",
+  "StartedUtc": "2026-10-03T12:41:05.8481843Z",
+  "Pr": 71,
+  "Project": "mustbeviral-web-production",
+  "DeploymentId": "dpl_HCxas3BjbcANLZoVVQh68q1EcHoL",
+  "FinishedUtc": "2026-10-03T12:41:47.1448670Z",
+  "Source": "f97488dc220c6f1b6686f4c0642b2203baab156e",
+  "Vercel": "59.16.0"
+}

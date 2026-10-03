@@ -1,0 +1,10 @@
+{
+  "StartedUtc": "2026-10-03T11:18:53.2360235Z",
+  "FinishedUtc": "2026-10-03T11:32:39.3129910Z",
+  "Command": "corepack pnpm agent:verify",
+  "Exit": 0,
+  "Root": "C:/dev/mbv-finish",
+  "Base": "c0b39c989a68b6be05f00eff883e288eb5e68cc0",
+  "Node": "24.18.0",
+  "Pnpm": "11.12.0"
+}
