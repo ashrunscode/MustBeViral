@@ -1,0 +1,103 @@
+{
+  "checkedUtc": "2026-10-03T19:35:01.129Z",
+  "localOnly": true,
+  "noFormSubmission": true,
+  "cells": [
+    {
+      "path": "/",
+      "linkHeight": 42,
+      "pseudoTop": "-2px",
+      "effectiveHeight": 46,
+      "upperHit": true,
+      "lowerHit": false,
+      "paragraphs": [
+        {
+          "text": "",
+          "fontSize": "16px"
+        },
+        {
+          "text": "Weekly content for Houston businesses — Reels, photos, and a pos",
+          "fontSize": "16px"
+        },
+        {
+          "text": "In a generated room, two hands adjust a camera on a gimbal. A ca",
+          "fontSize": "16px"
+        },
+        {
+          "text": "This film was made with AI: stills from Seedream v5 pro and moti",
+          "fontSize": "16px"
+        },
+        {
+          "text": "$700one time",
+          "fontSize": "16px"
+        }
+      ],
+      "footerSize": "16px"
+    },
+    {
+      "path": "/es",
+      "linkHeight": 42,
+      "pseudoTop": "-2px",
+      "effectiveHeight": 46,
+      "upperHit": true,
+      "lowerHit": false,
+      "paragraphs": [
+        {
+          "text": "Contenido semanal para negocios de Houston: Reels, fotos y un ca",
+          "fontSize": "16px"
+        },
+        {
+          "text": "In a generated room, two hands adjust a camera on a gimbal. A ca",
+          "fontSize": "16px"
+        },
+        {
+          "text": "This film was made with AI: stills from Seedream v5 pro and moti",
+          "fontSize": "16px"
+        },
+        {
+          "text": "$700una sola vez",
+          "fontSize": "16px"
+        },
+        {
+          "text": "El Test Shoot cuesta $700, una sola vez: una sesión de hasta dos",
+          "fontSize": "16px"
+        }
+      ],
+      "footerSize": "16px"
+    },
+    {
+      "path": "/software",
+      "linkHeight": 40.5,
+      "pseudoTop": "-2.75px",
+      "effectiveHeight": 46,
+      "upperHit": true,
+      "lowerHit": false,
+      "paragraphs": [
+        {
+          "text": "The film follows one photo from a Drive folder to a receipt.",
+          "fontSize": "15px"
+        },
+        {
+          "text": "Enrollment is closed.",
+          "fontSize": "15px"
+        }
+      ],
+      "footerSize": "16px"
+    },
+    {
+      "path": "/login",
+      "linkHeight": 37,
+      "pseudoTop": "-4.5px",
+      "effectiveHeight": 46,
+      "upperHit": true,
+      "lowerHit": false,
+      "paragraphs": [
+        {
+          "text": "Use the email and password for your Studio workspace.",
+          "fontSize": "15px"
+        }
+      ],
+      "footerSize": "16px"
+    }
+  ]
+}

@@ -5,15 +5,15 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/studio/campaign/brief',
 }));
 
-import SignUpPage, { metadata as signupMetadata } from '../../app/signup/page';
-import { metadata as loginMetadata } from '../../app/login/page';
+import SignUpPage, { metadata as signupMetadata } from '../../app/(en)/signup/page';
+import { metadata as loginMetadata } from '../../app/(en)/login/page';
 import { metadata as spanishMetadata } from '../../app/es/page';
-import { metadata as softwareMetadata } from '../../app/software/page';
-import { metadata as pricingMetadata } from '../../app/software/pricing/page';
-import { metadata as studioPricingMetadata } from '../../app/pricing/page';
-import { metadata as privacyMetadata } from '../../app/privacy/page';
-import { metadata as termsMetadata } from '../../app/terms/page';
-import { metadata as advertisingMetadata } from '../../app/advertising/page';
+import { metadata as softwareMetadata } from '../../app/(en)/software/page';
+import { metadata as pricingMetadata } from '../../app/(en)/software/pricing/page';
+import { metadata as studioPricingMetadata } from '../../app/(en)/pricing/page';
+import { metadata as privacyMetadata } from '../../app/(en)/privacy/page';
+import { metadata as termsMetadata } from '../../app/(en)/terms/page';
+import { metadata as advertisingMetadata } from '../../app/(en)/advertising/page';
 import { studioEn, studioEs, studioHeroMedia, type StudioHeroMedia } from './public-copy';
 import { SoftwareLanding } from './software-landing';
 import { SoftwarePricing } from './software-pricing';

@@ -10,6 +10,7 @@ import { publicOrigin } from './public-origin';
 
 afterEach(() => {
   vi.unstubAllEnvs();
+  vi.useRealTimers();
 });
 
 describe('publicOrigin', () => {
@@ -63,6 +64,16 @@ describe('robots and sitemap', () => {
     vi.stubEnv('NEXT_PUBLIC_APP_ORIGIN', '');
     expect(sitemap()).toHaveLength(8);
     expect(robots().sitemap).toBe('https://mustbeviral.com/sitemap.xml');
+  });
+
+  it('records a truthful modification date for every public document', () => {
+    expect(sitemap().map((entry) => entry.lastModified)).toEqual(Array(8).fill('2026-10-03'));
+  });
+
+  it('does not invent new page modification dates on a later build', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2027-10-03T12:00:00Z'));
+    expect(sitemap().map((entry) => entry.lastModified)).toEqual(Array(8).fill('2026-10-03'));
   });
 });
 

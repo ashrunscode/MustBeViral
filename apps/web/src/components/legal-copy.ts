@@ -44,7 +44,7 @@ export const privacyCopy: LegalPageCopy = {
     whoWeAre,
     {
       // apps/web/src/lib/document-lang.ts and src/lib/supabase/proxy.ts (the sales, legal and text
-      // paths skip session work); no analytics or tag dependency in apps/web/package.json; the
+      // guest paths skip session work); no analytics or tag dependency in apps/web/package.json; the
       // production pages answer with no Set-Cookie; next/font self-hosts Geist (the build output
       // holds the font files); web-vitals has no reporter registered in production
       // (src/lib/telemetry/web-vitals.ts).
@@ -56,11 +56,11 @@ export const privacyCopy: LegalPageCopy = {
       ],
     },
     {
-      // apps/web/app/login/actions.ts, forgot-password/actions.ts, verify-email/actions.ts,
-      // reset-password/actions.ts and app/auth/callback (Supabase Auth calls); src/lib/supabase/
+      // apps/web/app/(en)/login/actions.ts, (en)/forgot-password/actions.ts, (en)/verify-email/actions.ts,
+      // (en)/reset-password/actions.ts and app/auth/callback (Supabase Auth calls); src/lib/supabase/
       // proxy.ts (cookies set only through Supabase Auth, including the PKCE code verifier that
       // forgot-password/actions.ts and verify-email/actions.ts store before any link is opened);
-      // apps/web/app/signup/page.tsx
+      // apps/web/app/(en)/signup/page.tsx
       // (enrollment closed); src/features/platform/platform-frame.tsx (studio sign-out with the
       // default global scope); brand/context.md section 9 and docs/architecture/SYSTEM_OVERVIEW.md
       // (Resend as the Supabase Auth mail relay).

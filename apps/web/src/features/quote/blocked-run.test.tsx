@@ -5,7 +5,7 @@ import { createMustBeViralRestClient } from '@mustbeviral/contracts';
 import {
   BlockedRunNotice,
   QuoteResultNotice,
-} from '../../../app/studio/[workspace]/(workflow)/quote/quote-flow';
+} from '../../../app/(en)/studio/[workspace]/(workflow)/quote/quote-flow';
 import { WorkerRunStartPort } from '../run/run-port';
 import { WorkerQuotePort, createGoldenQuote } from './quote-port';
 

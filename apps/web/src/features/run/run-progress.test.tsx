@@ -5,7 +5,7 @@ import {
   RunProgress,
   RunResultNotice,
   shouldStopRunPolling,
-} from '../../../app/studio/[workspace]/(workflow)/quote/run-progress';
+} from '../../../app/(en)/studio/[workspace]/(workflow)/quote/run-progress';
 import { InMemoryRunPort } from './run-port';
 
 describe('RunProgress', () => {

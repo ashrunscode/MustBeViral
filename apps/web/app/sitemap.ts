@@ -6,14 +6,16 @@ import { publicOrigin } from '../src/lib/public-origin';
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = publicOrigin();
   const studio = { en: `${origin}/`, es: `${origin}/es`, 'x-default': `${origin}/` };
+  // D3 changed each page's shared document/footer on this date. A later build is not a new edit.
+  const lastModified = '2026-10-03';
   return [
-    { url: `${origin}/`, alternates: { languages: studio } },
-    { url: `${origin}/es`, alternates: { languages: studio } },
-    { url: `${origin}/pricing` },
-    { url: `${origin}/software` },
-    { url: `${origin}/software/pricing` },
-    { url: `${origin}/privacy` },
-    { url: `${origin}/terms` },
-    { url: `${origin}/advertising` },
+    { url: `${origin}/`, lastModified, alternates: { languages: studio } },
+    { url: `${origin}/es`, lastModified, alternates: { languages: studio } },
+    { url: `${origin}/pricing`, lastModified },
+    { url: `${origin}/software`, lastModified },
+    { url: `${origin}/software/pricing`, lastModified },
+    { url: `${origin}/privacy`, lastModified },
+    { url: `${origin}/terms`, lastModified },
+    { url: `${origin}/advertising`, lastModified },
   ];
 }
