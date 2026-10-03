@@ -58,11 +58,8 @@ scope:
     - docs/**
     - PROJECT_STATE.yaml
     - llms.txt
-    # Owner directive 2026-10-02d A9: facts-only corrections in these two existing brand sources.
     - brand/context.md
     - brand/BRAND.md
-    # Owner directive 2026-10-02: the barrier test aborts after any canvas has existed; this one
-    # file joins the packet so the test can be fixed with a regression. No other test path joins.
     - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
   forbidden_paths:
     - .github/workflows/**
@@ -113,11 +110,10 @@ deliverables:
     packages/ui/src/tokens.ts and components use semantic roles.
   - "Release through deploy-rollback-incidents under adr-0009-standing-release-authority with the
     owner's 2026-10-01 directive and 2026-10-02d A1 as the recorded approvals: fresh-clone gates,
-    one pull request,
-    independent review of the exact head, merge commit, staging deploy and smoke, production
-    promotion only after staging passes, Workers only when the pre-deploy checks show no setting
-    change except the exact Core production CORS change recorded below. A hard stop is recorded
-    with the one sentence that clears it and never crossed."
+    one pull request, independent review of the exact head, merge commit, staging deploy and smoke,
+    production promotion only after staging passes, Workers only when the pre-deploy checks show no
+    setting change except the exact Core production CORS change recorded below. A hard stop is
+    recorded with the one sentence that clears it and never crossed."
   - "Specification revision 3 retains external_effects.remote_mutation approval-required: the
     recorded approval is the owner's 2026-10-01 directive
     (governance/evidence/WP-PLATFORM-W3-001/owner-directive-2026-10-01.md), which approves the
@@ -125,13 +121,13 @@ deliverables:
     adr-0009-standing-release-authority. The owner's adopted 2026-10-02d directive
     (governance/evidence/WP-PLATFORM-UI-001/owner-directive-2026-10-02d.md) is the additional
     recorded approval; every other hard stop remains owner-gated."
-  - 'Owner directive 2026-10-02d A4 permits exactly one NEXT_PUBLIC_APP_ORIGIN update to
+  - Owner directive 2026-10-02d A4 permits exactly one NEXT_PUBLIC_APP_ORIGIN update to
     https://mustbeviral.com on mustbeviral-web-production in Production, then the guarded web
     release. A6 permits adding the apex and www origins to production CORS_ALLOWED_ORIGINS in
     apps/core/wrangler.jsonc while keeping the existing origin, then the guarded Core release.
     Staging Core settings do not change. Confirm the named setting is the only live/config
-    difference before release. Record fresh rollback deployments and Worker versions first.
-    No other environment variable, Worker setting, binding, route, cron or queue changes.'
+    difference before release. Record fresh rollback deployments and Worker versions first. No other
+    environment variable, Worker setting, binding, route, cron or queue changes.
 public_interfaces:
   - Public routes /, /es, /software, /software/pricing, /login, /signup, /forgot-password,
     /reset-password, /verify-email, /maintenance, /unauthorized and not-found. Authenticated routes
@@ -303,17 +299,17 @@ rollback:
     back by promoting the recorded prior Vercel deployment in each project; Workers roll back to the
     recorded version with wrangler rollback. No migration, data, branch, backup, rollback material
     or other session's work is deleted. For the A4 release, promoting the recorded prior web
-    deployment restores its build and environment snapshot without another environment update.
-    For A6, use the recorded prior Core version and record whether its CORS setting was restored;
-    any forward repair of that exact setting follows the reviewed guarded release. No other
-    provider, route, secret or environment value changes.
+    deployment restores its build and environment snapshot without another environment update. For
+    A6, use the recorded prior Core version and record whether its CORS setting was restored; any
+    forward repair of that exact setting follows the reviewed guarded release. No other provider,
+    route, secret or environment value changes.
   remote_actions_required: false
 external_effects:
   remote_mutation: approval-required
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Correct and release the public-origin boundary under A4 and A6, including request-relative auth callbacks.
+  next_action: Release the two authorized production Core origin additions under A6.
   blockers: []
   changed_paths: []
   last_green_checks: []

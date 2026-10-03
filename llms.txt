@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
 current_step: ui-008-release
-next_action: Correct and release the public-origin boundary under A4 and A6, including request-relative auth callbacks.
+next_action: Release the two authorized production Core origin additions under A6.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

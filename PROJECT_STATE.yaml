@@ -11,8 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Correct and release the public-origin boundary under A4 and A6, including
-  request-relative auth callbacks.
+next_action: Release the two authorized production Core origin additions under A6.
 decisions_pending: []
 blockers: []
 legacy:
@@ -26,7 +25,7 @@ environments:
     traffic: live
     mutation_policy: preserve_until_v2_cutover
     notes: V2 web serves mustbeviral.com and www after the owner-directed 2026-10-02 cutover, from
-      1db863c7dac147da044a60b802e37f4f8415d819 in deployment dpl_96beiXaCW9ZCL4HxAa3EG7GqCpyC. The
+      658cd50cc48906262bf24ec08e84b7d768cce481 in deployment dpl_CHf1B4RTTcHMRVpAkSvjKQPuQx9b. The
       existing workers.dev Core health is reachable; all signup, generation, provider, queue, and
       charge behavior is off. preserve_until_v2_cutover keeps legacy V1 unchanged. Under
       adr-0009-standing-release-authority, agents may deploy staging-verified merged commits through
