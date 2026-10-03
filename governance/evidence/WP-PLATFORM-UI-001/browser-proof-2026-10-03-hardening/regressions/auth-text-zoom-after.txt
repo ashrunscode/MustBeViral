@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:66032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 375px and 200% text size (501ms)
+  ok 2 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 375px and 200% text size (312ms)
+  ok 3 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 375px and 200% text size (304ms)
+  ok 4 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 1280px and 200% text size (316ms)
+  ok 5 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 1280px and 200% text size (292ms)
+  ok 6 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 1280px and 200% text size (258ms)
+
+  6 passed (2.9s)

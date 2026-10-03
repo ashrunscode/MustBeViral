@@ -1,0 +1,168 @@
+
+Running 6 tests using 1 worker
+
+(node:63896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 375px and 200% text size (297ms)
+(node:41812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 375px and 200% text size (300ms)
+(node:63780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 375px and 200% text size (267ms)
+(node:55904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 1280px and 200% text size (278ms)
+(node:66200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 1280px and 200% text size (285ms)
+(node:59144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 1280px and 200% text size (283ms)
+
+
+  1) [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 375px and 200% text size
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 376
+    Received:    542
+
+      55 |
+      56 |       expect(layout.controls.length).toBeGreaterThan(0);
+    > 57 |       expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth + 1);
+         |                                    ^
+      58 |       for (const control of layout.controls) {
+      59 |         expect(control.width, `${control.tag} has a usable width`).toBeGreaterThan(0);
+      60 |         expect(control.left, `${control.tag} stays inside the left padding`).toBeGreaterThanOrEqual(
+        at C:\dev\mbv-finish\apps\web\e2e\public-hardening.spec.ts:57:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-log-b6492--at-375px-and-200-text-size-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-log-b6492--at-375px-and-200-text-size-desktop-chromium\error-context.md
+
+  2) [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 375px and 200% text size
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 376
+    Received:    542
+
+      55 |
+      56 |       expect(layout.controls.length).toBeGreaterThan(0);
+    > 57 |       expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth + 1);
+         |                                    ^
+      58 |       for (const control of layout.controls) {
+      59 |         expect(control.width, `${control.tag} has a usable width`).toBeGreaterThan(0);
+      60 |         expect(control.left, `${control.tag} stays inside the left padding`).toBeGreaterThanOrEqual(
+        at C:\dev\mbv-finish\apps\web\e2e\public-hardening.spec.ts:57:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-for-a0ba6--at-375px-and-200-text-size-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-for-a0ba6--at-375px-and-200-text-size-desktop-chromium\error-context.md
+
+  3) [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 375px and 200% text size
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 376
+    Received:    542
+
+      55 |
+      56 |       expect(layout.controls.length).toBeGreaterThan(0);
+    > 57 |       expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth + 1);
+         |                                    ^
+      58 |       for (const control of layout.controls) {
+      59 |         expect(control.width, `${control.tag} has a usable width`).toBeGreaterThan(0);
+      60 |         expect(control.left, `${control.tag} stays inside the left padding`).toBeGreaterThanOrEqual(
+        at C:\dev\mbv-finish\apps\web\e2e\public-hardening.spec.ts:57:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-ver-c1dd4--at-375px-and-200-text-size-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-ver-c1dd4--at-375px-and-200-text-size-desktop-chromium\error-context.md
+
+  4) [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 1280px and 200% text size
+
+    Error: INPUT stays inside the right padding
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 828
+    Received:    897
+
+      61 |           control.contentLeft - 1,
+      62 |         );
+    > 63 |         expect(control.right, `${control.tag} stays inside the right padding`).toBeLessThanOrEqual(
+         |                                                                                ^
+      64 |           control.contentRight + 1,
+      65 |         );
+      66 |       }
+        at C:\dev\mbv-finish\apps\web\e2e\public-hardening.spec.ts:63:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-log-e6602-at-1280px-and-200-text-size-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-log-e6602-at-1280px-and-200-text-size-desktop-chromium\error-context.md
+
+  5) [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 1280px and 200% text size
+
+    Error: INPUT stays inside the right padding
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 828
+    Received:    897
+
+      61 |           control.contentLeft - 1,
+      62 |         );
+    > 63 |         expect(control.right, `${control.tag} stays inside the right padding`).toBeLessThanOrEqual(
+         |                                                                                ^
+      64 |           control.contentRight + 1,
+      65 |         );
+      66 |       }
+        at C:\dev\mbv-finish\apps\web\e2e\public-hardening.spec.ts:63:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-for-e5dfe-at-1280px-and-200-text-size-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-for-e5dfe-at-1280px-and-200-text-size-desktop-chromium\error-context.md
+
+  6) [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 1280px and 200% text size
+
+    Error: INPUT stays inside the right padding
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 828
+    Received:    897
+
+      61 |           control.contentLeft - 1,
+      62 |         );
+    > 63 |         expect(control.right, `${control.tag} stays inside the right padding`).toBeLessThanOrEqual(
+         |                                                                                ^
+      64 |           control.contentRight + 1,
+      65 |         );
+      66 |       }
+        at C:\dev\mbv-finish\apps\web\e2e\public-hardening.spec.ts:63:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-ver-2ad33-at-1280px-and-200-text-size-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\mbv-run\d3-zoom-regression-before-corrected\public-hardening-keeps-ver-2ad33-at-1280px-and-200-text-size-desktop-chromium\error-context.md
+
+  6 failed
+    [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 375px and 200% text size
+    [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 375px and 200% text size
+    [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 375px and 200% text size
+    [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /login fields inside their card at 1280px and 200% text size
+    [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /forgot-password fields inside their card at 1280px and 200% text size
+    [desktop-chromium] › apps\web\e2e\public-hardening.spec.ts:7:9 › keeps /verify-email fields inside their card at 1280px and 200% text size

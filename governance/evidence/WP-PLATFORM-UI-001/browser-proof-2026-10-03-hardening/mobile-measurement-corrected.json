@@ -1,0 +1,152 @@
+{
+  "checkedUtc": "2026-10-03T19:36:23.866Z",
+  "driver": "Playwright MCP; local production; no form submission",
+  "correction": "Pseudo-element inset originates at the padding box: subtract the two border widths when calculating effective height.",
+  "cells": [
+    {
+      "path": "/",
+      "linkHeight": 42,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 16,
+      "footerSize": 16
+    },
+    {
+      "path": "/es",
+      "linkHeight": 42,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 16,
+      "footerSize": 16
+    },
+    {
+      "path": "/pricing",
+      "linkHeight": 42,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 16,
+      "footerSize": 16
+    },
+    {
+      "path": "/software",
+      "linkHeight": 40.5,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 15,
+      "footerSize": 16
+    },
+    {
+      "path": "/software/pricing",
+      "linkHeight": 40.5,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 15,
+      "footerSize": 16
+    },
+    {
+      "path": "/privacy",
+      "linkHeight": 40.5,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    },
+    {
+      "path": "/terms",
+      "linkHeight": 40.5,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    },
+    {
+      "path": "/advertising",
+      "linkHeight": 40.5,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    },
+    {
+      "path": "/login",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 15,
+      "footerSize": 16
+    },
+    {
+      "path": "/signup",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    },
+    {
+      "path": "/forgot-password",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 15,
+      "footerSize": 16
+    },
+    {
+      "path": "/verify-email",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 15,
+      "footerSize": 16
+    },
+    {
+      "path": "/maintenance",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    },
+    {
+      "path": "/unauthorized",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    },
+    {
+      "path": "/d3-not-found",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 15,
+      "footerSize": 16
+    },
+    {
+      "path": "/forgot-password?notice=expired_link",
+      "linkHeight": 37,
+      "effectiveHeight": 44,
+      "upperHit": true,
+      "lowerHit": true,
+      "visibleParagraphMinimum": 13,
+      "footerSize": 16
+    }
+  ],
+  "pass": true
+}

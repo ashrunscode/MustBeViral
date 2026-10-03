@@ -1,0 +1,15 @@
+{
+  "checkedUtc": "2026-10-03T18:33:13.833Z",
+  "node": "v24.18.0",
+  "localOnly": true,
+  "ephemeralOwnedPort": true,
+  "requestedHost": "www.mustbeviral.com",
+  "fetchObservation": {
+    "receivedHost": "127.0.0.1:62042"
+  },
+  "wireObservation": {
+    "receivedHost": "www.mustbeviral.com"
+  },
+  "fetchTransmittedRequestedHost": false,
+  "wireTransmittedRequestedHost": true
+}

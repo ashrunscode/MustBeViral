@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { ReviewFlow } from '../../../app/studio/[workspace]/(workflow)/review/review-flow';
+import { ReviewFlow } from '../../../app/(en)/studio/[workspace]/(workflow)/review/review-flow';
 import type {
   ArtifactGroupReview,
   ReviewPortResult,

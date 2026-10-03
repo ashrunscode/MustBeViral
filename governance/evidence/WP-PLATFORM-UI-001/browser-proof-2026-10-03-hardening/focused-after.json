@@ -1,0 +1,13 @@
+{
+  "Node": "v24.18.0",
+  "Pnpm": "11.12.0",
+  "FinishedUtc": "2026-10-03T17:58:56.2935731Z",
+  "RemoteCalls": false,
+  "Root": "C:/dev/mbv-finish",
+  "Lane": "after-7",
+  "ActualExit": 0,
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-focused-after-7.log",
+  "Command": "corepack pnpm exec vitest run --config vitest.config.ts src/lib/public-security.test.ts src/lib/supabase/proxy.test.ts src/components/public-static-pages.test.tsx src/lib/public-surfaces.test.ts",
+  "StartedUtc": "2026-10-03T17:58:53.2324454Z",
+  "Head": "526457e1ba38f612e829d2bb47fb9bb1d2a9465f"
+}

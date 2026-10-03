@@ -1,0 +1,423 @@
+{
+  "checkedUtc": "2026-10-03T19:08:47.445Z",
+  "driver": "Playwright MCP; fixed paper theme under actual dark preference; axe 4.12.1; no form submission",
+  "results": [
+    {
+      "route": "/",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/login",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/signup",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/forgot-password",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/verify-email",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/maintenance",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/unauthorized",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/d3-page-that-does-not-exist",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/reset-password",
+      "width": 375,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/login",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/signup",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/verify-email",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/maintenance",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/unauthorized",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/d3-page-that-does-not-exist",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    },
+    {
+      "route": "/reset-password",
+      "width": 1280,
+      "observed": {
+        "darkRequested": true,
+        "colorScheme": "light",
+        "background": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "violations": [],
+        "incomplete": []
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

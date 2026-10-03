@@ -1,0 +1,8 @@
+
+ RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+
+
+ Test Files  4 passed (4)
+      Tests  90 passed (90)
+   Start at  12:58:54
+   Duration  1.02s (transform 504ms, setup 0ms, import 1.12s, tests 163ms, environment 0ms)

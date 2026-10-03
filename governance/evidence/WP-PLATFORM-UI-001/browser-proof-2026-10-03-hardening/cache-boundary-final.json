@@ -1,0 +1,224 @@
+{
+  "checkedUtc": "2026-10-03T19:04:18.635Z",
+  "localOnly": true,
+  "cacheDriver": "Node fetch; no Host override",
+  "canonicalDriver": "Node HTTP; actual wire Host header",
+  "sessionFixture": "Invalid synthetic local cookie; no real authentication",
+  "cells": [
+    {
+      "route": "/",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "sessionFixture": false,
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "setCookiePresent": false,
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "sessionFixture": true,
+      "status": 200,
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "setCookiePresent": false,
+      "pass": true
+    }
+  ],
+  "canonical": [
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/",
+      "status": 308,
+      "location": "https://mustbeviral.com/",
+      "pass": true
+    },
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/software?probe=d3",
+      "status": 308,
+      "location": "https://mustbeviral.com/software?probe=d3",
+      "pass": true
+    },
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 308,
+      "location": "https://mustbeviral.com/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "pass": true
+    },
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/_next/static/d3-canonical-probe.js",
+      "status": 308,
+      "location": "https://mustbeviral.com/_next/static/d3-canonical-probe.js",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/",
+      "status": 308,
+      "location": "https://mustbeviral.com/",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/software?probe=d3",
+      "status": 308,
+      "location": "https://mustbeviral.com/software?probe=d3",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 308,
+      "location": "https://mustbeviral.com/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/_next/static/d3-canonical-probe.js",
+      "status": 308,
+      "location": "https://mustbeviral.com/_next/static/d3-canonical-probe.js",
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/",
+      "status": 200,
+      "location": null,
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/software?probe=d3",
+      "status": 200,
+      "location": null,
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 200,
+      "location": null,
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/_next/static/d3-canonical-probe.js",
+      "status": 404,
+      "location": null,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

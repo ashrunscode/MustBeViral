@@ -1,0 +1,114 @@
+$ node governance/scripts/agent-state.mjs verify
+> node governance/scripts/validate-docs.mjs
+> node governance/scripts/validate-work-packet.mjs
+> node governance/scripts/validate-transition-receipts.mjs
+> node governance/scripts/scan-cleanroom.mjs
+> node governance/scripts/check-generated.mjs
+$ node governance/scripts/validate-design-direction.mjs
+Design-direction evidence valid: governance/evidence/WP-D0-001/design-direction.yaml.
+Design-direction evidence valid: governance/evidence/WP-D0-002/design-direction.yaml.
+$ npm run format:check && npm run governance:check && npm run governance:test && npm run security:check && npm run task-graph:check && npm run lint:governance && npm run lint && npm run typecheck && npm run test && npm run test:integration && npm run build
+> mustbeviral-studio@0.0.0 format:check
+> prettier --check . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path governance/format-evidence.ignore
+Checking formatting...
+> mustbeviral-studio@0.0.0 governance:check
+> node governance/scripts/validate-docs.mjs
+> node governance/scripts/validate-work-packet.mjs
+> node governance/scripts/validate-transition-receipts.mjs
+> node governance/scripts/scan-cleanroom.mjs
+> node governance/scripts/check-generated.mjs
+> mustbeviral-studio@0.0.0 governance:test
+> node --test governance/tests/**/*.test.mjs
+✔ requires Cloudflare runtime tests to run in an isolated serial lane (0.1787ms)
+ℹ tests 177
+> node governance/scripts/scan-cleanroom.mjs
+> node governance/scripts/validate-task-graph.mjs
+> mustbeviral-studio@0.0.0 lint:governance
+> eslint governance/**/*.mjs --max-warnings=0
+> node governance/scripts/with-pnpm-path.mjs turbo run lint
+ Tasks:    18 successful, 18 total
+> node governance/scripts/with-pnpm-path.mjs turbo run typecheck --concurrency=50%
+ Tasks:    18 successful, 18 total
+> node governance/scripts/with-pnpm-path.mjs turbo run test --concurrency=50% --filter=!@mustbeviral/core --filter=!@mustbeviral/collaboration-worker && node governance/scripts/with-pnpm-path.mjs turbo run test --concurrency=1 --filter=@mustbeviral/core && node governance/scripts/with-pnpm-path.mjs turbo run test --concurrency=1 --filter=@mustbeviral/collaboration-worker
+@mustbeviral/graph:test:  Test Files  1 passed (1)
+@mustbeviral/graph:test:       Tests  19 passed (19)
+@mustbeviral/graph:test:    Duration  389ms (transform 80ms, setup 0ms, import 108ms, tests 18ms, environment 0ms)
+@mustbeviral/ai:test:  Test Files  1 passed (1)
+@mustbeviral/ai:test:       Tests  1 passed (1)
+@mustbeviral/ai:test:    Duration  364ms (transform 47ms, setup 0ms, import 71ms, tests 5ms, environment 0ms)
+@mustbeviral/collaboration:test:  Test Files  6 passed (6)
+@mustbeviral/collaboration:test:       Tests  40 passed (40)
+@mustbeviral/collaboration:test:    Duration  905ms (transform 446ms, setup 0ms, import 1.08s, tests 368ms, environment 1ms)
+@mustbeviral/db:test:  Test Files  2 passed (2)
+@mustbeviral/db:test:       Tests  15 passed (15)
+@mustbeviral/db:test:    Duration  307ms (transform 79ms, setup 0ms, import 147ms, tests 35ms, environment 0ms)
+@mustbeviral/domain:test:  Test Files  7 passed (7)
+@mustbeviral/domain:test:       Tests  73 passed (73)
+@mustbeviral/domain:test:    Duration  522ms (transform 541ms, setup 0ms, import 832ms, tests 86ms, environment 1ms)
+@mustbeviral/artifacts:test:  Test Files  2 passed (2)
+@mustbeviral/artifacts:test:       Tests  26 passed (26)
+@mustbeviral/artifacts:test:    Duration  1.37s (transform 160ms, setup 0ms, import 249ms, tests 977ms, environment 0ms)
+@mustbeviral/provider:test:  Test Files  4 passed (4)
+@mustbeviral/provider:test:       Tests  85 passed (85)
+@mustbeviral/provider:test:    Duration  699ms (transform 562ms, setup 0ms, import 828ms, tests 135ms, environment 1ms)
+@mustbeviral/email:test:  Test Files  1 passed (1)
+@mustbeviral/email:test:       Tests  2 passed (2)
+@mustbeviral/email:test:    Duration  327ms (transform 33ms, setup 0ms, import 52ms, tests 4ms, environment 0ms)
+@mustbeviral/providers:test:  Test Files  1 passed (1)
+@mustbeviral/providers:test:       Tests  1 passed (1)
+@mustbeviral/providers:test:    Duration  350ms (transform 37ms, setup 0ms, import 60ms, tests 4ms, environment 0ms)
+@mustbeviral/ui:test:  Test Files  5 passed (5)
+@mustbeviral/ui:test:       Tests  66 passed (66)
+@mustbeviral/ui:test:    Duration  4.30s (transform 168ms, setup 0ms, import 804ms, tests 1.06s, environment 1.60s)
+@mustbeviral/config:test:  Test Files  1 passed (1)
+@mustbeviral/config:test:       Tests  4 passed (4)
+@mustbeviral/config:test:    Duration  489ms (transform 59ms, setup 0ms, import 171ms, tests 13ms, environment 0ms)
+@mustbeviral/billing:test:  Test Files  11 passed (11)
+@mustbeviral/billing:test:       Tests  89 passed (89)
+@mustbeviral/billing:test:    Duration  464ms (transform 638ms, setup 0ms, import 970ms, tests 72ms, environment 1ms)
+@mustbeviral/telemetry:test:  Test Files  2 passed (2)
+@mustbeviral/telemetry:test:       Tests  8 passed (8)
+@mustbeviral/telemetry:test:    Duration  345ms (transform 76ms, setup 0ms, import 125ms, tests 31ms, environment 0ms)
+@mustbeviral/contracts:test:  Test Files  15 passed (15)
+@mustbeviral/contracts:test:       Tests  140 passed (140)
+@mustbeviral/contracts:test:    Duration  757ms (transform 2.09s, setup 0ms, import 4.06s, tests 294ms, environment 2ms)
+@mustbeviral/cli:test:  Test Files  2 passed (2)
+@mustbeviral/cli:test:       Tests  20 passed (20)
+@mustbeviral/cli:test:    Duration  1.08s (transform 1.20s, setup 0ms, import 1.76s, tests 50ms, environment 0ms)
+@mustbeviral/web:test:  ✓ src/components/public-static-pages.test.tsx (14 tests) 90ms
+@mustbeviral/web:test:  Test Files  66 passed (66)
+@mustbeviral/web:test:       Tests  448 passed (448)
+@mustbeviral/web:test:    Duration  8.11s (transform 82.77s, setup 0ms, import 133.99s, tests 5.59s, environment 13.72s)
+ Tasks:    24 successful, 24 total
+@mustbeviral/core:test:  Test Files  53 passed (53)
+@mustbeviral/core:test:       Tests  633 passed (633)
+@mustbeviral/core:test:    Duration  74.92s (transform 1.63s, setup 0ms, import 18.29s, tests 11.37s, environment 2ms)
+ Tasks:    6 successful, 6 total
+@mustbeviral/collaboration-worker:test:      ✓ drops a member whose socket passed its lifetime, before and after the 4401 close  479ms
+@mustbeviral/collaboration-worker:test:  Test Files  10 passed (10)
+@mustbeviral/collaboration-worker:test:       Tests  83 passed (83)
+@mustbeviral/collaboration-worker:test:    Duration  43.96s (transform 434ms, setup 0ms, import 2.76s, tests 32.49s, environment 2ms)
+ Tasks:    2 successful, 2 total
+> node governance/scripts/with-pnpm-path.mjs turbo run test:integration --filter=!@mustbeviral/core --filter=!@mustbeviral/collaboration-worker && node governance/scripts/with-pnpm-path.mjs turbo run test:integration --concurrency=1 --filter=@mustbeviral/core
+@mustbeviral/contracts:test:integration:  Test Files  1 passed (1)
+@mustbeviral/contracts:test:integration:       Tests  4 passed (4)
+@mustbeviral/contracts:test:integration:    Duration  803ms (transform 299ms, setup 0ms, import 479ms, tests 10ms, environment 0ms)
+@mustbeviral/web:test:integration:  Test Files  4 passed (4)
+@mustbeviral/web:test:integration:       Tests  31 passed (31)
+@mustbeviral/web:test:integration:    Duration  957ms (transform 548ms, setup 0ms, import 1.13s, tests 116ms, environment 1ms)
+ Tasks:    10 successful, 10 total
+@mustbeviral/core:test:integration:  Test Files  1 passed (1)
+@mustbeviral/core:test:integration:       Tests  2 passed (2)
+@mustbeviral/core:test:integration:    Duration  2.80s (transform 931ms, setup 0ms, import 1.64s, tests 10ms, environment 0ms)
+ Tasks:    6 successful, 6 total
+> node governance/scripts/with-pnpm-path.mjs turbo run build --concurrency=50%
+@mustbeviral/web:build:   Generating static pages using 31 workers (0/21) ...
+@mustbeviral/web:build:   Generating static pages using 31 workers (5/21)
+@mustbeviral/web:build:   Generating static pages using 31 workers (10/21)
+@mustbeviral/web:build:   Generating static pages using 31 workers (15/21)
+@mustbeviral/web:build: ✓ Generating static pages using 31 workers (21/21) in 405ms
+@mustbeviral/web:build: ○  (Static)   prerendered as static content
+@mustbeviral/web:build: Cache boundaries passed: eight static marketing documents; no prerendered Studio route.
+ Tasks:    18 successful, 18 total
+All tests successful.
+Result: PASS

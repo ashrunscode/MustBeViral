@@ -120,6 +120,7 @@ a {
 }
 .auth-form {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
 }
 .auth-form label {
@@ -128,6 +129,8 @@ a {
   font-size: 13px;
 }
 .auth-form input {
+  min-width: 0;
+  width: 100%;
   min-height: 44px;
   border: 1px solid var(--line);
   border-radius: var(--radius-input);
@@ -1370,11 +1373,12 @@ a.pub-wordmark:hover {
 /* The one footer on every public page. */
 .pub-footer {
   width: 100%;
+  overflow-wrap: anywhere;
   margin-top: 16px;
   border-top: 1px solid var(--line);
   padding: 24px 0 8px;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -1431,13 +1435,14 @@ a.pub-wordmark:hover {
 }
 
 .pub-footer--compact {
-  font-size: 13px;
+  font-size: 16px;
 }
 
 /* Signed-out screens keep their centred card; the footer takes the row beneath it. */
 .auth-layout {
   min-height: 100vh;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   background: var(--paper);
 }

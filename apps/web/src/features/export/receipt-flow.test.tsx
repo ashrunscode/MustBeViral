@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ExportResultNotice,
   ReceiptFlow,
-} from '../../../app/studio/[workspace]/(workflow)/receipt/receipt-flow';
+} from '../../../app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow';
 import { InMemoryExportPort, type ExportPort } from './export-port';
 
 describe('ReceiptFlow', () => {

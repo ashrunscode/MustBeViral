@@ -1,0 +1,198 @@
+{
+  "checkedUtc": "2026-10-03T18:32:16.843Z",
+  "driver": "Playwright MCP",
+  "localOnly": true,
+  "noFormSubmission": true,
+  "beforeAuthGridRepair": true,
+  "cells": [
+    {
+      "route": "/login",
+      "width": 375,
+      "layout": {
+        "documentWidth": 542,
+        "viewportWidth": 375,
+        "cardWidth": 440,
+        "contentLeft": 76,
+        "contentRight": 466,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "INPUT",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "BUTTON",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          }
+        ]
+      },
+      "screenshot": "auth-containment-before/login-375.png",
+      "pass": false
+    },
+    {
+      "route": "/forgot-password",
+      "width": 375,
+      "layout": {
+        "documentWidth": 542,
+        "viewportWidth": 375,
+        "cardWidth": 440,
+        "contentLeft": 76,
+        "contentRight": 466,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "BUTTON",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          }
+        ]
+      },
+      "screenshot": "auth-containment-before/forgot-password-375.png",
+      "pass": false
+    },
+    {
+      "route": "/verify-email",
+      "width": 375,
+      "layout": {
+        "documentWidth": 542,
+        "viewportWidth": 375,
+        "cardWidth": 440,
+        "contentLeft": 76,
+        "contentRight": 466,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "BUTTON",
+            "left": 76,
+            "right": 520,
+            "width": 444,
+            "contained": false
+          }
+        ]
+      },
+      "screenshot": "auth-containment-before/verify-email-375.png",
+      "pass": false
+    },
+    {
+      "route": "/login",
+      "width": 1280,
+      "layout": {
+        "documentWidth": 1280,
+        "viewportWidth": 1280,
+        "cardWidth": 440,
+        "contentLeft": 453,
+        "contentRight": 827,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "INPUT",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "BUTTON",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          }
+        ]
+      },
+      "screenshot": "auth-containment-before/login-1280.png",
+      "pass": false
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1280,
+      "layout": {
+        "documentWidth": 1280,
+        "viewportWidth": 1280,
+        "cardWidth": 440,
+        "contentLeft": 453,
+        "contentRight": 827,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "BUTTON",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          }
+        ]
+      },
+      "screenshot": "auth-containment-before/forgot-password-1280.png",
+      "pass": false
+    },
+    {
+      "route": "/verify-email",
+      "width": 1280,
+      "layout": {
+        "documentWidth": 1280,
+        "viewportWidth": 1280,
+        "cardWidth": 440,
+        "contentLeft": 453,
+        "contentRight": 827,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          },
+          {
+            "tag": "BUTTON",
+            "left": 453,
+            "right": 897,
+            "width": 444,
+            "contained": false
+          }
+        ]
+      },
+      "screenshot": "auth-containment-before/verify-email-1280.png",
+      "pass": false
+    }
+  ],
+  "pass": false
+}

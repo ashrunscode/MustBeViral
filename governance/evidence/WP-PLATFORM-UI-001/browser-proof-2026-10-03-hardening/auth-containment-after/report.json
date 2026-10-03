@@ -1,0 +1,224 @@
+{
+  "checkedUtc": "2026-10-03T19:00:36.701Z",
+  "driver": "Playwright MCP on freshly built source after CSS repair",
+  "textZoom": "Each original computed font size doubled once; spacing and dimensions unchanged",
+  "diagnosticCssInjected": false,
+  "formsSubmitted": false,
+  "results": [
+    {
+      "route": "/login",
+      "width": 375,
+      "measured": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "cardWidth": 327,
+        "contentLeft": 49,
+        "contentRight": 326,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "type": "email",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          },
+          {
+            "tag": "INPUT",
+            "type": "password",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          },
+          {
+            "tag": "BUTTON",
+            "type": "submit",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          }
+        ]
+      },
+      "errorClasses": [],
+      "namesRetained": true,
+      "screenshot": "auth-containment-after/login-375.png",
+      "pass": true
+    },
+    {
+      "route": "/forgot-password",
+      "width": 375,
+      "measured": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "cardWidth": 327,
+        "contentLeft": 49,
+        "contentRight": 326,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "type": "email",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          },
+          {
+            "tag": "BUTTON",
+            "type": "submit",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          }
+        ]
+      },
+      "errorClasses": [],
+      "namesRetained": true,
+      "screenshot": "auth-containment-after/forgot-password-375.png",
+      "pass": true
+    },
+    {
+      "route": "/verify-email",
+      "width": 375,
+      "measured": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "cardWidth": 327,
+        "contentLeft": 49,
+        "contentRight": 326,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "type": "email",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          },
+          {
+            "tag": "BUTTON",
+            "type": "submit",
+            "left": 49,
+            "right": 326,
+            "width": 277,
+            "contained": true
+          }
+        ]
+      },
+      "errorClasses": [],
+      "namesRetained": true,
+      "screenshot": "auth-containment-after/verify-email-375.png",
+      "pass": true
+    },
+    {
+      "route": "/login",
+      "width": 1280,
+      "measured": {
+        "viewport": 1280,
+        "documentWidth": 1280,
+        "cardWidth": 440,
+        "contentLeft": 453,
+        "contentRight": 827,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "type": "email",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          },
+          {
+            "tag": "INPUT",
+            "type": "password",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          },
+          {
+            "tag": "BUTTON",
+            "type": "submit",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          }
+        ]
+      },
+      "errorClasses": [],
+      "namesRetained": true,
+      "screenshot": "auth-containment-after/login-1280.png",
+      "pass": true
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1280,
+      "measured": {
+        "viewport": 1280,
+        "documentWidth": 1280,
+        "cardWidth": 440,
+        "contentLeft": 453,
+        "contentRight": 827,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "type": "email",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          },
+          {
+            "tag": "BUTTON",
+            "type": "submit",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          }
+        ]
+      },
+      "errorClasses": [],
+      "namesRetained": true,
+      "screenshot": "auth-containment-after/forgot-password-1280.png",
+      "pass": true
+    },
+    {
+      "route": "/verify-email",
+      "width": 1280,
+      "measured": {
+        "viewport": 1280,
+        "documentWidth": 1280,
+        "cardWidth": 440,
+        "contentLeft": 453,
+        "contentRight": 827,
+        "controls": [
+          {
+            "tag": "INPUT",
+            "type": "email",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          },
+          {
+            "tag": "BUTTON",
+            "type": "submit",
+            "left": 453,
+            "right": 827,
+            "width": 374,
+            "contained": true
+          }
+        ]
+      },
+      "errorClasses": [],
+      "namesRetained": true,
+      "screenshot": "auth-containment-after/verify-email-1280.png",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

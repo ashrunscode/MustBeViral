@@ -1,0 +1,15 @@
+{
+  "CoreStatus": "ok",
+  "FounderNamePresent": false,
+  "NoSecretsLoaded": true,
+  "SourceHead": "526457e1ba38f612e829d2bb47fb9bb1d2a9465f",
+  "PreflightCompletionObservedUtc": "2026-10-03T19:24:20.1269132Z",
+  "HiggsfieldCheckActualExit": 1,
+  "DeploymentMarker": "dpl_HCxas3BjbcANLZoVVQh68q1EcHoL",
+  "NamesActualExit": 0,
+  "HiggsfieldFallbackPresent": false,
+  "ObservedUtc": "2026-10-03T19:24:19.8913458Z",
+  "PreflightActualExit": 0,
+  "PreflightTimeIsObservedNotCommandEnd": true,
+  "ProductionHttpStatus": 200
+}

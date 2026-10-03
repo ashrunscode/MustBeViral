@@ -1,0 +1,100 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
+import { authMessageClassName, authMessageRole } from '../../../src/lib/auth/auth-message';
+import { safeStudioRedirectPath } from '../../../src/lib/auth/sign-in';
+import { createServerSupabaseClient } from '../../../src/lib/supabase/server';
+import { PendingSubmit } from '../../../src/components/pending-submit';
+import { signOut } from './actions';
+import { LoginForm } from './login-form';
+import { PublicFooter } from '../../../src/components/public-footer';
+
+export const metadata: Metadata = {
+  title: 'Sign in',
+  description: 'Sign in to your Must Be Viral Studio workspace.',
+};
+
+const notices: Readonly<Record<string, string>> = {
+  signed_out: 'You are signed out.',
+  expired_link: 'That sign-in link expired. Request a new link before trying again.',
+  auth_link_failed: 'That sign-in link could not be verified. Sign in to continue.',
+  password_updated: 'Password updated. Sign in with your new password.',
+  rate_limited: 'Too many auth attempts. Wait a moment, then try again.',
+  verification_sent: 'If the account exists, a new verification email is on the way.',
+  recovery_sent: 'If the account exists, recovery instructions are on the way.',
+  sign_out_failed: 'Sign-out did not complete. Try again before closing this browser.',
+};
+
+export default async function LoginPage({
+  searchParams,
+}: Readonly<{
+  searchParams: Promise<Readonly<Record<string, string | string[] | undefined>>>;
+}>) {
+  const params = await searchParams;
+  const next = safeStudioRedirectPath(params.next);
+  const noticeKey = typeof params.notice === 'string' ? params.notice : '';
+  const notice = notices[noticeKey];
+  const supabase = await createServerSupabaseClient();
+  const { data } = await supabase.auth.getClaims();
+  const signedIn = typeof data?.claims?.sub === 'string';
+  const forgotPasswordUrl = `/forgot-password?${new URLSearchParams({ next }).toString()}`;
+
+  return (
+    <div className="auth-layout">
+      <main className="auth-page">
+        <a className="skip-link" href="#auth-heading">
+          Skip to sign in
+        </a>
+        <section aria-labelledby="auth-heading" className="auth-card">
+          <Link className="pub-wordmark" href="/" translate="no">
+            {'Must\u00a0Be\u00a0Viral'}
+          </Link>
+          <h1 id="auth-heading">{signedIn ? 'Your session is active' : 'Sign in'}</h1>
+          <p className="auth-intro">
+            {signedIn
+              ? 'Continue to your Studio workspace or end this browser session.'
+              : 'Use the email and password for your Studio workspace.'}
+          </p>
+          {notice === undefined ? null : (
+            <p className={authMessageClassName(noticeKey)} role={authMessageRole(noticeKey)}>
+              {notice}
+            </p>
+          )}
+          {signedIn ? (
+            <div className="auth-session-actions">
+              <a className="auth-primary auth-primary--link" href={next}>
+                Continue to Studio
+              </a>
+              <form action={signOut}>
+                <PendingSubmit
+                  className="auth-secondary"
+                  label="Sign out"
+                  pendingLabel="Signing out…"
+                />
+              </form>
+            </div>
+          ) : (
+            <>
+              <LoginForm next={next} />
+              <div className="auth-links">
+                <a className="auth-link" href={forgotPasswordUrl}>
+                  Forgot password?
+                </a>
+                <a className="auth-link" href="/signup">
+                  Request access
+                </a>
+                <a
+                  className="auth-link"
+                  href={`/verify-email?${new URLSearchParams({ next }).toString()}`}
+                >
+                  Verify email
+                </a>
+              </div>
+            </>
+          )}
+        </section>
+      </main>
+      <PublicFooter compact surface="legal" />
+    </div>
+  );
+}
