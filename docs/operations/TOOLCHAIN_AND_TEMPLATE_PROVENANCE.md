@@ -82,6 +82,7 @@ pnpm dlx create-cloudflare@2.70.10 core-hono `
 - Rejected: public assets, sample `/message` behavior, remote deploy command, loose ranges, nested workspace/lockfile, VS Code settings, copied generated types, and every generated instructional file.
 - Modification: omit `--lang ts`. With C3 2.70.10 that option removes Hono from the eligible framework map and can silently select the generic SSR template when defaults are accepted. On Windows/Node 24, C3 telemetry cleanup caused a post-generation libuv assertion; disabling C3 telemetry produced a clean exit without changing generated files.
 - Testing correction: the Hono template contains no tests. Current Worker tests use `cloudflareTest()` from `@cloudflare/vitest-pool-workers@0.18.4`; the older C3 generic template's `defineWorkersConfig`/`poolOptions` pattern was rejected.
+- Upstream fact reverified on 2026-10-03 (`src-cloudflare-workers-vitest`): current Cloudflare documentation names `@cloudflare/vitest-plugin` as the replacement for `@cloudflare/vitest-pool-workers` and preserves the package API/configuration. This repository still pins pool-workers 0.18.4; the historical intake and approved pin above are unchanged. This annotation does not approve a dependency upgrade.
 
 ### shadcn inspection only
 

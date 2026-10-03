@@ -321,7 +321,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Reverify official research sources under L2.
+  next_action: Implement D3 public hardening within WP-PLATFORM-UI-001.
   blockers: []
   changed_paths: []
   last_green_checks: []

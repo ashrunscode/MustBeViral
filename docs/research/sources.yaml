@@ -5,118 +5,118 @@ sources:
     publisher: Cloudflare
     url: https://developers.cloudflare.com/workers/
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [system-overview, deploy-rollback-incidents]
   - id: src-cloudflare-wrangler-configuration
     title: Wrangler configuration
     publisher: Cloudflare
     url: https://developers.cloudflare.com/workers/wrangler/configuration/
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [toolchain-template-provenance]
   - id: src-cloudflare-workers-vitest
     title: Workers Vitest integration
     publisher: Cloudflare
     url: https://developers.cloudflare.com/workers/testing/vitest-integration/
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [toolchain-template-provenance, quality-gates]
   - id: src-cloudflare-hyperdrive-supabase
     title: Connect Hyperdrive to Supabase
     publisher: Cloudflare
     url: https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-database-providers/supabase/
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [data-auth-tenancy]
   - id: src-cloudflare-r2
     title: Cloudflare R2 documentation
     publisher: Cloudflare
     url: https://developers.cloudflare.com/r2/
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [system-overview, execution-providers-billing]
   - id: src-supabase-auth
-    title: Supabase Auth with Next.js
+    title: Supabase server-side clients with Next.js
     publisher: Supabase
-    url: https://supabase.com/docs/guides/auth/server-side/nextjs
+    url: https://supabase.com/docs/guides/auth/server-side/creating-a-client?queryGroups=framework&framework=nextjs
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [data-auth-tenancy, toolchain-template-provenance]
   - id: src-supabase-rls
     title: Supabase Row Level Security
     publisher: Supabase
     url: https://supabase.com/docs/guides/database/postgres/row-level-security
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [data-auth-tenancy]
   - id: src-nextjs
     title: Next.js App Router documentation
     publisher: Vercel
     url: https://nextjs.org/docs/app
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [system-overview, toolchain-template-provenance]
   - id: src-nextjs-typegen
     title: Next.js CLI type generation
     publisher: Vercel
     url: https://nextjs.org/docs/app/api-reference/cli/next#next-typegen-options
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [toolchain-template-provenance, quality-gates]
   - id: src-pnpm-settings
     title: pnpm workspace settings
     publisher: pnpm
     url: https://pnpm.io/settings
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [toolchain-template-provenance]
   - id: src-react-19-types
     title: React 19 TypeScript JSX namespace change
     publisher: Meta
-    url: https://github.com/facebook/react/blob/main/CHANGELOG.md
+    url: https://raw.githubusercontent.com/react/react/main/CHANGELOG.md
     source_type: primary-source
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [toolchain-template-provenance]
   - id: src-vercel
     title: Vercel documentation
     publisher: Vercel
     url: https://vercel.com/docs
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [system-overview, deploy-rollback-incidents]
   - id: src-fal
     title: fal developer documentation
     publisher: fal
-    url: https://fal.ai/docs
+    url: https://fal.ai/docs/documentation
     source_type: official-docs
-    valid_as_of: '2026-09-16'
-    reverify_after: '2026-10-16'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2026-11-03'
     used_by: [execution-providers-billing]
   - id: src-stripe
     title: Stripe documentation
     publisher: Stripe
     url: https://docs.stripe.com/
     source_type: official-docs
-    valid_as_of: '2026-07-12'
-    reverify_after: '2026-10-12'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2027-01-03'
     used_by: [execution-providers-billing, deploy-rollback-incidents]
   - id: src-shadcn
     title: shadcn CLI agent skill
     publisher: shadcn
     url: https://raw.githubusercontent.com/shadcn-ui/ui/main/skills/shadcn/SKILL.md
     source_type: primary-source
-    valid_as_of: '2026-09-16'
-    reverify_after: '2026-10-16'
+    valid_as_of: '2026-10-03'
+    reverify_after: '2026-11-03'
     used_by: [experience-contract, toolchain-template-provenance]
