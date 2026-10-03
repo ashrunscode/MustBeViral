@@ -1,0 +1,261 @@
+{
+  "observedUtc": "2026-10-03T07:09:13.566Z",
+  "origin": "https://mustbeviral.com",
+  "deploymentId": "dpl_CHf1B4RTTcHMRVpAkSvjKQPuQx9b",
+  "cells": [
+    {
+      "width": 375,
+      "route": "/",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/es",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/pricing",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/software",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/software/pricing",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/privacy",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/terms",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/advertising",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/login",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/signup",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/forgot-password",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/verify-email",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/maintenance",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 375,
+      "route": "/unauthorized",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/es",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/pricing",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/software",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/software/pricing",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/privacy",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/terms",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/advertising",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/login",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/signup",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/forgot-password",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/verify-email",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/maintenance",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    },
+    {
+      "width": 1280,
+      "route": "/unauthorized",
+      "status": 200,
+      "main": 1,
+      "h1Px": 28,
+      "overflow": false,
+      "identity": true
+    }
+  ],
+  "consoleErrors": 0,
+  "formsSubmitted": 0
+}

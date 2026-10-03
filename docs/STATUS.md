@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Correct and release the public-origin boundary under A4 and A6, including request-relative auth callbacks.
+Release the two authorized production Core origin additions under A6.
