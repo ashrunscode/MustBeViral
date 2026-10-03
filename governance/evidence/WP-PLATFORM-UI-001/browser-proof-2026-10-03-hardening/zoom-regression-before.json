@@ -1,0 +1,9 @@
+{
+  "ActualExit": 1,
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/public-hardening.spec.ts --project=desktop-chromium --reporter=list --output=C:/dev/mbv-run/d3-zoom-regression-before",
+  "SourceBase": "526457e1ba38f612e829d2bb47fb9bb1d2a9465f",
+  "StartedUtc": "2026-10-03T18:22:36.6187029Z",
+  "BeforeAuthGridRepair": true,
+  "LocalOnly": true,
+  "FinishedUtc": "2026-10-03T18:22:44.3547625Z"
+}

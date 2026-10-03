@@ -1,0 +1,1830 @@
+{
+  "checkedUtc": "2026-10-03T19:02:56.057Z",
+  "driver": "Playwright MCP; built local production; unthrottled lab observations; no form submission",
+  "webVitals": "5.1.0",
+  "results": [
+    {
+      "route": "/",
+      "perf": {
+        "lcpMs": 100,
+        "lcpTag": "IMG",
+        "lcpClass": "studio-hero__poster",
+        "lcpIsPoster": true,
+        "cls": 0,
+        "imagePreload": true,
+        "imageBoxes": [
+          {
+            "width": 309,
+            "height": 173.8125,
+            "aspectRatio": "1920 / 1080"
+          }
+        ]
+      },
+      "focusable": 16,
+      "keyboardWrapped": true,
+      "nativeFocusCaptures": [],
+      "stops": [
+        {
+          "index": 48,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 177.640625,
+          "height": 42,
+          "axFocus": {
+            "nodeId": "18",
+            "role": "link",
+            "name": "Skip to main content",
+            "backendDOMNodeId": 18
+          },
+          "key": "48:18"
+        },
+        {
+          "index": 51,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "69",
+            "role": "link",
+            "name": "Must Be Viral",
+            "backendDOMNodeId": 69
+          },
+          "key": "51:69"
+        },
+        {
+          "index": 55,
+          "tag": "A",
+          "name": "Español",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 58.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "72",
+            "role": "link",
+            "name": "Español",
+            "backendDOMNodeId": 72
+          },
+          "key": "55:72"
+        },
+        {
+          "index": 62,
+          "tag": "BUTTON",
+          "name": "Play the film",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 125.46875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "75",
+            "role": "button",
+            "name": "Play the film",
+            "backendDOMNodeId": 75
+          },
+          "key": "62:75"
+        },
+        {
+          "index": 68,
+          "tag": "A",
+          "name": "Book a test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 166.921875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "78",
+            "role": "link",
+            "name": "Book a test shoot.",
+            "backendDOMNodeId": 78
+          },
+          "key": "68:78"
+        },
+        {
+          "index": 69,
+          "tag": "A",
+          "name": "Call 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 140.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "79",
+            "role": "link",
+            "name": "Call 713-899-9346.",
+            "backendDOMNodeId": 79
+          },
+          "key": "69:79"
+        },
+        {
+          "index": 118,
+          "tag": "A",
+          "name": "Pricing, with the add-ons",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 182.328125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "122",
+            "role": "link",
+            "name": "Pricing, with the add-ons",
+            "backendDOMNodeId": 122
+          },
+          "key": "118:122"
+        },
+        {
+          "index": 159,
+          "tag": "A",
+          "name": "Book a test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 166.921875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "163",
+            "role": "link",
+            "name": "Book a test shoot.",
+            "backendDOMNodeId": 163
+          },
+          "key": "159:163"
+        },
+        {
+          "index": 160,
+          "tag": "A",
+          "name": "Call 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 140.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "164",
+            "role": "link",
+            "name": "Call 713-899-9346.",
+            "backendDOMNodeId": 164
+          },
+          "key": "160:164"
+        },
+        {
+          "index": 166,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 105.015625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "170",
+            "role": "link",
+            "name": "713-899-9346",
+            "backendDOMNodeId": 170
+          },
+          "key": "166:170"
+        },
+        {
+          "index": 167,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 180.21875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "171",
+            "role": "link",
+            "name": "studio@mustbeviral.com",
+            "backendDOMNodeId": 171
+          },
+          "key": "167:171"
+        },
+        {
+          "index": 173,
+          "tag": "A",
+          "name": "Pricing",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 50.765625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "177",
+            "role": "link",
+            "name": "Pricing",
+            "backendDOMNodeId": 177
+          },
+          "key": "173:177"
+        },
+        {
+          "index": 175,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "179",
+            "role": "link",
+            "name": "Privacy",
+            "backendDOMNodeId": 179
+          },
+          "key": "175:179"
+        },
+        {
+          "index": 177,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "181",
+            "role": "link",
+            "name": "Terms",
+            "backendDOMNodeId": 181
+          },
+          "key": "177:181"
+        },
+        {
+          "index": 180,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 211.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "183",
+            "role": "link",
+            "name": "Advertising and AI disclosure",
+            "backendDOMNodeId": 183
+          },
+          "key": "180:183"
+        },
+        {
+          "index": 182,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 66.859375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "185",
+            "role": "link",
+            "name": "Software",
+            "backendDOMNodeId": 185
+          },
+          "key": "182:185"
+        }
+      ],
+      "firstFocus": "Skip to main content",
+      "skipTarget": {
+        "hash": "#studio-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "interaction": {
+        "kind": "Trusted Enter on the studio play/pause control with static CSP",
+        "playing": {
+          "paused": false,
+          "controls": false,
+          "muted": true,
+          "tracks": 0,
+          "pressed": "true"
+        },
+        "paused": {
+          "paused": true,
+          "shown": false,
+          "pressed": "false"
+        }
+      },
+      "inp": [
+        {
+          "value": 40,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "target": "BUTTON",
+              "interactionId": 559
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "target": "BUTTON",
+              "interactionId": 559
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "target": "BUTTON",
+              "interactionId": 559
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "target": "BUTTON",
+              "interactionId": 559
+            }
+          ]
+        },
+        {
+          "value": 64,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 64,
+              "target": "BUTTON",
+              "interactionId": 566
+            },
+            {
+              "name": "keypress",
+              "duration": 64,
+              "target": "BUTTON",
+              "interactionId": 566
+            },
+            {
+              "name": "click",
+              "duration": 64,
+              "target": "BUTTON",
+              "interactionId": 566
+            }
+          ]
+        }
+      ],
+      "tree": "- link \"Skip to main content\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Español\":\n          - /url: /es\n- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Play the film\"\n    - status\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "errorClasses": [],
+      "expectedDocument404Errors": 0,
+      "expectations": {
+        "lcp": true,
+        "cls": true,
+        "posterLcp": true,
+        "keyboard": true,
+        "skip": true,
+        "noApplicationConsoleErrors": true,
+        "inp": true,
+        "loginHome": true,
+        "playback": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "perf": {
+        "lcpMs": 128,
+        "lcpTag": "IMG",
+        "lcpClass": "studio-hero__poster",
+        "lcpIsPoster": true,
+        "cls": 0,
+        "imagePreload": true,
+        "imageBoxes": [
+          {
+            "width": 309,
+            "height": 173.8125,
+            "aspectRatio": "1920 / 1080"
+          }
+        ]
+      },
+      "focusable": 14,
+      "keyboardWrapped": true,
+      "nativeFocusCaptures": [],
+      "stops": [
+        {
+          "index": 48,
+          "tag": "A",
+          "name": "Saltar al contenido",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 162.9375,
+          "height": 42,
+          "axFocus": {
+            "nodeId": "5",
+            "role": "link",
+            "name": "Saltar al contenido",
+            "backendDOMNodeId": 5
+          },
+          "key": "48:5"
+        },
+        {
+          "index": 51,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "74",
+            "role": "link",
+            "name": "Must Be Viral",
+            "backendDOMNodeId": 74
+          },
+          "key": "51:74"
+        },
+        {
+          "index": 55,
+          "tag": "A",
+          "name": "English",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.609375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "77",
+            "role": "link",
+            "name": "English",
+            "backendDOMNodeId": 77
+          },
+          "key": "55:77"
+        },
+        {
+          "index": 65,
+          "tag": "A",
+          "name": "Agende un test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 194.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "81",
+            "role": "link",
+            "name": "Agende un test shoot.",
+            "backendDOMNodeId": 81
+          },
+          "key": "65:81"
+        },
+        {
+          "index": 66,
+          "tag": "A",
+          "name": "Llame al 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 173.640625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "82",
+            "role": "link",
+            "name": "Llame al 713-899-9346.",
+            "backendDOMNodeId": 82
+          },
+          "key": "66:82"
+        },
+        {
+          "index": 99,
+          "tag": "A",
+          "name": "Agende un test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 194.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "109",
+            "role": "link",
+            "name": "Agende un test shoot.",
+            "backendDOMNodeId": 109
+          },
+          "key": "99:109"
+        },
+        {
+          "index": 100,
+          "tag": "A",
+          "name": "Llame al 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 173.640625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "110",
+            "role": "link",
+            "name": "Llame al 713-899-9346.",
+            "backendDOMNodeId": 110
+          },
+          "key": "100:110"
+        },
+        {
+          "index": 106,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 105.015625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "116",
+            "role": "link",
+            "name": "713-899-9346",
+            "backendDOMNodeId": 116
+          },
+          "key": "106:116"
+        },
+        {
+          "index": 107,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 180.21875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "117",
+            "role": "link",
+            "name": "studio@mustbeviral.com",
+            "backendDOMNodeId": 117
+          },
+          "key": "107:117"
+        },
+        {
+          "index": 113,
+          "tag": "A",
+          "name": "Pricing",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 50.765625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "123",
+            "role": "link",
+            "name": "Pricing",
+            "backendDOMNodeId": 123
+          },
+          "key": "113:123"
+        },
+        {
+          "index": 115,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "125",
+            "role": "link",
+            "name": "Privacy",
+            "backendDOMNodeId": 125
+          },
+          "key": "115:125"
+        },
+        {
+          "index": 117,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "127",
+            "role": "link",
+            "name": "Terms",
+            "backendDOMNodeId": 127
+          },
+          "key": "117:127"
+        },
+        {
+          "index": 119,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 211.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "129",
+            "role": "link",
+            "name": "Advertising and AI disclosure",
+            "backendDOMNodeId": 129
+          },
+          "key": "119:129"
+        },
+        {
+          "index": 122,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 66.859375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "132",
+            "role": "link",
+            "name": "Software",
+            "backendDOMNodeId": 132
+          },
+          "key": "122:132"
+        }
+      ],
+      "firstFocus": "Saltar al contenido",
+      "skipTarget": {
+        "hash": "#studio-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "interaction": null,
+      "inp": [],
+      "tree": "- link \"Saltar al contenido\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /es\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"English\":\n          - /url: /\n- main:\n  - region \"Filmamos Houston.\":\n    - heading \"Filmamos Houston.\" [level=1]\n    - paragraph: \"Contenido semanal para negocios de Houston: Reels, fotos y un calendario de publicación que sí se cumple.\"\n    - link \"Agende un test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Llame al 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 una sola vez\n    - term: Full Package\n    - definition: $3,500 al mes\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 una sola vez\n    - paragraph: \"El Test Shoot cuesta $700, una sola vez: una sesión de hasta dos horas, 2 Reels editados y de 15 a 25 fotos.\"\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 al mes\n    - paragraph: Con el Full Package vamos a su negocio de cuatro a ocho veces al mes, grabamos, editamos y le entregamos las publicaciones con su calendario.\n  - paragraph: Le entregamos el material listo para publicar. El alcance depende de su cuenta y de su mercado.\n  - region \"Agende un test shoot. Dos horas, dos Reels y de 15 a 25 fotos, $700.\":\n    - heading \"Agende un test shoot. Dos horas, dos Reels y de 15 a 25 fotos, $700.\" [level=2]\n    - link \"Agende un test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Llame al 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n    - paragraph: These pages are in English.\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "errorClasses": [],
+      "expectedDocument404Errors": 0,
+      "expectations": {
+        "lcp": true,
+        "cls": true,
+        "posterLcp": true,
+        "keyboard": true,
+        "skip": true,
+        "noApplicationConsoleErrors": true,
+        "inp": true,
+        "loginHome": true,
+        "playback": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "perf": {
+        "lcpMs": 168,
+        "lcpTag": "VIDEO",
+        "lcpClass": "is-shown",
+        "lcpIsPoster": false,
+        "cls": 0,
+        "imagePreload": true,
+        "imageBoxes": [
+          {
+            "width": 343,
+            "height": 192.9375,
+            "aspectRatio": "16 / 9"
+          }
+        ]
+      },
+      "focusable": 15,
+      "keyboardWrapped": true,
+      "nativeFocusCaptures": [
+        "interactions-mcp-after/software-native-focus-0.png",
+        "interactions-mcp-after/software-native-focus-1.png",
+        "interactions-mcp-after/software-native-focus-2.png",
+        "interactions-mcp-after/software-native-focus-3.png"
+      ],
+      "stops": [
+        {
+          "index": 45,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.15625,
+          "height": 40.5,
+          "axFocus": {
+            "nodeId": "11",
+            "role": "link",
+            "name": "Skip to main content",
+            "backendDOMNodeId": 11
+          },
+          "key": "45:11"
+        },
+        {
+          "index": 48,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "75",
+            "role": "link",
+            "name": "Must Be Viral",
+            "backendDOMNodeId": 75
+          },
+          "key": "48:75"
+        },
+        {
+          "index": 52,
+          "tag": "A",
+          "name": "Plans",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "78",
+            "role": "link",
+            "name": "Plans",
+            "backendDOMNodeId": 78
+          },
+          "key": "52:78"
+        },
+        {
+          "index": 61,
+          "tag": "VIDEO",
+          "name": "",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 698.796875,
+          "height": 392.1875,
+          "axFocus": {
+            "nodeId": "3",
+            "role": "Video",
+            "name": "",
+            "backendDOMNodeId": 3
+          },
+          "key": "61:3"
+        },
+        {
+          "index": 61,
+          "tag": "VIDEO",
+          "name": "",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 698.796875,
+          "height": 392.1875,
+          "axFocus": {
+            "nodeId": "90",
+            "role": "button",
+            "name": "pause",
+            "backendDOMNodeId": 90
+          },
+          "key": "61:90",
+          "nativeStyle": {
+            "tag": "INPUT",
+            "outlineStyle": "auto",
+            "outlineWidth": "1px",
+            "boxShadow": "none",
+            "onScreen": true,
+            "width": 48,
+            "height": 48
+          },
+          "nativeScreenshot": "interactions-mcp-after/software-native-focus-0.png"
+        },
+        {
+          "index": 62,
+          "tag": "VIDEO",
+          "name": "",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 698.796875,
+          "height": 392.1875,
+          "axFocus": {
+            "nodeId": "105",
+            "role": "button",
+            "name": "enter full screen",
+            "backendDOMNodeId": 105
+          },
+          "key": "62:105",
+          "nativeStyle": {
+            "tag": "INPUT",
+            "outlineStyle": "auto",
+            "outlineWidth": "1px",
+            "boxShadow": "none",
+            "onScreen": true,
+            "width": 48,
+            "height": 48
+          },
+          "nativeScreenshot": "interactions-mcp-after/software-native-focus-1.png"
+        },
+        {
+          "index": 62,
+          "tag": "VIDEO",
+          "name": "",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 698.796875,
+          "height": 392.1875,
+          "axFocus": {
+            "nodeId": "107",
+            "role": "button",
+            "name": "show more media controls",
+            "backendDOMNodeId": 107
+          },
+          "key": "62:107",
+          "nativeStyle": {
+            "tag": "INPUT",
+            "outlineStyle": "auto",
+            "outlineWidth": "1px",
+            "boxShadow": "none",
+            "onScreen": true,
+            "width": 48,
+            "height": 48
+          },
+          "nativeScreenshot": "interactions-mcp-after/software-native-focus-2.png"
+        },
+        {
+          "index": 62,
+          "tag": "VIDEO",
+          "name": "",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 698.796875,
+          "height": 392.1875,
+          "axFocus": {
+            "nodeId": "109",
+            "role": "slider",
+            "name": "video time scrubber",
+            "backendDOMNodeId": 109
+          },
+          "key": "62:109",
+          "nativeStyle": {
+            "tag": "INPUT",
+            "outlineStyle": "auto",
+            "outlineWidth": "1px",
+            "boxShadow": "none",
+            "onScreen": true,
+            "width": 698.796875,
+            "height": 24
+          },
+          "nativeScreenshot": "interactions-mcp-after/software-native-focus-3.png"
+        },
+        {
+          "index": 69,
+          "tag": "BUTTON",
+          "name": "0:00photo.jpg arrives from the Google Drive folder you selected.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 467.203125,
+          "height": 66,
+          "axFocus": {
+            "nodeId": "165",
+            "role": "button",
+            "name": "0:00 photo.jpg arrives from the Google Drive folder you selected.",
+            "backendDOMNodeId": 165
+          },
+          "key": "69:165"
+        },
+        {
+          "index": 73,
+          "tag": "BUTTON",
+          "name": "0:04The same photo is cropped and captioned from the approved offer.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 467.203125,
+          "height": 66,
+          "axFocus": {
+            "nodeId": "169",
+            "role": "button",
+            "name": "0:04 The same photo is cropped and captioned from the approved offer.",
+            "backendDOMNodeId": 169
+          },
+          "key": "73:169"
+        },
+        {
+          "index": 77,
+          "tag": "BUTTON",
+          "name": "0:08The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 467.203125,
+          "height": 88.5,
+          "axFocus": {
+            "nodeId": "173",
+            "role": "button",
+            "name": "0:08 The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.",
+            "backendDOMNodeId": 173
+          },
+          "key": "77:173"
+        },
+        {
+          "index": 81,
+          "tag": "BUTTON",
+          "name": "0:13The receipt shows the provider id and the actual cost for that photo. Pause stays available.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 467.203125,
+          "height": 66,
+          "axFocus": {
+            "nodeId": "175",
+            "role": "button",
+            "name": "0:13 The receipt shows the provider id and the actual cost for that photo. Pause stays available.",
+            "backendDOMNodeId": 175
+          },
+          "key": "81:175"
+        },
+        {
+          "index": 87,
+          "tag": "A",
+          "name": "Sign in to Studio",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 147.109375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "180",
+            "role": "link",
+            "name": "Sign in to Studio",
+            "backendDOMNodeId": 180
+          },
+          "key": "87:180"
+        },
+        {
+          "index": 88,
+          "tag": "A",
+          "name": "Request access by email",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 169.828125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "181",
+            "role": "link",
+            "name": "Request access by email",
+            "backendDOMNodeId": 181
+          },
+          "key": "88:181"
+        },
+        {
+          "index": 94,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 105.015625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "185",
+            "role": "link",
+            "name": "713-899-9346",
+            "backendDOMNodeId": 185
+          },
+          "key": "94:185"
+        },
+        {
+          "index": 95,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 180.21875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "186",
+            "role": "link",
+            "name": "studio@mustbeviral.com",
+            "backendDOMNodeId": 186
+          },
+          "key": "95:186"
+        },
+        {
+          "index": 101,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "189",
+            "role": "link",
+            "name": "Privacy",
+            "backendDOMNodeId": 189
+          },
+          "key": "101:189"
+        },
+        {
+          "index": 103,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "191",
+            "role": "link",
+            "name": "Terms",
+            "backendDOMNodeId": 191
+          },
+          "key": "103:191"
+        },
+        {
+          "index": 105,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 211.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "192",
+            "role": "link",
+            "name": "Advertising and AI disclosure",
+            "backendDOMNodeId": 192
+          },
+          "key": "105:192"
+        },
+        {
+          "index": 107,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 110.625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "194",
+            "role": "link",
+            "name": "Houston studio",
+            "backendDOMNodeId": 194
+          },
+          "key": "107:194"
+        }
+      ],
+      "firstFocus": "Skip to main content",
+      "skipTarget": {
+        "hash": "#software-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "interaction": {
+        "kind": "Trusted Enter on each existing software beat under static CSP",
+        "beats": [
+          {
+            "currentTime": 0.205473,
+            "paused": false,
+            "tracks": 1,
+            "currentBeat": "0:00"
+          },
+          {
+            "currentTime": 4.133287,
+            "paused": false,
+            "tracks": 1,
+            "currentBeat": "0:04"
+          },
+          {
+            "currentTime": 8.080163,
+            "paused": false,
+            "tracks": 1,
+            "currentBeat": "0:08"
+          },
+          {
+            "currentTime": 13.114005,
+            "paused": false,
+            "tracks": 1,
+            "currentBeat": "0:13"
+          }
+        ]
+      },
+      "inp": [
+        {
+          "value": 80,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 80,
+              "target": "BUTTON",
+              "interactionId": 6593
+            },
+            {
+              "name": "keypress",
+              "duration": 80,
+              "target": "BUTTON",
+              "interactionId": 6593
+            },
+            {
+              "name": "click",
+              "duration": 80,
+              "target": "BUTTON",
+              "interactionId": 6593
+            },
+            {
+              "name": "keydown",
+              "duration": 80,
+              "target": "BUTTON",
+              "interactionId": 6593
+            }
+          ]
+        },
+        {
+          "value": 88,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 88,
+              "target": "BUTTON",
+              "interactionId": 6600
+            },
+            {
+              "name": "keypress",
+              "duration": 88,
+              "target": "BUTTON",
+              "interactionId": 6600
+            },
+            {
+              "name": "click",
+              "duration": 88,
+              "target": "BUTTON",
+              "interactionId": 6600
+            }
+          ]
+        }
+      ],
+      "tree": "- link \"Skip to main content\":\n  - /url: \"#software-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /software\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Plans\":\n          - /url: /software/pricing\n- main:\n  - heading \"You brief. Agents produce. You approve every dollar.\" [level=1]\n  - paragraph: The film follows one photo from a Drive folder to a receipt.\n  - figure \"One photo, from Drive to receipt\":\n    - img \"Film frame. A photo arrives from a Google Drive folder, is cropped and captioned from the approved offer, publishes to the eligible channels, and ends in a receipt that shows the cost.\"\n    - text: One photo, from Drive to receipt\n  - list \"The path, in four beats\":\n    - listitem:\n      - button \"0:00 photo.jpg arrives from the Google Drive folder you selected.\"\n    - listitem:\n      - button \"0:04 The same photo is cropped and captioned from the approved offer.\"\n    - listitem:\n      - button \"0:08 The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.\"\n    - listitem:\n      - button \"0:13 The receipt shows the provider id and the actual cost for that photo. Pause stays available.\"\n  - paragraph: Enrollment is closed.\n  - link \"Sign in to Studio\":\n    - /url: /login\n  - link \"Request access by email\":\n    - /url: mailto:studio@mustbeviral.com?subject=Request%20access\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral is also a Houston content studio.\n    - link \"Houston studio\":\n      - /url: /\n- alert",
+      "errorClasses": [],
+      "expectedDocument404Errors": 0,
+      "expectations": {
+        "lcp": true,
+        "cls": true,
+        "posterLcp": true,
+        "keyboard": true,
+        "skip": true,
+        "noApplicationConsoleErrors": true,
+        "inp": true,
+        "loginHome": true,
+        "playback": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/login",
+      "perf": {
+        "lcpMs": 100,
+        "lcpTag": "P",
+        "lcpClass": "auth-intro",
+        "lcpIsPoster": false,
+        "cls": 0,
+        "imagePreload": false,
+        "imageBoxes": []
+      },
+      "focusable": 15,
+      "keyboardWrapped": true,
+      "nativeFocusCaptures": [],
+      "stops": [
+        {
+          "index": 32,
+          "tag": "A",
+          "name": "Skip to sign in",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 123.296875,
+          "height": 37,
+          "axFocus": {
+            "nodeId": "13",
+            "role": "link",
+            "name": "Skip to sign in",
+            "backendDOMNodeId": 13
+          },
+          "key": "32:13"
+        },
+        {
+          "index": 34,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "16",
+            "role": "link",
+            "name": "Must Be Viral",
+            "backendDOMNodeId": 16
+          },
+          "key": "34:16"
+        },
+        {
+          "index": 44,
+          "tag": "INPUT",
+          "name": "Email",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 374,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "3",
+            "role": "textbox",
+            "name": "Email",
+            "backendDOMNodeId": 3
+          },
+          "key": "44:3"
+        },
+        {
+          "index": 46,
+          "tag": "INPUT",
+          "name": "Password",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 374,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "4",
+            "role": "textbox",
+            "name": "Password",
+            "backendDOMNodeId": 4
+          },
+          "key": "46:4"
+        },
+        {
+          "index": 47,
+          "tag": "BUTTON",
+          "name": "Sign in",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 374,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "10",
+            "role": "button",
+            "name": "Sign in",
+            "backendDOMNodeId": 10
+          },
+          "key": "47:10"
+        },
+        {
+          "index": 49,
+          "tag": "A",
+          "name": "Forgot password?",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 123.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "21",
+            "role": "link",
+            "name": "Forgot password?",
+            "backendDOMNodeId": 21
+          },
+          "key": "49:21"
+        },
+        {
+          "index": 50,
+          "tag": "A",
+          "name": "Request access",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 108.78125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "22",
+            "role": "link",
+            "name": "Request access",
+            "backendDOMNodeId": 22
+          },
+          "key": "50:22"
+        },
+        {
+          "index": 51,
+          "tag": "A",
+          "name": "Verify email",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 79.921875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "23",
+            "role": "link",
+            "name": "Verify email",
+            "backendDOMNodeId": 23
+          },
+          "key": "51:23"
+        },
+        {
+          "index": 56,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 105.015625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "71",
+            "role": "link",
+            "name": "713-899-9346",
+            "backendDOMNodeId": 71
+          },
+          "key": "56:71"
+        },
+        {
+          "index": 57,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 180.21875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "72",
+            "role": "link",
+            "name": "studio@mustbeviral.com",
+            "backendDOMNodeId": 72
+          },
+          "key": "57:72"
+        },
+        {
+          "index": 63,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "75",
+            "role": "link",
+            "name": "Privacy",
+            "backendDOMNodeId": 75
+          },
+          "key": "63:75"
+        },
+        {
+          "index": 65,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "77",
+            "role": "link",
+            "name": "Terms",
+            "backendDOMNodeId": 77
+          },
+          "key": "65:77"
+        },
+        {
+          "index": 67,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 211.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "78",
+            "role": "link",
+            "name": "Advertising and AI disclosure",
+            "backendDOMNodeId": 78
+          },
+          "key": "67:78"
+        },
+        {
+          "index": 69,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 110.625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "79",
+            "role": "link",
+            "name": "Houston studio",
+            "backendDOMNodeId": 79
+          },
+          "key": "69:79"
+        },
+        {
+          "index": 70,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 66.859375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "80",
+            "role": "link",
+            "name": "Software",
+            "backendDOMNodeId": 80
+          },
+          "key": "70:80"
+        }
+      ],
+      "firstFocus": "Skip to sign in",
+      "skipTarget": {
+        "hash": "#auth-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "interaction": {
+        "kind": "Trusted Tab then Enter on the changed login wordmark",
+        "target": {
+          "tag": "A",
+          "href": "/",
+          "name": "Must Be Viral"
+        },
+        "homeReached": true,
+        "destinationLang": "en"
+      },
+      "inp": [
+        {
+          "value": 48,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "target": "BODY",
+              "interactionId": 7338
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "target": "BODY",
+              "interactionId": 7338
+            }
+          ]
+        }
+      ],
+      "tree": "- alert: Must Be Viral, a Houston content studio\n- link \"Skip to main content\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Español\":\n          - /url: /es\n- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Play the film\"\n    - status\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software",
+      "errorClasses": [],
+      "expectedDocument404Errors": 0,
+      "expectations": {
+        "lcp": true,
+        "cls": true,
+        "posterLcp": true,
+        "keyboard": true,
+        "skip": true,
+        "noApplicationConsoleErrors": true,
+        "inp": true,
+        "loginHome": true,
+        "playback": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "perf": {
+        "lcpMs": 124,
+        "lcpTag": "P",
+        "lcpClass": "",
+        "lcpIsPoster": false,
+        "cls": 0,
+        "imagePreload": false,
+        "imageBoxes": []
+      },
+      "focusable": 9,
+      "keyboardWrapped": true,
+      "nativeFocusCaptures": [],
+      "stops": [
+        {
+          "index": 30,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.15625,
+          "height": 40.5,
+          "axFocus": {
+            "nodeId": "6",
+            "role": "link",
+            "name": "Skip to main content",
+            "backendDOMNodeId": 6
+          },
+          "key": "30:6"
+        },
+        {
+          "index": 33,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "64",
+            "role": "link",
+            "name": "Must Be Viral",
+            "backendDOMNodeId": 64
+          },
+          "key": "33:64"
+        },
+        {
+          "index": 71,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 105.015625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "92",
+            "role": "link",
+            "name": "713-899-9346",
+            "backendDOMNodeId": 92
+          },
+          "key": "71:92"
+        },
+        {
+          "index": 72,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 180.21875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "93",
+            "role": "link",
+            "name": "studio@mustbeviral.com",
+            "backendDOMNodeId": 93
+          },
+          "key": "72:93"
+        },
+        {
+          "index": 78,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "3",
+            "role": "link",
+            "name": "Privacy",
+            "backendDOMNodeId": 3
+          },
+          "key": "78:3"
+        },
+        {
+          "index": 80,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "100",
+            "role": "link",
+            "name": "Terms",
+            "backendDOMNodeId": 100
+          },
+          "key": "80:100"
+        },
+        {
+          "index": 82,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 211.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "102",
+            "role": "link",
+            "name": "Advertising and AI disclosure",
+            "backendDOMNodeId": 102
+          },
+          "key": "82:102"
+        },
+        {
+          "index": 84,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 110.625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "104",
+            "role": "link",
+            "name": "Houston studio",
+            "backendDOMNodeId": 104
+          },
+          "key": "84:104"
+        },
+        {
+          "index": 85,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 66.859375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "105",
+            "role": "link",
+            "name": "Software",
+            "backendDOMNodeId": 105
+          },
+          "key": "85:105"
+        }
+      ],
+      "firstFocus": "Skip to main content",
+      "skipTarget": {
+        "hash": "#legal-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "interaction": null,
+      "inp": [],
+      "tree": "- link \"Skip to main content\":\n  - /url: \"#legal-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n- main:\n  - heading \"Advertising and AI disclosure\" [level=1]\n  - paragraph: This page says what Must Be Viral commits to about AI tools and the labelling of paid and synthetic content, and what it does not promise.\n  - paragraph: Last changed 2026-10-02.\n  - region \"Who we are\":\n    - heading \"Who we are\" [level=2]\n    - paragraph: ERLV INC, DBA Must Be Viral, in Houston, Texas. The street address is not yet published. Write to studio@mustbeviral.com or call 713-899-9346.\n  - region \"In the studio’s work\":\n    - heading \"In the studio’s work\" [level=2]\n    - paragraph: AI tools may be used in editing and post-production. Which tools, and at which step, is not yet published. A person directs every shoot and approves every delivered asset.\n    - paragraph: A delivered asset that contains synthetic or AI-generated imagery, voice or likeness will carry a visible disclosure on the asset or in its caption, plus the platform’s own AI-content label where the platform provides one.\n  - region \"Paid placements\":\n    - heading \"Paid placements\" [level=2]\n    - paragraph: No paid placement runs today. When one does, in our account or in a client’s ad account, it will name the advertiser of record and carry the platform’s required ad label, and paid partnership and sponsored content will carry the platform’s paid-partnership tag.\n  - region \"Testimonials and portfolio\":\n    - heading \"Testimonials and portfolio\" [level=2]\n    - paragraph: A testimonial carries its attribution and date and appears only with permission on file. No result is implied as typical.\n    - paragraph: Today no client name, logo, quote or delivered clip appears on this site, because no written permission is on file.\n  - region \"On this site\":\n    - heading \"On this site\" [level=2]\n    - paragraph: The film on the software page is an animation of designed interface frames. It shows no person, place or product.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"In the software\":\n    - heading \"In the software\" [level=2]\n    - paragraph: Outputs produced by the software are agent-produced. The run’s model route, provider and cost are inspectable in its receipt. A generated image needs a user-editable description before it can be approved or exported.\n    - paragraph: On mustbeviral.com today, no generation run can start.\n  - region \"What we do not promise\":\n    - heading \"What we do not promise\" [level=2]\n    - paragraph: No promise of reach, views, followers, engagement or results, for a client or for ourselves.\n  - region \"The date\":\n    - heading \"The date\" [level=2]\n    - paragraph: This page describes what Must Be Viral discloses as of 2026-10-02. The date above is when it last changed.\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - link \"Houston studio\":\n      - /url: /\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "errorClasses": [],
+      "expectedDocument404Errors": 0,
+      "expectations": {
+        "lcp": true,
+        "cls": true,
+        "posterLcp": true,
+        "keyboard": true,
+        "skip": true,
+        "noApplicationConsoleErrors": true,
+        "inp": true,
+        "loginHome": true,
+        "playback": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/d3-page-that-does-not-exist",
+      "perf": {
+        "lcpMs": 68,
+        "lcpTag": "H1",
+        "lcpClass": "",
+        "lcpIsPoster": false,
+        "cls": 0,
+        "imagePreload": false,
+        "imageBoxes": []
+      },
+      "focusable": 10,
+      "keyboardWrapped": true,
+      "nativeFocusCaptures": [],
+      "stops": [
+        {
+          "index": 33,
+          "tag": "A",
+          "name": "Skip to page content",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.875,
+          "height": 37,
+          "axFocus": {
+            "nodeId": "5",
+            "role": "link",
+            "name": "Skip to page content",
+            "backendDOMNodeId": 5
+          },
+          "key": "33:5"
+        },
+        {
+          "index": 40,
+          "tag": "A",
+          "name": "Return home",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 454,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "54",
+            "role": "link",
+            "name": "Return home",
+            "backendDOMNodeId": 54
+          },
+          "key": "40:54"
+        },
+        {
+          "index": 41,
+          "tag": "A",
+          "name": "Sign in",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 454,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "3",
+            "role": "link",
+            "name": "Sign in",
+            "backendDOMNodeId": 3
+          },
+          "key": "41:3"
+        },
+        {
+          "index": 46,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 105.015625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "57",
+            "role": "link",
+            "name": "713-899-9346",
+            "backendDOMNodeId": 57
+          },
+          "key": "46:57"
+        },
+        {
+          "index": 47,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 180.21875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "58",
+            "role": "link",
+            "name": "studio@mustbeviral.com",
+            "backendDOMNodeId": 58
+          },
+          "key": "47:58"
+        },
+        {
+          "index": 53,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.453125,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "61",
+            "role": "link",
+            "name": "Privacy",
+            "backendDOMNodeId": 61
+          },
+          "key": "53:61"
+        },
+        {
+          "index": 55,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "63",
+            "role": "link",
+            "name": "Terms",
+            "backendDOMNodeId": 63
+          },
+          "key": "55:63"
+        },
+        {
+          "index": 57,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 211.296875,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "4",
+            "role": "link",
+            "name": "Advertising and AI disclosure",
+            "backendDOMNodeId": 4
+          },
+          "key": "57:4"
+        },
+        {
+          "index": 59,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 110.625,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "64",
+            "role": "link",
+            "name": "Houston studio",
+            "backendDOMNodeId": 64
+          },
+          "key": "59:64"
+        },
+        {
+          "index": 60,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 66.859375,
+          "height": 44,
+          "axFocus": {
+            "nodeId": "65",
+            "role": "link",
+            "name": "Software",
+            "backendDOMNodeId": 65
+          },
+          "key": "60:65"
+        }
+      ],
+      "firstFocus": "Skip to page content",
+      "skipTarget": {
+        "hash": "#status-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "interaction": null,
+      "inp": [],
+      "tree": "- main:\n  - link \"Skip to page content\":\n    - /url: \"#status-heading\"\n  - region \"This page does not exist\":\n    - text: Must Be Viral\n    - heading \"This page does not exist\" [level=1]\n    - paragraph: The URL may be mistyped, expired, or belong to a campaign that moved. Signed-in work lives under Studio.\n    - link \"Return home\":\n      - /url: /\n    - link \"Sign in\":\n      - /url: /login\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - link \"Houston studio\":\n      - /url: /\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "errorClasses": [],
+      "expectedDocument404Errors": 2,
+      "expectations": {
+        "lcp": true,
+        "cls": true,
+        "posterLcp": true,
+        "keyboard": true,
+        "skip": true,
+        "noApplicationConsoleErrors": true,
+        "inp": true,
+        "loginHome": true,
+        "playback": true
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import {
   QuoteFlow,
   QuoteResultNotice,
-} from '../../../app/studio/[workspace]/(workflow)/quote/quote-flow';
+} from '../../../app/(en)/studio/[workspace]/(workflow)/quote/quote-flow';
 import { InMemoryQuotePort, type QuoteConfirmResult } from './quote-port';
 
 describe('QuoteResultNotice result-union rendering', () => {

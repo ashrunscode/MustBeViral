@@ -15,7 +15,7 @@ vi.mock('../../lib/core/browser-client', () => ({
   createBrowserCoreClient: () => ({ request: () => new Promise(() => undefined) }),
 }));
 
-import { QuoteFlow } from '../../../app/studio/[workspace]/(workflow)/quote/quote-flow';
+import { QuoteFlow } from '../../../app/(en)/studio/[workspace]/(workflow)/quote/quote-flow';
 
 afterEach(cleanup);
 

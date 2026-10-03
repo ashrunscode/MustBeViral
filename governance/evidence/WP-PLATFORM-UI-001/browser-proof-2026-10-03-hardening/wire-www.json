@@ -1,0 +1,92 @@
+{
+  "checkedUtc": "2026-10-03T18:22:45.165Z",
+  "driver": "Node HTTP with explicit wire Host header",
+  "localOnly": true,
+  "cells": [
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/",
+      "status": 308,
+      "location": "https://mustbeviral.com/",
+      "pass": true
+    },
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/software?probe=d3",
+      "status": 308,
+      "location": "https://mustbeviral.com/software?probe=d3",
+      "pass": true
+    },
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 308,
+      "location": "https://mustbeviral.com/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "pass": true
+    },
+    {
+      "host": "www.mustbeviral.com",
+      "route": "/_next/static/d3-canonical-probe.js",
+      "status": 308,
+      "location": "https://mustbeviral.com/_next/static/d3-canonical-probe.js",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/",
+      "status": 308,
+      "location": "https://mustbeviral.com/",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/software?probe=d3",
+      "status": 308,
+      "location": "https://mustbeviral.com/software?probe=d3",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 308,
+      "location": "https://mustbeviral.com/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "pass": true
+    },
+    {
+      "host": "WWW.MustBeViral.com:443",
+      "route": "/_next/static/d3-canonical-probe.js",
+      "status": 308,
+      "location": "https://mustbeviral.com/_next/static/d3-canonical-probe.js",
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/",
+      "status": 200,
+      "location": null,
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/software?probe=d3",
+      "status": 200,
+      "location": null,
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 200,
+      "location": null,
+      "pass": true
+    },
+    {
+      "host": "unrelated.example",
+      "route": "/_next/static/d3-canonical-probe.js",
+      "status": 404,
+      "location": null,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

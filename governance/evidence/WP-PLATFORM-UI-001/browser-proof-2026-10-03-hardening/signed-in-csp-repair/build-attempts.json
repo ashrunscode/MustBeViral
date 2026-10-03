@@ -1,0 +1,44 @@
+[
+  {
+    "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Root": "C:/dev/mbv-verify-48d74b8",
+    "StartedUtc": "2026-10-03T20:42:38.699587Z",
+    "FinishedUtc": "2026-10-03T20:42:59.0783322Z",
+    "ActualExit": 1,
+    "Versions": {
+      "Pnpm": "11.12.0",
+      "Node": "v24.18.0"
+    },
+    "NoEnvironmentFile": true,
+    "LocalConfigurationOnly": true,
+    "NoRemoteAuthentication": true
+  },
+  {
+    "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Root": "C:/dev/mbv-verify-48d74b8-2",
+    "StartedUtc": "2026-10-03T20:44:26.2656725Z",
+    "FinishedUtc": "2026-10-03T20:44:50.4681157Z",
+    "ActualExit": 0,
+    "Versions": {
+      "Pnpm": "11.12.0",
+      "Node": "v24.18.0"
+    },
+    "NoEnvironmentFile": true,
+    "LocalConfigurationOnly": true,
+    "NoRemoteAuthentication": true
+  },
+  {
+    "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Root": "C:/dev/mbv-finish",
+    "StartedUtc": "2026-10-03T20:52:10.8987895Z",
+    "FinishedUtc": "2026-10-03T20:52:35.2171953Z",
+    "ActualExit": 0,
+    "Versions": {
+      "Node": "v24.18.0",
+      "Pnpm": "11.12.0"
+    },
+    "NoEnvironmentFile": true,
+    "LocalConfigurationOnly": true,
+    "NoRemoteAuthentication": true
+  }
+]

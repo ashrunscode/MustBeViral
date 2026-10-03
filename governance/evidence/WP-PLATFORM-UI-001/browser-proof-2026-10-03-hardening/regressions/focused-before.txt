@@ -1,0 +1,506 @@
+
+ RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+
+ ❯ src/lib/public-security.test.ts (11 tests | 11 failed) 16ms
+     × protects documents and assets without making static pages depend on a nonce 4ms
+     × normalizes only the configured public service origins, including collaboration sockets 1ms
+     × allows the existing loopback harness without upgrading its local HTTP transport 1ms
+     × allows eval and loopback hot reload only in development 1ms
+     × rejects unsafe service input without echoing it: not a URL 4ms
+     × rejects unsafe service input without echoing it: javascript:alert(1) 1ms
+     × rejects unsafe service input without echoing it: https://user:fixture@example.test 1ms
+     × rejects unsafe service input without echoing it: https://example.test;script-src.example 1ms
+     × rejects unsafe service input without echoing it: https://example.test/
+script-src * 1ms
+     × rejects unsafe service input without echoing it: http://remote.synthetic.example 1ms
+     × rejects unsafe service input without echoing it: wss://remote.synthetic.example 1ms
+ ❯ src/lib/public-surfaces.test.ts (18 tests | 2 failed) 49ms
+     × records a truthful modification date for every public document 10ms
+     × does not invent new page modification dates on a later build 3ms
+ ❯ src/lib/supabase/proxy.test.ts (38 tests | 21 failed) 43ms
+     × redirects a verified nonempty subject from / to Studio privately 5ms
+     × redirects a verified nonempty subject from /es to Studio privately 2ms
+     × redirects a verified nonempty subject from /es/ to Studio privately 1ms
+     × does not authenticate a missing or malformed subject: null 1ms
+     × does not authenticate a missing or malformed subject:  1ms
+     × does not authenticate a missing or malformed subject:     1ms
+     × does not authenticate a missing or malformed subject: 12 1ms
+     × fails closed on a claims error without returning provider details 1ms
+     × recovers from a thrown claims failure as a private guest landing 1ms
+     × keeps a cookie-bearing landing available when public configuration is absent 1ms
+     × does not refresh other marketing pages even with an existing session 0ms
+     × bridges every refreshed cookie with options into the landing redirect and request 1ms
+     × does not share response cookies between overlapping requests 1ms
+     × denies an empty subject at Studio and preserves the return path:  2ms
+     × denies an empty subject at Studio and preserves the return path:     1ms
+     × never enables the local preview bypass in production 2ms
+     × canonically redirects www/ before any session work 1ms
+     × canonically redirects www/software?ref=synthetic before any session work 0ms
+     × canonically redirects www/films/s0-studio-hero-d55af8ec3d69.mp4 before any session work 1ms
+     × canonically redirects www/_next/static/fixture.js before any session work 1ms
+     × matches www assets for canonicalization while keeping apex assets outside session middleware 2ms
+ ❯ src/components/public-static-pages.test.tsx (12 tests | 6 failed) 52ms
+     × renders an English root synchronously without reading request headers 20ms
+     × renders / without a request-time session or promise 1ms
+     × renders /es without a request-time session or promise 1ms
+     × makes the unchanged login wordmark a home link 4ms
+     × keeps .pub-footer body text at the 16px public floor 1ms
+     × keeps .pub-footer--compact body text at the 16px public floor 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 40 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/public-static-pages.test.tsx > static marketing document > renders an English root synchronously without reading request headers
+AssertionError: expected Promise{…} to not be an instance of Promise
+ ❯ src/components/public-static-pages.test.tsx:41:26
+     39|     const document = RootLayout({ children: <main>synthetic document f…
+     40|     await Promise.resolve(document);
+     41|     expect(document).not.toBeInstanceOf(Promise);
+       |                          ^
+     42|     expect(mocks.headers).not.toHaveBeenCalled();
+     43|     const html = renderToStaticMarkup(document);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/40]⎯
+
+ FAIL  src/components/public-static-pages.test.tsx > static marketing document > renders / without a request-time session or promise
+ FAIL  src/components/public-static-pages.test.tsx > static marketing document > renders /es without a request-time session or promise
+AssertionError: expected Promise{…} to not be an instance of Promise
+ ❯ src/components/public-static-pages.test.tsx:55:24
+     53|     const result = page();
+     54|     await Promise.resolve(result);
+     55|     expect(result).not.toBeInstanceOf(Promise);
+       |                        ^
+     56|     expect(mocks.getClaims).not.toHaveBeenCalled();
+     57|     expect(renderToStaticMarkup(result)).toContain('<main');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/40]⎯
+
+ FAIL  src/components/public-static-pages.test.tsx > public finishing details > makes the unchanged login wordmark a home link
+AssertionError: expected '<div class="auth-layout"><main class=…' to match /<a\b…/")[^>]*>Must\u00a0Be\u00a0Viral<\
+
+- Expected:
+/<a\b(?=[^>]*class="pub-wordmark")(?=[^>]*href="\/")[^>]*>Must\u00a0Be\u00a0Viral<\/a>/u
+
++ Received:
+"<div class=\"auth-layout\"><main class=\"auth-page\"><a class=\"skip-link\" href=\"#auth-heading\">Skip to sign in</a><section aria-labelledby=\"auth-heading\" class=\"auth-card\"><span class=\"pub-wordmark\" translate=\"no\">Must Be Viral</span><h1 id=\"auth-heading\">Sign in</h1><p class=\"auth-intro\">Use the email and password for your Studio workspace.</p><form class=\"auth-form\" action=\"javascript:throw new Error(&#x27;React form unexpectedly submitted.&#x27;)\"><input type=\"hidden\" name=\"next\" value=\"/studio\"/><label for=\"email\">Email</label><input autoComplete=\"email\" id=\"email\" required=\"\" spellCheck=\"false\" type=\"email\" name=\"email\"/><label for=\"password\">Password</label><input autoComplete=\"current-password\" id=\"password\" required=\"\" type=\"password\" name=\"password\"/><button class=\"auth-primary\" type=\"submit\">Sign in</button></form><div class=\"auth-links\"><a class=\"auth-link\" href=\"/forgot-password?next=%2Fstudio\">Forgot password?</a><a class=\"auth-link\" href=\"/signup\">Request access</a><a class=\"auth-link\" href=\"/verify-email?next=%2Fstudio\">Verify email</a></div></section></main><footer class=\"pub-footer pub-footer--compact\"><div class=\"pub-footer__inner\"><p class=\"pub-footer__entity\" translate=\"no\">ERLV INC, DBA Must Be Viral</p><p class=\"pub-footer__contact\"><a href=\"tel:+17138999346\">713-899-9346</a><a href=\"mailto:studio@mustbeviral.com\">studio@mustbeviral.com</a><span>Houston, Texas</span><span>Street address not yet published.</span></p><nav aria-label=\"Legal\"><ul class=\"pub-footer__links\"><li><a href=\"/privacy\">Privacy</a></li><li><a href=\"/terms\">Terms</a></li><li><a href=\"/advertising\">Advertising and AI disclosure</a></li></ul></nav><p class=\"pub-footer__other\"><a href=\"/\">Houston studio</a><a href=\"/software\">Software</a></p></div></footer></div><script>addEventListener(\"submit\",function(a){if(!a.defaultPrevented){var c=a.target,d=a.submitter,e=c.action,b=d;if(d){var f=d.getAttribute(\"formAction\");null!=f&&(e=f,b=null)}\"javascript:throw new Error('React form unexpectedly submitted.')\"===e&&(a.preventDefault(),b?(a=document.createElement(\"input\"),a.name=b.name,a.value=b.value,b.parentNode.insertBefore(a,b),b=new FormData(c),a.parentNode.removeChild(a)):b=new FormData(c),a=c.ownerDocument||c,(a.$$reactFormReplay=a.$$reactFormReplay||[]).push(c,d,b))}});</script>"
+
+ ❯ src/components/public-static-pages.test.tsx:64:18
+     62|   it('makes the unchanged login wordmark a home link', async () => {
+     63|     const html = renderToStaticMarkup(await LoginPage({ searchParams: …
+     64|     expect(html).toMatch(/<a\b(?=[^>]*class="pub-wordmark")(?=[^>]*hre…
+       |                  ^
+     65|     expect(html).not.toMatch(/<span class="pub-wordmark"/u);
+     66|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/40]⎯
+
+ FAIL  src/components/public-static-pages.test.tsx > public finishing details > keeps .pub-footer body text at the 16px public floor
+AssertionError: expected 15 to be greater than or equal to 16
+ ❯ src/components/public-static-pages.test.tsx:73:28
+     71|     const pixels = /font-size:\s*(\d+)px/u.exec(declarations)?.[1];
+     72|     expect(pixels).toBeDefined();
+     73|     expect(Number(pixels)).toBeGreaterThanOrEqual(16);
+       |                            ^
+     74|   });
+     75| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/40]⎯
+
+ FAIL  src/components/public-static-pages.test.tsx > public finishing details > keeps .pub-footer--compact body text at the 16px public floor
+AssertionError: expected 13 to be greater than or equal to 16
+ ❯ src/components/public-static-pages.test.tsx:73:28
+     71|     const pixels = /font-size:\s*(\d+)px/u.exec(declarations)?.[1];
+     72|     expect(pixels).toBeDefined();
+     73|     expect(Number(pixels)).toBeGreaterThanOrEqual(16);
+       |                            ^
+     74|   });
+     75| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/40]⎯
+
+ FAIL  src/lib/public-security.test.ts > public security headers > protects documents and assets without making static pages depend on a nonce
+AssertionError: all routes need the security policy: expected undefined to be defined
+ ❯ globalHeaders src/lib/public-security.test.ts:8:55
+      6|   const rules = await nextConfig.headers?.();
+      7|   const rule = rules?.find(({ source }) => source === '/:path*');
+      8|   expect(rule, 'all routes need the security policy').toBeDefined();
+       |                                                       ^
+      9|   return new Map(rule?.headers.map(({ key, value }) => [key.toLowerCas…
+     10| }
+ ❯ src/lib/public-security.test.ts:32:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/40]⎯
+
+ FAIL  src/lib/public-security.test.ts > public security headers > normalizes only the configured public service origins, including collaboration sockets
+AssertionError: all routes need the security policy: expected undefined to be defined
+ ❯ globalHeaders src/lib/public-security.test.ts:8:55
+      6|   const rules = await nextConfig.headers?.();
+      7|   const rule = rules?.find(({ source }) => source === '/:path*');
+      8|   expect(rule, 'all routes need the security policy').toBeDefined();
+       |                                                       ^
+      9|   return new Map(rule?.headers.map(({ key, value }) => [key.toLowerCas…
+     10| }
+ ❯ src/lib/public-security.test.ts:60:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/40]⎯
+
+ FAIL  src/lib/public-security.test.ts > public security headers > allows the existing loopback harness without upgrading its local HTTP transport
+AssertionError: all routes need the security policy: expected undefined to be defined
+ ❯ globalHeaders src/lib/public-security.test.ts:8:55
+      6|   const rules = await nextConfig.headers?.();
+      7|   const rule = rules?.find(({ source }) => source === '/:path*');
+      8|   expect(rule, 'all routes need the security policy').toBeDefined();
+       |                                                       ^
+      9|   return new Map(rule?.headers.map(({ key, value }) => [key.toLowerCas…
+     10| }
+ ❯ src/lib/public-security.test.ts:77:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/40]⎯
+
+ FAIL  src/lib/public-security.test.ts > public security headers > allows eval and loopback hot reload only in development
+AssertionError: all routes need the security policy: expected undefined to be defined
+ ❯ globalHeaders src/lib/public-security.test.ts:8:55
+      6|   const rules = await nextConfig.headers?.();
+      7|   const rule = rules?.find(({ source }) => source === '/:path*');
+      8|   expect(rule, 'all routes need the security policy').toBeDefined();
+       |                                                       ^
+      9|   return new Map(rule?.headers.map(({ key, value }) => [key.toLowerCas…
+     10| }
+ ❯ src/lib/public-security.test.ts:86:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/40]⎯
+
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: not a URL
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: javascript:alert(1)
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: https://user:fixture@example.test
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: https://example.test;script-src.example
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: https://example.test/
+script-src *
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: http://remote.synthetic.example
+ FAIL  src/lib/public-security.test.ts > public security headers > rejects unsafe service input without echoing it: wss://remote.synthetic.example
+AssertionError: promise resolved "[ { …(2) }, { …(2) } ]" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+[
+  {
+    "headers": [
+      {
+        "key": "Cache-Control",
+        "value": "public, max-age=31536000, immutable",
+      },
+    ],
+    "source": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+  },
+  {
+    "headers": [
+      {
+        "key": "Cache-Control",
+        "value": "public, max-age=31536000, immutable",
+      },
+    ],
+    "source": "/films/s0-studio-hero-poster-41da8acddb3f.jpg",
+  },
+]
+
+ ❯ src/lib/public-security.test.ts:107:41
+    105|   ])('rejects unsafe service input without echoing it: %s', async (val…
+    106|     vi.stubEnv('NEXT_PUBLIC_CORE_API_URL', value);
+    107|     await expect(nextConfig.headers?.()).rejects.toThrow('Invalid publ…
+       |                                         ^
+    108|   });
+    109| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/40]⎯
+
+ FAIL  src/lib/public-surfaces.test.ts > robots and sitemap > records a truthful modification date for every public document
+AssertionError: expected [ undefined, undefined, …(6) ] to deeply equal [ '2026-10-03', '2026-10-03', …(6) ]
+
+- Expected
++ Received
+
+  [
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
+  ]
+
+ ❯ src/lib/public-surfaces.test.ts:70:58
+     68|
+     69|   it('records a truthful modification date for every public document',…
+     70|     expect(sitemap().map((entry) => entry.lastModified)).toEqual(Array…
+       |                                                          ^
+     71|   });
+     72|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/40]⎯
+
+ FAIL  src/lib/public-surfaces.test.ts > robots and sitemap > does not invent new page modification dates on a later build
+AssertionError: expected [ undefined, undefined, …(6) ] to deeply equal [ '2026-10-03', '2026-10-03', …(6) ]
+
+- Expected
++ Received
+
+  [
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
+-   "2026-10-03",
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
++   undefined,
+  ]
+
+ ❯ src/lib/public-surfaces.test.ts:76:58
+     74|     vi.useFakeTimers();
+     75|     vi.setSystemTime(new Date('2027-10-03T12:00:00Z'));
+     76|     expect(sitemap().map((entry) => entry.lastModified)).toEqual(Array…
+       |                                                          ^
+     77|   });
+     78| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > redirects a verified nonempty subject from / to Studio privately
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > redirects a verified nonempty subject from /es to Studio privately
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > redirects a verified nonempty subject from /es/ to Studio privately
+AssertionError: expected 200 to be 307 // Object.is equality
+
+- Expected
++ Received
+
+- 307
++ 200
+
+ ❯ src/lib/supabase/proxy.test.ts:86:53
+     84|       expect(response.status).toBe(200);
+     85|       expect(mocks.createServerClient).not.toHaveBeenCalled();
+     86|       expect(response.headers.has('cache-control')).toBe(false);
+       |                                                     ^
+     87|     },
+     88|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > does not authenticate a missing or malformed subject: null
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > does not authenticate a missing or malformed subject:
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > does not authenticate a missing or malformed subject:
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > does not authenticate a missing or malformed subject: 12
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/lib/supabase/proxy.test.ts:114:53
+    114|   });
+    115|
+    116|   it('keeps a cookie-bearing landing available when public configurati…
+       |                                              ^
+    117|     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', undefined);
+    118|     vi.stubEnv('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY', undefined);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > fails closed on a claims error without returning provider details
+AssertionError: the given combination of arguments (null and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ expectPrivate src/lib/supabase/proxy.test.ts:25:74
+     26|
+     27| function expectPrivate(response: Response) {
+     28|   expect(response.headers.get('cache-control')).toContain('private');
+       |                          ^
+     29|   expect(response.headers.get('cache-control')).toContain('no-store');
+     30| }
+ ❯ src/lib/supabase/proxy.test.ts:126:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > recovers from a thrown claims failure as a private guest landing
+AssertionError: the given combination of arguments (null and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ expectPrivate src/lib/supabase/proxy.test.ts:25:74
+     26|
+     27| function expectPrivate(response: Response) {
+     28|   expect(response.headers.get('cache-control')).toContain('private');
+       |                          ^
+     29|   expect(response.headers.get('cache-control')).toContain('no-store');
+     30| }
+ ❯ src/lib/supabase/proxy.test.ts:133:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > keeps a cookie-bearing landing available when public configuration is absent
+AssertionError: the given combination of arguments (null and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ expectPrivate src/lib/supabase/proxy.test.ts:25:74
+     26|
+     27| function expectPrivate(response: Response) {
+     28|   expect(response.headers.get('cache-control')).toContain('private');
+       |                          ^
+     29|   expect(response.headers.get('cache-control')).toContain('no-store');
+     30| }
+ ❯ src/lib/supabase/proxy.test.ts:141:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > does not refresh other marketing pages even with an existing session
+AssertionError: the given combination of arguments (null and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ expectPrivate src/lib/supabase/proxy.test.ts:25:74
+     26|
+     27| function expectPrivate(response: Response) {
+     28|   expect(response.headers.get('cache-control')).toContain('private');
+       |                          ^
+     29|   expect(response.headers.get('cache-control')).toContain('no-store');
+     30| }
+ ❯ src/lib/supabase/proxy.test.ts:148:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > bridges every refreshed cookie with options into the landing redirect and request
+AssertionError: expected 200 to be 307 // Object.is equality
+
+- Expected
++ Received
+
+- 307
++ 200
+
+ ❯ src/lib/supabase/proxy.test.ts:183:53
+    181|   });
+    182|
+    183|   it('never enables the local preview bypass in production', async () …
+       |                                                     ^
+    184|     vi.stubEnv('MBV_LOCAL_GOLDEN_PREVIEW', '1');
+    185|     const response = await refreshSupabaseSession(request('/studio'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > static public pages with verified landing redirects > does not share response cookies between overlapping requests
+AssertionError: expected 200 to be 307 // Object.is equality
+
+- Expected
++ Received
+
+- 307
++ 200
+
+ ❯ src/lib/supabase/proxy.test.ts:224:53
+    213|     }
+    214|   });
+    215| });
+       |    ^
+    216|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > denies an empty subject at Studio and preserves the return path:
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > denies an empty subject at Studio and preserves the return path:
+AssertionError: expected 200 to be 307 // Object.is equality
+
+- Expected
++ Received
+
+- 307
++ 200
+
+ ❯ src/lib/supabase/proxy.test.ts:239:53
+    213|     }
+    214|   });
+    215| });
+       |    ^
+    216|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > never enables the local preview bypass in production
+AssertionError: the given combination of arguments (null and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ expectPrivate src/lib/supabase/proxy.test.ts:25:74
+     26|
+     27| function expectPrivate(response: Response) {
+     28|   expect(response.headers.get('cache-control')).toContain('private');
+       |                          ^
+     29|   expect(response.headers.get('cache-control')).toContain('no-store');
+     30| }
+ ❯ src/lib/supabase/proxy.test.ts:250:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > canonically redirects www/ before any session work
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > canonically redirects www/software?ref=synthetic before any session work
+AssertionError: expected 200 to be 308 // Object.is equality
+
+- Expected
++ Received
+
+- 308
++ 200
+
+ ❯ src/lib/supabase/proxy.test.ts:266:53
+    213|     }
+    214|   });
+    215| });
+       |    ^
+    216|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > canonically redirects www/films/s0-studio-hero-d55af8ec3d69.mp4 before any session work
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > canonically redirects www/_next/static/fixture.js before any session work
+AssertionError: expected 200 to be 308 // Object.is equality
+
+- Expected
++ Received
+
+- 308
++ 200
+
+ ❯ src/lib/supabase/proxy.test.ts:266:53
+    213|     }
+    214|   });
+    215| });
+       |    ^
+    216|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/40]⎯
+
+ FAIL  src/lib/supabase/proxy.test.ts > protected routes and canonical host > matches www assets for canonicalization while keeping apex assets outside session middleware
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/supabase/proxy.test.ts:281:8
+    213|     }
+    214|   });
+    215| });
+       |    ^
+    216|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/40]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  40 failed | 39 passed (79)
+   Start at  10:24:06
+   Duration  1.09s (transform 543ms, setup 0ms, import 1.31s, tests 159ms, environment 0ms)

@@ -1,0 +1,35 @@
+[
+  {
+    "Root": "C:/dev/mbv-verify-48d74b8-2",
+    "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Pid": 54580,
+    "CreatedUtc": "2026-10-03T20:46:21.750537Z",
+    "StoppedUtc": "2026-10-03T20:51:15.3410049Z",
+    "StopExit": 0,
+    "PortFree": true,
+    "PortsFree": null,
+    "Port": 3115
+  },
+  {
+    "Root": "C:/dev/mbv-finish",
+    "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Pid": 42084,
+    "CreatedUtc": "2026-10-03T20:53:42.58182Z",
+    "StoppedUtc": "2026-10-03T21:01:15.8870683Z",
+    "StopExit": 0,
+    "PortFree": true,
+    "PortsFree": null,
+    "Port": 3115
+  },
+  {
+    "Root": "C:/dev/mbv-verify-48d74b8",
+    "Head": null,
+    "Pid": 44540,
+    "CreatedUtc": "2026-10-03T20:21:46.220977Z",
+    "StoppedUtc": "2026-10-03T21:01:17.9362375Z",
+    "StopExit": 0,
+    "PortFree": null,
+    "PortsFree": true,
+    "Port": null
+  }
+]

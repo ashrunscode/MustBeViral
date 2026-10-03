@@ -1,0 +1,918 @@
+{
+  "checkedUtc": "2026-10-03T19:06:15.322Z",
+  "driver": "Playwright MCP; remaining public families; local production; unthrottled; no form submission",
+  "results": [
+    {
+      "route": "/pricing",
+      "perf": {
+        "lcpMs": 128,
+        "cls": 0
+      },
+      "focusable": 12,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 44,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 47,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 51,
+          "tag": "A",
+          "name": "Español",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 105,
+          "tag": "A",
+          "name": "Book a test shoot.",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 106,
+          "tag": "A",
+          "name": "Call 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 112,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 113,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 119,
+          "tag": "A",
+          "name": "Pricing",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 121,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 123,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 125,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 127,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "perf": {
+        "lcpMs": 96,
+        "cls": 0
+      },
+      "focusable": 10,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 44,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 47,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 51,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 87,
+          "tag": "A",
+          "name": "Sign in to Studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 92,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 93,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 99,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 101,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 103,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 105,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "perf": {
+        "lcpMs": 100,
+        "cls": 0
+      },
+      "focusable": 9,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 30,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 33,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 70,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 71,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 77,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 79,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 81,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 83,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 84,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "perf": {
+        "lcpMs": 128,
+        "cls": 0
+      },
+      "focusable": 9,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 30,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 33,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 72,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 73,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 79,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 81,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 83,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 85,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 86,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/signup",
+      "perf": {
+        "lcpMs": 84,
+        "cls": 0
+      },
+      "focusable": 10,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 31,
+          "tag": "A",
+          "name": "Skip to page content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 39,
+          "tag": "A",
+          "name": "Request access by email",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 40,
+          "tag": "A",
+          "name": "Sign in to Studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 45,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 46,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 52,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 56,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 58,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 59,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/forgot-password",
+      "perf": {
+        "lcpMs": 144,
+        "cls": 0
+      },
+      "focusable": 11,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 33,
+          "tag": "A",
+          "name": "Skip to password recovery",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 45,
+          "tag": "INPUT",
+          "name": "Email",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 46,
+          "tag": "BUTTON",
+          "name": "Send recovery link",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 48,
+          "tag": "A",
+          "name": "Return to sign in",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 53,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 60,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 62,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 64,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 66,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 67,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/verify-email",
+      "perf": {
+        "lcpMs": 116,
+        "cls": 0
+      },
+      "focusable": 11,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 32,
+          "tag": "A",
+          "name": "Skip to verification",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 45,
+          "tag": "INPUT",
+          "name": "Email awaiting verification",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 46,
+          "tag": "BUTTON",
+          "name": "Resend verification email",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 48,
+          "tag": "A",
+          "name": "Back to sign in",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 53,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 60,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 62,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 64,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 66,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 67,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/maintenance",
+      "perf": {
+        "lcpMs": 100,
+        "cls": 0
+      },
+      "focusable": 10,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 31,
+          "tag": "A",
+          "name": "Skip to page content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 39,
+          "tag": "A",
+          "name": "Sign in to Studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 40,
+          "tag": "A",
+          "name": "Must Be Viral home",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 45,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 46,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 52,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 56,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 58,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 59,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/unauthorized",
+      "perf": {
+        "lcpMs": 108,
+        "cls": 0
+      },
+      "focusable": 10,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 31,
+          "tag": "A",
+          "name": "Skip to page content",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 39,
+          "tag": "A",
+          "name": "Choose a permitted studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 40,
+          "tag": "A",
+          "name": "Sign in with another account",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 45,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 46,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 52,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 56,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 58,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 59,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/reset-password",
+      "perf": {
+        "lcpMs": 152,
+        "cls": 0
+      },
+      "focusable": 11,
+      "wrapped": true,
+      "stops": [
+        {
+          "index": 33,
+          "tag": "A",
+          "name": "Skip to password recovery",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 46,
+          "tag": "INPUT",
+          "name": "Email",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 47,
+          "tag": "BUTTON",
+          "name": "Send recovery link",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 49,
+          "tag": "A",
+          "name": "Return to sign in",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 55,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 61,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 63,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 65,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 67,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true
+        },
+        {
+          "index": 68,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true
+        }
+      ],
+      "errorClasses": [],
+      "checks": {
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noApplicationErrors": true
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

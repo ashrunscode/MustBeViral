@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 
 import { studioEs } from '../../src/components/public-copy';
 import { StudioLanding } from '../../src/components/studio-landing';
-import { canReadSession } from '../../src/lib/auth/can-read-session';
 import { publicOrigin } from '../../src/lib/public-origin';
-import { createServerSupabaseClient } from '../../src/lib/supabase/server';
+
+export const dynamic = 'error';
 
 const title = 'Must Be Viral, estudio de contenido en Houston';
 const description = studioEs.sub;
@@ -33,12 +32,6 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title, description, images: [image.url] },
 };
 
-export default async function SpanishStudioPage() {
-  if (canReadSession()) {
-    const supabase = await createServerSupabaseClient();
-    const { data } = await supabase.auth.getClaims();
-    if (typeof data?.claims?.sub === 'string') redirect('/studio');
-  }
-
+export default function SpanishStudioPage() {
   return <StudioLanding locale="es" origin={publicOrigin()} />;
 }

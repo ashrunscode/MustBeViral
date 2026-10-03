@@ -1,0 +1,68 @@
+{
+  "Versions": {
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0"
+  },
+  "Root": "C:/dev/mbv-finish",
+  "SourceAndSchemaUnchangedFromLastAppliedFiles": true,
+  "LocalDatabaseOnly": true,
+  "StartingHead": "526457e1ba38f612e829d2bb47fb9bb1d2a9465f",
+  "Checks": [
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Label": "migration-list-before",
+      "StartedUtc": "2026-10-03T18:38:26.2115108Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-migration-list-before.log",
+      "FinishedUtc": "2026-10-03T18:38:29.0217235Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Label": "migration-up",
+      "StartedUtc": "2026-10-03T18:38:29.1984183Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-migration-up.log",
+      "FinishedUtc": "2026-10-03T18:38:31.8539318Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Label": "migration-list",
+      "StartedUtc": "2026-10-03T18:38:31.8562539Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-migration-list.log",
+      "FinishedUtc": "2026-10-03T18:38:34.6267594Z"
+    },
+    {
+      "Command": "corepack pnpm agent:verify",
+      "Label": "agent-verify",
+      "StartedUtc": "2026-10-03T18:38:35.6008336Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-agent-verify.log",
+      "FinishedUtc": "2026-10-03T18:54:50.9143838Z"
+    },
+    {
+      "Command": "corepack pnpm packet:verify",
+      "Label": "packet-verify",
+      "StartedUtc": "2026-10-03T18:54:50.9165769Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-packet-verify.log",
+      "FinishedUtc": "2026-10-03T18:54:52.3447950Z"
+    },
+    {
+      "Command": "corepack pnpm diff-scope:check --base origin/main --head HEAD",
+      "Label": "diff-scope",
+      "StartedUtc": "2026-10-03T18:54:52.3466685Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-diff-scope.log",
+      "FinishedUtc": "2026-10-03T18:54:54.2725737Z"
+    },
+    {
+      "Command": "corepack pnpm format:check",
+      "Label": "format-check",
+      "StartedUtc": "2026-10-03T18:54:54.2748094Z",
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-5-format-check.log",
+      "FinishedUtc": "2026-10-03T18:55:10.2291726Z"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import {
   CanvasFlow,
   CanvasResultBanner,
-} from '../../../app/studio/[workspace]/(workflow)/canvas/canvas-flow';
+} from '../../../app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow';
 import { createCanvasFixture, type CanvasPortResult } from './canvas-port';
 
 describe('CanvasResultBanner result-union rendering', () => {

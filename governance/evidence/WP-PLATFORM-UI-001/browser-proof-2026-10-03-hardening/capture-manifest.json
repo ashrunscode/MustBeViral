@@ -1,0 +1,1199 @@
+{
+  "checkedUtc": "2026-10-03T19:25:47.972Z",
+  "sourceBase": "526457e1ba38f612e829d2bb47fb9bb1d2a9465f",
+  "source": "Owned D3 candidate after auth containment repair; runtime tree covered by author agent verify retry 5. Exact committed source is recorded by PR and fresh C4 receipts.",
+  "byteIdenticalCopies": true,
+  "captures": 169,
+  "afterCaptures": 163,
+  "afterUniqueContents": 132,
+  "afterUniqueContentsActuallyViewed": 132,
+  "previousInspectedByteMatches": 15,
+  "newUniqueContentsActuallyViewed": 117,
+  "beforeCapturesActuallyViewed": 6,
+  "driver": "Playwright MCP; native view_image visual inspection of every unique content",
+  "entries": [
+    {
+      "path": "public-375-mcp-after/advertising.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "width": 375,
+      "height": 2198,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/es.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "width": 375,
+      "height": 2117,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/expired-reset.png",
+      "sha256": "70d500dbc51b60c33523e96b39a33be9e94ab6aaf697326b5fd10feba4f034cd",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/forgot-password.png",
+      "sha256": "64b6b5eeb951ffa870037c56303e0f39ad3b0bff4a8c0994db46ea33d804a780",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/home.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "width": 375,
+      "height": 3828,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/login.png",
+      "sha256": "0fe095efdb348936627f29ec11da3910bbcfa2d4d6bf8e10678ccbe8d9d8203d",
+      "width": 375,
+      "height": 938,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/maintenance.png",
+      "sha256": "75f78e07c44778773d34575823e6bbcdcb38cfae8b7fc32262434fc0f72a73ee",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/not-found.png",
+      "sha256": "f2943b980d660b408b8afdab0e5034435b51c62b35a7d07a97e79ce8a705d9d7",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/pricing.png",
+      "sha256": "1cf3d4c37499d5ac9f66753b84cb82b1465209c541ef9323f9e53b0f05f4b490",
+      "width": 375,
+      "height": 1959,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/privacy.png",
+      "sha256": "da627caaa66297d627e477f4b7212553fc26cb7d3a16dc7e3535eb2d07a77711",
+      "width": 375,
+      "height": 3180,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/signup.png",
+      "sha256": "d6809fdfd7d0b7f40342b644d9f8c83a64e35fd535483abf52e8b8bd7fc6700e",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/software-pricing.png",
+      "sha256": "b23b6022cfbb49514c36a8c044ac8de794fac576421a2723a18e2af09c34c39a",
+      "width": 375,
+      "height": 1304,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/software.png",
+      "sha256": "d1a29e185905e49981831a069d83b82c41670ece8bfa95c7ff505ebe40e19fbd",
+      "width": 375,
+      "height": 1398,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/terms.png",
+      "sha256": "d4114f596bad7a9f2a6d8c9e45373bf91aea1be217282363fc041ef7e2f369c8",
+      "width": 375,
+      "height": 2670,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/unauthorized.png",
+      "sha256": "bbbdfc2801ce79d17baa2cabe92c0716526dabf7845ca047696e00e69f350296",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-375-mcp-after/verify-email.png",
+      "sha256": "f1cc3eac8e1d5f18dd1fdbcdc2a0d3a740821a4d805411647e38d330bccf78e9",
+      "width": 375,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/advertising.png",
+      "sha256": "e81b267891d4382e93521bc3de973e9eb57e44033d129ae996f02bb7385d8902",
+      "width": 768,
+      "height": 1622,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/es.png",
+      "sha256": "2bcca86e64cd478c965b19da24c274ad561bad84d1cea15050b387221517965d",
+      "width": 768,
+      "height": 1725,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/expired-reset.png",
+      "sha256": "2530c5340b23acb4a0b9c7b06145df98faabc597b3c88e5677bbec93ba420c8b",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/forgot-password.png",
+      "sha256": "c70a04fba24ae3b13bbb521f99d726d59815375ccda7550489ec2f1759058c41",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/home.png",
+      "sha256": "0c7c0b63c6b095b4cdeee3f288e3f1f1003a1b7000bbaa4ff5be37d23ddfaad8",
+      "width": 768,
+      "height": 2953,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/login.png",
+      "sha256": "c9c1e799bb7119602f9b5b9a0763a0c3ef8319368f61d252ec764d7f99021ba7",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/maintenance.png",
+      "sha256": "a731d8350c7b2be4c9b3c9a0e6f89bc75cceb0f7fc89680ff0efd7dbfbaf9c19",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/not-found.png",
+      "sha256": "30cac61fb20cf6164bd7905fa680c29f43f19f42657ce771eaf39ab13d12c78a",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/pricing.png",
+      "sha256": "63692e2770adbdc42183403edc71bd07010c64d9e708c77598b76482baf660ea",
+      "width": 768,
+      "height": 1393,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/privacy.png",
+      "sha256": "0e5d19779b358a474595437a57e2a341910dfa44913c97f08c4b92e4b67a80e4",
+      "width": 768,
+      "height": 2030,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/signup.png",
+      "sha256": "1bd5254390ce16a2676c75328af134956fdff1654cd3d3b943ef08bd708dc5a1",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/software-pricing.png",
+      "sha256": "776d4f2cef1b3f1c98f4f19ee4e8a7f91095eb92a3345f04f956175964e3f8c4",
+      "width": 768,
+      "height": 1030,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/software.png",
+      "sha256": "079406a1b1d8c5d9d330b430e52a1eddd54c7d81c066f2d7cc8691cb559893ad",
+      "width": 768,
+      "height": 1291,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/terms.png",
+      "sha256": "0e0145f406a574d87c1e108d80abdaaa6d12ba3be5fd967335ee93e0d78f6d38",
+      "width": 768,
+      "height": 1790,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/unauthorized.png",
+      "sha256": "644103cd25e24466ffa6e2342109425dc796bded752a395a775636d2980d78b1",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-768-mcp-after/verify-email.png",
+      "sha256": "27214c590f84faefebf8f1c333b939aaa619d196dcb1a62626b8d2c134577cbc",
+      "width": 768,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/advertising.png",
+      "sha256": "8351536ba5b256b7f954ba78ad602c800f76002670c98581325f4a2482d60100",
+      "width": 1280,
+      "height": 1622,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/es.png",
+      "sha256": "ca7cf7521dfea54b67259e79346339dacb39248ac186f4605beab6c5e22ad479",
+      "width": 1280,
+      "height": 1669,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/expired-reset.png",
+      "sha256": "0ffb26d7d9a77872d341082e3518987bc42f730450167bbef291cb341b8b5e28",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/forgot-password.png",
+      "sha256": "cf98c6916d146d6aa499ba6c791656ada399bbc1df52144e6bfdf20d24181996",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/home.png",
+      "sha256": "0e6853601d726096145361a23cc287c758093a11e3596c415a5dc512240e0110",
+      "width": 1280,
+      "height": 2788,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/login.png",
+      "sha256": "88657c0281fd462ea1c4c4f049a199e15f3d311366fe317beeb2ffdc9667d01a",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/maintenance.png",
+      "sha256": "9b426d40ed6479e68f28c59b209a5a27a1f4782b136114c78bdc3b6e3751cf77",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/not-found.png",
+      "sha256": "cd055da051c2924cdcf82fdc344d9bcc8241a26c5cdfaa4ceb7597bae3efcac3",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/pricing.png",
+      "sha256": "7e98a03b5590c843a1936de344c3ff54d543745e26512573e1b68e8fd6ffecff",
+      "width": 1280,
+      "height": 1369,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/privacy.png",
+      "sha256": "f7c27397d6dc9635e93dd4631d7fe21469d35b67994825b5f1e49c06f4cc4c0b",
+      "width": 1280,
+      "height": 2030,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/signup.png",
+      "sha256": "67f754fd8a8c47fb08f3e3e8ed7f73e86e3b88fc6b0f4b922f8ff393048c9592",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/software-pricing.png",
+      "sha256": "88153904b62241ceaff9c8b09696cf3f5870c9c1d631f87dbd451e37290d1c39",
+      "width": 1280,
+      "height": 1030,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/software.png",
+      "sha256": "165035392c0b2dc9e4065d990ec2b692752781d7028bb60ada303da1e96ef709",
+      "width": 1280,
+      "height": 1048,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/terms.png",
+      "sha256": "4fec58621dde3e6e531d82797f89d5ec56c8aeaac36ba42e3983c577d8622096",
+      "width": 1280,
+      "height": 1790,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/unauthorized.png",
+      "sha256": "1757b6b3abad353a58294acaabb9184a173298f63469543c8b87e402421cee9e",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1280-mcp-after/verify-email.png",
+      "sha256": "f055021886cf28f0f1ae4ee60edb331dd0dd2180b2f9519038203da5c1ab2c06",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/advertising.png",
+      "sha256": "ab452ef77271c2e6e50e5e5d15ca9a6d2aeef220c9cd30042aa8f4908d2c5f06",
+      "width": 1920,
+      "height": 1622,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/es.png",
+      "sha256": "d613bdcdfb5ca3ff29af2b7828ff01b87496fa60091dd2caed32c76a70b017e4",
+      "width": 1920,
+      "height": 1669,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/expired-reset.png",
+      "sha256": "9342502dc40e91e1b8c9ce90e5be89c8953aa507e75b18a8e3bfed8e26893ef1",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/forgot-password.png",
+      "sha256": "24706cf436c0d07bfbe4fd325472b78d17dea713d6a747cf2fcf030afecce7c4",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/home.png",
+      "sha256": "8fbe9b2a5693371debabda132999050f6d65432986999851f479b3697d45312a",
+      "width": 1920,
+      "height": 2788,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/login.png",
+      "sha256": "4ffa03d6a253b7c56fbab23d78d1a3871cb9161e77d51bb174e7a16faf3c5ea8",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/maintenance.png",
+      "sha256": "7e544ac6533aeb3ecc8d6471f169f551deae902af0bda567c691aef3f1d74db5",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/not-found.png",
+      "sha256": "f6671c0949dffc1a0b0f0a288106ab02448c2d6c6f37656f0930e630d048cc21",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/pricing.png",
+      "sha256": "bf00b01b6a4b63fcb594d70203508aceb04e7371273ffb393b26a7722b5cabb7",
+      "width": 1920,
+      "height": 1369,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/privacy.png",
+      "sha256": "f993d6770e34371610291092fc6e05befd00eba0ff7e942a2e1639183feb9bb0",
+      "width": 1920,
+      "height": 2030,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/signup.png",
+      "sha256": "eca16427adf120085ef1c23d048a128493fb07aa7e26d8a6d509f3e46166e308",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/software-pricing.png",
+      "sha256": "1e161a6b3134ee16fb04671466fc780f0b00bc422e33786715e51032e5c516c7",
+      "width": 1920,
+      "height": 1030,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/software.png",
+      "sha256": "7e2dfdc7a2b69732f444387c1c3227add9de2add289eaef5859622cc982dad51",
+      "width": 1920,
+      "height": 1048,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/terms.png",
+      "sha256": "d44a55f091e0aebe51dc0d6bd98b4e75aec3f66274d11b3047d61fee5071952b",
+      "width": 1920,
+      "height": 1790,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/unauthorized.png",
+      "sha256": "139913e7002441ce263b8dba418ac388940bfaa95ae2c437661a43f2160ca69b",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "public-1920-mcp-after/verify-email.png",
+      "sha256": "a7d4aee0ce76a1909f59db7e2abdf4988fcdce574ce72e6c8daeb9c9bb283b9b",
+      "width": 1920,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/advertising-skip.png",
+      "sha256": "ab57dc1d8e0ae45defd68adb4a1d380c651361757f35226db7265319154a356d",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/es-skip.png",
+      "sha256": "49048ed86a184d5c7a223087caaa3ba14a3bb0b8a038280815a08aed671f41c1",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/home-interaction.png",
+      "sha256": "59eb9545c001ece7f138257aa9cce73d92f25c4c6ce3a094900c2214552c8ac3",
+      "width": 375,
+      "height": 3828,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/home-skip.png",
+      "sha256": "82f47bff12ae81de7a906bd8877f1d7665137584f5aeb7ea35824fdfd7fabf2a",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/login-interaction.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "width": 375,
+      "height": 3828,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/login-skip.png",
+      "sha256": "db83ec5ee2d68230d393619bba650559bf733b43cb84474eb6e00cf5ce0c9330",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/not-found-skip.png",
+      "sha256": "be9adbec47b7156a350a30bd9e12a1de08afd4bc0b992e4836f2d043a85b745e",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/software-interaction.png",
+      "sha256": "a5b87ea241024744c67842f0cf3f6f328ba92831babd2b82434d1e5d51670fb7",
+      "width": 375,
+      "height": 1398,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/software-native-focus-0.png",
+      "sha256": "81158c93f573eafc940e9058522782eff0eeaf71001f26b06a384bee217ed3c3",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/software-native-focus-1.png",
+      "sha256": "4d53f61f17779675d6aa2b0b8d4e3740be2ba0625f2877799f5b393715ae4208",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/software-native-focus-2.png",
+      "sha256": "f3ffc31c385b53b764a8c5c2cdd3c799a6cb7a4f6edb5daa835f1ec883601902",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/software-native-focus-3.png",
+      "sha256": "3016e0b0fcfacc49f8fef104f50cfce70d84e5048a961c75a50e5e3523bafbb9",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "interactions-mcp-after/software-skip.png",
+      "sha256": "954e5fa96388ce883a527820546bfa064dfa183a86b12154a14d556870b9315c",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/advertising-dark-preference.png",
+      "sha256": "8351536ba5b256b7f954ba78ad602c800f76002670c98581325f4a2482d60100",
+      "width": 1280,
+      "height": 1622,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/advertising-forced-colors.png",
+      "sha256": "7cdc615757b2a4e67a7a854383b5c5c80ea455fd40a71542b5eea92510466b17",
+      "width": 1280,
+      "height": 1622,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/advertising-reduced-motion.png",
+      "sha256": "8351536ba5b256b7f954ba78ad602c800f76002670c98581325f4a2482d60100",
+      "width": 1280,
+      "height": 1622,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/advertising-text-zoom-200.png",
+      "sha256": "48309fabafb6167b5aa099d596fc741b8b3f9ed714bcf2a0e94d8d24172a98d1",
+      "width": 1280,
+      "height": 2600,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/advertising-zoom-200-emulated.png",
+      "sha256": "4b6a42268a2f7e92f71f1263ae7af9b6ca84927c577eb28b840f09f78c6e9e7f",
+      "width": 1280,
+      "height": 3292,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/es-dark-preference.png",
+      "sha256": "840d967b37c7a2e91ecb253158680dbd02f73f6d7244bb0b31e98c2064325572",
+      "width": 1280,
+      "height": 1669,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/es-forced-colors.png",
+      "sha256": "acf477034b1832c378f98c355d0f77cc5021c08b800072cf6021d628c05e5217",
+      "width": 1280,
+      "height": 1669,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/es-reduced-motion.png",
+      "sha256": "840d967b37c7a2e91ecb253158680dbd02f73f6d7244bb0b31e98c2064325572",
+      "width": 1280,
+      "height": 1669,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/es-text-zoom-200.png",
+      "sha256": "83c38c14904088a727c8f5a733b7af344df686aedee6803e9ca0414e4add8b7a",
+      "width": 1280,
+      "height": 2477,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/es-zoom-200-emulated.png",
+      "sha256": "38419f3d44a897a9330c0854cd3ee7c3d291b281f3fbe74f9afa070dda19efd3",
+      "width": 1280,
+      "height": 3964,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/home-dark-preference.png",
+      "sha256": "dd6042c2eef3a4c68b8300e6787d8fafc7d510aa8b69af1dd9b97d048e95733e",
+      "width": 1280,
+      "height": 2788,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/home-forced-colors.png",
+      "sha256": "7014144f7559b2d5852bec08bf745e1c2511f3e0ea41dfdfa422bfbd4590c19b",
+      "width": 1280,
+      "height": 2788,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/home-reduced-motion.png",
+      "sha256": "7516e975dc7cd662ec8288507da85ddb3e65b06f1f832df176c0593ef6bdd5c1",
+      "width": 1280,
+      "height": 2788,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/home-text-zoom-200.png",
+      "sha256": "81f87faaaf99e1d56aa7e3830aaa0f8091060fea7dd0507f210ebd3579c7cefc",
+      "width": 1280,
+      "height": 4566,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/home-zoom-200-emulated.png",
+      "sha256": "da0197a6f8cb5bb83e71b40abeeaeaa490be0226cc4facef49c50810a7bce73c",
+      "width": 1280,
+      "height": 6854,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/login-dark-preference.png",
+      "sha256": "88657c0281fd462ea1c4c4f049a199e15f3d311366fe317beeb2ffdc9667d01a",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/login-forced-colors.png",
+      "sha256": "67e16175b4af8617980f914b186726d44e623eff07ffca59bcd1abebdbc6b7b2",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/login-reduced-motion.png",
+      "sha256": "88657c0281fd462ea1c4c4f049a199e15f3d311366fe317beeb2ffdc9667d01a",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/login-text-zoom-200.png",
+      "sha256": "0a0488ea71c23c0e4f2341d6fb04cc0b2dd4f8c317c54e7d883895a1d0d68ab5",
+      "width": 1280,
+      "height": 1303,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/login-zoom-200-emulated.png",
+      "sha256": "ac86fff47604adc6948337efba6d4d7b975bf9f316a6ed0f12fa8e935544113d",
+      "width": 1280,
+      "height": 1668,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/not-found-dark-preference.png",
+      "sha256": "cd055da051c2924cdcf82fdc344d9bcc8241a26c5cdfaa4ceb7597bae3efcac3",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/not-found-forced-colors.png",
+      "sha256": "a62677d985ddcc5066ea79f933c8fdd9d98405d8d4754626c7e44e6b5f7f0575",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/not-found-reduced-motion.png",
+      "sha256": "cd055da051c2924cdcf82fdc344d9bcc8241a26c5cdfaa4ceb7597bae3efcac3",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/not-found-text-zoom-200.png",
+      "sha256": "200e45f7009ccd8189375723f67115d6c30467b4b3b00f657c7c4e3d2e9aa28d",
+      "width": 1280,
+      "height": 1117,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/not-found-zoom-200-emulated.png",
+      "sha256": "630bff35e4741b8a462f92ba2dd1227d9c3cf4d31e0a8013cf1c7c973e3f11ed",
+      "width": 1280,
+      "height": 1336,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/software-dark-preference.png",
+      "sha256": "9fb4fcc387f06c013b465716781d2acea9c5ba2c075afacd205e6700bd0357c1",
+      "width": 1280,
+      "height": 1048,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/software-forced-colors.png",
+      "sha256": "67f85b282bbe0880f5bc2c5a239a4c01898dab7d24d76c684b0598d27a2dd7f5",
+      "width": 1280,
+      "height": 1048,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/software-reduced-motion.png",
+      "sha256": "30e1097310df5e33f24a4b0960cf61b96356f84f144f7f1d38c1d74570180666",
+      "width": 1280,
+      "height": 1100,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/software-text-zoom-200.png",
+      "sha256": "4408e1e30d0e2ff5127ab32fa97a1e811fe94677c46bebe9fdf4df8abd188696",
+      "width": 1280,
+      "height": 1753,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/software-zoom-200-emulated.png",
+      "sha256": "8a687bd3a654a2ca969ac28b6d98f2b532ab63fd9afaa37cb8c6015c65b6d31c",
+      "width": 1280,
+      "height": 2642,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/status-dark-preference.png",
+      "sha256": "9b426d40ed6479e68f28c59b209a5a27a1f4782b136114c78bdc3b6e3751cf77",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/status-forced-colors.png",
+      "sha256": "7730535e18f58c115bd00395ce1fc79ef936447dafb23a9d83c6e0b48e6384a2",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/status-reduced-motion.png",
+      "sha256": "9b426d40ed6479e68f28c59b209a5a27a1f4782b136114c78bdc3b6e3751cf77",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/status-text-zoom-200.png",
+      "sha256": "885a846d9f9d278f1ed226fc072edf169e3c13a793dfccfc1cb3673d70901cea",
+      "width": 1280,
+      "height": 1319,
+      "after": true
+    },
+    {
+      "path": "themes-mcp-after/status-zoom-200-emulated.png",
+      "sha256": "eb05eab6a4d77634b0535010aaebe19b69d955f585809ee8170e7075933fc3db",
+      "width": 1280,
+      "height": 1438,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/expired-reset-dark-preference.png",
+      "sha256": "0ffb26d7d9a77872d341082e3518987bc42f730450167bbef291cb341b8b5e28",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/expired-reset-forced-colors.png",
+      "sha256": "b37c503ef7f1c119efdfcb42154269dd09129b23e748e4316e936261b80da819",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/expired-reset-reduced-motion.png",
+      "sha256": "0ffb26d7d9a77872d341082e3518987bc42f730450167bbef291cb341b8b5e28",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/expired-reset-text-zoom-200.png",
+      "sha256": "1de7ab6516ff21daaba03cfd1b11df88ae42b6e105f1430cf12f70fb8b7d3ac3",
+      "width": 1280,
+      "height": 1354,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/expired-reset-zoom-200-emulated.png",
+      "sha256": "b8138d19828f251d84ce18fb88dfe5d284ba3351fde7d15ca83ada1993a9a681",
+      "width": 1280,
+      "height": 1614,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/forgot-password-dark-preference.png",
+      "sha256": "cf98c6916d146d6aa499ba6c791656ada399bbc1df52144e6bfdf20d24181996",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/forgot-password-forced-colors.png",
+      "sha256": "229ceb0a8ac21700bd0f09b571a8f8396343f8e0f3867ca58a36b08f2c3af504",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/forgot-password-reduced-motion.png",
+      "sha256": "cf98c6916d146d6aa499ba6c791656ada399bbc1df52144e6bfdf20d24181996",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/forgot-password-text-zoom-200.png",
+      "sha256": "b6387689fc8b25dbe9944208a5e6f97c1eb835bec4ee62cc20385cc27b7e7cad",
+      "width": 1280,
+      "height": 1260,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/forgot-password-zoom-200-emulated.png",
+      "sha256": "88713ad7075b07dbe8af6ebfd82129e7c4b8fb1563a64bda6988a3382b1ee31f",
+      "width": 1280,
+      "height": 1544,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/pricing-dark-preference.png",
+      "sha256": "7e98a03b5590c843a1936de344c3ff54d543745e26512573e1b68e8fd6ffecff",
+      "width": 1280,
+      "height": 1369,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/pricing-forced-colors.png",
+      "sha256": "bbc00a70170a1448ee2fff18edd3c4467180d7cff56c3467ce2c06391a33ecfa",
+      "width": 1280,
+      "height": 1369,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/pricing-reduced-motion.png",
+      "sha256": "7e98a03b5590c843a1936de344c3ff54d543745e26512573e1b68e8fd6ffecff",
+      "width": 1280,
+      "height": 1369,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/pricing-text-zoom-200.png",
+      "sha256": "0fdc5eda23eb3ef3a7e404777d1986af135b24f42190c093ecbb6748e2c4778c",
+      "width": 1280,
+      "height": 2429,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/pricing-zoom-200-emulated.png",
+      "sha256": "fd401b0b8727b33d2581ada55705c33c0c366e55f400b0eaa4228128d2cec4f4",
+      "width": 1280,
+      "height": 3490,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/privacy-dark-preference.png",
+      "sha256": "f7c27397d6dc9635e93dd4631d7fe21469d35b67994825b5f1e49c06f4cc4c0b",
+      "width": 1280,
+      "height": 2030,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/privacy-forced-colors.png",
+      "sha256": "c259515dd95a613f24d5065f9bfb3ec11ae0dc1257e79385480ab92028fcea61",
+      "width": 1280,
+      "height": 2030,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/privacy-reduced-motion.png",
+      "sha256": "f7c27397d6dc9635e93dd4631d7fe21469d35b67994825b5f1e49c06f4cc4c0b",
+      "width": 1280,
+      "height": 2030,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/privacy-text-zoom-200.png",
+      "sha256": "1c3c0fe98bd9815984fda06739ebf826098835504a17febca8315ae365a07d17",
+      "width": 1280,
+      "height": 3833,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/privacy-zoom-200-emulated.png",
+      "sha256": "e82a7685276b43c7cbd38856f768589c398fc59ec1930814080eae963ef20b75",
+      "width": 1280,
+      "height": 4558,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/signup-dark-preference.png",
+      "sha256": "67f754fd8a8c47fb08f3e3e8ed7f73e86e3b88fc6b0f4b922f8ff393048c9592",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/signup-forced-colors.png",
+      "sha256": "8fad84f08120dd7001aa5ae39a39b3dc15d04c051d10db6935325c41a1727d17",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/signup-reduced-motion.png",
+      "sha256": "67f754fd8a8c47fb08f3e3e8ed7f73e86e3b88fc6b0f4b922f8ff393048c9592",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/signup-text-zoom-200.png",
+      "sha256": "f0f2b24f9e2efad7a8bfb11f6b4df770a7cbc87b13ecb428fd8f131800fb4be5",
+      "width": 1280,
+      "height": 1089,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/signup-zoom-200-emulated.png",
+      "sha256": "2aa765eee49bc8b9f3f9815333a986a634417139562ca7534b5f96fc2fb5ea42",
+      "width": 1280,
+      "height": 1400,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/software-pricing-dark-preference.png",
+      "sha256": "88153904b62241ceaff9c8b09696cf3f5870c9c1d631f87dbd451e37290d1c39",
+      "width": 1280,
+      "height": 1030,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/software-pricing-forced-colors.png",
+      "sha256": "0c032a7194218dec49f327b096934cbee37f8a0baa37d88727ab5712dad40b01",
+      "width": 1280,
+      "height": 1030,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/software-pricing-reduced-motion.png",
+      "sha256": "88153904b62241ceaff9c8b09696cf3f5870c9c1d631f87dbd451e37290d1c39",
+      "width": 1280,
+      "height": 1030,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/software-pricing-text-zoom-200.png",
+      "sha256": "53218f253811d976b8d6258d6d388d363a67aaeb241007ee4cc3c89b8a39b5e3",
+      "width": 1280,
+      "height": 1519,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/software-pricing-zoom-200-emulated.png",
+      "sha256": "aa3072d302e7f4509042cc52b32ae2db8c18c7d9e444a53d3e4bda026bd5059f",
+      "width": 1280,
+      "height": 2108,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/terms-dark-preference.png",
+      "sha256": "4fec58621dde3e6e531d82797f89d5ec56c8aeaac36ba42e3983c577d8622096",
+      "width": 1280,
+      "height": 1790,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/terms-forced-colors.png",
+      "sha256": "61edf964f35553db7fcc237a1aeb6d0ed92567ae8f65e6841aab2cb7c9a60967",
+      "width": 1280,
+      "height": 1790,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/terms-reduced-motion.png",
+      "sha256": "4fec58621dde3e6e531d82797f89d5ec56c8aeaac36ba42e3983c577d8622096",
+      "width": 1280,
+      "height": 1790,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/terms-text-zoom-200.png",
+      "sha256": "dfce30a695daccc3afe12b88d0aa293ee289b1f95f859fd495f1431b02d66a28",
+      "width": 1280,
+      "height": 3260,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/terms-zoom-200-emulated.png",
+      "sha256": "873a99c85e028b1fecff7fcd88917497ebf719e0125fe578d83394c3ab7d143e",
+      "width": 1280,
+      "height": 3988,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/unauthorized-dark-preference.png",
+      "sha256": "1757b6b3abad353a58294acaabb9184a173298f63469543c8b87e402421cee9e",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/unauthorized-forced-colors.png",
+      "sha256": "0a5fd0b838c5e5d3b63e587d631bb86e30f89eea9ba7a150dfa81158434116cf",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/unauthorized-reduced-motion.png",
+      "sha256": "1757b6b3abad353a58294acaabb9184a173298f63469543c8b87e402421cee9e",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/unauthorized-text-zoom-200.png",
+      "sha256": "c728f81fee5429542f6c0a06bb34a51e52cd29210e83dd9a0bb8504240fd6fc3",
+      "width": 1280,
+      "height": 1246,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/unauthorized-zoom-200-emulated.png",
+      "sha256": "f92b0ba38b2958590f8d0262defaddc87aaed1b034e827be1f76036ed5c44d1d",
+      "width": 1280,
+      "height": 1438,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/verify-email-dark-preference.png",
+      "sha256": "f055021886cf28f0f1ae4ee60edb331dd0dd2180b2f9519038203da5c1ab2c06",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/verify-email-forced-colors.png",
+      "sha256": "d2e5c4af482b5ac78be15454ccd3fceec8c4fbd01fe651fbf9a96d149acbefdb",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/verify-email-reduced-motion.png",
+      "sha256": "f055021886cf28f0f1ae4ee60edb331dd0dd2180b2f9519038203da5c1ab2c06",
+      "width": 1280,
+      "height": 900,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/verify-email-text-zoom-200.png",
+      "sha256": "e088a09f38b5b26139143f6402a9aaaff9971c8279f421b5442527d257d057da",
+      "width": 1280,
+      "height": 1296,
+      "after": true
+    },
+    {
+      "path": "themes-additional-mcp-after/verify-email-zoom-200-emulated.png",
+      "sha256": "e4d472d5e92f28fee268ffbc1f1a5045f6b7ab1fe1a37025f247387e129f79a0",
+      "width": 1280,
+      "height": 1544,
+      "after": true
+    },
+    {
+      "path": "auth-containment-after/forgot-password-1280.png",
+      "sha256": "b6387689fc8b25dbe9944208a5e6f97c1eb835bec4ee62cc20385cc27b7e7cad",
+      "width": 1280,
+      "height": 1260,
+      "after": true
+    },
+    {
+      "path": "auth-containment-after/forgot-password-375.png",
+      "sha256": "941e45d145c290918be5e25ec5175b31d9af1184bf5f2ee483ff471ba5233f93",
+      "width": 375,
+      "height": 1565,
+      "after": true
+    },
+    {
+      "path": "auth-containment-after/login-1280.png",
+      "sha256": "0a0488ea71c23c0e4f2341d6fb04cc0b2dd4f8c317c54e7d883895a1d0d68ab5",
+      "width": 1280,
+      "height": 1303,
+      "after": true
+    },
+    {
+      "path": "auth-containment-after/login-375.png",
+      "sha256": "2757f7b7f132830224072c3a44370a66b69a146cfe2afb82d244c26180ea859f",
+      "width": 375,
+      "height": 1527,
+      "after": true
+    },
+    {
+      "path": "auth-containment-after/verify-email-1280.png",
+      "sha256": "e088a09f38b5b26139143f6402a9aaaff9971c8279f421b5442527d257d057da",
+      "width": 1280,
+      "height": 1296,
+      "after": true
+    },
+    {
+      "path": "auth-containment-after/verify-email-375.png",
+      "sha256": "224c48f0c764ce85c43fd53fe91075cdb22f0e834abf21e598cb21ce8aaa836b",
+      "width": 375,
+      "height": 1689,
+      "after": true
+    },
+    {
+      "path": "auth-containment-before/forgot-password-1280.png",
+      "sha256": "f58492028eccfd42747f7670e2cbc9b9b4357e484ffe886179ae40a8b5cc9572",
+      "width": 1280,
+      "height": 1260,
+      "after": false
+    },
+    {
+      "path": "auth-containment-before/forgot-password-375.png",
+      "sha256": "cc6c500fc9c9768a7bf8420f0fc023ef0874fd8221ce33157feb413aa2317f9e",
+      "width": 542,
+      "height": 1199,
+      "after": false
+    },
+    {
+      "path": "auth-containment-before/login-1280.png",
+      "sha256": "c0d5f4edb90491904275b2ca65c714885b5eb3846d4c913a9894e28200b607fc",
+      "width": 1280,
+      "height": 1303,
+      "after": false
+    },
+    {
+      "path": "auth-containment-before/login-375.png",
+      "sha256": "0a8fe14e7e2a94c3da29fead5d2187862c710de779c7079fbb91dea15fbb591f",
+      "width": 542,
+      "height": 1190,
+      "after": false
+    },
+    {
+      "path": "auth-containment-before/verify-email-1280.png",
+      "sha256": "54de291946d66fc34044c5911ea20f02e4ddfbe249650861ba31d2929da5329e",
+      "width": 1280,
+      "height": 1260,
+      "after": false
+    },
+    {
+      "path": "auth-containment-before/verify-email-375.png",
+      "sha256": "3c3046970169d5aa83332b0915406f898103167503d4a2ce085bf6ae6728759d",
+      "width": 542,
+      "height": 1244,
+      "after": false
+    }
+  ]
+}

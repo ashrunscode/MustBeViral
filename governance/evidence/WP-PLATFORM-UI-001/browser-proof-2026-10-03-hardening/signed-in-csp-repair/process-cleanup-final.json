@@ -1,0 +1,26 @@
+[
+  {
+    "Root": "C:/dev/mbv-finish",
+    "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Source": null,
+    "Pid": 63920,
+    "CreatedUtc": "2026-10-03T21:23:50.35002Z",
+    "StoppedUtc": "2026-10-03T21:27:43.2272406Z",
+    "StopExit": 0,
+    "PortFree": true,
+    "PortsFree": null,
+    "Port": 3115
+  },
+  {
+    "Root": "C:/dev/mbv-verify-48d74b8",
+    "Head": null,
+    "Source": "48d74b8ca575233b88a370c6913c38139e344aa9",
+    "Pid": 56732,
+    "CreatedUtc": "2026-10-03T21:23:49.063932Z",
+    "StoppedUtc": "2026-10-03T21:27:45.4988801Z",
+    "StopExit": 0,
+    "PortFree": null,
+    "PortsFree": true,
+    "Port": null
+  }
+]

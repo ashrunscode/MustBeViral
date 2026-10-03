@@ -9,7 +9,7 @@ import {
   ReviewFlow,
   ReviewRecoveryNotice,
   ReviewResultNotice,
-} from '../../../app/studio/[workspace]/(workflow)/review/review-flow';
+} from '../../../app/(en)/studio/[workspace]/(workflow)/review/review-flow';
 import type { ReviewConcept, ReviewSummary } from './review-port';
 
 describe('ReviewFlow', () => {

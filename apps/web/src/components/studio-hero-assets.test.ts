@@ -36,11 +36,19 @@ describe('Approved S0 assets', () => {
     expect(studioHeroMedia?.video?.src).toBe(assets[0][0]);
     expect(studioHeroMedia?.poster.src).toBe(assets[1][0]);
     const headers = await nextConfig.headers?.();
-    expect(headers).toEqual(
+    const immutable = headers?.filter((rule) =>
+      rule.headers.some(({ key, value }) => key === 'Cache-Control' && value.includes('immutable')),
+    );
+    expect(immutable).toEqual(
       assets.map(([source]) => ({
         source,
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       })),
     );
+    for (const rule of headers ?? []) {
+      if (!assets.some(([source]) => source === rule.source)) {
+        expect(rule.headers.some(({ key }) => key === 'Cache-Control')).toBe(false);
+      }
+    }
   });
 });

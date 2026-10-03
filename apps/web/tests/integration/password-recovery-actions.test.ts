@@ -27,8 +27,8 @@ vi.mock('../../src/config/public-environment', () => ({
 
 vi.mock('next/navigation', () => ({ redirect }));
 
-import { requestPasswordRecovery } from '../../app/forgot-password/actions';
-import { resetPassword, signOutAfterPasswordReset } from '../../app/reset-password/actions';
+import { requestPasswordRecovery } from '../../app/(en)/forgot-password/actions';
+import { resetPassword, signOutAfterPasswordReset } from '../../app/(en)/reset-password/actions';
 import {
   INITIAL_PASSWORD_RESET_STATE,
   INITIAL_RECOVERY_REQUEST_STATE,
