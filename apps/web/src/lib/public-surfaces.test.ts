@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import robots from '../../app/robots';
 import sitemap from '../../app/sitemap';
+import { GET as publicLlms } from '../../app/llms.txt/route';
 import { studioEn, studioEs } from '../components/public-copy';
 import { softwareStructuredData, studioStructuredData } from '../components/structured-data';
 import { buildLlmsText } from './llms-text';
@@ -12,11 +13,17 @@ afterEach(() => {
 });
 
 describe('publicOrigin', () => {
-  it('reads the one public origin and refuses anything that is not an origin', () => {
-    vi.stubEnv('NEXT_PUBLIC_APP_ORIGIN', 'https://example.test');
-    expect(publicOrigin()).toBe('https://example.test');
-    vi.stubEnv('NEXT_PUBLIC_APP_ORIGIN', 'not a url');
-    expect(publicOrigin()).toBeUndefined();
+  it.each([
+    undefined,
+    '',
+    'not a url',
+    'http://127.0.0.1:3113',
+    'https://staging.mustbeviral.example',
+    'https://mustbeviral-web-production-ashrunscode-projects.vercel.app',
+    'https://example.test/path?redirect=1',
+  ])('keeps the canonical site origin when the deployment origin is %s', (origin) => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ORIGIN', origin);
+    expect(publicOrigin()).toBe('https://mustbeviral.com');
   });
 });
 
@@ -29,33 +36,33 @@ describe('robots and sitemap', () => {
     expect(rule?.disallow).toEqual(
       expect.arrayContaining(['/studio', '/api/', '/login', '/signup', '/auth/']),
     );
-    expect(rules.sitemap).toBe('https://example.test/sitemap.xml');
+    expect(rules.sitemap).toBe('https://mustbeviral.com/sitemap.xml');
   });
 
-  it('lists the four public pages with the studio pages as peers', () => {
+  it('lists the indexable public pages with the studio pages as peers', () => {
     vi.stubEnv('NEXT_PUBLIC_APP_ORIGIN', 'https://example.test');
     const entries = sitemap();
     expect(entries.map((entry) => entry.url)).toEqual([
-      'https://example.test/',
-      'https://example.test/es',
-      'https://example.test/pricing',
-      'https://example.test/software',
-      'https://example.test/software/pricing',
-      'https://example.test/privacy',
-      'https://example.test/terms',
-      'https://example.test/advertising',
+      'https://mustbeviral.com/',
+      'https://mustbeviral.com/es',
+      'https://mustbeviral.com/pricing',
+      'https://mustbeviral.com/software',
+      'https://mustbeviral.com/software/pricing',
+      'https://mustbeviral.com/privacy',
+      'https://mustbeviral.com/terms',
+      'https://mustbeviral.com/advertising',
     ]);
     expect(entries[1]?.alternates?.languages).toEqual({
-      en: 'https://example.test/',
-      es: 'https://example.test/es',
-      'x-default': 'https://example.test/',
+      en: 'https://mustbeviral.com/',
+      es: 'https://mustbeviral.com/es',
+      'x-default': 'https://mustbeviral.com/',
     });
   });
 
-  it('names no host when the origin is unknown', () => {
+  it('keeps a reachable sitemap when the deployment origin is unknown', () => {
     vi.stubEnv('NEXT_PUBLIC_APP_ORIGIN', '');
-    expect(sitemap()).toEqual([]);
-    expect(robots().sitemap).toBeUndefined();
+    expect(sitemap()).toHaveLength(8);
+    expect(robots().sitemap).toBe('https://mustbeviral.com/sitemap.xml');
   });
 });
 
@@ -93,6 +100,18 @@ describe('structured data', () => {
 });
 
 describe('llms.txt', () => {
+  it('serves canonical links even when the configured deployment is protected', async () => {
+    vi.stubEnv(
+      'NEXT_PUBLIC_APP_ORIGIN',
+      'https://mustbeviral-web-production-ashrunscode-projects.vercel.app',
+    );
+    const response = publicLlms();
+    const text = await response.text();
+    expect(response.headers.get('content-type')).toBe('text/plain; charset=utf-8');
+    expect(text).toContain('- English page: https://mustbeviral.com/\n');
+    expect(text).toContain('- Pricing page: https://mustbeviral.com/pricing');
+    expect(text).not.toContain('vercel.app');
+  });
   it('carries the locked lines, the exact prices and the closed enrollment, from the page copy', () => {
     const text = buildLlmsText('https://example.test');
     expect(text.startsWith('# Must Be Viral\n')).toBe(true);

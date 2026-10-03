@@ -1,14 +1,8 @@
 /**
- * The public origin the app is served from, read from the one public variable that names it.
- * Undefined when the variable is unset or malformed, so a page leaves absolute URLs out rather than
- * invent a host.
+ * The canonical public site, shared by metadata, structured data and crawler files.
+ * Deployment and auth origins can differ; a preview host or a bad public environment value must
+ * never become the indexable site's identity.
  */
-export function publicOrigin(): string | undefined {
-  const origin = process.env.NEXT_PUBLIC_APP_ORIGIN;
-  if (origin === undefined) return undefined;
-  try {
-    return new URL(origin).origin;
-  } catch {
-    return undefined;
-  }
+export function publicOrigin(): string {
+  return 'https://mustbeviral.com';
 }

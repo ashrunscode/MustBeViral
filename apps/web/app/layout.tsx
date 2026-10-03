@@ -7,25 +7,14 @@ import { lightfieldTokens } from '@mustbeviral/ui';
 import '@mustbeviral/ui/styles.css';
 import { WebVitalsReporter } from '../src/components/web-vitals-reporter';
 import { DOCUMENT_LANG_HEADER, parseDocumentLang } from '../src/lib/document-lang';
+import { publicOrigin } from '../src/lib/public-origin';
 import './globals.css';
 
 const geistSans = Geist({ subsets: ['latin'], variable: '--font-sans' });
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
-function metadataBase(): URL | undefined {
-  const origin = process.env.NEXT_PUBLIC_APP_ORIGIN;
-  if (origin === undefined) return undefined;
-  try {
-    return new URL(origin);
-  } catch {
-    return undefined;
-  }
-}
-
-const base = metadataBase();
-
 export const metadata: Metadata = {
-  ...(base === undefined ? {} : { metadataBase: base }),
+  metadataBase: new URL(publicOrigin()),
   title: { default: 'Must Be Viral', template: '%s | Must Be Viral' },
   description: 'Must Be Viral',
   // The logo system is owner-gated at draft (brand/context.md section 13). An empty data URL stops
