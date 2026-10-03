@@ -268,9 +268,9 @@ Only what it can show, on request, from delivered work:
 - Contact of record: Houston, Texas · 713-899-9346 · studio@mustbeviral.com.
 - Footer postal address: `[OWNER-INPUT-NEEDED]` (section 6). **Blocking for every commercial email.**
 
-## 8b. Legal pages — BLOCKED
+## 8b. Legal pages — published; legal review open
 
-Privacy policy, terms of service, and the AI / advertising disclosure page do not exist. The owner has decided these are produced with Anthropic's Legal plugin, which is **not installed in this workstation** (owner decision, 2026-09-15).
+The facts-only privacy, terms and AI / advertising disclosure pages are published at `/privacy`, `/terms` and `/advertising`, from the reviewed public-site release of 2026-10-02. Attorney review remains open. The owner's 2026-09-15 decision names Anthropic's Legal plugin, which is **not installed in this workstation**.
 
 - **No agent writes legal text or legal advice for this brand.** Not a privacy policy, not terms, not a disclosure page, not a contract clause.
 - What agents may produce: a **facts-only input pack** for the plugin or an attorney — entity name and DBA, contact details, service description, data actually collected and by which system, sub-processors actually in use, retention and deletion behaviour as implemented, consent mechanism as implemented, jurisdiction, and the list of pages needed.
@@ -423,6 +423,7 @@ Each item: the question, and who must answer.
 - 2026-09-15 **Instagram and TikTok handles** — **owner** — open
 - 2026-09-15 **Production email from-address and the published DMARC policy** for its domain; DMARC must be at least `p=none` with SPF and DKIM aligned before any bulk send — **owner / whoever controls DNS** — open
 - 2026-09-15 **Legal pages blocked** — privacy, terms and the AI/advertising disclosure are to be produced with Anthropic's Legal plugin, which is not installed here. Install it or engage an attorney; no agent writes legal text — **owner** — open
+- 2026-10-02 **Legal page publication** — `/privacy`, `/terms` and `/advertising` now serve the reviewed facts-only pages from PR #63. The preceding plugin or attorney input remains open; publication does not establish legal review.
 - 2026-09-15 **Consent record and suppression list do not exist**; marketing contact is blocked until both exist and the four acceptance tests in section 8c pass — **owner + engineering** — open
 - 2026-09-15 **"Request access" CTA defect** — the shipped CTA links to a page that collects nothing. Build a real form that writes a consent record, or remove the CTA. Which? — **owner** — open
 - 2026-09-15 **Testimonials and portfolio permission** — no written permission is on file for any client name, logo, quote or delivered clip, so none may be published. Who grants the first? — **owner** — open
@@ -439,10 +440,10 @@ Each item: the question, and who must answer.
 - 2026-09-15 **Add-on range rule** — what determines the point inside $200–$400 (24-hour turnaround) and $300–$600 (drone)? — **owner** — open
 - 2026-09-15 **Contracted crew paperwork** — is there a standard contractor agreement covering IP assignment, usage rights and model releases for videographers and photographers? Portfolio and delivery claims depend on it — **owner** — open
 - 2026-09-15 **Software pilot offer after the pivot** — **resolved by the owner's September 28 execution plan**: offer SaaS separately using the provisional catalog and prepaid credits in `docs/architecture/EXECUTION_PROVIDERS_AND_BILLING.md`; no inherited setup fee for new subscriptions, no silent migration of existing mappings and no live charging before commercial acceptance. Studio clients receive only their permitted workflow/review access.
-- 2026-09-15 **Stale shipped name form** — `README.md`, `PROJECT_STATE.yaml`, `apps/web/src/components/landing-page.tsx` and `.studio-wordmark` in `apps/web/app/globals.css` still render the one-word "MustBeViral Studio" in public-facing strings; UI strings must move to "Must Be Viral" while code identifiers stay unchanged — **owner to schedule a packet** — open
+- 2026-09-15 **Stale shipped name form** — resolved 2026-10-02: the published studio, software, auth and status surfaces now render "Must Be Viral", three words, from the reviewed interface release. Internal code identifiers remain unchanged.
 - 2026-09-15 **KPI targets for the two funnel metrics** — what monthly target for test shoots booked, and what target test-shoot → Full Package conversion rate? — **owner** — open
 - 2026-09-15 **Approved reference examples** — one per channel (studio landing, Spanish landing, cold email, IG caption, GBP post) once drafted — **owner** — open
-- 2026-09-15 **Diff scope — the in-branch amendment cannot admit its own commit.** `governance/scripts/validate-diff-scope.mjs` reads `docs/delivery/ACTIVE_WORK_PACKET.yaml` from `git merge-base <base> <head>`, not from HEAD, so the five-path amendment made on this branch is invisible to the check: the merge base (`966006b`, `origin/codex/viralgraph-cleanroom`) carries no `brand/**` entry and `pnpm diff-scope:check` fails. Fix, in this order: land the five-path amendment as its own commit on the base branch, rebase this branch onto it, then run `pnpm install --frozen-lockfile` followed by `pnpm diff-scope:check --base <base> --head HEAD`, `pnpm docs:check`, `pnpm governance:check`, `pnpm format:check` and `pnpm generated:check`. **None of those gates has been run.** This worktree has no `node_modules` and no `pnpm`, so nothing here is verified against the repository gates, and the markdown in `brand/` and `docs/gtm/` has never been through Prettier 3.9.5 — expect `format:check` to rewrite table padding — **lead** — open
+- 2026-09-15 **Diff scope — the in-branch amendment cannot admit its own commit.** — resolved 2026-10-02: WP-PLATFORM-UI-001 specification revision 3 admits exactly `brand/context.md` and `brand/BRAND.md` after the authority-only PR #65 merged as `5a11b3144b3e386115870a9cfdcadfb795427cc5`. The validator still reads scope from the merge base. That exact authority head passed fresh-clone governance, formatting and independent review. Current edits use the admitted paths and pinned tools on local `main`, with each change checked separately.
 
 # Changelog
 
