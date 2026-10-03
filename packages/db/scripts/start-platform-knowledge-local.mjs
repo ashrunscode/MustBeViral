@@ -205,6 +205,9 @@ await ready('http://127.0.0.1:8789/health', 'Core knowledge harness', {
 });
 await ready('http://127.0.0.1:3111/studio', 'Web');
 process.stdout.write(
+  'Local platform servers ready: web 127.0.0.1:3111, Core 127.0.0.1:8789. Provider runs and queues are disabled.\n',
+);
+process.stdout.write(
   'Local knowledge servers ready: web 127.0.0.1:3111, Core 127.0.0.1:8789. PUBLIC_EGRESS is a test-only explicit-host fixture adapter over public-only network. Provider runs and queues are disabled.\n',
 );
 await new Promise((done) => {

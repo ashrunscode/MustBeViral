@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 
-import { readWebPublicEnvironment } from '../../../src/config/public-environment';
 import { resolveAuthCallback } from '../../../src/lib/auth/recovery';
 import { createServerSupabaseClient } from '../../../src/lib/supabase/server';
 
@@ -18,9 +17,7 @@ export async function GET(request: Request) {
     async (code) => supabase.auth.exchangeCodeForSession(code),
   );
 
-  const response = NextResponse.redirect(
-    new URL(result.destination, readWebPublicEnvironment().NEXT_PUBLIC_APP_ORIGIN),
-  );
+  const response = NextResponse.redirect(new URL(result.destination, requestUrl.origin));
   response.headers.set('Cache-Control', 'private, no-store');
   response.headers.set('Pragma', 'no-cache');
   response.headers.set('Expires', '0');

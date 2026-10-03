@@ -4,8 +4,8 @@ import { publicOrigin } from '../src/lib/public-origin';
 
 /**
  * The public pages and the plain-text summary are open to every crawler. The signed-in app, the
- * auth screens and the API are not pages to index. The sitemap is named only when the public origin
- * is known.
+ * auth screens and the API are not pages to index. The sitemap belongs to the canonical site,
+ * regardless of the deployment serving this file.
  */
 export default function robots(): MetadataRoute.Robots {
   const origin = publicOrigin();
@@ -28,6 +28,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    ...(origin === undefined ? {} : { sitemap: `${origin}/sitemap.xml` }),
+    sitemap: `${origin}/sitemap.xml`,
   };
 }
