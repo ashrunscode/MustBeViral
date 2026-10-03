@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Release the two authorized production Core origin additions under A6.
+next_action: Ship the approved S0 English wordless plate under D2.
 decisions_pending: []
 blockers: []
 legacy:

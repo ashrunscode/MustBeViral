@@ -1,0 +1,84 @@
+{
+  "stagingQueueConsumerMatches": true,
+  "observedUtc": "2026-10-03T09:13:04.6211407Z",
+  "priorSource": "20b6e1e51420e0213fd4122201afe95e7173fce8",
+  "coreRuntimeAndMigrationsUnchanged": true,
+  "targets": {
+    "production": {
+      "createdUtc": "2026-10-02T14:43:15.818208Z",
+      "rollbackVersion": "d69e987c-90a6-43f5-ae45-a397c206ddf3",
+      "bindingCheck": {
+        "observedUtc": "2026-10-03T09:13:21.415Z",
+        "environment": "production",
+        "versionId": "d69e987c-90a6-43f5-ae45-a397c206ddf3",
+        "checkedConfiguredNames": [
+          "APP_ENV",
+          "CORS_ALLOWED_ORIGINS",
+          "MEDIA_BUCKET",
+          "PROVIDER_RUNS_ENABLED",
+          "QUEUES_ENABLED",
+          "SERVICE_GENERATION",
+          "SERVICE_NAME",
+          "SUPABASE_JWT_AUDIENCE",
+          "SUPABASE_URL"
+        ],
+        "retainedSecretNames": [
+          "ARTIFACT_ACCESS_SIGNING_KEY",
+          "COLLABORATION_TICKET_SECRET",
+          "CONFIRMATION_SIGNING_KEY",
+          "SUPABASE_PUBLISHABLE_KEY",
+          "SUPABASE_SECRET_KEY"
+        ],
+        "differingNames": ["CORS_ALLOWED_ORIGINS"],
+        "namesAndTypesMatch": true,
+        "allOtherValuesMatch": true,
+        "runtimeCompatibilityMatches": true,
+        "providerRunsDisabled": true,
+        "queuesDisabled": true
+      },
+      "deploymentId": "13813144-2c24-4cae-844d-3c3ee8a6bb24"
+    },
+    "staging": {
+      "createdUtc": "2026-10-02T14:42:37.743857Z",
+      "rollbackVersion": "8c90ddc3-d5da-49ef-9d96-31e5ceda04c6",
+      "bindingCheck": {
+        "observedUtc": "2026-10-03T09:13:13.092Z",
+        "environment": "staging",
+        "versionId": "8c90ddc3-d5da-49ef-9d96-31e5ceda04c6",
+        "checkedConfiguredNames": [
+          "APP_ENV",
+          "CORS_ALLOWED_ORIGINS",
+          "FAL_WEBHOOK_URL",
+          "MEDIA_BUCKET",
+          "OUTBOX_DISPATCH_QUEUE",
+          "PROVIDER_RUNS_ENABLED",
+          "QUEUES_ENABLED",
+          "SERVICE_GENERATION",
+          "SERVICE_NAME",
+          "SUPABASE_JWT_AUDIENCE",
+          "SUPABASE_PUBLISHABLE_KEY",
+          "SUPABASE_URL"
+        ],
+        "retainedSecretNames": [
+          "ARTIFACT_ACCESS_SIGNING_KEY",
+          "COLLABORATION_TICKET_SECRET",
+          "CONFIRMATION_SIGNING_KEY",
+          "FAL_KEY",
+          "MOONSHOT_API_KEY",
+          "OPENROUTER_API_KEY",
+          "STRIPE_WEBHOOK_SECRET",
+          "SUPABASE_SECRET_KEY",
+          "SUPABASE_SERVICE_ROLE_KEY"
+        ],
+        "differingNames": [],
+        "namesAndTypesMatch": true,
+        "allOtherValuesMatch": true,
+        "runtimeCompatibilityMatches": true,
+        "providerRunsDisabled": false,
+        "queuesDisabled": false
+      },
+      "deploymentId": "b0aa5ef0-1150-4714-8474-cead7bf1d7e4"
+    }
+  },
+  "source": "77892509133e2f58ba09cca300f4a615d254a376"
+}

@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Release the two authorized production Core origin additions under A6.
+Ship the approved S0 English wordless plate under D2.
