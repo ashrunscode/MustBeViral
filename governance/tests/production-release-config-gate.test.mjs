@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { URL } from 'node:url';
 
 import { readText } from '../scripts/lib.mjs';
 
@@ -95,4 +96,26 @@ test('current V2 production Worker configs stay unrouted and placeholder-free', 
   );
   assert.match(productionSlice(core), /"workers_dev"\s*:\s*true/u);
   assert.match(productionSlice(core), /"preview_urls"\s*:\s*false/u);
+});
+
+test('production MCP admits both canonical site origins and retains the existing origin', () => {
+  const production = productionSlice(readText('apps/core/wrangler.jsonc'));
+  const configured = /"CORS_ALLOWED_ORIGINS"\s*:\s*"([^"]+)"/u.exec(production)?.[1];
+  assert.ok(configured, 'production must declare an explicit origin allow-list');
+  const origins = configured.split(',').map((origin) => origin.trim());
+
+  for (const required of [
+    'https://mustbeviral.com',
+    'https://www.mustbeviral.com',
+    'https://mustbeviral-web-production-ashrunscode-projects.vercel.app',
+  ]) {
+    assert.ok(origins.includes(required), `production must allow ${required}`);
+  }
+  assert.equal(origins.length, 3, 'A6 adds only the two canonical origins');
+  assert.equal(new Set(origins).size, 3, 'approved origins must be unique');
+  for (const origin of origins) {
+    const url = new URL(origin);
+    assert.equal(url.protocol, 'https:');
+    assert.equal(url.origin, origin, 'allow-list entries must be exact origins, without paths');
+  }
 });
