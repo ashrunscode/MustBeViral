@@ -30,17 +30,27 @@ export interface StudioKind {
 
 export interface StudioHeroMedia {
   readonly poster: { readonly src: string; readonly width: number; readonly height: number };
-  readonly video?: { readonly src: string; readonly captions: string };
+  readonly video?: { readonly src: string; readonly captions?: string };
   readonly alt: Readonly<Record<StudioLocale, string>>;
 }
 
 /**
- * No rights-cleared studio footage is on file (brand/context.md section 4c), so the hero renders
- * the frame without media. When the owner records permission for a studio-produced poster and
- * clip, point this at them: the frame already reserves the geometry and the poster becomes the
- * priority LCP element.
+ * Owner directive 2026-10-02d A8 approves this generated, silent, wordless plate. It is not
+ * client footage or a real Houston location. Versioned files retain the approved package bytes.
  */
-export const studioHeroMedia: StudioHeroMedia | null = null;
+export const studioHeroMedia: StudioHeroMedia = {
+  poster: { src: '/films/s0-studio-hero-poster-41da8acddb3f.jpg', width: 1920, height: 1080 },
+  video: { src: '/films/s0-studio-hero-d55af8ec3d69.mp4' },
+  alt: { en: 'Two hands adjust a camera on a gimbal in a generated room.', es: '' },
+};
+
+/** Visible text alternative for the silent plate, from the S0 run report. */
+export const studioFilmDescription =
+  'In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.';
+
+/** A8 requires this exact English disclosure on the hero and the advertising page. */
+export const studioFilmDisclosure =
+  'This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.';
 
 export interface StudioCopy {
   readonly locale: StudioLocale;

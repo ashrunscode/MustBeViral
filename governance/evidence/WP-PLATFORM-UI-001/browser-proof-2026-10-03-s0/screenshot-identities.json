@@ -1,0 +1,142 @@
+[
+  {
+    "Sha256": "0522b27302a620f084848bc2a635fb3b02354edb604d8c78b513bdfa11004f35",
+    "Paths": ["es/1440-light.png", "es/1440-dark.png"]
+  },
+  {
+    "Sha256": "1d45b7399e44dbc0eaa6789abde5894c6954a39228ece7a7c546adced536b0da",
+    "Paths": ["es/reduced.png"]
+  },
+  {
+    "Sha256": "2302ca4dea16ac32784f3fd24fa8764210d3669c1ee5828a0351ff2ac19fc844",
+    "Paths": ["advertising/forced.png"]
+  },
+  {
+    "Sha256": "298282d629b6ff22b9175389042d67e092722a37a93cb32727f124429e409a90",
+    "Paths": ["advertising/1440-light.png", "advertising/1440-dark.png"]
+  },
+  {
+    "Sha256": "4807ed451d7abeff319363d4610b75ddd00124fcc95d5b1afd1a0d42abee76ff",
+    "Paths": ["es/375-light.png"]
+  },
+  {
+    "Sha256": "49048ed86a184d5c7a223087caaa3ba14a3bb0b8a038280815a08aed671f41c1",
+    "Paths": ["es/keyboard-skip.png"]
+  },
+  {
+    "Sha256": "4c76bc51a66668281a31ed8983aff55368ca2e3a24ac3e27cd99b593d3b177bc",
+    "Paths": ["home/loading.png"]
+  },
+  {
+    "Sha256": "4f02cc646b723e613e2fd0b3ec45bceed877d17f61e1310070b334a5c2ca2427",
+    "Paths": ["advertising/text200.png"]
+  },
+  {
+    "Sha256": "4fc9f80a5a19129f65c1102fd8fc38382035627b616fbe7d54c55f88feeaf1bd",
+    "Paths": ["home/zoom200.png"]
+  },
+  {
+    "Sha256": "580811ae0dd67a7d4f72c39ac29df909566aae02349a32cae67102c157d2c578",
+    "Paths": ["es/1280-light.png"]
+  },
+  {
+    "Sha256": "59b2223d870a087e7828a079d83e3cedf1b6f70192cb3bd7e44e28c504abd686",
+    "Paths": ["home/initial-375.png", "home/375-light.png", "home/375-dark.png"]
+  },
+  {
+    "Sha256": "65e88c83c6772f46ec8777670a1b15cb9aede988663934213ba14861b6cfa908",
+    "Paths": ["home/1920-light.png"]
+  },
+  {
+    "Sha256": "694646ef38b4b3edb144574e299aa74593289acbbaa30425a727e54eee5aa6a5",
+    "Paths": ["advertising/zoom200.png"]
+  },
+  {
+    "Sha256": "6bb9af54676c61350c52a9b4966d1b9cc6f0722ef59cb761ddb9312800242d88",
+    "Paths": ["es/text200.png"]
+  },
+  {
+    "Sha256": "7f65f262bcddc2b65765edab2126cc483d812ef261d42218c0d124f191159813",
+    "Paths": ["home/1280-light.png"]
+  },
+  {
+    "Sha256": "7ff0e10a794e3ab389f5728995a8e0efda25703dcccabb48da600d67846a87da",
+    "Paths": ["home/forced.png"]
+  },
+  {
+    "Sha256": "820c1ed5dd1d06608fabc46b5237b0bfb6ccfacda68d3d4b26dc1d51dbd6b618",
+    "Paths": ["advertising/reduced.png", "advertising/375-light.png", "advertising/375-dark.png"]
+  },
+  {
+    "Sha256": "82f47bff12ae81de7a906bd8877f1d7665137584f5aeb7ea35824fdfd7fabf2a",
+    "Paths": ["home/keyboard-skip.png"]
+  },
+  {
+    "Sha256": "8353a6805fc893b9885f9bf62dbd65e3aa9eca87d57f4a6a907881315c3453d0",
+    "Paths": ["home/recovered.png"]
+  },
+  {
+    "Sha256": "89ba6520d1836ccff0eb237439ff080792a869a1d8da1114b891d5effdbe83bc",
+    "Paths": ["home/text200.png"]
+  },
+  {
+    "Sha256": "8f3f0ade2b8a61bcce86c8f824a1ee24815dcca2e11d77bf3fa03041c87962e1",
+    "Paths": ["es/375-dark.png"]
+  },
+  {
+    "Sha256": "a6b096ed37c9a235621a790dce1096562f3f8bcdad4f30d1c051660917474a02",
+    "Paths": ["advertising/1920-light.png"]
+  },
+  {
+    "Sha256": "ab57dc1d8e0ae45defd68adb4a1d380c651361757f35226db7265319154a356d",
+    "Paths": ["advertising/keyboard-skip.png"]
+  },
+  {
+    "Sha256": "b093a056ce57277088359e923d3f7ad16a3de9546771949296b505048ae769a5",
+    "Paths": ["home/playing.png"]
+  },
+  {
+    "Sha256": "b1a71073462de6dc3d0aad47db7fc678ca3828b79a6f6181eda0395336c71a75",
+    "Paths": ["es/zoom200.png"]
+  },
+  {
+    "Sha256": "ba2c0ad65c93868ee1d3a6a4aef46d171b8e1498ad829ec4b2ff54e26ecefade",
+    "Paths": ["home/1440-light.png", "home/1440-dark.png"]
+  },
+  {
+    "Sha256": "ba34623cbc735ed93fbf16879f747901339110e63d893b203f82c45a2141f2c3",
+    "Paths": ["advertising/768-light.png", "advertising/768-dark.png"]
+  },
+  {
+    "Sha256": "bcb96ee006319bd0ef81170cb779a6bad498f2a3762585675213433c4f050229",
+    "Paths": ["es/1920-light.png"]
+  },
+  {
+    "Sha256": "cbee6bcb67c1b2799cc9918825706f6c85a7da57f2d2f49477e5ef0166817ee5",
+    "Paths": ["home/error.png"]
+  },
+  {
+    "Sha256": "cbfd6e5640c420d7adf142d753dfbd9386329e3149e81ecb25e556ad70130d53",
+    "Paths": ["advertising/1280-light.png"]
+  },
+  {
+    "Sha256": "e0b2db5c5973e948effc9d2f6203ea5c3683a168ecd42884027df60acef8ca09",
+    "Paths": ["home/reduced.png"]
+  },
+  {
+    "Sha256": "e75fc559bd4d65c24125dcb7d61090de5971a5002c532a1dea512c6e2918a216",
+    "Paths": ["es/768-light.png", "es/768-dark.png"]
+  },
+  {
+    "Sha256": "e7882710542153da4c89fa4f51482b2924f1af95a6090e86792a7b72e3ffe450",
+    "Paths": ["es/forced.png"]
+  },
+  {
+    "Sha256": "ef2e8a739bfc50811668fbca57b9312f08583d25cb4f4c08adcfe911cd691c35",
+    "Paths": ["home/768-light.png", "home/768-dark.png"]
+  },
+  {
+    "Sha256": "f6a46808c18f0ac6913099a733cd6c597f447754befa1af33ac2c4c2acac1e1d",
+    "Paths": ["home/paused.png"]
+  }
+]

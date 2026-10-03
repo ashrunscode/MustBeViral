@@ -1,0 +1,80 @@
+
+ RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+
+ ❯ src/components/studio-hero-media.test.tsx (10 tests | 2 failed) 185ms
+     × keeps the poster and announces a failed start with a retry action 11ms
+     × recovers from a media error without showing the broken clip 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > keeps the poster and announces a failed start with a retry action
+AssertionError: expected <video aria-hidden="true" …(5)>…(1)</video> to be null
+
+- Expected:
+null
+
++ Received:
+<video
+  aria-hidden="true"
+  class="studio-hero__video"
+  loop=""
+  playsinline=""
+  poster="/films/fixture-poster.jpg"
+  preload="metadata"
+>
+  <source
+    src="/films/fixture.mp4"
+    type="video/mp4"
+  />
+</video>
+
+ ❯ src/components/studio-hero-media.test.tsx:126:46
+    124|     );
+    125|     expect(container.querySelector('video.is-shown')).toBeNull();
+    126|     expect(container.querySelector('video')).toBeNull();
+       |                                              ^
+    127|     expect(container.querySelector('img')).not.toBeNull();
+    128|     await act(async () => getByRole('button', { name: 'Play the film' …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > recovers from a media error without showing the broken clip
+AssertionError: expected <video aria-hidden="true" …(5)>…(1)</video> to be null
+
+- Expected:
+null
+
++ Received:
+<video
+  aria-hidden="true"
+  class="studio-hero__video"
+  loop=""
+  playsinline=""
+  poster="/films/fixture-poster.jpg"
+  preload="metadata"
+>
+  <source
+    src="/films/fixture.mp4"
+    type="video/mp4"
+  />
+</video>
+
+ ❯ src/components/studio-hero-media.test.tsx:190:46
+    188|     fireEvent.error(video as HTMLVideoElement);
+    189|     expect(container.querySelector('video.is-shown')).toBeNull();
+    190|     expect(container.querySelector('video')).toBeNull();
+       |                                              ^
+    191|     expect(getByRole('status').textContent).toContain('could not play'…
+    192|     expect(getByRole('button', { name: 'Play the film' })).not.toBeNul…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 8 passed (10)
+   Start at  05:31:45
+   Duration  1.20s (transform 42ms, setup 0ms, import 176ms, tests 185ms, environment 577ms)
+
+undefined
+C:\dev\mbv-finish\apps\web:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/components/studio-hero-media.test.tsx

@@ -1,0 +1,54 @@
+{
+  "checkedUtc": "2026-10-03T11:08:59.754Z",
+  "measurement": "Pseudo-element absolute containing block is the anchor padding box; borders excluded.",
+  "results": [
+    {
+      "route": "/",
+      "anchorHeight": 42,
+      "effectiveHeight": 44,
+      "pseudoInsets": {
+        "top": "-2px",
+        "bottom": "-2px"
+      },
+      "borderWidths": {
+        "top": "1px",
+        "bottom": "1px"
+      },
+      "topHit": true,
+      "bottomHit": true,
+      "focused": true
+    },
+    {
+      "route": "/es",
+      "anchorHeight": 42,
+      "effectiveHeight": 44,
+      "pseudoInsets": {
+        "top": "-2px",
+        "bottom": "-2px"
+      },
+      "borderWidths": {
+        "top": "1px",
+        "bottom": "1px"
+      },
+      "topHit": true,
+      "bottomHit": true,
+      "focused": true
+    },
+    {
+      "route": "/advertising",
+      "anchorHeight": 40.5,
+      "effectiveHeight": 44,
+      "pseudoInsets": {
+        "top": "-2.75px",
+        "bottom": "-2.75px"
+      },
+      "borderWidths": {
+        "top": "1px",
+        "bottom": "1px"
+      },
+      "topHit": true,
+      "bottomHit": true,
+      "focused": true
+    }
+  ]
+}

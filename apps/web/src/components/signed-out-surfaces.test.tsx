@@ -68,9 +68,9 @@ describe('StudioLanding', () => {
       'Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.',
     );
     expect(html.indexOf('</header>')).toBeLessThan(html.indexOf('<main'));
-    expect(html).toContain('data-media="none"');
-    expect(html).not.toContain('studio-frame__media');
-    expect(html).not.toContain('<img');
+    expect(html).toContain('data-media="poster"');
+    expect(html).toContain('studio-frame__media');
+    expect(html.match(/<img /g)).toHaveLength(1);
     expect(html).not.toContain('<video');
     // The frame holds the decision: the locked lines, the action, then both offers inside it.
     const frameStart = html.indexOf('class="studio-frame"');
@@ -189,7 +189,14 @@ describe('StudioLanding', () => {
     expect(esFooter).toContain('These pages are in English.');
     expect(esFooter).toContain('href="/privacy"');
     expect(esFooter).toContain('ERLV INC, DBA Must Be Viral');
-    expect(html).toContain('data-media="none"');
+    expect(html).toContain('data-media="poster"');
+    expect(html).toContain('alt=""');
+    expect(html).not.toContain('<video');
+    expect(html).not.toContain('<track');
+    expect(html).not.toContain('Reproducir el video');
+    expect(html).not.toContain('studio-hero__controls');
+    expect(html).toContain('<div class="studio-frame__notes" lang="en">');
+    expect(html).toContain('This film was made with AI: stills from Seedream v5 pro');
     expect(html.match(/class="pub-cta"/g)).toHaveLength(2);
     expect(html.match(/class="studio-offer"/g)).toHaveLength(2);
     expect(html).not.toContain('Buenos días');
@@ -234,48 +241,63 @@ describe('StudioLanding', () => {
     expect(studioEs.question).toBeUndefined();
   });
 
-  it('renders the poster as the priority image when rights-cleared media is configured', () => {
+  it('renders the approved generated poster as the one priority image with a truthful alt', () => {
     const media: StudioHeroMedia = {
-      poster: { src: '/studio/hero-poster.jpg', width: 1080, height: 1350 },
-      video: { src: '/studio/hero.mp4', captions: '/studio/hero.vtt' },
-      alt: { en: 'A Houston crew films a storefront.', es: 'Un equipo filma un local en Houston.' },
+      poster: { src: '/films/fixture-poster.jpg', width: 1920, height: 1080 },
+      video: { src: '/films/fixture.mp4' },
+      alt: { en: 'Two hands adjust a camera on a gimbal in a generated room.', es: '' },
     };
     const html = renderToStaticMarkup(<StudioLanding locale="en" media={media} />);
     expect(html).toContain('data-media="poster"');
     // next/image preloads the one priority image on the route.
     expect(html).toContain('<link rel="preload" as="image"');
-    expect(html).toContain('hero-poster.jpg');
-    expect(html).toContain('alt="A Houston crew films a storefront."');
+    expect(html).toContain('fixture-poster.jpg');
+    expect(html).toContain('alt="Two hands adjust a camera on a gimbal in a generated room."');
     expect(html.match(/<img /g)).toHaveLength(1);
     // The clip mounts after the poster on the client; the server never ships it as the LCP element.
     expect(html).not.toContain('<video');
     expect(html).toContain('Play the film');
   });
 
-  it('keeps the type and the actions out of the media block, clear of the native controls', () => {
+  it('keeps all type, controls, the description and disclosure outside the picture', () => {
     const media: StudioHeroMedia = {
-      poster: { src: '/studio/hero-poster.jpg', width: 1080, height: 1350 },
-      video: { src: '/studio/hero.mp4', captions: '/studio/hero.vtt' },
-      alt: { en: 'A Houston crew films a storefront.', es: 'Un equipo filma un local en Houston.' },
+      poster: { src: '/films/fixture-poster.jpg', width: 1920, height: 1080 },
+      video: { src: '/films/fixture.mp4' },
+      alt: { en: 'Two hands adjust a camera on a gimbal in a generated room.', es: '' },
     };
     const html = renderToStaticMarkup(<StudioLanding locale="en" media={media} />);
     const mediaStart = html.indexOf('class="studio-frame__media"');
-    const mediaEnd = html.indexOf('class="studio-frame__lead"');
+    const mediaEnd = html.indexOf('</div>', mediaStart);
     expect(mediaStart).toBeGreaterThan(-1);
     expect(mediaEnd).toBeGreaterThan(mediaStart);
-    // Nothing but the poster, the clip mount point and the play control lives inside the media block.
+    // Only the poster and clip mount point are in the picture.
     const mediaBlock = html.slice(mediaStart, mediaEnd);
     expect(mediaBlock).not.toContain('<h1');
     expect(mediaBlock).not.toContain('pub-cta');
     expect(mediaBlock).not.toContain('$700');
+    expect(mediaBlock).not.toContain('<button');
+    expect(mediaBlock).not.toContain('This film was made with AI');
+    expect(mediaBlock).not.toContain('<p');
+    expect(html).toContain(
+      'In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.',
+    );
+    expect(html).toContain(
+      'This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.',
+    );
     expect(html).not.toContain('studio-hero__panel');
     // The heading and the offers follow the media block instead of overlaying it.
     expect(html.indexOf('<h1')).toBeGreaterThan(mediaEnd);
     expect(html.indexOf('>$700<')).toBeGreaterThan(mediaEnd);
   });
 
-  it('ships without studio footage until permission is on file', () => {
-    expect(studioHeroMedia).toBeNull();
+  it('ships only the owner-approved English wordless plate with no client-footage claim', () => {
+    expect(studioHeroMedia).toMatchObject({
+      poster: { src: '/films/s0-studio-hero-poster-41da8acddb3f.jpg', width: 1920, height: 1080 },
+      video: { src: '/films/s0-studio-hero-d55af8ec3d69.mp4' },
+      alt: { en: 'Two hands adjust a camera on a gimbal in a generated room.', es: '' },
+    });
+    expect(studioHeroMedia?.video).not.toHaveProperty('captions');
+    expect(renderToStaticMarkup(<StudioLanding locale="en" />)).not.toContain('A Houston crew');
     expect(studioEn.offers.map((offer) => offer.name)).toEqual(['Test Shoot', 'Full Package']);
   });
 });

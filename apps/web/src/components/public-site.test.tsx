@@ -138,6 +138,10 @@ describe('legal pages', () => {
     );
     expect(body).toContain('No paid placement runs today.');
     expect(body).toContain('It shows no person, place or product.');
+    expect(body).toContain(
+      'This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.',
+    );
+    expect(body).not.toContain('The studio pages carry no photograph and no film today.');
     expect(body).toContain('model route, provider and cost are inspectable in its receipt');
     expect(body).toContain('On mustbeviral.com today, no generation run can start.');
   });

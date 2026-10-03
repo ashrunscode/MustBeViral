@@ -1,0 +1,500 @@
+
+ RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+
+ ❯ src/components/public-site.test.tsx (7 tests | 1 failed) 53ms
+     × discloses the AI practice as the brand registry states it 21ms
+ ❯ src/components/studio-hero-assets.test.ts (3 tests | 3 failed) 9ms
+     × serves the byte-identical, versioned plate asset /films/s0-studio-hero-d55af8ec3d69.mp4 outside the auth namespace 4ms
+     × serves the byte-identical, versioned plate asset /films/s0-studio-hero-poster-41da8acddb3f.jpg outside the auth namespace 1ms
+     × uses long-lived caching only for the two content-versioned hero files 3ms
+ ❯ src/components/signed-out-surfaces.test.tsx (11 tests | 4 failed) 45ms
+     × opens with the frame, then prices, what is included, the cadence and how to book 15ms
+     × keeps the Spanish page a layout peer that uses only the locked and approved lines 5ms
+     × keeps all type, controls, the description and disclosure outside the picture 3ms
+     × ships only the owner-approved English wordless plate with no client-footage claim 2ms
+ ❯ src/components/studio-hero-media.test.tsx (10 tests | 8 failed) 168ms
+     × keeps the priority poster first and starts a silent inline clip only on an explicit request 35ms
+     × never mounts or plays the clip under reduced motion, including a attempted play request 61ms
+     × stops immediately when reduced motion changes and requires a fresh request when it changes back 10ms
+     × keeps the poster and announces a failed start with a retry action 18ms
+     × lets the visitor cancel a pending start without a late promise showing motion 14ms
+     × ignores a late playback promise after reduced motion unmounts the clip 8ms
+     × recovers from a media error without showing the broken clip 6ms
+     × cancels a pending start when the component leaves the route 5ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/public-site.test.tsx > legal pages > discloses the AI practice as the brand registry states it
+AssertionError: expected '  Skip to main content    Must Be Vir…' to contain 'This film was made with AI: stills fr…'
+
+Expected: "This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew."
+Received: "  Skip to main content    Must Be Viral     Advertising and AI disclosure  This page says what Must Be Viral commits to about AI tools and the labelling of paid and synthetic content, and what it does not promise.  Last changed 2026-10-02.    Who we are  ERLV INC, DBA Must Be Viral, in Houston, Texas. The street address is not yet published. Write to studio@mustbeviral.com or call 713-899-9346.    In the studio’s work  AI tools may be used in editing and post-production. Which tools, and at which step, is not yet published. A person directs every shoot and approves every delivered asset.  A delivered asset that contains synthetic or AI-generated imagery, voice or likeness will carry a visible disclosure on the asset or in its caption, plus the platform’s own AI-content label where the platform provides one.    Paid placements  No paid placement runs today. When one does, in our account or in a client’s ad account, it will name the advertiser of record and carry the platform’s required ad label, and paid partnership and sponsored content will carry the platform’s paid-partnership tag.    Testimonials and portfolio  A testimonial carries its attribution and date and appears only with permission on file. No result is implied as typical.  Today no client name, logo, quote or delivered clip appears on this site, because no written permission is on file.    On this site  The film on the software page is an animation of designed interface frames. It shows no person, place or product. The studio pages carry no photograph and no film today.    In the software  Outputs produced by the software are agent-produced. The run’s model route, provider and cost are inspectable in its receipt. A generated image needs a user-editable description before it can be approved or exported.  On mustbeviral.com today, no generation run can start.    What we do not promise  No promise of reach, views, followers, engagement or results, for a client or for ourselves.    The date  This page describes what Must Be Viral discloses as of 2026-10-02. The date above is when it last changed.       ERLV INC, DBA Must Be Viral   713-899-9346  studio@mustbeviral.com  Houston, Texas  Street address not yet published.      Privacy    Terms    Advertising and AI disclosure      Houston studio  Software     "
+
+ ❯ src/components/public-site.test.tsx:141:18
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  src/components/signed-out-surfaces.test.tsx > StudioLanding > opens with the frame, then prices, what is included, the cadence and how to book
+AssertionError: expected '<div class="pub-page pub-page--studio…' to contain 'data-media="poster"'
+
+Expected: "data-media="poster""
+Received: "<div class="pub-page pub-page--studio" lang="en"><a class="skip-link" href="#studio-heading">Skip to main content</a><div class="pub-shell pub-shell--studio"><header class="pub-header"><a class="pub-wordmark" translate="no" href="/">Must Be Viral</a><nav aria-label="Site"><ul class="pub-nav"><li><a href="/es">Español</a></li></ul></nav></header><main id="studio-main"><section class="studio-frame" aria-labelledby="studio-heading" data-media="none"><div class="studio-frame__lead"><h1 id="studio-heading">We film Houston.</h1><p class="studio-frame__sub">Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.</p><div class="pub-actions"><a class="pub-cta" href="tel:+17138999346">Book a test shoot.</a><a class="pub-phone" href="tel:+17138999346">Call 713-899-9346.</a></div></div><dl class="studio-frame__prices"><div class="studio-price"><dt translate="no">Test Shoot</dt><dd><span class="pub-price">$700</span><span class="pub-price-unit">one time</span></dd></div><div class="studio-price"><dt translate="no">Full Package</dt><dd><span class="pub-price">$3,500</span><span class="pub-price-unit">a month</span></dd></div></dl></section><div class="studio-body"><div class="studio-offers"><section aria-labelledby="offer-test-shoot" class="studio-offer"><h2 id="offer-test-shoot" translate="no">Test Shoot</h2><p class="studio-offer__price"><span class="pub-price">$700</span><span class="pub-price-unit">one time</span></p><ul class="studio-offer__includes"><li>One shoot, up to 2 hours</li><li>2 edited Reels</li><li>15–25 edited photos</li><li>Creative direction on set</li><li>Formatted for Instagram and TikTok, ready to post</li></ul></section><section aria-labelledby="offer-full-package" class="studio-offer"><h2 id="offer-full-package" translate="no">Full Package</h2><p class="studio-offer__price"><span class="pub-price">$3,500</span><span class="pub-price-unit">a month</span></p><ul class="studio-offer__includes"><li>4–8 shoots per month, 2–3 hours each</li><li>12–16+ edited Reels</li><li>120–200 edited photos</li><li>Lifestyle, branding, product and team photography</li><li>Cinematic brand content</li><li>Full creative direction</li><li>Monthly content strategy and calendar</li><li>Hook and caption assistance</li><li>Trend research</li><li>Instagram and TikTok optimisation</li><li>Behind-the-scenes and story content</li><li>Monthly strategy meeting</li><li>Priority editing</li><li>Drone / aerial included where applicable</li></ul></section></div><p class="studio-pricing-link"><a href="/pricing">Pricing, with the add-ons</a></p><p class="studio-cadence">On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.</p><section aria-labelledby="studio-kinds" class="studio-kinds"><h2 id="studio-kinds">Your kind of work.</h2><dl class="studio-rows"><div class="studio-row"><dt>Med spa</dt><dd><p class="studio-row__situation">The treatment menu changed and the page still shows last season.</p><p class="studio-row__line">We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.</p></dd></div><div class="studio-row"><dt>Restaurant</dt><dd><p class="studio-row__situation">The special is gone and the photo of it is still up, shot in bad light.</p><p class="studio-row__line">We film the dish and the room on a schedule, so the feed matches the menu.</p></dd></div><div class="studio-row"><dt>Gym</dt><dd><p class="studio-row__situation">One member films, and the class looks empty.</p><p class="studio-row__line">We film the week of classes in the room, with people who have said yes.</p></dd></div><div class="studio-row"><dt>Auto</dt><dd><p class="studio-row__situation">The build is finished and the footage is still on a phone.</p><p class="studio-row__line">We walk the car and cut the Reels.</p></dd></div><div class="studio-row"><dt>Home services</dt><dd><p class="studio-row__situation">The before-and-after is the proof, and nobody shot it.</p><p class="studio-row__line">We document the job from start to finish and turn it into the month.</p></dd></div><div class="studio-row"><dt>Real estate team</dt><dd><p class="studio-row__situation">Every listing has photos. The team itself has no face.</p><p class="studio-row__line">We film the team, on a week that is not a listing.</p></dd></div></dl></section><section aria-labelledby="studio-question" class="studio-objection"><h2 id="studio-question">Already posting?</h2><p class="studio-answer">You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.</p></section><section aria-labelledby="studio-book" class="studio-book"><h2 id="studio-book">Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.</h2><div class="pub-actions"><a class="pub-cta" href="tel:+17138999346">Book a test shoot.</a><a class="pub-phone" href="tel:+17138999346">Call 713-899-9346.</a></div></section></div></main></div><script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Must Be Viral","description":"Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.","inLanguage":"en","telephone":"+17138999346","email":"studio@mustbeviral.com","areaServed":{"@type":"City","name":"Houston","containedInPlace":{"@type":"State","name":"Texas"}},"knowsLanguage":["en","es"],"makesOffer":[{"@type":"Offer","name":"Test Shoot","price":"700","priceCurrency":"USD","description":"One shoot, up to 2 hours. 2 edited Reels. 15–25 edited photos. Creative direction on set. Formatted for Instagram and TikTok, ready to post.","itemOffered":{"@type":"Service","name":"Test Shoot","areaServed":{"@type":"City","name":"Houston","containedInPlace":{"@type":"State","name":"Texas"}}}},{"@type":"Offer","name":"Full Package","priceCurrency":"USD","priceSpecification":{"@type":"UnitPriceSpecification","price":"3500","priceCurrency":"USD","unitCode":"MON","unitText":"month"},"description":"4–8 shoots per month, 2–3 hours each. 12–16+ edited Reels. 120–200 edited photos. Lifestyle, branding, product and team photography. Cinematic brand content. Full creative direction. Monthly content strategy and calendar. Hook and caption assistance. Trend research. Instagram and TikTok optimisation. Behind-the-scenes and story content. Monthly strategy meeting. Priority editing. Drone / aerial included where applicable.","itemOffered":{"@type":"Service","name":"Full Package","areaServed":{"@type":"City","name":"Houston","containedInPlace":{"@type":"State","name":"Texas"}}}}]}</script><footer class="pub-footer"><div class="pub-footer__inner"><p class="pub-footer__entity" translate="no">ERLV INC, DBA Must Be Viral</p><p class="pub-footer__contact"><a href="tel:+17138999346">713-899-9346</a><a href="mailto:studio@mustbeviral.com">studio@mustbeviral.com</a><span>Houston, Texas</span><span>Street address not yet published.</span></p><nav aria-label="Legal"><ul class="pub-footer__links"><li><a href="/pricing">Pricing</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li><li><a href="/advertising">Advertising and AI disclosure</a></li></ul></nav><p class="pub-footer__other">Must Be Viral also makes software. <a href="/software">Software</a></p></div></footer></div>"
+
+ ❯ src/components/signed-out-surfaces.test.tsx:71:18
+     69|     );
+     70|     expect(html.indexOf('</header>')).toBeLessThan(html.indexOf('<main…
+     71|     expect(html).toContain('data-media="poster"');
+       |                  ^
+     72|     expect(html).toContain('studio-frame__media');
+     73|     expect(html.match(/<img /g)).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  src/components/signed-out-surfaces.test.tsx > StudioLanding > keeps the Spanish page a layout peer that uses only the locked and approved lines
+AssertionError: expected '<div class="pub-page pub-page--studio…' to contain 'data-media="poster"'
+
+Expected: "data-media="poster""
+Received: "<div class="pub-page pub-page--studio" lang="es"><a class="skip-link" href="#studio-heading">Saltar al contenido</a><div class="pub-shell pub-shell--studio"><header class="pub-header"><a class="pub-wordmark" translate="no" href="/es">Must Be Viral</a><nav aria-label="Site"><ul class="pub-nav"><li><a href="/">English</a></li></ul></nav></header><main id="studio-main"><section class="studio-frame" aria-labelledby="studio-heading" data-media="none"><div class="studio-frame__lead"><h1 id="studio-heading">Filmamos Houston.</h1><p class="studio-frame__sub">Contenido semanal para negocios de Houston: Reels, fotos y un calendario de publicación que sí se cumple.</p><div class="pub-actions"><a class="pub-cta" href="tel:+17138999346">Agende un test shoot.</a><a class="pub-phone" href="tel:+17138999346">Llame al 713-899-9346.</a></div></div><dl class="studio-frame__prices"><div class="studio-price"><dt translate="no">Test Shoot</dt><dd><span class="pub-price">$700</span><span class="pub-price-unit">una sola vez</span></dd></div><div class="studio-price"><dt translate="no">Full Package</dt><dd><span class="pub-price">$3,500</span><span class="pub-price-unit">al mes</span></dd></div></dl></section><div class="studio-body"><div class="studio-offers"><section aria-labelledby="offer-test-shoot" class="studio-offer"><h2 id="offer-test-shoot" translate="no">Test Shoot</h2><p class="studio-offer__price"><span class="pub-price">$700</span><span class="pub-price-unit">una sola vez</span></p><p>El Test Shoot cuesta $700, una sola vez: una sesión de hasta dos horas, 2 Reels editados y de 15 a 25 fotos.</p></section><section aria-labelledby="offer-full-package" class="studio-offer"><h2 id="offer-full-package" translate="no">Full Package</h2><p class="studio-offer__price"><span class="pub-price">$3,500</span><span class="pub-price-unit">al mes</span></p><p>Con el Full Package vamos a su negocio de cuatro a ocho veces al mes, grabamos, editamos y le entregamos las publicaciones con su calendario.</p></section></div><p class="studio-answer">Le entregamos el material listo para publicar. El alcance depende de su cuenta y de su mercado.</p><section aria-labelledby="studio-book" class="studio-book"><h2 id="studio-book">Agende un test shoot. Dos horas, dos Reels y de 15 a 25 fotos, $700.</h2><div class="pub-actions"><a class="pub-cta" href="tel:+17138999346">Agende un test shoot.</a><a class="pub-phone" href="tel:+17138999346">Llame al 713-899-9346.</a></div></section></div></main></div><script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Must Be Viral","description":"Contenido semanal para negocios de Houston: Reels, fotos y un calendario de publicación que sí se cumple.","inLanguage":"es","telephone":"+17138999346","email":"studio@mustbeviral.com","areaServed":{"@type":"City","name":"Houston","containedInPlace":{"@type":"State","name":"Texas"}},"knowsLanguage":["en","es"],"makesOffer":[{"@type":"Offer","name":"Test Shoot","price":"700","priceCurrency":"USD","description":"El Test Shoot cuesta $700, una sola vez: una sesión de hasta dos horas, 2 Reels editados y de 15 a 25 fotos.","itemOffered":{"@type":"Service","name":"Test Shoot","areaServed":{"@type":"City","name":"Houston","containedInPlace":{"@type":"State","name":"Texas"}}}},{"@type":"Offer","name":"Full Package","priceCurrency":"USD","priceSpecification":{"@type":"UnitPriceSpecification","price":"3500","priceCurrency":"USD","unitCode":"MON","unitText":"month"},"description":"Con el Full Package vamos a su negocio de cuatro a ocho veces al mes, grabamos, editamos y le entregamos las publicaciones con su calendario.","itemOffered":{"@type":"Service","name":"Full Package","areaServed":{"@type":"City","name":"Houston","containedInPlace":{"@type":"State","name":"Texas"}}}}]}</script><footer class="pub-footer"><div class="pub-footer__inner"><p class="pub-footer__entity" translate="no">ERLV INC, DBA Must Be Viral</p><p class="pub-footer__contact"><a href="tel:+17138999346">713-899-9346</a><a href="mailto:studio@mustbeviral.com">studio@mustbeviral.com</a><span>Houston, Texas</span><span lang="en">Street address not yet published.</span></p><nav aria-label="Legal" lang="en"><ul class="pub-footer__links"><li><a href="/pricing">Pricing</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li><li><a href="/advertising">Advertising and AI disclosure</a></li></ul><p class="pub-footer__note">These pages are in English.</p></nav><p class="pub-footer__other" lang="en">Must Be Viral also makes software. <a href="/software">Software</a></p></div></footer></div>"
+
+ ❯ src/components/signed-out-surfaces.test.tsx:192:18
+    190|     expect(esFooter).toContain('href="/privacy"');
+    191|     expect(esFooter).toContain('ERLV INC, DBA Must Be Viral');
+    192|     expect(html).toContain('data-media="poster"');
+       |                  ^
+    193|     expect(html).toContain('alt=""');
+    194|     expect(html).not.toContain('<video');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  src/components/signed-out-surfaces.test.tsx > StudioLanding > keeps all type, controls, the description and disclosure outside the picture
+AssertionError: expected 'class="studio-frame__media"><img alt=…' not to contain '<button'
+
+Expected: "<button"
+Received: "class="studio-frame__media"><img alt="Two hands adjust a camera on a gimbal in a generated room." decoding="async" data-nimg="fill" class="studio-hero__poster" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" sizes="100vw" srcSet="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=640&amp;q=75 640w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=750&amp;q=75 750w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=828&amp;q=75 828w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=3840&amp;q=75 3840w" src="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&amp;w=3840&amp;q=75"/><button class="pub-play studio-hero__play" type="button">Play the film</button>"
+
+ ❯ src/components/signed-out-surfaces.test.tsx:278:28
+    276|     expect(mediaBlock).not.toContain('pub-cta');
+    277|     expect(mediaBlock).not.toContain('$700');
+    278|     expect(mediaBlock).not.toContain('<button');
+       |                            ^
+    279|     expect(mediaBlock).not.toContain('This film was made with AI');
+    280|     expect(mediaBlock).not.toContain('<p');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  src/components/signed-out-surfaces.test.tsx > StudioLanding > ships only the owner-approved English wordless plate with no client-footage claim
+AssertionError: expected null to match object { poster: { …(3) }, …(2) }
+
+- Expected:
+{
+  "alt": {
+    "en": "Two hands adjust a camera on a gimbal in a generated room.",
+    "es": "",
+  },
+  "poster": {
+    "height": 1080,
+    "src": "/films/s0-studio-hero-poster-41da8acddb3f.jpg",
+    "width": 1920,
+  },
+  "video": {
+    "src": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+  },
+}
+
++ Received:
+null
+
+ ❯ src/components/signed-out-surfaces.test.tsx:290:29
+    288|
+    289|   it('ships only the owner-approved English wordless plate with no cli…
+    290|     expect(studioHeroMedia).toMatchObject({
+       |                             ^
+    291|       poster: { src: '/films/s0-studio-hero-poster-41da8acddb3f.jpg', …
+    292|       video: { src: '/films/s0-studio-hero-d55af8ec3d69.mp4' },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  src/components/studio-hero-assets.test.ts > Approved S0 assets > serves the byte-identical, versioned plate asset /films/s0-studio-hero-d55af8ec3d69.mp4 outside the auth namespace
+Error: ENOENT: no such file or directory, stat 'C:\dev\mbv-finish\apps\web\public\films\s0-studio-hero-d55af8ec3d69.mp4'
+ ❯ src/components/studio-hero-assets.test.ts:17:12
+     15|   it.each(assets)('serves the byte-identical, versioned plate asset %s…
+     16|     const path = new URL(`../../public${src}`, import.meta.url);
+     17|     expect(statSync(path).size).toBe(bytes);
+       |            ^
+     18|     expect(createHash('sha256').update(readFileSync(path)).digest('hex…
+     19|     const matcher = new RegExp(`^${proxyConfig.matcher[0]}$`, 'u');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  src/components/studio-hero-assets.test.ts > Approved S0 assets > serves the byte-identical, versioned plate asset /films/s0-studio-hero-poster-41da8acddb3f.jpg outside the auth namespace
+Error: ENOENT: no such file or directory, stat 'C:\dev\mbv-finish\apps\web\public\films\s0-studio-hero-poster-41da8acddb3f.jpg'
+ ❯ src/components/studio-hero-assets.test.ts:17:12
+     15|   it.each(assets)('serves the byte-identical, versioned plate asset %s…
+     16|     const path = new URL(`../../public${src}`, import.meta.url);
+     17|     expect(statSync(path).size).toBe(bytes);
+       |            ^
+     18|     expect(createHash('sha256').update(readFileSync(path)).digest('hex…
+     19|     const matcher = new RegExp(`^${proxyConfig.matcher[0]}$`, 'u');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  src/components/studio-hero-assets.test.ts > Approved S0 assets > uses long-lived caching only for the two content-versioned hero files
+AssertionError: expected undefined to be '/films/s0-studio-hero-d55af8ec3d69.mp4' // Object.is equality
+
+- Expected:
+"/films/s0-studio-hero-d55af8ec3d69.mp4"
+
++ Received:
+undefined
+
+ ❯ src/components/studio-hero-assets.test.ts:25:41
+     23|
+     24|   it('uses long-lived caching only for the two content-versioned hero …
+     25|     expect(studioHeroMedia?.video?.src).toBe(assets[0][0]);
+       |                                         ^
+     26|     expect(studioHeroMedia?.poster.src).toBe(assets[1][0]);
+     27|     const headers = await nextConfig.headers?.();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > keeps the priority poster first and starts a silent inline clip only on an explicit request
+AssertionError: expected <video …(6)>…(2)</video> to be null
+
+- Expected:
+null
+
++ Received:
+<video
+  class="studio-hero__video"
+  controls=""
+  loop=""
+  playsinline=""
+  poster="/films/fixture-poster.jpg"
+  preload="metadata"
+>
+  <source
+    src="/films/fixture.mp4"
+    type="video/mp4"
+  />
+  <track
+    default=""
+    kind="captions"
+    label="English captions"
+    srclang="en"
+  />
+</video>
+
+ ❯ src/components/studio-hero-media.test.tsx:49:46
+     47|       <StudioHeroMedia alt={media.alt.en} media={media} playLabel="Pla…
+     48|     );
+     49|     expect(container.querySelector('video')).toBeNull();
+       |                                              ^
+     50|     expect(play).not.toHaveBeenCalled();
+     51|     expect(container.querySelector('img')?.getAttribute('alt')).toBe(m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > never mounts or plays the clip under reduced motion, including a attempted play request
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/components/studio-hero-media.test.tsx:85:30
+     83|     expect(play).not.toHaveBeenCalled();
+     84|     const control = getByRole('button', { name: 'Play the film' }) as …
+     85|     expect(control.disabled).toBe(true);
+       |                              ^
+     86|     expect(getByRole('status').textContent).toContain('Reduced motion …
+     87|     await act(async () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > stops immediately when reduced motion changes and requires a fresh request when it changes back
+AssertionError: expected <video …(6)>…(2)</video> to be null
+
+- Expected:
+null
+
++ Received:
+<video
+  class="studio-hero__video is-shown"
+  controls=""
+  loop=""
+  playsinline=""
+  poster="/films/fixture-poster.jpg"
+  preload="metadata"
+>
+  <source
+    src="/films/fixture.mp4"
+    type="video/mp4"
+  />
+  <track
+    default=""
+    kind="captions"
+    label="English captions"
+    srclang="en"
+  />
+</video>
+
+ ❯ src/components/studio-hero-media.test.tsx:103:46
+    101|     expect(container.querySelector('video')).not.toBeNull();
+    102|     await act(async () => setReduced(true));
+    103|     expect(container.querySelector('video')).toBeNull();
+       |                                              ^
+    104|     expect(pause).toHaveBeenCalled();
+    105|     await act(async () => setReduced(false));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > keeps the poster and announces a failed start with a retry action
+TestingLibraryElementError: Unable to find an accessible element with the role "status"
+
+Here are the accessible roles:
+
+  img:
+
+  Name "Two hands adjust a camera on a gimbal in a generated room.":
+  <img
+    alt="Two hands adjust a camera on a gimbal in a generated room."
+    class="studio-hero__poster"
+    data-nimg="fill"
+    decoding="async"
+    sizes="100vw"
+    src="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75"
+    srcset="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=640&q=75 640w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=750&q=75 750w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=828&q=75 828w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1080&q=75 1080w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1200&q=75 1200w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1920&q=75 1920w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=2048&q=75 2048w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75 3840w"
+    style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <img
+      alt="Two hands adjust a camera on a gimbal in a generated room."
+      class="studio-hero__poster"
+      data-nimg="fill"
+      decoding="async"
+      sizes="100vw"
+      src="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75"
+      srcset="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=640&q=75 640w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=750&q=75 750w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=828&q=75 828w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1080&q=75 1080w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1200&q=75 1200w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1920&q=75 1920w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=2048&q=75 2048w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75 3840w"
+      style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+    />
+    <video
+      class="studio-hero__video is-shown"
+      controls=""
+      loop=""
+      playsinline=""
+      poster="/films/fixture-poster.jpg"
+      preload="metadata"
+    >
+      <source
+        src="/films/fixture.mp4"
+        type="video/mp4"
+      />
+      <track
+        default=""
+        kind="captions"
+        label="English captions"
+        srclang="en"
+      />
+    </video>
+    <button
+      class="pub-play studio-hero__play"
+      hidden=""
+      type="button"
+    >
+      Play the film
+    </button>
+  </div>
+</body>
+ ❯ Object.getElementError ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/studio-hero-media.test.tsx:119:12
+    117|     );
+    118|     await act(async () => getByRole('button', { name: 'Play the film' …
+    119|     expect(getByRole('status').textContent).toBe('The film could not p…
+       |            ^
+    120|     expect(container.querySelector('video.is-shown')).toBeNull();
+    121|     expect(container.querySelector('img')).not.toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > lets the visitor cancel a pending start without a late promise showing motion
+TestingLibraryElementError: Unable to find an accessible element with the role "status"
+
+Here are the accessible roles:
+
+  img:
+
+  Name "Two hands adjust a camera on a gimbal in a generated room.":
+  <img
+    alt="Two hands adjust a camera on a gimbal in a generated room."
+    class="studio-hero__poster"
+    data-nimg="fill"
+    decoding="async"
+    sizes="100vw"
+    src="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75"
+    srcset="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=640&q=75 640w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=750&q=75 750w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=828&q=75 828w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1080&q=75 1080w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1200&q=75 1200w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1920&q=75 1920w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=2048&q=75 2048w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75 3840w"
+    style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <img
+      alt="Two hands adjust a camera on a gimbal in a generated room."
+      class="studio-hero__poster"
+      data-nimg="fill"
+      decoding="async"
+      sizes="100vw"
+      src="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75"
+      srcset="/_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=640&q=75 640w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=750&q=75 750w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=828&q=75 828w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1080&q=75 1080w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1200&q=75 1200w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=1920&q=75 1920w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=2048&q=75 2048w, /_next/image?url=%2Ffilms%2Ffixture-poster.jpg&w=3840&q=75 3840w"
+      style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+    />
+    <video
+      class="studio-hero__video"
+      controls=""
+      loop=""
+      playsinline=""
+      poster="/films/fixture-poster.jpg"
+      preload="metadata"
+    >
+      <source
+        src="/films/fixture.mp4"
+        type="video/mp4"
+      />
+      <track
+        default=""
+        kind="captions"
+        label="English captions"
+        srclang="en"
+      />
+    </video>
+    <button
+      class="pub-play studio-hero__play"
+      hidden=""
+      type="button"
+    >
+      Play the film
+    </button>
+  </div>
+</body>
+ ❯ Object.getElementError ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/studio-hero-media.test.tsx:137:12
+    135|     );
+    136|     await act(async () => getByRole('button', { name: 'Play the film' …
+    137|     expect(getByRole('status').textContent).toBe('Loading the film…');
+       |            ^
+    138|     await act(async () => getByRole('button', { name: 'Pause the film'…
+    139|     await act(async () => finish?.());
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > ignores a late playback promise after reduced motion unmounts the clip
+AssertionError: expected <video …(6)>…(2)</video> to be null
+
+- Expected:
+null
+
++ Received:
+<video
+  class="studio-hero__video is-shown"
+  controls=""
+  loop=""
+  playsinline=""
+  poster="/films/fixture-poster.jpg"
+  preload="metadata"
+>
+  <source
+    src="/films/fixture.mp4"
+    type="video/mp4"
+  />
+  <track
+    default=""
+    kind="captions"
+    label="English captions"
+    srclang="en"
+  />
+</video>
+
+ ❯ src/components/studio-hero-media.test.tsx:157:46
+    155|     await act(async () => setReduced(true));
+    156|     await act(async () => finish?.());
+    157|     expect(container.querySelector('video')).toBeNull();
+       |                                              ^
+    158|     expect(getByRole('status').textContent).toBe('Reduced motion is on…
+    159|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > recovers from a media error without showing the broken clip
+AssertionError: expected <video …(6)>…(2)</video> to be null
+
+- Expected:
+null
+
++ Received:
+<video
+  class="studio-hero__video is-shown"
+  controls=""
+  loop=""
+  playsinline=""
+  poster="/films/fixture-poster.jpg"
+  preload="metadata"
+>
+  <source
+    src="/films/fixture.mp4"
+    type="video/mp4"
+  />
+  <track
+    default=""
+    kind="captions"
+    label="English captions"
+    srclang="en"
+  />
+</video>
+
+ ❯ src/components/studio-hero-media.test.tsx:171:55
+    169|     expect(video).not.toBeNull();
+    170|     fireEvent.error(video as HTMLVideoElement);
+    171|     expect(container.querySelector('video.is-shown')).toBeNull();
+       |                                                       ^
+    172|     expect(getByRole('status').textContent).toContain('could not play'…
+    173|     expect(getByRole('button', { name: 'Play the film' })).not.toBeNul…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+
+ FAIL  src/components/studio-hero-media.test.tsx > StudioHeroMedia > cancels a pending start when the component leaves the route
+AssertionError: expected "pause" to be called at least once
+ ❯ src/components/studio-hero-media.test.tsx:213:19
+    211|     unmount();
+    212|     await act(async () => finish?.());
+    213|     expect(pause).toHaveBeenCalled();
+       |                   ^
+    214|   });
+    215| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  16 failed | 15 passed (31)
+   Start at  05:25:53
+   Duration  1.45s (transform 423ms, setup 0ms, import 1.15s, tests 275ms, environment 834ms)
+
+undefined
+C:\dev\mbv-finish\apps\web:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/components/studio-hero-media.test.tsx src/components/studio-hero-assets.test.ts src/components/signed-out-surfaces.test.tsx src/components/public-site.test.tsx
