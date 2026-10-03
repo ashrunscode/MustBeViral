@@ -1,0 +1,19 @@
+{
+  "NewestCreatedUtc": "2026-10-03T07:01:48.9970000Z",
+  "CheckedUtc": "2026-10-03T12:30:00.8843499Z",
+  "RemoteDatabaseWrite": false,
+  "NewestDeployment": "dpl_HWP8wh8sDzBNDZQijK9uXittJiZf",
+  "Rollback": "dpl_HWP8wh8sDzBNDZQijK9uXittJiZf",
+  "NewestJournaled": true,
+  "Source": "f97488dc220c6f1b6686f4c0642b2203baab156e",
+  "Project": "mustbeviral-web-staging",
+  "Reviewed": "56abd4b9c100f98a1ea06835c7aeee2a32acd511",
+  "AgeMinutes": 328.16,
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "LiveReady": true,
+  "LiveSource": "658cd50cc48906262bf24ec08e84b7d768cce481",
+  "SchemaFacingRuntimeUnchanged": true
+}

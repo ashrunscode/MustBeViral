@@ -1,0 +1,15 @@
+{
+  "Root": "C:/dev/mbv-verify-56abd4b",
+  "Executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "ProvidersAndQueuesDisabled": true,
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-platform-local-56abd4b.log",
+  "LocalOnly": true,
+  "Source": "56abd4b9c100f98a1ea06835c7aeee2a32acd511",
+  "Pid": 68800,
+  "ErrorLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-platform-local-56abd4b-error.log",
+  "Script": "packages/db/scripts/start-platform-local.mjs",
+  "CreatedUtc": "2026-10-03T12:09:30.422058Z",
+  "StopExit": 0,
+  "StoppedUtc": "2026-10-03T12:17:24.5378007Z",
+  "PortsFree": true
+}

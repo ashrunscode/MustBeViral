@@ -1,0 +1,15 @@
+{
+  "checkedUtc": "2026-10-03T12:42:24Z",
+  "driver": "Vercel connector get_deployment and CLI inspect; read only",
+  "id": "dpl_HCxas3BjbcANLZoVVQh68q1EcHoL",
+  "name": "mustbeviral-web-production",
+  "readyState": "READY",
+  "source": "f97488dc220c6f1b6686f4c0642b2203baab156e",
+  "aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "protectedAliasHttpFetched": false
+}

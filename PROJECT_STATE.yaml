@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Ship the approved S0 English wordless plate under D2.
+next_action: Reverify official research sources under L2.
 decisions_pending: []
 blockers: []
 legacy:

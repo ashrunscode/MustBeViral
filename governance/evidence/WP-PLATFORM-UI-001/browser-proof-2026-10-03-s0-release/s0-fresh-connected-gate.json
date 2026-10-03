@@ -1,0 +1,12 @@
+{
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-fresh-56abd4b-connected-journeys.log",
+  "Exit": 0,
+  "Source": "56abd4b9c100f98a1ea06835c7aeee2a32acd511",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts apps/web/e2e/platform-knowledge-connected.spec.ts --project=desktop-chromium",
+  "FinishedUtc": "2026-10-03T12:17:10.5869996Z",
+  "LocalOnly": true,
+  "HarnessPid": 68800,
+  "ProvidersAndQueuesDisabled": true,
+  "StartedUtc": "2026-10-03T12:10:25.8331817Z",
+  "Root": "C:/dev/mbv-verify-56abd4b"
+}

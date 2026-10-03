@@ -1,0 +1,13 @@
+{
+  "checkedUtc": "2026-10-03T12:32:12Z",
+  "driver": "Vercel connector get_deployment and CLI inspect; read only",
+  "id": "dpl_vHurZJBF5kKQ9Jum6sTN6MhTFhDn",
+  "name": "mustbeviral-web-staging",
+  "readyState": "READY",
+  "source": "f97488dc220c6f1b6686f4c0642b2203baab156e",
+  "aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "protectedAliasHttpFetched": false
+}

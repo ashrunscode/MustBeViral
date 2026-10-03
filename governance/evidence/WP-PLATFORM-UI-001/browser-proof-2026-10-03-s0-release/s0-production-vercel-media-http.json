@@ -1,0 +1,45 @@
+{
+  "checkedUtc": "2026-10-03T12:42:56.810Z",
+  "origin": "https://mustbeviral-web-production.vercel.app",
+  "deploymentId": "dpl_HCxas3BjbcANLZoVVQh68q1EcHoL",
+  "healthy": true,
+  "results": [
+    {
+      "path": "/films/s0-studio-hero-d55af8ec3d69.mp4",
+      "status": 200,
+      "type": "video/mp4",
+      "bytes": 2163648,
+      "sha256": "d55af8ec3d692af3545e001bc40d7c559fbff9c09de281da1c9a7cfca0cf01bb",
+      "immutableCache": true,
+      "cookie": false
+    },
+    {
+      "path": "/films/s0-studio-hero-poster-41da8acddb3f.jpg",
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 119229,
+      "sha256": "41da8acddb3fbf938ba8f250228641dca41cf24414601c13ae79855d00e81fe5",
+      "immutableCache": true,
+      "cookie": false
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "expectedDeployment": true,
+      "exactDisclosure": true
+    },
+    {
+      "path": "/es",
+      "status": 200,
+      "expectedDeployment": true,
+      "exactDisclosure": true
+    },
+    {
+      "path": "/advertising",
+      "status": 200,
+      "expectedDeployment": true,
+      "exactDisclosure": true
+    }
+  ],
+  "approvedOriginMcpStatus": 401
+}

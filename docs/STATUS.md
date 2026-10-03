@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Ship the approved S0 English wordless plate under D2.
+Reverify official research sources under L2.
