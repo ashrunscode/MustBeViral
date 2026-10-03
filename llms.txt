@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
 current_step: ui-008-release
-next_action: Production serves 1db863c (dpl_96beiXaCW9ZCL4HxAa3EG7GqCpyC) and staging serves it too (dpl_FP3cE5nNaBoAxiFCCeLvVjCJ8uJW); mustbeviral.com and www answer with the production deployment, carrying the three legal pages, the footer, the full Full Package list and the pricing page. Still open are the Higgsfield films, which wait for HF_API_KEY_ID and HF_API_KEY_SECRET in the vault inbox; the one read-only signed-in smoke on staging and production, which is granted for founder@mustbeviral.com but waits for that credential in the vault; and brand/context.md sections 8b and 13, which still call the legal pages blocked and sit outside this packet's paths, for the owner to close.
+next_action: Correct and release the public-origin boundary under A4 and A6, including request-relative auth callbacks.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

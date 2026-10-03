@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Production serves 1db863c (dpl_96beiXaCW9ZCL4HxAa3EG7GqCpyC) and staging serves it too (dpl_FP3cE5nNaBoAxiFCCeLvVjCJ8uJW); mustbeviral.com and www answer with the production deployment, carrying the three legal pages, the footer, the full Full Package list and the pricing page. Still open are the Higgsfield films, which wait for HF_API_KEY_ID and HF_API_KEY_SECRET in the vault inbox; the one read-only signed-in smoke on staging and production, which is granted for founder@mustbeviral.com but waits for that credential in the vault; and brand/context.md sections 8b and 13, which still call the legal pages blocked and sit outside this packet's paths, for the owner to close.
+Correct and release the public-origin boundary under A4 and A6, including request-relative auth callbacks.

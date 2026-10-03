@@ -11,7 +11,8 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Production serves 1db863c (dpl_96beiXaCW9ZCL4HxAa3EG7GqCpyC) and staging serves it too (dpl_FP3cE5nNaBoAxiFCCeLvVjCJ8uJW); mustbeviral.com and www answer with the production deployment, carrying the three legal pages, the footer, the full Full Package list and the pricing page. Still open are the Higgsfield films, which wait for HF_API_KEY_ID and HF_API_KEY_SECRET in the vault inbox; the one read-only signed-in smoke on staging and production, which is granted for founder@mustbeviral.com but waits for that credential in the vault; and brand/context.md sections 8b and 13, which still call the legal pages blocked and sit outside this packet's paths, for the owner to close.
+next_action: Correct and release the public-origin boundary under A4 and A6, including
+  request-relative auth callbacks.
 decisions_pending: []
 blockers: []
 legacy:
@@ -21,13 +22,13 @@ legacy:
   destructive_remote_action: forbidden
 environments:
   production:
-    generation: legacy-v1
+    generation: viralgraph-cleanroom-v2
     traffic: live
     mutation_policy: preserve_until_v2_cutover
-    notes:
-      V2 private foundation is deployed only on SSO-protected Vercel provider URLs and an unrouted
-      workers.dev Core URL; all signup, generation, provider, queue, and charge behavior is off.
-      preserve_until_v2_cutover keeps legacy V1 unchanged. Under
+    notes: V2 web serves mustbeviral.com and www after the owner-directed 2026-10-02 cutover, from
+      1db863c7dac147da044a60b802e37f4f8415d819 in deployment dpl_96beiXaCW9ZCL4HxAa3EG7GqCpyC. The
+      existing workers.dev Core health is reachable; all signup, generation, provider, queue, and
+      charge behavior is off. preserve_until_v2_cutover keeps legacy V1 unchanged. Under
       adr-0009-standing-release-authority, agents may deploy staging-verified merged commits through
       the guarded release in deploy-rollback-incidents to the existing V2 production Workers
       mustbeviral-v2-production-core and mustbeviral-v2-production-collaboration, only when its
