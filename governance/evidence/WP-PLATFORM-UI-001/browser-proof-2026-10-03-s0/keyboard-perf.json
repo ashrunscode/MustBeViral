@@ -1,0 +1,487 @@
+{
+  "checkedUtc": "2026-10-03T10:51:29.289Z",
+  "driver": "Playwright MCP, built production preview, signed out, no CPU or network throttling",
+  "webVitals": "5.1.0",
+  "results": [
+    {
+      "route": "/",
+      "perf": {
+        "lcpMs": 108,
+        "lcpTag": "IMG",
+        "lcpClass": "studio-hero__poster",
+        "lcpIsPoster": true,
+        "cls": 0,
+        "highPriorityPoster": true,
+        "initialVideoCount": 0
+      },
+      "treeBefore": "- link \"Skip to main content\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Español\":\n          - /url: /es\n- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Play the film\"\n    - status\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "focusable": 16,
+      "stops": [
+        {
+          "index": 47,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 177.640625,
+          "height": 42
+        },
+        {
+          "index": 50,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "Español",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 58.296875,
+          "height": 44
+        },
+        {
+          "index": 61,
+          "tag": "BUTTON",
+          "name": "Play the film",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 125.46875,
+          "height": 44
+        },
+        {
+          "index": 67,
+          "tag": "A",
+          "name": "Book a test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 166.921875,
+          "height": 44
+        },
+        {
+          "index": 68,
+          "tag": "A",
+          "name": "Call 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 140.453125,
+          "height": 44
+        },
+        {
+          "index": 117,
+          "tag": "A",
+          "name": "Pricing, with the add-ons",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 182.328125,
+          "height": 44
+        },
+        {
+          "index": 158,
+          "tag": "A",
+          "name": "Book a test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 166.921875,
+          "height": 44
+        },
+        {
+          "index": 159,
+          "tag": "A",
+          "name": "Call 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 140.453125,
+          "height": 44
+        },
+        {
+          "index": 165,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 98.453125,
+          "height": 44
+        },
+        {
+          "index": 166,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.953125,
+          "height": 44
+        },
+        {
+          "index": 172,
+          "tag": "A",
+          "name": "Pricing",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 47.59375,
+          "height": 44
+        },
+        {
+          "index": 174,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 50.109375,
+          "height": 44
+        },
+        {
+          "index": 176,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "index": 178,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 198.09375,
+          "height": 44
+        },
+        {
+          "index": 180,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 62.671875,
+          "height": 44
+        }
+      ],
+      "firstFocus": "Skip to main content",
+      "skipTarget": {
+        "hash": "#studio-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "playback": {
+        "input": "Trusted keyboard Enter on the tab-reached media control",
+        "playing": {
+          "videoPaused": false,
+          "controls": false,
+          "muted": true,
+          "trackCount": 0,
+          "pressed": "true",
+          "liveStatus": "",
+          "inp": [
+            {
+              "value": 56,
+              "entries": [
+                {
+                  "name": "keydown",
+                  "duration": 56,
+                  "target": "BODY",
+                  "interactionId": 2435
+                },
+                {
+                  "name": "keydown",
+                  "duration": 56,
+                  "target": "BODY",
+                  "interactionId": 2435
+                }
+              ]
+            }
+          ]
+        },
+        "paused": {
+          "videoPaused": true,
+          "shown": false,
+          "pressed": "false",
+          "inp": [
+            {
+              "value": 56,
+              "entries": [
+                {
+                  "name": "keydown",
+                  "duration": 56,
+                  "target": "BODY",
+                  "interactionId": 2435
+                },
+                {
+                  "name": "keydown",
+                  "duration": 56,
+                  "target": "BODY",
+                  "interactionId": 2435
+                }
+              ]
+            }
+          ]
+        },
+        "treePlaying": "- link \"Skip to main content\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Español\":\n          - /url: /es\n- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Pause the film\" [pressed]\n    - status\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert"
+      },
+      "consoleErrors": 0,
+      "errorClasses": []
+    },
+    {
+      "route": "/es",
+      "perf": {
+        "lcpMs": 108,
+        "lcpTag": "IMG",
+        "lcpClass": "studio-hero__poster",
+        "lcpIsPoster": true,
+        "cls": 0,
+        "highPriorityPoster": true,
+        "initialVideoCount": 0
+      },
+      "treeBefore": "- link \"Saltar al contenido\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /es\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"English\":\n          - /url: /\n- main:\n  - region \"Filmamos Houston.\":\n    - heading \"Filmamos Houston.\" [level=1]\n    - paragraph: \"Contenido semanal para negocios de Houston: Reels, fotos y un calendario de publicación que sí se cumple.\"\n    - link \"Agende un test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Llame al 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 una sola vez\n    - term: Full Package\n    - definition: $3,500 al mes\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 una sola vez\n    - paragraph: \"El Test Shoot cuesta $700, una sola vez: una sesión de hasta dos horas, 2 Reels editados y de 15 a 25 fotos.\"\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 al mes\n    - paragraph: Con el Full Package vamos a su negocio de cuatro a ocho veces al mes, grabamos, editamos y le entregamos las publicaciones con su calendario.\n  - paragraph: Le entregamos el material listo para publicar. El alcance depende de su cuenta y de su mercado.\n  - region \"Agende un test shoot. Dos horas, dos Reels y de 15 a 25 fotos, $700.\":\n    - heading \"Agende un test shoot. Dos horas, dos Reels y de 15 a 25 fotos, $700.\" [level=2]\n    - link \"Agende un test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Llame al 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n    - paragraph: These pages are in English.\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "focusable": 14,
+      "stops": [
+        {
+          "index": 47,
+          "tag": "A",
+          "name": "Saltar al contenido",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 162.9375,
+          "height": 42
+        },
+        {
+          "index": 50,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44
+        },
+        {
+          "index": 54,
+          "tag": "A",
+          "name": "English",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 53.609375,
+          "height": 44
+        },
+        {
+          "index": 64,
+          "tag": "A",
+          "name": "Agende un test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 194.296875,
+          "height": 44
+        },
+        {
+          "index": 65,
+          "tag": "A",
+          "name": "Llame al 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 173.640625,
+          "height": 44
+        },
+        {
+          "index": 98,
+          "tag": "A",
+          "name": "Agende un test shoot.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 194.296875,
+          "height": 44
+        },
+        {
+          "index": 99,
+          "tag": "A",
+          "name": "Llame al 713-899-9346.",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 173.640625,
+          "height": 44
+        },
+        {
+          "index": 105,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 98.453125,
+          "height": 44
+        },
+        {
+          "index": 106,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.953125,
+          "height": 44
+        },
+        {
+          "index": 112,
+          "tag": "A",
+          "name": "Pricing",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 47.59375,
+          "height": 44
+        },
+        {
+          "index": 114,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 50.109375,
+          "height": 44
+        },
+        {
+          "index": 116,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "index": 118,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 198.09375,
+          "height": 44
+        },
+        {
+          "index": 121,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 62.671875,
+          "height": 44
+        }
+      ],
+      "firstFocus": "Saltar al contenido",
+      "skipTarget": {
+        "hash": "#studio-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "playback": null,
+      "consoleErrors": 0,
+      "errorClasses": []
+    },
+    {
+      "route": "/advertising",
+      "perf": {
+        "lcpMs": 80,
+        "lcpTag": "P",
+        "lcpClass": "",
+        "lcpIsPoster": false,
+        "cls": 0,
+        "highPriorityPoster": false,
+        "initialVideoCount": 0
+      },
+      "treeBefore": "- link \"Skip to main content\":\n  - /url: \"#legal-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n- main:\n  - heading \"Advertising and AI disclosure\" [level=1]\n  - paragraph: This page says what Must Be Viral commits to about AI tools and the labelling of paid and synthetic content, and what it does not promise.\n  - paragraph: Last changed 2026-10-02.\n  - region \"Who we are\":\n    - heading \"Who we are\" [level=2]\n    - paragraph: ERLV INC, DBA Must Be Viral, in Houston, Texas. The street address is not yet published. Write to studio@mustbeviral.com or call 713-899-9346.\n  - region \"In the studio’s work\":\n    - heading \"In the studio’s work\" [level=2]\n    - paragraph: AI tools may be used in editing and post-production. Which tools, and at which step, is not yet published. A person directs every shoot and approves every delivered asset.\n    - paragraph: A delivered asset that contains synthetic or AI-generated imagery, voice or likeness will carry a visible disclosure on the asset or in its caption, plus the platform’s own AI-content label where the platform provides one.\n  - region \"Paid placements\":\n    - heading \"Paid placements\" [level=2]\n    - paragraph: No paid placement runs today. When one does, in our account or in a client’s ad account, it will name the advertiser of record and carry the platform’s required ad label, and paid partnership and sponsored content will carry the platform’s paid-partnership tag.\n  - region \"Testimonials and portfolio\":\n    - heading \"Testimonials and portfolio\" [level=2]\n    - paragraph: A testimonial carries its attribution and date and appears only with permission on file. No result is implied as typical.\n    - paragraph: Today no client name, logo, quote or delivered clip appears on this site, because no written permission is on file.\n  - region \"On this site\":\n    - heading \"On this site\" [level=2]\n    - paragraph: The film on the software page is an animation of designed interface frames. It shows no person, place or product.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"In the software\":\n    - heading \"In the software\" [level=2]\n    - paragraph: Outputs produced by the software are agent-produced. The run’s model route, provider and cost are inspectable in its receipt. A generated image needs a user-editable description before it can be approved or exported.\n    - paragraph: On mustbeviral.com today, no generation run can start.\n  - region \"What we do not promise\":\n    - heading \"What we do not promise\" [level=2]\n    - paragraph: No promise of reach, views, followers, engagement or results, for a client or for ourselves.\n  - region \"The date\":\n    - heading \"The date\" [level=2]\n    - paragraph: This page describes what Must Be Viral discloses as of 2026-10-02. The date above is when it last changed.\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - link \"Houston studio\":\n      - /url: /\n    - link \"Software\":\n      - /url: /software\n- alert",
+      "focusable": 9,
+      "stops": [
+        {
+          "index": 28,
+          "tag": "A",
+          "name": "Skip to main content",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.15625,
+          "height": 40.5
+        },
+        {
+          "index": 31,
+          "tag": "A",
+          "name": "Must Be Viral",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 91.515625,
+          "height": 44
+        },
+        {
+          "index": 69,
+          "tag": "A",
+          "name": "713-899-9346",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 98.453125,
+          "height": 44
+        },
+        {
+          "index": 70,
+          "tag": "A",
+          "name": "studio@mustbeviral.com",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 168.953125,
+          "height": 44
+        },
+        {
+          "index": 76,
+          "tag": "A",
+          "name": "Privacy",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 50.109375,
+          "height": 44
+        },
+        {
+          "index": 78,
+          "tag": "A",
+          "name": "Terms",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "index": 80,
+          "tag": "A",
+          "name": "Advertising and AI disclosure",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 198.09375,
+          "height": 44
+        },
+        {
+          "index": 82,
+          "tag": "A",
+          "name": "Houston studio",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 103.71875,
+          "height": 44
+        },
+        {
+          "index": 83,
+          "tag": "A",
+          "name": "Software",
+          "visibleFocus": true,
+          "onScreen": true,
+          "width": 62.671875,
+          "height": 44
+        }
+      ],
+      "firstFocus": "Skip to main content",
+      "skipTarget": {
+        "hash": "#legal-heading",
+        "tag": "BODY",
+        "id": ""
+      },
+      "playback": null,
+      "consoleErrors": 0,
+      "errorClasses": []
+    }
+  ]
+}

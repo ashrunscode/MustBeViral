@@ -1,0 +1,54 @@
+{
+  "lcpMs": 188,
+  "lcpTag": "IMG",
+  "lcpClass": "studio-hero__poster",
+  "lcpIsPoster": true,
+  "cls": 0,
+  "overflow": false,
+  "videoCount": 0,
+  "h1Px": "28px",
+  "posterRect": {
+    "x": 33,
+    "y": 97,
+    "width": 309,
+    "height": 173.8125,
+    "top": 97,
+    "right": 342,
+    "bottom": 270.8125,
+    "left": 33
+  },
+  "priceRect": {
+    "x": 33,
+    "y": 608.40625,
+    "width": 309,
+    "height": 152.1875,
+    "top": 608.40625,
+    "right": 342,
+    "bottom": 760.59375,
+    "left": 33
+  },
+  "ctaRect": {
+    "x": 33,
+    "y": 480.40625,
+    "width": 166.921875,
+    "height": 44,
+    "top": 480.40625,
+    "right": 199.921875,
+    "bottom": 524.40625,
+    "left": 33
+  },
+  "controlsRect": {
+    "x": 33,
+    "y": 282.8125,
+    "width": 309,
+    "height": 44,
+    "top": 282.8125,
+    "right": 342,
+    "bottom": 326.8125,
+    "left": 33
+  },
+  "disclosure": "In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n\nThis film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.",
+  "htmlLang": "en",
+  "errors": [],
+  "checkedUtc": "2026-10-03T10:36:57.121Z"
+}

@@ -1,0 +1,60 @@
+{
+  "checkedUtc": "2026-10-03T10:55:50.931Z",
+  "loading": {
+    "status": "Loading the film…",
+    "tree": "- link \"Skip to main content\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Español\":\n          - /url: /es\n- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Pause the film\" [pressed]\n    - status: Loading the film…\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert"
+  },
+  "cancelled": {
+    "status": "",
+    "pressed": "false",
+    "shown": false,
+    "paused": true
+  },
+  "reduced": {
+    "videoCount": 0,
+    "status": "Reduced motion is on. The poster stays still.",
+    "disabled": true
+  },
+  "restored": {
+    "videoCount": 0,
+    "pressed": "false"
+  },
+  "normalConsoleErrors": 0,
+  "normalMediaStatuses": [206, 206],
+  "faultInjection": "Local browser route fulfilled the MP4 request with 503; synthetic recovery mechanics only, no live failure claimed",
+  "failed": {
+    "status": "The film could not play. Try Play the film again.",
+    "videoCount": 0,
+    "posterPresent": true,
+    "pressed": "false"
+  },
+  "failureTree": "- link \"Skip to main content\":\n  - /url: \"#studio-heading\"\n- banner:\n  - link \"Must Be Viral\":\n    - /url: /\n  - navigation \"Site\":\n    - list:\n      - listitem:\n        - link \"Español\":\n          - /url: /es\n- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Play the film\"\n    - status: The film could not play. Try Play the film again.\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n- contentinfo:\n  - paragraph: ERLV INC, DBA Must Be Viral\n  - paragraph:\n    - link \"713-899-9346\":\n      - /url: tel:+17138999346\n    - link \"studio@mustbeviral.com\":\n      - /url: mailto:studio@mustbeviral.com\n    - text: Houston, Texas Street address not yet published.\n  - navigation \"Legal\":\n    - list:\n      - listitem:\n        - link \"Pricing\":\n          - /url: /pricing\n      - listitem:\n        - link \"Privacy\":\n          - /url: /privacy\n      - listitem:\n        - link \"Terms\":\n          - /url: /terms\n      - listitem:\n        - link \"Advertising and AI disclosure\":\n          - /url: /advertising\n  - paragraph:\n    - text: Must Be Viral also makes software.\n    - link \"Software\":\n      - /url: /software\n- alert",
+  "recovered": {
+    "status": "",
+    "paused": false,
+    "shown": true,
+    "trackCount": 0
+  },
+  "injectedStatuses": [503, 206],
+  "injectedErrorClasses": ["console-error"],
+  "skip": [
+    {
+      "route": "/",
+      "hash": "#studio-heading",
+      "nextFocus": "Book a test shoot.",
+      "tag": "A"
+    },
+    {
+      "route": "/es",
+      "hash": "#studio-heading",
+      "nextFocus": "Agende un test shoot.",
+      "tag": "A"
+    },
+    {
+      "route": "/advertising",
+      "hash": "#legal-heading",
+      "nextFocus": "713-899-9346",
+      "tag": "A"
+    }
+  ]
+}

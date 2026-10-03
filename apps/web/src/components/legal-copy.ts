@@ -6,7 +6,7 @@
  * right the code does not implement, no promise about future maintenance. Each page is dated.
  */
 
-import { phoneDisplay, siteFooter, studioEmail } from './public-copy';
+import { phoneDisplay, siteFooter, studioEmail, studioFilmDisclosure } from './public-copy';
 
 export interface LegalSection {
   readonly heading: string;
@@ -222,11 +222,12 @@ export const advertisingCopy: LegalPageCopy = {
     },
     {
       // apps/web/public/software/software-hero.mp4 is rendered from designed HTML keyframes
-      // (governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md); the studio pages carry
-      // no image and no video (public-copy.ts, studioHeroMedia is null).
+      // (governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md). Owner directive
+      // 2026-10-02d A8 supplies the exact S0 disclosure below.
       heading: 'On this site',
       paragraphs: [
-        'The film on the software page is an animation of designed interface frames. It shows no person, place or product. The studio pages carry no photograph and no film today.',
+        'The film on the software page is an animation of designed interface frames. It shows no person, place or product.',
+        studioFilmDisclosure,
       ],
     },
     {

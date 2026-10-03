@@ -5,6 +5,8 @@ import { PublicHeader } from './public-header';
 import {
   phoneHref,
   studioCopy,
+  studioFilmDescription,
+  studioFilmDisclosure,
   studioHeroMedia,
   type StudioHeroMedia as StudioHeroMediaRecord,
   type StudioLocale,
@@ -16,7 +18,7 @@ import { StudioOffers } from './studio-offers';
 /**
  * The studio page is a frame at screen width, designed at 375 first. The first screen is the
  * decision: the locked line, the two prices as titles, one action with the phone as the only
- * secondary. When a rights-cleared poster and clip exist they take their own block above the lead
+ * secondary. The owner-approved generated plate takes its own block above the lead
  * with the geometry reserved. Below the frame, type and space carry the rank: the two offers in
  * full, the cadence, six composed rows in the owner's words, the objection with its answer, the
  * close, and the one footer.
@@ -46,9 +48,11 @@ export function StudioLanding({
             data-media={media === null ? 'none' : 'poster'}
           >
             {media === null ? null : (
-              <div className="studio-frame__media">
-                <StudioHeroMedia alt={media.alt[locale]} media={media} playLabel={copy.playFilm} />
-              </div>
+              <StudioHeroMedia
+                alt={media.alt[locale]}
+                media={locale === 'es' ? { poster: media.poster, alt: media.alt } : media}
+                playLabel={copy.playFilm}
+              />
             )}
             <div className="studio-frame__lead">
               <h1 id="studio-heading">{copy.h1}</h1>
@@ -73,6 +77,12 @@ export function StudioLanding({
                 </div>
               ))}
             </dl>
+            {media === null ? null : (
+              <div className="studio-frame__notes" lang="en">
+                <p>{studioFilmDescription}</p>
+                <p>{studioFilmDisclosure}</p>
+              </div>
+            )}
           </section>
 
           <div className="studio-body">

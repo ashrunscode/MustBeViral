@@ -1,0 +1,88 @@
+{
+  "checkedUtc": "2026-10-03T10:54:50.115Z",
+  "ownedClosed": 0,
+  "cells": [
+    {
+      "route": "/",
+      "width": 375,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "home/375-dark.png"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "home/768-dark.png"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "home/1440-dark.png"
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "es/375-dark.png"
+    },
+    {
+      "route": "/es",
+      "width": 768,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "es/768-dark.png"
+    },
+    {
+      "route": "/es",
+      "width": 1440,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "es/1440-dark.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 375,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "advertising/375-dark.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 768,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "advertising/768-dark.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 1440,
+      "requestedColorScheme": "dark",
+      "prefersDark": true,
+      "effectiveColorScheme": "light",
+      "overflow": false,
+      "originalScreenshot": "advertising/1440-dark.png"
+    }
+  ],
+  "diagnostic": "The first matrix colorScheme field held effective CSS scheme; this separate probe confirms the requested dark preference while the brand keeps fixed light paper."
+}

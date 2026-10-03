@@ -1,0 +1,245 @@
+{
+  "checkedUtc": "2026-10-03T11:08:06.094Z",
+  "driver": "Playwright MCP; signed-out production build; local unthrottled lab",
+  "checks": [
+    {
+      "route": "/",
+      "box": {
+        "width": 177.640625,
+        "height": 42
+      },
+      "pseudo": {
+        "top": "-2px",
+        "bottom": "-2px",
+        "left": "0px",
+        "right": "0px"
+      },
+      "effectiveHeight": 46,
+      "topHit": true,
+      "bottomHit": false,
+      "focused": true
+    },
+    {
+      "route": "/es",
+      "box": {
+        "width": 162.9375,
+        "height": 42
+      },
+      "pseudo": {
+        "top": "-2px",
+        "bottom": "-2px",
+        "left": "0px",
+        "right": "0px"
+      },
+      "effectiveHeight": 46,
+      "topHit": true,
+      "bottomHit": false,
+      "focused": true
+    },
+    {
+      "route": "/advertising",
+      "box": {
+        "width": 168.15625,
+        "height": 40.5
+      },
+      "pseudo": {
+        "top": "-2.75px",
+        "bottom": "-2.75px",
+        "left": "0px",
+        "right": "0px"
+      },
+      "effectiveHeight": 46,
+      "topHit": true,
+      "bottomHit": false,
+      "focused": true
+    }
+  ],
+  "interactions": {
+    "play": {
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 40,
+          "target": "BODY",
+          "interactionId": 8848,
+          "start": 656.5
+        },
+        {
+          "name": "keydown",
+          "duration": 56,
+          "target": "A",
+          "interactionId": 8855,
+          "start": 666.3999999910593
+        },
+        {
+          "name": "keyup",
+          "duration": 56,
+          "target": "A",
+          "interactionId": 8855,
+          "start": 667.8999999910593
+        },
+        {
+          "name": "keydown",
+          "duration": 56,
+          "target": "A",
+          "interactionId": 8862,
+          "start": 669.0999999940395
+        },
+        {
+          "name": "keyup",
+          "duration": 56,
+          "target": "A",
+          "interactionId": 8862,
+          "start": 670.5
+        },
+        {
+          "name": "keydown",
+          "duration": 56,
+          "target": "A",
+          "interactionId": 8869,
+          "start": 671.5
+        },
+        {
+          "name": "keyup",
+          "duration": 56,
+          "target": "BUTTON",
+          "interactionId": 8869,
+          "start": 672
+        },
+        {
+          "name": "keydown",
+          "duration": 56,
+          "target": "BUTTON",
+          "interactionId": 8876,
+          "start": 673.2999999970198
+        },
+        {
+          "name": "keypress",
+          "duration": 56,
+          "target": "BUTTON",
+          "interactionId": 8876,
+          "start": 673.2999999970198
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "target": "BUTTON",
+          "interactionId": 8876,
+          "start": 673.2999999970198
+        },
+        {
+          "name": "keyup",
+          "duration": 48,
+          "target": "BUTTON",
+          "interactionId": 8876,
+          "start": 676.3999999910593
+        }
+      ],
+      "paints": [
+        {
+          "phase": "Play",
+          "trusted": true,
+          "latencyMs": 52.3999999910593,
+          "target": "BUTTON"
+        }
+      ],
+      "inp": [
+        {
+          "value": 40,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "target": "BODY",
+              "interactionId": 8848
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "target": "BODY",
+              "interactionId": 8848
+            }
+          ]
+        },
+        {
+          "value": 56,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "target": "A",
+              "interactionId": 8855
+            }
+          ]
+        }
+      ],
+      "pressed": "true"
+    },
+    "pause": {
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 32,
+          "target": "BUTTON",
+          "interactionId": 8883,
+          "start": 1096.8999999910593
+        },
+        {
+          "name": "keypress",
+          "duration": 32,
+          "target": "BUTTON",
+          "interactionId": 8883,
+          "start": 1096.8999999910593
+        },
+        {
+          "name": "click",
+          "duration": 32,
+          "target": "BUTTON",
+          "interactionId": 8883,
+          "start": 1096.8999999910593
+        }
+      ],
+      "paints": [
+        {
+          "phase": "Pause",
+          "trusted": true,
+          "latencyMs": 3.7000000029802322,
+          "target": "BUTTON"
+        }
+      ],
+      "inp": [
+        {
+          "value": 40,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "target": "BODY",
+              "interactionId": 8848
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "target": "BODY",
+              "interactionId": 8848
+            }
+          ]
+        },
+        {
+          "value": 56,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "target": "A",
+              "interactionId": 8855
+            }
+          ]
+        }
+      ],
+      "pressed": "false",
+      "paused": true
+    }
+  },
+  "interpretation": "Event Timing quantizes durations in 8 ms increments; events below the 16 ms observer threshold may be absent. Next-paint latency is separate from INP."
+}

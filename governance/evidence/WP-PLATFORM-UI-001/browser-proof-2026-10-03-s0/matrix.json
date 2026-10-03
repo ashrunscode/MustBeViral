@@ -1,0 +1,742 @@
+{
+  "checkedUtc": "2026-10-03T10:40:10.240Z",
+  "driver": "Playwright MCP; built Next.js production preview; signed out",
+  "cells": [
+    {
+      "route": "/",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/375-light.png"
+    },
+    {
+      "route": "/",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/375-dark.png"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/768-light.png"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/768-dark.png"
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/1280-light.png"
+    },
+    {
+      "route": "/",
+      "width": 1920,
+      "height": 1080,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/1920-light.png"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/1440-light.png"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "home/1440-dark.png"
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/375-light.png"
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/375-dark.png"
+    },
+    {
+      "route": "/es",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/768-light.png"
+    },
+    {
+      "route": "/es",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/768-dark.png"
+    },
+    {
+      "route": "/es",
+      "width": 1280,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/1280-light.png"
+    },
+    {
+      "route": "/es",
+      "width": 1920,
+      "height": 1080,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/1920-light.png"
+    },
+    {
+      "route": "/es",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/1440-light.png"
+    },
+    {
+      "route": "/es",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "16px",
+      "themeColor": true,
+      "htmlLang": "es",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Saltar al contenido"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "en",
+      "posterAlt": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "es/1440-dark.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/375-light.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/375-dark.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/768-light.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/768-dark.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 1280,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/1280-light.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 1920,
+      "height": 1080,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/1920-light.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/1440-light.png"
+    },
+    {
+      "route": "/advertising",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "status": 200,
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "h1Px": "28px",
+      "bodyPx": "15px",
+      "contentPx": "15px",
+      "themeColor": true,
+      "htmlLang": "en",
+      "videoCount": 0,
+      "trackCount": 0,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "name": "Skip to main content"
+        }
+      ],
+      "pictureText": "",
+      "notesLang": "",
+      "disclosureVisible": true,
+      "violations": [],
+      "incomplete": [],
+      "consoleErrors": 0,
+      "screenshot": "advertising/1440-dark.png"
+    }
+  ]
+}
