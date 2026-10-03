@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Reverify official research sources under L2.
+Implement D3 public hardening within WP-PLATFORM-UI-001.
