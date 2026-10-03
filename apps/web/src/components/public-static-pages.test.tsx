@@ -1,4 +1,6 @@
 import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { HeadManagerContext } from 'next/dist/shared/lib/head-manager-context.shared-runtime';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -37,6 +39,58 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 describe('static marketing document', () => {
+  it.each([
+    ['English', RootLayout],
+    ['Spanish', SpanishRootLayout],
+    ['not-found', GlobalNotFound],
+  ] as const)(
+    'initializes %s validation before browser schemas without an eval probe',
+    (_name, root) => {
+      const html = renderToStaticMarkup(
+        <HeadManagerContext.Provider value={{ appDir: true }}>
+          {root({ children: <main>synthetic validation fixture</main> })}
+        </HeadManagerContext.Provider>,
+      );
+      const script = /<script\b[^>]*>(\(self\.__next_s=[^<]+)<\/script>/u.exec(html);
+      expect(
+        script,
+        'every root schedules CSP-safe validation before browser modules',
+      ).not.toBeNull();
+      const program = `
+      import { runInThisContext } from 'node:vm';
+      globalThis.self = globalThis;
+      ${script![1]}
+      const [kind, scheduled] = globalThis.__next_s.find(([, value]) => value.id === 'mbv-browser-validation');
+      if (kind !== 0) throw new Error('Synthetic fixture requires the early inline strategy');
+      runInThisContext(scheduled.children);
+      let functionProbes = 0;
+      globalThis.Function = new Proxy(globalThis.Function, {
+        construct() { functionProbes++; throw new Error('Synthetic CSP forbids eval'); },
+        apply() { functionProbes++; throw new Error('Synthetic CSP forbids eval'); }
+      });
+      const { z } = await import('zod');
+      const schema = z.object({ name: z.string().min(1), count: z.number().int().nonnegative() });
+      console.log(JSON.stringify({
+        jitless: z.config().jitless,
+        valid: schema.safeParse({ name: 'Synthetic fixture', count: 1 }).success,
+        invalid: schema.safeParse({ name: '', count: -1 }).success,
+        functionProbes
+      }));
+    `;
+      const result = execFileSync(process.execPath, ['--input-type=module', '-e', program], {
+        cwd: new URL('../../', import.meta.url),
+        encoding: 'utf8',
+        windowsHide: true,
+      });
+      expect(JSON.parse(result)).toEqual({
+        jitless: true,
+        valid: true,
+        invalid: false,
+        functionProbes: 0,
+      });
+    },
+  );
+
   it('renders an English root synchronously without reading request headers', async () => {
     const document = RootLayout({ children: <main>synthetic document fixture</main> });
     await Promise.resolve(document);

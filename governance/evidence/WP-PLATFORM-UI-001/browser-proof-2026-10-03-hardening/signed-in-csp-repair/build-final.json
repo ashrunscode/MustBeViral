@@ -1,0 +1,14 @@
+{
+  "Head": "48d74b8ca575233b88a370c6913c38139e344aa9",
+  "Root": "C:/dev/mbv-finish",
+  "StartedUtc": "2026-10-03T21:22:57.6969676Z",
+  "FinishedUtc": "2026-10-03T21:23:21.0704706Z",
+  "ActualExit": 0,
+  "Versions": {
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0"
+  },
+  "NoEnvironmentFile": true,
+  "LocalConfigurationOnly": true,
+  "NoRemoteAuthentication": true
+}

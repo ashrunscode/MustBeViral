@@ -1,0 +1,18 @@
+{
+  "ParentHead": "48d74b8ca575233b88a370c6913c38139e344aa9",
+  "ObservedUtc": "2026-10-03T20:58:50.3815192Z",
+  "SourceStatus": [
+    " M apps/web/src/components/public-static-pages.test.tsx",
+    " M apps/web/src/components/root-document.tsx"
+  ],
+  "SourceFiles": [
+    {
+      "Sha256": "e80d3131707b00c13450e0ce9e022040db58ff5f32ff5d494eca9c853ddaf6dc",
+      "Path": "apps/web/src/components/root-document.tsx"
+    },
+    {
+      "Sha256": "b75d2e011c13d1e2e5190f79ec3326333ff87b3124d63466a32d52d0c5766703",
+      "Path": "apps/web/src/components/public-static-pages.test.tsx"
+    }
+  ]
+}

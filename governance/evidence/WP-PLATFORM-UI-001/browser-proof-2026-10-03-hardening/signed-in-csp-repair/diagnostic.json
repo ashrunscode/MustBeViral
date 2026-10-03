@@ -1,0 +1,21 @@
+{
+  "checkedUtc": "2026-10-03T20:48:48.990Z",
+  "csp": [
+    {
+      "directive": "script-src",
+      "disposition": "enforce",
+      "blockedKind": "eval",
+      "sourcePath": "/_next/static/chunks/0a475u_q5i_dd.js",
+      "line": 1,
+      "column": 2859
+    }
+  ],
+  "landing": {
+    "status": 307,
+    "scheme": "http:",
+    "host": "127.0.0.1",
+    "port": "3115",
+    "path": "/studio",
+    "queryEmpty": true
+  }
+}

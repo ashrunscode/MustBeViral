@@ -1,0 +1,42 @@
+{
+  "StartingHead": "48d74b8ca575233b88a370c6913c38139e344aa9",
+  "Versions": {
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0"
+  },
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:07:11.3902362Z",
+      "FinishedUtc": "2026-10-03T21:07:14.2757232Z",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-6-migration-list-before.log",
+      "Label": "migration-list-before"
+    },
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:07:14.4336205Z",
+      "FinishedUtc": "2026-10-03T21:07:17.1104014Z",
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-6-migration-up.log",
+      "Label": "migration-up"
+    },
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:07:17.1134428Z",
+      "FinishedUtc": "2026-10-03T21:07:19.6908439Z",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-6-migration-list.log",
+      "Label": "migration-list"
+    },
+    {
+      "ActualExit": 1,
+      "StartedUtc": "2026-10-03T21:07:20.7671453Z",
+      "FinishedUtc": "2026-10-03T21:18:39.0012269Z",
+      "Command": "corepack pnpm agent:verify",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-author-retry-6-agent-verify.log",
+      "Label": "agent-verify"
+    }
+  ],
+  "LocalDatabaseOnly": true
+}

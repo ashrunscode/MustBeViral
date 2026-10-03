@@ -8,6 +8,7 @@ import { WebVitalsReporter } from './web-vitals-reporter';
 import type { DocumentLang } from '../lib/document-lang';
 import { publicOrigin } from '../lib/public-origin';
 import '../../app/globals.css';
+import { BrowserValidationScript } from '../../app/browser-validation';
 
 const geistSans = Geist({ subsets: ['latin'], variable: '--font-sans' });
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
@@ -34,6 +35,7 @@ export default function RootDocument({
   return (
     <html lang={lang}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <BrowserValidationScript />
         <WebVitalsReporter />
         {children}
       </body>

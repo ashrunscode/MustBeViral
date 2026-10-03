@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 C:/dev/mbv-verify-48d74b8-2/apps/web
+
+ ❯ src/components/public-static-pages.test.tsx (17 tests | 3 failed) 49ms
+     × initializes English validation before browser schemas without an eval probe 18ms
+     × initializes Spanish validation before browser schemas without an eval probe 1ms
+     × initializes not-found validation before browser schemas without an eval probe 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/public-static-pages.test.tsx > static marketing document > initializes English validation before browser schemas without an eval probe
+ FAIL  src/components/public-static-pages.test.tsx > static marketing document > initializes Spanish validation before browser schemas without an eval probe
+ FAIL  src/components/public-static-pages.test.tsx > static marketing document > initializes not-found validation before browser schemas without an eval probe
+AssertionError: every root schedules CSP-safe validation before browser modules: expected null not to be null
+ ❯ src/components/public-static-pages.test.tsx:58:13
+     56|         script,
+     57|         'every root schedules CSP-safe validation before browser modul…
+     58|       ).not.toBeNull();
+       |             ^
+     59|       const program = `
+     60|       import { runInThisContext } from 'node:vm';
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 14 passed (17)
+   Start at  16:22:55
+   Duration  785ms (transform 280ms, setup 0ms, import 481ms, tests 49ms, environment 0ms)
+
+undefined
+C:\dev\mbv-verify-48d74b8-2\apps\web:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/components/public-static-pages.test.tsx

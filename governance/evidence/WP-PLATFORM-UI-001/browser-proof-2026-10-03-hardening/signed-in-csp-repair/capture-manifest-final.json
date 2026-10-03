@@ -1,0 +1,30 @@
+[
+  {
+    "NativeContentEqualsInspectedBefore": true,
+    "Path": "final/studio-375.png",
+    "Bytes": 38766,
+    "Width": 375,
+    "Sha256": "daa5b4ea2a6fb2c86b58f683e64a0e453b8cf56f10fcf5fd636cc9333ad79576"
+  },
+  {
+    "NativeContentEqualsInspectedBefore": true,
+    "Path": "final/studio-768.png",
+    "Bytes": 43583,
+    "Width": 768,
+    "Sha256": "f5e08d76b5bdb7feb4c2a796132981ede63ffe062802ebcaa5128411bb469493"
+  },
+  {
+    "NativeContentEqualsInspectedBefore": true,
+    "Path": "final/studio-1280.png",
+    "Bytes": 44206,
+    "Width": 1280,
+    "Sha256": "17c65566bbebe304353fff0cfbe502f3c10cdf2a3f36f5bd1fb033d17294d90b"
+  },
+  {
+    "NativeContentEqualsInspectedBefore": true,
+    "Path": "final/studio-1920.png",
+    "Bytes": 46083,
+    "Width": 1920,
+    "Sha256": "b6efa04cf2714cfd54a362513d73060887439e50089714ffcb13c8543d223193"
+  }
+]

@@ -1,0 +1,248 @@
+{
+  "checkedUtc": "2026-10-03T21:24:40.095Z",
+  "parentHead": "48d74b8ca575233b88a370c6913c38139e344aa9",
+  "precommitRepair": true,
+  "driver": "Playwright MCP; configured local production build; local synthetic Auth and Core; providers and queues disabled",
+  "noEnvironmentFile": true,
+  "noRemoteAuthentication": true,
+  "syntheticFixtureRetained": true,
+  "cells": [
+    {
+      "route": "/studio",
+      "width": 375,
+      "observed": {
+        "lang": "en",
+        "main": 1,
+        "h1": 1,
+        "overflow": false,
+        "validationJitless": true,
+        "fixtureMarkers": 0,
+        "cspViolations": [],
+        "unavailable": false
+      },
+      "checks": {
+        "status": true,
+        "english": true,
+        "oneMain": true,
+        "oneH1": true,
+        "noOverflow": true,
+        "realSession": true,
+        "validationJitless": true,
+        "noUnavailable": true,
+        "csp": true,
+        "noEval": true,
+        "noNonce": true,
+        "noFrame": true,
+        "noSniff": true,
+        "referrer": true,
+        "permissions": true,
+        "noPowered": true,
+        "private": true,
+        "noCspViolations": true
+      },
+      "screenshot": "final/studio-375.png",
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n  - button \"Sign out\"\n- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - heading \"Your first studio starts here.\" [level=2]\n    - paragraph: Create a studio for one brand or a portfolio of brands.\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list\n- alert",
+      "pass": true
+    },
+    {
+      "route": "/studio",
+      "width": 768,
+      "observed": {
+        "lang": "en",
+        "main": 1,
+        "h1": 1,
+        "overflow": false,
+        "validationJitless": true,
+        "fixtureMarkers": 0,
+        "cspViolations": [],
+        "unavailable": false
+      },
+      "checks": {
+        "status": true,
+        "english": true,
+        "oneMain": true,
+        "oneH1": true,
+        "noOverflow": true,
+        "realSession": true,
+        "validationJitless": true,
+        "noUnavailable": true,
+        "csp": true,
+        "noEval": true,
+        "noNonce": true,
+        "noFrame": true,
+        "noSniff": true,
+        "referrer": true,
+        "permissions": true,
+        "noPowered": true,
+        "private": true,
+        "noCspViolations": true
+      },
+      "screenshot": "final/studio-768.png",
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Your studios\n  - link \"Switch studio\":\n    - /url: /studio\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n  - button \"Sign out\"\n- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - heading \"Your first studio starts here.\" [level=2]\n    - paragraph: Create a studio for one brand or a portfolio of brands.\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list\n- alert",
+      "pass": true
+    },
+    {
+      "route": "/studio",
+      "width": 1280,
+      "observed": {
+        "lang": "en",
+        "main": 1,
+        "h1": 1,
+        "overflow": false,
+        "validationJitless": true,
+        "fixtureMarkers": 0,
+        "cspViolations": [],
+        "unavailable": false
+      },
+      "checks": {
+        "status": true,
+        "english": true,
+        "oneMain": true,
+        "oneH1": true,
+        "noOverflow": true,
+        "realSession": true,
+        "validationJitless": true,
+        "noUnavailable": true,
+        "csp": true,
+        "noEval": true,
+        "noNonce": true,
+        "noFrame": true,
+        "noSniff": true,
+        "referrer": true,
+        "permissions": true,
+        "noPowered": true,
+        "private": true,
+        "noCspViolations": true
+      },
+      "screenshot": "final/studio-1280.png",
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Your studios\n  - link \"Switch studio\":\n    - /url: /studio\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n  - button \"Sign out\"\n- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - heading \"Your first studio starts here.\" [level=2]\n    - paragraph: Create a studio for one brand or a portfolio of brands.\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list\n- alert",
+      "pass": true
+    },
+    {
+      "route": "/studio",
+      "width": 1920,
+      "observed": {
+        "lang": "en",
+        "main": 1,
+        "h1": 1,
+        "overflow": false,
+        "validationJitless": true,
+        "fixtureMarkers": 0,
+        "cspViolations": [],
+        "unavailable": false
+      },
+      "checks": {
+        "status": true,
+        "english": true,
+        "oneMain": true,
+        "oneH1": true,
+        "noOverflow": true,
+        "realSession": true,
+        "validationJitless": true,
+        "noUnavailable": true,
+        "csp": true,
+        "noEval": true,
+        "noNonce": true,
+        "noFrame": true,
+        "noSniff": true,
+        "referrer": true,
+        "permissions": true,
+        "noPowered": true,
+        "private": true,
+        "noCspViolations": true
+      },
+      "screenshot": "final/studio-1920.png",
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Your studios\n  - link \"Switch studio\":\n    - /url: /studio\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n  - button \"Sign out\"\n- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - heading \"Your first studio starts here.\" [level=2]\n    - paragraph: Create a studio for one brand or a portfolio of brands.\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list\n- alert",
+      "pass": true
+    }
+  ],
+  "landingCheck": {
+    "actualStatus": 307,
+    "studioRedirect": true,
+    "privateNoStore": true
+  },
+  "apiReads": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "consoleClasses": [],
+  "pass": true
+}
