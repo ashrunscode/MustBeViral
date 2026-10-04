@@ -1,0 +1,485 @@
+[WebServer] (node:54180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:66228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:52864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 58 tests using 1 worker
+
+(node:46472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:64548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:64836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:48552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › apps\web\e2e\campaign-resume-recovery.spec.ts:8:5 › workspace tools preserve the last campaign step without crashing resume (2.7s)
+[WebServer] (node:59352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:66044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:54864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [desktop-chromium] › apps\web\e2e\campaign-resume-recovery.spec.ts:27:5 › campaign steps advance the saved step and resume at the latest one (3.4s)
+  ok  3 [desktop-chromium] › apps\web\e2e\campaign-resume-recovery.spec.ts:49:5 › a stored settings step recovers to an empty resume state (350ms)
+[WebServer] (node:64776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+canvas-fps {"fixtureNodes":100,"viewport":{"width":1440,"height":900},"thresholdFps":55,"measuredFps":60.04,"frames":181,"durationMs":3015,"maxFrameDeltaMs":16.8,"passed":true}
+  ok  4 [desktop-chromium] › apps\web\e2e\canvas-perf.spec.ts:5:5 › sustains at least 55 FPS while panning and zooming the 100-node canvas (6.8s)
+[WebServer] (node:45984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+canvas-fps-500 {"fixtureNodes":500,"viewport":{"width":1440,"height":900},"thresholdFps":30,"measuredFps":60.17,"frames":181,"durationMs":3008,"maxFrameDeltaMs":16.8,"domNodeCount":12,"selectionLatencyMs":24.5,"passed":true}
+  ok  5 [desktop-chromium] › apps\web\e2e\canvas-stress.spec.ts:5:5 › keeps the deterministic 500-node stress graph navigable (10.8s)
+[WebServer] (node:3312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [desktop-chromium] › apps\web\e2e\cleanroom.spec.ts:17:5 › renders the approved campaign brief golden at 1440x900 (2.4s)
+[WebServer] (node:65268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <InnerLayoutRouter url="/studio/lu..." tree={[...]} params={{...}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+[WebServer]       <SegmentViewNode type="page" pagePath="(en)/studi...">
+[WebServer]         <SegmentTrieNode>
+[WebServer]         <CanvasPage>
+[WebServer]           <CanvasFlow dataMode="preview" workspace="lumen-skin" fixtureNodeCount={12} scenario="ok">
+[WebServer]             <div ref={{current:null}} id="main-content" className="canvas-flo..." data-canvas-layout="rail">
+[WebServer]               <section>
+[WebServer]               <Drawer id="canvas-nav..." data-canvas-rail={true} className={"canvas-f..."} title="Plan outli..." ...>
+[WebServer]                 <aside ref={{current:null}} className={"mbv-draw..."} data-state="open" aria-hidden={false} ...>
+[WebServer]                   <div>
+[WebServer]                   <CanvasOutlinePanel>
+[WebServer]                   <CollaborationSidebar actorId="local-preview" onDeleteComment={function deleteComment} refusal={null} ...>
+[WebServer]                     <div className="collaborat...">
+[WebServer]                       <PresenceBar>
+[WebServer]                       <fieldset className="canvas-flo..." disabled={false} aria-label="Plan param..." ...>
+[WebServer]                         <NodeConfigDraftPanel actorId="local-preview" localDrafts={{}} nodeId="2" nodeKind="planner_text" ...>
+[WebServer]                           <section className="collaborat..." aria-label="Collaborat...">
+[WebServer]                             <div>
+[WebServer]                             <div className="collaborat...">
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Node notes" ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" ...>
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_6el5esnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_6el5esnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Draft notes for this node"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                       <CommentThreadPanel actorId="local-preview" anchorId="2" anchorLabel="Concept A" comments={[...]} ...>
+[WebServer]                         <section className="collaborat..." aria-labelledby="_R_il5esne..." data-comment-anchor="2">
+[WebServer]                           <div>
+[WebServer]                           <p>
+[WebServer]                           <div className="collaborat...">
+[WebServer]                             <label htmlFor="_R_il5esne...">
+[WebServer]                               <textarea
+[WebServer]                                 id="_R_il5esnebn9qbn9ev9etbH1_"
+[WebServer]                                 value=""
+[WebServer]                                 maxLength={4000}
+[WebServer]                                 disabled={false}
+[WebServer]                                 placeholder="Share a draft note for collaborators"
+[WebServer]                                 onChange={function onChange}
+[WebServer]                                 onKeyDown={function onKeyDown}
+[WebServer] -                               style={{caret-color:"transparent"}}
+[WebServer]                               >
+[WebServer]                             ...
+[WebServer]       ...
+[WebServer]
+  ok  7 [desktop-chromium] › apps\web\e2e\cleanroom.spec.ts:33:5 › renders the golden canvas markers and screenshot at 1440x900 (712ms)
+[WebServer] (node:68016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [desktop-chromium] › apps\web\e2e\cleanroom.spec.ts:51:5 › disables canvas work-motion under reduced motion (599ms)
+[WebServer] (node:51472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [desktop-chromium] › apps\web\e2e\cleanroom.spec.ts:60:5 › renders the named-price quote and screenshot at 1440x900 (716ms)
+[WebServer] (node:61248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [desktop-chromium] › apps\web\e2e\cleanroom.spec.ts:77:5 › keeps quote feedback static under reduced motion (514ms)
+[WebServer] (node:43732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:17:5 › renders partial run progress at 1440x900 (1.9s)
+[WebServer] (node:31456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:32:5 › disables run work-motion under reduced motion (1.8s)
+[WebServer] (node:30000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <RedirectBoundary>
+[WebServer]       <RedirectErrorBoundary router={{...}}>
+[WebServer]         <InnerLayoutRouter url="/studio/lu..." tree={[...]} params={{...}} cacheNode={{rsc:{...}, ...}} ...>
+[WebServer]           <SegmentViewNode type="page" pagePath="(en)/studi...">
+[WebServer]             <SegmentTrieNode>
+[WebServer]             <ComparePage>
+[WebServer]               <ReviewFlow dataMode="preview" reviewer="Maya Chen" workspace="lumen-skin" mode="compare">
+[WebServer]                 <div id="main-content" className="review-flo...">
+[WebServer]                   <section ref={function bound dispatchSetState} tabIndex={undefined} className="review-flo..." ...>
+[WebServer]                     <div>
+[WebServer]                     <div>
+[WebServer]                     <CollaborationSidebar actorId="local-preview" onDeleteComment={function deleteComment} refusal={null} ...>
+[WebServer]                       <div className="collaborat...">
+[WebServer]                         <PresenceBar>
+[WebServer]                         <ReviewDraftPanel actorId="local-preview" anchorId="hero-a" anchorLabel="Hero A" localDrafts={{}} ...>
+[WebServer]                           <section className="collaborat..." aria-label="Collaborat...">
+[WebServer]                             <div>
+[WebServer]                             <div className="collaborat...">
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Accessibil..." ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" ...>
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_pj6atpesnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_pj6atpesnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Describe this output before approval"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Review notes" ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" data-field-path="review_notes">
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_19j6atpesnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_19j6atpesnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Draft review notes for collaborators"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Caption draft" ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" ...>
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_1pj6atpesnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_1pj6atpesnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Draft primary ad copy for this output"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                         <CommentThreadPanel actorId="local-preview" anchorId="hero-a" anchorLabel="Hero A" ...>
+[WebServer]                           <section className="collaborat..." aria-labelledby="_R_236atpe..." data-comment-anchor="hero-a">
+[WebServer]                             <div>
+[WebServer]                             <p>
+[WebServer]                             <div className="collaborat...">
+[WebServer]                               <label htmlFor="_R_236atpe...">
+[WebServer]                                 <textarea
+[WebServer]                                   id="_R_236atpesnebn9qbn9ev9etbH1_"
+[WebServer]                                   value=""
+[WebServer]                                   maxLength={4000}
+[WebServer]                                   disabled={false}
+[WebServer]                                   placeholder="Share a draft note for collaborators"
+[WebServer]                                   onChange={function onChange}
+[WebServer]                                   onKeyDown={function onKeyDown}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                               ...
+[WebServer]                     ...
+[WebServer]                   ...
+[WebServer]           ...
+[WebServer]         ...
+[WebServer]
+  ok 13 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:41:5 › renders output comparison at 1440x900 (1.3s)
+[WebServer] (node:68136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:57:5 › keeps comparison feedback static under reduced motion (539ms)
+[WebServer] (node:64012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <RedirectBoundary>
+[WebServer]       <RedirectErrorBoundary router={{...}}>
+[WebServer]         <InnerLayoutRouter url="/studio/lu..." tree={[...]} params={{...}} cacheNode={{rsc:{...}, ...}} ...>
+[WebServer]           <SegmentViewNode type="page" pagePath="(en)/studi...">
+[WebServer]             <SegmentTrieNode>
+[WebServer]             <ReviewPage>
+[WebServer]               <ReviewFlow dataMode="preview" reviewer="Maya Chen" workspace="lumen-skin">
+[WebServer]                 <div id="main-content" className="review-flo...">
+[WebServer]                   <section ref={function bound dispatchSetState} tabIndex={undefined} className="review-flo..." ...>
+[WebServer]                     <div>
+[WebServer]                     <div>
+[WebServer]                     <CollaborationSidebar actorId="local-preview" onDeleteComment={function deleteComment} refusal={null} ...>
+[WebServer]                       <div className="collaborat...">
+[WebServer]                         <PresenceBar>
+[WebServer]                         <ReviewDraftPanel actorId="local-preview" anchorId="hero-a" anchorLabel="Hero A" localDrafts={{}} ...>
+[WebServer]                           <section className="collaborat..." aria-label="Collaborat...">
+[WebServer]                             <div>
+[WebServer]                             <div className="collaborat...">
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Accessibil..." ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" ...>
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_cpj5esnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_cpj5esnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Describe this output before approval"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Review notes" ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" data-field-path="review_notes">
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_kpj5esnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_kpj5esnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Draft review notes for collaborators"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                               <CollaborativeTextField actorId="local-preview" fieldLabel="Caption draft" ...>
+[WebServer]                                 <div className="collaborat..." data-lease-state="released" ...>
+[WebServer]                                   <div>
+[WebServer]                                   <p>
+[WebServer]                                   <textarea
+[WebServer]                                     id="_R_spj5esnebn9qbn9ev9etb_"
+[WebServer]                                     className="collaboration-panel-module__zDcWlW__collaborativeTextarea"
+[WebServer]                                     value=""
+[WebServer]                                     maxLength={4000}
+[WebServer]                                     readOnly={false}
+[WebServer]                                     aria-readonly={false}
+[WebServer]                                     aria-describedby="_R_spj5esnebn9qbn9ev9etb_-status"
+[WebServer]                                     placeholder="Draft primary ad copy for this output"
+[WebServer]                                     onFocus={function handleFocus}
+[WebServer]                                     onBlur={function handleBlur}
+[WebServer]                                     onChange={function onChange}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                         <CommentThreadPanel actorId="local-preview" anchorId="hero-a" anchorLabel="Hero A" ...>
+[WebServer]                           <section className="collaborat..." aria-labelledby="_R_11j5esn..." data-comment-anchor="hero-a">
+[WebServer]                             <div>
+[WebServer]                             <p>
+[WebServer]                             <div className="collaborat...">
+[WebServer]                               <label htmlFor="_R_11j5esn...">
+[WebServer]                                 <textarea
+[WebServer]                                   id="_R_11j5esnebn9qbn9ev9etbH1_"
+[WebServer]                                   value=""
+[WebServer]                                   maxLength={4000}
+[WebServer]                                   disabled={false}
+[WebServer]                                   placeholder="Share a draft note for collaborators"
+[WebServer]                                   onChange={function onChange}
+[WebServer]                                   onKeyDown={function onKeyDown}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                               ...
+[WebServer]                     ...
+[WebServer]                   ...
+[WebServer]           ...
+[WebServer]         ...
+[WebServer]
+  ok 15 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:67:5 › renders named review at 1440x900 (712ms)
+[WebServer] (node:62412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:82:5 › keeps named review static under reduced motion (543ms)
+[WebServer] (node:50640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 17 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:92:5 › renders immutable receipt at 1440x900 (638ms)
+[WebServer] (node:44484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 18 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:107:5 › keeps receipt presentation static under reduced motion (562ms)
+[WebServer] (node:13080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 19 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:114:5 › bounds the tablet review Drawer and returns focus after closing at 768x1024 (698ms)
+[WebServer] (node:66188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 20 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:143:5 › renders mobile review and export summary without horizontal scroll at 375x812 (667ms)
+[WebServer] (node:19468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:162:5 › keeps a full 44px review control with an isolated pointer target (611ms)
+[WebServer] (node:42300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 22 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:199:7 › keeps the Publish version hit area off the textarea above it (577ms)
+[WebServer] (node:67916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 23 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:199:7 › keeps the Issue key hit area off the fieldset above it (650ms)
+[WebServer] (node:1812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 24 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:256:7 › keeps the campaign brief laid out and unclipped at 1440x900 (825ms)
+[WebServer] (node:49756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 25 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:256:7 › keeps the campaign brief laid out and unclipped at 1024x600 (668ms)
+[WebServer] (node:52968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 26 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:256:7 › keeps the campaign brief laid out and unclipped at 768x1024 (729ms)
+[WebServer] (node:40232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 27 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:256:7 › keeps the campaign brief laid out and unclipped at 375x812 (720ms)
+[WebServer] (node:68604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 28 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:420:5 › keeps adjacent canvas toolbar buttons at a 44px hit width each (649ms)
+[WebServer] (node:66280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 29 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:443:5 › keeps dimmed canvas node text at AA contrast with a non-colour inactive cue (557ms)
+[WebServer] (node:46484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 30 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:530:5 › keeps the dimmed-node dashed border at 3:1 against the canvas at rest, on hover and on focus (759ms)
+[WebServer] (node:6120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 31 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 320x568 (714ms)
+[WebServer] (node:34596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 32 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 375x667 (681ms)
+[WebServer] (node:40412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 33 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 375x812 (729ms)
+[WebServer] (node:42556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 34 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 414x896 (759ms)
+[WebServer] (node:12928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 35 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 768x1024 (766ms)
+[WebServer] (node:6084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 36 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 1024x768 (746ms)
+[WebServer] (node:16468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 37 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 1440x900 (754ms)
+[WebServer] (node:22252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 38 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 320x568 at 125% (750ms)
+[WebServer] (node:11768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 39 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 375x812 at 150% (715ms)
+[WebServer] (node:36480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 40 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 375x812 at 200% (738ms)
+[WebServer] (node:33120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 41 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:600:7 › gives every API-key scope a clear 44px target and never hides the focused control at 414x896 at 200% (728ms)
+[WebServer] (node:49080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 42 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:724:7 › makes the receipt scroll region a named tab stop only while it scrolls at 375px (749ms)
+[WebServer] (node:36392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 43 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:724:7 › makes the billing scroll region a named tab stop only while it scrolls at 375px (863ms)
+[WebServer] (node:47576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 44 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:724:7 › makes the billing scroll region a named tab stop only while it scrolls at 1440px (771ms)
+[WebServer] (node:66032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 45 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:724:7 › makes the billing scroll region a named tab stop only while it scrolls at 768px (738ms)
+[WebServer] (node:65648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 46 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:797:7 › keeps focus on the receipt scroll region when it stops overflowing at 375px (1.1s)
+[WebServer] (node:38380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 47 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:847:5 › names the billing page and its introduction distinctly (761ms)
+[WebServer] (node:67684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 48 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:868:5 › keeps adjacent canvas outline rows from sharing hit-test pixels (823ms)
+[WebServer] (node:1812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 49 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:904:5 › keeps canvas nodes inside their column at 375px so none sits over a side-rail field (589ms)
+[WebServer] (node:66020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 50 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:961:5 › keeps the quote acknowledgment checkbox clear of the side panel at 375px (615ms)
+[WebServer] (node:39860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 51 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1015:5 › keeps every canvas outline row reachable and unclipped beside the collaboration panel at 375px (739ms)
+[WebServer] (node:54028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 52 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1054:7 › shows at least five canvas outline rows beside the collaboration panel at 768x1024 (739ms)
+[WebServer] (node:62504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 53 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1054:7 › shows at least five canvas outline rows beside the collaboration panel at 1280x800 (702ms)
+[WebServer] (node:26312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 54 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1054:7 › shows at least five canvas outline rows beside the collaboration panel at 1440x900 (622ms)
+[WebServer] (node:63348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 55 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1089:5 › keeps the failure reason of a selected failed node at AA contrast (716ms)
+[WebServer] (node:40012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 56 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1138:5 › keeps only list items in the selected node comment list (674ms)
+[WebServer] (node:56392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 57 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:1151:5 › gives Retry lease a 44px hit area clear of its textarea (671ms)
+(node:20208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  58 [desktop-chromium] › apps\web\e2e\operator-self-session.spec.ts:111:5 › operator proves the GB-04 buyer entry and quote path on deployed staging without spend
+
+  1 skipped
+  57 passed (1.2m)

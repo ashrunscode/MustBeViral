@@ -1,0 +1,115 @@
+  1) [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:114:5 › uses the Drawer primitive for tablet review at 768x1024
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 459
+    Received:   420
+
+      119 |   await expect(drawer).toHaveAttribute('data-state', 'open');
+      120 |   const drawerBox = await drawer.boundingBox();
+    > 121 |   expect(drawerBox?.width).toBeGreaterThan(459);
+          |                            ^
+      122 |   expect(drawerBox?.width).toBeLessThan(462);
+      123 |   if (testInfo.project.name === 'desktop-chromium') {
+      124 |     await page.screenshot({
+        at C:\dev\mbv-verify-87ec058\apps\web\e2e\final-ui.spec.ts:121:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\final-ui-uses-the-Drawer-p-aae77-r-tablet-review-at-768x1024-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\final-ui-uses-the-Drawer-p-aae77-r-tablet-review-at-768x1024-desktop-chromium\error-context.md
+
+  2) [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:150:5 › keeps a 32px compact review control at a 44px touch target
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 32
+    Received: 44
+
+      153 |   const control = page.getByRole('button', { name: 'Approve group as Maya Chen' }).first();
+      154 |   await expect(control).toBeVisible();
+    > 155 |   expect((await control.boundingBox())?.height).toBe(32);
+          |                                                 ^
+      156 |   // The bounding box stays compact; the pointer hit area extends to 44px, centred on the control.
+      157 |   const probes = await control.evaluate((element) => {
+      158 |     // elementFromPoint only resolves points inside the viewport.
+        at C:\dev\mbv-verify-87ec058\apps\web\e2e\final-ui.spec.ts:155:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\final-ui-keeps-a-32px-comp-e3263-trol-at-a-44px-touch-target-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\final-ui-keeps-a-32px-comp-e3263-trol-at-a-44px-touch-target-desktop-chromium\error-context.md
+
+  3) [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:711:7 › makes the receipt scroll region a named tab stop only while it scrolls at 375px
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('#main-content[tabindex="0"], #main-content [tabindex="0"]')
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('#main-content[tabindex="0"], #main-content [tabindex="0"]')
+        14 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      744 |         .toEqual([expect.objectContaining({ tabIndex: '0', name: expect.stringMatching(/\S/u) })]);
+      745 |       const scroller = page.locator('#main-content[tabindex="0"], #main-content [tabindex="0"]');
+    > 746 |       await expect(scroller).toHaveCount(1);
+          |                              ^
+      747 |       await scroller.focus();
+      748 |       await expect(scroller).toBeFocused();
+      749 |       await page.keyboard.press('PageDown');
+        at C:\dev\mbv-verify-87ec058\apps\web\e2e\final-ui.spec.ts:746:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\final-ui-makes-the-receipt-8b44f-y-while-it-scrolls-at-375px-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\final-ui-makes-the-receipt-8b44f-y-while-it-scrolls-at-375px-desktop-chromium\error-context.md
+
+  4) [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:764:7 › keeps focus on the receipt scroll region when it stops overflowing at 375px
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('#main-content[tabindex="0"], #main-content [tabindex="0"]')
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('#main-content[tabindex="0"], #main-content [tabindex="0"]')
+        2 × locator resolved to 0 elements
+          - unexpected value "0"
+        12 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      768 |     await page.goto(`/studio/lumen-skin/${region.route}`);
+      769 |     const scroller = page.locator('#main-content[tabindex="0"], #main-content [tabindex="0"]');
+    > 770 |     await expect(scroller).toHaveCount(1);
+          |                            ^
+      771 |     await scroller.focus();
+      772 |     await expect(scroller).toBeFocused();
+      773 |     // A larger window or a zoom-out: the region no longer overflows while it has focus.
+        at C:\dev\mbv-verify-87ec058\apps\web\e2e\final-ui.spec.ts:770:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\final-ui-keeps-focus-on-th-064fc--stops-overflowing-at-375px-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\final-ui-keeps-focus-on-th-064fc--stops-overflowing-at-375px-desktop-chromium\error-context.md
+
+  4 failed
+    [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:114:5 › uses the Drawer primitive for tablet review at 768x1024
+    [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:150:5 › keeps a 32px compact review control at a 44px touch target
+    [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:711:7 › makes the receipt scroll region a named tab stop only while it scrolls at 375px
+    [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:764:7 › keeps focus on the receipt scroll region when it stops overflowing at 375px
+  1 skipped
+  53 passed (1.5m)

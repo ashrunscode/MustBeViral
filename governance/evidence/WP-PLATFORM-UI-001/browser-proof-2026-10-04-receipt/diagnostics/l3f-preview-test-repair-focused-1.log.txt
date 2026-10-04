@@ -1,0 +1,18 @@
+Running 4 tests using 1 worker
+
+(node:34596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:43540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:114:5 › bounds the tablet review Drawer and returns focus after closing at 768x1024 (1.5s)
+[WebServer] (node:63968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:162:5 › keeps a full 44px review control with an isolated pointer target (650ms)
+[WebServer] (node:67968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:724:7 › makes the receipt scroll region a named tab stop only while it scrolls at 375px (1.3s)
+[WebServer] (node:6888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [desktop-chromium] › apps\web\e2e\final-ui.spec.ts:797:7 › keeps focus on the receipt scroll region when it stops overflowing at 375px (1.0s)
+
+  4 passed (12.0s)

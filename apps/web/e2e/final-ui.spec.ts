@@ -111,21 +111,33 @@ test('keeps receipt presentation static under reduced motion', async ({ page }) 
   await expect(page.locator('.receipt-card')).toHaveCSS('transition-duration', '1e-05s');
 });
 
-test('uses the Drawer primitive for tablet review at 768x1024', async ({ page }, testInfo) => {
+test('bounds the tablet review Drawer and returns focus after closing at 768x1024', async ({
+  page,
+}, testInfo) => {
   await page.setViewportSize({ width: 768, height: 1024 });
   await page.goto('/studio/lumen-skin/review');
   const drawer = page.locator('.mbv-drawer');
   await expect(drawer).toBeVisible();
   await expect(drawer).toHaveAttribute('data-state', 'open');
   const drawerBox = await drawer.boundingBox();
-  expect(drawerBox?.width).toBeGreaterThan(459);
-  expect(drawerBox?.width).toBeLessThan(462);
+  expect(drawerBox?.width).toBeGreaterThan(300);
+  expect(drawerBox?.width).toBeLessThanOrEqual(420);
+  expect(drawerBox?.x).toBeGreaterThanOrEqual(0);
+  expect((drawerBox?.x ?? 0) + (drawerBox?.width ?? 0)).toBeLessThanOrEqual(768);
   if (testInfo.project.name === 'desktop-chromium') {
     await page.screenshot({
       path: await screenshotPath('tablet-review-768x1024.png'),
       fullPage: false,
     });
   }
+  await drawer.getByRole('button', { name: 'Close QA findings' }).click();
+  await expect(drawer).toHaveAttribute('data-state', 'closed');
+  await expect(drawer).toHaveAttribute('inert', '');
+  const trigger = page.getByRole('button', { name: 'QA findings', exact: true });
+  await expect(trigger).toBeFocused();
+  await trigger.press('Enter');
+  await expect(drawer).toHaveAttribute('data-state', 'open');
+  await expect(drawer).not.toHaveAttribute('inert');
 });
 
 test('renders mobile review and export summary without horizontal scroll at 375x812', async ({
@@ -147,13 +159,14 @@ test('renders mobile review and export summary without horizontal scroll at 375x
   }
 });
 
-test('keeps a 32px compact review control at a 44px touch target', async ({ page }) => {
+test('keeps a full 44px review control with an isolated pointer target', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/review');
   const control = page.getByRole('button', { name: 'Approve group as Maya Chen' }).first();
   await expect(control).toBeVisible();
-  expect((await control.boundingBox())?.height).toBe(32);
-  // The bounding box stays compact; the pointer hit area extends to 44px, centred on the control.
+  expect((await control.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+  expect((await control.boundingBox())?.width).toBeGreaterThanOrEqual(44);
+  // The whole minimum target belongs to the control; points beyond its box hit something else.
   const probes = await control.evaluate((element) => {
     // elementFromPoint only resolves points inside the viewport.
     element.scrollIntoView({ block: 'center' });
@@ -167,8 +180,8 @@ test('keeps a 32px compact review control at a 44px touch target', async ({ page
     return {
       insideTop: hits(y - 21.5),
       insideBottom: hits(y + 21.5),
-      outsideTop: hits(y - 23),
-      outsideBottom: hits(y + 23),
+      outsideTop: hits(rect.top - 7),
+      outsideBottom: hits(rect.bottom + 7),
     };
   });
   expect(probes).toEqual({
@@ -700,8 +713,8 @@ for (const viewport of [
   });
 }
 
-// The receipt is an app-height surface with its own scroll region; billing is a document page
-// inside the studio frame, so the page scrolls and no inner region becomes a tab stop.
+// Receipt has separately named vertical-card and horizontal-ledger scroll regions. Billing is a
+// document page inside the studio frame, so the page scrolls and no inner region becomes a tab stop.
 for (const region of [
   { route: 'receipt', width: 375, height: 812, scrolls: true },
   { route: 'billing', width: 375, height: 812, scrolls: false },
@@ -736,18 +749,38 @@ for (const region of [
           });
       });
     if (region.scrolls) {
-      // The region measures its own overflow after mount, then becomes a named tab stop.
+      // Both receipt regions measure their own overflow and announce distinct names.
       await expect
-        .poll(async () =>
-          (await describeRegions()).filter((entry) => entry.scrolls && !entry.hasFocusableContent),
-        )
-        .toEqual([expect.objectContaining({ tabIndex: '0', name: expect.stringMatching(/\S/u) })]);
-      const scroller = page.locator('#main-content[tabindex="0"], #main-content [tabindex="0"]');
-      await expect(scroller).toHaveCount(1);
+        .poll(async () => (await describeRegions()).filter((entry) => entry.scrolls))
+        .toEqual([
+          expect.objectContaining({
+            tabIndex: '0',
+            name: expect.stringMatching(/Receipt for revision/u),
+          }),
+          expect.objectContaining({
+            tabIndex: '0',
+            name: 'Receipt charges by attempt',
+            hasFocusableContent: false,
+          }),
+        ]);
+      const scroller = page.getByRole('article', { name: /Receipt for revision/u });
+      const ledger = page.getByRole('region', { name: 'Receipt charges by attempt', exact: true });
+      await expect(scroller).toHaveAttribute('tabindex', '0');
+      await expect(ledger).toHaveAttribute('tabindex', '0');
+      await expect(
+        page.locator('#main-content[tabindex="0"], #main-content [tabindex="0"]'),
+      ).toHaveCount(2);
       await scroller.focus();
       await expect(scroller).toBeFocused();
       await page.keyboard.press('PageDown');
       await expect.poll(() => scroller.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+      await ledger.focus();
+      await expect(ledger).toBeFocused();
+      await page.keyboard.press('ArrowRight');
+      await expect.poll(() => ledger.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+        region.width,
+      );
     } else {
       await page.waitForTimeout(300);
       const regions = await describeRegions();
@@ -766,8 +799,9 @@ for (const region of [
   }) => {
     await page.setViewportSize(region.from);
     await page.goto(`/studio/lumen-skin/${region.route}`);
-    const scroller = page.locator('#main-content[tabindex="0"], #main-content [tabindex="0"]');
+    const scroller = page.getByRole('article', { name: /Receipt for revision/u });
     await expect(scroller).toHaveCount(1);
+    await expect(scroller).toHaveAttribute('tabindex', '0');
     await scroller.focus();
     await expect(scroller).toBeFocused();
     // A larger window or a zoom-out: the region no longer overflows while it has focus.
@@ -802,7 +836,11 @@ for (const region of [
     await expect(page.locator('[data-expected-focus="true"]')).toBeFocused();
     // Once focus has left, the region is measured again and, fitting, is no longer a tab stop.
     await expect(page.locator('#main-content')).not.toHaveAttribute('tabindex');
-    await expect(page.locator('#main-content [tabindex]')).toHaveCount(0);
+    await expect(page.locator('#main-content [tabindex="0"]')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: /Receipt for revision/u })).toHaveAttribute(
+      'tabindex',
+      '-1',
+    );
   });
 }
 

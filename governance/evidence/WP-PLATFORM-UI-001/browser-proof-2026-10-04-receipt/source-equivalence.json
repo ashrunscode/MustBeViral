@@ -116,5 +116,18 @@
       "sha256": "a60f0ed0e0ac42b8cb1bb92a07d01ccac9e0288b35e4ba8aca9f6b6a2a765438"
     }
   ],
-  "evidenceLevel": "Production-rendered local synthetic reads with an existing local Auth session; no remote writes or provider generation."
+  "evidenceLevel": "Production-rendered local synthetic reads with an existing local Auth session; no remote writes or provider generation.",
+  "postBrowserTestRepairs": [
+    {
+      "path": "apps/web/e2e/final-ui.spec.ts",
+      "sha256": "9a13433d61c53fe3975262f1bb35d5ab51abf2c08a106db4f68ae5bbfc44ac20",
+      "changedAfterBrowserProof": true,
+      "runtimeFilesUnchanged": true,
+      "firstFreshHead": "87ec058116f798414bb4702f37a644bac67e2034",
+      "reason": "Rewrite four obsolete preview expectations for the bounded Drawer, full 44-px target and two separately named Receipt scroll regions; retain the original tests and strengthen keyboard/focus coverage.",
+      "validation": "diagnostics/l3f-author-preview-repair-2.json",
+      "originalFailure": "diagnostics/l3f-c4-first-head-87ec058-gates.json"
+    }
+  ],
+  "testRepairNote": "The original browser whole-source fingerprint remains historical. All fifteen original changed source/test hashes and the final runtime still match; this additional preview test was repaired afterward and has its own full-suite receipt. No new whole-tree browser fingerprint is claimed."
 }

@@ -1,0 +1,69 @@
+{
+  "Cause": "Post-test artifact guard omitted the suite generated performance files and three preview-server captures",
+  "Artifacts": [
+    {
+      "Path": "apps/web/test/__perf__/canvas-fps-500.json",
+      "Sha256": "bdb982c89435bb50bf001366d3bc9a178f447aee86219e2aecc1a7fa208ce3e9",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\canvas-fps-500.json"
+    },
+    {
+      "Path": "apps/web/test/__perf__/canvas-fps.json",
+      "Sha256": "bffccf09d9cf66b7d43c9aa5c76173f2b9ad26abc5ea3d5af2479afc4842e697",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\canvas-fps.json"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/campaign-brief-1440x900.png",
+      "Sha256": "ad83f8d806c035f35677b764304f9710d1039005776ca3ab89425ff589a1b87e",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\campaign-brief-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/canvas-1440x900.png",
+      "Sha256": "be6575363eaf45add1cd2092402e01b92c9c0af48d1170ec69bb3a51788043de",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\canvas-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/mobile-review-375x812.png",
+      "Sha256": "017a20937123ef896ac72d7e6f7b7ef23db41d90ac7095060930323d741a24e9",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\mobile-review-375x812.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/output-comparison-1440x900.png",
+      "Sha256": "2444871eecfafd95e72f97d1c3e952422a057a777f105b6afa2e1368413cbf49",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\output-comparison-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/quote-1440x900.png",
+      "Sha256": "7d5588b5bd38b59f4895ca66db33dda21fb391cb9ab1a767f9584a47c9e5739a",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\quote-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/receipt-1440x900.png",
+      "Sha256": "17578d32b1ff817813a8179abfa8080282deb1c7e22fe545964496f928f58da2",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\receipt-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/review-1440x900.png",
+      "Sha256": "d87031d600285bb6f3f24ca94ee06d942b5ba195909b51db06e8164eb56a1dfa",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\review-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/run-progress-1440x900.png",
+      "Sha256": "d9be956e13d52f843e12a2abb701adceac5add96bc61c53a61171e56ecac1ffe",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\run-progress-1440x900.png"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/tablet-review-768x1024.png",
+      "Sha256": "2d9c1c20f8e72e478a09595db5674a9d680abdae8e384a2745a9811d722732e6",
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-1-generated\\tablet-review-768x1024.png"
+    }
+  ],
+  "OriginalLog": "C:/dev/mbv-run/l3f-author-preview-repair-1.txt",
+  "HelperActualExit": 1,
+  "BaseHead": "87ec058116f798414bb4702f37a644bac67e2034",
+  "ValidatorReportedSkipped": 1,
+  "ValidatorExitReceiptPersisted": false,
+  "ExistingTrackedArtifactsRestored": true,
+  "RecordedUtc": "2026-10-04T08:23:30.6565273Z",
+  "RuntimeSourceUnchanged": true,
+  "ValidatorReportedPassed": 57
+}

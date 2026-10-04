@@ -1,0 +1,10 @@
+{
+  "FinishedUtc": "2026-10-04T08:10:14.6555408Z",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep bounds/44px/receipt-scroll",
+  "Node": "v24.18.0",
+  "Pnpm": "11.12.0",
+  "RuntimeSourceUnchanged": true,
+  "StartedUtc": "2026-10-04T08:10:01.3198436Z",
+  "ActualExit": 0,
+  "BaseHead": "87ec058116f798414bb4702f37a644bac67e2034"
+}
