@@ -6,6 +6,25 @@
   overflow: hidden;
   background: var(--paper);
 }
+.canvasPage[data-canvas-state] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.canvasPage[data-canvas-layout='drawer'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.canvasPage[data-canvas-state] .toolbarTitle {
+  font-size: 16px;
+}
+.canvasPage[data-canvas-state] .resultBanner {
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+}
+.canvasPage[data-canvas-state] .resultBanner button {
+  min-height: 44px;
+}
 
 /* One explicit column: the implicit auto column took the toolbar's 580.64px min-content width, so on
    viewports under 901px the canvas surface ran under the side rail and nodes sat over its fields. */
@@ -14,24 +33,29 @@
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 54px auto minmax(0, 1fr) 72px;
+  grid-template-rows: max-content max-content minmax(160px, 1fr) max-content;
   overflow: hidden;
+  overflow-y: auto;
 }
 
 .toolbar {
   grid-row: 1;
+  min-height: 54px;
   z-index: 4;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   border-bottom: 1px solid var(--line);
-  padding: 0 16px;
+  padding: 6px 16px;
   background: var(--card);
 }
 
 .toolbar > div:first-child {
+  min-width: 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 12px;
 }
@@ -46,32 +70,58 @@
 }
 
 .toolbarActions {
+  min-width: 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
 
 .toolbarActions :global(.mbv-button) {
-  min-height: 32px;
-  padding: 0 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 10px;
+  white-space: normal;
+}
+.toolbarActions :global(.mbv-button)[data-state='success'] {
+  color: var(--ink-strong);
 }
 
-/* An icon-only 32px button grows a 44px hit area; 12px to the next button keeps them apart. */
+.desktopNotice {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.desktopNotice a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Icon controls keep a 44px box and 12px of space to the next control. */
 .toolbarActions :global(.mbv-button)[aria-label] + :global(.mbv-button) {
   margin-left: 4px;
 }
 
 .resultBanner {
+  min-width: 0;
   grid-row: 2;
   z-index: 5;
   min-height: 44px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   border-bottom: 1px solid var(--line);
   padding: 6px 16px;
   background: var(--card);
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .resultSuccess {
@@ -316,20 +366,29 @@
 }
 
 .quoteBar {
+  min-width: 0;
+  min-height: 72px;
   grid-row: 4;
   z-index: 4;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 12px 24px;
   border-top: 1px solid var(--line);
-  padding: 0 24px;
+  padding: 12px 24px;
   background: var(--card);
 }
 
 .quoteBar > div {
+  min-width: 0;
   display: grid;
   gap: 5px;
+  overflow-wrap: anywhere;
+}
+.quoteBar > :global(.mbv-button) {
+  min-height: 44px;
+  white-space: normal;
 }
 
 .quoteBar > div > :first-child {
@@ -337,6 +396,12 @@
 }
 
 .sideRail {
+  position: static;
+  inset: auto;
+  width: auto;
+  padding: 0;
+  box-shadow: none;
+  z-index: auto;
   min-height: 0;
   grid-column: 2;
   grid-row: 1;
@@ -349,6 +414,31 @@
   overflow: hidden;
   border-left: 1px solid var(--line);
   background: var(--card);
+}
+.sideRail > :global(.mbv-drawer__header) {
+  display: none;
+}
+.drawerRail {
+  position: fixed;
+  inset: 60px 0 0 auto;
+  width: min(420px, 100vw);
+  z-index: 80;
+  grid-template-rows: auto minmax(0, 1fr) fit-content(36%);
+}
+.drawerRail > :global(.mbv-drawer__header) {
+  display: flex;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.drawerRail > :global(.mbv-drawer__header) button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.draftFieldset {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 .sideRail > :last-child {

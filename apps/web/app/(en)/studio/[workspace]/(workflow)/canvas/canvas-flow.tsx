@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Chip, MonoCaps } from '@mustbeviral/ui';
+import { Button, Chip, Drawer, MonoCaps } from '@mustbeviral/ui';
 import Link from 'next/link';
 import {
   useEffect,
@@ -413,7 +413,12 @@ export function CanvasFlow({
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [viewport, setViewport] = useState({ width: 1120, height: 620 });
+  const [compact, setCompact] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const [layoutReady, setLayoutReady] = useState(dataMode === 'preview');
+  const [railOpen, setRailOpen] = useState(false);
   const [textDrafts, setTextDrafts] = useState<Record<string, Record<string, string>>>({});
+  const rootRef = useRef<HTMLDivElement>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const graphPlaneRef = useRef<HTMLDivElement>(null);
   const livePanRef = useRef(pan);
@@ -446,6 +451,34 @@ export function CanvasFlow({
   }, [dataMode, readPort]);
 
   useEffect(() => {
+    const element = rootRef.current;
+    if (element === null) return;
+    const mobileViewport = window.matchMedia('(max-width: 767px)');
+    const observer = new ResizeObserver(([entry]) => {
+      if (entry === undefined) return;
+      // Available space also responds to browser zoom and the surrounding Studio navigation.
+      setCompact(entry.contentRect.width < 960);
+      setMobile(mobileViewport.matches);
+      setLayoutReady(true);
+    });
+    const onMobileChange = (event: MediaQueryListEvent) => setMobile(event.matches);
+    observer.observe(element);
+    mobileViewport.addEventListener('change', onMobileChange);
+    return () => {
+      observer.disconnect();
+      mobileViewport.removeEventListener('change', onMobileChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!compact || !railOpen) return;
+    rootRef.current
+      ?.querySelector<HTMLButtonElement>('[data-canvas-rail] .mbv-drawer__header button')
+      ?.focus();
+  }, [compact, railOpen]);
+
+  const modelReady = model !== null && layoutReady;
+  useEffect(() => {
     const element = surfaceRef.current;
     if (element === null) return;
     const observer = new ResizeObserver(([entry]) => {
@@ -455,7 +488,7 @@ export function CanvasFlow({
     });
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [modelReady]);
 
   const nodesById = useMemo(
     () => new Map((model?.nodes ?? []).map((node) => [node.id, node])),
@@ -690,10 +723,18 @@ export function CanvasFlow({
     [outline.length],
   );
 
-  if (model === null) {
+  if (model === null || !layoutReady) {
     return (
-      <div id="main-content" className={styles.canvasPage}>
+      <div
+        ref={rootRef}
+        id="main-content"
+        className={styles.canvasPage}
+        data-canvas-state={loadResult === null ? 'loading' : 'unavailable'}
+      >
         <section className={styles.workspace} aria-label="Campaign plan">
+          <div className={styles.toolbar}>
+            <h1 className={styles.toolbarTitle}>Campaign plan</h1>
+          </div>
           <CanvasLoadNotice result={loadResult} onRetry={() => void reloadLatest()} />
         </section>
       </div>
@@ -701,7 +742,12 @@ export function CanvasFlow({
   }
 
   return (
-    <div id="main-content" className={styles.canvasPage}>
+    <div
+      ref={rootRef}
+      id="main-content"
+      className={styles.canvasPage}
+      data-canvas-layout={compact ? 'drawer' : 'rail'}
+    >
       <section className={styles.workspace} aria-label="Campaign plan">
         <div className={styles.toolbar}>
           <div>
@@ -709,8 +755,25 @@ export function CanvasFlow({
               Canvas revision {shortRevision(model.revision)}
             </MonoCaps>
             <h1 className={styles.toolbarTitle}>{campaignTitleFromModel(model, dataMode)}</h1>
+            {mobile ? (
+              <p id="canvas-desktop-notice" className={styles.desktopNotice}>
+                Plan editing needs a desktop. Review the outline and comments here.{' '}
+                <Link href={campaignHref(workspace, 'plan', context)}>
+                  Open this plan on a desktop
+                </Link>
+              </p>
+            ) : null}
           </div>
           <div className={styles.toolbarActions}>
+            {compact ? (
+              <Button
+                aria-expanded={railOpen}
+                aria-controls="canvas-navigation-rail"
+                onClick={() => setRailOpen((current) => !current)}
+              >
+                Outline and comments
+              </Button>
+            ) : null}
             <MonoCaps data-testid="virtualized-count">
               {visibleNodes.length} / {model.nodes.length} nodes mounted
             </MonoCaps>
@@ -738,7 +801,8 @@ export function CanvasFlow({
                       : 'error'
               }
               loadingLabel="Validating"
-              disabled={mutationPort === null || result?.type === 'session_expired'}
+              disabled={mobile || mutationPort === null || result?.type === 'session_expired'}
+              aria-describedby={mobile ? 'canvas-desktop-notice' : undefined}
               onClick={() => void validateCanvas()}
             >
               Validate graph
@@ -755,11 +819,13 @@ export function CanvasFlow({
               }
               loadingLabel="Checkpointing"
               disabled={
+                mobile ||
                 mutationPort === null ||
                 !hasCheckpointDrafts ||
                 result?.type === 'session_expired' ||
                 checkpointing
               }
+              aria-describedby={mobile ? 'canvas-desktop-notice' : undefined}
               onClick={() => void checkpointDraftsToRevision()}
             >
               Checkpoint drafts
@@ -876,7 +942,15 @@ export function CanvasFlow({
           )}
         </div>
       </section>
-      <div className={styles.sideRail}>
+      <Drawer
+        id="canvas-navigation-rail"
+        data-canvas-rail
+        className={`${styles.sideRail} ${compact ? styles.drawerRail : ''}`}
+        title="Plan outline and comments"
+        open={!compact || railOpen}
+        inert={compact && !railOpen}
+        onClose={() => setRailOpen(false)}
+      >
         <CanvasOutlinePanel
           nodeCount={model.nodes.length}
           outline={outline}
@@ -893,25 +967,32 @@ export function CanvasFlow({
           anchorLabel={selectedNode?.label ?? 'Selected node'}
           comments={anchoredComments}
           draftPanel={
-            <NodeConfigDraftPanel
-              actorId={collaborationActorId}
-              localDrafts={selectedDrafts}
-              nodeId={selectedId}
-              nodeKind={selectedNode?.kind}
-              nodeLabel={selectedNode?.label ?? 'Selected node'}
-              snapshot={collaboration.snapshot}
-              onAcquireLease={collaboration.acquireLease}
-              onReleaseLease={collaboration.releaseLease}
-              onChange={updateCollaborationDraft}
-              onSyncDraft={syncCollaborationDraft}
-            />
+            <fieldset
+              className={styles.draftFieldset}
+              disabled={mobile}
+              aria-label="Plan parameters"
+              aria-describedby={mobile ? 'canvas-desktop-notice' : undefined}
+            >
+              <NodeConfigDraftPanel
+                actorId={collaborationActorId}
+                localDrafts={selectedDrafts}
+                nodeId={selectedId}
+                nodeKind={selectedNode?.kind}
+                nodeLabel={selectedNode?.label ?? 'Selected node'}
+                snapshot={collaboration.snapshot}
+                onAcquireLease={collaboration.acquireLease}
+                onReleaseLease={collaboration.releaseLease}
+                onChange={updateCollaborationDraft}
+                onSyncDraft={syncCollaborationDraft}
+              />
+            </fieldset>
           }
           onSubmitComment={submitCollaborationComment}
           snapshot={collaboration.snapshot}
           status={collaboration.status}
           surface="canvas"
         />
-      </div>
+      </Drawer>
     </div>
   );
 }

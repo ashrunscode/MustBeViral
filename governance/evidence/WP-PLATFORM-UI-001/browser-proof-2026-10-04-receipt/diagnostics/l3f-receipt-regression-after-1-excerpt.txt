@@ -1,0 +1,11 @@
+Selected lines from the original source-scanned test transcript; an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  3 passed (3)
+6:       Tests  38 passed (38)
+7:    Start at  20:09:42
+8:    Duration  2.04s (transform 963ms, setup 0ms, import 1.98s, tests 343ms, environment 801ms)
+9:
+10:

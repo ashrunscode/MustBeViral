@@ -1,0 +1,537 @@
+{
+  "checkedUtc": "2026-10-04T06:16:44.228Z",
+  "sourceFingerprint": "bb30818df4dd34ec46d785cb8eaa76698062df790b5eecb3f26a2e1ffce74e3c",
+  "localOnly": true,
+  "coreReadsIntercepted": true,
+  "expectedHeadingVisible": true,
+  "failedCases": 4,
+  "cells": [
+    {
+      "label": "review-visible-heading-before-error",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 355,
+          "flowWidth": 375,
+          "clientWidth": 353,
+          "scrollWidth": 353,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": false
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 208,
+          "cls": 0.08376959763542753,
+          "events": [],
+          "shifts": [
+            {
+              "time": 332.19999998807907,
+              "value": 0.08376959763542753,
+              "sources": [
+                {
+                  "tag": "MAIN",
+                  "className": "platform-main platform-main--flush",
+                  "previous": {
+                    "x": 0,
+                    "y": 161.5,
+                    "width": 375,
+                    "height": 650.5,
+                    "top": 161.5,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  },
+                  "current": {
+                    "x": 0,
+                    "y": 185,
+                    "width": 375,
+                    "height": 627,
+                    "top": 185,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  }
+                },
+                {
+                  "tag": "DIV",
+                  "className": "platform-context",
+                  "previous": {
+                    "x": 267.796875,
+                    "y": 106.5,
+                    "width": 91.203125,
+                    "height": 44,
+                    "top": 106.5,
+                    "right": 359,
+                    "bottom": 150.5,
+                    "left": 267.796875
+                  },
+                  "current": {
+                    "x": 201.578125,
+                    "y": 130,
+                    "width": 157.421875,
+                    "height": 44,
+                    "top": 130,
+                    "right": 359,
+                    "bottom": 174,
+                    "left": 201.578125
+                  }
+                },
+                {
+                  "tag": "LI",
+                  "className": "",
+                  "previous": {
+                    "x": 96.890625,
+                    "y": 71,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 71,
+                    "right": 230.140625,
+                    "bottom": 90.5,
+                    "left": 96.890625
+                  },
+                  "current": {
+                    "x": 16,
+                    "y": 94.5,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 94.5,
+                    "right": 149.25,
+                    "bottom": 114,
+                    "left": 16
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Review outputs\":\n    - alert:\n      - text: Synthetic receipt error state.\n      - button \"Try loading review again\"\n    - link \"Back to the run\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "visibleHeading": false,
+      "failure": "The mobile first-child heading is hidden by the existing selector."
+    },
+    {
+      "label": "review-visible-heading-before-denied",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 355,
+          "flowWidth": 375,
+          "clientWidth": 353,
+          "scrollWidth": 353,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": false
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 104,
+          "cls": 0.08376959763542753,
+          "events": [],
+          "shifts": [
+            {
+              "time": 134.2000000178814,
+              "value": 0.08376959763542753,
+              "sources": [
+                {
+                  "tag": "MAIN",
+                  "className": "platform-main platform-main--flush",
+                  "previous": {
+                    "x": 0,
+                    "y": 161.5,
+                    "width": 375,
+                    "height": 650.5,
+                    "top": 161.5,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  },
+                  "current": {
+                    "x": 0,
+                    "y": 185,
+                    "width": 375,
+                    "height": 627,
+                    "top": 185,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  }
+                },
+                {
+                  "tag": "DIV",
+                  "className": "platform-context",
+                  "previous": {
+                    "x": 267.796875,
+                    "y": 106.5,
+                    "width": 91.203125,
+                    "height": 44,
+                    "top": 106.5,
+                    "right": 359,
+                    "bottom": 150.5,
+                    "left": 267.796875
+                  },
+                  "current": {
+                    "x": 201.578125,
+                    "y": 130,
+                    "width": 157.421875,
+                    "height": 44,
+                    "top": 130,
+                    "right": 359,
+                    "bottom": 174,
+                    "left": 201.578125
+                  }
+                },
+                {
+                  "tag": "LI",
+                  "className": "",
+                  "previous": {
+                    "x": 96.890625,
+                    "y": 71,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 71,
+                    "right": 230.140625,
+                    "bottom": 90.5,
+                    "left": 96.890625
+                  },
+                  "current": {
+                    "x": 16,
+                    "y": 94.5,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 94.5,
+                    "right": 149.25,
+                    "bottom": 114,
+                    "left": 16
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Review outputs\":\n    - alert: Your session is not permitted to review this run.\n    - link \"Back to the run\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "visibleHeading": false,
+      "failure": "The mobile first-child heading is hidden by the existing selector."
+    },
+    {
+      "label": "review-visible-heading-before-not-found",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 355,
+          "flowWidth": 375,
+          "clientWidth": 353,
+          "scrollWidth": 353,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": false
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 168,
+          "cls": 0.08376959763542753,
+          "events": [],
+          "shifts": [
+            {
+              "time": 135.90000000596046,
+              "value": 0.08376959763542753,
+              "sources": [
+                {
+                  "tag": "MAIN",
+                  "className": "platform-main platform-main--flush",
+                  "previous": {
+                    "x": 0,
+                    "y": 161.5,
+                    "width": 375,
+                    "height": 650.5,
+                    "top": 161.5,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  },
+                  "current": {
+                    "x": 0,
+                    "y": 185,
+                    "width": 375,
+                    "height": 627,
+                    "top": 185,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  }
+                },
+                {
+                  "tag": "DIV",
+                  "className": "platform-context",
+                  "previous": {
+                    "x": 267.796875,
+                    "y": 106.5,
+                    "width": 91.203125,
+                    "height": 44,
+                    "top": 106.5,
+                    "right": 359,
+                    "bottom": 150.5,
+                    "left": 267.796875
+                  },
+                  "current": {
+                    "x": 201.578125,
+                    "y": 130,
+                    "width": 157.421875,
+                    "height": 44,
+                    "top": 130,
+                    "right": 359,
+                    "bottom": 174,
+                    "left": 201.578125
+                  }
+                },
+                {
+                  "tag": "LI",
+                  "className": "",
+                  "previous": {
+                    "x": 96.890625,
+                    "y": 71,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 71,
+                    "right": 230.140625,
+                    "bottom": 90.5,
+                    "left": 96.890625
+                  },
+                  "current": {
+                    "x": 16,
+                    "y": 94.5,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 94.5,
+                    "right": 149.25,
+                    "bottom": 114,
+                    "left": 16
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Review outputs\":\n    - alert: Artifact 44444444-4444-4444-8444-444444444444 was not found.\n    - link \"Back to the run\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "visibleHeading": false,
+      "failure": "The mobile first-child heading is hidden by the existing selector."
+    },
+    {
+      "label": "review-visible-heading-before-conflict",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 355,
+          "flowWidth": 375,
+          "clientWidth": 353,
+          "scrollWidth": 353,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": false
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 120,
+          "cls": 0.08376959763542753,
+          "events": [],
+          "shifts": [
+            {
+              "time": 152.40000000596046,
+              "value": 0.08376959763542753,
+              "sources": [
+                {
+                  "tag": "MAIN",
+                  "className": "platform-main platform-main--flush",
+                  "previous": {
+                    "x": 0,
+                    "y": 161.5,
+                    "width": 375,
+                    "height": 650.5,
+                    "top": 161.5,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  },
+                  "current": {
+                    "x": 0,
+                    "y": 185,
+                    "width": 375,
+                    "height": 627,
+                    "top": 185,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  }
+                },
+                {
+                  "tag": "DIV",
+                  "className": "platform-context",
+                  "previous": {
+                    "x": 267.796875,
+                    "y": 106.5,
+                    "width": 91.203125,
+                    "height": 44,
+                    "top": 106.5,
+                    "right": 359,
+                    "bottom": 150.5,
+                    "left": 267.796875
+                  },
+                  "current": {
+                    "x": 201.578125,
+                    "y": 130,
+                    "width": 157.421875,
+                    "height": 44,
+                    "top": 130,
+                    "right": 359,
+                    "bottom": 174,
+                    "left": 201.578125
+                  }
+                },
+                {
+                  "tag": "LI",
+                  "className": "",
+                  "previous": {
+                    "x": 96.890625,
+                    "y": 71,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 71,
+                    "right": 230.140625,
+                    "bottom": 90.5,
+                    "left": 96.890625
+                  },
+                  "current": {
+                    "x": 16,
+                    "y": 94.5,
+                    "width": 133.25,
+                    "height": 19.5,
+                    "top": 94.5,
+                    "right": 149.25,
+                    "bottom": 114,
+                    "left": 16
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Review outputs\":\n    - alert: Synthetic receipt conflict state.\n    - link \"Back to the run\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "visibleHeading": false,
+      "failure": "The mobile first-child heading is hidden by the existing selector."
+    }
+  ],
+  "errors": [
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    }
+  ],
+  "writes": 0
+}

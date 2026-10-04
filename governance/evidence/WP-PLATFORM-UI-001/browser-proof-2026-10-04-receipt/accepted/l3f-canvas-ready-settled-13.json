@@ -1,0 +1,387 @@
+{
+  "checkedUtc": "2026-10-04T05:10:57.630Z",
+  "sourceFingerprint": "a7c40db4426d5d7b85adf6c8a4c026965059c08870dc9df0b70e49d5d2c68400",
+  "localOnly": true,
+  "realLocalAuth": true,
+  "coreReadsIntercepted": true,
+  "cells": [
+    {
+      "label": "canvas-ready-settled-light",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 320,
+          "cls": 0.08347613872020271,
+          "events": [],
+          "shifts": [
+            {
+              "time": 232.80000001192093,
+              "value": 0.08347613872020271,
+              "sources": [
+                {
+                  "tag": "MAIN",
+                  "className": "platform-main platform-main--flush",
+                  "previous": {
+                    "x": 0,
+                    "y": 161.5,
+                    "width": 375,
+                    "height": 650.5,
+                    "top": 161.5,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  },
+                  "current": {
+                    "x": 0,
+                    "y": 185,
+                    "width": 375,
+                    "height": 627,
+                    "top": 185,
+                    "right": 375,
+                    "bottom": 812,
+                    "left": 0
+                  }
+                },
+                {
+                  "tag": "DIV",
+                  "className": "platform-context",
+                  "previous": {
+                    "x": 267.796875,
+                    "y": 106.5,
+                    "width": 91.203125,
+                    "height": 44,
+                    "top": 106.5,
+                    "right": 359,
+                    "bottom": 150.5,
+                    "left": 267.796875
+                  },
+                  "current": {
+                    "x": 201.578125,
+                    "y": 130,
+                    "width": 157.421875,
+                    "height": 44,
+                    "top": 130,
+                    "right": 359,
+                    "bottom": 174,
+                    "left": 201.578125
+                  }
+                },
+                {
+                  "tag": "LI",
+                  "className": "",
+                  "previous": {
+                    "x": 96.890625,
+                    "y": 71,
+                    "width": 110.234375,
+                    "height": 19.5,
+                    "top": 71,
+                    "right": 207.125,
+                    "bottom": 90.5,
+                    "left": 96.890625
+                  },
+                  "current": {
+                    "x": 16,
+                    "y": 94.5,
+                    "width": 110.234375,
+                    "height": 19.5,
+                    "top": 94.5,
+                    "right": 126.234375,
+                    "bottom": 114,
+                    "left": 16
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Budget\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n  - region \"Campaign plan\":\n    - text: Canvas revision 77777777\n    - heading \"Campaign\" [level=1]\n    - paragraph:\n      - text: Plan editing needs a desktop. Review the outline and comments here.\n      - link \"Open this plan on a desktop\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - button \"Outline and comments\"\n    - text: 1 / 1 nodes mounted 0 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\" [disabled]\n    - button \"Checkpoint drafts\" [disabled]\n    - 'button \"Input node: Synthetic campaign plan, Verified\" [pressed]': Input node Verified Synthetic campaign plan revision input Revision pinned\n    - text: Pinned revision 77777777 Route Pinned catalog routes Quote basis Named price on next screen\n    - link \"Review named quote\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&revision=77777777-7777-4777-8777-777777777777\n- alert",
+      "geometry": {
+        "layout": "drawer",
+        "root": {
+          "left": 0,
+          "right": 375,
+          "top": 342,
+          "bottom": 812,
+          "width": 375,
+          "height": 470
+        },
+        "toolbar": {
+          "left": 16,
+          "right": 359,
+          "top": 463.390625,
+          "bottom": 611.390625,
+          "width": 343,
+          "height": 148
+        },
+        "quoteBar": {
+          "left": 0,
+          "right": 375,
+          "top": 778.390625,
+          "bottom": 921.390625,
+          "width": 375,
+          "height": 143
+        },
+        "toolbarContained": true,
+        "toolbarHeightContained": true,
+        "graphStartsAfterControls": true,
+        "toolbarRow": {
+          "left": 0,
+          "right": 375,
+          "top": 342,
+          "bottom": 618.390625,
+          "width": 375,
+          "height": 276.390625
+        },
+        "surface": {
+          "left": 0,
+          "right": 375,
+          "top": 618.390625,
+          "bottom": 778.390625,
+          "width": 375,
+          "height": 160
+        },
+        "quoteBarContained": true,
+        "workspace": {
+          "clientHeight": 470,
+          "scrollHeight": 579,
+          "scrollTop": 0
+        },
+        "inertRail": true,
+        "mobileNotice": "Plan editing needs a desktop. Review the outline and comments here. Open this plan on a desktop"
+      },
+      "evidenceLevel": "Production-rendered synthetic canvas with real existing local Auth; no real provider or remote write.",
+      "controls": [
+        {
+          "name": "Zoom in",
+          "latencyUpperBoundMs": 37,
+          "focus": {
+            "focused": true,
+            "outline": "solid",
+            "outlineWidth": "2px",
+            "box": {
+              "width": 44,
+              "height": 44
+            }
+          }
+        },
+        {
+          "name": "Zoom out",
+          "latencyUpperBoundMs": 53,
+          "focus": {
+            "focused": true,
+            "outline": "solid",
+            "outlineWidth": "2px",
+            "box": {
+              "width": 44,
+              "height": 44
+            }
+          }
+        },
+        {
+          "name": "Fit",
+          "latencyUpperBoundMs": 53,
+          "focus": {
+            "focused": true,
+            "outline": "solid",
+            "outlineWidth": "2px",
+            "box": {
+              "width": 44,
+              "height": 44
+            }
+          }
+        }
+      ],
+      "drawerOpen": {
+        "expanded": "true",
+        "closeFocused": true,
+        "outlineHeadings": 1,
+        "tree": "- complementary \"Plan outline and comments\":\n  - heading \"Plan outline and comments\" [level=2]\n  - button \"Close Plan outline and comments\": Close\n  - complementary \"Graph outline\":\n    - text: Outline\n    - heading \"Graph outline\" [level=2]\n    - text: 1 nodes\n    - paragraph: In order. Arrow keys move between nodes.\n    - list:\n      - listitem:\n        - button \"Input node Synthetic campaign plan Verified\":\n          - text: Input node\n          - strong: Synthetic campaign plan\n          - text: Verified\n  - region \"Collaborator presence\":\n    - list \"Active collaborators\"\n    - text: Live presence\n    - strong: Only you\n    - text: Viewing graph. Draft comments only. Unavailable\n  - group \"Plan parameters\":\n    - region \"Collaborative text drafts\":\n      - text: Draft text\n      - heading \"Synthetic campaign plan\" [level=3]\n      - text: 2 fields Campaign product\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Campaign product\" [disabled]:\n        - /placeholder: Draft the product truth collaborators should align on\n      - text: Brief notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Brief notes\" [disabled]:\n        - /placeholder: Constraints, claims, and launch notes\n  - region \"Synthetic campaign plan\":\n    - text: Draft comments\n    - heading \"Synthetic campaign plan\" [level=3]\n    - text: 0 threads\n    - paragraph: No draft comments on this anchor yet.\n    - text: Add a draft comment\n    - textbox \"Add a draft comment\":\n      - /placeholder: Share a draft note for collaborators\n    - button \"Post draft comment\" [disabled]",
+        "axe": []
+      },
+      "drawerClosed": {
+        "expanded": "false",
+        "triggerFocused": true,
+        "geometry": {
+          "layout": "drawer",
+          "root": {
+            "left": 0,
+            "right": 375,
+            "top": 342,
+            "bottom": 812,
+            "width": 375,
+            "height": 470
+          },
+          "toolbar": {
+            "left": 16,
+            "right": 359,
+            "top": 463.390625,
+            "bottom": 611.390625,
+            "width": 343,
+            "height": 148
+          },
+          "quoteBar": {
+            "left": 0,
+            "right": 375,
+            "top": 778.390625,
+            "bottom": 921.390625,
+            "width": 375,
+            "height": 143
+          },
+          "toolbarContained": true,
+          "toolbarHeightContained": true,
+          "graphStartsAfterControls": true,
+          "toolbarRow": {
+            "left": 0,
+            "right": 375,
+            "top": 342,
+            "bottom": 618.390625,
+            "width": 375,
+            "height": 276.390625
+          },
+          "surface": {
+            "left": 0,
+            "right": 375,
+            "top": 618.390625,
+            "bottom": 778.390625,
+            "width": 375,
+            "height": 160
+          },
+          "quoteBarContained": true,
+          "workspace": {
+            "clientHeight": 470,
+            "scrollHeight": 579,
+            "scrollTop": 0
+          },
+          "inertRail": true,
+          "mobileNotice": "Plan editing needs a desktop. Review the outline and comments here. Open this plan on a desktop"
+        }
+      },
+      "mobile": {
+        "validateDisabled": true,
+        "checkpointDisabled": true,
+        "continuationVisible": true
+      },
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 32,
+          "interactionId": 890
+        },
+        {
+          "name": "keypress",
+          "duration": 32,
+          "interactionId": 890
+        },
+        {
+          "name": "click",
+          "duration": 32,
+          "interactionId": 890
+        },
+        {
+          "name": "keyup",
+          "duration": 32,
+          "interactionId": 890
+        },
+        {
+          "name": "keydown",
+          "duration": 48,
+          "interactionId": 897
+        },
+        {
+          "name": "keypress",
+          "duration": 48,
+          "interactionId": 897
+        },
+        {
+          "name": "click",
+          "duration": 48,
+          "interactionId": 897
+        },
+        {
+          "name": "keyup",
+          "duration": 48,
+          "interactionId": 897
+        },
+        {
+          "name": "keydown",
+          "duration": 56,
+          "interactionId": 904
+        },
+        {
+          "name": "keypress",
+          "duration": 56,
+          "interactionId": 904
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 904
+        },
+        {
+          "name": "keyup",
+          "duration": 48,
+          "interactionId": 904
+        },
+        {
+          "name": "keydown",
+          "duration": 48,
+          "interactionId": 911
+        },
+        {
+          "name": "keypress",
+          "duration": 48,
+          "interactionId": 911
+        },
+        {
+          "name": "click",
+          "duration": 48,
+          "interactionId": 911
+        },
+        {
+          "name": "keyup",
+          "duration": 48,
+          "interactionId": 911
+        },
+        {
+          "name": "keydown",
+          "duration": 40,
+          "interactionId": 918
+        },
+        {
+          "name": "keyup",
+          "duration": 40,
+          "interactionId": 918
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "canvasReads": 2,
+  "writes": 0
+}

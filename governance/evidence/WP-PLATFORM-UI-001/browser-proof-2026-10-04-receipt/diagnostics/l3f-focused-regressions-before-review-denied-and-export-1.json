@@ -1,0 +1,12 @@
+{
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx",
+  "startedUtc": "2026-10-04T05:41:13.3278735Z",
+  "endedUtc": "2026-10-04T05:41:18.9597483Z",
+  "pnpm": "11.12.0",
+  "root": "C:/dev/mbv-finish",
+  "node": "v24.18.0",
+  "ownedWorkInProgress": true,
+  "log": "C:/dev/mbv-run/l3f-focused-regressions-before-review-denied-and-export-1.txt",
+  "head": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "exit": 1
+}

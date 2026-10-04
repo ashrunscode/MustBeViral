@@ -1,0 +1,930 @@
+{
+  "checkedUtc": "2026-10-04T03:00:01.890Z",
+  "width": 1280,
+  "localOnly": true,
+  "realLocalAuth": true,
+  "receiptReadsIntercepted": true,
+  "sourceFingerprint": "bb99c5cb96e05c54334aeea1ab5ef2cc43cb6470fc12292b5dcf2e9d14dd6839",
+  "cells": [
+    {
+      "label": "missing",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": {
+          "withinColumn": true,
+          "overlapsEvidence": false,
+          "regionWidth": 591.859375,
+          "clientWidth": 592,
+          "scrollWidth": 765,
+          "overflowX": "auto",
+          "tabIndex": 0
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": "Quote unavailable, settled amount unavailable. Quote comparison unavailable.",
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": "normal",
+        "moneyState": "unavailable",
+        "bodyFontPx": 15,
+        "noticeFontPx": 16,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 280,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - text: Export not created yet\n  - article \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\":\n    - heading \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\" [level=1]\n    - paragraph: Run 44444444-4444-4444-8444-444444444444. This settlement record does not change.\n    - text: Statement\n    - strong: 44444444-4444-4444-8444-444444444444\n    - region \"What was charged, by attempt\":\n      - heading \"What was charged, by attempt\" [level=2]\n      - region \"Receipt charges by attempt\":\n        - table \"Receipt lineage rows\":\n          - rowgroup:\n            - row \"Attempt Provider Model Route Status Captured\":\n              - columnheader \"Attempt\"\n              - columnheader \"Provider\"\n              - columnheader \"Model\"\n              - columnheader \"Route\"\n              - columnheader \"Status\"\n              - columnheader \"Captured\"\n          - rowgroup:\n            - row \"attempt-fixture fal fixture/model fixture/route succeeded $0.67\":\n              - cell \"attempt-fixture\"\n              - cell \"fal\"\n              - cell \"fixture/model\"\n              - cell \"fixture/route\"\n              - cell \"succeeded\"\n              - cell \"$0.67\"\n            - row \"Total actual Unavailable Rev 77777777-7777-4777-8777-777777777777 All routes Net capture Unavailable\":\n              - cell \"Total actual\"\n              - cell \"Unavailable\"\n              - cell \"Rev 77777777-7777-4777-8777-777777777777\"\n              - cell \"All routes\"\n              - cell \"Net capture\"\n              - cell \"Unavailable\"\n    - complementary \"Receipt evidence\":\n      - heading \"Quote vs actual\" [level=2]\n      - text: Named quote\n      - strong: Unavailable\n      - text: Actual settled\n      - strong: Unavailable\n      - text: Under quote\n      - strong: Unavailable\n      - paragraph: This receipt does not include every amount needed to compare the quote and settlement.\n      - button \"Check receipt status\"\n      - heading \"Immutable record\" [level=2]\n      - text: Revision\n      - strong: 77777777-7777-4777-8777-777777777777\n      - text: Issued\n      - strong: 2026-10-04T01:00:00.000Z\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - strong: copy/concept-01.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-02.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-03.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/reels-motion-9x16.mp4\n      - text: video/mp4 Approved and verified for the immutable archive. Ready\n      - strong: qa-report.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: receipt.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: manifest.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: mustbeviral-launch-pack-44444444-4444-4444-8444-444444444444.zip\n      - text: application/zip The archive has not been created. Queued\n    - text: Run 44444444-4444-4444-8444-444444444444\n  - text: Settlement unavailable\n  - status \"Receipt totals\": Quote unavailable, settled amount unavailable. Quote comparison unavailable.\n  - button \"Create immutable export\"\n- alert"
+    },
+    {
+      "label": "missing-to-zero-keyboard",
+      "width": 1280,
+      "recovery": {
+        "focusedH1": true,
+        "summary": "Quoted $0.00, charged $0.00, $0.00 under quote",
+        "events": [
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 489
+          },
+          {
+            "name": "keypress",
+            "duration": 48,
+            "interactionId": 489
+          },
+          {
+            "name": "click",
+            "duration": 48,
+            "interactionId": 489
+          },
+          {
+            "name": "keyup",
+            "duration": 40,
+            "interactionId": 489
+          }
+        ],
+        "inp": [
+          {
+            "value": 48,
+            "entries": [
+              {
+                "name": "keydown",
+                "duration": 48,
+                "interactionId": 489
+              },
+              {
+                "name": "keypress",
+                "duration": 48,
+                "interactionId": 489
+              },
+              {
+                "name": "click",
+                "duration": 48,
+                "interactionId": 489
+              },
+              {
+                "name": "keydown",
+                "duration": 48,
+                "interactionId": 489
+              }
+            ]
+          }
+        ]
+      },
+      "readIncrement": 1,
+      "writes": 0
+    },
+    {
+      "label": "zero",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": {
+          "withinColumn": true,
+          "overlapsEvidence": false,
+          "regionWidth": 591.859375,
+          "clientWidth": 592,
+          "scrollWidth": 715,
+          "overflowX": "auto",
+          "tabIndex": 0
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": "Quoted $0.00, charged $0.00, $0.00 under quote",
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": "normal",
+        "moneyState": "known",
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 180,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - text: Export not created yet\n  - article \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\":\n    - heading \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\" [level=1]\n    - paragraph: Run 44444444-4444-4444-8444-444444444444. This settlement record does not change.\n    - text: Statement\n    - strong: 44444444-4444-4444-8444-444444444444\n    - region \"What was charged, by attempt\":\n      - heading \"What was charged, by attempt\" [level=2]\n      - region \"Receipt charges by attempt\":\n        - table \"Receipt lineage rows\":\n          - rowgroup:\n            - row \"Attempt Provider Model Route Status Captured\":\n              - columnheader \"Attempt\"\n              - columnheader \"Provider\"\n              - columnheader \"Model\"\n              - columnheader \"Route\"\n              - columnheader \"Status\"\n              - columnheader \"Captured\"\n          - rowgroup:\n            - row \"attempt-fixture fal fixture/model fixture/route succeeded $0.67\":\n              - cell \"attempt-fixture\"\n              - cell \"fal\"\n              - cell \"fixture/model\"\n              - cell \"fixture/route\"\n              - cell \"succeeded\"\n              - cell \"$0.67\"\n            - row \"Total actual Settled Rev 77777777-7777-4777-8777-777777777777 All routes Net capture $0.00\":\n              - cell \"Total actual\"\n              - cell \"Settled\"\n              - cell \"Rev 77777777-7777-4777-8777-777777777777\"\n              - cell \"All routes\"\n              - cell \"Net capture\"\n              - cell \"$0.00\"\n    - complementary \"Receipt evidence\":\n      - heading \"Quote vs actual\" [level=2]\n      - text: Named quote\n      - strong: $0.00\n      - text: Actual settled\n      - strong: $0.00\n      - text: Under quote\n      - strong: $0.00\n      - heading \"Immutable record\" [level=2]\n      - text: Revision\n      - strong: 77777777-7777-4777-8777-777777777777\n      - text: Issued\n      - strong: 2026-10-04T01:00:00.000Z\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - strong: copy/concept-01.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-02.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-03.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/reels-motion-9x16.mp4\n      - text: video/mp4 Approved and verified for the immutable archive. Ready\n      - strong: qa-report.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: receipt.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: manifest.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: mustbeviral-launch-pack-44444444-4444-4444-8444-444444444444.zip\n      - text: application/zip The archive has not been created. Queued\n    - text: Run 44444444-4444-4444-8444-444444444444\n  - text: Settled\n  - status \"Receipt totals\": Quoted $0.00, charged $0.00, $0.00 under quote\n  - button \"Create immutable export\"\n- alert"
+    },
+    {
+      "label": "positive",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": {
+          "withinColumn": true,
+          "overlapsEvidence": false,
+          "regionWidth": 591.859375,
+          "clientWidth": 592,
+          "scrollWidth": 715,
+          "overflowX": "auto",
+          "tabIndex": 0
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": "Quoted $4.20, charged $4.08, $0.12 under quote",
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": "normal",
+        "moneyState": "known",
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 172,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - text: Export not created yet\n  - article \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\":\n    - heading \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\" [level=1]\n    - paragraph: Run 44444444-4444-4444-8444-444444444444. This settlement record does not change.\n    - text: Statement\n    - strong: 44444444-4444-4444-8444-444444444444\n    - region \"What was charged, by attempt\":\n      - heading \"What was charged, by attempt\" [level=2]\n      - region \"Receipt charges by attempt\":\n        - table \"Receipt lineage rows\":\n          - rowgroup:\n            - row \"Attempt Provider Model Route Status Captured\":\n              - columnheader \"Attempt\"\n              - columnheader \"Provider\"\n              - columnheader \"Model\"\n              - columnheader \"Route\"\n              - columnheader \"Status\"\n              - columnheader \"Captured\"\n          - rowgroup:\n            - row \"attempt-fixture fal fixture/model fixture/route succeeded $0.67\":\n              - cell \"attempt-fixture\"\n              - cell \"fal\"\n              - cell \"fixture/model\"\n              - cell \"fixture/route\"\n              - cell \"succeeded\"\n              - cell \"$0.67\"\n            - row \"Total actual Settled Rev 77777777-7777-4777-8777-777777777777 All routes Net capture $4.08\":\n              - cell \"Total actual\"\n              - cell \"Settled\"\n              - cell \"Rev 77777777-7777-4777-8777-777777777777\"\n              - cell \"All routes\"\n              - cell \"Net capture\"\n              - cell \"$4.08\"\n    - complementary \"Receipt evidence\":\n      - heading \"Quote vs actual\" [level=2]\n      - text: Named quote\n      - strong: $4.20\n      - text: Actual settled\n      - strong: $4.08\n      - text: Under quote\n      - strong: $0.12\n      - heading \"Immutable record\" [level=2]\n      - text: Revision\n      - strong: 77777777-7777-4777-8777-777777777777\n      - text: Issued\n      - strong: 2026-10-04T01:00:00.000Z\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - strong: copy/concept-01.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-02.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-03.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/reels-motion-9x16.mp4\n      - text: video/mp4 Approved and verified for the immutable archive. Ready\n      - strong: qa-report.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: receipt.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: manifest.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: mustbeviral-launch-pack-44444444-4444-4444-8444-444444444444.zip\n      - text: application/zip The archive has not been created. Queued\n    - text: Run 44444444-4444-4444-8444-444444444444\n  - text: Settled\n  - status \"Receipt totals\": Quoted $4.20, charged $4.08, $0.12 under quote\n  - button \"Create immutable export\"\n- alert"
+    },
+    {
+      "label": "incomplete",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": {
+          "withinColumn": true,
+          "overlapsEvidence": false,
+          "regionWidth": 591.859375,
+          "clientWidth": 592,
+          "scrollWidth": 765,
+          "overflowX": "auto",
+          "tabIndex": 0
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": "Quote unavailable, settled amount unavailable. Quote comparison unavailable.",
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": "normal",
+        "moneyState": "unavailable",
+        "bodyFontPx": 15,
+        "noticeFontPx": 16,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Back to content review",
+            "width": 577,
+            "height": 23
+          }
+        ],
+        "perf": {
+          "lcpMs": 204,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - text: Approval incomplete\n  - article \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\":\n    - alert:\n      - strong: This campaign’s content is not fully approved\n      - text: Approve or finish copy-1, copy-2, copy-3, master-1, master-2, master-3, adaptation-1-1, adaptation-1-2, adaptation-1-3, adaptation-2-1, adaptation-2-2, adaptation-2-3, adaptation-3-1, adaptation-3-2, adaptation-3-3, motion-1 before creating an export. The checklist below names every expected file and its current state.\n      - link \"Back to content review\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - heading \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\" [level=1]\n    - paragraph: Run 44444444-4444-4444-8444-444444444444. This settlement record does not change.\n    - text: Statement\n    - strong: 44444444-4444-4444-8444-444444444444\n    - region \"What was charged, by attempt\":\n      - heading \"What was charged, by attempt\" [level=2]\n      - region \"Receipt charges by attempt\":\n        - table \"Receipt lineage rows\":\n          - rowgroup:\n            - row \"Attempt Provider Model Route Status Captured\":\n              - columnheader \"Attempt\"\n              - columnheader \"Provider\"\n              - columnheader \"Model\"\n              - columnheader \"Route\"\n              - columnheader \"Status\"\n              - columnheader \"Captured\"\n          - rowgroup:\n            - row \"attempt-fixture fal fixture/model fixture/route succeeded $0.67\":\n              - cell \"attempt-fixture\"\n              - cell \"fal\"\n              - cell \"fixture/model\"\n              - cell \"fixture/route\"\n              - cell \"succeeded\"\n              - cell \"$0.67\"\n            - row \"Total actual Unavailable Rev 77777777-7777-4777-8777-777777777777 All routes Net capture Unavailable\":\n              - cell \"Total actual\"\n              - cell \"Unavailable\"\n              - cell \"Rev 77777777-7777-4777-8777-777777777777\"\n              - cell \"All routes\"\n              - cell \"Net capture\"\n              - cell \"Unavailable\"\n    - complementary \"Receipt evidence\":\n      - heading \"Quote vs actual\" [level=2]\n      - text: Named quote\n      - strong: Unavailable\n      - text: Actual settled\n      - strong: Unavailable\n      - text: Under quote\n      - strong: Unavailable\n      - paragraph: This receipt does not include every amount needed to compare the quote and settlement.\n      - button \"Check receipt status\"\n      - heading \"Immutable record\" [level=2]\n      - text: Revision\n      - strong: 77777777-7777-4777-8777-777777777777\n      - text: Issued\n      - strong: 2026-10-04T01:00:00.000Z\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - strong: copy/concept-01.json\n      - text: application/json The run node is finished but its approved output is missing. Missing\n      - strong: copy/concept-02.json\n      - text: application/json The run node is finished but its approved output is missing. Missing\n      - strong: copy/concept-03.json\n      - text: application/json The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-01/master.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-02/master.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-03/master.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-01/feed-4x5.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-01/square-1x1.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-01/stories-9x16.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-02/feed-4x5.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-02/square-1x1.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-02/stories-9x16.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-03/feed-4x5.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-03/square-1x1.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: \"assets/concept-03/stories-9x16.{jpg|png|webp}\"\n      - text: image/jpeg, image/png, or image/webp The run node is finished but its approved output is missing. Missing\n      - strong: assets/concept-01/reels-motion-9x16.mp4\n      - text: video/mp4 The run node is finished but its approved output is missing. Missing\n      - strong: qa-report.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: receipt.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: manifest.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: mustbeviral-launch-pack-44444444-4444-4444-8444-444444444444.zip\n      - text: application/zip The archive has not been created. Queued\n    - text: Run 44444444-4444-4444-8444-444444444444\n  - text: Settlement unavailable\n  - status \"Receipt totals\": Quote unavailable, settled amount unavailable. Quote comparison unavailable.\n  - link \"Back to content review\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert"
+    },
+    {
+      "label": "denied",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 140,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - heading \"Receipt\" [level=1]\n  - alert:\n    - strong: Export unavailable\n    - text: Your session is not permitted to export this run.\n- alert"
+    },
+    {
+      "label": "not-found",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 180,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - heading \"Receipt\" [level=1]\n  - alert:\n    - strong: Export unavailable\n    - text: Run 44444444-4444-4444-8444-444444444444 was not found.\n- alert"
+    },
+    {
+      "label": "conflict",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Open the plan to recover",
+            "width": 577,
+            "height": 23
+          }
+        ],
+        "perf": {
+          "lcpMs": 184,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - heading \"Receipt\" [level=1]\n  - alert:\n    - strong: Revision conflict\n    - text: The immutable receipt cannot be issued against stale revision current immutable revision. Current revision is 77777777-7777-4777-8777-777777777777.\n    - link \"Open the plan to recover\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n- alert"
+    },
+    {
+      "label": "error",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 92,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - heading \"Receipt\" [level=1]\n  - alert:\n    - strong: Export unavailable\n    - text: Synthetic receipt error state.\n    - button \"Try reading receipt again\"\n- alert"
+    },
+    {
+      "label": "error-to-positive-keyboard",
+      "width": 1280,
+      "recovery": {
+        "focusedH1": true,
+        "summary": "Quoted $4.20, charged $4.08, $0.12 under quote",
+        "events": [
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 2648
+          },
+          {
+            "name": "keypress",
+            "duration": 56,
+            "interactionId": 2648
+          },
+          {
+            "name": "click",
+            "duration": 56,
+            "interactionId": 2648
+          },
+          {
+            "name": "keyup",
+            "duration": 56,
+            "interactionId": 2648
+          }
+        ],
+        "inp": [
+          {
+            "value": 56,
+            "entries": [
+              {
+                "name": "keydown",
+                "duration": 56,
+                "interactionId": 2648
+              },
+              {
+                "name": "keypress",
+                "duration": 56,
+                "interactionId": 2648
+              },
+              {
+                "name": "click",
+                "duration": 56,
+                "interactionId": 2648
+              },
+              {
+                "name": "keydown",
+                "duration": 56,
+                "interactionId": 2648
+              }
+            ]
+          }
+        ]
+      },
+      "readIncrement": 1,
+      "writes": 0
+    },
+    {
+      "label": "recovered",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "ledgerGeometry": {
+          "withinColumn": true,
+          "overlapsEvidence": false,
+          "regionWidth": 591.859375,
+          "clientWidth": 592,
+          "scrollWidth": 715,
+          "overflowX": "auto",
+          "tabIndex": 0
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": "Quoted $4.20, charged $4.08, $0.12 under quote",
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": "normal",
+        "moneyState": "known",
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 92,
+          "cls": 0.0013314857482910156,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2648
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2648
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2648
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2648
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - text: Export not created yet\n  - article \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\":\n    - heading \"Receipt for revision 77777777-7777-4777-8777-777777777777, issued 2026-10-04\" [level=1]\n    - paragraph: Run 44444444-4444-4444-8444-444444444444. This settlement record does not change.\n    - text: Statement\n    - strong: 44444444-4444-4444-8444-444444444444\n    - region \"What was charged, by attempt\":\n      - heading \"What was charged, by attempt\" [level=2]\n      - region \"Receipt charges by attempt\":\n        - table \"Receipt lineage rows\":\n          - rowgroup:\n            - row \"Attempt Provider Model Route Status Captured\":\n              - columnheader \"Attempt\"\n              - columnheader \"Provider\"\n              - columnheader \"Model\"\n              - columnheader \"Route\"\n              - columnheader \"Status\"\n              - columnheader \"Captured\"\n          - rowgroup:\n            - row \"attempt-fixture fal fixture/model fixture/route succeeded $0.67\":\n              - cell \"attempt-fixture\"\n              - cell \"fal\"\n              - cell \"fixture/model\"\n              - cell \"fixture/route\"\n              - cell \"succeeded\"\n              - cell \"$0.67\"\n            - row \"Total actual Settled Rev 77777777-7777-4777-8777-777777777777 All routes Net capture $4.08\":\n              - cell \"Total actual\"\n              - cell \"Settled\"\n              - cell \"Rev 77777777-7777-4777-8777-777777777777\"\n              - cell \"All routes\"\n              - cell \"Net capture\"\n              - cell \"$4.08\"\n    - complementary \"Receipt evidence\":\n      - heading \"Quote vs actual\" [level=2]\n      - text: Named quote\n      - strong: $4.20\n      - text: Actual settled\n      - strong: $4.08\n      - text: Under quote\n      - strong: $0.12\n      - heading \"Immutable record\" [level=2]\n      - text: Revision\n      - strong: 77777777-7777-4777-8777-777777777777\n      - text: Issued\n      - strong: 2026-10-04T01:00:00.000Z\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - strong: copy/concept-01.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-02.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: copy/concept-03.json\n      - text: application/json Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/master.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-02/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/feed-4x5.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/square-1x1.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-03/stories-9x16.png\n      - text: image/png Approved and verified for the immutable archive. Ready\n      - strong: assets/concept-01/reels-motion-9x16.mp4\n      - text: video/mp4 Approved and verified for the immutable archive. Ready\n      - strong: qa-report.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: receipt.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: manifest.json\n      - text: application/json Created deterministically after every source member is ready. Queued\n      - strong: mustbeviral-launch-pack-44444444-4444-4444-8444-444444444444.zip\n      - text: application/zip The archive has not been created. Queued\n    - text: Run 44444444-4444-4444-8444-444444444444\n  - text: Settled\n  - status \"Receipt totals\": Quoted $4.20, charged $4.08, $0.12 under quote\n  - button \"Create immutable export\"\n- alert"
+    },
+    {
+      "label": "loading",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": {
+          "top": 445.296875,
+          "bottom": 538.6875,
+          "parentTop": 118,
+          "parentBottom": 900,
+          "withinParent": true
+        },
+        "ledgerGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 112,
+          "cls": 0.0013314857482910156,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Results\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Results\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - status:\n    - heading \"Reading immutable receipt\" [level=1]\n    - text: Reading approved outputs. This read creates no export and replays none.\n- alert"
+    }
+  ],
+  "errors": [
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/22222222-2222-4222-8222-222222222222/workspaces/11111111-1111-4111-8111-111111111111/brands/33333333-3333-4333-8333-333333333333/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/11111111-1111-4111-8111-111111111111/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444/receipt"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    }
+  ],
+  "writes": 0
+}

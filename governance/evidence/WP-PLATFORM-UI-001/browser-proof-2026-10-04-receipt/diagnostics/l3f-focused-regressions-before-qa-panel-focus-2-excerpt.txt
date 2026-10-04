@@ -1,0 +1,34 @@
+Selected diagnostic lines from l3f-focused-regressions-before-qa-panel-focus-2.txt. This is an excerpt, not the full transcript.
+5:      × makes overflowing QA findings keyboard reachable and keeps focus when they fit again 173ms
+6:
+7: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+8:
+9:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > makes overflowing QA findings keyboard reachable and keeps focus when they fit again
+10: AssertionError: expected null to be '0' // Object.is equality
+11:
+12: - Expected:
+13: "0"
+14:
+15: + Received:
+16: null
+17:
+18:  ❯ src/features/review/review-flow.worker.test.tsx:121:46
+19:     119|       }
+20:     120|       act(() => resizes.forEach((callback) => callback([], {} as Resiz…
+21:     121|       expect(panel.getAttribute('tabindex')).toBe('0');
+22:        |                                              ^
+23:     122|       act(() => panel.focus());
+24:     123|       expect(document.activeElement).toBe(panel);
+25:
+26: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+27:
+28:
+29:  Test Files  1 failed | 5 passed (6)
+30:       Tests  1 failed | 65 passed (66)
+31:    Start at  22:22:56
+32:    Duration  2.67s (transform 2.48s, setup 0ms, import 5.04s, tests 961ms, environment 1.77s)
+33:
+34: undefined
+35: C:\dev\mbv-finish\apps\web:
+36: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx
+37:

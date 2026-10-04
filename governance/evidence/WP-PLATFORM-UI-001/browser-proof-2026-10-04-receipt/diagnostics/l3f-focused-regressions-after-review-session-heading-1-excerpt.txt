@@ -1,0 +1,11 @@
+Selected diagnostic lines from l3f-focused-regressions-after-review-session-heading-1.txt. This is an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  7 passed (7)
+6:       Tests  81 passed (81)
+7:    Start at  00:54:06
+8:    Duration  3.19s (transform 3.18s, setup 0ms, import 6.50s, tests 2.01s, environment 2.79s)
+9:
+10:

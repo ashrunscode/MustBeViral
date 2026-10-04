@@ -1,0 +1,39 @@
+Selected diagnostic lines from l3f-connected-author-before-review-available-width-1.txt. This is an excerpt, not the full transcript.
+17:   1) [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+18:
+19:     Error: expect(locator).toBeVisible() failed
+20:
+21:     Locator: getByRole('button', { name: 'Close QA findings', exact: true })
+22:     Expected: visible
+23:     Timeout: 5000ms
+24:     Error: element(s) not found
+25:
+26:     Call log:
+27:       - Expect "toBeVisible" with timeout 5000ms
+28:       - waiting for getByRole('button', { name: 'Close QA findings', exact: true })
+29:
+30:
+31:       545 |     // The existing tablet drawer must replace desktop columns and retain its Close action.
+32:       546 |     const closeQa = page.getByRole('button', { name: 'Close QA findings', exact: true });
+33:     > 547 |     await expect(closeQa).toBeVisible();
+34:           |                           ^
+256:     attachment #33: review-exact-text-size-200-aria (text/plain) ───────────────────────────────────
+257:     - link "Skip to content":
+258:       - /url: "#platform-main"
+259:     - complementary "Studio":
+260:       - link "Must Be Viral":
+261:         - /url: /studio
+262:       - text: Studio Synthetic W1 journeys c355ae80-88ee-48b6-8b2e-dc986d66cc19
+263:       - link "Switch studio":
+264:         - /url: /studio
+265:       - navigation "Studio navigation":
+266:         - link "Overv...
+267:     ────────────────────────────────────────────────────────────────────────────────────────────────
+268:
+269:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+270:
+271:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+272:
+273:   1 failed
+274:     [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+275:

@@ -1,0 +1,61 @@
+Selected diagnostic lines from l3f-focused-regressions-before-ready-drawer-1.txt. This is an excerpt, not the full transcript.
+7:      × explains mobile graph editing while leaving outline navigation and comments available 93ms
+8:
+9: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+10:
+11:  FAIL  src/features/canvas/canvas-flow.worker.test.tsx > CanvasFlow responsive navigation and late worker loading > observes the graph surface after a delayed worker read and fits its measured size
+12: AssertionError: expected false to be true // Object.is equality
+13:
+14: - Expected
+15: + Received
+16:
+17: - true
+18: + false
+19:
+20:  ❯ src/features/canvas/canvas-flow.worker.test.tsx:85:74
+21:      83|     await act(async () => resolveRead?.({ type: 'ok', model: createCan…
+22:      84|     const surface = await screen.findByTestId('canvas-surface');
+28: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+29:
+30:  FAIL  src/features/canvas/canvas-flow.worker.test.tsx > CanvasFlow responsive navigation and late worker loading > keeps the outline and comment draft in one drawer with Escape focus recovery
+31: TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Outline and comments"
+32:
+33: Here are the accessible roles:
+34:
+35:   region:
+36:
+37:   Name "Campaign plan":
+38:   <section
+39:     aria-label="Campaign plan"
+40:     class="_workspace_ef187b"
+702: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+703:
+704:  FAIL  src/features/canvas/canvas-flow.worker.test.tsx > CanvasFlow responsive navigation and late worker loading > explains mobile graph editing while leaving outline navigation and comments available
+705: AssertionError: expected false to be true // Object.is equality
+706:
+707: - Expected
+708: + Received
+709:
+710: - true
+711: + false
+712:
+713:  ❯ src/features/canvas/canvas-flow.worker.test.tsx:123:100
+714:     121|     render(<CanvasFlow dataMode="preview" workspace="lumen-skin" />);
+715:     122|     resize(flowRoot(), 375, 700);
+716:     123|     expect((screen.getByRole('button', { name: 'Validate graph' }) as …
+717:        |                                                                                                    ^
+718:     124|       true,
+719:     125|     );
+720:
+721: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+722:
+723:
+724:  Test Files  1 failed | 6 passed (7)
+725:       Tests  3 failed | 66 passed (69)
+726:    Start at  22:59:35
+727:    Duration  2.90s (transform 2.83s, setup 0ms, import 6.06s, tests 1.48s, environment 2.77s)
+728:
+729: undefined
+730: C:\dev\mbv-finish\apps\web:
+731: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+732:

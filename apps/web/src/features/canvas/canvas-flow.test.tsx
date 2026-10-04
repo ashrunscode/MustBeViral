@@ -34,6 +34,17 @@ describe('CanvasResultBanner result-union rendering', () => {
 });
 
 describe('CanvasFlow semantic outline component parity', () => {
+  it('names the campaign plan when no canvas is selected and keeps its missing-input message', () => {
+    const html = renderToStaticMarkup(
+      <CanvasFlow dataMode="worker" workspace="workspace-fixture" />,
+    );
+    expect(html.match(/<h1\b/gu)).toHaveLength(1);
+    expect(html).toContain('Campaign plan</h1>');
+    expect(html).toContain('Open this screen from a project with a canvas selected.');
+    expect(html).toContain('role="alert"');
+    expect(html).not.toContain('data-node-id');
+  });
+
   it('renders outline rows in the same order and with the same statuses as graph data', () => {
     const graph = createCanvasFixture();
     const html = renderToStaticMarkup(<CanvasFlow dataMode="preview" workspace="lumen-skin" />);

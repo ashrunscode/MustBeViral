@@ -1,0 +1,28 @@
+{
+  "startedUtc": "2026-10-04T01:05:37.0784651Z",
+  "endedUtc": "2026-10-04T01:05:40.4203050Z",
+  "base": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "state": "new regressions against unchanged receipt implementation",
+  "node": "v24.21.0",
+  "pnpm": "11.12.0",
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx",
+  "exit": 1,
+  "files": [
+    {
+      "path": "apps/web/src/features/export/export-port.ts",
+      "sha256": "b40bf43e050e3ffccc9eef1430811a5f7e8d0f953094117e8f74d192373e287d"
+    },
+    {
+      "path": "apps/web/src/features/export/export-port.test.ts",
+      "sha256": "fd93935dee750bf249c743787c7a111f11284136fb1b233a321dc6908fe5f4ab"
+    },
+    {
+      "path": "apps/web/src/features/export/receipt-flow.test.tsx",
+      "sha256": "3159a7689b2626ca97dbc54778df609477777c209bdd4098f356f613094885c1"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow.tsx",
+      "sha256": "201acd23c6d6bf1e9f58a98955878d0b3e5def9c3c6b9353926b6a422cd8c010"
+    }
+  ]
+}

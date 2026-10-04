@@ -34,8 +34,8 @@ export interface ReceiptLineageRow {
 
 export interface ImmutableReceipt {
   readonly receiptNumber: string;
-  readonly quoteMicros: bigint;
-  readonly actualMicros: bigint;
+  readonly quoteMicros: bigint | null;
+  readonly actualMicros: bigint | null;
   readonly revision: string;
   readonly issuedAt: string;
   readonly lineage: readonly ReceiptLineageRow[];
@@ -218,12 +218,15 @@ export class InMemoryExportPort implements ExportPort {
 
 function immutableReceipt(receipt: P0OperationData<'get_receipt'>['receipt']): ImmutableReceipt {
   const reservation = receipt.reservation;
-  const capturedMicros = BigInt(reservation?.captured_micros ?? 0);
-  const refundedMicros = BigInt(reservation?.refunded_micros ?? 0);
+  const netCapturedMicros =
+    reservation === null
+      ? null
+      : BigInt(reservation.captured_micros) - BigInt(reservation.refunded_micros);
   return {
     receiptNumber: receipt.run.id,
-    quoteMicros: BigInt(reservation?.amount_micros ?? 0),
-    actualMicros: capturedMicros >= refundedMicros ? capturedMicros - refundedMicros : 0n,
+    quoteMicros: reservation === null ? null : BigInt(reservation.amount_micros),
+    actualMicros:
+      netCapturedMicros === null ? null : netCapturedMicros >= 0n ? netCapturedMicros : 0n,
     revision: receipt.run.canvas_revision_id,
     issuedAt: receipt.run.updated_at,
     lineage: [...receipt.provider_jobs]

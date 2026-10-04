@@ -1,0 +1,18 @@
+{
+  "OwnedWorkInProgress": true,
+  "Root": "C:/dev/mbv-finish",
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep keeps campaign receipt",
+  "SyntheticCleanupDeleteRequestsPrevented": true,
+  "StartedUtc": "2026-10-04T04:38:08.7111335Z",
+  "FinishedUtc": "2026-10-04T04:39:00.9998867Z",
+  "ProvidersAndQueuesDisabled": true,
+  "HarnessPid": 8316,
+  "ActualExit": 0,
+  "Log": "C:/dev/mbv-run/l3f-connected-author-after-review-rail-containment-1.txt",
+  "SourceBase": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "LocalOnly": true
+}

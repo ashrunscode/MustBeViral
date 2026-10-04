@@ -1,0 +1,36 @@
+Selected diagnostic lines from l3f-focused-regressions-before-qa-panel-focus-1.txt. This is an excerpt, not the full transcript.
+5:      × makes overflowing QA findings keyboard reachable and keeps focus when they fit again 159ms
+6:
+7: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+8:
+9:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > makes overflowing QA findings keyboard reachable and keeps focus when they fit again
+10: TestingLibraryElementError: Found multiple elements with the role "complementary" and name "QA findings"
+11:
+12: Here are the matching elements:
+13:
+14: Ignored nodes: comments, script, style
+15: <aside
+16:   aria-labelledby="qa-title"
+17:   class="_qaPanel_e9fec0"
+18: >
+19:   <h2
+261:  ❯ src/features/review/review-flow.worker.test.tsx:103:28
+262:     101|       );
+263:     102|       await screen.findByRole('button', { name: 'Approve Visual system…
+264:     103|       const panel = screen.getByRole('complementary', { name: 'QA find…
+265:        |                            ^
+266:     104|       expect(panel.hasAttribute('tabindex')).toBe(false);
+267:     105|       for (const [key, value] of Object.entries({
+268:
+269: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+270:
+271:
+272:  Test Files  1 failed | 5 passed (6)
+273:       Tests  1 failed | 65 passed (66)
+274:    Start at  22:22:20
+275:    Duration  2.72s (transform 2.50s, setup 0ms, import 5.07s, tests 910ms, environment 1.79s)
+276:
+277: undefined
+278: C:\dev\mbv-finish\apps\web:
+279: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx
+280:

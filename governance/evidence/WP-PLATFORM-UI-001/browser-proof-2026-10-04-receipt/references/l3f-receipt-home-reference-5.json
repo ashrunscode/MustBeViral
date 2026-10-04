@@ -1,0 +1,58 @@
+{
+  "checkedUtc": "2026-10-04T02:26:02.303Z",
+  "sourceFingerprint": "d54d9790277e1a143ed2a13b03d56c6bef4dfaf9a7e55322f3119964c1017b04",
+  "localOnly": true,
+  "signedOut": true,
+  "formsSubmitted": false,
+  "cells": [
+    {
+      "width": 375,
+      "overflow": false,
+      "main": 1,
+      "h1": 1,
+      "lang": "en",
+      "perf": {
+        "lcpMs": 132,
+        "cls": 0.03476691984760611
+      },
+      "seriousCritical": []
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "main": 1,
+      "h1": 1,
+      "lang": "en",
+      "perf": {
+        "lcpMs": 68,
+        "cls": 0
+      },
+      "seriousCritical": []
+    },
+    {
+      "width": 1280,
+      "overflow": false,
+      "main": 1,
+      "h1": 1,
+      "lang": "en",
+      "perf": {
+        "lcpMs": 60,
+        "cls": 0
+      },
+      "seriousCritical": []
+    },
+    {
+      "width": 1920,
+      "overflow": false,
+      "main": 1,
+      "h1": 1,
+      "lang": "en",
+      "perf": {
+        "lcpMs": 72,
+        "cls": 0
+      },
+      "seriousCritical": []
+    }
+  ],
+  "errors": []
+}

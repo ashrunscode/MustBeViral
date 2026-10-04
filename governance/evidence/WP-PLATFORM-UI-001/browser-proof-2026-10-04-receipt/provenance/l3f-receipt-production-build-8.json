@@ -1,0 +1,13 @@
+{
+  "sourceFingerprint": "l3f-receipt-browser-source-before-8.json",
+  "exit": 0,
+  "pnpm": "11.12.0",
+  "command": "node C:/dev/mbv-run/launch-l3f-receipt-production-8.mjs build",
+  "startedUtc": "2026-10-04T02:56:52.7590555Z",
+  "log": "C:/dev/mbv-run/l3f-receipt-production-build-8.txt",
+  "node": "v24.18.0",
+  "environmentFileCreated": false,
+  "sourceBase": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "localOnly": true,
+  "endedUtc": "2026-10-04T02:57:16.5814060Z"
+}

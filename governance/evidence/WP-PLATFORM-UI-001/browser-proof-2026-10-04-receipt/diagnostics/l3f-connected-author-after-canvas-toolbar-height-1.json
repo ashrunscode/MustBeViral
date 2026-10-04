@@ -1,0 +1,18 @@
+{
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "StartedUtc": "2026-10-04T04:51:33.1703610Z",
+  "SourceBase": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "Root": "C:/dev/mbv-finish",
+  "Log": "C:/dev/mbv-run/l3f-connected-author-after-canvas-toolbar-height-1.txt",
+  "FinishedUtc": "2026-10-04T04:52:27.0865835Z",
+  "OwnedWorkInProgress": true,
+  "LocalOnly": true,
+  "SyntheticCleanupDeleteRequestsPrevented": true,
+  "ProvidersAndQueuesDisabled": true,
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep keeps campaign receipt",
+  "HarnessPid": 67524,
+  "ActualExit": 0
+}

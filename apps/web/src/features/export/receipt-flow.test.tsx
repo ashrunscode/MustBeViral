@@ -20,6 +20,72 @@ describe('ReceiptFlow', () => {
     expect(html.match(/data-export-state=/gu)?.length).toBe(4);
   });
 
+  it.each([
+    {
+      label: 'missing quote',
+      quoteMicros: null,
+      actualMicros: 4_080_000n,
+      quoteText: 'Unavailable',
+      actualText: '$4.08',
+      comparisonText: 'Unavailable',
+      summary: 'Quote unavailable, charged $4.08. Quote comparison unavailable.',
+    },
+    {
+      label: 'missing settlement',
+      quoteMicros: 4_200_000n,
+      actualMicros: null,
+      quoteText: '$4.20',
+      actualText: 'Unavailable',
+      comparisonText: 'Unavailable',
+      summary: 'Quoted $4.20, settled amount unavailable. Quote comparison unavailable.',
+    },
+    {
+      label: 'missing reservation totals',
+      quoteMicros: null,
+      actualMicros: null,
+      quoteText: 'Unavailable',
+      actualText: 'Unavailable',
+      comparisonText: 'Unavailable',
+      summary: 'Quote unavailable, settled amount unavailable. Quote comparison unavailable.',
+    },
+    {
+      label: 'known zero totals',
+      quoteMicros: 0n,
+      actualMicros: 0n,
+      quoteText: '$0.00',
+      actualText: '$0.00',
+      comparisonText: '$0.00',
+      summary: 'Quoted $0.00, charged $0.00, $0.00 under quote',
+    },
+  ])('renders $label honestly in the ledger, evidence and summary', (testCase) => {
+    const base = new InMemoryExportPort().create({
+      expectedRevisionId: '7f3a',
+      approvedGroupIds: ['visuals'],
+    });
+    if (base.type !== 'ok') throw new Error('Expected the complete preview receipt');
+    const port: ExportPort = {
+      create: () => ({
+        ...base,
+        receipt: {
+          ...base.receipt,
+          quoteMicros: testCase.quoteMicros,
+          actualMicros: testCase.actualMicros,
+        },
+      }),
+    };
+    const html = renderToStaticMarkup(<ReceiptFlow port={port} workspace="lumen-skin" />);
+
+    expect(html).toContain(`<span>Named quote</span><strong>${testCase.quoteText}</strong>`);
+    expect(html).toContain(`<span>Actual settled</span><strong>${testCase.actualText}</strong>`);
+    expect(html).toContain(`<span>Under quote</span><strong>${testCase.comparisonText}</strong>`);
+    expect(html.replaceAll(/<!--.*?-->/gu, '')).toContain(testCase.summary);
+    if (testCase.actualMicros === null) {
+      expect(html).toContain('<td>Total actual</td><td>Unavailable</td>');
+      expect(html).toContain('Settlement unavailable');
+    }
+    if (testCase.comparisonText === 'Unavailable') expect(html).not.toContain('$0.00 under quote');
+  });
+
   it('renders the incomplete checklist and blocks export creation', () => {
     const html = renderToStaticMarkup(
       <ReceiptFlow workspace="lumen-skin" scenario="review_incomplete" />,

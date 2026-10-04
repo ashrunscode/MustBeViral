@@ -1,0 +1,103 @@
+{
+  "recordedUtc": "2026-10-04T06:47:28.486Z",
+  "rubric": "design-qa-loop section 8; owner A3 requires at least 90.",
+  "evidenceLevel": "Production-rendered local synthetic read fixtures; no remote writes.",
+  "keyboardEvidence": "Named ledger focus/scroll, receipt retry recovery focus, Canvas and QA Close/Escape return and inert closed drawers in retained native observations.",
+  "themeEvidence": "Readable intentional Lightfield palette under light/dark preference and forced colors; no new dark palette.",
+  "motionEvidence": "Reduced-motion cells have no running animations; no transition-all in changed route styles; existing work-motion rules retained.",
+  "scores": [
+    {
+      "route": "Receipt",
+      "files": [
+        "l3f-receipt-browser-final-8-375.json",
+        "l3f-receipt-browser-final-8-768.json",
+        "l3f-receipt-browser-final-8-1280.json",
+        "l3f-receipt-browser-final-8-1920.json",
+        "l3f-receipt-accessibility-additional-8.json"
+      ],
+      "cellCount": 62,
+      "measuredCellCount": 54,
+      "seriousCriticalViolations": 0,
+      "horizontalOverflow": false,
+      "bodyFontPx": [15],
+      "smallTargetNames": ["Skip to content", "Back to content review", "Open the plan to recover"],
+      "maximum375LcpMs": 264,
+      "maximum375Cls": 0.08371856130234495,
+      "maximumTrustedEventDurationMs": 56,
+      "controlledResourceConsoleEntries": 16,
+      "applicationErrors": 0,
+      "areas": {
+        "accessibility": 25,
+        "responsive": 9,
+        "theming": 10,
+        "motion": 10,
+        "performance": 16,
+        "craft": 20
+      },
+      "total": 90,
+      "craftFinding": null
+    },
+    {
+      "route": "Canvas",
+      "files": [
+        "l3f-canvas-ready-final-13.json",
+        "l3f-canvas-states-final-13.json",
+        "l3f-canvas-ready-settled-13.json"
+      ],
+      "cellCount": 61,
+      "measuredCellCount": 61,
+      "seriousCriticalViolations": 0,
+      "horizontalOverflow": false,
+      "bodyFontPx": [15],
+      "smallTargetNames": ["Skip to content"],
+      "maximum375LcpMs": 400,
+      "maximum375Cls": 0.08347613872020271,
+      "maximumTrustedEventDurationMs": 64,
+      "controlledResourceConsoleEntries": 34,
+      "applicationErrors": 0,
+      "areas": {
+        "accessibility": 25,
+        "responsive": 11,
+        "theming": 10,
+        "motion": 10,
+        "performance": 16,
+        "craft": 19
+      },
+      "total": 91,
+      "craftFinding": "P3 dense presence metadata in the compact drawer."
+    },
+    {
+      "route": "Review",
+      "files": ["l3f-review-final-20.json", "l3f-review-states-verified-20.json"],
+      "cellCount": 61,
+      "measuredCellCount": 61,
+      "seriousCriticalViolations": 0,
+      "horizontalOverflow": false,
+      "bodyFontPx": [15],
+      "smallTargetNames": ["Skip to content"],
+      "maximum375LcpMs": 224,
+      "maximum375Cls": 0.0844128632651039,
+      "maximumTrustedEventDurationMs": 64,
+      "controlledResourceConsoleEntries": 548,
+      "applicationErrors": 0,
+      "areas": {
+        "accessibility": 25,
+        "responsive": 11,
+        "theming": 10,
+        "motion": 10,
+        "performance": 16,
+        "craft": 19
+      },
+      "total": 91,
+      "craftFinding": "P3 pending-approval label wraps without clipping."
+    }
+  ],
+  "limitations": [
+    "CSS enlargement and exact computed text doubling are emulations, not browser-toolbar zoom.",
+    "Lab event durations are not field INP.",
+    "The one-node browser fixture does not establish canvas FPS; exact-head C4 performance suite is still required.",
+    "Shared Brief and public home are references; no new full-route score is assigned from those four width-only samples."
+  ],
+  "scoringCorrectionUtc": "2026-10-04T07:06:38.650Z",
+  "scoringCorrection": "Conservatively withhold all four console-performance points because the captured errors include intentionally failed resources. Application errors are still zero. Counts and thresholds are unchanged."
+}

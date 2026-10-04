@@ -1,0 +1,8 @@
+{
+  "completedUtc": "2026-10-04T06:47:28.488Z",
+  "firstAttemptExit": 1,
+  "firstAttemptError": "TypeError: a keyboard recovery record has no metrics field.",
+  "retryActualExit": 0,
+  "correction": "Score only measured cells; preserve every original observation, keyboard record and threshold.",
+  "sourceEdits": false
+}

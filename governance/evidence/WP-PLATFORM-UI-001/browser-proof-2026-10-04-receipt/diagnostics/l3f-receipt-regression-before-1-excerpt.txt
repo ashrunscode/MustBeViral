@@ -1,0 +1,76 @@
+Selected lines from the original source-scanned test transcript; an excerpt, not the full transcript.
+9:      × renders 'missing reservation totals' honestly in the ledger, evidence and summary 1ms
+10:
+11: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+12:
+13:  FAIL  src/features/export/export-port.test.ts > WorkerExportPort > preserves receipt totals for 'missing reservation' without substituting run spend
+14: AssertionError: expected { type: 'export_required', …(2) } to match object { type: 'export_required', …(1) }
+15: (5 matching properties omitted from actual)
+16:
+17: - Expected
+18: + Received
+19:
+20:   {
+21:     "receipt": {
+22: -     "actualMicros": null,
+23: -     "quoteMicros": null,
+24: +     "actualMicros": 0n,
+38: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+39:
+40:  FAIL  src/features/export/receipt-flow.test.tsx > ReceiptFlow > renders 'missing quote' honestly in the ledger, evidence and summary
+41: TypeError: Cannot mix BigInt and other types, use explicit conversions
+42:  ❯ formatUsdMicros ../../packages/ui/src/money.ts:12:25
+43:      10|   const negative = micros < 0n;
+44:      11|   const absoluteMicros = negative ? -micros : micros;
+45:      12|   const roundedCents = (absoluteMicros + USD_MICROS_PER_CENT / 2n) / U…
+46:        |                         ^
+47:      13|   const dollars = roundedCents / USD_CENTS_PER_DOLLAR;
+48:      14|   const cents = roundedCents % USD_CENTS_PER_DOLLAR;
+49:  ❯ ReceiptFlow app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow.tsx:384:26
+50:  ❯ Object.react_stack_bottom_frame ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:9808:18
+59: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+60:
+61:  FAIL  src/features/export/receipt-flow.test.tsx > ReceiptFlow > renders 'missing settlement' honestly in the ledger, evidence and summary
+62: TypeError: Cannot mix BigInt and other types, use explicit conversions
+63:  ❯ ReceiptFlow app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow.tsx:287:59
+64:     285|   }
+65:     286|   const varianceMicros =
+66:     287|     receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros …
+67:        |                                                           ^
+68:     288|   const issuedDate = receipt.issuedAt.slice(0, 10);
+69:     289|   return (
+70:  ❯ Object.react_stack_bottom_frame ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:9808:18
+71:  ❯ renderWithHooks ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5062:19
+80: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+81:
+82:  FAIL  src/features/export/receipt-flow.test.tsx > ReceiptFlow > renders 'missing reservation totals' honestly in the ledger, evidence and summary
+83: TypeError: Cannot mix BigInt and other types, use explicit conversions
+84:  ❯ formatUsdMicros ../../packages/ui/src/money.ts:12:25
+85:      10|   const negative = micros < 0n;
+86:      11|   const absoluteMicros = negative ? -micros : micros;
+87:      12|   const roundedCents = (absoluteMicros + USD_MICROS_PER_CENT / 2n) / U…
+88:        |                         ^
+89:      13|   const dollars = roundedCents / USD_CENTS_PER_DOLLAR;
+90:      14|   const cents = roundedCents % USD_CENTS_PER_DOLLAR;
+91:  ❯ ReceiptFlow app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow.tsx:374:24
+92:  ❯ Object.react_stack_bottom_frame ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:9808:18
+93:  ❯ renderWithHooks ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5062:19
+94:  ❯ renderElement ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5497:23
+95:  ❯ retryNode ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:6428:21
+96:  ❯ performWork ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:7435:17
+97:  ❯ startWork ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:8270:7
+98:  ❯ renderToStringImpl ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:8380:7
+99:  ❯ process.env.NODE_ENV.exports.renderToStaticMarkup ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:9861:14
+100:
+101: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+102:
+103:
+104:  Test Files  2 failed (2)
+105:       Tests  4 failed | 32 passed (36)
+106:    Start at  20:05:38
+107:    Duration  908ms (transform 662ms, setup 0ms, import 1.19s, tests 100ms, environment 0ms)
+108:
+109: undefined
+110: C:\dev\mbv-finish\apps\web:
+111: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx
+112:

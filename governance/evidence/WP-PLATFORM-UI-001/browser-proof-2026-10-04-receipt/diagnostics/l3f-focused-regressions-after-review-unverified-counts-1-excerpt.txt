@@ -1,0 +1,11 @@
+Selected diagnostic lines from l3f-focused-regressions-after-review-unverified-counts-1.txt. This is an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  7 passed (7)
+6:       Tests  81 passed (81)
+7:    Start at  00:58:45
+8:    Duration  3.08s (transform 3.10s, setup 0ms, import 6.37s, tests 1.72s, environment 2.82s)
+9:
+10:

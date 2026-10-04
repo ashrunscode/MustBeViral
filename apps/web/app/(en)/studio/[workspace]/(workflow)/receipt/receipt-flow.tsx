@@ -10,7 +10,7 @@ import {
   useScrollableRegion,
 } from '@mustbeviral/ui';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SessionExpiredAction } from '../../../../../../src/components/session-expired-action';
 import {
@@ -170,9 +170,19 @@ export function ReceiptFlow({
   const [downloadError, setDownloadError] = useState<string | null>(null);
   const context = useCampaignContext();
   const reviewHref = campaignHref(workspace, 'content', { ...context, run: runId ?? context.run });
-  // The receipt card scrolls inside the page on narrow screens and holds no focusable content there.
+  // The receipt card scrolls inside the page on narrow screens; make that region keyboard reachable.
   const { ref: receiptRegionRef, tabIndex: receiptRegionTabIndex } =
     useScrollableRegion<HTMLElement>();
+  const { ref: ledgerRegionRef, tabIndex: ledgerRegionTabIndex } =
+    useScrollableRegion<HTMLDivElement>();
+  const receiptHeadingRef = useRef<HTMLHeadingElement>(null);
+  const focusAfterRead = useRef(false);
+
+  useEffect(() => {
+    if (!focusAfterRead.current || result === null) return;
+    focusAfterRead.current = false;
+    receiptHeadingRef.current?.focus();
+  }, [result]);
 
   useEffect(() => {
     if (readPort === null) return;
@@ -189,7 +199,7 @@ export function ReceiptFlow({
     return (
       <div id="main-content" className={styles.receiptPage}>
         <Card className={styles.resultCard} feedback="loading" role="status" data-result="loading">
-          <strong>Reading immutable receipt</strong>
+          <h1 className={styles.loadingTitle}>Reading immutable receipt</h1>
           <span>Reading approved outputs. This read creates no export and replays none.</span>
         </Card>
       </div>
@@ -205,7 +215,9 @@ export function ReceiptFlow({
   ) {
     return (
       <div id="main-content" className={styles.receiptPage}>
-        <h1 className={styles.sectionLabel}>Receipt</h1>
+        <h1 ref={receiptHeadingRef} tabIndex={-1} className={styles.sectionLabel}>
+          Receipt
+        </h1>
         <ExportResultNotice
           context={context}
           {...(runId === undefined ? {} : { runId })}
@@ -265,6 +277,7 @@ export function ReceiptFlow({
   };
   async function retryRead() {
     if (readPort === null) return;
+    focusAfterRead.current = true;
     setLastOperation('read');
     setResult(null);
     setResult(await readPort.read());
@@ -284,10 +297,24 @@ export function ReceiptFlow({
     setResult(next);
   }
   const varianceMicros =
-    receipt.quoteMicros >= receipt.actualMicros ? receipt.quoteMicros - receipt.actualMicros : 0n;
+    receipt.quoteMicros === null || receipt.actualMicros === null
+      ? null
+      : receipt.quoteMicros >= receipt.actualMicros
+        ? receipt.quoteMicros - receipt.actualMicros
+        : 0n;
+  const quoteText =
+    receipt.quoteMicros === null ? 'Unavailable' : formatUsdMicros(receipt.quoteMicros);
+  const actualText =
+    receipt.actualMicros === null ? 'Unavailable' : formatUsdMicros(receipt.actualMicros);
+  const comparisonText = varianceMicros === null ? 'Unavailable' : formatUsdMicros(varianceMicros);
+  const settlementSummary = `${receipt.quoteMicros === null ? 'Quote unavailable' : `Quoted ${quoteText}`}, ${receipt.actualMicros === null ? 'settled amount unavailable' : `charged ${actualText}`}${varianceMicros === null ? '. Quote comparison unavailable.' : `, ${comparisonText} under quote`}`;
   const issuedDate = receipt.issuedAt.slice(0, 10);
   return (
-    <div id="main-content" className={styles.receiptPage}>
+    <div
+      id="main-content"
+      className={styles.receiptPage}
+      data-money-state={varianceMicros === null ? 'unavailable' : 'known'}
+    >
       <div className={styles.sealRow}>
         <span className={`${styles.receiptSeal} receipt-seal`} data-seal={result.type}>
           <MonoCaps>
@@ -319,7 +346,7 @@ export function ReceiptFlow({
         ) : null}
         <header className={styles.documentHead}>
           <div>
-            <h1 id="receipt-title">
+            <h1 ref={receiptHeadingRef} tabIndex={-1} id="receipt-title">
               Receipt for revision {receipt.revision}, issued {issuedDate}
             </h1>
             <p>
@@ -338,59 +365,80 @@ export function ReceiptFlow({
             <h2 id="lineage-title" className={styles.sectionLabel}>
               What was charged, by attempt
             </h2>
-            <LedgerTable className={styles.ledger} aria-label="Receipt lineage rows">
-              <thead>
-                <tr>
-                  <th>Attempt</th>
-                  <th>Provider</th>
-                  <th>Model</th>
-                  <th>Route</th>
-                  <th>Status</th>
-                  <th>Captured</th>
-                </tr>
-              </thead>
-              <tbody>
-                {receipt.lineage.length === 0 ? (
+            <div
+              ref={ledgerRegionRef}
+              tabIndex={ledgerRegionTabIndex}
+              className={styles.ledgerRegion}
+              role="region"
+              aria-label="Receipt charges by attempt"
+            >
+              <LedgerTable className={styles.ledger} aria-label="Receipt lineage rows">
+                <thead>
                   <tr>
-                    <td colSpan={6}>No charged attempts are recorded on this receipt.</td>
+                    <th>Attempt</th>
+                    <th>Provider</th>
+                    <th>Model</th>
+                    <th>Route</th>
+                    <th>Status</th>
+                    <th>Captured</th>
                   </tr>
-                ) : null}
-                {receipt.lineage.map((row) => (
-                  <tr key={row.attemptId} data-lineage-id={row.attemptId}>
-                    <td>{row.attemptId}</td>
-                    <td>{row.provider}</td>
-                    <td>{row.providerModelId}</td>
-                    <td>{row.routeId}</td>
-                    <td>{row.status.replaceAll('_', ' ')}</td>
-                    <td>{formatUsdMicros(row.capturedMicros)}</td>
+                </thead>
+                <tbody>
+                  {receipt.lineage.length === 0 ? (
+                    <tr>
+                      <td colSpan={6}>No charged attempts are recorded on this receipt.</td>
+                    </tr>
+                  ) : null}
+                  {receipt.lineage.map((row) => (
+                    <tr key={row.attemptId} data-lineage-id={row.attemptId}>
+                      <td>{row.attemptId}</td>
+                      <td>{row.provider}</td>
+                      <td>{row.providerModelId}</td>
+                      <td>{row.routeId}</td>
+                      <td>{row.status.replaceAll('_', ' ')}</td>
+                      <td>{formatUsdMicros(row.capturedMicros)}</td>
+                    </tr>
+                  ))}
+                  <tr className={styles.totalRow}>
+                    <td>Total actual</td>
+                    <td>{receipt.actualMicros === null ? 'Unavailable' : 'Settled'}</td>
+                    <td>Rev {receipt.revision}</td>
+                    <td>All routes</td>
+                    <td>Net capture</td>
+                    <td>{actualText}</td>
                   </tr>
-                ))}
-                <tr className={styles.totalRow}>
-                  <td>Total actual</td>
-                  <td>Settled</td>
-                  <td>Rev {receipt.revision}</td>
-                  <td>All routes</td>
-                  <td>Net capture</td>
-                  <td>{formatUsdMicros(receipt.actualMicros)}</td>
-                </tr>
-              </tbody>
-            </LedgerTable>
+                </tbody>
+              </LedgerTable>
+            </div>
           </section>
           <aside className={styles.evidenceColumn} aria-label="Receipt evidence">
             <section className={styles.evidenceBlock}>
               <h2>Quote vs actual</h2>
               <div>
                 <span>Named quote</span>
-                <strong>{formatUsdMicros(receipt.quoteMicros)}</strong>
+                <strong>{quoteText}</strong>
               </div>
               <div>
                 <span>Actual settled</span>
-                <strong>{formatUsdMicros(receipt.actualMicros)}</strong>
+                <strong>{actualText}</strong>
               </div>
               <div>
                 <span>Under quote</span>
-                <strong>{formatUsdMicros(varianceMicros)}</strong>
+                <strong>{comparisonText}</strong>
               </div>
+              {varianceMicros === null ? (
+                <>
+                  <p className={styles.availabilityNotice}>
+                    This receipt does not include every amount needed to compare the quote and
+                    settlement.
+                  </p>
+                  {readPort === null ? null : (
+                    <Button variant="ghost" onClick={() => void retryRead()}>
+                      Check receipt status
+                    </Button>
+                  )}
+                </>
+              ) : null}
             </section>
             <section className={styles.evidenceBlock}>
               <h2>Immutable record</h2>
@@ -445,10 +493,11 @@ export function ReceiptFlow({
       </article>
       <div className={styles.confirmBar}>
         <div>
-          <MonoCaps>Settled</MonoCaps>
-          <span>
-            Quoted {formatUsdMicros(receipt.quoteMicros)}, charged{' '}
-            {formatUsdMicros(receipt.actualMicros)}, {formatUsdMicros(varianceMicros)} under quote
+          <MonoCaps>
+            {receipt.actualMicros === null ? 'Settlement unavailable' : 'Settled'}
+          </MonoCaps>
+          <span role="status" aria-label="Receipt totals">
+            {settlementSummary}
           </span>
         </div>
         {result.type === 'review_incomplete' ? (

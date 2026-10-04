@@ -1,0 +1,346 @@
+{
+  "checkedUtc": "2026-10-04T03:20:22.495Z",
+  "sourceFingerprint": "bb99c5cb96e05c54334aeea1ab5ef2cc43cb6470fc12292b5dcf2e9d14dd6839",
+  "samples": [
+    {
+      "type": "ledger",
+      "viewportWidth": 375,
+      "before": 0,
+      "regionWidth": 333,
+      "tabIndex": 0,
+      "scrollLeft": 40,
+      "scrollWidth": 717,
+      "clientWidth": 333,
+      "withinColumn": true,
+      "overlapsEvidence": false,
+      "focus": true,
+      "outline": "solid",
+      "outlineWidth": "2px"
+    },
+    {
+      "type": "canvas-retry",
+      "viewportWidth": 375,
+      "readIncrement": 1,
+      "box": {
+        "x": 18,
+        "y": 470,
+        "width": 143.109375,
+        "height": 44
+      },
+      "inp": [
+        {
+          "value": 16,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 6853
+            },
+            {
+              "name": "keypress",
+              "duration": 16,
+              "interactionId": 6853
+            },
+            {
+              "name": "click",
+              "duration": 16,
+              "interactionId": 6853
+            },
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 6853
+            }
+          ]
+        }
+      ],
+      "eventTiming": [
+        {
+          "name": "keydown",
+          "duration": 16,
+          "interactionId": 6853
+        },
+        {
+          "name": "keypress",
+          "duration": 16,
+          "interactionId": 6853
+        },
+        {
+          "name": "click",
+          "duration": 16,
+          "interactionId": 6853
+        },
+        {
+          "name": "keyup",
+          "duration": 16,
+          "interactionId": 6853
+        }
+      ],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Budget\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Synthetic canvas read error. Nothing changed.\n      - button \"Try loading again\"\n- alert"
+    },
+    {
+      "type": "ledger",
+      "viewportWidth": 768,
+      "before": 0,
+      "regionWidth": 382,
+      "tabIndex": 0,
+      "scrollLeft": 40,
+      "scrollWidth": 765,
+      "clientWidth": 382,
+      "withinColumn": true,
+      "overlapsEvidence": false,
+      "focus": true,
+      "outline": "solid",
+      "outlineWidth": "2px"
+    },
+    {
+      "type": "canvas-retry",
+      "viewportWidth": 768,
+      "readIncrement": 1,
+      "box": {
+        "x": 242,
+        "y": 357.5,
+        "width": 143.109375,
+        "height": 44
+      },
+      "inp": [
+        {
+          "value": 16,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 7898
+            },
+            {
+              "name": "keypress",
+              "duration": 16,
+              "interactionId": 7898
+            },
+            {
+              "name": "click",
+              "duration": 16,
+              "interactionId": 7898
+            },
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 7898
+            }
+          ]
+        }
+      ],
+      "eventTiming": [
+        {
+          "name": "keydown",
+          "duration": 16,
+          "interactionId": 7898
+        },
+        {
+          "name": "keypress",
+          "duration": 16,
+          "interactionId": 7898
+        },
+        {
+          "name": "click",
+          "duration": 16,
+          "interactionId": 7898
+        },
+        {
+          "name": "keyup",
+          "duration": 16,
+          "interactionId": 7898
+        }
+      ],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Budget\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Synthetic canvas read error. Nothing changed.\n      - button \"Try loading again\"\n- alert"
+    },
+    {
+      "type": "ledger",
+      "viewportWidth": 1280,
+      "before": 0,
+      "regionWidth": 591.859375,
+      "tabIndex": 0,
+      "scrollLeft": 40,
+      "scrollWidth": 765,
+      "clientWidth": 592,
+      "withinColumn": true,
+      "overlapsEvidence": false,
+      "focus": true,
+      "outline": "solid",
+      "outlineWidth": "2px"
+    },
+    {
+      "type": "canvas-retry",
+      "viewportWidth": 1280,
+      "readIncrement": 1,
+      "box": {
+        "x": 238,
+        "y": 246,
+        "width": 143.109375,
+        "height": 44
+      },
+      "inp": [
+        {
+          "value": 16,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 4157
+            },
+            {
+              "name": "keypress",
+              "duration": 16,
+              "interactionId": 4157
+            },
+            {
+              "name": "click",
+              "duration": 16,
+              "interactionId": 4157
+            },
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 4157
+            }
+          ]
+        }
+      ],
+      "eventTiming": [
+        {
+          "name": "keydown",
+          "duration": 16,
+          "interactionId": 4157
+        },
+        {
+          "name": "keypress",
+          "duration": 16,
+          "interactionId": 4157
+        },
+        {
+          "name": "click",
+          "duration": 16,
+          "interactionId": 4157
+        },
+        {
+          "name": "keyup",
+          "duration": 16,
+          "interactionId": 4157
+        }
+      ],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Budget\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Synthetic canvas read error. Nothing changed.\n      - button \"Try loading again\"\n- alert"
+    },
+    {
+      "type": "ledger",
+      "viewportWidth": 1920,
+      "before": 0,
+      "regionWidth": 591.859375,
+      "tabIndex": 0,
+      "scrollLeft": 40,
+      "scrollWidth": 765,
+      "clientWidth": 592,
+      "withinColumn": true,
+      "overlapsEvidence": false,
+      "focus": true,
+      "outline": "solid",
+      "outlineWidth": "2px"
+    },
+    {
+      "type": "canvas-retry",
+      "viewportWidth": 1920,
+      "readIncrement": 1,
+      "box": {
+        "x": 238,
+        "y": 246,
+        "width": 143.109375,
+        "height": 44
+      },
+      "inp": [
+        {
+          "value": 16,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 6389
+            },
+            {
+              "name": "keypress",
+              "duration": 16,
+              "interactionId": 6389
+            },
+            {
+              "name": "click",
+              "duration": 16,
+              "interactionId": 6389
+            },
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 6389
+            }
+          ]
+        }
+      ],
+      "eventTiming": [
+        {
+          "name": "keydown",
+          "duration": 16,
+          "interactionId": 6389
+        },
+        {
+          "name": "keypress",
+          "duration": 16,
+          "interactionId": 6389
+        },
+        {
+          "name": "click",
+          "duration": 16,
+          "interactionId": 6389
+        },
+        {
+          "name": "keyup",
+          "duration": 16,
+          "interactionId": 6389
+        }
+      ],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Budget\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/quote?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&canvas=66666666-6666-4666-8666-666666666666&run=44444444-4444-4444-8444-444444444444\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Synthetic canvas read error. Nothing changed.\n      - button \"Try loading again\"\n- alert"
+    }
+  ],
+  "localOnly": true,
+  "writes": 0,
+  "errors": [
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ]
+}

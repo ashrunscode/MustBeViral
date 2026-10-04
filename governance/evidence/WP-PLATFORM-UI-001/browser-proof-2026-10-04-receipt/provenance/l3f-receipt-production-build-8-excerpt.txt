@@ -1,0 +1,21 @@
+Selected diagnostic lines from l3f-receipt-production-build-8.txt. This is an excerpt, not the full transcript.
+46: ├ ƒ /studio/[workspace]/collaborators
+47: ├ ƒ /studio/[workspace]/internal
+48: ├ ƒ /studio/[workspace]/projects/[project]
+49: ├ ƒ /studio/[workspace]/quote
+50: ├ ƒ /studio/[workspace]/receipt
+51: ├ ƒ /studio/[workspace]/review
+52: ├ ƒ /studio/[workspace]/review/compare
+53: ├ ƒ /studio/[workspace]/skills
+54: ├ ƒ /studio/continue
+55: ├ ○ /terms
+56: ├ ○ /unauthorized
+57: └ ƒ /verify-email
+58:
+59:
+60: ƒ Proxy (Middleware)
+61:
+62: ○  (Static)   prerendered as static content
+63: ƒ  (Dynamic)  server-rendered on demand
+64:
+65:

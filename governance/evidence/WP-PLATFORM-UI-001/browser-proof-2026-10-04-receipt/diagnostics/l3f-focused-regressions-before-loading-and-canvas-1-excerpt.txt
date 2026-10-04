@@ -1,0 +1,48 @@
+Selected diagnostic lines from l3f-focused-regressions-before-loading-and-canvas-1.txt. This is an excerpt, not the full transcript.
+7:      × keeps a named receipt heading in the loading status without creating an export 125ms
+8:
+9: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+10:
+11:  FAIL  src/features/canvas/canvas-flow.test.tsx > CanvasFlow semantic outline component parity > names the campaign plan when no canvas is selected and keeps its missing-input message
+12: AssertionError: Target cannot be null or undefined.
+13:  ❯ src/features/canvas/canvas-flow.test.tsx:41:35
+14:      39|       <CanvasFlow dataMode="worker" workspace="workspace-fixture" />,
+15:      40|     );
+16:      41|     expect(html.match(/<h1\b/gu)).toHaveLength(1);
+17:        |                                   ^
+18:      42|     expect(html).toContain('Campaign plan</h1>');
+19:      43|     expect(html).toContain('Open this screen from a project with a can…
+20:
+21: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+22:
+23:  FAIL  src/features/export/receipt-flow.worker.test.tsx > ReceiptFlow missing totals recovery > keeps a named receipt heading in the loading status without creating an export
+24: TestingLibraryElementError: Unable to find an accessible element with the role "heading" and name "Reading immutable receipt"
+25:
+26: Here are the accessible roles:
+27:
+28:   status:
+29:
+30:   Name "":
+31:   <div
+32:     class="mbv-card _resultCard_f10020"
+33:     data-result="loading"
+73:  ❯ src/features/export/receipt-flow.worker.test.tsx:29:28
+74:      27|     );
+75:      28|
+76:      29|     const heading = screen.getByRole('heading', { level: 1, name: 'Rea…
+77:        |                            ^
+78:      30|     expect(screen.getByRole('status').contains(heading)).toBe(true);
+79:      31|     expect(create).not.toHaveBeenCalled();
+80:
+81: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+82:
+83:
+84:  Test Files  2 failed | 4 passed (6)
+85:       Tests  2 failed | 63 passed (65)
+86:    Start at  21:51:06
+87:    Duration  2.69s (transform 2.59s, setup 0ms, import 5.19s, tests 923ms, environment 1.79s)
+88:
+89: undefined
+90: C:\dev\mbv-finish\apps\web:
+91: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx
+92:

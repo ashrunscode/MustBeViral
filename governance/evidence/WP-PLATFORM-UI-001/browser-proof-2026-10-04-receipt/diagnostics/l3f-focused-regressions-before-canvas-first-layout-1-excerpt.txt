@@ -1,0 +1,42 @@
+Selected diagnostic lines from l3f-focused-regressions-before-canvas-first-layout-1.txt. This is an excerpt, not the full transcript.
+5:      × measures the available layout before mounting a worker graph or its rail 97ms
+6:
+7: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+8:
+9:  FAIL  src/features/canvas/canvas-flow.worker.test.tsx > CanvasFlow responsive navigation and late worker loading > measures the available layout before mounting a worker graph or its rail
+10: AssertionError: expected <div …(2)>…(1)</div> to be null
+11:
+12: - Expected:
+13: null
+14:
+15: + Received:
+16: <div
+17:   class="_canvasSurface_ef187b"
+18:   data-testid="canvas-surface"
+19: >
+20:   <div
+21:     class="_graphPlane_ef187b"
+22:     data-lod="full"
+23:     data-testid="graph-plane"
+24:     style="width: 1080px; height: 680px; transform: translate3d(0px, 0px, 0) scale(1);"
+25:   >
+813:  ❯ src/features/canvas/canvas-flow.worker.test.tsx:80:52
+814:      78|       );
+815:      79|     });
+816:      80|     expect(screen.queryByTestId('canvas-surface')).toBeNull();
+817:        |                                                    ^
+818:      81|     const root = document.getElementById('main-content');
+819:      82|     if (root === null) throw new Error('The campaign plan root is miss…
+820:
+821: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+822:
+823:
+824:  Test Files  1 failed | 6 passed (7)
+825:       Tests  1 failed | 70 passed (71)
+826:    Start at  23:48:01
+827:    Duration  3.09s (transform 3.10s, setup 0ms, import 6.49s, tests 1.72s, environment 2.87s)
+828:
+829: undefined
+830: C:\dev\mbv-finish\apps\web:
+831: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+832:

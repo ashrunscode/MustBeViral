@@ -1,0 +1,39 @@
+Selected diagnostic lines from l3f-focused-regressions-before-review-unverified-counts-1.txt. This is an excerpt, not the full transcript.
+8:      × offers no approved export without verified approvals: 'error' 32ms
+9:
+10: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+11:
+12:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > offers no approved export without verified approvals: 'forbidden'
+13:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > offers no approved export without verified approvals: 'not_found'
+14:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > offers no approved export without verified approvals: 'conflict'
+15:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > offers no approved export without verified approvals: 'error'
+16: AssertionError: expected <p></p> to be null
+17:
+18: - Expected:
+19: null
+20:
+21: + Received:
+22: <p>
+23:   Read each ad. Approve what you would run. 0 of 0 approved.
+24: </p>
+25:
+26:  ❯ src/features/review/review-flow.worker.test.tsx:119:54
+27:     117|     expect(screen.queryByText('0 / 0 approved')).toBeNull();
+28:     118|     if (readResult.type !== 'ok') {
+29:     119|       expect(screen.queryByText(/0 of 0 approved/u)).toBeNull();
+30:        |                                                      ^
+31:     120|       expect(screen.queryByRole('textbox', { name: 'Add a draft commen…
+32:     121|     }
+33:
+34: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+35:
+36:
+37:  Test Files  1 failed | 6 passed (7)
+38:       Tests  4 failed | 77 passed (81)
+39:    Start at  00:57:57
+40:    Duration  3.17s (transform 3.02s, setup 0ms, import 6.31s, tests 1.87s, environment 2.76s)
+41:
+42: undefined
+43: C:\dev\mbv-finish\apps\web:
+44: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+45:

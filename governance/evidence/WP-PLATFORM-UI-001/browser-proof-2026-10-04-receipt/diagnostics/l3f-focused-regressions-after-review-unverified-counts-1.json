@@ -1,0 +1,12 @@
+{
+  "log": "C:/dev/mbv-run/l3f-focused-regressions-after-review-unverified-counts-1.txt",
+  "endedUtc": "2026-10-04T05:58:48.9811239Z",
+  "pnpm": "11.12.0",
+  "root": "C:/dev/mbv-finish",
+  "startedUtc": "2026-10-04T05:58:43.9282015Z",
+  "ownedWorkInProgress": true,
+  "node": "v24.18.0",
+  "exit": 0,
+  "head": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx"
+}

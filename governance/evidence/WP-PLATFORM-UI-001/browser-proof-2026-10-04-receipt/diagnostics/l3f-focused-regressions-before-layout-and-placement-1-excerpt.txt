@@ -1,0 +1,49 @@
+Selected diagnostic lines from l3f-focused-regressions-before-layout-and-placement-1.txt. This is an excerpt, not the full transcript.
+7:      × keeps long ledger identifiers inside a named scroll region without removing the table 1029ms
+8:
+9: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+10:
+11:  FAIL  src/features/export/receipt-flow.worker.test.tsx > ReceiptFlow missing totals recovery > keeps long ledger identifiers inside a named scroll region without removing the table
+12: TestingLibraryElementError: Unable to find role="region" and name "Receipt charges by attempt"
+13:
+14: Ignored nodes: comments, script, style
+15: <body>
+16:   <div>
+17:     <div
+18:       class="_receiptPage_f10020"
+19:       data-money-state="unavailable"
+20:       id="main-content"
+21:     >
+837: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+838:
+839:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > announces placement switches as pressed buttons and keeps the safe-zone checkbox independent
+840: TestingLibraryElementError: Unable to find an accessible element with the role "group" and name "Placement"
+841:
+842: Here are the accessible roles:
+843:
+844:   region:
+845:
+846:   Name "Composed review":
+847:   <section
+848:     aria-label="Composed review"
+849:     class="_composed_e9fec0"
+1121:  ❯ src/features/review/review-flow.worker.test.tsx:104:36
+1122:     102|     );
+1123:     103|
+1124:     104|     const controls = within(screen.getByRole('group', { name: 'Placeme…
+1125:        |                                    ^
+1126:     105|     expect(controls.getAllByRole('button')).toHaveLength(4);
+1127:     106|     const feed = controls.getByRole('button', { name: 'Feed 4:5', pres…
+1128:
+1129: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+1130:
+1131:
+1132:  Test Files  2 failed | 3 passed (5)
+1133:       Tests  2 failed | 55 passed (57)
+1134:    Start at  21:40:16
+1135:    Duration  3.28s (transform 2.19s, setup 0ms, import 4.26s, tests 1.64s, environment 1.68s)
+1136:
+1137: undefined
+1138: C:\dev\mbv-finish\apps\web:
+1139: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx
+1140:

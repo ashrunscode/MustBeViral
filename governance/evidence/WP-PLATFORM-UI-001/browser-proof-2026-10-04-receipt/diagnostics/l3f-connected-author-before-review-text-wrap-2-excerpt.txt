@@ -1,0 +1,34 @@
+Selected diagnostic lines from l3f-connected-author-before-review-text-wrap-2.txt. This is an excerpt, not the full transcript.
+11:   1) [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+12:
+13:     Error: expect(received).toEqual(expected) // deep equality
+14:
+15:     - Expected  -  1
+16:     + Received  + 20
+17:
+18:     - Array []
+19:     + Array [
+20:     +   Object {
+21:     +     "help": "Elements must meet minimum color contrast ratio thresholds",
+22:     +     "id": "color-contrast",
+23:     +     "impact": "serious",
+226:     attachment #27: canvas-ready-responsive-768-aria (text/plain) ──────────────────────────────────
+227:     - link "Skip to content":
+228:       - /url: "#platform-main"
+229:     - complementary "Studio":
+230:       - link "Must Be Viral":
+231:         - /url: /studio
+232:       - text: Studio Synthetic W1 journeys 7d2c2337-c995-4ff5-bc70-d6dc82ca9384
+233:       - link "Switch studio":
+234:         - /url: /studio
+235:       - navigation "Studio navigation":
+236:         - link "Overv...
+237:     ────────────────────────────────────────────────────────────────────────────────────────────────
+238:
+239:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+240:
+241:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+242:
+243:   1 failed
+244:     [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+245:

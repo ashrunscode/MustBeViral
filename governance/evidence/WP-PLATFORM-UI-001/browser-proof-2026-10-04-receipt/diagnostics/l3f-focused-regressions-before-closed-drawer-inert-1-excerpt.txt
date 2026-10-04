@@ -1,0 +1,34 @@
+Selected diagnostic lines from l3f-focused-regressions-before-closed-drawer-inert-1.txt. This is an excerpt, not the full transcript.
+5:      × keeps the outline and comment draft in one drawer with Escape focus recovery 201ms
+6:
+7: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+8:
+9:  FAIL  src/features/canvas/canvas-flow.worker.test.tsx > CanvasFlow responsive navigation and late worker loading > keeps the outline and comment draft in one drawer with Escape focus recovery
+10: AssertionError: expected false to be true // Object.is equality
+11:
+12: - Expected
+13: + Received
+14:
+15: - true
+16: + false
+17:
+18:  ❯ src/features/canvas/canvas-flow.worker.test.tsx:111:86
+19:     109|     expect(trigger.getAttribute('aria-expanded')).toBe('false');
+20:     110|     expect(document.activeElement).toBe(trigger);
+21:     111|     expect(document.getElementById('canvas-navigation-rail')?.hasAttri…
+22:        |                                                                                      ^
+23:     112|     fireEvent.click(trigger);
+24:     113|     expect(
+25:
+26: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+27:
+28:
+29:  Test Files  1 failed | 6 passed (7)
+30:       Tests  1 failed | 68 passed (69)
+31:    Start at  23:07:13
+32:    Duration  3.07s (transform 3.04s, setup 0ms, import 6.26s, tests 1.70s, environment 2.86s)
+33:
+34: undefined
+35: C:\dev\mbv-finish\apps\web:
+36: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+37:

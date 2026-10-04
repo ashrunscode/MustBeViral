@@ -187,6 +187,65 @@ describe('WorkerExportPort', () => {
     ],
   });
 
+  it.each([
+    {
+      label: 'missing reservation',
+      reservation: null,
+      quoteMicros: null,
+      actualMicros: null,
+    },
+    {
+      label: 'known zero reservation',
+      reservation: {
+        ...receipt(false).reservation,
+        amount_micros: 0,
+        captured_micros: 0,
+        refunded_micros: 0,
+        released_micros: 0,
+      },
+      quoteMicros: 0n,
+      actualMicros: 0n,
+    },
+    {
+      label: 'known net capture after a refund',
+      reservation: { ...receipt(false).reservation, refunded_micros: 72_000 },
+      quoteMicros: 4_550_000n,
+      actualMicros: 600_574n,
+    },
+  ])('preserves receipt totals for $label without substituting run spend', async (testCase) => {
+    const methods: string[] = [];
+    const client = createMustBeViralRestClient({
+      baseUrl: 'https://api.example.test',
+      getAccessToken: async () => 'session-token',
+      createRequestId: () => 'request-receipt-totals',
+      fetch: async (input, init) => {
+        methods.push(init?.method ?? 'GET');
+        const url = String(input);
+        if (url.endsWith('/receipt')) {
+          return new Response(
+            JSON.stringify({
+              data: { receipt: { ...receipt(false), reservation: testCase.reservation } },
+              meta: { request_id: 'request-receipt-totals' },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          );
+        }
+        if (url.endsWith('/v1/runs/run-live')) return runResponse('request-receipt-totals');
+        throw new Error('Unexpected request while reading receipt totals');
+      },
+    });
+
+    const createIdempotencyKey = vi.fn(() => 'receipt-read-must-not-create');
+    const result = await new WorkerExportPort(client, 'run-live', createIdempotencyKey).read();
+
+    expect(result).toMatchObject({
+      type: 'export_required',
+      receipt: { quoteMicros: testCase.quoteMicros, actualMicros: testCase.actualMicros },
+    });
+    expect(methods).toEqual(['GET', 'GET']);
+    expect(createIdempotencyKey).not.toHaveBeenCalled();
+  });
+
   it('reads without mutation and gives each proven explicit create or rebuild a fresh key', async () => {
     const calls: Array<Readonly<{ headers: Headers; method: string; url: string }>> = [];
     let exportCreated = false;
