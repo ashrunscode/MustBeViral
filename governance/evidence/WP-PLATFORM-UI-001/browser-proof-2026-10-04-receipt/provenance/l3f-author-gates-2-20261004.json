@@ -1,0 +1,68 @@
+{
+  "StartingHead": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "Root": "C:/dev/mbv-finish",
+  "SourceAndSchemaUnchangedFromLastAppliedFiles": true,
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-migration-list-before.log",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Label": "migration-list-before",
+      "StartedUtc": "2026-10-04T06:47:35.0898322Z",
+      "FinishedUtc": "2026-10-04T06:47:37.7138320Z"
+    },
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-migration-up.log",
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Label": "migration-up",
+      "StartedUtc": "2026-10-04T06:47:37.8662053Z",
+      "FinishedUtc": "2026-10-04T06:47:40.7582409Z"
+    },
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-migration-list.log",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Label": "migration-list",
+      "StartedUtc": "2026-10-04T06:47:40.7608533Z",
+      "FinishedUtc": "2026-10-04T06:47:43.4013401Z"
+    },
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-agent-verify.log",
+      "Command": "corepack pnpm agent:verify",
+      "Label": "agent-verify",
+      "StartedUtc": "2026-10-04T06:47:44.2797636Z",
+      "FinishedUtc": "2026-10-04T07:05:30.6318331Z"
+    },
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-packet-verify.log",
+      "Command": "corepack pnpm packet:verify",
+      "Label": "packet-verify",
+      "StartedUtc": "2026-10-04T07:05:30.6342100Z",
+      "FinishedUtc": "2026-10-04T07:05:32.6665090Z"
+    },
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-diff-scope.log",
+      "Command": "corepack pnpm diff-scope:check --base origin/main --head HEAD",
+      "Label": "diff-scope",
+      "StartedUtc": "2026-10-04T07:05:32.6683193Z",
+      "FinishedUtc": "2026-10-04T07:05:34.9419392Z"
+    },
+    {
+      "ActualExit": 0,
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-author-2-format-check.log",
+      "Command": "corepack pnpm format:check",
+      "Label": "format-check",
+      "StartedUtc": "2026-10-04T07:05:34.9439110Z",
+      "FinishedUtc": "2026-10-04T07:05:52.9191039Z"
+    }
+  ],
+  "LocalDatabaseOnly": true
+}

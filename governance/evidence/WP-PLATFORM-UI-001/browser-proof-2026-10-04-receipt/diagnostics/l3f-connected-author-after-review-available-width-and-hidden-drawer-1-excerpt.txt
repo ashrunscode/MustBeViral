@@ -1,0 +1,12 @@
+Selected diagnostic lines from l3f-connected-author-after-review-available-width-and-hidden-drawer-1.txt. This is an excerpt, not the full transcript.
+1:
+2: Running 1 test using 1 worker
+3:
+4: (node:58460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+5: (Use `node --trace-warnings ...` to show where the warning was created)
+6: Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+7: Preserved 1 synthetic users from this run because cleanup was blocked.
+8:   ok 1 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes (31.3s)
+9:
+10:   1 passed (48.9s)
+11:

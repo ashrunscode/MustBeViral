@@ -1,0 +1,11 @@
+Selected diagnostic lines from l3f-focused-regressions-after-ready-drawer-1.txt. This is an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  7 passed (7)
+6:       Tests  69 passed (69)
+7:    Start at  23:02:11
+8:    Duration  3.03s (transform 2.91s, setup 0ms, import 6.30s, tests 1.65s, environment 2.74s)
+9:
+10:

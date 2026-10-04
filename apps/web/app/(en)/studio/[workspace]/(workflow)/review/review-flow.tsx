@@ -1,6 +1,14 @@
 'use client';
 
-import { Button, Card, Chip, Drawer, MonoCaps, formatUsdMicros } from '@mustbeviral/ui';
+import {
+  Button,
+  Card,
+  Chip,
+  Drawer,
+  MonoCaps,
+  formatUsdMicros,
+  useScrollableRegion,
+} from '@mustbeviral/ui';
 import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
@@ -204,14 +212,13 @@ export function ComposedReview({
         ))}
       </div>
       <div className={styles.stageWrap}>
-        <div className={styles.placementRow} role="tablist" aria-label="Placement">
+        <div className={styles.placementRow} role="group" aria-label="Placement">
           {(['4:5', '1:1', '9:16', 'reels'] as const).map((option) => (
             <button
               key={option}
               type="button"
               className={styles.placementTab}
-              role="tab"
-              aria-selected={placement === option}
+              aria-pressed={placement === option}
               onClick={() => setPlacement(option)}
             >
               {option === 'reels' ? 'Reels' : `Feed ${option}`}
@@ -640,11 +647,14 @@ export function ReviewFlow({
   const receiptHref = campaignHref(workspace, 'results', { ...context, run: runId ?? context.run });
   const [rejectionReason, setRejectionReason] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const qaToggleRef = useRef<HTMLButtonElement>(null);
   const [inspected, setInspected] = useState<ReviewVariant | null>(null);
   const [reviewTextDrafts, setReviewTextDrafts] = useState<Record<string, Record<string, string>>>(
     {},
   );
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const { ref: qaPanelRef, tabIndex: qaPanelTabIndex } = useScrollableRegion<HTMLElement>();
+  const { ref: reviewStageRef, tabIndex: reviewStageTabIndex } = useScrollableRegion<HTMLElement>();
   const variants = groups.flatMap((group) => group.variants);
 
   useEffect(() => {
@@ -734,6 +744,9 @@ export function ReviewFlow({
   }
 
   const approvedCount = variants.filter((variant) => variant.decision === 'approved').length;
+  const verifiedOutputs =
+    summaryRead && !loading && (result === null || result.type === 'ok') && variants.length > 0;
+  const approvedExport = verifiedOutputs && approvedCount === variants.length;
   const concepts =
     dataMode === 'worker' && mode === 'approval' ? composeReviewConcepts(groups) : [];
   const composed = concepts.length > 0;
@@ -811,11 +824,83 @@ export function ReviewFlow({
     setLoading(false);
   }
 
+  if (loading && !summaryRead) {
+    return (
+      <div
+        id="main-content"
+        className={`${styles.reviewPage} ${mode === 'compare' ? styles.compareMode : styles.approvalMode}`}
+        data-review-state="loading"
+      >
+        <section
+          ref={reviewStageRef}
+          tabIndex={reviewStageTabIndex}
+          className={styles.reviewStage}
+          aria-labelledby="review-title"
+        >
+          <div className={styles.desktopBanner}>
+            <span>Plan editing needs a desktop. Review and approve here.</span>
+          </div>
+          <div className={styles.sectionHeading}>
+            <div>
+              <MonoCaps>Reading the pinned run</MonoCaps>
+              <h1 id="review-title">
+                {mode === 'compare' ? 'Output comparison' : 'Review outputs'}
+              </h1>
+              <p>No approval or export is available until the receipt is read.</p>
+            </div>
+          </div>
+          <div className={styles.loadingNotice} role="status" data-result="loading">
+            Reading outputs and approvals…
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   if (result?.type === 'session_expired') {
     return (
       <div id="main-content" className={styles.reviewPage}>
-        <section className={styles.reviewStage} aria-label="Session expired">
+        <section
+          ref={reviewStageRef}
+          tabIndex={reviewStageTabIndex}
+          className={styles.reviewStage}
+          aria-label="Session expired"
+        >
+          <div className={styles.sectionHeading}>
+            <h1>{mode === 'compare' ? 'Output comparison' : 'Review outputs'}</h1>
+          </div>
           <SessionExpiredAction className={styles.reviewError} />
+        </section>
+      </div>
+    );
+  }
+  if (!summaryRead && result !== null) {
+    return (
+      <div id="main-content" className={styles.reviewPage} data-review-state={result.type}>
+        <section
+          ref={reviewStageRef}
+          tabIndex={reviewStageTabIndex}
+          className={styles.reviewStage}
+          aria-labelledby="review-title"
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <h1 id="review-title">
+                {mode === 'compare' ? 'Output comparison' : 'Review outputs'}
+              </h1>
+              <p>No approval or export is available until the receipt is read.</p>
+            </div>
+          </div>
+          <ReviewResultNotice
+            result={result}
+            {...(readPort === null ? {} : { onRetryRead: () => void retryRead() })}
+          />
+          <Link
+            className="mbv-button"
+            href={campaignHref(workspace, 'budget', { ...context, run: runId ?? context.run })}
+          >
+            Back to the run
+          </Link>
         </section>
       </div>
     );
@@ -825,7 +910,12 @@ export function ReviewFlow({
       id="main-content"
       className={`${styles.reviewPage} ${mode === 'compare' ? styles.compareMode : styles.approvalMode}`}
     >
-      <section className={styles.reviewStage} aria-labelledby="review-title">
+      <section
+        ref={reviewStageRef}
+        tabIndex={reviewStageTabIndex}
+        className={styles.reviewStage}
+        aria-labelledby="review-title"
+      >
         <div className={styles.desktopBanner}>
           <span>Plan editing needs a desktop. Review and approve here.</span>
         </div>
@@ -851,7 +941,13 @@ export function ReviewFlow({
                   : 'Named approval is recorded per artifact group.'}
             </p>
           </div>
-          <Button className={styles.qaToggle} onClick={() => setDrawerOpen(true)}>
+          <Button
+            ref={qaToggleRef}
+            className={styles.qaToggle}
+            aria-expanded={drawerOpen}
+            aria-controls="review-qa-drawer"
+            onClick={() => setDrawerOpen(true)}
+          >
             QA findings
           </Button>
         </div>
@@ -890,10 +986,7 @@ export function ReviewFlow({
           summary={summary}
           workspace={workspace}
         />
-        {dataMode === 'worker' &&
-        !loading &&
-        variants.length > 0 &&
-        approvedCount === variants.length ? (
+        {dataMode === 'worker' && approvedExport ? (
           <div className={styles.exportHero} role="status">
             <div>
               <MonoCaps>Pack approved</MonoCaps>
@@ -1055,7 +1148,12 @@ export function ReviewFlow({
           </>
         ) : null}
       </section>
-      <aside className={styles.qaPanel} aria-labelledby="qa-title">
+      <aside
+        ref={qaPanelRef}
+        tabIndex={qaPanelTabIndex}
+        className={styles.qaPanel}
+        aria-labelledby="qa-title"
+      >
         <h2 id="qa-title">QA findings</h2>
         <p>
           {dataMode === 'preview'
@@ -1065,35 +1163,44 @@ export function ReviewFlow({
         <QaFindings preview={dataMode === 'preview'} findings={summary.qaFindings} />
       </aside>
       <Drawer
+        id="review-qa-drawer"
         className={styles.tabletDrawer}
         open={drawerOpen}
+        inert={!drawerOpen}
         title="QA findings"
-        onClose={() => setDrawerOpen(false)}
+        onClose={() => {
+          setDrawerOpen(false);
+          qaToggleRef.current?.focus();
+        }}
       >
         <QaFindings preview={dataMode === 'preview'} findings={summary.qaFindings} />
       </Drawer>
-      <div className={styles.confirmBar}>
-        <div>
-          <MonoCaps>Batch approval</MonoCaps>
-          <strong>
-            {approvedCount} / {variants.length} approved
-          </strong>
+      {verifiedOutputs ? (
+        <div className={styles.confirmBar}>
+          <div>
+            <MonoCaps>Batch approval</MonoCaps>
+            <strong>
+              {approvedCount} / {variants.length} approved
+            </strong>
+          </div>
+          <div className={styles.confirmActions}>
+            {mode === 'compare' ? (
+              <Link
+                className="mbv-button mbv-button--primary"
+                href={campaignHref(workspace, 'content', { ...context, run: runId ?? context.run })}
+              >
+                Continue to approval
+              </Link>
+            ) : approvedExport ? (
+              <Link className="mbv-button mbv-button--primary" href={receiptHref}>
+                Export approved
+              </Link>
+            ) : (
+              <span>Approve every output before exporting.</span>
+            )}
+          </div>
         </div>
-        <div className={styles.confirmActions}>
-          {mode === 'compare' ? (
-            <Link
-              className="mbv-button mbv-button--primary"
-              href={campaignHref(workspace, 'content', { ...context, run: runId ?? context.run })}
-            >
-              Continue to approval
-            </Link>
-          ) : (
-            <Link className="mbv-button mbv-button--primary" href={receiptHref}>
-              Export approved
-            </Link>
-          )}
-        </div>
-      </div>
+      ) : null}
       {inspected !== null && dataMode === 'worker' ? (
         <div
           className={styles.inspectOverlay}

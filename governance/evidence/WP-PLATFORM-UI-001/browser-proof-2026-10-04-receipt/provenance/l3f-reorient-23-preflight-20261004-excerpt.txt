@@ -1,0 +1,21 @@
+Selected diagnostic lines from l3f-reorient-23-preflight-20261004.txt. This is an excerpt, not the full transcript.
+39: - packages/contracts/**
+40: - packages/domain/**
+41: - packages/config/**
+42: - packages/db/scripts/**
+43: - playwright.config.ts
+44: - turbo.json
+45: - governance/**
+46: - docs/**
+47: - PROJECT_STATE.yaml
+48: - llms.txt
+49: - brand/context.md
+50: - brand/BRAND.md
+51: - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
+52:
+53: Verification commands:
+54: - pnpm governance:check
+55: - pnpm design:check
+56: - pnpm verify
+57: - pnpm supabase:test
+58:

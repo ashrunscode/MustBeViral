@@ -1,0 +1,12 @@
+{
+  "endedUtc": "2026-10-04T04:48:05.1929029Z",
+  "exit": 1,
+  "ownedWorkInProgress": true,
+  "root": "C:/dev/mbv-finish",
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx",
+  "log": "C:/dev/mbv-run/l3f-focused-regressions-before-canvas-first-layout-1.txt",
+  "startedUtc": "2026-10-04T04:47:59.5382535Z",
+  "node": "v24.18.0",
+  "pnpm": "11.12.0",
+  "head": "88804c80c814cfe2ee2b65182566b6f9d4358829"
+}

@@ -1,0 +1,12 @@
+{
+  "log": "C:/dev/mbv-run/l3f-focused-regressions-before-qa-panel-focus-1.txt",
+  "startedUtc": "2026-10-04T03:22:18.5407993Z",
+  "ownedWorkInProgress": true,
+  "endedUtc": "2026-10-04T03:22:23.8078249Z",
+  "root": "C:/dev/mbv-finish",
+  "head": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx",
+  "pnpm": "11.12.0",
+  "node": "v24.18.0",
+  "exit": 1
+}

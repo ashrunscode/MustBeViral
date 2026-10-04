@@ -1,0 +1,11 @@
+Selected diagnostic lines from l3f-focused-regressions-after-layout-and-placement-1.txt. This is an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  5 passed (5)
+6:       Tests  57 passed (57)
+7:    Start at  21:41:00
+8:    Duration  2.70s (transform 2.16s, setup 0ms, import 4.28s, tests 771ms, environment 1.76s)
+9:
+10:

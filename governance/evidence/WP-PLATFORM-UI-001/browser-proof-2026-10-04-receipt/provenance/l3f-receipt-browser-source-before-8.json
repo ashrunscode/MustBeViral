@@ -1,0 +1,65 @@
+{
+  "checkedUtc": "2026-10-04T02:56:41.576Z",
+  "root": "C:/dev/mbv-finish",
+  "head": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "trackedAndUntrackedFileCount": 2475,
+  "wholeSourceSha256": "bb99c5cb96e05c54334aeea1ab5ef2cc43cb6470fc12292b5dcf2e9d14dd6839",
+  "receiptFiles": [
+    {
+      "path": "apps/web/src/features/export/export-port.ts",
+      "sha256": "df166f1a5639a4821ed97c4d1c6662ca083bb112bd026fb118dbf552e8fcd466"
+    },
+    {
+      "path": "apps/web/src/features/export/export-port.test.ts",
+      "sha256": "f9878c33704e2936b8b2291c887538c92bacb319908d563ba8f8aa637628dd1a"
+    },
+    {
+      "path": "apps/web/src/features/export/receipt-flow.test.tsx",
+      "sha256": "3159a7689b2626ca97dbc54778df609477777c209bdd4098f356f613094885c1"
+    },
+    {
+      "path": "apps/web/src/features/export/receipt-flow.worker.test.tsx",
+      "sha256": "f4eebd75c6fe19254d26a056cf8e9d66db210208c28300315b33800e54f020a2"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow.tsx",
+      "sha256": "3fd51b77ef7acb3f1e8d6a945ac8a0ef8a7fe38698b084bf942144f9bbf8b0fb"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/receipt/receipt-flow.module.css",
+      "sha256": "240486b32cb86548a265029afb1e6a80352939bd5f9c54b25d12f40103bb7988"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f59807245203e047185fc9acf767cc50e74410f4d9de801617d4f4b43f064eb4"
+    },
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "e3c476c8c0838bd92e23e25d5f8aafbb3b4a74e2b018457bcab4028bc78e2279"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.tsx",
+      "sha256": "e9bf6fceeb12fb487c07e2c2ed5afca4b2ea2f2459c40c91f06d10e7b5e05c1f"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "e781177c63c353a86208ea7c6e0f8058c89d1d615415c6e303eb916b403286d6"
+    },
+    {
+      "path": "apps/web/src/features/review/review-flow.worker.test.tsx",
+      "sha256": "99c42d8731630065e5ee8f9649acaae6912d920c97e1ae9347b170944668fec3"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx",
+      "sha256": "d8f50321140248bae5c24ef46956a0fd38425d34b88223f0cfaaaabb732d28dc"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css",
+      "sha256": "4cf36f569d9a5daf16e5a79e462ebfa5c5e39dcfc2028261e6065753635f9f5e"
+    },
+    {
+      "path": "apps/web/src/features/canvas/canvas-flow.test.tsx",
+      "sha256": "7ebd3d7eb24eecc25f2ce42b9c28231ff64e12b001349869e433d48a652dd3a6"
+    }
+  ]
+}

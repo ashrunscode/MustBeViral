@@ -1,0 +1,11 @@
+Selected diagnostic lines from l3f-focused-regressions-after-review-denied-and-export-1.txt. This is an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  7 passed (7)
+6:       Tests  80 passed (80)
+7:    Start at  00:43:15
+8:    Duration  2.98s (transform 2.90s, setup 0ms, import 6.13s, tests 1.81s, environment 2.72s)
+9:
+10:

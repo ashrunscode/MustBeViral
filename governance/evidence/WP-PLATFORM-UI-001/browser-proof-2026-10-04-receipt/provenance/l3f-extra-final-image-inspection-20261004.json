@@ -1,0 +1,42 @@
+{
+  "checkedUtc": "2026-10-04T06:39:19.820Z",
+  "method": "Six actual view_image originals inspected during evidence packaging; no new browser run.",
+  "images": [
+    {
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-drawer-open-375.png",
+      "sha256": "648167b17b8ca43a4dbdb5e592c096e50c75ff0e7513aa0be75189144c7cbd93",
+      "inspectedAtOriginalResolution": true,
+      "disposition": "Final settled Canvas mobile drawer and continuation. Controls are contained; dense presence metadata is a minor craft observation."
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-mobile-continuation-375.png",
+      "sha256": "ddea07703625c86e7fe84bb340cdfb7f20c300ad86a2afaa8447ae5edae42133",
+      "inspectedAtOriginalResolution": true,
+      "disposition": "Final settled Canvas mobile drawer and continuation. Controls are contained; dense presence metadata is a minor craft observation."
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-375.png",
+      "sha256": "05b92485adc5508d8e44f0cc9c50b02f9ed2ac1c1b671962d0b6ef66d80edadc",
+      "inspectedAtOriginalResolution": true,
+      "disposition": "Diagnostic before mobile heading repair; heading is visually absent. Never accepted as final."
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-375.png",
+      "sha256": "c1345e708524546ab169955515624b3f00ab0a5dd965a7514bd5bccaa84f5e01",
+      "inspectedAtOriginalResolution": true,
+      "disposition": "Diagnostic before mobile heading repair; heading is visually absent. Never accepted as final."
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-375.png",
+      "sha256": "b4b6a3fa72a689ad08cd408f553b6ae1b11f7d6a6d73cb17bd9047fc87e754c7",
+      "inspectedAtOriginalResolution": true,
+      "disposition": "Diagnostic before mobile heading repair; heading is visually absent. Never accepted as final."
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-375.png",
+      "sha256": "6217c8d5d3b75adbd9664e9375f5465d7d85295d1a976484ee537add83a9989d",
+      "inspectedAtOriginalResolution": true,
+      "disposition": "Diagnostic before mobile heading repair; heading is visually absent. Never accepted as final."
+    }
+  ]
+}

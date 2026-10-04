@@ -1,0 +1,15 @@
+{
+  "fixtureNodes": 500,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "thresholdFps": 30,
+  "measuredFps": 60.17,
+  "frames": 181,
+  "durationMs": 3008,
+  "maxFrameDeltaMs": 16.8,
+  "domNodeCount": 12,
+  "selectionLatencyMs": 24.5,
+  "passed": true
+}

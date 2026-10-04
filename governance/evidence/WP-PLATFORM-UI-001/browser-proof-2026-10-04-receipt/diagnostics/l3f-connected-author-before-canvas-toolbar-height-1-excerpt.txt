@@ -1,0 +1,34 @@
+Selected diagnostic lines from l3f-connected-author-before-canvas-toolbar-height-1.txt. This is an excerpt, not the full transcript.
+17:   1) [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+18:
+19:     Error: expect(received).toEqual(expected) // deep equality
+20:
+21:     - Expected  - 2
+22:     + Received  + 2
+23:
+24:       Object {
+25:         "controlsContained": true,
+26:     -   "graphStartsAfterControls": true,
+27:     +   "graphStartsAfterControls": false,
+28:         "pageOverflow": false,
+29:     -   "toolbarHeightContained": true,
+191:     attachment #23: canvas-unavailable-recovery-1920-aria (text/plain) ─────────────────────────────
+192:     - link "Skip to content":
+193:       - /url: "#platform-main"
+194:     - complementary "Studio":
+195:       - link "Must Be Viral":
+196:         - /url: /studio
+197:       - text: Studio Synthetic W1 journeys 7005a5e0-f106-4de2-9217-e188f33ef909
+198:       - link "Switch studio":
+199:         - /url: /studio
+200:       - navigation "Studio navigation":
+201:         - link "Overv...
+202:     ────────────────────────────────────────────────────────────────────────────────────────────────
+203:
+204:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+205:
+206:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+207:
+208:   1 failed
+209:     [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+210:

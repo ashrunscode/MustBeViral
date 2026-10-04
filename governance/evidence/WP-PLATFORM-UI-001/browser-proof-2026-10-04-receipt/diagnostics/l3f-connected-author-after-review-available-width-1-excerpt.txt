@@ -1,0 +1,34 @@
+Selected diagnostic lines from l3f-connected-author-after-review-available-width-1.txt. This is an excerpt, not the full transcript.
+11:   1) [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+12:
+13:     Error: expect(received).toEqual(expected) // deep equality
+14:
+15:     - Expected  -  1
+16:     + Received  + 20
+17:
+18:     - Array []
+19:     + Array [
+20:     +   Object {
+21:     +     "help": "ARIA hidden element must not be focusable or contain focusable elements",
+22:     +     "id": "aria-hidden-focus",
+23:     +     "impact": "serious",
+278:     attachment #35: review-available-width-zoom-200-aria (text/plain) ──────────────────────────────
+279:     - link "Skip to content":
+280:       - /url: "#platform-main"
+281:     - complementary "Studio":
+282:       - link "Must Be Viral":
+283:         - /url: /studio
+284:       - text: Studio Synthetic W1 journeys b0631354-2d50-4a36-a375-a7f4a896ced4
+285:       - link "Switch studio":
+286:         - /url: /studio
+287:       - navigation "Studio navigation":
+288:         - link "Overv...
+289:     ────────────────────────────────────────────────────────────────────────────────────────────────
+290:
+291:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+292:
+293:     Error Context: test-results\platform-connected-connect-54cdf-le-without-replaying-writes-desktop-chromium\error-context.md
+294:
+295:   1 failed
+296:     [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes
+297:

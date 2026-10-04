@@ -1,0 +1,18 @@
+{
+  "SyntheticCleanupDeleteRequestsPrevented": true,
+  "ActualExit": 1,
+  "OwnedWorkInProgress": true,
+  "StartedUtc": "2026-10-04T04:07:24.6967949Z",
+  "ProvidersAndQueuesDisabled": true,
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep keeps campaign receipt",
+  "SourceBase": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "LocalOnly": true,
+  "Root": "C:/dev/mbv-finish",
+  "HarnessPid": 68400,
+  "Log": "C:/dev/mbv-run/l3f-connected-author-before-review-text-wrap-2.txt",
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "FinishedUtc": "2026-10-04T04:08:16.1274694Z"
+}

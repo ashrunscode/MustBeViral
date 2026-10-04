@@ -1,0 +1,189 @@
+{
+  "checkedUtc": "2026-10-04 06:16:24 UTC",
+  "sourceFingerprint": "bb30818df4dd34ec46d785cb8eaa76698062df790b5eecb3f26a2e1ffce74e3c",
+  "captureCount": 73,
+  "distinct": 54,
+  "newDistinctDirectInspected": 29,
+  "viewedIndices": [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+    26, 27, 28
+  ],
+  "directInspection": [
+    {
+      "sha256": "1a7a24fd6fbb574ebadaef3f6fbcd1d430974f26d9fab6fdaf9444ba87508d6e",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-1280.png",
+      "names": ["review-states-verified-conflict-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "ed6485af5178c8d3231cec42abf2818d63b3dd37132afcc573639f38738927d5",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-1920.png",
+      "names": ["review-states-verified-conflict-1920.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "05b92485adc5508d8e44f0cc9c50b02f9ed2ac1c1b671962d0b6ef66d80edadc",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-375.png",
+      "names": ["review-states-verified-conflict-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "263caec138cd487ce1403be2ff05d4224c3777da8ad6dc5b181df4fc09afaec9",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-768.png",
+      "names": ["review-states-verified-conflict-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "07563ed5d37c7538e8497a6fa3b0360d4c3adb76dc88e40adea1f4683df2a2f0",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-1280.png",
+      "names": ["review-states-verified-denied-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "d4a12c1af3f37351b95cdaab9f626cfdb605e910586f5738b1e379780d494bfb",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-1920.png",
+      "names": ["review-states-verified-denied-1920.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "c1345e708524546ab169955515624b3f00ab0a5dd965a7514bd5bccaa84f5e01",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-375.png",
+      "names": ["review-states-verified-denied-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "be2594676d41973508cd805871822b32ea369cacb78908f06109905477140c53",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-768.png",
+      "names": ["review-states-verified-denied-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "3f94c1e0b008e0156d8c6b611747bbe719151c016bdd0627e2d757be1fe07677",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-1280.png",
+      "names": ["review-states-verified-error-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "f15e104e7ef60490da6dc55d8996dc17c5dd454939963386dee4037eac774dc0",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-1920.png",
+      "names": ["review-states-verified-error-1920.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "b4b6a3fa72a689ad08cd408f553b6ae1b11f7d6a6d73cb17bd9047fc87e754c7",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-375.png",
+      "names": ["review-states-verified-error-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "c1d8a5a1acf96da872e82f82faa611370839cd7d16d7c010d4bb6a049c0b0b3c",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-768.png",
+      "names": ["review-states-verified-error-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "dc034c877ab96f62abcdd31d3bf729eaa119d59cfbf20e9f7b2745ebc64baa48",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-expired-1280.png",
+      "names": ["review-states-verified-expired-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "bc24ad1a4458115ce20fb62c56dc6908043b1c463c868d0411d7556e745ab372",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-expired-1920.png",
+      "names": ["review-states-verified-expired-1920.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "cb1cdfb55fe8103612fea6b17478e6f3903904411bc52db1384129eff9c5c552",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-expired-375.png",
+      "names": ["review-states-verified-expired-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "f3927ddd6f47f62853c2a4c48f28decb78d364a57b0bd220b19f6b1885f4cfc9",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-expired-768.png",
+      "names": ["review-states-verified-expired-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "692a85b74a27140c2c2f821b7ff0aae485a3dda5a28c7b6e5d93d2789e10e2f7",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-incomplete-375.png",
+      "names": ["review-states-verified-incomplete-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "d2d3c8192d01893f58c2547c0be713a8bab131bc21a1b31f52430dce451583de",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-1280.png",
+      "names": ["review-states-verified-not-found-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "8402e4c9dedf6a81929015bdb80ffbb0f1fde22c92f619fd3d554377d332d984",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-1920.png",
+      "names": ["review-states-verified-not-found-1920.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "6217c8d5d3b75adbd9664e9375f5465d7d85295d1a976484ee537add83a9989d",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-375.png",
+      "names": ["review-states-verified-not-found-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "dd6e9da90926d64b7a884a40132975e3f6bd1777943d0571268a960713c95d87",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-768.png",
+      "names": ["review-states-verified-not-found-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "fceef3a15994aa0ecf5086b5f3e18ce84ee4c25223c027adf009a640763535ca",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-1280.png",
+      "names": ["review-states-verified-pending-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "b062dc6e352cf336ef7f05c2d91d066539949c9848c8d0637a6deb586a6becd1",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-1920.png",
+      "names": ["review-states-verified-pending-1920.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "c5caefccd3983ddb2b35ad24c865382609da717df0a36ac71e7bebf55e308a13",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-375.png",
+      "names": ["review-states-verified-pending-375.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "fd2284a49847de8f5f5f920171c3fb88f0085f019e203565d12f23663311b17f",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-768.png",
+      "names": ["review-states-verified-pending-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "4584642f274c720ac2ecc4270a49a92f02e868e2d5b88033c9bce6c38157b55d",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-css-1280.png",
+      "names": ["review-states-verified-pending-css-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "fd741deca7abf3f6ed52c56591ce04f4a2dabae72910ee461c6147ed80702b4b",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-css-qa-open-1280.png",
+      "names": ["review-states-verified-pending-css-qa-open-1280.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "a741c1a798ef48bc59b4699d643ddecd00723ff1bfde44868bfdd36574fc270b",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-qa-open-768.png",
+      "names": ["review-states-verified-pending-qa-open-768.png"],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "98cfc1a5316dadffe54041cdf2aaf3d5a8f0e8cf14bd498268d6b6f7d2fa3f81",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-pending-text-only-1280.png",
+      "names": ["review-states-verified-pending-text-only-1280.png"],
+      "inspectedReuse": null
+    }
+  ],
+  "exactPriorInspectedReuse": 25,
+  "disposition": "Ready, pending and tablet/desktop failures have correct containment. Mobile initial error, denied, not_found and generic GET409 headings are visually hidden by the existing first-child selector. This capture set is superseded for those failed cells, not final PASS."
+}

@@ -1,0 +1,2118 @@
+{
+  "checkedUtc": "2026-10-04T03:03:08.276Z",
+  "sourceFingerprint": "bb99c5cb96e05c54334aeea1ab5ef2cc43cb6470fc12292b5dcf2e9d14dd6839",
+  "localOnly": true,
+  "realLocalAuth": true,
+  "coreReadsIntercepted": true,
+  "cells": [
+    {
+      "label": "shared-brief",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Save draft",
+            "width": 166,
+            "height": 40
+          }
+        ],
+        "perf": {
+          "lcpMs": 272,
+          "cls": 0.08351441597001463,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Brief\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Brief\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - status:\n    - text: First use\n    - paragraph: Complete each required brief section before spend. Every field explains why it matters for planning, rights, and the named-price quote.\n  - navigation \"Brief sections\":\n    - heading \"Brief sections\" [level=2]\n    - button \"Product truth 6 missing\"\n    - button \"Brand kit 6 missing\"\n    - button \"Audience 5 missing\"\n    - button \"Offer 3 missing\"\n    - button \"Claims & legal 6 missing\"\n    - button \"Assets 0 / 5 ready\"\n  - region \"Product truth\":\n    - text: Campaign / Step 1 of 6\n    - heading \"Product truth\" [level=1]\n    - paragraph: Record only supported product facts that concepts and copy may use.\n    - text: Product name *\n    - textbox \"Product name *\"\n    - text: Category *\n    - textbox \"Category *\"\n    - text: Features *\n    - textbox \"Features *\"\n    - text: Supported benefits *\n    - textbox \"Supported benefits *\"\n    - text: Evidence *\n    - textbox \"Evidence *\"\n    - text: Approved facts *\n    - textbox \"Approved facts *\"\n  - complementary \"Brief summary\":\n    - heading \"Brief summary\" [level=2]\n    - text: Brief completeness 0%\n    - progressbar \"Brief completeness\"\n    - heading \"Missing items\" [level=3]\n    - list:\n      - listitem: Product name\n      - listitem: Category\n      - listitem: Features\n      - listitem: Benefits\n      - listitem: Product evidence\n      - listitem: Approved facts\n      - listitem: Brand colors\n      - listitem: Typography\n      - listitem: Tone\n      - listitem: Visual rules\n      - listitem: Brand examples\n      - listitem: Prohibited treatments\n      - listitem: Target audience\n      - listitem: Awareness stage\n      - listitem: Pain points\n      - listitem: Desires\n      - listitem: Objections\n      - listitem: Price presentation\n      - listitem: Urgency constraints\n      - listitem: Valid destination URL\n      - listitem: Approved claims\n      - listitem: Evidence source for approved claims\n      - listitem: Legal copy\n      - listitem: At least one prohibited claim\n      - listitem: Creative constraints\n      - listitem: Asset-rights attestation\n      - listitem: At least one product packshot\n      - listitem: One square product packshot\n    - text: Execution blocked Validation and planning remain unavailable until all required fields and rights attestations pass.\n  - text: Campaign Untitled campaign Plan Not planned yet Required 28 items missing\n  - button \"Save draft\"\n  - button \"Validate and open the plan\" [disabled]\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-brief",
+      "width": 768,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Save draft",
+            "width": 71,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 212,
+          "cls": 0.11303872073767707,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Brief\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Brief\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - status:\n    - text: First use\n    - paragraph: Complete each required brief section before spend. Every field explains why it matters for planning, rights, and the named-price quote.\n  - navigation \"Brief sections\":\n    - heading \"Brief sections\" [level=2]\n    - button \"Product truth 6 missing\"\n    - button \"Brand kit 6 missing\"\n    - button \"Audience 5 missing\"\n    - button \"Offer 3 missing\"\n    - button \"Claims & legal 6 missing\"\n    - button \"Assets 0 / 5 ready\"\n  - region \"Product truth\":\n    - text: Campaign / Step 1 of 6\n    - heading \"Product truth\" [level=1]\n    - paragraph: Record only supported product facts that concepts and copy may use.\n    - text: Product name *\n    - textbox \"Product name *\"\n    - text: Category *\n    - textbox \"Category *\"\n    - text: Features *\n    - textbox \"Features *\"\n    - text: Supported benefits *\n    - textbox \"Supported benefits *\"\n    - text: Evidence *\n    - textbox \"Evidence *\"\n    - text: Approved facts *\n    - textbox \"Approved facts *\"\n  - complementary \"Brief summary\":\n    - heading \"Brief summary\" [level=2]\n    - text: Brief completeness 0%\n    - progressbar \"Brief completeness\"\n    - heading \"Missing items\" [level=3]\n    - list:\n      - listitem: Product name\n      - listitem: Category\n      - listitem: Features\n      - listitem: Benefits\n      - listitem: Product evidence\n      - listitem: Approved facts\n      - listitem: Brand colors\n      - listitem: Typography\n      - listitem: Tone\n      - listitem: Visual rules\n      - listitem: Brand examples\n      - listitem: Prohibited treatments\n      - listitem: Target audience\n      - listitem: Awareness stage\n      - listitem: Pain points\n      - listitem: Desires\n      - listitem: Objections\n      - listitem: Price presentation\n      - listitem: Urgency constraints\n      - listitem: Valid destination URL\n      - listitem: Approved claims\n      - listitem: Evidence source for approved claims\n      - listitem: Legal copy\n      - listitem: At least one prohibited claim\n      - listitem: Creative constraints\n      - listitem: Asset-rights attestation\n      - listitem: At least one product packshot\n      - listitem: One square product packshot\n    - text: Execution blocked Validation and planning remain unavailable until all required fields and rights attestations pass.\n  - text: Campaign Untitled campaign Plan Not planned yet Required 28 items missing\n  - button \"Save draft\"\n  - button \"Validate and open the plan\" [disabled]\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-brief",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Save draft",
+            "width": 103,
+            "height": 40
+          }
+        ],
+        "perf": {
+          "lcpMs": 168,
+          "cls": 0.0012609901428222655,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Brief\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Brief\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - status:\n    - text: First use\n    - paragraph: Complete each required brief section before spend. Every field explains why it matters for planning, rights, and the named-price quote.\n  - navigation \"Brief sections\":\n    - heading \"Brief sections\" [level=2]\n    - button \"Product truth 6 missing\"\n    - button \"Brand kit 6 missing\"\n    - button \"Audience 5 missing\"\n    - button \"Offer 3 missing\"\n    - button \"Claims & legal 6 missing\"\n    - button \"Assets 0 / 5 ready\"\n  - region \"Product truth\":\n    - text: Campaign / Step 1 of 6\n    - heading \"Product truth\" [level=1]\n    - paragraph: Record only supported product facts that concepts and copy may use.\n    - text: Product name *\n    - textbox \"Product name *\"\n    - text: Category *\n    - textbox \"Category *\"\n    - text: Features *\n    - textbox \"Features *\"\n    - text: Supported benefits *\n    - textbox \"Supported benefits *\"\n    - text: Evidence *\n    - textbox \"Evidence *\"\n    - text: Approved facts *\n    - textbox \"Approved facts *\"\n  - complementary \"Brief summary\":\n    - heading \"Brief summary\" [level=2]\n    - text: Brief completeness 0%\n    - progressbar \"Brief completeness\"\n    - heading \"Missing items\" [level=3]\n    - list:\n      - listitem: Product name\n      - listitem: Category\n      - listitem: Features\n      - listitem: Benefits\n      - listitem: Product evidence\n      - listitem: Approved facts\n      - listitem: Brand colors\n      - listitem: Typography\n      - listitem: Tone\n      - listitem: Visual rules\n      - listitem: Brand examples\n      - listitem: Prohibited treatments\n      - listitem: Target audience\n      - listitem: Awareness stage\n      - listitem: Pain points\n      - listitem: Desires\n      - listitem: Objections\n      - listitem: Price presentation\n      - listitem: Urgency constraints\n      - listitem: Valid destination URL\n      - listitem: Approved claims\n      - listitem: Evidence source for approved claims\n      - listitem: Legal copy\n      - listitem: At least one prohibited claim\n      - listitem: Creative constraints\n      - listitem: Asset-rights attestation\n      - listitem: At least one product packshot\n      - listitem: One square product packshot\n    - text: Execution blocked Validation and planning remain unavailable until all required fields and rights attestations pass.\n  - text: Campaign Untitled campaign Plan Not planned yet Required 28 items missing\n  - button \"Save draft\"\n  - button \"Validate and open the plan\" [disabled]\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-brief",
+      "width": 1920,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Save draft",
+            "width": 103,
+            "height": 40
+          }
+        ],
+        "perf": {
+          "lcpMs": 164,
+          "cls": 0.0005604400634765625,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Brief\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Brief\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - status:\n    - text: First use\n    - paragraph: Complete each required brief section before spend. Every field explains why it matters for planning, rights, and the named-price quote.\n  - navigation \"Brief sections\":\n    - heading \"Brief sections\" [level=2]\n    - button \"Product truth 6 missing\"\n    - button \"Brand kit 6 missing\"\n    - button \"Audience 5 missing\"\n    - button \"Offer 3 missing\"\n    - button \"Claims & legal 6 missing\"\n    - button \"Assets 0 / 5 ready\"\n  - region \"Product truth\":\n    - text: Campaign / Step 1 of 6\n    - heading \"Product truth\" [level=1]\n    - paragraph: Record only supported product facts that concepts and copy may use.\n    - text: Product name *\n    - textbox \"Product name *\"\n    - text: Category *\n    - textbox \"Category *\"\n    - text: Features *\n    - textbox \"Features *\"\n    - text: Supported benefits *\n    - textbox \"Supported benefits *\"\n    - text: Evidence *\n    - textbox \"Evidence *\"\n    - text: Approved facts *\n    - textbox \"Approved facts *\"\n  - complementary \"Brief summary\":\n    - heading \"Brief summary\" [level=2]\n    - text: Brief completeness 0%\n    - progressbar \"Brief completeness\"\n    - heading \"Missing items\" [level=3]\n    - list:\n      - listitem: Product name\n      - listitem: Category\n      - listitem: Features\n      - listitem: Benefits\n      - listitem: Product evidence\n      - listitem: Approved facts\n      - listitem: Brand colors\n      - listitem: Typography\n      - listitem: Tone\n      - listitem: Visual rules\n      - listitem: Brand examples\n      - listitem: Prohibited treatments\n      - listitem: Target audience\n      - listitem: Awareness stage\n      - listitem: Pain points\n      - listitem: Desires\n      - listitem: Objections\n      - listitem: Price presentation\n      - listitem: Urgency constraints\n      - listitem: Valid destination URL\n      - listitem: Approved claims\n      - listitem: Evidence source for approved claims\n      - listitem: Legal copy\n      - listitem: At least one prohibited claim\n      - listitem: Creative constraints\n      - listitem: Asset-rights attestation\n      - listitem: At least one product packshot\n      - listitem: One square product packshot\n    - text: Execution blocked Validation and planning remain unavailable until all required fields and rights attestations pass.\n  - text: Campaign Untitled campaign Plan Not planned yet Required 28 items missing\n  - button \"Save draft\"\n  - button \"Validate and open the plan\" [disabled]\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-canvas",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 375,
+          "flowWidth": 375,
+          "clientWidth": 373,
+          "scrollWidth": 373,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": true
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 188,
+          "cls": 0.08347613872020271,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - text: Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Budget open after the brief is planned.\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Open this screen from a project with a canvas selected.\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-canvas",
+      "width": 768,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 520,
+          "flowWidth": 520,
+          "clientWidth": 518,
+          "scrollWidth": 518,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": true
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 180,
+          "cls": 0.11301935854135081,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - text: Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Budget open after the brief is planned.\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Open this screen from a project with a canvas selected.\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-canvas",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 1060,
+          "flowWidth": 1060,
+          "clientWidth": 1058,
+          "scrollWidth": 1058,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": true
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 172,
+          "cls": 0.001247772216796875,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - text: Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Budget open after the brief is planned.\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Open this screen from a project with a canvas selected.\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-canvas",
+      "width": 1920,
+      "metrics": {
+        "noticeGeometry": {
+          "width": 1700,
+          "flowWidth": 1700,
+          "clientWidth": 1698,
+          "scrollWidth": 1698,
+          "textClipped": false,
+          "withinFlow": true,
+          "usesAvailableWidth": true
+        },
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 176,
+          "cls": 0.0005545654296875,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - link \"Plan\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/canvas?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - text: Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Budget open after the brief is planned.\n  - region \"Campaign plan\":\n    - heading \"Campaign plan\" [level=1]\n    - alert:\n      - strong: Canvas unavailable\n      - text: Open this screen from a project with a canvas selected.\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "shared-review",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 108,
+          "cls": 0.24924514024545608,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: Plan editing needs a desktop. Review and approve here.\n    - heading \"Receipt QA campaign\" [level=1]\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\" [pressed]\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\"\n        - checkbox \"Safe zone\" [checked]\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored 4:5 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n    - region \"Receipt summary\":\n      - heading \"Receipt summary\" [level=2]\n      - text: Run total\n      - strong: $0.67\n      - text: Route\n      - strong: fixture/route\n      - text: Captured / quoted\n      - strong: $0.67 / $4.55\n      - text: Released / refunded / net\n      - strong: $3.88 / $0.00 / $0.67\n      - text: Settlement / pending\n      - strong: partially_captured / $0.00\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - text: Meta-ready bundle Pending\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "review-keyboard-controls",
+      "width": 375,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 108,
+          "cls": 0.24924514024545608,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 180
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 180
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 180
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 180
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: Plan editing needs a desktop. Review and approve here.\n    - heading \"Receipt QA campaign\" [level=1]\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\"\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\" [pressed]\n        - checkbox \"Safe zone\"\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored Reels 9:16 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n    - region \"Receipt summary\":\n      - heading \"Receipt summary\" [level=2]\n      - text: Run total\n      - strong: $0.67\n      - text: Route\n      - strong: fixture/route\n      - text: Captured / quoted\n      - strong: $0.67 / $4.55\n      - text: Released / refunded / net\n      - strong: $3.88 / $0.00 / $0.67\n      - text: Settlement / pending\n      - strong: partially_captured / $0.00\n    - region \"Export status\":\n      - heading \"Export status\" [level=2]\n      - text: Meta-ready bundle Pending\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Local synthetic read fixture; keyboard preview selection only, no approval, export, provider call or Core write.",
+      "interactions": [
+        {
+          "name": "Feed 4:5",
+          "pressed": "true",
+          "box": {
+            "x": 10,
+            "y": 490.75,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 152
+            }
+          ]
+        },
+        {
+          "name": "Feed 1:1",
+          "pressed": "true",
+          "box": {
+            "x": 85.203125,
+            "y": 490.75,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 159
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 159
+            }
+          ]
+        },
+        {
+          "name": "Feed 9:16",
+          "pressed": "true",
+          "box": {
+            "x": 160.40625,
+            "y": 490.75,
+            "width": 75.609375,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 166
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 166
+            }
+          ]
+        },
+        {
+          "name": "Reels",
+          "pressed": "true",
+          "box": {
+            "x": 242.015625,
+            "y": 490.75,
+            "width": 50,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 173
+            }
+          ]
+        },
+        {
+          "name": "Safe zone",
+          "checked": false,
+          "box": {
+            "x": 22,
+            "y": 543.75,
+            "width": 66.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 180
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 180
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 180
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 180
+            }
+          ]
+        }
+      ],
+      "inp": [
+        {
+          "value": 48,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 152
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 152
+            }
+          ]
+        },
+        {
+          "value": 56,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 173
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 173
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "shared-review",
+      "width": 768,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Close",
+            "width": 44,
+            "height": 44
+          }
+        ],
+        "perf": {
+          "lcpMs": 184,
+          "cls": 0.292521213045499,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: \"Revision 77777777-7777-4777-8777-777777777777. Reviewer: you.\"\n    - heading \"Receipt QA campaign\" [level=1]\n    - paragraph: 16 of 16 approved. Export the bundle when you are ready.\n    - button \"QA findings\"\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\" [pressed]\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\"\n        - checkbox \"Safe zone\" [checked]\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored 4:5 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - button \"Close QA findings\": Close\n    - text: No copy QA findings Client copy checks run against parsed headline and primary text. Visual QA is not on this receipt.\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "review-keyboard-controls",
+      "width": 768,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          },
+          {
+            "name": "Close",
+            "width": 44,
+            "height": 44
+          }
+        ],
+        "perf": {
+          "lcpMs": 184,
+          "cls": 0.292521213045499,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2525
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2525
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2525
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2525
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: \"Revision 77777777-7777-4777-8777-777777777777. Reviewer: you.\"\n    - heading \"Receipt QA campaign\" [level=1]\n    - paragraph: 16 of 16 approved. Export the bundle when you are ready.\n    - button \"QA findings\"\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\"\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\" [pressed]\n        - checkbox \"Safe zone\"\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored Reels 9:16 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - button \"Close QA findings\": Close\n    - text: No copy QA findings Client copy checks run against parsed headline and primary text. Visual QA is not on this receipt.\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Local synthetic read fixture; keyboard preview selection only, no approval, export, provider call or Core write.",
+      "interactions": [
+        {
+          "name": "Feed 4:5",
+          "pressed": "true",
+          "box": {
+            "x": 280.1875,
+            "y": 566.953125,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2497
+            }
+          ]
+        },
+        {
+          "name": "Feed 1:1",
+          "pressed": "true",
+          "box": {
+            "x": 355.390625,
+            "y": 566.953125,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2504
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2504
+            }
+          ]
+        },
+        {
+          "name": "Feed 9:16",
+          "pressed": "true",
+          "box": {
+            "x": 430.59375,
+            "y": 566.953125,
+            "width": 75.609375,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2511
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2511
+            }
+          ]
+        },
+        {
+          "name": "Reels",
+          "pressed": "true",
+          "box": {
+            "x": 512.203125,
+            "y": 566.953125,
+            "width": 50,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2518
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2518
+            }
+          ]
+        },
+        {
+          "name": "Safe zone",
+          "checked": false,
+          "box": {
+            "x": 580.203125,
+            "y": 566.953125,
+            "width": 66.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2525
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2525
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2525
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2525
+            }
+          ]
+        }
+      ],
+      "inp": [
+        {
+          "value": 56,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2497
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2497
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "shared-review",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 164,
+          "cls": 0.06826443951924642,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: \"Revision 77777777-7777-4777-8777-777777777777. Reviewer: you.\"\n    - heading \"Receipt QA campaign\" [level=1]\n    - paragraph: 16 of 16 approved. Export the bundle when you are ready.\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\" [pressed]\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\"\n        - checkbox \"Safe zone\" [checked]\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored 4:5 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - paragraph: Receipt-backed artifacts remain isolated from local review drafts.\n    - text: No copy QA findings Client copy checks run against parsed headline and primary text. Visual QA is not on this receipt.\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "review-keyboard-controls",
+      "width": 1280,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 164,
+          "cls": 0.06826443951924642,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 8267
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 8267
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 8267
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 8267
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: \"Revision 77777777-7777-4777-8777-777777777777. Reviewer: you.\"\n    - heading \"Receipt QA campaign\" [level=1]\n    - paragraph: 16 of 16 approved. Export the bundle when you are ready.\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\"\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\" [pressed]\n        - checkbox \"Safe zone\"\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored Reels 9:16 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - paragraph: Receipt-backed artifacts remain isolated from local review drafts.\n    - text: No copy QA findings Client copy checks run against parsed headline and primary text. Visual QA is not on this receipt.\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Local synthetic read fixture; keyboard preview selection only, no approval, export, provider call or Core write.",
+      "interactions": [
+        {
+          "name": "Feed 4:5",
+          "pressed": "true",
+          "box": {
+            "x": 514.1875,
+            "y": 451.453125,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 8239
+            }
+          ]
+        },
+        {
+          "name": "Feed 1:1",
+          "pressed": "true",
+          "box": {
+            "x": 589.390625,
+            "y": 451.453125,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 8246
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 8246
+            }
+          ]
+        },
+        {
+          "name": "Feed 9:16",
+          "pressed": "true",
+          "box": {
+            "x": 664.59375,
+            "y": 451.453125,
+            "width": 75.609375,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 8253
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 8253
+            }
+          ]
+        },
+        {
+          "name": "Reels",
+          "pressed": "true",
+          "box": {
+            "x": 746.203125,
+            "y": 451.453125,
+            "width": 50,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 8260
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 8260
+            }
+          ]
+        },
+        {
+          "name": "Safe zone",
+          "checked": false,
+          "box": {
+            "x": 814.203125,
+            "y": 451.453125,
+            "width": 66.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 8267
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 8267
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 8267
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 8267
+            }
+          ]
+        }
+      ],
+      "inp": [
+        {
+          "value": 56,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 8239
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 8239
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "shared-review",
+      "width": 1920,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 148,
+          "cls": 0.056987440905158906,
+          "events": []
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: \"Revision 77777777-7777-4777-8777-777777777777. Reviewer: you.\"\n    - heading \"Receipt QA campaign\" [level=1]\n    - paragraph: 16 of 16 approved. Export the bundle when you are ready.\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\" [pressed]\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\"\n        - checkbox \"Safe zone\" [checked]\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored 4:5 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - paragraph: Receipt-backed artifacts remain isolated from local review drafts.\n    - text: No copy QA findings Client copy checks run against parsed headline and primary text. Visual QA is not on this receipt.\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Shared shell and rendered fixture states only; synthetic Core reads, not proof of this route's primary task."
+    },
+    {
+      "label": "review-keyboard-controls",
+      "width": 1920,
+      "metrics": {
+        "noticeGeometry": null,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "summary": null,
+        "summaryClipped": false,
+        "summaryWithinViewport": true,
+        "summaryWhiteSpace": null,
+        "moneyState": null,
+        "bodyFontPx": 15,
+        "noticeFontPx": null,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 131,
+            "height": 41
+          }
+        ],
+        "perf": {
+          "lcpMs": 148,
+          "cls": 0.056987440905158906,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 9169
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 9197
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 9197
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 9197
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 9197
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "snapshot": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Receipt QA studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n    - link \"Brands\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=22222222-2222-4222-8222-222222222222&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Receipt QA studio\":\n          - /url: /studio?studio=22222222-2222-4222-8222-222222222222\n      - listitem:\n        - text: /\n        - strong: Receipt QA brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/brief?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/review?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/approvals?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/collaborators?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/calendar?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan and Budget open after the brief is planned.\n  - region \"Receipt QA campaign\":\n    - text: \"Revision 77777777-7777-4777-8777-777777777777. Reviewer: you.\"\n    - heading \"Receipt QA campaign\" [level=1]\n    - paragraph: 16 of 16 approved. Export the bundle when you are ready.\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Reviewing outputs. Draft comments only. Unavailable\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Copy, Problem-recognition\":\n      - text: Draft comments\n      - heading \"Copy, Problem-recognition\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - status:\n      - text: Pack approved\n      - paragraph: Every artifact on this receipt is approved. Export is the next step.\n      - link \"Export approved\":\n        - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n    - region \"Composed review\":\n      - tablist \"Concepts\":\n        - 'tab \"Concept 1: Packshot Problem-recognition\" [selected]'\n        - 'tab \"Concept 2: Material Proof-first\"'\n        - 'tab \"Concept 3: Proof-forward Offer-clarity\"'\n      - group \"Placement\":\n        - button \"Feed 4:5\"\n        - button \"Feed 1:1\"\n        - button \"Feed 9:16\"\n        - button \"Reels\" [pressed]\n        - checkbox \"Safe zone\"\n        - text: Safe zone\n      - article:\n        - text: Receipt QA campaign, sponsored Reels 9:16 No private preview for this placement\n        - strong: Packshot\n      - text: Concept approved\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - paragraph: Receipt-backed artifacts remain isolated from local review drafts.\n    - text: No copy QA findings Client copy checks run against parsed headline and primary text. Visual QA is not on this receipt.\n  - text: Batch approval\n  - strong: 16 / 16 approved\n  - link \"Export approved\":\n    - /url: /studio/11111111-1111-4111-8111-111111111111/receipt?studio=22222222-2222-4222-8222-222222222222&brand=33333333-3333-4333-8333-333333333333&run=44444444-4444-4444-8444-444444444444\n- alert",
+      "evidenceLevel": "Local synthetic read fixture; keyboard preview selection only, no approval, export, provider call or Core write.",
+      "interactions": [
+        {
+          "name": "Feed 4:5",
+          "pressed": "true",
+          "box": {
+            "x": 834.1875,
+            "y": 451.453125,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 9169
+            }
+          ]
+        },
+        {
+          "name": "Feed 1:1",
+          "pressed": "true",
+          "box": {
+            "x": 909.390625,
+            "y": 451.453125,
+            "width": 69.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 9176
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 9176
+            }
+          ]
+        },
+        {
+          "name": "Feed 9:16",
+          "pressed": "true",
+          "box": {
+            "x": 984.59375,
+            "y": 451.453125,
+            "width": 75.609375,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 9183
+            },
+            {
+              "name": "keyup",
+              "duration": 40,
+              "interactionId": 9183
+            }
+          ]
+        },
+        {
+          "name": "Reels",
+          "pressed": "true",
+          "box": {
+            "x": 1066.203125,
+            "y": 451.453125,
+            "width": 50,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 9190
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 9190
+            }
+          ]
+        },
+        {
+          "name": "Safe zone",
+          "checked": false,
+          "box": {
+            "x": 1134.203125,
+            "y": 451.453125,
+            "width": 66.203125,
+            "height": 44
+          },
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 48,
+              "interactionId": 9197
+            },
+            {
+              "name": "keypress",
+              "duration": 48,
+              "interactionId": 9197
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 9197
+            },
+            {
+              "name": "click",
+              "duration": 48,
+              "interactionId": 9197
+            }
+          ]
+        }
+      ],
+      "inp": [
+        {
+          "value": 56,
+          "entries": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 9169
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 9169
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "writes": 0
+}

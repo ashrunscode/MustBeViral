@@ -1,0 +1,50 @@
+Selected diagnostic lines from l3f-focused-regressions-before-review-session-heading-2.txt. This is an excerpt, not the full transcript.
+7:      × keeps the review heading when its session expires 143ms
+8:
+9: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+10:
+11:  FAIL  src/features/export/receipt-flow.worker.test.tsx > ReceiptFlow missing totals recovery > offers only another read after a failed status check and recovers without creating an export
+12: AssertionError: expected <body><div>…(1)</div></body> to be <h1 tabindex="-1" …(1)></h1> // Object.is equality
+13:
+14: - Expected
+15: + Received
+16:
+17: + <body>
+18: +   <div>
+19: +     <div
+20: +       class="_receiptPage_f10020"
+21: +       data-money-state="known"
+22: +       id="main-content"
+489: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+490:
+491:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > keeps the review heading when its session expires
+492: TestingLibraryElementError: Unable to find an accessible element with the role "heading" and name "Review outputs"
+493:
+494: Here are the accessible roles:
+495:
+496:   region:
+497:
+498:   Name "Session expired":
+499:   <section
+500:     aria-label="Session expired"
+501:     class="_reviewStage_e9fec0"
+568:  ❯ src/features/review/review-flow.worker.test.tsx:95:19
+569:      93|     );
+570:      94|     await screen.findByRole('region', { name: 'Session expired' });
+571:      95|     expect(screen.getByRole('heading', { level: 1, name: 'Review outpu…
+572:        |                   ^
+573:      96|     expect(screen.queryByRole('link', { name: 'Export approved' })).to…
+574:      97|   });
+575:
+576: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+577:
+578:
+579:  Test Files  2 failed | 5 passed (7)
+580:       Tests  2 failed | 79 passed (81)
+581:    Start at  00:52:32
+582:    Duration  3.04s (transform 2.85s, setup 0ms, import 6.04s, tests 1.82s, environment 2.75s)
+583:
+584: undefined
+585: C:\dev\mbv-finish\apps\web:
+586: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+587:

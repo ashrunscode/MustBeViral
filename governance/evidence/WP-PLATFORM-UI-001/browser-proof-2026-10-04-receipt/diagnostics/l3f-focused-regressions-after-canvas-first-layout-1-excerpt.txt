@@ -1,0 +1,11 @@
+Selected diagnostic lines from l3f-focused-regressions-after-canvas-first-layout-1.txt. This is an excerpt, not the full transcript.
+1:
+2:  RUN  v4.1.10 C:/dev/mbv-finish/apps/web
+3:
+4:
+5:  Test Files  7 passed (7)
+6:       Tests  71 passed (71)
+7:    Start at  23:50:44
+8:    Duration  3.02s (transform 2.78s, setup 0ms, import 6.13s, tests 1.60s, environment 2.81s)
+9:
+10:

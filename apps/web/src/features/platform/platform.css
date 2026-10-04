@@ -373,7 +373,7 @@
 }
 .platform-main--flush > .platform-campaign-nav a,
 .platform-main--flush > .platform-campaign-nav span {
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 12px;
 }
 /* Compact step links keep a 44px hit area through the same pseudo-element the UI package uses. */
@@ -798,6 +798,10 @@
 @media (max-width: 767px) {
   .platform-app {
     grid-template-columns: minmax(0, 1fr);
+  }
+  /* App-height workflows reserve the main row while scope and receipt reads settle. */
+  .platform-app--flush {
+    grid-template-rows: auto minmax(0, 1fr);
   }
   .platform-rail {
     position: static;

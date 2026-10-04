@@ -1,0 +1,39 @@
+Selected diagnostic lines from l3f-focused-regressions-before-review-loading-1.txt. This is an excerpt, not the full transcript.
+5:      × waits for the pinned receipt before showing review controls and comments 182ms
+6:
+7: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+8:
+9:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > waits for the pinned receipt before showing review controls and comments
+10: AssertionError: expected <textarea id="_r_1_" …(3)></textarea> to be null
+11:
+12: - Expected:
+13: null
+14:
+15: + Received:
+16: <textarea
+17:   disabled=""
+18:   id="_r_1_"
+19:   maxlength="4000"
+20:   placeholder="Select an element to anchor a draft comment"
+21: />
+22:
+23:  ❯ src/features/review/review-flow.worker.test.tsx:95:76
+24:      93|     expect(screen.getByRole('heading', { level: 1, name: 'Review outpu…
+25:      94|     expect(screen.getByText('Reading outputs and approvals…')).toBeTru…
+26:      95|     expect(screen.queryByRole('textbox', { name: 'Add a draft comment'…
+27:        |                                                                            ^
+28:      96|     expect(screen.queryByRole('button', { name: 'Close QA findings' })…
+29:      97|     expect(screen.queryByRole('button', { name: 'Approve Visual system…
+30:
+31: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+32:
+33:
+34:  Test Files  1 failed | 6 passed (7)
+35:       Tests  1 failed | 69 passed (70)
+36:    Start at  23:34:57
+37:    Duration  3.25s (transform 3.13s, setup 0ms, import 6.64s, tests 1.76s, environment 3.05s)
+38:
+39: undefined
+40: C:\dev\mbv-finish\apps\web:
+41: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+42:

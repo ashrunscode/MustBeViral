@@ -74,6 +74,519 @@ test.describe('connected platform journeys', () => {
     await expect(page).toHaveURL(new RegExp('^http://127\\.0\\.0\\.1:3111/'));
   });
 
+  test('keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes', async ({
+    page,
+  }) => {
+    test.setTimeout(240_000);
+    const owner = await registerUser(`receipt-totals-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    const brands = await createStudioAndBrands(page);
+    const project = await seedLegacyProject(
+      brands.workspaceId,
+      owner.id,
+      'Synthetic receipt totals',
+    );
+    await seedProjectBrandMapping(brands.workspaceId, project.id, brands.washbodegaBrandId);
+    const runId = randomUUID();
+    const canvasId = randomUUID();
+    const revisionId = randomUUID();
+    const quoteId = randomUUID();
+    const reservationId = randomUUID();
+    const timestamp = '2026-10-04T01:00:00.000Z';
+    const nodeKeys = [
+      'copy-1',
+      'copy-2',
+      'copy-3',
+      'master-1',
+      'master-2',
+      'master-3',
+      'adaptation-1-1',
+      'adaptation-1-2',
+      'adaptation-1-3',
+      'adaptation-2-1',
+      'adaptation-2-2',
+      'adaptation-2-3',
+      'adaptation-3-1',
+      'adaptation-3-2',
+      'adaptation-3-3',
+      'motion-1',
+    ];
+    const coreWrites: string[] = [];
+    let reservationKnown = false;
+    let receiptReads = 0;
+    let reviewReadFailure: 'error' | 'denied' | null = null;
+    let releaseInitialRead: (() => void) | undefined;
+    let initialReadReleased = false;
+    const initialRead = new Promise<void>((resolve) => {
+      releaseInitialRead = resolve;
+    });
+    page.on('request', (request) => {
+      if (request.url().includes('/api/core/') && request.method() !== 'GET')
+        coreWrites.push(request.method());
+    });
+    await page.route(`**/api/core/v1/runs/${runId}`, async (route) => {
+      await route.fulfill({
+        json: {
+          data: {
+            run: {
+              runId,
+              projectId: project.id,
+              canvasId,
+              canvasRevisionId: revisionId,
+              quoteId,
+              reservationId,
+              status: 'succeeded',
+            },
+            nodes: nodeKeys.map((nodeKey) => ({
+              runNodeId: `node-${nodeKey}`,
+              nodeKey,
+              modelRouteId: `route-${nodeKey}`,
+              status: 'succeeded',
+              dispatchWave: 1,
+            })),
+            recovery: null,
+            spend: {
+              currency: 'USD',
+              authorizedMicros: '0',
+              capturedMicros: '0',
+              releasedMicros: '0',
+              refundedMicros: '0',
+              netMicros: '0',
+              settlementStatus: 'released',
+            },
+          },
+          meta: { request_id: 'receipt-totals-fixture' },
+        },
+      });
+    });
+    await page.route(`**/api/core/v1/runs/${runId}/receipt`, async (route) => {
+      receiptReads++;
+      if (!initialReadReleased) await initialRead;
+      if (reviewReadFailure !== null) {
+        await route.fulfill({
+          status: reviewReadFailure === 'error' ? 503 : 403,
+          json: {
+            error: {
+              code: reviewReadFailure === 'error' ? 'UPSTREAM_UNAVAILABLE' : 'FORBIDDEN',
+              message: 'Synthetic review read failure.',
+              request_id: 'review-read-failure-fixture',
+              retryable: reviewReadFailure === 'error',
+            },
+          },
+        });
+        return;
+      }
+      await route.fulfill({
+        json: {
+          data: {
+            receipt: {
+              run: {
+                id: runId,
+                project_id: project.id,
+                canvas_id: canvasId,
+                canvas_revision_id: revisionId,
+                canvas_revision_hash: 'a'.repeat(64),
+                quote_id: quoteId,
+                confirmed_at: timestamp,
+                created_at: timestamp,
+                updated_at: timestamp,
+                dispatch_wave: 1,
+                status: 'succeeded',
+              },
+              reservation: reservationKnown
+                ? {
+                    id: reservationId,
+                    run_id: runId,
+                    quote_id: quoteId,
+                    amount_micros: 0,
+                    captured_micros: 0,
+                    refunded_micros: 0,
+                    released_micros: 0,
+                    status: 'released',
+                    created_at: timestamp,
+                    updated_at: timestamp,
+                  }
+                : null,
+              ledger: [],
+              artifacts: nodeKeys.map((nodeKey) => ({
+                id: `artifact-${nodeKey}`,
+                project_id: project.id,
+                run_id: runId,
+                run_node_id: `node-${nodeKey}`,
+                canvas_revision_id: revisionId,
+                artifact_kind: 'approved_output',
+                status: 'available',
+                mime_type: nodeKey.startsWith('copy-')
+                  ? 'application/json'
+                  : nodeKey === 'motion-1'
+                    ? 'video/mp4'
+                    : 'image/png',
+                byte_size: 2048,
+                content_hash: 'a'.repeat(64),
+                accessibility_description: 'Synthetic receipt fixture output.',
+                approved_at: timestamp,
+                created_at: timestamp,
+                updated_at: timestamp,
+              })),
+              lineage: [],
+              provider_jobs: [],
+            },
+          },
+          meta: { request_id: 'receipt-totals-fixture' },
+        },
+      });
+    });
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    const query = new URLSearchParams({
+      studio: brands.studioId,
+      brand: brands.washbodegaBrandId,
+      run: runId,
+    });
+    await page.goto(`/studio/${brands.workspaceId}/receipt?${query}`);
+    try {
+      await expect(page.getByText('Reading immutable receipt', { exact: true })).toBeVisible();
+      const loadingNotice = await page.locator('[data-result="loading"]').evaluate((notice) => {
+        const flow = notice.closest('#main-content');
+        if (flow === null) throw new Error('The loading receipt has no flow container.');
+        const n = notice.getBoundingClientRect();
+        const f = flow.getBoundingClientRect();
+        return n.top >= f.top && n.bottom <= f.bottom && n.left >= f.left && n.right <= f.right;
+      });
+      expect.soft(loadingNotice).toBe(true);
+      const loadingRail = await page.locator('.platform-rail').evaluate((rail) => {
+        const style = getComputedStyle(rail);
+        const head = rail.querySelector('.platform-rail__head');
+        if (head === null) throw new Error('The mobile rail has no visible header.');
+        return {
+          height: rail.getBoundingClientRect().height,
+          contentHeight:
+            head.getBoundingClientRect().height +
+            Number.parseFloat(style.paddingTop) +
+            Number.parseFloat(style.paddingBottom) +
+            Number.parseFloat(style.borderTopWidth) +
+            Number.parseFloat(style.borderBottomWidth),
+        };
+      });
+      expect.soft(loadingRail.height).toBeCloseTo(loadingRail.contentHeight);
+    } finally {
+      initialReadReleased = true;
+      releaseInitialRead?.();
+    }
+    const check = page.getByRole('button', { name: 'Check receipt status' });
+    await expect(check).toBeVisible();
+    expect((await check.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    for (const step of await page
+      .getByRole('navigation', { name: 'Campaign workflow' })
+      .getByRole('link')
+      .all()) {
+      expect((await step.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    }
+    await expect(
+      page.getByRole('complementary', { name: 'Receipt evidence' }).getByText('Unavailable', {
+        exact: true,
+      }),
+    ).toHaveCount(3);
+    const summary = page.locator('[class*="confirmBar"] > div > span:last-child');
+    await expect(summary).toHaveText(
+      'Quote unavailable, settled amount unavailable. Quote comparison unavailable.',
+    );
+    const checkGeometry = async (state: string) => {
+      for (const width of [375, 768, 1280, 1920]) {
+        await page.setViewportSize({
+          width,
+          height: width === 375 ? 812 : width === 768 ? 1024 : 900,
+        });
+        const geometry = await summary.evaluate((element) => ({
+          unclipped:
+            element.scrollWidth <= element.clientWidth &&
+            element.scrollHeight <= element.clientHeight,
+          withinViewport: element.getBoundingClientRect().bottom <= window.innerHeight,
+          pageOverflow: document.documentElement.scrollWidth > window.innerWidth,
+        }));
+        expect(geometry).toEqual({ unclipped: true, withinViewport: true, pageOverflow: false });
+        const ledger = page.getByRole('region', { name: 'Receipt charges by attempt' });
+        const containment = await ledger.evaluate((region) => {
+          const section = region.closest('section');
+          const evidence = section?.nextElementSibling;
+          if (section === null || evidence === undefined || evidence === null)
+            throw new Error('Receipt ledger or evidence column is missing.');
+          const r = region.getBoundingClientRect();
+          const s = section.getBoundingClientRect();
+          const a = evidence.getBoundingClientRect();
+          return {
+            withinColumn: r.left >= s.left - 1 && r.right <= s.right + 1,
+            overlapsEvidence:
+              r.left < a.right && r.right > a.left && r.top < a.bottom && r.bottom > a.top,
+            overflowX: getComputedStyle(region).overflowX,
+          };
+        });
+        expect(containment).toEqual({
+          withinColumn: true,
+          overlapsEvidence: false,
+          overflowX: 'auto',
+        });
+        await expect(ledger).toHaveAttribute('tabindex', '0');
+        await ledger.focus();
+        await ledger.evaluate((region) => {
+          region.scrollLeft = 0;
+        });
+        await page.keyboard.press('ArrowRight');
+        await expect.poll(() => ledger.evaluate((region) => region.scrollLeft)).toBeGreaterThan(0);
+        await attachAxeAndAria(page, `receipt-${state}-${width}`);
+      }
+    };
+    await checkGeometry('unavailable-totals');
+    await page.setViewportSize({ width: 375, height: 812 });
+    const readsBeforeRecovery = receiptReads;
+    reservationKnown = true;
+    await check.focus();
+    await page.keyboard.press('Enter');
+    await expect(summary).toHaveText('Quoted $0.00, charged $0.00, $0.00 under quote');
+    await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+    await checkGeometry('known-zero-totals');
+    expect(receiptReads).toBeGreaterThan(readsBeforeRecovery);
+
+    let canvasReads = 0;
+    let canvasReady = false;
+    await page.route(`**/api/core/v1/canvases/${canvasId}`, async (route) => {
+      canvasReads++;
+      // The outer boundary must confirm campaign scope before exercising a later canvas read failure.
+      // The dev harness may repeat that scope read under Strict Mode; no guard is bypassed.
+      if (canvasReady || (await page.locator('[data-canvas-state]').count()) === 0) {
+        await route.fulfill({
+          json: {
+            data: {
+              canvas: {
+                canvasId,
+                projectId: project.id,
+                headRevisionId: revisionId,
+                graphSchemaVersion: 1,
+                graphSnapshot: {
+                  nodes: [
+                    {
+                      id: 'synthetic-brief',
+                      kind: 'brief',
+                      parameter_schema_version: 1,
+                      parameters: {},
+                    },
+                  ],
+                  edges: [],
+                },
+                canonicalHash: 'a'.repeat(64),
+              },
+            },
+            meta: { request_id: 'canvas-scope-fixture' },
+          },
+        });
+        return;
+      }
+      await route.fulfill({
+        status: 503,
+        json: {
+          error: {
+            code: 'INTERNAL_ERROR',
+            message: 'Canvas read unavailable in the local synthetic fixture.',
+            request_id: 'canvas-recovery-fixture',
+            retryable: true,
+          },
+        },
+      });
+    });
+    query.set('canvas', canvasId);
+    for (const width of [375, 768, 1280, 1920]) {
+      await page.setViewportSize({
+        width,
+        height: width === 375 ? 812 : width === 768 ? 1024 : 900,
+      });
+      await page.goto(`/studio/${brands.workspaceId}/canvas?${query}`);
+      await expect(page.getByRole('heading', { level: 1, name: 'Campaign plan' })).toBeVisible();
+      const retry = page.getByRole('button', { name: 'Try loading again' });
+      await expect(retry).toBeVisible();
+      expect((await retry.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+      const noticeGeometry = await page
+        .locator('#main-content')
+        .getByRole('alert')
+        .evaluate((notice) => {
+          const flow = notice.closest('#main-content');
+          if (flow === null) throw new Error('The canvas notice has no flow container.');
+          const n = notice.getBoundingClientRect();
+          const f = flow.getBoundingClientRect();
+          return {
+            usesAvailableWidth: Math.abs(n.width - f.width) <= 1,
+            textClipped: notice.scrollWidth > notice.clientWidth + 1,
+            pageOverflow: document.documentElement.scrollWidth > window.innerWidth,
+          };
+        });
+      expect(noticeGeometry).toEqual({
+        usesAvailableWidth: true,
+        textClipped: false,
+        pageOverflow: false,
+      });
+      const readsBeforeRetry = canvasReads;
+      await retry.focus();
+      await page.keyboard.press('Enter');
+      await expect(retry).toBeVisible();
+      await expect.poll(() => canvasReads).toBeGreaterThan(readsBeforeRetry);
+      await attachAxeAndAria(page, `canvas-unavailable-recovery-${width}`);
+    }
+    canvasReady = true;
+    await page.getByRole('button', { name: 'Try loading again' }).focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByTestId('canvas-surface')).toBeVisible();
+    for (const width of [375, 768, 1280, 1920]) {
+      await page.setViewportSize({
+        width,
+        height: width === 375 ? 812 : width === 768 ? 1024 : 900,
+      });
+      const root = page.locator('#main-content');
+      await expect(root).toHaveAttribute('data-canvas-layout', width < 1280 ? 'drawer' : 'rail');
+      const canvasGeometry = await root.evaluate((flow) => {
+        const container = flow.getBoundingClientRect();
+        const toolbar = flow.querySelector('[class*="toolbarActions"]');
+        const quote = flow.querySelector('[class*="quoteBar"]');
+        const surface = flow.querySelector('[data-testid="canvas-surface"]');
+        const toolbarRow = toolbar?.parentElement;
+        if (toolbar === null || quote === null || surface === null || !toolbarRow)
+          throw new Error('Canvas controls are missing.');
+        return {
+          pageOverflow: document.documentElement.scrollWidth > window.innerWidth,
+          toolbarHeightContained:
+            toolbar.getBoundingClientRect().bottom <= toolbarRow.getBoundingClientRect().bottom + 1,
+          graphStartsAfterControls:
+            toolbar.getBoundingClientRect().bottom <= surface.getBoundingClientRect().top + 1,
+          controlsContained: [toolbar, quote].every((element) => {
+            const bounds = element.getBoundingClientRect();
+            return (
+              bounds.left >= container.left - 1 &&
+              bounds.right <= container.right + 1 &&
+              element.scrollWidth <= element.clientWidth + 1
+            );
+          }),
+        };
+      });
+      expect(canvasGeometry).toEqual({
+        pageOverflow: false,
+        controlsContained: true,
+        toolbarHeightContained: true,
+        graphStartsAfterControls: true,
+      });
+      if (width < 1280) {
+        const trigger = page.getByRole('button', { name: 'Outline and comments' });
+        await trigger.focus();
+        await page.keyboard.press('Enter');
+        const close = page.getByRole('button', { name: 'Close Plan outline and comments' });
+        await expect(close).toBeFocused();
+        expect((await close.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+        await expect(page.getByRole('heading', { name: 'Graph outline' })).toBeVisible();
+        await page.keyboard.press('Escape');
+        await expect(trigger).toBeFocused();
+        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      }
+      if (width === 375) {
+        await expect(page.getByRole('button', { name: 'Validate graph' })).toBeDisabled();
+        await expect(page.getByRole('link', { name: 'Open this plan on a desktop' })).toBeVisible();
+      }
+      await attachAxeAndAria(page, `canvas-ready-responsive-${width}`);
+    }
+
+    for (const width of [375, 768, 1280, 1920]) {
+      await page.setViewportSize({ width, height: width === 375 ? 812 : 1024 });
+      for (const failure of ['error', 'denied'] as const) {
+        reviewReadFailure = failure;
+        await page.goto(`/studio/${brands.workspaceId}/review?${query}`);
+        await expect(
+          page.locator(`[data-review-state="${failure === 'denied' ? 'forbidden' : 'error'}"]`),
+        ).toBeVisible();
+        await expect(page.getByRole('heading', { level: 1, name: 'Review outputs' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Back to the run' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Export approved' })).toHaveCount(0);
+        await expect(page.getByRole('textbox', { name: 'Add a draft comment' })).toHaveCount(0);
+        await expectNoHorizontalOverflow(page);
+        await attachAxeAndAria(page, `review-read-failure-${failure}-${width}`);
+      }
+    }
+    reviewReadFailure = null;
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/studio/${brands.workspaceId}/review?${query}`);
+    await expect(page.getByRole('tablist', { name: 'Concepts' })).toBeVisible();
+    await page.evaluate(() => {
+      // Freeze every computed size before doubling: inherited text must not accidentally grow 4x.
+      const sizes = [...document.querySelectorAll<HTMLElement>('body *')]
+        .filter((element) =>
+          [...element.childNodes].some(
+            (node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim(),
+          ),
+        )
+        .map((element) => {
+          const style = getComputedStyle(element);
+          return {
+            element,
+            size: Number.parseFloat(style.fontSize),
+            line: style.lineHeight === 'normal' ? null : Number.parseFloat(style.lineHeight),
+          };
+        });
+      for (const { element, size, line } of sizes) {
+        element.style.fontSize = `${String(size * 2)}px`;
+        if (line !== null) element.style.lineHeight = `${String(line * 2)}px`;
+      }
+    });
+    const conceptLabels = await page.getByRole('tablist', { name: 'Concepts' }).evaluate((rail) => {
+      const railBox = rail.getBoundingClientRect();
+      const stageBox = rail.nextElementSibling?.getBoundingClientRect();
+      return [...rail.querySelectorAll('[role="tab"]')].map((tab) => {
+        const button = tab.getBoundingClientRect();
+        const textFits = [...tab.querySelectorAll('span')].every((label) => {
+          const range = document.createRange();
+          range.selectNodeContents(label);
+          return [...range.getClientRects()].every(
+            (text) =>
+              text.left >= button.left - 1 &&
+              text.right <= button.right + 1 &&
+              text.top >= button.top - 1 &&
+              text.bottom <= button.bottom + 1,
+          );
+        });
+        return {
+          textFits,
+          insideRail: button.left >= railBox.left - 1 && button.right <= railBox.right + 1,
+          overlapsStage:
+            stageBox !== undefined &&
+            button.right > stageBox.left + 1 &&
+            button.left < stageBox.right - 1 &&
+            button.bottom > stageBox.top + 1 &&
+            button.top < stageBox.bottom - 1,
+        };
+      });
+    });
+    expect(conceptLabels).toEqual(
+      Array.from({ length: 3 }, () => ({
+        textFits: true,
+        insideRail: true,
+        overlapsStage: false,
+      })),
+    );
+    await attachAxeAndAria(page, 'review-exact-text-size-200');
+
+    await page.reload();
+    await expect(page.getByRole('tablist', { name: 'Concepts' })).toBeVisible();
+    await page.evaluate(() => {
+      document.body.style.zoom = '2';
+    });
+    // Available width changes before viewport media queries under CSS enlargement.
+    // The existing tablet drawer must replace desktop columns and retain its Close action.
+    const closeQa = page.getByRole('button', { name: 'Close QA findings', exact: true });
+    await expect(closeQa).toBeVisible();
+    await closeQa.focus();
+    await page.keyboard.press('Enter');
+    await expect(closeQa).toBeHidden();
+    await expect(page.getByRole('button', { name: 'QA findings', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'QA findings', exact: true })).toBeFocused();
+    await expectNoHorizontalOverflow(page);
+    await attachAxeAndAria(page, 'review-available-width-zoom-200');
+    expect(coreWrites).toEqual([]);
+  });
+
   test('saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave', async ({
     page,
     browser,

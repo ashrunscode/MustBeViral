@@ -1,0 +1,12 @@
+{
+  "endedUtc": "2026-10-04T02:40:20.3169752Z",
+  "root": "C:/dev/mbv-finish",
+  "head": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "node": "v24.18.0",
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx",
+  "exit": 1,
+  "ownedWorkInProgress": true,
+  "log": "C:/dev/mbv-run/l3f-focused-regressions-before-layout-and-placement-1.txt",
+  "startedUtc": "2026-10-04T02:40:14.4413983Z",
+  "pnpm": "11.12.0"
+}

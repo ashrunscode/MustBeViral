@@ -1,0 +1,36 @@
+Selected diagnostic lines from l3f-focused-regressions-before-review-session-heading-1.txt. This is an excerpt, not the full transcript.
+12:      × keeps the review heading when its session expires 1041ms
+13:
+14: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+15:
+16:  FAIL  src/features/review/review-flow.worker.test.tsx > ReviewFlow against a worker read port > keeps the review heading when its session expires
+17: TestingLibraryElementError: Unable to find role="region" and name "Session expired"
+18:
+19: Ignored nodes: comments, script, style
+20: <body>
+21:   <div />
+22: </body>
+23:
+24: Ignored nodes: comments, script, style
+25: <body>
+26:   <div />
+61:  ❯ renderRootSync ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-client.development.js:17450:11
+62:  ❯ performWorkOnRoot ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-client.development.js:16583:35
+63:
+64: This error originated in "src/features/review/review-flow.worker.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+65: The latest test that might've caused the error is "keeps the review heading when its session expires". It might mean one of the following:
+66: - The error was thrown, while Vitest was running this test.
+67: - If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+68: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+69:
+70:
+71:  Test Files  1 failed | 6 passed (7)
+72:       Tests  1 failed | 80 passed (81)
+73:      Errors  1 error
+74:    Start at  00:52:03
+75:    Duration  4.16s (transform 3.28s, setup 0ms, import 6.57s, tests 2.73s, environment 3.04s)
+76:
+77: undefined
+78: C:\dev\mbv-finish\apps\web:
+79: [ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx
+80:

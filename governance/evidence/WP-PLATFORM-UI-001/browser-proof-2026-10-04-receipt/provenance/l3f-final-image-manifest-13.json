@@ -1,0 +1,813 @@
+{
+  "checkedUtc": "2026-10-04T05:05:49.543Z",
+  "groups": [
+    {
+      "sha256": "e43248055e7fbfb801d9aada36d8d855b44bf89cbb8a18a6cfe627890673ba38",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-css-final-1280.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-css-final-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "610076eee7834df77d180313e4fcfc45012e767505055eaf7c5500b09b92fe31",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-default-final-1280.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-default-final-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-1280.png"
+      }
+    },
+    {
+      "sha256": "1860f21adc6add6a4723d65556b3f85ea251f57cc86aa19da3f206d3e1449193",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-default-final-1920.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-default-final-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-1920.png"
+      }
+    },
+    {
+      "sha256": "add43551e2b8238f87e03a48e1a1f8fb7e907e2c9e59460538b6ce38885d2045",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-default-final-375.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-default-final-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-375.png"
+      }
+    },
+    {
+      "sha256": "2e9ff797b970770a197ac78b05970312e3f53614fd08ac4fa484898b17ac56d8",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-default-final-768.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-default-final-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-768.png"
+      }
+    },
+    {
+      "sha256": "76ff1cca31478a2914c57573e8ed9f781345f90adefa1d9f4379ee373dd4752b",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-inherited-text-stress-final-1280.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-inherited-text-stress-final-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "89062af2f0f670a92fc9513027b4e10e46844906a62f30adfe116491e58afd6f",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-label-containment-after-12.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-label-containment-after-12.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "8f1b623cd864f570755b18f064d74c49af83f63cc4b686e14936aedfcccbbcf6",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-qa-keyboard-inherited-text-stress-1280.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-qa-keyboard-inherited-text-stress-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "8f8e8fcb24f29deb0767e2a1359f284138ee17cf742109c8600c8c1e7053b782",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-12/review-text-only-final-1280.png",
+      "names": [
+        {
+          "proof": 12,
+          "name": "review-text-only-final-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "dee58a418f3a8b43c0f4760013ad0d3ce503541361951a2100e09d25883d0f58",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-conflict-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-1280.png"
+      }
+    },
+    {
+      "sha256": "494d118402a705c1d3553c2c41ad4a1c91c8061ad1c29169c7350925924a1b01",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-conflict-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-1920.png"
+      }
+    },
+    {
+      "sha256": "c54d210f10ee45223fb85804dbb5d5d545f6f170dc92f3c7843aac73c8261c49",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-conflict-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-375.png"
+      }
+    },
+    {
+      "sha256": "3f42dfec86e887a9d0b46a3b4fe4de8fb1c3bf7de1886f490a5c078e488e1664",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-conflict-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-768.png"
+      }
+    },
+    {
+      "sha256": "541541e0b306155e16e39a57b6759491c86263ecbbe74d440d9c9492d63a01a2",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-css-zoom-200-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-css-zoom-200-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-css-zoom-200-1280.png"
+      }
+    },
+    {
+      "sha256": "909e610ec2318e677ad95cd0a01d81e92cfb8267eb44bc6695a8e293ddcc2ad6",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-dark-1280.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-error-1280.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-reduced-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-1280.png"
+      }
+    },
+    {
+      "sha256": "4a8a0492804753b6291382f23e5bb0f1c566fe470577a48a35e2f1d13e92a570",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-dark-1920.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-error-1920.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-reduced-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-1920.png"
+      }
+    },
+    {
+      "sha256": "ef7773b5e0cf63ea770744512915916610f5516e10aa52a85037bccc751746e2",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-dark-375.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-error-375.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-reduced-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-375.png"
+      }
+    },
+    {
+      "sha256": "14cda1da24a71f5103068ca73e458960b249f89b2f50888fc9ec8272807da5d9",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-dark-768.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-error-768.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-reduced-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-768.png"
+      }
+    },
+    {
+      "sha256": "d6c7b02dbe4e22d7564a6e9cce2d3f1faa52c9f0afcc48c7591a8424e3f928d8",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-denied-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-1280.png"
+      }
+    },
+    {
+      "sha256": "0afca377d5b247d2aee2935128b0cba590a600719988743e893e4d851a37608a",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-denied-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-1920.png"
+      }
+    },
+    {
+      "sha256": "843ea4e20b5db7b4e5322d51791cadb0e468bd533b91611a8e90004cde6adb8d",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-denied-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-375.png"
+      }
+    },
+    {
+      "sha256": "d96c5f7a9c064e1580a82b102dc416deccc0ed7e1b8b0cad6afa18fb127b8edc",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-denied-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-768.png"
+      }
+    },
+    {
+      "sha256": "813f4f3d1f79475a95ef011500b50193fa8748a51813b23e003157c6014bc626",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-forced-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-1280.png"
+      }
+    },
+    {
+      "sha256": "f63614f0694092dcabe58b5ee85cf474131384abf2be66d03934275d38aae647",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-forced-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-1920.png"
+      }
+    },
+    {
+      "sha256": "c1f9cbf8c713f4229af14f9092c955dcf3e66bf7e2f816c142c7d0bcae30d50a",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-forced-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-375.png"
+      }
+    },
+    {
+      "sha256": "0da947dc6572bcd35ca3ea9d466952b1d38bbaf089a1b0a804a1f50e4ab10838",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-forced-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-768.png"
+      }
+    },
+    {
+      "sha256": "3688f7d8be0a0da054ce2e1322391ad8305cd314726ad11619c4536cede997b5",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-loading-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-1280.png"
+      }
+    },
+    {
+      "sha256": "17662754b4ea5f25c40a83ff395b667f818500be0d8a2e03cd84a802f57860b6",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-loading-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-1920.png"
+      }
+    },
+    {
+      "sha256": "ef029bda5b7657afd74b3cc86136bb47e9fac14c9a4579a443a3f2d81a8d17c8",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-loading-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-375.png"
+      }
+    },
+    {
+      "sha256": "81b14d38a366bce4e43065b1a17e3e4f6a23d9235beaf4eaf3b42b1e62aa3e92",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-loading-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-768.png"
+      }
+    },
+    {
+      "sha256": "703870611b4205ba37666cc278802f9c4633ec440c12c8d7b4447885fafac269",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-malformed-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-1280.png"
+      }
+    },
+    {
+      "sha256": "4f121333262b421959c42973e89a4a7e9d99e50d67a04d2d67289d2407c0f5b9",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-malformed-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-1920.png"
+      }
+    },
+    {
+      "sha256": "ff7dcdcf223d9dcffd41e0935192a79d90adeb3d08d01956d393f2eb1905eff7",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-malformed-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-375.png"
+      }
+    },
+    {
+      "sha256": "6190eff6efb8bc504155a6ada5f44bcabce92936e29d2fb6480cd541dedf079f",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-malformed-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-768.png"
+      }
+    },
+    {
+      "sha256": "c1aaf7de568211abc2741e683bc0fdcbdcd4d610caafd34b6a0f1c77ab1f9ee5",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-not-found-1280.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-1280.png"
+      }
+    },
+    {
+      "sha256": "ce43441638e5551fda562d1f1e5b525b062b8ce796684bf6092c23b5b74447fd",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-not-found-1920.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-1920.png"
+      }
+    },
+    {
+      "sha256": "d21da2e943a255d8177d3e7979b21ec699815f138be19a2850bdfa9aa0ded78e",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-not-found-375.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-375.png"
+      }
+    },
+    {
+      "sha256": "ed763e35d9f4891db8aea16e5e72d59595925885ed9395da18d183d733dd6af5",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-not-found-768.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-768.png"
+      }
+    },
+    {
+      "sha256": "ed37461e6e4787c3e33419363eb525341731d992e5535f798566995b5894a342",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-drawer-open-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-drawer-open-375.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "4d0c4aaa0cda4641292fd71c0f5b7b7ddb250c7c0eed39e2053f4e877579a9b6",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-drawer-open-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-drawer-open-768.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "007599d3ceb6d001f0a222f4b984a6e2c3df9b6df0bdb0ede9249e5ec1edba31",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-css-zoom-200-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-css-zoom-200-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "a885d0086d48e12fdf1dc41ffbca94084d5db7e2aedef550c260f57ceee66b14",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-dark-1280.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-light-1280.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-reduced-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "9d76aeca5aed48c771daa0dc71a1b1a84fee369accda7593da246573f83801e9",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-dark-1920.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-light-1920.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-reduced-1920.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "99ef4e9c1f72def7207ba0afdaf2216362fde61f6d7b87968291585bb0d6a5ff",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-dark-375.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-light-375.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-reduced-375.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "1210e32ab77f15bdbdf63d8ba3df876322e4f70d36e5ef0737ba3832da22c11b",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-dark-768.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-light-768.png"
+        },
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-reduced-768.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "1711fdcacb192c04140babc342ee6c47a196477456b3ddf93fdf25774235b0e4",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-forced-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "9eb9f197f2f9c0666ef47b4fc81b54cb6bf4307b1e5768d84ff60f56a295ce91",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-forced-1920.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "85eabb267b725cff44d8980fae591e5118f77777f2b26e53da8094955e282e5e",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-forced-375.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "7110e2952d13c7c3f784edb5413de6717a49766309f8dfc2bbe2fc33855a494c",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-forced-768.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "328c2f70d348e787ddfe6df8bbe799b22091d49f61638ba8b019d018ee44986d",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-text-zoom-200-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-final-text-zoom-200-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "1a04e11024812b26177867e86a1af379c39ab34d7a358bd31616c01b07039512",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-mobile-continuation-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-ready-mobile-continuation-375.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "cd88cdb65a2ba861da254eef44c27f9ee99716abb1757d97c27b0eabfb7a4157",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-recovered-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "96c72dd5b3e6b25271e17469fe54c446abaa32cbb2ad1a3e1e69f6d43dbf1743",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-1920.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-recovered-1920.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "26cf52e8ae615d953d02b818e4db68239795e5f2af472b66d2867ce5130d2984",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-375.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-recovered-375.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "4c371944d3168a462b9b97dab7943d83fffc15bd435646179e0dccaecb544802",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-768.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-recovered-768.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "7442b41a861c718393b92e46976ae2b2f1391cc27db488f29430409fa4abfc3c",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-text-only-zoom-200-1280.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "canvas-text-only-zoom-200-1280.png"
+        }
+      ],
+      "inspectedReuse": null
+    },
+    {
+      "sha256": "e6fa25987a7946c786e282477063a5118a139caba29d230be8d059e69b4a1b5e",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/missing-375-top.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "missing-375-top.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-375-375.png"
+      }
+    },
+    {
+      "sha256": "0fd97b61737a2ef5b8d19e6aa7fd94469661155af2bd02dce15d87a78353e114",
+      "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/missing-375-totals.png",
+      "names": [
+        {
+          "proof": 13,
+          "name": "missing-375-totals.png"
+        }
+      ],
+      "inspectedReuse": {
+        "proof": "proof8",
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-375-totals.png"
+      }
+    }
+  ],
+  "captureCount": 74
+}

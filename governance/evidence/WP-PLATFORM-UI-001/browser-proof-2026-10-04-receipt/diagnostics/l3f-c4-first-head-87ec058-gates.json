@@ -1,0 +1,99 @@
+{
+  "Checks": [
+    {
+      "Label": "install",
+      "Command": "corepack pnpm install --frozen-lockfile",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-install.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T07:32:37.5521879Z",
+      "FinishedUtc": "2026-10-04T07:33:08.2679519Z"
+    },
+    {
+      "Label": "agent-preflight",
+      "Command": "corepack pnpm agent:preflight",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-agent-preflight.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T07:33:08.2760226Z",
+      "FinishedUtc": "2026-10-04T07:37:17.2569780Z"
+    },
+    {
+      "Label": "governance-check",
+      "Command": "corepack pnpm governance:check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-governance-check.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T07:37:17.2594001Z",
+      "FinishedUtc": "2026-10-04T07:41:31.9348731Z"
+    },
+    {
+      "Label": "governance-test",
+      "Command": "corepack pnpm governance:test",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-governance-test.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T07:41:31.9367637Z",
+      "FinishedUtc": "2026-10-04T07:47:02.9734087Z"
+    },
+    {
+      "Label": "format-check",
+      "Command": "corepack pnpm format:check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-format-check.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T07:47:02.9753115Z",
+      "FinishedUtc": "2026-10-04T07:47:21.2820209Z"
+    },
+    {
+      "Label": "verify",
+      "Command": "corepack pnpm verify",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-verify.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T07:47:21.2843909Z",
+      "FinishedUtc": "2026-10-04T08:01:54.2303833Z"
+    },
+    {
+      "Label": "migration-list-before",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-migration-list-before.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T08:01:54.5657396Z",
+      "FinishedUtc": "2026-10-04T08:01:57.5626650Z"
+    },
+    {
+      "Label": "migration-up",
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-migration-up.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T08:01:57.7312268Z",
+      "FinishedUtc": "2026-10-04T08:02:00.2436444Z"
+    },
+    {
+      "Label": "migration-list",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-migration-list.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T08:02:00.2452079Z",
+      "FinishedUtc": "2026-10-04T08:02:02.7262319Z"
+    },
+    {
+      "Label": "supabase-test",
+      "Command": "corepack pnpm supabase:test",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-supabase-test.log",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T08:02:02.9048631Z",
+      "FinishedUtc": "2026-10-04T08:02:19.6291715Z"
+    },
+    {
+      "Label": "preview-journeys",
+      "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts apps/web/e2e/campaign-resume-recovery.spec.ts apps/web/e2e/cleanroom.spec.ts apps/web/e2e/operator-self-session.spec.ts apps/web/e2e/canvas-stress.spec.ts apps/web/e2e/canvas-perf.spec.ts --project=desktop-chromium",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-87ec058-preview-journeys.log",
+      "ActualExit": 1,
+      "StartedUtc": "2026-10-04T08:02:21.7757918Z",
+      "FinishedUtc": "2026-10-04T08:03:52.2087374Z"
+    }
+  ],
+  "Root": "C:/dev/mbv-verify-87ec058",
+  "Head": "87ec058116f798414bb4702f37a644bac67e2034",
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "LocalDatabaseOnly": true
+}

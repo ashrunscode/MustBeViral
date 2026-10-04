@@ -1,0 +1,964 @@
+{
+  "inspectedUtc": "2026-10-04 04:18:19 UTC",
+  "method": "Actual original-resolution inspection across the prior completed contexts; SHA-256 equivalence used only for identical captured contents.",
+  "proof8": {
+    "captureCount": 153,
+    "distinctContents": 126,
+    "groups": [
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Reels-1920.png",
+        "names": ["review-placement-Reels-1920.png"],
+        "sha256": "07bca9419b312e727ca07ea6a05605e7c959e21232588f9a162c160dcab211e2",
+        "inspectionCompleted": true,
+        "inspectionIndex": 0
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-1920.png",
+        "names": ["canvas-denied-1920.png"],
+        "sha256": "0afca377d5b247d2aee2935128b0cba590a600719988743e893e4d851a37608a",
+        "inspectionCompleted": true,
+        "inspectionIndex": 1
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-768.png",
+        "names": ["canvas-forced-768.png"],
+        "sha256": "0da947dc6572bcd35ca3ea9d466952b1d38bbaf089a1b0a804a1f50e4ab10838",
+        "inspectionCompleted": true,
+        "inspectionIndex": 2
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-375-totals.png",
+        "names": ["missing-375-totals.png", "missing-totals-375.png"],
+        "sha256": "0fd97b61737a2ef5b8d19e6aa7fd94469661155af2bd02dce15d87a78353e114",
+        "inspectionCompleted": true,
+        "inspectionIndex": 3
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-1280.png",
+        "names": ["positive-1280.png"],
+        "sha256": "0fe8de974b1885f4a5a1b107bc7a979bf58e74b6b280b0ea879719320d32a174",
+        "inspectionCompleted": true,
+        "inspectionIndex": 4
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-1920.png",
+        "names": ["zero-1920.png"],
+        "sha256": "11b3cbe2c458525ef2d649c34959e3be241c2cb8272dbc26763a1d2ca3a2e30e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 5
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-768.png",
+        "names": ["canvas-dark-768.png", "canvas-error-768.png", "canvas-reduced-768.png"],
+        "sha256": "14cda1da24a71f5103068ca73e458960b249f89b2f50888fc9ec8272807da5d9",
+        "inspectionCompleted": true,
+        "inspectionIndex": 6
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-dark-375.png",
+        "names": ["review-dark-375.png", "review-reduced-375.png"],
+        "sha256": "15b92222b1c0300264c260514bfa9da3fbeda81cec42c9038cb8fc65a9b4bdb7",
+        "inspectionCompleted": true,
+        "inspectionIndex": 7
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-1920.png",
+        "names": ["recovered-1920.png"],
+        "sha256": "175a10f57dd670c6d70e74d6b5b8936354eef9096ca8c3dbab53dbec04c444b7",
+        "inspectionCompleted": true,
+        "inspectionIndex": 8
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-1920.png",
+        "names": ["canvas-loading-1920.png"],
+        "sha256": "17662754b4ea5f25c40a83ff395b667f818500be0d8a2e03cd84a802f57860b6",
+        "inspectionCompleted": true,
+        "inspectionIndex": 9
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-1920.png",
+        "names": ["shared-review-1920.png"],
+        "sha256": "1860f21adc6add6a4723d65556b3f85ea251f57cc86aa19da3f206d3e1449193",
+        "inspectionCompleted": true,
+        "inspectionIndex": 10
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-1920-1920.png",
+        "names": ["forced-1920-1920.png"],
+        "sha256": "18dc2be54e7ea996f0456c5843a1204531aa30713479cfb3860153dfb41ee298",
+        "inspectionCompleted": true,
+        "inspectionIndex": 11
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-4-5-1280.png",
+        "names": ["review-placement-Feed-4-5-1280.png"],
+        "sha256": "1ca9f4412f8b252d5a40f221cd45d725888090aa0b905efa3851ca84eddd5591",
+        "inspectionCompleted": true,
+        "inspectionIndex": 12
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-1920.png",
+        "names": ["denied-1920.png"],
+        "sha256": "1cb746120e313bb6ee4bd8811ffc572d2fd446ca20f092a301db581e95d601db",
+        "inspectionCompleted": true,
+        "inspectionIndex": 13
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-keyboard-controls-1920.png",
+        "names": ["review-keyboard-controls-1920.png"],
+        "sha256": "25e1924edc94eac099ff99660b06536dc7a056f3428c58df10c3bfce9592bb30",
+        "inspectionCompleted": true,
+        "inspectionIndex": 14
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-1280.png",
+        "names": ["error-1280.png"],
+        "sha256": "299a17182e2f2c158c83cb4d6b49d699d1366702c36e938bf0ef1c6970f2447e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 15
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-768.png",
+        "names": ["denied-768.png"],
+        "sha256": "2e6c9e105cb1d739149b6fff28cab019072eb488becd8d68b23ca06b46bda978",
+        "inspectionCompleted": true,
+        "inspectionIndex": 16
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-768.png",
+        "names": ["shared-review-768.png"],
+        "sha256": "2e9ff797b970770a197ac78b05970312e3f53614fd08ac4fa484898b17ac56d8",
+        "inspectionCompleted": true,
+        "inspectionIndex": 17
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-1280.png",
+        "names": ["incomplete-1280.png"],
+        "sha256": "30506de1ff74b637f6a53b15e2f32fa11fbf28e27e600ab310609fba27e4ec39",
+        "inspectionCompleted": true,
+        "inspectionIndex": 18
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-1280.png",
+        "names": ["conflict-1280.png"],
+        "sha256": "3328da462d0fb9133db63b19cac6bacc87de0491e805b3c7184251540244e06d",
+        "inspectionCompleted": true,
+        "inspectionIndex": 19
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-css-zoom-200-1280.png",
+        "names": ["review-css-zoom-200-1280.png"],
+        "sha256": "35a4961236dcbf640d93a318ab84611629f294f70d3aeba2c0b7ffaa8f98ab37",
+        "inspectionCompleted": true,
+        "inspectionIndex": 20
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-1280.png",
+        "names": ["canvas-loading-1280.png"],
+        "sha256": "3688f7d8be0a0da054ce2e1322391ad8305cd314726ad11619c4536cede997b5",
+        "inspectionCompleted": true,
+        "inspectionIndex": 21
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-375-375.png",
+        "names": ["forced-375-375.png"],
+        "sha256": "3ac6a5e96b871fcccaf77da4238ca561eab7e24c94a08e025604b8bfa89d99ab",
+        "inspectionCompleted": true,
+        "inspectionIndex": 22
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-1280.png",
+        "names": ["shared-brief-1280.png"],
+        "sha256": "3e96e2f48bff5615b86140c1abb84aab58fa206986810c2604cee36a0d67990f",
+        "inspectionCompleted": true,
+        "inspectionIndex": 23
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-768.png",
+        "names": ["canvas-conflict-768.png"],
+        "sha256": "3f42dfec86e887a9d0b46a3b4fe4de8fb1c3bf7de1886f490a5c078e488e1664",
+        "inspectionCompleted": true,
+        "inspectionIndex": 24
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-768.png",
+        "names": ["recovered-768.png"],
+        "sha256": "41fbc83be6d6564a08c64096d30654cda06bc5d66c2d3f85190479990ebb3898",
+        "inspectionCompleted": true,
+        "inspectionIndex": 25
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Reels-375.png",
+        "names": ["review-placement-Reels-375.png"],
+        "sha256": "42b440f41e071030e013f6cbef9ab2db9855a853a1843b7b5381a78c49fd9ae7",
+        "inspectionCompleted": true,
+        "inspectionIndex": 26
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-768.png",
+        "names": ["loading-768.png"],
+        "sha256": "4466b4ea3c0903eb8336797076ded76e205c00f657165e9ab6ea529ed78bc3cb",
+        "inspectionCompleted": true,
+        "inspectionIndex": 27
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-recovered-768.png",
+        "names": ["canvas-recovered-768.png"],
+        "sha256": "4469681be5ee6d1d1035f0fb510f71f7ba9620a96baffad043a57d3328d3dd29",
+        "inspectionCompleted": true,
+        "inspectionIndex": 28
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-keyboard-controls-375.png",
+        "names": ["review-keyboard-controls-375.png"],
+        "sha256": "45858de8fc307b589b549fb847e8615f3c71f3c8ac3edbd60056f9b6b7507ea1",
+        "inspectionCompleted": true,
+        "inspectionIndex": 29
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-768.png",
+        "names": ["error-768.png"],
+        "sha256": "47bf8880a123de77a99afedcae0dd508ab43e0fc871c7d7170702abd306a3bbf",
+        "inspectionCompleted": true,
+        "inspectionIndex": 30
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-375.png",
+        "names": ["not-found-375.png"],
+        "sha256": "47cd110ec56eee1e83479536c105a489023307f47824bfce6ebd8c77049f17a7",
+        "inspectionCompleted": true,
+        "inspectionIndex": 31
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-1920.png",
+        "names": ["canvas-conflict-1920.png"],
+        "sha256": "494d118402a705c1d3553c2c41ad4a1c91c8061ad1c29169c7350925924a1b01",
+        "inspectionCompleted": true,
+        "inspectionIndex": 32
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-recovered-1920.png",
+        "names": ["canvas-recovered-1920.png"],
+        "sha256": "4a0afc55baa702f44eeb8ab00c0229a81654576886995f7398dc823109bfcc65",
+        "inspectionCompleted": true,
+        "inspectionIndex": 33
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-canvas-375.png",
+        "names": ["shared-canvas-375.png"],
+        "sha256": "4a2afa94e56872a3c2fa40fdbe9836c7cc9b1834dc9da4182748525df5caeea8",
+        "inspectionCompleted": true,
+        "inspectionIndex": 34
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-1920.png",
+        "names": ["canvas-dark-1920.png", "canvas-error-1920.png", "canvas-reduced-1920.png"],
+        "sha256": "4a8a0492804753b6291382f23e5bb0f1c566fe470577a48a35e2f1d13e92a570",
+        "inspectionCompleted": true,
+        "inspectionIndex": 35
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-dark-768.png",
+        "names": ["review-dark-768.png", "review-reduced-768.png"],
+        "sha256": "4ade9a739072755363916e981be683b23fb18d7e1000c6f2d90150708cf3744f",
+        "inspectionCompleted": true,
+        "inspectionIndex": 36
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-1280.png",
+        "names": ["zero-1280.png"],
+        "sha256": "4cb537bd18b35f9316e63b5bb044792f6461ed27c78062d5b576593468d83550",
+        "inspectionCompleted": true,
+        "inspectionIndex": 37
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-1920.png",
+        "names": ["canvas-malformed-1920.png"],
+        "sha256": "4f121333262b421959c42973e89a4a7e9d99e50d67a04d2d67289d2407c0f5b9",
+        "inspectionCompleted": true,
+        "inspectionIndex": 38
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-1280-1280.png",
+        "names": ["forced-1280-1280.png"],
+        "sha256": "5063eeff891219b456deb2447a484fb2c167763170359c36d6092e556a1b528d",
+        "inspectionCompleted": true,
+        "inspectionIndex": 39
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-css-zoom-200-1280.png",
+        "names": ["canvas-css-zoom-200-1280.png"],
+        "sha256": "541541e0b306155e16e39a57b6759491c86263ecbbe74d440d9c9492d63a01a2",
+        "inspectionCompleted": true,
+        "inspectionIndex": 40
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-1920.png",
+        "names": ["error-1920.png"],
+        "sha256": "5a872d5c48fa9cfe2e82ff2082be4db7ec7ae20c51c7f59ab0d1d5c0460d4c4d",
+        "inspectionCompleted": true,
+        "inspectionIndex": 41
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-recovered-375.png",
+        "names": ["canvas-recovered-375.png"],
+        "sha256": "5b8c0a370d0ff773576c0a4b5211cf0350be62059122ef410bbe0ab3bb2539ac",
+        "inspectionCompleted": true,
+        "inspectionIndex": 42
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-canvas-1920.png",
+        "names": ["shared-canvas-1920.png"],
+        "sha256": "5c84c0d5042d04539fcd3bf060cb30a2eb3a6dc28a8b456f7a953a8327480c6b",
+        "inspectionCompleted": true,
+        "inspectionIndex": 43
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-1280.png",
+        "names": ["shared-review-1280.png"],
+        "sha256": "610076eee7834df77d180313e4fcfc45012e767505055eaf7c5500b09b92fe31",
+        "inspectionCompleted": true,
+        "inspectionIndex": 44
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-768.png",
+        "names": ["canvas-malformed-768.png"],
+        "sha256": "6190eff6efb8bc504155a6ada5f44bcabce92936e29d2fb6480cd541dedf079f",
+        "inspectionCompleted": true,
+        "inspectionIndex": 45
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-1920.png",
+        "names": ["conflict-1920.png"],
+        "sha256": "62289b0dcb201ea664225cd15c95c49dd6c69c69b208b5f6419cd60fef4a985f",
+        "inspectionCompleted": true,
+        "inspectionIndex": 46
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-1920-1920.png",
+        "names": [
+          "dark-1920-1920.png",
+          "missing-1920.png",
+          "missing-totals-1920.png",
+          "reduced-1920-1920.png"
+        ],
+        "sha256": "66dac0c440857b458e41d9ccba86d37cdd6b6d18fae9769a009d7dade3b77590",
+        "inspectionCompleted": true,
+        "inspectionIndex": 47
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-1280.png",
+        "names": ["canvas-malformed-1280.png"],
+        "sha256": "703870611b4205ba37666cc278802f9c4633ec440c12c8d7b4447885fafac269",
+        "inspectionCompleted": true,
+        "inspectionIndex": 48
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-768.png",
+        "names": ["zero-768.png"],
+        "sha256": "75b188c5e32dfcd3b8478f06e78aa7426a6761061e0f2ff592912ea655aefdbb",
+        "inspectionCompleted": true,
+        "inspectionIndex": 49
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-1-1-768.png",
+        "names": ["review-placement-Feed-1-1-768.png"],
+        "sha256": "7970b65d07641f8887efeb3fcab173e70504e7a779a2a26a2cbc6a7f513845cc",
+        "inspectionCompleted": true,
+        "inspectionIndex": 50
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-375.png",
+        "names": ["zero-375.png"],
+        "sha256": "7b5119e034c9b33b5f55f1e32d424f875fd9b4f225658fa4526063f3f1479dad",
+        "inspectionCompleted": true,
+        "inspectionIndex": 51
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-768.png",
+        "names": ["incomplete-768.png"],
+        "sha256": "7be806ab165dcba571c1110b766dbcf7f65ec294b72167504a89958bc57303d9",
+        "inspectionCompleted": true,
+        "inspectionIndex": 52
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-1280.png",
+        "names": ["recovered-1280.png"],
+        "sha256": "7e652ae8aec7512fa00cebdd2f3130d8b871910e32231c111c4bd8926bd31066",
+        "inspectionCompleted": true,
+        "inspectionIndex": 53
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-1920.png",
+        "names": ["loading-1920.png"],
+        "sha256": "80bf431e4dc11a4714a8f74a57454c4f67f616c524fbd47e4f991819519b99cb",
+        "inspectionCompleted": true,
+        "inspectionIndex": 54
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-1280.png",
+        "names": ["canvas-forced-1280.png"],
+        "sha256": "813f4f3d1f79475a95ef011500b50193fa8748a51813b23e003157c6014bc626",
+        "inspectionCompleted": true,
+        "inspectionIndex": 55
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-4-5-768.png",
+        "names": ["review-placement-Feed-4-5-768.png"],
+        "sha256": "814fdc7aa6be22571232cdb2b94455793f7de8489be960ddfab7159957a4fa79",
+        "inspectionCompleted": true,
+        "inspectionIndex": 56
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-768.png",
+        "names": ["canvas-loading-768.png"],
+        "sha256": "81b14d38a366bce4e43065b1a17e3e4f6a23d9235beaf4eaf3b42b1e62aa3e92",
+        "inspectionCompleted": true,
+        "inspectionIndex": 57
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-768-768.png",
+        "names": [
+          "dark-768-768.png",
+          "missing-768.png",
+          "missing-totals-768.png",
+          "reduced-768-768.png"
+        ],
+        "sha256": "8306c90a2d731edfcfd073d08dfc61ae81496be85fdf7e4aeba45c7836fe7f0c",
+        "inspectionCompleted": true,
+        "inspectionIndex": 58
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-375.png",
+        "names": ["canvas-denied-375.png"],
+        "sha256": "843ea4e20b5db7b4e5322d51791cadb0e468bd533b91611a8e90004cde6adb8d",
+        "inspectionCompleted": true,
+        "inspectionIndex": 59
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/text-only-zoom-200-1280.png",
+        "names": ["text-only-zoom-200-1280.png"],
+        "sha256": "8b3c7ef4ea40ef3c41ed28fa17ee0d592afbec942f4549104f29eaf03a6457cc",
+        "inspectionCompleted": true,
+        "inspectionIndex": 60
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-1-1-375.png",
+        "names": ["review-placement-Feed-1-1-375.png"],
+        "sha256": "8ea9dfa0c459fdd19d7aed0cecc05d72f8c2b4da1c9542f6d62af9b6052dd211",
+        "inspectionCompleted": true,
+        "inspectionIndex": 61
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-1280.png",
+        "names": ["canvas-dark-1280.png", "canvas-error-1280.png", "canvas-reduced-1280.png"],
+        "sha256": "909e610ec2318e677ad95cd0a01d81e92cfb8267eb44bc6695a8e293ddcc2ad6",
+        "inspectionCompleted": true,
+        "inspectionIndex": 62
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-text-only-zoom-200-1280.png",
+        "names": ["review-text-only-zoom-200-1280.png"],
+        "sha256": "90f6bf123f2f1d175b65c7a5f477df1a899cdbc0209bc9960ab84b85dfc065ef",
+        "inspectionCompleted": true,
+        "inspectionIndex": 63
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-forced-768.png",
+        "names": ["review-forced-768.png"],
+        "sha256": "9148dc8bd6ee10ca93fbabc2532f573da334f2b6969f07f3a5f5c22e34557d72",
+        "inspectionCompleted": true,
+        "inspectionIndex": 64
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-9-16-1280.png",
+        "names": ["review-placement-Feed-9-16-1280.png"],
+        "sha256": "943afc3835c7fcdc25b7a7e92974575413763e665dae222b71f9bbfef64e118d",
+        "inspectionCompleted": true,
+        "inspectionIndex": 65
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-forced-1920.png",
+        "names": ["review-forced-1920.png"],
+        "sha256": "95ce25a7ee951081901af0f2454ba43b358c23c26d6039318ca1455233a0471e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 66
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-9-16-375.png",
+        "names": ["review-placement-Feed-9-16-375.png"],
+        "sha256": "9726b1266fad86f10eab07a8ad46e9c547830787387f22a34a29af3002f45262",
+        "inspectionCompleted": true,
+        "inspectionIndex": 67
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-1920.png",
+        "names": ["not-found-1920.png"],
+        "sha256": "9886ea916384e8648930d15048459ce9db853b258eff45006ffb175835120322",
+        "inspectionCompleted": true,
+        "inspectionIndex": 68
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-375.png",
+        "names": ["positive-375.png"],
+        "sha256": "9bda67c96999696742f1e77998dbd1facf2631082a4b02effab514ae72961d19",
+        "inspectionCompleted": true,
+        "inspectionIndex": 69
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-9-16-1920.png",
+        "names": ["review-placement-Feed-9-16-1920.png"],
+        "sha256": "9bfcd3dab37c908b8485610fa2063b9a1ae17635cfce7dad57ae8150cf5d52b7",
+        "inspectionCompleted": true,
+        "inspectionIndex": 70
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-1280.png",
+        "names": ["loading-1280.png"],
+        "sha256": "9d52540db47e06da626d3f886f1df0d71ffd9588aa31f8963232800e31b79ede",
+        "inspectionCompleted": true,
+        "inspectionIndex": 71
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-375.png",
+        "names": ["denied-375.png"],
+        "sha256": "a34b3ebd94311d7cc4854c0f8ccae69268979d2dc00f2d89e0eed615f2ae2358",
+        "inspectionCompleted": true,
+        "inspectionIndex": 72
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-375.png",
+        "names": ["recovered-375.png"],
+        "sha256": "a65591d21b05383604b1349a4ef51d634173b39ad66f19cf330a4a2bef28817f",
+        "inspectionCompleted": true,
+        "inspectionIndex": 73
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-canvas-768.png",
+        "names": ["shared-canvas-768.png"],
+        "sha256": "a8ed6f8dde1afc2c157f28a3f937df106c4faad2d5ebede19cdb38889636b6cd",
+        "inspectionCompleted": true,
+        "inspectionIndex": 74
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-1280.png",
+        "names": ["not-found-1280.png"],
+        "sha256": "ab13293e5664e067d72e487a2c14a13de0163454d4c8738baae0e1432e0b7b97",
+        "inspectionCompleted": true,
+        "inspectionIndex": 75
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Reels-1280.png",
+        "names": ["review-placement-Reels-1280.png"],
+        "sha256": "acf73b1016d0c15cf0bce9ea12ca849349fba65590eb103ff2120590ee9a2b2e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 76
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-forced-375.png",
+        "names": ["review-forced-375.png"],
+        "sha256": "ad60974db1c859354ddbcb3c60ce4799d90c8e7eeea858c00b99348f719ed35d",
+        "inspectionCompleted": true,
+        "inspectionIndex": 77
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-review-375.png",
+        "names": ["shared-review-375.png"],
+        "sha256": "add43551e2b8238f87e03a48e1a1f8fb7e907e2c9e59460538b6ce38885d2045",
+        "inspectionCompleted": true,
+        "inspectionIndex": 78
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-375.png",
+        "names": ["error-375.png"],
+        "sha256": "add990939daa3892da6e392366e86a9f6aa796a73810efca1ee3d4a4364fbf6b",
+        "inspectionCompleted": true,
+        "inspectionIndex": 79
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-4-5-375.png",
+        "names": ["review-placement-Feed-4-5-375.png"],
+        "sha256": "b412f6ce3d0a3d50070fe9c6d396b39807efcedda89fa9e5d5bcbe2034361e63",
+        "inspectionCompleted": true,
+        "inspectionIndex": 80
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-768.png",
+        "names": ["not-found-768.png"],
+        "sha256": "bb92b0e0da18e8bf7f51f9836101b79f67d052876c1f2b70b6d25389075014e2",
+        "inspectionCompleted": true,
+        "inspectionIndex": 81
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-375.png",
+        "names": ["shared-brief-375.png"],
+        "sha256": "bd9df0ee767f035e22aa10b46c2580827c46e8eec319561bc7c70536d82d9500",
+        "inspectionCompleted": true,
+        "inspectionIndex": 82
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-1920.png",
+        "names": ["positive-1920.png"],
+        "sha256": "bf0bfe0b5811258cf1fc94588c7c036fe7762b262b1bf3699d057fe919ac4bd1",
+        "inspectionCompleted": true,
+        "inspectionIndex": 83
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-1280.png",
+        "names": ["canvas-not-found-1280.png"],
+        "sha256": "c1aaf7de568211abc2741e683bc0fdcbdcd4d610caafd34b6a0f1c77ab1f9ee5",
+        "inspectionCompleted": true,
+        "inspectionIndex": 84
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-dark-1920.png",
+        "names": ["review-dark-1920.png", "review-reduced-1920.png"],
+        "sha256": "c1c5c08d88850be80ffb94076ec3cf0a02dbe189b2fda546442c63480c96cfe4",
+        "inspectionCompleted": true,
+        "inspectionIndex": 85
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-375.png",
+        "names": ["canvas-forced-375.png"],
+        "sha256": "c1f9cbf8c713f4229af14f9092c955dcf3e66bf7e2f816c142c7d0bcae30d50a",
+        "inspectionCompleted": true,
+        "inspectionIndex": 86
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-768.png",
+        "names": ["positive-768.png"],
+        "sha256": "c415b32ca0608e93f34c03dcc32ed8820bd6fc042b1a73126730d336aef6c813",
+        "inspectionCompleted": true,
+        "inspectionIndex": 87
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-1920.png",
+        "names": ["shared-brief-1920.png"],
+        "sha256": "c4987c293ec8fefcad25f1d99648bb6cdf6c8b6e4e90e5208b41f40d9d76da0e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 88
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-375.png",
+        "names": ["canvas-conflict-375.png"],
+        "sha256": "c54d210f10ee45223fb85804dbb5d5d545f6f170dc92f3c7843aac73c8261c49",
+        "inspectionCompleted": true,
+        "inspectionIndex": 89
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-keyboard-controls-768.png",
+        "names": [
+          "review-keyboard-controls-768.png",
+          "review-placement-Feed-9-16-768.png",
+          "review-placement-Reels-768.png"
+        ],
+        "sha256": "c5f797e5167e46f19589296218976b4cfff1c703d90fc8582d1815f75bf83c03",
+        "inspectionCompleted": true,
+        "inspectionIndex": 90
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-canvas-1280.png",
+        "names": ["shared-canvas-1280.png"],
+        "sha256": "c9efb06ce1db1ebd0de64fa3000b71c958776a7444343adff98ca12d4db29952",
+        "inspectionCompleted": true,
+        "inspectionIndex": 91
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-375.png",
+        "names": ["ledger-keyboard-375.png"],
+        "sha256": "ca4f4d4824da74ecb779456420e93945ccc4d354f968adfe74de8f1fb44841ee",
+        "inspectionCompleted": true,
+        "inspectionIndex": 92
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-1920.png",
+        "names": ["ledger-keyboard-1920.png"],
+        "sha256": "cb7a7ab41f9ae0acc378fd1c74420778c3ab2402b89c2920e5ddd9de65390c96",
+        "inspectionCompleted": true,
+        "inspectionIndex": 93
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-1920.png",
+        "names": ["canvas-not-found-1920.png"],
+        "sha256": "ce43441638e5551fda562d1f1e5b525b062b8ce796684bf6092c23b5b74447fd",
+        "inspectionCompleted": true,
+        "inspectionIndex": 94
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-1-1-1280.png",
+        "names": ["review-placement-Feed-1-1-1280.png"],
+        "sha256": "cea9c8833a62bb15e6e76d62165116e898d7d77c6c0ba16c8b7d74bd78490177",
+        "inspectionCompleted": true,
+        "inspectionIndex": 95
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-768.png",
+        "names": ["shared-brief-768.png"],
+        "sha256": "d01f253864f1dae4ddd97346f9d3d9bbf3f7c5d8f2640e13f2a44db12ba0fa30",
+        "inspectionCompleted": true,
+        "inspectionIndex": 96
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-375.png",
+        "names": ["incomplete-375.png"],
+        "sha256": "d1a4c62d1f2bb25c60c877cde7c7a99ba90acfde315fed3fab0eb036b864b2c4",
+        "inspectionCompleted": true,
+        "inspectionIndex": 97
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-375.png",
+        "names": ["canvas-not-found-375.png"],
+        "sha256": "d21da2e943a255d8177d3e7979b21ec699815f138be19a2850bdfa9aa0ded78e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 98
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-768.png",
+        "names": ["ledger-keyboard-768.png"],
+        "sha256": "d505c9cad3d24488a79df5972e94da20bb0c63251bd686131de219b9bb5d38d9",
+        "inspectionCompleted": true,
+        "inspectionIndex": 99
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-1280.png",
+        "names": ["canvas-denied-1280.png"],
+        "sha256": "d6c7b02dbe4e22d7564a6e9cce2d3f1faa52c9f0afcc48c7591a8424e3f928d8",
+        "inspectionCompleted": true,
+        "inspectionIndex": 100
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-375.png",
+        "names": ["loading-375.png"],
+        "sha256": "d7c791b7b7766f098d6de76084b1474b4327cae5c34168655c059e1057946f29",
+        "inspectionCompleted": true,
+        "inspectionIndex": 101
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-denied-768.png",
+        "names": ["canvas-denied-768.png"],
+        "sha256": "d96c5f7a9c064e1580a82b102dc416deccc0ed7e1b8b0cad6afa18fb127b8edc",
+        "inspectionCompleted": true,
+        "inspectionIndex": 102
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-forced-1280.png",
+        "names": ["review-forced-1280.png"],
+        "sha256": "da018262e494830a46ff97629a58d940d6c72f65c5abbf531ddaa663ec1cd38b",
+        "inspectionCompleted": true,
+        "inspectionIndex": 103
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-recovered-1280.png",
+        "names": ["canvas-recovered-1280.png"],
+        "sha256": "db28961802284f593af0035bab119b7750b28034c78b182addfd5b7a275db3c9",
+        "inspectionCompleted": true,
+        "inspectionIndex": 104
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-dark-1280.png",
+        "names": ["review-dark-1280.png", "review-reduced-1280.png"],
+        "sha256": "ddd66a927a916f0cd3586bb28c7d603112698a36860355942bcb5442976778f1",
+        "inspectionCompleted": true,
+        "inspectionIndex": 105
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-conflict-1280.png",
+        "names": ["canvas-conflict-1280.png"],
+        "sha256": "dee58a418f3a8b43c0f4760013ad0d3ce503541361951a2100e09d25883d0f58",
+        "inspectionCompleted": true,
+        "inspectionIndex": 106
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-1-1-1920.png",
+        "names": ["review-placement-Feed-1-1-1920.png"],
+        "sha256": "e1cd7afe73a3ab0783e7e14473e04e78a485f03da57d21f80dce470f3d688679",
+        "inspectionCompleted": true,
+        "inspectionIndex": 107
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-text-only-zoom-200-1280.png",
+        "names": ["canvas-text-only-zoom-200-1280.png"],
+        "sha256": "e5eb296eb1d74ac094d0d41bf7ef08acae4dec970a0198e86d00bf68a5e95521",
+        "inspectionCompleted": true,
+        "inspectionIndex": 108
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-1280.png",
+        "names": ["denied-1280.png"],
+        "sha256": "e642a20fc860833636ea485ae3f66d0b82f79a726a832ac86cd8309a0ca33436",
+        "inspectionCompleted": true,
+        "inspectionIndex": 109
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-1280.png",
+        "names": ["ledger-keyboard-1280.png"],
+        "sha256": "e67a97fd2e12ba1d63ac97abcd2a4878e541d04902a842b296d8a8839abd6e78",
+        "inspectionCompleted": true,
+        "inspectionIndex": 110
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-375-375.png",
+        "names": [
+          "dark-375-375.png",
+          "missing-375-top.png",
+          "missing-375.png",
+          "reduced-375-375.png"
+        ],
+        "sha256": "e6fa25987a7946c786e282477063a5118a139caba29d230be8d059e69b4a1b5e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 111
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-1280-1280.png",
+        "names": [
+          "dark-1280-1280.png",
+          "missing-1280.png",
+          "missing-totals-1280.png",
+          "reduced-1280-1280.png"
+        ],
+        "sha256": "eb569cdddc02abecc0e709ad5514f9c7af9b32362cb884f7d8250210ca1fb29e",
+        "inspectionCompleted": true,
+        "inspectionIndex": 112
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-not-found-768.png",
+        "names": ["canvas-not-found-768.png"],
+        "sha256": "ed763e35d9f4891db8aea16e5e72d59595925885ed9395da18d183d733dd6af5",
+        "inspectionCompleted": true,
+        "inspectionIndex": 113
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-loading-375.png",
+        "names": ["canvas-loading-375.png"],
+        "sha256": "ef029bda5b7657afd74b3cc86136bb47e9fac14c9a4579a443a3f2d81a8d17c8",
+        "inspectionCompleted": true,
+        "inspectionIndex": 114
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-dark-375.png",
+        "names": ["canvas-dark-375.png", "canvas-error-375.png", "canvas-reduced-375.png"],
+        "sha256": "ef7773b5e0cf63ea770744512915916610f5516e10aa52a85037bccc751746e2",
+        "inspectionCompleted": true,
+        "inspectionIndex": 115
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-placement-Feed-4-5-1920.png",
+        "names": ["review-placement-Feed-4-5-1920.png"],
+        "sha256": "f004177ae2ff95a61f7395e2e083d39dbcfdade84c3e7e63d4ea4ce0c4842f5a",
+        "inspectionCompleted": true,
+        "inspectionIndex": 116
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/css-zoom-200-1280.png",
+        "names": ["css-zoom-200-1280.png"],
+        "sha256": "f0a0b96b5c07c382798e4255b467ac930816b09b8ed85e18ebc7b93f998b70fe",
+        "inspectionCompleted": true,
+        "inspectionIndex": 117
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/review-keyboard-controls-1280.png",
+        "names": ["review-keyboard-controls-1280.png"],
+        "sha256": "f156ff369656af97563cb5e0d10637bfa5b129d8776763101f35feecceea8368",
+        "inspectionCompleted": true,
+        "inspectionIndex": 118
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-375.png",
+        "names": ["conflict-375.png"],
+        "sha256": "f28ede100891de5b4826687cfef0a9d2ac042bf8a6838c8a2a3b2637f4e8b7f3",
+        "inspectionCompleted": true,
+        "inspectionIndex": 119
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-1920.png",
+        "names": ["incomplete-1920.png"],
+        "sha256": "f614f89f8efca0345cbf012846fb154ce3970f804bb7d4d93a52df99dc214b70",
+        "inspectionCompleted": true,
+        "inspectionIndex": 120
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-forced-1920.png",
+        "names": ["canvas-forced-1920.png"],
+        "sha256": "f63614f0694092dcabe58b5ee85cf474131384abf2be66d03934275d38aae647",
+        "inspectionCompleted": true,
+        "inspectionIndex": 121
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-diagnostic-375.png",
+        "names": ["canvas-diagnostic-375.png"],
+        "sha256": "f6c5da23d25d1aa83af204ab66222c555ed7da382cc656bb826d418bcb80bc69",
+        "inspectionCompleted": true,
+        "inspectionIndex": 122
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-768-768.png",
+        "names": ["forced-768-768.png"],
+        "sha256": "f89692545b5566eb97585475aa0c1a0e12f0d677048f6ee184b0cc88852bf360",
+        "inspectionCompleted": true,
+        "inspectionIndex": 123
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-768.png",
+        "names": ["conflict-768.png"],
+        "sha256": "fde766959e629cffb58067f3a1fb4d3206f4759e874363644b45cddacbfb6404",
+        "inspectionCompleted": true,
+        "inspectionIndex": 124
+      },
+      {
+        "path": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/canvas-malformed-375.png",
+        "names": ["canvas-malformed-375.png"],
+        "sha256": "ff7dcdcf223d9dcffd41e0935192a79d90adeb3d08d01956d393f2eb1905eff7",
+        "inspectionCompleted": true,
+        "inspectionIndex": 125
+      }
+    ],
+    "findings": [
+      {
+        "severity": "P2",
+        "files": ["canvas-ready-375.png", "canvas-ready-768.png"],
+        "cause": "Permanent 320 px rail clips graph controls at narrow widths.",
+        "status": "New Canvas repair locally tested; production browser proof pending."
+      }
+    ]
+  },
+  "proof9": {
+    "captureCount": 12,
+    "distinctContents": 12,
+    "inspectedHashes": [
+      "0fd97b61737a2ef5b8d19e6aa7fd94469661155af2bd02dce15d87a78353e114",
+      "1860f21adc6add6a4723d65556b3f85ea251f57cc86aa19da3f206d3e1449193",
+      "2e9ff797b970770a197ac78b05970312e3f53614fd08ac4fa484898b17ac56d8",
+      "35a4961236dcbf640d93a318ab84611629f294f70d3aeba2c0b7ffaa8f98ab37",
+      "610076eee7834df77d180313e4fcfc45012e767505055eaf7c5500b09b92fe31",
+      "90f6bf123f2f1d175b65c7a5f477df1a899cdbc0209bc9960ab84b85dfc065ef",
+      "add43551e2b8238f87e03a48e1a1f8fb7e907e2c9e59460538b6ce38885d2045",
+      "e6fa25987a7946c786e282477063a5118a139caba29d230be8d059e69b4a1b5e",
+      "1110d9baddb68c26bab899ff519f16d9f2280c4b8c20f320804b847bec77c642",
+      "21c6237fab9fa3074fe035ca9c272826f8d5db78d894cf99e46fe7274dce2770",
+      "e6f4e9afdf611815e8e3b0efed97c78aa1ca6be4c1318668ac84ef7df8093193",
+      "ed9b95e01b5f1ba153d507682564e527b4403434e51c3d23ec95cb63cd9a5740"
+    ],
+    "newContentsDirectlyInspected": 4,
+    "identicalContentsReused": 8,
+    "findings": [
+      {
+        "severity": "P2",
+        "file": "review-text-only-final-1280.png",
+        "cause": "Apparent concept-label overlap at exactly doubled text size.",
+        "status": "Development connected geometry regression passes; production reproduction still pending."
+      }
+    ]
+  },
+  "home5": {
+    "captureCount": 4,
+    "inspectedHashes": [
+      "53916737e170074eaff4c8bdaa19a74b300b1fcddf84610b1204e6ec65739b45",
+      "7516e975dc7cd662ec8288507da85ddb3e65b06f1f832df176c0593ef6bdd5c1",
+      "80bdf06bc95b5242c2385e692cb1ccbab6fc16eccd96a2ff12a381db2f901aeb",
+      "e31e9d6586fde62a38f698093b8349210870aa20ba7c31d33c2807546fe11233"
+    ],
+    "allDirectlyInspected": true,
+    "findings": []
+  },
+  "routeScoresFinal": false
+}

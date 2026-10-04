@@ -1,0 +1,2372 @@
+{
+  "generatedUtc": "2026-10-04T06:40:46.582Z",
+  "captureCount": 212,
+  "distinctContents": 163,
+  "inspectedDistinctContents": 163,
+  "images": [
+    {
+      "sha256": "3328da462d0fb9133db63b19cac6bacc87de0491e805b3c7184251540244e06d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "conflict-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/3328da462d0fb9133db63b19cac6bacc87de0491e805b3c7184251540244e06d.png"
+    },
+    {
+      "sha256": "62289b0dcb201ea664225cd15c95c49dd6c69c69b208b5f6419cd60fef4a985f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "conflict-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/62289b0dcb201ea664225cd15c95c49dd6c69c69b208b5f6419cd60fef4a985f.png"
+    },
+    {
+      "sha256": "f28ede100891de5b4826687cfef0a9d2ac042bf8a6838c8a2a3b2637f4e8b7f3",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "conflict-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f28ede100891de5b4826687cfef0a9d2ac042bf8a6838c8a2a3b2637f4e8b7f3.png"
+    },
+    {
+      "sha256": "fde766959e629cffb58067f3a1fb4d3206f4759e874363644b45cddacbfb6404",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "conflict-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/conflict-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/fde766959e629cffb58067f3a1fb4d3206f4759e874363644b45cddacbfb6404.png"
+    },
+    {
+      "sha256": "f0a0b96b5c07c382798e4255b467ac930816b09b8ed85e18ebc7b93f998b70fe",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/css-zoom-200-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "css-zoom-200-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/css-zoom-200-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f0a0b96b5c07c382798e4255b467ac930816b09b8ed85e18ebc7b93f998b70fe.png"
+    },
+    {
+      "sha256": "eb569cdddc02abecc0e709ad5514f9c7af9b32362cb884f7d8250210ca1fb29e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-1280-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "dark-1280-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-1280-1280.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-1280.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-totals-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-totals-1280.png"
+        },
+        {
+          "group": "receipt",
+          "label": "reduced-1280-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/reduced-1280-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/eb569cdddc02abecc0e709ad5514f9c7af9b32362cb884f7d8250210ca1fb29e.png"
+    },
+    {
+      "sha256": "66dac0c440857b458e41d9ccba86d37cdd6b6d18fae9769a009d7dade3b77590",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-1920-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "dark-1920-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-1920-1920.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-1920.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-totals-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-totals-1920.png"
+        },
+        {
+          "group": "receipt",
+          "label": "reduced-1920-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/reduced-1920-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/66dac0c440857b458e41d9ccba86d37cdd6b6d18fae9769a009d7dade3b77590.png"
+    },
+    {
+      "sha256": "e6fa25987a7946c786e282477063a5118a139caba29d230be8d059e69b4a1b5e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-375-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "dark-375-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-375-375.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-375-top.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-375-top.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-375.png"
+        },
+        {
+          "group": "receipt",
+          "label": "reduced-375-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/reduced-375-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/e6fa25987a7946c786e282477063a5118a139caba29d230be8d059e69b4a1b5e.png"
+    },
+    {
+      "sha256": "8306c90a2d731edfcfd073d08dfc61ae81496be85fdf7e4aeba45c7836fe7f0c",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-768-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "dark-768-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/dark-768-768.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-768.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-totals-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-totals-768.png"
+        },
+        {
+          "group": "receipt",
+          "label": "reduced-768-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/reduced-768-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/8306c90a2d731edfcfd073d08dfc61ae81496be85fdf7e4aeba45c7836fe7f0c.png"
+    },
+    {
+      "sha256": "e642a20fc860833636ea485ae3f66d0b82f79a726a832ac86cd8309a0ca33436",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "denied-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/e642a20fc860833636ea485ae3f66d0b82f79a726a832ac86cd8309a0ca33436.png"
+    },
+    {
+      "sha256": "1cb746120e313bb6ee4bd8811ffc572d2fd446ca20f092a301db581e95d601db",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "denied-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1cb746120e313bb6ee4bd8811ffc572d2fd446ca20f092a301db581e95d601db.png"
+    },
+    {
+      "sha256": "a34b3ebd94311d7cc4854c0f8ccae69268979d2dc00f2d89e0eed615f2ae2358",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "denied-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/a34b3ebd94311d7cc4854c0f8ccae69268979d2dc00f2d89e0eed615f2ae2358.png"
+    },
+    {
+      "sha256": "2e6c9e105cb1d739149b6fff28cab019072eb488becd8d68b23ca06b46bda978",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "denied-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/denied-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/2e6c9e105cb1d739149b6fff28cab019072eb488becd8d68b23ca06b46bda978.png"
+    },
+    {
+      "sha256": "299a17182e2f2c158c83cb4d6b49d699d1366702c36e938bf0ef1c6970f2447e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "error-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/299a17182e2f2c158c83cb4d6b49d699d1366702c36e938bf0ef1c6970f2447e.png"
+    },
+    {
+      "sha256": "5a872d5c48fa9cfe2e82ff2082be4db7ec7ae20c51c7f59ab0d1d5c0460d4c4d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "error-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/5a872d5c48fa9cfe2e82ff2082be4db7ec7ae20c51c7f59ab0d1d5c0460d4c4d.png"
+    },
+    {
+      "sha256": "add990939daa3892da6e392366e86a9f6aa796a73810efca1ee3d4a4364fbf6b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "error-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/add990939daa3892da6e392366e86a9f6aa796a73810efca1ee3d4a4364fbf6b.png"
+    },
+    {
+      "sha256": "47bf8880a123de77a99afedcae0dd508ab43e0fc871c7d7170702abd306a3bbf",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "error-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/error-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/47bf8880a123de77a99afedcae0dd508ab43e0fc871c7d7170702abd306a3bbf.png"
+    },
+    {
+      "sha256": "5063eeff891219b456deb2447a484fb2c167763170359c36d6092e556a1b528d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-1280-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "forced-1280-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-1280-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/5063eeff891219b456deb2447a484fb2c167763170359c36d6092e556a1b528d.png"
+    },
+    {
+      "sha256": "18dc2be54e7ea996f0456c5843a1204531aa30713479cfb3860153dfb41ee298",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-1920-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "forced-1920-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-1920-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/18dc2be54e7ea996f0456c5843a1204531aa30713479cfb3860153dfb41ee298.png"
+    },
+    {
+      "sha256": "3ac6a5e96b871fcccaf77da4238ca561eab7e24c94a08e025604b8bfa89d99ab",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-375-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "forced-375-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-375-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/3ac6a5e96b871fcccaf77da4238ca561eab7e24c94a08e025604b8bfa89d99ab.png"
+    },
+    {
+      "sha256": "f89692545b5566eb97585475aa0c1a0e12f0d677048f6ee184b0cc88852bf360",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-768-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "forced-768-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/forced-768-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f89692545b5566eb97585475aa0c1a0e12f0d677048f6ee184b0cc88852bf360.png"
+    },
+    {
+      "sha256": "30506de1ff74b637f6a53b15e2f32fa11fbf28e27e600ab310609fba27e4ec39",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "incomplete-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/30506de1ff74b637f6a53b15e2f32fa11fbf28e27e600ab310609fba27e4ec39.png"
+    },
+    {
+      "sha256": "f614f89f8efca0345cbf012846fb154ce3970f804bb7d4d93a52df99dc214b70",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "incomplete-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f614f89f8efca0345cbf012846fb154ce3970f804bb7d4d93a52df99dc214b70.png"
+    },
+    {
+      "sha256": "d1a4c62d1f2bb25c60c877cde7c7a99ba90acfde315fed3fab0eb036b864b2c4",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "incomplete-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d1a4c62d1f2bb25c60c877cde7c7a99ba90acfde315fed3fab0eb036b864b2c4.png"
+    },
+    {
+      "sha256": "7be806ab165dcba571c1110b766dbcf7f65ec294b72167504a89958bc57303d9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "incomplete-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/incomplete-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/7be806ab165dcba571c1110b766dbcf7f65ec294b72167504a89958bc57303d9.png"
+    },
+    {
+      "sha256": "e67a97fd2e12ba1d63ac97abcd2a4878e541d04902a842b296d8a8839abd6e78",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "ledger-keyboard-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/e67a97fd2e12ba1d63ac97abcd2a4878e541d04902a842b296d8a8839abd6e78.png"
+    },
+    {
+      "sha256": "cb7a7ab41f9ae0acc378fd1c74420778c3ab2402b89c2920e5ddd9de65390c96",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "ledger-keyboard-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/cb7a7ab41f9ae0acc378fd1c74420778c3ab2402b89c2920e5ddd9de65390c96.png"
+    },
+    {
+      "sha256": "ca4f4d4824da74ecb779456420e93945ccc4d354f968adfe74de8f1fb44841ee",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "ledger-keyboard-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ca4f4d4824da74ecb779456420e93945ccc4d354f968adfe74de8f1fb44841ee.png"
+    },
+    {
+      "sha256": "d505c9cad3d24488a79df5972e94da20bb0c63251bd686131de219b9bb5d38d9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "ledger-keyboard-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/ledger-keyboard-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d505c9cad3d24488a79df5972e94da20bb0c63251bd686131de219b9bb5d38d9.png"
+    },
+    {
+      "sha256": "9d52540db47e06da626d3f886f1df0d71ffd9588aa31f8963232800e31b79ede",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "loading-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/9d52540db47e06da626d3f886f1df0d71ffd9588aa31f8963232800e31b79ede.png"
+    },
+    {
+      "sha256": "80bf431e4dc11a4714a8f74a57454c4f67f616c524fbd47e4f991819519b99cb",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "loading-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/80bf431e4dc11a4714a8f74a57454c4f67f616c524fbd47e4f991819519b99cb.png"
+    },
+    {
+      "sha256": "d7c791b7b7766f098d6de76084b1474b4327cae5c34168655c059e1057946f29",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "loading-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d7c791b7b7766f098d6de76084b1474b4327cae5c34168655c059e1057946f29.png"
+    },
+    {
+      "sha256": "4466b4ea3c0903eb8336797076ded76e205c00f657165e9ab6ea529ed78bc3cb",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "loading-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/loading-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4466b4ea3c0903eb8336797076ded76e205c00f657165e9ab6ea529ed78bc3cb.png"
+    },
+    {
+      "sha256": "0fd97b61737a2ef5b8d19e6aa7fd94469661155af2bd02dce15d87a78353e114",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-375-totals.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "missing-375-totals.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-375-totals.png"
+        },
+        {
+          "group": "receipt",
+          "label": "missing-totals-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/missing-totals-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/0fd97b61737a2ef5b8d19e6aa7fd94469661155af2bd02dce15d87a78353e114.png"
+    },
+    {
+      "sha256": "ab13293e5664e067d72e487a2c14a13de0163454d4c8738baae0e1432e0b7b97",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "not-found-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ab13293e5664e067d72e487a2c14a13de0163454d4c8738baae0e1432e0b7b97.png"
+    },
+    {
+      "sha256": "9886ea916384e8648930d15048459ce9db853b258eff45006ffb175835120322",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "not-found-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/9886ea916384e8648930d15048459ce9db853b258eff45006ffb175835120322.png"
+    },
+    {
+      "sha256": "47cd110ec56eee1e83479536c105a489023307f47824bfce6ebd8c77049f17a7",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "not-found-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/47cd110ec56eee1e83479536c105a489023307f47824bfce6ebd8c77049f17a7.png"
+    },
+    {
+      "sha256": "bb92b0e0da18e8bf7f51f9836101b79f67d052876c1f2b70b6d25389075014e2",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "not-found-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/not-found-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/bb92b0e0da18e8bf7f51f9836101b79f67d052876c1f2b70b6d25389075014e2.png"
+    },
+    {
+      "sha256": "0fe8de974b1885f4a5a1b107bc7a979bf58e74b6b280b0ea879719320d32a174",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "positive-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/0fe8de974b1885f4a5a1b107bc7a979bf58e74b6b280b0ea879719320d32a174.png"
+    },
+    {
+      "sha256": "bf0bfe0b5811258cf1fc94588c7c036fe7762b262b1bf3699d057fe919ac4bd1",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "positive-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/bf0bfe0b5811258cf1fc94588c7c036fe7762b262b1bf3699d057fe919ac4bd1.png"
+    },
+    {
+      "sha256": "9bda67c96999696742f1e77998dbd1facf2631082a4b02effab514ae72961d19",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "positive-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/9bda67c96999696742f1e77998dbd1facf2631082a4b02effab514ae72961d19.png"
+    },
+    {
+      "sha256": "c415b32ca0608e93f34c03dcc32ed8820bd6fc042b1a73126730d336aef6c813",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "positive-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/positive-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c415b32ca0608e93f34c03dcc32ed8820bd6fc042b1a73126730d336aef6c813.png"
+    },
+    {
+      "sha256": "7e652ae8aec7512fa00cebdd2f3130d8b871910e32231c111c4bd8926bd31066",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "recovered-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/7e652ae8aec7512fa00cebdd2f3130d8b871910e32231c111c4bd8926bd31066.png"
+    },
+    {
+      "sha256": "175a10f57dd670c6d70e74d6b5b8936354eef9096ca8c3dbab53dbec04c444b7",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "recovered-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/175a10f57dd670c6d70e74d6b5b8936354eef9096ca8c3dbab53dbec04c444b7.png"
+    },
+    {
+      "sha256": "a65591d21b05383604b1349a4ef51d634173b39ad66f19cf330a4a2bef28817f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "recovered-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/a65591d21b05383604b1349a4ef51d634173b39ad66f19cf330a4a2bef28817f.png"
+    },
+    {
+      "sha256": "41fbc83be6d6564a08c64096d30654cda06bc5d66c2d3f85190479990ebb3898",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "recovered-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/recovered-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/41fbc83be6d6564a08c64096d30654cda06bc5d66c2d3f85190479990ebb3898.png"
+    },
+    {
+      "sha256": "3e96e2f48bff5615b86140c1abb84aab58fa206986810c2604cee36a0d67990f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "shared-brief-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/3e96e2f48bff5615b86140c1abb84aab58fa206986810c2604cee36a0d67990f.png"
+    },
+    {
+      "sha256": "c4987c293ec8fefcad25f1d99648bb6cdf6c8b6e4e90e5208b41f40d9d76da0e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "shared-brief-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c4987c293ec8fefcad25f1d99648bb6cdf6c8b6e4e90e5208b41f40d9d76da0e.png"
+    },
+    {
+      "sha256": "bd9df0ee767f035e22aa10b46c2580827c46e8eec319561bc7c70536d82d9500",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "shared-brief-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/bd9df0ee767f035e22aa10b46c2580827c46e8eec319561bc7c70536d82d9500.png"
+    },
+    {
+      "sha256": "d01f253864f1dae4ddd97346f9d3d9bbf3f7c5d8f2640e13f2a44db12ba0fa30",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "shared-brief-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/shared-brief-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d01f253864f1dae4ddd97346f9d3d9bbf3f7c5d8f2640e13f2a44db12ba0fa30.png"
+    },
+    {
+      "sha256": "8b3c7ef4ea40ef3c41ed28fa17ee0d592afbec942f4549104f29eaf03a6457cc",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/text-only-zoom-200-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "text-only-zoom-200-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/text-only-zoom-200-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/8b3c7ef4ea40ef3c41ed28fa17ee0d592afbec942f4549104f29eaf03a6457cc.png"
+    },
+    {
+      "sha256": "4cb537bd18b35f9316e63b5bb044792f6461ed27c78062d5b576593468d83550",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "zero-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4cb537bd18b35f9316e63b5bb044792f6461ed27c78062d5b576593468d83550.png"
+    },
+    {
+      "sha256": "11b3cbe2c458525ef2d649c34959e3be241c2cb8272dbc26763a1d2ca3a2e30e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-1920.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "zero-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/11b3cbe2c458525ef2d649c34959e3be241c2cb8272dbc26763a1d2ca3a2e30e.png"
+    },
+    {
+      "sha256": "7b5119e034c9b33b5f55f1e32d424f875fd9b4f225658fa4526063f3f1479dad",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-375.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "zero-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/7b5119e034c9b33b5f55f1e32d424f875fd9b4f225658fa4526063f3f1479dad.png"
+    },
+    {
+      "sha256": "75b188c5e32dfcd3b8478f06e78aa7426a6761061e0f2ff592912ea655aefdbb",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-768.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "zero-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-8/zero-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/75b188c5e32dfcd3b8478f06e78aa7426a6761061e0f2ff592912ea655aefdbb.png"
+    },
+    {
+      "sha256": "1110d9baddb68c26bab899ff519f16d9f2280c4b8c20f320804b847bec77c642",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-9/receipt-text-only-200-exact-final-1280.png",
+      "captures": [
+        {
+          "group": "receipt",
+          "label": "receipt-text-only-200-exact-final-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-9/receipt-text-only-200-exact-final-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1110d9baddb68c26bab899ff519f16d9f2280c4b8c20f320804b847bec77c642.png"
+    },
+    {
+      "sha256": "dee58a418f3a8b43c0f4760013ad0d3ce503541361951a2100e09d25883d0f58",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-conflict-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/dee58a418f3a8b43c0f4760013ad0d3ce503541361951a2100e09d25883d0f58.png"
+    },
+    {
+      "sha256": "494d118402a705c1d3553c2c41ad4a1c91c8061ad1c29169c7350925924a1b01",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-conflict-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/494d118402a705c1d3553c2c41ad4a1c91c8061ad1c29169c7350925924a1b01.png"
+    },
+    {
+      "sha256": "c54d210f10ee45223fb85804dbb5d5d545f6f170dc92f3c7843aac73c8261c49",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-conflict-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c54d210f10ee45223fb85804dbb5d5d545f6f170dc92f3c7843aac73c8261c49.png"
+    },
+    {
+      "sha256": "3f42dfec86e887a9d0b46a3b4fe4de8fb1c3bf7de1886f490a5c078e488e1664",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-conflict-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-conflict-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/3f42dfec86e887a9d0b46a3b4fe4de8fb1c3bf7de1886f490a5c078e488e1664.png"
+    },
+    {
+      "sha256": "541541e0b306155e16e39a57b6759491c86263ecbbe74d440d9c9492d63a01a2",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-css-zoom-200-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-css-zoom-200-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-css-zoom-200-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/541541e0b306155e16e39a57b6759491c86263ecbbe74d440d9c9492d63a01a2.png"
+    },
+    {
+      "sha256": "909e610ec2318e677ad95cd0a01d81e92cfb8267eb44bc6695a8e293ddcc2ad6",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-dark-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-1280.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-error-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-error-1280.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-reduced-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-reduced-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/909e610ec2318e677ad95cd0a01d81e92cfb8267eb44bc6695a8e293ddcc2ad6.png"
+    },
+    {
+      "sha256": "4a8a0492804753b6291382f23e5bb0f1c566fe470577a48a35e2f1d13e92a570",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-dark-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-1920.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-error-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-error-1920.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-reduced-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-reduced-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4a8a0492804753b6291382f23e5bb0f1c566fe470577a48a35e2f1d13e92a570.png"
+    },
+    {
+      "sha256": "ef7773b5e0cf63ea770744512915916610f5516e10aa52a85037bccc751746e2",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-dark-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-375.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-error-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-error-375.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-reduced-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-reduced-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ef7773b5e0cf63ea770744512915916610f5516e10aa52a85037bccc751746e2.png"
+    },
+    {
+      "sha256": "14cda1da24a71f5103068ca73e458960b249f89b2f50888fc9ec8272807da5d9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-dark-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-dark-768.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-error-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-error-768.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-reduced-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-reduced-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/14cda1da24a71f5103068ca73e458960b249f89b2f50888fc9ec8272807da5d9.png"
+    },
+    {
+      "sha256": "d6c7b02dbe4e22d7564a6e9cce2d3f1faa52c9f0afcc48c7591a8424e3f928d8",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-denied-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d6c7b02dbe4e22d7564a6e9cce2d3f1faa52c9f0afcc48c7591a8424e3f928d8.png"
+    },
+    {
+      "sha256": "0afca377d5b247d2aee2935128b0cba590a600719988743e893e4d851a37608a",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-denied-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/0afca377d5b247d2aee2935128b0cba590a600719988743e893e4d851a37608a.png"
+    },
+    {
+      "sha256": "843ea4e20b5db7b4e5322d51791cadb0e468bd533b91611a8e90004cde6adb8d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-denied-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/843ea4e20b5db7b4e5322d51791cadb0e468bd533b91611a8e90004cde6adb8d.png"
+    },
+    {
+      "sha256": "d96c5f7a9c064e1580a82b102dc416deccc0ed7e1b8b0cad6afa18fb127b8edc",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-denied-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-denied-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d96c5f7a9c064e1580a82b102dc416deccc0ed7e1b8b0cad6afa18fb127b8edc.png"
+    },
+    {
+      "sha256": "813f4f3d1f79475a95ef011500b50193fa8748a51813b23e003157c6014bc626",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-forced-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/813f4f3d1f79475a95ef011500b50193fa8748a51813b23e003157c6014bc626.png"
+    },
+    {
+      "sha256": "f63614f0694092dcabe58b5ee85cf474131384abf2be66d03934275d38aae647",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-forced-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f63614f0694092dcabe58b5ee85cf474131384abf2be66d03934275d38aae647.png"
+    },
+    {
+      "sha256": "c1f9cbf8c713f4229af14f9092c955dcf3e66bf7e2f816c142c7d0bcae30d50a",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-forced-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c1f9cbf8c713f4229af14f9092c955dcf3e66bf7e2f816c142c7d0bcae30d50a.png"
+    },
+    {
+      "sha256": "0da947dc6572bcd35ca3ea9d466952b1d38bbaf089a1b0a804a1f50e4ab10838",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-forced-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-forced-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/0da947dc6572bcd35ca3ea9d466952b1d38bbaf089a1b0a804a1f50e4ab10838.png"
+    },
+    {
+      "sha256": "3688f7d8be0a0da054ce2e1322391ad8305cd314726ad11619c4536cede997b5",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-loading-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/3688f7d8be0a0da054ce2e1322391ad8305cd314726ad11619c4536cede997b5.png"
+    },
+    {
+      "sha256": "17662754b4ea5f25c40a83ff395b667f818500be0d8a2e03cd84a802f57860b6",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-loading-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/17662754b4ea5f25c40a83ff395b667f818500be0d8a2e03cd84a802f57860b6.png"
+    },
+    {
+      "sha256": "ef029bda5b7657afd74b3cc86136bb47e9fac14c9a4579a443a3f2d81a8d17c8",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-loading-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ef029bda5b7657afd74b3cc86136bb47e9fac14c9a4579a443a3f2d81a8d17c8.png"
+    },
+    {
+      "sha256": "81b14d38a366bce4e43065b1a17e3e4f6a23d9235beaf4eaf3b42b1e62aa3e92",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-loading-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-loading-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/81b14d38a366bce4e43065b1a17e3e4f6a23d9235beaf4eaf3b42b1e62aa3e92.png"
+    },
+    {
+      "sha256": "703870611b4205ba37666cc278802f9c4633ec440c12c8d7b4447885fafac269",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-malformed-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/703870611b4205ba37666cc278802f9c4633ec440c12c8d7b4447885fafac269.png"
+    },
+    {
+      "sha256": "4f121333262b421959c42973e89a4a7e9d99e50d67a04d2d67289d2407c0f5b9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-malformed-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4f121333262b421959c42973e89a4a7e9d99e50d67a04d2d67289d2407c0f5b9.png"
+    },
+    {
+      "sha256": "ff7dcdcf223d9dcffd41e0935192a79d90adeb3d08d01956d393f2eb1905eff7",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-malformed-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ff7dcdcf223d9dcffd41e0935192a79d90adeb3d08d01956d393f2eb1905eff7.png"
+    },
+    {
+      "sha256": "6190eff6efb8bc504155a6ada5f44bcabce92936e29d2fb6480cd541dedf079f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-malformed-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-malformed-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/6190eff6efb8bc504155a6ada5f44bcabce92936e29d2fb6480cd541dedf079f.png"
+    },
+    {
+      "sha256": "c1aaf7de568211abc2741e683bc0fdcbdcd4d610caafd34b6a0f1c77ab1f9ee5",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-not-found-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c1aaf7de568211abc2741e683bc0fdcbdcd4d610caafd34b6a0f1c77ab1f9ee5.png"
+    },
+    {
+      "sha256": "ce43441638e5551fda562d1f1e5b525b062b8ce796684bf6092c23b5b74447fd",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-not-found-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ce43441638e5551fda562d1f1e5b525b062b8ce796684bf6092c23b5b74447fd.png"
+    },
+    {
+      "sha256": "d21da2e943a255d8177d3e7979b21ec699815f138be19a2850bdfa9aa0ded78e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-not-found-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d21da2e943a255d8177d3e7979b21ec699815f138be19a2850bdfa9aa0ded78e.png"
+    },
+    {
+      "sha256": "ed763e35d9f4891db8aea16e5e72d59595925885ed9395da18d183d733dd6af5",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-not-found-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-not-found-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ed763e35d9f4891db8aea16e5e72d59595925885ed9395da18d183d733dd6af5.png"
+    },
+    {
+      "sha256": "4d0c4aaa0cda4641292fd71c0f5b7b7ddb250c7c0eed39e2053f4e877579a9b6",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-drawer-open-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-drawer-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-drawer-open-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4d0c4aaa0cda4641292fd71c0f5b7b7ddb250c7c0eed39e2053f4e877579a9b6.png"
+    },
+    {
+      "sha256": "007599d3ceb6d001f0a222f4b984a6e2c3df9b6df0bdb0ede9249e5ec1edba31",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-css-zoom-200-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-css-zoom-200-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-css-zoom-200-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/007599d3ceb6d001f0a222f4b984a6e2c3df9b6df0bdb0ede9249e5ec1edba31.png"
+    },
+    {
+      "sha256": "a885d0086d48e12fdf1dc41ffbca94084d5db7e2aedef550c260f57ceee66b14",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-dark-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-1280.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-light-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-light-1280.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-reduced-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-reduced-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/a885d0086d48e12fdf1dc41ffbca94084d5db7e2aedef550c260f57ceee66b14.png"
+    },
+    {
+      "sha256": "9d76aeca5aed48c771daa0dc71a1b1a84fee369accda7593da246573f83801e9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-dark-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-1920.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-light-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-light-1920.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-reduced-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-reduced-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/9d76aeca5aed48c771daa0dc71a1b1a84fee369accda7593da246573f83801e9.png"
+    },
+    {
+      "sha256": "99ef4e9c1f72def7207ba0afdaf2216362fde61f6d7b87968291585bb0d6a5ff",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-dark-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-375.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-light-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-light-375.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-reduced-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-reduced-375.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-settled-light-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-light-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/99ef4e9c1f72def7207ba0afdaf2216362fde61f6d7b87968291585bb0d6a5ff.png"
+    },
+    {
+      "sha256": "1210e32ab77f15bdbdf63d8ba3df876322e4f70d36e5ef0737ba3832da22c11b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-dark-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-dark-768.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-light-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-light-768.png"
+        },
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-reduced-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-reduced-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1210e32ab77f15bdbdf63d8ba3df876322e4f70d36e5ef0737ba3832da22c11b.png"
+    },
+    {
+      "sha256": "1711fdcacb192c04140babc342ee6c47a196477456b3ddf93fdf25774235b0e4",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-forced-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1711fdcacb192c04140babc342ee6c47a196477456b3ddf93fdf25774235b0e4.png"
+    },
+    {
+      "sha256": "9eb9f197f2f9c0666ef47b4fc81b54cb6bf4307b1e5768d84ff60f56a295ce91",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-forced-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/9eb9f197f2f9c0666ef47b4fc81b54cb6bf4307b1e5768d84ff60f56a295ce91.png"
+    },
+    {
+      "sha256": "85eabb267b725cff44d8980fae591e5118f77777f2b26e53da8094955e282e5e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-forced-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/85eabb267b725cff44d8980fae591e5118f77777f2b26e53da8094955e282e5e.png"
+    },
+    {
+      "sha256": "7110e2952d13c7c3f784edb5413de6717a49766309f8dfc2bbe2fc33855a494c",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-forced-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-forced-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/7110e2952d13c7c3f784edb5413de6717a49766309f8dfc2bbe2fc33855a494c.png"
+    },
+    {
+      "sha256": "328c2f70d348e787ddfe6df8bbe799b22091d49f61638ba8b019d018ee44986d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-text-zoom-200-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-final-text-zoom-200-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-final-text-zoom-200-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/328c2f70d348e787ddfe6df8bbe799b22091d49f61638ba8b019d018ee44986d.png"
+    },
+    {
+      "sha256": "648167b17b8ca43a4dbdb5e592c096e50c75ff0e7513aa0be75189144c7cbd93",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-drawer-open-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-settled-drawer-open-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-drawer-open-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/648167b17b8ca43a4dbdb5e592c096e50c75ff0e7513aa0be75189144c7cbd93.png"
+    },
+    {
+      "sha256": "ddea07703625c86e7fe84bb340cdfb7f20c300ad86a2afaa8447ae5edae42133",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-mobile-continuation-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-ready-settled-mobile-continuation-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-ready-settled-mobile-continuation-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ddea07703625c86e7fe84bb340cdfb7f20c300ad86a2afaa8447ae5edae42133.png"
+    },
+    {
+      "sha256": "cd88cdb65a2ba861da254eef44c27f9ee99716abb1757d97c27b0eabfb7a4157",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-recovered-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/cd88cdb65a2ba861da254eef44c27f9ee99716abb1757d97c27b0eabfb7a4157.png"
+    },
+    {
+      "sha256": "96c72dd5b3e6b25271e17469fe54c446abaa32cbb2ad1a3e1e69f6d43dbf1743",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-1920.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-recovered-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/96c72dd5b3e6b25271e17469fe54c446abaa32cbb2ad1a3e1e69f6d43dbf1743.png"
+    },
+    {
+      "sha256": "26cf52e8ae615d953d02b818e4db68239795e5f2af472b66d2867ce5130d2984",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-375.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-recovered-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/26cf52e8ae615d953d02b818e4db68239795e5f2af472b66d2867ce5130d2984.png"
+    },
+    {
+      "sha256": "4c371944d3168a462b9b97dab7943d83fffc15bd435646179e0dccaecb544802",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-768.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-recovered-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-recovered-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4c371944d3168a462b9b97dab7943d83fffc15bd435646179e0dccaecb544802.png"
+    },
+    {
+      "sha256": "7442b41a861c718393b92e46976ae2b2f1391cc27db488f29430409fa4abfc3c",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-text-only-zoom-200-1280.png",
+      "captures": [
+        {
+          "group": "canvas",
+          "label": "canvas-text-only-zoom-200-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-13/canvas-text-only-zoom-200-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/7442b41a861c718393b92e46976ae2b2f1391cc27db488f29430409fa4abfc3c.png"
+    },
+    {
+      "sha256": "cbf69e8754e8b96e54caf80b0dfefab2952dc76456645ae9885f15686dcbdc73",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-css-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-css-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-css-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/cbf69e8754e8b96e54caf80b0dfefab2952dc76456645ae9885f15686dcbdc73.png"
+    },
+    {
+      "sha256": "0f13ee2c26c7fd3c90f8bb421e99337c1523ea361b2e498dc8b88eb75cbfe62e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-css-qa-open-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-css-qa-open-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-css-qa-open-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/0f13ee2c26c7fd3c90f8bb421e99337c1523ea361b2e498dc8b88eb75cbfe62e.png"
+    },
+    {
+      "sha256": "610076eee7834df77d180313e4fcfc45012e767505055eaf7c5500b09b92fe31",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-dark-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-1280.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-light-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-light-1280.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-reduced-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-reduced-1280.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-error-recovered-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-recovered-1280.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-recovered-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-recovered-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/610076eee7834df77d180313e4fcfc45012e767505055eaf7c5500b09b92fe31.png"
+    },
+    {
+      "sha256": "1860f21adc6add6a4723d65556b3f85ea251f57cc86aa19da3f206d3e1449193",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-dark-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-1920.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-light-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-light-1920.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-reduced-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-reduced-1920.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-error-recovered-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-recovered-1920.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-recovered-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-recovered-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1860f21adc6add6a4723d65556b3f85ea251f57cc86aa19da3f206d3e1449193.png"
+    },
+    {
+      "sha256": "add43551e2b8238f87e03a48e1a1f8fb7e907e2c9e59460538b6ce38885d2045",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-dark-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-375.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-light-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-light-375.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-reduced-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-reduced-375.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-error-recovered-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-recovered-375.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-recovered-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-recovered-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/add43551e2b8238f87e03a48e1a1f8fb7e907e2c9e59460538b6ce38885d2045.png"
+    },
+    {
+      "sha256": "fa9aa665859334f40185c25f5a641450d53b6478548820e3d5fa2dadb46a3e1c",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-dark-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-light-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-light-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-reduced-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-reduced-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-recovered-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-recovered-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/fa9aa665859334f40185c25f5a641450d53b6478548820e3d5fa2dadb46a3e1c.png"
+    },
+    {
+      "sha256": "b3d9d5cf4cd0cbfccfbccac998cb6bdbb7deb406e0d3b81dcf937fe5515147dc",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-qa-open-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-dark-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-dark-qa-open-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-light-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-light-qa-open-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-final-reduced-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-reduced-qa-open-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-error-recovered-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-recovered-768.png"
+        },
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-recovered-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-recovered-qa-open-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/b3d9d5cf4cd0cbfccfbccac998cb6bdbb7deb406e0d3b81dcf937fe5515147dc.png"
+    },
+    {
+      "sha256": "003e599fe4df34cbedfca25816965a448adbfbc1c63c3dddd4803466171c6d8b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-forced-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/003e599fe4df34cbedfca25816965a448adbfbc1c63c3dddd4803466171c6d8b.png"
+    },
+    {
+      "sha256": "c7370b67f7feb299b97f34a08a793265f478be73f30eb515c4fc36c4604d230a",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-forced-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c7370b67f7feb299b97f34a08a793265f478be73f30eb515c4fc36c4604d230a.png"
+    },
+    {
+      "sha256": "89c055be1f474897be021beaca22b37c380adb69f2dd5b33aae0a4933d34274f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-forced-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/89c055be1f474897be021beaca22b37c380adb69f2dd5b33aae0a4933d34274f.png"
+    },
+    {
+      "sha256": "d05b2fcb77940fdf19e23899e74767132ddba0c3f8fb143ff295ba52192be97f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-forced-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d05b2fcb77940fdf19e23899e74767132ddba0c3f8fb143ff295ba52192be97f.png"
+    },
+    {
+      "sha256": "8f7cc81cf1fd7b37ed41f04a461fd5612b4062fa85dd361f251384b82907a89f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-qa-open-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-forced-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-forced-qa-open-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/8f7cc81cf1fd7b37ed41f04a461fd5612b4062fa85dd361f251384b82907a89f.png"
+    },
+    {
+      "sha256": "76ff1cca31478a2914c57573e8ed9f781345f90adefa1d9f4379ee373dd4752b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-inherited-text-stress-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-inherited-text-stress-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-inherited-text-stress-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/76ff1cca31478a2914c57573e8ed9f781345f90adefa1d9f4379ee373dd4752b.png"
+    },
+    {
+      "sha256": "8f1b623cd864f570755b18f064d74c49af83f63cc4b686e14936aedfcccbbcf6",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-qa-keyboard-inherited-text-stress-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-qa-keyboard-inherited-text-stress-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-qa-keyboard-inherited-text-stress-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/8f1b623cd864f570755b18f064d74c49af83f63cc4b686e14936aedfcccbbcf6.png"
+    },
+    {
+      "sha256": "8f8e8fcb24f29deb0767e2a1359f284138ee17cf742109c8600c8c1e7053b782",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-text-only-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-final-text-only-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-final-text-only-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/8f8e8fcb24f29deb0767e2a1359f284138ee17cf742109c8600c8c1e7053b782.png"
+    },
+    {
+      "sha256": "1a7a24fd6fbb574ebadaef3f6fbcd1d430974f26d9fab6fdaf9444ba87508d6e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-conflict-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1a7a24fd6fbb574ebadaef3f6fbcd1d430974f26d9fab6fdaf9444ba87508d6e.png"
+    },
+    {
+      "sha256": "ed6485af5178c8d3231cec42abf2818d63b3dd37132afcc573639f38738927d5",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-conflict-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ed6485af5178c8d3231cec42abf2818d63b3dd37132afcc573639f38738927d5.png"
+    },
+    {
+      "sha256": "2b2ad3e73023489af574dc6e2346f484665f375a7c880b72fd3c952364bd7881",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-conflict-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/2b2ad3e73023489af574dc6e2346f484665f375a7c880b72fd3c952364bd7881.png"
+    },
+    {
+      "sha256": "263caec138cd487ce1403be2ff05d4224c3777da8ad6dc5b181df4fc09afaec9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-conflict-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-conflict-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/263caec138cd487ce1403be2ff05d4224c3777da8ad6dc5b181df4fc09afaec9.png"
+    },
+    {
+      "sha256": "07563ed5d37c7538e8497a6fa3b0360d4c3adb76dc88e40adea1f4683df2a2f0",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-denied-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/07563ed5d37c7538e8497a6fa3b0360d4c3adb76dc88e40adea1f4683df2a2f0.png"
+    },
+    {
+      "sha256": "d4a12c1af3f37351b95cdaab9f626cfdb605e910586f5738b1e379780d494bfb",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-denied-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d4a12c1af3f37351b95cdaab9f626cfdb605e910586f5738b1e379780d494bfb.png"
+    },
+    {
+      "sha256": "2308ae60f5bb6587ffca6d398ca359061b28843bdc5403f9b28d5a4a4bd44ba1",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-denied-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/2308ae60f5bb6587ffca6d398ca359061b28843bdc5403f9b28d5a4a4bd44ba1.png"
+    },
+    {
+      "sha256": "be2594676d41973508cd805871822b32ea369cacb78908f06109905477140c53",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-denied-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-denied-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/be2594676d41973508cd805871822b32ea369cacb78908f06109905477140c53.png"
+    },
+    {
+      "sha256": "3f94c1e0b008e0156d8c6b611747bbe719151c016bdd0627e2d757be1fe07677",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-error-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/3f94c1e0b008e0156d8c6b611747bbe719151c016bdd0627e2d757be1fe07677.png"
+    },
+    {
+      "sha256": "f15e104e7ef60490da6dc55d8996dc17c5dd454939963386dee4037eac774dc0",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-error-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f15e104e7ef60490da6dc55d8996dc17c5dd454939963386dee4037eac774dc0.png"
+    },
+    {
+      "sha256": "b9d28a418182c2770b6ae03f629e1ff84eaa3ee22c4b0e8b77e1ba834589dc4b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-error-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/b9d28a418182c2770b6ae03f629e1ff84eaa3ee22c4b0e8b77e1ba834589dc4b.png"
+    },
+    {
+      "sha256": "c1d8a5a1acf96da872e82f82faa611370839cd7d16d7c010d4bb6a049c0b0b3c",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-error-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-error-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c1d8a5a1acf96da872e82f82faa611370839cd7d16d7c010d4bb6a049c0b0b3c.png"
+    },
+    {
+      "sha256": "dc034c877ab96f62abcdd31d3bf729eaa119d59cfbf20e9f7b2745ebc64baa48",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-expired-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/dc034c877ab96f62abcdd31d3bf729eaa119d59cfbf20e9f7b2745ebc64baa48.png"
+    },
+    {
+      "sha256": "bc24ad1a4458115ce20fb62c56dc6908043b1c463c868d0411d7556e745ab372",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-expired-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/bc24ad1a4458115ce20fb62c56dc6908043b1c463c868d0411d7556e745ab372.png"
+    },
+    {
+      "sha256": "cb1cdfb55fe8103612fea6b17478e6f3903904411bc52db1384129eff9c5c552",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-expired-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/cb1cdfb55fe8103612fea6b17478e6f3903904411bc52db1384129eff9c5c552.png"
+    },
+    {
+      "sha256": "f3927ddd6f47f62853c2a4c48f28decb78d364a57b0bd220b19f6b1885f4cfc9",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-expired-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-expired-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/f3927ddd6f47f62853c2a4c48f28decb78d364a57b0bd220b19f6b1885f4cfc9.png"
+    },
+    {
+      "sha256": "2fb9afe7805d4fecd580a7ea4d9adbcea7e4e3b7b57a0fdb827abfb7b7ae5fe2",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-incomplete-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/2fb9afe7805d4fecd580a7ea4d9adbcea7e4e3b7b57a0fdb827abfb7b7ae5fe2.png"
+    },
+    {
+      "sha256": "9d678af2fce2f3fe06f79d9cb3fa6594fd9f04907e23b91fe12b0d4a7f0648bc",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-incomplete-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/9d678af2fce2f3fe06f79d9cb3fa6594fd9f04907e23b91fe12b0d4a7f0648bc.png"
+    },
+    {
+      "sha256": "692a85b74a27140c2c2f821b7ff0aae485a3dda5a28c7b6e5d93d2789e10e2f7",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-incomplete-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/692a85b74a27140c2c2f821b7ff0aae485a3dda5a28c7b6e5d93d2789e10e2f7.png"
+    },
+    {
+      "sha256": "1bc69117cbdf1c8a62b76e17d640c901e6425172819d26866eef811f5db8b70e",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-incomplete-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/1bc69117cbdf1c8a62b76e17d640c901e6425172819d26866eef811f5db8b70e.png"
+    },
+    {
+      "sha256": "a82c66dfad9a8e30d9974aba164e10e0834777c162488636a83e7788996643ad",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-qa-open-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-incomplete-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-incomplete-qa-open-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/a82c66dfad9a8e30d9974aba164e10e0834777c162488636a83e7788996643ad.png"
+    },
+    {
+      "sha256": "fe36067edd2ebf11a2472a7ec1c4835001aaed543cdcc267f918f98934e7c6c1",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/fe36067edd2ebf11a2472a7ec1c4835001aaed543cdcc267f918f98934e7c6c1.png"
+    },
+    {
+      "sha256": "88e7c937ad9e47a5e751d9876065febcd3da8d4367d82ce70b29932fceb0263f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/88e7c937ad9e47a5e751d9876065febcd3da8d4367d82ce70b29932fceb0263f.png"
+    },
+    {
+      "sha256": "007babce6895115fbd5daf40b401e536d8df5ea04e994a22c7ccec1a6f48e809",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/007babce6895115fbd5daf40b401e536d8df5ea04e994a22c7ccec1a6f48e809.png"
+    },
+    {
+      "sha256": "6e592494ca9aef296699685546a377ac1ff2321cdc6b806c44353c0ea55aadf7",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-loading-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-loading-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/6e592494ca9aef296699685546a377ac1ff2321cdc6b806c44353c0ea55aadf7.png"
+    },
+    {
+      "sha256": "d2d3c8192d01893f58c2547c0be713a8bab131bc21a1b31f52430dce451583de",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-not-found-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/d2d3c8192d01893f58c2547c0be713a8bab131bc21a1b31f52430dce451583de.png"
+    },
+    {
+      "sha256": "8402e4c9dedf6a81929015bdb80ffbb0f1fde22c92f619fd3d554377d332d984",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-not-found-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/8402e4c9dedf6a81929015bdb80ffbb0f1fde22c92f619fd3d554377d332d984.png"
+    },
+    {
+      "sha256": "ce430f0a551a4e690e34af281b51e5d3a920bb19e62f960e349959d908de13e8",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-not-found-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/ce430f0a551a4e690e34af281b51e5d3a920bb19e62f960e349959d908de13e8.png"
+    },
+    {
+      "sha256": "dd6e9da90926d64b7a884a40132975e3f6bd1777943d0571268a960713c95d87",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-not-found-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-not-found-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/dd6e9da90926d64b7a884a40132975e3f6bd1777943d0571268a960713c95d87.png"
+    },
+    {
+      "sha256": "fceef3a15994aa0ecf5086b5f3e18ce84ee4c25223c027adf009a640763535ca",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/fceef3a15994aa0ecf5086b5f3e18ce84ee4c25223c027adf009a640763535ca.png"
+    },
+    {
+      "sha256": "b062dc6e352cf336ef7f05c2d91d066539949c9848c8d0637a6deb586a6becd1",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-1920.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/b062dc6e352cf336ef7f05c2d91d066539949c9848c8d0637a6deb586a6becd1.png"
+    },
+    {
+      "sha256": "c5caefccd3983ddb2b35ad24c865382609da717df0a36ac71e7bebf55e308a13",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-375.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c5caefccd3983ddb2b35ad24c865382609da717df0a36ac71e7bebf55e308a13.png"
+    },
+    {
+      "sha256": "fd2284a49847de8f5f5f920171c3fb88f0085f019e203565d12f23663311b17f",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/fd2284a49847de8f5f5f920171c3fb88f0085f019e203565d12f23663311b17f.png"
+    },
+    {
+      "sha256": "4584642f274c720ac2ecc4270a49a92f02e868e2d5b88033c9bce6c38157b55d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-css-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-css-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-css-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/4584642f274c720ac2ecc4270a49a92f02e868e2d5b88033c9bce6c38157b55d.png"
+    },
+    {
+      "sha256": "fd741deca7abf3f6ed52c56591ce04f4a2dabae72910ee461c6147ed80702b4b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-css-qa-open-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-css-qa-open-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-css-qa-open-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/fd741deca7abf3f6ed52c56591ce04f4a2dabae72910ee461c6147ed80702b4b.png"
+    },
+    {
+      "sha256": "a741c1a798ef48bc59b4699d643ddecd00723ff1bfde44868bfdd36574fc270b",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-qa-open-768.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-qa-open-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-qa-open-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/a741c1a798ef48bc59b4699d643ddecd00723ff1bfde44868bfdd36574fc270b.png"
+    },
+    {
+      "sha256": "98cfc1a5316dadffe54041cdf2aaf3d5a8f0e8cf14bd498268d6b6f7d2fa3f81",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-text-only-1280.png",
+      "captures": [
+        {
+          "group": "review",
+          "label": "review-states-verified-pending-text-only-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-20/review-states-verified-pending-text-only-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/98cfc1a5316dadffe54041cdf2aaf3d5a8f0e8cf14bd498268d6b6f7d2fa3f81.png"
+    },
+    {
+      "sha256": "7516e975dc7cd662ec8288507da85ddb3e65b06f1f832df176c0593ef6bdd5c1",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-1280.png",
+      "captures": [
+        {
+          "group": "home-reference",
+          "label": "home-reference-1280.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-1280.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/7516e975dc7cd662ec8288507da85ddb3e65b06f1f832df176c0593ef6bdd5c1.png"
+    },
+    {
+      "sha256": "53916737e170074eaff4c8bdaa19a74b300b1fcddf84610b1204e6ec65739b45",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-1920.png",
+      "captures": [
+        {
+          "group": "home-reference",
+          "label": "home-reference-1920.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-1920.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/53916737e170074eaff4c8bdaa19a74b300b1fcddf84610b1204e6ec65739b45.png"
+    },
+    {
+      "sha256": "e31e9d6586fde62a38f698093b8349210870aa20ba7c31d33c2807546fe11233",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-375.png",
+      "captures": [
+        {
+          "group": "home-reference",
+          "label": "home-reference-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/e31e9d6586fde62a38f698093b8349210870aa20ba7c31d33c2807546fe11233.png"
+    },
+    {
+      "sha256": "80bdf06bc95b5242c2385e692cb1ccbab6fc16eccd96a2ff12a381db2f901aeb",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-768.png",
+      "captures": [
+        {
+          "group": "home-reference",
+          "label": "home-reference-768.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-5/home-reference-768.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/80bdf06bc95b5242c2385e692cb1ccbab6fc16eccd96a2ff12a381db2f901aeb.png"
+    },
+    {
+      "sha256": "05b92485adc5508d8e44f0cc9c50b02f9ed2ac1c1b671962d0b6ef66d80edadc",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-375.png",
+      "captures": [
+        {
+          "group": "diagnostic-before-mobile-heading",
+          "label": "review-states-verified-conflict-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-conflict-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/05b92485adc5508d8e44f0cc9c50b02f9ed2ac1c1b671962d0b6ef66d80edadc.png"
+    },
+    {
+      "sha256": "c1345e708524546ab169955515624b3f00ab0a5dd965a7514bd5bccaa84f5e01",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-375.png",
+      "captures": [
+        {
+          "group": "diagnostic-before-mobile-heading",
+          "label": "review-states-verified-denied-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-denied-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/c1345e708524546ab169955515624b3f00ab0a5dd965a7514bd5bccaa84f5e01.png"
+    },
+    {
+      "sha256": "b4b6a3fa72a689ad08cd408f553b6ae1b11f7d6a6d73cb17bd9047fc87e754c7",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-375.png",
+      "captures": [
+        {
+          "group": "diagnostic-before-mobile-heading",
+          "label": "review-states-verified-error-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-error-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/b4b6a3fa72a689ad08cd408f553b6ae1b11f7d6a6d73cb17bd9047fc87e754c7.png"
+    },
+    {
+      "sha256": "6217c8d5d3b75adbd9664e9375f5465d7d85295d1a976484ee537add83a9989d",
+      "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-375.png",
+      "captures": [
+        {
+          "group": "diagnostic-before-mobile-heading",
+          "label": "review-states-verified-not-found-375.png",
+          "source": "C:/dev/mbv-run/l3f-receipt-browser-20261004-18/review-states-verified-not-found-375.png"
+        }
+      ],
+      "visuallyInspected": true,
+      "path": "images/6217c8d5d3b75adbd9664e9375f5465d7d85295d1a976484ee537add83a9989d.png"
+    }
+  ]
+}

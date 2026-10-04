@@ -1,0 +1,445 @@
+{
+  "readUtc": "2026-10-04T06:32:28.650Z",
+  "base": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "mainFiles": [
+    "supabase/migrations/20260712000000_cleanroom_bootstrap.sql",
+    "supabase/migrations/20260719010000_p0_authoritative_schema.sql",
+    "supabase/migrations/20260719020000_p0_invariants_rls_and_grants.sql",
+    "supabase/migrations/20260719030000_p0_hardened_rpcs.sql",
+    "supabase/migrations/20260726000000_p0_launch_catalog_and_create_quote.sql",
+    "supabase/migrations/20260727000000_p0_webhook_event_dedup.sql",
+    "supabase/migrations/20260728000000_p0_webhook_claim_lifecycle.sql",
+    "supabase/migrations/20260728010000_p0_provider_outbox_dispatch.sql",
+    "supabase/migrations/20260728020000_p0_artifact_ingest_export.sql",
+    "supabase/migrations/20260728030000_p0_seedance_pro_fast_repoint.sql",
+    "supabase/migrations/20260729000000_p0_price_catalog_retirement_transition.sql",
+    "supabase/migrations/20260729010000_p0_openrouter_copy_catalog_v2.sql",
+    "supabase/migrations/20260729020000_p0_create_quote_openrouter_copy_route.sql",
+    "supabase/migrations/20260730000000_p0_submission_requires_capture_proof.sql",
+    "supabase/migrations/20260730010000_p0_reap_dead_dispatch.sql",
+    "supabase/migrations/20260730020000_p0_app_tier_idempotency.sql",
+    "supabase/migrations/20260730030000_p0_run_cancellation.sql",
+    "supabase/migrations/20260730040000_p0_refund_run_capture.sql",
+    "supabase/migrations/20260730050000_p0_flux_kontext_pro_repoint.sql",
+    "supabase/migrations/20260730060000_p0_dispatch_wave_readiness.sql",
+    "supabase/migrations/20260730070000_p0_dispatch_brief_and_upstream.sql",
+    "supabase/migrations/20260730080000_p0_copy_terminal_path.sql",
+    "supabase/migrations/20260731000000_p0_approval_produces_approved_output.sql",
+    "supabase/migrations/20260731010000_p0_reap_stranded_synchronous_jobs.sql",
+    "supabase/migrations/20260731020000_p0_readiness_safeupdate_fix.sql",
+    "supabase/migrations/20260802020000_p0_dispatch_epoch_and_stranded_sweeper.sql",
+    "supabase/migrations/20260811000000_p0_poll_reconciliation_run_exit.sql",
+    "supabase/migrations/20260811114946_p0_global_spend_exposure_audit.sql",
+    "supabase/migrations/20260811132914_p0_golden_20_defect_audit.sql",
+    "supabase/migrations/20260817140000_p0_webhook_provider_error_code.sql",
+    "supabase/migrations/20260818120000_p0_pending_input_artifact_upload.sql",
+    "supabase/migrations/20260830163000_p1a_billing_kill_switches_stripe.sql",
+    "supabase/migrations/20260830170000_p1a_kill_switch_stripe_rpcs.sql",
+    "supabase/migrations/20260830180000_p1a_stripe_wallet_settlement.sql",
+    "supabase/migrations/20260831120000_p1b_api_keys_oauth_skills.sql",
+    "supabase/migrations/20260831130000_p1b_programmatic_auth_rpcs.sql",
+    "supabase/migrations/20260831140000_p3_start_run_barrier_outbox_event_id.sql",
+    "supabase/migrations/20260902000000_production_rls_advisor_hardening.sql",
+    "supabase/migrations/20260902154759_production_disabled_binding_hardening.sql",
+    "supabase/migrations/20260910000000_platform_baseline_subscription_audit_identity.sql",
+    "supabase/migrations/20260910100000_platform_portfolio_identity.sql",
+    "supabase/migrations/20260910110000_platform_commands.sql",
+    "supabase/migrations/20260910120000_platform_queries.sql",
+    "supabase/migrations/20260910130000_platform_revocation_hardening.sql",
+    "supabase/migrations/20260910140000_platform_foreign_key_indexes.sql",
+    "supabase/migrations/20260910150000_platform_saved_setup.sql",
+    "supabase/migrations/20260910160000_platform_setup_queries.sql",
+    "supabase/migrations/20260910170000_platform_existing_brand_onboarding.sql",
+    "supabase/migrations/20260910180000_platform_studio_presentation.sql",
+    "supabase/migrations/20260910190000_platform_context_directory.sql",
+    "supabase/migrations/20260910200000_platform_workspace_billing.sql",
+    "supabase/migrations/20260914010000_platform_knowledge.sql",
+    "supabase/migrations/20260914020000_platform_knowledge_fk_indexes.sql",
+    "supabase/migrations/20260915010000_platform_knowledge_extraction.sql",
+    "supabase/migrations/20260915020000_platform_knowledge_extraction_plpgsql_names.sql",
+    "supabase/migrations/20260915030000_platform_knowledge_extraction_supersede_unknowns.sql",
+    "supabase/migrations/20260916140000_p1a_stripe_subscription_replay_hardening.sql",
+    "supabase/migrations/20260916150000_p1a_stripe_wallet_credit_event_identity.sql",
+    "supabase/migrations/20260916155000_p1a_drop_broken_stripe_webhook_dedup_overload.sql",
+    "supabase/migrations/20260916157000_p1a_stripe_webhook_dedup_input_validation.sql",
+    "supabase/migrations/20260916160000_p1a_stripe_subscription_event_ordering.sql",
+    "supabase/migrations/20260916170000_p1a_stripe_wallet_top_up_credit.sql",
+    "supabase/migrations/20260929000000_platform_knowledge_review_correctness.sql",
+    "supabase/migrations/20260929001000_platform_knowledge_wire_limits.sql",
+    "supabase/migrations/20260929002000_platform_knowledge_review_controls.sql",
+    "supabase/migrations/20260929002100_platform_knowledge_question_order.sql",
+    "supabase/migrations/20260929003000_platform_knowledge_machine_actor.sql",
+    "supabase/migrations/20260929010000_platform_knowledge_changes.sql",
+    "supabase/migrations/20260929011000_platform_knowledge_lifecycle.sql",
+    "supabase/migrations/20260929012000_platform_catalog_import.sql",
+    "supabase/migrations/20260929013000_platform_catalog_unknown_records.sql",
+    "supabase/migrations/20260929014000_platform_recapture_missing_claims.sql",
+    "supabase/migrations/20260929015000_platform_reviewed_source_baseline.sql",
+    "supabase/migrations/20260929016000_platform_capture_occurrences.sql",
+    "supabase/migrations/20260929017000_platform_capture_review_identity.sql"
+  ],
+  "remotes": {
+    "staging": [
+      {
+        "version": "20260720172229",
+        "name": "cleanroom_bootstrap"
+      },
+      {
+        "version": "20260720172406",
+        "name": "p0_authoritative_schema"
+      },
+      {
+        "version": "20260720172509",
+        "name": "p0_invariants_rls_and_grants"
+      },
+      {
+        "version": "20260720172703",
+        "name": "p0_hardened_rpcs"
+      },
+      {
+        "version": "20260727012719",
+        "name": "p0_launch_catalog_and_create_quote"
+      },
+      {
+        "version": "20260727202425",
+        "name": "20260727000000_p0_webhook_event_dedup"
+      },
+      {
+        "version": "20260728164539",
+        "name": "20260728000000_p0_webhook_claim_lifecycle"
+      },
+      {
+        "version": "20260728174133",
+        "name": "20260728010000_p0_provider_outbox_dispatch"
+      },
+      {
+        "version": "20260728191603",
+        "name": "20260728020000_p0_artifact_ingest_export"
+      },
+      {
+        "version": "20260729005906",
+        "name": "p0_price_catalog_retirement_transition"
+      },
+      {
+        "version": "20260729010147",
+        "name": "p0_openrouter_copy_catalog_v2"
+      },
+      {
+        "version": "20260729061806",
+        "name": "p0_create_quote_openrouter_copy_route"
+      },
+      {
+        "version": "20260730032044",
+        "name": "p0_submission_requires_capture_proof"
+      },
+      {
+        "version": "20260730033950",
+        "name": "p0_reap_dead_dispatch"
+      },
+      {
+        "version": "20260730042603",
+        "name": "p0_app_tier_idempotency"
+      },
+      {
+        "version": "20260730043819",
+        "name": "p0_run_cancellation"
+      },
+      {
+        "version": "20260730043834",
+        "name": "p0_refund_run_capture"
+      },
+      {
+        "version": "20260730052032",
+        "name": "p0_flux_kontext_pro_repoint"
+      },
+      {
+        "version": "20260731161019",
+        "name": "p0_dispatch_wave_columns"
+      },
+      {
+        "version": "20260731161047",
+        "name": "p0_advance_run_readiness"
+      },
+      {
+        "version": "20260731161125",
+        "name": "p0_dispatch_gate_brief_and_upstream"
+      },
+      {
+        "version": "20260731161242",
+        "name": "p0_create_quote_dispatch_waves"
+      },
+      {
+        "version": "20260731161350",
+        "name": "p0_start_run_barrier_eager_attempts"
+      },
+      {
+        "version": "20260731161434",
+        "name": "p0_provider_artifact_context"
+      },
+      {
+        "version": "20260731161514",
+        "name": "p0_settle_attempt_transition"
+      },
+      {
+        "version": "20260731161552",
+        "name": "p0_provider_attempt_entry_points"
+      },
+      {
+        "version": "20260731171707",
+        "name": "p0_fix_dispatch_attempts_grant"
+      },
+      {
+        "version": "20260731171751",
+        "name": "p0_fix_copy_terminal_path_grants"
+      },
+      {
+        "version": "20260731172734",
+        "name": "p0_fix_reaper_and_finalizer_grants"
+      },
+      {
+        "version": "20260731200933",
+        "name": "p0_approval_schema"
+      },
+      {
+        "version": "20260731201009",
+        "name": "p0_approve_run_artifacts"
+      },
+      {
+        "version": "20260731201153",
+        "name": "p0_register_artifact_approval_aware"
+      },
+      {
+        "version": "20260731201302",
+        "name": "p0_settle_admits_approved_output"
+      },
+      {
+        "version": "20260731202622",
+        "name": "p0_reap_stranded_synchronous_jobs"
+      },
+      {
+        "version": "20260731204946",
+        "name": "p0_readiness_safeupdate_fix"
+      },
+      {
+        "version": "20260802014421",
+        "name": "p0_dispatch_epoch_and_stranded_sweeper"
+      },
+      {
+        "version": "20260811060259",
+        "name": "p0_poll_reconciliation_run_exit"
+      },
+      {
+        "version": "20260811115659",
+        "name": "p0_global_spend_exposure_audit"
+      },
+      {
+        "version": "20260811133215",
+        "name": "p0_golden_20_defect_audit"
+      },
+      {
+        "version": "20260901000101",
+        "name": "p3_start_run_barrier_outbox_event_id"
+      },
+      {
+        "version": "20260917222904",
+        "name": "p1a_billing_kill_switches_stripe"
+      },
+      {
+        "version": "20260917222926",
+        "name": "p1a_kill_switch_stripe_rpcs"
+      },
+      {
+        "version": "20260917222944",
+        "name": "p1a_stripe_wallet_settlement"
+      },
+      {
+        "version": "20260917223000",
+        "name": "platform_baseline_subscription_audit_identity"
+      },
+      {
+        "version": "20260917223015",
+        "name": "p1a_stripe_subscription_replay_hardening"
+      },
+      {
+        "version": "20260917223023",
+        "name": "p1a_stripe_wallet_credit_event_identity"
+      },
+      {
+        "version": "20260917223025",
+        "name": "p1a_drop_broken_stripe_webhook_dedup_overload"
+      },
+      {
+        "version": "20260917223029",
+        "name": "p1a_stripe_webhook_dedup_input_validation"
+      },
+      {
+        "version": "20260917223055",
+        "name": "p1a_stripe_subscription_event_ordering"
+      },
+      {
+        "version": "20260917223105",
+        "name": "p1a_stripe_wallet_top_up_credit"
+      }
+    ],
+    "production": [
+      {
+        "version": "20260712000000",
+        "name": "cleanroom_bootstrap"
+      },
+      {
+        "version": "20260719010000",
+        "name": "p0_authoritative_schema"
+      },
+      {
+        "version": "20260719020000",
+        "name": "p0_invariants_rls_and_grants"
+      },
+      {
+        "version": "20260719030000",
+        "name": "p0_hardened_rpcs"
+      },
+      {
+        "version": "20260726000000",
+        "name": "p0_launch_catalog_and_create_quote"
+      },
+      {
+        "version": "20260727000000",
+        "name": "p0_webhook_event_dedup"
+      },
+      {
+        "version": "20260728000000",
+        "name": "p0_webhook_claim_lifecycle"
+      },
+      {
+        "version": "20260728010000",
+        "name": "p0_provider_outbox_dispatch"
+      },
+      {
+        "version": "20260728020000",
+        "name": "p0_artifact_ingest_export"
+      },
+      {
+        "version": "20260728030000",
+        "name": "p0_seedance_pro_fast_repoint"
+      },
+      {
+        "version": "20260729000000",
+        "name": "p0_price_catalog_retirement_transition"
+      },
+      {
+        "version": "20260729010000",
+        "name": "p0_openrouter_copy_catalog_v2"
+      },
+      {
+        "version": "20260729020000",
+        "name": "p0_create_quote_openrouter_copy_route"
+      },
+      {
+        "version": "20260730000000",
+        "name": "p0_submission_requires_capture_proof"
+      },
+      {
+        "version": "20260730010000",
+        "name": "p0_reap_dead_dispatch"
+      },
+      {
+        "version": "20260730020000",
+        "name": "p0_app_tier_idempotency"
+      },
+      {
+        "version": "20260730030000",
+        "name": "p0_run_cancellation"
+      },
+      {
+        "version": "20260730040000",
+        "name": "p0_refund_run_capture"
+      },
+      {
+        "version": "20260730050000",
+        "name": "p0_flux_kontext_pro_repoint"
+      },
+      {
+        "version": "20260730060000",
+        "name": "p0_dispatch_wave_readiness"
+      },
+      {
+        "version": "20260730070000",
+        "name": "p0_dispatch_brief_and_upstream"
+      },
+      {
+        "version": "20260730080000",
+        "name": "p0_copy_terminal_path"
+      },
+      {
+        "version": "20260731000000",
+        "name": "p0_approval_produces_approved_output"
+      },
+      {
+        "version": "20260731010000",
+        "name": "p0_reap_stranded_synchronous_jobs"
+      },
+      {
+        "version": "20260731020000",
+        "name": "p0_readiness_safeupdate_fix"
+      },
+      {
+        "version": "20260802020000",
+        "name": "p0_dispatch_epoch_and_stranded_sweeper"
+      },
+      {
+        "version": "20260811000000",
+        "name": "p0_poll_reconciliation_run_exit"
+      },
+      {
+        "version": "20260811114946",
+        "name": "p0_global_spend_exposure_audit"
+      },
+      {
+        "version": "20260811132914",
+        "name": "p0_golden_20_defect_audit"
+      },
+      {
+        "version": "20260817140000",
+        "name": "p0_webhook_provider_error_code"
+      },
+      {
+        "version": "20260818120000",
+        "name": "p0_pending_input_artifact_upload"
+      },
+      {
+        "version": "20260830163000",
+        "name": "p1a_billing_kill_switches_stripe"
+      },
+      {
+        "version": "20260830170000",
+        "name": "p1a_kill_switch_stripe_rpcs"
+      },
+      {
+        "version": "20260830180000",
+        "name": "p1a_stripe_wallet_settlement"
+      },
+      {
+        "version": "20260831120000",
+        "name": "p1b_api_keys_oauth_skills"
+      },
+      {
+        "version": "20260831130000",
+        "name": "p1b_programmatic_auth_rpcs"
+      },
+      {
+        "version": "20260831140000",
+        "name": "p3_start_run_barrier_outbox_event_id"
+      },
+      {
+        "version": "20260902000000",
+        "name": "production_rls_advisor_hardening"
+      },
+      {
+        "version": "20260902154759",
+        "name": "production_disabled_binding_hardening"
+      }
+    ]
+  },
+  "semanticParity": false,
+  "remoteWrites": 0
+}

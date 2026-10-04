@@ -1,0 +1,8 @@
+{
+  "startedUtc": "2026-10-04T01:09:41.0096039Z",
+  "endedUtc": "2026-10-04T01:09:44.4597870Z",
+  "base": "88804c80c814cfe2ee2b65182566b6f9d4358829",
+  "state": "nullable totals and read-only recovery implementation",
+  "command": "corepack pnpm --filter @mustbeviral/web exec vitest run --config vitest.config.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx",
+  "exit": 0
+}

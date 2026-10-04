@@ -1,0 +1,76 @@
+{
+  "RuntimeSourceUnchanged": true,
+  "ExistingTrackedArtifactsRestored": true,
+  "StartedUtc": "2026-10-04T08:24:01.1210040Z",
+  "Versions": {
+    "Playwright": "Version 1.61.1",
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0"
+  },
+  "PreviewPortFree": true,
+  "BaseHead": "87ec058116f798414bb4702f37a644bac67e2034",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts apps/web/e2e/campaign-resume-recovery.spec.ts apps/web/e2e/cleanroom.spec.ts apps/web/e2e/operator-self-session.spec.ts apps/web/e2e/canvas-stress.spec.ts apps/web/e2e/canvas-perf.spec.ts --project=desktop-chromium",
+  "TestSha256": "9a13433d61c53fe3975262f1bb35d5ab51abf2c08a106db4f68ae5bbfc44ac20",
+  "FinishedUtc": "2026-10-04T08:25:13.8812682Z",
+  "WrittenArtifacts": [
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\canvas-fps-500.json",
+      "Path": "apps/web/test/__perf__/canvas-fps-500.json",
+      "PreservedSha256": "c656e3ab3c44de71d2694197c31e91ec85e9f33147e9085dac70d5af20e540d1"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\canvas-fps.json",
+      "Path": "apps/web/test/__perf__/canvas-fps.json",
+      "PreservedSha256": "fabce8a20c6981eaa6aaef71951de93939bb6d90eb3e12558b1c0ba719fea8b6"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\campaign-brief-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/campaign-brief-1440x900.png",
+      "PreservedSha256": "ad83f8d806c035f35677b764304f9710d1039005776ca3ab89425ff589a1b87e"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\canvas-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/canvas-1440x900.png",
+      "PreservedSha256": "07afddc71a6319d95eea8cddd6e2d196356cd2a4ecac84d45bc100b323d91395"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\mobile-review-375x812.png",
+      "Path": "apps/web/test/__screenshots__/mobile-review-375x812.png",
+      "PreservedSha256": "017a20937123ef896ac72d7e6f7b7ef23db41d90ac7095060930323d741a24e9"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\output-comparison-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/output-comparison-1440x900.png",
+      "PreservedSha256": "ec09d4019c38c777a4f2d8a1679ad02b6ca0803bf8554151c397132eb93ab256"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\quote-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/quote-1440x900.png",
+      "PreservedSha256": "7d5588b5bd38b59f4895ca66db33dda21fb391cb9ab1a767f9584a47c9e5739a"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\receipt-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/receipt-1440x900.png",
+      "PreservedSha256": "17578d32b1ff817813a8179abfa8080282deb1c7e22fe545964496f928f58da2"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\review-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/review-1440x900.png",
+      "PreservedSha256": "d87031d600285bb6f3f24ca94ee06d942b5ba195909b51db06e8164eb56a1dfa"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\run-progress-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/run-progress-1440x900.png",
+      "PreservedSha256": "d9be956e13d52f843e12a2abb701adceac5add96bc61c53a61171e56ecac1ffe"
+    },
+    {
+      "PreservedPath": "C:\\dev\\mbv-run\\l3f-author-preview-repair-2-captures\\tablet-review-768x1024.png",
+      "Path": "apps/web/test/__screenshots__/tablet-review-768x1024.png",
+      "PreservedSha256": "2d9c1c20f8e72e478a09595db5674a9d680abdae8e384a2745a9811d722732e6"
+    }
+  ],
+  "ActualExit": 0,
+  "Root": "C:/dev/mbv-finish",
+  "TestPath": "apps/web/e2e/final-ui.spec.ts",
+  "Log": "C:/dev/mbv-run/l3f-author-preview-repair-2.txt"
+}

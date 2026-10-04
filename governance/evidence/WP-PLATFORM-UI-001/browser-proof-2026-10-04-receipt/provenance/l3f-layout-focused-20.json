@@ -1,0 +1,26 @@
+[
+  {
+    "endedUtc": "2026-10-04T06:18:46.7567740Z",
+    "log": "C:/dev/mbv-run/l3f-layout-focused-20-eslint.txt",
+    "command": "corepack pnpm --filter @mustbeviral/web exec eslint app/**/receipt/receipt-flow.tsx app/**/review/review-flow.tsx app/**/canvas/canvas-flow.tsx src/features/export/export-port.ts src/features/export/export-port.test.ts src/features/export/receipt-flow.test.tsx src/features/export/receipt-flow.worker.test.tsx src/features/review/review-flow.worker.test.tsx src/features/canvas/canvas-flow.test.tsx src/features/canvas/canvas-flow.worker.test.tsx e2e/platform-connected.spec.ts --max-warnings 0",
+    "startedUtc": "2026-10-04T06:18:42.0380411Z",
+    "exit": 0,
+    "label": "eslint"
+  },
+  {
+    "endedUtc": "2026-10-04T06:18:50.2267536Z",
+    "log": "C:/dev/mbv-run/l3f-layout-focused-20-typecheck.txt",
+    "command": "corepack pnpm --filter @mustbeviral/web typecheck",
+    "startedUtc": "2026-10-04T06:18:46.7687817Z",
+    "exit": 0,
+    "label": "typecheck"
+  },
+  {
+    "endedUtc": "2026-10-04T06:18:51.9429403Z",
+    "log": "C:/dev/mbv-run/l3f-layout-focused-20-prettier.txt",
+    "command": "corepack pnpm exec prettier --check apps/web/app/**/receipt/receipt-flow.tsx apps/web/app/**/receipt/receipt-flow.module.css apps/web/app/**/review/review-flow.tsx apps/web/app/**/review/review-flow.module.css apps/web/app/**/canvas/canvas-flow.tsx apps/web/app/**/canvas/canvas-flow.module.css apps/web/src/features/export/export-port.ts apps/web/src/features/export/export-port.test.ts apps/web/src/features/export/receipt-flow.test.tsx apps/web/src/features/export/receipt-flow.worker.test.tsx apps/web/src/features/review/review-flow.worker.test.tsx apps/web/src/features/canvas/canvas-flow.test.tsx apps/web/src/features/canvas/canvas-flow.worker.test.tsx apps/web/e2e/platform-connected.spec.ts apps/web/src/features/platform/platform.css",
+    "startedUtc": "2026-10-04T06:18:50.2308912Z",
+    "exit": 0,
+    "label": "prettier"
+  }
+]
