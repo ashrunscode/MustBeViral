@@ -1,5 +1,5 @@
 {
-  "checkedUtc": "2026-10-04T00:08:19.518Z",
+  "checkedUtc": "2026-10-04T00:23:04.597Z",
   "source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
   "reviewed": "3beb428444d3226d1c2c52f99505d5c6faf31699",
   "files": [
@@ -685,11 +685,12 @@
     },
     {
       "file": "d3-record-handoff-output-1.txt",
-      "sha256": "b81bd8071add61a978a8c4521c30bcbb4097e03f3de06f63fa79b77ebc4ac27d",
+      "sha256": "d8b3c161e8a5ebdd00c80e5f1e54d7d03d50ad4d60808e93cb098a1f77002164",
       "original": "C:/dev/mbv-run/d3-record-handoff-output-1.txt",
       "originalRetained": true,
-      "byteIdentical": true,
-      "parsedJsonEquivalent": null
+      "byteIdentical": false,
+      "parsedJsonEquivalent": null,
+      "textLineEndingsEquivalent": true
     }
   ],
   "allJsonContentEquivalent": true,
