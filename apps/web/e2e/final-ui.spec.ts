@@ -225,6 +225,25 @@ test('disables run work-motion under reduced motion', async ({ page }) => {
   await expect(page.locator('.flow-transfer').first()).toHaveCSS('animation-name', 'none');
 });
 
+test('disables broad transitions when reduced motion is requested', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  await expect(page.getByRole('heading', { name: 'Lumen Skin launch pack' })).toBeVisible();
+  const broadTransitions = await page.locator('body *').evaluateAll((elements) =>
+    elements
+      .filter((element) => {
+        const style = getComputedStyle(element);
+        return (
+          style.transitionProperty.split(',').some((property) => property.trim() === 'all') &&
+          style.transitionDuration.split(',').some((duration) => parseFloat(duration) > 0)
+        );
+      })
+      .map((element) => element.tagName),
+  );
+  expect(broadTransitions).toEqual([]);
+});
+
 test('renders output comparison at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/review/compare');
