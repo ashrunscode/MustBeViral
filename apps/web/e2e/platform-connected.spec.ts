@@ -192,10 +192,14 @@ test.describe('connected platform journeys', () => {
           const railHead = page.locator('.platform-rail__head');
           const pendingShell = await shell.boundingBox();
           const pendingHead = await railHead.boundingBox();
+          const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb' });
+          const pendingCurrent = await breadcrumb.locator('li[aria-current="page"]').boundingBox();
+          const pendingStudio = await breadcrumb.locator('li').first().boundingBox();
           expect(pendingShell).not.toBeNull();
           expect(pendingHead).not.toBeNull();
           // A collapsed menu must not absorb free space and then move the whole screen upward.
           expect(pendingShell!.y - (pendingHead!.y + pendingHead!.height)).toBeLessThanOrEqual(12);
+          expect(pendingStudio?.height).toBeGreaterThanOrEqual(44);
           releaseAccess();
           await expect(
             page.getByRole('heading', { level: 1, name: title, exact: true }),
@@ -203,6 +207,10 @@ test.describe('connected platform journeys', () => {
           const readyShell = await shell.boundingBox();
           expect(readyShell).not.toBeNull();
           expect(Math.abs(readyShell!.y - pendingShell!.y)).toBeLessThanOrEqual(1);
+          const readyCurrent = await breadcrumb.locator('li[aria-current="page"]').boundingBox();
+          expect(pendingCurrent).not.toBeNull();
+          expect(readyCurrent).not.toBeNull();
+          expect(Math.abs(readyCurrent!.x - pendingCurrent!.x)).toBeLessThanOrEqual(1);
           await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeVisible();
           await expectNoHorizontalOverflow(page);
         } finally {

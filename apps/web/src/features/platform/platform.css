@@ -855,6 +855,17 @@
   .platform-breadcrumb {
     flex-basis: 100%;
   }
+  /* Keep each verified identity on its own line. The neutral studio row reserves the same
+     height as its eventual link, so access reads cannot move the current breadcrumb sideways. */
+  .platform-breadcrumb ol {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .platform-breadcrumb li:first-child {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
   .platform-preview-banner {
     padding: 8px 16px;
   }
