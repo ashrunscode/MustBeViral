@@ -166,7 +166,7 @@ test.describe('connected platform journeys', () => {
       for (const [screen, title] of [
         ['access', 'API keys'],
         ['skills', 'Skills and version history'],
-      ]) {
+      ] as const) {
         let releaseAccess!: () => void;
         let markRequested!: () => void;
         const delayedAccess = new Promise<void>((resolve) => {
@@ -313,7 +313,7 @@ test.describe('connected platform journeys', () => {
       for (const [segment, title] of [
         ['access', 'API keys'],
         ['skills', 'Skills and version history'],
-      ]) {
+      ] as const) {
         await page.goto(`/studio/${workspaceId}/${segment}?${context.toString()}`);
         const heading = page.getByRole('heading', { level: 1, name: title, exact: true });
         await expect(heading).toBeVisible();
