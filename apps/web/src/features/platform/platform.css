@@ -803,9 +803,7 @@
 @media (max-width: 767px) {
   .platform-app {
     grid-template-columns: minmax(0, 1fr);
-  }
-  /* App-height workflows reserve the main row while scope and receipt reads settle. */
-  .platform-app--flush {
+    /* Reserve the main row so a pending access read cannot stretch the collapsed rail. */
     grid-template-rows: auto minmax(0, 1fr);
   }
   .platform-rail {

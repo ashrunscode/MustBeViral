@@ -138,6 +138,81 @@ test.describe('connected platform journeys', () => {
     }
   });
 
+  test('keeps collapsed mobile navigation stable while workspace access resolves', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`workspace-layout-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic stable workspace studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic stable workspace');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Make Synthetic stable workspace feel like itself.' }),
+    ).toBeVisible();
+    const brandLocation = new URL(page.url());
+    const workspaceId = brandLocation.pathname.split('/')[2]!;
+    const studioId = brandLocation.searchParams.get('studio')!;
+    const context = new URLSearchParams({
+      studio: studioId,
+      brand: brandLocation.pathname.split('/')[4]!,
+    });
+    const accessRoute = `**/api/core/v1/studios/${studioId}/access`;
+
+    for (const width of [375, 767]) {
+      await page.setViewportSize({ width, height: 812 });
+      for (const [screen, title] of [
+        ['access', 'API keys'],
+        ['skills', 'Skills and version history'],
+      ]) {
+        let releaseAccess!: () => void;
+        let markRequested!: () => void;
+        const delayedAccess = new Promise<void>((resolve) => {
+          releaseAccess = resolve;
+        });
+        const requested = new Promise<void>((resolve) => {
+          markRequested = resolve;
+        });
+        // Delay the real local read, preserving Core's response and all permission checks.
+        const delayRead = async (route: Route) => {
+          markRequested();
+          await delayedAccess;
+          await route.continue();
+        };
+        await page.route(accessRoute, delayRead);
+        try {
+          await page.goto(`/studio/${workspaceId}/${screen}?${context.toString()}`);
+          await requested;
+          await expect(page.getByRole('status')).toContainText(
+            'Confirming the studio and brand for this campaign',
+          );
+          const shell = page.locator('.platform-shell');
+          const railHead = page.locator('.platform-rail__head');
+          const pendingShell = await shell.boundingBox();
+          const pendingHead = await railHead.boundingBox();
+          expect(pendingShell).not.toBeNull();
+          expect(pendingHead).not.toBeNull();
+          // A collapsed menu must not absorb free space and then move the whole screen upward.
+          expect(pendingShell!.y - (pendingHead!.y + pendingHead!.height)).toBeLessThanOrEqual(12);
+          releaseAccess();
+          await expect(
+            page.getByRole('heading', { level: 1, name: title, exact: true }),
+          ).toBeVisible();
+          const readyShell = await shell.boundingBox();
+          expect(readyShell).not.toBeNull();
+          expect(Math.abs(readyShell!.y - pendingShell!.y)).toBeLessThanOrEqual(1);
+          await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeVisible();
+          await expectNoHorizontalOverflow(page);
+        } finally {
+          releaseAccess();
+          await page.unroute(accessRoute, delayRead);
+        }
+      }
+    }
+  });
+
   test('keeps workspace tools headings on the accepted page scale at every supported width', async ({
     page,
   }) => {
