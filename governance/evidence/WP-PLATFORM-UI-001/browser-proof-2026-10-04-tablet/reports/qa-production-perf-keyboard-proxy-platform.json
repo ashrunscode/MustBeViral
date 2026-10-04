@@ -1,0 +1,518 @@
+{
+  "recordedUtc": "2026-10-04T16:35:59.441Z",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "renderMode": "clean local production build, unthrottled Chromium",
+  "providerAndQueueExecution": false,
+  "remoteAuthOrDatabaseAccess": false,
+  "rows": [
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "observedUtc": "2026-10-04T16:35:54.391Z",
+      "httpStatus": 200,
+      "perf": {
+        "lcpMs": 152,
+        "lcpTag": "P",
+        "lcpPriority": null,
+        "lcpDimensions": {
+          "width": 343,
+          "height": 45
+        },
+        "cls": 0.04276575505350772,
+        "shifts": [
+          {
+            "value": 0.04276575505350772,
+            "time": 339.40000000596046
+          }
+        ],
+        "events": [],
+        "eventSupported": true,
+        "interactionCount": 0
+      },
+      "keyboard": {
+        "focusable": 7,
+        "wrapped": true,
+        "wrapReason": "BODY",
+        "stops": [
+          {
+            "index": 34,
+            "tag": "A",
+            "name": "Skip to content",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 37,
+            "tag": "A",
+            "name": "Must Be Viral",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 43,
+            "tag": "A",
+            "name": "Switch studio",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 51,
+            "tag": "BUTTON",
+            "name": "Sign out",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 59,
+            "tag": "A",
+            "name": "Tablet fixture studioOpen studio",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 67,
+            "tag": "INPUT",
+            "name": "Studio name",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 68,
+            "tag": "BUTTON",
+            "name": "Create studio",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          }
+        ]
+      },
+      "scriptedKeyboardEventTiming": {
+        "supported": true,
+        "observed": [
+          {
+            "name": "keydown",
+            "duration": 40,
+            "interactionId": 216
+          },
+          {
+            "name": "keyup",
+            "duration": 32,
+            "interactionId": 216
+          },
+          {
+            "name": "keydown",
+            "duration": 32,
+            "interactionId": 223
+          },
+          {
+            "name": "keyup",
+            "duration": 32,
+            "interactionId": 223
+          },
+          {
+            "name": "keydown",
+            "duration": 64,
+            "interactionId": 230
+          },
+          {
+            "name": "keyup",
+            "duration": 64,
+            "interactionId": 230
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 237
+          },
+          {
+            "name": "keyup",
+            "duration": 56,
+            "interactionId": 237
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 244
+          },
+          {
+            "name": "keyup",
+            "duration": 56,
+            "interactionId": 244
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 251
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 251
+          },
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 258
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 258
+          },
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 265
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 265
+          }
+        ],
+        "interactionCount": 8,
+        "thresholdMs": 16,
+        "maxDurationMs": 64,
+        "scope": "scripted keyboard sequence, not field INP"
+      },
+      "errors": [],
+      "http": [],
+      "checks": {
+        "http200": true,
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noErrors": true
+      },
+      "pass": true
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "observedUtc": "2026-10-04T16:35:59.423Z",
+      "httpStatus": 200,
+      "perf": {
+        "lcpMs": 224,
+        "lcpTag": "P",
+        "lcpPriority": null,
+        "lcpDimensions": {
+          "width": 301,
+          "height": 45
+        },
+        "cls": 0.0018500777540504908,
+        "shifts": [
+          {
+            "value": 0.0018500777540504908,
+            "time": 217.90000000596046
+          }
+        ],
+        "events": [],
+        "eventSupported": true,
+        "interactionCount": 0
+      },
+      "keyboard": {
+        "focusable": 15,
+        "wrapped": true,
+        "wrapReason": "BODY",
+        "stops": [
+          {
+            "index": 34,
+            "tag": "A",
+            "name": "Skip to content",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 37,
+            "tag": "A",
+            "name": "Must Be Viral",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 43,
+            "tag": "A",
+            "name": "Switch studio",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 45,
+            "tag": "A",
+            "name": "Overview",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 46,
+            "tag": "A",
+            "name": "Brands",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 47,
+            "tag": "A",
+            "name": "Calendar",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 48,
+            "tag": "A",
+            "name": "Approvals",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 49,
+            "tag": "A",
+            "name": "Tasks",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 50,
+            "tag": "A",
+            "name": "Creators and partners",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 51,
+            "tag": "A",
+            "name": "Reports",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 52,
+            "tag": "A",
+            "name": "Team",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 53,
+            "tag": "A",
+            "name": "Settings",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 59,
+            "tag": "A",
+            "name": "Tablet fixture studio",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 62,
+            "tag": "BUTTON",
+            "name": "Sign out",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          },
+          {
+            "index": 72,
+            "tag": "A",
+            "name": "Back to brands",
+            "visibleFocus": true,
+            "onScreen": true,
+            "inDialog": false
+          }
+        ]
+      },
+      "scriptedKeyboardEventTiming": {
+        "supported": true,
+        "observed": [
+          {
+            "name": "keydown",
+            "duration": 40,
+            "interactionId": 6713
+          },
+          {
+            "name": "keyup",
+            "duration": 32,
+            "interactionId": 6713
+          },
+          {
+            "name": "keydown",
+            "duration": 32,
+            "interactionId": 6720
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 6727
+          },
+          {
+            "name": "keyup",
+            "duration": 56,
+            "interactionId": 6727
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 6734
+          },
+          {
+            "name": "keyup",
+            "duration": 56,
+            "interactionId": 6734
+          },
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 6741
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 6741
+          },
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 6748
+          },
+          {
+            "name": "keyup",
+            "duration": 40,
+            "interactionId": 6748
+          },
+          {
+            "name": "keydown",
+            "duration": 40,
+            "interactionId": 6755
+          },
+          {
+            "name": "keyup",
+            "duration": 40,
+            "interactionId": 6755
+          },
+          {
+            "name": "keydown",
+            "duration": 40,
+            "interactionId": 6762
+          },
+          {
+            "name": "keyup",
+            "duration": 40,
+            "interactionId": 6762
+          },
+          {
+            "name": "keydown",
+            "duration": 32,
+            "interactionId": 6769
+          },
+          {
+            "name": "keyup",
+            "duration": 32,
+            "interactionId": 6769
+          },
+          {
+            "name": "keydown",
+            "duration": 32,
+            "interactionId": 6776
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 6783
+          },
+          {
+            "name": "keyup",
+            "duration": 56,
+            "interactionId": 6783
+          },
+          {
+            "name": "keydown",
+            "duration": 56,
+            "interactionId": 6790
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 6790
+          },
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 6797
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 6797
+          },
+          {
+            "name": "keydown",
+            "duration": 48,
+            "interactionId": 6804
+          },
+          {
+            "name": "keyup",
+            "duration": 48,
+            "interactionId": 6804
+          },
+          {
+            "name": "keydown",
+            "duration": 40,
+            "interactionId": 6811
+          },
+          {
+            "name": "keyup",
+            "duration": 40,
+            "interactionId": 6811
+          },
+          {
+            "name": "keydown",
+            "duration": 40,
+            "interactionId": 6818
+          },
+          {
+            "name": "keyup",
+            "duration": 40,
+            "interactionId": 6818
+          }
+        ],
+        "interactionCount": 16,
+        "thresholdMs": 16,
+        "maxDurationMs": 56,
+        "scope": "scripted keyboard sequence, not field INP"
+      },
+      "errors": [],
+      "http": [],
+      "checks": {
+        "http200": true,
+        "lcp": true,
+        "cls": true,
+        "keyboard": true,
+        "noErrors": true
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

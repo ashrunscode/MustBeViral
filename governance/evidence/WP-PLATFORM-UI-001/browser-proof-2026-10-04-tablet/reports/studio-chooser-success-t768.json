@@ -1,0 +1,46 @@
+{
+  "cell": "studio-chooser-success-t768",
+  "path": "/studio",
+  "observedUtc": "2026-10-04T12:49:16.601Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Choose a studio.",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - link \"Tablet fixture studio Open studio\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - heading \"Tablet fixture studio\" [level=2]\n      - text: Open studio\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-chooser-success-t768.png"
+}

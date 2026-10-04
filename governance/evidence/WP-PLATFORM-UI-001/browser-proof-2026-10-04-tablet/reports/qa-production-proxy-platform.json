@@ -1,0 +1,1086 @@
+{
+  "recordedUtc": "2026-10-04T16:34:01.136Z",
+  "driver": "Playwright MCP",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "renderMode": "production build; authenticated local synthetic workspace data; public home signed out",
+  "labPerformanceIncluded": false,
+  "providerAndQueueExecution": false,
+  "remoteAuthOrDatabaseAccess": false,
+  "trees": [
+    "- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - link \"Tablet fixture studio Open studio\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - heading \"Tablet fixture studio\" [level=2]\n      - text: Open studio\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list",
+    "- main \"Overview\":\n  - heading \"Studio overview\" [level=1]\n  - paragraph: What needs a decision across this studio, then the brands themselves.\n  - link \"Add a brand\":\n    - /url: \"#new-brand\"\n  - region \"Needs a decision\":\n    - heading \"Needs a decision\" [level=2]\n    - status:\n      - paragraph: Reading what is open across your brands…\n  - region \"Checking approvals…\":\n    - heading \"Checking approvals…\" [level=2]\n    - link \"Open approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - paragraph: \"Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel is connected: neither is part of this release yet.\"\n  - heading \"Your brands\" [level=2]\n  - link \"All brands and search\":\n    - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n  - status:\n    - paragraph: Finding your brands…\n  - heading \"Start with the essentials.\" [level=2]\n  - paragraph: A new brand gets its own workspace. The draft is saved the moment you create it.\n  - group:\n    - text: Brand name\n    - textbox \"Brand name\":\n      - /placeholder: What is the brand called?\n    - button \"Create brand draft\"",
+    "- main \"Overview\":\n  - heading \"Studio overview\" [level=1]\n  - paragraph: What needs a decision across this studio, then the brands themselves.\n  - link \"Add a brand\":\n    - /url: \"#new-brand\"\n  - region \"Needs a decision\":\n    - heading \"Needs a decision\" [level=2]\n    - list:\n      - listitem:\n        - text: Not started\n        - strong: \"Tablet fixture brand: no knowledge draft yet\"\n        - text: Capture the website or add facts by hand to start the brand’s knowledge.\n        - link \"Start findings\":\n          - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=findings\n  - region \"0 brand versions ready to approve\":\n    - heading \"0 brand versions ready to approve\" [level=2]\n    - link \"Open approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - paragraph: \"Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel is connected: neither is part of this release yet.\"\n  - heading \"Your brands\" [level=2]\n  - link \"All brands and search\":\n    - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n  - article:\n    - heading \"Tablet fixture brand\" [level=3]\n    - text: Active brand\n    - link \"Open Tablet fixture brand\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n  - heading \"Start with the essentials.\" [level=2]\n  - paragraph: A new brand gets its own workspace. The draft is saved the moment you create it.\n  - group:\n    - text: Brand name\n    - textbox \"Brand name\":\n      - /placeholder: What is the brand called?\n    - button \"Create brand draft\"",
+    "- main \"Overview\":\n  - heading \"Studio overview\" [level=1]\n  - paragraph: What needs a decision across this studio, then the brands themselves.\n  - link \"Add a brand\":\n    - /url: \"#new-brand\"\n  - region \"Needs a decision\":\n    - heading \"Needs a decision\" [level=2]\n    - status:\n      - paragraph: Reading what is open across your brands…\n  - region \"Checking approvals…\":\n    - heading \"Checking approvals…\" [level=2]\n    - link \"Open approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - paragraph: \"Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel is connected: neither is part of this release yet.\"\n  - heading \"Your brands\" [level=2]\n  - link \"All brands and search\":\n    - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n  - article:\n    - heading \"Tablet fixture brand\" [level=3]\n    - text: Active brand\n    - link \"Open Tablet fixture brand\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n  - heading \"Start with the essentials.\" [level=2]\n  - paragraph: A new brand gets its own workspace. The draft is saved the moment you create it.\n  - group:\n    - text: Brand name\n    - textbox \"Brand name\":\n      - /placeholder: What is the brand called?\n    - button \"Create brand draft\""
+  ],
+  "cells": [
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-m375-light",
+      "capturedUtc": "2026-10-04T16:33:51.440Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-m375-dark",
+      "capturedUtc": "2026-10-04T16:33:52.065Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-t768-light",
+      "capturedUtc": "2026-10-04T16:33:52.633Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 224,
+              "y": 93,
+              "width": 419.265625,
+              "height": 33.59375,
+              "top": 93,
+              "right": 643.265625,
+              "bottom": 126.59375,
+              "left": 224
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-t768-dark",
+      "capturedUtc": "2026-10-04T16:33:53.131Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 224,
+              "y": 93,
+              "width": 419.265625,
+              "height": 33.59375,
+              "top": 93,
+              "right": 643.265625,
+              "bottom": 126.59375,
+              "left": 224
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-d1440-light",
+      "capturedUtc": "2026-10-04T16:33:53.633Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 419.265625,
+              "height": 33.59375,
+              "top": 97,
+              "right": 671.265625,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-d1440-dark",
+      "capturedUtc": "2026-10-04T16:33:54.196Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 419.265625,
+              "height": 33.59375,
+              "top": 97,
+              "right": 671.265625,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-m375-reduced",
+      "capturedUtc": "2026-10-04T16:33:54.747Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-d1280-reduced",
+      "capturedUtc": "2026-10-04T16:33:55.256Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 419.265625,
+              "height": 33.59375,
+              "top": 97,
+              "right": 671.265625,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "studio-chooser",
+      "path": "/studio",
+      "cell": "studio-chooser-d1920-reduced",
+      "capturedUtc": "2026-10-04T16:33:55.764Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Choose a studio.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 382,
+              "y": 97,
+              "width": 419.265625,
+              "height": 33.59375,
+              "top": 97,
+              "right": 801.265625,
+              "bottom": 130.59375,
+              "left": 382
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-studio-chooser-d1920-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-m375-light",
+      "capturedUtc": "2026-10-04T16:33:56.457Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-m375-dark",
+      "capturedUtc": "2026-10-04T16:33:57.106Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-t768-light",
+      "capturedUtc": "2026-10-04T16:33:57.736Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 224,
+              "y": 93,
+              "width": 397.34375,
+              "height": 33.59375,
+              "top": 93,
+              "right": 621.34375,
+              "bottom": 126.59375,
+              "left": 224
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-t768-dark",
+      "capturedUtc": "2026-10-04T16:33:58.260Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 224,
+              "y": 93,
+              "width": 397.34375,
+              "height": 33.59375,
+              "top": 93,
+              "right": 621.34375,
+              "bottom": 126.59375,
+              "left": 224
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-d1440-light",
+      "capturedUtc": "2026-10-04T16:33:58.797Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 478.953125,
+              "height": 33.59375,
+              "top": 97,
+              "right": 730.953125,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-d1440-dark",
+      "capturedUtc": "2026-10-04T16:33:59.422Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 478.953125,
+              "height": 33.59375,
+              "top": 97,
+              "right": 730.953125,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-m375-reduced",
+      "capturedUtc": "2026-10-04T16:34:00.000Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-d1280-reduced",
+      "capturedUtc": "2026-10-04T16:34:00.587Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 478.953125,
+              "height": 33.59375,
+              "top": 97,
+              "right": 730.953125,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&section=creators",
+      "cell": "creators-d1920-reduced",
+      "capturedUtc": "2026-10-04T16:34:01.122Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Studio overview",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 382,
+              "y": 97,
+              "width": 478.953125,
+              "height": 33.59375,
+              "top": 97,
+              "right": 860.953125,
+              "bottom": 130.59375,
+              "left": 382
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy-platform-prod-creators-d1920-reduced.png",
+      "folds": []
+    }
+  ]
+}

@@ -1,0 +1,996 @@
+{
+  "recordedUtc": "2026-10-04T16:26:01.585Z",
+  "driver": "Playwright MCP",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "renderMode": "production build; authenticated local synthetic workspace data; public home signed out",
+  "labPerformanceIncluded": false,
+  "providerAndQueueExecution": false,
+  "remoteAuthOrDatabaseAccess": false,
+  "trees": [
+    "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+    "- main \"Skills\":\n  - region \"Skills and version history\":\n    - text: User-authored Skills\n    - heading \"Skills and version history\" [level=1]\n    - paragraph: Publish reusable workflow instructions for your team. Each publish creates an immutable version; edits always create a new version and never mutate a published snapshot. Skills cannot access database, storage, or billing credentials.\n    - button \"Publish Skill\"\n  - region \"Published Skills\":\n    - text: Workspace Skills\n    - heading \"Published Skills\" [level=2]\n    - paragraph: No Skills yet. Publish your first reusable workflow instruction.\n  - region \"Version history\":\n    - text: Immutable versions\n    - heading \"Version history\" [level=2]\n    - paragraph: Select a Skill to inspect its immutable published versions.",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Content Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan open after the brief is planned. Content, Approvals, Results open after a run is confirmed.\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - alert:\n      - strong: Quote unavailable\n      - text: Open this quote from its plan so the revision it prices is known.",
+    "- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Approvals, Results open after a run is confirmed.\n  - region \"Review outputs\":\n    - heading \"Review outputs\" [level=1]\n    - alert: Open this review from its run so its outputs can be loaded.\n    - link \"Back to the run\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+    "- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Approvals, Results open after a run is confirmed.\n  - region \"Output comparison\":\n    - heading \"Output comparison\" [level=1]\n    - alert: Open this review from its run so its outputs can be loaded.\n    - link \"Back to the run\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa"
+  ],
+  "cells": [
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-m375-light",
+      "capturedUtc": "2026-10-04T16:25:49.131Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 253,
+              "height": 33.59375,
+              "top": 324,
+              "right": 314,
+              "bottom": 357.59375,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": ["console-error"],
+      "httpErrors": [
+        {
+          "path": "/api/core/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access",
+          "status": 403
+        }
+      ],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-workspace-access-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-m375-dark",
+      "capturedUtc": "2026-10-04T16:25:50.037Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 253,
+              "height": 33.59375,
+              "top": 324,
+              "right": 314,
+              "bottom": 357.59375,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-workspace-access-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-m375-reduced",
+      "capturedUtc": "2026-10-04T16:25:50.841Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 253,
+              "height": 33.59375,
+              "top": 324,
+              "right": 314,
+              "bottom": 357.59375,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-workspace-access-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-m375-light",
+      "capturedUtc": "2026-10-04T16:25:51.754Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 278,
+              "height": 67.1875,
+              "top": 324,
+              "right": 339,
+              "bottom": 391.1875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-workspace-skills-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-m375-dark",
+      "capturedUtc": "2026-10-04T16:25:52.628Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 278,
+              "height": 67.1875,
+              "top": 324,
+              "right": 339,
+              "bottom": 391.1875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-workspace-skills-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-m375-reduced",
+      "capturedUtc": "2026-10-04T16:25:53.437Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 278,
+              "height": 67.1875,
+              "top": 324,
+              "right": 339,
+              "bottom": 391.1875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-workspace-skills-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "quote",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "quote-m375-light",
+      "capturedUtc": "2026-10-04T16:25:54.445Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 34,
+              "y": 459.5,
+              "width": 308,
+              "height": 67.1875,
+              "top": 459.5,
+              "right": 342,
+              "bottom": 526.6875,
+              "left": 34
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-quote-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "quote",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "quote-m375-dark",
+      "capturedUtc": "2026-10-04T16:25:55.348Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 34,
+              "y": 459.5,
+              "width": 308,
+              "height": 67.1875,
+              "top": 459.5,
+              "right": 342,
+              "bottom": 526.6875,
+              "left": 34
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-quote-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "quote",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "quote-m375-reduced",
+      "capturedUtc": "2026-10-04T16:25:56.161Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 34,
+              "y": 459.5,
+              "width": 308,
+              "height": 67.1875,
+              "top": 459.5,
+              "right": 342,
+              "bottom": 526.6875,
+              "left": 34
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-quote-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "review",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "review-m375-light",
+      "capturedUtc": "2026-10-04T16:25:57.127Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Review outputs",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 10,
+              "y": 420.5,
+              "width": 186.9375,
+              "height": 33.59375,
+              "top": 420.5,
+              "right": 196.9375,
+              "bottom": 454.09375,
+              "left": 10
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-review-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "review",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "review-m375-dark",
+      "capturedUtc": "2026-10-04T16:25:58.027Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Review outputs",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 10,
+              "y": 420.5,
+              "width": 186.9375,
+              "height": 33.59375,
+              "top": 420.5,
+              "right": 196.9375,
+              "bottom": 454.09375,
+              "left": 10
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-review-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "review",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "review-m375-reduced",
+      "capturedUtc": "2026-10-04T16:25:58.821Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Review outputs",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 10,
+              "y": 420.5,
+              "width": 186.9375,
+              "height": 33.59375,
+              "top": 420.5,
+              "right": 196.9375,
+              "bottom": 454.09375,
+              "left": 10
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-review-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "compare",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review/compare?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "compare-m375-light",
+      "capturedUtc": "2026-10-04T16:25:59.727Z",
+      "httpStatus": 200,
+      "treeIndex": 4,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Output comparison",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 10,
+              "y": 420.5,
+              "width": 232.015625,
+              "height": 33.59375,
+              "top": 420.5,
+              "right": 242.015625,
+              "bottom": 454.09375,
+              "left": 10
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-compare-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "compare",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review/compare?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "compare-m375-dark",
+      "capturedUtc": "2026-10-04T16:26:00.664Z",
+      "httpStatus": 200,
+      "treeIndex": 4,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Output comparison",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 10,
+              "y": 420.5,
+              "width": 232.015625,
+              "height": 33.59375,
+              "top": 420.5,
+              "right": 242.015625,
+              "bottom": 454.09375,
+              "left": 10
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-compare-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "compare",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review/compare?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "compare-m375-reduced",
+      "capturedUtc": "2026-10-04T16:26:01.570Z",
+      "httpStatus": 200,
+      "treeIndex": 4,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Output comparison",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 10,
+              "y": 420.5,
+              "width": 232.015625,
+              "height": 33.59375,
+              "top": 420.5,
+              "right": 242.015625,
+              "bottom": 454.09375,
+              "left": 10
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-breadcrumb-prod-compare-m375-reduced.png",
+      "folds": []
+    }
+  ]
+}

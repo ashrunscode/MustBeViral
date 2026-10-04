@@ -1,0 +1,61 @@
+{
+  "run": "codex-finish-20261002",
+  "previousHead": "8ce8ac98aa69a9ef7401147179d5872fa6f5ae71",
+  "connectedRegressions": "C:/dev/mbv-run/l3f-enlargement-connected-green-3-20261004.json",
+  "startedUtc": "2026-10-04T18:29:01.3474060Z",
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "977e45a4edf5da4fb553a9316b86651fbbc6d5c533c51ca472ab8b16d75baec5"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "5837a17bc952432cd1ec3b36a211517aed0cca16efbd7921f7a5f4f86278bcf3"
+    },
+    {
+      "path": "apps/web/e2e/final-ui.spec.ts",
+      "sha256": "532e104cee347855779700b834acfd9cc61b7b65fe9c998099033969009c8a13"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css",
+      "sha256": "3c373482cba30359593bd5fc24f5951f1c37d8723d868c0312231a6def6d97d4"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css",
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "6025b5e0fde2068d4cd566daef21d5ecc207b2a7b8bb25f126eb767d73b30db3"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx",
+      "sha256": "1134934aaf8a20e4a6af83330b983ef7d0daaccbc89bfb37227b7c4bf5d518fd"
+    },
+    {
+      "path": "apps/web/src/features/collaboration/collaboration-panel.module.css",
+      "sha256": "c2ca7da17a50f162253ff536d45dc5819e50a7f0f86344944eccc05c871de185"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx",
+      "sha256": "3b11426f012d75751e0a04fd968c731877189b1c79a95b930f1b08d97e02d5a6"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css",
+      "sha256": "8bcc6269e038bfd8eb7502626b3ac1a38f34b26f82c7b742fb25fabeab6f66cc"
+    }
+  ],
+  "released": false,
+  "previewRegressions": "C:/dev/mbv-run/l3f-enlargement-preview-green-6-20261004.json",
+  "endedUtc": "2026-10-04T18:29:02.2327036Z",
+  "pushed": false,
+  "clean": true,
+  "fullC4Passed": false,
+  "exit": 0,
+  "independentC5Passed": false,
+  "sourceHead": "9958d82703069d16cd1f3eb98afc6f49f2c1b065"
+}

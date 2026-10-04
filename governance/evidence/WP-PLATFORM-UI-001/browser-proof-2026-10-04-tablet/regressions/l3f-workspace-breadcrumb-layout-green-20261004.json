@@ -1,0 +1,31 @@
+{
+  "providersAndQueuesDisabled": true,
+  "log": "C:/dev/mbv-run/l3f-workspace-breadcrumb-layout-green-20261004.txt",
+  "startedUtc": "2026-10-04T16:05:32.1877406Z",
+  "localOnly": true,
+  "exit": 0,
+  "command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep collapsed mobile navigation",
+  "sourceBase": "9a77865d501c9b1b3813d81ebdb4915c99305f22",
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "977e45a4edf5da4fb553a9316b86651fbbc6d5c533c51ca472ab8b16d75baec5"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "4d0cee359a050fc40bb18e542a7c445f2fea28e92546213b6b0f04e995d46a7a"
+    }
+  ],
+  "phase": "green",
+  "root": "C:/dev/mbv-finish",
+  "pnpm": "11.12.0",
+  "node": "v24.18.0",
+  "harnessPid": 44264,
+  "ownedWorkInProgress": true,
+  "endedUtc": "2026-10-04T16:06:10.6967768Z",
+  "syntheticCleanupDeleteRequestsPrevented": true
+}

@@ -1,0 +1,58 @@
+{
+  "recordedUtc": "2026-10-04 13:03:52 UTC",
+  "timestampMeaning": "recorded after original-resolution visual inspection",
+  "cells": [
+    {
+      "cell": "workspace-billing-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/workspace-billing-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "workspace-access-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/workspace-access-t768.png",
+      "method": "view_image original resolution",
+      "findings": [
+        "Page H1 computes to 21px rather than the accepted 28px; candidate display hierarchy defect."
+      ]
+    },
+    {
+      "cell": "workspace-skills-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/workspace-skills-t768.png",
+      "method": "view_image original resolution",
+      "findings": [
+        "Page H1 computes to 21px rather than the accepted 28px; candidate display hierarchy defect."
+      ]
+    },
+    {
+      "cell": "campaign-collaborators-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/campaign-collaborators-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "campaign-calendar-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/campaign-calendar-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "campaign-approvals-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/campaign-approvals-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    }
+  ],
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "scope": "viewport; only synthetic fixture identity is visible on collaborators, no customer identity; calendar lower fold remains pending"
+}

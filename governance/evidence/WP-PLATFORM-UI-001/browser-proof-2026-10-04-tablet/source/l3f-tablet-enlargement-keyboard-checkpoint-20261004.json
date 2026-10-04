@@ -1,0 +1,53 @@
+{
+  "clean": true,
+  "fullC4Passed": false,
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "977e45a4edf5da4fb553a9316b86651fbbc6d5c533c51ca472ab8b16d75baec5"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "5837a17bc952432cd1ec3b36a211517aed0cca16efbd7921f7a5f4f86278bcf3"
+    },
+    {
+      "path": "apps/web/e2e/final-ui.spec.ts",
+      "sha256": "33360dad7d4d060fbd12103809aca8690f2c210929633ca71010ee4b48698d38"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css",
+      "sha256": "3c373482cba30359593bd5fc24f5951f1c37d8723d868c0312231a6def6d97d4"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css",
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "6025b5e0fde2068d4cd566daef21d5ecc207b2a7b8bb25f126eb767d73b30db3"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx",
+      "sha256": "1134934aaf8a20e4a6af83330b983ef7d0daaccbc89bfb37227b7c4bf5d518fd"
+    },
+    {
+      "path": "apps/web/src/features/collaboration/collaboration-panel.module.css",
+      "sha256": "c2ca7da17a50f162253ff536d45dc5819e50a7f0f86344944eccc05c871de185"
+    }
+  ],
+  "pushed": false,
+  "sourceHead": "8ce8ac98aa69a9ef7401147179d5872fa6f5ae71",
+  "run": "codex-finish-20261002",
+  "exit": 0,
+  "released": false,
+  "connectedRegressions": "C:/dev/mbv-run/l3f-enlargement-connected-green-3-20261004.json",
+  "independentC5Passed": false,
+  "startedUtc": "2026-10-04T18:02:22.3739858Z",
+  "endedUtc": "2026-10-04T18:02:23.3493904Z",
+  "previewRegressions": "C:/dev/mbv-run/l3f-enlargement-preview-green-5-20261004.json",
+  "previousHead": "0d36e99031d2479d0b84c47d5aedf9ec5f35329e"
+}

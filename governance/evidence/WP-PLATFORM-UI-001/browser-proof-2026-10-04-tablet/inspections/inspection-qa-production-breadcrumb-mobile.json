@@ -1,0 +1,23 @@
+{
+  "recordedUtc": "2026-10-04 16:41:08 UTC",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "captureReceipt": "qa-production-breadcrumb-mobile.json",
+  "manifest": "qa-production-breadcrumb-manifest.json",
+  "imageNames": 15,
+  "distinctContents": 5,
+  "groups": [
+    {
+      "viewedUtc": "2026-10-04 16:32:31 UTC",
+      "names": [
+        "qa-breadcrumb-prod-workspace-access-m375-light.png",
+        "qa-breadcrumb-prod-workspace-skills-m375-light.png",
+        "qa-breadcrumb-prod-quote-m375-light.png",
+        "qa-breadcrumb-prod-review-m375-light.png",
+        "qa-breadcrumb-prod-compare-m375-light.png"
+      ]
+    }
+  ],
+  "visualFindings": [],
+  "diagnostic": "One brand-access 403 is retained in the raw Access light cell; no cause or unconditional zero-error claim is made.",
+  "scoreAccepted": false
+}

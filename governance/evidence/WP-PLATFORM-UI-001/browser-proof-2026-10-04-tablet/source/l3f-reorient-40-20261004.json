@@ -1,0 +1,76 @@
+{
+  "mainMigrationCount": 75,
+  "founderNamePresent": false,
+  "worktreeCount": 1,
+  "vaultCheckExit": 1,
+  "branch": "main",
+  "deploymentMarker": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+  "ownedDirtyPaths": [],
+  "frozenSha256": "66ab6b8222f7414205db3c082b1581f16b39ee3b737367b963f549ee2d205e82",
+  "originMain": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "higgsfieldRequiredNamesPresent": false,
+  "sourceHashes": [
+    {
+      "sha256": "977e45a4edf5da4fb553a9316b86651fbbc6d5c533c51ca472ab8b16d75baec5",
+      "path": "apps/web/src/features/platform/platform.css"
+    },
+    {
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0",
+      "path": "apps/web/app/globals.css"
+    },
+    {
+      "sha256": "5837a17bc952432cd1ec3b36a211517aed0cca16efbd7921f7a5f4f86278bcf3",
+      "path": "apps/web/e2e/platform-connected.spec.ts"
+    },
+    {
+      "sha256": "b035ca8e12948a75634c9435d742189816ab7bb7d109d635a6d2bfb0c1e02006",
+      "path": "apps/web/e2e/final-ui.spec.ts"
+    },
+    {
+      "sha256": "3c373482cba30359593bd5fc24f5951f1c37d8723d868c0312231a6def6d97d4",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css"
+    },
+    {
+      "sha256": "3bfd30bcd6f0f4b90808f1501e800414b61a3a3434242fe6a55d826173d247b4",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css"
+    },
+    {
+      "sha256": "6025b5e0fde2068d4cd566daef21d5ecc207b2a7b8bb25f126eb767d73b30db3",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css"
+    },
+    {
+      "sha256": "1134934aaf8a20e4a6af83330b983ef7d0daaccbc89bfb37227b7c4bf5d518fd",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx"
+    },
+    {
+      "sha256": "c2ca7da17a50f162253ff536d45dc5819e50a7f0f86344944eccc05c871de185",
+      "path": "apps/web/src/features/collaboration/collaboration-panel.module.css"
+    },
+    {
+      "sha256": "daffaa7a1c8f2970e1d31109fdb3cee2f9415fa4727d7218aeb0f2195258171a",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx"
+    },
+    {
+      "sha256": "8bcc6269e038bfd8eb7502626b3ac1a38f34b26f82c7b742fb25fabeab6f66cc",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css"
+    },
+    {
+      "sha256": "fe16cb93e33fd38686a2eeaa1a11bd9f5094c848869e9ac9e087f1c37f22d983",
+      "path": "packages/ui/src/styles.css"
+    },
+    {
+      "sha256": "7b56defa26da9abd95abd8aff985deb033c8f8a21341c1f61f1405c05bab3ca6",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.tsx"
+    }
+  ],
+  "healthState": "ok",
+  "mainMigrationHead": "20260929017000",
+  "namesCheckExit": 0,
+  "healthStatus": 200,
+  "head": "16295a846a56dce750cd494fa7800709786110b5",
+  "root": "C:/dev/mbv-finish",
+  "checkedUtc": "2026-10-04T19:37:20.6182196Z",
+  "fetchedWithoutPrune": true,
+  "homeStatus": 200,
+  "diskFreeGb": 406.7
+}

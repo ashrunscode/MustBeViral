@@ -1,0 +1,66 @@
+{
+  "cell": "workspace-billing-t768",
+  "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/billing?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+  "observedUtc": "2026-10-04T13:01:43.287Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Workspace billing.",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [
+      {
+        "role": "status",
+        "text": "Charging is turned off. That is not a wallet balance of zero."
+      },
+      {
+        "role": "status",
+        "text": "No billing profile is on file for this workspace, so we cannot show a saved wallet balance."
+      }
+    ],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Workspace billing\":\n  - heading \"Workspace billing.\" [level=1]\n  - paragraph: These totals come from this workspace’s saved wallet and ledger. Charging stays off until it is separately authorized.\n  - status: Charging is turned off. That is not a wallet balance of zero.\n  - status: No billing profile is on file for this workspace, so we cannot show a saved wallet balance.\n  - heading \"Saved wallet\" [level=2]\n  - paragraph: Missing profile\n  - paragraph: Not available\n  - paragraph: \"Subscription: none on file\"\n  - heading \"Ledger\" [level=2]\n  - paragraph: \"Available: $0.00\"\n  - paragraph: \"Recorded usage: $0.00\"\n  - paragraph: Usage is the sum of usage ledger rows. It is not an estimate and it is not a second wallet.",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/workspace-billing-t768.png"
+}

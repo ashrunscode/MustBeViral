@@ -1,0 +1,549 @@
+{
+  "recordedUtc": "2026-10-04T16:34:56.897Z",
+  "driver": "Playwright MCP",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "renderMode": "production build; authenticated local synthetic workspace data; public home signed out",
+  "labPerformanceIncluded": false,
+  "providerAndQueueExecution": false,
+  "remoteAuthOrDatabaseAccess": false,
+  "trees": [
+    "- main \"Creators and partners\":\n  - heading \"Creators and partners\" [level=1]\n  - paragraph: People and brands you work with, with the evidence for each fit.\n  - status:\n    - heading \"No creators or partners yet.\" [level=2]\n    - paragraph: Creator discovery, outreach and partnership agreements are later roadmap waves.\n    - paragraph: Creator and partner lists are not part of this release yet.\n    - link \"Back to brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands"
+  ],
+  "cells": [
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-m375-light",
+      "capturedUtc": "2026-10-04T16:34:54.816Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-m375-dark",
+      "capturedUtc": "2026-10-04T16:34:55.223Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-t768-light",
+      "capturedUtc": "2026-10-04T16:34:55.598Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 224,
+              "y": 93,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 93,
+              "right": 661.109375,
+              "bottom": 126.59375,
+              "left": 224
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-t768-dark",
+      "capturedUtc": "2026-10-04T16:34:55.763Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 224,
+              "y": 93,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 93,
+              "right": 661.109375,
+              "bottom": 126.59375,
+              "left": 224
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-d1440-light",
+      "capturedUtc": "2026-10-04T16:34:55.953Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 97,
+              "right": 689.109375,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-d1440-dark",
+      "capturedUtc": "2026-10-04T16:34:56.199Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 97,
+              "right": 689.109375,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-m375-reduced",
+      "capturedUtc": "2026-10-04T16:34:56.463Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 343,
+              "height": 33.59375,
+              "top": 210,
+              "right": 359,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-d1280-reduced",
+      "capturedUtc": "2026-10-04T16:34:56.679Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 97,
+              "right": 689.109375,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "cell": "creators-d1920-reduced",
+      "capturedUtc": "2026-10-04T16:34:56.881Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 382,
+              "y": 97,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 97,
+              "right": 819.109375,
+              "bottom": 130.59375,
+              "left": 382
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-creators-final-prod-creators-d1920-reduced.png",
+      "folds": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "recordedUtc": "2026-10-04T19:08:33.412Z",
+  "actualViews": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-review-forced-colors.png",
+      "recordedUtc": "2026-10-04T19:01:32.961Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-review-forced-colors-bottom.png",
+      "recordedUtc": "2026-10-04T19:01:32.974Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-review-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:01:32.987Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-review-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:01:32.999Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-review-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:01:33.010Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-compare-forced-colors.png",
+      "recordedUtc": "2026-10-04T19:01:49.647Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-compare-forced-colors-bottom.png",
+      "recordedUtc": "2026-10-04T19:01:49.656Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-compare-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:01:49.666Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-compare-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:01:49.676Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-compare-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:01:49.686Z"
+    }
+  ],
+  "additionalActuallyViewedWithoutPerImageTimestamp": [
+    "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-quote-expired-forced-colors.png",
+    "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-quote-expired-forced-colors-bottom.png",
+    "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-quote-expired-zoom-200-emulated.png",
+    "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-quote-expired-text-only-200-emulated.png",
+    "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-enlargement-final-2-quote-expired-text-only-200-emulated-bottom.png"
+  ],
+  "scope": "Original-resolution inspection of the remaining 15 Quote expired, Review and Compare capture files. Canvas subset was inspected earlier and is superseded by final-4 proof. No missing inspection or capture time inferred."
+}

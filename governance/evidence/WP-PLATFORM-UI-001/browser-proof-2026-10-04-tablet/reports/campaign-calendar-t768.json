@@ -1,0 +1,62 @@
+{
+  "cell": "campaign-calendar-t768",
+  "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+  "observedUtc": "2026-10-04T13:01:53.787Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Campaign calendar",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [
+      {
+        "role": "status",
+        "text": "Nothing is scheduled for this campaign. Scheduling starts after a channel is connected and a revision is approved.Scheduling and publishing are not part of this release yet, so there is nothing to create, move or cancel here.Open the brief"
+      }
+    ],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- 'main \"Campaign: Calendar\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget Content Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Content, Approvals, Results open after a run is confirmed.\n  - heading \"Campaign calendar\" [level=1]\n  - paragraph: When each approved revision of this campaign would publish, once scheduling is part of a release.\n  - region \"this campaign calendar\":\n    - button \"Earlier\"\n    - heading \"October 2026\" [level=2]\n    - button \"Later\"\n    - text: Times in America/Chicago\n    - group \"Calendar range\":\n      - button \"Week\" [pressed]\n      - button \"Month\"\n    - list \"Week of October 2026\":\n      - listitem: 28 Mon Nothing scheduled\n      - listitem: 29 Tue Nothing scheduled\n      - listitem: 30 Wed Nothing scheduled\n      - listitem: 1 Thu Nothing scheduled\n      - listitem: 2 Fri Nothing scheduled\n      - listitem: 3 Sat Nothing scheduled\n      - listitem: 4 Sun Nothing scheduled\n    - status:\n      - paragraph: Nothing is scheduled for this campaign. Scheduling starts after a channel is connected and a revision is approved.\n      - paragraph: Scheduling and publishing are not part of this release yet, so there is nothing to create, move or cancel here.\n      - link \"Open the brief\":\n        - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/campaign-calendar-t768.png"
+}

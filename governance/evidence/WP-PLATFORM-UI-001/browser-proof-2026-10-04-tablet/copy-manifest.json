@@ -1,0 +1,1171 @@
+{
+  "recordedUtc": "2026-10-04T19:45:56.346Z",
+  "base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceRuntimeHead": "16295a846a56dce750cd494fa7800709786110b5",
+  "originalJsonCount": 119,
+  "regressionReceiptCount": 32,
+  "records": [
+    {
+      "kind": "json",
+      "originalName": "brand-assets-t768.json",
+      "originalSha256": "4f65bcc87819cea6aee9af91c111e5fd3d2965d9dc811be001be0597d84667f0",
+      "relativePath": "reports/brand-assets-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-calendar-complete-t768.json",
+      "originalSha256": "28518960e595765efb564c91c2a0562c2d76dd1643ac807acf3ec2d2380d4488",
+      "relativePath": "reports/brand-calendar-complete-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-calendar-t768.json",
+      "originalSha256": "69f6864540edb492aa0e0397b611ff5f195fa83277d6b7d03b49bc57756a88d6",
+      "relativePath": "reports/brand-calendar-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-campaigns-t768.json",
+      "originalSha256": "84e680e52bf29ab48075d03f2f7cf596cdcbc6711ea6c099ce91a117929ea1c1",
+      "relativePath": "reports/brand-campaigns-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-channels-t768.json",
+      "originalSha256": "bcfbad0bce91e6bce4c6fa44360f5955d34af85b8fd350551631eea6009d9185",
+      "relativePath": "reports/brand-channels-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-content-t768.json",
+      "originalSha256": "011ead918fb918b2e63a915de35a31760eb231148f725671702177ab4acb08a7",
+      "relativePath": "reports/brand-content-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-inbox-t768.json",
+      "originalSha256": "30c7abb176f70f48663378f0ca0a06b4f22e3632e3673017769d1038a34af53c",
+      "relativePath": "reports/brand-inbox-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-locations-t768.json",
+      "originalSha256": "8af37520fb2b185cf0633a87d7ab54d65f8cbd517c56295ff1b800db98a82394",
+      "relativePath": "reports/brand-locations-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-results-t768.json",
+      "originalSha256": "77158a54a378fb10fcc99ec7f1d51ebe01bd96e1e235cfd9ab966a797730399c",
+      "relativePath": "reports/brand-results-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-settings-complete-t768.json",
+      "originalSha256": "d15364621d65e949ff4990bb5bc977c4346ea3bd071286209173277d27c53d00",
+      "relativePath": "reports/brand-settings-complete-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "brand-settings-t768.json",
+      "originalSha256": "0c5e036d7ef6742f95736b819412e3e2a87e30d7c4c11f2570d612e96e4a72ae",
+      "relativePath": "reports/brand-settings-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "campaign-approvals-t768.json",
+      "originalSha256": "381ff0f44ce9f9b1216d79d8b980543ac9fd9557f1c66a37f5012b3d09b69b02",
+      "relativePath": "reports/campaign-approvals-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "campaign-calendar-complete-t768.json",
+      "originalSha256": "814b135e43172998f366570ddf8cbeef98256ea66a299db6576ec878b91f2198",
+      "relativePath": "reports/campaign-calendar-complete-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "campaign-calendar-t768.json",
+      "originalSha256": "5ba9ed6059e5fc1c5607a3430c5861577298eff77027f6bf1ee15257ebb96cca",
+      "relativePath": "reports/campaign-calendar-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "campaign-collaborators-t768.json",
+      "originalSha256": "9f6fc51bdd4a90a71a830277ec18c36df81c512d966066c12625f4f4ffcd5397",
+      "relativePath": "reports/campaign-collaborators-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "canvas-enlargement-final-4-manifest.json",
+      "originalSha256": "277530c9b2d4c8ee2b18ba6f6ee71169d61da9c254b75243ee89d584eb7e8605",
+      "relativePath": "reports/canvas-enlargement-final-4-manifest.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "canvas-enlargement-final-4.json",
+      "originalSha256": "838c65178bdd6abaae4806aa9d5025f936c7b5460bfcbc5d5d5fd89c428cd470",
+      "relativePath": "reports/canvas-enlargement-final-4.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "enlargement-before-diagnostic-1.json",
+      "originalSha256": "7b2951b7ca7d5c296fbc17d2fd5eb433a02821538345f62f4f643b1b2a9b3954",
+      "relativePath": "reports/enlargement-before-diagnostic-1.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "enlargement-before-diagnostic-2.json",
+      "originalSha256": "05d9f9a045016194c794c851a1ad22ffdc392e3b5b42ff707bbb97b4e811df14",
+      "relativePath": "reports/enlargement-before-diagnostic-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-canvas-enlargement-final-4.json",
+      "originalSha256": "795abbbd837e0bccb9243981c2948a95eb47258db2460abcc5390c8144a0d4d0",
+      "relativePath": "inspections/inspection-canvas-enlargement-final-4.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-complete-folds-t768.json",
+      "originalSha256": "c70e141dade808a22a4aa297d50d57e65afc59672935b21a18a9f30f5af8ca8a",
+      "relativePath": "inspections/inspection-complete-folds-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-preview-before-repair-t768.json",
+      "originalSha256": "14d2b5e77e92d9d064a105a84d2ff24e2b770f4bf92dff085d3e3194342b936f",
+      "relativePath": "inspections/inspection-preview-before-repair-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-preview-enlargement-final-special-2-remaining.json",
+      "originalSha256": "b8c2c143220e134f4c60ce5d15bac6171150b033600142768b90707915d27dc9",
+      "relativePath": "inspections/inspection-preview-enlargement-final-special-2-remaining.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-preview-final-remaining-widths.json",
+      "originalSha256": "f12fabf663d9aa99d26722b15a1bd4727570676660eea55039194a248e567645",
+      "relativePath": "inspections/inspection-preview-final-remaining-widths.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-preview-final-schemes.json",
+      "originalSha256": "23cfa8d0aab5e52861497ce0dcc495ba4efb58fbc1f96630f3081ef254685edc",
+      "relativePath": "inspections/inspection-preview-final-schemes.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-preview-final-w768.json",
+      "originalSha256": "eb1a362342ff580a76d6f5ce6505e6e1868df04f58959aaf2cf556b2b9f40bda",
+      "relativePath": "inspections/inspection-preview-final-w768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-preview-layout-repair-t768.json",
+      "originalSha256": "2130d611fb7c16e048628fd92560982d1171295e2195fd877e29285bf4805cbc",
+      "relativePath": "inspections/inspection-preview-layout-repair-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-public-routes-t768.json",
+      "originalSha256": "42bb25c49b0fc566e1bd0a916c654b3a0004d0bd503c758769b06025d2f2d37a",
+      "relativePath": "inspections/inspection-public-routes-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-qa-enlargement-current-special.json",
+      "originalSha256": "ba4421768c203fe9fc6bccdb62f1ae62c4525e2356af14d0ee3bade3fba92ddd",
+      "relativePath": "inspections/inspection-qa-enlargement-current-special.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-qa-production-20261004.json",
+      "originalSha256": "676974e7f9bbc01d94f35d682de65b28bb66828ce634e4b2e5cdfe3ebb31ce0d",
+      "relativePath": "inspections/inspection-qa-production-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-qa-production-breadcrumb-mobile.json",
+      "originalSha256": "be43b70f47b6911d1e0ee35c2834404afa96151f33b22bdad4275b3721c1b780",
+      "relativePath": "inspections/inspection-qa-production-breadcrumb-mobile.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-qa-production-proxy.json",
+      "originalSha256": "28974a3bdf862fbfb8c3f12e9026bcdcadd4c12220bcb8c795df17fd760a268b",
+      "relativePath": "inspections/inspection-qa-production-proxy.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-routes-a-t768.json",
+      "originalSha256": "d2d22b42c026d60808a47675025481f621a1e7e6359f559c71dc988c6fcf23b3",
+      "relativePath": "inspections/inspection-routes-a-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-routes-b-t768.json",
+      "originalSha256": "b0c59c1d99af21db9e6c8c1bf98430999c1fc8572d9d0d68cd24679c6a9bb76a",
+      "relativePath": "inspections/inspection-routes-b-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-routes-c-t768.json",
+      "originalSha256": "d575c850028c76b06b46a90800f4c491ff269ffdbd827febe86eadba40208c96",
+      "relativePath": "inspections/inspection-routes-c-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-run-production-final-2.json",
+      "originalSha256": "e220c56a5dfe2fd7baf8bfb4e1439856d39a1a06ecb4161c841a2e691cd915ec",
+      "relativePath": "inspections/inspection-run-production-final-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-run-production-final.json",
+      "originalSha256": "6c260fb86f00dca9b871b464f07d30464e26477ab117cf01a41e44dc1cb42043",
+      "relativePath": "inspections/inspection-run-production-final.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-special-before-enlargement-repair.json",
+      "originalSha256": "90b2e4210b6aa7e9e83d3e11c4ca7e54ea6c8417c739b42ebbc973bd51b6d964",
+      "relativePath": "inspections/inspection-special-before-enlargement-repair.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-studio-chooser-empty-t768.json",
+      "originalSha256": "828cd017132a9abcaa3236d8ad4425f5660e6cf7bd592590d4552a6eb939e538",
+      "relativePath": "inspections/inspection-studio-chooser-empty-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-studio-routes-t768.json",
+      "originalSha256": "f2cee5e34cae101b894d3532f481550bb7d41363514b53e3e5a33ee8124fbe76",
+      "relativePath": "inspections/inspection-studio-routes-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "inspection-workspace-headings-fixed-t768.json",
+      "originalSha256": "7f205e8812df28f265ade9d5a1dc48b0b90d5d6218b3dfe9e79384df1e231007",
+      "relativePath": "inspections/inspection-workspace-headings-fixed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-compare-t768.json",
+      "originalSha256": "ad27f4f7ffa60ca1967cbfad7e2110f08ad5ffce6609d5036d455c6e71903f80",
+      "relativePath": "reports/preview-compare-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-enlargement-final-special-2.json",
+      "originalSha256": "ce932460300155177f10a71d6157d81ce64c2df4960d5d3716358dcfb7211736",
+      "relativePath": "reports/preview-enlargement-final-special-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-enlargement-final-special.json",
+      "originalSha256": "6c6e5ef1da9c16ed987832d9b7c6221376ba8b07c3f6ef4d77986b861188b810",
+      "relativePath": "reports/preview-enlargement-final-special.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-final-dark.json",
+      "originalSha256": "f081fdc73cb3153a78265f13ebca7bceed4526ead95d66ae70180a48d6bef0b5",
+      "relativePath": "reports/preview-final-dark.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-final-desktop-light.json",
+      "originalSha256": "686d9d63f376521761dbe76d0afe7e2549d37755146578c49c610ecf433f73ed",
+      "relativePath": "reports/preview-final-desktop-light.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-final-remaining-manifest.json",
+      "originalSha256": "a87287abb48d5f4210dd5cc3a7e5a340fcb0a047220254d214b6eda898db6959",
+      "relativePath": "reports/preview-final-remaining-manifest.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-final-remaining-widths.json",
+      "originalSha256": "5dc254a1b945b63b5f5280afe3dbf362ab422b342dac29b9f7f46a5f970c102a",
+      "relativePath": "reports/preview-final-remaining-widths.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-final-scheme-manifest.json",
+      "originalSha256": "35ceb246cb63a1208bb6c2864f07d530a9d71b2603d1da2f158550dbb56a385e",
+      "relativePath": "reports/preview-final-scheme-manifest.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-final-w768.json",
+      "originalSha256": "d4cffe103be06cddb7fb728bc4f8ce558c2b1266e7e757705aadd726f55f94fb",
+      "relativePath": "reports/preview-final-w768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-compare-t768.json",
+      "originalSha256": "3364ce6b054f80c19628822e5e1ea872c9992d8e07b202b26f72e9bd462bc57d",
+      "relativePath": "reports/preview-fixed-compare-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-quote-cap_exceeded-t768.json",
+      "originalSha256": "30128a81dc5cf63e92452695e73e04d7c5f95d95cc497f8fd5012be0013e82b0",
+      "relativePath": "reports/preview-fixed-quote-cap_exceeded-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-quote-conflict-t768.json",
+      "originalSha256": "21d63f2e9485dd62e31cc8893e5fa09c76b9e5d8c533429d6ef56273e2b146ab",
+      "relativePath": "reports/preview-fixed-quote-conflict-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-quote-expired_quote-t768.json",
+      "originalSha256": "d31953bef423242007bab0f079d3b12a7ba5596383d3133cfe0051fc35488dd6",
+      "relativePath": "reports/preview-fixed-quote-expired_quote-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-quote-ok-t768.json",
+      "originalSha256": "51553b143b83a74c944b55296d4eb45988acdadd676e8563ff6a7545e466a693",
+      "relativePath": "reports/preview-fixed-quote-ok-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-quote-refreshed-t768.json",
+      "originalSha256": "f14e57d5e0b04cde67abd4a8d9f6e7ef6d7f294b87fb36c097e7c48e33aaa832",
+      "relativePath": "reports/preview-fixed-quote-refreshed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-run-complete-t768.json",
+      "originalSha256": "2a3783df87d42f5b42815128f5a92477998dca86be3ee1f6c487ec0e57ed6f88",
+      "relativePath": "reports/preview-fixed-run-complete-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-run-failed-t768.json",
+      "originalSha256": "2e5b7bcb1546301e8c98939952373ed5fa9fe3f0509031fa0f63932c01377a37",
+      "relativePath": "reports/preview-fixed-run-failed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-fixed-run-running-t768.json",
+      "originalSha256": "de91e11f527142e52a30bdb3004812de65f18104a0118a178b19486b8c926850",
+      "relativePath": "reports/preview-fixed-run-running-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-quote-cap_exceeded-t768.json",
+      "originalSha256": "0b2375886db13ccc1f5810a692ff42976e74e214bba0d6884074863e00aa7d2f",
+      "relativePath": "reports/preview-quote-cap_exceeded-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-quote-conflict-t768.json",
+      "originalSha256": "cd8c74727624309b954dd7b4232e028229ebb3c7c77669022793ef3eac11923c",
+      "relativePath": "reports/preview-quote-conflict-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-quote-expired_quote-t768.json",
+      "originalSha256": "1f5c64bed85a948b916af175deb984d8f8901eebd2f63e6919b4daa039c30b6e",
+      "relativePath": "reports/preview-quote-expired_quote-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-quote-ok-t768.json",
+      "originalSha256": "3d8cc8e3fbd202b74c782a026ae3f42ba5b9acaa5aba13abd82bd788ae5cde41",
+      "relativePath": "reports/preview-quote-ok-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-quote-refreshed-t768.json",
+      "originalSha256": "7d8b9e6ec9018118f9712dc01d89c914ffbccc840437192f6ec721937e24555b",
+      "relativePath": "reports/preview-quote-refreshed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-run-complete-t768.json",
+      "originalSha256": "43debdbfc89fc4b89679526223c5b4bc0ef79ea71efe13fd885288162c57156b",
+      "relativePath": "reports/preview-run-complete-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-run-failed-t768.json",
+      "originalSha256": "f01efb619a8356e81480e8c1c0a60c9b6025493b509a37a4df60256eb45eeb9c",
+      "relativePath": "reports/preview-run-failed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-run-running-t768.json",
+      "originalSha256": "8ad89c5bd755dc83eeeb27e5f3813da801d51a5608e0c5622dd08e1dc2487b4d",
+      "relativePath": "reports/preview-run-running-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "preview-special.json",
+      "originalSha256": "0e54cb60435a2c03474769700c4a9621170c79696f0ffa811dfcb36607409c37",
+      "relativePath": "reports/preview-special.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "public-login-t768.json",
+      "originalSha256": "9b7e89891deaaaea876b3c43b297c9b2089436f6152c6e7bb995333c4b3acd03",
+      "relativePath": "reports/public-login-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "public-maintenance-t768.json",
+      "originalSha256": "703940bfc6bce3d18cafae28f09d3f88ba3840547fe979bbd90bc79c148cb248",
+      "relativePath": "reports/public-maintenance-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "public-signup-t768.json",
+      "originalSha256": "77720965f27c11446991849733ee0205d3de5cbcdaa186d4279a4b2337251b42",
+      "relativePath": "reports/public-signup-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "public-unauthorized-t768.json",
+      "originalSha256": "6a505f07c3505703d8cde63e6405ed0067bade767d7ad5fd8dfac179306bf810",
+      "relativePath": "reports/public-unauthorized-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-access-read-diagnostic-20261004.json",
+      "originalSha256": "1de984dbe7fbb9fff40a4bfb05e8696f10d97ae8aec99ad8d197e82ac9173622",
+      "relativePath": "reports/qa-access-read-diagnostic-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-access-repeat-diagnostic-20261004.json",
+      "originalSha256": "851b02ec68f096ec7bc84faf8f3239465cf46aeda361925c6895fa7f51207bb0",
+      "relativePath": "reports/qa-access-repeat-diagnostic-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-canvas-production-perf-final-2.json",
+      "originalSha256": "cbeeeab6e23ba3bf703502de071fd934f1d4209f8d36fe961baf7bb4153d5af2",
+      "relativePath": "reports/qa-canvas-production-perf-final-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-canvas-production-perf-final-3.json",
+      "originalSha256": "3ba6f48e6888c7d7d7fef335668cb0bfcd58ff3fec813b2e5f9e9dbc76fa4db6",
+      "relativePath": "reports/qa-canvas-production-perf-final-3.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-canvas-production-perf-final-4.json",
+      "originalSha256": "998367fa7ce0c0bb61a5e9e5557495110b0e5726fd7efaf939d8efe7f2873863",
+      "relativePath": "reports/qa-canvas-production-perf-final-4.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-canvas-production-perf-isolated.json",
+      "originalSha256": "0d317b4259a07513aba6125fcd78d9bbb7b304728542c596c82f256414c90ea9",
+      "relativePath": "reports/qa-canvas-production-perf-isolated.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-changed-controls-final.json",
+      "originalSha256": "8073a18d452f9802c9fd972cb92603aee37e2368f773f06e25ed0ce4b1133f50",
+      "relativePath": "reports/qa-changed-controls-final.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-enlargement-current-special.json",
+      "originalSha256": "26515a4503c74717bf553532b3a96612ef7b1414be751f55f0de5c0e712ca667",
+      "relativePath": "reports/qa-enlargement-current-special.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-enlargement-final-special.json",
+      "originalSha256": "2f5a7ccc5dcfd6f212cfe0553463df62435079ab11551d773e9a125e5aec2476",
+      "relativePath": "reports/qa-enlargement-final-special.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-first-paint-before-20261004.json",
+      "originalSha256": "b83667f3af8aa8c224443ddae869e8549d592b947cce39b2f64e518c6e300d39",
+      "relativePath": "reports/qa-first-paint-before-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-first-paint-mobile-20261004.json",
+      "originalSha256": "84350646ac8977c8996a961954e8af580e450ddd5887eb1bcaa648292072e6db",
+      "relativePath": "reports/qa-first-paint-mobile-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-native-blank-frame-baseline.json",
+      "originalSha256": "5f2264e66267b5740632f17b2543174fb494f150b89d24582e3e733a716dd0be",
+      "relativePath": "reports/qa-native-blank-frame-baseline.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-batch-1.json",
+      "originalSha256": "820edf944afb54fb8e22fde76957cd9767c2702571e03012d729c8d84c57e96f",
+      "relativePath": "reports/qa-production-batch-1.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-batch-2.json",
+      "originalSha256": "a6b6ca4da7ccc49fe35380da2e26459de004b05aa9ee4cfffddbc39b78bf3353",
+      "relativePath": "reports/qa-production-batch-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-breadcrumb-manifest.json",
+      "originalSha256": "aeec1586a293f0f10ec66f216430c3eeda8ab701479eacdb9c3c89390c4234b2",
+      "relativePath": "reports/qa-production-breadcrumb-manifest.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-breadcrumb-mobile.json",
+      "originalSha256": "a250d93755efbc0c757d28a25dad394da2e089e003086e07aedab4167be122ad",
+      "relativePath": "reports/qa-production-breadcrumb-mobile.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-capture-manifest-20261004.json",
+      "originalSha256": "d57c20d0744dc24619933a6a3d972cd0248011af6afd443947c7a7e74b9549b1",
+      "relativePath": "reports/qa-production-capture-manifest-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-creators-final.json",
+      "originalSha256": "3d3b4f9b5d15d1d96a0c681407bf72757d2c03170687b6d2f0add6cc4bcc8f87",
+      "relativePath": "reports/qa-production-creators-final.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-batch-1.json",
+      "originalSha256": "8dd0a00a1827461cca6d2eece6b88a4be5a114510ac0df1a148602ed12ef8d2e",
+      "relativePath": "reports/qa-production-perf-keyboard-batch-1.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-batch-2.json",
+      "originalSha256": "d62b9690b21313707d8e2c2851d1228c64a51de3a9ab6bcde00df780274d2a32",
+      "relativePath": "reports/qa-production-perf-keyboard-batch-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-breadcrumb-green.json",
+      "originalSha256": "b6b14b0a5327f6e3c334a1905f931cc15881463328c8fea624e67679a5408469",
+      "relativePath": "reports/qa-production-perf-keyboard-breadcrumb-green.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-enlargement-final.json",
+      "originalSha256": "8d5b748e766ae67ac3a6fd6ee502f3b909f3691c102bab73b0a47a8bbfe11546",
+      "relativePath": "reports/qa-production-perf-keyboard-enlargement-final.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-mobile-green.json",
+      "originalSha256": "be4380a33b4d03547351db2587b91ac718ed24c676fa9501d16e4733f7f46fe6",
+      "relativePath": "reports/qa-production-perf-keyboard-mobile-green.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-proxy-platform.json",
+      "originalSha256": "628f5e8d91b3f66a21ff6cc4c3574495ec1ba628f78004190d050118f12e1577",
+      "relativePath": "reports/qa-production-perf-keyboard-proxy-platform.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-proxy-public.json",
+      "originalSha256": "7892e549f7193ad630fa3083a5203bbd8cb16a5f0573f652ece7f33e3b44a94d",
+      "relativePath": "reports/qa-production-perf-keyboard-proxy-public.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-perf-keyboard-workflow-breadcrumb.json",
+      "originalSha256": "4d1c9c601a81f16146e7c569f673f43f0d8785946b957b04099c2a412129a6a6",
+      "relativePath": "reports/qa-production-perf-keyboard-workflow-breadcrumb.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-proxy-manifest.json",
+      "originalSha256": "9b10d2349e4e0bf3a75422a480f1751a81209ab24d58618d55ad3abd5d157f50",
+      "relativePath": "reports/qa-production-proxy-manifest.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-proxy-platform.json",
+      "originalSha256": "ffb168234eb8aaa3cf37fc5240cabecf38e91768d16b4227b5d5ae9680d0467f",
+      "relativePath": "reports/qa-production-proxy-platform.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-proxy-public.json",
+      "originalSha256": "8b82d5921b2bce8cbda7daa0198861f8b0df320b2a02d832899e3d27358c342e",
+      "relativePath": "reports/qa-production-proxy-public.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-production-special.json",
+      "originalSha256": "fef347af04b3f68fdfe96a606e46355b116d16b62683c6a4ff2d7905a32f10ee",
+      "relativePath": "reports/qa-production-special.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-run-production-final-2.json",
+      "originalSha256": "807a8cb6e932574222579b0bb67357f7d65c3e72a6241f7e00d5fafd3acde7e8",
+      "relativePath": "reports/qa-run-production-final-2.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "qa-run-production-final.json",
+      "originalSha256": "d8b89ba1dfcf6a0fdf97235a0145da71ecb7e2843a96c548d1a70024c309216a",
+      "relativePath": "reports/qa-run-production-final.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "quote-keyboard-focus-before-t768.json",
+      "originalSha256": "dd79fca215581dca941d97cfed3f297628e4ab71ddf330ea056c470f7342d059",
+      "relativePath": "reports/quote-keyboard-focus-before-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "special-manifest.json",
+      "originalSha256": "f3a6d505e31a6567de77281811498a74514043e94fa79c92b29a37295b85b92d",
+      "relativePath": "reports/special-manifest.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-chooser-empty-t768.json",
+      "originalSha256": "e0b78e7b83d294c3c906e95d40baa640736b3c227ddc18c65b187755fa66bb1d",
+      "relativePath": "reports/studio-chooser-empty-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-chooser-success-t768.json",
+      "originalSha256": "db0aa8b372d444d58c087b81dad37f7af560c100f96e43d5e2dbdb9881804893",
+      "relativePath": "reports/studio-chooser-success-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-creators-fixed-t768.json",
+      "originalSha256": "b759e6d8728a21fc5e0d0ee411c0dfc639843efa147a3cf0043f851c26d16644",
+      "relativePath": "reports/studio-creators-fixed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-creators-t768.json",
+      "originalSha256": "900fcf2d09b2be41b61e846a53d841459aa3eec167d2a86285582936c93e8f81",
+      "relativePath": "reports/studio-creators-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-reports-fixed-t768.json",
+      "originalSha256": "6e529028959b8aa55af7ad13cb6260498e3c8c4301debe35919921cb3d756db7",
+      "relativePath": "reports/studio-reports-fixed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-reports-t768.json",
+      "originalSha256": "9a294e2e4f8a5b9bc92bffdebe7ab7942f3c5bfdd8ea75dec4ba49b8e729c42e",
+      "relativePath": "reports/studio-reports-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-settings-fixed-t768.json",
+      "originalSha256": "6655ed171d24d90be3a81eecee0dff889c858d747c4ae4955f5491d87369a52a",
+      "relativePath": "reports/studio-settings-fixed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "studio-settings-t768.json",
+      "originalSha256": "bd7c4924893bafe0c12bf3dbcf48e7f6dc2be9a20c2521a5fbe2d88994666a49",
+      "relativePath": "reports/studio-settings-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "workspace-access-fixed-t768.json",
+      "originalSha256": "b7b3a19a7cb9a473c4f612575d0774b5ff7851048545ecf51b9b172e63ef1943",
+      "relativePath": "reports/workspace-access-fixed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "workspace-access-t768.json",
+      "originalSha256": "712933b598dbef9f9be4df9125939dfe0c2f5a1ec9be3c7a7b9a2f507a654f21",
+      "relativePath": "reports/workspace-access-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "workspace-billing-t768.json",
+      "originalSha256": "a18566e0f5624aee30913023b235f7cb610c612f309a3a73f7ec3f9ae84102ab",
+      "relativePath": "reports/workspace-billing-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "workspace-skills-fixed-t768.json",
+      "originalSha256": "8f6c8a0dcbacdff98b10e089706039ef3fc8a15e5dfc957023bd44ac1544759b",
+      "relativePath": "reports/workspace-skills-fixed-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "json",
+      "originalName": "workspace-skills-t768.json",
+      "originalSha256": "7fd8a5e37e0837812b1c5b3b0cc72ab4239e022883df3077e7f2917107018b8d",
+      "relativePath": "reports/workspace-skills-t768.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-breadcrumb-green-20261004.json",
+      "originalSha256": "5ad6ed25ce841f2bcbe1567b4358c5b830494dfc876ad1c10626db057bcd79f4",
+      "relativePath": "regressions/l3f-breadcrumb-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-breadcrumb-red-20261004.json",
+      "originalSha256": "7c0df9f6bac27da8e4a24cb4e18a18d1e5fc47a7e3079510c7113c0bc20b3ff9",
+      "relativePath": "regressions/l3f-breadcrumb-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-connected-green-2-20261004.json",
+      "originalSha256": "301481bb4158b6b2b01d43a8a735b22875b9170ba88de7c6714714448161b29d",
+      "relativePath": "regressions/l3f-enlargement-connected-green-2-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-connected-green-20261004.json",
+      "originalSha256": "11d27a99dc14c62de0c3665ee63ec3c4fedcca3d35b15f665f09baac4c7ced83",
+      "relativePath": "regressions/l3f-enlargement-connected-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-connected-green-3-20261004.json",
+      "originalSha256": "736233363d4c4b921a9945d913952f86b4a07aed2b01a80a7b40bc4a26ff3b5a",
+      "relativePath": "regressions/l3f-enlargement-connected-green-3-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-connected-red-20261004.json",
+      "originalSha256": "751ecc3a37f98851e1e2bed77a9290e21a76c836a5dcb29061458ee30d569528",
+      "relativePath": "regressions/l3f-enlargement-connected-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-connected-red-3-20261004.json",
+      "originalSha256": "970ff6b304d0687912995842163269d736897c2c493984ecc45fe108555f531c",
+      "relativePath": "regressions/l3f-enlargement-connected-red-3-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-green-20261004.json",
+      "originalSha256": "4ff7b6e577020e69e8fd2bfdf5ac451dd09cd92a62f8ced9546c7fc2d6cda790",
+      "relativePath": "regressions/l3f-enlargement-preview-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-green-5-20261004.json",
+      "originalSha256": "6c6f7d2b11bdab5a12f3334d18d18b5e989bd32731e7624a3e88fc76b1948959",
+      "relativePath": "regressions/l3f-enlargement-preview-green-5-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-green-6-20261004.json",
+      "originalSha256": "30e570a0c296767c67a3fd67aaddc44bd0b896ca4efc306614243a00b95b4044",
+      "relativePath": "regressions/l3f-enlargement-preview-green-6-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-red-20261004.json",
+      "originalSha256": "d4c400ba399fdde31e73ba6428587af8796dd82d050808556601f7335d68d494",
+      "relativePath": "regressions/l3f-enlargement-preview-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-red-4-20261004.json",
+      "originalSha256": "61ff0f787f66772b2d764d9e5a741a8fc30999e6c199353ee0a4623ea3c416e7",
+      "relativePath": "regressions/l3f-enlargement-preview-red-4-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-red-5-20261004.json",
+      "originalSha256": "985e8c840c1ff0c1884d7adfb005c9529b3a3e28705f847f0660f0b925f0477f",
+      "relativePath": "regressions/l3f-enlargement-preview-red-5-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-enlargement-preview-red-6-20261004.json",
+      "originalSha256": "943c149ab0a7f4fa133c49065a032230f82c96b9bbe50ee602609a8d1fb915dd",
+      "relativePath": "regressions/l3f-enlargement-preview-red-6-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-motion-preview-green-20261004.json",
+      "originalSha256": "bf53596f35ee742c4dd1dad39385185fdfdc04ffea3d4dbc682fb25c9796ab42",
+      "relativePath": "regressions/l3f-motion-preview-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-motion-preview-red-20261004.json",
+      "originalSha256": "fafaf1ed835768d26ed9e081b589ceb007c73448cca2baac487317e7ed9e5611",
+      "relativePath": "regressions/l3f-motion-preview-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-quote-focus-green-20261004.json",
+      "originalSha256": "144cec68674593e45bf8384006f400f96797ed8f6ba567573677c4071a31b28c",
+      "relativePath": "regressions/l3f-quote-focus-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-quote-focus-red-20261004.json",
+      "originalSha256": "34e1ad74588ebf5313c0b73bd281cc44dfeec830e09847518673ed71b2eb888f",
+      "relativePath": "regressions/l3f-quote-focus-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-run-summary-preview-green-20261004.json",
+      "originalSha256": "8055a26699f30b22f2f0c03dfd341de80dee57f85156df2d49f71c0877ae2a0a",
+      "relativePath": "regressions/l3f-run-summary-preview-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-run-summary-preview-red-20261004.json",
+      "originalSha256": "c1457c73fbe758a49890d4fbe7f21c34485a6e107eb875e441fe0c3465a66fab",
+      "relativePath": "regressions/l3f-run-summary-preview-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-tablet-layout-green-2-20261004.json",
+      "originalSha256": "004ac62e4288f9ab275aeb97bfb8829927c86b8ea29931f102889e9cd0960362",
+      "relativePath": "regressions/l3f-tablet-layout-green-2-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-tablet-layout-green-20261004.json",
+      "originalSha256": "1313aeac0881a8df065eab05d7991bfc645f619830173440bdcfcb03d389fda2",
+      "relativePath": "regressions/l3f-tablet-layout-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-tablet-layout-red-2-20261004.json",
+      "originalSha256": "f205d28785f345f6a4ebcea68a6cdb015610377a5e82db8cdab288e6f88737cc",
+      "relativePath": "regressions/l3f-tablet-layout-red-2-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-tablet-layout-red-20261004.json",
+      "originalSha256": "cfaac8ec3024eff31d4833cc6361a443da2130be96fcb6ebe401ddd7e4af4a65",
+      "relativePath": "regressions/l3f-tablet-layout-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-wheel-preview-green-20261004.json",
+      "originalSha256": "9ae8f6ff1253940e2b40faccb5332b7cfc8b105dee224ef3f1b34ec4fe081e1b",
+      "relativePath": "regressions/l3f-wheel-preview-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-wheel-preview-red-20261004.json",
+      "originalSha256": "6f6e93dea92afbd173d986d8fa600866f8d9b8b2cf78eef460539a92e1c3487e",
+      "relativePath": "regressions/l3f-wheel-preview-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-workspace-breadcrumb-layout-green-20261004.json",
+      "originalSha256": "4a9c3ba5d0a58082cb72c385bac2d553edaff2254a3674b4730074111ffba2c4",
+      "relativePath": "regressions/l3f-workspace-breadcrumb-layout-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-workspace-breadcrumb-layout-red-20261004.json",
+      "originalSha256": "4acbf03d1749d494151a55c7f909dcc144ab1d98392db9aee1b91531b6acedb9",
+      "relativePath": "regressions/l3f-workspace-breadcrumb-layout-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-workspace-layout-green-20261004.json",
+      "originalSha256": "57ee23fa046d847d24d539069b59f18f273cb96360ffab191932217e216bcd3b",
+      "relativePath": "regressions/l3f-workspace-layout-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-workspace-layout-red-20261004.json",
+      "originalSha256": "278e2a63651e684c7a6b019675fa020346bcf870b7e76d474a8e8c914889e4fc",
+      "relativePath": "regressions/l3f-workspace-layout-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-workspace-type-green-20261004.json",
+      "originalSha256": "a320cb9f4e551b22ed7fc2184bc7b784b17e19f89134ce1c34ae34af65e580d0",
+      "relativePath": "regressions/l3f-workspace-type-green-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "regression-receipt",
+      "originalName": "l3f-workspace-type-red-20261004.json",
+      "originalSha256": "4e4a213b0d5e94f508876b53ca5f2c81a41a7c0b7b854973f6f3f1f7f887e380",
+      "relativePath": "regressions/l3f-workspace-type-red-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-checkpoint-20261004.json",
+      "originalSha256": "92de9651e3e6fa198f2089e12a3c0276e9ad9f445e17c4d316830b489a1e72f5",
+      "relativePath": "source/l3f-tablet-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-mobile-checkpoint-20261004.json",
+      "originalSha256": "58352ebd0450219b3068f465afcd1e63b4c1d75ed3a22af09b71c7426f66ada0",
+      "relativePath": "source/l3f-tablet-mobile-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-breadcrumb-checkpoint-20261004.json",
+      "originalSha256": "a1f25f800e8c976ef8b1b3370d220cab051402b9294f2175b3898dbd3bb1f23c",
+      "relativePath": "source/l3f-tablet-breadcrumb-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-enlargement-checkpoint-20261004.json",
+      "originalSha256": "aea5f7a6329e36ff53f32b7d0ef34d1552542f97ffabb0ac8d080b5686129833",
+      "relativePath": "source/l3f-tablet-enlargement-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-enlargement-keyboard-checkpoint-20261004.json",
+      "originalSha256": "e1b1672262eb8b69d6a3f0bb40d11f25380819118ca5febdede2158afc25c351",
+      "relativePath": "source/l3f-tablet-enlargement-keyboard-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-canvas-enlargement-checkpoint-20261004.json",
+      "originalSha256": "6307eb59559a21bfa4bf6c4d9df89e005a673579b08ad4e47f4dbc70905c70ff",
+      "relativePath": "source/l3f-tablet-canvas-enlargement-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-motion-checkpoint-20261004.json",
+      "originalSha256": "de5bdaafc34bb06f41eb4481cd000459570e4be6767f9c66bb439458013f99c4",
+      "relativePath": "source/l3f-tablet-motion-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-wheel-checkpoint-20261004.json",
+      "originalSha256": "cd88a59cd2d0bef2eacb58020e4606a912f7f54db8bb34396e07fb8febeda2e4",
+      "relativePath": "source/l3f-tablet-wheel-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-run-summary-checkpoint-20261004.json",
+      "originalSha256": "0f14070f3b9343595530cae19850815327e1bd9555ce049e4a18a76f8d39709d",
+      "relativePath": "source/l3f-tablet-run-summary-checkpoint-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-reorient-40-20261004.json",
+      "originalSha256": "39ff01105dab073b84018f8bbf9b6f5a90683930048a04ec471a9675c067c3c1",
+      "relativePath": "source/l3f-reorient-40-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-reorient-40-preflight-20261004.json",
+      "originalSha256": "7bef69d43e741acc90ad8a9ee6aa53234c42ee26311f692df05e3c1080d46e93",
+      "relativePath": "source/l3f-reorient-40-preflight-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-reorient-40-migrations-0-20261004.json",
+      "originalSha256": "582f017df970ba2c097d0a422e36846b41ef631de024d931559cd686bc1db8f8",
+      "relativePath": "source/l3f-reorient-40-migrations-0-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-reorient-40-migrations-1-20261004.json",
+      "originalSha256": "b323227459ce9dd85ff5d78c3988910e35b6753b821e3ff9a65fa86c5f303b5b",
+      "relativePath": "source/l3f-reorient-40-migrations-1-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-canvas-production-isolated-20261004.json",
+      "originalSha256": "33d4afb361e2f51a5b2581f220272a6c216aed0ff64b26040f9cbcce363e830c",
+      "relativePath": "source/l3f-canvas-production-isolated-20261004.json",
+      "parsedValuesPreserved": true
+    },
+    {
+      "kind": "source-receipt",
+      "originalName": "l3f-tablet-production-run-summary-build-20261004.json",
+      "originalSha256": "07206a35a643d50872dce9293946e557f4968e30de67eac52f9365e2c8ef28d5",
+      "relativePath": "source/l3f-tablet-production-run-summary-build-20261004.json",
+      "parsedValuesPreserved": true
+    }
+  ]
+}

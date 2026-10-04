@@ -1,0 +1,50 @@
+{
+  "formatBeforeStageExit": 0,
+  "released": false,
+  "root": "C:/dev/mbv-finish",
+  "head": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "reviewPending": true,
+  "fullGatesPending": true,
+  "endedUtc": "2026-10-04T14:32:20.2810507Z",
+  "startedUtc": "2026-10-04T14:32:18.9808606Z",
+  "clean": true,
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css",
+      "sha256": "49514cc8dc7a4495b282da750d7f282408a97c8295841dda788d8782217ca5b1"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css",
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "2d9fdfa917d1774f3396c650d4dc9d911a0a0365e5d7c789c6c3fba9e5309f5a"
+    },
+    {
+      "path": "apps/web/e2e/final-ui.spec.ts",
+      "sha256": "aa86a306e7da6ed881a0f18eb0af47c8218f341ac37d9c4dca9c97e85828c63c"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx",
+      "sha256": "9fc83ecfc16537d47804c6a534341133c1edf7071b311b2600523fe015b85377"
+    }
+  ],
+  "actualExit": 0,
+  "run": "codex-finish-20261002",
+  "base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "focusedRegressionsPassed": true,
+  "secretScanBeforeStageExit": 0
+}

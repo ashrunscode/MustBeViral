@@ -1,0 +1,81 @@
+{
+  "distinctContents": 5,
+  "imageNames": 15,
+  "images": [
+    {
+      "name": "qa-breadcrumb-prod-workspace-access-m375-light.png",
+      "bytes": 38369,
+      "sha256": "e1aa5a5da82d785ccc1e38b3a587ff5bdf794008701d4f80baddd88ed9f15e33"
+    },
+    {
+      "name": "qa-breadcrumb-prod-workspace-access-m375-dark.png",
+      "bytes": 38369,
+      "sha256": "e1aa5a5da82d785ccc1e38b3a587ff5bdf794008701d4f80baddd88ed9f15e33"
+    },
+    {
+      "name": "qa-breadcrumb-prod-workspace-access-m375-reduced.png",
+      "bytes": 38369,
+      "sha256": "e1aa5a5da82d785ccc1e38b3a587ff5bdf794008701d4f80baddd88ed9f15e33"
+    },
+    {
+      "name": "qa-breadcrumb-prod-workspace-skills-m375-light.png",
+      "bytes": 54869,
+      "sha256": "6c3b32f39976de108221a85a7f6838810340bc59ea76290e91b1a572161bf89a"
+    },
+    {
+      "name": "qa-breadcrumb-prod-workspace-skills-m375-dark.png",
+      "bytes": 54869,
+      "sha256": "6c3b32f39976de108221a85a7f6838810340bc59ea76290e91b1a572161bf89a"
+    },
+    {
+      "name": "qa-breadcrumb-prod-workspace-skills-m375-reduced.png",
+      "bytes": 54869,
+      "sha256": "6c3b32f39976de108221a85a7f6838810340bc59ea76290e91b1a572161bf89a"
+    },
+    {
+      "name": "qa-breadcrumb-prod-quote-m375-light.png",
+      "bytes": 42494,
+      "sha256": "2dad74b5ce4b162c3609a20343746d41549b9a1d776fed295292cbfa0bf4945b"
+    },
+    {
+      "name": "qa-breadcrumb-prod-quote-m375-dark.png",
+      "bytes": 42494,
+      "sha256": "2dad74b5ce4b162c3609a20343746d41549b9a1d776fed295292cbfa0bf4945b"
+    },
+    {
+      "name": "qa-breadcrumb-prod-quote-m375-reduced.png",
+      "bytes": 42494,
+      "sha256": "2dad74b5ce4b162c3609a20343746d41549b9a1d776fed295292cbfa0bf4945b"
+    },
+    {
+      "name": "qa-breadcrumb-prod-review-m375-light.png",
+      "bytes": 37567,
+      "sha256": "3974acee319f5088818dc4ba1835f0a61ce0e9b5b5edff38e5ff17232a34269f"
+    },
+    {
+      "name": "qa-breadcrumb-prod-review-m375-dark.png",
+      "bytes": 37567,
+      "sha256": "3974acee319f5088818dc4ba1835f0a61ce0e9b5b5edff38e5ff17232a34269f"
+    },
+    {
+      "name": "qa-breadcrumb-prod-review-m375-reduced.png",
+      "bytes": 37567,
+      "sha256": "3974acee319f5088818dc4ba1835f0a61ce0e9b5b5edff38e5ff17232a34269f"
+    },
+    {
+      "name": "qa-breadcrumb-prod-compare-m375-light.png",
+      "bytes": 37869,
+      "sha256": "627231396b1167e009fe3117d8195ca4ed8a3a870876474f75ac2f5342fd55f2"
+    },
+    {
+      "name": "qa-breadcrumb-prod-compare-m375-dark.png",
+      "bytes": 37869,
+      "sha256": "627231396b1167e009fe3117d8195ca4ed8a3a870876474f75ac2f5342fd55f2"
+    },
+    {
+      "name": "qa-breadcrumb-prod-compare-m375-reduced.png",
+      "bytes": 37869,
+      "sha256": "627231396b1167e009fe3117d8195ca4ed8a3a870876474f75ac2f5342fd55f2"
+    }
+  ]
+}

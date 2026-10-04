@@ -1,0 +1,17 @@
+{
+  "sourceHashesValidatedByLauncher": true,
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "log": "C:/dev/mbv-run/l3f-tablet-production-run-summary-build-20261004.txt",
+  "preliminaryProductionProofOnly": true,
+  "pnpm": "11.12.0",
+  "preflightEvidence": "C:/dev/mbv-run/l3f-reorient-39-preflight-20261004.json",
+  "fullAuthorAndFreshC4Pending": true,
+  "command": "pinned Node outside launcher: next build with local in-memory runtime",
+  "endedUtc": "2026-10-04T19:24:32.8546592Z",
+  "frozenInstallReusedBecauseLockfileUnchanged": true,
+  "node": "v24.18.0",
+  "head": "16295a846a56dce750cd494fa7800709786110b5",
+  "startedUtc": "2026-10-04T19:24:07.3043000Z",
+  "exit": 0,
+  "preflightReuseScope": "Preliminary production capture only; three-path Run accessibility repair; packet authority and dependencies unchanged; exact-head C4 still pending"
+}

@@ -1,0 +1,236 @@
+{
+  "recordedUtc": "2026-10-04T15:34:15.963Z",
+  "sourceHead": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "records": [
+    {
+      "kind": "access",
+      "observedUtc": "2026-10-04T15:34:13.590Z",
+      "diagnostic": {
+        "shifts": [
+          {
+            "value": 0.18756486086928828,
+            "time": 223.80000001192093,
+            "fontStatus": "loading",
+            "styles": ["1gsfo_arfk39d.css", "165n45g0d05i7.css"],
+            "sources": [
+              {
+                "tag": "DIV",
+                "class": "platform-shell",
+                "previous": {
+                  "x": 0,
+                  "y": 279.75,
+                  "width": 375,
+                  "height": 532.25,
+                  "top": 279.75,
+                  "right": 375,
+                  "bottom": 812,
+                  "left": 0
+                },
+                "current": {
+                  "x": 0,
+                  "y": 104.828125,
+                  "width": 375,
+                  "height": 707.171875,
+                  "top": 104.828125,
+                  "right": 375,
+                  "bottom": 812,
+                  "left": 0
+                }
+              }
+            ]
+          },
+          {
+            "value": 0.012250812929214492,
+            "time": 249.69999998807907,
+            "fontStatus": "loaded",
+            "styles": ["1gsfo_arfk39d.css", "165n45g0d05i7.css"],
+            "sources": [
+              {
+                "tag": "DIV",
+                "class": "platform-shell",
+                "previous": {
+                  "x": 0,
+                  "y": 104.828125,
+                  "width": 375,
+                  "height": 707.171875,
+                  "top": 104.828125,
+                  "right": 375,
+                  "bottom": 812,
+                  "left": 0
+                },
+                "current": {
+                  "x": 0,
+                  "y": 93.578125,
+                  "width": 375,
+                  "height": 718.421875,
+                  "top": 93.578125,
+                  "right": 375,
+                  "bottom": 812,
+                  "left": 0
+                }
+              }
+            ]
+          }
+        ],
+        "lcp": [
+          {
+            "time": 96,
+            "tag": "P",
+            "class": ""
+          },
+          {
+            "time": 252,
+            "tag": "P",
+            "class": ""
+          }
+        ],
+        "cssLoads": [],
+        "errors": [],
+        "cls": 0.19981567379850276,
+        "fontStatus": "loaded",
+        "resources": [
+          {
+            "file": "797e433ab948586e-s.p.0r6juujl39pe6.woff2",
+            "start": 26.80000001192093,
+            "end": 28,
+            "initiator": "link"
+          },
+          {
+            "file": "1gsfo_arfk39d.css",
+            "start": 27,
+            "end": 28.69999998807907,
+            "initiator": "link"
+          },
+          {
+            "file": "caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+            "start": 27,
+            "end": 28.900000005960464,
+            "initiator": "link"
+          },
+          {
+            "file": "165n45g0d05i7.css",
+            "start": 27.099999994039536,
+            "end": 28.900000005960464,
+            "initiator": "link"
+          }
+        ],
+        "h1Font": "Geist, \"Geist Fallback\", sans-serif"
+      }
+    },
+    {
+      "kind": "skills",
+      "observedUtc": "2026-10-04T15:34:15.942Z",
+      "diagnostic": {
+        "shifts": [
+          {
+            "value": 0.24915863342959063,
+            "time": 219.30000001192093,
+            "fontStatus": "loading",
+            "styles": ["1gsfo_arfk39d.css", "165n45g0d05i7.css"],
+            "sources": [
+              {
+                "tag": "DIV",
+                "class": "platform-shell",
+                "previous": {
+                  "x": 0,
+                  "y": 279.75,
+                  "width": 375,
+                  "height": 532.25,
+                  "top": 279.75,
+                  "right": 375,
+                  "bottom": 812,
+                  "left": 0
+                },
+                "current": {
+                  "x": 0,
+                  "y": 61,
+                  "width": 375,
+                  "height": 751,
+                  "top": 61,
+                  "right": 375,
+                  "bottom": 812,
+                  "left": 0
+                }
+              }
+            ]
+          },
+          {
+            "value": 0.0017707600281491908,
+            "time": 233.90000000596046,
+            "fontStatus": "loaded",
+            "styles": ["1gsfo_arfk39d.css", "165n45g0d05i7.css"],
+            "sources": [
+              {
+                "tag": "SECTION",
+                "class": "access-panel__card",
+                "previous": {
+                  "x": 40,
+                  "y": 751.4375,
+                  "width": 319,
+                  "height": 60.5625,
+                  "top": 751.4375,
+                  "right": 359,
+                  "bottom": 812,
+                  "left": 40
+                },
+                "current": {
+                  "x": 40,
+                  "y": 773.9375,
+                  "width": 319,
+                  "height": 38.0625,
+                  "top": 773.9375,
+                  "right": 359,
+                  "bottom": 812,
+                  "left": 40
+                }
+              }
+            ]
+          }
+        ],
+        "lcp": [
+          {
+            "time": 104,
+            "tag": "P",
+            "class": ""
+          },
+          {
+            "time": 232,
+            "tag": "P",
+            "class": ""
+          }
+        ],
+        "cssLoads": [],
+        "errors": [],
+        "cls": 0.25092939345773985,
+        "fontStatus": "loaded",
+        "resources": [
+          {
+            "file": "797e433ab948586e-s.p.0r6juujl39pe6.woff2",
+            "start": 24.200000017881393,
+            "end": 25.5,
+            "initiator": "link"
+          },
+          {
+            "file": "caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+            "start": 24.5,
+            "end": 26.700000017881393,
+            "initiator": "link"
+          },
+          {
+            "file": "1gsfo_arfk39d.css",
+            "start": 24.600000023841858,
+            "end": 26.400000005960464,
+            "initiator": "link"
+          },
+          {
+            "file": "165n45g0d05i7.css",
+            "start": 24.700000017881393,
+            "end": 26.600000023841858,
+            "initiator": "link"
+          }
+        ],
+        "h1Font": "Geist, \"Geist Fallback\", sans-serif"
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "phase": "red",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "root": "C:/dev/mbv-finish",
+  "endedUtc": "2026-10-04T13:06:49.5454890Z",
+  "log": "C:/dev/mbv-run/l3f-workspace-type-red-20261004.txt",
+  "pnpm": "11.12.0",
+  "startedUtc": "2026-10-04T13:06:04.5183705Z",
+  "command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep workspace tools headings",
+  "ownedWorkInProgress": true,
+  "sourceHashes": [
+    {
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d",
+      "path": "apps/web/src/features/platform/platform.css"
+    },
+    {
+      "sha256": "447532f772ec39992bd5f237dbbd6b3a2a587a623b207b003eb24c687c788547",
+      "path": "apps/web/app/globals.css"
+    },
+    {
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64",
+      "path": "apps/web/e2e/platform-connected.spec.ts"
+    }
+  ],
+  "node": "v24.18.0",
+  "localOnly": true,
+  "harnessPid": 44264,
+  "exit": 1,
+  "syntheticCleanupDeleteRequestsPrevented": true,
+  "providersAndQueuesDisabled": true
+}

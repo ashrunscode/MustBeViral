@@ -1,0 +1,27 @@
+{
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "startedUtc": "2026-10-04T12:56:02.4240696Z",
+  "root": "C:/dev/mbv-finish",
+  "pnpm": "11.12.0",
+  "providersAndQueuesDisabled": true,
+  "command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep studio breadcrumb targets",
+  "endedUtc": "2026-10-04T12:56:40.4108125Z",
+  "exit": 1,
+  "phase": "red",
+  "syntheticCleanupDeleteRequestsPrevented": true,
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "e3c476c8c0838bd92e23e25d5f8aafbb3b4a74e2b018457bcab4028bc78e2279"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "d73e0d256215c62a26c94ce641c0218308ebfbd60dea1a3f1e5c4480d1f6fe83"
+    }
+  ],
+  "node": "v24.18.0",
+  "localOnly": true,
+  "harnessPid": 44264,
+  "ownedWorkInProgress": true,
+  "log": "C:/dev/mbv-run/l3f-breadcrumb-red-20261004.txt"
+}

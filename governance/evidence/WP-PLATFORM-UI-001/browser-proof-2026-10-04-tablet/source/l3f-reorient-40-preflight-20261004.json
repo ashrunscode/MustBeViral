@@ -1,0 +1,11 @@
+{
+  "head": "16295a846a56dce750cd494fa7800709786110b5",
+  "command": "corepack pnpm agent:preflight",
+  "node": "v24.21.0",
+  "startedUtc": "2026-10-04T19:37:20.7709188Z",
+  "endedUtc": "2026-10-04T19:44:22.1978637Z",
+  "root": "C:/dev/mbv-finish",
+  "log": "C:/dev/mbv-run/l3f-reorient-40-preflight-20261004.txt",
+  "exit": 0,
+  "pnpm": "11.12.0"
+}

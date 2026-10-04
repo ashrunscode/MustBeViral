@@ -1,0 +1,79 @@
+{
+  "recordedUtc": "2026-10-04 15:30:54 UTC",
+  "sourceHead": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "driver": "view_image with detail original; native full-page PNGs; no montage, cropping or re-rendering",
+  "manifest": "qa-production-capture-manifest-20261004.json",
+  "inspections": [
+    {
+      "utc": "2026-10-04T15:20:31Z",
+      "files": [
+        "qa-prod-home-m375-light.png",
+        "qa-prod-home-t768-light.png",
+        "qa-prod-home-d1440-light.png"
+      ]
+    },
+    {
+      "utc": "2026-10-04T15:28:38Z",
+      "files": [
+        "qa-prod-home-m375-reduced.png",
+        "qa-prod-home-d1280-reduced.png",
+        "qa-prod-home-d1920-reduced.png",
+        "qa-prod-workspace-access-m375-light.png"
+      ]
+    },
+    {
+      "utc": "2026-10-04T15:28:49Z",
+      "files": [
+        "qa-prod-workspace-access-t768-light.png",
+        "qa-prod-workspace-access-d1440-light.png",
+        "qa-prod-workspace-access-d1280-reduced.png",
+        "qa-prod-workspace-access-d1920-reduced.png",
+        "qa-prod-workspace-skills-m375-light.png",
+        "qa-prod-workspace-skills-t768-light.png"
+      ]
+    },
+    {
+      "utc": "2026-10-04T15:29:01Z",
+      "files": [
+        "qa-prod-workspace-skills-d1440-light.png",
+        "qa-prod-workspace-skills-d1280-reduced.png",
+        "qa-prod-workspace-skills-d1920-reduced.png",
+        "qa-prod-quote-m375-light.png",
+        "qa-prod-quote-t768-light.png",
+        "qa-prod-quote-d1440-light.png"
+      ]
+    },
+    {
+      "utc": "2026-10-04T15:29:12Z",
+      "files": [
+        "qa-prod-quote-d1280-reduced.png",
+        "qa-prod-quote-d1920-reduced.png",
+        "qa-prod-review-m375-light.png",
+        "qa-prod-review-t768-light.png",
+        "qa-prod-review-d1440-light.png",
+        "qa-prod-review-d1280-reduced.png"
+      ]
+    },
+    {
+      "utc": "2026-10-04T15:29:23Z",
+      "files": [
+        "qa-prod-review-d1920-reduced.png",
+        "qa-prod-compare-m375-light.png",
+        "qa-prod-compare-t768-light.png",
+        "qa-prod-compare-d1440-light.png",
+        "qa-prod-compare-d1280-reduced.png",
+        "qa-prod-compare-d1920-reduced.png"
+      ]
+    }
+  ],
+  "duplicatePolicy": "Every distinct SHA-256 content was viewed. Equivalent names reuse the representative by the manifest's byte hash.",
+  "visualFindingCount": 0,
+  "observations": [
+    "Home preserves the disclosed S0 plate, exact retail prices and single primary booking action.",
+    "API access and Skills use 28-pixel regular-weight headings with readable body and explicit empty-state instructions.",
+    "Quote, Review and Compare keep the heading, missing-input explanation and available recovery/navigation visible at narrow widths."
+  ],
+  "scope": "Local production build with synthetic authenticated workspace data. Quote, Review and Compare are missing-input states; no happy workflow, generation, spend or production authenticated acceptance is claimed.",
+  "scoreAssigned": false,
+  "keyboardAndPerformancePending": true
+}

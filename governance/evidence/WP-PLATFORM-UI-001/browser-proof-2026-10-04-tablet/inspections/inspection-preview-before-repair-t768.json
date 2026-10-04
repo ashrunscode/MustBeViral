@@ -1,0 +1,68 @@
+{
+  "recordedUtc": "2026-10-04 13:37:08 UTC",
+  "timestampMeaning": "recorded after original-resolution inspection of every listed native capture",
+  "captures": [
+    {
+      "cell": "preview-quote-ok-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-quote-ok-t768.png"
+    },
+    {
+      "cell": "preview-quote-expired_quote-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-quote-expired_quote-t768.png"
+    },
+    {
+      "cell": "preview-quote-refreshed-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-quote-refreshed-t768.png"
+    },
+    {
+      "cell": "preview-quote-cap_exceeded-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-quote-cap_exceeded-t768.png"
+    },
+    {
+      "cell": "preview-quote-conflict-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-quote-conflict-t768.png"
+    },
+    {
+      "cell": "preview-run-running-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-run-running-t768.png"
+    },
+    {
+      "cell": "preview-run-complete-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-run-complete-t768.png"
+    },
+    {
+      "cell": "preview-run-failed-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-run-failed-t768.png"
+    },
+    {
+      "cell": "preview-compare-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-compare-t768.png"
+    }
+  ],
+  "inspectionMethod": "view_image original; no montage or recreated pixels",
+  "source": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "findings": [
+    {
+      "severity": "P2",
+      "routes": ["quote"],
+      "cause": "viewport breakpoint leaves a 200-pixel stage beside a 320-pixel summary in a 520-pixel Studio content area at 768",
+      "disposition": "repair with containment and target regressions"
+    },
+    {
+      "severity": "P2",
+      "routes": ["run"],
+      "cause": "stacked auto rows shrink below the visible attempts/recovery content; overflow-visible children overlap settlement and footer",
+      "disposition": "repair with terminal-state overlap and reachability regressions"
+    },
+    {
+      "severity": "P3",
+      "routes": ["review/compare"],
+      "cause": "page H1 uses 25 pixels and phone override 19 rather than accepted 28/1.2 scale",
+      "disposition": "cheap in-scope heading regression and repair"
+    }
+  ],
+  "axeIncomplete": [
+    "color-contrast in the three run cells; full visual inspection performed; no violation claimed"
+  ],
+  "acceptedAsFinal": false
+}

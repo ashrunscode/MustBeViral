@@ -1,0 +1,349 @@
+{
+  "recordedUtc": "2026-10-04T19:28:27.938Z",
+  "sourceHead": "16295a846a56dce750cd494fa7800709786110b5",
+  "rows": [
+    {
+      "label": "mobile-menu-open",
+      "environment": "authenticated local production reads",
+      "observedUtc": "2026-10-04T19:28:23.248Z",
+      "feedbackObservedMs": 70,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 40,
+          "interactionId": 1005
+        },
+        {
+          "name": "keypress",
+          "duration": 40,
+          "interactionId": 1005
+        },
+        {
+          "name": "click",
+          "duration": 40,
+          "interactionId": 1005
+        },
+        {
+          "name": "keyup",
+          "duration": 32,
+          "interactionId": 1005
+        }
+      ],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Close menu",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 40,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "mobile-menu-close",
+      "environment": "authenticated local production reads",
+      "observedUtc": "2026-10-04T19:28:23.561Z",
+      "feedbackObservedMs": 45,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 16,
+          "interactionId": 1012
+        },
+        {
+          "name": "keypress",
+          "duration": 16,
+          "interactionId": 1012
+        },
+        {
+          "name": "click",
+          "duration": 16,
+          "interactionId": 1012
+        }
+      ],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Menu",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 16,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "mobile-studio-breadcrumb",
+      "environment": "authenticated local production reads",
+      "observedUtc": "2026-10-04T19:28:23.999Z",
+      "feedbackObservedMs": 156,
+      "events": [],
+      "supported": true,
+      "activeTag": "BODY",
+      "activeName": "(self.__next_s=self.__next_s||[]).push([0,{\"children\":\"globalThis.__zod_globalConfig ??= {}; globalT",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": null,
+      "eventDurationUnder200": null
+    },
+    {
+      "label": "synthetic-confirm-expired-quote-heading-focus",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:25.152Z",
+      "feedbackObservedMs": 157,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 3492
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 3492
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 3492
+        },
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 3499
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 3499
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 3499
+        }
+      ],
+      "supported": true,
+      "activeTag": "H1",
+      "activeName": "Review this run before spending",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 56,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "synthetic-requote-heading-focus",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:25.495Z",
+      "feedbackObservedMs": 73,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 40,
+          "interactionId": 3506
+        },
+        {
+          "name": "keypress",
+          "duration": 40,
+          "interactionId": 3506
+        },
+        {
+          "name": "click",
+          "duration": 40,
+          "interactionId": 3506
+        }
+      ],
+      "supported": true,
+      "activeTag": "H1",
+      "activeName": "Review this run before spending",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 40,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "compact-plan-outline-open",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:26.460Z",
+      "feedbackObservedMs": 64,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 64,
+          "interactionId": 4047
+        },
+        {
+          "name": "keypress",
+          "duration": 64,
+          "interactionId": 4047
+        },
+        {
+          "name": "click",
+          "duration": 64,
+          "interactionId": 4047
+        },
+        {
+          "name": "keyup",
+          "duration": 48,
+          "interactionId": 4047
+        }
+      ],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Close Plan outline and comments",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 64,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "compact-plan-outline-escape",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:26.805Z",
+      "feedbackObservedMs": 83,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 16,
+          "interactionId": 4054
+        }
+      ],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Outline and comments",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 16,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "selected-node-complete-details",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:27.209Z",
+      "feedbackObservedMs": 68,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 32,
+          "interactionId": 4061
+        },
+        {
+          "name": "keypress",
+          "duration": 32,
+          "interactionId": 4061
+        },
+        {
+          "name": "click",
+          "duration": 32,
+          "interactionId": 4061
+        },
+        {
+          "name": "keyup",
+          "duration": 16,
+          "interactionId": 4061
+        }
+      ],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Visual genAsset 01 — Hero✓Verified",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 32,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "canvas-zoom-button",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:27.549Z",
+      "feedbackObservedMs": 77,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 40,
+          "interactionId": 4068
+        },
+        {
+          "name": "keypress",
+          "duration": 40,
+          "interactionId": 4068
+        },
+        {
+          "name": "click",
+          "duration": 40,
+          "interactionId": 4068
+        },
+        {
+          "name": "keyup",
+          "duration": 32,
+          "interactionId": 4068
+        }
+      ],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Zoom out",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": 40,
+      "eventDurationUnder200": true
+    },
+    {
+      "label": "canvas-wheel-zoom",
+      "environment": "synthetic in-memory preview mechanics",
+      "observedUtc": "2026-10-04T19:28:27.938Z",
+      "feedbackObservedMs": 110,
+      "events": [],
+      "supported": true,
+      "activeTag": "BUTTON",
+      "activeName": "Zoom out",
+      "hScroll": false,
+      "animations": [],
+      "broadTransitions": 0,
+      "scriptedMaxEventDurationMs": null,
+      "eventDurationUnder200": null
+    }
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/brands"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studio-invitations"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/knowledge-review"
+    }
+  ],
+  "remoteAuthentication": false,
+  "providerOrQueueExecution": false,
+  "externalWrites": 0,
+  "syntheticConfirmUsesOnlyInMemoryPort": true,
+  "fieldINP": "not measured; durations are individual scripted Event Timing entries, not a field percentile; absence of a qualifying entry is unmeasured"
+}

@@ -1,0 +1,12 @@
+{
+  "node": "v24.18.0",
+  "pnpm": "11.12.0",
+  "command": "Pinned Node existing repository Playwright isolated local production measurement",
+  "finishedUtc": "2026-10-04T19:10:19.7637653Z",
+  "localOnly": true,
+  "log": "C:/dev/mbv-run/l3f-canvas-production-isolated-20261004.txt",
+  "newBrowserStackInstalled": false,
+  "startedUtc": "2026-10-04T19:10:01.7177045Z",
+  "exit": 0,
+  "sourceHead": "1486b2c47a08bb5dc4d81793a6f3fec5f40e590a"
+}

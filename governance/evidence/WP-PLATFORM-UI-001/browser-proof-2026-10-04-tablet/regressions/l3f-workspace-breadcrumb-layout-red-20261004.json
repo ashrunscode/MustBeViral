@@ -1,0 +1,31 @@
+{
+  "pnpm": "11.12.0",
+  "phase": "red",
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "0d5bef32254b553545e88c10a52abde56496fbbdd5d2438d3897554796959900"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "4d0cee359a050fc40bb18e542a7c445f2fea28e92546213b6b0f04e995d46a7a"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "startedUtc": "2026-10-04T16:04:01.2263747Z",
+  "root": "C:/dev/mbv-finish",
+  "node": "v24.18.0",
+  "command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep collapsed mobile navigation",
+  "exit": 1,
+  "providersAndQueuesDisabled": true,
+  "sourceBase": "9a77865d501c9b1b3813d81ebdb4915c99305f22",
+  "log": "C:/dev/mbv-run/l3f-workspace-breadcrumb-layout-red-20261004.txt",
+  "harnessPid": 44264,
+  "localOnly": true,
+  "endedUtc": "2026-10-04T16:04:39.4215464Z",
+  "syntheticCleanupDeleteRequestsPrevented": true
+}

@@ -1,0 +1,196 @@
+{
+  "recordedUtc": "2026-10-04T17:06:01.943Z",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "rows": [
+    {
+      "route": "review",
+      "mode": "zoom-200-emulated",
+      "renderMode": "production build and real local authenticated Core reads",
+      "probe": {
+        "rect": {
+          "x": 20,
+          "y": 339.59375,
+          "width": 133.828125,
+          "height": 44,
+          "top": 339.59375,
+          "right": 153.828125,
+          "bottom": 383.59375,
+          "left": 20
+        },
+        "hits": 288,
+        "total": 288,
+        "focus": true,
+        "scrollY": 0,
+        "stageRect": {
+          "x": 0,
+          "y": 342,
+          "width": 640,
+          "height": 40,
+          "top": 342,
+          "right": 640,
+          "bottom": 382,
+          "left": 0
+        }
+      }
+    },
+    {
+      "route": "quote-expired",
+      "mode": "text-only-200-emulated",
+      "probe": {
+        "rect": {
+          "x": 1022.125,
+          "y": 824.5,
+          "width": 225.875,
+          "height": 80,
+          "top": 824.5,
+          "right": 1248,
+          "bottom": 904.5,
+          "left": 1022.125
+        },
+        "hits": 990,
+        "total": 990,
+        "focus": false,
+        "scrollY": 0,
+        "footer": {
+          "x": 220,
+          "y": 828,
+          "width": 1060,
+          "height": 72,
+          "top": 828,
+          "right": 1280,
+          "bottom": 900,
+          "left": 220
+        }
+      }
+    },
+    {
+      "route": "compare",
+      "mode": "text-only-200-emulated",
+      "avatars": [],
+      "captions": [
+        {
+          "box": {
+            "x": 262,
+            "y": 2423.1875,
+            "width": 154,
+            "height": 40,
+            "top": 2423.1875,
+            "right": 416,
+            "bottom": 2463.1875,
+            "left": 262
+          },
+          "texts": [
+            {
+              "text": "kimi-2.6",
+              "box": {
+                "x": 262,
+                "y": 2423.1875,
+                "width": 65,
+                "height": 40,
+                "top": 2423.1875,
+                "right": 327,
+                "bottom": 2463.1875,
+                "left": 262
+              },
+              "textBox": {
+                "x": 262,
+                "y": 2420.1875,
+                "width": 65,
+                "height": 46,
+                "top": 2420.1875,
+                "right": 327,
+                "bottom": 2466.1875,
+                "left": 262
+              }
+            },
+            {
+              "text": "3 placements",
+              "box": {
+                "x": 332,
+                "y": 2423.1875,
+                "width": 130,
+                "height": 40,
+                "top": 2423.1875,
+                "right": 462,
+                "bottom": 2463.1875,
+                "left": 332
+              },
+              "textBox": {
+                "x": 332,
+                "y": 2420.1875,
+                "width": 130,
+                "height": 46,
+                "top": 2420.1875,
+                "right": 462,
+                "bottom": 2466.1875,
+                "left": 332
+              }
+            }
+          ]
+        },
+        {
+          "box": {
+            "x": 426,
+            "y": 2423.1875,
+            "width": 154,
+            "height": 40,
+            "top": 2423.1875,
+            "right": 580,
+            "bottom": 2463.1875,
+            "left": 426
+          },
+          "texts": [
+            {
+              "text": "Prior",
+              "box": {
+                "x": 426,
+                "y": 2433.1875,
+                "width": 65,
+                "height": 20,
+                "top": 2433.1875,
+                "right": 491,
+                "bottom": 2453.1875,
+                "left": 426
+              },
+              "textBox": {
+                "x": 426,
+                "y": 2430.1875,
+                "width": 65,
+                "height": 26,
+                "top": 2430.1875,
+                "right": 491,
+                "bottom": 2456.1875,
+                "left": 426
+              }
+            },
+            {
+              "text": "3 placements",
+              "box": {
+                "x": 496,
+                "y": 2423.1875,
+                "width": 130,
+                "height": 40,
+                "top": 2423.1875,
+                "right": 626,
+                "bottom": 2463.1875,
+                "left": 496
+              },
+              "textBox": {
+                "x": 496,
+                "y": 2420.1875,
+                "width": 130,
+                "height": 46,
+                "top": 2420.1875,
+                "right": 626,
+                "bottom": 2466.1875,
+                "left": 496
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "remoteWrites": 0,
+  "providers": false
+}

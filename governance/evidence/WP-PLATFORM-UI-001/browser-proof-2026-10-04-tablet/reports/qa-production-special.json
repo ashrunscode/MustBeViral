@@ -1,0 +1,1195 @@
+{
+  "recordedUtc": "2026-10-04T16:42:32.010Z",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "renderMode": "local production build, real local synthetic workspace data",
+  "emulation": "Zoom 200 uses the 640 by 450 CSS viewport corresponding to 1280 by 900 at 200 percent browser zoom. Text-only freezes computed fonts and line heights before doubling once. Neither is a real browser zoom or device claim.",
+  "remoteAccess": false,
+  "providers": false,
+  "writes": 0,
+  "rows": [
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "forced-colors",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:20.669Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 906,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1203,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": true,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "zoom-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:21.357Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 518,
+              "height": 33.59375,
+              "top": 324,
+              "right": 579,
+              "bottom": 357.59375,
+              "left": 61
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 1,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-zoom-200-emulated.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "text-only-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:22.079Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "API keys",
+            "px": 56,
+            "rect": {
+              "x": 297,
+              "y": 193,
+              "width": 906,
+              "height": 67.203125,
+              "top": 193,
+              "right": 1203,
+              "bottom": 260.203125,
+              "left": 297
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-text-only-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 215,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:22.142Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "API keys",
+              "px": 56,
+              "rect": {
+                "x": 297,
+                "y": 193,
+                "width": 906,
+                "height": 67.203125,
+                "top": 193,
+                "right": 1203,
+                "bottom": 260.203125,
+                "left": 297
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "forced-colors",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:22.764Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 906,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1203,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": true,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 2,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "zoom-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:23.407Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "rect": {
+              "x": 61,
+              "y": 324,
+              "width": 518,
+              "height": 33.59375,
+              "top": 324,
+              "right": 579,
+              "bottom": 357.59375,
+              "left": 61
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 3,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-zoom-200-emulated.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "text-only-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:24.047Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Skills and version history",
+            "px": 56,
+            "rect": {
+              "x": 297,
+              "y": 193,
+              "width": 906,
+              "height": 67.203125,
+              "top": 193,
+              "right": 1203,
+              "bottom": 260.203125,
+              "left": 297
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 2,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-text-only-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 215,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:24.109Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Skills and version history",
+              "px": 56,
+              "rect": {
+                "x": 297,
+                "y": 193,
+                "width": 906,
+                "height": 67.203125,
+                "top": 193,
+                "right": 1203,
+                "bottom": 260.203125,
+                "left": 297
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "quote",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "forced-colors",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:24.725Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "rect": {
+              "x": 424,
+              "y": 432.65625,
+              "width": 653,
+              "height": 33.59375,
+              "top": 432.65625,
+              "right": 1077,
+              "bottom": 466.25,
+              "left": 424
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": true,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 4,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "quote",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "zoom-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:25.320Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "rect": {
+              "x": 34,
+              "y": 397,
+              "width": 573,
+              "height": 33.59375,
+              "top": 397,
+              "right": 607,
+              "bottom": 430.59375,
+              "left": 34
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage quote-flow-module__I1bYXW__single",
+            "scrollTop": 0,
+            "clientHeight": 108,
+            "scrollHeight": 209
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 5,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-zoom-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-zoom-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage quote-flow-module__I1bYXW__single",
+            "scrollTop": 101,
+            "clientHeight": 108,
+            "scrollHeight": 209
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:25.381Z",
+        "probe": {
+          "width": 640,
+          "height": 450,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 28,
+              "rect": {
+                "x": 34,
+                "y": 296,
+                "width": 573,
+                "height": 33.59375,
+                "top": 296,
+                "right": 607,
+                "bottom": 329.59375,
+                "left": 34
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "quote-flow-module__I1bYXW__quotePage quote-flow-module__I1bYXW__single",
+              "scrollTop": 101,
+              "clientHeight": 108,
+              "scrollHeight": 209
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "quote",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "text-only-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:26.018Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 56,
+            "rect": {
+              "x": 424,
+              "y": 436.40625,
+              "width": 653,
+              "height": 134.40625,
+              "top": 436.40625,
+              "right": 1077,
+              "bottom": 570.8125,
+              "left": 424
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 4,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-text-only-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 215,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:26.081Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 56,
+              "rect": {
+                "x": 424,
+                "y": 436.40625,
+                "width": 653,
+                "height": 134.40625,
+                "top": 436.40625,
+                "right": 1077,
+                "bottom": 570.8125,
+                "left": 424
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "review",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "forced-colors",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:26.668Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review outputs",
+            "px": 28,
+            "rect": {
+              "x": 248,
+              "y": 162.5,
+              "width": 312.890625,
+              "height": 33.59375,
+              "top": 162.5,
+              "right": 560.890625,
+              "bottom": 196.09375,
+              "left": 248
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": true,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 6,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "review",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "zoom-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:27.277Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review outputs",
+            "px": 28,
+            "rect": {
+              "x": 20,
+              "y": 368,
+              "width": 312.890625,
+              "height": 33.59375,
+              "top": 368,
+              "right": 332.890625,
+              "bottom": 401.59375,
+              "left": 20
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 0,
+            "clientHeight": 40,
+            "scrollHeight": 216
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 7,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-zoom-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-zoom-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 176,
+            "clientHeight": 40,
+            "scrollHeight": 216
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:27.343Z",
+        "probe": {
+          "width": 640,
+          "height": 450,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review outputs",
+              "px": 28,
+              "rect": {
+                "x": 20,
+                "y": 192,
+                "width": 312.890625,
+                "height": 33.59375,
+                "top": 192,
+                "right": 332.890625,
+                "bottom": 225.59375,
+                "left": 20
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "review-flow-module__VOGFZW__reviewStage",
+              "scrollTop": 176,
+              "clientHeight": 40,
+              "scrollHeight": 216
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "review",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "text-only-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:28.022Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review outputs",
+            "px": 56,
+            "rect": {
+              "x": 248,
+              "y": 328,
+              "width": 625.765625,
+              "height": 67.203125,
+              "top": 328,
+              "right": 873.765625,
+              "bottom": 395.203125,
+              "left": 248
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 6,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-text-only-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 215,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:28.086Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review outputs",
+              "px": 56,
+              "rect": {
+                "x": 248,
+                "y": 328,
+                "width": 625.765625,
+                "height": 67.203125,
+                "top": 328,
+                "right": 873.765625,
+                "bottom": 395.203125,
+                "left": 248
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "compare",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review/compare?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "forced-colors",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:28.705Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Output comparison",
+            "px": 28,
+            "rect": {
+              "x": 248,
+              "y": 162.5,
+              "width": 312.890625,
+              "height": 33.59375,
+              "top": 162.5,
+              "right": 560.890625,
+              "bottom": 196.09375,
+              "left": 248
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": true,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 8,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "compare",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review/compare?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "zoom-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:29.316Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Output comparison",
+            "px": 28,
+            "rect": {
+              "x": 20,
+              "y": 368,
+              "width": 312.890625,
+              "height": 33.59375,
+              "top": 368,
+              "right": 332.890625,
+              "bottom": 401.59375,
+              "left": 20
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 0,
+            "clientHeight": 40,
+            "scrollHeight": 216
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 9,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-zoom-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-zoom-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 176,
+            "clientHeight": 40,
+            "scrollHeight": 216
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:29.378Z",
+        "probe": {
+          "width": 640,
+          "height": 450,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Output comparison",
+              "px": 28,
+              "rect": {
+                "x": 20,
+                "y": 192,
+                "width": 312.890625,
+                "height": 33.59375,
+                "top": 192,
+                "right": 332.890625,
+                "bottom": 225.59375,
+                "left": 20
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "review-flow-module__VOGFZW__reviewStage",
+              "scrollTop": 176,
+              "clientHeight": 40,
+              "scrollHeight": 216
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "compare",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review/compare?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "mode": "text-only-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:30.016Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Output comparison",
+            "px": 56,
+            "rect": {
+              "x": 248,
+              "y": 328,
+              "width": 625.765625,
+              "height": 67.203125,
+              "top": 328,
+              "right": 873.765625,
+              "bottom": 395.203125,
+              "left": 248
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 8,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-text-only-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 215,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:30.079Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Output comparison",
+              "px": 56,
+              "rect": {
+                "x": 248,
+                "y": 328,
+                "width": 625.765625,
+                "height": 67.203125,
+                "top": 328,
+                "right": 873.765625,
+                "bottom": 395.203125,
+                "left": 248
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "mode": "forced-colors",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:30.697Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "rect": {
+              "x": 252,
+              "y": 97,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 97,
+              "right": 689.109375,
+              "bottom": 130.59375,
+              "left": 252
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": true,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 10,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "mode": "zoom-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:31.313Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Creators and partners",
+            "px": 28,
+            "rect": {
+              "x": 16,
+              "y": 210,
+              "width": 437.109375,
+              "height": 33.59375,
+              "top": 210,
+              "right": 453.109375,
+              "bottom": 243.59375,
+              "left": 16
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 11,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-zoom-200-emulated.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    },
+    {
+      "route": "creators",
+      "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+      "mode": "text-only-200-emulated",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T16:42:31.949Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Creators and partners",
+            "px": 56,
+            "rect": {
+              "x": 252,
+              "y": 116,
+              "width": 874.203125,
+              "height": 67.203125,
+              "top": 116,
+              "right": 1126.203125,
+              "bottom": 183.203125,
+              "left": 252
+            }
+          }
+        ],
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "forcedColors": false,
+        "reducedMotion": true,
+        "animations": []
+      },
+      "treeIndex": 10,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-text-only-200-emulated-bottom.png",
+        "positions": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 215,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          }
+        ],
+        "capturedUtc": "2026-10-04T16:42:32.008Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Creators and partners",
+              "px": 56,
+              "rect": {
+                "x": 252,
+                "y": 116,
+                "width": 874.203125,
+                "height": 67.203125,
+                "top": 116,
+                "right": 1126.203125,
+                "bottom": 183.203125,
+                "left": 252
+              }
+            }
+          ],
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            }
+          ],
+          "forcedColors": false,
+          "reducedMotion": true,
+          "animations": []
+        }
+      },
+      "errors": [],
+      "http": []
+    }
+  ],
+  "trees": [
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: API access\n  - text: Owner\n  - button \"Sign out\"\n- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: API access\n  - text: Owner\n  - button \"Sign out\"\n- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: Skills\n  - text: Owner\n  - button \"Sign out\"\n- main \"Skills\":\n  - region \"Skills and version history\":\n    - text: User-authored Skills\n    - heading \"Skills and version history\" [level=1]\n    - paragraph: Publish reusable workflow instructions for your team. Each publish creates an immutable version; edits always create a new version and never mutate a published snapshot. Skills cannot access database, storage, or billing credentials.\n    - button \"Publish Skill\"\n  - region \"Published Skills\":\n    - text: Workspace Skills\n    - heading \"Published Skills\" [level=2]\n    - paragraph: No Skills yet. Publish your first reusable workflow instruction.\n  - region \"Version history\":\n    - text: Immutable versions\n    - heading \"Version history\" [level=2]\n    - paragraph: Select a Skill to inspect its immutable published versions.\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: Skills\n  - text: Owner\n  - button \"Sign out\"\n- main \"Skills\":\n  - region \"Skills and version history\":\n    - text: User-authored Skills\n    - heading \"Skills and version history\" [level=1]\n    - paragraph: Publish reusable workflow instructions for your team. Each publish creates an immutable version; edits always create a new version and never mutate a published snapshot. Skills cannot access database, storage, or billing credentials.\n    - button \"Publish Skill\"\n  - region \"Published Skills\":\n    - text: Workspace Skills\n    - heading \"Published Skills\" [level=2]\n    - paragraph: No Skills yet. Publish your first reusable workflow instruction.\n  - region \"Version history\":\n    - text: Immutable versions\n    - heading \"Version history\" [level=2]\n    - paragraph: Select a Skill to inspect its immutable published versions.\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Budget\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Content Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan open after the brief is planned. Content, Approvals, Results open after a run is confirmed.\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - alert:\n      - strong: Quote unavailable\n      - text: Open this quote from its plan so the revision it prices is known.\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Budget\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Content Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan open after the brief is planned. Content, Approvals, Results open after a run is confirmed.\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - alert:\n      - strong: Quote unavailable\n      - text: Open this quote from its plan so the revision it prices is known.\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Approvals, Results open after a run is confirmed.\n  - region \"Review outputs\":\n    - heading \"Review outputs\" [level=1]\n    - paragraph: No approval or export is available until the receipt is read.\n    - alert: Open this review from its run so its outputs can be loaded.\n    - link \"Back to the run\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Approvals, Results open after a run is confirmed.\n  - region \"Review outputs\":\n    - heading \"Review outputs\" [level=1]\n    - paragraph: No approval or export is available until the receipt is read.\n    - alert: Open this review from its run so its outputs can be loaded.\n    - link \"Back to the run\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Approvals, Results open after a run is confirmed.\n  - region \"Output comparison\":\n    - heading \"Output comparison\" [level=1]\n    - paragraph: No approval or export is available until the receipt is read.\n    - alert: Open this review from its run so its outputs can be loaded.\n    - link \"Back to the run\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Content\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan Budget\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Results\n    - paragraph: Plan and Budget open after the brief is planned. Approvals, Results open after a run is confirmed.\n  - region \"Output comparison\":\n    - heading \"Output comparison\" [level=1]\n    - paragraph: No approval or export is available until the receipt is read.\n    - alert: Open this review from its run so its outputs can be loaded.\n    - link \"Back to the run\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n  - text: Owner\n  - button \"Sign out\"\n- main \"Creators and partners\":\n  - heading \"Creators and partners\" [level=1]\n  - paragraph: People and brands you work with, with the evidence for each fit.\n  - status:\n    - heading \"No creators or partners yet.\" [level=2]\n    - paragraph: Creator discovery, outreach and partnership agreements are later roadmap waves.\n    - paragraph: Creator and partner lists are not part of this release yet.\n    - link \"Back to brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n  - text: Owner\n  - button \"Sign out\"\n- main \"Creators and partners\":\n  - heading \"Creators and partners\" [level=1]\n  - paragraph: People and brands you work with, with the evidence for each fit.\n  - status:\n    - heading \"No creators or partners yet.\" [level=2]\n    - paragraph: Creator discovery, outreach and partnership agreements are later roadmap waves.\n    - paragraph: Creator and partner lists are not part of this release yet.\n    - link \"Back to brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n- alert"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "recordedUtc": "2026-10-04T16:27:02.557Z",
+  "rows": [
+    {
+      "i": 0,
+      "utc": "2026-10-04T16:27:00.477Z",
+      "tree": "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+      "breadcrumb": "- navigation \"Breadcrumb\":\n  - list:\n    - listitem:\n      - link \"Tablet fixture studio\":\n        - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - listitem:\n      - text: /\n      - strong: Tablet fixture brand\n    - listitem:\n      - text: /\n      - strong: API access"
+    },
+    {
+      "i": 1,
+      "utc": "2026-10-04T16:27:01.182Z",
+      "tree": "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+      "breadcrumb": "- navigation \"Breadcrumb\":\n  - list:\n    - listitem:\n      - link \"Tablet fixture studio\":\n        - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - listitem:\n      - text: /\n      - strong: Tablet fixture brand\n    - listitem:\n      - text: /\n      - strong: API access"
+    },
+    {
+      "i": 2,
+      "utc": "2026-10-04T16:27:01.852Z",
+      "tree": "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+      "breadcrumb": "- navigation \"Breadcrumb\":\n  - list:\n    - listitem:\n      - link \"Tablet fixture studio\":\n        - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - listitem:\n      - text: /\n      - strong: Tablet fixture brand\n    - listitem:\n      - text: /\n      - strong: API access"
+    },
+    {
+      "i": 3,
+      "utc": "2026-10-04T16:27:02.536Z",
+      "tree": "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+      "breadcrumb": "- navigation \"Breadcrumb\":\n  - list:\n    - listitem:\n      - link \"Tablet fixture studio\":\n        - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - listitem:\n      - text: /\n      - strong: Tablet fixture brand\n    - listitem:\n      - text: /\n      - strong: API access"
+    }
+  ],
+  "requests": [],
+  "localOnly": true,
+  "writes": 0
+}

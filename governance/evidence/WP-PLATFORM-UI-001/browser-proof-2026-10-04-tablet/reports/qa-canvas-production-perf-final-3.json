@@ -1,0 +1,120 @@
+{
+  "recordedUtc": "2026-10-04T18:48:24.359Z",
+  "sourceHead": "9958d82703069d16cd1f3eb98afc6f49f2c1b065",
+  "normalMotionRuntimeEquivalentTo": "9b92ca08412794162098dc0c2a1bc41585778643",
+  "renderMode": "production build; authenticated local synthetic session; intercepted GET graph, synthetic project and brand mapping containing 100 synthetic brief nodes; mechanics only",
+  "httpStatus": 200,
+  "mobile": {
+    "lcpMs": 436,
+    "cls": 0.06351460479405793,
+    "events": [],
+    "supported": true,
+    "hScroll": false
+  },
+  "idleFps": {
+    "fps": 32.881626146460704,
+    "visibility": "visible",
+    "hasFocus": true
+  },
+  "fps": {
+    "frames": 97,
+    "durationMs": 3023.4999999821184,
+    "fps": 32.08202414439348,
+    "maxFrameDeltaMs": 31.800000000000182
+  },
+  "lab": {
+    "lcpMs": 436,
+    "cls": 0.06351460479405793,
+    "events": [
+      {
+        "name": "keydown",
+        "duration": 64,
+        "interactionId": 816
+      },
+      {
+        "name": "keypress",
+        "duration": 64,
+        "interactionId": 816
+      },
+      {
+        "name": "click",
+        "duration": 64,
+        "interactionId": 816
+      },
+      {
+        "name": "keyup",
+        "duration": 48,
+        "interactionId": 816
+      },
+      {
+        "name": "pointerdown",
+        "duration": 56,
+        "interactionId": 823
+      }
+    ],
+    "supported": true,
+    "hScroll": false
+  },
+  "errors": [
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation.",
+    "Unable to preventDefault inside passive event listener invocation."
+  ],
+  "responses": [],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    }
+  ],
+  "remoteAuthentication": false,
+  "providerOrQueueExecution": false,
+  "externalWrites": 0,
+  "blockedNonGetRequests": [],
+  "thresholdFps": 55,
+  "passFps": false,
+  "fieldINP": "not measured"
+}

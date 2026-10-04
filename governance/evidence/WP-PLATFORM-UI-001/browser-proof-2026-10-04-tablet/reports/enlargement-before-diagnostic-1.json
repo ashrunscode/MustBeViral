@@ -1,0 +1,293 @@
+{
+  "recordedUtc": "2026-10-04T17:03:51.880Z",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "rows": [
+    {
+      "route": "review",
+      "mode": "zoom-200-emulated",
+      "probe": {
+        "tag": "BUTTON",
+        "text": "Approve group as Maya Chen",
+        "rect": {
+          "x": 462.265625,
+          "y": 322.671875,
+          "width": 157.734375,
+          "height": 44,
+          "top": 322.671875,
+          "right": 620,
+          "bottom": 366.671875,
+          "left": 462.265625
+        },
+        "paintedHitPoints": 342,
+        "totalPoints": 342,
+        "focus": true,
+        "viewport": {
+          "width": 640,
+          "height": 450
+        },
+        "ancestorClips": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "rect": {
+              "x": 0,
+              "y": 311,
+              "width": 640,
+              "height": 67,
+              "top": 311,
+              "right": 640,
+              "bottom": 378,
+              "left": 0
+            },
+            "clientHeight": 67,
+            "scrollHeight": 1962
+          },
+          {
+            "class": "review-flow-module__VOGFZW__reviewPage review-flow-module__VOGFZW__approvalMode",
+            "rect": {
+              "x": 0,
+              "y": 311,
+              "width": 640,
+              "height": 139,
+              "top": 311,
+              "right": 640,
+              "bottom": 450,
+              "left": 0
+            },
+            "clientHeight": 139,
+            "scrollHeight": 147
+          },
+          {
+            "class": "platform-main platform-main--flush",
+            "rect": {
+              "x": 0,
+              "y": 202,
+              "width": 640,
+              "height": 248,
+              "top": 202,
+              "right": 640,
+              "bottom": 450,
+              "left": 0
+            },
+            "clientHeight": 248,
+            "scrollHeight": 248
+          },
+          {
+            "class": "platform-app platform-app--flush",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 640,
+              "height": 450,
+              "top": 0,
+              "right": 640,
+              "bottom": 450,
+              "left": 0
+            },
+            "clientHeight": 450,
+            "scrollHeight": 450
+          }
+        ]
+      }
+    },
+    {
+      "route": "quote-expired",
+      "mode": "text-only-200-emulated",
+      "probe": {
+        "tag": "BUTTON",
+        "text": "Re-quote this run",
+        "rect": {
+          "x": 1022.125,
+          "y": 819.5,
+          "width": 225.875,
+          "height": 80,
+          "top": 819.5,
+          "right": 1248,
+          "bottom": 899.5,
+          "left": 1022.125
+        },
+        "paintedHitPoints": 990,
+        "totalPoints": 990,
+        "focus": true,
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "ancestorClips": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "rect": {
+              "x": 220,
+              "y": 255,
+              "width": 1060,
+              "height": 645,
+              "top": 255,
+              "right": 1280,
+              "bottom": 900,
+              "left": 220
+            },
+            "clientHeight": 645,
+            "scrollHeight": 650
+          },
+          {
+            "class": "platform-main platform-main--flush",
+            "rect": {
+              "x": 220,
+              "y": 120,
+              "width": 1060,
+              "height": 780,
+              "top": 120,
+              "right": 1280,
+              "bottom": 900,
+              "left": 220
+            },
+            "clientHeight": 780,
+            "scrollHeight": 780
+          },
+          {
+            "class": "platform-app platform-app--flush",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900,
+              "top": 0,
+              "right": 1280,
+              "bottom": 900,
+              "left": 0
+            },
+            "clientHeight": 900,
+            "scrollHeight": 900
+          }
+        ]
+      }
+    },
+    {
+      "route": "compare",
+      "mode": "text-only-200-emulated",
+      "avatars": [],
+      "captions": [
+        {
+          "box": {
+            "x": 262,
+            "y": 2423.1875,
+            "width": 154,
+            "height": 40,
+            "top": 2423.1875,
+            "right": 416,
+            "bottom": 2463.1875,
+            "left": 262
+          },
+          "texts": [
+            {
+              "text": "kimi-2.6",
+              "box": {
+                "x": 262,
+                "y": 2423.1875,
+                "width": 65,
+                "height": 40,
+                "top": 2423.1875,
+                "right": 327,
+                "bottom": 2463.1875,
+                "left": 262
+              },
+              "textBox": {
+                "x": 262,
+                "y": 2420.1875,
+                "width": 65,
+                "height": 46,
+                "top": 2420.1875,
+                "right": 327,
+                "bottom": 2466.1875,
+                "left": 262
+              }
+            },
+            {
+              "text": "3 placements",
+              "box": {
+                "x": 332,
+                "y": 2423.1875,
+                "width": 130,
+                "height": 40,
+                "top": 2423.1875,
+                "right": 462,
+                "bottom": 2463.1875,
+                "left": 332
+              },
+              "textBox": {
+                "x": 332,
+                "y": 2420.1875,
+                "width": 130,
+                "height": 46,
+                "top": 2420.1875,
+                "right": 462,
+                "bottom": 2466.1875,
+                "left": 332
+              }
+            }
+          ]
+        },
+        {
+          "box": {
+            "x": 426,
+            "y": 2423.1875,
+            "width": 154,
+            "height": 40,
+            "top": 2423.1875,
+            "right": 580,
+            "bottom": 2463.1875,
+            "left": 426
+          },
+          "texts": [
+            {
+              "text": "Prior",
+              "box": {
+                "x": 426,
+                "y": 2433.1875,
+                "width": 65,
+                "height": 20,
+                "top": 2433.1875,
+                "right": 491,
+                "bottom": 2453.1875,
+                "left": 426
+              },
+              "textBox": {
+                "x": 426,
+                "y": 2430.1875,
+                "width": 65,
+                "height": 26,
+                "top": 2430.1875,
+                "right": 491,
+                "bottom": 2456.1875,
+                "left": 426
+              }
+            },
+            {
+              "text": "3 placements",
+              "box": {
+                "x": 496,
+                "y": 2423.1875,
+                "width": 130,
+                "height": 40,
+                "top": 2423.1875,
+                "right": 626,
+                "bottom": 2463.1875,
+                "left": 496
+              },
+              "textBox": {
+                "x": 496,
+                "y": 2420.1875,
+                "width": 130,
+                "height": 46,
+                "top": 2420.1875,
+                "right": 626,
+                "bottom": 2466.1875,
+                "left": 496
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Synthetic in-memory preview only; no Core, provider or remote mutation; enlarged fonts frozen then doubled once"
+}

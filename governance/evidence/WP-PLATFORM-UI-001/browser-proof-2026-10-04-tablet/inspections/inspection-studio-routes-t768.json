@@ -1,0 +1,36 @@
+{
+  "recordedUtc": "2026-10-04 12:50:13 UTC",
+  "timestampMeaning": "recorded after original-resolution visual inspection",
+  "cells": [
+    {
+      "cell": "studio-chooser-success-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-chooser-success-t768.png",
+      "method": "view_image original resolution",
+      "scope": "viewport visual inspection only",
+      "findings": []
+    },
+    {
+      "cell": "studio-creators-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-creators-t768.png",
+      "method": "view_image original resolution",
+      "scope": "viewport visual inspection only",
+      "findings": []
+    },
+    {
+      "cell": "studio-reports-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-reports-t768.png",
+      "method": "view_image original resolution",
+      "scope": "viewport visual inspection only",
+      "findings": []
+    },
+    {
+      "cell": "studio-settings-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-settings-t768.png",
+      "method": "view_image original resolution",
+      "scope": "viewport visual inspection only",
+      "findings": []
+    }
+  ],
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "note": "Compact target candidates are being checked for effective hit area before classification. No broad design score."
+}

@@ -1,0 +1,54 @@
+{
+  "recordedUtc": "2026-10-04 13:00:10 UTC",
+  "timestampMeaning": "recorded after original-resolution visual inspection",
+  "cells": [
+    {
+      "cell": "studio-creators-fixed-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-creators-fixed-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "studio-reports-fixed-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-reports-fixed-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "studio-settings-fixed-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-settings-fixed-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-campaigns-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-campaigns-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-calendar-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-calendar-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-assets-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-assets-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    }
+  ],
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "scope": "viewport capture; calendar lower fold and missing route/state coverage remain pending"
+}

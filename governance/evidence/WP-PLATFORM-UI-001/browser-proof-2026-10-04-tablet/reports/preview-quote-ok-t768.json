@@ -1,0 +1,46 @@
+{
+  "cell": "preview-quote-ok-t768",
+  "path": "/studio/lumen-skin/quote",
+  "capturedUtc": "2026-10-04T13:30:26.088Z",
+  "observedUtc": "2026-10-04T13:30:26.324Z",
+  "sourceBase": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "equalMergedTree": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [],
+  "evidenceLevel": "synthetic in-memory local preview, no Core execution",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Review this run before spending",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "runState": null,
+    "results": [],
+    "announcements": [
+      {
+        "role": "status",
+        "text": "Preview. Sample work only. No connected accounts, approvals or publication."
+      }
+    ],
+    "runningAnimations": []
+  },
+  "tree": "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - paragraph: The reservation is pinned to this revision, route, and affected branch.\n    - text: Quote $4.20 Revision 7f3a Expires 15:00\n    - table \"Per-node estimate\":\n      - rowgroup:\n        - row \"Node Basis Estimate\":\n          - columnheader \"Node\"\n          - columnheader \"Basis\"\n          - columnheader \"Estimate\"\n      - rowgroup:\n        - row \"Concept logic kimi-2.6 $1.20\":\n          - cell \"Concept logic\"\n          - cell \"kimi-2.6\"\n          - cell \"$1.20\"\n        - row \"Asset gen x3 flux-2-klein $2.40\":\n          - cell \"Asset gen x3\"\n          - cell \"flux-2-klein\"\n          - cell \"$2.40\"\n        - row \"Copy 3 sets $0.24\":\n          - cell \"Copy\"\n          - cell \"3 sets\"\n          - cell \"$0.24\"\n        - row \"Motion seedance-1.0 6s 9:16 $0.36\":\n          - cell \"Motion seedance-1.0 6s\"\n          - cell \"9:16\"\n          - cell \"$0.36\"\n        - row \"Total Maximum charge $4.20\":\n          - cell \"Total\"\n          - cell \"Maximum charge\"\n          - cell \"$4.20\"\n    - text: 4 nodes priced in this quote Expires 15:00 Run cap $8.00. Day cap $100.00, used $18.42.\n    - checkbox \"I acknowledge this revision and the maximum $4.20 charge before provider work starts.\"\n    - text: I acknowledge this revision and the maximum $4.20 charge before provider work starts.\n    - link \"Back to the plan\":\n      - /url: /studio/lumen-skin/canvas\n  - complementary \"What this run covers\":\n    - heading \"What this run covers\" [level=2]\n    - term: Nodes priced\n    - definition: \"4\"\n    - term: Route\n    - definition: kimi-2.6 + flux-2-klein + seedance-1.0\n    - term: Pinned revision\n    - definition: 7f3a\n    - term: Maximum charge\n    - definition: $4.20\n    - term: Run cap\n    - definition: $8.00\n    - term: Day cap used\n    - definition: $18.42 of $100.00\n    - paragraph: The charge can only be lower than the maximum. Nothing starts until you confirm.\n  - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein + seedance-1.0 Expires 15:00\n  - button \"Confirm $4.20 run\" [disabled]",
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "afterAxeRunState": null,
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-quote-ok-t768.png"
+}

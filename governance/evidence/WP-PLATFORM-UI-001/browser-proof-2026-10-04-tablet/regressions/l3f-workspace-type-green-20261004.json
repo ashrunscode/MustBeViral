@@ -1,0 +1,31 @@
+{
+  "sourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64"
+    }
+  ],
+  "pnpm": "11.12.0",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "root": "C:/dev/mbv-finish",
+  "startedUtc": "2026-10-04T13:07:09.2577830Z",
+  "command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts --project=desktop-chromium --grep workspace tools headings",
+  "phase": "green",
+  "localOnly": true,
+  "harnessPid": 44264,
+  "node": "v24.18.0",
+  "providersAndQueuesDisabled": true,
+  "endedUtc": "2026-10-04T13:07:50.7157226Z",
+  "log": "C:/dev/mbv-run/l3f-workspace-type-green-20261004.txt",
+  "exit": 0,
+  "ownedWorkInProgress": true,
+  "syntheticCleanupDeleteRequestsPrevented": true
+}
