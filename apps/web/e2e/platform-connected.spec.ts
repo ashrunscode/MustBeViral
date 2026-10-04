@@ -269,6 +269,21 @@ test.describe('connected platform journeys', () => {
           page.getByRole('heading', { name: 'Review this run before spending', exact: true }),
         ).toBeVisible();
       }
+      await page.goto(`/studio/${workspaceId}/quote?${context.toString()}`);
+      await expect(
+        page.getByRole('heading', { name: 'Review this run before spending' }),
+      ).toBeVisible();
+      const skip = page.getByRole('link', { name: 'Skip to content', exact: true });
+      await page.keyboard.press('Tab');
+      await expect(skip).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('#platform-main')).toBeFocused();
+      await expect(
+        page.getByText('Open this quote from its plan so the revision it prices is known.', {
+          exact: true,
+        }),
+      ).toBeInViewport({ ratio: 1 });
+      await expectNoHorizontalOverflow(page);
     }
   });
 

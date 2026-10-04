@@ -12,6 +12,17 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* Keep unavailable quote details reachable from Skip to content in a short viewport. */
+@media (max-height: 600px) {
+  :global(.platform-app--flush):has(.quotePage) {
+    height: auto;
+    overflow: visible;
+  }
+  :global(.platform-main--flush):has(.quotePage) {
+    overflow: visible;
+  }
+}
+
 .quoteStage {
   min-width: 0;
   overflow-y: auto;

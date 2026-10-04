@@ -659,7 +659,7 @@ export function QuoteFlow({
         </Card>
       </section>
 
-      <aside className={styles.sidePanel} aria-labelledby="impact-title">
+      <aside className={styles.sidePanel} aria-labelledby="impact-title" tabIndex={0}>
         <h2 id="impact-title">What this run covers</h2>
         <dl className={styles.coverage}>
           <div>

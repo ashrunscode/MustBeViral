@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 
 async function screenshotPath(name: string) {
@@ -41,6 +42,32 @@ test('keeps enlarged quote recovery inside its footer and viewport', async ({ pa
   await page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }).click();
   await expect(page.locator('[data-result="expired_quote"]')).toBeVisible();
   await emulateDoubleText(page);
+  const fromProject = createRequire(path.resolve(process.cwd(), 'package.json'));
+  const fromNext = createRequire(fromProject.resolve('eslint-config-next'));
+  const fromA11y = createRequire(fromNext.resolve('eslint-plugin-jsx-a11y'));
+  await page.addScriptTag({ path: fromA11y.resolve('axe-core/axe.min.js') });
+  const inaccessibleScrollers = await page.evaluate(async () => {
+    const axe = (
+      window as unknown as {
+        axe: {
+          run: (
+            context: Document,
+            options: { runOnly: { type: string; values: string[] } },
+          ) => Promise<{ violations: Array<{ id: string }> }>;
+        };
+      }
+    ).axe;
+    const result = await axe.run(document, {
+      runOnly: { type: 'rule', values: ['scrollable-region-focusable'] },
+    });
+    return result.violations.map((violation) => violation.id);
+  });
+  expect(inaccessibleScrollers).toEqual([]);
+  const coverage = page.getByRole('complementary', { name: 'What this run covers', exact: true });
+  await coverage.focus();
+  await expect(coverage).toBeFocused();
+  await page.keyboard.press('End');
+  await expect.poll(() => coverage.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   const recovery = page
     .locator('[class*="confirmBar"]')
     .getByRole('button', { name: 'Re-quote this run', exact: true });
@@ -101,6 +128,35 @@ test('keeps enlarged collaborator initials inside their presence markers', async
         : [];
     }),
   );
+  expect(overflows).toEqual([]);
+});
+
+test('keeps enlarged presence content inside the collaboration rail', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const presence = page.getByRole('region', { name: 'Collaborator presence', exact: true });
+  await expect(presence.getByRole('list').locator('li').first()).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const overflows = await presence.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    return [...element.querySelectorAll('*')].flatMap((child) =>
+      [...child.childNodes].flatMap((node) => {
+        if (node.nodeType !== Node.TEXT_NODE || !node.textContent?.trim()) return [];
+        const range = document.createRange();
+        range.selectNode(node);
+        return [...range.getClientRects()]
+          .filter(
+            (rect) =>
+              rect.left < box.left ||
+              rect.right > box.right ||
+              rect.top < box.top ||
+              rect.bottom > box.bottom,
+          )
+          .map(() => node.textContent);
+      }),
+    );
+  });
   expect(overflows).toEqual([]);
 });
 

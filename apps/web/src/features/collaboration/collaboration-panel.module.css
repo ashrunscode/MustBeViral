@@ -1,5 +1,6 @@
 .collaborationStack {
   display: grid;
+  grid-auto-rows: max-content;
   gap: 12px;
 }
 
