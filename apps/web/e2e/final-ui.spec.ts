@@ -225,6 +225,27 @@ test('disables run work-motion under reduced motion', async ({ page }) => {
   await expect(page.locator('.flow-transfer').first()).toHaveCSS('animation-name', 'none');
 });
 
+test('zooms the canvas with the wheel without passive listener failures', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const surface = page.getByTestId('canvas-surface');
+  await expect(surface).toBeVisible();
+  const plane = page.getByTestId('graph-plane');
+  const before = await plane.getAttribute('style');
+  const box = await surface.boundingBox();
+  expect(box).not.toBeNull();
+  if (box === null) return;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.wheel(0, 80);
+  await expect(plane).not.toHaveAttribute('style', before ?? '');
+  await page.waitForTimeout(100);
+  expect(errors).toEqual([]);
+});
+
 test('disables broad transitions when reduced motion is requested', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1280, height: 900 });
