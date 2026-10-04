@@ -973,6 +973,27 @@ export function CanvasFlow({
               aria-label="Plan parameters"
               aria-describedby={mobile ? 'canvas-desktop-notice' : undefined}
             >
+              {selectedNode === undefined ? null : (
+                <section className={styles.nodeDetails} aria-label="Selected node details">
+                  <dl>
+                    <div>
+                      <dt>Node</dt>
+                      <dd>{selectedNode.label}</dd>
+                    </div>
+                    <div>
+                      <dt>Status</dt>
+                      <dd>
+                        {mapCanvasStatusToChip(selectedNode.status).label} —{' '}
+                        {selectedNode.statusDetail}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Reference</dt>
+                      <dd>{selectedNode.model}</dd>
+                    </div>
+                  </dl>
+                </section>
+              )}
               <NodeConfigDraftPanel
                 actorId={collaborationActorId}
                 localDrafts={selectedDrafts}

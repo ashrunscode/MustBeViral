@@ -160,6 +160,47 @@ test('keeps enlarged presence content inside the collaboration rail', async ({ p
   expect(overflows).toEqual([]);
 });
 
+test('keeps enlarged plan names readable in the graph outline', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const names = page
+    .getByRole('complementary', { name: 'Graph outline', exact: true })
+    .locator('strong');
+  await expect(names).toHaveCount(12);
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const clipped = await names.evaluateAll((elements) =>
+    elements
+      .filter((element) => element.scrollWidth > element.clientWidth + 0.5)
+      .map((element) => element.textContent),
+  );
+  expect(clipped).toEqual([]);
+});
+
+test('shows complete selected node details outside the scaled diagram', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const node = page
+    .getByRole('complementary', { name: 'Graph outline', exact: true })
+    .getByRole('button', { name: 'Visual gen Asset 01 — Hero Verified', exact: true });
+  await node.focus();
+  await page.keyboard.press('Enter');
+  const details = page.getByRole('region', { name: 'Selected node details', exact: true });
+  await expect(details.getByText('Asset 01 — Hero', { exact: true })).toBeVisible();
+  await expect(details.getByText('Verified — Output verified', { exact: true })).toBeVisible();
+  await expect(details.getByText('flux-2-klein', { exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const clipped = await details
+    .locator('dd')
+    .evaluateAll((elements) =>
+      elements
+        .filter((element) => element.scrollWidth > element.clientWidth + 0.5)
+        .map((element) => element.textContent),
+    );
+  expect(clipped).toEqual([]);
+});
+
 test('renders partial run progress at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/quote?stage=run');
