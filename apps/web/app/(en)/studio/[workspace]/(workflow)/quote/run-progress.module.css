@@ -157,6 +157,10 @@
   padding: 28px 24px;
   background: var(--card);
 }
+.runAside:focus-visible {
+  outline-offset: -2px;
+}
+
 .runAside h2 {
   margin: 9px 0 14px;
   color: var(--ink-head);

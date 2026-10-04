@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -33,6 +33,59 @@ async function emulateDoubleText(page: Page) {
   });
 }
 
+async function expectCompleteFocusOutline(region: Locator) {
+  await expect(region).toBeFocused();
+  await expect(region).toHaveCSS('outline-style', 'solid');
+  const clippedEdges = await region.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const width = Number.parseFloat(style.outlineWidth);
+    const outset = Math.max(0, width + Number.parseFloat(style.outlineOffset));
+    const rect = element.getBoundingClientRect();
+    const outline = {
+      top: rect.top - outset,
+      right: rect.right + outset,
+      bottom: rect.bottom + outset,
+      left: rect.left - outset,
+    };
+    const failures: string[] = [];
+    if (width < 2) failures.push('outline narrower than 2px');
+    const checkEdges = (
+      name: string,
+      bounds: { top: number; right: number; bottom: number; left: number },
+      clipX: boolean,
+      clipY: boolean,
+    ) => {
+      if (clipX && outline.left < bounds.left - 0.5) failures.push(`${name}: left`);
+      if (clipX && outline.right > bounds.right + 0.5) failures.push(`${name}: right`);
+      if (clipY && outline.top < bounds.top - 0.5) failures.push(`${name}: top`);
+      if (clipY && outline.bottom > bounds.bottom + 0.5) failures.push(`${name}: bottom`);
+    };
+    checkEdges('viewport', { top: 0, right: innerWidth, bottom: innerHeight, left: 0 }, true, true);
+    for (let parent = element.parentElement; parent !== null; parent = parent.parentElement) {
+      const parentStyle = getComputedStyle(parent);
+      const clipX = parentStyle.overflowX !== 'visible';
+      const clipY = parentStyle.overflowY !== 'visible';
+      if (!clipX && !clipY) continue;
+      const box = parent.getBoundingClientRect();
+      checkEdges(
+        parent.tagName,
+        {
+          top: box.top + parent.clientTop,
+          right: box.left + parent.clientLeft + parent.clientWidth,
+          bottom: box.top + parent.clientTop + parent.clientHeight,
+          left: box.left + parent.clientLeft,
+        },
+        clipX,
+        clipY,
+      );
+    }
+    return failures;
+  });
+  expect(clippedEdges, 'all four focus outline edges remain inside every clipping frame').toEqual(
+    [],
+  );
+}
+
 test('keeps enlarged quote recovery inside its footer and viewport', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -64,8 +117,10 @@ test('keeps enlarged quote recovery inside its footer and viewport', async ({ pa
   });
   expect(inaccessibleScrollers).toEqual([]);
   const coverage = page.getByRole('complementary', { name: 'What this run covers', exact: true });
+  await page.keyboard.press('Tab');
   await coverage.focus();
   await expect(coverage).toBeFocused();
+  await expectCompleteFocusOutline(coverage);
   await page.keyboard.press('End');
   await expect.poll(() => coverage.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   const recovery = page
@@ -82,6 +137,36 @@ test('keeps enlarged quote recovery inside its footer and viewport', async ({ pa
   await page.keyboard.press('Enter');
   await expect(page.locator('[data-result="expired_quote"]')).toBeHidden();
   await expect(page.getByRole('checkbox')).not.toBeChecked();
+});
+
+test('returns focus to the fresh quote after timer expiry without a confirmation attempt', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.clock.install();
+  await page.goto('/studio/lumen-skin/quote');
+  const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+  await expect(acknowledgment).toBeEnabled();
+  await acknowledgment.focus();
+  await page.keyboard.press('Space');
+  await expect(acknowledgment).toBeChecked();
+  await page.clock.fastForward(15 * 60_000 + 1000);
+  const notice = page.locator('[data-result="expired_quote"]');
+  await expect(notice).toBeVisible();
+  const recovery = notice.getByRole('button', { name: 'Re-quote this run', exact: true });
+  await recovery.focus();
+  await page.keyboard.press('Enter');
+  await expect(notice).toBeHidden();
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Review this run before spending',
+      exact: true,
+    }),
+  ).toBeFocused();
+  await expect(acknowledgment).toBeEnabled();
+  await expect(acknowledgment).not.toBeChecked();
+  await expect(page.getByRole('button', { name: 'Confirm $4.20 run', exact: true })).toBeDisabled();
 });
 
 test('keeps enlarged comparison metadata inside each version column', async ({ page }) => {
@@ -214,6 +299,7 @@ test('keeps the enlarged run summary scrollable by keyboard', async ({ page }) =
   );
   await summary.focus();
   await expect(summary).toBeFocused();
+  await expectCompleteFocusOutline(summary);
   await page.keyboard.press('End');
   await expect
     .poll(() =>

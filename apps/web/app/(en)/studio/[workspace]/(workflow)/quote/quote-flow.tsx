@@ -391,7 +391,6 @@ export function QuoteFlow({
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<QuoteConfirmResult | null>(null);
   const quoteHeadingRef = useRef<HTMLHeadingElement>(null);
-  const previousResult = useRef<QuoteConfirmResult | null>(null);
   const context = useCampaignContext();
   // A confirmed run joins the link. If this screen remounts afterwards, for example while the
   // frame re-proves the scope, the run in the link wins: no second quote is created and no second
@@ -433,13 +432,9 @@ export function QuoteFlow({
   }, [runStage]);
 
   useEffect(() => {
-    const previous = previousResult.current;
-    previousResult.current = result;
     const rejected = result !== null && result.type !== 'ok';
-    const recovered = result === null && previous !== null && previous.type !== 'ok';
-    // The confirm control disappears after a refusal. Keep its explanation and recovery in view,
-    // and return to the fresh quote after re-quoting without moving focus on an initial read.
-    if (rejected || recovered) quoteHeadingRef.current?.focus();
+    // The confirm control disappears after a refusal. Keep its explanation and recovery in view.
+    if (rejected) quoteHeadingRef.current?.focus();
   }, [result]);
 
   if (runStage) {
@@ -545,6 +540,9 @@ export function QuoteFlow({
     setAcknowledged(false);
     setResult(null);
     setPending(false);
+    // A successful re-quote keeps this heading mounted. Focus it from the recovery action even
+    // when only the timer expired and the confirmation result remains null.
+    if (!('type' in next) || next.type === 'ok') quoteHeadingRef.current?.focus();
   }
 
   return (
