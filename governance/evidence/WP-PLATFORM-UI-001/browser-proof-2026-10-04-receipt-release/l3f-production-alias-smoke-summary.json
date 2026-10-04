@@ -1,0 +1,42 @@
+{
+  "RemoteAuthentication": false,
+  "Environment": "production-alias",
+  "HttpPass": true,
+  "FormsSubmitted": false,
+  "Source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "BrowserPass": true,
+  "Pass": true,
+  "SignedOut": true,
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T10:14:35.6351545Z",
+      "FinishedUtc": "2026-10-04T10:14:39.6813047Z",
+      "Check": "c8",
+      "Path": "C:/dev/mbv-run/l3f-production-alias-c8.json"
+    },
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-04T10:14:39.6834387Z",
+      "FinishedUtc": "2026-10-04T10:14:40.6881435Z",
+      "Check": "s0-media",
+      "Path": "C:/dev/mbv-run/l3f-production-alias-s0-media.json"
+    },
+    {
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T10:14:44.9055915Z",
+      "Check": "d3-headers",
+      "Path": "C:/dev/mbv-run/l3f-production-alias-headers.json"
+    }
+  ],
+  "DeploymentId": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+  "Origin": "https://mustbeviral-web-production.vercel.app",
+  "CheckedUtc": "2026-10-04T10:28:39.7010494Z",
+  "BrowserProofPaths": [
+    "C:/dev/mbv-run/l3f-production-alias-c8-browser.json",
+    "C:/dev/mbv-run/l3f-production-alias-s0-browser.json"
+  ],
+  "BrowserCells": 32,
+  "BrowserApplicationErrors": 0,
+  "ExpectedDocument404ResourceCount": 2.0
+}

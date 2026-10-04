@@ -1,0 +1,533 @@
+{
+  "recordedUtc": "2026-10-04T10:48:35.171Z",
+  "source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "reviewed": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "entries": [
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-fresh-ee91bb6-gates.json",
+      "bytes": 4024,
+      "sha256": "f9261436b58fec0fa634672934230353ba8912a93baf4d85ded7358fd5cf2194",
+      "originalPath": "C:/dev/mbv-run/l3f-fresh-ee91bb6-gates.json",
+      "originalSha256": "e3f3a149779f1f58ae6225694eb627cc259ca463b9b16d1e06a43c860aa7444f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-fresh-ee91bb6-versions.json",
+      "bytes": 326,
+      "sha256": "629f1b4b827793a14d7c283b25a39d63c23b6eea82a71ec9cd2b28e0558ec173",
+      "originalPath": "C:/dev/mbv-run/l3f-fresh-ee91bb6-versions.json",
+      "originalSha256": "770ab0e81a49dafc4e240a679dcb7823c46f5f461a13e2a2bf1662e1a31174bd"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-connected-gate-ee91bb6.json",
+      "bytes": 711,
+      "sha256": "05c58647afbf6325fb12e05ec0342130110e1bad85c547333c0c1ce2e95a53b3",
+      "originalPath": "C:/dev/mbv-run/l3f-connected-gate-ee91bb6.json",
+      "originalSha256": "66f99806e32fa7287a6129923a6565686a428d44780b1d58432d3adc43f56894"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-connected-process-ee91bb6.json",
+      "bytes": 619,
+      "sha256": "73efc30c429f0e8252627dab0d9d627278147630d23f25242a4cbdab9e05ed03",
+      "originalPath": "C:/dev/mbv-run/l3f-connected-process-ee91bb6.json",
+      "originalSha256": "7f9f6067bbf0b403248e9f77156fecdd14afcfd2de7acb9f5122651b5321a855"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-source-post-connected-ee91bb6.json",
+      "bytes": 271,
+      "sha256": "58a32657f691d26345eea364e096758119641e24acc0bd6c8e381584debe0c2d",
+      "originalPath": "C:/dev/mbv-run/l3f-source-post-connected-ee91bb6.json",
+      "originalSha256": "adc67f6f20a8bb7ddaac1b7a04441e419b0ed7064dc2425d87de05902c0f46db"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-author-gates-3-20261004.json",
+      "bytes": 2548,
+      "sha256": "c032dd6075c7bc581f524b73a551651218dbddd457621a614c55cfa1e32508a9",
+      "originalPath": "C:/dev/mbv-run/l3f-author-gates-3-20261004.json",
+      "originalSha256": "dd7d8f74c65836937889e82d74201a2daa06e5df096878c4776c9b46b9a3bab0"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-merge-receipt-20261004.json",
+      "bytes": 688,
+      "sha256": "503af95d515b16c85d4c0347c1f815bcd81b0c8698c8abada2a60554121b79ca",
+      "originalPath": "C:/dev/mbv-run/l3f-merge-receipt-20261004.json",
+      "originalSha256": "ff023997dc971410a900fea3ee3ba92d9a440bb6ed90d562c38c8402347901d2"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-deploy-clone-20261004.json",
+      "bytes": 766,
+      "sha256": "5728f6fc724a3b0fd08e237e825b833a3b88034088be469fbdd684f0c5a3dc63",
+      "originalPath": "C:/dev/mbv-run/l3f-deploy-clone-20261004.json",
+      "originalSha256": "0e87a0c941a594fa2fc7bc5ba11d494a56d4e28d3826a4eb6b06fdf42c8f09e4"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-release-migrations-20261004.json",
+      "bytes": 8881,
+      "sha256": "ba42d1da143c71d22e7f55a2f55f166a6cb664159137ea4b554754ae5923edb6",
+      "originalPath": "C:/dev/mbv-run/l3f-release-migrations-20261004.json",
+      "originalSha256": "ba42d1da143c71d22e7f55a2f55f166a6cb664159137ea4b554754ae5923edb6"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-release-ready.json",
+      "bytes": 854,
+      "sha256": "eeef7ca25870368f52bb2f1da6f83bae54c63967b6b37d4cdd8d44a3f026f412",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-release-ready.json",
+      "originalSha256": "bb991a1638c69816e6f61374610b5c1f287be68326632ce183a6530fd830dde8"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-release-ready.json",
+      "bytes": 914,
+      "sha256": "123d4931c2a6844c5d6d8dae7a0330f72b492405af59baf5d8dbeb00f96eb0ab",
+      "originalPath": "C:/dev/mbv-run/l3f-production-release-ready.json",
+      "originalSha256": "2956c795b88bd69ffe91c9670b128c6439253f5d1306567f097a8ee85412b9f9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-deploy-receipt.json",
+      "bytes": 562,
+      "sha256": "e9cd002655da4ca966e5773881cd6fd1c03b2a7a9641bd0a04063c31c5336154",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-deploy-receipt.json",
+      "originalSha256": "0585a4c9bc1e8543cd0b5ac18ca5e45bc7f533167abb3783d9628706c285fed6"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-deploy-receipt.json",
+      "bytes": 568,
+      "sha256": "3e9a0c5c228726c24a10e490252345b937675c640fb80750dadd1a1ff8f0759f",
+      "originalPath": "C:/dev/mbv-run/l3f-production-deploy-receipt.json",
+      "originalSha256": "1f4b0dfc05c521403292eb79dcc549dfeb6422767a08fff657ba257259c30823"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-deployment-inspection-before.json",
+      "bytes": 803,
+      "sha256": "f39aad04a885c547b61ec510c5a3c6212aae4c748c6f65c125d4dbc58b5c4cef",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-deployment-inspection-before.json",
+      "originalSha256": "7aebaa7a94f95be1c4e38d26a2f48fb3cc4448873802ea611f22465ef18eff94"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-deployment-inspection.json",
+      "bytes": 1341,
+      "sha256": "116fd5030909cd204fe462ac5b2bc1d0366cdc20280ba1a82253c7984b06000e",
+      "originalPath": "C:/dev/mbv-run/l3f-production-deployment-inspection.json",
+      "originalSha256": "da20dd3ea6a72315d4cf53e66cda4b17b721161e58c1c5ce778fa324c7e28cd2"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-capture-inspection.json",
+      "bytes": 1899,
+      "sha256": "140b19ae28cde005c1ed0c3f55880e8656d1061639e38fbf500c2cccb6203343",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-capture-inspection.json",
+      "originalSha256": "a0ffd4d36c197e08cea2a61a6f8f0a3be710d0f2b3282dc0a10a39a5ecb384bc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-capture-inspection.json",
+      "bytes": 3751,
+      "sha256": "a9b4986f2137bc9bcba2ae379635631d561456f5c1f474043d145a0bc11e7802",
+      "originalPath": "C:/dev/mbv-run/l3f-production-capture-inspection.json",
+      "originalSha256": "6fcc230a9f40f2c97ade64a0dabb0d81d91f13533845758a6a1bbb7f2ec77cc7"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-reorient-26-20261004.json",
+      "bytes": 687,
+      "sha256": "6ebbac97819a20223d99650a1b49e54c2977aed6e31fc872dd6b99533003e866",
+      "originalPath": "C:/dev/mbv-run/l3f-reorient-26-20261004.json",
+      "originalSha256": "3c86c3425f4302437e8b11b34f95c89ce787c19be8ff7f119da863db3b0c676d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-reorient-26-preflight-20261004.json",
+      "bytes": 350,
+      "sha256": "534ea4d51a15599831054a57bb199a2696284ec3b68d0b09757fa26ca8b60892",
+      "originalPath": "C:/dev/mbv-run/l3f-reorient-26-preflight-20261004.json",
+      "originalSha256": "08075edd0235e5fdbd57648c781c0f8a3eb9a089235ba58333d49fbe2958e33c"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-reorient-26-migrations-20261004.json",
+      "bytes": 8771,
+      "sha256": "3ad8556f2f0524aaf3c682a310f79985e9d70e10f56a013af770f8ab28980c8c",
+      "originalPath": "C:/dev/mbv-run/l3f-reorient-26-migrations-20261004.json",
+      "originalSha256": "3ad8556f2f0524aaf3c682a310f79985e9d70e10f56a013af770f8ab28980c8c"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-higgsfield-terms-check-20261004.json",
+      "bytes": 504,
+      "sha256": "eb041d869d12b4d296365ffebf1e185e2323546285bbd61afed24938fc505bc5",
+      "originalPath": "C:/dev/mbv-run/l3f-higgsfield-terms-check-20261004.json",
+      "originalSha256": "eb041d869d12b4d296365ffebf1e185e2323546285bbd61afed24938fc505bc5"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-reorient-27-20261004.json",
+      "bytes": 687,
+      "sha256": "1af43df3637e368dd287250b8a93c5ac2748cf93504f63df713fe212f6294145",
+      "originalPath": "C:/dev/mbv-run/l3f-reorient-27-20261004.json",
+      "originalSha256": "3d6bd248d415f5ff55a979d19c875e37feb8a61904c757e8c37deb9f375d1a36"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-reorient-27-preflight-20261004.json",
+      "bytes": 350,
+      "sha256": "dc1b42af883e792f92473a54ac956e5813776f7736bcb360463695fdc0fcd279",
+      "originalPath": "C:/dev/mbv-run/l3f-reorient-27-preflight-20261004.json",
+      "originalSha256": "bf8d64b388f347675ec64483b74d6637501e59bc6959e97f969aa9edc15a80bf"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-reorient-27-migrations-20261004.json",
+      "bytes": 9760,
+      "sha256": "fa370f18743fe9ee8ca0398e08995e62735ea75c989a3d82523a59ea67cb38a4",
+      "originalPath": "C:/dev/mbv-run/l3f-reorient-27-migrations-20261004.json",
+      "originalSha256": "fa370f18743fe9ee8ca0398e08995e62735ea75c989a3d82523a59ea67cb38a4"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-c8.json",
+      "bytes": 3077,
+      "sha256": "d004bdb8dd2fe059a11ee67b25e7d49492eca4f9b16202e49f0ed4d9d7a6b0da",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-c8.json",
+      "originalSha256": "1dc80d24e95b0dcfef571b5fe5b171c34dbbfc2602eccd5c461c001e3d774f14"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-s0-media.json",
+      "bytes": 1156,
+      "sha256": "7d1592850bb7d69e9ad2c683bf5a5a89389eb824f4727d2f2d8a5a8c1280887b",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-s0-media.json",
+      "originalSha256": "2b849cab5cac70e73beeeccd2ca3d0539dff079d561d289d87079e8618cde2fc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-headers.json",
+      "bytes": 11952,
+      "sha256": "a0ed7bdc668392e7287e566ddcadb7726a15176797c4844955da5ffb6ac73b98",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-headers.json",
+      "originalSha256": "a0ed7bdc668392e7287e566ddcadb7726a15176797c4844955da5ffb6ac73b98"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-smoke-summary.json",
+      "bytes": 1244,
+      "sha256": "928596edfb4ddd259627616d3bf27133cda6016d0cd84f3e454f75b73022b889",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-smoke-summary.json",
+      "originalSha256": "6fdf3968645aa59965c4146f6303f6eaf377ec3a39949214d6034264999e63b9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-c8-browser.json",
+      "bytes": 34777,
+      "sha256": "2cae8c92e120bd074859dd57b6e2704a3441124d470d069a4f9a7242b491e0c7",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-c8-browser.json",
+      "originalSha256": "2cae8c92e120bd074859dd57b6e2704a3441124d470d069a4f9a7242b491e0c7"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-s0-browser.json",
+      "bytes": 2926,
+      "sha256": "3e03fcbba7ab41cfebf6817cd977bb38fc7f786ee79e4a34dae5795164d64cd9",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-s0-browser.json",
+      "originalSha256": "3e03fcbba7ab41cfebf6817cd977bb38fc7f786ee79e4a34dae5795164d64cd9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-staging-cached-policy.json",
+      "bytes": 19163,
+      "sha256": "6af8a03c419b2ad06823d00a52830958922fdce18896c1b32811b1e764681153",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-cached-policy.json",
+      "originalSha256": "6af8a03c419b2ad06823d00a52830958922fdce18896c1b32811b1e764681153"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/software-375.png",
+      "bytes": 86401,
+      "sha256": "6c240f9dcfa2b2bcd47444e2df6e0f3dcd2fe377a99ef5bac5915f8a05419633",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-browser/software-375.png",
+      "originalSha256": "6c240f9dcfa2b2bcd47444e2df6e0f3dcd2fe377a99ef5bac5915f8a05419633"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/software-1280.png",
+      "bytes": 100592,
+      "sha256": "9a301ecd94ad0854e319eec7a2f22292a9277f131b98332088fe4d512bbe37cc",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-browser/software-1280.png",
+      "originalSha256": "9a301ecd94ad0854e319eec7a2f22292a9277f131b98332088fe4d512bbe37cc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/home-375.png",
+      "bytes": 287583,
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-browser/home-375.png",
+      "originalSha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/es-375.png",
+      "bytes": 176542,
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-browser/es-375.png",
+      "originalSha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/advertising-375.png",
+      "bytes": 184282,
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "originalPath": "C:/dev/mbv-run/l3f-staging-browser/advertising-375.png",
+      "originalSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-c8.json",
+      "bytes": 3058,
+      "sha256": "c070a78e4ccbdce617e6ad28bf6e9b89789cd2a4217d09e4453948a851ae22e5",
+      "originalPath": "C:/dev/mbv-run/l3f-production-c8.json",
+      "originalSha256": "3f4dacf38c4f04b90f2131a50e3a6d753c41c1dc1790ff288faae240358190ac"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-s0-media.json",
+      "bytes": 1137,
+      "sha256": "5be22716bd9ca1c21980d708e2d8a3ade02c9acfee4710fad43c496dd9a57e6f",
+      "originalPath": "C:/dev/mbv-run/l3f-production-s0-media.json",
+      "originalSha256": "c5b66f6250c7641be80c6f96c7be3ccfad4cf7b8fb255f37db6e590a39fec700"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-headers.json",
+      "bytes": 12712,
+      "sha256": "2ed9f89efbb06010f0f064a71a8c58e5329efce659b77471bd98cc075360b13b",
+      "originalPath": "C:/dev/mbv-run/l3f-production-headers.json",
+      "originalSha256": "2ed9f89efbb06010f0f064a71a8c58e5329efce659b77471bd98cc075360b13b"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-smoke-summary.json",
+      "bytes": 1243,
+      "sha256": "a602f92b7c1b51dad6019d8b78c2bb5e9ba23246adc2f976dd01586cb275e45b",
+      "originalPath": "C:/dev/mbv-run/l3f-production-smoke-summary.json",
+      "originalSha256": "cb8038257547c373bc1314d61b049733c340d11a12cd15f331fbf6a008f7ff12"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-c8-browser.json",
+      "bytes": 34764,
+      "sha256": "11ce9635df01fdd7acd0ea18a8784b5608b5651114d699d2dcb83a4519c73adf",
+      "originalPath": "C:/dev/mbv-run/l3f-production-c8-browser.json",
+      "originalSha256": "11ce9635df01fdd7acd0ea18a8784b5608b5651114d699d2dcb83a4519c73adf"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-s0-browser.json",
+      "bytes": 2907,
+      "sha256": "50277bb657001f5de85279353f5991f52674feacbb9dcf7360edb3a53de15091",
+      "originalPath": "C:/dev/mbv-run/l3f-production-s0-browser.json",
+      "originalSha256": "50277bb657001f5de85279353f5991f52674feacbb9dcf7360edb3a53de15091"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-cached-policy.json",
+      "bytes": 19144,
+      "sha256": "6e21352016afe010a9c0ad13a2690bb39c0e381482ffb3c91ee021827f12a6e5",
+      "originalPath": "C:/dev/mbv-run/l3f-production-cached-policy.json",
+      "originalSha256": "6e21352016afe010a9c0ad13a2690bb39c0e381482ffb3c91ee021827f12a6e5"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/software-375.png",
+      "bytes": 86458,
+      "sha256": "480e06e56bca076393c6939bb78210b5b354635bd48f474dfaddc4c811c6a18e",
+      "originalPath": "C:/dev/mbv-run/l3f-production-browser/software-375.png",
+      "originalSha256": "480e06e56bca076393c6939bb78210b5b354635bd48f474dfaddc4c811c6a18e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/software-1280.png",
+      "bytes": 100608,
+      "sha256": "5befa58842363a5b88a16a426069fab2eb09f35076ece9ee59913f366b842d42",
+      "originalPath": "C:/dev/mbv-run/l3f-production-browser/software-1280.png",
+      "originalSha256": "5befa58842363a5b88a16a426069fab2eb09f35076ece9ee59913f366b842d42"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/home-375.png",
+      "bytes": 287583,
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "originalPath": "C:/dev/mbv-run/l3f-production-browser/home-375.png",
+      "originalSha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/es-375.png",
+      "bytes": 176542,
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "originalPath": "C:/dev/mbv-run/l3f-production-browser/es-375.png",
+      "originalSha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/advertising-375.png",
+      "bytes": 184282,
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "originalPath": "C:/dev/mbv-run/l3f-production-browser/advertising-375.png",
+      "originalSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-c8.json",
+      "bytes": 3080,
+      "sha256": "59edb48dbc5dc1bcd64423a5b16dc632ffa4984e7fc586fa3845aab9cc8fd972",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-c8.json",
+      "originalSha256": "73edeabbdb4bef41416e20dbef7a7156c25bdff9343c71f91d940f164d95f809"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-s0-media.json",
+      "bytes": 1159,
+      "sha256": "d412921681662aac40061020ef4d413bc1914f1517049505ca58af9e03722731",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-s0-media.json",
+      "originalSha256": "1e13867bfc71729bc1f0ec32aca586c94cf10237e7eba26c29e87bf029fe8f7a"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-headers.json",
+      "bytes": 11955,
+      "sha256": "53c8b5a0976a37749f909fc10b1c4b68ed8d63683412c4bcf8f2175913bf6e42",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-headers.json",
+      "originalSha256": "53c8b5a0976a37749f909fc10b1c4b68ed8d63683412c4bcf8f2175913bf6e42"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-smoke-summary.json",
+      "bytes": 1301,
+      "sha256": "28e7713f38a3db85d7053dab776bfc3d44674e7b17c917b75b3219787afc7145",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-smoke-summary.json",
+      "originalSha256": "d6e3692757253b70cfce5fe83dc7c743549217e583fc8c855f9209b8d665c80e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-c8-browser.json",
+      "bytes": 34798,
+      "sha256": "ebbd3e4790427aea8586d291fec954bdb4da0132f869b3970a391d1d24a18d73",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-c8-browser.json",
+      "originalSha256": "ebbd3e4790427aea8586d291fec954bdb4da0132f869b3970a391d1d24a18d73"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-s0-browser.json",
+      "bytes": 2929,
+      "sha256": "b28d4ff41da795ebb48750810909167f514336fc7c7899f209168c066925440a",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-s0-browser.json",
+      "originalSha256": "b28d4ff41da795ebb48750810909167f514336fc7c7899f209168c066925440a"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-production-alias-cached-policy.json",
+      "bytes": 19166,
+      "sha256": "70bf852ccd76a0f914693a7777c1bae7933953ba5097c1d1d477a6d9c66abab6",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-cached-policy.json",
+      "originalSha256": "70bf852ccd76a0f914693a7777c1bae7933953ba5097c1d1d477a6d9c66abab6"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/software-375.png",
+      "bytes": 86902,
+      "sha256": "fb33a0625b1a460f569ab2fd6e529cbb2b0b1fa550c712851d2063f712a7ec6f",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-browser/software-375.png",
+      "originalSha256": "fb33a0625b1a460f569ab2fd6e529cbb2b0b1fa550c712851d2063f712a7ec6f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/software-1280.png",
+      "bytes": 100598,
+      "sha256": "d83edb29389d9ba1d701aea305aa088fe500328a774dfd7f937ec9ec55769d9e",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-browser/software-1280.png",
+      "originalSha256": "d83edb29389d9ba1d701aea305aa088fe500328a774dfd7f937ec9ec55769d9e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/home-375.png",
+      "bytes": 287583,
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-browser/home-375.png",
+      "originalSha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/es-375.png",
+      "bytes": 176542,
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-browser/es-375.png",
+      "originalSha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/advertising-375.png",
+      "bytes": 184282,
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "originalPath": "C:/dev/mbv-run/l3f-production-alias-browser/advertising-375.png",
+      "originalSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/fresh-governance-test-counts.log.txt",
+      "bytes": 52,
+      "sha256": "01ce1edd3becc5226171af6c07b316826c081f3a93fa74a58577a70db6e8619f",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-governance-test.log",
+      "originalSha256": "2fd0a2a1674202eaef7525fa0825b73e7251003153cb9ec68653acf6c27b7579"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/fresh-verify-counts.log.txt",
+      "bytes": 699,
+      "sha256": "98f981226f7f44ec57075bbc4676485c1a076d7eb4540eb090972ca8fcfb8d2d",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-verify.log",
+      "originalSha256": "f2dbc09c674a4bb2b14be175ac6e0ce4db6cff622a58ca004984a40a5a627c50"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/fresh-supabase-test-counts.log.txt",
+      "bytes": 120,
+      "sha256": "245b5879d315817647a7cb8dfac96af4cf8e3c6adf7c60560716355e368f6ab6",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-supabase-test.log",
+      "originalSha256": "8381c252d3bc540e553518473ca526b3a45ad0c29ca39a9050196c16d1659f9b"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/fresh-preview-counts.log.txt",
+      "bytes": 31,
+      "sha256": "6034b3fc25b570dc7ffc32d7f470d19f59bfa2ed6a9b3e965b9231eafc5a9e10",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-preview-journeys.log",
+      "originalSha256": "d2142807b0f8e86e740960d2373cd899141f66b86a413bd9f19771c41c80a75e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/connected-local-journeys.log.txt",
+      "bytes": 5932,
+      "sha256": "11e214b9a4ed65dbf48a005377d6e649de86789026957b7e1e772e7708732654",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-connected-ee91bb6.log",
+      "originalSha256": "422feb09e0d5f390562399544e97fdd97bd7749be85fcf04ec7b46dd203b0805"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/fresh-canvas-fps.json",
+      "bytes": 214,
+      "sha256": "9f27c0d09a56b1bac50a3202f3d8654fbd3472a7598501098bced7529bb596c9",
+      "originalPath": "C:/dev/mbv-verify-ee91bb6/apps/web/test/__perf__/canvas-fps.json",
+      "originalSha256": "9f27c0d09a56b1bac50a3202f3d8654fbd3472a7598501098bced7529bb596c9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/fresh-canvas-fps-500.json",
+      "bytes": 266,
+      "sha256": "3eacb63d37c68d990afa293fb307fb490aed0d9db07a7d4eb45039eeda391c38",
+      "originalPath": "C:/dev/mbv-verify-ee91bb6/apps/web/test/__perf__/canvas-fps-500.json",
+      "originalSha256": "3eacb63d37c68d990afa293fb307fb490aed0d9db07a7d4eb45039eeda391c38"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/merge-review-public-hardening-record-2026-10-04.md",
+      "bytes": 1533,
+      "sha256": "4ea3597f912510493dbe5deb6c7fe731b6550952c26eaf9da0a552ced985b819",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-43acaca-round-1.md",
+      "originalSha256": "3809349b655e64179e4468a781c07b82026bb1ebf8e2b283a057fd71fd7a7034"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/pr-75-review-round-1.json",
+      "bytes": 678,
+      "sha256": "8253072038c66c1bf5757c44927d80383ff15cadbb3c8e22ecf010b4eeb73ca9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/merge-review-receipt-responsive-2026-10-04.md",
+      "bytes": 1107,
+      "sha256": "aa87a0c1b40c9751cb820779977edcba0bf8aca527404d130c833b07cd8c7142",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp/mbv-l3f-review-ee91bb6-round-1.md",
+      "originalSha256": "9be898cfc99098f5eed8ff2f1833b6d57fb8e557621fd264781242c08245ea79"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/pr-76-review-round-1.json",
+      "bytes": 683,
+      "sha256": "fbb4d52705f2ca5e38e5e091749b8349843c67eb1821f650eb0d137490094d10"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/capture-manifest.json",
+      "bytes": 5362,
+      "sha256": "2dc378c5d880e48249a02272d73ff62f263397c088262da4b7d14b1068bab487"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/README.md",
+      "bytes": 2982,
+      "sha256": "3f972ea4997e43fe5e811fe0f47e2d51ea21bc28ac64ec26b58f5a0ef5a43bd4"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-record-handoff-1.json",
+      "bytes": 491,
+      "sha256": "7b159ac6cb6cfc35d3222a6ac14d462c7a3e0016c06c958a2b3564388419e9b4",
+      "originalPath": "C:/dev/mbv-run/l3f-record-handoff-1.json",
+      "originalSha256": "dcad6ae0a3df37644d80a0113877fb69a4f57aeeb8f7b8990135195b0cad2d24"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/l3f-record-handoff-poststep-1.json",
+      "bytes": 567,
+      "sha256": "cfe9e5d70ef826134088cd6bf1acd9fbdbd2a81437c4add9b145b2b4a3d53b9e",
+      "originalPath": "C:/dev/mbv-run/l3f-record-handoff-poststep-1.json",
+      "originalSha256": "5033b88d0dae486a5eef0bf895ea1e3881529e240fd55bfacf0a5e5e1e89c35f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/handoff-output.log.txt",
+      "bytes": 362,
+      "sha256": "15cb16df83c74174888fa231c31c1a1b51f19f3e84ebfec2fb4bfa840a801e1f",
+      "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-record-handoff-1.log",
+      "originalSha256": "f9357061a96dd3853fdaafe7fad1d916344e8dcf231f22f713e725cd32a1e1a5"
+    }
+  ],
+  "finalizedUtc": "2026-10-04T11:03:08.086Z",
+  "representation": "Repository-formatted JSON preserves parsed values; original and copy hashes are retained. PNGs are byte-identical. Text excerpts and review records are identified derived copies."
+}

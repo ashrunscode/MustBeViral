@@ -1,0 +1,21 @@
+{
+  "founderNamePresent": false,
+  "branch": "main",
+  "homeStatus": 200,
+  "vaultCheckExit": 1,
+  "mainMigrationHead": "20260929017000",
+  "head": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "namesCheckExit": 0,
+  "checkedUtc": "2026-10-04T10:44:31.2308016Z",
+  "higgsfieldRequiredNamesPresent": false,
+  "healthState": "ok",
+  "deploymentMarker": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+  "ownedDirtyPaths": [],
+  "diskFreeGb": 402.57,
+  "worktreeCount": 1,
+  "healthStatus": 200,
+  "originMain": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "frozenSha256": "66ab6b8222f7414205db3c082b1581f16b39ee3b737367b963f549ee2d205e82",
+  "root": "C:/dev/mbv-finish",
+  "mainMigrationCount": 75
+}

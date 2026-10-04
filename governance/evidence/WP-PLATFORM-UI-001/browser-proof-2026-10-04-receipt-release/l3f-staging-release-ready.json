@@ -1,0 +1,23 @@
+{
+  "NewestDeployment": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "SchemaMetadataCheckedUtc": "2026-10-04T09:54:27Z",
+  "NewDatabaseDependency": false,
+  "Source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "SharedSchemaRuntimeUnchanged": true,
+  "NewestJournaled": true,
+  "AgeMinutes": 645.3,
+  "Reviewed": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "Project": "mustbeviral-web-staging",
+  "ExactServedInventoryMatch": true,
+  "RemoteDatabaseWrite": false,
+  "BrowserSourceFilesMatch": true,
+  "CheckedUtc": "2026-10-04T09:56:38.0524031Z",
+  "NewestCreatedUtc": "2026-10-03T23:11:16.9040000Z",
+  "LiveReady": true,
+  "LiveSource": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "Rollback": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ]
+}

@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Repair the in-scope receipt, responsive proof and operator-gate defects under L3f.
+Capture the remaining 768-pixel platform browser cells under L3f.

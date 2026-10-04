@@ -183,6 +183,7 @@ acceptance:
         Rendered-output tests lock the copy separation and the structure.'
       status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-s0-release/README.md
@@ -220,6 +221,7 @@ acceptance:
         regression tests that fail if the defect returns.
       status: pending
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/merge-review-films-2026-10-02.md
         - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02c/README.md
         - governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md
@@ -233,6 +235,7 @@ acceptance:
         repaired defect has a failing-then-passing test recorded in the repair log.
       status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/release-site-2026-10-02.md
@@ -252,6 +255,7 @@ acceptance:
         after refresh.
       status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-s0-release/README.md
@@ -267,6 +271,7 @@ acceptance:
         it is recorded with the one sentence that clears it and nothing was crossed.
       status: pending
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
         - governance/evidence/WP-PLATFORM-UI-001/public-site-2026-10-02.md
@@ -282,6 +287,7 @@ quality_gates:
     command: pnpm governance:check
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
@@ -291,6 +297,7 @@ quality_gates:
     command: pnpm design:check
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
@@ -300,6 +307,7 @@ quality_gates:
     command: pnpm verify
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
@@ -309,6 +317,7 @@ quality_gates:
     command: pnpm supabase:test
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
       - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
@@ -329,7 +338,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Repair the in-scope receipt, responsive proof and operator-gate defects under L3f.
+  next_action: Capture the remaining 768-pixel platform browser cells under L3f.
   blockers: []
   changed_paths: []
   last_green_checks: []

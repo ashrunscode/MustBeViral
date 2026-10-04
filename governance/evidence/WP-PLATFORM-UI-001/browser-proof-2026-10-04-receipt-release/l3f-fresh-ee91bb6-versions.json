@@ -1,0 +1,12 @@
+{
+  "checkedUtc": "2026-10-04T08:50:42.5582458Z",
+  "playwright": "Version 1.61.1",
+  "root": "C:/dev/mbv-verify-ee91bb6",
+  "node": "v24.18.0",
+  "vercel": "59.16.0",
+  "supabase": "2.109.1",
+  "pnpm": "11.12.0",
+  "head": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "wrangler": "4.110.0",
+  "codex": "codex-cli 0.160.0"
+}

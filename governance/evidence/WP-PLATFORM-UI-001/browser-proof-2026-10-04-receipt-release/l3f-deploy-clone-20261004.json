@@ -1,0 +1,24 @@
+{
+  "node": "v24.18.0",
+  "worktreeCount": 1,
+  "source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "C4StandsForMergedTree": true,
+  "installLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-deploy-8e0b43a-install.log",
+  "vercel": "59.16.0",
+  "envLikeFiles": [
+    ".env.example",
+    ".dev.vars.example",
+    "apps\\collaboration\\.dev.vars.example",
+    "apps\\core\\.dev.vars.example"
+  ],
+  "reviewed": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "startedUtc": "2026-10-04T09:54:28.4099771Z",
+  "endedUtc": "2026-10-04T09:54:59.9642491Z",
+  "treeEqualityActualExit": 0,
+  "clean": true,
+  "branch": "main",
+  "root": "C:/dev/mbv-deploy-8e0b43a",
+  "installStartedUtc": "2026-10-04T09:54:38.6703490Z",
+  "installActualExit": 0,
+  "pnpm": "11.12.0"
+}

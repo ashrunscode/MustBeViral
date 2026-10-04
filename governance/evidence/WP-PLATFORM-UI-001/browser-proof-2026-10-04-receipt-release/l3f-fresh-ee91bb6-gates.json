@@ -1,0 +1,99 @@
+{
+  "LocalDatabaseOnly": true,
+  "Root": "C:/dev/mbv-verify-ee91bb6",
+  "Versions": {
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0"
+  },
+  "Head": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "Checks": [
+    {
+      "Command": "corepack pnpm install --frozen-lockfile",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T08:48:31.7229010Z",
+      "Label": "install",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-install.log",
+      "StartedUtc": "2026-10-04T08:48:10.4966120Z"
+    },
+    {
+      "Command": "corepack pnpm agent:preflight",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T08:52:29.7720422Z",
+      "Label": "agent-preflight",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-agent-preflight.log",
+      "StartedUtc": "2026-10-04T08:48:31.7288268Z"
+    },
+    {
+      "Command": "corepack pnpm governance:check",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T08:56:02.0804249Z",
+      "Label": "governance-check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-governance-check.log",
+      "StartedUtc": "2026-10-04T08:52:29.7742947Z"
+    },
+    {
+      "Command": "corepack pnpm governance:test",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:00:28.6449604Z",
+      "Label": "governance-test",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-governance-test.log",
+      "StartedUtc": "2026-10-04T08:56:02.0828815Z"
+    },
+    {
+      "Command": "corepack pnpm format:check",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:00:46.2948418Z",
+      "Label": "format-check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-format-check.log",
+      "StartedUtc": "2026-10-04T09:00:28.6467995Z"
+    },
+    {
+      "Command": "corepack pnpm verify",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:14:18.1620176Z",
+      "Label": "verify",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-verify.log",
+      "StartedUtc": "2026-10-04T09:00:46.2967873Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:14:21.4234296Z",
+      "Label": "migration-list-before",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-migration-list-before.log",
+      "StartedUtc": "2026-10-04T09:14:18.3905449Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:14:24.4435946Z",
+      "Label": "migration-up",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-migration-up.log",
+      "StartedUtc": "2026-10-04T09:14:21.5989042Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:14:27.1681718Z",
+      "Label": "migration-list",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-migration-list.log",
+      "StartedUtc": "2026-10-04T09:14:24.4463478Z"
+    },
+    {
+      "Command": "corepack pnpm supabase:test",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:14:46.2548531Z",
+      "Label": "supabase-test",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-supabase-test.log",
+      "StartedUtc": "2026-10-04T09:14:27.3165364Z"
+    },
+    {
+      "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts apps/web/e2e/campaign-resume-recovery.spec.ts apps/web/e2e/cleanroom.spec.ts apps/web/e2e/operator-self-session.spec.ts apps/web/e2e/canvas-stress.spec.ts apps/web/e2e/canvas-perf.spec.ts --project=desktop-chromium",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-04T09:16:05.0312669Z",
+      "Label": "preview-journeys",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-fresh-ee91bb6-preview-journeys.log",
+      "StartedUtc": "2026-10-04T09:14:48.0673346Z"
+    }
+  ]
+}

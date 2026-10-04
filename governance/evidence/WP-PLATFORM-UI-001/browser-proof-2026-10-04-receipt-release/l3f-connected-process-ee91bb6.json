@@ -1,0 +1,15 @@
+{
+  "CreatedUtc": "2026-10-04T09:19:38.38069Z",
+  "ProvidersAndQueuesDisabled": true,
+  "Pid": 15712,
+  "Source": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "Executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "ErrorLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-platform-local-ee91bb6-error.log",
+  "Root": "C:/dev/mbv-verify-ee91bb6",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-platform-local-ee91bb6.log",
+  "Script": "packages/db/scripts/start-platform-local.mjs",
+  "LocalOnly": true,
+  "StopExit": 0,
+  "StoppedUtc": "2026-10-04T09:29:29.9618843Z",
+  "PortsFree": true
+}
