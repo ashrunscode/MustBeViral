@@ -345,7 +345,7 @@ export function RunProgress({
           })}
         </div>
       </section>
-      <aside className={styles.runAside} aria-label="Run progress summary">
+      <aside className={styles.runAside} aria-label="Run progress summary" tabIndex={0}>
         <MonoCaps>Live run</MonoCaps>
         <h2>
           {completeCount} of {snapshot.attempts.length} branches complete

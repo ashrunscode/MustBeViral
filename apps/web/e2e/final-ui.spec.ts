@@ -201,6 +201,33 @@ test('shows complete selected node details outside the scaled diagram', async ({
   expect(clipped).toEqual([]);
 });
 
+test('keeps the enlarged run summary scrollable by keyboard', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 600 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/quote?stage=run&run=failed');
+  await expect(page.locator('[data-run-state="failed"]')).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const summary = page.getByRole('complementary', { name: 'Run progress summary', exact: true });
+  expect(await summary.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(
+    true,
+  );
+  await summary.focus();
+  await expect(summary).toBeFocused();
+  await page.keyboard.press('End');
+  await expect
+    .poll(() =>
+      summary.evaluate((element) => {
+        const last = element.querySelector('dl > div:last-child');
+        if (last === null) return false;
+        const outer = element.getBoundingClientRect();
+        const inner = last.getBoundingClientRect();
+        return inner.top >= outer.top && inner.bottom <= outer.bottom;
+      }),
+    )
+    .toBe(true);
+});
+
 test('renders partial run progress at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/quote?stage=run');
