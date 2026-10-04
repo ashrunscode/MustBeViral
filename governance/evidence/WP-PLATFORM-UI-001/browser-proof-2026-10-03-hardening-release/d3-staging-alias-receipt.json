@@ -1,0 +1,12 @@
+{
+  "AllRequiredAliasesMoved": true,
+  "Ready": true,
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "ProtectedAliasInspectedOnly": true,
+  "CheckedUtc": "2026-10-03T23:13:02.2716791Z",
+  "PromoteNeeded": false,
+  "Deployment": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA"
+}

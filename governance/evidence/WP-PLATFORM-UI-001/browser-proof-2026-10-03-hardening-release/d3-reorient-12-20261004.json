@@ -1,0 +1,13 @@
+{
+  "CheckedUtc": "2026-10-03T23:45:47.2799943Z",
+  "Head": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "VaultCheckExit": 1,
+  "HiggsfieldFallbackNamesPresent": false,
+  "VaultNamesExit": 0,
+  "FounderNamePresent": false,
+  "ProductionHomeStatus": 200,
+  "Deployment": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "CoreHealthStatus": 200,
+  "CoreHealthOk": false,
+  "DiskFreeGb": 411.0
+}

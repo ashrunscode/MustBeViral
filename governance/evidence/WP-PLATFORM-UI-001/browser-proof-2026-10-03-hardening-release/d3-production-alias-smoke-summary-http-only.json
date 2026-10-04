@@ -1,0 +1,35 @@
+{
+  "Origin": "https://mustbeviral-web-production.vercel.app",
+  "Pass": false,
+  "SignedOut": true,
+  "Environment": "production-alias",
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "HttpPass": true,
+  "Checks": [
+    {
+      "Check": "c8",
+      "StartedUtc": "2026-10-03T23:38:24.9385000Z",
+      "Path": "C:/dev/mbv-run/d3-production-alias-c8.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-03T23:38:29.0192146Z"
+    },
+    {
+      "Check": "s0-media",
+      "StartedUtc": "2026-10-03T23:38:29.0208251Z",
+      "Path": "C:/dev/mbv-run/d3-production-alias-s0-media.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-03T23:38:30.0107109Z"
+    },
+    {
+      "Check": "d3-headers",
+      "Path": "C:/dev/mbv-run/d3-production-alias-headers.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-03T23:38:34.5835005Z"
+    }
+  ],
+  "CheckedUtc": "2026-10-03T23:38:34.5835598Z",
+  "RemoteAuthentication": false,
+  "DeploymentId": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "FormsSubmitted": false,
+  "BrowserPass": false
+}

@@ -1,0 +1,23 @@
+{
+  "AllMatch": true,
+  "SourceFiles": [
+    {
+      "Sha256": "1558bf544681b486aa8b72259f6c0fdd09e65c6fd89a60559dccca0ca50e39bc",
+      "MatchesActualBrowserSource": true,
+      "Path": "apps/web/app/browser-validation.tsx"
+    },
+    {
+      "Sha256": "a91b744140d0f8adb2ac215bae5b371e65d6210a696a1c8155e1fc0158ee497f",
+      "MatchesActualBrowserSource": true,
+      "Path": "apps/web/src/components/root-document.tsx"
+    },
+    {
+      "Sha256": "b6989fe57f5af05fe28aa7239d3efa94a2bb6cf69014fc0abd79aaa4dd176cf6",
+      "MatchesActualBrowserSource": true,
+      "Path": "apps/web/src/components/public-static-pages.test.tsx"
+    }
+  ],
+  "Root": "C:/dev/mbv-verify-3beb428",
+  "Head": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "CheckedUtc": "2026-10-03T22:08:18.4032307Z"
+}

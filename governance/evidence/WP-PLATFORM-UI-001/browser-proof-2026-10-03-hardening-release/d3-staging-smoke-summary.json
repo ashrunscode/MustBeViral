@@ -1,0 +1,44 @@
+{
+  "Environment": "staging",
+  "FormsSubmitted": false,
+  "HttpPass": true,
+  "BrowserPass": true,
+  "SignedOut": true,
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "Origin": "https://mustbeviral-web-staging.vercel.app",
+  "DeploymentId": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "Checks": [
+    {
+      "FinishedUtc": "2026-10-03T23:28:13.3997088Z",
+      "Check": "c8",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T23:28:08.3128335Z",
+      "Path": "C:/dev/mbv-run/d3-staging-2-c8.json"
+    },
+    {
+      "FinishedUtc": "2026-10-03T23:28:14.5893728Z",
+      "Check": "s0-media",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T23:28:13.4022085Z",
+      "Path": "C:/dev/mbv-run/d3-staging-2-s0-media.json"
+    },
+    {
+      "FinishedUtc": "2026-10-03T23:28:18.8860957Z",
+      "Check": "d3-headers",
+      "ActualExit": 0,
+      "Path": "C:/dev/mbv-run/d3-staging-2-headers.json"
+    }
+  ],
+  "CheckedUtc": "2026-10-03T23:28:18.8861664Z",
+  "Pass": true,
+  "RemoteAuthentication": false,
+  "CachedDocumentPolicyPass": true,
+  "MediaBrowserPass": true,
+  "CapturesInspected": true,
+  "BrowserProof": "C:/dev/mbv-run/d3-staging-browser-retry-2/c8-d3-browser.json",
+  "MediaBrowserProof": "C:/dev/mbv-run/d3-staging-browser-retry-2/c8-s0-browser.json",
+  "CachedPolicyProof": "C:/dev/mbv-run/d3-cache-policy-all-staging.json",
+  "InitialFailedAttempt": "C:/dev/mbv-run/d3-staging-smoke-summary-attempt-1.json",
+  "PromotionReceipt": "C:/dev/mbv-run/d3-staging-promote-receipt.json",
+  "VerifiedUtc": "2026-10-03T23:34:53.5187370Z"
+}

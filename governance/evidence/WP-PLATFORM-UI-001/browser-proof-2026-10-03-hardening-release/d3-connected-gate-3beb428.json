@@ -1,0 +1,18 @@
+{
+  "HarnessPid": 67680,
+  "ActualExit": 0,
+  "Head": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "SyntheticCleanupDeleteRequestsPrevented": true,
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-connected-3beb428.log",
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "StartedUtc": "2026-10-03T22:33:56.6423399Z",
+  "ProductRequestsAndAssertionsUnchanged": true,
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts apps/web/e2e/platform-knowledge-connected.spec.ts --project=desktop-chromium",
+  "Root": "C:/dev/mbv-verify-3beb428",
+  "LocalOnly": true,
+  "FinishedUtc": "2026-10-03T22:41:38.8573881Z",
+  "ProvidersAndQueuesDisabled": true
+}

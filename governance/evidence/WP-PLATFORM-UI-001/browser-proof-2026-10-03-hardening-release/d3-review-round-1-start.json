@@ -1,0 +1,11 @@
+{
+  "Pr": 74,
+  "Effort": "xhigh",
+  "InitialRecordingError": "An empty live log returned null before session parsing; string normalization repaired only the outside metadata reader. No validator or reviewer restarted.",
+  "BodyPath": "C:\\Users\\ernij\\AppData\\Local\\Temp/mbv-pr-public-static-hardening-20261003-review-start.md",
+  "Status": "running",
+  "Head": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "RecordedUtc": "2026-10-03T22:58:25.3850198Z",
+  "Model": "gpt-6.1-sol",
+  "Session": ""
+}

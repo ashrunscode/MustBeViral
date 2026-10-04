@@ -1,0 +1,37 @@
+{
+  "CheckedUtc": "2026-10-03T23:45:47.2799943Z",
+  "Head": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "VaultCheckExit": 1,
+  "HiggsfieldFallbackNamesPresent": false,
+  "VaultNamesExit": 0,
+  "FounderNamePresent": false,
+  "ProductionHomeStatus": 200,
+  "Deployment": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "CoreHealthStatus": 200,
+  "CoreHealthOk": true,
+  "DiskFreeGb": 411.0,
+  "InitialDiagnosticPreserved": "d3-reorient-12-20261004.json retains a wrong ok-boolean parser; corrected live status field in d3-reorient-12-health-corrected-20261003.json.",
+  "Preflight": {
+    "Node": "v24.21.0",
+    "Blockers": 0,
+    "Pnpm": "11.12.0",
+    "ActualExit": 0,
+    "InspectedFiles": 4447,
+    "TransitionReceipts": 24,
+    "Session": 49360
+  },
+  "RemoteMigrations": {
+    "Staging": {
+      "Head": "20260917223105",
+      "Count": 50
+    },
+    "MainHead": "20260929017000",
+    "MainFileCount": 75,
+    "Production": {
+      "Head": "20260902154759",
+      "Count": 39
+    },
+    "StagingAlternativeTimestampsDoNotEstablishSemanticParity": true,
+    "ReadOnly": true
+  }
+}

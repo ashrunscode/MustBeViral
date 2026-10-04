@@ -1,0 +1,68 @@
+{
+  "checkedUtc": "2026-10-03T23:27:02.492Z",
+  "source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "deployment": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "localOnly": false,
+  "formsSubmitted": 0,
+  "driver": "Playwright MCP CDP; isolated diagnostic with one intentional eval-denial probe per navigation; CDP Runtime.evaluate allowUnsafeEvalBlockedByCSP=false; not zero-error acceptance",
+  "results": [
+    {
+      "width": 375,
+      "browserStatus": 200,
+      "cspInAllHeaders": true,
+      "documentPackets": [
+        {
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "cspInMergedHeaders": true,
+          "wireStatus": 200,
+          "cspInWireHeaders": true
+        }
+      ],
+      "observed": {
+        "jitless": true,
+        "oneMain": true,
+        "lang": "en",
+        "evalDenied": true,
+        "exceptionName": "EvalError",
+        "noEvalInHeader": true
+      },
+      "intentionalProbePolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "browserStatus": 200,
+      "cspInAllHeaders": false,
+      "documentPackets": [
+        {
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "cspInMergedHeaders": true,
+          "wireStatus": 304,
+          "cspInWireHeaders": false
+        }
+      ],
+      "observed": {
+        "jitless": true,
+        "oneMain": true,
+        "lang": "en",
+        "evalDenied": true,
+        "exceptionName": "EvalError",
+        "noEvalInHeader": true
+      },
+      "intentionalProbePolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "FormsSubmitted": false,
+  "HttpPass": true,
+  "Origin": "https://mustbeviral-web-staging.vercel.app",
+  "SignedOut": true,
+  "BrowserPass": false,
+  "Pass": false,
+  "RemoteAuthentication": false,
+  "DeploymentId": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "Checks": [
+    {
+      "FinishedUtc": "2026-10-03T23:13:08.7879316Z",
+      "Path": "C:/dev/mbv-run/d3-staging-c8.json",
+      "Check": "c8",
+      "StartedUtc": "2026-10-03T23:13:02.3667711Z",
+      "ActualExit": 0
+    },
+    {
+      "FinishedUtc": "2026-10-03T23:13:10.1168774Z",
+      "Path": "C:/dev/mbv-run/d3-staging-s0-media.json",
+      "Check": "s0-media",
+      "StartedUtc": "2026-10-03T23:13:08.7902447Z",
+      "ActualExit": 0
+    },
+    {
+      "FinishedUtc": "2026-10-03T23:13:15.2456730Z",
+      "Path": "C:/dev/mbv-run/d3-staging-headers.json",
+      "Check": "d3-headers",
+      "ActualExit": 0
+    }
+  ],
+  "CheckedUtc": "2026-10-03T23:13:15.2457369Z",
+  "Environment": "staging"
+}

@@ -11,7 +11,7 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Implement D3 public hardening within WP-PLATFORM-UI-001.
+next_action: Repair the in-scope receipt, responsive proof and operator-gate defects under L3f.
 decisions_pending: []
 blockers: []
 legacy:

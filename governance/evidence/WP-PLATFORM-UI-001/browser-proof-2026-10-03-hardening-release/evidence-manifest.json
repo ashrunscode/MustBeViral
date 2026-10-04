@@ -1,0 +1,698 @@
+{
+  "checkedUtc": "2026-10-04T00:23:04.597Z",
+  "source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "reviewed": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "files": [
+    {
+      "file": "d3-reorient-11-20261003.json",
+      "sha256": "07e43f49935e804c32b3213fb733e131591234f9cf7cbf9062f20e91ebda0e9d",
+      "original": "C:/dev/mbv-run/d3-reorient-11-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-author-gates-retry-7-20261003.json",
+      "sha256": "4ccb7e3387f7fbb1933e5a91d7047b0445b4a92fb533c032831b3ae4a43d9354",
+      "original": "C:/dev/mbv-run/d3-author-gates-retry-7-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-final-evidence-gates-20261003.json",
+      "sha256": "120d50876bca865210b2f9a8e60b74196872952e419f940985baa0ae0c30cc98",
+      "original": "C:/dev/mbv-run/d3-final-evidence-gates-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staged-eof-repair-20261003.json",
+      "sha256": "30639718a50715108069b909a440fb1dda92441ba5187b2e18d43425671161a8",
+      "original": "C:/dev/mbv-run/d3-staged-eof-repair-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-csp-source-equivalence-3beb428.json",
+      "sha256": "37fc01a2bd27e3a2cda2331ec0d1a203731c610ce22f8979d64699c8100688af",
+      "original": "C:/dev/mbv-run/d3-csp-source-equivalence-3beb428.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-fresh-browser-source-match-3beb428.json",
+      "sha256": "3e05f171406c6135e730e794eae91d7ada4798264956cc57c421765e99ad9560",
+      "original": "C:/dev/mbv-run/d3-fresh-browser-source-match-3beb428.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-fresh-3beb428-gates.json",
+      "sha256": "11c36084d7282dc9b36e9d53f7083de3d86df4d4094c8aee98cdda847f6c1783",
+      "original": "C:/dev/mbv-run/d3-fresh-3beb428-gates.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-connected-gate-3beb428.json",
+      "sha256": "79417c511ac58ac248f2726792cc2bb87c998e188b8bbc6bd430d72a06a714d8",
+      "original": "C:/dev/mbv-run/d3-connected-gate-3beb428.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-connected-process-3beb428.json",
+      "sha256": "18f1c654f45b832ac2d67859c3cd7661c57b87abce69204b3f3109818fa7e1c8",
+      "original": "C:/dev/mbv-run/d3-connected-process-3beb428.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-current-harness-console-3beb428.json",
+      "sha256": "f40a3791fd6b3c96faeffbd3c7a638874e7800a8348dd7c0822f357b4b837e0a",
+      "original": "C:/dev/mbv-run/d3-current-harness-console-3beb428.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-terms-live-check-20261003.json",
+      "sha256": "183925a4624b2371c17037e8ca8271c400850e0e352d53c166b8cac43298beac",
+      "original": "C:/dev/mbv-run/d3-terms-live-check-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-review-round-1-start.json",
+      "sha256": "706770640d5b9386a5510ee490b670eb97089865c6f484d304af29c02dd644ce",
+      "original": "C:/dev/mbv-run/d3-review-round-1-start.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-review-round-1.json",
+      "sha256": "84533e93c0c99ef731bab01adb48914d4039ac19c51e1246dcf73021bc903ba9",
+      "original": "C:/dev/mbv-run/d3-review-round-1.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "l2-review-round-1.json",
+      "sha256": "8bda5ed8bf977b2cd74d4353d137a3c2cecf87b48477a47adfd1fb61f1ab8309",
+      "original": "C:/dev/mbv-run/l2-review-round-1.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-merge-receipt.json",
+      "sha256": "6c00eb770cb7fe697b2555b4cbe32089ff4df8fde6fdbf042bb0700225153a46",
+      "original": "C:/dev/mbv-run/d3-merge-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-deploy-root-receipt.json",
+      "sha256": "5ba2fbd43973db93f2ad50d3a309bb99a7e890ae04b9e580da3973a451b3912c",
+      "original": "C:/dev/mbv-run/d3-deploy-root-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-release-toolchain-schema.json",
+      "sha256": "c3a16dc348a895b669546fa253b936a1576d5c477a1f985afca92a32306e1376",
+      "original": "C:/dev/mbv-run/d3-release-toolchain-schema.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-release-ready.json",
+      "sha256": "ecd1371b97d166fffc54a20bbd6193d66f896bf6c8326301e19a0b0017b59fef",
+      "original": "C:/dev/mbv-run/d3-staging-release-ready.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-release-ready-2.json",
+      "sha256": "360f8d5e1fecd819cd8c4a2d4f0aae0f0bf6fa700ae8335a176288df7acde625",
+      "original": "C:/dev/mbv-run/d3-staging-release-ready-2.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-release-ready.json",
+      "sha256": "5a18c8c59e9c134aa5a360462b10fd4e5c5c7da2e564dc2796c6bc65cd0765a5",
+      "original": "C:/dev/mbv-run/d3-production-release-ready.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-deploy-receipt.json",
+      "sha256": "e49d3b55e192dd2891acd06e484a2e622812687bbba72e90b9b43f735f43d6d6",
+      "original": "C:/dev/mbv-run/d3-staging-deploy-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-provider-receipt.json",
+      "sha256": "fb0c4d1388c1519ee6a845e7b94870a2a2220a558e5b6d9a90d79d702e10b37c",
+      "original": "C:/dev/mbv-run/d3-staging-provider-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-alias-receipt.json",
+      "sha256": "55f9de95c6de36593b81031786175d9cfca6572d7fb040730f33aa9738abdce3",
+      "original": "C:/dev/mbv-run/d3-staging-alias-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-rollback-receipt.json",
+      "sha256": "acf9aebb16781a03fc92bbc87314496c72362ce2747ec4a42ccd128fcf7b0ee2",
+      "original": "C:/dev/mbv-run/d3-staging-rollback-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-promote-receipt.json",
+      "sha256": "8515997ecd09e0f47a634d7644e98b213e712db77616ca16ab81d707c12678bb",
+      "original": "C:/dev/mbv-run/d3-staging-promote-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-deploy-receipt.json",
+      "sha256": "65eb3fe3c6f0a5d13c6f7eba84a8181c470a860a8796dd81f44d8960fd6332d5",
+      "original": "C:/dev/mbv-run/d3-production-deploy-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-provider-receipt.json",
+      "sha256": "602a3810d058f03f6080398f61a121616d8641124de65f78d027040a2014cdef",
+      "original": "C:/dev/mbv-run/d3-production-provider-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-alias-receipt.json",
+      "sha256": "2ba0e001d3cebdcafc03026c67cf1ae8318d5789a6b03231a31222cff6180ce3",
+      "original": "C:/dev/mbv-run/d3-production-alias-receipt.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-c8.json",
+      "sha256": "21db9cfc4c01eefa5190c14be0fb97aa0711670f96067370c6cc1b0b38329a6e",
+      "original": "C:/dev/mbv-run/d3-staging-c8.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-s0-media.json",
+      "sha256": "6d4b0be65329a1ba8e686761192caacb4d72d84f66316a33759cdd85d2946460",
+      "original": "C:/dev/mbv-run/d3-staging-s0-media.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-headers.json",
+      "sha256": "c347132f6bf58abf72853aa3e9b19962288e6e1149411207ecabc79fa4cbd9ff",
+      "original": "C:/dev/mbv-run/d3-staging-headers.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-2-c8.json",
+      "sha256": "ac1a76b8a6ffdbb0866ae612ff290eb0a517d13f463536f9d2c13426dd497039",
+      "original": "C:/dev/mbv-run/d3-staging-2-c8.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-2-s0-media.json",
+      "sha256": "32fbe7767852c56ccd21f76955acf63dcdd68551cfb2bdd3c74039648a856b78",
+      "original": "C:/dev/mbv-run/d3-staging-2-s0-media.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-2-headers.json",
+      "sha256": "78d6a5cd9ab442fd0f83f7fb5e02d440c47bfc1fc0565434d86423ebad7ff30b",
+      "original": "C:/dev/mbv-run/d3-staging-2-headers.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-smoke-summary-attempt-1.json",
+      "sha256": "3fc024ec6b2161004a3589edfc324d550ed28e0366528f3e7f7e8468fb68e399",
+      "original": "C:/dev/mbv-run/d3-staging-smoke-summary-attempt-1.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-smoke-summary.json",
+      "sha256": "41cdba3c29382452542bd652dfa68d80682cc48138fd0de66aaee882284741e4",
+      "original": "C:/dev/mbv-run/d3-staging-smoke-summary.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-staging-capture-inspection.json",
+      "sha256": "9c6198b91304dc5d4b729ac7b6c3d13d85b317b76e63948affdf544924e30c76",
+      "original": "C:/dev/mbv-run/d3-staging-capture-inspection.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-c8.json",
+      "sha256": "78404077b379f25cd275ca761f53b2c87e3b27b0b7512e893fe686c181fb7746",
+      "original": "C:/dev/mbv-run/d3-production-c8.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-s0-media.json",
+      "sha256": "70b6c162bbe782ad477309086c719327079fe0f00e2bf801830b878aace5f1a4",
+      "original": "C:/dev/mbv-run/d3-production-s0-media.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-headers.json",
+      "sha256": "2f57a534006512de8054114c73e37d691f659b7ef0761c2e6258bee9e4398835",
+      "original": "C:/dev/mbv-run/d3-production-headers.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-smoke-summary-http-only.json",
+      "sha256": "09395f5ae959bb096b5b8c3092648cdca6cbfbc7200394763f75066cc209772f",
+      "original": "C:/dev/mbv-run/d3-production-smoke-summary-http-only.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-smoke-summary.json",
+      "sha256": "8ebebe1756b68276dc6c468bf5b395998415a0f9d1913ef0d7444fe80614c22b",
+      "original": "C:/dev/mbv-run/d3-production-smoke-summary.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-alias-c8.json",
+      "sha256": "7cc254253fa146e3533ebe426bc4af548a96ae29186542de1904f5ec68713326",
+      "original": "C:/dev/mbv-run/d3-production-alias-c8.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-alias-s0-media.json",
+      "sha256": "3456d1c71775d0ac85dd804ff5eceabe22101d4efbfa00061a395625497d5806",
+      "original": "C:/dev/mbv-run/d3-production-alias-s0-media.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-alias-headers.json",
+      "sha256": "0fc7082d5a2dd7f43f67478f0aef025416606ff808487e835ae22b6b8221dc5a",
+      "original": "C:/dev/mbv-run/d3-production-alias-headers.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-alias-smoke-summary-http-only.json",
+      "sha256": "c79131cb0dd7a5d3502077c727d70937e9b03b7b52751382f5270dc4dfc928b3",
+      "original": "C:/dev/mbv-run/d3-production-alias-smoke-summary-http-only.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-alias-smoke-summary.json",
+      "sha256": "39a58d03476119a8943a86c95562cc919c0d5986087e8823441a164b1422f209",
+      "original": "C:/dev/mbv-run/d3-production-alias-smoke-summary.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-cache-diagnostic-process.json",
+      "sha256": "1a72940f17716bedd4b2af9c57926d2918bf66a49df37fff54f8c7e755d96233",
+      "original": "C:/dev/mbv-run/d3-cache-diagnostic-process.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-cache-diagnostic-local.json",
+      "sha256": "e6b38a5fdd8901938c8176a2d59e894a391ecaf457540d21ce0c868aacb9e702",
+      "original": "C:/dev/mbv-run/d3-cache-diagnostic-local.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-cache-diagnostic-local-corrected.json",
+      "sha256": "bcf620f497930774379cb79022b46f98ceb81289c6197077c475ceca49dec931",
+      "original": "C:/dev/mbv-run/d3-cache-diagnostic-local-corrected.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-cache-diagnostic-staging.json",
+      "sha256": "0fe6470e1c7cf48e3e579fbf8c13ea908c9b4d901068cdd7bba496fb0ae585e8",
+      "original": "C:/dev/mbv-run/d3-cache-diagnostic-staging.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-cache-policy-all-staging.json",
+      "sha256": "56da90b878dda2543a63a5115db1bca95fb7cbb90d6f48e5c729e0a01cf2f86d",
+      "original": "C:/dev/mbv-run/d3-cache-policy-all-staging.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-cache-policy-all-production.json",
+      "sha256": "94c1b6f04be7a8c773975f6e3bd3aefdb03171eb5e11b08c2438a3b690badad1",
+      "original": "C:/dev/mbv-run/d3-cache-policy-all-production.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-live-capture-hash-comparison.json",
+      "sha256": "bac776c41be1ba76546e864ad9e8fe988268029c92efe6c21b84e45b4baf7ad6",
+      "original": "C:/dev/mbv-run/d3-live-capture-hash-comparison.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-production-capture-inspection.json",
+      "sha256": "29485918ffb33142c0de96b47fe24814dea321f2f2bc91c917d80a4451282e9e",
+      "original": "C:/dev/mbv-run/d3-production-capture-inspection.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-reorient-12-20261004.json",
+      "sha256": "fe472ab899de3408ae4701a0d26f32e8a9a0069250dae4ed1ce1c4a2fa7a0d8b",
+      "original": "C:/dev/mbv-run/d3-reorient-12-20261004.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-reorient-12-health-corrected-20261003.json",
+      "sha256": "80c4358bf50725b02b8988c77ae05de9e93489ee576cd092e2a221e64c5cfab2",
+      "original": "C:/dev/mbv-run/d3-reorient-12-health-corrected-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-reorient-12-final-20261003.json",
+      "sha256": "0ba321a45fd0f70fdc380eba0792fcf033eaf36953fd49a6ab8be7ba7b82cbae",
+      "original": "C:/dev/mbv-run/d3-reorient-12-final-20261003.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "staging/c8-d3-browser.json",
+      "sha256": "198c3f1b85906ab3a0d58b19d1f9248490961d605e094c9c557997297b41805a",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/c8-d3-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "staging/c8-s0-browser.json",
+      "sha256": "b6c3202ac02d99769c4512d7b1c35f41172c79cc829608744812b6497f6d41f1",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/c8-s0-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "staging/software-375.png",
+      "sha256": "9889d2e0d78cbbab713704b174b639ed1f636119630aa9fd52436eac2fc6a68d",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/software-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "staging/software-1280.png",
+      "sha256": "d83edb29389d9ba1d701aea305aa088fe500328a774dfd7f937ec9ec55769d9e",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/software-1280.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "staging/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/home-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "staging/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/es-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "staging/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "original": "C:/dev/mbv-run/d3-staging-browser-retry-2/advertising-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production/c8-d3-browser.json",
+      "sha256": "0068995e2b9b3b7fe4381045177bb790600b68ced060ad9d8da32d233db76334",
+      "original": "C:/dev/mbv-run/d3-production-browser/c8-d3-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "production/c8-s0-browser.json",
+      "sha256": "648271aebbff7e9f1d309e1c767bbb3d5b197727fd62ceb64c93024d6993bc89",
+      "original": "C:/dev/mbv-run/d3-production-browser/c8-s0-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "production/software-375.png",
+      "sha256": "a62f4bc8d31812bcd0583d7909b61e69e7f54f901d0074608112accf4e65a857",
+      "original": "C:/dev/mbv-run/d3-production-browser/software-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production/software-1280.png",
+      "sha256": "94abf404eb5e738aace3c75fe2d95c0e2c747cd14e9149b18de33d428f164457",
+      "original": "C:/dev/mbv-run/d3-production-browser/software-1280.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "original": "C:/dev/mbv-run/d3-production-browser/home-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "original": "C:/dev/mbv-run/d3-production-browser/es-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "original": "C:/dev/mbv-run/d3-production-browser/advertising-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production-alias/c8-d3-browser.json",
+      "sha256": "aff27efcf49c276912f71d3737aadf28697f19bcc0ce452d51d3397c91fb3099",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/c8-d3-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "production-alias/c8-s0-browser.json",
+      "sha256": "d61c398e7d83da7b22749e863aa144950a089c644ae417b5af23868b605a2807",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/c8-s0-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "production-alias/software-375.png",
+      "sha256": "fb33a0625b1a460f569ab2fd6e529cbb2b0b1fa550c712851d2063f712a7ec6f",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/software-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production-alias/software-1280.png",
+      "sha256": "3c6a30072d803e9510c8e7604639286b75a419b4d19924e4b8be7671ae4efa26",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/software-1280.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production-alias/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/home-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production-alias/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/es-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "production-alias/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "original": "C:/dev/mbv-run/d3-production-alias-browser/advertising-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "staging-attempt-1/c8-d3-browser.json",
+      "sha256": "f28b4d74b65494d40729c1e4c80957528bbbd87beedee537ae3b0cf65923035d",
+      "original": "C:/dev/mbv-run/d3-staging-browser/c8-d3-browser.json",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "staging-attempt-1/software-375.png",
+      "sha256": "067b82b2b0c902d7115fbe4e4c9c29cbea741ea3901dbfb56879277ec036e4f0",
+      "original": "C:/dev/mbv-run/d3-staging-browser/software-375.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "staging-attempt-1/software-1280.png",
+      "sha256": "5befa58842363a5b88a16a426069fab2eb09f35076ece9ee59913f366b842d42",
+      "original": "C:/dev/mbv-run/d3-staging-browser/software-1280.png",
+      "originalRetained": true,
+      "byteIdentical": true,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "incident-staging-cached-policy.md",
+      "sha256": "776744ff07ae308f0ab543e8c7dfb2539b921eab15ea8c3e812d361ecdcf85f2",
+      "original": "C:/dev/mbv-run/d3-staging-csp-repeat-incident-draft.md",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": null
+    },
+    {
+      "file": "d3-record-handoff-1.json",
+      "sha256": "7e54649e644b9f4de975e2bd07722f7499aad36b5b2063c4f35785d0e6a8e3a3",
+      "original": "C:/dev/mbv-run/d3-record-handoff-1.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-record-handoff-poststep-1.json",
+      "sha256": "298622f5d7de4a365d87ec4d9ec2c568bf630c2379f131911f7da63979bab7ee",
+      "original": "C:/dev/mbv-run/d3-record-handoff-poststep-1.json",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": true
+    },
+    {
+      "file": "d3-record-handoff-output-1.txt",
+      "sha256": "d8b3c161e8a5ebdd00c80e5f1e54d7d03d50ad4d60808e93cb098a1f77002164",
+      "original": "C:/dev/mbv-run/d3-record-handoff-output-1.txt",
+      "originalRetained": true,
+      "byteIdentical": false,
+      "parsedJsonEquivalent": null,
+      "textLineEndingsEquivalent": true
+    }
+  ],
+  "allJsonContentEquivalent": true,
+  "allPngByteIdentical": true
+}

@@ -1,0 +1,39 @@
+{
+  "FounderNamePresent": false,
+  "Deployment": "dpl_HCxas3BjbcANLZoVVQh68q1EcHoL",
+  "CheckedUtc": "2026-10-03T22:53:53.6887951Z",
+  "CoreHealthOk": true,
+  "DiskFreeGb": 404.4,
+  "CoreHealthStatus": 200,
+  "Head": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "HiggsfieldFallbackNamesPresent": false,
+  "VaultCheckExit": 1,
+  "VaultNamesExit": 0,
+  "ProductionHomeStatus": 200,
+  "RemoteMigrations": {
+    "Staging": {
+      "Head": "20260917223105",
+      "Count": 50
+    },
+    "Production": {
+      "Head": "20260902154759",
+      "Count": 39
+    },
+    "MainHead": "20260929017000",
+    "StagingAlternativeTimestampsDoNotEstablishSemanticParity": true,
+    "MainFileCount": 75,
+    "ReadOnly": true
+  },
+  "Preflight": {
+    "Node": "v24.21.0",
+    "Session": 26036,
+    "ActualExit": 0,
+    "Blockers": 0,
+    "InspectedFiles": 4447,
+    "TransitionReceipts": 24,
+    "FinishedUtc": "2026-10-03T22:56:44.6270370Z",
+    "Pnpm": "11.12.0"
+  },
+  "ReleaseRecordRead": "governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md",
+  "InitialReleaseRecordReadError": "An initial read used the wrong date punctuation and failed; the exact existing release-studio-s0-2026-10-03.md was then read in full. No mutation occurred."
+}

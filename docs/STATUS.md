@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Implement D3 public hardening within WP-PLATFORM-UI-001.
+Repair the in-scope receipt, responsive proof and operator-gate defects under L3f.

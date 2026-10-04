@@ -1,0 +1,43 @@
+{
+  "DeploymentId": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "Environment": "production",
+  "Pass": true,
+  "FormsSubmitted": false,
+  "RemoteAuthentication": false,
+  "HttpPass": true,
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "BrowserPass": true,
+  "CheckedUtc": "2026-10-03T23:37:58.628068Z",
+  "SignedOut": true,
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-03T23:37:51.1415094Z",
+      "StartedUtc": "2026-10-03T23:37:44.8600594Z",
+      "Check": "c8",
+      "Path": "C:/dev/mbv-run/d3-production-c8.json"
+    },
+    {
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-03T23:37:53.077534Z",
+      "StartedUtc": "2026-10-03T23:37:51.1436332Z",
+      "Check": "s0-media",
+      "Path": "C:/dev/mbv-run/d3-production-s0-media.json"
+    },
+    {
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-03T23:37:58.628006Z",
+      "Path": "C:/dev/mbv-run/d3-production-headers.json",
+      "Check": "d3-headers"
+    }
+  ],
+  "Origin": "https://mustbeviral.com",
+  "MediaBrowserPass": true,
+  "CapturesInspected": true,
+  "BrowserProof": "C:\\dev\\mbv-run\\d3-production-browser\\c8-d3-browser.json",
+  "VerifiedUtc": "2026-10-03T23:52:46.1237961Z",
+  "CaptureInspectionProof": "C:\\dev\\mbv-run\\d3-production-capture-inspection.json",
+  "MediaBrowserProof": "C:\\dev\\mbv-run\\d3-production-browser\\c8-s0-browser.json",
+  "CachedDocumentPolicyPass": true,
+  "CachedPolicyProof": "C:\\dev\\mbv-run\\d3-cache-policy-all-production.json"
+}

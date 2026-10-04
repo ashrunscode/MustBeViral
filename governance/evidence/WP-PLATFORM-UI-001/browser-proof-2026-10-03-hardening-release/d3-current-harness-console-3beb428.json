@@ -1,0 +1,78 @@
+{
+  "checkedUtc": "2026-10-03T22:47:06.139Z",
+  "sourceHead": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "driver": "Playwright MCP; current connected local development harness; existing retained synthetic session; additional console observation only; separate actual production CSP proof retained",
+  "formsSubmitted": 0,
+  "remoteAuthentication": false,
+  "pass": true,
+  "cells": [
+    {
+      "width": 375,
+      "status": 200,
+      "observed": {
+        "path": "/studio",
+        "main": 1,
+        "h1": 1,
+        "lang": "en",
+        "overflow": false,
+        "validationJitless": true,
+        "unavailable": false,
+        "sessionActive": true
+      },
+      "applicationErrorClasses": [],
+      "privateNoStore": false,
+      "pass": true
+    },
+    {
+      "width": 768,
+      "status": 200,
+      "observed": {
+        "path": "/studio",
+        "main": 1,
+        "h1": 1,
+        "lang": "en",
+        "overflow": false,
+        "validationJitless": true,
+        "unavailable": false,
+        "sessionActive": true
+      },
+      "applicationErrorClasses": [],
+      "privateNoStore": false,
+      "pass": true
+    },
+    {
+      "width": 1280,
+      "status": 200,
+      "observed": {
+        "path": "/studio",
+        "main": 1,
+        "h1": 1,
+        "lang": "en",
+        "overflow": false,
+        "validationJitless": true,
+        "unavailable": false,
+        "sessionActive": true
+      },
+      "applicationErrorClasses": [],
+      "privateNoStore": false,
+      "pass": true
+    },
+    {
+      "width": 1920,
+      "status": 200,
+      "observed": {
+        "path": "/studio",
+        "main": 1,
+        "h1": 1,
+        "lang": "en",
+        "overflow": false,
+        "validationJitless": true,
+        "unavailable": false,
+        "sessionActive": true
+      },
+      "applicationErrorClasses": [],
+      "privateNoStore": false,
+      "pass": true
+    }
+  ]
+}
