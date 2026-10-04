@@ -1,0 +1,35 @@
+{
+  "checkedUtc": "2026-10-04T10:08:46.9734021Z",
+  "deploymentId": "dpl_H71RFwKHgz52iTyYxSbaujskGJJn",
+  "source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "images": [
+    {
+      "path": "l3f-staging-browser/software-375.png",
+      "sha256": "6c240f9dcfa2b2bcd47444e2df6e0f3dcd2fe377a99ef5bac5915f8a05419633",
+      "inspectedOriginal": true
+    },
+    {
+      "path": "l3f-staging-browser/software-1280.png",
+      "sha256": "9a301ecd94ad0854e319eec7a2f22292a9277f131b98332088fe4d512bbe37cc",
+      "inspectedOriginal": true
+    },
+    {
+      "path": "l3f-staging-browser/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "byteIdenticalToPreviouslyInspectedOriginal": "d3-staging-browser-retry-2/home-375.png"
+    },
+    {
+      "path": "l3f-staging-browser/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "byteIdenticalToPreviouslyInspectedOriginal": "d3-staging-browser-retry-2/es-375.png"
+    },
+    {
+      "path": "l3f-staging-browser/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "byteIdenticalToPreviouslyInspectedOriginal": "d3-staging-browser-retry-2/advertising-375.png"
+    }
+  ],
+  "priorInspectionRecord": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-hardening-release/d3-staging-capture-inspection.json",
+  "observations": "Current software page remains contained at both widths. Its unchanged moving film still has small type and an internal label assigned to D4; this bounded patch does not claim that film accepted. The three S0/legal captures exactly match the inspected D3 originals. No new copy, media or layout finding.",
+  "timestampMeaning": "Receipt recording time after actual inspection; initial approximate scalar retained outside the repository as a diagnostic."
+}

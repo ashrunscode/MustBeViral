@@ -1,0 +1,42 @@
+{
+  "HttpPass": true,
+  "Origin": "https://mustbeviral.com",
+  "FormsSubmitted": false,
+  "DeploymentId": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+  "SignedOut": true,
+  "Source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "Environment": "production",
+  "BrowserPass": true,
+  "Checks": [
+    {
+      "Check": "c8",
+      "FinishedUtc": "2026-10-04T10:12:00.0026087Z",
+      "Path": "C:/dev/mbv-run/l3f-production-c8.json",
+      "StartedUtc": "2026-10-04T10:11:53.3788175Z",
+      "ActualExit": 0
+    },
+    {
+      "Check": "s0-media",
+      "FinishedUtc": "2026-10-04T10:12:01.2845995Z",
+      "Path": "C:/dev/mbv-run/l3f-production-s0-media.json",
+      "StartedUtc": "2026-10-04T10:12:00.0052192Z",
+      "ActualExit": 0
+    },
+    {
+      "Check": "d3-headers",
+      "FinishedUtc": "2026-10-04T10:12:06.6299455Z",
+      "Path": "C:/dev/mbv-run/l3f-production-headers.json",
+      "ActualExit": 0
+    }
+  ],
+  "RemoteAuthentication": false,
+  "CheckedUtc": "2026-10-04T10:26:53.5271676Z",
+  "Pass": true,
+  "BrowserProofPaths": [
+    "C:/dev/mbv-run/l3f-production-c8-browser.json",
+    "C:/dev/mbv-run/l3f-production-s0-browser.json"
+  ],
+  "BrowserCells": 32,
+  "BrowserApplicationErrors": 0,
+  "ExpectedDocument404ResourceCount": 2.0
+}

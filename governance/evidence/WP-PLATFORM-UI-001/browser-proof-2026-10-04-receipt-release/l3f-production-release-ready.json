@@ -1,0 +1,25 @@
+{
+  "Rollback": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "NewDatabaseDependency": false,
+  "BrowserSourceFilesMatch": true,
+  "NewestJournaled": true,
+  "SharedSchemaRuntimeUnchanged": true,
+  "Project": "mustbeviral-web-production",
+  "Source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "LiveSource": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "NewestCreatedUtc": "2026-10-03T23:35:39.7710000Z",
+  "NewestDeployment": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "CheckedUtc": "2026-10-04T10:08:57.5227223Z",
+  "Aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "SchemaMetadataCheckedUtc": "2026-10-04T09:54:27Z",
+  "ExactServedInventoryMatch": true,
+  "Reviewed": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "AgeMinutes": 633.25,
+  "LiveReady": true,
+  "RemoteDatabaseWrite": false
+}

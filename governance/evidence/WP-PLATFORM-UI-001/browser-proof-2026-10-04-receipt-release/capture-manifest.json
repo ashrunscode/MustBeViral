@@ -1,0 +1,99 @@
+{
+  "recordedUtc": "2026-10-04T10:48:35.170Z",
+  "source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "captureNames": 15,
+  "distinctContents": 9,
+  "allInspectionsAccountedFor": true,
+  "entries": [
+    {
+      "environment": "staging",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/software-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-staging-browser/software-375.png",
+      "sha256": "6c240f9dcfa2b2bcd47444e2df6e0f3dcd2fe377a99ef5bac5915f8a05419633"
+    },
+    {
+      "environment": "staging",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/software-1280.png",
+      "nativePath": "C:/dev/mbv-run/l3f-staging-browser/software-1280.png",
+      "sha256": "9a301ecd94ad0854e319eec7a2f22292a9277f131b98332088fe4d512bbe37cc"
+    },
+    {
+      "environment": "staging",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/home-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-staging-browser/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73"
+    },
+    {
+      "environment": "staging",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/es-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-staging-browser/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885"
+    },
+    {
+      "environment": "staging",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/staging/advertising-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-staging-browser/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    },
+    {
+      "environment": "production",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/software-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-browser/software-375.png",
+      "sha256": "480e06e56bca076393c6939bb78210b5b354635bd48f474dfaddc4c811c6a18e"
+    },
+    {
+      "environment": "production",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/software-1280.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-browser/software-1280.png",
+      "sha256": "5befa58842363a5b88a16a426069fab2eb09f35076ece9ee59913f366b842d42"
+    },
+    {
+      "environment": "production",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/home-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-browser/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73"
+    },
+    {
+      "environment": "production",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/es-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-browser/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885"
+    },
+    {
+      "environment": "production",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production/advertising-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-browser/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    },
+    {
+      "environment": "production-alias",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/software-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-alias-browser/software-375.png",
+      "sha256": "fb33a0625b1a460f569ab2fd6e529cbb2b0b1fa550c712851d2063f712a7ec6f"
+    },
+    {
+      "environment": "production-alias",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/software-1280.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-alias-browser/software-1280.png",
+      "sha256": "d83edb29389d9ba1d701aea305aa088fe500328a774dfd7f937ec9ec55769d9e"
+    },
+    {
+      "environment": "production-alias",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/home-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-alias-browser/home-375.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73"
+    },
+    {
+      "environment": "production-alias",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/es-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-alias-browser/es-375.png",
+      "sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885"
+    },
+    {
+      "environment": "production-alias",
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-04-receipt-release/captures/production-alias/advertising-375.png",
+      "nativePath": "C:/dev/mbv-run/l3f-production-alias-browser/advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    }
+  ]
+}

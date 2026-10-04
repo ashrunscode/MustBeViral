@@ -1,0 +1,18 @@
+{
+  "ProductRequestsAndAssertionsUnchanged": true,
+  "Head": "ee91bb6a170d4e6520a6e537807f8f29721a2c06",
+  "StartedUtc": "2026-10-04T09:20:25.0372147Z",
+  "SyntheticCleanupDeleteRequestsPrevented": true,
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-connected-ee91bb6.log",
+  "Root": "C:/dev/mbv-verify-ee91bb6",
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "ProvidersAndQueuesDisabled": true,
+  "FinishedUtc": "2026-10-04T09:28:54.3000887Z",
+  "ActualExit": 0,
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts apps/web/e2e/platform-knowledge-connected.spec.ts --project=desktop-chromium",
+  "LocalOnly": true,
+  "HarnessPid": 15712
+}

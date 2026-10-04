@@ -1,0 +1,27 @@
+{
+  "checkedUtc": "2026-10-04T09:58:34.4696230Z",
+  "project": "mustbeviral-web-staging",
+  "source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "deployment": "dpl_H71RFwKHgz52iTyYxSbaujskGJJn",
+  "aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "allAliasesMoved": true,
+  "aliasInspections": [
+    {
+      "matchesExpected": true,
+      "alias": "mustbeviral-web-staging.vercel.app",
+      "deployment": "dpl_H71RFwKHgz52iTyYxSbaujskGJJn",
+      "ready": "READY"
+    },
+    {
+      "matchesExpected": true,
+      "alias": "mustbeviral-web-staging-ashrunscode-projects.vercel.app",
+      "deployment": "dpl_H71RFwKHgz52iTyYxSbaujskGJJn",
+      "ready": "READY"
+    }
+  ],
+  "rawValuesNotRecorded": true,
+  "ready": "READY"
+}

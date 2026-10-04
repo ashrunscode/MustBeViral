@@ -1,0 +1,45 @@
+{
+  "checkedUtc": "2026-10-04T10:11:52.6456527Z",
+  "source": "8e0b43ac3a6120c304eec9bdd9b1915cc64a61b2",
+  "deployment": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+  "ready": "READY",
+  "project": "mustbeviral-web-production",
+  "aliasInspections": [
+    {
+      "ready": "READY",
+      "deployment": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+      "protectedInspectedOnly": false,
+      "matchesExpected": true,
+      "alias": "mustbeviral.com"
+    },
+    {
+      "ready": "READY",
+      "deployment": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+      "protectedInspectedOnly": false,
+      "matchesExpected": true,
+      "alias": "www.mustbeviral.com"
+    },
+    {
+      "ready": "READY",
+      "deployment": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+      "protectedInspectedOnly": false,
+      "matchesExpected": true,
+      "alias": "mustbeviral-web-production.vercel.app"
+    },
+    {
+      "ready": "READY",
+      "deployment": "dpl_8xnrLRBENEKYoWnGxsuHfLZPAfvM",
+      "protectedInspectedOnly": true,
+      "matchesExpected": true,
+      "alias": "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+    }
+  ],
+  "aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "allAliasesMoved": true,
+  "rawValuesNotRecorded": true
+}
