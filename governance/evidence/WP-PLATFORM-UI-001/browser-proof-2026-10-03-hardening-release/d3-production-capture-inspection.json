@@ -1,0 +1,89 @@
+{
+  "CheckedUtc": "2026-10-03T23:52:46.1687463Z",
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "Deployment": "dpl_39ZBwGjXdn9EtqDuStLd1moqFLx3",
+  "StagingInspectionProof": "d3-staging-capture-inspection.json",
+  "Captures": [
+    {
+      "Name": "software-375.png",
+      "Environment": "production",
+      "Sha256": "a62f4bc8d31812bcd0583d7909b61e69e7f54f901d0074608112accf4e65a857",
+      "Inspected": true,
+      "Method": "Direct visual inspection at original resolution",
+      "Limitation": "Existing software film small type and internal label remain assigned to D4; animated frame changes produce different PNG hashes."
+    },
+    {
+      "Name": "software-375.png",
+      "Environment": "production-alias",
+      "Sha256": "fb33a0625b1a460f569ab2fd6e529cbb2b0b1fa550c712851d2063f712a7ec6f",
+      "Inspected": true,
+      "Method": "Direct visual inspection at original resolution",
+      "Limitation": "Existing software film small type and internal label remain assigned to D4; animated frame changes produce different PNG hashes."
+    },
+    {
+      "Name": "software-1280.png",
+      "Environment": "production",
+      "Sha256": "94abf404eb5e738aace3c75fe2d95c0e2c747cd14e9149b18de33d428f164457",
+      "Inspected": true,
+      "Method": "Direct visual inspection at original resolution",
+      "Limitation": "Existing software film small type and internal label remain assigned to D4; animated frame changes produce different PNG hashes."
+    },
+    {
+      "Name": "software-1280.png",
+      "Environment": "production-alias",
+      "Sha256": "3c6a30072d803e9510c8e7604639286b75a419b4d19924e4b8be7671ae4efa26",
+      "Inspected": true,
+      "Method": "Direct visual inspection at original resolution",
+      "Limitation": "Existing software film small type and internal label remain assigned to D4; animated frame changes produce different PNG hashes."
+    },
+    {
+      "Name": "home-375.png",
+      "Environment": "production",
+      "Sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "Inspected": true,
+      "Method": "Byte-identical to the actually visually inspected staging original",
+      "Limitation": null
+    },
+    {
+      "Name": "home-375.png",
+      "Environment": "production-alias",
+      "Sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "Inspected": true,
+      "Method": "Byte-identical to the actually visually inspected staging original",
+      "Limitation": null
+    },
+    {
+      "Name": "es-375.png",
+      "Environment": "production",
+      "Sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "Inspected": true,
+      "Method": "Byte-identical to the actually visually inspected staging original",
+      "Limitation": null
+    },
+    {
+      "Name": "es-375.png",
+      "Environment": "production-alias",
+      "Sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "Inspected": true,
+      "Method": "Byte-identical to the actually visually inspected staging original",
+      "Limitation": null
+    },
+    {
+      "Name": "advertising-375.png",
+      "Environment": "production",
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "Inspected": true,
+      "Method": "Byte-identical to the actually visually inspected staging original",
+      "Limitation": null
+    },
+    {
+      "Name": "advertising-375.png",
+      "Environment": "production-alias",
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "Inspected": true,
+      "Method": "Byte-identical to the actually visually inspected staging original",
+      "Limitation": null
+    }
+  ],
+  "AllInspected": true
+}

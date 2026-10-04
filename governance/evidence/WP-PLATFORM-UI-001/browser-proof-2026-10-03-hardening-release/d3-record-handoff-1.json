@@ -1,0 +1,11 @@
+{
+  "StartedUtc": "2026-10-03T23:59:43.0965006Z",
+  "FinishedUtc": "2026-10-04T00:06:06.4028305Z",
+  "StartingHead": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "Command": "corepack pnpm agent:handoff --next-action Repair the in-scope receipt, responsive proof and operator-gate defects under L3f.",
+  "ActualExit": 0,
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-record-handoff-1.log",
+  "Node": "v24.18.0",
+  "Pnpm": "11.12.0",
+  "FrozenAuthorDuringCommand": true
+}

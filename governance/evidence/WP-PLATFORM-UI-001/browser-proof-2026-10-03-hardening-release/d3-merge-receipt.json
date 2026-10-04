@@ -1,0 +1,14 @@
+{
+  "AuthorFastForwardExit": 0,
+  "MergeCommand": "gh pr merge 74 --merge --match-head-commit 3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "RecordedUtc": "2026-10-03T23:08:54.3018987Z",
+  "MergedAt": "2026-10-03T23:08:44Z",
+  "Pr": 74,
+  "Reviewed": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "AuthorClean": true,
+  "BodyPath": "C:\\Users\\ernij\\AppData\\Local\\Temp/mbv-pr-public-static-hardening-20261003-review-pass.md",
+  "TreeEqualityExit": 0,
+  "NormalProtectionPreserved": true,
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "BranchDeleted": false
+}

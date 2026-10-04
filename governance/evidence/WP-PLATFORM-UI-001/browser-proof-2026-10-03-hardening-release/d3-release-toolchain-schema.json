@@ -1,0 +1,22 @@
+{
+  "Vercel": "59.16.0",
+  "Node": "v24.18.0",
+  "RemoteMigrations": {
+    "ReadOnly": true,
+    "Production": {
+      "Count": 39,
+      "Head": "20260902154759"
+    },
+    "MainFiles": {
+      "Count": 75,
+      "Head": "20260929017000"
+    },
+    "CheckedUtc": "2026-10-03T23:10:47Z",
+    "Staging": {
+      "Count": 50,
+      "Head": "20260917223105"
+    }
+  },
+  "CheckedUtc": "2026-10-03T23:11:03.8274732Z",
+  "Pnpm": "11.12.0"
+}

@@ -1,0 +1,20 @@
+{
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "RollbackReady": true,
+  "Incident": "D3-STAGING-CSP-REPEAT-20261003",
+  "OwnedDeployment": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "Project": "mustbeviral-web-staging",
+  "Reason": "C8 browser reported CSP absent on eight repeat static-page visits at 1280 despite passing fresh HTTP and all 375px cells.",
+  "Command": "vercel rollback dpl_vHurZJBF5kKQ9Jum6sTN6MhTFhDn --scope ashrunscode-projects --yes",
+  "Pr": 74,
+  "StartedUtc": "2026-10-03T23:16:22.5309097Z",
+  "RollbackDeployment": "dpl_vHurZJBF5kKQ9Jum6sTN6MhTFhDn",
+  "VerifiedUtc": "2026-10-03T23:16:27.5430761Z",
+  "Source": "f97488dc220c6f1b6686f4c0642b2203baab156e",
+  "ProductionDeployed": false,
+  "FinishedUtc": "2026-10-03T23:16:25.7321576Z",
+  "ActualExit": 0
+}

@@ -1,0 +1,23 @@
+{
+  "NewDatabaseDependency": false,
+  "RemoteDatabaseWrite": false,
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "NewestJournaled": true,
+  "NewestCreatedUtc": "2026-10-03T12:30:06.3130000Z",
+  "SharedSchemaRuntimeUnchanged": true,
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "Rollback": "dpl_vHurZJBF5kKQ9Jum6sTN6MhTFhDn",
+  "AgeMinutes": 641.05,
+  "NewestDeployment": "dpl_vHurZJBF5kKQ9Jum6sTN6MhTFhDn",
+  "Reviewed": "3beb428444d3226d1c2c52f99505d5c6faf31699",
+  "Project": "mustbeviral-web-staging",
+  "CspProofObservedUtc": "2026-10-03T21:24:40.095Z",
+  "LiveReady": true,
+  "SignedInCspProofSourceEquivalent": true,
+  "UrlNeutralRoutesIndependentlyReviewed": true,
+  "LiveSource": "f97488dc220c6f1b6686f4c0642b2203baab156e",
+  "CheckedUtc": "2026-10-03T23:11:11.9728067Z"
+}

@@ -1,0 +1,39 @@
+{
+  "ParentHead": "48d74b8ca575233b88a370c6913c38139e344aa9",
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:54:32.6013017Z",
+      "FinishedUtc": "2026-10-03T21:54:48.8826455Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-final-evidence-format.log",
+      "Command": "corepack pnpm format:check",
+      "Label": "format"
+    },
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:54:49.2044929Z",
+      "FinishedUtc": "2026-10-03T21:57:42.9573464Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-final-evidence-governance.log",
+      "Command": "corepack pnpm governance:check",
+      "Label": "governance"
+    },
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:57:43.1687340Z",
+      "FinishedUtc": "2026-10-03T21:57:45.1558036Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-final-evidence-packet.log",
+      "Command": "corepack pnpm packet:verify",
+      "Label": "packet"
+    },
+    {
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-03T21:57:45.5240147Z",
+      "FinishedUtc": "2026-10-03T21:57:48.0856010Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-d3-final-evidence-scope.log",
+      "Command": "corepack pnpm diff-scope:check --base origin/main --head HEAD",
+      "Label": "scope"
+    }
+  ],
+  "SourceFingerprintsUnchanged": true,
+  "EvidenceOnlyEditsAfterFullAuthorVerify": true
+}

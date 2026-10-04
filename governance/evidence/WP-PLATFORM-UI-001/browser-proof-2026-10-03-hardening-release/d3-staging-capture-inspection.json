@@ -1,0 +1,34 @@
+{
+  "NativePlaywrightCaptures": true,
+  "Stage": "staging",
+  "Source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "Deployment": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "Files": [
+    {
+      "Sha256": "9889d2e0d78cbbab713704b174b639ed1f636119630aa9fd52436eac2fc6a68d",
+      "File": "software-375.png",
+      "VisuallyInspected": true
+    },
+    {
+      "Sha256": "d83edb29389d9ba1d701aea305aa088fe500328a774dfd7f937ec9ec55769d9e",
+      "File": "software-1280.png",
+      "VisuallyInspected": true
+    },
+    {
+      "Sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "File": "home-375.png",
+      "VisuallyInspected": true
+    },
+    {
+      "Sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "File": "es-375.png",
+      "VisuallyInspected": true
+    },
+    {
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "File": "advertising-375.png",
+      "VisuallyInspected": true
+    }
+  ],
+  "CheckedUtc": "2026-10-03T23:34:53.5588813Z"
+}

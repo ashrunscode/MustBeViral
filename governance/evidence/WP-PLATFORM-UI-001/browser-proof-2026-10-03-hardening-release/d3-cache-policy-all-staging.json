@@ -1,0 +1,715 @@
+{
+  "checkedUtc": "2026-10-03T23:32:07.363Z",
+  "source": "c403b4c395b4c899f1b9562bbd66a50f972d0584",
+  "deployment": "dpl_3AVxM3qfZ8XihpUuC4YSCsGEXRVA",
+  "origin": "https://mustbeviral-web-staging.vercel.app",
+  "formsSubmitted": 0,
+  "driver": "Playwright MCP CDP; cold then cached visits; allowUnsafeEvalBlockedByCSP=false; intentional denial events/errors counted separately from ordinary C8 acceptance",
+  "results": [
+    {
+      "route": "/",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "width": 375,
+      "allHeadersCspPresent": true,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 200,
+          "wireCspPresent": true
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/software",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/software/pricing",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/privacy",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/terms",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    },
+    {
+      "route": "/advertising",
+      "width": 1280,
+      "allHeadersCspPresent": false,
+      "packets": [
+        {
+          "browserStatus": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "mergedCspPresent": true,
+          "mergedCspForbidsEval": true,
+          "wireStatus": 304,
+          "wireCspPresent": false
+        }
+      ],
+      "ordinary": {
+        "jitless": true,
+        "policyEventsBeforeProbe": 0
+      },
+      "evaluated": {
+        "evalDenied": true,
+        "exceptionName": "EvalError"
+      },
+      "intentionalPolicyEvents": [
+        {
+          "directive": "script-src",
+          "disposition": "enforce"
+        }
+      ],
+      "navigationErrorClasses": [],
+      "intentionalDiagnosticConsoleErrors": 0,
+      "checks": {
+        "http200": true,
+        "expectedDeployment": true,
+        "jitless": true,
+        "noPolicyViolationBeforeIntentionalProbe": true,
+        "noNavigationError": true,
+        "mergedPolicyPresent": true,
+        "mergedPolicyForbidsEval": true,
+        "evalActuallyDenied": true,
+        "expectedEnforcedDenialEvent": true
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

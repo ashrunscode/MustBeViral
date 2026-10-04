@@ -1,0 +1,7 @@
+{
+  "CheckedUtc": "2026-10-03T23:46:45.4474193Z",
+  "Status": 200,
+  "CoreHealthOk": true,
+  "HealthField": "status",
+  "InitialParserError": "The first reorientation read incorrectly expected an ok boolean; its false result is preserved and is not a live incident."
+}
