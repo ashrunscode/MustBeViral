@@ -7,6 +7,22 @@
   background: var(--paper-2);
 }
 
+/* Keep the stacked summary and recovery reachable when campaign navigation uses most of the
+   viewport. The 220px Studio rail leaves the same 800px stack threshold at 1020px. */
+@media (max-width: 1020px), (max-height: 600px) {
+  :global(.platform-app--flush):has(.runPage) {
+    height: auto;
+    overflow: visible;
+  }
+  :global(.platform-main--flush):has(.runPage) {
+    overflow: visible;
+  }
+  .runAside {
+    max-block-size: 50dvh;
+    align-self: start;
+  }
+}
+
 .quoteStage {
   min-width: 0;
   min-height: 0;
@@ -278,7 +294,6 @@
   .runAside {
     grid-column: 1;
     grid-row: 2;
-    overflow: visible;
     border-left: 0;
     border-top: 1px solid var(--line);
     padding: 20px 14px;

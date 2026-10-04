@@ -12,14 +12,19 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-/* Keep unavailable quote details reachable from Skip to content in a short viewport. */
-@media (max-height: 600px) {
+/* A stacked or short frame uses document flow. Its summary owns a bounded scroll area rather
+   than sending End through the clipped campaign frame. The 220px rail leaves 800px at 1020px. */
+@media (max-width: 1020px), (max-height: 600px) {
   :global(.platform-app--flush):has(.quotePage) {
     height: auto;
     overflow: visible;
   }
   :global(.platform-main--flush):has(.quotePage) {
     overflow: visible;
+  }
+  .sidePanel {
+    max-block-size: 50dvh;
+    align-self: start;
   }
 }
 

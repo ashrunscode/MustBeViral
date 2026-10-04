@@ -169,6 +169,60 @@ test('returns focus to the fresh quote after timer expiry without a confirmation
   await expect(page.getByRole('button', { name: 'Confirm $4.20 run', exact: true })).toBeDisabled();
 });
 
+for (const [label, route, width, height, enlarged, regionName] of [
+  ['quote-mobile', '/studio/lumen-skin/quote', 375, 812, false, 'What this run covers'],
+  ['quote-zoom', '/studio/lumen-skin/quote', 640, 450, false, 'What this run covers'],
+  ['quote-short-text', '/studio/lumen-skin/quote', 1280, 600, true, 'What this run covers'],
+  [
+    'run-zoom',
+    '/studio/lumen-skin/quote?stage=run&run=failed',
+    640,
+    450,
+    false,
+    'Run progress summary',
+  ],
+] as const) {
+  test(`keeps stacked summary focus visible after End: ${label}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(route);
+    const region = page.getByRole('complementary', { name: regionName, exact: true });
+    await expect(region).toBeVisible();
+    if (label.startsWith('quote-')) {
+      // Confirm a controlled interaction before changing text sizes; SSR can be visible before
+      // hydration, when a style mutation would create a test-only hydration mismatch.
+      const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+      const confirm = page.getByRole('button', { name: 'Confirm $4.20 run', exact: true });
+      await acknowledgment.check();
+      await expect(confirm).toBeEnabled();
+      await acknowledgment.uncheck();
+      await expect(confirm).toBeDisabled();
+    }
+    await page.evaluate(() => document.fonts.ready);
+    if (enlarged) await emulateDoubleText(page);
+    await page.keyboard.press('Tab');
+    await region.focus();
+    await page.keyboard.press('End');
+    await expect(async () => expectCompleteFocusOutline(region)).toPass({ timeout: 1500 });
+    const lastRowVisible = () =>
+      region.evaluate((element) => {
+        const last = element.querySelector('dl > div:last-child');
+        if (last === null) return false;
+        const outer = element.getBoundingClientRect();
+        const inner = last.getBoundingClientRect();
+        return inner.top >= outer.top && inner.bottom <= outer.bottom;
+      });
+    // Quote ends with an explanatory paragraph. Arrow keys reach the last money row when the
+    // enlarged paragraph fills the end of its scroll area; Run ends with the row itself.
+    for (let step = 0; step < 12 && !(await lastRowVisible()); step++) {
+      await page.keyboard.press('ArrowUp');
+      await page.waitForTimeout(100);
+    }
+    await expect.poll(lastRowVisible).toBe(true);
+    await expectCompleteFocusOutline(region);
+  });
+}
+
 test('keeps enlarged comparison metadata inside each version column', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/studio/lumen-skin/review/compare');
