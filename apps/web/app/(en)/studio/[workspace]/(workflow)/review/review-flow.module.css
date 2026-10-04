@@ -25,9 +25,10 @@
 .sectionHeading h1 {
   margin: 6px 0 4px;
   color: var(--ink-head);
-  font-size: 25px;
+  font-size: 28px;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
 }
 .sectionHeading p {
   margin: 0;
@@ -649,7 +650,7 @@
     margin-bottom: 8px;
   }
   .sectionHeading h1 {
-    font-size: 19px;
+    font-size: 28px;
   }
   .sectionHeading p,
   .sectionHeading > div > :first-child:not(h1),

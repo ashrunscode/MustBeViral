@@ -296,6 +296,11 @@
   color: var(--ink-faint);
 }
 .platform-breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 100%;
   color: var(--ink);
 }
 .platform-breadcrumb strong {

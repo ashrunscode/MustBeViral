@@ -958,58 +958,208 @@ test('keeps canvas nodes inside their column at 375px so none sits over a side-r
   expect(report.surfaceRight).toBeLessThanOrEqual(report.railLeft + 0.5);
 });
 
-test('keeps the quote acknowledgment checkbox clear of the side panel at 375px', async ({
+test('keeps the full quote and acknowledgment clear of the summary at every supported width', async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto('/studio/lumen-skin/quote');
-  const checkbox = page.getByRole('checkbox');
-  await expect(checkbox).toBeEnabled();
-  const probe = await checkbox.evaluate((box) => {
-    const stage = box.closest('section');
-    const aside = document.querySelector('aside[aria-labelledby="impact-title"]');
-    const label = box instanceof HTMLInputElement ? box.labels?.[0] : undefined;
-    if (!(box instanceof HTMLInputElement) || !label || !stage || !aside) {
-      throw new Error('Missing quote stage, checkbox, label or side panel.');
-    }
-    const stolen: string[] = [];
-    // Every point of the label (and so the checkbox) inside the scrolling stage must reach it.
-    const sample = (element: Element, phase: string) => {
-      const rect = element.getBoundingClientRect();
-      const stageRect = stage.getBoundingClientRect();
-      const left = Math.max(rect.left, stageRect.left, 0) + 1;
-      const right = Math.min(rect.right, stageRect.right) - 1;
-      const top = Math.max(rect.top, stageRect.top, 0) + 1;
-      const bottom = Math.min(rect.bottom, stageRect.bottom, innerHeight) - 1;
-      for (let x = left; x <= right; x += 2) {
-        for (let y = top; y <= bottom; y += 2) {
-          const target = document.elementFromPoint(x, y);
-          if (target !== box && !label.contains(target)) {
-            stolen.push(`${phase}: ${target?.tagName ?? 'none'}`);
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    await page.goto('/studio/lumen-skin/quote');
+    const checkbox = page.getByRole('checkbox');
+    await expect(checkbox).toBeEnabled();
+    await checkbox.scrollIntoViewIfNeeded();
+    const probe = await checkbox.evaluate((box) => {
+      const stage = box.closest('section');
+      const aside = document.querySelector('aside[aria-labelledby="impact-title"]');
+      const label = box instanceof HTMLInputElement ? box.labels?.[0] : undefined;
+      const card = label?.closest('.mbv-card');
+      if (!(box instanceof HTMLInputElement) || !label || !stage || !aside || !card) {
+        throw new Error('Missing quote stage, checkbox, label or side panel.');
+      }
+      const stolen: string[] = [];
+      // Every point of the label (and so the checkbox) inside the scrolling stage must reach it.
+      const sample = (element: Element, phase: string) => {
+        const rect = element.getBoundingClientRect();
+        const radius = Math.min(
+          parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0,
+          rect.width / 2,
+          rect.height / 2,
+        );
+        const stageRect = stage.getBoundingClientRect();
+        const left = Math.max(rect.left, stageRect.left, 0) + 1;
+        const right = Math.min(rect.right, stageRect.right) - 1;
+        const top = Math.max(rect.top, stageRect.top, 0) + 1;
+        const bottom = Math.min(rect.bottom, stageRect.bottom, innerHeight) - 1;
+        for (let x = left; x <= right; x += 2) {
+          for (let y = top; y <= bottom; y += 2) {
+            // A rounded label's unpainted corners belong to its card, not its pointer target.
+            const paintedX = Math.max(rect.left + radius, Math.min(x, rect.right - radius));
+            const paintedY = Math.max(rect.top + radius, Math.min(y, rect.bottom - radius));
+            if (Math.hypot(x - paintedX, y - paintedY) > radius) continue;
+            const target = document.elementFromPoint(x, y);
+            if (target !== box && !label.contains(target)) {
+              stolen.push(`${phase}: ${target?.tagName ?? 'none'}`);
+            }
           }
         }
+        return right - left;
+      };
+      // Scroll the stage vertically so the acknowledgment row is in view, then sample it.
+      const labelRect = label.getBoundingClientRect();
+      const stageBox = stage.getBoundingClientRect();
+      stage.scrollTop += (labelRect.top + labelRect.bottom - stageBox.top - stageBox.bottom) / 2;
+      sample(label, 'label');
+      // Scroll the stage until the checkbox sits at its right edge, as scrolling towards it would.
+      stage.scrollLeft += box.getBoundingClientRect().right - stage.getBoundingClientRect().right;
+      const visibleWidth = sample(box, 'checkbox at the stage edge');
+      return {
+        visibleWidth,
+        stolen: [...new Set(stolen)],
+        stageBottom: stage.getBoundingClientRect().bottom,
+        stageLeft: stage.getBoundingClientRect().left,
+        stageRight: stage.getBoundingClientRect().right,
+        asideTop: aside.getBoundingClientRect().top,
+        asideLeft: aside.getBoundingClientRect().left,
+        cardLeft: card.getBoundingClientRect().left,
+        cardRight: card.getBoundingClientRect().right,
+        availableWidth: stage.parentElement!.getBoundingClientRect().width,
+      };
+    });
+    expect(probe.visibleWidth).toBeGreaterThan(8);
+    expect(probe.stolen).toEqual([]);
+    expect(probe.cardLeft).toBeGreaterThanOrEqual(probe.stageLeft - 0.5);
+    expect(probe.cardRight).toBeLessThanOrEqual(probe.stageRight + 0.5);
+    if (probe.availableWidth <= 800) {
+      expect(probe.asideTop).toBeGreaterThanOrEqual(probe.stageBottom - 0.5);
+    } else {
+      expect(probe.asideLeft).toBeGreaterThanOrEqual(probe.stageRight - 0.5);
+    }
+  }
+});
+
+test('keeps rejected quote confirmation and re-quote recovery visible to keyboard users', async ({
+  page,
+}) => {
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    for (const scenario of ['expired_quote', 'cap_exceeded', 'conflict']) {
+      await page.goto(`/studio/lumen-skin/quote?state=${scenario}`);
+      const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+      await acknowledgment.focus();
+      await page.keyboard.press('Space');
+      await expect(acknowledgment).toBeChecked();
+      await page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }).focus();
+      await page.keyboard.press('Enter');
+      const notice = page.locator(`[role="alert"][data-result="${scenario}"]`);
+      await expect(notice).toBeVisible();
+      const heading = page.getByRole('heading', {
+        level: 1,
+        name: 'Review this run before spending',
+        exact: true,
+      });
+      await expect(heading).toBeFocused();
+      await expect(heading).toHaveCSS('outline-style', 'solid');
+      await expect(notice).toBeInViewport({ ratio: 1 });
+      await page.keyboard.press('Tab');
+      if (scenario === 'expired_quote') {
+        await expect(
+          page.getByRole('button', { name: 'Re-quote this run', exact: true }).first(),
+        ).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(notice).toBeHidden();
+        await expect(heading).toBeFocused();
+        await expect(acknowledgment).toBeEnabled();
+        await expect(acknowledgment).not.toBeChecked();
+        await expect(
+          page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }),
+        ).toBeDisabled();
+      } else {
+        await expect(
+          page.getByRole('link', {
+            name: scenario === 'conflict' ? 'Open canvas recovery' : 'Back to the plan',
+            exact: true,
+          }),
+        ).toBeFocused();
       }
-      return right - left;
-    };
-    // Scroll the stage vertically so the acknowledgment row is in view, then sample it.
-    const labelRect = label.getBoundingClientRect();
-    const stageBox = stage.getBoundingClientRect();
-    stage.scrollTop += (labelRect.top + labelRect.bottom - stageBox.top - stageBox.bottom) / 2;
-    sample(label, 'label');
-    // Scroll the stage until the checkbox sits at its right edge, as scrolling towards it would.
-    stage.scrollLeft += box.getBoundingClientRect().right - stage.getBoundingClientRect().right;
-    const visibleWidth = sample(box, 'checkbox at the stage edge');
-    return {
-      visibleWidth,
-      stolen: [...new Set(stolen)],
-      stageBottom: stage.getBoundingClientRect().bottom,
-      asideTop: aside.getBoundingClientRect().top,
-    };
-  });
-  expect(probe.visibleWidth).toBeGreaterThan(8);
-  expect(probe.stolen).toEqual([]);
-  // On a phone the side panel stacks below the stage instead of sharing its row.
-  expect(probe.asideTop).toBeGreaterThanOrEqual(probe.stageBottom - 0.5);
+    }
+  }
+});
+
+test('keeps terminal run branches, recovery and settlement separate and reachable at every supported width', async ({
+  page,
+}) => {
+  test.setTimeout(180_000);
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    for (const failed of [false, true]) {
+      await page.goto(`/studio/lumen-skin/quote?stage=run${failed ? '&run=failed' : ''}`);
+      const run = page.locator(`[data-run-state="${failed ? 'failed' : 'complete'}"]`);
+      await expect(run).toBeVisible();
+      const geometry = await run.evaluate((element) => {
+        const stage = element.querySelector('section[aria-labelledby="run-title"]')!;
+        const aside = element.querySelector('aside[aria-label="Run progress summary"]')!;
+        const cards = [...stage.querySelectorAll('.mbv-card')];
+        const stageRect = stage.getBoundingClientRect();
+        const asideRect = aside.getBoundingClientRect();
+        return {
+          availableWidth: element.getBoundingClientRect().width,
+          stageRight: stageRect.right,
+          stageBottom: stageRect.bottom,
+          asideLeft: asideRect.left,
+          asideTop: asideRect.top,
+          lastCardBottom: cards.at(-1)!.getBoundingClientRect().bottom,
+          stageClientHeight: stage.clientHeight,
+          stageScrollHeight: stage.scrollHeight,
+          horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+        };
+      });
+      expect(geometry.horizontalOverflow).toBe(false);
+      if (geometry.availableWidth <= 800) {
+        expect(geometry.stageScrollHeight).toBeLessThanOrEqual(geometry.stageClientHeight + 1);
+        expect(geometry.asideTop).toBeGreaterThanOrEqual(geometry.lastCardBottom - 0.5);
+        expect(geometry.asideTop).toBeGreaterThanOrEqual(geometry.stageBottom - 0.5);
+      } else {
+        expect(geometry.asideLeft).toBeGreaterThanOrEqual(geometry.stageRight - 0.5);
+      }
+      const continueButton = page.getByRole('link', { name: 'Open output review', exact: true });
+      await continueButton.scrollIntoViewIfNeeded();
+      await continueButton.focus();
+      await expect(continueButton).toBeFocused();
+      expect(
+        await continueButton.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const target = document.elementFromPoint(
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2,
+          );
+          return target !== null && element.contains(target);
+        }),
+      ).toBe(true);
+      if (failed) {
+        await page
+          .getByRole('link', { name: 'Edit the campaign brief', exact: true })
+          .scrollIntoViewIfNeeded();
+        await expect(run.locator('[role="alert"][data-recovery]')).toContainText(
+          'completed branches are retained',
+        );
+      }
+    }
+  }
+});
+
+test('keeps review and comparison titles on the accepted page scale at every supported width', async ({
+  page,
+}) => {
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    for (const segment of ['review', 'review/compare']) {
+      await page.goto(`/studio/lumen-skin/${segment}`);
+      const heading = page.getByRole('heading', { level: 1 });
+      await expect(heading).toHaveCount(1);
+      await expect(heading).toHaveCSS('font-size', '28px');
+      await expect(heading).toHaveCSS('font-weight', '400');
+      await expect(heading).toHaveCSS('line-height', '33.6px');
+    }
+  }
 });
 
 test('keeps every canvas outline row reachable and unclipped beside the collaboration panel at 375px', async ({

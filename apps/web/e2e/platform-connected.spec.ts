@@ -74,6 +74,109 @@ test.describe('connected platform journeys', () => {
     await expect(page).toHaveURL(new RegExp('^http://127\\.0\\.0\\.1:3111/'));
   });
 
+  test('keeps studio breadcrumb targets complete and keyboard usable at every supported width', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`breadcrumb-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    const names = [
+      'Synthetic breadcrumb studio',
+      'Synthetic breadcrumb studio with a deliberately long name for narrow screens',
+    ];
+    await page.getByLabel('Studio name').fill(names[0]!);
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Studio overview', exact: true })).toBeVisible();
+    const studioId = new URL(page.url()).searchParams.get('studio');
+    expect(studioId).not.toBeNull();
+    const studioUrl = `/studio?studio=${studioId}`;
+
+    for (const [index, name] of names.entries()) {
+      if (index > 0) {
+        await page.goto(`${studioUrl}&view=settings`);
+        await page.getByLabel('Studio name').fill(name);
+        await page.getByRole('button', { name: 'Save studio name', exact: true }).click();
+        await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText(name);
+      }
+      for (const width of [375, 768, 1280, 1920]) {
+        await page.setViewportSize({ width, height: 1024 });
+        await page.goto(`${studioUrl}&view=creators`);
+        const link = page
+          .getByRole('navigation', { name: 'Breadcrumb' })
+          .getByRole('link', { name, exact: true });
+        await expect(link).toBeVisible();
+        await link.scrollIntoViewIfNeeded();
+        const box = await link.boundingBox();
+        expect(box?.width).toBeGreaterThanOrEqual(44);
+        expect(box?.height).toBeGreaterThanOrEqual(44);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+          width,
+        );
+        const hits = await link.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const inside = (y: number) => {
+            const target = document.elementFromPoint(x, y);
+            return target !== null && element.contains(target);
+          };
+          return {
+            top: inside(rect.top + 0.5),
+            bottom: inside(rect.bottom - 0.5),
+            outsideTop: inside(rect.top - 1),
+            outsideBottom: inside(rect.bottom + 1),
+          };
+        });
+        expect(hits).toEqual({ top: true, bottom: true, outsideTop: false, outsideBottom: false });
+        await link.focus();
+        await expect(link).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(page).toHaveURL(new RegExp(`/studio\\?studio=${studioId}$`));
+        await expect(
+          page.getByRole('heading', { name: 'Studio overview', exact: true }),
+        ).toBeVisible();
+      }
+    }
+  });
+
+  test('keeps workspace tools headings on the accepted page scale at every supported width', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`workspace-type-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic workspace tools studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic workspace tools');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Make Synthetic workspace tools feel like itself.' }),
+    ).toBeVisible();
+    const brandLocation = new URL(page.url());
+    const workspaceId = brandLocation.pathname.split('/')[2];
+    expect(workspaceId).toMatch(/^[0-9a-f-]{36}$/u);
+    const context = new URLSearchParams({
+      studio: brandLocation.searchParams.get('studio')!,
+      brand: brandLocation.pathname.split('/')[4]!,
+    });
+    for (const width of [375, 768, 1280, 1920]) {
+      await page.setViewportSize({ width, height: 1024 });
+      for (const [segment, title] of [
+        ['access', 'API keys'],
+        ['skills', 'Skills and version history'],
+      ]) {
+        await page.goto(`/studio/${workspaceId}/${segment}?${context.toString()}`);
+        const heading = page.getByRole('heading', { level: 1, name: title, exact: true });
+        await expect(heading).toBeVisible();
+        await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+        await expect(heading).toHaveCSS('font-size', '28px');
+        await expect(heading).toHaveCSS('font-weight', '400');
+        await expectPlatformLandmarks(page);
+        await expectNoHorizontalOverflow(page);
+      }
+    }
+  });
+
   test('keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes', async ({
     page,
   }) => {

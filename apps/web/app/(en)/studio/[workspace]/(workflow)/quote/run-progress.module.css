@@ -257,10 +257,11 @@
   }
 }
 
-/* Phone and small tablet: the settlement summary stacks under the attempts instead of hiding. */
-@media (max-width: 800px) {
+/* Size the stack to the available Studio column. Content-sized tracks prevent the attempts and
+   recovery message from overflowing their row into the settlement summary. */
+@container platform-main (max-width: 800px) {
   .runPage {
-    grid-template: auto auto auto / 1fr;
+    grid-template: max-content max-content max-content / minmax(0, 1fr);
     align-content: start;
     overflow-y: auto;
   }

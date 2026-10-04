@@ -24,6 +24,7 @@
 /* The 40px gutter is card margin, not stage padding: 80px of padding cannot shrink, so on a 375px
    screen the stage overflowed its 55px track and the side panel covered the acknowledgment. */
 .quoteCard {
+  min-width: 0;
   width: min(720px, calc(100% - 80px));
   margin-inline: 40px;
   padding: 28px 32px 24px;
@@ -374,10 +375,11 @@
   font-size: 13px;
   line-height: 1.5;
 }
-/* Phone: the card, the coverage list and the confirm bar stack in one column. */
-@media (max-width: 767px) {
+/* Stack using the space inside Studio, including its rail and enlargement. Content-sized rows
+   keep the quote and its acknowledgment above the summary and confirmation controls. */
+@container platform-main (max-width: 800px) {
   .quotePage {
-    grid-template: auto auto auto / minmax(0, 1fr);
+    grid-template: max-content max-content max-content / minmax(0, 1fr);
     align-content: start;
     overflow-y: auto;
   }

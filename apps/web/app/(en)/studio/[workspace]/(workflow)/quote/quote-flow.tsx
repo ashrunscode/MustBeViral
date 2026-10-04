@@ -2,7 +2,7 @@
 
 import { Button, Card, LedgerTable, MonoCaps, QuotePill, formatUsdMicros } from '@mustbeviral/ui';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SessionExpiredAction } from '../../../../../../src/components/session-expired-action';
 import {
@@ -390,6 +390,8 @@ export function QuoteFlow({
   const [acknowledged, setAcknowledged] = useState(false);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<QuoteConfirmResult | null>(null);
+  const quoteHeadingRef = useRef<HTMLHeadingElement>(null);
+  const previousResult = useRef<QuoteConfirmResult | null>(null);
   const context = useCampaignContext();
   // A confirmed run joins the link. If this screen remounts afterwards, for example while the
   // frame re-proves the scope, the run in the link wins: no second quote is created and no second
@@ -429,6 +431,16 @@ export function QuoteFlow({
     const timer = window.setInterval(() => setNowMs(Date.now()), 1000);
     return () => window.clearInterval(timer);
   }, [runStage]);
+
+  useEffect(() => {
+    const previous = previousResult.current;
+    previousResult.current = result;
+    const rejected = result !== null && result.type !== 'ok';
+    const recovered = result === null && previous !== null && previous.type !== 'ok';
+    // The confirm control disappears after a refusal. Keep its explanation and recovery in view,
+    // and return to the fresh quote after re-quoting without moving focus on an initial read.
+    if (rejected || recovered) quoteHeadingRef.current?.focus();
+  }, [result]);
 
   if (runStage) {
     return (
@@ -540,7 +552,9 @@ export function QuoteFlow({
       <section className={styles.quoteStage} aria-labelledby="quote-title">
         <Card className={styles.quoteCard} feedback={feedback === 'error' ? 'error' : feedback}>
           <MonoCaps className={styles.eyebrow}>Pre-spend quote</MonoCaps>
-          <h1 id="quote-title">Review this run before spending</h1>
+          <h1 id="quote-title" ref={quoteHeadingRef} tabIndex={-1}>
+            Review this run before spending
+          </h1>
           <p className={styles.lede}>
             The reservation is pinned to this revision, route, and affected branch.
           </p>
