@@ -439,8 +439,14 @@
   background: var(--wash);
 }
 .versionCaption {
+  flex-wrap: wrap;
   gap: 5px;
   color: var(--ink);
+}
+.versionCaption > span {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .mobileThumb {
   min-height: 90px;
@@ -786,6 +792,17 @@
   .tabletDrawer {
     animation: none;
     transition: none;
+  }
+}
+
+/* Short enlarged viewports need document scrolling so the header cannot clip a recovery target. */
+@media (max-height: 600px) {
+  :global(.platform-app--flush):has(.reviewPage) {
+    height: auto;
+    overflow: visible;
+  }
+  :global(.platform-main--flush):has(.reviewPage) {
+    overflow: visible;
   }
 }
 

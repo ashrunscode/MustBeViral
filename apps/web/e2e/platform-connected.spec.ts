@@ -221,6 +221,57 @@ test.describe('connected platform journeys', () => {
     }
   });
 
+  test('keeps review recovery targets complete at the short enlargement viewport', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`review-zoom-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic short viewport studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic short viewport brand');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Make Synthetic short viewport brand feel like itself.' }),
+    ).toBeVisible();
+    const brandLocation = new URL(page.url());
+    const workspaceId = brandLocation.pathname.split('/')[2]!;
+    const context = new URLSearchParams({
+      studio: brandLocation.searchParams.get('studio')!,
+      brand: brandLocation.pathname.split('/')[4]!,
+    });
+    // 640 by 450 CSS pixels emulate a 1280 by 900 viewport enlarged to 200 percent.
+    for (const width of [640, 375]) {
+      await page.setViewportSize({ width, height: 450 });
+      for (const segment of ['review', 'review/compare']) {
+        await page.goto(`/studio/${workspaceId}/${segment}?${context.toString()}`);
+        const heading = page.getByRole('heading', { level: 1 });
+        await expect(heading).toBeVisible();
+        // Center the heading: a minimal scroll can round down at a fractional text edge.
+        await heading.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+        await expect(heading).toBeInViewport({ ratio: 1 });
+        const back = page.getByRole('link', { name: 'Back to the run', exact: true });
+        await back.focus();
+        await expect(back).toBeFocused();
+        await expect(back).toBeInViewport({ ratio: 1 });
+        const completeTarget = await back.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          return [rect.top + 0.5, rect.bottom - 0.5].every((y) =>
+            element.contains(document.elementFromPoint(x, y)),
+          );
+        });
+        expect(completeTarget).toBe(true);
+        await expectNoHorizontalOverflow(page);
+        await page.keyboard.press('Enter');
+        await expect(
+          page.getByRole('heading', { name: 'Review this run before spending', exact: true }),
+        ).toBeVisible();
+      }
+    }
+  });
+
   test('keeps workspace tools headings on the accepted page scale at every supported width', async ({
     page,
   }) => {

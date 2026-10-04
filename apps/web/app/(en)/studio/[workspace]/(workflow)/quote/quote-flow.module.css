@@ -2,7 +2,7 @@
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template: minmax(0, 1fr) 72px / minmax(0, 1fr) 320px;
+  grid-template: minmax(0, 1fr) minmax(72px, max-content) / minmax(0, 1fr) 320px;
   overflow: hidden;
   background: var(--paper);
 }

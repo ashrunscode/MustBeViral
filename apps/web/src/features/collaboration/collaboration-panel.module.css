@@ -33,8 +33,8 @@
 }
 
 .presenceAvatar {
-  width: 24px;
-  height: 24px;
+  width: max(24px, 2.4em);
+  height: max(24px, 2.4em);
   display: grid;
   place-items: center;
   border-radius: 999px;

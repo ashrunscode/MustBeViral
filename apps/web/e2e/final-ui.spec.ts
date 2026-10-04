@@ -14,6 +14,96 @@ async function screenshotPath(name: string) {
   return path.join(directory, name);
 }
 
+async function emulateDoubleText(page: Page) {
+  await page.evaluate(() => {
+    // Freeze all computed sizes before applying them so nested inheritance never doubles twice.
+    const measured = [...document.querySelectorAll<HTMLElement>('body *')].map((element) => {
+      const style = getComputedStyle(element);
+      return {
+        element,
+        font: Number.parseFloat(style.fontSize),
+        line: style.lineHeight === 'normal' ? null : Number.parseFloat(style.lineHeight),
+      };
+    });
+    for (const { element, font, line } of measured) {
+      element.style.fontSize = `${font * 2}px`;
+      if (line !== null) element.style.lineHeight = `${line * 2}px`;
+    }
+  });
+}
+
+test('keeps enlarged quote recovery inside its footer and viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/quote?state=expired_quote');
+  await page.evaluate(() => document.fonts.ready);
+  await page.getByRole('checkbox', { name: /I acknowledge this revision/ }).check();
+  await page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }).click();
+  await expect(page.locator('[data-result="expired_quote"]')).toBeVisible();
+  await emulateDoubleText(page);
+  const recovery = page
+    .locator('[class*="confirmBar"]')
+    .getByRole('button', { name: 'Re-quote this run', exact: true });
+  await expect(recovery).toBeInViewport({ ratio: 1 });
+  const contained = await recovery.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    const footer = element.parentElement!.getBoundingClientRect();
+    return rect.top >= footer.top && rect.bottom <= footer.bottom;
+  });
+  expect(contained).toBe(true);
+  await recovery.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('[data-result="expired_quote"]')).toBeHidden();
+  await expect(page.getByRole('checkbox')).not.toBeChecked();
+});
+
+test('keeps enlarged comparison metadata inside each version column', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/review/compare');
+  await expect(page.locator('.compare-pair')).toHaveCount(4);
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const captions = page.locator('.compare-pair [class*="versionCaption"]');
+  await expect(captions).toHaveCount(8);
+  const overflows = await captions.evaluateAll((elements) =>
+    elements.flatMap((element, index) => {
+      const box = element.getBoundingClientRect();
+      return [...element.children].flatMap((child) => {
+        const range = document.createRange();
+        range.selectNodeContents(child);
+        return [...range.getClientRects()]
+          .filter((rect) => rect.left < box.left - 0.5 || rect.right > box.right + 0.5)
+          .map(() => `${index}: ${child.textContent}`);
+      });
+    }),
+  );
+  expect(overflows).toEqual([]);
+});
+
+test('keeps enlarged collaborator initials inside their presence markers', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/review');
+  const avatars = page.getByRole('list', { name: 'Active collaborators' }).locator('li > span');
+  await expect(avatars.first()).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const overflows = await avatars.evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      const box = element.getBoundingClientRect();
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      const text = range.getBoundingClientRect();
+      return text.left < box.left ||
+        text.right > box.right ||
+        text.top < box.top ||
+        text.bottom > box.bottom
+        ? [element.textContent]
+        : [];
+    }),
+  );
+  expect(overflows).toEqual([]);
+});
+
 test('renders partial run progress at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/studio/lumen-skin/quote?stage=run');
