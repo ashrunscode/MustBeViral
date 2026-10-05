@@ -1,0 +1,2208 @@
+{
+  "recordedUtc": "2026-10-05T00:07:56.362Z",
+  "sourceHead": "0b9f33bd340c501bc02047ef8e911a028afadeda",
+  "pass": true,
+  "timer": {
+    "visibilityAtAcknowledgment": "visible",
+    "visibilityAfterRecovery": "visible",
+    "nativeClock": true,
+    "syntheticExpiryMs": 4500,
+    "expiryScope": "Short synthetic expiry proves timer-only recovery mechanics; the repository regression separately verifies 15 minutes with its controlled test clock.",
+    "capturedUtc": "2026-10-05T00:07:56.280Z",
+    "headingFocused": true,
+    "acknowledgmentUnchecked": true,
+    "acknowledgmentEnabled": true,
+    "confirmDisabled": true,
+    "noConfirmationAttempt": true,
+    "expiredTreeIndex": 7,
+    "recoveredTreeIndex": 8,
+    "expiredScreenshot": "C:/dev/mbv-run/l3f-tablet-c5-bounded-browser-2-20261004/quote-timer-only-expired.png",
+    "recoveredScreenshot": "C:/dev/mbv-run/l3f-tablet-c5-bounded-browser-2-20261004/quote-timer-only-recovered.png",
+    "lab": {
+      "lcpMs": 220,
+      "cls": 0.02248019360436334,
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 32,
+          "interactionId": 9995
+        },
+        {
+          "name": "keypress",
+          "duration": 32,
+          "interactionId": 9995
+        },
+        {
+          "name": "keyup",
+          "duration": 32,
+          "interactionId": 9995
+        },
+        {
+          "name": "click",
+          "duration": 32,
+          "interactionId": 9995
+        },
+        {
+          "name": "keydown",
+          "duration": 48,
+          "interactionId": 10002
+        },
+        {
+          "name": "keypress",
+          "duration": 48,
+          "interactionId": 10002
+        },
+        {
+          "name": "click",
+          "duration": 48,
+          "interactionId": 10002
+        },
+        {
+          "name": "keyup",
+          "duration": 48,
+          "interactionId": 10002
+        }
+      ]
+    },
+    "pass": true
+  },
+  "rows": [
+    {
+      "family": "quote",
+      "label": "m375-light",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 269.6875,
+          "width": 375,
+          "height": 400.25,
+          "top": 269.6875,
+          "right": 375,
+          "bottom": 669.9375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 375,
+          "top": 269.6875,
+          "bottom": 669.9375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": 0,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": -549,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 399,
+        "scrollHeight": 399
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "m375-dark",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 269.6875,
+          "width": 375,
+          "height": 400.25,
+          "top": 269.6875,
+          "right": 375,
+          "bottom": 669.9375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 375,
+          "top": 269.6875,
+          "bottom": 669.9375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": 0,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": -549,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 399,
+        "scrollHeight": 399
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "t768-light",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 224,
+          "y": 523.09375,
+          "width": 520,
+          "height": 361.25,
+          "top": 523.09375,
+          "right": 744,
+          "bottom": 884.34375,
+          "left": 224
+        },
+        "outline": {
+          "left": 224,
+          "right": 744,
+          "top": 523.09375,
+          "bottom": 884.34375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 768,
+              "top": 0,
+              "bottom": 1024
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 224,
+              "right": 744,
+              "top": -223.5,
+              "bottom": 996.5
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 360,
+        "scrollHeight": 360
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "t768-dark",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 224,
+          "y": 523.09375,
+          "width": 520,
+          "height": 361.25,
+          "top": 523.09375,
+          "right": 744,
+          "bottom": 884.34375,
+          "left": 224
+        },
+        "outline": {
+          "left": 224,
+          "right": 744,
+          "top": 523.09375,
+          "bottom": 884.34375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 768,
+              "top": 0,
+              "bottom": 1024
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 224,
+              "right": 744,
+              "top": -223.5,
+              "bottom": 996.5
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 360,
+        "scrollHeight": 360
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "d1440-light",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 1120,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1440,
+          "bottom": 828,
+          "left": 1120
+        },
+        "outline": {
+          "left": 1120,
+          "right": 1440,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "d1440-dark",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 1120,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1440,
+          "bottom": 828,
+          "left": 1120
+        },
+        "outline": {
+          "left": 1120,
+          "right": 1440,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "m375-reduced",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 269.6875,
+          "width": 375,
+          "height": 400.25,
+          "top": 269.6875,
+          "right": 375,
+          "bottom": 669.9375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 375,
+          "top": 269.6875,
+          "bottom": 669.9375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": 0,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": -549,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 399,
+        "scrollHeight": 399
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "d1280-reduced",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 960,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "d1920-reduced",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 1600,
+          "y": 118,
+          "width": 320,
+          "height": 890,
+          "top": 118,
+          "right": 1920,
+          "bottom": 1008,
+          "left": 1600
+        },
+        "outline": {
+          "left": 1600,
+          "right": 1920,
+          "top": 118,
+          "bottom": 1008
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1920,
+              "top": 0,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1920,
+              "top": 118,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1920,
+              "top": 65,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1920,
+              "top": 0,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 890,
+        "scrollHeight": 890
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "text-only-200-emulated",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 960,
+          "y": 283,
+          "width": 320,
+          "height": 536,
+          "top": 283,
+          "right": 1280,
+          "bottom": 819,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 283,
+          "bottom": 819
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 283,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 144,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 360,
+        "clientHeight": 536,
+        "scrollHeight": 896
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "short-text-only-200-emulated",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 960,
+          "y": 150,
+          "width": 320,
+          "height": 300,
+          "top": 150,
+          "right": 1280,
+          "bottom": 450,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 150,
+          "bottom": 450
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 600
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 150,
+              "bottom": 1350
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 596,
+        "clientHeight": 300,
+        "scrollHeight": 896
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "zoom-200-emulated",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 224.59375,
+          "width": 640,
+          "height": 225,
+          "top": 224.59375,
+          "right": 640,
+          "bottom": 449.59375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 640,
+          "top": 224.59375,
+          "bottom": 449.59375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 640,
+              "top": 0,
+              "bottom": 450
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 640,
+              "top": -522,
+              "bottom": 552
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 136,
+        "clientHeight": 224,
+        "scrollHeight": 360
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "quote",
+      "label": "forced-colors",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(55, 0, 110)",
+        "box": {
+          "x": 960,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "m375-light",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 406.6875,
+          "width": 375,
+          "height": 362.25,
+          "top": 406.6875,
+          "right": 375,
+          "bottom": 768.9375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 375,
+          "top": 406.6875,
+          "bottom": 768.9375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": 0,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": -374,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 361,
+        "scrollHeight": 361
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "m375-dark",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 406.6875,
+          "width": 375,
+          "height": 362.25,
+          "top": 406.6875,
+          "right": 375,
+          "bottom": 768.9375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 375,
+          "top": 406.6875,
+          "bottom": 768.9375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": 0,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": -374,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 361,
+        "scrollHeight": 361
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "t768-light",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 224,
+          "y": 660.09375,
+          "width": 520,
+          "height": 362.25,
+          "top": 660.09375,
+          "right": 744,
+          "bottom": 1022.34375,
+          "left": 224
+        },
+        "outline": {
+          "left": 224,
+          "right": 744,
+          "top": 660.09375,
+          "bottom": 1022.34375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 768,
+              "top": 0,
+              "bottom": 1024
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 224,
+              "right": 744,
+              "top": -28.5,
+              "bottom": 1065.5
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 361,
+        "scrollHeight": 361
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "t768-dark",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 224,
+          "y": 660.09375,
+          "width": 520,
+          "height": 362.25,
+          "top": 660.09375,
+          "right": 744,
+          "bottom": 1022.34375,
+          "left": 224
+        },
+        "outline": {
+          "left": 224,
+          "right": 744,
+          "top": 660.09375,
+          "bottom": 1022.34375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 768,
+              "top": 0,
+              "bottom": 1024
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 224,
+              "right": 744,
+              "top": -28.5,
+              "bottom": 1065.5
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 361,
+        "scrollHeight": 361
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "d1440-light",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 1120,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1440,
+          "bottom": 828,
+          "left": 1120
+        },
+        "outline": {
+          "left": 1120,
+          "right": 1440,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "d1440-dark",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 1120,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1440,
+          "bottom": 828,
+          "left": 1120
+        },
+        "outline": {
+          "left": 1120,
+          "right": 1440,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1440,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1440,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "m375-reduced",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 406.6875,
+          "width": 375,
+          "height": 362.25,
+          "top": 406.6875,
+          "right": 375,
+          "bottom": 768.9375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 375,
+          "top": 406.6875,
+          "bottom": 768.9375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": 0,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 375,
+              "top": -374,
+              "bottom": 812
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 361,
+        "scrollHeight": 361
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "d1280-reduced",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 960,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "d1920-reduced",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 1600,
+          "y": 118,
+          "width": 320,
+          "height": 890,
+          "top": 118,
+          "right": 1920,
+          "bottom": 1008,
+          "left": 1600
+        },
+        "outline": {
+          "left": 1600,
+          "right": 1920,
+          "top": 118,
+          "bottom": 1008
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1920,
+              "top": 0,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1920,
+              "top": 118,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1920,
+              "top": 65,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1920,
+              "top": 0,
+              "bottom": 1080
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 890,
+        "scrollHeight": 890
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "text-only-200-emulated",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 960,
+          "y": 281,
+          "width": 320,
+          "height": 547,
+          "top": 281,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 281,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 281,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 144,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 89,
+        "clientHeight": 547,
+        "scrollHeight": 636
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "short-text-only-200-emulated",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 960,
+          "y": 281,
+          "width": 320,
+          "height": 300,
+          "top": 281,
+          "right": 1280,
+          "bottom": 581,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 281,
+          "bottom": 581
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 600
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 281,
+              "bottom": 1575
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 336,
+        "clientHeight": 300,
+        "scrollHeight": 636
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "zoom-200-emulated",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(49, 130, 212)",
+        "box": {
+          "x": 0,
+          "y": 184.09375,
+          "width": 640,
+          "height": 225,
+          "top": 184.09375,
+          "right": 640,
+          "bottom": 409.09375,
+          "left": 0
+        },
+        "outline": {
+          "left": 0,
+          "right": 640,
+          "top": 184.09375,
+          "bottom": 409.09375
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 640,
+              "top": 0,
+              "bottom": 450
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 640,
+              "top": -487,
+              "bottom": 450
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 137,
+        "clientHeight": 224,
+        "scrollHeight": 361
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    },
+    {
+      "family": "run",
+      "label": "forced-colors",
+      "focus": {
+        "focused": true,
+        "focusVisible": true,
+        "style": "solid",
+        "width": 2,
+        "offset": -2,
+        "color": "rgb(55, 0, 110)",
+        "box": {
+          "x": 960,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "outline": {
+          "left": 960,
+          "right": 1280,
+          "top": 118,
+          "bottom": 828
+        },
+        "clips": [
+          {
+            "name": "viewport",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 118,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "MAIN",
+            "bounds": {
+              "left": 220,
+              "right": 1280,
+              "top": 65,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          },
+          {
+            "name": "DIV",
+            "bounds": {
+              "left": 0,
+              "right": 1280,
+              "top": 0,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true
+          }
+        ],
+        "failures": [],
+        "scrollTop": 0,
+        "clientHeight": 710,
+        "scrollHeight": 710
+      },
+      "checks": {
+        "lastMoneyRowReachable": true,
+        "completeFinalOutline": true,
+        "zeroConsoleOrPageErrors": true,
+        "zeroFailedHttp": true,
+        "status": true,
+        "oneMain": true,
+        "noHorizontalScroll": true,
+        "zeroSeriousCritical": true,
+        "focusVisible": true,
+        "completeOutline": true,
+        "insetTwoPx": true,
+        "reducedMotion": true,
+        "zeroBroadTransitions": true
+      },
+      "pass": true
+    }
+  ],
+  "scope": "Bounded focus geometry passed before internal Quote value containment was measured; manual inspection found the separate value clipping. This does not establish full acceptance."
+}

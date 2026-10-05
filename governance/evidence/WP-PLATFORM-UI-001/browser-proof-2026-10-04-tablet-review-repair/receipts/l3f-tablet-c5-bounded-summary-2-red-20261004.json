@@ -1,0 +1,38 @@
+{
+  "OnlySyntheticCleanupDeletePrevented": true,
+  "FinishedUtc": "2026-10-04T23:39:00.7291018Z",
+  "Head": "13e65d78867a9dd31bd77f102a515df1606fa535",
+  "StartedUtc": "2026-10-04T23:38:32.9074648Z",
+  "ChangedPaths": ["apps/web/e2e/final-ui.spec.ts"],
+  "Html": "C:/dev/mbv-run/l3f-tablet-c5-bounded-summary-2-red-20261004-html",
+  "Log": "C:/dev/mbv-run/l3f-tablet-c5-bounded-summary-2-red-20261004.log",
+  "Output": "C:/dev/mbv-run/l3f-tablet-c5-bounded-summary-2-red-20261004-test-results",
+  "Root": "C:/dev/mbv-finish",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep quote recovery|timer expiry without|run summary scrollable|stacked summary focus --output C:/dev/mbv-run/l3f-tablet-c5-bounded-summary-2-red-20261004-test-results --reporter=list,json,html",
+  "SourceHashes": [
+    {
+      "sha256": "be8e97f7536714fb739e1c96f7d7f570e1011ab1e6e7e0fa6fac1d69396b74cb",
+      "path": "apps/web/e2e/final-ui.spec.ts"
+    },
+    {
+      "sha256": "7fad3d3992a4a9d50b4352a1249bccd2f98c273d9c2c44f428c515c34b7a406f",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx"
+    },
+    {
+      "sha256": "0f831857af6f98f9270691cd5e4451f996ac0d82a89525b3356be1209957472c",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css"
+    },
+    {
+      "sha256": "76c46e332275c5e616302dba9302cb0acd78fe1f1d1d9cf7c25c08f6790dd39d",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css"
+    }
+  ],
+  "ActualExit": 1,
+  "Versions": {
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0",
+    "Playwright": "Version 1.61.1"
+  },
+  "NativeResults": "C:/dev/mbv-run/l3f-tablet-c5-bounded-summary-2-red-20261004-results.json",
+  "Phase": "red"
+}

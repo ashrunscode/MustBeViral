@@ -1,0 +1,120 @@
+{
+  "recordedUtc": "2026-10-05T01:03:28.134Z",
+  "copies": [
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-inspection-20261004.json",
+      "sourceSha256": "237ebda8b91a2c1b97ccd5f29e9f867999a378592c8864cc7be21acdd91dd5dd",
+      "copy": "inspection.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-result-1-20261004.json",
+      "sourceSha256": "596fef2f020949e2e15b1b5fe4f589297177debe609f82515e690811d7b80ce0",
+      "copy": "native-current.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-checkpoint-20261004.json",
+      "sourceSha256": "46d0f72e5ef20a2239d1003e77b8d97a703c788b27e3d918c61c3157093b495f",
+      "copy": "source/checkpoint.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-repair-2-red-20261004.json",
+      "sourceSha256": "e0d725e643f5d4eab8c9fe68776daa52c6410446d69e55e710c736bdf8c55c17",
+      "copy": "receipts/l3f-tablet-c5-repair-2-red-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-repair-2-green-20261004.json",
+      "sourceSha256": "0c5621be92e1b820d2e460f3f5cb2bc6b8306655cbdba6f11cdaff32c04e1692",
+      "copy": "receipts/l3f-tablet-c5-repair-2-green-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-summary-2-red-20261004.json",
+      "sourceSha256": "ae717dfb1f00a354c64d853f5be717d710c2ccd70a795a4201694ec9a361864b",
+      "copy": "receipts/l3f-tablet-c5-bounded-summary-2-red-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-summary-3-green-20261004.json",
+      "sourceSha256": "0819a11fc8417aa57e953b391e77fe37d02a7cfb834618b8fa59c2b38cab25a8",
+      "copy": "receipts/l3f-tablet-c5-bounded-summary-3-green-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-2-red-20261004.json",
+      "sourceSha256": "01cae9ddbf33e74f718fcde905b966cf9075b8a8408dfdd83fbb00ae4973da38",
+      "copy": "receipts/l3f-tablet-c5-summary-values-2-red-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-2-green-20261004.json",
+      "sourceSha256": "b7169b70f923eea8da7d93707d90e9bcc4e8f98884015b22d656e912a202c4b1",
+      "copy": "receipts/l3f-tablet-c5-summary-values-2-green-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-format-20261004.json",
+      "sourceSha256": "b8f9d3e22e6b5a8e4968ad321487f56c07e0c73be5b633e297fe96df0011c0f5",
+      "copy": "receipts/l3f-tablet-c5-summary-values-format-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-production-build-20261004.json",
+      "sourceSha256": "6ac62633dfb61cf042a9210e015718f5a19ba9656854cc8971d25db15a9204e0",
+      "copy": "receipts/l3f-tablet-c5-summary-values-production-build-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-production-web-process-20261004.json",
+      "sourceSha256": "6dec894b191afaea6bcb1d20521d09ca5a44bced3b8d703aff998be4bf556504",
+      "copy": "receipts/l3f-tablet-c5-summary-values-production-web-process-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-production-core-process-20261004.json",
+      "sourceSha256": "d49ebb2cbb04565c1c02a56d3967ec822ddc1cf1bc1d9b19cf35f8ad59c7de87",
+      "copy": "receipts/l3f-tablet-c5-summary-values-production-core-process-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-production-stop-20261004.json",
+      "sourceSha256": "47e07ae9f6a4edc54b628e70413eb8f5d20483d5c272dc66592af307b0672197",
+      "copy": "receipts/l3f-tablet-c5-summary-values-production-stop-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-reorient-47-20261004.json",
+      "sourceSha256": "43deea7b176decf850467b35b75626763e51f930131fd9c3a4e6bf04d7bc1ee6",
+      "copy": "receipts/l3f-reorient-47-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-reorient-47-preflight-20261004.json",
+      "sourceSha256": "bb3cbc1e48e08b8f0502ef11888796ca3525fa11a5dd15d945f87b85f81bb29a",
+      "copy": "receipts/l3f-reorient-47-preflight-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-reorient-47-migrations-0-20261004.json",
+      "sourceSha256": "183aa441e12937e89f631b468d1c165420a5cdcd6b78cb2aaa3e33fb1dc97994",
+      "copy": "receipts/l3f-reorient-47-migrations-0-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-reorient-47-migrations-1-20261004.json",
+      "sourceSha256": "f689290c342e08175188a6943a7e0152c9b507ea54afe4b6c7bb1ee444cd6fb3",
+      "copy": "receipts/l3f-reorient-47-migrations-1-20261004.json",
+      "parsedValuesUnchanged": true
+    },
+    {
+      "source": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-native2-value-inspection-20261004.json",
+      "sourceSha256": "826914ff4d9322c4ce256b4f265b77fc94300473ca4095d2e5f9c6f1b6161956",
+      "copy": "diagnostics/prior-value-inspection.json",
+      "parsedValuesUnchanged": true
+    }
+  ],
+  "rawMcpAndCompletePlaywrightReportsExcluded": true
+}

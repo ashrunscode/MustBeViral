@@ -1,0 +1,652 @@
+{
+  "recordedUtc": "2026-10-05T01:03:28.130Z",
+  "environmentConfigAndRawReportOmitted": true,
+  "runs": [
+    {
+      "receipt": "l3f-tablet-c5-repair-2-red-20261004.json",
+      "reportedStats": {
+        "startTime": "2026-10-04T22:55:28.033Z",
+        "duration": 23812.663999999997,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 3,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "keeps enlarged quote recovery inside its footer and viewport",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 1469,
+              "errors": [
+                {
+                  "message": "Error: all four focus outline edges remain inside every clipping frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"viewport: right\",\u001b[39m\n\u001b[31m+   \"DIV: right\",\u001b[39m\n\u001b[31m+   \"DIV: top\",\u001b[39m\n\u001b[31m+   \"MAIN: right\",\u001b[39m\n\u001b[31m+   \"DIV: right\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  82 |     return failures;\n  83 |   });\n> 84 |   expect(clippedEdges, 'all four focus outline edges remain inside every clipping frame').toEqual([]);\n     |                                                                                           ^\n  85 | }\n  86 |\n  87 | test('keeps enlarged quote recovery inside its footer and viewport', async ({ page }) => {\n    at expectCompleteFocusOutline (C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:84:91)\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:121:3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "returns focus to the fresh quote after timer expiry without a confirmation attempt",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 5818,
+              "errors": [
+                {
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('heading', { name: 'Review this run before spending', exact: true, level: 1 })\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Review this run before spending', exact: true, level: 1 })\u001b[22m\n\u001b[2m    14 × locator resolved to <h1 tabindex=\"-1\" id=\"quote-title\">Review this run before spending</h1>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n\n  162 |       exact: true,\n  163 |     }),\n> 164 |   ).toBeFocused();\n      |     ^\n  165 |   await expect(acknowledgment).toBeEnabled();\n  166 |   await expect(acknowledgment).not.toBeChecked();\n  167 |   await expect(page.getByRole('button', { name: 'Confirm $4.20 run', exact: true })).toBeDisabled();\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:164:5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps the enlarged run summary scrollable by keyboard",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 2955,
+              "errors": [
+                {
+                  "message": "Error: all four focus outline edges remain inside every clipping frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"viewport: right\",\u001b[39m\n\u001b[31m+   \"DIV: right\",\u001b[39m\n\u001b[31m+   \"DIV: top\",\u001b[39m\n\u001b[31m+   \"MAIN: right\",\u001b[39m\n\u001b[31m+   \"DIV: right\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  82 |     return failures;\n  83 |   });\n> 84 |   expect(clippedEdges, 'all four focus outline edges remain inside every clipping frame').toEqual([]);\n     |                                                                                           ^\n  85 | }\n  86 |\n  87 | test('keeps enlarged quote recovery inside its footer and viewport', async ({ page }) => {\n    at expectCompleteFocusOutline (C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:84:91)\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:300:3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps rejected quote confirmation and re-quote recovery visible to keyboard users",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 3949,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "receipt": "l3f-tablet-c5-repair-2-green-20261004.json",
+      "reportedStats": {
+        "startTime": "2026-10-04T22:56:28.226Z",
+        "duration": 21067.419,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "keeps enlarged quote recovery inside its footer and viewport",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1970,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "returns focus to the fresh quote after timer expiry without a confirmation attempt",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1031,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps the enlarged run summary scrollable by keyboard",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 3585,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps rejected quote confirmation and re-quote recovery visible to keyboard users",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 6773,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "receipt": "l3f-tablet-c5-bounded-summary-2-red-20261004.json",
+      "reportedStats": {
+        "startTime": "2026-10-04T23:38:33.998Z",
+        "duration": 26122.563000000002,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 4,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "keeps enlarged quote recovery inside its footer and viewport",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1545,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "returns focus to the fresh quote after timer expiry without a confirmation attempt",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 766,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-mobile",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 1623,
+              "errors": [
+                {
+                  "message": "Error: all four focus outline edges remain inside every clipping frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"DIV: top\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\nCall Log:\n- Timeout 1500ms exceeded while waiting on the predicate\n\n  197 |     await region.focus();\n  198 |     await page.keyboard.press('End');\n> 199 |     await expect(async () => expectCompleteFocusOutline(region)).toPass({ timeout: 1500 });\n      |                                                                  ^\n  200 |     await expect\n  201 |       .poll(() =>\n  202 |         region.evaluate((element) => {\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:199:66"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-zoom",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 1699,
+              "errors": [
+                {
+                  "message": "Error: all four focus outline edges remain inside every clipping frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"viewport: top\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\nCall Log:\n- Timeout 1500ms exceeded while waiting on the predicate\n\n  197 |     await region.focus();\n  198 |     await page.keyboard.press('End');\n> 199 |     await expect(async () => expectCompleteFocusOutline(region)).toPass({ timeout: 1500 });\n      |                                                                  ^\n  200 |     await expect\n  201 |       .poll(() =>\n  202 |         region.evaluate((element) => {\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:199:66"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-short-text",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 1644,
+              "errors": [
+                {
+                  "message": "Error: all four focus outline edges remain inside every clipping frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"viewport: top\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\nCall Log:\n- Timeout 1500ms exceeded while waiting on the predicate\n\n  197 |     await region.focus();\n  198 |     await page.keyboard.press('End');\n> 199 |     await expect(async () => expectCompleteFocusOutline(region)).toPass({ timeout: 1500 });\n      |                                                                  ^\n  200 |     await expect\n  201 |       .poll(() =>\n  202 |         region.evaluate((element) => {\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:199:66"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: run-zoom",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 1507,
+              "errors": [
+                {
+                  "message": "Error: all four focus outline edges remain inside every clipping frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"DIV: top\",\u001b[39m\n\u001b[31m+   \"MAIN: top\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\nCall Log:\n- Timeout 1500ms exceeded while waiting on the predicate\n\n  197 |     await region.focus();\n  198 |     await page.keyboard.press('End');\n> 199 |     await expect(async () => expectCompleteFocusOutline(region)).toPass({ timeout: 1500 });\n      |                                                                  ^\n  200 |     await expect\n  201 |       .poll(() =>\n  202 |         region.evaluate((element) => {\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:199:66"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps the enlarged run summary scrollable by keyboard",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 2508,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps rejected quote confirmation and re-quote recovery visible to keyboard users",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 4275,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "receipt": "l3f-tablet-c5-bounded-summary-3-green-20261004.json",
+      "reportedStats": {
+        "startTime": "2026-10-04T23:43:05.025Z",
+        "duration": 18058.406,
+        "expected": 8,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "keeps enlarged quote recovery inside its footer and viewport",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1345,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "returns focus to the fresh quote after timer expiry without a confirmation attempt",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 704,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-mobile",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 859,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-zoom",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 777,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-short-text",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1079,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: run-zoom",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 766,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps the enlarged run summary scrollable by keyboard",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 3022,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps rejected quote confirmation and re-quote recovery visible to keyboard users",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 3799,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "receipt": "l3f-tablet-c5-summary-values-2-red-20261004.json",
+      "reportedStats": {
+        "startTime": "2026-10-05T00:21:47.614Z",
+        "duration": 24450.326,
+        "expected": 9,
+        "skipped": 0,
+        "unexpected": 3,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "keeps enlarged quote recovery inside its footer and viewport",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1294,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "returns focus to the fresh quote after timer expiry without a confirmation attempt",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 715,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-mobile",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 698,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-zoom",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 951,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-short-text",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1322,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: run-zoom",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 590,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: desktop",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 815,
+              "errors": [
+                {
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 26\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"4\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"synthetic/measurement-route\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"77777777-7777-4777-8777-777777777777\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$4.20\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$8.00\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$18.42 of $100.00\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  275 |     });\n  276 |     expect(geometry.values).toHaveLength(6);\n> 277 |     expect(geometry.values.filter((value) => value.clipped)).toEqual([]);\n      |                                                              ^\n  278 |     expect(geometry.regionOverflow).toBe(false);\n  279 |   });\n  280 | }\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:277:62"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: short",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 767,
+              "errors": [
+                {
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 26\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"4\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"synthetic/measurement-route\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"77777777-7777-4777-8777-777777777777\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$4.20\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$8.00\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$18.42 of $100.00\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  275 |     });\n  276 |     expect(geometry.values).toHaveLength(6);\n> 277 |     expect(geometry.values.filter((value) => value.clipped)).toEqual([]);\n      |                                                              ^\n  278 |     expect(geometry.regionOverflow).toBe(false);\n  279 |   });\n  280 | }\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:277:62"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: mobile",
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "duration": 701,
+              "errors": [
+                {
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 26\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"4\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"synthetic/measurement-route\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"77777777-7777-4777-8777-777777777777\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$4.20\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$8.00\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"clipped\": true,\u001b[39m\n\u001b[31m+     \"text\": \"$18.42 of $100.00\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  275 |     });\n  276 |     expect(geometry.values).toHaveLength(6);\n> 277 |     expect(geometry.values.filter((value) => value.clipped)).toEqual([]);\n      |                                                              ^\n  278 |     expect(geometry.regionOverflow).toBe(false);\n  279 |   });\n  280 | }\n    at C:\\dev\\mbv-finish\\apps\\web\\e2e\\final-ui.spec.ts:277:62"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: tablet",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 709,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps the enlarged run summary scrollable by keyboard",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 2919,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps rejected quote confirmation and re-quote recovery visible to keyboard users",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 4061,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "receipt": "l3f-tablet-c5-summary-values-2-green-20261004.json",
+      "reportedStats": {
+        "startTime": "2026-10-05T00:34:52.578Z",
+        "duration": 22864.87,
+        "expected": 12,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "keeps enlarged quote recovery inside its footer and viewport",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1244,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "returns focus to the fresh quote after timer expiry without a confirmation attempt",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 736,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-mobile",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 747,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-zoom",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 743,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: quote-short-text",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1298,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps stacked summary focus visible after End: run-zoom",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1031,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: desktop",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1277,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: short",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1136,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: mobile",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 1053,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps enlarged quote summary values inside the region: tablet",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 721,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps the enlarged run summary scrollable by keyboard",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 3039,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "keeps rejected quote confirmation and re-quote recovery visible to keyboard users",
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration": 4327,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,548 @@
+{
+  "recordedUtc": "2026-10-05 01:00:14 UTC",
+  "sourceHead": "74b98486204c22e41b76072a6eba833e14609a57",
+  "driver": "view_image original",
+  "allDistinctContentsInspected": true,
+  "imageCount": 81,
+  "distinctContents": 57,
+  "batches": [
+    {
+      "indices": [0, 1, 2, 3, 4, 5],
+      "recordedUtc": "2026-10-05 00:44:27 UTC",
+      "observation": "Six original Quote desktop/wide contents inspected. Four inset summary focus borders remain visible. Route and full UUID wrap inside the 320 px panel; all amounts and consequence copy are readable. Confirmation is disabled while acknowledgment is unchecked. The fixed quote stage scrolls to its lower text; no new lost value.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 24221,
+          "name": "quote-d1280-reduced-focus-region.png",
+          "sha256": "65f9472195e1f462024ed75b7a6b3c5601c8927495387f9c69af575214784732",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1280-reduced-focus-region.png",
+          "height": 710
+        },
+        {
+          "bytes": 113560,
+          "name": "quote-d1280-reduced-focus.png",
+          "sha256": "6da4b04aafff214d2b82b6bedf5cfa841ec97e85619eaa2173e323d5672fee3b",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1280-reduced-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 111965,
+          "name": "quote-d1280-reduced.png",
+          "sha256": "6f3e322084965e102b7180835e2f3934d18d4eb5a7c098296cb5ec575044090a",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1280-reduced.png",
+          "height": 900
+        },
+        {
+          "bytes": 114421,
+          "name": "quote-d1440-dark-focus.png",
+          "sha256": "127f792e5888f5b3cc0aa0da8a7366d08a7d060fb5bf2301434b7a23345c3f9e",
+          "width": 1440,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1440-dark-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 112868,
+          "name": "quote-d1440-dark.png",
+          "sha256": "82d10196220dfbd61bc09c04046249368f3318d8b04a5ad0e2ed418c90cbc328",
+          "width": 1440,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1440-dark.png",
+          "height": 900
+        },
+        {
+          "bytes": 24975,
+          "name": "quote-d1920-reduced-focus-region.png",
+          "sha256": "57da405af04e20aefff3b02833e997f6e70afaeae24768bcc7a0e4e76aed74e9",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1920-reduced-focus-region.png",
+          "height": 890
+        }
+      ]
+    },
+    {
+      "indices": [6, 7, 8, 9, 10, 11],
+      "recordedUtc": "2026-10-05 00:44:46 UTC",
+      "observation": "Six wide/forced-color/mobile region Quote originals inspected. Focus borders are complete in standard and forced colors. The route, complete pinned revision, named money and no-confirmation consequence stay inside the panel. Dark preference intentionally retains the readable light design.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 119509,
+          "name": "quote-d1920-reduced-focus.png",
+          "sha256": "331a3507516ff9c284695233e01ffdf17bf89ab60f180061393b0c719f69f36a",
+          "width": 1920,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1920-reduced-focus.png",
+          "height": 1080
+        },
+        {
+          "bytes": 119063,
+          "name": "quote-d1920-reduced.png",
+          "sha256": "aa3015d29d35521179e0d0c87324c4f682de0a6f33f653af4f3536bf5cacf2ec",
+          "width": 1920,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-d1920-reduced.png",
+          "height": 1080
+        },
+        {
+          "bytes": 21766,
+          "name": "quote-forced-colors-focus-region.png",
+          "sha256": "9ee8a35bd08db6321f40980fc3d330ec17702d8833bd9986ad5a0c718b767bdd",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-forced-colors-focus-region.png",
+          "height": 710
+        },
+        {
+          "bytes": 105457,
+          "name": "quote-forced-colors-focus.png",
+          "sha256": "2edd855303e55ea130d9175cda5e25d79a84652f31e0136086066eb402d4b125",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-forced-colors-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 103093,
+          "name": "quote-forced-colors.png",
+          "sha256": "df82c5a9db6e8d6435718b63984252f86c343804b5358efa94e40bd8bc07c032",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-forced-colors.png",
+          "height": 900
+        },
+        {
+          "bytes": 22947,
+          "name": "quote-m375-dark-focus-region.png",
+          "sha256": "3c2aa9d5c551e89588e8620040f3981fa63605ae4f8c242d083e076a7b881ed7",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-m375-dark-focus-region.png",
+          "height": 407
+        }
+      ]
+    },
+    {
+      "indices": [12, 13, 14, 15, 16, 17],
+      "recordedUtc": "2026-10-05 00:55:49 UTC",
+      "viewedClockUtc": "2026-10-05 00:44:46 UTC",
+      "observation": "Previously displayed six originals: mobile Quote rows, acknowledgment and footer remain readable; short doubled-text summary has all four focus borders, and its Day cap amount is visible. The complete Day cap label is separately reachable after ArrowUp in capture 18. No horizontally lost value.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 98695,
+          "name": "quote-m375-dark-focus.png",
+          "sha256": "9f496b701b01c4abe03fd58672a97ea79b8a341ed0fb299025976e5c2f449047",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-m375-dark-focus.png",
+          "height": 1757
+        },
+        {
+          "bytes": 98357,
+          "name": "quote-m375-dark.png",
+          "sha256": "04fd2d370b0399e56b974cd49011015b83fffe16ecb3d1aa3369cdd50a26d15f",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-m375-dark.png",
+          "height": 1757
+        },
+        {
+          "bytes": 98539,
+          "name": "quote-m375-light-focus.png",
+          "sha256": "4b8a18655c07f286cb767cc845c11d5541081655c5d797083674669c0584445e",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-m375-light-focus.png",
+          "height": 1757
+        },
+        {
+          "bytes": 98212,
+          "name": "quote-m375-light.png",
+          "sha256": "34d4cdd837427a037157f2da9b0017606a0ee93d10ba2a7dca7cb2922a468027",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-m375-light.png",
+          "height": 1757
+        },
+        {
+          "bytes": 19702,
+          "name": "quote-short-text-only-200-emulated-focus-region.png",
+          "sha256": "7a9d0a8544205c6876c41387b1852aac541da3004804ccac32390833a8c38324",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-short-text-only-200-emulated-focus-region.png",
+          "height": 300
+        },
+        {
+          "bytes": 205589,
+          "name": "quote-short-text-only-200-emulated-focus.png",
+          "sha256": "8d72f221dab7fb1d2817c58b964f0886642cc0923acf585405b0aa77dc68252e",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-short-text-only-200-emulated-focus.png",
+          "height": 1483
+        }
+      ]
+    },
+    {
+      "indices": [18, 19, 20, 21, 22, 23],
+      "recordedUtc": "2026-10-05 00:55:49 UTC",
+      "observation": "Six Quote originals inspected. Short doubled-text capture 18 shows the complete Day cap used label and $18.42 of $100.00 after ArrowUp. Tablet full and region captures contain all six terms and values, the acknowledgment and Confirm amount. Desktop doubled-text region wraps values and consequence copy within all four inset borders. No new clipping.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 209210,
+          "name": "quote-short-text-only-200-emulated-money-reachable.png",
+          "sha256": "8a3ff40b54e50829343ff864c445a0a82c0c70a250fcc702b9b07ace90c0a940",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-short-text-only-200-emulated-money-reachable.png",
+          "height": 1483
+        },
+        {
+          "bytes": 203880,
+          "name": "quote-short-text-only-200-emulated.png",
+          "sha256": "54dc6cc33f225d32756acf393849f71381a1959acf437fea50987e535946f4d1",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-short-text-only-200-emulated.png",
+          "height": 1483
+        },
+        {
+          "bytes": 22833,
+          "name": "quote-t768-dark-focus-region.png",
+          "sha256": "ed429095f97134e873ea24f0251a22b0acf900f4a01909b63d879bdd893cd394",
+          "width": 520,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-t768-dark-focus-region.png",
+          "height": 362
+        },
+        {
+          "bytes": 117312,
+          "name": "quote-t768-dark-focus.png",
+          "sha256": "0fb99a488725441a902bc00a34cd397df2ced39ad88789524ba0e5cf12891e4d",
+          "width": 768,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-t768-dark-focus.png",
+          "height": 1525
+        },
+        {
+          "bytes": 117072,
+          "name": "quote-t768-dark.png",
+          "sha256": "27f2667866d0d0aea9107164b2e53f4cc22ac5376f3cc25ce330d85a34befe81",
+          "width": 768,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-t768-dark.png",
+          "height": 1525
+        },
+        {
+          "bytes": 32901,
+          "name": "quote-text-only-200-emulated-focus-region.png",
+          "sha256": "e2fbb8865dd2bfa1eb4203b746ec9d4b90136dac0df11dacf775f6681b403ad7",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-text-only-200-emulated-focus-region.png",
+          "height": 536
+        }
+      ]
+    },
+    {
+      "indices": [24, 25, 26, 27, 28, 29],
+      "recordedUtc": "2026-10-05 00:56:27 UTC",
+      "observation": "Six Quote originals inspected: desktop doubled text wraps route and UUID; scrolled summary has complete monetary values and consequence text within all four borders. Native timer expiry and recovery retain truthful expiry/disabled Confirm; recovery focuses the heading. Emulated zoom region and full document have complete borders, reachable Day cap row and footer, no lost value.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 172646,
+          "name": "quote-text-only-200-emulated-focus.png",
+          "sha256": "6b705bfc2268552dab873a2654873519843d7444bc4946643f7686684ac547d4",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-text-only-200-emulated-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 166980,
+          "name": "quote-text-only-200-emulated.png",
+          "sha256": "0668fb70c53584d1e459c3f55f7c3ed443f0f076f681e078a6e1bc2aa7dfe3d7",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-text-only-200-emulated.png",
+          "height": 900
+        },
+        {
+          "bytes": 113019,
+          "name": "quote-timer-only-expired.png",
+          "sha256": "23622181ca2c30879400e724c6df300b10587d0d8716333dadcadea9f28cba2a",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-timer-only-expired.png",
+          "height": 900
+        },
+        {
+          "bytes": 112108,
+          "name": "quote-timer-only-recovered.png",
+          "sha256": "ff95c5957d44c7d32423fe1a8fc301a5a29f843adcbef5060514192eb7223140",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-timer-only-recovered.png",
+          "height": 900
+        },
+        {
+          "bytes": 15309,
+          "name": "quote-zoom-200-emulated-focus-region.png",
+          "sha256": "3dbd079751e2cc4626e0ff394abf0bb7cd1745755df14b4f69921acc9f427986",
+          "width": 640,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-zoom-200-emulated-focus-region.png",
+          "height": 226
+        },
+        {
+          "bytes": 90829,
+          "name": "quote-zoom-200-emulated-focus.png",
+          "sha256": "9f181af1de00886c71b630221409fb90fc9caa58a52577018f1c4635a682fb09",
+          "width": 640,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-zoom-200-emulated-focus.png",
+          "height": 1416
+        }
+      ]
+    },
+    {
+      "indices": [30, 31, 32, 33, 34, 35],
+      "recordedUtc": "2026-10-05 00:56:46 UTC",
+      "observation": "Emulated-zoom Quote and five desktop Run originals inspected. Monetary rows remain contained. Focused Run summary has all four borders. Readiness, four branches, settled values and review action remain legible. The Revision label/value spacing is dense but neither text is clipped; retain the existing craft deduction.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 88370,
+          "name": "quote-zoom-200-emulated.png",
+          "sha256": "282e20fdbc4edad0b95dd4f87dace59648f27f8d14c259eac611d55665421ba5",
+          "width": 640,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\quote-zoom-200-emulated.png",
+          "height": 1416
+        },
+        {
+          "bytes": 15809,
+          "name": "run-d1280-reduced-focus-region.png",
+          "sha256": "adbcdc37343bdb32087baff397619ea4ea5ec47c543c96d10afa3018f7781bd0",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1280-reduced-focus-region.png",
+          "height": 710
+        },
+        {
+          "bytes": 104801,
+          "name": "run-d1280-reduced-focus.png",
+          "sha256": "82d46e9a870aa6301b1d7a7aed8cbce430094be08c7e5b0595408bcd66e97500",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1280-reduced-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 104514,
+          "name": "run-d1280-reduced.png",
+          "sha256": "34c64a1747ee6cd4eaf22f327718bf80feb07b8f01c5d3034b774c05fc8d653e",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1280-reduced.png",
+          "height": 900
+        },
+        {
+          "bytes": 106136,
+          "name": "run-d1440-dark-focus.png",
+          "sha256": "7954fd6aaae3a269d55880866b8f87b2642f2c194df26e65d0d410012f98f1fc",
+          "width": 1440,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1440-dark-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 105864,
+          "name": "run-d1440-dark.png",
+          "sha256": "c35369ec8e65fdc636c6c8c16298a1328c306d5956ba2180434f7e40ed4c424b",
+          "width": 1440,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1440-dark.png",
+          "height": 900
+        }
+      ]
+    },
+    {
+      "indices": [36, 37, 38, 39, 40, 41],
+      "recordedUtc": "2026-10-05 00:57:05 UTC",
+      "observation": "Six wide/forced-color Run originals inspected. Four focus edges remain visible, including forced-color purple system outline. Completed branches and five monetary totals remain inside the panel; complete pinned revision is readable. Review action and readiness are visible; no new loss.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 16520,
+          "name": "run-d1920-reduced-focus-region.png",
+          "sha256": "243d40d263d13c29f31c83b0055012f33e42c0870f37493502df26a9401d445f",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1920-reduced-focus-region.png",
+          "height": 890
+        },
+        {
+          "bytes": 110099,
+          "name": "run-d1920-reduced-focus.png",
+          "sha256": "8c67d6d04852aa872f22d0ce6364bcba8d44e6f91c6df9fc26795155fbbc4e86",
+          "width": 1920,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1920-reduced-focus.png",
+          "height": 1080
+        },
+        {
+          "bytes": 109845,
+          "name": "run-d1920-reduced.png",
+          "sha256": "4fcca3106ddf64d57e1853eda897dbbd286c46ab338812a1b46eaa8aebc693b7",
+          "width": 1920,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-d1920-reduced.png",
+          "height": 1080
+        },
+        {
+          "bytes": 14443,
+          "name": "run-forced-colors-focus-region.png",
+          "sha256": "648cd87329aa7a02a1d196e7b4835ac1cd36204e4131c9459ee1b3fc04b61772",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-forced-colors-focus-region.png",
+          "height": 710
+        },
+        {
+          "bytes": 96962,
+          "name": "run-forced-colors-focus.png",
+          "sha256": "7614c493d74e9af94d33db8aa0ebecf4100bc0eadd52a14ca57d310b3bfc8cfe",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-forced-colors-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 96532,
+          "name": "run-forced-colors.png",
+          "sha256": "d9e7420caa5f5ce1a8795e509e4edc9633c5be48c891f0f60be493e84676cf09",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-forced-colors.png",
+          "height": 900
+        }
+      ]
+    },
+    {
+      "indices": [42, 43, 44, 45, 46, 47],
+      "recordedUtc": "2026-10-05 00:57:32 UTC",
+      "observation": "Six Run mobile/short doubled-text originals inspected. Mobile settlement values and review action stay inside document flow. Short summary has a bounded 300 px scroll region, all four focus edges and complete last monetary rows/revision after End. Terms are dense but no value is lost. Enlarged heading, node labels and footer wrap.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 14483,
+          "name": "run-m375-dark-focus-region.png",
+          "sha256": "4d75c2667ca690d7ae98246a3da14f2e66c403430fb54886193b168d97a86084",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-m375-dark-focus-region.png",
+          "height": 363
+        },
+        {
+          "bytes": 89266,
+          "name": "run-m375-dark-focus.png",
+          "sha256": "ed649b299bdf85205d7959f7499eb776d156ca4e894ece09b86bfa3ed379c25c",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-m375-dark-focus.png",
+          "height": 1576
+        },
+        {
+          "bytes": 88928,
+          "name": "run-m375-dark.png",
+          "sha256": "61e0fdbdea2a662e3e7e0e29c9e9efa960246ff34e522b108b6a22b45543ce73",
+          "width": 375,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-m375-dark.png",
+          "height": 1576
+        },
+        {
+          "bytes": 15744,
+          "name": "run-short-text-only-200-emulated-focus-region.png",
+          "sha256": "ab8a0aad22219bb628090ccf93373a583276877ca1773dfd41f0b7605d2a1b53",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-short-text-only-200-emulated-focus-region.png",
+          "height": 300
+        },
+        {
+          "bytes": 200096,
+          "name": "run-short-text-only-200-emulated-focus.png",
+          "sha256": "4f2554740c2cf87fabae39b007fd4d805ff708d5d6ffe72fd1355a07800b1382",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-short-text-only-200-emulated-focus.png",
+          "height": 1575
+        },
+        {
+          "bytes": 200292,
+          "name": "run-short-text-only-200-emulated.png",
+          "sha256": "81d685e27363ef1f1da8842196c274f0d6fef94605f84f25b5c6a91bd4b0233e",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-short-text-only-200-emulated.png",
+          "height": 1575
+        }
+      ]
+    },
+    {
+      "indices": [48, 49, 50, 51, 52, 53],
+      "recordedUtc": "2026-10-05 00:57:53 UTC",
+      "observation": "Six Run tablet/doubled-text originals inspected. Tablet shows full summary and reachable footer. Enlarged desktop End exposes all five monetary rows and complete revision, bounded by four inset focus edges. Initial summary scroll position is distinct from End; no new lost content.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 14752,
+          "name": "run-t768-dark-focus-region.png",
+          "sha256": "1f2b6edb17222c7d6f973909fbcec41875ca1b16d9ddb8fc59a2acf305cec3a5",
+          "width": 520,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-t768-dark-focus-region.png",
+          "height": 363
+        },
+        {
+          "bytes": 107893,
+          "name": "run-t768-dark-focus.png",
+          "sha256": "47edff7c0b0ec2dd81b849eed706e53264a9ea38e9c94806e54c7542c539e716",
+          "width": 768,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-t768-dark-focus.png",
+          "height": 1399
+        },
+        {
+          "bytes": 107501,
+          "name": "run-t768-dark.png",
+          "sha256": "b0ae44fa6aec3e18c0101c025c731aac80686c581f6e94bcea3f2c97f808f54a",
+          "width": 768,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-t768-dark.png",
+          "height": 1399
+        },
+        {
+          "bytes": 32884,
+          "name": "run-text-only-200-emulated-focus-region.png",
+          "sha256": "c229c2643478e243aecfea5ed7191161695f0c27de2f83fec77419b4876bd246",
+          "width": 320,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-text-only-200-emulated-focus-region.png",
+          "height": 547
+        },
+        {
+          "bytes": 171125,
+          "name": "run-text-only-200-emulated-focus.png",
+          "sha256": "648b8131a029c363229b82805466ba68c8af1ad04052364aab81cb83b21431d7",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-text-only-200-emulated-focus.png",
+          "height": 900
+        },
+        {
+          "bytes": 169992,
+          "name": "run-text-only-200-emulated.png",
+          "sha256": "a13c5693a7071558514e9f5785b880c600872ec41c3885f779df6cfa9c0f5001",
+          "width": 1280,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-text-only-200-emulated.png",
+          "height": 900
+        }
+      ]
+    },
+    {
+      "indices": [54, 55, 56],
+      "recordedUtc": "2026-10-05 00:58:27 UTC",
+      "observation": "Three emulated-zoom Run originals inspected. End position shows Captured, Released, Refunded, Pending and complete revision inside four visible focus edges. The top Reserved row is reachable with Home/ArrowUp in the same scrollable summary. Full document retains branch cards and review action; no horizontal content loss.",
+      "driver": "view_image original",
+      "images": [
+        {
+          "bytes": 8777,
+          "name": "run-zoom-200-emulated-focus-region.png",
+          "sha256": "ea631bfb7e781593111eed72a9bb525d318c4742c1022fdd8d1034c67ee7e299",
+          "width": 640,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-zoom-200-emulated-focus-region.png",
+          "height": 226
+        },
+        {
+          "bytes": 84019,
+          "name": "run-zoom-200-emulated-focus.png",
+          "sha256": "1174c3520d14383e3324a2e776be0996c05835799007c8bb77a41ac84604304c",
+          "width": 640,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-zoom-200-emulated-focus.png",
+          "height": 1279
+        },
+        {
+          "bytes": 85093,
+          "name": "run-zoom-200-emulated.png",
+          "sha256": "1fd47acfd52dea3830caa1147390a13d96e8f2692ce72b2aebb9d6909a16d2f7",
+          "width": 640,
+          "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-summary-values-browser-20261004\\run-zoom-200-emulated.png",
+          "height": 1279
+        }
+      ]
+    }
+  ],
+  "scope": "Original native MCP pixels. Synthetic layout mechanics and local production build only; no remote authenticated acceptance or whole-platform completion."
+}

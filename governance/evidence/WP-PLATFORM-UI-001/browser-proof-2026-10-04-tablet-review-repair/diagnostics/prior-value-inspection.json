@@ -1,0 +1,55 @@
+{
+  "recordedUtc": "2026-10-05 00:32:55 UTC",
+  "sourceHead": "0b9f33bd340c501bc02047ef8e911a028afadeda",
+  "driver": "view_image original",
+  "inspected": [
+    {
+      "name": "quote-text-only-200-emulated-focus-region.png",
+      "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-browser-2-20261004\\quote-text-only-200-emulated-focus-region.png",
+      "sha256": "f2f53ea981db1243b934ab5245e859b78764367d431488f0ea8cc0fc32efc450",
+      "width": 320,
+      "height": 536
+    },
+    {
+      "name": "run-short-text-only-200-emulated-focus-region.png",
+      "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-browser-2-20261004\\run-short-text-only-200-emulated-focus-region.png",
+      "sha256": "ab8a0aad22219bb628090ccf93373a583276877ca1773dfd41f0b7605d2a1b53",
+      "width": 320,
+      "height": 300
+    },
+    {
+      "name": "run-text-only-200-emulated-focus-region.png",
+      "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-browser-2-20261004\\run-text-only-200-emulated-focus-region.png",
+      "sha256": "c229c2643478e243aecfea5ed7191161695f0c27de2f83fec77419b4876bd246",
+      "width": 320,
+      "height": 547
+    },
+    {
+      "name": "run-zoom-200-emulated-focus-region.png",
+      "absolute": "C:\\dev\\mbv-run\\l3f-tablet-c5-bounded-browser-2-20261004\\run-zoom-200-emulated-focus-region.png",
+      "sha256": "ea631bfb7e781593111eed72a9bb525d318c4742c1022fdd8d1034c67ee7e299",
+      "width": 640,
+      "height": 226
+    }
+  ],
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "quote-text-only-200-emulated-focus-region.png",
+      "cause": "Quote coverage rows use unconstrained min-content grid width and non-wrapping flex pairs. Long synthetic route and revision values displace the money outside the right edge.",
+      "disposition": "Reproduced by three enlarged-summary regression failures; repair and new native proof pending."
+    },
+    {
+      "severity": "P3",
+      "files": [
+        "run-short-text-only-200-emulated-focus-region.png",
+        "run-text-only-200-emulated-focus-region.png",
+        "run-zoom-200-emulated-focus-region.png"
+      ],
+      "observation": "Run money and revision text remain inside the focused panel. Revision and label meet closely at doubled text, a density finding retained in Craft; four inset focus borders are visible.",
+      "disposition": "No Run value-clipping cause reproduced by these originals."
+    }
+  ],
+  "allCapturesInspected": false,
+  "notAcceptanceEvidence": true
+}
