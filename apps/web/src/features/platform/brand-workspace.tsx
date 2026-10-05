@@ -137,7 +137,7 @@ function BrandResource({
     );
   if (!confirmed)
     return (
-      <PlatformFrame section="brands">
+      <PlatformFrame section="brands" brandContextPending>
         <PlatformLoading label="Opening the selected brand…" />
       </PlatformFrame>
     );
@@ -149,7 +149,7 @@ function BrandResource({
   const scope = { studioId, brand: current.brand, canWrite };
   const switcher = (
     <>
-      <label>
+      <label className="platform-brand-switcher">
         Switch brand
         <select
           value={brandId}
@@ -170,14 +170,6 @@ function BrandResource({
             ))}
         </select>
       </label>
-      {brands.data?.next_cursor ? (
-        <button
-          type="button"
-          onClick={() => setSwitchCursor(brands.data?.next_cursor ?? undefined)}
-        >
-          More brands
-        </button>
-      ) : null}
     </>
   );
   return (
@@ -200,6 +192,14 @@ function BrandResource({
       <div hidden={waiting} inert={waiting}>
         <div className="platform-row platform-between" style={{ marginBottom: 16 }}>
           <Link href={studioHref(studioId, 'brands')}>All brands</Link>
+          {brands.data?.next_cursor ? (
+            <button
+              type="button"
+              onClick={() => setSwitchCursor(brands.data?.next_cursor ?? undefined)}
+            >
+              More brands
+            </button>
+          ) : null}
         </div>
         {brands.error !== undefined ? (
           <p role="status" className="platform-note">
