@@ -1,0 +1,46 @@
+{
+  "cell": "preview-compare-t768",
+  "path": "/studio/lumen-skin/review/compare",
+  "capturedUtc": "2026-10-04T13:30:36.219Z",
+  "observedUtc": "2026-10-04T13:30:36.358Z",
+  "sourceBase": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "equalMergedTree": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [],
+  "evidenceLevel": "synthetic in-memory local preview, no Core execution",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Output comparison",
+        "px": 25
+      }
+    ],
+    "bodyPx": 15,
+    "runState": null,
+    "results": [],
+    "announcements": [
+      {
+        "role": "status",
+        "text": "Preview. Sample work only. No connected accounts, approvals or publication."
+      }
+    ],
+    "runningAnimations": []
+  },
+  "tree": "- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Output comparison\":\n    - text: Rev 7f3a. Reviewer Maya Chen\n    - heading \"Output comparison\" [level=1]\n    - paragraph: Compare current output to its prior pinned version before approval.\n    - button \"QA findings\" [expanded]\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Reviewing outputs. Draft comments only. Live\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Hero A\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Hero A\":\n      - text: Draft comments\n      - heading \"Hero A\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - region \"Visual system\":\n      - heading \"Visual system\" [level=2]\n      - text: \"Reviewer: Maya Chen Pending\"\n      - button \"Approve group as Maya Chen\"\n      - heading \"Hero A\" [level=2]\n      - text: Approved Current output, v2 flux-2-klein 1080 x 1350 Prior pinned, v1 Prior 1080 x 1350 Already approved\n      - button \"Reject\"\n      - text: 1080 x 1350\n      - heading \"Hero B\" [level=2]\n      - text: Pending Current output, v2 flux-2-klein 1080 x 1350 Prior pinned, v1 Prior 1080 x 1350\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 1080 x 1350\n      - heading \"Story A\" [level=2]\n      - text: Pending Current output, v2 flux-2-klein 1080 x 1920 Prior pinned, v1 Prior 1080 x 1920\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 1080 x 1920\n    - region \"Copy system\":\n      - heading \"Copy system\" [level=2]\n      - text: \"Reviewer: Maya Chen Pending\"\n      - button \"Approve group as Maya Chen\"\n      - heading \"Launch copy A\" [level=2]\n      - text: Pending Current output, v2 kimi-2.6 3 placements Prior pinned, v1 Prior 3 placements\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 3 placements\n  - complementary \"QA findings\":\n    - heading \"QA findings\" [level=2]\n    - button \"Close QA findings\": Close\n    - article:\n      - text: Contrast issue\n      - paragraph: Logo visibility on Hero B is below the 4.5:1 target.\n      - link \"Jump to Hero B\":\n        - /url: \"#hero-b\"\n    - article:\n      - text: Legal disclaimer\n      - paragraph: Required “Results vary” line is missing from Story A.\n      - link \"Jump to Story A\":\n        - /url: \"#story-a\"\n    - text: Partial value retained Approved artifacts remain verified while pending work is reviewed.\n  - text: Batch approval\n  - strong: 1 / 4 approved\n  - link \"Continue to approval\":\n    - /url: /studio/lumen-skin/review",
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "afterAxeRunState": null,
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-compare-t768.png"
+}

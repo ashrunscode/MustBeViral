@@ -1,0 +1,46 @@
+{
+  "recordedUtc": "2026-10-05T03:45:25.278Z",
+  "sourceHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "captureCount": 6,
+  "entries": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-m375.png",
+      "bytes": 32462,
+      "sha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-m375-reference.png",
+      "bytes": 7804,
+      "sha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-light.png",
+      "bytes": 90664,
+      "sha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-light-reference.png",
+      "bytes": 7731,
+      "sha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-dark.png",
+      "bytes": 90664,
+      "sha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-dark-reference.png",
+      "bytes": 7731,
+      "sha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75"
+    }
+  ],
+  "newDistinctContents": 1,
+  "newUnique": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-dark.png",
+      "bytes": 90664,
+      "sha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc"
+    }
+  ],
+  "previousManifest": "l3f-tablet-reference-font-captures-20261005.json"
+}

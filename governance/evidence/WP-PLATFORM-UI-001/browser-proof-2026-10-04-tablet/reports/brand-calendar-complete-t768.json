@@ -1,0 +1,67 @@
+{
+  "cell": "brand-calendar-complete-t768",
+  "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar",
+  "observedUtc": "2026-10-04T13:41:43.172Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Calendar",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [
+      {
+        "role": "status",
+        "text": "Nothing is scheduled for Tablet fixture brand. Scheduling starts after a channel is connected and a revision is approved.Scheduling and publishing are not part of this release yet, so there is nothing to create, move or cancel here.Start a campaign brief"
+      }
+    ],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Tablet fixture brand\":\n  - link \"All brands\":\n    - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n  - navigation \"Brand navigation\":\n    - link \"Overview\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brand draft\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=draft\n    - link \"Intelligence\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=findings\n    - link \"Assets\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=assets\n    - link \"Channels\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=channels\n    - link \"Campaigns\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=campaigns\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=content\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Inbox\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=inbox\n    - link \"Results\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=results\n    - link \"Locations\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=locations\n    - link \"Settings\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n    - link \"Billing\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/billing?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n  - heading \"Calendar\" [level=1]\n  - paragraph: Scheduled revisions for Tablet fixture brand.\n  - region \"Tablet fixture brand calendar\":\n    - button \"Earlier\"\n    - heading \"October 2026\" [level=2]\n    - button \"Later\"\n    - text: Times in America/Chicago\n    - group \"Calendar range\":\n      - button \"Week\" [pressed]\n      - button \"Month\"\n    - list \"Week of October 2026\":\n      - listitem: 28 Mon Nothing scheduled\n      - listitem: 29 Tue Nothing scheduled\n      - listitem: 30 Wed Nothing scheduled\n      - listitem: 1 Thu Nothing scheduled\n      - listitem: 2 Fri Nothing scheduled\n      - listitem: 3 Sat Nothing scheduled\n      - listitem: 4 Sun Nothing scheduled\n    - status:\n      - paragraph: Nothing is scheduled for Tablet fixture brand. Scheduling starts after a channel is connected and a revision is approved.\n      - paragraph: Scheduling and publishing are not part of this release yet, so there is nothing to create, move or cancel here.\n      - link \"Start a campaign brief\":\n        - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-calendar-complete-t768.png",
+  "captureScope": "native full page capture; rendering hashes listed in sourceChanges; no whole-tree equality claimed"
+}

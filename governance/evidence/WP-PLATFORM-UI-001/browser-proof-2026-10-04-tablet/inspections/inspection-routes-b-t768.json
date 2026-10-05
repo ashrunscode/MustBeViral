@@ -1,0 +1,54 @@
+{
+  "recordedUtc": "2026-10-04 13:01:18 UTC",
+  "timestampMeaning": "recorded after original-resolution visual inspection",
+  "cells": [
+    {
+      "cell": "brand-channels-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-channels-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-content-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-content-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-inbox-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-inbox-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-results-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-results-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-locations-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-locations-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "brand-settings-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-settings-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    }
+  ],
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "scope": "viewport visual inspection; settings lower fold and further state evidence remain pending"
+}

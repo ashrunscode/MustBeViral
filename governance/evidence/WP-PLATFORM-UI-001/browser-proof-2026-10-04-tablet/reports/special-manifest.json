@@ -1,0 +1,315 @@
+{
+  "images": [
+    {
+      "sha256": "aba7a16100be93bc6e9cdca0fdbbcf6af48667e8578a88976a2208db7fe18a3d",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-forced-colors.png",
+      "bytes": 53335,
+      "name": "qa-special-workspace-access-forced-colors.png"
+    },
+    {
+      "sha256": "f5cef21f27c0dcaf6a658a3ba7219f7a9545e82d8db6677b333755216779de1a",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-zoom-200-emulated.png",
+      "bytes": 39122,
+      "name": "qa-special-workspace-access-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "e8f1e30b765b568183a3c033567b987f71e2c2a9eed6dfb2886b340240b91320",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-text-only-200-emulated.png",
+      "bytes": 112302,
+      "name": "qa-special-workspace-access-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "2305a81caa6d435df70d1e5d535f2e3b3656401070ee8de9dc6cb584963af5c3",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-access-text-only-200-emulated-bottom.png",
+      "bytes": 110306,
+      "name": "qa-special-workspace-access-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "6eabaa901fea95707cfe3fea8ef550eb1391f38a2ef5eb6e3562deab537d3eec",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-forced-colors.png",
+      "bytes": 64481,
+      "name": "qa-special-workspace-skills-forced-colors.png"
+    },
+    {
+      "sha256": "bcf432381a1d41b77d5582edf62430aad03c99ae630fc8fc6ccddf9f5c90ef97",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-zoom-200-emulated.png",
+      "bytes": 56810,
+      "name": "qa-special-workspace-skills-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "8cfb0584b2dc18ba77c3387622b16acfcc9d67e135d84a2e4ccce54f32218312",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-text-only-200-emulated.png",
+      "bytes": 144050,
+      "name": "qa-special-workspace-skills-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "4e21d8525ad4aee0e635afd7b4579bf36492512c440112f868a18e58005fac1e",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-workspace-skills-text-only-200-emulated-bottom.png",
+      "bytes": 142097,
+      "name": "qa-special-workspace-skills-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "ca994d479fb5262db66075096206a819ae2be19f5ed11ad8c6017f4ebc01c857",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-forced-colors.png",
+      "bytes": 58082,
+      "name": "qa-special-quote-forced-colors.png"
+    },
+    {
+      "sha256": "1006477ce06a8b50fcdc3b4e6ebb7332d01da6dbcc1610d2839cfd0e1445c4f3",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-zoom-200-emulated.png",
+      "bytes": 35048,
+      "name": "qa-special-quote-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "8b78fcfabf54c59620019a611f2c244cad39f40fd95175a141f65aa277058519",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-zoom-200-emulated-bottom.png",
+      "bytes": 33920,
+      "name": "qa-special-quote-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "0227bf188e42427a812f2a9295393d8e6b0f939697c77fa8de8e7b00cc6bd8f2",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-text-only-200-emulated.png",
+      "bytes": 117998,
+      "name": "qa-special-quote-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "6e76d6bcbd900a94e349ec2a7e269439669ff5f0d3f1bb66191604e0d0fe7312",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-quote-text-only-200-emulated-bottom.png",
+      "bytes": 115978,
+      "name": "qa-special-quote-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "36b9935ae793ec702051e6a24b7712b51915c5357f7e3cd6f6ce5f3236fd652a",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-forced-colors.png",
+      "bytes": 56451,
+      "name": "qa-special-review-forced-colors.png"
+    },
+    {
+      "sha256": "c4d87a1ed6f956da5a0c4f74afbba9d6c94ef477e41a76830092f3da5054cf0c",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-zoom-200-emulated.png",
+      "bytes": 29181,
+      "name": "qa-special-review-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "ae856843d6223f4775cac6ded799b217c3a7aed8915ba4ba5250a509b6357146",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-zoom-200-emulated-bottom.png",
+      "bytes": 28482,
+      "name": "qa-special-review-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "4e68ca0e05863a24a22505168d91ce48b098a7b99534f2b5001f8032db118bdd",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-text-only-200-emulated.png",
+      "bytes": 113489,
+      "name": "qa-special-review-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "0e710820bc79bf8ec410a43fdbc40fe255958e55a6053405f4727034f1d89aa8",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-review-text-only-200-emulated-bottom.png",
+      "bytes": 111714,
+      "name": "qa-special-review-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "6297815f52a171bfc14cff502a6d7a1fbd181e02ae41dd9fd3c5278a9d618754",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-forced-colors.png",
+      "bytes": 56785,
+      "name": "qa-special-compare-forced-colors.png"
+    },
+    {
+      "sha256": "0b614438377532fd2fff75c66869863c1e16a21e24faa10cea8af7dad241c461",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-zoom-200-emulated.png",
+      "bytes": 29515,
+      "name": "qa-special-compare-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "ae856843d6223f4775cac6ded799b217c3a7aed8915ba4ba5250a509b6357146",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-zoom-200-emulated-bottom.png",
+      "bytes": 28482,
+      "name": "qa-special-compare-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "54afee024375991fa71542207aa3f5adb50a4eb7cfebd9bd10a5ff3262bac1c3",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-text-only-200-emulated.png",
+      "bytes": 113596,
+      "name": "qa-special-compare-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "16a5cf2673be2c74dff60cacb2f364d6a0dfedc19c445c92f053d7aba7ff7f32",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-compare-text-only-200-emulated-bottom.png",
+      "bytes": 111773,
+      "name": "qa-special-compare-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "8723dfc1f839224902d736b81fc5527f39b9fddeccbed57b61333ba187ed2c3e",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-forced-colors.png",
+      "bytes": 51203,
+      "name": "qa-special-creators-forced-colors.png"
+    },
+    {
+      "sha256": "f8862342f4a1a333c6c347ad3a1702a146d1b07a6ce8a4153a33bd280d01006e",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-zoom-200-emulated.png",
+      "bytes": 34876,
+      "name": "qa-special-creators-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "a91c768d55b9efce160e4c917b7a0a0afb565908431be704be64ccea2601dec5",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-text-only-200-emulated.png",
+      "bytes": 102823,
+      "name": "qa-special-creators-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "a13d7ce63969e2ddbae88585a29f11918aa819bd8e84b94ea654b82fdba526da",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-special-creators-text-only-200-emulated-bottom.png",
+      "bytes": 101040,
+      "name": "qa-special-creators-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "84e7bbb03dd654db233cf44f5ecb9a08423ec78bf3cb229d94b96dd42917e9e9",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-quote-expired-forced-colors.png",
+      "bytes": 85500,
+      "name": "preview-special-quote-expired-forced-colors.png"
+    },
+    {
+      "sha256": "ed2744b94d4c3a5a8a09ba5cdc911fd1f37711992f6884e75caaa708f93924c3",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-quote-expired-forced-colors-bottom.png",
+      "bytes": 79211,
+      "name": "preview-special-quote-expired-forced-colors-bottom.png"
+    },
+    {
+      "sha256": "d5287d8dbddfac5be8f9a402478a9a636be2afd3f47e4dd6dfd0f43390b5e586",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-quote-expired-zoom-200-emulated.png",
+      "bytes": 30446,
+      "name": "preview-special-quote-expired-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "d2d46d11eda74c457c6c5b644ffba3e5064208518d587fa8bf12f4e74e9b4d8c",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-quote-expired-zoom-200-emulated-bottom.png",
+      "bytes": 28158,
+      "name": "preview-special-quote-expired-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "95266c4afc2b49bfdf7f3792d13dacb8e994e33c8a246fe0f00466d97d37da96",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-quote-expired-text-only-200-emulated.png",
+      "bytes": 151494,
+      "name": "preview-special-quote-expired-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "97fa7235219c2b3bb3be44c1e0d099213684c0d5193edc0d13ccff708a902881",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-quote-expired-text-only-200-emulated-bottom.png",
+      "bytes": 152605,
+      "name": "preview-special-quote-expired-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "55e7f0b68b037b300cb7d189f9c82b63445c9c77224edcd01217b1e567e1fa03",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-run-failed-forced-colors.png",
+      "bytes": 92707,
+      "name": "preview-special-run-failed-forced-colors.png"
+    },
+    {
+      "sha256": "b6048582d97107e6f195e2b63e9819f9b36cd33aa28c690b60feea8778c7d6e2",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-run-failed-forced-colors-bottom.png",
+      "bytes": 82860,
+      "name": "preview-special-run-failed-forced-colors-bottom.png"
+    },
+    {
+      "sha256": "b312401c74c91178870d769d7b194858a3b6c519907b69b906f90a50ea5f9a2f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-run-failed-zoom-200-emulated.png",
+      "bytes": 30174,
+      "name": "preview-special-run-failed-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "c6826558bf807daa7edbc8df5aba2968981ae5f9e1cb840f68178cbd74e9671a",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-run-failed-zoom-200-emulated-bottom.png",
+      "bytes": 24704,
+      "name": "preview-special-run-failed-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "be141e15ce22ce7ee1362497b269c4435b38c618fd311929264c87b56d7e2558",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-run-failed-text-only-200-emulated.png",
+      "bytes": 152762,
+      "name": "preview-special-run-failed-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "0325e2387c6e2a36ec8869ea253850e0eb8153b8258f4e2410b3e806f10043ee",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-run-failed-text-only-200-emulated-bottom.png",
+      "bytes": 134107,
+      "name": "preview-special-run-failed-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "aea06fa5c6efb708801bd9b2610e4c41a979af9ea07c84b2e24ac1388a8625ba",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-review-forced-colors.png",
+      "bytes": 88598,
+      "name": "preview-special-review-forced-colors.png"
+    },
+    {
+      "sha256": "98e0bf75967f4ca1ce69bf19fe1e1575c322bab6593b75b5e90f6f68f078f4bc",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-review-forced-colors-bottom.png",
+      "bytes": 75750,
+      "name": "preview-special-review-forced-colors-bottom.png"
+    },
+    {
+      "sha256": "2e8bf69f31ff39212a12916bef08cf45378fd348ee95c89307fb494f6906dd4a",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-review-zoom-200-emulated.png",
+      "bytes": 33334,
+      "name": "preview-special-review-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "4a8b6a225012ddc47b07fb06402a4f0ef6545e64f475f4ca5c33c163392936e8",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-review-zoom-200-emulated-bottom.png",
+      "bytes": 27324,
+      "name": "preview-special-review-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "5a1a738c418a74635007741bf95401518b47ce418e1f3a4705308dbb6595bd11",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-review-text-only-200-emulated.png",
+      "bytes": 157631,
+      "name": "preview-special-review-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "299fdf43838550c4700614f73a8d3c0a4af1b4acfdac50beb576379705342306",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-review-text-only-200-emulated-bottom.png",
+      "bytes": 137544,
+      "name": "preview-special-review-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "c1df74f3b49a8563ba27c6da1859b473e2a2d5c793ffd1cc534bb4da659a3e6f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-compare-forced-colors.png",
+      "bytes": 88643,
+      "name": "preview-special-compare-forced-colors.png"
+    },
+    {
+      "sha256": "cb86b6e7a748f91747d1521c467f86253f0696bb9b58ac371e72614fc3f10006",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-compare-forced-colors-bottom.png",
+      "bytes": 81412,
+      "name": "preview-special-compare-forced-colors-bottom.png"
+    },
+    {
+      "sha256": "d36ede28c05cabd9e185c718584387ebfff4c79b48cbf34a40947ccd879e03a8",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-compare-zoom-200-emulated.png",
+      "bytes": 33274,
+      "name": "preview-special-compare-zoom-200-emulated.png"
+    },
+    {
+      "sha256": "5435ad8e2ec17e72e3fed0b3dd386363c6fbb32d0843e01e4a5ab73b110fbe43",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-compare-zoom-200-emulated-bottom.png",
+      "bytes": 26128,
+      "name": "preview-special-compare-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "d930b1b1b8d1a97a13382a6d21fa98e5606be7d64468927d3063689ed25e905d",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-compare-text-only-200-emulated.png",
+      "bytes": 154239,
+      "name": "preview-special-compare-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "4c9ade4951edeebf9ee4f15a59090c154077888dca7fb7c9c60cdfa2c58702db",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-special-compare-text-only-200-emulated-bottom.png",
+      "bytes": 144920,
+      "name": "preview-special-compare-text-only-200-emulated-bottom.png"
+    }
+  ],
+  "imageNames": 51,
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "reports": ["qa-production-special.json", "preview-special.json"],
+  "recordedUtc": "2026-10-04T16:58:00.0001904Z",
+  "distinctContents": 50
+}

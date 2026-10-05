@@ -1,0 +1,61 @@
+{
+  "cell": "public-unauthorized-t768",
+  "path": "/unauthorized",
+  "observedUtc": "2026-10-04T13:10:38.038Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local public render, fresh signed-out browser context; no form submitted",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "You do not have access",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [],
+    "smallTargets": [
+      {
+        "name": "Skip to page content",
+        "width": 169,
+        "height": 37,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main:\n  - link \"Skip to page content\":\n    - /url: \"#status-heading\"\n  - region \"You do not have access\":\n    - text: Must Be Viral\n    - heading \"You do not have access\" [level=1]\n    - paragraph: Your session is valid, but this workspace, brand or action is outside your permissions. Nothing changed.\n    - paragraph: Ask the workspace owner to share the brand with your studio, or open a brand you already have.\n    - link \"Choose a permitted studio\":\n      - /url: /studio\n    - link \"Sign in with another account\":\n      - /url: /login",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/public-unauthorized-t768.png"
+}

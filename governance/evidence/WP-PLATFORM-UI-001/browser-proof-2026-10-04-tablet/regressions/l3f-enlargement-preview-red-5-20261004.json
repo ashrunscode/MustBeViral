@@ -1,0 +1,59 @@
+{
+  "localOnly": true,
+  "root": "C:/dev/mbv-finish",
+  "ownedWorkInProgress": true,
+  "remoteAuthentication": false,
+  "node": "v24.18.0",
+  "runtimeUsesCurrentAuthorSourcesThroughDevHmr": true,
+  "providerOrQueueExecution": false,
+  "sourceUnchangedDuringRun": true,
+  "exit": 1,
+  "serverPid": 45532,
+  "suite": "preview",
+  "pnpm": "11.12.0",
+  "sourceHashes": [
+    {
+      "sha256": "977e45a4edf5da4fb553a9316b86651fbbc6d5c533c51ca472ab8b16d75baec5",
+      "path": "apps/web/src/features/platform/platform.css"
+    },
+    {
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0",
+      "path": "apps/web/app/globals.css"
+    },
+    {
+      "sha256": "5837a17bc952432cd1ec3b36a211517aed0cca16efbd7921f7a5f4f86278bcf3",
+      "path": "apps/web/e2e/platform-connected.spec.ts"
+    },
+    {
+      "sha256": "33360dad7d4d060fbd12103809aca8690f2c210929633ca71010ee4b48698d38",
+      "path": "apps/web/e2e/final-ui.spec.ts"
+    },
+    {
+      "sha256": "3c373482cba30359593bd5fc24f5951f1c37d8723d868c0312231a6def6d97d4",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css"
+    },
+    {
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css"
+    },
+    {
+      "sha256": "6025b5e0fde2068d4cd566daef21d5ecc207b2a7b8bb25f126eb767d73b30db3",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css"
+    },
+    {
+      "sha256": "9fc83ecfc16537d47804c6a534341133c1edf7071b311b2600523fe015b85377",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx"
+    },
+    {
+      "sha256": "7275bfd8bfb324bb2df9d84c161bac54768f106a80a683ffa8b8b7f997e63ac6",
+      "path": "apps/web/src/features/collaboration/collaboration-panel.module.css"
+    }
+  ],
+  "phase": "red",
+  "syntheticCleanupDeleteRequestsPrevented": true,
+  "log": "C:/dev/mbv-run/l3f-enlargement-preview-red-5-20261004.txt",
+  "endedUtc": "2026-10-04T17:57:38.1975380Z",
+  "command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep enlarged quote recovery|enlarged comparison metadata|enlarged collaborator initials|enlarged presence content",
+  "startedUtc": "2026-10-04T17:57:31.5748643Z",
+  "sourceBase": "0d36e99031d2479d0b84c47d5aedf9ec5f35329e"
+}

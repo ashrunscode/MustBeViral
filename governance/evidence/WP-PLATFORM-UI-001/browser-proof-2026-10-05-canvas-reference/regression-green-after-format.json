@@ -1,0 +1,23 @@
+{
+  "Phase": "green",
+  "LocalSyntheticPreviewOnly": true,
+  "Root": "C:/dev/mbv-finish",
+  "TestSha256": "37a376317c77d958b053775b461f5f142d4e744e7d64e9b5451b0ce9e2c1fc20",
+  "RemoteWrites": 0,
+  "Versions": {
+    "Playwright": "Version 1.61.1",
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0"
+  },
+  "OwnedDirtyPaths": [
+    "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css",
+    "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx",
+    "apps/web/e2e/final-ui.spec.ts"
+  ],
+  "Head": "b6f022d2c2531ebd499c104ce6c9b5bcf8357428",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep shows complete selected node details outside the scaled diagram",
+  "ActualExit": 0,
+  "Log": "C:/dev/mbv-run/l3f-tablet-reference-font-green-2-20261005.log",
+  "FinishedUtc": "2026-10-05T03:12:22.6739565Z",
+  "StartedUtc": "2026-10-05T03:12:12.0637993Z"
+}

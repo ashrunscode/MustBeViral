@@ -1,0 +1,696 @@
+{
+  "images": [
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43221,
+      "sha256": "0e13511ff699f1e3583f8c94c0eebc3bcbd1522d17e41498e087e7f282ed34de",
+      "name": "preview-final-dark-quote-ok-w375.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 44201,
+      "sha256": "75778dc1ae9bcaa107bef5260dfdf0ad58faaec7516f6b942eaac6ce96ac21c3",
+      "name": "preview-final-dark-quote-ok-w375-bottom.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 46655,
+      "sha256": "b3eb1f69a6892e5bb57976b93d72ede63834181aaf8d0589d0ee1272c74d14e9",
+      "name": "preview-final-dark-quote-expired_quote-w375.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43807,
+      "sha256": "d8363ba4140fa4d2fc50f7494146a98ece2da5eb05ee3965fcbf6d9fdf5b14d0",
+      "name": "preview-final-dark-quote-expired_quote-w375-bottom.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43221,
+      "sha256": "0e13511ff699f1e3583f8c94c0eebc3bcbd1522d17e41498e087e7f282ed34de",
+      "name": "preview-final-dark-quote-refreshed-w375.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 44201,
+      "sha256": "75778dc1ae9bcaa107bef5260dfdf0ad58faaec7516f6b942eaac6ce96ac21c3",
+      "name": "preview-final-dark-quote-refreshed-w375-bottom.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 49965,
+      "sha256": "5596555357007e4e428bc60981b5a9794a3a1a0096b873d1038c59ae74d70ffe",
+      "name": "preview-final-dark-quote-cap_exceeded-w375.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 45076,
+      "sha256": "75088c7fd2a6de68428177d121a48fe905ab5af1f136e0201508bafdb9704fa6",
+      "name": "preview-final-dark-quote-cap_exceeded-w375-bottom.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 47370,
+      "sha256": "dda35b8e8e94a52af539b749160b194e0b4e7d86a311a915d4ab6a2cf61d10ff",
+      "name": "preview-final-dark-quote-conflict-w375.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 45073,
+      "sha256": "931b8067427a99b12b2d61636451445d7e2a6f7b8dc6f4e6b2412a9c5fe0b33a",
+      "name": "preview-final-dark-quote-conflict-w375-bottom.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-dark.json",
+      "bytes": 45223,
+      "sha256": "8cabbb7bb535932703152e4f74cc7141c41981124f272fec646e9ce52f847405",
+      "name": "preview-final-dark-run-running-w375.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-dark.json",
+      "bytes": 35712,
+      "sha256": "58c09b0d0ba0186dbad3b548bd9905e3aa390ad6a9573e6eb88c81d3e48eff59",
+      "name": "preview-final-dark-run-running-w375-bottom.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-dark.json",
+      "bytes": 51364,
+      "sha256": "fc8c50807f6e069b7b239e693923425135186bbc7c89c6f556471f5aed6d3556",
+      "name": "preview-final-dark-run-complete-w375.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-dark.json",
+      "bytes": 36310,
+      "sha256": "98f25ef3cedeb4b461334d5c7de86a3c6b4e60030a36d339c06fef7fbcb11649",
+      "name": "preview-final-dark-run-complete-w375-bottom.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 56588,
+      "sha256": "649bb60d2b880377704e561ef2748f6b2b8c88b5dbabd3c26d056d4c4f268af1",
+      "name": "preview-final-dark-run-failed-w375.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 36652,
+      "sha256": "ff8fbc142fc5cd8a67e81954c55f1cb449bc8d93df865330afd1212086fc6c4d",
+      "name": "preview-final-dark-run-failed-w375-bottom.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 48604,
+      "sha256": "3b8c8e9892e2c242c65724ee463ee22b055fac4b28d2c89b58b75cb653e10147",
+      "name": "preview-final-dark-review-w375.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43430,
+      "sha256": "5b5295ce39eb87c908aeee26c3de9185ba810748666133823f1e48f402062318",
+      "name": "preview-final-dark-review-w375-bottom.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 47422,
+      "sha256": "6e6626d5361143554c1b8dc3ffa06958fc938b951cf6047c08b4549dfa89e340",
+      "name": "preview-final-dark-compare-w375.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 41016,
+      "sha256": "b96c5ffcd7da0280920f03bebe91370753a4cc1a4c1ce050ba942988c2531666",
+      "name": "preview-final-dark-compare-w375-bottom.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 95474,
+      "sha256": "68b1c68970c6173a9eb2fdcf31085146c0cd65200e6b04e5104c1822bb23cc5c",
+      "name": "preview-final-dark-quote-ok-w1440.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 90159,
+      "sha256": "7f5ee0b3ca919b150b3cae40b14ba6cac5556f97a024f861ad010bde74c4c021",
+      "name": "preview-final-dark-quote-ok-w1440-bottom.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 95523,
+      "sha256": "5e5979d3ac1801ecff947d9aaad4aa3c011ed4832746d62e2eba76353688b5f3",
+      "name": "preview-final-dark-quote-expired_quote-w1440.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87668,
+      "sha256": "70c7786dc8f9f83ce2d2325d58236685e84d7cdf1a51edb21e9cea413392f168",
+      "name": "preview-final-dark-quote-expired_quote-w1440-bottom.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 95474,
+      "sha256": "68b1c68970c6173a9eb2fdcf31085146c0cd65200e6b04e5104c1822bb23cc5c",
+      "name": "preview-final-dark-quote-refreshed-w1440.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 90159,
+      "sha256": "7f5ee0b3ca919b150b3cae40b14ba6cac5556f97a024f861ad010bde74c4c021",
+      "name": "preview-final-dark-quote-refreshed-w1440-bottom.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 98744,
+      "sha256": "ab45e7b9ba46878cc5c489fecad300be04d281ef29aa7df28048c4b6252302f1",
+      "name": "preview-final-dark-quote-cap_exceeded-w1440.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87334,
+      "sha256": "af5be2fc59d7df3d5065564050476f7b6ac17f19974dd99f32624ace11b6548c",
+      "name": "preview-final-dark-quote-cap_exceeded-w1440-bottom.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 94756,
+      "sha256": "fc5119bcb24d8579ba5f0f81c0e46e6a2af56b1483c5cdc87463131f4fc7241c",
+      "name": "preview-final-dark-quote-conflict-w1440.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87271,
+      "sha256": "df20fc1916addcca8cca108b3289d907ff7f2fe6015661219f1b6c33622cfba1",
+      "name": "preview-final-dark-quote-conflict-w1440-bottom.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-dark.json",
+      "bytes": 74227,
+      "sha256": "bb2d1e565041e338e24eadc0f46291dc327668391f4c498c7650fbb509620201",
+      "name": "preview-final-dark-run-running-w1440.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87740,
+      "sha256": "ef4647405777f062a7c53799f7229c6b99600b4365503f07826f3e58e90caf79",
+      "name": "preview-final-dark-run-complete-w1440.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 102641,
+      "sha256": "b39da75269eab262beedb110eaaab9098f339e7db2f966185288c1db192df90d",
+      "name": "preview-final-dark-run-failed-w1440.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 91617,
+      "sha256": "8940c3c51e1dcad80dfbca9d18cf1a6f91ea94ff3561fd136d2e44074fb4f2c3",
+      "name": "preview-final-dark-run-failed-w1440-bottom.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 97291,
+      "sha256": "36b19322ef1d9043e0a8ec979805e1716c7db4d7dc3adfb269d729c2c79a9082",
+      "name": "preview-final-dark-review-w1440.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 83669,
+      "sha256": "a76c96ae6dab4b496b3aa7298d610a067ff1d16b9501b1e90f9afd85831865dd",
+      "name": "preview-final-dark-review-w1440-bottom.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 97146,
+      "sha256": "c691e5af680ae317ee4989d6a6b8f9decaad20680c31275398af89b4b6f6c901",
+      "name": "preview-final-dark-compare-w1440.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 88279,
+      "sha256": "d1f48a1f433563bbdf982959a6ef3eafec68ee56c2dcfa057d09370d8491b14b",
+      "name": "preview-final-dark-compare-w1440-bottom.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 95474,
+      "sha256": "68b1c68970c6173a9eb2fdcf31085146c0cd65200e6b04e5104c1822bb23cc5c",
+      "name": "preview-final-light-quote-ok-w1440.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 90159,
+      "sha256": "7f5ee0b3ca919b150b3cae40b14ba6cac5556f97a024f861ad010bde74c4c021",
+      "name": "preview-final-light-quote-ok-w1440-bottom.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 95540,
+      "sha256": "4f8606241ee7cd50ec1f4d7a7c9795f0161a45343dc5e7a7a17cfa691f3b7f9e",
+      "name": "preview-final-light-quote-expired_quote-w1440.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 87668,
+      "sha256": "70c7786dc8f9f83ce2d2325d58236685e84d7cdf1a51edb21e9cea413392f168",
+      "name": "preview-final-light-quote-expired_quote-w1440-bottom.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 95760,
+      "sha256": "2378dafd069331d46014fdc15c6b9a6f5df2c9bd81307085d7d7daf7a29b2cb0",
+      "name": "preview-final-light-quote-refreshed-w1440.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 90313,
+      "sha256": "2a43f0186947a1b8461d4c2ed99c147ba0f3a6fd3fd30424b84f0ec3193895e5",
+      "name": "preview-final-light-quote-refreshed-w1440-bottom.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 98732,
+      "sha256": "7b6d7e8e5dafbbdab8cfe25f038c0b9ab43bd7ea431cb629b8b6ecf1978017c6",
+      "name": "preview-final-light-quote-cap_exceeded-w1440.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 87334,
+      "sha256": "af5be2fc59d7df3d5065564050476f7b6ac17f19974dd99f32624ace11b6548c",
+      "name": "preview-final-light-quote-cap_exceeded-w1440-bottom.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 94650,
+      "sha256": "7282710a365ce2023d8b60c577188bd930edb2fd8120bccd2b6fdd2664d1eb10",
+      "name": "preview-final-light-quote-conflict-w1440.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 87174,
+      "sha256": "2a178aed36948f09b432728f9679d6277fd50446a84127016930906a45a23a03",
+      "name": "preview-final-light-quote-conflict-w1440-bottom.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 74227,
+      "sha256": "bb2d1e565041e338e24eadc0f46291dc327668391f4c498c7650fbb509620201",
+      "name": "preview-final-light-run-running-w1440.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 87740,
+      "sha256": "ef4647405777f062a7c53799f7229c6b99600b4365503f07826f3e58e90caf79",
+      "name": "preview-final-light-run-complete-w1440.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 102637,
+      "sha256": "97beb8b70d8bc1751e3e30f3da57d4b986c456d498b5f0439c903460c8024238",
+      "name": "preview-final-light-run-failed-w1440.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 91617,
+      "sha256": "6739b0670bcb4a14385d82afbec3eed6e7c27d72c8409ca883fda0c3b1c407e6",
+      "name": "preview-final-light-run-failed-w1440-bottom.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 97291,
+      "sha256": "36b19322ef1d9043e0a8ec979805e1716c7db4d7dc3adfb269d729c2c79a9082",
+      "name": "preview-final-light-review-w1440.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 83669,
+      "sha256": "a76c96ae6dab4b496b3aa7298d610a067ff1d16b9501b1e90f9afd85831865dd",
+      "name": "preview-final-light-review-w1440-bottom.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 97146,
+      "sha256": "c691e5af680ae317ee4989d6a6b8f9decaad20680c31275398af89b4b6f6c901",
+      "name": "preview-final-light-compare-w1440.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 88279,
+      "sha256": "d1f48a1f433563bbdf982959a6ef3eafec68ee56c2dcfa057d09370d8491b14b",
+      "name": "preview-final-light-compare-w1440-bottom.png"
+    }
+  ],
+  "distinctContents": 42,
+  "imageNames": 56,
+  "previouslyInspectedByHash": [
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43221,
+      "sha256": "0e13511ff699f1e3583f8c94c0eebc3bcbd1522d17e41498e087e7f282ed34de",
+      "name": "preview-final-dark-quote-ok-w375.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 48604,
+      "sha256": "3b8c8e9892e2c242c65724ee463ee22b055fac4b28d2c89b58b75cb653e10147",
+      "name": "preview-final-dark-review-w375.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 49965,
+      "sha256": "5596555357007e4e428bc60981b5a9794a3a1a0096b873d1038c59ae74d70ffe",
+      "name": "preview-final-dark-quote-cap_exceeded-w375.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-dark.json",
+      "bytes": 35712,
+      "sha256": "58c09b0d0ba0186dbad3b548bd9905e3aa390ad6a9573e6eb88c81d3e48eff59",
+      "name": "preview-final-dark-run-running-w375-bottom.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43430,
+      "sha256": "5b5295ce39eb87c908aeee26c3de9185ba810748666133823f1e48f402062318",
+      "name": "preview-final-dark-review-w375-bottom.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 56588,
+      "sha256": "649bb60d2b880377704e561ef2748f6b2b8c88b5dbabd3c26d056d4c4f268af1",
+      "name": "preview-final-dark-run-failed-w375.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 47422,
+      "sha256": "6e6626d5361143554c1b8dc3ffa06958fc938b951cf6047c08b4549dfa89e340",
+      "name": "preview-final-dark-compare-w375.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 45076,
+      "sha256": "75088c7fd2a6de68428177d121a48fe905ab5af1f136e0201508bafdb9704fa6",
+      "name": "preview-final-dark-quote-cap_exceeded-w375-bottom.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 44201,
+      "sha256": "75778dc1ae9bcaa107bef5260dfdf0ad58faaec7516f6b942eaac6ce96ac21c3",
+      "name": "preview-final-dark-quote-ok-w375-bottom.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-dark.json",
+      "bytes": 45223,
+      "sha256": "8cabbb7bb535932703152e4f74cc7141c41981124f272fec646e9ce52f847405",
+      "name": "preview-final-dark-run-running-w375.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 45073,
+      "sha256": "931b8067427a99b12b2d61636451445d7e2a6f7b8dc6f4e6b2412a9c5fe0b33a",
+      "name": "preview-final-dark-quote-conflict-w375-bottom.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-dark.json",
+      "bytes": 36310,
+      "sha256": "98f25ef3cedeb4b461334d5c7de86a3c6b4e60030a36d339c06fef7fbcb11649",
+      "name": "preview-final-dark-run-complete-w375-bottom.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 46655,
+      "sha256": "b3eb1f69a6892e5bb57976b93d72ede63834181aaf8d0589d0ee1272c74d14e9",
+      "name": "preview-final-dark-quote-expired_quote-w375.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 41016,
+      "sha256": "b96c5ffcd7da0280920f03bebe91370753a4cc1a4c1ce050ba942988c2531666",
+      "name": "preview-final-dark-compare-w375-bottom.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 43807,
+      "sha256": "d8363ba4140fa4d2fc50f7494146a98ece2da5eb05ee3965fcbf6d9fdf5b14d0",
+      "name": "preview-final-dark-quote-expired_quote-w375-bottom.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 47370,
+      "sha256": "dda35b8e8e94a52af539b749160b194e0b4e7d86a311a915d4ab6a2cf61d10ff",
+      "name": "preview-final-dark-quote-conflict-w375.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-dark.json",
+      "bytes": 51364,
+      "sha256": "fc8c50807f6e069b7b239e693923425135186bbc7c89c6f556471f5aed6d3556",
+      "name": "preview-final-dark-run-complete-w375.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 36652,
+      "sha256": "ff8fbc142fc5cd8a67e81954c55f1cb449bc8d93df865330afd1212086fc6c4d",
+      "name": "preview-final-dark-run-failed-w375-bottom.png"
+    }
+  ],
+  "newDistinctOriginals": [
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 95760,
+      "sha256": "2378dafd069331d46014fdc15c6b9a6f5df2c9bd81307085d7d7daf7a29b2cb0",
+      "name": "preview-final-light-quote-refreshed-w1440.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 87174,
+      "sha256": "2a178aed36948f09b432728f9679d6277fd50446a84127016930906a45a23a03",
+      "name": "preview-final-light-quote-conflict-w1440-bottom.png"
+    },
+    {
+      "state": "quote-refreshed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 90313,
+      "sha256": "2a43f0186947a1b8461d4c2ed99c147ba0f3a6fd3fd30424b84f0ec3193895e5",
+      "name": "preview-final-light-quote-refreshed-w1440-bottom.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 97291,
+      "sha256": "36b19322ef1d9043e0a8ec979805e1716c7db4d7dc3adfb269d729c2c79a9082",
+      "name": "preview-final-dark-review-w1440.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 95540,
+      "sha256": "4f8606241ee7cd50ec1f4d7a7c9795f0161a45343dc5e7a7a17cfa691f3b7f9e",
+      "name": "preview-final-light-quote-expired_quote-w1440.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 95523,
+      "sha256": "5e5979d3ac1801ecff947d9aaad4aa3c011ed4832746d62e2eba76353688b5f3",
+      "name": "preview-final-dark-quote-expired_quote-w1440.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 91617,
+      "sha256": "6739b0670bcb4a14385d82afbec3eed6e7c27d72c8409ca883fda0c3b1c407e6",
+      "name": "preview-final-light-run-failed-w1440-bottom.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 95474,
+      "sha256": "68b1c68970c6173a9eb2fdcf31085146c0cd65200e6b04e5104c1822bb23cc5c",
+      "name": "preview-final-dark-quote-ok-w1440.png"
+    },
+    {
+      "state": "quote-expired_quote",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87668,
+      "sha256": "70c7786dc8f9f83ce2d2325d58236685e84d7cdf1a51edb21e9cea413392f168",
+      "name": "preview-final-dark-quote-expired_quote-w1440-bottom.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 94650,
+      "sha256": "7282710a365ce2023d8b60c577188bd930edb2fd8120bccd2b6fdd2664d1eb10",
+      "name": "preview-final-light-quote-conflict-w1440.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 98732,
+      "sha256": "7b6d7e8e5dafbbdab8cfe25f038c0b9ab43bd7ea431cb629b8b6ecf1978017c6",
+      "name": "preview-final-light-quote-cap_exceeded-w1440.png"
+    },
+    {
+      "state": "quote-ok",
+      "receipt": "preview-final-dark.json",
+      "bytes": 90159,
+      "sha256": "7f5ee0b3ca919b150b3cae40b14ba6cac5556f97a024f861ad010bde74c4c021",
+      "name": "preview-final-dark-quote-ok-w1440-bottom.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 91617,
+      "sha256": "8940c3c51e1dcad80dfbca9d18cf1a6f91ea94ff3561fd136d2e44074fb4f2c3",
+      "name": "preview-final-dark-run-failed-w1440-bottom.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-desktop-light.json",
+      "bytes": 102637,
+      "sha256": "97beb8b70d8bc1751e3e30f3da57d4b986c456d498b5f0439c903460c8024238",
+      "name": "preview-final-light-run-failed-w1440.png"
+    },
+    {
+      "state": "review",
+      "receipt": "preview-final-dark.json",
+      "bytes": 83669,
+      "sha256": "a76c96ae6dab4b496b3aa7298d610a067ff1d16b9501b1e90f9afd85831865dd",
+      "name": "preview-final-dark-review-w1440-bottom.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 98744,
+      "sha256": "ab45e7b9ba46878cc5c489fecad300be04d281ef29aa7df28048c4b6252302f1",
+      "name": "preview-final-dark-quote-cap_exceeded-w1440.png"
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87334,
+      "sha256": "af5be2fc59d7df3d5065564050476f7b6ac17f19974dd99f32624ace11b6548c",
+      "name": "preview-final-dark-quote-cap_exceeded-w1440-bottom.png"
+    },
+    {
+      "state": "run-failed",
+      "receipt": "preview-final-dark.json",
+      "bytes": 102641,
+      "sha256": "b39da75269eab262beedb110eaaab9098f339e7db2f966185288c1db192df90d",
+      "name": "preview-final-dark-run-failed-w1440.png"
+    },
+    {
+      "state": "run-running",
+      "receipt": "preview-final-dark.json",
+      "bytes": 74227,
+      "sha256": "bb2d1e565041e338e24eadc0f46291dc327668391f4c498c7650fbb509620201",
+      "name": "preview-final-dark-run-running-w1440.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 97146,
+      "sha256": "c691e5af680ae317ee4989d6a6b8f9decaad20680c31275398af89b4b6f6c901",
+      "name": "preview-final-dark-compare-w1440.png"
+    },
+    {
+      "state": "compare",
+      "receipt": "preview-final-dark.json",
+      "bytes": 88279,
+      "sha256": "d1f48a1f433563bbdf982959a6ef3eafec68ee56c2dcfa057d09370d8491b14b",
+      "name": "preview-final-dark-compare-w1440-bottom.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87271,
+      "sha256": "df20fc1916addcca8cca108b3289d907ff7f2fe6015661219f1b6c33622cfba1",
+      "name": "preview-final-dark-quote-conflict-w1440-bottom.png"
+    },
+    {
+      "state": "run-complete",
+      "receipt": "preview-final-dark.json",
+      "bytes": 87740,
+      "sha256": "ef4647405777f062a7c53799f7229c6b99600b4365503f07826f3e58e90caf79",
+      "name": "preview-final-dark-run-complete-w1440.png"
+    },
+    {
+      "state": "quote-conflict",
+      "receipt": "preview-final-dark.json",
+      "bytes": 94756,
+      "sha256": "fc5119bcb24d8579ba5f0f81c0e46e6a2af56b1483c5cdc87463131f4fc7241c",
+      "name": "preview-final-dark-quote-conflict-w1440.png"
+    }
+  ]
+}

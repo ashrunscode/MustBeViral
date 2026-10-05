@@ -2,7 +2,7 @@
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template: minmax(0, 1fr) 72px / minmax(0, 1fr) 320px;
+  grid-template: minmax(0, 1fr) minmax(72px, max-content) / minmax(0, 1fr) 320px;
   overflow: hidden;
   background: var(--paper);
 }
@@ -10,6 +10,22 @@
 /* Load, blocked and session-ended states have no side column. */
 .single {
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* A stacked or short frame uses document flow. Its summary owns a bounded scroll area rather
+   than sending End through the clipped campaign frame. The 220px rail leaves 800px at 1020px. */
+@media (max-width: 1020px), (max-height: 600px) {
+  :global(.platform-app--flush):has(.quotePage) {
+    height: auto;
+    overflow: visible;
+  }
+  :global(.platform-main--flush):has(.quotePage) {
+    overflow: visible;
+  }
+  .sidePanel {
+    max-block-size: 50dvh;
+    align-self: start;
+  }
 }
 
 .quoteStage {
@@ -24,6 +40,7 @@
 /* The 40px gutter is card margin, not stage padding: 80px of padding cannot shrink, so on a 375px
    screen the stage overflowed its 55px track and the side panel covered the acknowledgment. */
 .quoteCard {
+  min-width: 0;
   width: min(720px, calc(100% - 80px));
   margin-inline: 40px;
   padding: 28px 32px 24px;
@@ -192,6 +209,10 @@
   background: var(--card);
 }
 
+.sidePanel:focus-visible {
+  outline-offset: -2px;
+}
+
 .sidePanel h2 {
   margin: 0 0 18px;
   color: var(--ink-head);
@@ -348,22 +369,32 @@
 
 .coverage {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0;
   margin: 0;
 }
 .coverage div {
+  min-inline-size: 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 12px;
   border-top: 1px solid var(--wash);
   padding: 10px 0;
   font-size: 13px;
 }
+.coverage dt,
+.coverage dd {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
 .coverage dt {
   color: var(--ink);
 }
 .coverage dd {
   margin: 0;
+  margin-inline-start: auto;
   color: var(--ink-strong);
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -374,10 +405,11 @@
   font-size: 13px;
   line-height: 1.5;
 }
-/* Phone: the card, the coverage list and the confirm bar stack in one column. */
-@media (max-width: 767px) {
+/* Stack using the space inside Studio, including its rail and enlargement. Content-sized rows
+   keep the quote and its acknowledgment above the summary and confirmation controls. */
+@container platform-main (max-width: 800px) {
   .quotePage {
-    grid-template: auto auto auto / minmax(0, 1fr);
+    grid-template: max-content max-content max-content / minmax(0, 1fr);
     align-content: start;
     overflow-y: auto;
   }

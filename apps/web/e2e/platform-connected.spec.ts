@@ -74,6 +74,258 @@ test.describe('connected platform journeys', () => {
     await expect(page).toHaveURL(new RegExp('^http://127\\.0\\.0\\.1:3111/'));
   });
 
+  test('keeps studio breadcrumb targets complete and keyboard usable at every supported width', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`breadcrumb-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    const names = [
+      'Synthetic breadcrumb studio',
+      'Synthetic breadcrumb studio with a deliberately long name for narrow screens',
+    ];
+    await page.getByLabel('Studio name').fill(names[0]!);
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Studio overview', exact: true })).toBeVisible();
+    const studioId = new URL(page.url()).searchParams.get('studio');
+    expect(studioId).not.toBeNull();
+    const studioUrl = `/studio?studio=${studioId}`;
+
+    for (const [index, name] of names.entries()) {
+      if (index > 0) {
+        await page.goto(`${studioUrl}&view=settings`);
+        await page.getByLabel('Studio name').fill(name);
+        await page.getByRole('button', { name: 'Save studio name', exact: true }).click();
+        await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText(name);
+      }
+      for (const width of [375, 768, 1280, 1920]) {
+        await page.setViewportSize({ width, height: 1024 });
+        await page.goto(`${studioUrl}&view=creators`);
+        const link = page
+          .getByRole('navigation', { name: 'Breadcrumb' })
+          .getByRole('link', { name, exact: true });
+        await expect(link).toBeVisible();
+        await link.scrollIntoViewIfNeeded();
+        const box = await link.boundingBox();
+        expect(box?.width).toBeGreaterThanOrEqual(44);
+        expect(box?.height).toBeGreaterThanOrEqual(44);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+          width,
+        );
+        const hits = await link.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const inside = (y: number) => {
+            const target = document.elementFromPoint(x, y);
+            return target !== null && element.contains(target);
+          };
+          return {
+            top: inside(rect.top + 0.5),
+            bottom: inside(rect.bottom - 0.5),
+            outsideTop: inside(rect.top - 1),
+            outsideBottom: inside(rect.bottom + 1),
+          };
+        });
+        expect(hits).toEqual({ top: true, bottom: true, outsideTop: false, outsideBottom: false });
+        await link.focus();
+        await expect(link).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(page).toHaveURL(new RegExp(`/studio\\?studio=${studioId}$`));
+        await expect(
+          page.getByRole('heading', { name: 'Studio overview', exact: true }),
+        ).toBeVisible();
+      }
+    }
+  });
+
+  test('keeps collapsed mobile navigation stable while workspace access resolves', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`workspace-layout-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic stable workspace studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic stable workspace');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Make Synthetic stable workspace feel like itself.' }),
+    ).toBeVisible();
+    const brandLocation = new URL(page.url());
+    const workspaceId = brandLocation.pathname.split('/')[2]!;
+    const studioId = brandLocation.searchParams.get('studio')!;
+    const context = new URLSearchParams({
+      studio: studioId,
+      brand: brandLocation.pathname.split('/')[4]!,
+    });
+    const accessRoute = `**/api/core/v1/studios/${studioId}/access`;
+
+    for (const width of [375, 767]) {
+      await page.setViewportSize({ width, height: 812 });
+      for (const [screen, title] of [
+        ['access', 'API keys'],
+        ['skills', 'Skills and version history'],
+      ] as const) {
+        let releaseAccess!: () => void;
+        let markRequested!: () => void;
+        const delayedAccess = new Promise<void>((resolve) => {
+          releaseAccess = resolve;
+        });
+        const requested = new Promise<void>((resolve) => {
+          markRequested = resolve;
+        });
+        // Delay the real local read, preserving Core's response and all permission checks.
+        const delayRead = async (route: Route) => {
+          markRequested();
+          await delayedAccess;
+          await route.continue();
+        };
+        await page.route(accessRoute, delayRead);
+        try {
+          await page.goto(`/studio/${workspaceId}/${screen}?${context.toString()}`);
+          await requested;
+          await expect(page.getByRole('status')).toContainText(
+            'Confirming the studio and brand for this campaign',
+          );
+          const shell = page.locator('.platform-shell');
+          const railHead = page.locator('.platform-rail__head');
+          const pendingShell = await shell.boundingBox();
+          const pendingHead = await railHead.boundingBox();
+          const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb' });
+          const pendingCurrent = await breadcrumb.locator('li[aria-current="page"]').boundingBox();
+          const pendingStudio = await breadcrumb.locator('li').first().boundingBox();
+          expect(pendingShell).not.toBeNull();
+          expect(pendingHead).not.toBeNull();
+          // A collapsed menu must not absorb free space and then move the whole screen upward.
+          expect(pendingShell!.y - (pendingHead!.y + pendingHead!.height)).toBeLessThanOrEqual(12);
+          expect(pendingStudio?.height).toBeGreaterThanOrEqual(44);
+          releaseAccess();
+          await expect(
+            page.getByRole('heading', { level: 1, name: title, exact: true }),
+          ).toBeVisible();
+          const readyShell = await shell.boundingBox();
+          expect(readyShell).not.toBeNull();
+          expect(Math.abs(readyShell!.y - pendingShell!.y)).toBeLessThanOrEqual(1);
+          const readyCurrent = await breadcrumb.locator('li[aria-current="page"]').boundingBox();
+          expect(pendingCurrent).not.toBeNull();
+          expect(readyCurrent).not.toBeNull();
+          expect(Math.abs(readyCurrent!.x - pendingCurrent!.x)).toBeLessThanOrEqual(1);
+          await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeVisible();
+          await expectNoHorizontalOverflow(page);
+        } finally {
+          releaseAccess();
+          await page.unroute(accessRoute, delayRead);
+        }
+      }
+    }
+  });
+
+  test('keeps review recovery targets complete at the short enlargement viewport', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`review-zoom-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic short viewport studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic short viewport brand');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Make Synthetic short viewport brand feel like itself.' }),
+    ).toBeVisible();
+    const brandLocation = new URL(page.url());
+    const workspaceId = brandLocation.pathname.split('/')[2]!;
+    const context = new URLSearchParams({
+      studio: brandLocation.searchParams.get('studio')!,
+      brand: brandLocation.pathname.split('/')[4]!,
+    });
+    // 640 by 450 CSS pixels emulate a 1280 by 900 viewport enlarged to 200 percent.
+    for (const width of [640, 375]) {
+      await page.setViewportSize({ width, height: 450 });
+      for (const segment of ['review', 'review/compare']) {
+        await page.goto(`/studio/${workspaceId}/${segment}?${context.toString()}`);
+        const heading = page.getByRole('heading', { level: 1 });
+        await expect(heading).toBeVisible();
+        // Center the heading: a minimal scroll can round down at a fractional text edge.
+        await heading.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+        await expect(heading).toBeInViewport({ ratio: 1 });
+        const back = page.getByRole('link', { name: 'Back to the run', exact: true });
+        await back.focus();
+        await expect(back).toBeFocused();
+        await expect(back).toBeInViewport({ ratio: 1 });
+        const completeTarget = await back.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          return [rect.top + 0.5, rect.bottom - 0.5].every((y) =>
+            element.contains(document.elementFromPoint(x, y)),
+          );
+        });
+        expect(completeTarget).toBe(true);
+        await expectNoHorizontalOverflow(page);
+        await page.keyboard.press('Enter');
+        await expect(
+          page.getByRole('heading', { name: 'Review this run before spending', exact: true }),
+        ).toBeVisible();
+      }
+      await page.goto(`/studio/${workspaceId}/quote?${context.toString()}`);
+      await expect(
+        page.getByRole('heading', { name: 'Review this run before spending' }),
+      ).toBeVisible();
+      const skip = page.getByRole('link', { name: 'Skip to content', exact: true });
+      await page.keyboard.press('Tab');
+      await expect(skip).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('#platform-main')).toBeFocused();
+      await expect(
+        page.getByText('Open this quote from its plan so the revision it prices is known.', {
+          exact: true,
+        }),
+      ).toBeInViewport({ ratio: 1 });
+      await expectNoHorizontalOverflow(page);
+    }
+  });
+
+  test('keeps workspace tools headings on the accepted page scale at every supported width', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`workspace-type-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic workspace tools studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic workspace tools');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Make Synthetic workspace tools feel like itself.' }),
+    ).toBeVisible();
+    const brandLocation = new URL(page.url());
+    const workspaceId = brandLocation.pathname.split('/')[2];
+    expect(workspaceId).toMatch(/^[0-9a-f-]{36}$/u);
+    const context = new URLSearchParams({
+      studio: brandLocation.searchParams.get('studio')!,
+      brand: brandLocation.pathname.split('/')[4]!,
+    });
+    for (const width of [375, 768, 1280, 1920]) {
+      await page.setViewportSize({ width, height: 1024 });
+      for (const [segment, title] of [
+        ['access', 'API keys'],
+        ['skills', 'Skills and version history'],
+      ] as const) {
+        await page.goto(`/studio/${workspaceId}/${segment}?${context.toString()}`);
+        const heading = page.getByRole('heading', { level: 1, name: title, exact: true });
+        await expect(heading).toBeVisible();
+        await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+        await expect(heading).toHaveCSS('font-size', '28px');
+        await expect(heading).toHaveCSS('font-weight', '400');
+        await expectPlatformLandmarks(page);
+        await expectNoHorizontalOverflow(page);
+      }
+    }
+  });
+
   test('keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes', async ({
     page,
   }) => {

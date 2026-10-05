@@ -1,0 +1,70 @@
+{
+  "recordedUtc": "2026-10-04 16:41:08 UTC",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "manifest": "qa-production-proxy-manifest.json",
+  "groups": [
+    {
+      "viewedUtc": "2026-10-04 16:36:48 UTC",
+      "names": [
+        "qa-proxy3-prod-login-m375-light.png",
+        "qa-proxy3-prod-login-t768-light.png",
+        "qa-proxy3-prod-login-d1440-light.png",
+        "qa-proxy3-prod-login-d1280-reduced.png",
+        "qa-proxy3-prod-login-d1920-reduced.png",
+        "qa-proxy-platform-prod-studio-chooser-m375-light.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:37:15 UTC",
+      "names": [
+        "qa-proxy-platform-prod-studio-chooser-t768-light.png",
+        "qa-proxy-platform-prod-studio-chooser-d1440-light.png",
+        "qa-proxy-platform-prod-studio-chooser-d1280-reduced.png",
+        "qa-proxy-platform-prod-studio-chooser-d1920-reduced.png",
+        "qa-creators-final-prod-creators-m375-light.png",
+        "qa-creators-final-prod-creators-t768-light.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:39:47 UTC",
+      "names": [
+        "qa-creators-final-prod-creators-d1440-light.png",
+        "qa-creators-final-prod-creators-d1280-reduced.png",
+        "qa-creators-final-prod-creators-d1920-reduced.png",
+        "qa-proxy-platform-prod-creators-m375-light.png",
+        "qa-proxy-platform-prod-creators-m375-dark.png",
+        "qa-proxy-platform-prod-creators-t768-light.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:40:10 UTC",
+      "names": [
+        "qa-proxy-platform-prod-creators-d1440-light.png",
+        "qa-proxy-platform-prod-creators-d1280-reduced.png",
+        "qa-proxy-platform-prod-creators-d1920-reduced.png",
+        "qa-proxy3-prod-software-m375-light.png",
+        "qa-proxy3-prod-software-m375-dark.png",
+        "qa-proxy3-prod-software-m375-reduced.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:41:08 UTC",
+      "names": [
+        "qa-proxy3-prod-software-t768-light.png",
+        "qa-proxy3-prod-software-t768-dark.png",
+        "qa-proxy3-prod-software-d1440-light.png",
+        "qa-proxy3-prod-software-d1280-reduced.png",
+        "qa-proxy3-prod-software-d1920-reduced.png"
+      ]
+    }
+  ],
+  "all29DistinctOriginalsInspected": true,
+  "findings": [
+    {
+      "scope": "unchanged software film",
+      "finding": "Small rasterized type remains D4 work; this capture does not accept the film."
+    }
+  ],
+  "routeCorrection": "qa-production-proxy-platform.json labelled creators uses ignored section query and renders Studio overview. Only qa-production-creators-final.json proves Creators and partners through view=creators.",
+  "scoreAccepted": false
+}

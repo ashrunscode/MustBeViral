@@ -568,7 +568,16 @@ a {
   padding: 20px;
 }
 
-.access-panel__card h1,
+.access-panel__card h1 {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
 .access-panel__card h2 {
   margin: 0;
   color: var(--ink-head);

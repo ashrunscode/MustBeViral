@@ -1,0 +1,46 @@
+{
+  "recordedUtc": "2026-10-04 13:11:39 UTC",
+  "timestampMeaning": "recorded after original-resolution visual inspection",
+  "cells": [
+    {
+      "cell": "public-login-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/public-login-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "public-signup-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/public-signup-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "public-maintenance-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/public-maintenance-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    },
+    {
+      "cell": "public-unauthorized-t768",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/public-unauthorized-t768.png",
+      "method": "view_image original resolution",
+      "findings": []
+    }
+  ],
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64"
+    }
+  ],
+  "scope": "fresh signed-out local development render at 768px; no form submitted, no performance score"
+}

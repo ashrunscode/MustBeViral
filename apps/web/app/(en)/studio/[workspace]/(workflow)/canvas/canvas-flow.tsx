@@ -11,7 +11,6 @@ import {
   memo,
   type KeyboardEvent,
   type PointerEvent as ReactPointerEvent,
-  type WheelEvent as ReactWheelEvent,
 } from 'react';
 
 import {
@@ -630,14 +629,21 @@ export function CanvasFlow({
     }
   }
 
-  function handleWheel(event: ReactWheelEvent<HTMLDivElement>) {
-    event.preventDefault();
-    setZoom((current) => {
-      const next = Math.min(1.4, Math.max(0.12, current - event.deltaY * 0.001));
-      zoomRef.current = next;
-      return next;
-    });
-  }
+  useEffect(() => {
+    const element = surfaceRef.current;
+    if (element === null) return;
+    // React delegates wheel events passively, which cannot cancel scrolling while zooming.
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      setZoom((current) => {
+        const next = Math.min(1.4, Math.max(0.12, current - event.deltaY * 0.001));
+        zoomRef.current = next;
+        return next;
+      });
+    };
+    element.addEventListener('wheel', handleWheel, { passive: false });
+    return () => element.removeEventListener('wheel', handleWheel);
+  }, [modelReady]);
 
   async function validateCanvas() {
     if (mutationPort === null || model === null) return;
@@ -841,7 +847,6 @@ export function CanvasFlow({
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          onWheel={handleWheel}
         >
           <div
             ref={graphPlaneRef}
@@ -973,6 +978,27 @@ export function CanvasFlow({
               aria-label="Plan parameters"
               aria-describedby={mobile ? 'canvas-desktop-notice' : undefined}
             >
+              {selectedNode === undefined ? null : (
+                <section className={styles.nodeDetails} aria-label="Selected node details">
+                  <dl>
+                    <div>
+                      <dt>Node</dt>
+                      <dd>{selectedNode.label}</dd>
+                    </div>
+                    <div>
+                      <dt>Status</dt>
+                      <dd>
+                        {mapCanvasStatusToChip(selectedNode.status).label} —{' '}
+                        {selectedNode.statusDetail}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Reference</dt>
+                      <dd className={styles.nodeReference}>{selectedNode.model}</dd>
+                    </div>
+                  </dl>
+                </section>
+              )}
               <NodeConfigDraftPanel
                 actorId={collaborationActorId}
                 localDrafts={selectedDrafts}

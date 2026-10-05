@@ -1,0 +1,59 @@
+{
+  "recordedUtc": "2026-10-04T18:46:57.838Z",
+  "actualViews": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-quote-forced-colors.png",
+      "recordedUtc": "2026-10-04T18:45:39.025Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-quote-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:45:39.025Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-quote-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:45:39.025Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-quote-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T18:45:39.025Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-review-forced-colors.png",
+      "recordedUtc": "2026-10-04T18:46:04.110Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-review-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:46:04.110Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-review-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:46:04.110Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-review-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T18:46:04.110Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-compare-forced-colors.png",
+      "recordedUtc": "2026-10-04T18:46:57.838Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-compare-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:46:57.838Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-compare-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:46:57.838Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-enlargement-final-2-compare-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T18:46:57.838Z"
+    }
+  ],
+  "all12CapturesInspected": true,
+  "findings": [
+    "Full empty-state explanation and Back to the run targets remain readable in short and enlarged viewports.",
+    "No missing content, horizontal scroll or contrast finding in these scoped Quote, Review and Compare empty states.",
+    "Real browser zoom, device acceptance and complete provider flows remain unproven."
+  ]
+}

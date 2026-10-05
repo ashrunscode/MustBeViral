@@ -1,0 +1,54 @@
+{
+  "cell": "preview-run-failed-t768",
+  "path": "/studio/lumen-skin/quote?stage=run&run=failed",
+  "capturedUtc": "2026-10-04T13:30:34.380Z",
+  "observedUtc": "2026-10-04T13:30:34.514Z",
+  "sourceBase": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "equalMergedTree": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [],
+  "evidenceLevel": "synthetic in-memory local preview, no Core execution",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "This run stopped",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "runState": "failed",
+    "results": [],
+    "announcements": [
+      {
+        "role": "status",
+        "text": "Preview. Sample work only. No connected accounts, approvals or publication."
+      },
+      {
+        "role": "status",
+        "text": "◆First reviewable output is ready. Review can begin without waiting for every branch.Review available outputs"
+      },
+      {
+        "role": "alert",
+        "text": "Image blockedThe image provider blocked this branch as a content-policy violation.Run settlement: $2.80 captured, $1.40 released, $0.00 refunded, $0.00 pending.Completed branches stay reviewable. This branch produced no image. 3 completed branches are retained.Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.Edit the campaign briefOpen the receipt"
+      }
+    ],
+    "runningAnimations": []
+  },
+  "tree": "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas?run=failed\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote?run=failed\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review?run=failed\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals?run=failed\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators?run=failed\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar?run=failed\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt?run=failed\n  - region \"This run stopped\":\n    - text: Run run-lumen-0007, revision 7f3a\n    - heading \"This run stopped\" [level=1]\n    - paragraph: Failed branches name what happened, whether spend was accepted, and the safest next step.\n    - text: Stopped\n    - status:\n      - strong: First reviewable output is ready.\n      - text: Review can begin without waiting for every branch.\n      - link \"Review available outputs\":\n        - /url: /studio/lumen-skin/review?run=run-lumen-0007\n    - alert:\n      - strong: Image blocked\n      - paragraph: The image provider blocked this branch as a content-policy violation.\n      - paragraph: \"Run settlement: $2.80 captured, $1.40 released, $0.00 refunded, $0.00 pending.\"\n      - paragraph: Completed branches stay reviewable. This branch produced no image. 3 completed branches are retained.\n      - paragraph: Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.\n      - link \"Edit the campaign brief\":\n        - /url: /studio/lumen-skin/brief\n      - link \"Open the receipt\":\n        - /url: /studio/lumen-skin/receipt?run=run-lumen-0007\n    - text: kimi-2.6 Complete\n    - strong: Concept logic\n    - text: Approved route produced flux-2-klein Complete\n    - strong: Asset generation\n    - text: 3 variants reviewable kimi-2.6 Complete\n    - strong: Copy sets\n    - text: 3 sets reviewable seedance-1.0 Failed\n    - strong: Motion\n    - text: Image blocked by content policy. No charge accepted.\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"3 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.20\n    - term: Captured\n    - definition: $2.80\n    - term: Released\n    - definition: $1.40\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $0.00\n    - term: Revision\n    - definition: 7f3a\n  - text: Finished\n  - strong: Stopped\n  - link \"Open output review\":\n    - /url: /studio/lumen-skin/review?run=run-lumen-0007",
+  "axe": {
+    "violations": [],
+    "incomplete": ["color-contrast"]
+  },
+  "afterAxeRunState": "failed",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-run-failed-t768.png"
+}

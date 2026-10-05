@@ -1,0 +1,54 @@
+{
+  "recordedUtc": "2026-10-04 16:04:52 UTC",
+  "sourceHead": "9a77865d501c9b1b3813d81ebdb4915c99305f22",
+  "captureReceipt": "preview-final-w768.json",
+  "driver": "native Playwright MCP PNG; view_image at original resolution",
+  "imageNames": 20,
+  "groups": [
+    {
+      "viewedUtc": "2026-10-04T15:48:11Z",
+      "names": [
+        "preview-final-quote-ok-w768.png",
+        "preview-final-quote-ok-w768-bottom.png",
+        "preview-final-quote-expired_quote-w768.png",
+        "preview-final-quote-expired_quote-w768-bottom.png",
+        "preview-final-quote-refreshed-w768.png",
+        "preview-final-quote-refreshed-w768-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04T15:48:48Z",
+      "names": [
+        "preview-final-quote-cap_exceeded-w768.png",
+        "preview-final-quote-cap_exceeded-w768-bottom.png",
+        "preview-final-quote-conflict-w768.png",
+        "preview-final-quote-conflict-w768-bottom.png",
+        "preview-final-run-running-w768.png",
+        "preview-final-run-running-w768-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04T15:56:52Z",
+      "names": [
+        "preview-final-run-complete-w768.png",
+        "preview-final-run-complete-w768-bottom.png",
+        "preview-final-run-failed-w768.png",
+        "preview-final-run-failed-w768-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04T15:57:04Z",
+      "names": [
+        "preview-final-review-w768.png",
+        "preview-final-review-w768-bottom.png",
+        "preview-final-compare-w768.png",
+        "preview-final-compare-w768-bottom.png"
+      ]
+    }
+  ],
+  "visualFindings": [],
+  "incompleteAxeReview": "The run complete and failed color-contrast incomplete entries were inspected on both top and inner-scroll-bottom originals; status text and recovery text are readable against their actual fills.",
+  "evidenceLevel": "synthetic in-memory preview mechanics only",
+  "completeMatrix": false,
+  "scoreAssigned": false
+}

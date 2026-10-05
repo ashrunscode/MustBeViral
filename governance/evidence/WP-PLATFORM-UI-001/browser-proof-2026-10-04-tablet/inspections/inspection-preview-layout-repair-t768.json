@@ -1,0 +1,32 @@
+{
+  "recordedAfterOriginalResolutionViewsUtc": "2026-10-04 14:48:01 UTC",
+  "captures": [
+    "preview-fixed-quote-ok-t768",
+    "preview-fixed-quote-expired_quote-t768",
+    "preview-fixed-quote-refreshed-t768",
+    "preview-fixed-quote-cap_exceeded-t768",
+    "preview-fixed-quote-conflict-t768",
+    "preview-fixed-run-running-t768",
+    "preview-fixed-run-complete-t768",
+    "preview-fixed-run-failed-t768",
+    "preview-fixed-compare-t768"
+  ],
+  "originalResolution": true,
+  "nativeImages": true,
+  "noImagesEdited": true,
+  "scope": "Actual captured viewport within scrolling route containers; fullPage option did not expand inner scrollers.",
+  "acceptedAsCompleteBrowserMatrix": false,
+  "labPerformanceMeasured": false,
+  "layoutFindingsResolved": [
+    "Quote card and summary no longer overlap in the observed tablet views.",
+    "Run attempt cards and summary no longer overlap in the observed tablet views.",
+    "Comparison H1 is 28 pixels."
+  ],
+  "additionalFinding": {
+    "severity": "P2",
+    "cause": "Failed confirmation removes the focused control while its explanation remains above the inner scroll viewport.",
+    "diagnostic": "quote-keyboard-focus-before-t768.json",
+    "repairedAfterTheseImages": true
+  },
+  "remainingCaptureScope": "Capture error explanations after the focus repair, closed comparison and lower scroll folds before final acceptance."
+}

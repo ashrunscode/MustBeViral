@@ -1,0 +1,10 @@
+{
+  "recordedUtc": "2026-10-04T18:49:14.201Z",
+  "frames": 65,
+  "durationMs": 2003.8,
+  "fps": 32.43836710250524,
+  "maxFrameMs": 31.700000000000045,
+  "visibility": "visible",
+  "hasFocus": true,
+  "scope": "Actual native Playwright MCP blank-document baseline, no application work. The native Canvas samples remain below the unchanged 55 FPS requirement. This baseline does not establish application acceptance."
+}

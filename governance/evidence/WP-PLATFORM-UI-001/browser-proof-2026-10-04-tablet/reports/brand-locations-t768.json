@@ -1,0 +1,57 @@
+{
+  "cell": "brand-locations-t768",
+  "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=locations",
+  "observedUtc": "2026-10-04T13:00:19.922Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Keep every location in context.",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Tablet fixture brand\":\n  - link \"All brands\":\n    - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n  - navigation \"Brand navigation\":\n    - link \"Overview\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brand draft\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=draft\n    - link \"Intelligence\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=findings\n    - link \"Assets\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=assets\n    - link \"Channels\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=channels\n    - link \"Campaigns\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=campaigns\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=content\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Inbox\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=inbox\n    - link \"Results\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=results\n    - link \"Locations\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=locations\n    - link \"Settings\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n    - link \"Billing\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/billing?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n  - heading \"Keep every location in context.\" [level=1]\n  - paragraph: Name the locations this brand uses and keep their time zones explicit.\n  - heading \"Add a location\" [level=2]\n  - group:\n    - text: Location name\n    - textbox \"Location name\"\n    - text: Time zone\n    - textbox \"Time zone\":\n      - /placeholder: America/Chicago\n      - text: America/Chicago\n    - paragraph: Check the time zone for this location. Opening hours, service hours and delivery coverage are separate details.\n    - button \"Add location\"\n  - heading \"Saved locations\" [level=2]\n  - text: No locations yet. Add only the places that belong to this brand.",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/brand-locations-t768.png"
+}

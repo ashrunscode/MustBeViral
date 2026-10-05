@@ -1,0 +1,50 @@
+{
+  "cell": "preview-run-complete-t768",
+  "path": "/studio/lumen-skin/quote?stage=run",
+  "capturedUtc": "2026-10-04T13:30:32.105Z",
+  "observedUtc": "2026-10-04T13:30:32.209Z",
+  "sourceBase": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "equalMergedTree": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [],
+  "evidenceLevel": "synthetic in-memory local preview, no Core execution",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Your content is ready to review",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "runState": "complete",
+    "results": [],
+    "announcements": [
+      {
+        "role": "status",
+        "text": "Preview. Sample work only. No connected accounts, approvals or publication."
+      },
+      {
+        "role": "status",
+        "text": "◆First reviewable output is ready. Review can begin without waiting for every branch.Review available outputs"
+      }
+    ],
+    "runningAnimations": []
+  },
+  "tree": "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Your content is ready to review\":\n    - text: Run run-lumen-0007, revision 7f3a\n    - heading \"Your content is ready to review\" [level=1]\n    - paragraph: Completed branches remain reviewable while downstream work continues.\n    - text: Complete\n    - status:\n      - strong: First reviewable output is ready.\n      - text: Review can begin without waiting for every branch.\n      - link \"Review available outputs\":\n        - /url: /studio/lumen-skin/review?run=run-lumen-0007\n    - text: kimi-2.6 Complete\n    - strong: Concept logic\n    - text: Approved route produced flux-2-klein Complete\n    - strong: Asset generation\n    - text: 3 variants reviewable kimi-2.6 Complete\n    - strong: Copy sets\n    - text: 3 sets reviewable seedance-1.0 Complete\n    - strong: Motion\n    - text: 6 second render reviewable\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"4 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.20\n    - term: Captured\n    - definition: $4.20\n    - term: Released\n    - definition: $0.00\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $0.00\n    - term: Revision\n    - definition: 7f3a\n  - text: Finished\n  - strong: Complete\n  - link \"Open output review\":\n    - /url: /studio/lumen-skin/review?run=run-lumen-0007",
+  "axe": {
+    "violations": [],
+    "incomplete": ["color-contrast"]
+  },
+  "afterAxeRunState": "complete",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-run-complete-t768.png"
+}

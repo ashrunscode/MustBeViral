@@ -1,0 +1,160 @@
+{
+  "recordedUtc": "2026-10-04T17:01:34.861Z",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "manifest": "special-manifest.json",
+  "viewGroups": [
+    {
+      "startedUtc": "2026-10-04T16:58:15.671Z",
+      "endedUtc": "2026-10-04T16:58:15.720Z",
+      "names": [
+        "qa-special-workspace-access-forced-colors.png",
+        "qa-special-workspace-access-zoom-200-emulated.png",
+        "qa-special-workspace-access-text-only-200-emulated.png",
+        "qa-special-workspace-access-text-only-200-emulated-bottom.png",
+        "qa-special-workspace-skills-forced-colors.png",
+        "qa-special-workspace-skills-zoom-200-emulated.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T16:58:30.394Z",
+      "endedUtc": "2026-10-04T16:58:30.458Z",
+      "names": [
+        "qa-special-workspace-skills-text-only-200-emulated.png",
+        "qa-special-workspace-skills-text-only-200-emulated-bottom.png",
+        "qa-special-quote-forced-colors.png",
+        "qa-special-quote-zoom-200-emulated.png",
+        "qa-special-quote-zoom-200-emulated-bottom.png",
+        "qa-special-quote-text-only-200-emulated.png",
+        "qa-special-quote-text-only-200-emulated-bottom.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T16:58:48.706Z",
+      "endedUtc": "2026-10-04T16:58:48.758Z",
+      "names": [
+        "qa-special-review-forced-colors.png",
+        "qa-special-review-zoom-200-emulated.png",
+        "qa-special-review-zoom-200-emulated-bottom.png",
+        "qa-special-review-text-only-200-emulated.png",
+        "qa-special-review-text-only-200-emulated-bottom.png",
+        "qa-special-compare-forced-colors.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T16:59:26.419Z",
+      "endedUtc": "2026-10-04T16:59:26.478Z",
+      "names": [
+        "qa-special-compare-zoom-200-emulated.png",
+        "qa-special-compare-text-only-200-emulated.png",
+        "qa-special-compare-text-only-200-emulated-bottom.png",
+        "qa-special-creators-forced-colors.png",
+        "qa-special-creators-zoom-200-emulated.png",
+        "qa-special-creators-text-only-200-emulated.png",
+        "qa-special-creators-text-only-200-emulated-bottom.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T16:59:38.779Z",
+      "endedUtc": "2026-10-04T16:59:38.828Z",
+      "names": [
+        "preview-special-quote-expired-forced-colors.png",
+        "preview-special-quote-expired-forced-colors-bottom.png",
+        "preview-special-quote-expired-zoom-200-emulated.png",
+        "preview-special-quote-expired-zoom-200-emulated-bottom.png",
+        "preview-special-quote-expired-text-only-200-emulated.png",
+        "preview-special-quote-expired-text-only-200-emulated-bottom.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T16:59:56.787Z",
+      "endedUtc": "2026-10-04T16:59:56.839Z",
+      "names": [
+        "preview-special-run-failed-forced-colors.png",
+        "preview-special-run-failed-forced-colors-bottom.png",
+        "preview-special-run-failed-zoom-200-emulated.png",
+        "preview-special-run-failed-zoom-200-emulated-bottom.png",
+        "preview-special-run-failed-text-only-200-emulated.png",
+        "preview-special-run-failed-text-only-200-emulated-bottom.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T17:00:12.331Z",
+      "endedUtc": "2026-10-04T17:00:12.380Z",
+      "names": [
+        "preview-special-review-forced-colors.png",
+        "preview-special-review-forced-colors-bottom.png",
+        "preview-special-review-zoom-200-emulated.png",
+        "preview-special-review-zoom-200-emulated-bottom.png",
+        "preview-special-review-text-only-200-emulated.png",
+        "preview-special-review-text-only-200-emulated-bottom.png"
+      ],
+      "detail": "original"
+    },
+    {
+      "startedUtc": "2026-10-04T17:00:35.820Z",
+      "endedUtc": "2026-10-04T17:00:35.868Z",
+      "names": [
+        "preview-special-compare-forced-colors.png",
+        "preview-special-compare-forced-colors-bottom.png",
+        "preview-special-compare-zoom-200-emulated.png",
+        "preview-special-compare-zoom-200-emulated-bottom.png",
+        "preview-special-compare-text-only-200-emulated.png",
+        "preview-special-compare-text-only-200-emulated-bottom.png"
+      ],
+      "detail": "original"
+    }
+  ],
+  "imageNames": 51,
+  "distinctContents": 50,
+  "duplicateReuse": [
+    {
+      "name": "qa-special-compare-zoom-200-emulated-bottom.png",
+      "equivalentInspected": "qa-special-review-zoom-200-emulated-bottom.png",
+      "sha256": "ae856843d6223f4775cac6ded799b217c3a7aed8915ba4ba5250a509b6357146"
+    }
+  ],
+  "method": "Every distinct native Playwright PNG was viewed at original resolution, without montage or rerendering.",
+  "findings": [
+    {
+      "severity": "P2",
+      "report": "qa-production-special.json",
+      "routes": ["review", "compare"],
+      "mode": "zoom-200-emulated",
+      "observation": "The 640 by 450 CSS viewport leaves a 40-pixel review scroll box. The top capture cuts the heading and the bottom capture cuts the Back to the run recovery link. The horizontal overflow/text-clip DOM probe does not cover this vertical control visibility failure.",
+      "status": "reproduced visually; keyboard regression and cause diagnosis next"
+    },
+    {
+      "severity": "P2",
+      "report": "preview-special.json",
+      "routes": ["quote-expired"],
+      "mode": "text-only-200-emulated",
+      "observation": "The footer Re-quote this run button wraps to two enlarged lines and extends beyond the bottom of the 900-pixel capture.",
+      "status": "visual finding; measure and reproduce before changing"
+    },
+    {
+      "severity": "P3",
+      "report": "preview-special.json",
+      "routes": ["review", "compare"],
+      "mode": "text-only-200-emulated",
+      "observation": "The enlarged decorative presence initials overlap their fixed small circles.",
+      "status": "visual finding; measure semantics and reproduce before changing"
+    },
+    {
+      "severity": "P2",
+      "report": "preview-special.json",
+      "routes": ["compare"],
+      "mode": "text-only-200-emulated",
+      "observation": "The enlarged Launch copy A comparison metadata overlaps across the current and prior columns.",
+      "status": "visual finding; measure and reproduce before changing"
+    }
+  ],
+  "screenAcceptance": false,
+  "scoreAssigned": false,
+  "scope": "Local production render with actual synthetic authenticated local Core reads, plus explicitly labelled in-memory preview mechanics. No production authentication or real customer/provider proof. Enlargement is emulated."
+}

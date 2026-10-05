@@ -1,0 +1,771 @@
+{
+  "recordedUtc": "2026-10-04T19:29:44.986Z",
+  "sourceHead": "16295a846a56dce750cd494fa7800709786110b5",
+  "renderMode": "Production build, local synthetic authenticated session; GET Run DTO, project and brand mapping intercepted for synthetic layout mechanics only; other reads use real local Core. No run execution.",
+  "rows": [
+    {
+      "label": "text-only-200-emulated",
+      "summaryKeyboard": {
+        "focused": true,
+        "scrollTop": 89,
+        "scrollHeight": 636,
+        "clientHeight": 547,
+        "lastRowFullyVisible": true,
+        "lastRowText": "Revision77777777-7777-4777-8777-777777777777",
+        "visibleFocus": true,
+        "outer": {
+          "x": 960,
+          "y": 281,
+          "width": 320,
+          "height": 547,
+          "top": 281,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "last": {
+          "x": 985,
+          "y": 680,
+          "width": 271,
+          "height": 120,
+          "top": 680,
+          "right": 1256,
+          "bottom": 800,
+          "left": 985
+        }
+      },
+      "summaryFeedbackObservedMs": 281,
+      "colorSchemePreference": "light",
+      "reducedMotionPreference": "reduce",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T19:29:41.625Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Your content is ready to review",
+            "fontPx": 56
+          }
+        ],
+        "bodyFontPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": [],
+        "broadTransitions": 0,
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 900,
+            "scrollHeight": 1115
+          },
+          {
+            "class": "run-progress-module__wy38Qq__quoteStage quote-stage",
+            "scrollTop": 0,
+            "clientHeight": 547,
+            "scrollHeight": 1222
+          },
+          {
+            "class": "run-progress-module__wy38Qq__runAside",
+            "scrollTop": 89,
+            "clientHeight": 547,
+            "scrollHeight": 636
+          }
+        ],
+        "smallTargets": [
+          {
+            "name": "Review available outputs",
+            "width": 273.265625,
+            "height": 36
+          },
+          {
+            "name": "Open output review",
+            "width": 275.40625,
+            "height": 41
+          }
+        ],
+        "lab": {
+          "lcpMs": 516,
+          "cls": 0.37821687820222644,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 1090
+            },
+            {
+              "name": "keyup",
+              "duration": 48,
+              "interactionId": 1090
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-text-only-200-emulated-bottom.png",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Your content is ready to review",
+              "fontPx": 56
+            }
+          ],
+          "bodyFontPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "animations": [],
+          "broadTransitions": 0,
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 215,
+              "clientHeight": 900,
+              "scrollHeight": 1115
+            },
+            {
+              "class": "run-progress-module__wy38Qq__quoteStage quote-stage",
+              "scrollTop": 675,
+              "clientHeight": 547,
+              "scrollHeight": 1222
+            },
+            {
+              "class": "run-progress-module__wy38Qq__runAside",
+              "scrollTop": 89,
+              "clientHeight": 547,
+              "scrollHeight": 636
+            }
+          ],
+          "smallTargets": [
+            {
+              "name": "Review available outputs",
+              "width": 273.265625,
+              "height": 36
+            },
+            {
+              "name": "Open output review",
+              "width": 275.40625,
+              "height": 41
+            }
+          ],
+          "lab": {
+            "lcpMs": 516,
+            "cls": 0.37821687820222644,
+            "events": [
+              {
+                "name": "keydown",
+                "duration": 56,
+                "interactionId": 1090
+              },
+              {
+                "name": "keyup",
+                "duration": 48,
+                "interactionId": 1090
+              }
+            ]
+          }
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "label": "short-text-only-200-emulated",
+      "summaryKeyboard": {
+        "focused": true,
+        "scrollTop": 389,
+        "scrollHeight": 636,
+        "clientHeight": 247,
+        "lastRowFullyVisible": true,
+        "lastRowText": "Revision77777777-7777-4777-8777-777777777777",
+        "visibleFocus": true,
+        "outer": {
+          "x": 960,
+          "y": 281,
+          "width": 320,
+          "height": 247,
+          "top": 281,
+          "right": 1280,
+          "bottom": 528,
+          "left": 960
+        },
+        "last": {
+          "x": 985,
+          "y": 380,
+          "width": 271,
+          "height": 120,
+          "top": 380,
+          "right": 1256,
+          "bottom": 500,
+          "left": 985
+        }
+      },
+      "summaryFeedbackObservedMs": 276,
+      "colorSchemePreference": "light",
+      "reducedMotionPreference": "reduce",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T19:29:42.801Z",
+      "probe": {
+        "width": 1280,
+        "height": 600,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Your content is ready to review",
+            "fontPx": 56
+          }
+        ],
+        "bodyFontPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": [],
+        "broadTransitions": 0,
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "platform-rail platform-rail--collapsed",
+            "scrollTop": 0,
+            "clientHeight": 600,
+            "scrollHeight": 1115
+          },
+          {
+            "class": "run-progress-module__wy38Qq__quoteStage quote-stage",
+            "scrollTop": 0,
+            "clientHeight": 247,
+            "scrollHeight": 1222
+          },
+          {
+            "class": "run-progress-module__wy38Qq__runAside",
+            "scrollTop": 389,
+            "clientHeight": 247,
+            "scrollHeight": 636
+          }
+        ],
+        "smallTargets": [
+          {
+            "name": "Review available outputs",
+            "width": 273.265625,
+            "height": 36
+          },
+          {
+            "name": "Open output review",
+            "width": 275.40625,
+            "height": 41
+          }
+        ],
+        "lab": {
+          "lcpMs": 304,
+          "cls": 0.36994453136126204,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 6432
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 6432
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-short-text-only-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-short-text-only-200-emulated-bottom.png",
+        "probe": {
+          "width": 1280,
+          "height": 600,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Your content is ready to review",
+              "fontPx": 56
+            }
+          ],
+          "bodyFontPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "animations": [],
+          "broadTransitions": 0,
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "platform-rail platform-rail--collapsed",
+              "scrollTop": 515,
+              "clientHeight": 600,
+              "scrollHeight": 1115
+            },
+            {
+              "class": "run-progress-module__wy38Qq__quoteStage quote-stage",
+              "scrollTop": 975,
+              "clientHeight": 247,
+              "scrollHeight": 1222
+            },
+            {
+              "class": "run-progress-module__wy38Qq__runAside",
+              "scrollTop": 389,
+              "clientHeight": 247,
+              "scrollHeight": 636
+            }
+          ],
+          "smallTargets": [
+            {
+              "name": "Review available outputs",
+              "width": 273.265625,
+              "height": 36
+            },
+            {
+              "name": "Open output review",
+              "width": 275.40625,
+              "height": 41
+            }
+          ],
+          "lab": {
+            "lcpMs": 304,
+            "cls": 0.36994453136126204,
+            "events": [
+              {
+                "name": "keydown",
+                "duration": 56,
+                "interactionId": 6432
+              },
+              {
+                "name": "keyup",
+                "duration": 56,
+                "interactionId": 6432
+              }
+            ]
+          }
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "label": "zoom-200-emulated",
+      "summaryKeyboard": {
+        "focused": true,
+        "scrollTop": 0,
+        "scrollHeight": 361,
+        "clientHeight": 361,
+        "lastRowFullyVisible": true,
+        "lastRowText": "Revision77777777-7777-4777-8777-777777777777",
+        "visibleFocus": true,
+        "outer": {
+          "x": 0,
+          "y": 45.09375,
+          "width": 640,
+          "height": 362.25,
+          "top": 45.09375,
+          "right": 640,
+          "bottom": 407.34375,
+          "left": 0
+        },
+        "last": {
+          "x": 14,
+          "y": 349.84375,
+          "width": 612,
+          "height": 37.5,
+          "top": 349.84375,
+          "right": 626,
+          "bottom": 387.34375,
+          "left": 14
+        }
+      },
+      "summaryFeedbackObservedMs": 273,
+      "colorSchemePreference": "light",
+      "reducedMotionPreference": "reduce",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T19:29:43.873Z",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Your content is ready to review",
+            "fontPx": 28
+          }
+        ],
+        "bodyFontPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "animations": [],
+        "broadTransitions": 0,
+        "clippedText": [],
+        "scrollers": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 968,
+            "clientHeight": 108,
+            "scrollHeight": 1076
+          }
+        ],
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          },
+          {
+            "name": "Review available outputs",
+            "width": 136.640625,
+            "height": 18
+          },
+          {
+            "name": "Open output review",
+            "width": 158.703125,
+            "height": 40
+          }
+        ],
+        "lab": {
+          "lcpMs": 308,
+          "cls": 0.059532567511664504,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 64,
+              "interactionId": 1364
+            },
+            {
+              "name": "keyup",
+              "duration": 32,
+              "interactionId": 1364
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      },
+      "treeIndex": 1,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-zoom-200-emulated.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-zoom-200-emulated-bottom.png",
+        "probe": {
+          "width": 640,
+          "height": 450,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Your content is ready to review",
+              "fontPx": 28
+            }
+          ],
+          "bodyFontPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "animations": [],
+          "broadTransitions": 0,
+          "clippedText": [],
+          "scrollers": [
+            {
+              "class": "run-progress-module__wy38Qq__runPage",
+              "scrollTop": 968,
+              "clientHeight": 108,
+              "scrollHeight": 1076
+            }
+          ],
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            },
+            {
+              "name": "Review available outputs",
+              "width": 136.640625,
+              "height": 18
+            },
+            {
+              "name": "Open output review",
+              "width": 158.703125,
+              "height": 40
+            }
+          ],
+          "lab": {
+            "lcpMs": 308,
+            "cls": 0.059532567511664504,
+            "events": [
+              {
+                "name": "keydown",
+                "duration": 64,
+                "interactionId": 1364
+              },
+              {
+                "name": "keyup",
+                "duration": 32,
+                "interactionId": 1364
+              }
+            ]
+          }
+        }
+      },
+      "errors": [],
+      "http": []
+    },
+    {
+      "label": "forced-colors",
+      "summaryKeyboard": {
+        "focused": true,
+        "scrollTop": 0,
+        "scrollHeight": 710,
+        "clientHeight": 710,
+        "lastRowFullyVisible": true,
+        "lastRowText": "Revision77777777-7777-4777-8777-777777777777",
+        "visibleFocus": true,
+        "outer": {
+          "x": 960,
+          "y": 118,
+          "width": 320,
+          "height": 710,
+          "top": 118,
+          "right": 1280,
+          "bottom": 828,
+          "left": 960
+        },
+        "last": {
+          "x": 985,
+          "y": 429.75,
+          "width": 271,
+          "height": 54,
+          "top": 429.75,
+          "right": 1256,
+          "bottom": 483.75,
+          "left": 985
+        }
+      },
+      "summaryFeedbackObservedMs": 274,
+      "colorSchemePreference": "light",
+      "reducedMotionPreference": "reduce",
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T19:29:44.986Z",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Your content is ready to review",
+            "fontPx": 28
+          }
+        ],
+        "bodyFontPx": 15,
+        "colorScheme": "light dark",
+        "themeColor": true,
+        "animations": [],
+        "broadTransitions": 0,
+        "clippedText": [],
+        "scrollers": [],
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          },
+          {
+            "name": "Review available outputs",
+            "width": 136.640625,
+            "height": 18
+          },
+          {
+            "name": "Open output review",
+            "width": 158.703125,
+            "height": 40
+          }
+        ],
+        "lab": {
+          "lcpMs": 328,
+          "cls": 0.003069479836357964,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 24,
+              "interactionId": 7114
+            },
+            {
+              "name": "keyup",
+              "duration": 24,
+              "interactionId": 7114
+            }
+          ]
+        }
+      },
+      "accessibility": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-forced-colors.png",
+      "bottom": null,
+      "errors": [],
+      "http": []
+    }
+  ],
+  "trees": [
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Budget\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/approvals?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/receipt?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan open after the brief is planned.\n  - region \"Your content is ready to review\":\n    - text: Run 44444444-4444-4444-8444-444444444444, revision 77777777-7777-4777-8777-777777777777\n    - heading \"Your content is ready to review\" [level=1]\n    - paragraph: Completed branches remain reviewable while downstream work continues.\n    - text: Complete\n    - status:\n      - strong: First reviewable output is ready.\n      - text: Review can begin without waiting for every branch.\n      - link \"Review available outputs\":\n        - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - text: synthetic/measurement-route Complete\n    - strong: copy-1\n    - text: Dispatch wave 1, succeeded synthetic/measurement-route Complete\n    - strong: master-1\n    - text: Dispatch wave 1, succeeded synthetic/measurement-route Complete\n    - strong: adaptation-1-1\n    - text: Dispatch wave 2, succeeded synthetic/measurement-route Complete\n    - strong: motion-1\n    - text: Dispatch wave 2, succeeded\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"4 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.55\n    - term: Captured\n    - definition: $0.67\n    - term: Released\n    - definition: $3.88\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $0.00\n    - term: Revision\n    - definition: 77777777-7777-4777-8777-777777777777\n  - text: Finished\n  - strong: Complete\n  - link \"Open output review\":\n    - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Budget\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - text: Plan\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Content\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Approvals\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/approvals?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - link \"Results\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/receipt?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - paragraph: Plan open after the brief is planned.\n  - region \"Your content is ready to review\":\n    - text: Run 44444444-4444-4444-8444-444444444444, revision 77777777-7777-4777-8777-777777777777\n    - heading \"Your content is ready to review\" [level=1]\n    - paragraph: Completed branches remain reviewable while downstream work continues.\n    - text: Complete\n    - status:\n      - strong: First reviewable output is ready.\n      - text: Review can begin without waiting for every branch.\n      - link \"Review available outputs\":\n        - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n    - text: synthetic/measurement-route Complete\n    - strong: copy-1\n    - text: Dispatch wave 1, succeeded synthetic/measurement-route Complete\n    - strong: master-1\n    - text: Dispatch wave 1, succeeded synthetic/measurement-route Complete\n    - strong: adaptation-1-1\n    - text: Dispatch wave 2, succeeded synthetic/measurement-route Complete\n    - strong: motion-1\n    - text: Dispatch wave 2, succeeded\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"4 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.55\n    - term: Captured\n    - definition: $0.67\n    - term: Released\n    - definition: $3.88\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $0.00\n    - term: Revision\n    - definition: 77777777-7777-4777-8777-777777777777\n  - text: Finished\n  - strong: Complete\n  - link \"Open output review\":\n    - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/review?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&run=44444444-4444-4444-8444-444444444444\n- alert"
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/44444444-4444-4444-8444-444444444444"
+    }
+  ],
+  "blockedNonGetRequests": [],
+  "remoteAuthentication": false,
+  "providerOrQueueExecution": false,
+  "externalWrites": 0,
+  "fieldINP": "not measured",
+  "enlargement": "640 by 450 CSS viewport emulates 1280 by 900 at 200 percent zoom; text-only doubles all measured fonts and line heights once; no real device or browser zoom claim"
+}

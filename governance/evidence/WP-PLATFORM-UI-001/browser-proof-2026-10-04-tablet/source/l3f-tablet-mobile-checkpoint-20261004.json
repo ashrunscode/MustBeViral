@@ -1,0 +1,43 @@
+{
+  "recordedUtc": "2026-10-04T15:42:10.2833102Z",
+  "head": "9a77865d501c9b1b3813d81ebdb4915c99305f22",
+  "base": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "clean": true,
+  "sourceHashes": [
+    {
+      "sha256": "0d5bef32254b553545e88c10a52abde56496fbbdd5d2438d3897554796959900",
+      "path": "apps/web/src/features/platform/platform.css"
+    },
+    {
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0",
+      "path": "apps/web/app/globals.css"
+    },
+    {
+      "sha256": "ae0c1a621942d9609abd5700678c1435345a29167b138c5ab2a1374641dd146b",
+      "path": "apps/web/e2e/platform-connected.spec.ts"
+    },
+    {
+      "sha256": "49514cc8dc7a4495b282da750d7f282408a97c8295841dda788d8782217ca5b1",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css"
+    },
+    {
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css"
+    },
+    {
+      "sha256": "2d9fdfa917d1774f3396c650d4dc9d911a0a0365e5d7c789c6c3fba9e5309f5a",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css"
+    },
+    {
+      "sha256": "aa86a306e7da6ed881a0f18eb0af47c8218f341ac37d9c4dca9c97e85828c63c",
+      "path": "apps/web/e2e/final-ui.spec.ts"
+    },
+    {
+      "sha256": "9fc83ecfc16537d47804c6a534341133c1edf7071b311b2600523fe015b85377",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx"
+    }
+  ],
+  "root": "C:/dev/mbv-finish",
+  "fullGatesReviewAndReleasePending": true,
+  "commitExit": 0
+}

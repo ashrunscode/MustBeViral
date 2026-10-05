@@ -1,0 +1,79 @@
+{
+  "cell": "preview-fixed-quote-cap_exceeded-t768",
+  "path": "/studio/lumen-skin/quote?state=cap_exceeded",
+  "capturedUtc": "2026-10-04T14:17:24.109Z",
+  "observedUtc": "2026-10-04T14:17:24.277Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "ownedWorkInProgress": true,
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css",
+      "sha256": "49514cc8dc7a4495b282da750d7f282408a97c8295841dda788d8782217ca5b1"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css",
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "2d9fdfa917d1774f3396c650d4dc9d911a0a0365e5d7c789c6c3fba9e5309f5a"
+    },
+    {
+      "path": "apps/web/e2e/final-ui.spec.ts",
+      "sha256": "387e12f6b77890640179066bea6ffdfba5a0274edba4fc5c96368cc6282035a5"
+    }
+  ],
+  "evidenceLevel": "synthetic in-memory local preview, no Core execution",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Review this run before spending",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "runState": null,
+    "results": ["cap_exceeded"],
+    "announcements": [
+      {
+        "role": "status",
+        "text": "Preview. Sample work only. No connected accounts, approvals or publication."
+      },
+      {
+        "role": "alert",
+        "text": "Spend cap blocked confirmationThe workspace-day reservation changed after this quote. No provider work was submitted and no spend was accepted.Cap $8.00, attempted $4.20"
+      }
+    ],
+    "runningAnimations": []
+  },
+  "tree": "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - paragraph: The reservation is pinned to this revision, route, and affected branch.\n    - alert:\n      - strong: Spend cap blocked confirmation\n      - text: The workspace-day reservation changed after this quote. No provider work was submitted and no spend was accepted. Cap $8.00, attempted $4.20\n    - text: Quote $4.20 Revision 7f3a Expires 15:00\n    - table \"Per-node estimate\":\n      - rowgroup:\n        - row \"Node Basis Estimate\":\n          - columnheader \"Node\"\n          - columnheader \"Basis\"\n          - columnheader \"Estimate\"\n      - rowgroup:\n        - row \"Concept logic kimi-2.6 $1.20\":\n          - cell \"Concept logic\"\n          - cell \"kimi-2.6\"\n          - cell \"$1.20\"\n        - row \"Asset gen x3 flux-2-klein $2.40\":\n          - cell \"Asset gen x3\"\n          - cell \"flux-2-klein\"\n          - cell \"$2.40\"\n        - row \"Copy 3 sets $0.24\":\n          - cell \"Copy\"\n          - cell \"3 sets\"\n          - cell \"$0.24\"\n        - row \"Motion seedance-1.0 6s 9:16 $0.36\":\n          - cell \"Motion seedance-1.0 6s\"\n          - cell \"9:16\"\n          - cell \"$0.36\"\n        - row \"Total Maximum charge $4.20\":\n          - cell \"Total\"\n          - cell \"Maximum charge\"\n          - cell \"$4.20\"\n    - text: 4 nodes priced in this quote Expires 15:00 Run cap $8.00. Day cap $100.00, used $18.42.\n    - checkbox \"I acknowledge this revision and the maximum $4.20 charge before provider work starts.\" [checked] [disabled]\n    - text: I acknowledge this revision and the maximum $4.20 charge before provider work starts.\n    - link \"Back to the plan\":\n      - /url: /studio/lumen-skin/canvas\n  - complementary \"What this run covers\":\n    - heading \"What this run covers\" [level=2]\n    - term: Nodes priced\n    - definition: \"4\"\n    - term: Route\n    - definition: kimi-2.6 + flux-2-klein + seedance-1.0\n    - term: Pinned revision\n    - definition: 7f3a\n    - term: Maximum charge\n    - definition: $4.20\n    - term: Run cap\n    - definition: $8.00\n    - term: Day cap used\n    - definition: $18.42 of $100.00\n    - paragraph: The charge can only be lower than the maximum. Nothing starts until you confirm.\n  - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein + seedance-1.0 Expires 15:00",
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "afterAxeRunState": null,
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-fixed-quote-cap_exceeded-t768.png"
+}

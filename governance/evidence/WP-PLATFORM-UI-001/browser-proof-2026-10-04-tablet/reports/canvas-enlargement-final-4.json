@@ -1,0 +1,3217 @@
+{
+  "recordedUtc": "2026-10-04T18:30:29.190Z",
+  "sourceHead": "9958d82703069d16cd1f3eb98afc6f49f2c1b065",
+  "sourceReceipt": "l3f-enlargement-preview-green-6-20261004.json",
+  "sourceCommitted": true,
+  "renderMode": "synthetic in-memory preview; keyboard selection only",
+  "localOnly": true,
+  "externalWrites": 0,
+  "providerOrQueueExecution": false,
+  "zoom": "CSS viewport and computed-text emulation; no real browser zoom or device claim",
+  "rows": [
+    {
+      "cell": "m375-light",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:15.786Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light.png",
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [
+          "canvas-flow-module__kYkW7G__dash-flow",
+          "canvas-flow-module__kYkW7G__filament-sweep"
+        ],
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__workspace",
+            "clientHeight": 434,
+            "scrollHeight": 542,
+            "scrollTop": 0
+          },
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 311,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 270,
+            "scrollHeight": 866,
+            "scrollTop": 28
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:15.879Z",
+        "probe": {
+          "width": 375,
+          "height": 812,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [
+            "canvas-flow-module__kYkW7G__dash-flow",
+            "canvas-flow-module__kYkW7G__filament-sweep"
+          ],
+          "transitionAll": 0,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__workspace",
+              "clientHeight": 434,
+              "scrollHeight": 542,
+              "scrollTop": 108
+            },
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 311,
+              "scrollHeight": 684,
+              "scrollTop": 373
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 270,
+              "scrollHeight": 866,
+              "scrollTop": 596
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": []
+    },
+    {
+      "cell": "m375-dark",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "dark",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:17.179Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-dark.png",
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [
+          "canvas-flow-module__kYkW7G__dash-flow",
+          "canvas-flow-module__kYkW7G__filament-sweep"
+        ],
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__workspace",
+            "clientHeight": 434,
+            "scrollHeight": 542,
+            "scrollTop": 0
+          },
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 311,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 270,
+            "scrollHeight": 866,
+            "scrollTop": 28
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-dark-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:17.253Z",
+        "probe": {
+          "width": 375,
+          "height": 812,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [
+            "canvas-flow-module__kYkW7G__dash-flow",
+            "canvas-flow-module__kYkW7G__filament-sweep"
+          ],
+          "transitionAll": 0,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__workspace",
+              "clientHeight": 434,
+              "scrollHeight": 542,
+              "scrollTop": 108
+            },
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 311,
+              "scrollHeight": 684,
+              "scrollTop": 373
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 270,
+              "scrollHeight": 866,
+              "scrollTop": 596
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": []
+    },
+    {
+      "cell": "t768-light",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:18.545Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-light.png",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [
+          "canvas-flow-module__kYkW7G__dash-flow",
+          "canvas-flow-module__kYkW7G__filament-sweep"
+        ],
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 447,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 346,
+            "scrollHeight": 866,
+            "scrollTop": 0
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-light-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:18.634Z",
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [
+            "canvas-flow-module__kYkW7G__dash-flow",
+            "canvas-flow-module__kYkW7G__filament-sweep"
+          ],
+          "transitionAll": 0,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 447,
+              "scrollHeight": 684,
+              "scrollTop": 237
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 346,
+              "scrollHeight": 866,
+              "scrollTop": 520
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 1,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": []
+    },
+    {
+      "cell": "t768-dark",
+      "width": 768,
+      "height": 1024,
+      "colorScheme": "dark",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:19.763Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-dark.png",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [
+          "canvas-flow-module__kYkW7G__dash-flow",
+          "canvas-flow-module__kYkW7G__filament-sweep"
+        ],
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 447,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 346,
+            "scrollHeight": 866,
+            "scrollTop": 0
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-dark-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:19.856Z",
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [
+            "canvas-flow-module__kYkW7G__dash-flow",
+            "canvas-flow-module__kYkW7G__filament-sweep"
+          ],
+          "transitionAll": 0,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 447,
+              "scrollHeight": 684,
+              "scrollTop": 237
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 346,
+              "scrollHeight": 866,
+              "scrollTop": 520
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 1,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": []
+    },
+    {
+      "cell": "d1440-light",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:21.117Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-light.png",
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [
+          "canvas-flow-module__kYkW7G__dash-flow",
+          "canvas-flow-module__kYkW7G__filament-sweep"
+        ],
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 377,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 268,
+            "scrollHeight": 914,
+            "scrollTop": 46
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-light-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:21.211Z",
+        "probe": {
+          "width": 1440,
+          "height": 900,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [
+            "canvas-flow-module__kYkW7G__dash-flow",
+            "canvas-flow-module__kYkW7G__filament-sweep"
+          ],
+          "transitionAll": 0,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 377,
+              "scrollHeight": 684,
+              "scrollTop": 307
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 268,
+              "scrollHeight": 914,
+              "scrollTop": 646
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 2,
+      "compact": false,
+      "escape": null,
+      "errors": []
+    },
+    {
+      "cell": "d1440-dark",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "dark",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:22.244Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-dark.png",
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [
+          "canvas-flow-module__kYkW7G__dash-flow",
+          "canvas-flow-module__kYkW7G__filament-sweep"
+        ],
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 377,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 268,
+            "scrollHeight": 914,
+            "scrollTop": 46
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-dark-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:22.336Z",
+        "probe": {
+          "width": 1440,
+          "height": 900,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [
+            "canvas-flow-module__kYkW7G__dash-flow",
+            "canvas-flow-module__kYkW7G__filament-sweep"
+          ],
+          "transitionAll": 0,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 377,
+              "scrollHeight": 684,
+              "scrollTop": 307
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 268,
+              "scrollHeight": 914,
+              "scrollTop": 646
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 2,
+      "compact": false,
+      "escape": null,
+      "errors": []
+    },
+    {
+      "cell": "m375-reduced",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:23.376Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-reduced.png",
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [],
+        "transitionAll": 15,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__workspace",
+            "clientHeight": 434,
+            "scrollHeight": 542,
+            "scrollTop": 0
+          },
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 311,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 270,
+            "scrollHeight": 866,
+            "scrollTop": 28
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-reduced-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:23.433Z",
+        "probe": {
+          "width": 375,
+          "height": 812,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 324,
+              "clientWidth": 324
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [],
+          "transitionAll": 15,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__workspace",
+              "clientHeight": 434,
+              "scrollHeight": 542,
+              "scrollTop": 108
+            },
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 311,
+              "scrollHeight": 684,
+              "scrollTop": 373
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 270,
+              "scrollHeight": 866,
+              "scrollTop": 596
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": []
+    },
+    {
+      "cell": "d1280-reduced",
+      "width": 1280,
+      "height": 900,
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:24.612Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1280-reduced.png",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [],
+        "transitionAll": 15,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 377,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 268,
+            "scrollHeight": 914,
+            "scrollTop": 46
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1280-reduced-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:24.678Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [],
+          "transitionAll": 15,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 377,
+              "scrollHeight": 684,
+              "scrollTop": 307
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 268,
+              "scrollHeight": 914,
+              "scrollTop": 646
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 2,
+      "compact": false,
+      "escape": null,
+      "errors": []
+    },
+    {
+      "cell": "d1920-reduced",
+      "width": 1920,
+      "height": 1080,
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:25.749Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1920-reduced.png",
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [],
+        "transitionAll": 15,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 492,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 333,
+            "scrollHeight": 914,
+            "scrollTop": 13
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1920-reduced-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:25.815Z",
+        "probe": {
+          "width": 1920,
+          "height": 1080,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [],
+          "transitionAll": 15,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 492,
+              "scrollHeight": 684,
+              "scrollTop": 192
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 333,
+              "scrollHeight": 914,
+              "scrollTop": 581
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 2,
+      "compact": false,
+      "escape": null,
+      "errors": []
+    },
+    {
+      "cell": "forced-colors",
+      "width": 1280,
+      "height": 900,
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "forcedColors": "active",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:26.891Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-forced-colors.png",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light dark",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [],
+        "transitionAll": 15,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 377,
+            "scrollHeight": 684,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 268,
+            "scrollHeight": 914,
+            "scrollTop": 46
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-forced-colors-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:26.951Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light dark",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 269,
+              "clientWidth": 269
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [],
+          "transitionAll": 15,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 377,
+              "scrollHeight": 684,
+              "scrollTop": 307
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 268,
+              "scrollHeight": 914,
+              "scrollTop": 646
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 2,
+      "compact": false,
+      "escape": null,
+      "errors": []
+    },
+    {
+      "cell": "zoom-200-emulated",
+      "width": 640,
+      "height": 450,
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "forcedColors": "none",
+      "textDouble": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:27.938Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-zoom-200-emulated.png",
+      "probe": {
+        "width": 640,
+        "height": 450,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 369,
+            "clientWidth": 369
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 84,
+            "clientWidth": 84
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 89,
+            "clientWidth": 89
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 107,
+            "clientWidth": 107
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 56,
+            "clientWidth": 56
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 70,
+            "clientWidth": 70
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 77,
+            "clientWidth": 77
+          }
+        ],
+        "animations": [],
+        "transitionAll": 15,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__workspace",
+            "clientHeight": 139,
+            "scrollHeight": 490,
+            "scrollTop": 26
+          },
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 79,
+            "scrollHeight": 684,
+            "scrollTop": 228
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 139,
+            "scrollHeight": 866,
+            "scrollTop": 93
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-zoom-200-emulated-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:27.997Z",
+        "probe": {
+          "width": 640,
+          "height": 450,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 13
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 369,
+              "clientWidth": 369
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 84,
+              "clientWidth": 84
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 89,
+              "clientWidth": 89
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 98,
+              "clientWidth": 98
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 107,
+              "clientWidth": 107
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 91,
+              "clientWidth": 91
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 56,
+              "clientWidth": 56
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 70,
+              "clientWidth": 70
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 77,
+              "clientWidth": 77
+            }
+          ],
+          "animations": [],
+          "transitionAll": 15,
+          "smallTargets": [
+            {
+              "name": "Skip to content",
+              "width": 130.796875,
+              "height": 40.5
+            }
+          ],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__workspace",
+              "clientHeight": 139,
+              "scrollHeight": 490,
+              "scrollTop": 351
+            },
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 79,
+              "scrollHeight": 684,
+              "scrollTop": 605
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 139,
+              "scrollHeight": 866,
+              "scrollTop": 727
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 3,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": []
+    },
+    {
+      "cell": "text-only-200-emulated",
+      "width": 1280,
+      "height": 900,
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "forcedColors": "none",
+      "textDouble": true,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T18:30:29.119Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-text-only-200-emulated.png",
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "hScroll": false,
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Lumen Skin launch pack",
+            "px": 26
+          }
+        ],
+        "details": [
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 288,
+            "clientWidth": 288
+          },
+          {
+            "text": "Verified — Output verified",
+            "scrollWidth": 288,
+            "clientWidth": 288
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 288,
+            "clientWidth": 288
+          }
+        ],
+        "outlineNames": [
+          {
+            "text": "Campaign brief",
+            "scrollWidth": 146,
+            "clientWidth": 146
+          },
+          {
+            "text": "Concept A",
+            "scrollWidth": 146,
+            "clientWidth": 146
+          },
+          {
+            "text": "Concept B",
+            "scrollWidth": 161,
+            "clientWidth": 161
+          },
+          {
+            "text": "Concept C",
+            "scrollWidth": 169,
+            "clientWidth": 169
+          },
+          {
+            "text": "Asset 01 — Hero",
+            "scrollWidth": 146,
+            "clientWidth": 146
+          },
+          {
+            "text": "Asset 02 — Detail",
+            "scrollWidth": 146,
+            "clientWidth": 146
+          },
+          {
+            "text": "Asset 03 — Texture",
+            "scrollWidth": 172,
+            "clientWidth": 172
+          },
+          {
+            "text": "Adaptations",
+            "scrollWidth": 169,
+            "clientWidth": 169
+          },
+          {
+            "text": "Copy set",
+            "scrollWidth": 104,
+            "clientWidth": 104
+          },
+          {
+            "text": "Motion 9:16",
+            "scrollWidth": 130,
+            "clientWidth": 130
+          },
+          {
+            "text": "QA review",
+            "scrollWidth": 143,
+            "clientWidth": 143
+          },
+          {
+            "text": "Export bundle",
+            "scrollWidth": 153,
+            "clientWidth": 153
+          }
+        ],
+        "animations": [],
+        "transitionAll": 15,
+        "smallTargets": [],
+        "scrollers": [
+          {
+            "class": "canvas-flow-module__kYkW7G__outlineList",
+            "clientHeight": 179,
+            "scrollHeight": 1220,
+            "scrollTop": 0
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+            "clientHeight": 231,
+            "scrollHeight": 1877,
+            "scrollTop": 405
+          },
+          {
+            "class": "collaboration-panel-module__zDcWlW__collaborativeTextarea",
+            "clientHeight": 88,
+            "scrollHeight": 124,
+            "scrollTop": 0
+          }
+        ]
+      },
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-text-only-200-emulated-bottom.png",
+        "capturedUtc": "2026-10-04T18:30:29.186Z",
+        "probe": {
+          "width": 1280,
+          "height": 900,
+          "hScroll": false,
+          "bodyPx": 15,
+          "colorScheme": "light",
+          "themeColor": true,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Lumen Skin launch pack",
+              "px": 26
+            }
+          ],
+          "details": [
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 288,
+              "clientWidth": 288
+            },
+            {
+              "text": "Verified — Output verified",
+              "scrollWidth": 288,
+              "clientWidth": 288
+            },
+            {
+              "text": "flux-2-klein",
+              "scrollWidth": 288,
+              "clientWidth": 288
+            }
+          ],
+          "outlineNames": [
+            {
+              "text": "Campaign brief",
+              "scrollWidth": 146,
+              "clientWidth": 146
+            },
+            {
+              "text": "Concept A",
+              "scrollWidth": 146,
+              "clientWidth": 146
+            },
+            {
+              "text": "Concept B",
+              "scrollWidth": 161,
+              "clientWidth": 161
+            },
+            {
+              "text": "Concept C",
+              "scrollWidth": 169,
+              "clientWidth": 169
+            },
+            {
+              "text": "Asset 01 — Hero",
+              "scrollWidth": 146,
+              "clientWidth": 146
+            },
+            {
+              "text": "Asset 02 — Detail",
+              "scrollWidth": 146,
+              "clientWidth": 146
+            },
+            {
+              "text": "Asset 03 — Texture",
+              "scrollWidth": 172,
+              "clientWidth": 172
+            },
+            {
+              "text": "Adaptations",
+              "scrollWidth": 169,
+              "clientWidth": 169
+            },
+            {
+              "text": "Copy set",
+              "scrollWidth": 104,
+              "clientWidth": 104
+            },
+            {
+              "text": "Motion 9:16",
+              "scrollWidth": 130,
+              "clientWidth": 130
+            },
+            {
+              "text": "QA review",
+              "scrollWidth": 143,
+              "clientWidth": 143
+            },
+            {
+              "text": "Export bundle",
+              "scrollWidth": 153,
+              "clientWidth": 153
+            }
+          ],
+          "animations": [],
+          "transitionAll": 15,
+          "smallTargets": [],
+          "scrollers": [
+            {
+              "class": "canvas-flow-module__kYkW7G__outlineList",
+              "clientHeight": 179,
+              "scrollHeight": 1220,
+              "scrollTop": 1041
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborationStack",
+              "clientHeight": 231,
+              "scrollHeight": 1877,
+              "scrollTop": 1646
+            },
+            {
+              "class": "collaboration-panel-module__zDcWlW__collaborativeTextarea",
+              "clientHeight": 88,
+              "scrollHeight": 124,
+              "scrollTop": 36
+            }
+          ]
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 2,
+      "compact": false,
+      "escape": null,
+      "errors": []
+    }
+  ],
+  "trees": [
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n- status: Preview. Sample work only. No connected accounts, approvals or publication.\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Campaign plan\":\n    - text: Canvas revision 7f3a\n    - heading \"Lumen Skin launch pack\" [level=1]\n    - paragraph:\n      - text: Plan editing needs a desktop. Review the outline and comments here.\n      - link \"Open this plan on a desktop\":\n        - /url: /studio/lumen-skin/canvas\n    - button \"Outline and comments\" [expanded]\n    - text: 6 / 12 nodes mounted 2 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\" [disabled]\n    - button \"Checkpoint drafts\" [disabled]\n    - 'button \"Input node: Campaign brief, Verified\"': Input node Verified Campaign brief rev 7f3a Brief locked\n    - 'button \"Concept logic: Concept A, Verified\"': Concept logic Verified Concept A kimi-2.6 Selected\n    - 'button \"Concept logic: Concept B, Running\"': Concept logic Running Concept B kimi-2.6 Generating 2/3\n    - 'button \"Visual gen: Asset 01 — Hero, Verified\" [pressed]': Visual gen Verified Asset 01 — Hero flux-2-klein Output verified\n    - 'button \"Visual gen: Asset 02 — Detail, Verified\"': Visual gen Verified Asset 02 — Detail flux-2-klein Ready\n    - 'button \"Copy gen: Copy set, Verified\"': Copy gen Verified Copy set kimi-2.6 3 variants\n    - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein Quote basis $4.20 total run\n    - link \"Review $4.20 quote\":\n      - /url: /studio/lumen-skin/quote\n  - complementary \"Plan outline and comments\":\n    - heading \"Plan outline and comments\" [level=2]\n    - button \"Close Plan outline and comments\": Close\n    - complementary \"Graph outline\":\n      - text: Outline\n      - heading \"Graph outline\" [level=2]\n      - text: 12 nodes\n      - paragraph: In order. Arrow keys move between nodes.\n      - list:\n        - listitem:\n          - button \"Input node Campaign brief Verified\":\n            - text: Input node\n            - strong: Campaign brief\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept A Verified\":\n            - text: Concept logic\n            - strong: Concept A\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept B Running\":\n            - text: Concept logic\n            - strong: Concept B\n            - text: Running\n        - listitem:\n          - button \"Concept logic Concept C Queued\":\n            - text: Concept logic\n            - strong: Concept C\n            - text: Queued\n        - listitem:\n          - button \"Visual gen Asset 01 — Hero Verified\":\n            - text: Visual gen\n            - strong: Asset 01 — Hero\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 02 — Detail Verified\":\n            - text: Visual gen\n            - strong: Asset 02 — Detail\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 03 — Texture Failed\":\n            - text: Visual gen\n            - strong: Asset 03 — Texture\n            - text: Failed\n        - listitem:\n          - button \"Output matrix Adaptations Queued\":\n            - text: Output matrix\n            - strong: Adaptations\n            - text: Queued\n        - listitem:\n          - button \"Copy gen Copy set Verified\":\n            - text: Copy gen\n            - strong: Copy set\n            - text: Verified\n        - listitem:\n          - button \"Motion gen Motion 9:16 Queued\":\n            - text: Motion gen\n            - strong: Motion 9:16\n            - text: Queued\n        - listitem:\n          - button \"Review gate QA review Notes\":\n            - text: Review gate\n            - strong: QA review\n            - text: Notes\n        - listitem:\n          - button \"Output pack Export bundle Queued\":\n            - text: Output pack\n            - strong: Export bundle\n            - text: Queued\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Viewing graph. Draft comments only. Live\n    - group \"Plan parameters\":\n      - region \"Selected node details\":\n        - term: Node\n        - definition: Asset 01 — Hero\n        - term: Status\n        - definition: Verified — Output verified\n        - term: Reference\n        - definition: flux-2-klein\n      - region \"Collaborative text drafts\":\n        - text: Draft text\n        - heading \"Asset 01 — Hero\" [level=3]\n        - text: 2 fields Generation prompt\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Generation prompt\" [disabled]:\n          - /placeholder: Draft the expensive node configuration prompt\n        - text: Configuration notes\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Configuration notes\" [disabled]:\n          - /placeholder: Capture tuning notes before checkpointing\n    - region \"Asset 01 — Hero\":\n      - text: Draft comments\n      - heading \"Asset 01 — Hero\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Your studios\n  - link \"Switch studio\":\n    - /url: /studio\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n- status: Preview. Sample work only. No connected accounts, approvals or publication.\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Campaign plan\":\n    - text: Canvas revision 7f3a\n    - heading \"Lumen Skin launch pack\" [level=1]\n    - button \"Outline and comments\" [expanded]\n    - text: 9 / 12 nodes mounted 2 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\"\n    - button \"Checkpoint drafts\"\n    - 'button \"Input node: Campaign brief, Verified\"': Input node Verified Campaign brief rev 7f3a Brief locked\n    - 'button \"Concept logic: Concept A, Verified\"': Concept logic Verified Concept A kimi-2.6 Selected\n    - 'button \"Concept logic: Concept B, Running\"': Concept logic Running Concept B kimi-2.6 Generating 2/3\n    - 'button \"Concept logic: Concept C, Queued\"': Concept logic Queued Concept C kimi-2.6 Waiting\n    - 'button \"Visual gen: Asset 01 — Hero, Verified\" [pressed]': Visual gen Verified Asset 01 — Hero flux-2-klein Output verified\n    - 'button \"Visual gen: Asset 02 — Detail, Verified\"': Visual gen Verified Asset 02 — Detail flux-2-klein Ready\n    - 'button \"Visual gen: Asset 03 — Texture, Failed\"': Visual gen Failed Asset 03 — Texture flux-2-klein Retry available Source texture is below the minimum 1024px input size.\n    - 'button \"Output matrix: Adaptations, Queued\"': Output matrix Queued Adaptations flux-kontext-pro 9 renders queued\n    - 'button \"Copy gen: Copy set, Verified\"': Copy gen Verified Copy set kimi-2.6 3 variants\n    - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein Quote basis $4.20 total run\n    - link \"Review $4.20 quote\":\n      - /url: /studio/lumen-skin/quote\n  - complementary \"Plan outline and comments\":\n    - heading \"Plan outline and comments\" [level=2]\n    - button \"Close Plan outline and comments\": Close\n    - complementary \"Graph outline\":\n      - text: Outline\n      - heading \"Graph outline\" [level=2]\n      - text: 12 nodes\n      - paragraph: In order. Arrow keys move between nodes.\n      - list:\n        - listitem:\n          - button \"Input node Campaign brief Verified\":\n            - text: Input node\n            - strong: Campaign brief\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept A Verified\":\n            - text: Concept logic\n            - strong: Concept A\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept B Running\":\n            - text: Concept logic\n            - strong: Concept B\n            - text: Running\n        - listitem:\n          - button \"Concept logic Concept C Queued\":\n            - text: Concept logic\n            - strong: Concept C\n            - text: Queued\n        - listitem:\n          - button \"Visual gen Asset 01 — Hero Verified\":\n            - text: Visual gen\n            - strong: Asset 01 — Hero\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 02 — Detail Verified\":\n            - text: Visual gen\n            - strong: Asset 02 — Detail\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 03 — Texture Failed\":\n            - text: Visual gen\n            - strong: Asset 03 — Texture\n            - text: Failed\n        - listitem:\n          - button \"Output matrix Adaptations Queued\":\n            - text: Output matrix\n            - strong: Adaptations\n            - text: Queued\n        - listitem:\n          - button \"Copy gen Copy set Verified\":\n            - text: Copy gen\n            - strong: Copy set\n            - text: Verified\n        - listitem:\n          - button \"Motion gen Motion 9:16 Queued\":\n            - text: Motion gen\n            - strong: Motion 9:16\n            - text: Queued\n        - listitem:\n          - button \"Review gate QA review Notes\":\n            - text: Review gate\n            - strong: QA review\n            - text: Notes\n        - listitem:\n          - button \"Output pack Export bundle Queued\":\n            - text: Output pack\n            - strong: Export bundle\n            - text: Queued\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Viewing graph. Draft comments only. Live\n    - group \"Plan parameters\":\n      - region \"Selected node details\":\n        - term: Node\n        - definition: Asset 01 — Hero\n        - term: Status\n        - definition: Verified — Output verified\n        - term: Reference\n        - definition: flux-2-klein\n      - region \"Collaborative text drafts\":\n        - text: Draft text\n        - heading \"Asset 01 — Hero\" [level=3]\n        - text: 2 fields Generation prompt\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Generation prompt\":\n          - /placeholder: Draft the expensive node configuration prompt\n        - text: Configuration notes\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Configuration notes\":\n          - /placeholder: Capture tuning notes before checkpointing\n    - region \"Asset 01 — Hero\":\n      - text: Draft comments\n      - heading \"Asset 01 — Hero\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Your studios\n  - link \"Switch studio\":\n    - /url: /studio\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n- status: Preview. Sample work only. No connected accounts, approvals or publication.\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Campaign plan\":\n    - text: Canvas revision 7f3a\n    - heading \"Lumen Skin launch pack\" [level=1]\n    - text: 12 / 12 nodes mounted 2 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\"\n    - button \"Checkpoint drafts\"\n    - 'button \"Input node: Campaign brief, Verified\"': Input node Verified Campaign brief rev 7f3a Brief locked\n    - 'button \"Concept logic: Concept A, Verified\"': Concept logic Verified Concept A kimi-2.6 Selected\n    - 'button \"Concept logic: Concept B, Running\"': Concept logic Running Concept B kimi-2.6 Generating 2/3\n    - 'button \"Concept logic: Concept C, Queued\"': Concept logic Queued Concept C kimi-2.6 Waiting\n    - 'button \"Visual gen: Asset 01 — Hero, Verified\" [pressed]': Visual gen Verified Asset 01 — Hero flux-2-klein Output verified\n    - 'button \"Visual gen: Asset 02 — Detail, Verified\"': Visual gen Verified Asset 02 — Detail flux-2-klein Ready\n    - 'button \"Visual gen: Asset 03 — Texture, Failed\"': Visual gen Failed Asset 03 — Texture flux-2-klein Retry available Source texture is below the minimum 1024px input size.\n    - 'button \"Output matrix: Adaptations, Queued\"': Output matrix Queued Adaptations flux-kontext-pro 9 renders queued\n    - 'button \"Copy gen: Copy set, Verified\"': Copy gen Verified Copy set kimi-2.6 3 variants\n    - 'button \"Motion gen: Motion 9:16, Queued\"': Motion gen Queued Motion 9:16 seedance-1.0 6 second render\n    - 'button \"Review gate: QA review, Notes\"': Review gate Notes QA review policy-v2 2 notes\n    - 'button \"Output pack: Export bundle, Queued\"': Output pack Queued Export bundle rev 7f3a Meta-ready\n    - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein Quote basis $4.20 total run\n    - link \"Review $4.20 quote\":\n      - /url: /studio/lumen-skin/quote\n  - complementary \"Plan outline and comments\":\n    - complementary \"Graph outline\":\n      - text: Outline\n      - heading \"Graph outline\" [level=2]\n      - text: 12 nodes\n      - paragraph: In order. Arrow keys move between nodes.\n      - list:\n        - listitem:\n          - button \"Input node Campaign brief Verified\":\n            - text: Input node\n            - strong: Campaign brief\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept A Verified\":\n            - text: Concept logic\n            - strong: Concept A\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept B Running\":\n            - text: Concept logic\n            - strong: Concept B\n            - text: Running\n        - listitem:\n          - button \"Concept logic Concept C Queued\":\n            - text: Concept logic\n            - strong: Concept C\n            - text: Queued\n        - listitem:\n          - button \"Visual gen Asset 01 — Hero Verified\":\n            - text: Visual gen\n            - strong: Asset 01 — Hero\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 02 — Detail Verified\":\n            - text: Visual gen\n            - strong: Asset 02 — Detail\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 03 — Texture Failed\":\n            - text: Visual gen\n            - strong: Asset 03 — Texture\n            - text: Failed\n        - listitem:\n          - button \"Output matrix Adaptations Queued\":\n            - text: Output matrix\n            - strong: Adaptations\n            - text: Queued\n        - listitem:\n          - button \"Copy gen Copy set Verified\":\n            - text: Copy gen\n            - strong: Copy set\n            - text: Verified\n        - listitem:\n          - button \"Motion gen Motion 9:16 Queued\":\n            - text: Motion gen\n            - strong: Motion 9:16\n            - text: Queued\n        - listitem:\n          - button \"Review gate QA review Notes\":\n            - text: Review gate\n            - strong: QA review\n            - text: Notes\n        - listitem:\n          - button \"Output pack Export bundle Queued\":\n            - text: Output pack\n            - strong: Export bundle\n            - text: Queued\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Viewing graph. Draft comments only. Live\n    - group \"Plan parameters\":\n      - region \"Selected node details\":\n        - term: Node\n        - definition: Asset 01 — Hero\n        - term: Status\n        - definition: Verified — Output verified\n        - term: Reference\n        - definition: flux-2-klein\n      - region \"Collaborative text drafts\":\n        - text: Draft text\n        - heading \"Asset 01 — Hero\" [level=3]\n        - text: 2 fields Generation prompt\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Generation prompt\":\n          - /placeholder: Draft the expensive node configuration prompt\n        - text: Configuration notes\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Configuration notes\":\n          - /placeholder: Capture tuning notes before checkpointing\n    - region \"Asset 01 — Hero\":\n      - text: Draft comments\n      - heading \"Asset 01 — Hero\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n- status: Preview. Sample work only. No connected accounts, approvals or publication.\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Campaign plan\":\n    - text: Canvas revision 7f3a\n    - heading \"Lumen Skin launch pack\" [level=1]\n    - paragraph:\n      - text: Plan editing needs a desktop. Review the outline and comments here.\n      - link \"Open this plan on a desktop\":\n        - /url: /studio/lumen-skin/canvas\n    - button \"Outline and comments\" [expanded]\n    - text: 9 / 12 nodes mounted 2 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\" [disabled]\n    - button \"Checkpoint drafts\" [disabled]\n    - 'button \"Input node: Campaign brief, Verified\"': Input node Verified Campaign brief rev 7f3a Brief locked\n    - 'button \"Concept logic: Concept A, Verified\"': Concept logic Verified Concept A kimi-2.6 Selected\n    - 'button \"Concept logic: Concept B, Running\"': Concept logic Running Concept B kimi-2.6 Generating 2/3\n    - 'button \"Visual gen: Asset 01 — Hero, Verified\" [pressed]': Visual gen Verified Asset 01 — Hero flux-2-klein Output verified\n    - 'button \"Visual gen: Asset 02 — Detail, Verified\"': Visual gen Verified Asset 02 — Detail flux-2-klein Ready\n    - 'button \"Output matrix: Adaptations, Queued\"': Output matrix Queued Adaptations flux-kontext-pro 9 renders queued\n    - 'button \"Copy gen: Copy set, Verified\"': Copy gen Verified Copy set kimi-2.6 3 variants\n    - 'button \"Motion gen: Motion 9:16, Queued\"': Motion gen Queued Motion 9:16 seedance-1.0 6 second render\n    - 'button \"Review gate: QA review, Notes\"': Review gate Notes QA review policy-v2 2 notes\n    - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein Quote basis $4.20 total run\n    - link \"Review $4.20 quote\":\n      - /url: /studio/lumen-skin/quote\n  - complementary \"Plan outline and comments\":\n    - heading \"Plan outline and comments\" [level=2]\n    - button \"Close Plan outline and comments\": Close\n    - complementary \"Graph outline\":\n      - text: Outline\n      - heading \"Graph outline\" [level=2]\n      - text: 12 nodes\n      - paragraph: In order. Arrow keys move between nodes.\n      - list:\n        - listitem:\n          - button \"Input node Campaign brief Verified\":\n            - text: Input node\n            - strong: Campaign brief\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept A Verified\":\n            - text: Concept logic\n            - strong: Concept A\n            - text: Verified\n        - listitem:\n          - button \"Concept logic Concept B Running\":\n            - text: Concept logic\n            - strong: Concept B\n            - text: Running\n        - listitem:\n          - button \"Concept logic Concept C Queued\":\n            - text: Concept logic\n            - strong: Concept C\n            - text: Queued\n        - listitem:\n          - button \"Visual gen Asset 01 — Hero Verified\":\n            - text: Visual gen\n            - strong: Asset 01 — Hero\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 02 — Detail Verified\":\n            - text: Visual gen\n            - strong: Asset 02 — Detail\n            - text: Verified\n        - listitem:\n          - button \"Visual gen Asset 03 — Texture Failed\":\n            - text: Visual gen\n            - strong: Asset 03 — Texture\n            - text: Failed\n        - listitem:\n          - button \"Output matrix Adaptations Queued\":\n            - text: Output matrix\n            - strong: Adaptations\n            - text: Queued\n        - listitem:\n          - button \"Copy gen Copy set Verified\":\n            - text: Copy gen\n            - strong: Copy set\n            - text: Verified\n        - listitem:\n          - button \"Motion gen Motion 9:16 Queued\":\n            - text: Motion gen\n            - strong: Motion 9:16\n            - text: Queued\n        - listitem:\n          - button \"Review gate QA review Notes\":\n            - text: Review gate\n            - strong: QA review\n            - text: Notes\n        - listitem:\n          - button \"Output pack Export bundle Queued\":\n            - text: Output pack\n            - strong: Export bundle\n            - text: Queued\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Viewing graph. Draft comments only. Live\n    - group \"Plan parameters\":\n      - region \"Selected node details\":\n        - term: Node\n        - definition: Asset 01 — Hero\n        - term: Status\n        - definition: Verified — Output verified\n        - term: Reference\n        - definition: flux-2-klein\n      - region \"Collaborative text drafts\":\n        - text: Draft text\n        - heading \"Asset 01 — Hero\" [level=3]\n        - text: 2 fields Generation prompt\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Generation prompt\" [disabled]:\n          - /placeholder: Draft the expensive node configuration prompt\n        - text: Configuration notes\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Configuration notes\" [disabled]:\n          - /placeholder: Capture tuning notes before checkpointing\n    - region \"Asset 01 — Hero\":\n      - text: Draft comments\n      - heading \"Asset 01 — Hero\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n- alert"
+  ]
+}

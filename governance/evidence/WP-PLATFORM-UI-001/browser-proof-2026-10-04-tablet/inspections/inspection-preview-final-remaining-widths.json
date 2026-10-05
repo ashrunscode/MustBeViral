@@ -1,0 +1,111 @@
+{
+  "recordedUtc": "2026-10-04 16:25:48 UTC",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "captureReceipt": "preview-final-remaining-widths.json",
+  "manifest": "preview-final-remaining-manifest.json",
+  "imageNames": 56,
+  "distinctContents": 50,
+  "groups": [
+    {
+      "viewedUtc": "2026-10-04 16:11:03 UTC",
+      "names": [
+        "preview-final-quote-ok-w375.png",
+        "preview-final-quote-ok-w375-bottom.png",
+        "preview-final-quote-expired_quote-w375.png",
+        "preview-final-quote-expired_quote-w375-bottom.png",
+        "preview-final-quote-cap_exceeded-w375.png",
+        "preview-final-quote-cap_exceeded-w375-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:11:25 UTC",
+      "names": [
+        "preview-final-quote-conflict-w375.png",
+        "preview-final-quote-conflict-w375-bottom.png",
+        "preview-final-run-running-w375.png",
+        "preview-final-run-running-w375-bottom.png",
+        "preview-final-run-complete-w375.png",
+        "preview-final-run-complete-w375-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:11:43 UTC",
+      "names": [
+        "preview-final-run-failed-w375.png",
+        "preview-final-run-failed-w375-bottom.png",
+        "preview-final-review-w375.png",
+        "preview-final-review-w375-bottom.png",
+        "preview-final-compare-w375.png",
+        "preview-final-compare-w375-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:12:11 UTC",
+      "names": [
+        "preview-final-quote-ok-w1280.png",
+        "preview-final-quote-ok-w1280-bottom.png",
+        "preview-final-quote-expired_quote-w1280.png",
+        "preview-final-quote-expired_quote-w1280-bottom.png",
+        "preview-final-quote-cap_exceeded-w1280.png",
+        "preview-final-quote-cap_exceeded-w1280-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:12:50 UTC",
+      "names": [
+        "preview-final-quote-conflict-w1280.png",
+        "preview-final-quote-conflict-w1280-bottom.png",
+        "preview-final-run-running-w1280.png",
+        "preview-final-run-complete-w1280.png",
+        "preview-final-run-failed-w1280.png",
+        "preview-final-run-failed-w1280-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:13:37 UTC",
+      "names": [
+        "preview-final-review-w1280.png",
+        "preview-final-review-w1280-bottom.png",
+        "preview-final-compare-w1280.png",
+        "preview-final-compare-w1280-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:13:51 UTC",
+      "names": [
+        "preview-final-quote-ok-w1920.png",
+        "preview-final-quote-ok-w1920-bottom.png",
+        "preview-final-quote-expired_quote-w1920.png",
+        "preview-final-quote-expired_quote-w1920-bottom.png",
+        "preview-final-quote-cap_exceeded-w1920.png",
+        "preview-final-quote-cap_exceeded-w1920-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:14:04 UTC",
+      "names": [
+        "preview-final-quote-conflict-w1920.png",
+        "preview-final-quote-conflict-w1920-bottom.png",
+        "preview-final-run-running-w1920.png",
+        "preview-final-run-complete-w1920.png",
+        "preview-final-run-failed-w1920.png",
+        "preview-final-run-failed-w1920-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:14:21 UTC",
+      "names": [
+        "preview-final-review-w1920.png",
+        "preview-final-review-w1920-bottom.png",
+        "preview-final-compare-w1920.png",
+        "preview-final-compare-w1920-bottom.png"
+      ]
+    }
+  ],
+  "driver": "native Playwright MCP PNG; view_image at original resolution",
+  "visualFindings": [],
+  "evidenceLevel": "synthetic in-memory preview mechanics only",
+  "allDistinctOriginalsInspected": true,
+  "completeMatrixAccepted": false,
+  "scoreAccepted": false
+}

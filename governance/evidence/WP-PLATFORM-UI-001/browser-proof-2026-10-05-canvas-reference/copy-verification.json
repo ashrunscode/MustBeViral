@@ -1,0 +1,439 @@
+{
+  "recordedUtc": "2026-10-05T03:49:56.659Z",
+  "sourceHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "files": 61,
+  "jsonFormattingCompleted": true,
+  "allParsedValuesEqual": true,
+  "allCaptureAndLogBytesEqual": true,
+  "originalTimesPreserved": true,
+  "readmeAfterFormattingSha256": "517ec330cb9f1971a074343882a922412c52b470bd956c9507e9ee3b4a75cd93",
+  "checks": [
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-m375-light.png",
+      "originalSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "currentSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-m375-light-reference.png",
+      "originalSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "currentSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-m375-dark.png",
+      "originalSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "currentSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-m375-dark-reference.png",
+      "originalSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "currentSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-t768-light.png",
+      "originalSha256": "fce689ecb50de4918b2b194d8a6accfe5c6de13c6201dac72eb0574c06989d16",
+      "currentSha256": "fce689ecb50de4918b2b194d8a6accfe5c6de13c6201dac72eb0574c06989d16",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-t768-light-reference.png",
+      "originalSha256": "ffcf323d842d6e866087bd0cf3f82900d9b57c22849326b977f51328de56dcee",
+      "currentSha256": "ffcf323d842d6e866087bd0cf3f82900d9b57c22849326b977f51328de56dcee",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-t768-dark.png",
+      "originalSha256": "fce689ecb50de4918b2b194d8a6accfe5c6de13c6201dac72eb0574c06989d16",
+      "currentSha256": "fce689ecb50de4918b2b194d8a6accfe5c6de13c6201dac72eb0574c06989d16",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-t768-dark-reference.png",
+      "originalSha256": "ffcf323d842d6e866087bd0cf3f82900d9b57c22849326b977f51328de56dcee",
+      "currentSha256": "ffcf323d842d6e866087bd0cf3f82900d9b57c22849326b977f51328de56dcee",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1280-light.png",
+      "originalSha256": "ad8cc3e9dd5df443a56218b1614a586cd1dfde05304e36c1882516410381e1fc",
+      "currentSha256": "ad8cc3e9dd5df443a56218b1614a586cd1dfde05304e36c1882516410381e1fc",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1280-light-reference.png",
+      "originalSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "currentSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1280-dark.png",
+      "originalSha256": "ad8cc3e9dd5df443a56218b1614a586cd1dfde05304e36c1882516410381e1fc",
+      "currentSha256": "ad8cc3e9dd5df443a56218b1614a586cd1dfde05304e36c1882516410381e1fc",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1280-dark-reference.png",
+      "originalSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "currentSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-m375-reduced.png",
+      "originalSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "currentSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-m375-reduced-reference.png",
+      "originalSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "currentSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1280-reduced.png",
+      "originalSha256": "ad8cc3e9dd5df443a56218b1614a586cd1dfde05304e36c1882516410381e1fc",
+      "currentSha256": "ad8cc3e9dd5df443a56218b1614a586cd1dfde05304e36c1882516410381e1fc",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1280-reduced-reference.png",
+      "originalSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "currentSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1920-reduced.png",
+      "originalSha256": "698a4470d8291a708bb53940f652740a24668d49fe2cab9b1fb4d94e8b163361",
+      "currentSha256": "698a4470d8291a708bb53940f652740a24668d49fe2cab9b1fb4d94e8b163361",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-d1920-reduced-reference.png",
+      "originalSha256": "0d91ec503f1dce7d0ef307990d8ad9b46e937e6a58a055c11091784304cc9990",
+      "currentSha256": "0d91ec503f1dce7d0ef307990d8ad9b46e937e6a58a055c11091784304cc9990",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-forced-colors.png",
+      "originalSha256": "2d1acf1000349e9263059de97a218f6f82164f61f029badeb8f39134b7486f72",
+      "currentSha256": "2d1acf1000349e9263059de97a218f6f82164f61f029badeb8f39134b7486f72",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-forced-colors-reference.png",
+      "originalSha256": "9a2712d4116a4a83dfe57857eda1fcafb7763c62195c5b01c085dc3bc9c66740",
+      "currentSha256": "9a2712d4116a4a83dfe57857eda1fcafb7763c62195c5b01c085dc3bc9c66740",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-zoom-200-emulated.png",
+      "originalSha256": "f87c2c9c5e891df5673c8cec29255d244f4f2b7f3dd7a68ec2d7492efb03b224",
+      "currentSha256": "f87c2c9c5e891df5673c8cec29255d244f4f2b7f3dd7a68ec2d7492efb03b224",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-zoom-200-emulated-reference.png",
+      "originalSha256": "e4a7e3a424c5f12d15f0f1cfead3ef768ce0d0827d702c66ea15b3759e405915",
+      "currentSha256": "e4a7e3a424c5f12d15f0f1cfead3ef768ce0d0827d702c66ea15b3759e405915",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-text-only-200-emulated.png",
+      "originalSha256": "6a93a5d3bde339a52664e639e1ba9db4000181327108353e4358d8c137774873",
+      "currentSha256": "6a93a5d3bde339a52664e639e1ba9db4000181327108353e4358d8c137774873",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-text-only-200-emulated-reference.png",
+      "originalSha256": "7c5de4462248014c599144c94bcf7292ed12ebe5649a502f14e742654e1edcb0",
+      "currentSha256": "7c5de4462248014c599144c94bcf7292ed12ebe5649a502f14e742654e1edcb0",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-m375.png",
+      "originalSha256": "ad501d619217c6a3afe3973d21d4dffa50ad7294590b3b66e3d50e127631861e",
+      "currentSha256": "ad501d619217c6a3afe3973d21d4dffa50ad7294590b3b66e3d50e127631861e",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-m375-reference.png",
+      "originalSha256": "4058e6a1f729d96eb7422e60f349c363bb7b0b04ffc38f81544b687d7d26a2e2",
+      "currentSha256": "4058e6a1f729d96eb7422e60f349c363bb7b0b04ffc38f81544b687d7d26a2e2",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-t768.png",
+      "originalSha256": "1fbff9bf03218777112740f87ac91851bb8cf5b0502c3621d46933ba5cd3a581",
+      "currentSha256": "1fbff9bf03218777112740f87ac91851bb8cf5b0502c3621d46933ba5cd3a581",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-t768-reference.png",
+      "originalSha256": "cdbad44cffea90b7bc4ae8567fce6637888788fdb575b4326c488cba75c36994",
+      "currentSha256": "cdbad44cffea90b7bc4ae8567fce6637888788fdb575b4326c488cba75c36994",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-d1920.png",
+      "originalSha256": "86e0bef352aff2c91a313cb5a8a2f4db14228d83943c3d342a2b8c646a5136a8",
+      "currentSha256": "86e0bef352aff2c91a313cb5a8a2f4db14228d83943c3d342a2b8c646a5136a8",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-d1920-reference.png",
+      "originalSha256": "8e44bf71f0e3e0e54775967736b97d51098d03e45ee8c3d8447b67eb71df764a",
+      "currentSha256": "8e44bf71f0e3e0e54775967736b97d51098d03e45ee8c3d8447b67eb71df764a",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-text-only-200-emulated.png",
+      "originalSha256": "10a8f88955d72b81ef672a5134e2a4bd2231ba2a8cc76f1b0179bb219763312d",
+      "currentSha256": "10a8f88955d72b81ef672a5134e2a4bd2231ba2a8cc76f1b0179bb219763312d",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-long-text-only-200-emulated-reference.png",
+      "originalSha256": "060c06bc2defe768a67c979e1afd3063cf391c35e4d024f88438ed05996d2e27",
+      "currentSha256": "060c06bc2defe768a67c979e1afd3063cf391c35e4d024f88438ed05996d2e27",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-quality-m375.png",
+      "originalSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "currentSha256": "1ae6c74fd1f1a70d1c75e68d631de90df682fcb36b9560791b3c7f72651c7479",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-quality-m375-reference.png",
+      "originalSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "currentSha256": "edf2bdc9237302e686db15ab8f8f76be6844590e6d837202191d73d27f9cbe7f",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-quality-d1440-light.png",
+      "originalSha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc",
+      "currentSha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-quality-d1440-light-reference.png",
+      "originalSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "currentSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-quality-d1440-dark.png",
+      "originalSha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc",
+      "currentSha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/canvas-quality-d1440-dark-reference.png",
+      "originalSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "currentSha256": "3486051e6757239eccd278f6374b6da048feadd45fd2215de752b47209f88e75",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/before-font-regression.png",
+      "originalSha256": "5406f09ef500d39adecd3f6105d85c3db4fcaf53b8ec0f730790a66cbe866ac8",
+      "currentSha256": "5406f09ef500d39adecd3f6105d85c3db4fcaf53b8ec0f730790a66cbe866ac8",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/native-current.json",
+      "originalSha256": "7c64515c6795afe1ff732f4435c948d4ca98572cb1b650ec0ee6cb635c9b3525",
+      "currentSha256": "a8ac342e2887e248fba259a78935c4a3ef8e8237a9151792cfec638712cc6b7f",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/native-quality.json",
+      "originalSha256": "28186243e9eb286df3bea160111fe25d5a76cf8cef421302f6e4b09cf434ed79",
+      "currentSha256": "11bc7fe2df075c13e964defe19962e80c9ddad2b6f380aecd911bc4db201d3fd",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/captures.json",
+      "originalSha256": "6f905324759f7e2dbbcb8408996665366ec59098ab474f0b7e3fcacf608ee3b5",
+      "currentSha256": "6f905324759f7e2dbbcb8408996665366ec59098ab474f0b7e3fcacf608ee3b5",
+      "parsedValuesEqual": true,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/quality-captures.json",
+      "originalSha256": "5b6035cffb42a870a53b1c93097ef2576d95eefef6850cf21c322abd18a275b1",
+      "currentSha256": "5b6035cffb42a870a53b1c93097ef2576d95eefef6850cf21c322abd18a275b1",
+      "parsedValuesEqual": true,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/original-inspection.json",
+      "originalSha256": "a000f8023da1dff00ad78b1731cb89d3e5e4ea0933856877cad91e3ae488b350",
+      "currentSha256": "a000f8023da1dff00ad78b1731cb89d3e5e4ea0933856877cad91e3ae488b350",
+      "parsedValuesEqual": true,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/design-score.json",
+      "originalSha256": "92f2d376523382a9ae4360fe4e671d08abccf4d3847d481030b2417e21715f53",
+      "currentSha256": "92f2d376523382a9ae4360fe4e671d08abccf4d3847d481030b2417e21715f53",
+      "parsedValuesEqual": true,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/source-checkpoint.json",
+      "originalSha256": "4e362795d935b70a6b1803ac6625d2f33fedb298c179302030be20dba9f4a5dd",
+      "currentSha256": "42d03f5744057d6d63846af079e28ce671d58c6ce84779c2e1e3044ad5fb00e0",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/regression-red.json",
+      "originalSha256": "edeedee01442e365417e7b49c216dd0802c19c46977ad2d5ab86c4175001f41c",
+      "currentSha256": "bf2ca88740619f98e3cfabab48f8ceea64f529dbbef8876e61a76505b3a595fb",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/regression-green-before-format.json",
+      "originalSha256": "0ca7f685767c062156353e32c1ce71a8e4e9b80e5674a3ca01dade34a14ff030",
+      "currentSha256": "f0576d42930d518ab66ca078663dd264ce7c76ffa63121c4b9f7a5d89a398e42",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/regression-green-after-format.json",
+      "originalSha256": "728b02fb987499001593c498eac527a6b1340e1512a69d1c0b2a5fd4380b1328",
+      "currentSha256": "87ee88e2d7afeae575a2ed179ccf2aa4775aaa9d15eafc4ce34e94d66a651553",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/production-prepared.json",
+      "originalSha256": "b4b0e8b57e9d5e1ce3e4e8029996fe3891d8daac41b2eeafc36179522acbbe78",
+      "currentSha256": "7eed18583b80d56d1ec65fe6c7162cf0763c9faf8f86053e1dcf558f3307492c",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/production-build.json",
+      "originalSha256": "e75e1bb2484d5314022f01ad393f0bc25b6ce4d91575720c7f9f5c3a4f303df9",
+      "currentSha256": "6643e765d91a3bf86e4ae0d5b358081a270423f65e1fd7fb1f89fbf3fce533a4",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/production-web-process.json",
+      "originalSha256": "1d426cee8b573a5adc26eb678402c8baa1ea7c2340b7819d6c04e2403c75b2b8",
+      "currentSha256": "4a0217ded57eaf609cfacdd74c05bdfece50bac72c4d99b43c7d6234fbe052c7",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/production-core-process.json",
+      "originalSha256": "5d57c6e67efc408b3bd86852dc7e034b8189b0e105ee5916a9ecce548f1eecf3",
+      "currentSha256": "bbbd5cd4203aa5b16f2c8c5c7c2f0c1112395ecc2b0334dfcd59b6cd8d6f8932",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/production-stop.json",
+      "originalSha256": "0da2c3cea1bce22542ae79e445fad2ac90bbf19624758af6fd4f320045149e13",
+      "currentSha256": "25da7ce117683cca79e18dc50f804186737acdfb01262d7c606d5e9de9f050a7",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/format-wrapper-diagnostic.json",
+      "originalSha256": "4c8a3b877f3f135b3023ea3f6629ddf88902f01acea95a7c70589bcf194aa664",
+      "currentSha256": "7cb1bf422e0483be8548d4c6e9220326239bb36bb64250266f8037340692c174",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/inventory-driver-diagnostic.json",
+      "originalSha256": "7b837bdafc28a06652be04c93a3863dc1afaa178a4fce204c91f015acc05dbdd",
+      "currentSha256": "7b837bdafc28a06652be04c93a3863dc1afaa178a4fce204c91f015acc05dbdd",
+      "parsedValuesEqual": true,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/filename-driver-diagnostic.json",
+      "originalSha256": "14420814516af55c98310ca9aa31797122fb5c971f9304521fb788340b55b959",
+      "currentSha256": "14420814516af55c98310ca9aa31797122fb5c971f9304521fb788340b55b959",
+      "parsedValuesEqual": true,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/preflight-current.json",
+      "originalSha256": "e4f1a60f2c5c633dbacb35989aeb9e5d82e784dd1640ae45fbbd504145b701ed",
+      "currentSha256": "9e83124ba65de34ff18182e39bff423ccb1d527ced39e8b2a8cc9eed6569c3cf",
+      "parsedValuesEqual": true,
+      "bytesEqual": false
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/regression-red.txt",
+      "originalSha256": "1865fed0cd3da2cf53639128b59059359faa4eb81405244d33f380b79c3b6756",
+      "currentSha256": "1865fed0cd3da2cf53639128b59059359faa4eb81405244d33f380b79c3b6756",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/regression-green-before-format.txt",
+      "originalSha256": "9b878174b46ca1f0ca98e77d7051fa12cf5c4996386e7877c0cf459b10f00d69",
+      "currentSha256": "9b878174b46ca1f0ca98e77d7051fa12cf5c4996386e7877c0cf459b10f00d69",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-canvas-reference/regression-green-after-format.txt",
+      "originalSha256": "8b673f1415460c29a1a7d14f20630cd0542dfbdcda4e4acbf680eac933cfe6c7",
+      "currentSha256": "8b673f1415460c29a1a7d14f20630cd0542dfbdcda4e4acbf680eac933cfe6c7",
+      "parsedValuesEqual": null,
+      "bytesEqual": true
+    }
+  ]
+}

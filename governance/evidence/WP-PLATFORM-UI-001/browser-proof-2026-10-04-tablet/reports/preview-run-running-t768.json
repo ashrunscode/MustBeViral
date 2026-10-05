@@ -1,0 +1,46 @@
+{
+  "cell": "preview-run-running-t768",
+  "path": "/studio/lumen-skin/quote?stage=run",
+  "capturedUtc": "2026-10-04T13:30:29.007Z",
+  "observedUtc": "2026-10-04T13:30:29.168Z",
+  "sourceBase": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "equalMergedTree": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [],
+  "evidenceLevel": "synthetic in-memory local preview, no Core execution",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Generating your content",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "runState": "running",
+    "results": [],
+    "announcements": [
+      {
+        "role": "status",
+        "text": "Preview. Sample work only. No connected accounts, approvals or publication."
+      }
+    ],
+    "runningAnimations": []
+  },
+  "tree": "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Generating your content\":\n    - text: Run run-lumen-0007, revision 7f3a\n    - heading \"Generating your content\" [level=1]\n    - paragraph: Completed branches remain reviewable while downstream work continues.\n    - text: Running kimi-2.6 Running\n    - strong: Concept logic\n    - text: Reasoning route pinned flux-2-klein Queued\n    - strong: Asset generation\n    - text: 3 variants queued kimi-2.6 Queued\n    - strong: Copy sets\n    - text: 3 sets queued seedance-1.0 Queued\n    - strong: Motion\n    - text: 6 second render queued\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"0 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.20\n    - term: Captured\n    - definition: $0.00\n    - term: Released\n    - definition: $0.00\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $4.20\n    - term: Revision\n    - definition: 7f3a\n  - text: In progress\n  - strong: Running\n  - button \"Cancel run\"",
+  "axe": {
+    "violations": [],
+    "incomplete": ["color-contrast"]
+  },
+  "afterAxeRunState": "running",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-run-running-t768.png"
+}

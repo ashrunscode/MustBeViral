@@ -1,0 +1,49 @@
+{
+  "node": "v24.18.0",
+  "log": "C:/dev/mbv-run/l3f-tablet-layout-red-20261004.txt",
+  "endedUtc": "2026-10-04T13:40:37.7608622Z",
+  "previewSourceChanges": null,
+  "sourceHashes": [
+    {
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d",
+      "path": "apps/web/src/features/platform/platform.css"
+    },
+    {
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0",
+      "path": "apps/web/app/globals.css"
+    },
+    {
+      "sha256": "df2d94a8d8f4c4ad3567c44eeb0e45a4b2003b159f406e9e4c1c91e5d1f08e64",
+      "path": "apps/web/e2e/platform-connected.spec.ts"
+    },
+    {
+      "sha256": "473a297fa880c994ed5bbdce0bedb4ceb3b9267e42921e823d31ce80c3d6a24e",
+      "path": "apps/web/e2e/final-ui.spec.ts"
+    },
+    {
+      "sha256": "9dd5095a0cd47a610980d0d84500ebe29546cb1d2614254650b754885a9f0b0c",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css"
+    },
+    {
+      "sha256": "ed593ce753bd599063429b91018576785e812e7b048d1b030c2773705e70af87",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css"
+    },
+    {
+      "sha256": "c4a6343b54da44d19eab481fc93812395a1699688f15c6bcdb39ffdc8e0942b4",
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css"
+    }
+  ],
+  "startedUtc": "2026-10-04T13:40:21.1121671Z",
+  "pnpm": "11.12.0",
+  "command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep full quote and acknowledgment|terminal run branches|review and comparison titles",
+  "remoteAuthentication": false,
+  "exit": 1,
+  "phase": "red",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "providerOrQueueExecution": false,
+  "ownedWorkInProgress": true,
+  "previewSourceBase": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "localOnly": true,
+  "previewPid": 59336,
+  "root": "C:/dev/mbv-finish"
+}

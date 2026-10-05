@@ -1,0 +1,1836 @@
+{
+  "recordedUtc": "2026-10-04T15:06:59.345Z",
+  "driver": "Playwright MCP",
+  "sourceHead": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "renderMode": "production build; authenticated local synthetic workspace data; public home signed out",
+  "labPerformanceIncluded": false,
+  "providerAndQueueExecution": false,
+  "remoteAuthOrDatabaseAccess": false,
+  "trees": [
+    "- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Play the film\"\n    - status\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346",
+    "- main:\n  - region \"We film Houston.\":\n    - img \"Two hands adjust a camera on a gimbal in a generated room.\"\n    - button \"Play the film\" [disabled]\n    - status: Reduced motion is on. The poster stays still.\n    - heading \"We film Houston.\" [level=1]\n    - paragraph: Weekly content for Houston businesses — Reels, photos, and a posting schedule you actually keep.\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346\n    - term: Test Shoot\n    - definition: $700 one time\n    - term: Full Package\n    - definition: $3,500 a month\n    - paragraph: In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.\n    - paragraph: \"This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.\"\n  - region \"Test Shoot\":\n    - heading \"Test Shoot\" [level=2]\n    - paragraph: $700 one time\n    - list:\n      - listitem: One shoot, up to 2 hours\n      - listitem: 2 edited Reels\n      - listitem: 15–25 edited photos\n      - listitem: Creative direction on set\n      - listitem: Formatted for Instagram and TikTok, ready to post\n  - region \"Full Package\":\n    - heading \"Full Package\" [level=2]\n    - paragraph: $3,500 a month\n    - list:\n      - listitem: 4–8 shoots per month, 2–3 hours each\n      - listitem: 12–16+ edited Reels\n      - listitem: 120–200 edited photos\n      - listitem: Lifestyle, branding, product and team photography\n      - listitem: Cinematic brand content\n      - listitem: Full creative direction\n      - listitem: Monthly content strategy and calendar\n      - listitem: Hook and caption assistance\n      - listitem: Trend research\n      - listitem: Instagram and TikTok optimisation\n      - listitem: Behind-the-scenes and story content\n      - listitem: Monthly strategy meeting\n      - listitem: Priority editing\n      - listitem: Drone / aerial included where applicable\n  - paragraph:\n    - link \"Pricing, with the add-ons\":\n      - /url: /pricing\n  - paragraph: On the Full Package we come to your business four to eight times a month, shoot, edit, and hand you the posts with a calendar.\n  - region \"Your kind of work.\":\n    - heading \"Your kind of work.\" [level=2]\n    - term: Med spa\n    - definition:\n      - paragraph: The treatment menu changed and the page still shows last season.\n      - paragraph: We come to the room. We film the staff, the device, and the work. You get the posts and the calendar.\n    - term: Restaurant\n    - definition:\n      - paragraph: The special is gone and the photo of it is still up, shot in bad light.\n      - paragraph: We film the dish and the room on a schedule, so the feed matches the menu.\n    - term: Gym\n    - definition:\n      - paragraph: One member films, and the class looks empty.\n      - paragraph: We film the week of classes in the room, with people who have said yes.\n    - term: Auto\n    - definition:\n      - paragraph: The build is finished and the footage is still on a phone.\n      - paragraph: We walk the car and cut the Reels.\n    - term: Home services\n    - definition:\n      - paragraph: The before-and-after is the proof, and nobody shot it.\n      - paragraph: We document the job from start to finish and turn it into the month.\n    - term: Real estate team\n    - definition:\n      - paragraph: Every listing has photos. The team itself has no face.\n      - paragraph: We film the team, on a week that is not a listing.\n  - region \"Already posting?\":\n    - heading \"Already posting?\" [level=2]\n    - paragraph: You do. The gap is the weeks you don’t. We keep the cadence so it doesn’t depend on somebody remembering.\n  - region \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\":\n    - heading \"Book a test shoot. Two hours, two Reels, 15 to 25 photos, $700.\" [level=2]\n    - link \"Book a test shoot.\":\n      - /url: tel:+17138999346\n    - link \"Call 713-899-9346.\":\n      - /url: tel:+17138999346",
+    "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+    "- main \"Skills\":\n  - region \"Skills and version history\":\n    - text: User-authored Skills\n    - heading \"Skills and version history\" [level=1]\n    - paragraph: Publish reusable workflow instructions for your team. Each publish creates an immutable version; edits always create a new version and never mutate a published snapshot. Skills cannot access database, storage, or billing credentials.\n    - button \"Publish Skill\"\n  - region \"Published Skills\":\n    - text: Workspace Skills\n    - heading \"Published Skills\" [level=2]\n    - paragraph: No Skills yet. Publish your first reusable workflow instruction.\n  - region \"Version history\":\n    - text: Immutable versions\n    - heading \"Version history\" [level=2]\n    - paragraph: Select a Skill to inspect its immutable published versions."
+  ],
+  "cells": [
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-m375-light",
+      "capturedUtc": "2026-10-04T15:06:37.646Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 33,
+              "y": 350.8125,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 350.8125,
+              "right": 236.203125,
+              "bottom": 384.40625,
+              "left": 33
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-m375-dark",
+      "capturedUtc": "2026-10-04T15:06:38.563Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 33,
+              "y": 350.8125,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 350.8125,
+              "right": 236.203125,
+              "bottom": 384.40625,
+              "left": 33
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-t768-light",
+      "capturedUtc": "2026-10-04T15:06:39.433Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 45,
+              "y": 574.375,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 574.375,
+              "right": 248.203125,
+              "bottom": 607.96875,
+              "left": 45
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-t768-dark",
+      "capturedUtc": "2026-10-04T15:06:40.148Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 45,
+              "y": 574.375,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 574.375,
+              "right": 248.203125,
+              "bottom": 607.96875,
+              "left": 45
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-d1440-light",
+      "capturedUtc": "2026-10-04T15:06:40.910Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 157,
+              "y": 606,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 606,
+              "right": 360.203125,
+              "bottom": 639.59375,
+              "left": 157
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-d1440-dark",
+      "capturedUtc": "2026-10-04T15:06:41.771Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 157,
+              "y": 606,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 606,
+              "right": 360.203125,
+              "bottom": 639.59375,
+              "left": 157
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-m375-reduced",
+      "capturedUtc": "2026-10-04T15:06:42.616Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 33,
+              "y": 410.8125,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 410.8125,
+              "right": 236.203125,
+              "bottom": 444.40625,
+              "left": 33
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 146
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-d1280-reduced",
+      "capturedUtc": "2026-10-04T15:06:43.367Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 77,
+              "y": 606,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 606,
+              "right": 280.203125,
+              "bottom": 639.59375,
+              "left": 77
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 146
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "home",
+      "path": "/",
+      "cell": "home-d1920-reduced",
+      "capturedUtc": "2026-10-04T15:06:44.141Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "We film Houston.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 397,
+              "y": 641,
+              "width": 203.203125,
+              "height": 33.59375,
+              "top": 641,
+              "right": 600.203125,
+              "bottom": 674.59375,
+              "left": 397
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 177.640625,
+            "height": 42,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 146
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-home-d1920-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-m375-light",
+      "capturedUtc": "2026-10-04T15:06:45.255Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 333.078125,
+              "width": 253,
+              "height": 33.59375,
+              "top": 333.078125,
+              "right": 314,
+              "bottom": 366.671875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-m375-dark",
+      "capturedUtc": "2026-10-04T15:06:46.096Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 333.078125,
+              "width": 253,
+              "height": 33.59375,
+              "top": 333.078125,
+              "right": 314,
+              "bottom": 366.671875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-t768-light",
+      "capturedUtc": "2026-10-04T15:06:47.006Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 269,
+              "y": 220,
+              "width": 430,
+              "height": 33.59375,
+              "top": 220,
+              "right": 699,
+              "bottom": 253.59375,
+              "left": 269
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-t768-dark",
+      "capturedUtc": "2026-10-04T15:06:47.781Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 269,
+              "y": 220,
+              "width": 430,
+              "height": 33.59375,
+              "top": 220,
+              "right": 699,
+              "bottom": 253.59375,
+              "left": 269
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-d1440-light",
+      "capturedUtc": "2026-10-04T15:06:48.573Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 1066,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1363,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-d1440-dark",
+      "capturedUtc": "2026-10-04T15:06:49.444Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 1066,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1363,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-m375-reduced",
+      "capturedUtc": "2026-10-04T15:06:50.290Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 333.078125,
+              "width": 253,
+              "height": 33.59375,
+              "top": 333.078125,
+              "right": 314,
+              "bottom": 366.671875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-d1280-reduced",
+      "capturedUtc": "2026-10-04T15:06:51.079Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 906,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1203,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-access",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/access?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-access-d1920-reduced",
+      "capturedUtc": "2026-10-04T15:06:51.878Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "API keys",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 427,
+              "y": 164,
+              "width": 1286,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1713,
+              "bottom": 197.59375,
+              "left": 427
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Create API key",
+            "width": 129.078125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-access-d1920-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-m375-light",
+      "capturedUtc": "2026-10-04T15:06:52.789Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 277,
+              "width": 278,
+              "height": 67.1875,
+              "top": 277,
+              "right": 339,
+              "bottom": 344.1875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-m375-dark",
+      "capturedUtc": "2026-10-04T15:06:53.730Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 277,
+              "width": 278,
+              "height": 67.1875,
+              "top": 277,
+              "right": 339,
+              "bottom": 344.1875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-t768-light",
+      "capturedUtc": "2026-10-04T15:06:54.610Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 269,
+              "y": 160,
+              "width": 430,
+              "height": 33.59375,
+              "top": 160,
+              "right": 699,
+              "bottom": 193.59375,
+              "left": 269
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-t768-dark",
+      "capturedUtc": "2026-10-04T15:06:55.348Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 269,
+              "y": 160,
+              "width": 430,
+              "height": 33.59375,
+              "top": 160,
+              "right": 699,
+              "bottom": 193.59375,
+              "left": 269
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-d1440-light",
+      "capturedUtc": "2026-10-04T15:06:56.114Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 1066,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1363,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-d1440-dark",
+      "capturedUtc": "2026-10-04T15:06:56.976Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 1066,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1363,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-m375-reduced",
+      "capturedUtc": "2026-10-04T15:06:57.753Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 61,
+              "y": 277,
+              "width": 278,
+              "height": 67.1875,
+              "top": 277,
+              "right": 339,
+              "bottom": 344.1875,
+              "left": 61
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-d1280-reduced",
+      "capturedUtc": "2026-10-04T15:06:58.541Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 297,
+              "y": 164,
+              "width": 906,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1203,
+              "bottom": 197.59375,
+              "left": 297
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "workspace-skills",
+      "path": "/studio/40c45d77-3df0-488a-9a93-c07d5737f03a/skills?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa",
+      "cell": "workspace-skills-d1920-reduced",
+      "capturedUtc": "2026-10-04T15:06:59.330Z",
+      "httpStatus": 200,
+      "treeIndex": 3,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Skills and version history",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 427,
+              "y": 164,
+              "width": 1286,
+              "height": 33.59375,
+              "top": 164,
+              "right": 1713,
+              "bottom": 197.59375,
+              "left": 427
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Publish Skill",
+            "width": 114.203125,
+            "height": 40,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [true, true]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 10
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-prod-workspace-skills-d1920-reduced.png",
+      "folds": []
+    }
+  ]
+}

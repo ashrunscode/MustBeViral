@@ -441,6 +441,37 @@
   padding: 0;
 }
 
+.nodeDetails {
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  background: var(--card);
+}
+.nodeDetails dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+.nodeDetails dl > div {
+  display: grid;
+  gap: 3px;
+}
+.nodeDetails dt {
+  color: var(--ink);
+  font-size: 11px;
+}
+.nodeDetails dd {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.nodeReference {
+  font-family: var(--font-mono), monospace;
+}
+
 .sideRail > :last-child {
   border-top: 1px solid var(--line);
   padding: 12px;
@@ -526,12 +557,11 @@
 }
 
 .outlineRow strong {
-  overflow: hidden;
   color: var(--ink-head);
   font-size: 12px;
   font-weight: 400;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .footer {

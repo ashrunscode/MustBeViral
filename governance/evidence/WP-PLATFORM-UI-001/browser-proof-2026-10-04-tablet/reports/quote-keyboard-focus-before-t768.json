@@ -1,0 +1,61 @@
+{
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "renderingSourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css",
+      "sha256": "49514cc8dc7a4495b282da750d7f282408a97c8295841dda788d8782217ca5b1"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css",
+      "sha256": "84bd29638f7c9ad58b0726504e002dae3ca7a450ed79fc2a254fc83baf85ea1e"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "2d9fdfa917d1774f3396c650d4dc9d911a0a0365e5d7c789c6c3fba9e5309f5a"
+    }
+  ],
+  "localOnly": true,
+  "evidenceLevel": "synthetic in-memory preview",
+  "observation": {
+    "observedUtc": "2026-10-04T14:20:55.659Z",
+    "alert": {
+      "x": 258,
+      "y": -131.40625,
+      "width": 453,
+      "height": 94.390625,
+      "top": -131.40625,
+      "right": 711,
+      "bottom": -37.015625,
+      "left": 258
+    },
+    "heading": {
+      "x": 258,
+      "y": -214.5,
+      "width": 453,
+      "height": 33.59375,
+      "top": -214.5,
+      "right": 711,
+      "bottom": -180.90625,
+      "left": 258
+    },
+    "focusedTag": "BODY",
+    "focusedName": "document body",
+    "visibleHeight": 1024,
+    "scrollers": [
+      {
+        "class": "quote-flow-module__I1bYXW__quotePage",
+        "scrollTop": 499,
+        "client": 767,
+        "content": 1266
+      }
+    ]
+  }
+}

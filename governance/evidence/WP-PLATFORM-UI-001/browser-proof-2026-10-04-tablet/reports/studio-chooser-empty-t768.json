@@ -1,0 +1,28 @@
+{
+  "cell": "studio-chooser-empty-t768",
+  "observedUtc": "2026-10-04T12:35:11.072Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": ["Choose a studio."],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - heading \"Your first studio starts here.\" [level=2]\n    - paragraph: Create a studio for one brand or a portfolio of brands.\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list",
+  "errors": {
+    "console": 0,
+    "page": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-chooser-empty-t768.png"
+}

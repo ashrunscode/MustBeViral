@@ -1,0 +1,39 @@
+{
+  "recordedUtc": "2026-10-04T15:39:13.675Z",
+  "sourceHead": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "responses": [
+    {
+      "path": "/api/core/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access",
+      "method": "GET",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "path": "/api/core/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access",
+      "method": "GET",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "path": "/api/core/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access",
+      "method": "GET",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "path": "/api/core/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access",
+      "method": "GET",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "path": "/api/core/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/api-keys",
+      "method": "GET",
+      "status": 200,
+      "errorCode": null
+    }
+  ],
+  "errors": [],
+  "tree": "- main \"API access\":\n  - region \"API keys\":\n    - text: Programmatic access\n    - heading \"API keys\" [level=1]\n    - paragraph: Scoped keys authorize REST, MCP, and CLI automation. Keys cannot bypass quote confirmation or spend autonomously. Revocation is immediate.\n    - button \"Create API key\"\n  - region \"Issued credentials\":\n    - text: Workspace keys\n    - heading \"Issued credentials\" [level=2]\n    - paragraph: No API keys yet. Create one for automation with explicit scopes.",
+  "noSubmission": true
+}

@@ -1,0 +1,62 @@
+{
+  "cell": "studio-creators-fixed-t768",
+  "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators",
+  "observedUtc": "2026-10-04T12:59:06.167Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Creators and partners",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [
+      {
+        "role": "status",
+        "text": "No creators or partners yet.Creator discovery, outreach and partnership agreements are later roadmap waves.Creator and partner lists are not part of this release yet.Back to brands"
+      }
+    ],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Creators and partners\":\n  - heading \"Creators and partners\" [level=1]\n  - paragraph: People and brands you work with, with the evidence for each fit.\n  - status:\n    - heading \"No creators or partners yet.\" [level=2]\n    - paragraph: Creator discovery, outreach and partnership agreements are later roadmap waves.\n    - paragraph: Creator and partner lists are not part of this release yet.\n    - link \"Back to brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-creators-fixed-t768.png"
+}

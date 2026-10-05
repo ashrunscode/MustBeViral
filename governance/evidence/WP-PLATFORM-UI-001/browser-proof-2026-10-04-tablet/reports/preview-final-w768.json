@@ -1,0 +1,1242 @@
+{
+  "recordedUtc": "2026-10-04T15:47:50.321Z",
+  "sourceHead": "9a77865d501c9b1b3813d81ebdb4915c99305f22",
+  "driver": "Playwright MCP",
+  "evidenceLevel": "synthetic in-memory dev preview; no Core, provider, queue, remote data or paid call",
+  "metricsScope": "event timings are fixture interaction samples, not production lab/field INP",
+  "trees": [
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - paragraph: The reservation is pinned to this revision, route, and affected branch.\n    - text: Quote $4.20 Revision 7f3a Expires 15:00\n    - table \"Per-node estimate\":\n      - rowgroup:\n        - row \"Node Basis Estimate\":\n          - columnheader \"Node\"\n          - columnheader \"Basis\"\n          - columnheader \"Estimate\"\n      - rowgroup:\n        - row \"Concept logic kimi-2.6 $1.20\":\n          - cell \"Concept logic\"\n          - cell \"kimi-2.6\"\n          - cell \"$1.20\"\n        - row \"Asset gen x3 flux-2-klein $2.40\":\n          - cell \"Asset gen x3\"\n          - cell \"flux-2-klein\"\n          - cell \"$2.40\"\n        - row \"Copy 3 sets $0.24\":\n          - cell \"Copy\"\n          - cell \"3 sets\"\n          - cell \"$0.24\"\n        - row \"Motion seedance-1.0 6s 9:16 $0.36\":\n          - cell \"Motion seedance-1.0 6s\"\n          - cell \"9:16\"\n          - cell \"$0.36\"\n        - row \"Total Maximum charge $4.20\":\n          - cell \"Total\"\n          - cell \"Maximum charge\"\n          - cell \"$4.20\"\n    - text: 4 nodes priced in this quote Expires 15:00 Run cap $8.00. Day cap $100.00, used $18.42.\n    - checkbox \"I acknowledge this revision and the maximum $4.20 charge before provider work starts.\"\n    - text: I acknowledge this revision and the maximum $4.20 charge before provider work starts.\n    - link \"Back to the plan\":\n      - /url: /studio/lumen-skin/canvas\n  - complementary \"What this run covers\":\n    - heading \"What this run covers\" [level=2]\n    - term: Nodes priced\n    - definition: \"4\"\n    - term: Route\n    - definition: kimi-2.6 + flux-2-klein + seedance-1.0\n    - term: Pinned revision\n    - definition: 7f3a\n    - term: Maximum charge\n    - definition: $4.20\n    - term: Run cap\n    - definition: $8.00\n    - term: Day cap used\n    - definition: $18.42 of $100.00\n    - paragraph: The charge can only be lower than the maximum. Nothing starts until you confirm.\n  - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein + seedance-1.0 Expires 15:00\n  - button \"Confirm $4.20 run\" [disabled]",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - paragraph: The reservation is pinned to this revision, route, and affected branch.\n    - alert:\n      - strong: Quote expired.\n      - text: No spend was submitted. Request a fresh named price.\n      - button \"Re-quote this run\"\n    - text: Quote $4.20 Revision 7f3a Expired\n    - table \"Per-node estimate\":\n      - rowgroup:\n        - row \"Node Basis Estimate\":\n          - columnheader \"Node\"\n          - columnheader \"Basis\"\n          - columnheader \"Estimate\"\n      - rowgroup:\n        - row \"Concept logic kimi-2.6 $1.20\":\n          - cell \"Concept logic\"\n          - cell \"kimi-2.6\"\n          - cell \"$1.20\"\n        - row \"Asset gen x3 flux-2-klein $2.40\":\n          - cell \"Asset gen x3\"\n          - cell \"flux-2-klein\"\n          - cell \"$2.40\"\n        - row \"Copy 3 sets $0.24\":\n          - cell \"Copy\"\n          - cell \"3 sets\"\n          - cell \"$0.24\"\n        - row \"Motion seedance-1.0 6s 9:16 $0.36\":\n          - cell \"Motion seedance-1.0 6s\"\n          - cell \"9:16\"\n          - cell \"$0.36\"\n        - row \"Total Maximum charge $4.20\":\n          - cell \"Total\"\n          - cell \"Maximum charge\"\n          - cell \"$4.20\"\n    - text: 4 nodes priced in this quote Quote expired Run cap $8.00. Day cap $100.00, used $18.42.\n    - checkbox \"I acknowledge this revision and the maximum $4.20 charge before provider work starts.\" [checked] [disabled]\n    - text: I acknowledge this revision and the maximum $4.20 charge before provider work starts.\n    - link \"Back to the plan\":\n      - /url: /studio/lumen-skin/canvas\n  - complementary \"What this run covers\":\n    - heading \"What this run covers\" [level=2]\n    - term: Nodes priced\n    - definition: \"4\"\n    - term: Route\n    - definition: kimi-2.6 + flux-2-klein + seedance-1.0\n    - term: Pinned revision\n    - definition: 7f3a\n    - term: Maximum charge\n    - definition: $4.20\n    - term: Run cap\n    - definition: $8.00\n    - term: Day cap used\n    - definition: $18.42 of $100.00\n    - paragraph: The charge can only be lower than the maximum. Nothing starts until you confirm.\n  - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein + seedance-1.0 Expires Expired\n  - button \"Re-quote this run\"",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - paragraph: The reservation is pinned to this revision, route, and affected branch.\n    - alert:\n      - strong: Spend cap blocked confirmation\n      - text: The workspace-day reservation changed after this quote. No provider work was submitted and no spend was accepted. Cap $8.00, attempted $4.20\n    - text: Quote $4.20 Revision 7f3a Expires 15:00\n    - table \"Per-node estimate\":\n      - rowgroup:\n        - row \"Node Basis Estimate\":\n          - columnheader \"Node\"\n          - columnheader \"Basis\"\n          - columnheader \"Estimate\"\n      - rowgroup:\n        - row \"Concept logic kimi-2.6 $1.20\":\n          - cell \"Concept logic\"\n          - cell \"kimi-2.6\"\n          - cell \"$1.20\"\n        - row \"Asset gen x3 flux-2-klein $2.40\":\n          - cell \"Asset gen x3\"\n          - cell \"flux-2-klein\"\n          - cell \"$2.40\"\n        - row \"Copy 3 sets $0.24\":\n          - cell \"Copy\"\n          - cell \"3 sets\"\n          - cell \"$0.24\"\n        - row \"Motion seedance-1.0 6s 9:16 $0.36\":\n          - cell \"Motion seedance-1.0 6s\"\n          - cell \"9:16\"\n          - cell \"$0.36\"\n        - row \"Total Maximum charge $4.20\":\n          - cell \"Total\"\n          - cell \"Maximum charge\"\n          - cell \"$4.20\"\n    - text: 4 nodes priced in this quote Expires 15:00 Run cap $8.00. Day cap $100.00, used $18.42.\n    - checkbox \"I acknowledge this revision and the maximum $4.20 charge before provider work starts.\" [checked] [disabled]\n    - text: I acknowledge this revision and the maximum $4.20 charge before provider work starts.\n    - link \"Back to the plan\":\n      - /url: /studio/lumen-skin/canvas\n  - complementary \"What this run covers\":\n    - heading \"What this run covers\" [level=2]\n    - term: Nodes priced\n    - definition: \"4\"\n    - term: Route\n    - definition: kimi-2.6 + flux-2-klein + seedance-1.0\n    - term: Pinned revision\n    - definition: 7f3a\n    - term: Maximum charge\n    - definition: $4.20\n    - term: Run cap\n    - definition: $8.00\n    - term: Day cap used\n    - definition: $18.42 of $100.00\n    - paragraph: The charge can only be lower than the maximum. Nothing starts until you confirm.\n  - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein + seedance-1.0 Expires 15:00",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review this run before spending\":\n    - text: Pre-spend quote\n    - heading \"Review this run before spending\" [level=1]\n    - paragraph: The reservation is pinned to this revision, route, and affected branch.\n    - alert:\n      - strong: Canvas revision changed.\n      - text: Expected 7f3a; current is 81c2.\n      - link \"Open canvas recovery\":\n        - /url: /studio/lumen-skin/canvas?state=conflict\n    - text: Quote $4.20 Revision 7f3a Expires 15:00\n    - table \"Per-node estimate\":\n      - rowgroup:\n        - row \"Node Basis Estimate\":\n          - columnheader \"Node\"\n          - columnheader \"Basis\"\n          - columnheader \"Estimate\"\n      - rowgroup:\n        - row \"Concept logic kimi-2.6 $1.20\":\n          - cell \"Concept logic\"\n          - cell \"kimi-2.6\"\n          - cell \"$1.20\"\n        - row \"Asset gen x3 flux-2-klein $2.40\":\n          - cell \"Asset gen x3\"\n          - cell \"flux-2-klein\"\n          - cell \"$2.40\"\n        - row \"Copy 3 sets $0.24\":\n          - cell \"Copy\"\n          - cell \"3 sets\"\n          - cell \"$0.24\"\n        - row \"Motion seedance-1.0 6s 9:16 $0.36\":\n          - cell \"Motion seedance-1.0 6s\"\n          - cell \"9:16\"\n          - cell \"$0.36\"\n        - row \"Total Maximum charge $4.20\":\n          - cell \"Total\"\n          - cell \"Maximum charge\"\n          - cell \"$4.20\"\n    - text: 4 nodes priced in this quote Expires 15:00 Run cap $8.00. Day cap $100.00, used $18.42.\n    - checkbox \"I acknowledge this revision and the maximum $4.20 charge before provider work starts.\" [checked] [disabled]\n    - text: I acknowledge this revision and the maximum $4.20 charge before provider work starts.\n    - link \"Back to the plan\":\n      - /url: /studio/lumen-skin/canvas\n  - complementary \"What this run covers\":\n    - heading \"What this run covers\" [level=2]\n    - term: Nodes priced\n    - definition: \"4\"\n    - term: Route\n    - definition: kimi-2.6 + flux-2-klein + seedance-1.0\n    - term: Pinned revision\n    - definition: 7f3a\n    - term: Maximum charge\n    - definition: $4.20\n    - term: Run cap\n    - definition: $8.00\n    - term: Day cap used\n    - definition: $18.42 of $100.00\n    - paragraph: The charge can only be lower than the maximum. Nothing starts until you confirm.\n  - text: Pinned revision 7f3a Route kimi-2.6 + flux-2-klein + seedance-1.0 Expires 15:00",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Generating your content\":\n    - text: Run run-lumen-0007, revision 7f3a\n    - heading \"Generating your content\" [level=1]\n    - paragraph: Completed branches remain reviewable while downstream work continues.\n    - text: Running kimi-2.6 Running\n    - strong: Concept logic\n    - text: Reasoning route pinned flux-2-klein Queued\n    - strong: Asset generation\n    - text: 3 variants queued kimi-2.6 Queued\n    - strong: Copy sets\n    - text: 3 sets queued seedance-1.0 Queued\n    - strong: Motion\n    - text: 6 second render queued\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"0 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.20\n    - term: Captured\n    - definition: $0.00\n    - term: Released\n    - definition: $0.00\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $4.20\n    - term: Revision\n    - definition: 7f3a\n  - text: In progress\n  - strong: Running\n  - button \"Cancel run\"",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Your content is ready to review\":\n    - text: Run run-lumen-0007, revision 7f3a\n    - heading \"Your content is ready to review\" [level=1]\n    - paragraph: Completed branches remain reviewable while downstream work continues.\n    - text: Complete\n    - status:\n      - strong: First reviewable output is ready.\n      - text: Review can begin without waiting for every branch.\n      - link \"Review available outputs\":\n        - /url: /studio/lumen-skin/review?run=run-lumen-0007\n    - text: kimi-2.6 Complete\n    - strong: Concept logic\n    - text: Approved route produced flux-2-klein Complete\n    - strong: Asset generation\n    - text: 3 variants reviewable kimi-2.6 Complete\n    - strong: Copy sets\n    - text: 3 sets reviewable seedance-1.0 Complete\n    - strong: Motion\n    - text: 6 second render reviewable\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"4 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.20\n    - term: Captured\n    - definition: $4.20\n    - term: Released\n    - definition: $0.00\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $0.00\n    - term: Revision\n    - definition: 7f3a\n  - text: Finished\n  - strong: Complete\n  - link \"Open output review\":\n    - /url: /studio/lumen-skin/review?run=run-lumen-0007",
+    "- 'main \"Campaign: Budget\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas?run=failed\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote?run=failed\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review?run=failed\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals?run=failed\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators?run=failed\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar?run=failed\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt?run=failed\n  - region \"This run stopped\":\n    - text: Run run-lumen-0007, revision 7f3a\n    - heading \"This run stopped\" [level=1]\n    - paragraph: Failed branches name what happened, whether spend was accepted, and the safest next step.\n    - text: Stopped\n    - status:\n      - strong: First reviewable output is ready.\n      - text: Review can begin without waiting for every branch.\n      - link \"Review available outputs\":\n        - /url: /studio/lumen-skin/review?run=run-lumen-0007\n    - alert:\n      - strong: Image blocked\n      - paragraph: The image provider blocked this branch as a content-policy violation.\n      - paragraph: \"Run settlement: $2.80 captured, $1.40 released, $0.00 refunded, $0.00 pending.\"\n      - paragraph: Completed branches stay reviewable. This branch produced no image. 3 completed branches are retained.\n      - paragraph: Edit the brief or visual direction, then request a new quote. Do not resubmit the same prompt.\n      - link \"Edit the campaign brief\":\n        - /url: /studio/lumen-skin/brief\n      - link \"Open the receipt\":\n        - /url: /studio/lumen-skin/receipt?run=run-lumen-0007\n    - text: kimi-2.6 Complete\n    - strong: Concept logic\n    - text: Approved route produced flux-2-klein Complete\n    - strong: Asset generation\n    - text: 3 variants reviewable kimi-2.6 Complete\n    - strong: Copy sets\n    - text: 3 sets reviewable seedance-1.0 Failed\n    - strong: Motion\n    - text: Image blocked by content policy. No charge accepted.\n  - complementary \"Run progress summary\":\n    - text: Live run\n    - heading \"3 of 4 branches complete\" [level=2]\n    - term: Reserved maximum\n    - definition: $4.20\n    - term: Captured\n    - definition: $2.80\n    - term: Released\n    - definition: $1.40\n    - term: Refunded\n    - definition: $0.00\n    - term: Pending\n    - definition: $0.00\n    - term: Revision\n    - definition: 7f3a\n  - text: Finished\n  - strong: Stopped\n  - link \"Open output review\":\n    - /url: /studio/lumen-skin/review?run=run-lumen-0007",
+    "- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Review outputs\":\n    - text: Rev 7f3a. Reviewer Maya Chen\n    - heading \"Review outputs\" [level=1]\n    - paragraph: Named approval is recorded per artifact group.\n    - button \"QA findings\"\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Reviewing outputs. Draft comments only. Live\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Hero A\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Hero A\":\n      - text: Draft comments\n      - heading \"Hero A\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - region \"Visual system\":\n      - heading \"Visual system\" [level=2]\n      - text: \"Reviewer: Maya Chen Pending\"\n      - button \"Approve group as Maya Chen\"\n      - heading \"Hero A\" [level=2]\n      - text: Approved Current v2, flux-2-klein Already approved\n      - button \"Reject\"\n      - text: 1080 x 1350\n      - heading \"Hero B\" [level=2]\n      - text: Pending Current v2, flux-2-klein\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 1080 x 1350\n      - heading \"Story A\" [level=2]\n      - text: Pending Current v2, flux-2-klein\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 1080 x 1920\n    - region \"Copy system\":\n      - heading \"Copy system\" [level=2]\n      - text: \"Reviewer: Maya Chen Pending\"\n      - button \"Approve group as Maya Chen\"\n      - heading \"Launch copy A\" [level=2]\n      - text: Pending Current v2, kimi-2.6\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 3 placements\n  - text: Batch approval\n  - strong: 1 / 4 approved\n  - text: Approve every output before exporting.",
+    "- 'main \"Campaign: Content\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/lumen-skin/brief\n    - link \"Plan\":\n      - /url: /studio/lumen-skin/canvas\n    - link \"Budget\":\n      - /url: /studio/lumen-skin/quote\n    - link \"Content\":\n      - /url: /studio/lumen-skin/review\n    - link \"Approvals\":\n      - /url: /studio/lumen-skin/approvals\n    - link \"Collaborators\":\n      - /url: /studio/lumen-skin/collaborators\n    - link \"Calendar\":\n      - /url: /studio/lumen-skin/calendar\n    - link \"Results\":\n      - /url: /studio/lumen-skin/receipt\n  - region \"Output comparison\":\n    - text: Rev 7f3a. Reviewer Maya Chen\n    - heading \"Output comparison\" [level=1]\n    - paragraph: Compare current output to its prior pinned version before approval.\n    - button \"QA findings\"\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\":\n        - listitem: MC\n        - listitem: MC\n      - text: Live presence\n      - strong: Maya Chen, Maya Chen\n      - text: Reviewing outputs. Draft comments only. Live\n    - region \"Collaborative review drafts\":\n      - text: Review drafts\n      - heading \"Hero A\" [level=3]\n      - text: Accessibility description\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Accessibility description\":\n        - /placeholder: Describe this output before approval\n      - text: Review notes\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Review notes\":\n        - /placeholder: Draft review notes for collaborators\n      - text: Caption draft\n      - paragraph: Draft text syncs to collaborators.\n      - textbox \"Caption draft\":\n        - /placeholder: Draft primary ad copy for this output\n    - region \"Hero A\":\n      - text: Draft comments\n      - heading \"Hero A\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n    - region \"Visual system\":\n      - heading \"Visual system\" [level=2]\n      - text: \"Reviewer: Maya Chen Pending\"\n      - button \"Approve group as Maya Chen\"\n      - heading \"Hero A\" [level=2]\n      - text: Approved Current output, v2 flux-2-klein 1080 x 1350 Prior pinned, v1 Prior 1080 x 1350 Already approved\n      - button \"Reject\"\n      - text: 1080 x 1350\n      - heading \"Hero B\" [level=2]\n      - text: Pending Current output, v2 flux-2-klein 1080 x 1350 Prior pinned, v1 Prior 1080 x 1350\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 1080 x 1350\n      - heading \"Story A\" [level=2]\n      - text: Pending Current output, v2 flux-2-klein 1080 x 1920 Prior pinned, v1 Prior 1080 x 1920\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 1080 x 1920\n    - region \"Copy system\":\n      - heading \"Copy system\" [level=2]\n      - text: \"Reviewer: Maya Chen Pending\"\n      - button \"Approve group as Maya Chen\"\n      - heading \"Launch copy A\" [level=2]\n      - text: Pending Current output, v2 kimi-2.6 3 placements Prior pinned, v1 Prior 3 placements\n      - button \"Approve\"\n      - button \"Reject\"\n      - text: 3 placements\n  - text: Batch approval\n  - strong: 1 / 4 approved\n  - link \"Continue to approval\":\n    - /url: /studio/lumen-skin/review"
+  ],
+  "rows": [
+    {
+      "state": "quote-ok",
+      "path": "/studio/lumen-skin/quote",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:37.890Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "focused": false,
+            "rect": {
+              "x": 257,
+              "y": 284.5,
+              "width": 454,
+              "height": 33.59375,
+              "top": 284.5,
+              "right": 711,
+              "bottom": 318.09375,
+              "left": 257
+            }
+          }
+        ],
+        "results": [],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1210
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-ok-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-ok-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:37.953Z",
+        "positions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 443,
+            "clientHeight": 767,
+            "scrollHeight": 1210
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 28,
+              "focused": false,
+              "rect": {
+                "x": 257,
+                "y": -158.5,
+                "width": 454,
+                "height": 33.59375,
+                "top": -158.5,
+                "right": 711,
+                "bottom": -124.90625,
+                "left": 257
+              }
+            }
+          ],
+          "results": [],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "quote-flow-module__I1bYXW__quotePage",
+              "scrollTop": 443,
+              "clientHeight": 767,
+              "scrollHeight": 1210
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "quote-expired_quote",
+      "path": "/studio/lumen-skin/quote?state=expired_quote",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:38.740Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "focused": true,
+            "rect": {
+              "x": 258,
+              "y": 284.5,
+              "width": 453,
+              "height": 33.59375,
+              "top": 284.5,
+              "right": 711,
+              "bottom": 318.09375,
+              "left": 258
+            }
+          }
+        ],
+        "results": [
+          {
+            "state": "expired_quote",
+            "rect": {
+              "x": 258,
+              "y": 367.59375,
+              "width": 453,
+              "height": 76.796875,
+              "top": 367.59375,
+              "right": 711,
+              "bottom": 444.390625,
+              "left": 258
+            }
+          }
+        ],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1301
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 1,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-expired_quote-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-expired_quote-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:38.797Z",
+        "positions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 534,
+            "clientHeight": 767,
+            "scrollHeight": 1301
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 28,
+              "focused": true,
+              "rect": {
+                "x": 258,
+                "y": -249.5,
+                "width": 453,
+                "height": 33.59375,
+                "top": -249.5,
+                "right": 711,
+                "bottom": -215.90625,
+                "left": 258
+              }
+            }
+          ],
+          "results": [
+            {
+              "state": "expired_quote",
+              "rect": {
+                "x": 258,
+                "y": -166.40625,
+                "width": 453,
+                "height": 76.796875,
+                "top": -166.40625,
+                "right": 711,
+                "bottom": -89.609375,
+                "left": 258
+              }
+            }
+          ],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "quote-flow-module__I1bYXW__quotePage",
+              "scrollTop": 534,
+              "clientHeight": 767,
+              "scrollHeight": 1301
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 9115
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 9115
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 9115
+        },
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 9122
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 9122
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 9122
+        }
+      ],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "quote-refreshed",
+      "path": "/studio/lumen-skin/quote?state=expired_quote",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:39.110Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "focused": true,
+            "rect": {
+              "x": 257,
+              "y": 284.5,
+              "width": 454,
+              "height": 33.59375,
+              "top": 284.5,
+              "right": 711,
+              "bottom": 318.09375,
+              "left": 257
+            }
+          }
+        ],
+        "results": [],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1210
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 0,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-refreshed-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-refreshed-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:39.175Z",
+        "positions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 443,
+            "clientHeight": 767,
+            "scrollHeight": 1210
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 28,
+              "focused": true,
+              "rect": {
+                "x": 257,
+                "y": -158.5,
+                "width": 454,
+                "height": 33.59375,
+                "top": -158.5,
+                "right": 711,
+                "bottom": -124.90625,
+                "left": 257
+              }
+            }
+          ],
+          "results": [],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "quote-flow-module__I1bYXW__quotePage",
+              "scrollTop": 443,
+              "clientHeight": 767,
+              "scrollHeight": 1210
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 9115
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 9115
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 9115
+        },
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 9122
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 9122
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 9122
+        },
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 9129
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 9129
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 9129
+        }
+      ],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "quote-cap_exceeded",
+      "path": "/studio/lumen-skin/quote?state=cap_exceeded",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:39.803Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "focused": true,
+            "rect": {
+              "x": 258,
+              "y": 284.5,
+              "width": 453,
+              "height": 33.59375,
+              "top": 284.5,
+              "right": 711,
+              "bottom": 318.09375,
+              "left": 258
+            }
+          }
+        ],
+        "results": [
+          {
+            "state": "cap_exceeded",
+            "rect": {
+              "x": 258,
+              "y": 367.59375,
+              "width": 453,
+              "height": 94.390625,
+              "top": 367.59375,
+              "right": 711,
+              "bottom": 461.984375,
+              "left": 258
+            }
+          }
+        ],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1266
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 2,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-cap_exceeded-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-cap_exceeded-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:39.860Z",
+        "positions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 499,
+            "clientHeight": 767,
+            "scrollHeight": 1266
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 28,
+              "focused": true,
+              "rect": {
+                "x": 258,
+                "y": -214.5,
+                "width": 453,
+                "height": 33.59375,
+                "top": -214.5,
+                "right": 711,
+                "bottom": -180.90625,
+                "left": 258
+              }
+            }
+          ],
+          "results": [
+            {
+              "state": "cap_exceeded",
+              "rect": {
+                "x": 258,
+                "y": -131.40625,
+                "width": 453,
+                "height": 94.390625,
+                "top": -131.40625,
+                "right": 711,
+                "bottom": -37.015625,
+                "left": 258
+              }
+            }
+          ],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "quote-flow-module__I1bYXW__quotePage",
+              "scrollTop": 499,
+              "clientHeight": 767,
+              "scrollHeight": 1266
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 1899
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 1899
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 1899
+        },
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 1906
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 1906
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 1906
+        }
+      ],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "quote-conflict",
+      "path": "/studio/lumen-skin/quote?state=conflict",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:40.639Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review this run before spending",
+            "px": 28,
+            "focused": true,
+            "rect": {
+              "x": 258,
+              "y": 284.5,
+              "width": 453,
+              "height": 33.59375,
+              "top": 284.5,
+              "right": 711,
+              "bottom": 318.09375,
+              "left": 258
+            }
+          }
+        ],
+        "results": [
+          {
+            "state": "conflict",
+            "rect": {
+              "x": 258,
+              "y": 367.59375,
+              "width": 453,
+              "height": 76.796875,
+              "top": 367.59375,
+              "right": 711,
+              "bottom": 444.390625,
+              "left": 258
+            }
+          }
+        ],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1249
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 3,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-conflict-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-quote-conflict-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:40.704Z",
+        "positions": [
+          {
+            "class": "quote-flow-module__I1bYXW__quotePage",
+            "scrollTop": 482,
+            "clientHeight": 767,
+            "scrollHeight": 1249
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review this run before spending",
+              "px": 28,
+              "focused": true,
+              "rect": {
+                "x": 258,
+                "y": -197.5,
+                "width": 453,
+                "height": 33.59375,
+                "top": -197.5,
+                "right": 711,
+                "bottom": -163.90625,
+                "left": 258
+              }
+            }
+          ],
+          "results": [
+            {
+              "state": "conflict",
+              "rect": {
+                "x": 258,
+                "y": -114.40625,
+                "width": 453,
+                "height": 76.796875,
+                "top": -114.40625,
+                "right": 711,
+                "bottom": -37.609375,
+                "left": 258
+              }
+            }
+          ],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "quote-flow-module__I1bYXW__quotePage",
+              "scrollTop": 482,
+              "clientHeight": 767,
+              "scrollHeight": 1249
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 5032
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 5032
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 5032
+        },
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 5039
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 5039
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 5039
+        }
+      ],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "run-running",
+      "path": "/studio/lumen-skin/quote?stage=run",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:41.266Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Generating your content",
+            "px": 28,
+            "focused": false,
+            "rect": {
+              "x": 238,
+              "y": 277,
+              "width": 394.78125,
+              "height": 33.59375,
+              "top": 277,
+              "right": 632.78125,
+              "bottom": 310.59375,
+              "left": 238
+            }
+          }
+        ],
+        "results": [],
+        "runState": "running",
+        "scrollRegions": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1004
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 4,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-run-running-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-run-running-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:41.326Z",
+        "positions": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 237,
+            "clientHeight": 767,
+            "scrollHeight": 1004
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Generating your content",
+              "px": 28,
+              "focused": false,
+              "rect": {
+                "x": 238,
+                "y": 40,
+                "width": 394.78125,
+                "height": 33.59375,
+                "top": 40,
+                "right": 632.78125,
+                "bottom": 73.59375,
+                "left": 238
+              }
+            }
+          ],
+          "results": [],
+          "runState": "running",
+          "scrollRegions": [
+            {
+              "class": "run-progress-module__wy38Qq__runPage",
+              "scrollTop": 237,
+              "clientHeight": 767,
+              "scrollHeight": 1004
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": null,
+      "postAxeRunState": "running",
+      "errors": [],
+      "scriptedEventTiming": [],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "run-complete",
+      "path": "/studio/lumen-skin/quote?stage=run",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:44.262Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Your content is ready to review",
+            "px": 28,
+            "focused": false,
+            "rect": {
+              "x": 238,
+              "y": 277,
+              "width": 387.046875,
+              "height": 33.59375,
+              "top": 277,
+              "right": 625.046875,
+              "bottom": 310.59375,
+              "left": 238
+            }
+          }
+        ],
+        "results": [],
+        "runState": "complete",
+        "scrollRegions": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1073
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 5,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-run-complete-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-run-complete-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:44.323Z",
+        "positions": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 306,
+            "clientHeight": 767,
+            "scrollHeight": 1073
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Your content is ready to review",
+              "px": 28,
+              "focused": false,
+              "rect": {
+                "x": 238,
+                "y": -29,
+                "width": 387.046875,
+                "height": 33.59375,
+                "top": -29,
+                "right": 625.046875,
+                "bottom": 4.59375,
+                "left": 238
+              }
+            }
+          ],
+          "results": [],
+          "runState": "complete",
+          "scrollRegions": [
+            {
+              "class": "run-progress-module__wy38Qq__runPage",
+              "scrollTop": 306,
+              "clientHeight": 767,
+              "scrollHeight": 1073
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "postAxeRunState": "complete",
+      "errors": [],
+      "scriptedEventTiming": [],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "run-failed",
+      "path": "/studio/lumen-skin/quote?stage=run&run=failed",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:46.732Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "This run stopped",
+            "px": 28,
+            "focused": false,
+            "rect": {
+              "x": 238,
+              "y": 277,
+              "width": 394.78125,
+              "height": 33.59375,
+              "top": 277,
+              "right": 632.78125,
+              "bottom": 310.59375,
+              "left": 238
+            }
+          }
+        ],
+        "results": [],
+        "runState": "failed",
+        "scrollRegions": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 0,
+            "clientHeight": 767,
+            "scrollHeight": 1343
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 6,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-run-failed-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-run-failed-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:46.789Z",
+        "positions": [
+          {
+            "class": "run-progress-module__wy38Qq__runPage",
+            "scrollTop": 576,
+            "clientHeight": 767,
+            "scrollHeight": 1343
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "This run stopped",
+              "px": 28,
+              "focused": false,
+              "rect": {
+                "x": 238,
+                "y": -299,
+                "width": 394.78125,
+                "height": 33.59375,
+                "top": -299,
+                "right": 632.78125,
+                "bottom": -265.40625,
+                "left": 238
+              }
+            }
+          ],
+          "results": [],
+          "runState": "failed",
+          "scrollRegions": [
+            {
+              "class": "run-progress-module__wy38Qq__runPage",
+              "scrollTop": 576,
+              "clientHeight": 767,
+              "scrollHeight": 1343
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "postAxeRunState": "failed",
+      "errors": [],
+      "scriptedEventTiming": [],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "review",
+      "path": "/studio/lumen-skin/review",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:47.758Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Review outputs",
+            "px": 28,
+            "focused": false,
+            "rect": {
+              "x": 244,
+              "y": 278,
+              "width": 254.15625,
+              "height": 33.59375,
+              "top": 278,
+              "right": 498.15625,
+              "bottom": 311.59375,
+              "left": 244
+            }
+          }
+        ],
+        "results": [],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 0,
+            "clientHeight": 695,
+            "scrollHeight": 1962
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 7,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-review-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-review-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:47.820Z",
+        "positions": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 1267,
+            "clientHeight": 695,
+            "scrollHeight": 1962
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Review outputs",
+              "px": 28,
+              "focused": false,
+              "rect": {
+                "x": 244,
+                "y": -989,
+                "width": 254.15625,
+                "height": 33.59375,
+                "top": -989,
+                "right": 498.15625,
+                "bottom": -955.40625,
+                "left": 244
+              }
+            }
+          ],
+          "results": [],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "review-flow-module__VOGFZW__reviewStage",
+              "scrollTop": 1267,
+              "clientHeight": 695,
+              "scrollHeight": 1962
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 1083
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 1083
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 1083
+        }
+      ],
+      "devServerPerfNotScored": true
+    },
+    {
+      "state": "compare",
+      "path": "/studio/lumen-skin/review/compare",
+      "width": 768,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-04T15:47:50.097Z",
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "hScroll": false,
+        "mains": 1,
+        "h1": [
+          {
+            "text": "Output comparison",
+            "px": 28,
+            "focused": false,
+            "rect": {
+              "x": 244,
+              "y": 278,
+              "width": 364.203125,
+              "height": 33.59375,
+              "top": 278,
+              "right": 608.203125,
+              "bottom": 311.59375,
+              "left": 244
+            }
+          }
+        ],
+        "results": [],
+        "runState": null,
+        "scrollRegions": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 0,
+            "clientHeight": 695,
+            "scrollHeight": 2082
+          }
+        ],
+        "animations": []
+      },
+      "treeIndex": 8,
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-compare-w768.png",
+      "bottom": {
+        "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/preview-final-compare-w768-bottom.png",
+        "capturedUtc": "2026-10-04T15:47:50.170Z",
+        "positions": [
+          {
+            "class": "review-flow-module__VOGFZW__reviewStage",
+            "scrollTop": 1387,
+            "clientHeight": 695,
+            "scrollHeight": 2082
+          }
+        ],
+        "probe": {
+          "width": 768,
+          "height": 1024,
+          "hScroll": false,
+          "mains": 1,
+          "h1": [
+            {
+              "text": "Output comparison",
+              "px": 28,
+              "focused": false,
+              "rect": {
+                "x": 244,
+                "y": -1109,
+                "width": 364.203125,
+                "height": 33.59375,
+                "top": -1109,
+                "right": 608.203125,
+                "bottom": -1075.40625,
+                "left": 244
+              }
+            }
+          ],
+          "results": [],
+          "runState": null,
+          "scrollRegions": [
+            {
+              "class": "review-flow-module__VOGFZW__reviewStage",
+              "scrollTop": 1387,
+              "clientHeight": 695,
+              "scrollHeight": 2082
+            }
+          ],
+          "animations": []
+        }
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "postAxeRunState": null,
+      "errors": [],
+      "scriptedEventTiming": [
+        {
+          "name": "pointerdown",
+          "duration": 56,
+          "interactionId": 853
+        },
+        {
+          "name": "pointerup",
+          "duration": 56,
+          "interactionId": 853
+        },
+        {
+          "name": "click",
+          "duration": 56,
+          "interactionId": 853
+        }
+      ],
+      "devServerPerfNotScored": true
+    }
+  ]
+}

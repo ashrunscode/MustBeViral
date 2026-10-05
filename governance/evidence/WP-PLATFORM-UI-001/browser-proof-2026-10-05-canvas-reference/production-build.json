@@ -1,0 +1,15 @@
+{
+  "Source": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "NoEnvironmentFileCreated": true,
+  "ActualExit": 0,
+  "Pnpm": "11.12.0",
+  "PreliminaryBrowserProofOnly": true,
+  "Node": "v24.18.0",
+  "Preflight": "Author preflight 50 passed at this source; focused green proof matches this checkpoint; full C4 remains pending",
+  "Log": "C:/dev/mbv-run/l3f-tablet-reference-font-production-build-20261005.log",
+  "ProductionPreviewBypassEnabled": false,
+  "FinishedUtc": "2026-10-05T03:35:54.1397811Z",
+  "StartedUtc": "2026-10-05T03:35:25.6927006Z",
+  "Command": "pinned Node outside launcher: next build with local in-memory runtime",
+  "Root": "C:/dev/mbv-verify-3082e90-perf"
+}

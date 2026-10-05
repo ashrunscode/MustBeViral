@@ -1,0 +1,37 @@
+{
+  "recordedUtc": "2026-10-04T19:38:22.685Z",
+  "report": "qa-run-production-final-2.json",
+  "sourceHead": "16295a846a56dce750cd494fa7800709786110b5",
+  "actualViews": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:37:49.666Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-short-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:37:49.676Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-forced-colors.png",
+      "recordedUtc": "2026-10-04T19:37:49.683Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:38:01.507Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-short-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:38:01.516Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:38:01.523Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-2-zoom-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:38:01.529Z"
+    }
+  ],
+  "result": "All seven capture names inspected at original resolution. The complete revision and focused named summary region remain readable, including at 1280 by 600 with all text doubled. Emulated 200-percent CSS viewport is a reflow test, not browser zoom.",
+  "missingViews": []
+}

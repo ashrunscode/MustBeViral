@@ -1,0 +1,646 @@
+{
+  "recordedUtc": "2026-10-04T15:12:42.976Z",
+  "sourceHead": "3082e9007167028c0f3b7eef49b674619910a1d3",
+  "nativeCaptureCount": 54,
+  "distinctContents": 31,
+  "images": [
+    {
+      "file": "qa-prod-home-m375-light.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "bytes": 287583,
+      "width": 375,
+      "height": 3828,
+      "cell": "home-m375-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-m375-dark.png",
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "bytes": 287583,
+      "width": 375,
+      "height": 3828,
+      "cell": "home-m375-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-t768-light.png",
+      "sha256": "0c7c0b63c6b095b4cdeee3f288e3f1f1003a1b7000bbaa4ff5be37d23ddfaad8",
+      "bytes": 381407,
+      "width": 768,
+      "height": 2953,
+      "cell": "home-t768-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-t768-dark.png",
+      "sha256": "0c7c0b63c6b095b4cdeee3f288e3f1f1003a1b7000bbaa4ff5be37d23ddfaad8",
+      "bytes": 381407,
+      "width": 768,
+      "height": 2953,
+      "cell": "home-t768-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-d1440-light.png",
+      "sha256": "d3acaaf22d005f8d870a865b2db17064a0a65cafc6a56183dfc48db318f25285",
+      "bytes": 426828,
+      "width": 1440,
+      "height": 2788,
+      "cell": "home-d1440-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-d1440-dark.png",
+      "sha256": "d3acaaf22d005f8d870a865b2db17064a0a65cafc6a56183dfc48db318f25285",
+      "bytes": 426828,
+      "width": 1440,
+      "height": 2788,
+      "cell": "home-d1440-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-m375-reduced.png",
+      "sha256": "dcde1abed0e05736eca868ab9f7bd9cf999d6393275933d2a5f1b1d2773a9d5d",
+      "bytes": 300667,
+      "width": 375,
+      "height": 3888,
+      "cell": "home-m375-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-d1280-reduced.png",
+      "sha256": "7516e975dc7cd662ec8288507da85ddb3e65b06f1f832df176c0593ef6bdd5c1",
+      "bytes": 425824,
+      "width": 1280,
+      "height": 2788,
+      "cell": "home-d1280-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-home-d1920-reduced.png",
+      "sha256": "0b5b847bb06f1d9adf51dc54fd50e2ebfcbe30a7f5e7a4944810db02b35df44d",
+      "bytes": 453429,
+      "width": 1920,
+      "height": 2823,
+      "cell": "home-d1920-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-m375-light.png",
+      "sha256": "47c93f177307c0fab2a1a6f7e22f68bba0214726cda11b3e0087385c0029e590",
+      "bytes": 38376,
+      "width": 375,
+      "height": 812,
+      "cell": "workspace-access-m375-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-m375-dark.png",
+      "sha256": "47c93f177307c0fab2a1a6f7e22f68bba0214726cda11b3e0087385c0029e590",
+      "bytes": 38376,
+      "width": 375,
+      "height": 812,
+      "cell": "workspace-access-m375-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-t768-light.png",
+      "sha256": "9dfddc3191eba9ae30af0edbd16670f31c7b30de4ca1db0c9831edcabb5f30bb",
+      "bytes": 57557,
+      "width": 768,
+      "height": 1024,
+      "cell": "workspace-access-t768-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-t768-dark.png",
+      "sha256": "9dfddc3191eba9ae30af0edbd16670f31c7b30de4ca1db0c9831edcabb5f30bb",
+      "bytes": 57557,
+      "width": 768,
+      "height": 1024,
+      "cell": "workspace-access-t768-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-d1440-light.png",
+      "sha256": "9d9e6f1da7876a89d57bebe51e367eba9499e83e6822be1ee08d16fde45881cd",
+      "bytes": 56009,
+      "width": 1440,
+      "height": 900,
+      "cell": "workspace-access-d1440-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-d1440-dark.png",
+      "sha256": "9d9e6f1da7876a89d57bebe51e367eba9499e83e6822be1ee08d16fde45881cd",
+      "bytes": 56009,
+      "width": 1440,
+      "height": 900,
+      "cell": "workspace-access-d1440-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-m375-reduced.png",
+      "sha256": "47c93f177307c0fab2a1a6f7e22f68bba0214726cda11b3e0087385c0029e590",
+      "bytes": 38376,
+      "width": 375,
+      "height": 812,
+      "cell": "workspace-access-m375-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-d1280-reduced.png",
+      "sha256": "e83291c5a61da7f6b1c5bb238f167d53f9fac5c5a90fdcff269cae5482477156",
+      "bytes": 55999,
+      "width": 1280,
+      "height": 900,
+      "cell": "workspace-access-d1280-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-access-d1920-reduced.png",
+      "sha256": "d556e0e580aaeeecfc78bb9506469fafe19adc0e9b3c3b138f298ffcfcefa806",
+      "bytes": 59331,
+      "width": 1920,
+      "height": 1080,
+      "cell": "workspace-access-d1920-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-m375-light.png",
+      "sha256": "399b48eaf91b28f112c8ff97b0574d48ed16096fcc5a56410aca48561ef7fe59",
+      "bytes": 54508,
+      "width": 375,
+      "height": 969,
+      "cell": "workspace-skills-m375-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-m375-dark.png",
+      "sha256": "399b48eaf91b28f112c8ff97b0574d48ed16096fcc5a56410aca48561ef7fe59",
+      "bytes": 54508,
+      "width": 375,
+      "height": 969,
+      "cell": "workspace-skills-m375-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-t768-light.png",
+      "sha256": "a4abb1d079bdc80b435106b19e5cae911bc46eeb4f791de4ab224364d74b2c1d",
+      "bytes": 74234,
+      "width": 768,
+      "height": 1024,
+      "cell": "workspace-skills-t768-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-t768-dark.png",
+      "sha256": "a4abb1d079bdc80b435106b19e5cae911bc46eeb4f791de4ab224364d74b2c1d",
+      "bytes": 74234,
+      "width": 768,
+      "height": 1024,
+      "cell": "workspace-skills-t768-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-d1440-light.png",
+      "sha256": "f916c9f69769ffafe52ac9672f25f1fff4ebccb2b87171c0d452fc14ad73d188",
+      "bytes": 68980,
+      "width": 1440,
+      "height": 900,
+      "cell": "workspace-skills-d1440-light",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-d1440-dark.png",
+      "sha256": "f916c9f69769ffafe52ac9672f25f1fff4ebccb2b87171c0d452fc14ad73d188",
+      "bytes": 68980,
+      "width": 1440,
+      "height": 900,
+      "cell": "workspace-skills-d1440-dark",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-m375-reduced.png",
+      "sha256": "399b48eaf91b28f112c8ff97b0574d48ed16096fcc5a56410aca48561ef7fe59",
+      "bytes": 54508,
+      "width": 375,
+      "height": 969,
+      "cell": "workspace-skills-m375-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-d1280-reduced.png",
+      "sha256": "67e1e322237600832f7f4ac66f1d071672d7b33388779ee94ff2951c7616dc10",
+      "bytes": 68451,
+      "width": 1280,
+      "height": 900,
+      "cell": "workspace-skills-d1280-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-workspace-skills-d1920-reduced.png",
+      "sha256": "5c18b5abf36788759b3a692655b04c950b8128b81300e4a5f21580e5a907bc96",
+      "bytes": 72071,
+      "width": 1920,
+      "height": 1080,
+      "cell": "workspace-skills-d1920-reduced",
+      "batch": "qa-production-batch-1.json"
+    },
+    {
+      "file": "qa-prod-quote-m375-light.png",
+      "sha256": "cbdf1b1b1d7a93e6ce84ae56914694b0247c311541d2e34b0b12a50920a8e579",
+      "bytes": 42541,
+      "width": 375,
+      "height": 812,
+      "cell": "quote-m375-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-m375-dark.png",
+      "sha256": "cbdf1b1b1d7a93e6ce84ae56914694b0247c311541d2e34b0b12a50920a8e579",
+      "bytes": 42541,
+      "width": 375,
+      "height": 812,
+      "cell": "quote-m375-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-t768-light.png",
+      "sha256": "e01c8ec19876919effb0955e9fae735f4ef509297c280e91f5d8ad23792081bb",
+      "bytes": 58465,
+      "width": 768,
+      "height": 1024,
+      "cell": "quote-t768-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-t768-dark.png",
+      "sha256": "e01c8ec19876919effb0955e9fae735f4ef509297c280e91f5d8ad23792081bb",
+      "bytes": 58465,
+      "width": 768,
+      "height": 1024,
+      "cell": "quote-t768-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-d1440-light.png",
+      "sha256": "89ff79e852a4f05e0d9f113e8f8b8d49b6b7bf3d65799bb0d21e2bac50a68506",
+      "bytes": 60993,
+      "width": 1440,
+      "height": 900,
+      "cell": "quote-d1440-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-d1440-dark.png",
+      "sha256": "89ff79e852a4f05e0d9f113e8f8b8d49b6b7bf3d65799bb0d21e2bac50a68506",
+      "bytes": 60993,
+      "width": 1440,
+      "height": 900,
+      "cell": "quote-d1440-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-m375-reduced.png",
+      "sha256": "cbdf1b1b1d7a93e6ce84ae56914694b0247c311541d2e34b0b12a50920a8e579",
+      "bytes": 42541,
+      "width": 375,
+      "height": 812,
+      "cell": "quote-m375-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-d1280-reduced.png",
+      "sha256": "62c9c1fb7b375e5d98e5e8e20ec11e3f4fefd64aa280709a8a80bccfc622ec9c",
+      "bytes": 61272,
+      "width": 1280,
+      "height": 900,
+      "cell": "quote-d1280-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-quote-d1920-reduced.png",
+      "sha256": "a075f0c1fa59110d07e9eab161008f80ee97d961d0dccb1e77259e7f9675c3da",
+      "bytes": 63452,
+      "width": 1920,
+      "height": 1080,
+      "cell": "quote-d1920-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-m375-light.png",
+      "sha256": "6d30bd169ad09dbfce0451f1169c526899f9827993f5a588358f87390ac93382",
+      "bytes": 37660,
+      "width": 375,
+      "height": 812,
+      "cell": "review-m375-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-m375-dark.png",
+      "sha256": "6d30bd169ad09dbfce0451f1169c526899f9827993f5a588358f87390ac93382",
+      "bytes": 37660,
+      "width": 375,
+      "height": 812,
+      "cell": "review-m375-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-t768-light.png",
+      "sha256": "023950eaf6c1e3fadbdc860a082a991fc3088352f08dd52cf585d1345c2fc02d",
+      "bytes": 58810,
+      "width": 768,
+      "height": 1024,
+      "cell": "review-t768-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-t768-dark.png",
+      "sha256": "023950eaf6c1e3fadbdc860a082a991fc3088352f08dd52cf585d1345c2fc02d",
+      "bytes": 58810,
+      "width": 768,
+      "height": 1024,
+      "cell": "review-t768-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-d1440-light.png",
+      "sha256": "f1976b3377ee27af0312e58dddbec2ea176be5e2a26f38fff3b086b357113a91",
+      "bytes": 59960,
+      "width": 1440,
+      "height": 900,
+      "cell": "review-d1440-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-d1440-dark.png",
+      "sha256": "f1976b3377ee27af0312e58dddbec2ea176be5e2a26f38fff3b086b357113a91",
+      "bytes": 59960,
+      "width": 1440,
+      "height": 900,
+      "cell": "review-d1440-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-m375-reduced.png",
+      "sha256": "6d30bd169ad09dbfce0451f1169c526899f9827993f5a588358f87390ac93382",
+      "bytes": 37660,
+      "width": 375,
+      "height": 812,
+      "cell": "review-m375-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-d1280-reduced.png",
+      "sha256": "fce5d123ebfb15e0216d24b05cbd63b3ad91e145516b64f447f56abd11cfaf3f",
+      "bytes": 59613,
+      "width": 1280,
+      "height": 900,
+      "cell": "review-d1280-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-review-d1920-reduced.png",
+      "sha256": "2ce2c8a6f6ff23e93ae55f18a777eb0630e48857ee9e6d03041e476dbbced4a6",
+      "bytes": 61968,
+      "width": 1920,
+      "height": 1080,
+      "cell": "review-d1920-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-m375-light.png",
+      "sha256": "1f13d6ec6b1990c90d478e5623d849800b649ac9ac7a5ea2d2c2bf7dcf0a917d",
+      "bytes": 37958,
+      "width": 375,
+      "height": 812,
+      "cell": "compare-m375-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-m375-dark.png",
+      "sha256": "1f13d6ec6b1990c90d478e5623d849800b649ac9ac7a5ea2d2c2bf7dcf0a917d",
+      "bytes": 37958,
+      "width": 375,
+      "height": 812,
+      "cell": "compare-m375-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-t768-light.png",
+      "sha256": "0d3cb52c83a4a33ea7fc887e7917736c1ef7ac1e99204d69db70bf8432f1c740",
+      "bytes": 59252,
+      "width": 768,
+      "height": 1024,
+      "cell": "compare-t768-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-t768-dark.png",
+      "sha256": "0d3cb52c83a4a33ea7fc887e7917736c1ef7ac1e99204d69db70bf8432f1c740",
+      "bytes": 59252,
+      "width": 768,
+      "height": 1024,
+      "cell": "compare-t768-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-d1440-light.png",
+      "sha256": "712eedb626de2ba62713c9cbfd36cf0f52e3f0c0528aebc369348de7fa43f296",
+      "bytes": 60267,
+      "width": 1440,
+      "height": 900,
+      "cell": "compare-d1440-light",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-d1440-dark.png",
+      "sha256": "712eedb626de2ba62713c9cbfd36cf0f52e3f0c0528aebc369348de7fa43f296",
+      "bytes": 60267,
+      "width": 1440,
+      "height": 900,
+      "cell": "compare-d1440-dark",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-m375-reduced.png",
+      "sha256": "1f13d6ec6b1990c90d478e5623d849800b649ac9ac7a5ea2d2c2bf7dcf0a917d",
+      "bytes": 37958,
+      "width": 375,
+      "height": 812,
+      "cell": "compare-m375-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-d1280-reduced.png",
+      "sha256": "4dc511a9e0852830b0b5a829cfcffd89326f974690dee2e3e1214fc43d9c54dd",
+      "bytes": 59999,
+      "width": 1280,
+      "height": 900,
+      "cell": "compare-d1280-reduced",
+      "batch": "qa-production-batch-2.json"
+    },
+    {
+      "file": "qa-prod-compare-d1920-reduced.png",
+      "sha256": "ce66590ee3176fd031516f4957222334b529e67954399f87fe4ebaa537cd5308",
+      "bytes": 62337,
+      "width": 1920,
+      "height": 1080,
+      "cell": "compare-d1920-reduced",
+      "batch": "qa-production-batch-2.json"
+    }
+  ],
+  "contentGroups": [
+    {
+      "sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "files": ["qa-prod-home-m375-light.png", "qa-prod-home-m375-dark.png"]
+    },
+    {
+      "sha256": "0c7c0b63c6b095b4cdeee3f288e3f1f1003a1b7000bbaa4ff5be37d23ddfaad8",
+      "files": ["qa-prod-home-t768-light.png", "qa-prod-home-t768-dark.png"]
+    },
+    {
+      "sha256": "d3acaaf22d005f8d870a865b2db17064a0a65cafc6a56183dfc48db318f25285",
+      "files": ["qa-prod-home-d1440-light.png", "qa-prod-home-d1440-dark.png"]
+    },
+    {
+      "sha256": "dcde1abed0e05736eca868ab9f7bd9cf999d6393275933d2a5f1b1d2773a9d5d",
+      "files": ["qa-prod-home-m375-reduced.png"]
+    },
+    {
+      "sha256": "7516e975dc7cd662ec8288507da85ddb3e65b06f1f832df176c0593ef6bdd5c1",
+      "files": ["qa-prod-home-d1280-reduced.png"]
+    },
+    {
+      "sha256": "0b5b847bb06f1d9adf51dc54fd50e2ebfcbe30a7f5e7a4944810db02b35df44d",
+      "files": ["qa-prod-home-d1920-reduced.png"]
+    },
+    {
+      "sha256": "47c93f177307c0fab2a1a6f7e22f68bba0214726cda11b3e0087385c0029e590",
+      "files": [
+        "qa-prod-workspace-access-m375-light.png",
+        "qa-prod-workspace-access-m375-dark.png",
+        "qa-prod-workspace-access-m375-reduced.png"
+      ]
+    },
+    {
+      "sha256": "9dfddc3191eba9ae30af0edbd16670f31c7b30de4ca1db0c9831edcabb5f30bb",
+      "files": ["qa-prod-workspace-access-t768-light.png", "qa-prod-workspace-access-t768-dark.png"]
+    },
+    {
+      "sha256": "9d9e6f1da7876a89d57bebe51e367eba9499e83e6822be1ee08d16fde45881cd",
+      "files": [
+        "qa-prod-workspace-access-d1440-light.png",
+        "qa-prod-workspace-access-d1440-dark.png"
+      ]
+    },
+    {
+      "sha256": "e83291c5a61da7f6b1c5bb238f167d53f9fac5c5a90fdcff269cae5482477156",
+      "files": ["qa-prod-workspace-access-d1280-reduced.png"]
+    },
+    {
+      "sha256": "d556e0e580aaeeecfc78bb9506469fafe19adc0e9b3c3b138f298ffcfcefa806",
+      "files": ["qa-prod-workspace-access-d1920-reduced.png"]
+    },
+    {
+      "sha256": "399b48eaf91b28f112c8ff97b0574d48ed16096fcc5a56410aca48561ef7fe59",
+      "files": [
+        "qa-prod-workspace-skills-m375-light.png",
+        "qa-prod-workspace-skills-m375-dark.png",
+        "qa-prod-workspace-skills-m375-reduced.png"
+      ]
+    },
+    {
+      "sha256": "a4abb1d079bdc80b435106b19e5cae911bc46eeb4f791de4ab224364d74b2c1d",
+      "files": ["qa-prod-workspace-skills-t768-light.png", "qa-prod-workspace-skills-t768-dark.png"]
+    },
+    {
+      "sha256": "f916c9f69769ffafe52ac9672f25f1fff4ebccb2b87171c0d452fc14ad73d188",
+      "files": [
+        "qa-prod-workspace-skills-d1440-light.png",
+        "qa-prod-workspace-skills-d1440-dark.png"
+      ]
+    },
+    {
+      "sha256": "67e1e322237600832f7f4ac66f1d071672d7b33388779ee94ff2951c7616dc10",
+      "files": ["qa-prod-workspace-skills-d1280-reduced.png"]
+    },
+    {
+      "sha256": "5c18b5abf36788759b3a692655b04c950b8128b81300e4a5f21580e5a907bc96",
+      "files": ["qa-prod-workspace-skills-d1920-reduced.png"]
+    },
+    {
+      "sha256": "cbdf1b1b1d7a93e6ce84ae56914694b0247c311541d2e34b0b12a50920a8e579",
+      "files": [
+        "qa-prod-quote-m375-light.png",
+        "qa-prod-quote-m375-dark.png",
+        "qa-prod-quote-m375-reduced.png"
+      ]
+    },
+    {
+      "sha256": "e01c8ec19876919effb0955e9fae735f4ef509297c280e91f5d8ad23792081bb",
+      "files": ["qa-prod-quote-t768-light.png", "qa-prod-quote-t768-dark.png"]
+    },
+    {
+      "sha256": "89ff79e852a4f05e0d9f113e8f8b8d49b6b7bf3d65799bb0d21e2bac50a68506",
+      "files": ["qa-prod-quote-d1440-light.png", "qa-prod-quote-d1440-dark.png"]
+    },
+    {
+      "sha256": "62c9c1fb7b375e5d98e5e8e20ec11e3f4fefd64aa280709a8a80bccfc622ec9c",
+      "files": ["qa-prod-quote-d1280-reduced.png"]
+    },
+    {
+      "sha256": "a075f0c1fa59110d07e9eab161008f80ee97d961d0dccb1e77259e7f9675c3da",
+      "files": ["qa-prod-quote-d1920-reduced.png"]
+    },
+    {
+      "sha256": "6d30bd169ad09dbfce0451f1169c526899f9827993f5a588358f87390ac93382",
+      "files": [
+        "qa-prod-review-m375-light.png",
+        "qa-prod-review-m375-dark.png",
+        "qa-prod-review-m375-reduced.png"
+      ]
+    },
+    {
+      "sha256": "023950eaf6c1e3fadbdc860a082a991fc3088352f08dd52cf585d1345c2fc02d",
+      "files": ["qa-prod-review-t768-light.png", "qa-prod-review-t768-dark.png"]
+    },
+    {
+      "sha256": "f1976b3377ee27af0312e58dddbec2ea176be5e2a26f38fff3b086b357113a91",
+      "files": ["qa-prod-review-d1440-light.png", "qa-prod-review-d1440-dark.png"]
+    },
+    {
+      "sha256": "fce5d123ebfb15e0216d24b05cbd63b3ad91e145516b64f447f56abd11cfaf3f",
+      "files": ["qa-prod-review-d1280-reduced.png"]
+    },
+    {
+      "sha256": "2ce2c8a6f6ff23e93ae55f18a777eb0630e48857ee9e6d03041e476dbbced4a6",
+      "files": ["qa-prod-review-d1920-reduced.png"]
+    },
+    {
+      "sha256": "1f13d6ec6b1990c90d478e5623d849800b649ac9ac7a5ea2d2c2bf7dcf0a917d",
+      "files": [
+        "qa-prod-compare-m375-light.png",
+        "qa-prod-compare-m375-dark.png",
+        "qa-prod-compare-m375-reduced.png"
+      ]
+    },
+    {
+      "sha256": "0d3cb52c83a4a33ea7fc887e7917736c1ef7ac1e99204d69db70bf8432f1c740",
+      "files": ["qa-prod-compare-t768-light.png", "qa-prod-compare-t768-dark.png"]
+    },
+    {
+      "sha256": "712eedb626de2ba62713c9cbfd36cf0f52e3f0c0528aebc369348de7fa43f296",
+      "files": ["qa-prod-compare-d1440-light.png", "qa-prod-compare-d1440-dark.png"]
+    },
+    {
+      "sha256": "4dc511a9e0852830b0b5a829cfcffd89326f974690dee2e3e1214fc43d9c54dd",
+      "files": ["qa-prod-compare-d1280-reduced.png"]
+    },
+    {
+      "sha256": "ce66590ee3176fd031516f4957222334b529e67954399f87fe4ebaa537cd5308",
+      "files": ["qa-prod-compare-d1920-reduced.png"]
+    }
+  ]
+}

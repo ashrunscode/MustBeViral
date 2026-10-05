@@ -1,0 +1,62 @@
+{
+  "cell": "studio-reports-fixed-t768",
+  "path": "/studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports",
+  "observedUtc": "2026-10-04T12:59:07.981Z",
+  "sourceBase": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "sourceChanges": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "298db0c5732d89750fa0170334e84dcdb6dd37d6483b5ac13db797697d0fb89d"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "f5daec521759d1e4bdfbca25891ef051383dbd956c95506c8bff368102444a06"
+    }
+  ],
+  "ownedWorkInProgress": true,
+  "evidenceLevel": "local connected existing session, synthetic fixtures",
+  "metricsScope": "dev-server rendering; lab performance unmeasured",
+  "httpStatus": 200,
+  "probe": {
+    "width": 768,
+    "height": 1024,
+    "dpr": 1,
+    "hScroll": false,
+    "mains": 1,
+    "h1": [
+      {
+        "text": "Reports",
+        "px": 28
+      }
+    ],
+    "bodyPx": 15,
+    "colorScheme": "light",
+    "themeColor": true,
+    "runningAnimations": [],
+    "status": [
+      {
+        "role": "status",
+        "text": "No results to report.Nothing has published, so there are no metrics. The only measured records are run receipts, which live on each campaign’s results page.Reports and measurements are not part of this release yet. Unknown numbers are never shown as zero.Open a brand"
+      }
+    ],
+    "smallTargets": [
+      {
+        "name": "Skip to content",
+        "width": 131,
+        "height": 41,
+        "afterMinHeight": "0px"
+      }
+    ]
+  },
+  "axe": {
+    "violations": [],
+    "incomplete": []
+  },
+  "tree": "- main \"Reports\":\n  - heading \"Reports\" [level=1]\n  - paragraph: What performed, what is uncertain, and what to change next.\n  - status:\n    - heading \"No results to report.\" [level=2]\n    - paragraph: Nothing has published, so there are no metrics. The only measured records are run receipts, which live on each campaign’s results page.\n    - paragraph: Reports and measurements are not part of this release yet. Unknown numbers are never shown as zero.\n    - link \"Open a brand\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands",
+  "errors": {
+    "console": 0,
+    "page": [],
+    "http": []
+  },
+  "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/studio-reports-fixed-t768.png"
+}

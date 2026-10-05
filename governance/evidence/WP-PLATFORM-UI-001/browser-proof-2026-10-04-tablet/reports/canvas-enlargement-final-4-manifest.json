@@ -1,0 +1,103 @@
+{
+  "recordedUtc": "2026-10-04T18:31:00.3508785Z",
+  "files": [
+    {
+      "sha256": "39d3d49b6318be2286ee303ba5d1dbae692b0b62a97797f097cd6d388a6108d4",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1280-reduced-bottom.png"
+    },
+    {
+      "sha256": "9513b00496aee32361336f93b67e3dd6e2252d13d32f1329a5f57e21a281385b",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1280-reduced.png"
+    },
+    {
+      "sha256": "8819fedb01ff4cd92a92ac03ab3f4da04b244e9cd03b7f9560a7a33ca57a8f3f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-dark-bottom.png"
+    },
+    {
+      "sha256": "9a115309c909e2fd82f4008484bb5a17c11adafa4358320f9d24ac363e77fb90",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-dark.png"
+    },
+    {
+      "sha256": "00a1aa03f3706e0063ce2ee1d8bfff875066eb1aec2adc064c21fdab1ed02426",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-light-bottom.png"
+    },
+    {
+      "sha256": "d0823af6ce5515d8bcf114dff9bf4da06dacc8640186d469958a60bb36507912",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-light.png"
+    },
+    {
+      "sha256": "8a2d42e57546569777540243b0b28004f5115655a352be6b2d16d0a5f9d1b406",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1920-reduced-bottom.png"
+    },
+    {
+      "sha256": "9b6982123a715f4eb1b2aff1d1faa325b58bf66948ea6946374677702b75f737",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1920-reduced.png"
+    },
+    {
+      "sha256": "af7996fadb0187cdd63e0b3cb49544e7d72615027fb2747a715a82568e8ca1f4",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-forced-colors-bottom.png"
+    },
+    {
+      "sha256": "c032ee6ca4a3d3ecf85554f9d73d9a4f95c8c36544c75b449408308c19a6685e",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-forced-colors.png"
+    },
+    {
+      "sha256": "45db06c3aa70f0106e53aa2d8277b6dbd405e63548ac8988d9cac2119675c60f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-dark-bottom.png"
+    },
+    {
+      "sha256": "62c95b9f1be361e2ec6abc3f457db404ec0a2a1b8faad12944dba8eb653b2a66",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-dark.png"
+    },
+    {
+      "sha256": "45db06c3aa70f0106e53aa2d8277b6dbd405e63548ac8988d9cac2119675c60f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light-bottom.png"
+    },
+    {
+      "sha256": "62c95b9f1be361e2ec6abc3f457db404ec0a2a1b8faad12944dba8eb653b2a66",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light.png"
+    },
+    {
+      "sha256": "45db06c3aa70f0106e53aa2d8277b6dbd405e63548ac8988d9cac2119675c60f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-reduced-bottom.png"
+    },
+    {
+      "sha256": "62c95b9f1be361e2ec6abc3f457db404ec0a2a1b8faad12944dba8eb653b2a66",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-reduced.png"
+    },
+    {
+      "sha256": "ee285d525c0d060ff8126963905f27eee22a7f3c233abeb6de6d02b731a6be7f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-dark-bottom.png"
+    },
+    {
+      "sha256": "46388af6ebbd61a4c4ff5fdd47a100f1a646c30cc4dab45713f45d6b8fcdb13b",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-dark.png"
+    },
+    {
+      "sha256": "ee285d525c0d060ff8126963905f27eee22a7f3c233abeb6de6d02b731a6be7f",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-light-bottom.png"
+    },
+    {
+      "sha256": "46388af6ebbd61a4c4ff5fdd47a100f1a646c30cc4dab45713f45d6b8fcdb13b",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-light.png"
+    },
+    {
+      "sha256": "54b1fb2f27638084c8155658f956e534bc98a89eb7bd81a3e25d8a613fb91c00",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-text-only-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "1cf33c8ed8c9d358d68644e584d59d6ba26dc98bfd21fe9e2aa29eaf0f7d9b8a",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-text-only-200-emulated.png"
+    },
+    {
+      "sha256": "968b9013fc46cb643c4dd233ebcca88ab9d54b30997bc2d2ab2ea179d8c443c0",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-zoom-200-emulated-bottom.png"
+    },
+    {
+      "sha256": "25a9c816f47a2bab7e1aab483c776014c4a6639e7016a6d6b527147a12086e65",
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-zoom-200-emulated.png"
+    }
+  ],
+  "nameCount": 24,
+  "distinctContentCount": 18
+}

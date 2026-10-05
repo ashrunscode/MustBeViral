@@ -1,0 +1,1085 @@
+{
+  "recordedUtc": "2026-10-04T16:33:04.586Z",
+  "driver": "Playwright MCP",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "renderMode": "production build; authenticated local synthetic workspace data; public home signed out",
+  "labPerformanceIncluded": false,
+  "providerAndQueueExecution": false,
+  "remoteAuthOrDatabaseAccess": false,
+  "trees": [
+    "- main:\n  - heading \"You brief. Agents produce. You approve every dollar.\" [level=1]\n  - paragraph: The film follows one photo from a Drive folder to a receipt.\n  - figure \"One photo, from Drive to receipt\":\n    - img \"Film frame. A photo arrives from a Google Drive folder, is cropped and captioned from the approved offer, publishes to the eligible channels, and ends in a receipt that shows the cost.\"\n    - text: One photo, from Drive to receipt\n  - list \"The path, in four beats\":\n    - listitem:\n      - button \"0:00 photo.jpg arrives from the Google Drive folder you selected.\"\n    - listitem:\n      - button \"0:04 The same photo is cropped and captioned from the approved offer.\"\n    - listitem:\n      - button \"0:08 The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.\"\n    - listitem:\n      - button \"0:13 The receipt shows the provider id and the actual cost for that photo. Pause stays available.\"\n  - paragraph: Enrollment is closed.\n  - link \"Sign in to Studio\":\n    - /url: /login\n  - link \"Request access by email\":\n    - /url: mailto:[local fixture email]?subject=Request%20access",
+    "- main:\n  - heading \"You brief. Agents produce. You approve every dollar.\" [level=1]\n  - paragraph: The film follows one photo from a Drive folder to a receipt.\n  - figure \"One photo, from Drive to receipt\":\n    - img \"Film frame. A photo arrives from a Google Drive folder, is cropped and captioned from the approved offer, publishes to the eligible channels, and ends in a receipt that shows the cost.\"\n    - text: One photo, from Drive to receipt\n    - button \"Play the film\"\n  - list \"The path, in four beats\":\n    - listitem:\n      - button \"0:00 photo.jpg arrives from the Google Drive folder you selected.\"\n    - listitem:\n      - button \"0:04 The same photo is cropped and captioned from the approved offer.\"\n    - listitem:\n      - button \"0:08 The eligible channels publish it. TikTok waits for per-post privacy, Google Business Profile waits for access, and YouTube stays private until the project is approved.\"\n    - listitem:\n      - button \"0:13 The receipt shows the provider id and the actual cost for that photo. Pause stays available.\"\n  - paragraph: Enrollment is closed.\n  - link \"Sign in to Studio\":\n    - /url: /login\n  - link \"Request access by email\":\n    - /url: mailto:[local fixture email]?subject=Request%20access",
+    "- main:\n  - link \"Skip to sign in\":\n    - /url: \"#auth-heading\"\n  - region \"Sign in\":\n    - link \"Must Be Viral\":\n      - /url: /\n    - heading \"Sign in\" [level=1]\n    - paragraph: Use the email and password for your Studio workspace.\n    - text: Email\n    - textbox \"Email\"\n    - text: Password\n    - textbox \"Password\"\n    - button \"Sign in\"\n    - link \"Forgot password?\":\n      - /url: /forgot-password?next=%2Fstudio\n    - link \"Request access\":\n      - /url: /signup\n    - link \"Verify email\":\n      - /url: /verify-email?next=%2Fstudio"
+  ],
+  "cells": [
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-m375-light",
+      "capturedUtc": "2026-10-04T16:32:57.086Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 84,
+              "width": 343,
+              "height": 67.1875,
+              "top": 84,
+              "right": 359,
+              "bottom": 151.1875,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-m375-dark",
+      "capturedUtc": "2026-10-04T16:32:57.735Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 84,
+              "width": 343,
+              "height": 67.1875,
+              "top": 84,
+              "right": 359,
+              "bottom": 151.1875,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-t768-light",
+      "capturedUtc": "2026-10-04T16:32:58.240Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 84,
+              "width": 609.484375,
+              "height": 33.59375,
+              "top": 84,
+              "right": 625.484375,
+              "bottom": 117.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-t768-dark",
+      "capturedUtc": "2026-10-04T16:32:58.661Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 84,
+              "width": 609.484375,
+              "height": 33.59375,
+              "top": 84,
+              "right": 625.484375,
+              "bottom": 117.59375,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-d1440-light",
+      "capturedUtc": "2026-10-04T16:32:59.055Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 120,
+              "y": 84,
+              "width": 609.484375,
+              "height": 33.59375,
+              "top": 84,
+              "right": 729.484375,
+              "bottom": 117.59375,
+              "left": 120
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-d1440-dark",
+      "capturedUtc": "2026-10-04T16:32:59.531Z",
+      "httpStatus": 200,
+      "treeIndex": 0,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 120,
+              "y": 84,
+              "width": 609.484375,
+              "height": 33.59375,
+              "top": 84,
+              "right": 729.484375,
+              "bottom": 117.59375,
+              "left": 120
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-m375-reduced",
+      "capturedUtc": "2026-10-04T16:33:00.015Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 16,
+              "y": 84,
+              "width": 343,
+              "height": 67.1875,
+              "top": 84,
+              "right": 359,
+              "bottom": 151.1875,
+              "left": 16
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 64
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-d1280-reduced",
+      "capturedUtc": "2026-10-04T16:33:00.399Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 40,
+              "y": 84,
+              "width": 609.484375,
+              "height": 33.59375,
+              "top": 84,
+              "right": 649.484375,
+              "bottom": 117.59375,
+              "left": 40
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 64
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "software",
+      "path": "/software",
+      "cell": "software-d1920-reduced",
+      "capturedUtc": "2026-10-04T16:33:00.808Z",
+      "httpStatus": 200,
+      "treeIndex": 1,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "You brief. Agents produce. You approve every dollar.",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "33.6px",
+            "rect": {
+              "x": 360,
+              "y": 84,
+              "width": 609.484375,
+              "height": 33.59375,
+              "top": 84,
+              "right": 969.484375,
+              "bottom": 117.59375,
+              "left": 360
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to main content",
+            "width": 168.15625,
+            "height": 40.5,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 64
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-software-d1920-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-m375-light",
+      "capturedUtc": "2026-10-04T16:33:01.442Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 49,
+              "y": 113,
+              "width": 277,
+              "height": 36,
+              "top": 113,
+              "right": 326,
+              "bottom": 149,
+              "left": 49
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-m375-light.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-m375-dark",
+      "capturedUtc": "2026-10-04T16:33:01.913Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 49,
+              "y": 113,
+              "width": 277,
+              "height": 36,
+              "top": 113,
+              "right": 326,
+              "bottom": 149,
+              "left": 49
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-m375-dark.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-t768-light",
+      "capturedUtc": "2026-10-04T16:33:02.323Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 197,
+              "y": 216,
+              "width": 374,
+              "height": 36,
+              "top": 216,
+              "right": 571,
+              "bottom": 252,
+              "left": 197
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-t768-light.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-t768-dark",
+      "capturedUtc": "2026-10-04T16:33:02.667Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 768,
+        "height": 1024,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 197,
+              "y": 216,
+              "width": 374,
+              "height": 36,
+              "top": 216,
+              "right": 571,
+              "bottom": 252,
+              "left": 197
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-t768-dark.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-d1440-light",
+      "capturedUtc": "2026-10-04T16:33:03.014Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 533,
+              "y": 154,
+              "width": 374,
+              "height": 36,
+              "top": 154,
+              "right": 907,
+              "bottom": 190,
+              "left": 533
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-d1440-light.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-d1440-dark",
+      "capturedUtc": "2026-10-04T16:33:03.421Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1440,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 533,
+              "y": 154,
+              "width": 374,
+              "height": 36,
+              "top": 154,
+              "right": 907,
+              "bottom": 190,
+              "left": 533
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 0
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-d1440-dark.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-m375-reduced",
+      "capturedUtc": "2026-10-04T16:33:03.849Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 375,
+        "height": 812,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 49,
+              "y": 113,
+              "width": 277,
+              "height": 36,
+              "top": 113,
+              "right": 326,
+              "bottom": 149,
+              "left": 49
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 49
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-m375-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-d1280-reduced",
+      "capturedUtc": "2026-10-04T16:33:04.201Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1280,
+        "height": 900,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 453,
+              "y": 154,
+              "width": 374,
+              "height": 36,
+              "top": 154,
+              "right": 827,
+              "bottom": 190,
+              "left": 453
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 49
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-d1280-reduced.png",
+      "folds": []
+    },
+    {
+      "route": "login",
+      "path": "/login",
+      "cell": "login-d1920-reduced",
+      "capturedUtc": "2026-10-04T16:33:04.549Z",
+      "httpStatus": 200,
+      "treeIndex": 2,
+      "probe": {
+        "width": 1920,
+        "height": 1080,
+        "mains": 1,
+        "hScroll": false,
+        "heading": [
+          {
+            "text": "Sign in",
+            "px": 28,
+            "weight": "400",
+            "lineHeight": "normal",
+            "rect": {
+              "x": 773,
+              "y": 244,
+              "width": 374,
+              "height": 36,
+              "top": 244,
+              "right": 1147,
+              "bottom": 280,
+              "left": 773
+            }
+          }
+        ],
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "bodyBackground": "rgb(250, 250, 250)",
+        "themeColor": true,
+        "scrollers": [],
+        "physicalSmallTargets": [
+          {
+            "tag": "A",
+            "name": "Skip to sign in",
+            "width": 123.296875,
+            "height": 37,
+            "disabled": false,
+            "labelWidth": null,
+            "labelHeight": null,
+            "pseudoMinWidth": 0,
+            "pseudoMinHeight": 0,
+            "edgeHits": [false, false]
+          }
+        ],
+        "runningAnimations": [],
+        "transitionAll": 49
+      },
+      "axe": null,
+      "errors": [],
+      "httpErrors": [],
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/qa-proxy3-prod-login-d1920-reduced.png",
+      "folds": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "firstFailure": "Windows cmd path parsing rejected the parentheses in the quoted CSS path before formatter execution",
+  "secondActualExit": 0,
+  "globResolvedToOneOwnedCssFile": true,
+  "secondFinishedUtc": "2026-10-05T00:34:44.2851361Z",
+  "firstFormattingCommandActualExit": 255,
+  "recordedUtc": "2026-10-05T00:34:44.2850470Z",
+  "secondCommand": "corepack pnpm exec prettier --write apps/web/e2e/final-ui.spec.ts apps/web/app/*/studio/*/*/quote/quote-flow.module.css",
+  "secondStartedUtc": "2026-10-05T00:34:42.6317879Z"
+}

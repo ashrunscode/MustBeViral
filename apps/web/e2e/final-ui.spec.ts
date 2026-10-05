@@ -1,5 +1,6 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 
 async function screenshotPath(name: string) {
@@ -13,6 +14,431 @@ async function screenshotPath(name: string) {
   await mkdir(directory, { recursive: true });
   return path.join(directory, name);
 }
+
+async function emulateDoubleText(page: Page) {
+  await page.evaluate(() => {
+    // Freeze all computed sizes before applying them so nested inheritance never doubles twice.
+    const measured = [...document.querySelectorAll<HTMLElement>('body *')].map((element) => {
+      const style = getComputedStyle(element);
+      return {
+        element,
+        font: Number.parseFloat(style.fontSize),
+        line: style.lineHeight === 'normal' ? null : Number.parseFloat(style.lineHeight),
+      };
+    });
+    for (const { element, font, line } of measured) {
+      element.style.fontSize = `${font * 2}px`;
+      if (line !== null) element.style.lineHeight = `${line * 2}px`;
+    }
+  });
+}
+
+async function expectCompleteFocusOutline(region: Locator) {
+  await expect(region).toBeFocused();
+  await expect(region).toHaveCSS('outline-style', 'solid');
+  const clippedEdges = await region.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const width = Number.parseFloat(style.outlineWidth);
+    const outset = Math.max(0, width + Number.parseFloat(style.outlineOffset));
+    const rect = element.getBoundingClientRect();
+    const outline = {
+      top: rect.top - outset,
+      right: rect.right + outset,
+      bottom: rect.bottom + outset,
+      left: rect.left - outset,
+    };
+    const failures: string[] = [];
+    if (width < 2) failures.push('outline narrower than 2px');
+    const checkEdges = (
+      name: string,
+      bounds: { top: number; right: number; bottom: number; left: number },
+      clipX: boolean,
+      clipY: boolean,
+    ) => {
+      if (clipX && outline.left < bounds.left - 0.5) failures.push(`${name}: left`);
+      if (clipX && outline.right > bounds.right + 0.5) failures.push(`${name}: right`);
+      if (clipY && outline.top < bounds.top - 0.5) failures.push(`${name}: top`);
+      if (clipY && outline.bottom > bounds.bottom + 0.5) failures.push(`${name}: bottom`);
+    };
+    checkEdges('viewport', { top: 0, right: innerWidth, bottom: innerHeight, left: 0 }, true, true);
+    for (let parent = element.parentElement; parent !== null; parent = parent.parentElement) {
+      const parentStyle = getComputedStyle(parent);
+      const clipX = parentStyle.overflowX !== 'visible';
+      const clipY = parentStyle.overflowY !== 'visible';
+      if (!clipX && !clipY) continue;
+      const box = parent.getBoundingClientRect();
+      checkEdges(
+        parent.tagName,
+        {
+          top: box.top + parent.clientTop,
+          right: box.left + parent.clientLeft + parent.clientWidth,
+          bottom: box.top + parent.clientTop + parent.clientHeight,
+          left: box.left + parent.clientLeft,
+        },
+        clipX,
+        clipY,
+      );
+    }
+    return failures;
+  });
+  expect(clippedEdges, 'all four focus outline edges remain inside every clipping frame').toEqual(
+    [],
+  );
+}
+
+test('keeps enlarged quote recovery inside its footer and viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/quote?state=expired_quote');
+  await page.evaluate(() => document.fonts.ready);
+  await page.getByRole('checkbox', { name: /I acknowledge this revision/ }).check();
+  await page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }).click();
+  await expect(page.locator('[data-result="expired_quote"]')).toBeVisible();
+  await emulateDoubleText(page);
+  const fromProject = createRequire(path.resolve(process.cwd(), 'package.json'));
+  const fromNext = createRequire(fromProject.resolve('eslint-config-next'));
+  const fromA11y = createRequire(fromNext.resolve('eslint-plugin-jsx-a11y'));
+  await page.addScriptTag({ path: fromA11y.resolve('axe-core/axe.min.js') });
+  const inaccessibleScrollers = await page.evaluate(async () => {
+    const axe = (
+      window as unknown as {
+        axe: {
+          run: (
+            context: Document,
+            options: { runOnly: { type: string; values: string[] } },
+          ) => Promise<{ violations: Array<{ id: string }> }>;
+        };
+      }
+    ).axe;
+    const result = await axe.run(document, {
+      runOnly: { type: 'rule', values: ['scrollable-region-focusable'] },
+    });
+    return result.violations.map((violation) => violation.id);
+  });
+  expect(inaccessibleScrollers).toEqual([]);
+  const coverage = page.getByRole('complementary', { name: 'What this run covers', exact: true });
+  await page.keyboard.press('Tab');
+  await coverage.focus();
+  await expect(coverage).toBeFocused();
+  await expectCompleteFocusOutline(coverage);
+  await page.keyboard.press('End');
+  await expect.poll(() => coverage.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+  const recovery = page
+    .locator('[class*="confirmBar"]')
+    .getByRole('button', { name: 'Re-quote this run', exact: true });
+  await expect(recovery).toBeInViewport({ ratio: 1 });
+  const contained = await recovery.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    const footer = element.parentElement!.getBoundingClientRect();
+    return rect.top >= footer.top && rect.bottom <= footer.bottom;
+  });
+  expect(contained).toBe(true);
+  await recovery.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('[data-result="expired_quote"]')).toBeHidden();
+  await expect(page.getByRole('checkbox')).not.toBeChecked();
+});
+
+test('returns focus to the fresh quote after timer expiry without a confirmation attempt', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.clock.install();
+  await page.goto('/studio/lumen-skin/quote');
+  const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+  await expect(acknowledgment).toBeEnabled();
+  await acknowledgment.focus();
+  await page.keyboard.press('Space');
+  await expect(acknowledgment).toBeChecked();
+  await page.clock.fastForward(15 * 60_000 + 1000);
+  const notice = page.locator('[data-result="expired_quote"]');
+  await expect(notice).toBeVisible();
+  const recovery = notice.getByRole('button', { name: 'Re-quote this run', exact: true });
+  await recovery.focus();
+  await page.keyboard.press('Enter');
+  await expect(notice).toBeHidden();
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Review this run before spending',
+      exact: true,
+    }),
+  ).toBeFocused();
+  await expect(acknowledgment).toBeEnabled();
+  await expect(acknowledgment).not.toBeChecked();
+  await expect(page.getByRole('button', { name: 'Confirm $4.20 run', exact: true })).toBeDisabled();
+});
+
+for (const [label, route, width, height, enlarged, regionName] of [
+  ['quote-mobile', '/studio/lumen-skin/quote', 375, 812, false, 'What this run covers'],
+  ['quote-zoom', '/studio/lumen-skin/quote', 640, 450, false, 'What this run covers'],
+  ['quote-short-text', '/studio/lumen-skin/quote', 1280, 600, true, 'What this run covers'],
+  [
+    'run-zoom',
+    '/studio/lumen-skin/quote?stage=run&run=failed',
+    640,
+    450,
+    false,
+    'Run progress summary',
+  ],
+] as const) {
+  test(`keeps stacked summary focus visible after End: ${label}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(route);
+    const region = page.getByRole('complementary', { name: regionName, exact: true });
+    await expect(region).toBeVisible();
+    if (label.startsWith('quote-')) {
+      // Confirm a controlled interaction before changing text sizes; SSR can be visible before
+      // hydration, when a style mutation would create a test-only hydration mismatch.
+      const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+      const confirm = page.getByRole('button', { name: 'Confirm $4.20 run', exact: true });
+      await acknowledgment.check();
+      await expect(confirm).toBeEnabled();
+      await acknowledgment.uncheck();
+      await expect(confirm).toBeDisabled();
+    }
+    await page.evaluate(() => document.fonts.ready);
+    if (enlarged) await emulateDoubleText(page);
+    await page.keyboard.press('Tab');
+    await region.focus();
+    await page.keyboard.press('End');
+    await expect(async () => expectCompleteFocusOutline(region)).toPass({ timeout: 1500 });
+    const lastRowVisible = () =>
+      region.evaluate((element) => {
+        const last = element.querySelector('dl > div:last-child');
+        if (last === null) return false;
+        const outer = element.getBoundingClientRect();
+        const inner = last.getBoundingClientRect();
+        return inner.top >= outer.top && inner.bottom <= outer.bottom;
+      });
+    // Quote ends with an explanatory paragraph. Arrow keys reach the last money row when the
+    // enlarged paragraph fills the end of its scroll area; Run ends with the row itself.
+    for (let step = 0; step < 12 && !(await lastRowVisible()); step++) {
+      await page.keyboard.press('ArrowUp');
+      await page.waitForTimeout(100);
+    }
+    await expect.poll(lastRowVisible).toBe(true);
+    await expectCompleteFocusOutline(region);
+  });
+}
+
+for (const [label, width, height] of [
+  ['desktop', 1280, 900],
+  ['short', 1280, 600],
+  ['mobile', 375, 812],
+  ['tablet', 768, 1024],
+] as const) {
+  test(`keeps enlarged quote summary values inside the region: ${label}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/studio/lumen-skin/quote');
+    const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+    const confirm = page.getByRole('button', { name: 'Confirm $4.20 run', exact: true });
+    await acknowledgment.check();
+    await expect(confirm).toBeEnabled();
+    await acknowledgment.uncheck();
+    await expect(confirm).toBeDisabled();
+    const region = page.getByRole('complementary', { name: 'What this run covers', exact: true });
+    // Preview uses short route/revision labels. These test-only text fixtures exercise the
+    // longer DTO fields observed in the worker-rendered browser proof; money is unchanged.
+    await region.locator('dl').evaluate((element) => {
+      for (const row of element.querySelectorAll('div')) {
+        const term = row.querySelector('dt')?.textContent;
+        const value = row.querySelector('dd');
+        if (value === null) continue;
+        if (term === 'Route') value.textContent = 'synthetic/measurement-route';
+        if (term === 'Pinned revision') {
+          value.textContent = '77777777-7777-4777-8777-777777777777';
+        }
+      }
+    });
+    await expect(region.locator('dd').nth(1)).toHaveText('synthetic/measurement-route');
+    await expect(region.locator('dd').nth(2)).toHaveText('77777777-7777-4777-8777-777777777777');
+    await page.evaluate(() => document.fonts.ready);
+    await emulateDoubleText(page);
+    const geometry = await region.evaluate((element) => {
+      const outer = element.getBoundingClientRect();
+      return {
+        regionOverflow: element.scrollWidth > element.clientWidth + 1,
+        values: [...element.querySelectorAll('dl dd')].map((value) => {
+          const bounds = value.getBoundingClientRect();
+          return {
+            text: value.textContent,
+            clipped:
+              bounds.left < outer.left ||
+              bounds.right > outer.right ||
+              value.scrollWidth > value.clientWidth + 1,
+          };
+        }),
+      };
+    });
+    expect(geometry.values).toHaveLength(6);
+    expect(geometry.values.filter((value) => value.clipped)).toEqual([]);
+    expect(geometry.regionOverflow).toBe(false);
+  });
+}
+
+test('keeps enlarged comparison metadata inside each version column', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/review/compare');
+  await expect(page.locator('.compare-pair')).toHaveCount(4);
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const captions = page.locator('.compare-pair [class*="versionCaption"]');
+  await expect(captions).toHaveCount(8);
+  const overflows = await captions.evaluateAll((elements) =>
+    elements.flatMap((element, index) => {
+      const box = element.getBoundingClientRect();
+      return [...element.children].flatMap((child) => {
+        const range = document.createRange();
+        range.selectNodeContents(child);
+        return [...range.getClientRects()]
+          .filter((rect) => rect.left < box.left - 0.5 || rect.right > box.right + 0.5)
+          .map(() => `${index}: ${child.textContent}`);
+      });
+    }),
+  );
+  expect(overflows).toEqual([]);
+});
+
+test('keeps enlarged collaborator initials inside their presence markers', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/review');
+  const avatars = page.getByRole('list', { name: 'Active collaborators' }).locator('li > span');
+  await expect(avatars.first()).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const overflows = await avatars.evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      const box = element.getBoundingClientRect();
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      const text = range.getBoundingClientRect();
+      return text.left < box.left ||
+        text.right > box.right ||
+        text.top < box.top ||
+        text.bottom > box.bottom
+        ? [element.textContent]
+        : [];
+    }),
+  );
+  expect(overflows).toEqual([]);
+});
+
+test('keeps enlarged presence content inside the collaboration rail', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const presence = page.getByRole('region', { name: 'Collaborator presence', exact: true });
+  await expect(presence.getByRole('list').locator('li').first()).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const overflows = await presence.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    return [...element.querySelectorAll('*')].flatMap((child) =>
+      [...child.childNodes].flatMap((node) => {
+        if (node.nodeType !== Node.TEXT_NODE || !node.textContent?.trim()) return [];
+        const range = document.createRange();
+        range.selectNode(node);
+        return [...range.getClientRects()]
+          .filter(
+            (rect) =>
+              rect.left < box.left ||
+              rect.right > box.right ||
+              rect.top < box.top ||
+              rect.bottom > box.bottom,
+          )
+          .map(() => node.textContent);
+      }),
+    );
+  });
+  expect(overflows).toEqual([]);
+});
+
+test('keeps enlarged plan names readable in the graph outline', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const names = page
+    .getByRole('complementary', { name: 'Graph outline', exact: true })
+    .locator('strong');
+  await expect(names).toHaveCount(12);
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const clipped = await names.evaluateAll((elements) =>
+    elements
+      .filter((element) => element.scrollWidth > element.clientWidth + 0.5)
+      .map((element) => element.textContent),
+  );
+  expect(clipped).toEqual([]);
+});
+
+test('shows complete selected node details outside the scaled diagram', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const node = page
+    .getByRole('complementary', { name: 'Graph outline', exact: true })
+    .getByRole('button', { name: 'Visual gen Asset 01 — Hero Verified', exact: true });
+  await node.focus();
+  await page.keyboard.press('Enter');
+  const details = page.getByRole('region', { name: 'Selected node details', exact: true });
+  await expect(details.getByText('Asset 01 — Hero', { exact: true })).toBeVisible();
+  await expect(details.getByText('Verified — Output verified', { exact: true })).toBeVisible();
+  await expect(details.getByText('flux-2-klein', { exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  const referenceTypography = await details
+    .getByText('flux-2-klein', { exact: true })
+    .evaluate((element) => {
+      const style = getComputedStyle(element);
+      const firstFamily = (value: string) =>
+        value
+          .split(',')[0]
+          ?.trim()
+          .replace(/^["']|["']$/g, '') ?? '';
+      return {
+        renderedFamily: firstFamily(style.fontFamily),
+        monoFamily: firstFamily(style.getPropertyValue('--font-mono')),
+      };
+    });
+  expect(referenceTypography.monoFamily).not.toBe('');
+  expect(referenceTypography.renderedFamily).toBe(referenceTypography.monoFamily);
+  await emulateDoubleText(page);
+  const clipped = await details
+    .locator('dd')
+    .evaluateAll((elements) =>
+      elements
+        .filter((element) => element.scrollWidth > element.clientWidth + 0.5)
+        .map((element) => element.textContent),
+    );
+  expect(clipped).toEqual([]);
+});
+
+test('keeps the enlarged run summary scrollable by keyboard', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 600 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/quote?stage=run&run=failed');
+  await expect(page.locator('[data-run-state="failed"]')).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await emulateDoubleText(page);
+  const summary = page.getByRole('complementary', { name: 'Run progress summary', exact: true });
+  expect(await summary.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(
+    true,
+  );
+  await summary.focus();
+  await expect(summary).toBeFocused();
+  await expectCompleteFocusOutline(summary);
+  await page.keyboard.press('End');
+  await expect
+    .poll(() =>
+      summary.evaluate((element) => {
+        const last = element.querySelector('dl > div:last-child');
+        if (last === null) return false;
+        const outer = element.getBoundingClientRect();
+        const inner = last.getBoundingClientRect();
+        return inner.top >= outer.top && inner.bottom <= outer.bottom;
+      }),
+    )
+    .toBe(true);
+});
 
 test('renders partial run progress at 1440x900', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -36,6 +462,46 @@ test('disables run work-motion under reduced motion', async ({ page }) => {
   await expect(page.locator('[data-first-reviewable="true"]')).toBeVisible();
   await expect(page.locator('.filament-sweep').first()).toHaveCSS('animation-name', 'none');
   await expect(page.locator('.flow-transfer').first()).toHaveCSS('animation-name', 'none');
+});
+
+test('zooms the canvas with the wheel without passive listener failures', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  const surface = page.getByTestId('canvas-surface');
+  await expect(surface).toBeVisible();
+  const plane = page.getByTestId('graph-plane');
+  const before = await plane.getAttribute('style');
+  const box = await surface.boundingBox();
+  expect(box).not.toBeNull();
+  if (box === null) return;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.wheel(0, 80);
+  await expect(plane).not.toHaveAttribute('style', before ?? '');
+  await page.waitForTimeout(100);
+  expect(errors).toEqual([]);
+});
+
+test('disables broad transitions when reduced motion is requested', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/studio/lumen-skin/canvas');
+  await expect(page.getByRole('heading', { name: 'Lumen Skin launch pack' })).toBeVisible();
+  const broadTransitions = await page.locator('body *').evaluateAll((elements) =>
+    elements
+      .filter((element) => {
+        const style = getComputedStyle(element);
+        return (
+          style.transitionProperty.split(',').some((property) => property.trim() === 'all') &&
+          style.transitionDuration.split(',').some((duration) => parseFloat(duration) > 0)
+        );
+      })
+      .map((element) => element.tagName),
+  );
+  expect(broadTransitions).toEqual([]);
 });
 
 test('renders output comparison at 1440x900', async ({ page }, testInfo) => {
@@ -958,58 +1424,208 @@ test('keeps canvas nodes inside their column at 375px so none sits over a side-r
   expect(report.surfaceRight).toBeLessThanOrEqual(report.railLeft + 0.5);
 });
 
-test('keeps the quote acknowledgment checkbox clear of the side panel at 375px', async ({
+test('keeps the full quote and acknowledgment clear of the summary at every supported width', async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto('/studio/lumen-skin/quote');
-  const checkbox = page.getByRole('checkbox');
-  await expect(checkbox).toBeEnabled();
-  const probe = await checkbox.evaluate((box) => {
-    const stage = box.closest('section');
-    const aside = document.querySelector('aside[aria-labelledby="impact-title"]');
-    const label = box instanceof HTMLInputElement ? box.labels?.[0] : undefined;
-    if (!(box instanceof HTMLInputElement) || !label || !stage || !aside) {
-      throw new Error('Missing quote stage, checkbox, label or side panel.');
-    }
-    const stolen: string[] = [];
-    // Every point of the label (and so the checkbox) inside the scrolling stage must reach it.
-    const sample = (element: Element, phase: string) => {
-      const rect = element.getBoundingClientRect();
-      const stageRect = stage.getBoundingClientRect();
-      const left = Math.max(rect.left, stageRect.left, 0) + 1;
-      const right = Math.min(rect.right, stageRect.right) - 1;
-      const top = Math.max(rect.top, stageRect.top, 0) + 1;
-      const bottom = Math.min(rect.bottom, stageRect.bottom, innerHeight) - 1;
-      for (let x = left; x <= right; x += 2) {
-        for (let y = top; y <= bottom; y += 2) {
-          const target = document.elementFromPoint(x, y);
-          if (target !== box && !label.contains(target)) {
-            stolen.push(`${phase}: ${target?.tagName ?? 'none'}`);
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    await page.goto('/studio/lumen-skin/quote');
+    const checkbox = page.getByRole('checkbox');
+    await expect(checkbox).toBeEnabled();
+    await checkbox.scrollIntoViewIfNeeded();
+    const probe = await checkbox.evaluate((box) => {
+      const stage = box.closest('section');
+      const aside = document.querySelector('aside[aria-labelledby="impact-title"]');
+      const label = box instanceof HTMLInputElement ? box.labels?.[0] : undefined;
+      const card = label?.closest('.mbv-card');
+      if (!(box instanceof HTMLInputElement) || !label || !stage || !aside || !card) {
+        throw new Error('Missing quote stage, checkbox, label or side panel.');
+      }
+      const stolen: string[] = [];
+      // Every point of the label (and so the checkbox) inside the scrolling stage must reach it.
+      const sample = (element: Element, phase: string) => {
+        const rect = element.getBoundingClientRect();
+        const radius = Math.min(
+          parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0,
+          rect.width / 2,
+          rect.height / 2,
+        );
+        const stageRect = stage.getBoundingClientRect();
+        const left = Math.max(rect.left, stageRect.left, 0) + 1;
+        const right = Math.min(rect.right, stageRect.right) - 1;
+        const top = Math.max(rect.top, stageRect.top, 0) + 1;
+        const bottom = Math.min(rect.bottom, stageRect.bottom, innerHeight) - 1;
+        for (let x = left; x <= right; x += 2) {
+          for (let y = top; y <= bottom; y += 2) {
+            // A rounded label's unpainted corners belong to its card, not its pointer target.
+            const paintedX = Math.max(rect.left + radius, Math.min(x, rect.right - radius));
+            const paintedY = Math.max(rect.top + radius, Math.min(y, rect.bottom - radius));
+            if (Math.hypot(x - paintedX, y - paintedY) > radius) continue;
+            const target = document.elementFromPoint(x, y);
+            if (target !== box && !label.contains(target)) {
+              stolen.push(`${phase}: ${target?.tagName ?? 'none'}`);
+            }
           }
         }
+        return right - left;
+      };
+      // Scroll the stage vertically so the acknowledgment row is in view, then sample it.
+      const labelRect = label.getBoundingClientRect();
+      const stageBox = stage.getBoundingClientRect();
+      stage.scrollTop += (labelRect.top + labelRect.bottom - stageBox.top - stageBox.bottom) / 2;
+      sample(label, 'label');
+      // Scroll the stage until the checkbox sits at its right edge, as scrolling towards it would.
+      stage.scrollLeft += box.getBoundingClientRect().right - stage.getBoundingClientRect().right;
+      const visibleWidth = sample(box, 'checkbox at the stage edge');
+      return {
+        visibleWidth,
+        stolen: [...new Set(stolen)],
+        stageBottom: stage.getBoundingClientRect().bottom,
+        stageLeft: stage.getBoundingClientRect().left,
+        stageRight: stage.getBoundingClientRect().right,
+        asideTop: aside.getBoundingClientRect().top,
+        asideLeft: aside.getBoundingClientRect().left,
+        cardLeft: card.getBoundingClientRect().left,
+        cardRight: card.getBoundingClientRect().right,
+        availableWidth: stage.parentElement!.getBoundingClientRect().width,
+      };
+    });
+    expect(probe.visibleWidth).toBeGreaterThan(8);
+    expect(probe.stolen).toEqual([]);
+    expect(probe.cardLeft).toBeGreaterThanOrEqual(probe.stageLeft - 0.5);
+    expect(probe.cardRight).toBeLessThanOrEqual(probe.stageRight + 0.5);
+    if (probe.availableWidth <= 800) {
+      expect(probe.asideTop).toBeGreaterThanOrEqual(probe.stageBottom - 0.5);
+    } else {
+      expect(probe.asideLeft).toBeGreaterThanOrEqual(probe.stageRight - 0.5);
+    }
+  }
+});
+
+test('keeps rejected quote confirmation and re-quote recovery visible to keyboard users', async ({
+  page,
+}) => {
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    for (const scenario of ['expired_quote', 'cap_exceeded', 'conflict']) {
+      await page.goto(`/studio/lumen-skin/quote?state=${scenario}`);
+      const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+      await acknowledgment.focus();
+      await page.keyboard.press('Space');
+      await expect(acknowledgment).toBeChecked();
+      await page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }).focus();
+      await page.keyboard.press('Enter');
+      const notice = page.locator(`[role="alert"][data-result="${scenario}"]`);
+      await expect(notice).toBeVisible();
+      const heading = page.getByRole('heading', {
+        level: 1,
+        name: 'Review this run before spending',
+        exact: true,
+      });
+      await expect(heading).toBeFocused();
+      await expect(heading).toHaveCSS('outline-style', 'solid');
+      await expect(notice).toBeInViewport({ ratio: 1 });
+      await page.keyboard.press('Tab');
+      if (scenario === 'expired_quote') {
+        await expect(
+          page.getByRole('button', { name: 'Re-quote this run', exact: true }).first(),
+        ).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(notice).toBeHidden();
+        await expect(heading).toBeFocused();
+        await expect(acknowledgment).toBeEnabled();
+        await expect(acknowledgment).not.toBeChecked();
+        await expect(
+          page.getByRole('button', { name: 'Confirm $4.20 run', exact: true }),
+        ).toBeDisabled();
+      } else {
+        await expect(
+          page.getByRole('link', {
+            name: scenario === 'conflict' ? 'Open canvas recovery' : 'Back to the plan',
+            exact: true,
+          }),
+        ).toBeFocused();
       }
-      return right - left;
-    };
-    // Scroll the stage vertically so the acknowledgment row is in view, then sample it.
-    const labelRect = label.getBoundingClientRect();
-    const stageBox = stage.getBoundingClientRect();
-    stage.scrollTop += (labelRect.top + labelRect.bottom - stageBox.top - stageBox.bottom) / 2;
-    sample(label, 'label');
-    // Scroll the stage until the checkbox sits at its right edge, as scrolling towards it would.
-    stage.scrollLeft += box.getBoundingClientRect().right - stage.getBoundingClientRect().right;
-    const visibleWidth = sample(box, 'checkbox at the stage edge');
-    return {
-      visibleWidth,
-      stolen: [...new Set(stolen)],
-      stageBottom: stage.getBoundingClientRect().bottom,
-      asideTop: aside.getBoundingClientRect().top,
-    };
-  });
-  expect(probe.visibleWidth).toBeGreaterThan(8);
-  expect(probe.stolen).toEqual([]);
-  // On a phone the side panel stacks below the stage instead of sharing its row.
-  expect(probe.asideTop).toBeGreaterThanOrEqual(probe.stageBottom - 0.5);
+    }
+  }
+});
+
+test('keeps terminal run branches, recovery and settlement separate and reachable at every supported width', async ({
+  page,
+}) => {
+  test.setTimeout(180_000);
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    for (const failed of [false, true]) {
+      await page.goto(`/studio/lumen-skin/quote?stage=run${failed ? '&run=failed' : ''}`);
+      const run = page.locator(`[data-run-state="${failed ? 'failed' : 'complete'}"]`);
+      await expect(run).toBeVisible();
+      const geometry = await run.evaluate((element) => {
+        const stage = element.querySelector('section[aria-labelledby="run-title"]')!;
+        const aside = element.querySelector('aside[aria-label="Run progress summary"]')!;
+        const cards = [...stage.querySelectorAll('.mbv-card')];
+        const stageRect = stage.getBoundingClientRect();
+        const asideRect = aside.getBoundingClientRect();
+        return {
+          availableWidth: element.getBoundingClientRect().width,
+          stageRight: stageRect.right,
+          stageBottom: stageRect.bottom,
+          asideLeft: asideRect.left,
+          asideTop: asideRect.top,
+          lastCardBottom: cards.at(-1)!.getBoundingClientRect().bottom,
+          stageClientHeight: stage.clientHeight,
+          stageScrollHeight: stage.scrollHeight,
+          horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+        };
+      });
+      expect(geometry.horizontalOverflow).toBe(false);
+      if (geometry.availableWidth <= 800) {
+        expect(geometry.stageScrollHeight).toBeLessThanOrEqual(geometry.stageClientHeight + 1);
+        expect(geometry.asideTop).toBeGreaterThanOrEqual(geometry.lastCardBottom - 0.5);
+        expect(geometry.asideTop).toBeGreaterThanOrEqual(geometry.stageBottom - 0.5);
+      } else {
+        expect(geometry.asideLeft).toBeGreaterThanOrEqual(geometry.stageRight - 0.5);
+      }
+      const continueButton = page.getByRole('link', { name: 'Open output review', exact: true });
+      await continueButton.scrollIntoViewIfNeeded();
+      await continueButton.focus();
+      await expect(continueButton).toBeFocused();
+      expect(
+        await continueButton.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const target = document.elementFromPoint(
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2,
+          );
+          return target !== null && element.contains(target);
+        }),
+      ).toBe(true);
+      if (failed) {
+        await page
+          .getByRole('link', { name: 'Edit the campaign brief', exact: true })
+          .scrollIntoViewIfNeeded();
+        await expect(run.locator('[role="alert"][data-recovery]')).toContainText(
+          'completed branches are retained',
+        );
+      }
+    }
+  }
+});
+
+test('keeps review and comparison titles on the accepted page scale at every supported width', async ({
+  page,
+}) => {
+  for (const width of [375, 768, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1024 });
+    for (const segment of ['review', 'review/compare']) {
+      await page.goto(`/studio/lumen-skin/${segment}`);
+      const heading = page.getByRole('heading', { level: 1 });
+      await expect(heading).toHaveCount(1);
+      await expect(heading).toHaveCSS('font-size', '28px');
+      await expect(heading).toHaveCSS('font-weight', '400');
+      await expect(heading).toHaveCSS('line-height', '33.6px');
+    }
+  }
 });
 
 test('keeps every canvas outline row reachable and unclipped beside the collaboration panel at 375px', async ({

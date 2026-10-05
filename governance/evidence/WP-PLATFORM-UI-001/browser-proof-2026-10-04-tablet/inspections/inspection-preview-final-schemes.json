@@ -1,0 +1,59 @@
+{
+  "recordedUtc": "2026-10-04 16:46:17 UTC",
+  "sourceHead": "3864eb6a61e88c3e70b163f542390cebd50e2f42",
+  "manifest": "preview-final-scheme-manifest.json",
+  "imageNames": 56,
+  "distinctContents": 42,
+  "groups": [
+    {
+      "viewedUtc": "2026-10-04 16:44:36 UTC",
+      "names": [
+        "preview-final-dark-quote-ok-w1440.png",
+        "preview-final-dark-quote-ok-w1440-bottom.png",
+        "preview-final-dark-quote-expired_quote-w1440.png",
+        "preview-final-dark-quote-expired_quote-w1440-bottom.png",
+        "preview-final-dark-quote-cap_exceeded-w1440.png",
+        "preview-final-dark-quote-cap_exceeded-w1440-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:44:55 UTC",
+      "names": [
+        "preview-final-dark-quote-conflict-w1440.png",
+        "preview-final-dark-quote-conflict-w1440-bottom.png",
+        "preview-final-dark-run-running-w1440.png",
+        "preview-final-dark-run-complete-w1440.png",
+        "preview-final-dark-run-failed-w1440.png",
+        "preview-final-dark-run-failed-w1440-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:45:19 UTC",
+      "names": [
+        "preview-final-dark-review-w1440.png",
+        "preview-final-dark-review-w1440-bottom.png",
+        "preview-final-dark-compare-w1440.png",
+        "preview-final-dark-compare-w1440-bottom.png",
+        "preview-final-light-quote-refreshed-w1440.png",
+        "preview-final-light-quote-refreshed-w1440-bottom.png"
+      ]
+    },
+    {
+      "viewedUtc": "2026-10-04 16:46:17 UTC",
+      "names": [
+        "preview-final-light-quote-expired_quote-w1440.png",
+        "preview-final-light-quote-cap_exceeded-w1440.png",
+        "preview-final-light-quote-conflict-w1440.png",
+        "preview-final-light-quote-conflict-w1440-bottom.png",
+        "preview-final-light-run-failed-w1440.png",
+        "preview-final-light-run-failed-w1440-bottom.png"
+      ]
+    }
+  ],
+  "previouslyInspectedDistinctByHash": 18,
+  "newDistinctOriginalsInspected": 24,
+  "visualFindings": [],
+  "incompleteAxe": "Terminal run color-contrast results were visually checked. Preview fixture artefact boxes remain explicitly sample placeholders, not real provider output.",
+  "evidenceLevel": "synthetic in-memory preview mechanics only",
+  "scoreAccepted": false
+}

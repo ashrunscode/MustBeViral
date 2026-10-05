@@ -1,0 +1,32 @@
+{
+  "deletedNoFiles": true,
+  "remainingListeners": [],
+  "portsFree": true,
+  "stops": [
+    {
+      "actualExit": 0,
+      "executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+      "source": "74b98486204c22e41b76072a6eba833e14609a57",
+      "command": "taskkill /PID 20396 /T /F",
+      "script": "C:/dev/mbv-run/launch-l3f-tablet-c5-summary-values-production-web-20261004.mjs",
+      "startedUtc": "2026-10-05T01:01:15.9980139Z",
+      "pid": 20396,
+      "createdUtc": "2026-10-05T00:39:42.6148550Z",
+      "endedUtc": "2026-10-05T01:01:16.8843570Z",
+      "kind": "web"
+    },
+    {
+      "actualExit": 0,
+      "executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+      "source": "74b98486204c22e41b76072a6eba833e14609a57",
+      "command": "taskkill /PID 64240 /T /F",
+      "script": "C:/dev/mbv-run/launch-l3f-tablet-c5-summary-values-production-core-20261004.mjs",
+      "startedUtc": "2026-10-05T01:01:16.8968212Z",
+      "pid": 64240,
+      "createdUtc": "2026-10-05T00:39:28.1822980Z",
+      "endedUtc": "2026-10-05T01:01:17.6581145Z",
+      "kind": "core"
+    }
+  ],
+  "recordedUtc": "2026-10-05T01:01:19.7451268Z"
+}

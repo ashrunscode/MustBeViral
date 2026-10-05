@@ -1,0 +1,55 @@
+{
+  "recordedUtc": "2026-10-04T19:24:12.549Z",
+  "actualViews": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-m375-light.png",
+      "recordedUtc": "2026-10-04T19:15:00.958Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-m375-light-bottom.png",
+      "recordedUtc": "2026-10-04T19:15:00.963Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-t768-light.png",
+      "recordedUtc": "2026-10-04T19:15:00.971Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-t768-light-bottom.png",
+      "recordedUtc": "2026-10-04T19:15:00.979Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-d1440-light.png",
+      "recordedUtc": "2026-10-04T19:15:16.406Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-d1280-reduced.png",
+      "recordedUtc": "2026-10-04T19:15:16.419Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-d1920-reduced.png",
+      "recordedUtc": "2026-10-04T19:15:16.437Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-forced-colors.png",
+      "recordedUtc": "2026-10-04T19:15:16.449Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:15:59.547Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-zoom-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:15:59.560Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T19:15:59.577Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/run-production-final-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T19:15:59.593Z"
+    }
+  ],
+  "scope": "Twelve distinct originals inspected; nineteen capture names. Explicit dark preferences still render the product's light theme. Original text-only capture exposed the unscrollable Run summary and remains before-repair evidence. Identical aliases must be verified by the capture manifest.",
+  "sourceHead": "1486b2c47a08bb5dc4d81793a6f3fec5f40e590a"
+}

@@ -1,0 +1,112 @@
+{
+  "recordedUtc": "2026-10-04T18:36:10.036Z",
+  "actualViews": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light.png",
+      "recordedUtc": "2026-10-04T18:31:54.288Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light-bottom.png",
+      "recordedUtc": "2026-10-04T18:31:54.288Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-dark.png",
+      "recordedUtc": "2026-10-04T18:31:54.288Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-dark-bottom.png",
+      "recordedUtc": "2026-10-04T18:31:54.288Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-light.png",
+      "recordedUtc": "2026-10-04T18:33:16.483Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-light-bottom.png",
+      "recordedUtc": "2026-10-04T18:33:16.483Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-dark.png",
+      "recordedUtc": "2026-10-04T18:33:16.483Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-t768-dark-bottom.png",
+      "recordedUtc": "2026-10-04T18:33:16.483Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-light.png",
+      "recordedUtc": "2026-10-04T18:33:47.494Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-light-bottom.png",
+      "recordedUtc": "2026-10-04T18:33:47.494Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-dark.png",
+      "recordedUtc": "2026-10-04T18:33:47.494Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1440-dark-bottom.png",
+      "recordedUtc": "2026-10-04T18:33:47.494Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1280-reduced.png",
+      "recordedUtc": "2026-10-04T18:34:53.864Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1280-reduced-bottom.png",
+      "recordedUtc": "2026-10-04T18:34:53.864Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1920-reduced.png",
+      "recordedUtc": "2026-10-04T18:34:53.864Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-d1920-reduced-bottom.png",
+      "recordedUtc": "2026-10-04T18:34:53.864Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-forced-colors.png",
+      "recordedUtc": "2026-10-04T18:35:34.934Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-forced-colors-bottom.png",
+      "recordedUtc": "2026-10-04T18:35:34.934Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-zoom-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:35:34.934Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-zoom-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T18:35:34.934Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-text-only-200-emulated.png",
+      "recordedUtc": "2026-10-04T18:36:10.036Z"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-text-only-200-emulated-bottom.png",
+      "recordedUtc": "2026-10-04T18:36:10.036Z"
+    }
+  ],
+  "all18DistinctContentsInspected": true,
+  "duplicateAliases": [
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-reduced.png",
+      "matches": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light.png",
+      "basis": "SHA256 manifest"
+    },
+    {
+      "path": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-reduced-bottom.png",
+      "matches": "C:/dev/mbv-run/l3f-tablet-browser-20261004-1/canvas-enlargement-final-4-m375-light-bottom.png",
+      "basis": "SHA256 manifest"
+    }
+  ],
+  "findings": [
+    "All full selected-node details and outline labels are readable; compact diagram labels retain ellipses with complete labels in the outline and readable selection details.",
+    "Presence at the top of some captures is partly above the scroll position after centering selection details; its full content remains in the same scrolling rail.",
+    "The shipped Lightfield scheme remains light under dark preference, matching the current global style.",
+    "Broad transition-property remains active only in reduced-motion pre-repair captures; separate red-green motion regression resolves it."
+  ]
+}

@@ -1,0 +1,321 @@
+{
+  "imageNames": 45,
+  "distinctContents": 29,
+  "images": [
+    {
+      "sha256": "5942f34dbd5828921e413e2bf3e95af8f4ec6cab9f36bc5a4d07924237b24b1f",
+      "name": "qa-proxy3-prod-software-m375-light.png",
+      "bytes": 88662,
+      "cell": "software-m375-light",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "e767ae0a6e6a443f5765430aafd7cb39782a4aaac1102c59618d9df567dc1026",
+      "name": "qa-proxy3-prod-software-m375-dark.png",
+      "bytes": 88797,
+      "cell": "software-m375-dark",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "e6798f13005f3b6d34e0e290ea160d1be0924cd24890c16e299dc782e355bb9c",
+      "name": "qa-proxy3-prod-software-t768-light.png",
+      "bytes": 96063,
+      "cell": "software-t768-light",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "694f146a28e5a350f3434a8d3ae2cf86eecbc0bfd06e356af9848972cffb6734",
+      "name": "qa-proxy3-prod-software-t768-dark.png",
+      "bytes": 96427,
+      "cell": "software-t768-dark",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "f9dc5648ff70b04d53354ddae329c25044515c84055c697d7909990f48c4abe7",
+      "name": "qa-proxy3-prod-software-d1440-light.png",
+      "bytes": 104280,
+      "cell": "software-d1440-light",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "f9dc5648ff70b04d53354ddae329c25044515c84055c697d7909990f48c4abe7",
+      "name": "qa-proxy3-prod-software-d1440-dark.png",
+      "bytes": 104280,
+      "cell": "software-d1440-dark",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "b50b3a56ed11138c112b815a6664c17cbccbbc1ce0937c175a7add72e9543b78",
+      "name": "qa-proxy3-prod-software-m375-reduced.png",
+      "bytes": 90887,
+      "cell": "software-m375-reduced",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "30e1097310df5e33f24a4b0960cf61b96356f84f144f7f1d38c1d74570180666",
+      "name": "qa-proxy3-prod-software-d1280-reduced.png",
+      "bytes": 110326,
+      "cell": "software-d1280-reduced",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "e30c1472c17ace341321c2e9999b5c1c1ff01d5a8501fbaec06fb6c304c0db92",
+      "name": "qa-proxy3-prod-software-d1920-reduced.png",
+      "bytes": 114565,
+      "cell": "software-d1920-reduced",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "0fe095efdb348936627f29ec11da3910bbcfa2d4d6bf8e10678ccbe8d9d8203d",
+      "name": "qa-proxy3-prod-login-m375-light.png",
+      "bytes": 41353,
+      "cell": "login-m375-light",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "0fe095efdb348936627f29ec11da3910bbcfa2d4d6bf8e10678ccbe8d9d8203d",
+      "name": "qa-proxy3-prod-login-m375-dark.png",
+      "bytes": 41353,
+      "cell": "login-m375-dark",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "f830155d6c88a5e3898a388f3bf629bdf46844d70181eada06e860f0aa8c107c",
+      "name": "qa-proxy3-prod-login-t768-light.png",
+      "bytes": 44549,
+      "cell": "login-t768-light",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "f830155d6c88a5e3898a388f3bf629bdf46844d70181eada06e860f0aa8c107c",
+      "name": "qa-proxy3-prod-login-t768-dark.png",
+      "bytes": 44549,
+      "cell": "login-t768-dark",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "5ed8c7921e36df605882ed81ae8002fca6dd91099d846e687c62fa6593fb9a4c",
+      "name": "qa-proxy3-prod-login-d1440-light.png",
+      "bytes": 46640,
+      "cell": "login-d1440-light",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "5ed8c7921e36df605882ed81ae8002fca6dd91099d846e687c62fa6593fb9a4c",
+      "name": "qa-proxy3-prod-login-d1440-dark.png",
+      "bytes": 46640,
+      "cell": "login-d1440-dark",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "0fe095efdb348936627f29ec11da3910bbcfa2d4d6bf8e10678ccbe8d9d8203d",
+      "name": "qa-proxy3-prod-login-m375-reduced.png",
+      "bytes": 41353,
+      "cell": "login-m375-reduced",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "88657c0281fd462ea1c4c4f049a199e15f3d311366fe317beeb2ffdc9667d01a",
+      "name": "qa-proxy3-prod-login-d1280-reduced.png",
+      "bytes": 45860,
+      "cell": "login-d1280-reduced",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "1d323efbdc71e05745c0058d94706756567cee397d30164c68132b69892bd13b",
+      "name": "qa-proxy3-prod-login-d1920-reduced.png",
+      "bytes": 49528,
+      "cell": "login-d1920-reduced",
+      "receipt": "qa-production-proxy-public.json"
+    },
+    {
+      "sha256": "7da6d5635f9bea721caf9727554ac3fca5f9455835a63059e9d913d44da1ea96",
+      "name": "qa-proxy-platform-prod-studio-chooser-m375-light.png",
+      "bytes": 35390,
+      "cell": "studio-chooser-m375-light",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "7da6d5635f9bea721caf9727554ac3fca5f9455835a63059e9d913d44da1ea96",
+      "name": "qa-proxy-platform-prod-studio-chooser-m375-dark.png",
+      "bytes": 35390,
+      "cell": "studio-chooser-m375-dark",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "18323e8e09d876ebb16561a1b6add07cc53186a789883be50d6fdb63f6486202",
+      "name": "qa-proxy-platform-prod-studio-chooser-t768-light.png",
+      "bytes": 41504,
+      "cell": "studio-chooser-t768-light",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "18323e8e09d876ebb16561a1b6add07cc53186a789883be50d6fdb63f6486202",
+      "name": "qa-proxy-platform-prod-studio-chooser-t768-dark.png",
+      "bytes": 41504,
+      "cell": "studio-chooser-t768-dark",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "c589d277a082769010f9664a2418ca5a5d2fb9a7375501d1e5774417837ced29",
+      "name": "qa-proxy-platform-prod-studio-chooser-d1440-light.png",
+      "bytes": 42732,
+      "cell": "studio-chooser-d1440-light",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "c589d277a082769010f9664a2418ca5a5d2fb9a7375501d1e5774417837ced29",
+      "name": "qa-proxy-platform-prod-studio-chooser-d1440-dark.png",
+      "bytes": 42732,
+      "cell": "studio-chooser-d1440-dark",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "7da6d5635f9bea721caf9727554ac3fca5f9455835a63059e9d913d44da1ea96",
+      "name": "qa-proxy-platform-prod-studio-chooser-m375-reduced.png",
+      "bytes": 35390,
+      "cell": "studio-chooser-m375-reduced",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "d3b4bd13867338ffd25f81092f02ddc288619cba09280795ce4dd199f1e26d67",
+      "name": "qa-proxy-platform-prod-studio-chooser-d1280-reduced.png",
+      "bytes": 41686,
+      "cell": "studio-chooser-d1280-reduced",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "1570bf516d1442ec4e86a7444ce3177ae6234fe5a0c03ca4f5ef07467d1a98a1",
+      "name": "qa-proxy-platform-prod-studio-chooser-d1920-reduced.png",
+      "bytes": 45466,
+      "cell": "studio-chooser-d1920-reduced",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "f06c6a2b108bc179a809931d412ae146947a5043788f320346c1ddd7f4a1bd4f",
+      "name": "qa-proxy-platform-prod-creators-m375-light.png",
+      "bytes": 75672,
+      "cell": "creators-m375-light",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "83a91e50931ba83a7a3a914bfc9646593b483428adfb8692fa99e6c1f54a8b6e",
+      "name": "qa-proxy-platform-prod-creators-m375-dark.png",
+      "bytes": 82771,
+      "cell": "creators-m375-dark",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "e30f387210be9c13ca332ee8c7836c309fb114541029ffafdcde17c65b8b2196",
+      "name": "qa-proxy-platform-prod-creators-t768-light.png",
+      "bytes": 103256,
+      "cell": "creators-t768-light",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "e30f387210be9c13ca332ee8c7836c309fb114541029ffafdcde17c65b8b2196",
+      "name": "qa-proxy-platform-prod-creators-t768-dark.png",
+      "bytes": 103256,
+      "cell": "creators-t768-dark",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "0758bd876b9db8ad1ef748169124dfa8b3ea767f24665151eabeda85c0fa73dd",
+      "name": "qa-proxy-platform-prod-creators-d1440-light.png",
+      "bytes": 102489,
+      "cell": "creators-d1440-light",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "0758bd876b9db8ad1ef748169124dfa8b3ea767f24665151eabeda85c0fa73dd",
+      "name": "qa-proxy-platform-prod-creators-d1440-dark.png",
+      "bytes": 102489,
+      "cell": "creators-d1440-dark",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "83a91e50931ba83a7a3a914bfc9646593b483428adfb8692fa99e6c1f54a8b6e",
+      "name": "qa-proxy-platform-prod-creators-m375-reduced.png",
+      "bytes": 82771,
+      "cell": "creators-m375-reduced",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "058dc85b345d13bc6ebe071e0965cb778a83aa653716c77e7021f1d81bbd3846",
+      "name": "qa-proxy-platform-prod-creators-d1280-reduced.png",
+      "bytes": 101341,
+      "cell": "creators-d1280-reduced",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "7de08091cf9b6fa453a2af2e73cf49b09a876c50a96a95adc20242aa67c7abdd",
+      "name": "qa-proxy-platform-prod-creators-d1920-reduced.png",
+      "bytes": 105465,
+      "cell": "creators-d1920-reduced",
+      "receipt": "qa-production-proxy-platform.json"
+    },
+    {
+      "sha256": "cd80b18b73ffcb533db919dd0318d3d4ff0127da70d4f9bc7ef6c1a616c5355f",
+      "name": "qa-creators-final-prod-creators-m375-light.png",
+      "bytes": 35879,
+      "cell": "creators-m375-light",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "cd80b18b73ffcb533db919dd0318d3d4ff0127da70d4f9bc7ef6c1a616c5355f",
+      "name": "qa-creators-final-prod-creators-m375-dark.png",
+      "bytes": 35879,
+      "cell": "creators-m375-dark",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "65139f613fc701edba3d05427b7e5912e10e1238d2bcf2434d4a01d9a1819855",
+      "name": "qa-creators-final-prod-creators-t768-light.png",
+      "bytes": 53572,
+      "cell": "creators-t768-light",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "65139f613fc701edba3d05427b7e5912e10e1238d2bcf2434d4a01d9a1819855",
+      "name": "qa-creators-final-prod-creators-t768-dark.png",
+      "bytes": 53572,
+      "cell": "creators-t768-dark",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "ef36020723eb3ab1f0f99054f1eb5fc867bb94120a1491c63519bd7cea823d36",
+      "name": "qa-creators-final-prod-creators-d1440-light.png",
+      "bytes": 54808,
+      "cell": "creators-d1440-light",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "ef36020723eb3ab1f0f99054f1eb5fc867bb94120a1491c63519bd7cea823d36",
+      "name": "qa-creators-final-prod-creators-d1440-dark.png",
+      "bytes": 54808,
+      "cell": "creators-d1440-dark",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "cd80b18b73ffcb533db919dd0318d3d4ff0127da70d4f9bc7ef6c1a616c5355f",
+      "name": "qa-creators-final-prod-creators-m375-reduced.png",
+      "bytes": 35879,
+      "cell": "creators-m375-reduced",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "72376575fa81b85d19afb113f851f7762681d9b19d8d2dca0c137d5c8fc11bc6",
+      "name": "qa-creators-final-prod-creators-d1280-reduced.png",
+      "bytes": 54075,
+      "cell": "creators-d1280-reduced",
+      "receipt": "qa-production-creators-final.json"
+    },
+    {
+      "sha256": "a37c7f2152df3e809b1f7de160dd4794ed34923baba5afe930bae97c38a8ce3d",
+      "name": "qa-creators-final-prod-creators-d1920-reduced.png",
+      "bytes": 58099,
+      "cell": "creators-d1920-reduced",
+      "receipt": "qa-production-creators-final.json"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "log": "C:/dev/mbv-run/l3f-tablet-c5-summary-values-production-core-20261004.log",
+  "kind": "core",
+  "createdUtc": "2026-10-05T00:39:28.1822980Z",
+  "versionNativeExits": {
+    "wrangler": 0,
+    "node": 0,
+    "pnpm": 0
+  },
+  "executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "versions": {
+    "wrangler": "4.110.0",
+    "node": "v24.18.0",
+    "pnpm": "11.12.0"
+  },
+  "readyConfirmed": true,
+  "port": 8790,
+  "pid": 64240,
+  "providersAndQueuesEnabled": false,
+  "recordedUtc": "2026-10-05T00:39:28.8966319Z",
+  "readyUtc": "2026-10-05T00:39:42.0712951Z",
+  "productionPreviewBypassEnabled": false,
+  "startedUtc": "2026-10-05T00:39:28.1623347Z",
+  "sourceHead": "74b98486204c22e41b76072a6eba833e14609a57",
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "noEnvironmentFileCreated": true,
+  "localOnly": true,
+  "errorLog": "C:/dev/mbv-run/l3f-tablet-c5-summary-values-production-core-20261004.err",
+  "script": "C:/dev/mbv-run/launch-l3f-tablet-c5-summary-values-production-core-20261004.mjs"
+}
