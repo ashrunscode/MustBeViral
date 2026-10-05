@@ -1,0 +1,39 @@
+{
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "RecordedUtc": "2026-10-05T16:35:22.3872963Z",
+  "Rows": [
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-software-375.png",
+      "Sha256": "d43e811b4fe5d532fb48a665986d2661583e468d8c180a9fdd4c482897bd4f05",
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-alias-e661edb-software-375.png",
+      "MovedOwnedOutput": true
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-software-1280.png",
+      "Sha256": "f422ceb6bf48ffb1e094eaa98ad23b87a63afc17b52a7d7d4e0ea60c76ea88f3",
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-alias-e661edb-software-1280.png",
+      "MovedOwnedOutput": true
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-home-375.png",
+      "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-alias-e661edb-home-375.png",
+      "MovedOwnedOutput": true
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-es-375.png",
+      "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-alias-e661edb-es-375.png",
+      "MovedOwnedOutput": true
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-advertising-375.png",
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-alias-e661edb-advertising-375.png",
+      "MovedOwnedOutput": true
+    }
+  ],
+  "DeploymentId": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC",
+  "Target": "production-alias",
+  "UnrelatedFilesTouched": 0
+}

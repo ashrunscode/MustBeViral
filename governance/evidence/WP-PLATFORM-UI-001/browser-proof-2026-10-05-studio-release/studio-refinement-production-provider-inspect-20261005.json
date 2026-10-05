@@ -1,0 +1,15 @@
+{
+  "State": "READY",
+  "CheckedUtc": "2026-10-05T16:28:30.5423509Z",
+  "Aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "PromotionNeeded": false,
+  "AllFourAliasesMoved": true,
+  "Project": "mustbeviral-web-production",
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "DeploymentId": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC"
+}

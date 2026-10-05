@@ -1,0 +1,21 @@
+{
+  "ServedPaths": [
+    "apps/web/app/globals.css",
+    "apps/web/e2e/final-ui.spec.ts",
+    "apps/web/e2e/studio-booking.spec.ts",
+    "apps/web/src/components/signed-out-surfaces.test.tsx",
+    "apps/web/src/components/studio-booking-actions.tsx",
+    "apps/web/src/components/studio-booking.test.tsx",
+    "apps/web/src/components/studio-hero-media.tsx",
+    "apps/web/src/components/studio-landing.tsx",
+    "apps/web/src/components/studio-pricing.tsx",
+    "packages/ui/src/primitives.tsx"
+  ],
+  "CheckedUtc": "2026-10-05T16:13:30.8258697Z",
+  "RemoteDatabaseWrites": 0,
+  "Head": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "DeploymentPending": true,
+  "SchemaFacingDiffExit": 0,
+  "ReviewedSourceInventoryMatches": true,
+  "LiveSource": "50556e252eb5d65128bc9599d06b03b85ff22475"
+}

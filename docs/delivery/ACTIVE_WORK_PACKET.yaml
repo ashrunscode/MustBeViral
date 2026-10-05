@@ -185,6 +185,7 @@ acceptance:
         Rendered-output tests lock the copy separation and the structure.'
       status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -224,6 +225,7 @@ acceptance:
         regression tests that fail if the defect returns.
       status: pending
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/merge-review-films-2026-10-02.md
@@ -239,6 +241,7 @@ acceptance:
         repaired defect has a failing-then-passing test recorded in the repair log.
       status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -260,6 +263,7 @@ acceptance:
         after refresh.
       status: passed
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -277,6 +281,7 @@ acceptance:
         it is recorded with the one sentence that clears it and nothing was crossed.
       status: pending
       evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
         - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
         - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -294,6 +299,7 @@ quality_gates:
     command: pnpm governance:check
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -305,6 +311,7 @@ quality_gates:
     command: pnpm design:check
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -316,6 +323,7 @@ quality_gates:
     command: pnpm verify
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
@@ -327,6 +335,7 @@ quality_gates:
     command: pnpm supabase:test
     status: passed
     evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
       - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
       - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md

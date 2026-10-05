@@ -1,0 +1,205 @@
+{
+  "checkedUtc": "2026-10-05T16:31:49.036Z",
+  "origin": "https://mustbeviral.com",
+  "deploymentId": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC",
+  "formsSubmitted": 0,
+  "rows": [
+    {
+      "route": "/",
+      "viewportWidth": 375,
+      "dialogWidth": 327,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 375,
+      "dialogWidth": 327,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/",
+      "viewportWidth": 768,
+      "dialogWidth": 520,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 768,
+      "dialogWidth": 520,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/",
+      "viewportWidth": 1280,
+      "dialogWidth": 520,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 1280,
+      "dialogWidth": 520,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/",
+      "viewportWidth": 1920,
+      "dialogWidth": 520,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 1920,
+      "dialogWidth": 520,
+      "identity": true,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    }
+  ],
+  "prices": [
+    {
+      "route": "/",
+      "identity": true,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "prices": [
+        {
+          "text": "$700",
+          "font": 56,
+          "left": 16,
+          "right": 143.6875
+        },
+        {
+          "text": "$3,500",
+          "font": 56,
+          "left": 167.46875,
+          "right": 359
+        },
+        {
+          "text": "$700",
+          "font": 56,
+          "left": 16,
+          "right": 143.6875
+        },
+        {
+          "text": "$3,500",
+          "font": 56,
+          "left": 16,
+          "right": 207.53125
+        }
+      ],
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "route": "/es",
+      "identity": true,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "prices": [
+        {
+          "text": "$700",
+          "font": 56,
+          "left": 16,
+          "right": 143.6875
+        },
+        {
+          "text": "$3,500",
+          "font": 56,
+          "left": 167.46875,
+          "right": 359
+        },
+        {
+          "text": "$700",
+          "font": 56,
+          "left": 16,
+          "right": 143.6875
+        },
+        {
+          "text": "$3,500",
+          "font": 56,
+          "left": 16,
+          "right": 207.53125
+        }
+      ],
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "route": "/pricing",
+      "identity": true,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "prices": [
+        {
+          "text": "$700",
+          "font": 56,
+          "left": 16,
+          "right": 143.6875
+        },
+        {
+          "text": "$3,500",
+          "font": 56,
+          "left": 16,
+          "right": 207.53125
+        }
+      ],
+      "errors": 0,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

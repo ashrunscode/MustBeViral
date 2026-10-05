@@ -1,0 +1,14 @@
+{
+  "Pid": 46132,
+  "InitialGuardFailure": "JSON date coercion discarded UTC during string reparse; identity rechecked with DateKind String",
+  "RecordedUtc": "2026-10-05T16:09:23.0170833Z",
+  "Head": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "StopExit": 0,
+  "CleanSource": true,
+  "PortsFree": true,
+  "Executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "TestsPassed": 22,
+  "NoForcedFixtureDeletion": true,
+  "TestExit": 0,
+  "CreatedUtc": "2026-10-05T15:54:20.5421510Z"
+}

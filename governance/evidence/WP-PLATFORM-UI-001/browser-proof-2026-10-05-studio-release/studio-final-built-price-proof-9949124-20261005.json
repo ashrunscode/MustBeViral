@@ -1,0 +1,35 @@
+{
+  "NoOverflow": true,
+  "Environment": "Final verified author production build",
+  "TextEnlargementPercent": 200,
+  "AtUtc": "2026-10-05T15:41:03.2960971Z",
+  "EnlargedPricePixels": 56,
+  "InitialH1Pixels": 40,
+  "Head": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "ViewportWidth": 375,
+  "Capture": "C:/dev/mbv-run/studio-final-built-price-all-text-200-375-9949124.png",
+  "ExactPrices": ["$700", "$3,500"],
+  "FullPackageRight": 359,
+  "DocumentWidth": 375,
+  "AdditionalRouteObservations": [
+    {
+      "FullPackageRight": 359,
+      "ViewportWidth": 375,
+      "Route": "/es",
+      "Forms": 0,
+      "ConsoleErrors": 0,
+      "DocumentWidth": 375,
+      "Language": "es",
+      "EnlargedPricePixels": 56
+    },
+    {
+      "EnlargedPricePixels": 56,
+      "ConsoleErrors": 0,
+      "Forms": 0,
+      "Route": "/pricing",
+      "FullPackageRight": 207.53125,
+      "DocumentWidth": 375,
+      "ViewportWidth": 375
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "DeploymentId": "dpl_BdxLvSpTLUgDeQcUe8cpbzRc8dHy",
+  "CheckedUtc": "2026-10-05T16:19:36.5040482Z",
+  "Project": "mustbeviral-web-staging",
+  "AllExpectedAliasesMoved": true,
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "State": "READY"
+}

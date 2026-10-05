@@ -1,0 +1,72 @@
+{
+  "Pnpm": "11.12.0",
+  "Complete": true,
+  "Head": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "Node": "v24.21.0",
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:38:07.4713570Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-install---frozen-lockfile-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:37:41.9611370Z",
+      "Command": "corepack pnpm install --frozen-lockfile"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:39:19.7844202Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-agent-preflight-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:38:07.6033977Z",
+      "Command": "corepack pnpm agent:preflight"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:40:32.6556983Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-governance-check-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:39:19.8805155Z",
+      "Command": "corepack pnpm governance:check"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:41:43.9444531Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-governance-test-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:40:32.7463982Z",
+      "Command": "corepack pnpm governance:test"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:42:03.6226666Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-format-check-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:41:44.0299018Z",
+      "Command": "corepack pnpm format:check"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:48:44.0446582Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-verify-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:42:03.7041356Z",
+      "Command": "corepack pnpm verify"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:48:46.1256069Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-exec-supabase-migration-up---local-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:48:44.1370543Z",
+      "Command": "corepack pnpm exec supabase migration up --local"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:48:48.2638168Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-exec-supabase-migration-list---local-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:48:46.2169888Z",
+      "Command": "corepack pnpm exec supabase migration list --local"
+    },
+    {
+      "ActualExit": 0,
+      "EndUtc": "2026-10-05T15:49:06.7932688Z",
+      "Log": "C:/dev/mbv-run/studio-refinement-fresh-final-supabase-test-9949124-20261005.log",
+      "StartUtc": "2026-10-05T15:48:48.3383767Z",
+      "Command": "corepack pnpm supabase:test"
+    }
+  ],
+  "Root": "C:/dev/mbv-verify-9949124"
+}

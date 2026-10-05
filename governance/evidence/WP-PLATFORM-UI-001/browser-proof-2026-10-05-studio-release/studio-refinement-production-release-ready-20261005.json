@@ -1,0 +1,23 @@
+{
+  "AgeMinutes": 620.393195015,
+  "Project": "mustbeviral-web-production",
+  "ExactServedInventoryMatch": true,
+  "LiveSource": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "OwnedHarnessStopped": true,
+  "SchemaCheckedUtc": "2026-10-05T16:26:22Z",
+  "NewestJournaled": true,
+  "CheckedUtc": "2026-10-05T16:27:03.4063827Z",
+  "Aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "Rollback": "dpl_5Rr9CQfFu83Nv4SbMUge8qAcB3a8",
+  "Newest": "dpl_5Rr9CQfFu83Nv4SbMUge8qAcB3a8",
+  "Reviewed": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "RemoteDatabaseWrite": false,
+  "FilmTermsReadToday": true,
+  "SharedSchemaRuntimeUnchanged": true,
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386"
+}

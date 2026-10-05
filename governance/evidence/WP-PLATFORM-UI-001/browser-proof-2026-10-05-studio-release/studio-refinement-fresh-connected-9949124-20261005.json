@@ -1,0 +1,10 @@
+{
+  "Root": "C:\\dev\\mbv-verify-9949124",
+  "Log": "C:/dev/mbv-run/studio-refinement-fresh-connected-9949124-20261005.log",
+  "StartedUtc": "2026-10-05T15:57:11.0577863Z",
+  "ProvidersDisabled": true,
+  "QueuesDisabled": true,
+  "ActualExit": 0,
+  "FinishedUtc": "2026-10-05T16:08:40.4033636Z",
+  "Head": "9949124ea4097040fb7b036f36835a42949d3b75"
+}

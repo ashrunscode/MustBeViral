@@ -1,0 +1,32 @@
+{
+  "Node": "v24.18.0",
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "Origin": "https://mustbeviral-web-production.vercel.app",
+  "Checks": [
+    {
+      "ActualExit": 0,
+      "Name": "d1",
+      "Log": "C:/dev/mbv-run/studio-refinement-production-alias-http-d1-20261005.log",
+      "FinishedUtc": "2026-10-05T16:28:51.7658135Z",
+      "StartedUtc": "2026-10-05T16:28:47.4392094Z"
+    },
+    {
+      "ActualExit": 0,
+      "Name": "s0",
+      "Log": "C:/dev/mbv-run/studio-refinement-production-alias-http-s0-20261005.log",
+      "FinishedUtc": "2026-10-05T16:28:53.2142750Z",
+      "StartedUtc": "2026-10-05T16:28:51.7662642Z"
+    },
+    {
+      "ActualExit": 0,
+      "Name": "headers",
+      "Log": "C:/dev/mbv-run/studio-refinement-production-alias-http-headers-20261005.log",
+      "FinishedUtc": "2026-10-05T16:28:58.4394208Z",
+      "StartedUtc": "2026-10-05T16:28:53.2146650Z"
+    }
+  ],
+  "DeploymentId": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC",
+  "RemoteWrites": 0,
+  "FormsSubmitted": 0,
+  "Pass": true
+}

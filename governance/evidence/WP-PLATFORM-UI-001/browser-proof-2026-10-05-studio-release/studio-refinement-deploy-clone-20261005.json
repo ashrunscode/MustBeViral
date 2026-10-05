@@ -1,0 +1,24 @@
+{
+  "C4StandsForMergedTree": true,
+  "envLikeFiles": [
+    ".env.example",
+    ".dev.vars.example",
+    "apps\\collaboration\\.dev.vars.example",
+    "apps\\core\\.dev.vars.example"
+  ],
+  "pnpm": "11.12.0",
+  "branch": "main",
+  "node": "v24.18.0",
+  "vercel": "59.16.0",
+  "endedUtc": "2026-10-05T16:17:46.1501697Z",
+  "installStartedUtc": "2026-10-05T16:17:26.6694606Z",
+  "treeEqualityActualExit": 0,
+  "reviewed": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "startedUtc": "2026-10-05T16:17:19.0098328Z",
+  "source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "root": "C:/dev/mbv-deploy-e661edb",
+  "installLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-studio-refinement-deploy-e661edb-install.log",
+  "clean": true,
+  "worktreeCount": 1,
+  "installActualExit": 0
+}
