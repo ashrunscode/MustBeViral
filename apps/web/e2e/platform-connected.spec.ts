@@ -221,6 +221,123 @@ test.describe('connected platform journeys', () => {
     }
   });
 
+  test('reserves the brand header before access resolves and restores mobile menu focus', async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const owner = await registerUser(`brand-header-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic stable brand studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic stable brand');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    const title = 'Make Synthetic stable brand feel like itself.';
+    await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible();
+    const brandUrl = page.url();
+    const studioId = new URL(brandUrl).searchParams.get('studio')!;
+    const accessRoute = `**/api/core/v1/studios/${studioId}/access`;
+
+    for (const width of [375, 767, 768, 1280, 1920]) {
+      await page.setViewportSize({ width, height: 900 });
+      let releaseAccess!: () => void;
+      let markRequested!: () => void;
+      const held = new Promise<void>((resolve) => {
+        releaseAccess = resolve;
+      });
+      const requested = new Promise<void>((resolve) => {
+        markRequested = resolve;
+      });
+      const delayRead = async (route: Route) => {
+        markRequested();
+        await held;
+        await route.continue();
+      };
+      await page.route(accessRoute, delayRead);
+      try {
+        await page.goto(brandUrl);
+        await requested;
+        await expect(page.getByRole('status')).toContainText('Opening the selected brand');
+        await page.evaluate(() => document.fonts.ready);
+        const main = page.locator('#platform-main');
+        const pending = await main.boundingBox();
+        const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb' });
+        await expect(breadcrumb).not.toContainText('Synthetic stable brand');
+        await expect(page.getByRole('combobox', { name: 'Switch brand' })).toHaveCount(0);
+        releaseAccess();
+        await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible();
+        const ready = await main.boundingBox();
+        expect(pending).not.toBeNull();
+        expect(ready).not.toBeNull();
+        expect(Math.abs(ready!.y - pending!.y)).toBeLessThanOrEqual(1);
+        await expect(breadcrumb).toContainText('Synthetic stable brand');
+        await expect(page.getByRole('combobox', { name: 'Switch brand' })).toBeEnabled();
+        await expectNoHorizontalOverflow(page);
+        if (width < 768) {
+          const toggle = page.getByRole('button', { name: /^(Menu|Close menu)$/ });
+          await toggle.focus();
+          await page.keyboard.press('Enter');
+          await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+          await page.getByRole('link', { name: 'Switch studio', exact: true }).focus();
+          await page.keyboard.press('Escape');
+          await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+          await expect(toggle).toBeFocused();
+        }
+      } finally {
+        releaseAccess();
+        await page.unroute(accessRoute, delayRead);
+      }
+    }
+  });
+
+  test('keeps the selected brand readable when text is enlarged', async ({ page }) => {
+    test.setTimeout(120_000);
+    const owner = await registerUser(`brand-text-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic enlarged studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    await page.getByLabel('Brand name').fill('Synthetic enlarged brand');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    await expect(
+      page.getByRole('heading', {
+        level: 1,
+        name: 'Make Synthetic enlarged brand feel like itself.',
+      }),
+    ).toBeVisible();
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(() => {
+      const sizes = [...document.querySelectorAll<HTMLElement>('body *')].map((element) => {
+        const style = getComputedStyle(element);
+        return { element, font: parseFloat(style.fontSize), line: parseFloat(style.lineHeight) };
+      });
+      for (const { element, font, line } of sizes) {
+        element.style.fontSize = `${font * 2}px`;
+        if (Number.isFinite(line)) element.style.lineHeight = `${line * 2}px`;
+      }
+    });
+    const readable = await page
+      .getByRole('combobox', { name: 'Switch brand' })
+      .evaluate((element: HTMLSelectElement) => {
+        const style = getComputedStyle(element);
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        if (!context) throw new Error('Text measurement is unavailable.');
+        context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+        const text = element.selectedOptions[0]?.text ?? '';
+        const required =
+          context.measureText(text).width +
+          parseFloat(style.paddingLeft) +
+          parseFloat(style.paddingRight) +
+          32;
+        return { text, width: element.getBoundingClientRect().width, required };
+      });
+    expect(readable.text).toBe('Synthetic enlarged brand');
+    expect(readable.width).toBeGreaterThanOrEqual(readable.required);
+    await expectNoHorizontalOverflow(page);
+  });
+
   test('keeps review recovery targets complete at the short enlargement viewport', async ({
     page,
   }) => {

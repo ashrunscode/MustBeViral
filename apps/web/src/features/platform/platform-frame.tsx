@@ -1,5 +1,5 @@
 'use client';
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import {
@@ -47,6 +47,7 @@ export function PlatformFrame({
   section,
   presentation = 'authenticated',
   contextControls,
+  brandContextPending = false,
   flush = false,
   showBilling = false,
   billingCurrent = false,
@@ -59,6 +60,8 @@ export function PlatformFrame({
   presentation?: PlatformPresentation;
   /** Context controls that belong beside the breadcrumb, such as the brand switcher. */
   contextControls?: ReactNode;
+  /** Reserve the brand header without exposing an unconfirmed identity or permission. */
+  brandContextPending?: boolean;
   /** Full-bleed main for the campaign canvas and other app-height surfaces. */
   flush?: boolean;
   showBilling?: boolean;
@@ -67,6 +70,7 @@ export function PlatformFrame({
   const [signingOut, setSigningOut] = useState(false);
   // Below 768px the rail collapses behind one button; wider screens ignore this state.
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [signOutError, setSignOutError] = useState(false);
   async function signOut() {
     setSigningOut(true);
@@ -81,6 +85,7 @@ export function PlatformFrame({
     }
   }
   const roleLabel = studio?.role ? roleName(studio.role) : null;
+  const brandHeader = brandContextPending || (!!brand && !campaignLabel && !!contextControls);
   const mainLabel =
     campaignLabel ??
     (brand ? brand.name : undefined) ??
@@ -94,12 +99,25 @@ export function PlatformFrame({
       <aside
         className={menuOpen ? 'platform-rail' : 'platform-rail platform-rail--collapsed'}
         aria-label="Studio"
+        onKeyDown={(event) => {
+          if (
+            event.key !== 'Escape' ||
+            event.defaultPrevented ||
+            !menuOpen ||
+            !window.matchMedia('(max-width: 767px)').matches
+          )
+            return;
+          event.preventDefault();
+          setMenuOpen(false);
+          menuButton.current?.focus();
+        }}
       >
         <div className="platform-rail__head">
           <Link className="platform-wordmark" href="/studio" translate="no">
             {'Must Be Viral'}
           </Link>
           <button
+            ref={menuButton}
             type="button"
             className="platform-rail-toggle"
             aria-expanded={menuOpen}
@@ -144,7 +162,9 @@ export function PlatformFrame({
         </div>
       </aside>
       <div className="platform-shell">
-        <header className="platform-topbar">
+        <header
+          className={brandHeader ? 'platform-topbar platform-topbar--brand' : 'platform-topbar'}
+        >
           <nav aria-label="Breadcrumb" className="platform-breadcrumb">
             <ol>
               <li>
@@ -160,8 +180,15 @@ export function PlatformFrame({
                 </li>
               ) : null}
               {brand ? (
-                <li aria-current={campaignLabel ? undefined : 'page'}>
+                <li
+                  className="platform-breadcrumb__brand"
+                  aria-current={campaignLabel ? undefined : 'page'}
+                >
                   <strong>{brand.name}</strong>
+                </li>
+              ) : brandContextPending ? (
+                <li className="platform-breadcrumb__brand" aria-hidden="true">
+                  <span className="platform-context-skeleton" />
                 </li>
               ) : null}
               {campaignLabel ? (
@@ -171,9 +198,27 @@ export function PlatformFrame({
               ) : null}
             </ol>
           </nav>
-          <div className="platform-context">
-            {contextControls}
-            {roleLabel ? <span className="platform-tag">{roleLabel}</span> : null}
+          <div
+            className={
+              brandHeader ? 'platform-context platform-context--brand' : 'platform-context'
+            }
+          >
+            {brandContextPending ? (
+              <div className="platform-brand-switcher" aria-hidden="true">
+                <span className="platform-context-skeleton" />
+                <span className="platform-brand-switcher__skeleton" />
+              </div>
+            ) : (
+              contextControls
+            )}
+            {roleLabel ? (
+              <span className="platform-tag">{roleLabel}</span>
+            ) : brandHeader ? (
+              <span
+                className="platform-context-skeleton platform-context-skeleton--role"
+                aria-hidden="true"
+              />
+            ) : null}
             {presentation === 'authenticated' ? (
               <button
                 type="button"

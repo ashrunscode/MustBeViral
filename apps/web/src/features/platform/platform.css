@@ -330,6 +330,64 @@
 .platform-signout {
   min-height: 44px;
 }
+/* Brand access resolves asynchronously. Keep the same breadcrumb/control tracks while its
+   identity and permissions are unknown; skeletons are decorative and never actionable. */
+.platform-topbar--brand {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 30em), 1fr));
+}
+.platform-topbar--brand .platform-breadcrumb li:first-child {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+.platform-topbar--brand .platform-breadcrumb__brand {
+  display: flex;
+  align-items: center;
+  min-height: 1.5em;
+}
+.platform-context--brand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(6ch, max-content) auto;
+  width: 100%;
+  max-width: 34em;
+}
+.platform-context--brand > .platform-tag {
+  justify-self: start;
+}
+.platform-context--brand .platform-brand-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 44px;
+  font-size: 13px;
+}
+.platform-brand-switcher select {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  max-width: none;
+}
+.platform-context-skeleton {
+  display: inline-block;
+  width: 12ch;
+  height: 1em;
+  background: var(--wash);
+}
+.platform-brand-switcher > .platform-context-skeleton {
+  width: 10ch;
+}
+.platform-brand-switcher__skeleton {
+  flex: 1;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+  background: var(--paper-2);
+}
+.platform-context-skeleton--role {
+  width: 4ch;
+}
 .platform-preview-banner {
   margin: 0;
   border-bottom: 1px solid var(--line);
@@ -854,6 +912,13 @@
   }
   .platform-topbar {
     padding: 10px 16px;
+  }
+  .platform-context--brand {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .platform-context--brand .platform-brand-switcher {
+    grid-column: 1 / -1;
   }
   .platform-breadcrumb {
     flex-basis: 100%;
