@@ -1,0 +1,266 @@
+{
+  "recordedUtc": "2026-10-05T13:52:18.567Z",
+  "root": "C:/dev/mbv-finish",
+  "base": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "environment": "local development, current uncommitted UI change",
+  "axe": "4.12.1",
+  "performanceMeasured": false,
+  "observations": [
+    {
+      "route": "/",
+      "width": 375,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/",
+      "width": 375,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "width": 1920,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/",
+      "width": 1920,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/es",
+      "width": 375,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/es",
+      "width": 768,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/es",
+      "width": 1280,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/es",
+      "width": 1920,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/pricing",
+      "width": 375,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/pricing",
+      "width": 375,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/pricing",
+      "width": 768,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/pricing",
+      "width": 768,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/pricing",
+      "width": 1280,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/pricing",
+      "width": 1280,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/pricing",
+      "width": 1920,
+      "state": "page",
+      "overflow": false,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "/pricing",
+      "width": 1920,
+      "state": "booking",
+      "overflow": false,
+      "violations": [],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
+      "targets": [
+        {
+          "name": "Close",
+          "width": 51.421875,
+          "height": 44
+        },
+        {
+          "name": "Call 713-899-9346.",
+          "width": 174.453125,
+          "height": 44
+        }
+      ]
+    }
+  ]
+}

@@ -285,9 +285,10 @@ describe('StudioLanding', () => {
       'This film was made with AI: stills from Seedream v5 pro and motion from Seedance 2.0, through Higgsfield, on October 2, 2026. The room is generated. It is not a real Houston location, our studio or our crew.',
     );
     expect(html).not.toContain('studio-hero__panel');
-    // The heading and the offers follow the media block instead of overlaying it.
-    expect(html.indexOf('<h1')).toBeGreaterThan(mediaEnd);
-    expect(html.indexOf('>$700<')).toBeGreaterThan(mediaEnd);
+    // Visitors encounter the offer and booking action before the film; no text overlays it.
+    expect(html.indexOf('<h1')).toBeLessThan(mediaStart);
+    expect(html.indexOf('>$700<')).toBeLessThan(mediaStart);
+    expect(html.indexOf('class="pub-cta"')).toBeLessThan(mediaStart);
   });
 
   it('ships only the owner-approved English wordless plate with no client-footage claim', () => {

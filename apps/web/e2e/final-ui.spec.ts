@@ -188,6 +188,11 @@ for (const [label, route, width, height, enlarged, regionName] of [
     await page.goto(route);
     const region = page.getByRole('complementary', { name: regionName, exact: true });
     await expect(region).toBeVisible();
+    if (label === 'run-zoom') {
+      // Wait for the hydrated failure and settlement before exercising the run summary.
+      await expect(page.locator('[role="alert"][data-recovery]')).toContainText('Image blocked');
+      await expect(region).toContainText('$2.80');
+    }
     if (label.startsWith('quote-')) {
       // Confirm a controlled interaction before changing text sizes; SSR can be visible before
       // hydration, when a style mutation would create a test-only hydration mismatch.
@@ -212,6 +217,11 @@ for (const [label, route, width, height, enlarged, regionName] of [
         const inner = last.getBoundingClientRect();
         return inner.top >= outer.top && inner.bottom <= outer.bottom;
       });
+    if (label === 'run-zoom') {
+      // Native keyboard scrolling settles asynchronously, even with reduced motion. An immediate
+      // ArrowUp would cancel End before the revision row reaches the visible scroll area.
+      await expect.poll(lastRowVisible).toBe(true);
+    }
     // Quote ends with an explanatory paragraph. Arrow keys reach the last money row when the
     // enlarged paragraph fills the end of its scroll area; Run ends with the row itself.
     for (let step = 0; step < 12 && !(await lastRowVisible()); step++) {
@@ -1633,6 +1643,7 @@ test('keeps every canvas outline row reachable and unclipped beside the collabor
 }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/studio/lumen-skin/canvas');
+  await openCompactCanvasOutline(page);
   const list = page.locator('ol:has([data-outline-id])');
   await expect(list.locator('[data-outline-id]')).toHaveCount(12);
   const report = await list.evaluate((element) => {
@@ -1672,6 +1683,7 @@ for (const viewport of [
   }) => {
     await page.setViewportSize(viewport);
     await page.goto('/studio/lumen-skin/canvas');
+    if (viewport.width === 768) await openCompactCanvasOutline(page);
     const list = page.locator('ol:has([data-outline-id])');
     await expect(list.locator('[data-outline-id]')).toHaveCount(12);
     const visibleRows = await list.evaluate((element) => {
@@ -1690,6 +1702,19 @@ for (const viewport of [
     });
     expect(visibleRows).toBeGreaterThanOrEqual(5);
   });
+}
+
+async function openCompactCanvasOutline(page: Page) {
+  // Compact layouts intentionally keep the outline inert until the customer opens its drawer.
+  const trigger = page.getByRole('button', { name: 'Outline and comments', exact: true });
+  await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  const rail = page.locator('[data-canvas-rail]');
+  await expect(rail).toHaveAttribute('data-state', 'open');
+  await expect(rail.getByRole('button', { name: 'Close Plan outline and comments' })).toBeFocused();
+  await expect
+    .poll(() => rail.evaluate((element) => element.getBoundingClientRect().right <= innerWidth))
+    .toBe(true);
 }
 
 async function selectFailedAsset(page: Page) {

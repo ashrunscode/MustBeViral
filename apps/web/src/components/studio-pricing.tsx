@@ -1,8 +1,9 @@
 import { PublicFooter } from './public-footer';
 import { PublicHeader } from './public-header';
-import { phoneHref, studioAddOns, studioEn, studioPricingCopy } from './public-copy';
+import { studioAddOns, studioEn, studioPricingCopy } from './public-copy';
 import { StructuredData, studioStructuredData } from './structured-data';
 import { StudioOffers } from './studio-offers';
+import { StudioBookingActions } from './studio-booking-actions';
 
 /**
  * The studio pricing page: the two offers in full, the add-on ranges with their rule, and the same
@@ -41,14 +42,7 @@ export function StudioPricing({ origin }: Readonly<{ origin?: string | undefined
           </section>
           <section aria-labelledby="pricing-book" className="studio-book">
             <h2 id="pricing-book">{copy.close}</h2>
-            <div className="pub-actions">
-              <a className="pub-cta" href={phoneHref}>
-                {copy.cta}
-              </a>
-              <a className="pub-phone" href={phoneHref}>
-                {copy.phone}
-              </a>
-            </div>
+            <StudioBookingActions locale="en" />
           </section>
         </main>
       </div>

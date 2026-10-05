@@ -1087,8 +1087,8 @@ a.pub-wordmark:hover {
 
 /* Studio pages: a frame at screen width, designed at 375 first. The first screen is the decision:
    the locked line, the two prices as titles, one action with the phone as the only secondary. When
-   a rights-cleared poster and clip exist they take their own block above the lead with the geometry
-   reserved, so nothing shifts and nothing sits over the native video controls. Below the frame,
+   the approved poster and clip follow the decision on phones and sit beside it on desktop. Their
+   geometry is reserved, so nothing shifts and no text sits over the picture. Below the frame,
    type and space carry the rank: the two offers in full, the cadence, six composed rows, the
    objection, the close. One action colour; motion only when a film plays. */
 .pub-page--studio {
@@ -1101,7 +1101,7 @@ a.pub-wordmark:hover {
 
 .pub-shell--studio {
   width: min(1200px, 100%);
-  gap: 16px;
+  gap: 24px;
 }
 
 .pub-shell--studio > main {
@@ -1112,10 +1112,42 @@ a.pub-wordmark:hover {
   display: grid;
   gap: 24px;
   width: 100%;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  padding: 20px 16px 24px;
-  background: var(--card);
+  padding: 16px 0 24px;
+}
+
+.pub-page--studio h1 {
+  font-size: 40px;
+  color: var(--ink-strong);
+  line-height: 1.1;
+}
+
+.pub-page--studio .pub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+}
+
+.studio-booking {
+  display: grid;
+  gap: 24px;
+  font-size: 16px;
+}
+
+.studio-booking-dialog {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+  overscroll-behavior: contain;
+}
+
+.studio-booking-dialog .mbv-button {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 16px;
+}
+
+.studio-booking .pub-cta {
+  justify-self: start;
 }
 
 .studio-hero {
@@ -1166,27 +1198,35 @@ a.pub-wordmark:hover {
 
 .studio-frame__notes {
   display: grid;
-  gap: 16px;
+  gap: 8px;
   grid-column: 1 / -1;
 }
 
 .studio-frame__lead {
   display: grid;
-  gap: 12px;
+  gap: 24px;
   justify-items: start;
 }
 
 .studio-frame__sub {
   max-width: 44ch;
+  font-size: 17px;
+  color: var(--ink-head);
 }
 
 /* The two prices as titles, in the frame at every width. */
 .studio-frame__prices {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin: 0;
   border-top: 1px solid var(--line);
   padding-top: 16px;
+}
+
+.studio-frame__prices > .studio-price {
+  flex: 1 1 0;
+  min-width: min-content;
 }
 
 .studio-price {
@@ -1201,8 +1241,9 @@ a.pub-wordmark:hover {
 
 .studio-price dd {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 12px;
+  gap: 4px 12px;
   margin: 0;
 }
 
@@ -1229,7 +1270,7 @@ a.pub-wordmark:hover {
 .studio-offer {
   align-content: start;
   display: grid;
-  gap: 8px;
+  gap: 16px;
   border-top: 1px solid var(--line);
   padding-top: 16px;
 }
@@ -1261,6 +1302,10 @@ a.pub-wordmark:hover {
   padding-left: 1.25rem;
   display: grid;
   gap: 4px;
+}
+
+.studio-offer__includes {
+  gap: 8px;
 }
 
 .studio-pricing-link {
@@ -1324,6 +1369,14 @@ a.pub-wordmark:hover {
   display: grid;
   gap: 12px;
   justify-items: start;
+}
+
+.studio-book {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  background: var(--card);
+  gap: 24px;
 }
 
 /* The add-ons on the pricing page: the two ranges as rows, then the rule that sets the figure. */
@@ -1474,25 +1527,37 @@ a.pub-wordmark:hover {
   .studio-frame {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 32px;
-    row-gap: 28px;
+    row-gap: 24px;
     align-items: start;
-    padding: 32px 28px;
+    padding: 24px 0;
+  }
+
+  .studio-frame__lead {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .studio-hero {
-    grid-column: 1 / -1;
-  }
-
-  .studio-frame__media {
-    max-height: min(45vh, 440px);
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 
   .studio-frame__prices {
-    border-top: 0;
-    border-left: 1px solid var(--line);
-    padding-top: 0;
-    padding-left: 32px;
+    grid-column: 1;
+    grid-row: 2;
+    border-left: 0;
+    padding-left: 0;
     gap: 24px;
+  }
+
+  .studio-frame[data-media='none'] .studio-frame__prices {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .studio-frame__notes {
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
   }
 
   .studio-offers {
@@ -1535,8 +1600,22 @@ a.pub-wordmark:hover {
   }
 
   .studio-frame {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    padding: 40px 36px;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: 48px;
+    padding: 32px 0;
+  }
+
+  .pub-page--studio h1 {
+    font-size: 56px;
+  }
+
+  .studio-book {
+    padding: 32px;
+  }
+
+  .studio-offer:last-child .studio-offer__includes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
   }
 
   .studio-row dd {
