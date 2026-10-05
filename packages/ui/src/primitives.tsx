@@ -218,6 +218,7 @@ export function Drawer({
 
 export interface DialogProps {
   readonly children: ReactNode;
+  readonly className?: string;
   readonly description?: string;
   readonly open: boolean;
   readonly title: string;
@@ -237,7 +238,7 @@ let pendingReturnFocus: HTMLElement | null = null;
  * and body scroll lock. Pressing the backdrop does not close it, so a half-filled form survives a
  * stray click. Only Close, Escape, or the consumer's own actions call `onClose`.
  */
-export function Dialog({ children, description, onClose, open, title }: DialogProps) {
+export function Dialog({ children, className, description, onClose, open, title }: DialogProps) {
   const returnFocusRef = useRef<HTMLElement | null>(null);
 
   useLayoutEffect(() => {
@@ -286,7 +287,7 @@ export function Dialog({ children, description, onClose, open, title }: DialogPr
       <RadixDialog.Portal>
         <RadixDialog.Overlay className="mbv-dialog-backdrop" role="presentation">
           <RadixDialog.Content
-            className="mbv-dialog"
+            className={classes('mbv-dialog', className)}
             aria-modal="true"
             onOpenAutoFocus={captureReturnFocus}
             onCloseAutoFocus={restoreFocus}

@@ -107,7 +107,7 @@ export function StudioHeroMedia({
           className="studio-hero__poster"
           fill
           priority
-          sizes="(min-width: 1280px) 1100px, (min-width: 768px) calc(100vw - 104px), calc(100vw - 66px)"
+          sizes="(min-width: 1280px) 700px, (min-width: 768px) calc((100vw - 64px) / 2), calc(100vw - 32px)"
           src={media.poster.src}
         />
         {mountVideo && media.video !== undefined ? (

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { PublicFooter } from './public-footer';
 import { PublicHeader } from './public-header';
 import {
-  phoneHref,
   studioCopy,
   studioFilmDescription,
   studioFilmDisclosure,
@@ -13,13 +12,14 @@ import {
 } from './public-copy';
 import { StructuredData, studioStructuredData } from './structured-data';
 import { StudioHeroMedia } from './studio-hero-media';
+import { StudioBookingActions } from './studio-booking-actions';
 import { StudioOffers } from './studio-offers';
 
 /**
  * The studio page is a frame at screen width, designed at 375 first. The first screen is the
  * decision: the locked line, the two prices as titles, one action with the phone as the only
- * secondary. The owner-approved generated plate takes its own block above the lead
- * with the geometry reserved. Below the frame, type and space carry the rank: the two offers in
+ * secondary. The owner-approved generated plate follows the decision on phones and sits beside
+ * it on desktop, with its geometry reserved. Below the frame, type and space carry the rank: the two offers in
  * full, the cadence, six composed rows in the owner's words, the objection with its answer, the
  * close, and the one footer.
  */
@@ -47,24 +47,10 @@ export function StudioLanding({
             aria-labelledby="studio-heading"
             data-media={media === null ? 'none' : 'poster'}
           >
-            {media === null ? null : (
-              <StudioHeroMedia
-                alt={media.alt[locale]}
-                media={locale === 'es' ? { poster: media.poster, alt: media.alt } : media}
-                playLabel={copy.playFilm}
-              />
-            )}
             <div className="studio-frame__lead">
               <h1 id="studio-heading">{copy.h1}</h1>
               <p className="studio-frame__sub">{copy.sub}</p>
-              <div className="pub-actions">
-                <a className="pub-cta" href={phoneHref}>
-                  {copy.cta}
-                </a>
-                <a className="pub-phone" href={phoneHref}>
-                  {copy.phone}
-                </a>
-              </div>
+              <StudioBookingActions locale={locale} />
             </div>
             <dl className="studio-frame__prices">
               {copy.offers.map((offer) => (
@@ -77,6 +63,13 @@ export function StudioLanding({
                 </div>
               ))}
             </dl>
+            {media === null ? null : (
+              <StudioHeroMedia
+                alt={media.alt[locale]}
+                media={locale === 'es' ? { poster: media.poster, alt: media.alt } : media}
+                playLabel={copy.playFilm}
+              />
+            )}
             {media === null ? null : (
               <div className="studio-frame__notes" lang="en">
                 <p>{studioFilmDescription}</p>
@@ -124,14 +117,7 @@ export function StudioLanding({
 
             <section aria-labelledby="studio-book" className="studio-book">
               <h2 id="studio-book">{copy.close}</h2>
-              <div className="pub-actions">
-                <a className="pub-cta" href={phoneHref}>
-                  {copy.cta}
-                </a>
-                <a className="pub-phone" href={phoneHref}>
-                  {copy.phone}
-                </a>
-              </div>
+              <StudioBookingActions locale={locale} />
             </section>
           </div>
         </main>
