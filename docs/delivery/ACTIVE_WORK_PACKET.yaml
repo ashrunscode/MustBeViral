@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-UI-001
-spec_revision: 3
+spec_revision: 4
 title: V2 interface program across public, studio, brand, campaign and content surfaces
 phase: P4
 status: in_progress
@@ -45,6 +45,8 @@ depends_on:
   - WP-PLATFORM-W3-001
 scope:
   allowed_paths:
+    # Instruction-only owner amendment: governance/evidence/WP-PLATFORM-UI-001/owner-instruction-amendment-2026-10-05.yaml
+    - CLAUDE.md
     - apps/web/**
     - apps/core/**
     - packages/ui/**
