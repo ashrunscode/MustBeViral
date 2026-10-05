@@ -45,7 +45,6 @@ depends_on:
   - WP-PLATFORM-W3-001
 scope:
   allowed_paths:
-    # Instruction-only owner amendment: governance/evidence/WP-PLATFORM-UI-001/owner-instruction-amendment-2026-10-05.yaml
     - CLAUDE.md
     - apps/web/**
     - apps/core/**
@@ -358,8 +357,8 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Run the pre-transition quality pass and supersede UI-001 into RENDER-001 under A2,
-    carrying unproven operator permission and primary flows.
+  next_action: Fix the studio chooser/overview craft findings and finish the current pre-transition
+    quality pass, then carry unproven obligations into RENDER-001 under A2.
   blockers: []
   changed_paths: []
   last_green_checks: []

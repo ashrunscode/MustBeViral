@@ -1,0 +1,15 @@
+{
+  "Node": "24.18.0",
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "StartedUtc": "2026-10-05T22:47:43.0936938Z",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/platform-connected.spec.ts apps/web/e2e/platform-knowledge-connected.spec.ts --project=desktop-chromium",
+  "QueuesDisabled": true,
+  "Log": "C:/dev/mbv-run/mobile-shell-fresh-connected-dade2f4-20261005.log",
+  "FinishedUtc": "2026-10-05T23:01:27.7076725Z",
+  "Root": "C:/dev/mbv-verify-dade2f4",
+  "Playwright": "1.61.1",
+  "ProvidersDisabled": true,
+  "ActualExit": 0,
+  "LocalOnly": true,
+  "Pnpm": "11.12.0"
+}

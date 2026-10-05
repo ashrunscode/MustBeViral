@@ -1,0 +1,24 @@
+{
+  "endedUtc": "2026-10-05T23:17:21.0884531Z",
+  "node": "v24.18.0",
+  "envLikeFiles": [
+    ".env.example",
+    ".dev.vars.example",
+    "apps\\collaboration\\.dev.vars.example",
+    "apps\\core\\.dev.vars.example"
+  ],
+  "worktreeCount": 1,
+  "branch": "main",
+  "root": "C:/dev/mbv-deploy-dd4279f",
+  "installLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-deploy-dd4279f-install.log",
+  "vercel": "59.16.0",
+  "source": "dd4279f0061c19249a5653f4279be00009ff2b26",
+  "pnpm": "11.12.0",
+  "installStartedUtc": "2026-10-05T23:16:55.2755463Z",
+  "C4StandsForMergedTree": true,
+  "clean": true,
+  "treeEqualityActualExit": 0,
+  "reviewed": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "installActualExit": 0,
+  "startedUtc": "2026-10-05T23:16:43.4668861Z"
+}

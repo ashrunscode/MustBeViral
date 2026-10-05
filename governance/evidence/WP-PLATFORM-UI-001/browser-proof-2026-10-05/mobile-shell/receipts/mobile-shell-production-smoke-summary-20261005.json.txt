@@ -1,0 +1,15 @@
+{
+  "MediaCases": 3,
+  "FormsSubmitted": 0,
+  "Source": "dd4279f0061c19249a5653f4279be00009ff2b26",
+  "CachedPolicyCases": 16,
+  "Captures": 5,
+  "ExistingSoftwareFilmAccepted": false,
+  "DeploymentId": "dpl_2wmv2ChXF5a5d4tPVWA32ixYsp4i",
+  "BrowserPass": true,
+  "HttpPass": true,
+  "CheckedUtc": "2026-10-05T23:28:46.0903850Z",
+  "Pass": true,
+  "RemoteWrites": 0,
+  "C8Cells": 32
+}

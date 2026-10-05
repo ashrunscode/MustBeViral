@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Run the pre-transition quality pass and supersede UI-001 into RENDER-001 under A2, carrying unproven operator permission and primary flows.
+Fix the studio chooser/overview craft findings and finish the current pre-transition quality pass, then carry unproven obligations into RENDER-001 under A2.

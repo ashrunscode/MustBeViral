@@ -1,0 +1,92 @@
+[
+  {
+    "Sha256": "576590a5f4735438cc18d015cb08c99ae0d6ee38b32485d1b739ef31f967ad88",
+    "Name": "software-375",
+    "Target": "staging",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-staging-dade2f4-software-375.png"
+  },
+  {
+    "Sha256": "bfa43f8d11335b95b40a188ff3161a8b4153f135c406e3aa639eb930cbcda2d4",
+    "Name": "software-1280",
+    "Target": "staging",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-staging-dade2f4-software-1280.png"
+  },
+  {
+    "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+    "Name": "home-375",
+    "Target": "staging",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-staging-dade2f4-home-375.png"
+  },
+  {
+    "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+    "Name": "es-375",
+    "Target": "staging",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-staging-dade2f4-es-375.png"
+  },
+  {
+    "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+    "Name": "advertising-375",
+    "Target": "staging",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-staging-dade2f4-advertising-375.png"
+  },
+  {
+    "Sha256": "9d9f6618c090469ced32de5027dd74fbffeb63cc14eb7bdd55184f5f79349442",
+    "Name": "software-375",
+    "Target": "production",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-dade2f4-software-375.png"
+  },
+  {
+    "Sha256": "63ff3ad9ab5bbb7746f79ea4353ecc5e9c248eea57e7dd34149de1781dc28549",
+    "Name": "software-1280",
+    "Target": "production",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-dade2f4-software-1280.png"
+  },
+  {
+    "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+    "Name": "home-375",
+    "Target": "production",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-dade2f4-home-375.png"
+  },
+  {
+    "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+    "Name": "es-375",
+    "Target": "production",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-dade2f4-es-375.png"
+  },
+  {
+    "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+    "Name": "advertising-375",
+    "Target": "production",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-dade2f4-advertising-375.png"
+  },
+  {
+    "Sha256": "89c57fd9a7db13a554619a84724a9e5d126b9825f2ca1ae1a698df4c93030d2e",
+    "Name": "software-375",
+    "Target": "production-alias",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-alias-dade2f4-software-375.png"
+  },
+  {
+    "Sha256": "005d1ae7bdf5575ff883dc6cfcc82f4270a26cdfd6a8e8c9eb0b9724d10b926f",
+    "Name": "software-1280",
+    "Target": "production-alias",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-alias-dade2f4-software-1280.png"
+  },
+  {
+    "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+    "Name": "home-375",
+    "Target": "production-alias",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-alias-dade2f4-home-375.png"
+  },
+  {
+    "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+    "Name": "es-375",
+    "Target": "production-alias",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-alias-dade2f4-es-375.png"
+  },
+  {
+    "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+    "Name": "advertising-375",
+    "Target": "production-alias",
+    "Path": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-production-alias-dade2f4-advertising-375.png"
+  }
+]

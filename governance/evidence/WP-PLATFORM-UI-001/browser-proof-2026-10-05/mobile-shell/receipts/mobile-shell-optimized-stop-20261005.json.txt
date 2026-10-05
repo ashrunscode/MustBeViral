@@ -1,0 +1,10 @@
+{
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "CleanSource": true,
+  "StopExit": 0,
+  "CreatedUtc": "2026-10-05T22:46:12.9778240Z",
+  "Pid": 2412,
+  "RecordedUtc": "2026-10-05T23:10:50.4239317Z",
+  "PortsFree": true,
+  "NoDataDeletion": true
+}

@@ -1,0 +1,1 @@
+{"Target":"staging","Attempt":"native filename argument for helper outside configured roots","ObservedError":"File access denied outside allowed roots","ChecksStarted":0,"ConfigurationChanged":false,"Recovery":"Read reviewed local helper with filesystem tool and pass its code through the supported browser code argument; retain successful actual results separately"}

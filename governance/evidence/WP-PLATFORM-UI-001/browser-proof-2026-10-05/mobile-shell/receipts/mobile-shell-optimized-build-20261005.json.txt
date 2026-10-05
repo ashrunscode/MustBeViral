@@ -1,0 +1,11 @@
+{
+  "Node": "v24.18.0",
+  "EndedUtc": "2026-10-05T22:45:54.5442814Z",
+  "LocalOnly": true,
+  "Root": "C:/dev/mbv-finish",
+  "PreviewBypass": false,
+  "ProductionBuild": true,
+  "ActualExit": 0,
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "StartedUtc": "2026-10-05T22:45:12.2116891Z"
+}

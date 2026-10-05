@@ -1,0 +1,114 @@
+[
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1280-dark-20261005.png",
+    "Sha256": "86721315bf211319e958c0377fdcbda510a31f8a70986d69c1de0f1aeb921e15"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1280-forced-20261005.png",
+    "Sha256": "ff844dc64d2559046a59b21dcd8c70cada91897e240eee1c76fa26ae9f67a985"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1280-light-20261005.png",
+    "Sha256": "86721315bf211319e958c0377fdcbda510a31f8a70986d69c1de0f1aeb921e15"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1440-dark-20261005.png",
+    "Sha256": "359f91dd479e0db5c40a0fea45c4186317aef02992995a1de29b206ea7a20efb"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1440-light-20261005.png",
+    "Sha256": "359f91dd479e0db5c40a0fea45c4186317aef02992995a1de29b206ea7a20efb"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1920-dark-20261005.png",
+    "Sha256": "fd4519e34e48f0013e5b5a97c42290a97541ab0be382b40d36e22cc22f187ca5"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-1920-light-20261005.png",
+    "Sha256": "fd4519e34e48f0013e5b5a97c42290a97541ab0be382b40d36e22cc22f187ca5"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-375-dark-20261005.png",
+    "Sha256": "2e1995032584e7a4c9952d70808bbe7b1fa4bf8f81edd10f7cc3e853a2944528"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-375-light-20261005.png",
+    "Sha256": "2e1995032584e7a4c9952d70808bbe7b1fa4bf8f81edd10f7cc3e853a2944528"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-375-reduced-20261005.png",
+    "Sha256": "2e1995032584e7a4c9952d70808bbe7b1fa4bf8f81edd10f7cc3e853a2944528"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-768-dark-20261005.png",
+    "Sha256": "733fde054ef4c9f38afcd6e4624ecba2eabe22df9707050031d65807f6994d85"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-768-light-20261005.png",
+    "Sha256": "733fde054ef4c9f38afcd6e4624ecba2eabe22df9707050031d65807f6994d85"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-double-text-20261005.png",
+    "Sha256": "ad256202c8fcc595b9609e61c09f445f3d35f272e64d5e55cd21a5e63756741a"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-chooser-equivalent-200-percent-20261005.png",
+    "Sha256": "d35a711c60c3f4315b6346bed43be95d34c8f830ef3559df72caef2053b41fee"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1280-dark-20261005.png",
+    "Sha256": "a265de42829d743ee2bbaff9217dcab96d6a0253b43202c1a8a932d8ddd89400"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1280-forced-20261005.png",
+    "Sha256": "aead8a2928808f5d0920392aba9a3814eb1f65b335c4898890517af5baed1d54"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1280-light-20261005.png",
+    "Sha256": "a265de42829d743ee2bbaff9217dcab96d6a0253b43202c1a8a932d8ddd89400"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1440-dark-20261005.png",
+    "Sha256": "9c42ef491916870e2c8d0371cb2cd6fc0234138ecf35cdac408d266092934486"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1440-light-20261005.png",
+    "Sha256": "9c42ef491916870e2c8d0371cb2cd6fc0234138ecf35cdac408d266092934486"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1920-dark-20261005.png",
+    "Sha256": "1d8654133722eeb65e8bc98bfac8dfe1604ac0b3994c3cc1d89195b1a17eab1c"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-1920-light-20261005.png",
+    "Sha256": "1d8654133722eeb65e8bc98bfac8dfe1604ac0b3994c3cc1d89195b1a17eab1c"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-375-dark-20261005.png",
+    "Sha256": "e798419caf48528c57d1023e73f6e441047c5b94c4e6163fdaa8d7aed00fb38a"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-375-light-20261005.png",
+    "Sha256": "e798419caf48528c57d1023e73f6e441047c5b94c4e6163fdaa8d7aed00fb38a"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-375-reduced-20261005.png",
+    "Sha256": "e798419caf48528c57d1023e73f6e441047c5b94c4e6163fdaa8d7aed00fb38a"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-768-dark-20261005.png",
+    "Sha256": "8e5257fb938537f50c3beed761f8d88c59a38a07e63c2e0d8f6565c3c5424804"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-768-light-20261005.png",
+    "Sha256": "8e5257fb938537f50c3beed761f8d88c59a38a07e63c2e0d8f6565c3c5424804"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-double-text-20261005.png",
+    "Sha256": "8ec2adc01d35085db7a1916f3146e80c70a50d8f3d64342a6fe2a7d6f6df5e28"
+  },
+  {
+    "Path": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\mobile-shell-frame-final-studio-overview-equivalent-200-percent-20261005.png",
+    "Sha256": "cd71b014483315c39733eacc7120d7a31485d184745297e59df170b0e8b59921"
+  }
+]

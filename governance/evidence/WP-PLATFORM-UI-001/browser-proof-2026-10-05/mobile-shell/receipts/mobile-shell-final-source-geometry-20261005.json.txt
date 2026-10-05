@@ -1,0 +1,90 @@
+{
+  "startedUtc": "2026-10-05T22:18:13.820Z",
+  "source": "final six-path repair on 57c61e83330b213457bca892f5b266fa155588d6",
+  "cells": [
+    {
+      "width": 375,
+      "pending": {
+        "x": 0,
+        "y": 265.5,
+        "width": 375,
+        "height": 634.5
+      },
+      "ready": {
+        "x": 0,
+        "y": 265.5,
+        "width": 375,
+        "height": 1736.9375
+      },
+      "mainDelta": 0,
+      "escapeExpanded": "false",
+      "focusReturned": true
+    },
+    {
+      "width": 767,
+      "pending": {
+        "x": 0,
+        "y": 265.5,
+        "width": 767,
+        "height": 634.5
+      },
+      "ready": {
+        "x": 0,
+        "y": 265.5,
+        "width": 767,
+        "height": 1458.09375
+      },
+      "mainDelta": 0,
+      "escapeExpanded": "false",
+      "focusReturned": true
+    },
+    {
+      "width": 768,
+      "pending": {
+        "x": 200,
+        "y": 125,
+        "width": 568,
+        "height": 775
+      },
+      "ready": {
+        "x": 200,
+        "y": 125,
+        "width": 568,
+        "height": 1572.09375
+      },
+      "mainDelta": 0
+    },
+    {
+      "width": 1280,
+      "pending": {
+        "x": 220,
+        "y": 65,
+        "width": 1060,
+        "height": 835
+      },
+      "ready": {
+        "x": 220,
+        "y": 65,
+        "width": 1060,
+        "height": 1178.34375
+      },
+      "mainDelta": 0
+    },
+    {
+      "width": 1920,
+      "pending": {
+        "x": 350,
+        "y": 65,
+        "width": 1440,
+        "height": 835
+      },
+      "ready": {
+        "x": 350,
+        "y": 65,
+        "width": 1440,
+        "height": 1130.34375
+      },
+      "mainDelta": 0
+    }
+  ]
+}

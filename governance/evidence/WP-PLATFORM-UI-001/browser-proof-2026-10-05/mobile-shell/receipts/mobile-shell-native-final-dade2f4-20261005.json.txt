@@ -1,0 +1,141 @@
+{
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "Complete": true,
+  "Passed": true,
+  "RecordedUtc": "2026-10-05T23:10:26.929Z",
+  "Scope": "Bounded mobile keyboard and brand-header repair; four representative shell routes. Not full-platform acceptance or completed C11.",
+  "LocalOnly": true,
+  "RemoteWrites": 0,
+  "PreviewBypass": false,
+  "MatrixCells": 56,
+  "AxeRuns": 24,
+  "AxeViolations": 0,
+  "DistinctReadyImagesInspected": 32,
+  "ExactLoadingImagesInspected": 4,
+  "MainDisplacementPx": 0,
+  "LoadingWidths": [
+    375,
+    768,
+    1280,
+    1920
+  ],
+  "SourceGeometryWidths": [
+    375,
+    767,
+    768,
+    1280,
+    1920
+  ],
+  "ReadyImagesHashFiles": [
+    "mobile-shell-final-image-hashes-20261005.json",
+    "mobile-shell-frame-final-image-hashes-20261005.json"
+  ],
+  "Sources": [
+    "mobile-shell-final-matrix-20261005.json",
+    "mobile-shell-frame-final-matrix-dade2f4-20261005.json",
+    "mobile-shell-exact-loading-dade2f4-20261005.json",
+    "mobile-shell-final-source-geometry-20261005.json",
+    "mobile-shell-optimized-performance-dade2f4-20261005.json"
+  ],
+  "Scores": [
+    {
+      "Route": "chooser",
+      "Accessibility": 25,
+      "Responsive": 11,
+      "Theme": 10,
+      "Motion": 10,
+      "Performance": 20,
+      "Craft": 17,
+      "Total": 93
+    },
+    {
+      "Route": "studio-overview",
+      "Accessibility": 25,
+      "Responsive": 11,
+      "Theme": 10,
+      "Motion": 10,
+      "Performance": 20,
+      "Craft": 18,
+      "Total": 94
+    },
+    {
+      "Route": "brand-draft",
+      "Accessibility": 25,
+      "Responsive": 11,
+      "Theme": 10,
+      "Motion": 10,
+      "Performance": 20,
+      "Craft": 20,
+      "Total": 96
+    },
+    {
+      "Route": "brand-assets",
+      "Accessibility": 25,
+      "Responsive": 11,
+      "Theme": 10,
+      "Motion": 10,
+      "Performance": 20,
+      "Craft": 20,
+      "Total": 96
+    }
+  ],
+  "Deductions": [
+    "All four: inherited small skip-link target -1 and 15px mobile app body -3.",
+    "Chooser: sparse desktop distribution -3 craft, follow-up C11 finding.",
+    "Studio overview: adjoining decision panels and wrapped tablet add-brand label -1 each craft, follow-up C11 findings."
+  ],
+  "Unmeasured": [
+    "Field INP",
+    "Brand-assets EventTiming: no above-threshold entries; null is not zero",
+    "Native OS browser zoom; 640x450 equivalent layout and actual doubled text only",
+    "All-route final C11 score and visual inspection still pending"
+  ],
+  "Performance": [
+    {
+      "Route": "chooser",
+      "LcpMs": 320,
+      "Cls": 0.02412960760998811,
+      "ObservedMaxInteractionMs": 16,
+      "Errors": 0,
+      "MenuRecovery": {
+        "collapsed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "Route": "studio-overview",
+      "LcpMs": 144,
+      "Cls": 0.016252376604625203,
+      "ObservedMaxInteractionMs": 16,
+      "Errors": 0,
+      "MenuRecovery": {
+        "collapsed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "Route": "brand-draft",
+      "LcpMs": 192,
+      "Cls": 0.000023587080492125507,
+      "ObservedMaxInteractionMs": 16,
+      "Errors": 0,
+      "MenuRecovery": {
+        "collapsed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "Route": "brand-assets",
+      "LcpMs": 128,
+      "Cls": 0.000023587080492125507,
+      "ObservedMaxInteractionMs": null,
+      "Errors": 0,
+      "MenuRecovery": {
+        "collapsed": true,
+        "focusReturned": true
+      }
+    }
+  ],
+  "RecoveryLimits": "Forged local unavailable resource recovery and mocked FORBIDDEN branch; not current production operator permission proof.",
+  "IndependentReviewPending": true
+}

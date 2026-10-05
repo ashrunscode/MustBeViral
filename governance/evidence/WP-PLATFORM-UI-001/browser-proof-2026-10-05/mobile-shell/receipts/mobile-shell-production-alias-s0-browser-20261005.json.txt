@@ -1,0 +1,113 @@
+{
+  "checkedUtc": "2026-10-05T23:27:38.099Z",
+  "origin": "https://mustbeviral-web-production.vercel.app",
+  "deploymentId": "dpl_2wmv2ChXF5a5d4tPVWA32ixYsp4i",
+  "driver": "Playwright MCP; signed out; live unthrottled 375px lab sample; no form submission",
+  "results": [
+    {
+      "route": "/",
+      "status": 200,
+      "initial": {
+        "lcpMs": 388,
+        "posterLcp": true,
+        "lcpTag": "IMG",
+        "cls": 0,
+        "mainCount": 1,
+        "documentLang": "en",
+        "h1Count": 1,
+        "h1Px": "40px",
+        "overflow": false,
+        "exactDisclosure": true,
+        "videoCount": 0,
+        "trackCount": 0,
+        "highPriorityPoster": true,
+        "posterAlt": "Two hands adjust a camera on a gimbal in a generated room.",
+        "notesLang": "en",
+        "pictureText": "",
+        "reservedFrameAspect": "1920 / 1080",
+        "frameWidth": 343,
+        "frameHeight": 192.9375,
+        "expectedDeployment": true
+      },
+      "playback": {
+        "playing": {
+          "paused": false,
+          "muted": true,
+          "nativeControls": false,
+          "trackCount": 0,
+          "pressed": "true"
+        },
+        "paused": {
+          "paused": true,
+          "shown": false,
+          "pressed": "false"
+        },
+        "reduced": {
+          "videoCount": 0,
+          "disabled": true,
+          "status": "Reduced motion is on. The poster stays still."
+        }
+      },
+      "consoleErrors": 0,
+      "errorClasses": []
+    },
+    {
+      "route": "/es",
+      "status": 200,
+      "initial": {
+        "lcpMs": 332,
+        "posterLcp": true,
+        "lcpTag": "IMG",
+        "cls": 0,
+        "mainCount": 1,
+        "documentLang": "es",
+        "h1Count": 1,
+        "h1Px": "40px",
+        "overflow": false,
+        "exactDisclosure": true,
+        "videoCount": 0,
+        "trackCount": 0,
+        "highPriorityPoster": true,
+        "posterAlt": "",
+        "notesLang": "en",
+        "pictureText": "",
+        "reservedFrameAspect": "1920 / 1080",
+        "frameWidth": 343,
+        "frameHeight": 192.9375,
+        "expectedDeployment": true
+      },
+      "playback": null,
+      "consoleErrors": 0,
+      "errorClasses": []
+    },
+    {
+      "route": "/advertising",
+      "status": 200,
+      "initial": {
+        "lcpMs": 356,
+        "posterLcp": false,
+        "lcpTag": "P",
+        "cls": 0,
+        "mainCount": 1,
+        "documentLang": "en",
+        "h1Count": 1,
+        "h1Px": "28px",
+        "overflow": false,
+        "exactDisclosure": true,
+        "videoCount": 0,
+        "trackCount": 0,
+        "highPriorityPoster": false,
+        "posterAlt": null,
+        "notesLang": null,
+        "pictureText": "",
+        "reservedFrameAspect": null,
+        "frameWidth": null,
+        "frameHeight": null,
+        "expectedDeployment": true
+      },
+      "playback": null,
+      "consoleErrors": 0,
+      "errorClasses": []
+    }
+  ]
+}

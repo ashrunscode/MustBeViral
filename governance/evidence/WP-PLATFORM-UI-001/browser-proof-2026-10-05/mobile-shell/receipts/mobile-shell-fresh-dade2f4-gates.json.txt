@@ -1,0 +1,93 @@
+{
+  "LocalDatabaseOnly": true,
+  "Checks": [
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-install.log",
+      "StartedUtc": "2026-10-05T22:21:44.5382812Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:22:11.3825888Z",
+      "Label": "install",
+      "Command": "corepack pnpm install --frozen-lockfile"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-agent-preflight.log",
+      "StartedUtc": "2026-10-05T22:22:16.2486058Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:24:02.4684140Z",
+      "Label": "agent-preflight",
+      "Command": "corepack pnpm agent:preflight"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-governance-check.log",
+      "StartedUtc": "2026-10-05T22:24:02.4715642Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:25:51.3154615Z",
+      "Label": "governance-check",
+      "Command": "corepack pnpm governance:check"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-governance-test.log",
+      "StartedUtc": "2026-10-05T22:25:51.3178097Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:27:51.7039322Z",
+      "Label": "governance-test",
+      "Command": "corepack pnpm governance:test"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-format-check.log",
+      "StartedUtc": "2026-10-05T22:27:51.7066280Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:28:15.1130527Z",
+      "Label": "format-check",
+      "Command": "corepack pnpm format:check"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-verify.log",
+      "StartedUtc": "2026-10-05T22:28:15.1149259Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:38:35.4366030Z",
+      "Label": "verify",
+      "Command": "corepack pnpm verify"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-migration-list-before.log",
+      "StartedUtc": "2026-10-05T22:38:35.5260491Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:38:38.8732572Z",
+      "Label": "migration-list-before",
+      "Command": "corepack pnpm exec supabase migration list --local"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-migration-up.log",
+      "StartedUtc": "2026-10-05T22:38:39.4966481Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:38:42.8076384Z",
+      "Label": "migration-up",
+      "Command": "corepack pnpm exec supabase migration up --local"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-migration-list.log",
+      "StartedUtc": "2026-10-05T22:38:42.8094086Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:38:46.6037314Z",
+      "Label": "migration-list",
+      "Command": "corepack pnpm exec supabase migration list --local"
+    },
+    {
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-mobile-shell-fresh-dade2f4-supabase-test.log",
+      "StartedUtc": "2026-10-05T22:38:47.2000919Z",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T22:39:08.7309237Z",
+      "Label": "supabase-test",
+      "Command": "corepack pnpm supabase:test"
+    }
+  ],
+  "Versions": {
+    "Node": "v24.18.0",
+    "Supabase": "2.109.1",
+    "Pnpm": "11.12.0",
+    "Playwright": "Version 1.61.1"
+  },
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "Root": "C:/dev/mbv-verify-dade2f4"
+}

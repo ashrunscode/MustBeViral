@@ -1,0 +1,13 @@
+{
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "NoForcedFixtureDeletion": true,
+  "CreatedUtc": "2026-10-05T22:46:44.1422870Z",
+  "Executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "TestsPassed": 24,
+  "TestExit": 0,
+  "CleanSource": true,
+  "StopExit": 0,
+  "RecordedUtc": "2026-10-05T23:10:46.8783141Z",
+  "Pid": 43916,
+  "PortsFree": true
+}

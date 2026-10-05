@@ -1,0 +1,139 @@
+{
+  "head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "localOnly": true,
+  "previewBypass": false,
+  "productionBuild": true,
+  "unthrottledLab": true,
+  "fieldINPProven": false,
+  "remoteWrites": 0,
+  "reports": [
+    {
+      "route": "chooser",
+      "status": 200,
+      "normal": {
+        "lcpMs": 320,
+        "lcpTag": "P",
+        "cls": 0.02412960760998811,
+        "shifts": [
+          {
+            "value": 0.02412960760998811,
+            "startTime": 525.5
+          }
+        ],
+        "events": [],
+        "hScroll": false,
+        "h1": "Choose a studio.",
+        "bodyPx": 15,
+        "theme": "light",
+        "themeColorMeta": true,
+        "smallTargets": 1
+      },
+      "recovered": {
+        "collapsed": true,
+        "focusReturned": true
+      },
+      "selectExercised": false,
+      "eventCount": 3,
+      "maxObservedInteractionMs": 16,
+      "errors": [],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem: Your studios\n  - button \"Sign out\"\n- main \"Your studios\":\n  - heading \"Choose a studio.\" [level=1]\n  - paragraph: Choose your studio, then pick the brand you want to work on.\n  - region \"Your studios\":\n    - link \"Synthetic quality studio Open studio\":\n      - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n      - heading \"Synthetic quality studio\" [level=2]\n      - text: Open studio\n  - heading \"Create a studio\" [level=2]\n  - group:\n    - text: Studio name\n    - textbox \"Studio name\":\n      - /placeholder: Your studio or business\n    - button \"Create studio\"\n  - heading \"Invitations\" [level=2]\n  - paragraph: No pending invitations for your verified email.\n  - list\n- alert"
+    },
+    {
+      "route": "studio-overview",
+      "status": 200,
+      "normal": {
+        "lcpMs": 144,
+        "lcpTag": "P",
+        "cls": 0.016252376604625203,
+        "shifts": [
+          {
+            "value": 0.0018500777540504908,
+            "startTime": 136.70000000298023
+          },
+          {
+            "value": 0.01440229885057471,
+            "startTime": 768.1000000014901
+          }
+        ],
+        "events": [],
+        "hScroll": false,
+        "h1": "Studio overview",
+        "bodyPx": 15,
+        "theme": "light",
+        "themeColorMeta": true,
+        "smallTargets": 1
+      },
+      "recovered": {
+        "collapsed": true,
+        "focusReturned": true
+      },
+      "selectExercised": false,
+      "eventCount": 3,
+      "maxObservedInteractionMs": 16,
+      "errors": [],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Synthetic quality studio\":\n          - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n  - text: Owner\n  - button \"Sign out\"\n- main \"Overview\":\n  - heading \"Studio overview\" [level=1]\n  - paragraph: What needs a decision across this studio, then the brands themselves.\n  - link \"Add a brand\":\n    - /url: \"#new-brand\"\n  - region \"Needs a decision\":\n    - heading \"Needs a decision\" [level=2]\n    - list:\n      - listitem:\n        - text: Not started\n        - strong: \"Synthetic quality brand: no knowledge draft yet\"\n        - text: Capture the website or add facts by hand to start the brand’s knowledge.\n        - link \"Start findings\":\n          - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=findings\n  - region \"0 brand versions ready to approve\":\n    - heading \"0 brand versions ready to approve\" [level=2]\n    - link \"Open approvals\":\n      - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=approvals\n    - paragraph: \"Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel is connected: neither is part of this release yet.\"\n  - heading \"Your brands\" [level=2]\n  - link \"All brands and search\":\n    - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=brands\n  - article:\n    - heading \"Synthetic quality brand\" [level=3]\n    - text: Active brand\n    - link \"Open Synthetic quality brand\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n  - heading \"Start with the essentials.\" [level=2]\n  - paragraph: A new brand gets its own workspace. The draft is saved the moment you create it.\n  - group:\n    - text: Brand name\n    - textbox \"Brand name\":\n      - /placeholder: What is the brand called?\n    - button \"Create brand draft\"\n- alert"
+    },
+    {
+      "route": "brand-draft",
+      "status": 200,
+      "normal": {
+        "lcpMs": 192,
+        "lcpTag": "H1",
+        "cls": 0.000023587080492125507,
+        "shifts": [
+          {
+            "value": 0.000023587080492125507,
+            "startTime": 122.39999999850988
+          }
+        ],
+        "events": [],
+        "hScroll": false,
+        "h1": "Make Synthetic quality brand feel like itself.",
+        "bodyPx": 15,
+        "theme": "light",
+        "themeColorMeta": true,
+        "smallTargets": 1
+      },
+      "recovered": {
+        "collapsed": true,
+        "focusReturned": true
+      },
+      "selectExercised": true,
+      "eventCount": 5,
+      "maxObservedInteractionMs": 16,
+      "errors": [],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Synthetic quality studio\":\n          - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n      - listitem:\n        - text: /\n        - strong: Synthetic quality brand\n  - text: Switch brand\n  - combobox \"Switch brand\":\n    - option \"Synthetic quality brand\" [selected]\n  - text: Owner\n  - button \"Sign out\"\n- main \"Synthetic quality brand\":\n  - link \"All brands\":\n    - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=brands\n  - navigation \"Brand navigation\":\n    - link \"Overview\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n    - link \"Brand draft\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft\n    - link \"Intelligence\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=findings\n    - link \"Assets\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets\n    - link \"Channels\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=channels\n    - link \"Campaigns\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=campaigns\n    - link \"Content\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=content\n    - link \"Calendar\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=calendar\n    - link \"Inbox\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=inbox\n    - link \"Results\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=results\n    - link \"Locations\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=locations\n    - link \"Settings\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=settings\n    - link \"Billing\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/billing?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&brand=12b4568b-13eb-44eb-b684-2c15d78939ab\n  - heading \"Make Synthetic quality brand feel like itself.\" [level=1]\n  - paragraph: Save what you know now. Add sources and review the details as your brand takes shape.\n  - heading \"Brand essentials\" [level=2]\n  - status: Saved, version 1\n  - group \"Brand essentials\":\n    - text: Website Optional — you can enter details manually.\n    - textbox \"Website Optional — you can enter details manually.\":\n      - /placeholder: https://yourbrand.com\n    - text: What should we know?\n    - textbox \"What should we know?\":\n      - /placeholder: What you do, where you work, and the details that make this brand different.\n    - text: Who are you trying to reach?\n    - textbox \"Who are you trying to reach?\":\n      - /placeholder: Describe your customers in your own words.\n    - text: What would you like to achieve?\n    - textbox \"What would you like to achieve?\":\n      - /placeholder: The next useful outcome for this brand.\n    - text: Where should we resume?\n    - combobox \"Where should we resume?\":\n      - option \"Brand essentials\" [selected]\n      - option \"Audience and goals\"\n      - option \"Ready for source review\"\n    - button \"Save draft\" [disabled]\n  - complementary:\n    - text: A brand you can reuse\n    - heading \"Keep the meaning. Keep the source.\" [level=2]\n    - paragraph: These details are your input. They have not been extracted from a website or approved as a brand version.\n    - text: Entering a website here saves its address only. Capture and review findings on the Findings tab. Nothing here is approved brand knowledge.\n    - paragraph: Original assets, rights and source review will attach to this brand as those workflows become available.\n- alert"
+    },
+    {
+      "route": "brand-assets",
+      "status": 200,
+      "normal": {
+        "lcpMs": 128,
+        "lcpTag": "P",
+        "cls": 0.000023587080492125507,
+        "shifts": [
+          {
+            "value": 0.000023587080492125507,
+            "startTime": 115
+          }
+        ],
+        "events": [],
+        "hScroll": false,
+        "h1": "Assets",
+        "bodyPx": 15,
+        "theme": "light",
+        "themeColorMeta": true,
+        "smallTargets": 1
+      },
+      "recovered": {
+        "collapsed": true,
+        "focusReturned": true
+      },
+      "selectExercised": true,
+      "eventCount": 0,
+      "maxObservedInteractionMs": null,
+      "errors": [],
+      "tree": "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Synthetic quality studio\":\n          - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n      - listitem:\n        - text: /\n        - strong: Synthetic quality brand\n  - text: Switch brand\n  - combobox \"Switch brand\":\n    - option \"Synthetic quality brand\" [selected]\n  - text: Owner\n  - button \"Sign out\"\n- main \"Synthetic quality brand\":\n  - link \"All brands\":\n    - /url: /studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=brands\n  - navigation \"Brand navigation\":\n    - link \"Overview\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e\n    - link \"Brand draft\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft\n    - link \"Intelligence\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=findings\n    - link \"Assets\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets\n    - link \"Channels\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=channels\n    - link \"Campaigns\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=campaigns\n    - link \"Content\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=content\n    - link \"Calendar\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=calendar\n    - link \"Inbox\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=inbox\n    - link \"Results\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=results\n    - link \"Locations\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=locations\n    - link \"Settings\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=settings\n    - link \"Billing\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/billing?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&brand=12b4568b-13eb-44eb-b684-2c15d78939ab\n  - heading \"Assets\" [level=1]\n  - paragraph: Original photos, video, logos and documents, with provenance and rights for each file.\n  - status:\n    - heading \"No assets yet.\" [level=2]\n    - paragraph: Assets arrive through the brief’s source folder once Drive is connected. Nothing is uploaded from this screen.\n    - paragraph: Uploads and Drive connections are not part of this release yet.\n    - link \"Capture brand findings instead\":\n      - /url: /studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=findings\n- alert"
+    }
+  ]
+}
