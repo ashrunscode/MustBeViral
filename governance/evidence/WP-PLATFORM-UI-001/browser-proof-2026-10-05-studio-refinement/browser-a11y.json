@@ -20,10 +20,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -51,10 +48,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -82,10 +76,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -113,10 +104,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -176,10 +164,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -207,10 +192,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -238,10 +220,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
@@ -269,10 +248,7 @@
       "state": "booking",
       "overflow": false,
       "violations": [],
-      "incomplete": [
-        "aria-hidden-focus",
-        "color-contrast"
-      ],
+      "incomplete": ["aria-hidden-focus", "color-contrast"],
       "targets": [
         {
           "name": "Close",
