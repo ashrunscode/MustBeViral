@@ -50,3 +50,45 @@ test('the Spanish page retains its phone booking and the approved copy', async (
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.locator('form, input, textarea')).toHaveCount(0);
 });
+
+for (const route of ['/', '/es', '/pricing']) {
+  test(`${route} keeps exact prices intact when all mobile text is doubled`, async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(route);
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(() => {
+      // Freeze every computed size before resizing, including the fixed-size money spans.
+      const measured = [document.body, ...document.querySelectorAll<HTMLElement>('body *')].map(
+        (element) => {
+          const style = getComputedStyle(element);
+          return {
+            element,
+            font: Number.parseFloat(style.fontSize),
+            line: style.lineHeight === 'normal' ? null : Number.parseFloat(style.lineHeight),
+          };
+        },
+      );
+      for (const { element, font, line } of measured) {
+        element.style.fontSize = `${font * 2}px`;
+        if (line !== null) element.style.lineHeight = `${line * 2}px`;
+      }
+    });
+    for (const amount of ['$700', '$3,500']) {
+      const price = page.locator('.pub-price').filter({ hasText: amount }).first();
+      await expect(price).toHaveText(amount);
+      await expect(price).toHaveCSS('font-size', '56px');
+      await price.scrollIntoViewIfNeeded();
+      await expect(price).toBeVisible();
+      expect(
+        await price.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.left >= 0 && rect.right <= innerWidth;
+        }),
+      ).toBe(true);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+      false,
+    );
+  });
+}
