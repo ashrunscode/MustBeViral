@@ -1,0 +1,2 @@
+All tests successful.
+Files=61, Tests=1181, 15 wallclock secs ( 0.35 usr  0.20 sys +  0.44 cusr  0.49 csys =  1.48 CPU)

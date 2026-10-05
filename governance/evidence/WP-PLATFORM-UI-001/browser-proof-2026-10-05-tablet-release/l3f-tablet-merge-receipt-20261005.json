@@ -1,0 +1,24 @@
+{
+  "NoProtectionBypass": true,
+  "NoBranchDeleted": true,
+  "CleanAuthor": true,
+  "FinishedUtc": "2026-10-05T06:00:08.9322733Z",
+  "Worktrees": 1,
+  "TreeEqualityActualExit": 0,
+  "ActualMergeExit": 0,
+  "StartedUtc": "2026-10-05T05:59:53.9374284Z",
+  "Parents": [
+    "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+    "53ee31f18bc41f70a991b0d19e4d3b43b5474319"
+  ],
+  "C4StandsForMergedTree": true,
+  "Pr": 78,
+  "MergedAt": "2026-10-05T05:59:55Z",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "Branch": "main",
+  "Reviewed": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "Base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "ActualFetchExit": 0,
+  "ActualFastForwardExit": 0,
+  "ReleasePending": true
+}

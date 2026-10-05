@@ -1,0 +1,19 @@
+{
+  "URL": "https://higgsfield.ai/terms-of-use-agreement",
+  "PublishedUpdate": "2026-07-26",
+  "OfficialHtmlRead": true,
+  "ExistingApprovedFilmOnly": true,
+  "NoGenerationOrSpend": true,
+  "ObservedUtc": "2026-10-05T01:25:44.2090554Z",
+  "ExtractionDiagnostic": {
+    "PriorShellActualExit": 1,
+    "ProviderTermsChanged": false,
+    "NoReleaseOnFailedCheck": true,
+    "Cause": "Replacing markup with spaces broke the expected text; removing markup preserves it."
+  },
+  "HttpStatus": 200,
+  "OwnershipClaimDisclaimed": true,
+  "Clause": "4.4",
+  "LegalApproval": false,
+  "CommercialUseUnrestrictedByCompany": true
+}

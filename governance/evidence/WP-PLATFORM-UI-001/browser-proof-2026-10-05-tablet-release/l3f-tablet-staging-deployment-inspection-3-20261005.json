@@ -1,0 +1,22 @@
+{
+  "ListExit": 0,
+  "Reviewed": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "Project": "mustbeviral-web-staging",
+  "CheckedUtc": "2026-10-05T06:02:41.4471024Z",
+  "DeploymentId": "dpl_65MhAN2LySepfp8c3KyE9KcutwhB",
+  "InspectExit": 0,
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "Environment": "staging",
+  "ProtectedProductionAliasInspectedOnly": false,
+  "ExpectedAliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "Ready": true,
+  "AliasesComplete": true,
+  "NoRemoteDatabaseWrite": true
+}

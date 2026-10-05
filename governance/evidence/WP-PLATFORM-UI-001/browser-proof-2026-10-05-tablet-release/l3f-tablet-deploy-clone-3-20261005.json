@@ -1,0 +1,24 @@
+{
+  "envLikeFiles": [
+    ".env.example",
+    ".dev.vars.example",
+    "apps\\collaboration\\.dev.vars.example",
+    "apps\\core\\.dev.vars.example"
+  ],
+  "vercel": "59.16.0",
+  "clean": true,
+  "installActualExit": 0,
+  "endedUtc": "2026-10-05T06:01:04.9753953Z",
+  "worktreeCount": 1,
+  "installLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-deploy-50556e2-install.log",
+  "startedUtc": "2026-10-05T06:00:27.8007219Z",
+  "node": "v24.18.0",
+  "branch": "main",
+  "reviewed": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "root": "C:/dev/mbv-deploy-50556e2",
+  "treeEqualityActualExit": 0,
+  "installStartedUtc": "2026-10-05T06:00:41.7888754Z",
+  "pnpm": "11.12.0",
+  "C4StandsForMergedTree": true
+}

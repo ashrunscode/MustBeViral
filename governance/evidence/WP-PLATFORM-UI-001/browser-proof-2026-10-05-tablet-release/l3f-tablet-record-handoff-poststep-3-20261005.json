@@ -1,0 +1,19 @@
+{
+  "StartingHead": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "Node": "v24.18.0",
+  "Pnpm": "11.12.0",
+  "Checks": [
+    {
+      "Command": "corepack pnpm exec prettier --write PROJECT_STATE.yaml docs/delivery/ACTIVE_WORK_PACKET.yaml",
+      "StartedUtc": "2026-10-05T06:29:41.5152591Z",
+      "FinishedUtc": "2026-10-05T06:29:42.9072541Z",
+      "ActualExit": 0
+    },
+    {
+      "Command": "corepack pnpm docs:generate",
+      "StartedUtc": "2026-10-05T06:29:42.9099621Z",
+      "FinishedUtc": "2026-10-05T06:29:46.2585445Z",
+      "ActualExit": 0
+    }
+  ]
+}

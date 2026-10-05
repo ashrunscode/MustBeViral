@@ -1,0 +1,16 @@
+{
+  "FinishedUtc": "2026-10-04T11:59:54.2197161Z",
+  "Session": "01a106c1-2619-7762-bc2c-e8df8cca5f05",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp/mbv-l3f-record-review-df93c02-round-1.log",
+  "Root": "C:/dev/worktrees/mustbeviral/review-df93c02",
+  "Head": "df93c02f1d58d93779093ebc7c1c9add09cfca15",
+  "Model": "gpt-6.1-sol",
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp/mbv-review-prompt-df93c02.md",
+  "Verdict": "VERDICT: PASS",
+  "DevelopmentSpend": false,
+  "Effort": "xhigh",
+  "RequiredFlagsRetained": true,
+  "StartedUtc": "2026-10-04T11:51:23.2576366Z",
+  "ActualProcessExit": 0,
+  "Out": "C:\\Users\\ernij\\AppData\\Local\\Temp/mbv-l3f-record-review-df93c02-round-1.md"
+}

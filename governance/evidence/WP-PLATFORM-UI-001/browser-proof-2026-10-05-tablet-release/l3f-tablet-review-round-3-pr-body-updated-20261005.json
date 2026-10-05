@@ -1,0 +1,15 @@
+{
+  "BodySha256": "40e308f435e83a43d703e0b87ee84bdc39a94f2adfa15a290300d54f5ea7025a",
+  "PriorRoundsPreserved": true,
+  "FinishedUtc": "2026-10-05T05:59:42.0325971Z",
+  "Base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "MergeGatePass": true,
+  "Pr": 78,
+  "ActualExit": 0,
+  "StartedUtc": "2026-10-05T05:59:39.5424319Z",
+  "Round": 3,
+  "ReviewVerdict": "VERDICT: PASS",
+  "ReleasePending": true,
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "ReadBackMatches": true
+}

@@ -1,0 +1,18 @@
+ Tasks:    18 successful, 18 total
+ Tasks:    18 successful, 18 total
+@mustbeviral/web:test:  Test Files  68 passed (68)
+@mustbeviral/web:test:       Tests  480 passed (480)
+ Tasks:    24 successful, 24 total
+@mustbeviral/core:test:  Test Files  53 passed (53)
+@mustbeviral/core:test:       Tests  633 passed (633)
+ Tasks:    6 successful, 6 total
+@mustbeviral/collaboration-worker:test:  Test Files  10 passed (10)
+@mustbeviral/collaboration-worker:test:       Tests  83 passed (83)
+ Tasks:    2 successful, 2 total
+@mustbeviral/web:test:integration:  Test Files  4 passed (4)
+@mustbeviral/web:test:integration:       Tests  31 passed (31)
+ Tasks:    10 successful, 10 total
+@mustbeviral/core:test:integration:  Test Files  1 passed (1)
+@mustbeviral/core:test:integration:       Tests  2 passed (2)
+ Tasks:    6 successful, 6 total
+ Tasks:    18 successful, 18 total

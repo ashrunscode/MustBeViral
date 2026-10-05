@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Capture the remaining 768-pixel platform browser cells under L3f.
+Verify the operator gate on /studio/internal in the UI and Core under L3f.

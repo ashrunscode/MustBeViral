@@ -1,0 +1,114 @@
+{
+  "RecordedUtc": "2026-10-05T05:30:18.075Z",
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "Root": "C:/dev/mbv-verify-53ee31f",
+  "Branch": "main",
+  "Clean": false,
+  "CleanAtInitialCheckout": true,
+  "WorktreeCount": 1,
+  "SourceHashes": [
+    {
+      "path": "apps/web/src/features/platform/platform.css",
+      "sha256": "977e45a4edf5da4fb553a9316b86651fbbc6d5c533c51ca472ab8b16d75baec5"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "b323bfde8217c8a13991ff148fa2e995e483bd2c0d3b927b6426b7c8ae3673c0"
+    },
+    {
+      "path": "apps/web/e2e/platform-connected.spec.ts",
+      "sha256": "e9593d53b57c99273598bd4aa223dcea15f1b15125e92671fa70ed4b5ba301b0"
+    },
+    {
+      "path": "apps/web/e2e/final-ui.spec.ts",
+      "sha256": "37a376317c77d958b053775b461f5f142d4e744e7d64e9b5451b0ce9e2c1fc20"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.module.css",
+      "sha256": "39b4b1a83e696e288df50df709f3e8a7927ba7d21f199aaec47b65a11477aeb4"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.module.css",
+      "sha256": "e7bdf74e2031897f11fa6b5a9a7b335223e7d46205ca72b256d9c8d0d8d981ba"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/review/review-flow.module.css",
+      "sha256": "6025b5e0fde2068d4cd566daef21d5ecc207b2a7b8bb25f126eb767d73b30db3"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/quote-flow.tsx",
+      "sha256": "7fad3d3992a4a9d50b4352a1249bccd2f98c273d9c2c44f428c515c34b7a406f"
+    },
+    {
+      "path": "apps/web/src/features/collaboration/collaboration-panel.module.css",
+      "sha256": "c2ca7da17a50f162253ff536d45dc5819e50a7f0f86344944eccc05c871de185"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx",
+      "sha256": "3f7ff23dc3194b209f06fb17fda855494b02d7db471d44bb5ab50e9f338919ee"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css",
+      "sha256": "72be5471774efb7380c3a61e9f106f66ba520c6bf315da4e66832c483a8865f4"
+    },
+    {
+      "path": "packages/ui/src/styles.css",
+      "sha256": "fe16cb93e33fd38686a2eeaa1a11bd9f5094c848869e9ac9e087f1c37f22d983"
+    },
+    {
+      "path": "apps/web/app/(en)/studio/[workspace]/(workflow)/quote/run-progress.tsx",
+      "sha256": "7b56defa26da9abd95abd8aff985deb033c8f8a21341c1f61f1405c05bab3ca6"
+    }
+  ],
+  "GeneratedDiagnosticArtifacts": [
+    {
+      "path": "apps/web/test/__perf__/canvas-fps-500.json",
+      "sha256": "f8f7ff8939c7fcb227ecdb9b77fc3d87dc7b9954ac79b808a8c34f92a5ab102a"
+    },
+    {
+      "path": "apps/web/test/__perf__/canvas-fps.json",
+      "sha256": "9f27c0d09a56b1bac50a3202f3d8654fbd3472a7598501098bced7529bb596c9"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/campaign-brief-1440x900.png",
+      "sha256": "ad83f8d806c035f35677b764304f9710d1039005776ca3ab89425ff589a1b87e"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/canvas-1440x900.png",
+      "sha256": "47e4727816317bee63a709af3e39d393b8da462ddd16ab2d79031295f17d8b09"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/mobile-review-375x812.png",
+      "sha256": "b07a13336758c17de19c7cc651e906e3786bac835eeb772a7a1737927ab2a58b"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/output-comparison-1440x900.png",
+      "sha256": "960357b211bd9c7a73031360c40d04b368450563ce757c237edaacc5328213fa"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/quote-1440x900.png",
+      "sha256": "6a44fd5179cb49dc62d9ecb083d98d06932e0e8c655448752f0dd48d9ed12ab6"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/receipt-1440x900.png",
+      "sha256": "17578d32b1ff817813a8179abfa8080282deb1c7e22fe545964496f928f58da2"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/review-1440x900.png",
+      "sha256": "dc40c647988c4f3c19ce11230e2672edfd57bfe87ec2193d12887cc163010fc4"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/run-progress-1440x900.png",
+      "sha256": "8aa1772ef87a77dc0b38d79d29fa2849ecabbff3c8e779db9eee170e9784a65f"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/tablet-review-768x1024.png",
+      "sha256": "581287a0eb24602db8e480b9aa40c1573ba2ed0d14f55372a19e3c9c8b54daa6"
+    }
+  ],
+  "ChangesConfinedToProducedDiagnosticArtifacts": true,
+  "ActualExit": 0,
+  "ConnectedChecksPassed": true,
+  "OwnedHarnessStopped": true,
+  "NoSourceMutation": true
+}

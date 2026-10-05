@@ -1,0 +1,16 @@
+{
+  "C5Pending": true,
+  "Body": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-pr-tablet-reflow-20261005-verified-3.md",
+  "FinishedUtc": "2026-10-05T05:31:06.8662548Z",
+  "ReadBackMatches": true,
+  "BodySha256": "c9920cf4b1d3f3e50cc9940e6e6c6c8f7c0fe964a2a4e75adef98149290d81c6",
+  "ActualExit": 0,
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "OriginalBodySha256": "721bfe12ed0fc4fd174c1057a2e831961550e6cfe3fe28769fb2540231ab6530",
+  "Base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "Pr": 78,
+  "PriorReviewsPreserved": true,
+  "MergePending": true,
+  "StartedUtc": "2026-10-05T05:31:03.0985911Z",
+  "ReleasePending": true
+}

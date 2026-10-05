@@ -1,0 +1,62 @@
+Scope: all 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 18d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 1s using pnpm v11.12.0
+
+Running 22 tests using 1 worker
+
+(node:70424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:68:7 › connected platform journeys › keeps unauthenticated studio entry on the live sign-in path (412ms)
+  ok  2 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:77:7 › connected platform journeys › keeps studio breadcrumb targets complete and keyboard usable at every supported width (21.8s)
+  ok  3 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:141:7 › connected platform journeys › keeps collapsed mobile navigation stable while workspace access resolves (23.2s)
+  ok  4 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:224:7 › connected platform journeys › keeps review recovery targets complete at the short enlargement viewport (24.0s)
+  ok  5 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:290:7 › connected platform journeys › keeps workspace tools headings on the accepted page scale at every supported width (21.4s)
+  ok  6 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:329:7 › connected platform journeys › keeps campaign receipt, canvas recovery and enlarged review text readable without replaying writes (41.3s)
+  ok  7 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:842:7 › connected platform journeys › saves WashBodega and UnPile separately through reload, reconnect, concurrency, and interrupted leave (32.3s)
+  ok  8 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:950:7 › connected platform journeys › hides forged identities, recovers old links, archives, and invites without outreach (47.6s)
+  ok  9 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:1073:7 › connected platform journeys › reads seeded integer billing, missing profile, unavailable, and keyboard skip targets (31.2s)
+  ok 10 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:1159:7 › connected platform journeys › retries an aborted in-flight save without mixing a deferred UnPile commit (29.7s)
+  ok 11 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:1292:7 › connected platform journeys › holds delayed old-brand HTTP and resolves mapped old links without wrong-parent leakage (30.8s)
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Preserved 12 synthetic users from this run because cleanup was blocked.
+  ok 12 [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts:1368:7 › connected platform journeys › keeps keyboard, landmarks, contrast, zoom, and motion evidence on connected studio (30.3s)
+  ok 13 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:57:7 › connected brand knowledge journeys › imports two brand catalogs, reviews source changes and expiry, and preserves approved history (1.1m)
+  ok 14 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:172:7 › connected brand knowledge journeys › imports every record at the forty-row catalog boundary without truncation (15.8s)
+  ok 15 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:213:7 › connected brand knowledge journeys › preserves blank catalog rows and requires review when a recapture removes a claim (18.6s)
+  ok 16 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:283:7 › connected brand knowledge journeys › restores the latest source when a recapture returns to earlier identical bytes (17.0s)
+  ok 17 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:325:7 › connected brand knowledge journeys › captures website and document sources for both brands and keeps them after reload (18.6s)
+  ok 18 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:413:7 › connected brand knowledge journeys › records manual corrections, unsafe destinations, stalled timeouts, and duplicate captures (26.5s)
+  ok 19 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:473:7 › connected brand knowledge journeys › hides delayed WashBodega findings and revoked editor access (32.5s)
+  ok 20 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:573:7 › connected brand knowledge journeys › keeps findings usable at 200% zoom with keyboard and reduced motion (16.0s)
+  ok 21 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:630:7 › connected brand knowledge journeys › reviews every proposal source and corrects offer expiry without losing text or approved history (21.7s)
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Owner boundary: retained a synthetic local Auth fixture; no DELETE request sent.
+Preserved 11 synthetic users from this run because cleanup was blocked.
+  ok 22 [desktop-chromium] › apps\web\e2e\platform-knowledge-connected.spec.ts:741:7 › connected brand knowledge journeys › extracts, proposes, questions and approves WashBodega and UnPile without mixing brands (21.6s)
+
+  Slow test file: [desktop-chromium] › apps\web\e2e\platform-connected.spec.ts (5.6m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  22 passed (10.6m)

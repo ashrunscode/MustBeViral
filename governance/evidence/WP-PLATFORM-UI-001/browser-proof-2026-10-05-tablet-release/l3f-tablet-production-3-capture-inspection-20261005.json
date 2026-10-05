@@ -1,0 +1,53 @@
+{
+  "CaptureNames": 5,
+  "Observations": "Software page remains contained at both widths; its unchanged moving film has small type and an internal label assigned to D4, and is not accepted by this bounded release. S0 and legal captures match actually inspected prior originals. No new public copy, media or layout finding.",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "RecordedUtc": "2026-10-05T06:14:27.6109337Z",
+  "Entries": [
+    {
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-browser/software-375.png",
+      "RecordedUtc": "2026-10-05T06:14:27.5602202Z",
+      "InspectedOriginal": true,
+      "Sha256": "480e06e56bca076393c6939bb78210b5b354635bd48f474dfaddc4c811c6a18e",
+      "Detail": "original"
+    },
+    {
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-browser/software-1280.png",
+      "RecordedUtc": "2026-10-05T06:14:27.5647900Z",
+      "InspectedOriginal": true,
+      "Sha256": "d83edb29389d9ba1d701aea305aa088fe500328a774dfd7f937ec9ec55769d9e",
+      "Detail": "original"
+    },
+    {
+      "RecordedUtc": "2026-10-05T06:14:27.6087622Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-browser/home-375.png",
+      "PriorInspectionRecordedUtc": "2026-10-04T10:08:46.9734021Z",
+      "Sha256": "8122447c12a64f5199c9df25c16a7e103d6c2560146bccc21a01e8469ddc6f73",
+      "PriorInspectionRecord": "C:/dev/mbv-run/l3f-staging-capture-inspection.json",
+      "InspectedOriginalPath": "C:/dev/mbv-run/d3-staging-browser-retry-2/home-375.png",
+      "VerifiedAgainstInspectedOriginal": true
+    },
+    {
+      "RecordedUtc": "2026-10-05T06:14:27.6100446Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-browser/es-375.png",
+      "PriorInspectionRecordedUtc": "2026-10-04T10:08:46.9734021Z",
+      "Sha256": "a17ffc31556fda0387d6e843893819cca4b4cfe7573665be49fbf3206de1e885",
+      "PriorInspectionRecord": "C:/dev/mbv-run/l3f-staging-capture-inspection.json",
+      "InspectedOriginalPath": "C:/dev/mbv-run/d3-staging-browser-retry-2/es-375.png",
+      "VerifiedAgainstInspectedOriginal": true
+    },
+    {
+      "RecordedUtc": "2026-10-05T06:14:27.6109232Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-browser/advertising-375.png",
+      "PriorInspectionRecordedUtc": "2026-10-04T10:08:46.9734021Z",
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "PriorInspectionRecord": "C:/dev/mbv-run/l3f-staging-capture-inspection.json",
+      "InspectedOriginalPath": "C:/dev/mbv-run/d3-staging-browser-retry-2/advertising-375.png",
+      "VerifiedAgainstInspectedOriginal": true
+    }
+  ],
+  "Environment": "production",
+  "TimestampMeaning": "Receipt recording time after actual original-resolution views and byte comparisons",
+  "DeploymentId": "dpl_5Rr9CQfFu83Nv4SbMUge8qAcB3a8",
+  "AllInspectionsAccountedFor": true
+}

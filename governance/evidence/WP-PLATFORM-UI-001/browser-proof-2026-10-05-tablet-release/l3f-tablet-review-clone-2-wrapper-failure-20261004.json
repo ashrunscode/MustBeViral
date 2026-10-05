@@ -1,0 +1,14 @@
+{
+  "SandboxStartFailure": false,
+  "ActualSetupProcessExit": 1,
+  "CodexReviewerStarted": false,
+  "OriginalWrapper": "C:/dev/mbv-run/prepare-l3f-tablet-review-clone-2-20261004.ps1",
+  "Head": "b6f022d2c2531ebd499c104ce6c9b5bcf8357428",
+  "Cause": "PowerShell emits null for git branch --show-current at detached HEAD; the setup wrapper called Trim on it.",
+  "SetupToolWallSeconds": 14.8167964,
+  "CloneRetained": true,
+  "ProductSourceChanged": false,
+  "Root": "C:/dev/worktrees/mustbeviral/review-b6f022d",
+  "ObservedUtc": "2026-10-05T02:40:49.3268184Z",
+  "OriginalWrapperSha256": "850102b2ddfc95f7bd4c8652c849892a264c5cfd91cc6d3c87334dde36b8a140"
+}
