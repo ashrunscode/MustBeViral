@@ -369,22 +369,32 @@
 
 .coverage {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0;
   margin: 0;
 }
 .coverage div {
+  min-inline-size: 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 12px;
   border-top: 1px solid var(--wash);
   padding: 10px 0;
   font-size: 13px;
 }
+.coverage dt,
+.coverage dd {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
 .coverage dt {
   color: var(--ink);
 }
 .coverage dd {
   margin: 0;
+  margin-inline-start: auto;
   color: var(--ink-strong);
   text-align: right;
   font-variant-numeric: tabular-nums;

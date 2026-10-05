@@ -223,6 +223,62 @@ for (const [label, route, width, height, enlarged, regionName] of [
   });
 }
 
+for (const [label, width, height] of [
+  ['desktop', 1280, 900],
+  ['short', 1280, 600],
+  ['mobile', 375, 812],
+  ['tablet', 768, 1024],
+] as const) {
+  test(`keeps enlarged quote summary values inside the region: ${label}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/studio/lumen-skin/quote');
+    const acknowledgment = page.getByRole('checkbox', { name: /I acknowledge this revision/ });
+    const confirm = page.getByRole('button', { name: 'Confirm $4.20 run', exact: true });
+    await acknowledgment.check();
+    await expect(confirm).toBeEnabled();
+    await acknowledgment.uncheck();
+    await expect(confirm).toBeDisabled();
+    const region = page.getByRole('complementary', { name: 'What this run covers', exact: true });
+    // Preview uses short route/revision labels. These test-only text fixtures exercise the
+    // longer DTO fields observed in the worker-rendered browser proof; money is unchanged.
+    await region.locator('dl').evaluate((element) => {
+      for (const row of element.querySelectorAll('div')) {
+        const term = row.querySelector('dt')?.textContent;
+        const value = row.querySelector('dd');
+        if (value === null) continue;
+        if (term === 'Route') value.textContent = 'synthetic/measurement-route';
+        if (term === 'Pinned revision') {
+          value.textContent = '77777777-7777-4777-8777-777777777777';
+        }
+      }
+    });
+    await expect(region.locator('dd').nth(1)).toHaveText('synthetic/measurement-route');
+    await expect(region.locator('dd').nth(2)).toHaveText('77777777-7777-4777-8777-777777777777');
+    await page.evaluate(() => document.fonts.ready);
+    await emulateDoubleText(page);
+    const geometry = await region.evaluate((element) => {
+      const outer = element.getBoundingClientRect();
+      return {
+        regionOverflow: element.scrollWidth > element.clientWidth + 1,
+        values: [...element.querySelectorAll('dl dd')].map((value) => {
+          const bounds = value.getBoundingClientRect();
+          return {
+            text: value.textContent,
+            clipped:
+              bounds.left < outer.left ||
+              bounds.right > outer.right ||
+              value.scrollWidth > value.clientWidth + 1,
+          };
+        }),
+      };
+    });
+    expect(geometry.values).toHaveLength(6);
+    expect(geometry.values.filter((value) => value.clipped)).toEqual([]);
+    expect(geometry.regionOverflow).toBe(false);
+  });
+}
+
 test('keeps enlarged comparison metadata inside each version column', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/studio/lumen-skin/review/compare');
