@@ -1,0 +1,12 @@
+{
+  "Environment": "production",
+  "ObservationStartedUtc": "2026-10-05T16:10:35Z",
+  "CheckedUtc": "2026-10-05T16:10:36Z",
+  "RemoteCount": 39,
+  "RemoteHead": "20260902154759",
+  "MainCount": 75,
+  "MainHead": "20260929017000",
+  "RemoteWrites": 0,
+  "StagingSemantics": "Alternate staging timestamps do not establish main parity",
+  "BothWebProjectsUseProductionDatabase": true
+}

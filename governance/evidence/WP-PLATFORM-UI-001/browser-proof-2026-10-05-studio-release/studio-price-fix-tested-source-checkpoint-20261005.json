@@ -1,0 +1,57 @@
+{
+  "PreviewSkip": 1,
+  "ConnectedPass": 22,
+  "StartingHead": "1e387adbc60bd6ad6fc0407c3a4703ca7e895084",
+  "BookingPass": 6,
+  "PreviewPass": 78,
+  "DatabaseTests": 1181,
+  "DatabaseFiles": 61,
+  "Base": "be62077ad86d28e7675232893a23740e7ec4af35",
+  "Toolchain": "Host Node 24.21.0; repository-pinned pnpm 11.12.0 and managed Node 24.18.0",
+  "AgentVerifyActualExit": 0,
+  "Root": "C:/dev/mbv-finish",
+  "TestedSourceUncommitted": true,
+  "RuntimeSource": [
+    {
+      "Path": "apps/web/app/globals.css",
+      "Sha256": "6044bcb43365eab1cc9b6b727f2030a979b6632f8044990ec2e67d5bb1980bf8"
+    },
+    {
+      "Path": "apps/web/e2e/final-ui.spec.ts",
+      "Sha256": "31682991a440739d7ceecc071f0404b89d2b1c4f9cb1624a4360d09e40a0e016"
+    },
+    {
+      "Path": "apps/web/e2e/studio-booking.spec.ts",
+      "Sha256": "50b5755b837cc5d7b93269deeecbd773b03409d2b266967ae593dd6059c2b0c1"
+    },
+    {
+      "Path": "apps/web/src/components/signed-out-surfaces.test.tsx",
+      "Sha256": "69b65ab942a08a77fdb46df71df8fff8038dd37c8b5c56484b569cc48f570983"
+    },
+    {
+      "Path": "apps/web/src/components/studio-booking-actions.tsx",
+      "Sha256": "b7d7402252fe90cdab86fa019bb405356b22af0dabc53556bdac945a33887adb"
+    },
+    {
+      "Path": "apps/web/src/components/studio-booking.test.tsx",
+      "Sha256": "7e530ed884808ae4ae2547b0970f4390f8655eb5af14041d3860468ec441b362"
+    },
+    {
+      "Path": "apps/web/src/components/studio-hero-media.tsx",
+      "Sha256": "1799f40f3783fa02a4f120d20f48fd90e100201184b149f1b36279ad13909476"
+    },
+    {
+      "Path": "apps/web/src/components/studio-landing.tsx",
+      "Sha256": "a0e855875ef349010f5f876298a8a17e8d2db692fa870791441f451dc8fe0760"
+    },
+    {
+      "Path": "apps/web/src/components/studio-pricing.tsx",
+      "Sha256": "05cf07b9ea5dc1487839b3a93503299a4b213ff389635999f11bdd54765e86b5"
+    },
+    {
+      "Path": "packages/ui/src/primitives.tsx",
+      "Sha256": "2812383f42075e9afbd31222d40e6ad5d6c70f28121b167444c0d996a8308c87"
+    }
+  ],
+  "AtUtc": "2026-10-05T15:36:02.2822562Z"
+}

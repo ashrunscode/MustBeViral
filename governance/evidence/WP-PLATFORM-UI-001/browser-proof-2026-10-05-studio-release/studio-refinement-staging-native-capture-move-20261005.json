@@ -1,0 +1,39 @@
+{
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "Target": "staging",
+  "RecordedUtc": "2026-10-05T16:24:59.9404625Z",
+  "UnrelatedFilesTouched": 0,
+  "Rows": [
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-software-375.png",
+      "Sha256": "093a72982896ecbead745c5f9742fcee0955810f5b981cc683027eaf3af9b8a5",
+      "MovedOwnedOutput": true,
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-staging-e661edb-software-375.png"
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-software-1280.png",
+      "Sha256": "edd757668c39682aaaaf3f04215a81929845230d0e3125f7ace8062b6ae94d41",
+      "MovedOwnedOutput": true,
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-staging-e661edb-software-1280.png"
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-home-375.png",
+      "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "MovedOwnedOutput": true,
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-staging-e661edb-home-375.png"
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-es-375.png",
+      "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "MovedOwnedOutput": true,
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-staging-e661edb-es-375.png"
+    },
+    {
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-advertising-375.png",
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "MovedOwnedOutput": true,
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-staging-e661edb-advertising-375.png"
+    }
+  ],
+  "DeploymentId": "dpl_BdxLvSpTLUgDeQcUe8cpbzRc8dHy"
+}

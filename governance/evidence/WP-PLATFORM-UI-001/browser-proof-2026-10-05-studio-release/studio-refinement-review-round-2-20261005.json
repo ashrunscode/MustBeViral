@@ -1,0 +1,16 @@
+{
+  "Base": "29f6e8456287f43a5f279fda84bd92f34d7fda71",
+  "Round": 2,
+  "Effort": "xhigh",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-92cbda7.log",
+  "Head": "92cbda7790d84342b55793a1a852c4d485e91bd8",
+  "RequiredFlagsRetained": true,
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-prompt-92cbda7.md",
+  "ActualProcessExit": 0,
+  "FinishedUtc": "2026-10-05T14:58:25.2075727Z",
+  "Out": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-92cbda7.md",
+  "Pr": 80,
+  "Model": "gpt-6.1-sol",
+  "StartedUtc": "2026-10-05T14:48:28.8607840Z",
+  "Root": "C:/dev/worktrees/mustbeviral/review-92cbda7"
+}

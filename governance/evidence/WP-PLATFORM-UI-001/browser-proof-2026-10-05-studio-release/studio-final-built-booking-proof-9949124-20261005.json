@@ -1,0 +1,105 @@
+{
+  "origin": "http://127.0.0.1:3114",
+  "rows": [
+    {
+      "route": "/",
+      "viewportWidth": 375,
+      "dialogWidth": 327,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 375,
+      "dialogWidth": 327,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/",
+      "viewportWidth": 768,
+      "dialogWidth": 520,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 768,
+      "dialogWidth": 520,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/",
+      "viewportWidth": 1280,
+      "dialogWidth": 520,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 1280,
+      "dialogWidth": 520,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/",
+      "viewportWidth": 1920,
+      "dialogWidth": 520,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    },
+    {
+      "route": "/pricing",
+      "viewportWidth": 1920,
+      "dialogWidth": 520,
+      "exactOffer": true,
+      "realPhone": true,
+      "noCharge": true,
+      "trapped": true,
+      "restored": true,
+      "overflow": false,
+      "errors": 0
+    }
+  ],
+  "pass": true,
+  "head": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "recordedUtc": "2026-10-05 16:10:17 UTC",
+  "provenance": "Playwright MCP, optimized local build; signed out, no submission"
+}

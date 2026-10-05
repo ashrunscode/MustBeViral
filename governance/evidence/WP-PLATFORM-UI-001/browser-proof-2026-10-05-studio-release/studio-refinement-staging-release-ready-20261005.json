@@ -1,0 +1,21 @@
+{
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "RemoteDatabaseWrite": false,
+  "SharedSchemaRuntimeUnchanged": true,
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "NewestJournaled": true,
+  "Project": "mustbeviral-web-staging",
+  "AgeMinutes": 616.4049295733333,
+  "Newest": "dpl_65MhAN2LySepfp8c3KyE9KcutwhB",
+  "SchemaCheckedUtc": "2026-10-05T16:10:35Z",
+  "FilmTermsReadToday": true,
+  "OwnedHarnessStopped": true,
+  "CheckedUtc": "2026-10-05T16:18:10.1675742Z",
+  "Reviewed": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "Rollback": "dpl_65MhAN2LySepfp8c3KyE9KcutwhB",
+  "LiveSource": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "ExactServedInventoryMatch": true
+}

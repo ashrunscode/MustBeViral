@@ -1,0 +1,68 @@
+{
+  "FinishedUtc": "2026-10-05T15:54:19.8732475Z",
+  "PreservedGenerated": [
+    {
+      "Path": "apps/web/test/__perf__/canvas-fps-500.json",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\canvas-fps-500.json",
+      "Sha256": "c57af9148f4a306da0e38ec8200bd500f59cd148be4189b032df4b6a9aa93a5f"
+    },
+    {
+      "Path": "apps/web/test/__perf__/canvas-fps.json",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\canvas-fps.json",
+      "Sha256": "c3505ea7fc9a2188762a598943951e3c4a564498872c81dfacdee2234084847c"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/campaign-brief-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\campaign-brief-1440x900.png",
+      "Sha256": "ad83f8d806c035f35677b764304f9710d1039005776ca3ab89425ff589a1b87e"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/canvas-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\canvas-1440x900.png",
+      "Sha256": "f01a26aa321d2debd96fb633665a389564f6e754901e08d95fffc4ada887bee3"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/mobile-review-375x812.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\mobile-review-375x812.png",
+      "Sha256": "b07a13336758c17de19c7cc651e906e3786bac835eeb772a7a1737927ab2a58b"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/output-comparison-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\output-comparison-1440x900.png",
+      "Sha256": "787488e436550224d26482ba1c2f474e29ff05651386165935f7cf4f9c4aa69b"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/quote-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\quote-1440x900.png",
+      "Sha256": "2af49cc394daba5f4d01423a94416be6b5d8ad7138094da0b425019c8f6c0791"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/receipt-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\receipt-1440x900.png",
+      "Sha256": "17578d32b1ff817813a8179abfa8080282deb1c7e22fe545964496f928f58da2"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/review-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\review-1440x900.png",
+      "Sha256": "dc40c647988c4f3c19ce11230e2672edfd57bfe87ec2193d12887cc163010fc4"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/run-progress-1440x900.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\run-progress-1440x900.png",
+      "Sha256": "d9be956e13d52f843e12a2abb701adceac5add96bc61c53a61171e56ecac1ffe"
+    },
+    {
+      "Path": "apps/web/test/__screenshots__/tablet-review-768x1024.png",
+      "Preserved": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-artifacts-9949124-20261005\\tablet-review-768x1024.png",
+      "Sha256": "581287a0eb24602db8e480b9aa40c1573ba2ed0d14f55372a19e3c9c8b54daa6"
+    }
+  ],
+  "TrackedBaselinesRestored": true,
+  "Log": "C:/dev/mbv-run/studio-refinement-fresh-browser-preview-9949124-20261005.log",
+  "Root": "C:/dev/mbv-verify-9949124",
+  "Command": "C4 six preview suites plus studio-booking.spec.ts, desktop-chromium",
+  "StartedUtc": "2026-10-05T15:49:53.6429745Z",
+  "ActualExit": 0,
+  "Head": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "ConnectedPending": true
+}

@@ -1,0 +1,16 @@
+{
+  "StartedUtc": "2026-10-05T14:19:49.1397487Z",
+  "FinishedUtc": "2026-10-05T14:24:59.7999267Z",
+  "Head": "c746f23dc6665169494875f9e0be89e097d42115",
+  "Base": "29f6e8456287f43a5f279fda84bd92f34d7fda71",
+  "Pr": 80,
+  "Round": 1,
+  "Model": "gpt-6.1-sol",
+  "Effort": "xhigh",
+  "Root": "C:/dev/worktrees/mustbeviral/review-c746f23",
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-prompt-c746f23.md",
+  "Out": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-c746f23.md",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-c746f23.log",
+  "ActualProcessExit": 0,
+  "RequiredFlagsRetained": true
+}

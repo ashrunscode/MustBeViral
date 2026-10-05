@@ -1,0 +1,10 @@
+{
+  "Base": "be62077ad86d28e7675232893a23740e7ec4af35",
+  "AtUtc": "2026-10-05T15:34:51.9654153Z",
+  "Head": "1e387adbc60bd6ad6fc0407c3a4703ca7e895084",
+  "ActualExit": 0,
+  "PriceFixUncommitted": true,
+  "Command": "corepack pnpm agent:verify",
+  "Node": "v24.21.0",
+  "Pnpm": "11.12.0"
+}

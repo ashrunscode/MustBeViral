@@ -1,0 +1,39 @@
+{
+  "Rows": [
+    {
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-e661edb-software-375.png",
+      "MovedOwnedOutput": true,
+      "Sha256": "9d9f6618c090469ced32de5027dd74fbffeb63cc14eb7bdd55184f5f79349442",
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-software-375.png"
+    },
+    {
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-e661edb-software-1280.png",
+      "MovedOwnedOutput": true,
+      "Sha256": "94abf404eb5e738aace3c75fe2d95c0e2c747cd14e9149b18de33d428f164457",
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-software-1280.png"
+    },
+    {
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-e661edb-home-375.png",
+      "MovedOwnedOutput": true,
+      "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-home-375.png"
+    },
+    {
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-e661edb-es-375.png",
+      "MovedOwnedOutput": true,
+      "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-es-375.png"
+    },
+    {
+      "OriginalNativePath": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\studio-refinement-production-e661edb-advertising-375.png",
+      "MovedOwnedOutput": true,
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "Path": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-advertising-375.png"
+    }
+  ],
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "DeploymentId": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC",
+  "UnrelatedFilesTouched": 0,
+  "Target": "production",
+  "RecordedUtc": "2026-10-05T16:32:18.5421394Z"
+}

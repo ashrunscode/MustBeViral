@@ -1,0 +1,12 @@
+{
+  "StartingHead": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "Pnpm": "11.12.0",
+  "Log": "C:/dev/mbv-run/studio-refinement-release-handoff-20261005.log",
+  "ActualExit": 0,
+  "Node": "v24.21.0",
+  "FinishedUtc": "2026-10-05T16:40:38.6327219Z",
+  "BlockerFlagUsed": false,
+  "StartedUtc": "2026-10-05T16:38:23.0402110Z",
+  "NormalizationPending": true,
+  "Command": "corepack pnpm agent:handoff --next-action Verify the operator gate on /studio/internal in the UI and Core under L3f."
+}

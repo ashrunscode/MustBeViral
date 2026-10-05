@@ -1,0 +1,550 @@
+{
+  "recordedUtc": "2026-10-05T16:49:34.409Z",
+  "releaseSource": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "reviewedHead": "9949124ea4097040fb7b036f36835a42949d3b75",
+  "copiedJsonValuesUnchanged": true,
+  "nativeBytesUnchanged": true,
+  "authorityAndAcceptanceUnchanged": true,
+  "mutableEvidenceReferencesAdded": 9,
+  "nativeCaptureCount": 15,
+  "distinctNativeContents": 9,
+  "sourceRuntimeUnchanged": true,
+  "rows": [
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-price-fix-agent-verify-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-price-fix-agent-verify-20261005.json",
+      "originalSha256": "277225ac5613d4cb1cb8061e1ba78272130840380bfe97641db5523536ce2003",
+      "committedRepresentationSha256": "01049010bce151aa68c170a73390d1a108a7900a052a4aa79ba57d765dae7972",
+      "bytes": 290,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-price-fix-tested-source-checkpoint-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-price-fix-tested-source-checkpoint-20261005.json",
+      "originalSha256": "5ae439779eeb09afa5c1a53a861f81b8925df5ee17740863183d234bb598e7ec",
+      "committedRepresentationSha256": "c52a38560f22e66fe18291e9a6c8a187acb4d61f57ddfc73b83f50255fce2a99",
+      "bytes": 2044,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-final-head-checkpoint-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-final-head-checkpoint-20261005.json",
+      "originalSha256": "b42ccf48b2eec13b9953eb1cba9a8a46b45c9d1b84dfb4c6a28b7f5222aaf9ae",
+      "committedRepresentationSha256": "62dba66ec10947a595c12e4b89ecfae8ff4bbb2264ac3a5bcbeef512922c516d",
+      "bytes": 2034,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-fresh-final-9949124-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-fresh-final-9949124-20261005.json",
+      "originalSha256": "981c95f64736a135ce7eb0e4e42ae1725e0f7525feae9bf6c40d1e92a53d803e",
+      "committedRepresentationSha256": "459cda5687a704949db10a7297d3cd6b5b9510fd71b03120c598e0004d43cb07",
+      "bytes": 2780,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-fresh-preview-9949124-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-fresh-preview-9949124-20261005.json",
+      "originalSha256": "dd7ed1c30f9b79903a20c2bd2f433e620881b1a14134a6fc31a69aed98175980",
+      "committedRepresentationSha256": "111f9fbbfa42dfc21b242fd17c666af911970c613db6b7fccf36c7afc78d3fad",
+      "bytes": 3645,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-fresh-connected-9949124-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-fresh-connected-9949124-20261005.json",
+      "originalSha256": "112f5710e19cacd332a70343d24f74b6c9826bf2cf7d429c127f27c2ca5573ab",
+      "committedRepresentationSha256": "681769d396e7ec05d9c204487320c59011b34f5151a06b438ec4a6e0127cd030",
+      "bytes": 351,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-fresh-connected-stop-9949124-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-fresh-connected-stop-9949124-20261005.json",
+      "originalSha256": "5cd348aaedf8b7798280f7ba48b162a9775ca347dd55b34adf1991c12dc934b9",
+      "committedRepresentationSha256": "08aba13ce2dbd06bc52c1b8c9ac88cf0879d1c6c8e7d4a3a46d21dee5a7e2b9e",
+      "bytes": 505,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-merge-receipt-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-merge-receipt-20261005.json",
+      "originalSha256": "6d5a8c5c524b8eed508ab2ad34e6a9db76c36cd829d5d25c89c93ee9ed5312ac",
+      "committedRepresentationSha256": "2f8c37d38cff0626319dd942da8022fc2e78873cd7dc875e12982764afccb868",
+      "bytes": 719,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-deploy-clone-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-deploy-clone-20261005.json",
+      "originalSha256": "e24ce934bc48f204588e27098278b25b7223db16796745c95c03ff8db26b3dcc",
+      "committedRepresentationSha256": "6ef081cdd2c28bdedfe5da62a901613be40495ace02b6d99c5755a78ea4a397e",
+      "bytes": 780,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-release-handoff-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-release-handoff-20261005.json",
+      "originalSha256": "8f9371a7d991ff1c353b2dc67027027090726a9169fdcf35d37181d591b605b0",
+      "committedRepresentationSha256": "158ac7e2071c859f8790d6ab92416671c035b9a88e433274fb37cfed81e37e40",
+      "bytes": 491,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-handoff-after-command-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-handoff-after-command-20261005.json",
+      "originalSha256": "3e1fad5c18ef2f89f266c007900e436543a44ac389df24d65eb3e82b3eb92f0f",
+      "committedRepresentationSha256": "69e8bea169523b2996508617b0e12bc09cb16f1ccd43a067c990b58d2952dfdd",
+      "bytes": 247,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-higgsfield-terms-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-higgsfield-terms-20261005.json",
+      "originalSha256": "6b0d9c219b9dc4756d468f3b37e7fee9d31888753bc42702459f6033e509e8ea",
+      "committedRepresentationSha256": "98a877e474b7deb0abce52524ad87a53bfa11155f523ed61c764f411fe6c0309",
+      "bytes": 326,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-final-schema-compatibility-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-final-schema-compatibility-20261005.json",
+      "originalSha256": "ebd72c1da119db577e4a8381915d74f38831a4336f66d9cb0b9388320d443aa6",
+      "committedRepresentationSha256": "2562d8437a707ce0de2e6a280bc7313533fd1161285d1e3e4dec1a596d88bdb7",
+      "bytes": 793,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-final-built-booking-proof-9949124-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-final-built-booking-proof-9949124-20261005.json",
+      "originalSha256": "437bd99251d17621d2db3976a45b9f2b11c770c3ef0f705fcff58d5a2e31c598",
+      "committedRepresentationSha256": "437bd99251d17621d2db3976a45b9f2b11c770c3ef0f705fcff58d5a2e31c598",
+      "bytes": 2302,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-final-built-price-proof-9949124-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-final-built-price-proof-9949124-20261005.json",
+      "originalSha256": "76b39f5727e561600d77b74438bd0f070bf177ebf7975ef36ff102954f35a226",
+      "committedRepresentationSha256": "7a7fff1f3da6f10836e826bb31581c797a00e36433e43d2413d1881a5689fba5",
+      "bytes": 935,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\films-final-credits-20261005.json",
+      "source": "C:\\dev\\mbv-run\\films-final-credits-20261005.json",
+      "originalSha256": "bc82184ce14f12e8d7b07cab06d3cbe58f38a5b7f41ea56c249999258c131dc0",
+      "committedRepresentationSha256": "360215bf91f580010375c2163a88bbcbe44ec5c7e8bdb9558e794fb1759d686a",
+      "bytes": 467,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-http-smoke-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-http-smoke-20261005.json",
+      "originalSha256": "1d768e99f15e685153472fcd4b4d4813cf68bc9e9cc80626cc76df71999150bd",
+      "committedRepresentationSha256": "60d33a9f007043160c4ed85ef8632d209499fb0daab091290f1c377fa378b3ac",
+      "bytes": 995,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-extended-headers-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-extended-headers-20261005.json",
+      "originalSha256": "168ea7f94999abab6b81d4d9c5d0b07fbcc27040178fe43c2d512c7acc51ab75",
+      "committedRepresentationSha256": "168ea7f94999abab6b81d4d9c5d0b07fbcc27040178fe43c2d512c7acc51ab75",
+      "bytes": 11952,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-c8-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-c8-browser-20261005.json",
+      "originalSha256": "51aed85161481d902cd48add165fff9e8c6b46ac78ebfd4395ba1325c4596585",
+      "committedRepresentationSha256": "51aed85161481d902cd48add165fff9e8c6b46ac78ebfd4395ba1325c4596585",
+      "bytes": 35175,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-s0-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-s0-browser-20261005.json",
+      "originalSha256": "f0d0f2b31f7b09d7da489e3b05a00269e70e9417dfffc290b6b7aee6b5575ae6",
+      "committedRepresentationSha256": "f0d0f2b31f7b09d7da489e3b05a00269e70e9417dfffc290b6b7aee6b5575ae6",
+      "bytes": 2926,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-cached-policy-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-cached-policy-20261005.json",
+      "originalSha256": "4d2764c737d5ed938e5c5aa7abe26a2378b5b0cb7fd5c11ce3a53178ceba2869",
+      "committedRepresentationSha256": "4d2764c737d5ed938e5c5aa7abe26a2378b5b0cb7fd5c11ce3a53178ceba2869",
+      "bytes": 19163,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-booking-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-booking-browser-20261005.json",
+      "originalSha256": "dffc2d7faf3fdaa3fcda5fca58e3bf275a00dfb5bf95fb5e7a75c3fdf834223e",
+      "committedRepresentationSha256": "dffc2d7faf3fdaa3fcda5fca58e3bf275a00dfb5bf95fb5e7a75c3fdf834223e",
+      "bytes": 4219,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-smoke-summary-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-smoke-summary-20261005.json",
+      "originalSha256": "12d5c4c5941c826c8a92592d4ea93c4b6a0da606e440ac831a1c974c5feab73d",
+      "committedRepresentationSha256": "3aeaafca07e133b29c23682e1b76ab0bb4ff18057d190acd05b1341955e73a6d",
+      "bytes": 736,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-native-capture-move-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-native-capture-move-20261005.json",
+      "originalSha256": "4ca09cfb6be7c46d6128e5ec43a9a940d6ffbf71a9884b260ec455d8adc8aead",
+      "committedRepresentationSha256": "bf51b5258b106f2781abc7bd45e2c8650ddf33558d070131b217616d040248cf",
+      "bytes": 2274,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-http-smoke-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-http-smoke-20261005.json",
+      "originalSha256": "106c1322aeba0d7b7823225064176fcf67247ad20f2ba3c79d1613967193ee83",
+      "committedRepresentationSha256": "5133db1f9c150c222db6ac8cce4267a4d71377d496996b661b5898de9e110078",
+      "bytes": 985,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-extended-headers-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-extended-headers-20261005.json",
+      "originalSha256": "159f2a8fcda7694ea5a8fd6532831c7a39db4d2ef5db470ed1baf6aabd818b2b",
+      "committedRepresentationSha256": "159f2a8fcda7694ea5a8fd6532831c7a39db4d2ef5db470ed1baf6aabd818b2b",
+      "bytes": 12712,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-c8-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-c8-browser-20261005.json",
+      "originalSha256": "a0f1b76943973b9d570360316af84f951e4d51860744d19213607cdac114f786",
+      "committedRepresentationSha256": "a0f1b76943973b9d570360316af84f951e4d51860744d19213607cdac114f786",
+      "bytes": 35162,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-s0-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-s0-browser-20261005.json",
+      "originalSha256": "d6503329018c7102c5e5c8f849b2fd3fd1c61ec9e56474d8160bb9bf6ef55b51",
+      "committedRepresentationSha256": "d6503329018c7102c5e5c8f849b2fd3fd1c61ec9e56474d8160bb9bf6ef55b51",
+      "bytes": 2907,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-cached-policy-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-cached-policy-20261005.json",
+      "originalSha256": "e7928e89bf248d05207a3cdf2eb61ef5d09810d1ab6177dba9c1b86c0c1ac356",
+      "committedRepresentationSha256": "e7928e89bf248d05207a3cdf2eb61ef5d09810d1ab6177dba9c1b86c0c1ac356",
+      "bytes": 19144,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-booking-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-booking-browser-20261005.json",
+      "originalSha256": "bc430fb7d4319f7160b83d2d98c1036489527ca06be452935afae213c7dbe096",
+      "committedRepresentationSha256": "bc430fb7d4319f7160b83d2d98c1036489527ca06be452935afae213c7dbe096",
+      "bytes": 4200,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-smoke-summary-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-smoke-summary-20261005.json",
+      "originalSha256": "f339bc6f050b52e6350423e5ae50995b4142e642e069ba53e588d2950f325b5a",
+      "committedRepresentationSha256": "46b7fb5d5d1ddf1569a35b0bce02c8f8d71320483fbd403e902899245941f205",
+      "bytes": 2525,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-native-capture-move-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-native-capture-move-20261005.json",
+      "originalSha256": "6308e8089e6041b0b9e0b762937b7b1fb6f86250510e9d0a70df43596b18786e",
+      "committedRepresentationSha256": "58be901a8f34706b28994f7e80dfd75dd20a1d8ce2540cf920616fb59b74f4d9",
+      "bytes": 2322,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-http-smoke-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-http-smoke-20261005.json",
+      "originalSha256": "790e567760658ad65aca29e9ad1c7989c23dfc4ab2ffbfcd20f7eb0d6a97f909",
+      "committedRepresentationSha256": "f1f0bb9020c63a4a1e676f5a4d09c97758faa02770564e5aa3ad647143aa3fc6",
+      "bytes": 1025,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-extended-headers-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-extended-headers-20261005.json",
+      "originalSha256": "955cf65d80bae4ccdde969a037ceb067912d842fb5d76801ef75215d8f0d4f32",
+      "committedRepresentationSha256": "955cf65d80bae4ccdde969a037ceb067912d842fb5d76801ef75215d8f0d4f32",
+      "bytes": 11955,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-c8-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-c8-browser-20261005.json",
+      "originalSha256": "d40dfa3a70bc1a966663a598939ec45ec1fa807e6a690a78046c56c06ce81dc8",
+      "committedRepresentationSha256": "d40dfa3a70bc1a966663a598939ec45ec1fa807e6a690a78046c56c06ce81dc8",
+      "bytes": 35196,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-s0-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-s0-browser-20261005.json",
+      "originalSha256": "ac3bf35549a352b04866aae89682a6220de974ae6adbc3d829d472b6e3785e39",
+      "committedRepresentationSha256": "ac3bf35549a352b04866aae89682a6220de974ae6adbc3d829d472b6e3785e39",
+      "bytes": 2929,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-cached-policy-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-cached-policy-20261005.json",
+      "originalSha256": "3f10930635e33fa5cdc964059bc23b217cfe18ea6966704e5a570b2d89b1b6c2",
+      "committedRepresentationSha256": "3f10930635e33fa5cdc964059bc23b217cfe18ea6966704e5a570b2d89b1b6c2",
+      "bytes": 19166,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-booking-browser-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-booking-browser-20261005.json",
+      "originalSha256": "ce04299b134eb03e57776f5fcf95a438eac7a111f8d6436f44c027065891036f",
+      "committedRepresentationSha256": "ce04299b134eb03e57776f5fcf95a438eac7a111f8d6436f44c027065891036f",
+      "bytes": 4222,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-smoke-summary-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-smoke-summary-20261005.json",
+      "originalSha256": "dc486278500b116c3467ab1e9f215ecba361cbc2cb3336cf0bfece35caac5cd7",
+      "committedRepresentationSha256": "7e925f437a217952815e85ab77d1672898ab9b1fcef7a15476bcf7e514a75458",
+      "bytes": 2591,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-native-capture-move-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-native-capture-move-20261005.json",
+      "originalSha256": "ef7f144aad7a8cf222bb7a1b04cc53c1a1bd73f3f72b02974abd7138153ba81c",
+      "committedRepresentationSha256": "e5cabcc9c1e422c286e633205cf38557b74ab2309a50b852e1178d318b4cfc28",
+      "bytes": 2418,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-provider-inspect-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-provider-inspect-20261005.json",
+      "originalSha256": "45f27e1b2e094a96e04ff2a2754e5a8980e9793f1c6ca295e67d82e496195407",
+      "committedRepresentationSha256": "932d0c80c1f23c657688d300e333d9bba4f59c64a4de4d2b84c093f04a9785d0",
+      "bytes": 380,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-release-ready-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-release-ready-20261005.json",
+      "originalSha256": "9f22cf7ae649864c3818f85b706424fba2e046abe8dbeef0af071b501851a056",
+      "committedRepresentationSha256": "0b01a5e98f6ef7846a4085d6cd44a2a676338e99b9ba454df260be4e7f2856d2",
+      "bytes": 765,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-deploy-receipt-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-deploy-receipt-20261005.json",
+      "originalSha256": "f5363c395d9d08b59442de86cb978402b3077c83a16e285c7d87e44f6b691e18",
+      "committedRepresentationSha256": "a71e35eaabfcf6f8e267b05887de9d7d4000cfe922996edd8bc5ac770c79fe83",
+      "bytes": 562,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-release-migrations-staging-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-release-migrations-staging-20261005.json",
+      "originalSha256": "e75cf4af833d95379f39ba5d8d7c3fc4795c49c6d062ac2961ce242d0ba14373",
+      "committedRepresentationSha256": "e75cf4af833d95379f39ba5d8d7c3fc4795c49c6d062ac2961ce242d0ba14373",
+      "bytes": 380,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-provider-inspect-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-provider-inspect-20261005.json",
+      "originalSha256": "cb899bebf9e66cf2d3479c5ee101d3caa5feaa378a0a5ea02c29ce4b754ba136",
+      "committedRepresentationSha256": "e8616ce8d13b0776b097a3f8d29ee918d9f85105e5a9afbfdea47b541813c7cd",
+      "bytes": 463,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-release-ready-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-release-ready-20261005.json",
+      "originalSha256": "dd2fc67820c99a4881aecc557d391f8a179459e0c8bc8cb6400bfc3cfdcf901a",
+      "committedRepresentationSha256": "f384a50a257e91c7fe8fa5ef91cbb46a9be6a8199edf51815b8b54731c2e49a0",
+      "bytes": 820,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-deploy-receipt-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-deploy-receipt-20261005.json",
+      "originalSha256": "e3c77d5676e29e221cad7d886f372fd734c2ff6243327a68c4620340f1e6084e",
+      "committedRepresentationSha256": "c11b849e12e5ff18b926f05944c0bbc60fb239b0b33d14c1d703e7e751352eaf",
+      "bytes": 568,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-release-migrations-production-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-release-migrations-production-20261005.json",
+      "originalSha256": "665aa82ca3195432e9da57c1e23808196de4aaeb5a965ae36e21175284e98504",
+      "committedRepresentationSha256": "665aa82ca3195432e9da57c1e23808196de4aaeb5a965ae36e21175284e98504",
+      "bytes": 383,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-release-migrations-production-pre-deploy-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-release-migrations-production-pre-deploy-20261005.json",
+      "originalSha256": "a7ec3c80f0eb298348d6dc455a94c29cd2a28067b733a814fa14d00cdd2429c2",
+      "committedRepresentationSha256": "a7ec3c80f0eb298348d6dc455a94c29cd2a28067b733a814fa14d00cdd2429c2",
+      "bytes": 300,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-review-round-1-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-review-round-1-20261005.json",
+      "originalSha256": "6b9991bbd214a61c3010d078ae974595f3a7a0d019ce1c3683a07ceaf42c5cdb",
+      "committedRepresentationSha256": "80b313a81d903a877d9b73c3d07dd56350f7abecb3aa1095128cc7bb23429ccf",
+      "bytes": 630,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-review-round-2-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-review-round-2-20261005.json",
+      "originalSha256": "841b37d59901560530c1e3cbd90daf7aadad9275749d51b1bd075fc28b560fd1",
+      "committedRepresentationSha256": "18008f218cafa08295176a64fd3d50681702751dab7ad45046afac081dbc73a0",
+      "bytes": 630,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-review-round-3-20261005.json",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-review-round-3-20261005.json",
+      "originalSha256": "e4902791ecf61745adc146b502ecc5c3cebdf885779f925c88f9246223560881",
+      "committedRepresentationSha256": "6048135974f700073481616f72cc607b620447b09650c299374e1897cd7f3ede",
+      "bytes": 899,
+      "kind": "json"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-e661edb-software-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-software-375.png",
+      "originalSha256": "093a72982896ecbead745c5f9742fcee0955810f5b981cc683027eaf3af9b8a5",
+      "committedRepresentationSha256": "093a72982896ecbead745c5f9742fcee0955810f5b981cc683027eaf3af9b8a5",
+      "bytes": 86467,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-e661edb-software-1280.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-software-1280.png",
+      "originalSha256": "edd757668c39682aaaaf3f04215a81929845230d0e3125f7ace8062b6ae94d41",
+      "committedRepresentationSha256": "edd757668c39682aaaaf3f04215a81929845230d0e3125f7ace8062b6ae94d41",
+      "bytes": 100678,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-e661edb-home-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-home-375.png",
+      "originalSha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "committedRepresentationSha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "bytes": 307000,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-e661edb-es-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-es-375.png",
+      "originalSha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "committedRepresentationSha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "bytes": 183534,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-staging-e661edb-advertising-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-staging-browser-captures-20261005\\studio-refinement-staging-e661edb-advertising-375.png",
+      "originalSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "committedRepresentationSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "bytes": 184282,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-e661edb-software-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-software-375.png",
+      "originalSha256": "9d9f6618c090469ced32de5027dd74fbffeb63cc14eb7bdd55184f5f79349442",
+      "committedRepresentationSha256": "9d9f6618c090469ced32de5027dd74fbffeb63cc14eb7bdd55184f5f79349442",
+      "bytes": 86576,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-e661edb-software-1280.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-software-1280.png",
+      "originalSha256": "94abf404eb5e738aace3c75fe2d95c0e2c747cd14e9149b18de33d428f164457",
+      "committedRepresentationSha256": "94abf404eb5e738aace3c75fe2d95c0e2c747cd14e9149b18de33d428f164457",
+      "bytes": 100494,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-e661edb-home-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-home-375.png",
+      "originalSha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "committedRepresentationSha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "bytes": 307000,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-e661edb-es-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-es-375.png",
+      "originalSha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "committedRepresentationSha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "bytes": 183534,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-e661edb-advertising-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-browser-captures-20261005\\studio-refinement-production-e661edb-advertising-375.png",
+      "originalSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "committedRepresentationSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "bytes": 184282,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-e661edb-software-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-software-375.png",
+      "originalSha256": "d43e811b4fe5d532fb48a665986d2661583e468d8c180a9fdd4c482897bd4f05",
+      "committedRepresentationSha256": "d43e811b4fe5d532fb48a665986d2661583e468d8c180a9fdd4c482897bd4f05",
+      "bytes": 87000,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-e661edb-software-1280.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-software-1280.png",
+      "originalSha256": "f422ceb6bf48ffb1e094eaa98ad23b87a63afc17b52a7d7d4e0ea60c76ea88f3",
+      "committedRepresentationSha256": "f422ceb6bf48ffb1e094eaa98ad23b87a63afc17b52a7d7d4e0ea60c76ea88f3",
+      "bytes": 100630,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-e661edb-home-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-home-375.png",
+      "originalSha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "committedRepresentationSha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "bytes": 307000,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-e661edb-es-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-es-375.png",
+      "originalSha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "committedRepresentationSha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "bytes": 183534,
+      "kind": "image"
+    },
+    {
+      "path": "governance\\evidence\\WP-PLATFORM-UI-001\\browser-proof-2026-10-05-studio-release\\studio-refinement-production-alias-e661edb-advertising-375.png",
+      "source": "C:\\dev\\mbv-run\\studio-refinement-production-alias-browser-captures-20261005\\studio-refinement-production-alias-e661edb-advertising-375.png",
+      "originalSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "committedRepresentationSha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "bytes": 184282,
+      "kind": "image"
+    }
+  ]
+}

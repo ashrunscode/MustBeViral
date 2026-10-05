@@ -1,0 +1,22 @@
+{
+  "S0HistoricalCredits": 215.24,
+  "Publications": 0,
+  "S1": 57.5,
+  "P2": 17.5,
+  "ClosingBalance": 2452.76,
+  "P3": 17.5,
+  "NoPurchase": true,
+  "AtUtc": "2026-10-05T15:30:33.1951311Z",
+  "P1": 120,
+  "Disposition": {
+    "S1": "discarded",
+    "P1": "discarded",
+    "P0": "cannot derive from discarded P1",
+    "P3": "discarded",
+    "P2": "discarded"
+  },
+  "FilmCreditFloor": 200,
+  "Reconciled": true,
+  "RunOpeningBalance": 2665.26,
+  "RunSpent": 212.5
+}

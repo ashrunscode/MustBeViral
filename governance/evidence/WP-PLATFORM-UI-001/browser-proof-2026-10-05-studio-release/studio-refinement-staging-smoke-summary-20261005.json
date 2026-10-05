@@ -1,0 +1,19 @@
+{
+  "NativeFileInputDiagnostic": "Outside-root filename input refused before execution; subsequent inline code used only native browser APIs with captures inside the configured MCP output root",
+  "StrictBrowserCells": 32,
+  "SoftwareFilmD4Acceptance": "Pending: unchanged film tiny type and internal label remain disclosed",
+  "Target": "staging",
+  "Source": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "RemoteWrites": 0,
+  "HttpPass": true,
+  "FormsSubmitted": 0,
+  "RecordedUtc": "2026-10-05T16:26:21.1057686Z",
+  "Pass": true,
+  "CachedPolicyCases": 16,
+  "DeploymentId": "dpl_BdxLvSpTLUgDeQcUe8cpbzRc8dHy",
+  "MediaCases": 3,
+  "CapturesActuallyViewed": 5,
+  "AllTextPriceCases": 3,
+  "BookingCases": 8,
+  "BrowserPass": true
+}
