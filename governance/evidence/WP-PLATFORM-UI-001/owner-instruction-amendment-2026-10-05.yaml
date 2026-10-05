@@ -1,0 +1,22 @@
+schema_version: 1
+record_type: owner_instruction_amendment
+date: 2026-10-05
+packet_id: WP-PLATFORM-UI-001
+previous_spec_revision: 3
+amended_spec_revision: 4
+owner_instruction: >-
+  For this task, I explicitly authorize these instruction updates across repositories despite the
+  normal folder-focus restriction.
+purpose: >-
+  Update Claude instructions from current official documentation, with concise verified project
+  commands, architecture, testing, bounded delegation, and guarded local delivery guidance.
+instruction_paths:
+  - CLAUDE.md
+implementation_order: >-
+  Commit and merge this authorization-only amendment before changing CLAUDE.md so the existing
+  committed diff-scope check validates the instruction change against an authorized merge base.
+preserved_obligations:
+  - Product steps, deliverables, acceptance, quality gates, and current handoff remain unchanged.
+  - Existing dated owner grants and external-effects boundaries remain effective.
+  - Existing hooks, runtime protections, required checks, and independent review remain effective.
+  - Instruction editing does not complete product acceptance or authorize deployment.
