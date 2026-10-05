@@ -26,6 +26,27 @@ for (const width of [375, 768, 1280, 1920]) {
     await expect(page.getByText('Product safety gates', { exact: true })).toHaveCount(0);
     await page.reload();
     await expect(unavailable).toContainText('Operations access is unavailable.');
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    });
+    for (const paragraph of await unavailable.locator('p').all()) {
+      const measure = await paragraph.evaluate((element) => {
+        const probe = document.createElement('span');
+        probe.style.cssText =
+          'display:block;position:absolute;width:70ch;max-width:none;font:inherit';
+        element.append(probe);
+        const limit = probe.getBoundingClientRect().width;
+        probe.remove();
+        return {
+          width: element.getBoundingClientRect().width,
+          limit,
+          maxWidth: getComputedStyle(element).maxWidth,
+        };
+      });
+      expect(Number.parseFloat(measure.maxWidth)).toBeLessThanOrEqual(measure.limit + 1);
+      expect(measure.width).toBeLessThanOrEqual(measure.limit + 1);
+    }
     expect(operationsRequests).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,

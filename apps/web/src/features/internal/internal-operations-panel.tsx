@@ -6,7 +6,7 @@ import { PlatformEmptySection, PlatformHeading } from '../platform/platform-fram
  */
 export function InternalOperationsPanel() {
   return (
-    <div className="platform-stack">
+    <div className="platform-stack platform-operations">
       <PlatformHeading
         title="Operations"
         description="Operations access is unavailable. No operations data is loaded or changed."
