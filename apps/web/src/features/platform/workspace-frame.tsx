@@ -166,7 +166,7 @@ function CampaignShell({
       : segment === 'skills'
         ? 'Skills'
         : segment === 'internal'
-          ? 'Internal operations'
+          ? 'Operations'
           : segment === 'billing'
             ? 'Billing'
             : 'Campaign';
