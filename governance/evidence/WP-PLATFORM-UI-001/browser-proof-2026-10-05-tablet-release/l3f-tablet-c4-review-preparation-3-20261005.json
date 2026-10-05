@@ -1,0 +1,116 @@
+{
+  "RecordedUtc": "2026-10-05T05:30:21.895Z",
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "Base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "Pr": 78,
+  "Body": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-pr-tablet-reflow-20261005-verified-3.md",
+  "BodySha256": "c9920cf4b1d3f3e50cc9940e6e6c6c8f7c0fe964a2a4e75adef98149290d81c6",
+  "OriginalBody": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-pr-tablet-reflow-20261005-before-verified-3.md",
+  "OriginalBodySha256": "721bfe12ed0fc4fd174c1057a2e831961550e6cfe3fe28769fb2540231ab6530",
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-prompt-53ee31f.md",
+  "PromptSha256": "578373dda57ae4fde5362e7178e31b1b34845b7f02bbc6e03b718c85262dc390",
+  "Counts": {
+    "governance": {
+      "passed": 177,
+      "skipped": 0
+    },
+    "webUnit": 480,
+    "webIntegration": 31,
+    "coreUnit": 633,
+    "coreIntegration": 2,
+    "collaborationWorker": 83,
+    "buildTasks": 18,
+    "sql": {
+      "files": 61,
+      "assertions": 1181
+    },
+    "preview": {
+      "passed": 78,
+      "skipped": 1
+    },
+    "connected": {
+      "passed": 22,
+      "skipped": 0
+    },
+    "canvas": [
+      {
+        "fixtureNodes": 100,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "thresholdFps": 55,
+        "measuredFps": 60.34,
+        "frames": 182,
+        "durationMs": 3016,
+        "maxFrameDeltaMs": 16.8,
+        "passed": true
+      },
+      {
+        "fixtureNodes": 500,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "thresholdFps": 30,
+        "measuredFps": 60.23,
+        "frames": 181,
+        "durationMs": 3005,
+        "maxFrameDeltaMs": 16.8,
+        "domNodeCount": 12,
+        "selectionLatencyMs": 21.6,
+        "passed": true
+      }
+    ]
+  },
+  "GeneratedDiagnosticArtifacts": [
+    {
+      "path": "apps/web/test/__perf__/canvas-fps-500.json",
+      "sha256": "f8f7ff8939c7fcb227ecdb9b77fc3d87dc7b9954ac79b808a8c34f92a5ab102a"
+    },
+    {
+      "path": "apps/web/test/__perf__/canvas-fps.json",
+      "sha256": "9f27c0d09a56b1bac50a3202f3d8654fbd3472a7598501098bced7529bb596c9"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/campaign-brief-1440x900.png",
+      "sha256": "ad83f8d806c035f35677b764304f9710d1039005776ca3ab89425ff589a1b87e"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/canvas-1440x900.png",
+      "sha256": "47e4727816317bee63a709af3e39d393b8da462ddd16ab2d79031295f17d8b09"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/mobile-review-375x812.png",
+      "sha256": "b07a13336758c17de19c7cc651e906e3786bac835eeb772a7a1737927ab2a58b"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/output-comparison-1440x900.png",
+      "sha256": "960357b211bd9c7a73031360c40d04b368450563ce757c237edaacc5328213fa"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/quote-1440x900.png",
+      "sha256": "6a44fd5179cb49dc62d9ecb083d98d06932e0e8c655448752f0dd48d9ed12ab6"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/receipt-1440x900.png",
+      "sha256": "17578d32b1ff817813a8179abfa8080282deb1c7e22fe545964496f928f58da2"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/review-1440x900.png",
+      "sha256": "dc40c647988c4f3c19ce11230e2672edfd57bfe87ec2193d12887cc163010fc4"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/run-progress-1440x900.png",
+      "sha256": "8aa1772ef87a77dc0b38d79d29fa2849ecabbff3c8e779db9eee170e9784a65f"
+    },
+    {
+      "path": "apps/web/test/__screenshots__/tablet-review-768x1024.png",
+      "sha256": "581287a0eb24602db8e480b9aa40c1573ba2ed0d14f55372a19e3c9c8b54daa6"
+    }
+  ],
+  "NoSourceMutation": true,
+  "GitHubBodyPreservedOutsideRequiredUpdate": true,
+  "C5Pending": true,
+  "ReleasePending": true
+}

@@ -1,0 +1,16 @@
+{
+  "Log": "C:/Users/ernij/AppData/Local/Temp/mbv-review-b7fb3c3.log",
+  "Session": "01a10907-953d-7072-a1dc-4f72853bcb54",
+  "Prompt": "C:/Users/ernij/AppData/Local/Temp/mbv-review-prompt-b7fb3c3.md",
+  "Model": "gpt-6.1-sol",
+  "StartedUtc": "2026-10-04T22:27:33.4773485Z",
+  "Effort": "xhigh",
+  "Root": "C:/dev/worktrees/mustbeviral/review-b7fb3c3",
+  "Head": "b7fb3c39a0fc1556e77ca616550fb4a6cb9e12ac",
+  "Out": "C:/Users/ernij/AppData/Local/Temp/mbv-review-b7fb3c3.md",
+  "DevelopmentSpend": false,
+  "FinishedUtc": "2026-10-04T22:42:01.5489815Z",
+  "RequiredFlagsRetained": true,
+  "ActualProcessExit": 0,
+  "Verdict": "VERDICT: FAIL"
+}

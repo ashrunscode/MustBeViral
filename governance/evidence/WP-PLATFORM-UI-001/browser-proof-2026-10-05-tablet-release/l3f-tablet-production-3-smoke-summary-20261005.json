@@ -1,0 +1,43 @@
+{
+  "SignedOut": true,
+  "RemoteAuthentication": false,
+  "FormsSubmitted": false,
+  "DeploymentId": "dpl_5Rr9CQfFu83Nv4SbMUge8qAcB3a8",
+  "Origin": "https://mustbeviral.com",
+  "Environment": "production",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "HttpPass": true,
+  "BrowserPass": true,
+  "CheckedUtc": "2026-10-05T06:11:17.1804207Z",
+  "Checks": [
+    {
+      "Check": "c8",
+      "StartedUtc": "2026-10-05T06:08:20.7046362Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-c8.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T06:08:27.4251608Z"
+    },
+    {
+      "Check": "s0-media",
+      "StartedUtc": "2026-10-05T06:08:27.4281979Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-s0-media.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T06:08:29.1854136Z"
+    },
+    {
+      "Check": "d3-headers",
+      "FinishedUtc": "2026-10-05T06:08:35.64455Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-production-3-headers.json",
+      "ActualExit": 0
+    }
+  ],
+  "Pass": true,
+  "BrowserProofPaths": [
+    "C:/dev/mbv-run/l3f-tablet-production-3-c8-browser.json",
+    "C:/dev/mbv-run/l3f-tablet-production-3-s0-browser.json",
+    "C:/dev/mbv-run/l3f-tablet-production-3-cached-policy.json"
+  ],
+  "BrowserCells": 32,
+  "BrowserApplicationErrors": 0,
+  "ExpectedDocument404ResourceCount": 2.0
+}

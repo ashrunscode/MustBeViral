@@ -1,0 +1,31 @@
+{
+  "PreparedUtc": "2026-10-05T06:03:32.138Z",
+  "Environment": "staging",
+  "Origin": "https://mustbeviral-web-staging.vercel.app",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "DeploymentId": "dpl_65MhAN2LySepfp8c3KyE9KcutwhB",
+  "OutputDirectory": "C:/dev/mbv-run/l3f-tablet-staging-3-browser",
+  "FormsSubmitted": 0,
+  "SignedOutFreshContext": true,
+  "BrowserObserved": false,
+  "Templates": [
+    {
+      "kind": "c8-browser",
+      "template": "C:/dev/mbv-run/c8-d3-browser-fresh-template.js",
+      "path": "C:/dev/mbv-run/l3f-tablet-staging-3-c8-browser-code.js",
+      "sha256": "f3b7c365778ccbfaef4bab56d26bb0820f730cac2ddd7729fc052d7032b5ac7b"
+    },
+    {
+      "kind": "s0-browser",
+      "template": "C:/dev/mbv-run/c8-s0-browser-template-2.js",
+      "path": "C:/dev/mbv-run/l3f-tablet-staging-3-s0-browser-code.js",
+      "sha256": "0859d4cd27bdbafa2f965c0cf873259ca43b40e59a113c77496333cb30e24cd5"
+    },
+    {
+      "kind": "cached-policy",
+      "template": "C:/dev/mbv-run/c8-l3f-cached-policy-template.js",
+      "path": "C:/dev/mbv-run/l3f-tablet-staging-3-cached-policy-code.js",
+      "sha256": "f8daff00efdabf5f734bf0c232c49d1da7ded67a7c62d926696322462d2509bd"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "ActualExit": 0,
+  "Pr": 78,
+  "Detached": true,
+  "Clean": true,
+  "Root": "C:/dev/worktrees/mustbeviral/review-53ee31f",
+  "FinishedUtc": "2026-10-05T05:31:35.5660818Z",
+  "TrackedFilesOnly": true,
+  "Round": 3,
+  "NoCanonicalWrite": true,
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "Base": "4268e9b24b605879dbbda81d88ca8cc4d720c2d9",
+  "StartedUtc": "2026-10-05T05:31:24.5718276Z"
+}

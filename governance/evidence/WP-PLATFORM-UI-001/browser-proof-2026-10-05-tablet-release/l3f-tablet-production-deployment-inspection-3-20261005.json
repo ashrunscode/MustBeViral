@@ -1,0 +1,26 @@
+{
+  "AliasesComplete": true,
+  "DeploymentId": "dpl_5Rr9CQfFu83Nv4SbMUge8qAcB3a8",
+  "Environment": "production",
+  "CheckedUtc": "2026-10-05T06:08:11.2452557Z",
+  "NoRemoteDatabaseWrite": true,
+  "Project": "mustbeviral-web-production",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "ExpectedAliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "ListExit": 0,
+  "Aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "Ready": true,
+  "InspectExit": 0,
+  "Reviewed": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "ProtectedProductionAliasInspectedOnly": true
+}

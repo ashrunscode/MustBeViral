@@ -1,0 +1,43 @@
+{
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "Environment": "staging",
+  "Checks": [
+    {
+      "StartedUtc": "2026-10-05T06:02:48.8068291Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-staging-3-c8.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T06:02:54.8323503Z",
+      "Check": "c8"
+    },
+    {
+      "StartedUtc": "2026-10-05T06:02:54.8343084Z",
+      "Path": "C:/dev/mbv-run/l3f-tablet-staging-3-s0-media.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T06:02:56.6185477Z",
+      "Check": "s0-media"
+    },
+    {
+      "Path": "C:/dev/mbv-run/l3f-tablet-staging-3-headers.json",
+      "ActualExit": 0,
+      "FinishedUtc": "2026-10-05T06:03:02.9618619Z",
+      "Check": "d3-headers"
+    }
+  ],
+  "DeploymentId": "dpl_65MhAN2LySepfp8c3KyE9KcutwhB",
+  "SignedOut": true,
+  "HttpPass": true,
+  "RemoteAuthentication": false,
+  "Origin": "https://mustbeviral-web-staging.vercel.app",
+  "Pass": true,
+  "CheckedUtc": "2026-10-05T06:05:45.7517966Z",
+  "FormsSubmitted": false,
+  "BrowserPass": true,
+  "BrowserProofPaths": [
+    "C:/dev/mbv-run/l3f-tablet-staging-3-c8-browser.json",
+    "C:/dev/mbv-run/l3f-tablet-staging-3-s0-browser.json",
+    "C:/dev/mbv-run/l3f-tablet-staging-3-cached-policy.json"
+  ],
+  "BrowserCells": 32,
+  "BrowserApplicationErrors": 0,
+  "ExpectedDocument404ResourceCount": 2.0
+}

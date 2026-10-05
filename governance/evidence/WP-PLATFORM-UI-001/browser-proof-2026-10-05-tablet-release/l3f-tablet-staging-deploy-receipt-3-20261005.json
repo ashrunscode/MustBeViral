@@ -1,0 +1,15 @@
+{
+  "Node": "v24.18.0",
+  "Project": "mustbeviral-web-staging",
+  "Rollback": "dpl_H71RFwKHgz52iTyYxSbaujskGJJn",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "Command": "vercel deploy --prod --yes --scope ashrunscode-projects --project mustbeviral-web-staging --json",
+  "Reviewed": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "DeploymentId": "dpl_65MhAN2LySepfp8c3KyE9KcutwhB",
+  "StartedUtc": "2026-10-05T06:01:27.8249644Z",
+  "Exit": 0,
+  "Pnpm": "11.12.0",
+  "FinishedUtc": "2026-10-05T06:02:27.7459164Z",
+  "Pr": 78,
+  "Vercel": "59.16.0"
+}

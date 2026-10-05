@@ -1,0 +1,11 @@
+{
+  "URL": "https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/json/js_protocol.json",
+  "Name": "allowUnsafeEvalBlockedByCSP",
+  "SmokeExplicitlySetsFalse": true,
+  "Purpose": "Ensure evaluation tests respect the enforced page CSP.",
+  "ObservedUtc": "2026-10-05T01:25:44.3437233Z",
+  "Type": "boolean",
+  "Optional": true,
+  "DefaultTrue": true,
+  "Command": "Runtime.evaluate"
+}

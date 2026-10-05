@@ -1,0 +1,171 @@
+{
+  "checkedUtc": "2026-10-05 05:55:36 UTC",
+  "environment": "production",
+  "projectId": "jjgtlfblsfobdhmtngbz",
+  "tool": "supabase_list_migrations",
+  "isError": false,
+  "remoteWrites": 0,
+  "mainCount": 75,
+  "mainHead": "20260929017000",
+  "remoteCount": 39,
+  "remoteHead": "20260902154759",
+  "semanticParityClaimed": false,
+  "migrations": [
+    {
+      "version": "20260712000000",
+      "name": "cleanroom_bootstrap"
+    },
+    {
+      "version": "20260719010000",
+      "name": "p0_authoritative_schema"
+    },
+    {
+      "version": "20260719020000",
+      "name": "p0_invariants_rls_and_grants"
+    },
+    {
+      "version": "20260719030000",
+      "name": "p0_hardened_rpcs"
+    },
+    {
+      "version": "20260726000000",
+      "name": "p0_launch_catalog_and_create_quote"
+    },
+    {
+      "version": "20260727000000",
+      "name": "p0_webhook_event_dedup"
+    },
+    {
+      "version": "20260728000000",
+      "name": "p0_webhook_claim_lifecycle"
+    },
+    {
+      "version": "20260728010000",
+      "name": "p0_provider_outbox_dispatch"
+    },
+    {
+      "version": "20260728020000",
+      "name": "p0_artifact_ingest_export"
+    },
+    {
+      "version": "20260728030000",
+      "name": "p0_seedance_pro_fast_repoint"
+    },
+    {
+      "version": "20260729000000",
+      "name": "p0_price_catalog_retirement_transition"
+    },
+    {
+      "version": "20260729010000",
+      "name": "p0_openrouter_copy_catalog_v2"
+    },
+    {
+      "version": "20260729020000",
+      "name": "p0_create_quote_openrouter_copy_route"
+    },
+    {
+      "version": "20260730000000",
+      "name": "p0_submission_requires_capture_proof"
+    },
+    {
+      "version": "20260730010000",
+      "name": "p0_reap_dead_dispatch"
+    },
+    {
+      "version": "20260730020000",
+      "name": "p0_app_tier_idempotency"
+    },
+    {
+      "version": "20260730030000",
+      "name": "p0_run_cancellation"
+    },
+    {
+      "version": "20260730040000",
+      "name": "p0_refund_run_capture"
+    },
+    {
+      "version": "20260730050000",
+      "name": "p0_flux_kontext_pro_repoint"
+    },
+    {
+      "version": "20260730060000",
+      "name": "p0_dispatch_wave_readiness"
+    },
+    {
+      "version": "20260730070000",
+      "name": "p0_dispatch_brief_and_upstream"
+    },
+    {
+      "version": "20260730080000",
+      "name": "p0_copy_terminal_path"
+    },
+    {
+      "version": "20260731000000",
+      "name": "p0_approval_produces_approved_output"
+    },
+    {
+      "version": "20260731010000",
+      "name": "p0_reap_stranded_synchronous_jobs"
+    },
+    {
+      "version": "20260731020000",
+      "name": "p0_readiness_safeupdate_fix"
+    },
+    {
+      "version": "20260802020000",
+      "name": "p0_dispatch_epoch_and_stranded_sweeper"
+    },
+    {
+      "version": "20260811000000",
+      "name": "p0_poll_reconciliation_run_exit"
+    },
+    {
+      "version": "20260811114946",
+      "name": "p0_global_spend_exposure_audit"
+    },
+    {
+      "version": "20260811132914",
+      "name": "p0_golden_20_defect_audit"
+    },
+    {
+      "version": "20260817140000",
+      "name": "p0_webhook_provider_error_code"
+    },
+    {
+      "version": "20260818120000",
+      "name": "p0_pending_input_artifact_upload"
+    },
+    {
+      "version": "20260830163000",
+      "name": "p1a_billing_kill_switches_stripe"
+    },
+    {
+      "version": "20260830170000",
+      "name": "p1a_kill_switch_stripe_rpcs"
+    },
+    {
+      "version": "20260830180000",
+      "name": "p1a_stripe_wallet_settlement"
+    },
+    {
+      "version": "20260831120000",
+      "name": "p1b_api_keys_oauth_skills"
+    },
+    {
+      "version": "20260831130000",
+      "name": "p1b_programmatic_auth_rpcs"
+    },
+    {
+      "version": "20260831140000",
+      "name": "p3_start_run_barrier_outbox_event_id"
+    },
+    {
+      "version": "20260902000000",
+      "name": "production_rls_advisor_hardening"
+    },
+    {
+      "version": "20260902154759",
+      "name": "production_disabled_binding_hardening"
+    }
+  ]
+}

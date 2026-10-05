@@ -1,0 +1,12 @@
+{
+  "StartedUtc": "2026-10-05T06:21:29.7523347Z",
+  "FinishedUtc": "2026-10-05T06:29:39.4993258Z",
+  "StartingHead": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "Command": "corepack pnpm agent:handoff --next-action Verify the operator gate on /studio/internal in the UI and Core under L3f.",
+  "ActualExit": 0,
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-record-handoff-3-20261005.log",
+  "Node": "v24.18.0",
+  "Pnpm": "11.12.0",
+  "FrozenAuthorDuringCommand": true,
+  "NoBlockerFlag": true
+}

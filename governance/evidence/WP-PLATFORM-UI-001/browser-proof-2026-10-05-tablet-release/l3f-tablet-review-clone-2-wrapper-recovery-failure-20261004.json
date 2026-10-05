@@ -1,0 +1,14 @@
+{
+  "ActualSetupProcessExit": 1,
+  "CodexReviewerStarted": false,
+  "Head": "b6f022d2c2531ebd499c104ce6c9b5bcf8357428",
+  "ProductSourceChanged": false,
+  "Root": "C:/dev/worktrees/mustbeviral/review-b6f022d",
+  "ObservedUtc": "2026-10-05T02:42:43.9078841Z",
+  "Cause": "String casting the no-output branch command still yielded null. The replacement uses git rev-parse --abbrev-ref HEAD, separately observed to return HEAD with actual exit zero.",
+  "CloneRetained": true,
+  "OriginalWrapperSha256": "cc76d052778fb83a2d64d12f53a3710e8d74462e7597a989860a80949b2e2b71",
+  "OriginalWrapper": "C:/dev/mbv-run/validate-l3f-tablet-review-clone-2-20261004.ps1",
+  "SandboxStartFailure": false,
+  "SetupToolWallSeconds": 1.8421445
+}

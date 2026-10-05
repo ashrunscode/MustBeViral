@@ -1,0 +1,17 @@
+{
+  "StartedUtc": "2026-10-05T04:30:31.9203023Z",
+  "Root": "C:/dev/mbv-verify-53ee31f",
+  "EnvironmentExamplesOnly": true,
+  "EnvironmentFiles": [
+    ".dev.vars.example",
+    ".env.example",
+    "apps\\core\\.dev.vars.example",
+    "apps\\collaboration\\.dev.vars.example"
+  ],
+  "Branch": "main",
+  "InitiallyClean": true,
+  "FinishedUtc": "2026-10-05T04:30:53.3748814Z",
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "WorktreeCount": 1,
+  "NoCanonicalWrite": true
+}

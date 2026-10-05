@@ -1,0 +1,70 @@
+{
+  "Versions": {
+    "Playwright": "Version 1.61.1",
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0",
+    "Supabase": "2.109.1"
+  },
+  "Root": "C:/dev/mbv-finish",
+  "Checks": [
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "FinishedUtc": "2026-10-05T03:55:05.6114038Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-migration-list-before.log",
+      "Label": "migration-list-before",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T03:55:01.7907584Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "FinishedUtc": "2026-10-05T03:55:09.4612563Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-migration-up.log",
+      "Label": "migration-up",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T03:55:05.8500690Z"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "FinishedUtc": "2026-10-05T03:55:13.0180213Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-migration-list.log",
+      "Label": "migration-list",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T03:55:09.4642677Z"
+    },
+    {
+      "Command": "corepack pnpm agent:verify",
+      "FinishedUtc": "2026-10-05T04:23:22.2095478Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-agent-verify.log",
+      "Label": "agent-verify",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T03:55:14.4786505Z"
+    },
+    {
+      "Command": "corepack pnpm packet:verify",
+      "FinishedUtc": "2026-10-05T04:23:24.1873308Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-packet-verify.log",
+      "Label": "packet-verify",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T04:23:22.2117210Z"
+    },
+    {
+      "Command": "corepack pnpm diff-scope:check --base origin/main --head HEAD",
+      "FinishedUtc": "2026-10-05T04:23:27.4382512Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-diff-scope.log",
+      "Label": "diff-scope",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T04:23:24.1900105Z"
+    },
+    {
+      "Command": "corepack pnpm format:check",
+      "FinishedUtc": "2026-10-05T04:23:49.5802597Z",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-author-4-format-check.log",
+      "Label": "format-check",
+      "ActualExit": 0,
+      "StartedUtc": "2026-10-05T04:23:27.4403154Z"
+    }
+  ],
+  "StartingHead": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "SourceAndSchemaUnchangedFromLastAppliedFiles": true,
+  "LocalDatabaseOnly": true
+}

@@ -1,0 +1,31 @@
+{
+  "PreparedUtc": "2026-10-05T06:11:53.453Z",
+  "Environment": "production-alias",
+  "Origin": "https://mustbeviral-web-production.vercel.app",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "DeploymentId": "dpl_5Rr9CQfFu83Nv4SbMUge8qAcB3a8",
+  "OutputDirectory": "C:/dev/mbv-run/l3f-tablet-production-alias-3-browser",
+  "FormsSubmitted": 0,
+  "SignedOutFreshContext": true,
+  "BrowserObserved": false,
+  "Templates": [
+    {
+      "kind": "c8-browser",
+      "template": "C:/dev/mbv-run/c8-d3-browser-fresh-template.js",
+      "path": "C:/dev/mbv-run/l3f-tablet-production-alias-3-c8-browser-code.js",
+      "sha256": "ee2c2e121b92ff48ab75640dba51360ccb2acdc5adac4795a62353d899eee74b"
+    },
+    {
+      "kind": "s0-browser",
+      "template": "C:/dev/mbv-run/c8-s0-browser-template-2.js",
+      "path": "C:/dev/mbv-run/l3f-tablet-production-alias-3-s0-browser-code.js",
+      "sha256": "073fb705b7542ed614f839de8aa3c38e8f70783101ba499ded2d306a5f6ce04c"
+    },
+    {
+      "kind": "cached-policy",
+      "template": "C:/dev/mbv-run/c8-l3f-cached-policy-template.js",
+      "path": "C:/dev/mbv-run/l3f-tablet-production-alias-3-cached-policy-code.js",
+      "sha256": "bb78ed1c141e7e03bd68225061ad08e1d66a5c5f4e3ed3cf4665ec2efc5d7356"
+    }
+  ]
+}

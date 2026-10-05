@@ -1,0 +1,14 @@
+{
+  "Head": "53ee31f18bc41f70a991b0d19e4d3b43b5474319",
+  "StartedUtc": "2026-10-05T04:30:11.0127230Z",
+  "FinishedUtc": "2026-10-05T04:30:20.1858114Z",
+  "PushExit": 0,
+  "BodyUpdatePending": false,
+  "BodyMatches": true,
+  "NoMergeOrRelease": true,
+  "Pr": 78,
+  "NoForce": true,
+  "BodyExit": 0,
+  "BodySha256": "ba7f5789ceca173dab6a266d1e302601699eb673d538115d876def66eef4af81",
+  "PushedUtc": "2026-10-05T04:30:15.3088356Z"
+}

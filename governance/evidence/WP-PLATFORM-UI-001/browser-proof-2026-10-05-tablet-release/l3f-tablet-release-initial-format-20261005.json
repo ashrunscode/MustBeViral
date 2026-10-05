@@ -1,0 +1,10 @@
+{
+  "Pnpm": "11.12.0",
+  "Log": "C:/dev/mbv-run/l3f-tablet-release-initial-format-20261005.txt",
+  "Source": "50556e252eb5d65128bc9599d06b03b85ff22475",
+  "FinishedUtc": "2026-10-05T06:19:10.5057692Z",
+  "StartedUtc": "2026-10-05T06:19:08.2297436Z",
+  "ActualExit": 0,
+  "Node": "v24.21.0",
+  "Command": "corepack pnpm exec prettier --write owned tablet release proof and three records"
+}
