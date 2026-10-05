@@ -1,0 +1,68 @@
+{
+  "StartedUtc": "2026-10-05T19:18:42.8313470Z",
+  "ActualExit": 0,
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "Log": "C:/dev/mbv-run/internal-access-fresh-browser-preview-5056ce2-20261005.log",
+  "TrackedBaselinesRestored": true,
+  "Command": "C4 six preview suites plus studio-booking.spec.ts and internal-access.spec.ts, desktop-chromium",
+  "ConnectedPending": true,
+  "Root": "C:/dev/mbv-verify-5056ce2",
+  "PreservedGenerated": [
+    {
+      "Sha256": "58f645e6bd768f3d47f64273cc415f21b283f3627eae316dadee5596dc1cd593",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\canvas-fps-500.json",
+      "Path": "apps/web/test/__perf__/canvas-fps-500.json"
+    },
+    {
+      "Sha256": "8b21ecf9bfbc12d9e01e67b9267b3bce527887c26bae83ca52a0d249cd62f7f3",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\canvas-fps.json",
+      "Path": "apps/web/test/__perf__/canvas-fps.json"
+    },
+    {
+      "Sha256": "ad83f8d806c035f35677b764304f9710d1039005776ca3ab89425ff589a1b87e",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\campaign-brief-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/campaign-brief-1440x900.png"
+    },
+    {
+      "Sha256": "fe9e3e63ead8110c7b6aaa39e84e2180ce72e39e99e74fa8293ab49b17039a99",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\canvas-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/canvas-1440x900.png"
+    },
+    {
+      "Sha256": "b07a13336758c17de19c7cc651e906e3786bac835eeb772a7a1737927ab2a58b",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\mobile-review-375x812.png",
+      "Path": "apps/web/test/__screenshots__/mobile-review-375x812.png"
+    },
+    {
+      "Sha256": "960357b211bd9c7a73031360c40d04b368450563ce757c237edaacc5328213fa",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\output-comparison-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/output-comparison-1440x900.png"
+    },
+    {
+      "Sha256": "2af49cc394daba5f4d01423a94416be6b5d8ad7138094da0b425019c8f6c0791",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\quote-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/quote-1440x900.png"
+    },
+    {
+      "Sha256": "17578d32b1ff817813a8179abfa8080282deb1c7e22fe545964496f928f58da2",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\receipt-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/receipt-1440x900.png"
+    },
+    {
+      "Sha256": "dc40c647988c4f3c19ce11230e2672edfd57bfe87ec2193d12887cc163010fc4",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\review-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/review-1440x900.png"
+    },
+    {
+      "Sha256": "d9be956e13d52f843e12a2abb701adceac5add96bc61c53a61171e56ecac1ffe",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\run-progress-1440x900.png",
+      "Path": "apps/web/test/__screenshots__/run-progress-1440x900.png"
+    },
+    {
+      "Sha256": "581287a0eb24602db8e480b9aa40c1573ba2ed0d14f55372a19e3c9c8b54daa6",
+      "Preserved": "C:\\dev\\mbv-run\\internal-access-fresh-preview-artifacts-5056ce2-20261005\\tablet-review-768x1024.png",
+      "Path": "apps/web/test/__screenshots__/tablet-review-768x1024.png"
+    }
+  ],
+  "FinishedUtc": "2026-10-05T19:23:19.2481475Z"
+}

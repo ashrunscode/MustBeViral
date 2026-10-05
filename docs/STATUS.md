@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Verify the operator gate on /studio/internal in the UI and Core under L3f.
+Run the pre-transition quality pass and supersede UI-001 into RENDER-001 under A2, carrying unproven operator permission and primary flows.

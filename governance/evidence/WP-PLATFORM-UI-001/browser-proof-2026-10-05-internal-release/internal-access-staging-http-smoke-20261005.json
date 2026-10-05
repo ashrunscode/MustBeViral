@@ -1,0 +1,32 @@
+{
+  "Origin": "https://mustbeviral-web-staging.vercel.app",
+  "FormsSubmitted": 0,
+  "Node": "v24.18.0",
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "Pass": true,
+  "DeploymentId": "dpl_9QguxAbLhT36J67FYaZZw6ofEiTz",
+  "RemoteWrites": 0,
+  "Checks": [
+    {
+      "StartedUtc": "2026-10-05T19:53:29.3545545Z",
+      "Log": "C:/dev/mbv-run/internal-access-staging-http-d1-20261005.log",
+      "FinishedUtc": "2026-10-05T19:53:36.0392821Z",
+      "Name": "d1",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T19:53:36.0409579Z",
+      "Log": "C:/dev/mbv-run/internal-access-staging-http-s0-20261005.log",
+      "FinishedUtc": "2026-10-05T19:53:37.9791770Z",
+      "Name": "s0",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T19:53:37.9796241Z",
+      "Log": "C:/dev/mbv-run/internal-access-staging-http-headers-20261005.log",
+      "FinishedUtc": "2026-10-05T19:53:43.9303405Z",
+      "Name": "headers",
+      "ActualExit": 0
+    }
+  ]
+}

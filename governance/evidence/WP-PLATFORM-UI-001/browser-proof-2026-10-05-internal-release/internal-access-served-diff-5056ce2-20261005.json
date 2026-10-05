@@ -1,0 +1,14 @@
+{
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "LiveSource": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "SharedRuntimeUnchangedExit": 0,
+  "ServedPaths": [
+    "apps/web/app/(en)/studio/[workspace]/internal/page.tsx",
+    "apps/web/e2e/internal-access.spec.ts",
+    "apps/web/src/features/internal/internal-operations-panel.test.tsx",
+    "apps/web/src/features/internal/internal-operations-panel.tsx",
+    "apps/web/src/features/platform/platform.css",
+    "apps/web/src/features/platform/workspace-frame.tsx"
+  ],
+  "RecordedUtc": "2026-10-05T19:13:14.8163205Z"
+}

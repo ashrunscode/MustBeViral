@@ -1,0 +1,212 @@
+{
+  "source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "originals": 29,
+  "distinct": 17,
+  "canonicalOriginalsRetained": true,
+  "mapping": [
+    {
+      "context": "local operations",
+      "cell": "375-light",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-375-light.png",
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-375-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "375-dark",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-375-dark.png",
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-375-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "768-light",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-768-light.png",
+      "sha256": "9ab1d3808eb3b5fda26c7028307892d64a9566c22f5b8f9a469c2413ecf6752d",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-768-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "768-dark",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-768-dark.png",
+      "sha256": "9ab1d3808eb3b5fda26c7028307892d64a9566c22f5b8f9a469c2413ecf6752d",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-768-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1280-light",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-light.png",
+      "sha256": "17db070c94d38ae643afb87cf94d3ddbe7430a0d09ffbd8cac3887a21114b10e",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1280-dark",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-dark.png",
+      "sha256": "17db070c94d38ae643afb87cf94d3ddbe7430a0d09ffbd8cac3887a21114b10e",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1920-light",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1920-light.png",
+      "sha256": "161cec04c5c76ec3bddd18806309eb139f33c3b489024f03c7cd14d755729da7",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1920-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1920-dark",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1920-dark.png",
+      "sha256": "161cec04c5c76ec3bddd18806309eb139f33c3b489024f03c7cd14d755729da7",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1920-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1440-light",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1440-light.png",
+      "sha256": "1051e123ec4df240f84239e531443a5f196158ed2e34692b63d3766c9f5d9fc6",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1440-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1440-dark",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1440-dark.png",
+      "sha256": "1051e123ec4df240f84239e531443a5f196158ed2e34692b63d3766c9f5d9fc6",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1440-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "375-reduced",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-375-reduced.png",
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-375-light.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1280-forced",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-forced.png",
+      "sha256": "01935378611f22797a65a02308b53e14d0d83c7737a861dde6b4699dd472d886",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-forced.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1280-zoom-200",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-zoom-200.png",
+      "sha256": "a707611e7d391415dd5af4551f7ef6d8f9284e8196685abd1297f2955ec70e6b",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-zoom-200.png"
+    },
+    {
+      "context": "local operations",
+      "cell": "1280-text-double",
+      "source": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-text-double.png",
+      "sha256": "0b364ac17579ca88738e6e9bb20b070e8ecc3856cf5f93730b7f1f2b275c550f",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-text-double.png"
+    },
+    {
+      "context": "staging",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-software-375.png",
+      "sha256": "1f82fafe98bcf8905f3c77b579a00728351d54a60f04eaf764816a4c74e4e561",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-software-375.png"
+    },
+    {
+      "context": "staging",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-software-1280.png",
+      "sha256": "ccc933c6c7433f86b280e6cd7c1d5b065c22b90f5b62e4c84d517750f5622eea",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-software-1280.png"
+    },
+    {
+      "context": "staging",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-home-375.png",
+      "sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-home-375.png"
+    },
+    {
+      "context": "staging",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-es-375.png",
+      "sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-es-375.png"
+    },
+    {
+      "context": "staging",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-advertising-375.png"
+    },
+    {
+      "context": "production",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-native-captures-5056ce2\\internal-access-production-5056ce2-software-375.png",
+      "sha256": "6ad09dbfbfab9850eee21280a01a4e009c15a606a371e8920247158d451f3681",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-5056ce2-software-375.png"
+    },
+    {
+      "context": "production",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-native-captures-5056ce2\\internal-access-production-5056ce2-software-1280.png",
+      "sha256": "aeb7a6258bbe6ec18efe7796ed86a0b4008b85c507116c62fe4b192db144de1f",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-5056ce2-software-1280.png"
+    },
+    {
+      "context": "production",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-native-captures-5056ce2\\internal-access-production-5056ce2-home-375.png",
+      "sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-home-375.png"
+    },
+    {
+      "context": "production",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-native-captures-5056ce2\\internal-access-production-5056ce2-es-375.png",
+      "sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-es-375.png"
+    },
+    {
+      "context": "production",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-native-captures-5056ce2\\internal-access-production-5056ce2-advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-advertising-375.png"
+    },
+    {
+      "context": "production-alias",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-software-375.png",
+      "sha256": "5ea2acf194931bd0782d6ed9e76bdae2b7bfc2ca82ba75a2fc7f68b5fed7292d",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-5056ce2-software-375.png"
+    },
+    {
+      "context": "production-alias",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-software-1280.png",
+      "sha256": "3c6a30072d803e9510c8e7604639286b75a419b4d19924e4b8be7671ae4efa26",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-5056ce2-software-1280.png"
+    },
+    {
+      "context": "production-alias",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-home-375.png",
+      "sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-home-375.png"
+    },
+    {
+      "context": "production-alias",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-es-375.png",
+      "sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-es-375.png"
+    },
+    {
+      "context": "production-alias",
+      "cell": null,
+      "source": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-advertising-375.png",
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "committedRepresentative": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-advertising-375.png"
+    }
+  ]
+}

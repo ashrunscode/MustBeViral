@@ -1,0 +1,24 @@
+{
+  "treeEqualityActualExit": 0,
+  "clean": true,
+  "envLikeFiles": [
+    ".env.example",
+    ".dev.vars.example",
+    "apps\\collaboration\\.dev.vars.example",
+    "apps\\core\\.dev.vars.example"
+  ],
+  "root": "C:/dev/mbv-deploy-a58328d",
+  "C4StandsForMergedTree": true,
+  "installLog": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-deploy-a58328d-install.log",
+  "branch": "main",
+  "startedUtc": "2026-10-05T19:51:12.1496057Z",
+  "source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "installStartedUtc": "2026-10-05T19:51:20.6797756Z",
+  "endedUtc": "2026-10-05T19:51:41.2032310Z",
+  "installActualExit": 0,
+  "reviewed": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "vercel": "59.16.0",
+  "pnpm": "11.12.0",
+  "node": "v24.18.0",
+  "worktreeCount": 1
+}

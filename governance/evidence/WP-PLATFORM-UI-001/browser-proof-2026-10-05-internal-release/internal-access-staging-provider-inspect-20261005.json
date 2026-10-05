@@ -1,0 +1,11 @@
+{
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "DeploymentId": "dpl_9QguxAbLhT36J67FYaZZw6ofEiTz",
+  "CheckedUtc": "2026-10-05T19:53:28.8686546Z",
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "ReadyState": "READY",
+  "SettingsChanged": false
+}

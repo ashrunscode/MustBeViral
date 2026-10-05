@@ -1,0 +1,32 @@
+{
+  "Pass": true,
+  "RemoteWrites": 0,
+  "DeploymentId": "dpl_42vW5NbwXH7zPk8nDFkGGqVcnx2f",
+  "Node": "v24.18.0",
+  "FormsSubmitted": 0,
+  "Origin": "https://mustbeviral-web-production.vercel.app",
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "Checks": [
+    {
+      "Name": "d1",
+      "FinishedUtc": "2026-10-05T19:58:01.6884638Z",
+      "ActualExit": 0,
+      "Log": "C:/dev/mbv-run/internal-access-production-alias-http-d1-20261005.log",
+      "StartedUtc": "2026-10-05T19:57:56.8812591Z"
+    },
+    {
+      "Name": "s0",
+      "FinishedUtc": "2026-10-05T19:58:03.5885843Z",
+      "ActualExit": 0,
+      "Log": "C:/dev/mbv-run/internal-access-production-alias-http-s0-20261005.log",
+      "StartedUtc": "2026-10-05T19:58:01.6888362Z"
+    },
+    {
+      "Name": "headers",
+      "FinishedUtc": "2026-10-05T19:58:08.3867125Z",
+      "ActualExit": 0,
+      "Log": "C:/dev/mbv-run/internal-access-production-alias-http-headers-20261005.log",
+      "StartedUtc": "2026-10-05T19:58:03.5892061Z"
+    }
+  ]
+}

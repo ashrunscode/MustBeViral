@@ -1,0 +1,96 @@
+{
+  "Complete": true,
+  "LocalDatabaseOnly": true,
+  "Root": "C:/dev/mbv-finish",
+  "SourceHashes": [
+    {
+      "Sha256": "4fe2aafad25744f1ab5729396c5c55e3d5e576e1a72906626b111c2b034aa548",
+      "Path": "apps/web/app/(en)/studio/[workspace]/internal/page.tsx"
+    },
+    {
+      "Sha256": "6bb626ab497a30fdb7892e0997bddcfda8552e44a0957c83139f1ce6f8afd631",
+      "Path": "apps/web/src/features/internal/internal-operations-panel.tsx"
+    },
+    {
+      "Sha256": "be7f6dcb953b2b751d25e984eae2048fdb84d7b12f2a6f83ac7e9b1dc9401ac9",
+      "Path": "apps/web/src/features/internal/internal-operations-panel.test.tsx"
+    },
+    {
+      "Sha256": "5ce9741893532a71f462862ac6b5fae09df5eb34584e497a4e43b22c9e8ee147",
+      "Path": "apps/web/e2e/internal-access.spec.ts"
+    },
+    {
+      "Sha256": "5b3e88c41c84fa986a31858ffb9e4d003bb9925677f48fa556a1baa59674d96e",
+      "Path": "apps/web/src/features/platform/workspace-frame.tsx"
+    },
+    {
+      "Sha256": "e680dfd80fd00f60520e1c545e2337b90f9650c5e10cdc237f2996f5c0819f40",
+      "Path": "apps/web/src/features/platform/platform.css"
+    }
+  ],
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0",
+    "Playwright": "Version 1.61.1",
+    "Supabase": "2.109.1"
+  },
+  "Base": "986e83e89447888ccdb7f406a1491aff0cffa8c7",
+  "Checks": [
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-migration-list-before.log",
+      "StartedUtc": "2026-10-05T18:52:34.2361161Z",
+      "FinishedUtc": "2026-10-05T18:52:37.4174285Z",
+      "ActualExit": 0,
+      "Label": "migration-list-before"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-migration-up.log",
+      "StartedUtc": "2026-10-05T18:52:38.0756739Z",
+      "FinishedUtc": "2026-10-05T18:52:41.5308345Z",
+      "ActualExit": 0,
+      "Label": "migration-up"
+    },
+    {
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-migration-list.log",
+      "StartedUtc": "2026-10-05T18:52:41.5334853Z",
+      "FinishedUtc": "2026-10-05T18:52:44.628242Z",
+      "ActualExit": 0,
+      "Label": "migration-list"
+    },
+    {
+      "Command": "corepack pnpm agent:verify",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-agent-verify.log",
+      "StartedUtc": "2026-10-05T18:52:46.8265404Z",
+      "FinishedUtc": "2026-10-05T19:02:13.781027Z",
+      "ActualExit": 0,
+      "Label": "agent-verify"
+    },
+    {
+      "Command": "corepack pnpm packet:verify",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-packet-verify.log",
+      "StartedUtc": "2026-10-05T19:02:13.7831743Z",
+      "FinishedUtc": "2026-10-05T19:02:15.9101748Z",
+      "ActualExit": 0,
+      "Label": "packet-verify"
+    },
+    {
+      "Command": "corepack pnpm format:check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-format-check.log",
+      "StartedUtc": "2026-10-05T19:02:15.9121027Z",
+      "FinishedUtc": "2026-10-05T19:02:37.1641903Z",
+      "ActualExit": 0,
+      "Label": "format-check"
+    },
+    {
+      "Command": "corepack pnpm diff-scope:check --base origin/main --head HEAD",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-author-reading-width-diff-scope.log",
+      "StartedUtc": "2026-10-05T19:02:37.16612Z",
+      "FinishedUtc": "2026-10-05T19:02:39.3939259Z",
+      "ActualExit": 0,
+      "Label": "diff-scope"
+    }
+  ]
+}

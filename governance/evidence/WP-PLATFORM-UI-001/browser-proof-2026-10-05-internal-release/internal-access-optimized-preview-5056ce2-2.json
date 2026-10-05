@@ -1,0 +1,18 @@
+{
+  "Mode": "Optimized Next build; real local synthetic Auth; no development bypass",
+  "Root": "C:/dev/mbv-verify-5056ce2",
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "BuildActualExit": 0,
+  "StartedUtc": "2026-10-05T19:37:51.5422816Z",
+  "LocalOnly": true,
+  "BuildFinishedUtc": "2026-10-05T19:38:30.1308244Z",
+  "BuildLog": "C:/dev/mbv-run/internal-access-optimized-build-5056ce2-2.log",
+  "QueuesDisabled": true,
+  "ProvidersDisabled": true,
+  "Pid": 18664,
+  "CreatedUtc": "2026-10-05T19:38:30.3174860Z",
+  "Log": "C:/dev/mbv-run/internal-access-optimized-preview-5056ce2-2.log",
+  "ErrorLog": "C:/dev/mbv-run/internal-access-optimized-preview-5056ce2-2.err.log",
+  "Script": "C:/dev/mbv-run/internal-access-optimized-preview-5056ce2-2.mjs",
+  "Port": 3115
+}

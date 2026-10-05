@@ -1,0 +1,937 @@
+{
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "Complete": true,
+  "Passed": true,
+  "RecordedUtc": "2026-10-05T19:45:30.249Z",
+  "Cells": [
+    {
+      "cell": "375-light",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 176,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 301,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 301,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 375,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-375-light.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "375-dark",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 52,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 301,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 301,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 375,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-375-dark.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "768-light",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 76,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 470,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 768,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-768-light.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "768-dark",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 48,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 470,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 768,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-768-dark.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1280-light",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 84,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-light.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1280-dark",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 68,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-dark.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1920-light",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 52,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1920,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1920-light.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1920-dark",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 60,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1920,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1920-dark.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1440-light",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 64,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1440-light.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1440-dark",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 44,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1440-dark.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "375-reduced",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 60,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 301,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 301,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 375,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-375-reduced.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1280-forced",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 60,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 694.34375,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light dark",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-forced.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1280-zoom-200",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 60,
+          "cls": 0,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 566,
+            "maxWidth": "696.15px",
+            "font": "15px"
+          },
+          {
+            "width": 413.375,
+            "maxWidth": "603.33px",
+            "font": "13px"
+          }
+        ],
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "dpr": 2,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "28px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "w": 130.796875,
+            "h": 40.5
+          }
+        ]
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-zoom-200.png",
+      "errors": [],
+      "operationsRequests": []
+    },
+    {
+      "cell": "1280-text-double",
+      "status": 200,
+      "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "lab": {
+          "lcpMs": 52,
+          "cls": 0.30273926010131835,
+          "eventDurations": []
+        },
+        "prose": [
+          {
+            "width": 946,
+            "maxWidth": "1392.3px",
+            "font": "30px"
+          },
+          {
+            "width": 826.734375,
+            "maxWidth": "1206.66px",
+            "font": "26px"
+          }
+        ],
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "dpr": 1,
+        "overflow": false,
+        "mainCount": 1,
+        "h1Count": 1,
+        "h1Px": "56px",
+        "bodyPx": "15px",
+        "colorScheme": "light",
+        "themeColor": true,
+        "statusTexts": [
+          "Operations access is unavailable.Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.This release has no approved operator permission or operations query.Return to your studios"
+        ],
+        "runningAnimations": 0,
+        "transitionAll": 0,
+        "smallTargets": []
+      },
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-text-double.png",
+      "errors": [],
+      "operationsRequests": []
+    }
+  ],
+  "Keyboard": {
+    "head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+    "stops": [
+      {
+        "name": "Skip to content",
+        "tag": "A",
+        "visible": true,
+        "onScreen": true,
+        "href": "#platform-main"
+      },
+      {
+        "name": "Must Be Viral",
+        "tag": "A",
+        "visible": true,
+        "onScreen": true,
+        "href": "/studio"
+      },
+      {
+        "name": "Switch studio",
+        "tag": "A",
+        "visible": true,
+        "onScreen": true,
+        "href": "/studio"
+      },
+      {
+        "name": "Sign out",
+        "tag": "BUTTON",
+        "visible": true,
+        "onScreen": true,
+        "href": null
+      },
+      {
+        "name": "Return to your studios",
+        "tag": "A",
+        "visible": true,
+        "onScreen": true,
+        "href": "/studio"
+      }
+    ],
+    "reached": true,
+    "recoverySucceeded": true,
+    "timing": {
+      "events": [
+        {
+          "name": "keydown",
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "duration": 16
+        }
+      ],
+      "firstInput": [
+        {
+          "name": "keydown",
+          "inputDelay": 0.5,
+          "duration": 8
+        }
+      ]
+    },
+    "before": {
+      "events": [],
+      "firstInput": [
+        {
+          "name": "keydown",
+          "inputDelay": 0.5,
+          "duration": 8
+        }
+      ]
+    },
+    "tree": "- main \"Operations\":\n  - heading \"Operations\" [level=1]\n  - paragraph: Operations access is unavailable. No operations data is loaded or changed.\n  - status:\n    - heading \"Operations access is unavailable.\" [level=2]\n    - paragraph: Signing in to a workspace does not grant access to platform operations. Your saved work stays saved.\n    - paragraph: This release has no approved operator permission or operations query.\n    - link \"Return to your studios\":\n      - /url: /studio"
+  },
+  "Captures": [
+    {
+      "cell": "375-light",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-375-light.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-375-light.png",
+      "bytes": 39102,
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4"
+    },
+    {
+      "cell": "375-dark",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-375-dark.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-375-dark.png",
+      "bytes": 39102,
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4"
+    },
+    {
+      "cell": "768-light",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-768-light.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-768-light.png",
+      "bytes": 44127,
+      "sha256": "9ab1d3808eb3b5fda26c7028307892d64a9566c22f5b8f9a469c2413ecf6752d"
+    },
+    {
+      "cell": "768-dark",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-768-dark.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-768-dark.png",
+      "bytes": 44127,
+      "sha256": "9ab1d3808eb3b5fda26c7028307892d64a9566c22f5b8f9a469c2413ecf6752d"
+    },
+    {
+      "cell": "1280-light",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-light.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-light.png",
+      "bytes": 43953,
+      "sha256": "17db070c94d38ae643afb87cf94d3ddbe7430a0d09ffbd8cac3887a21114b10e"
+    },
+    {
+      "cell": "1280-dark",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-dark.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-dark.png",
+      "bytes": 43953,
+      "sha256": "17db070c94d38ae643afb87cf94d3ddbe7430a0d09ffbd8cac3887a21114b10e"
+    },
+    {
+      "cell": "1920-light",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1920-light.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1920-light.png",
+      "bytes": 46013,
+      "sha256": "161cec04c5c76ec3bddd18806309eb139f33c3b489024f03c7cd14d755729da7"
+    },
+    {
+      "cell": "1920-dark",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1920-dark.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1920-dark.png",
+      "bytes": 46013,
+      "sha256": "161cec04c5c76ec3bddd18806309eb139f33c3b489024f03c7cd14d755729da7"
+    },
+    {
+      "cell": "1440-light",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1440-light.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1440-light.png",
+      "bytes": 44524,
+      "sha256": "1051e123ec4df240f84239e531443a5f196158ed2e34692b63d3766c9f5d9fc6"
+    },
+    {
+      "cell": "1440-dark",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1440-dark.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1440-dark.png",
+      "bytes": 44524,
+      "sha256": "1051e123ec4df240f84239e531443a5f196158ed2e34692b63d3766c9f5d9fc6"
+    },
+    {
+      "cell": "375-reduced",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-375-reduced.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-375-reduced.png",
+      "bytes": 39102,
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4"
+    },
+    {
+      "cell": "1280-forced",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-forced.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-forced.png",
+      "bytes": 40661,
+      "sha256": "01935378611f22797a65a02308b53e14d0d83c7737a861dde6b4699dd472d886"
+    },
+    {
+      "cell": "1280-zoom-200",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-zoom-200.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-zoom-200.png",
+      "bytes": 38518,
+      "sha256": "a707611e7d391415dd5af4551f7ef6d8f9284e8196685abd1297f2955ec70e6b"
+    },
+    {
+      "cell": "1280-text-double",
+      "original": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/internal-5056ce2-1280-text-double.png",
+      "preserved": "C:/dev/mbv-run/internal-native-captures-5056ce2/internal-5056ce2-1280-text-double.png",
+      "bytes": 91116,
+      "sha256": "0b364ac17579ca88738e6e9bb20b070e8ecc3856cf5f93730b7f1f2b275c550f"
+    }
+  ],
+  "Emulation": "640x450 CSS viewport at DPR2 represents1280x900 at200percent. This is emulated layout, not browser/OS zoom. Text sizes double after paint; induced CLS is diagnostic, not normal performance.",
+  "FieldINP": "Unproven. Only native Event Timing lab samples are recorded.",
+  "VisualInspectionPending": false,
+  "PositiveOperatorCapability": false,
+  "RemoteWrites": 0,
+  "DistinctAcceptedCapturesViewed": 8,
+  "DesignScore": {
+    "Motion": 10,
+    "Deductions": [
+      "Inherited body token is 15px (-3).",
+      "Inherited skip link measures 40.5px (-1); visible focus passes."
+    ],
+    "Performance": 20,
+    "Accessibility": 25,
+    "Responsive": 11,
+    "Total": 96,
+    "Craft": 20,
+    "Theming": 10,
+    "Scope": "Unavailable operations route only. No positive operator capability or whole-platform approval."
+  },
+  "VisualInspection": "All eight distinct captures inspected. Four normal widths, forced colors, enlarged text and corrected emulated zoom retain all copy and recovery control. Light-only product theme remains readable under dark preference; six duplicate captures match SHA-256."
+}

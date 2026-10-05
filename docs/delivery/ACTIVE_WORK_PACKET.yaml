@@ -358,7 +358,8 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Verify the operator gate on /studio/internal in the UI and Core under L3f.
+  next_action: Run the pre-transition quality pass and supersede UI-001 into RENDER-001 under A2,
+    carrying unproven operator permission and primary flows.
   blockers: []
   changed_paths: []
   last_green_checks: []

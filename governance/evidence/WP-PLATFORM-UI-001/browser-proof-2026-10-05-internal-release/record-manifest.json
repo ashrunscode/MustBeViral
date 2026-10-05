@@ -1,0 +1,342 @@
+{
+  "source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "reviewed": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "hashRepresentation": "Staged Git blobs; manifest excludes itself.",
+  "files": [
+    {
+      "path": "PROJECT_STATE.yaml",
+      "bytes": 3091,
+      "sha256": "fa1c580d43dcfa9634ecf2619b3055e9821a2e4f7e507f604b1dbfe75bc704e8"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "bytes": 800,
+      "sha256": "c3ddfd26d02bc971a5e817a5ba3a91a688b6cdcf8da182167e3c7cd2b4676aa1"
+    },
+    {
+      "path": "docs/delivery/ACTIVE_WORK_PACKET.yaml",
+      "bytes": 21899,
+      "sha256": "03ebea94dfe41186defbf18bcc845347368fcab29d864b7ade9e0007bba0f552"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/README.md",
+      "bytes": 1942,
+      "sha256": "4534b14fe0b151dcdb25450a65eef4957fe079f1be4816473028263ab18ba295"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/capture-representatives.json",
+      "bytes": 12785,
+      "sha256": "bb86eeddffc29c4b163eb12b5187fcded96d25b525455b4be266cdf0b77e6fd9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-forced.png",
+      "bytes": 40661,
+      "sha256": "01935378611f22797a65a02308b53e14d0d83c7737a861dde6b4699dd472d886"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-light.png",
+      "bytes": 43953,
+      "sha256": "17db070c94d38ae643afb87cf94d3ddbe7430a0d09ffbd8cac3887a21114b10e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-text-double.png",
+      "bytes": 91116,
+      "sha256": "0b364ac17579ca88738e6e9bb20b070e8ecc3856cf5f93730b7f1f2b275c550f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1280-zoom-200.png",
+      "bytes": 38518,
+      "sha256": "a707611e7d391415dd5af4551f7ef6d8f9284e8196685abd1297f2955ec70e6b"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1440-light.png",
+      "bytes": 44524,
+      "sha256": "1051e123ec4df240f84239e531443a5f196158ed2e34692b63d3766c9f5d9fc6"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-1920-light.png",
+      "bytes": 46013,
+      "sha256": "161cec04c5c76ec3bddd18806309eb139f33c3b489024f03c7cd14d755729da7"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-375-light.png",
+      "bytes": 39102,
+      "sha256": "dc52635422c9e70e3404e784f069131d1ef4d2ec72bdf9b8fc6098f84e7c6cb4"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-5056ce2-768-light.png",
+      "bytes": 44127,
+      "sha256": "9ab1d3808eb3b5fda26c7028307892d64a9566c22f5b8f9a469c2413ecf6752d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-author-reading-width-gates-20261005.json",
+      "bytes": 3747,
+      "sha256": "16b86a91ca2593ef8ea60a9469d17b24753d54312763846d66bf5afa54e64743"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-deploy-clone-20261005.json",
+      "bytes": 778,
+      "sha256": "406a0e0be7ba82de218c277b557dd9f3a81c1fadd3bd51489ac7f43d05c0ec4d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-fresh-5056ce2-gates.json",
+      "bytes": 3633,
+      "sha256": "f63588af1d77a5b6bc668cfabc9725a2a484189c952f33692cd704a10a4e53c6"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-fresh-connected-5056ce2-20261005.json",
+      "bytes": 604,
+      "sha256": "72e746a6d0fb1900a77303c0fdf34faee9f64e8221146b6bf5b29a32981ec1fa"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-fresh-connected-stop-5056ce2-20261005.json",
+      "bytes": 381,
+      "sha256": "3ced67427fa437a8a4ee1d192e10036032abbc2767858829b90123d731df49fd"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-fresh-preview-5056ce2-20261005.json",
+      "bytes": 3649,
+      "sha256": "5cd4097bc04cd1e7e2f6b9ef72bdf8a411f0d33cc4587e15ee19b7c5fbe310ea"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-merge-receipt-20261005.json",
+      "bytes": 452,
+      "sha256": "e2ccaad77ff325a36521b2ad3ecab0c360bc488dbf19b49824715e984e391a66"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-native-final-5056ce2-20261005.json",
+      "bytes": 35311,
+      "sha256": "90df84d7345bbe66adef15afbd8bad4ac01c0bf4feba235aab4a209dc6700d8f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-optimized-preview-5056ce2-2.json",
+      "bytes": 777,
+      "sha256": "03cc0892d6886e4d7c807f5e0ea87d50bc2fed1d0e57dcd99242bf8f11e162a3"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-5056ce2-software-1280.png",
+      "bytes": 100686,
+      "sha256": "aeb7a6258bbe6ec18efe7796ed86a0b4008b85c507116c62fe4b192db144de1f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-5056ce2-software-375.png",
+      "bytes": 86398,
+      "sha256": "6ad09dbfbfab9850eee21280a01a4e009c15a606a371e8920247158d451f3681"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-5056ce2-software-1280.png",
+      "bytes": 100562,
+      "sha256": "3c6a30072d803e9510c8e7604639286b75a419b4d19924e4b8be7671ae4efa26"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-5056ce2-software-375.png",
+      "bytes": 86735,
+      "sha256": "5ea2acf194931bd0782d6ed9e76bdae2b7bfc2ca82ba75a2fc7f68b5fed7292d"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-c8-browser-20261005.json",
+      "bytes": 35192,
+      "sha256": "5bc05d08eaba0f229b4ef2577db536d63f0f2c8245bd266d45b28b44789f1a72"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-cached-policy-20261005.json",
+      "bytes": 19166,
+      "sha256": "470aff8a80229aa3de59cf7221ef887fcd89d96dad41a8df20fa37f3ee649bfc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-http-smoke-20261005.json",
+      "bytes": 1019,
+      "sha256": "704613184abe0e87b66a50d2e0a6f1d57ea317cf5af4cb58ee182e7ec84a953f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-native-capture-copy-20261005.json",
+      "bytes": 3121,
+      "sha256": "e66ebc8c8b89fc56dfaa085327e1bf50597061c6768a1fbe764e2a34e848b889"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-s0-browser-20261005.json",
+      "bytes": 2929,
+      "sha256": "529fc07c0c5c5218a73fbf967d444a4555a544ecf2ef5583cd72b9cd323d745e"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-alias-smoke-summary-20261005.json",
+      "bytes": 417,
+      "sha256": "899154389ca0ae5ed789fe92494d0d2ccb02804276a0e1667da87b6d29d60265"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-c8-browser-20261005.json",
+      "bytes": 35158,
+      "sha256": "a9463c631a685aabe1318426e760bbb167cd00e85fcb249416b0d0a36210a263"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-cached-policy-20261005.json",
+      "bytes": 19144,
+      "sha256": "7e43ddcad3682f07fbace20102bac9bb2881d83727383b2091f460f1b3657488"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-deploy-receipt-20261005.json",
+      "bytes": 568,
+      "sha256": "92a4faa17d0c63f11565f33d96a4f52bcd5c075e74696cedacca636ec6e492bf"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-http-smoke-20261005.json",
+      "bytes": 979,
+      "sha256": "3d3b0e6bcb16ca57dbb33cfb56997623ffcfc30a3cd5920a3be5ad581fc15dfc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-native-capture-copy-20261005.json",
+      "bytes": 3031,
+      "sha256": "b254a1cdd59adbc6849fe8f44c8780e6bfb5f38e9b683cc86a2311afceccb3cf"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-provider-inspect-20261005.json",
+      "bytes": 394,
+      "sha256": "9d98935aefcbfae3732338565eff5078e8131554b3e02feee303c9b3f6855bc9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-release-ready-20261005.json",
+      "bytes": 799,
+      "sha256": "be3407978730d5d0022b96f4f167a580a3ac63fd75990932668961e2b73c61a9"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-s0-browser-20261005.json",
+      "bytes": 2907,
+      "sha256": "76a4dd458f1f25caf4266d623f57866a3fbf4fb184d523d5b678a4a179302d24"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-production-smoke-summary-20261005.json",
+      "bytes": 411,
+      "sha256": "599ca1dcdd7ed97592929ad9606b665ab13d0baf8817254357aee370f9fdaa72"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-release-migrations-production-20261005.json",
+      "bytes": 295,
+      "sha256": "3976681cd0333e79dbcb758c63d6dc62e9e3d305153e713c3bd0c625fc717f54"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-release-migrations-staging-20261005.json",
+      "bytes": 295,
+      "sha256": "3976681cd0333e79dbcb758c63d6dc62e9e3d305153e713c3bd0c625fc717f54"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-review-round-1-20261005.json",
+      "bytes": 899,
+      "sha256": "1b3a61ec89eee3adadf5d14e4bf2c57abe341609115ea4349af79ffd50a0d37f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-review-round-2-20261005.json",
+      "bytes": 899,
+      "sha256": "5efa6176f3f439dde3abb2087d8a99ce7131e4421a1e298881cf34f1ad34a9d7"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-served-diff-5056ce2-20261005.json",
+      "bytes": 580,
+      "sha256": "6268a49aab43ae93b0fd1a438fff462096d202dff46e5e035004f9a406b4c205"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-source-hash-parity-5056ce2-20261005.json",
+      "bytes": 785,
+      "sha256": "3aed2684a815275711502229ba47dbc23e57353f593b7ce2e07a580b8bdfb9e1"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-advertising-375.png",
+      "bytes": 184282,
+      "sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-es-375.png",
+      "bytes": 183534,
+      "sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-home-375.png",
+      "bytes": 307000,
+      "sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-software-1280.png",
+      "bytes": 100508,
+      "sha256": "ccc933c6c7433f86b280e6cd7c1d5b065c22b90f5b62e4c84d517750f5622eea"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-5056ce2-software-375.png",
+      "bytes": 86457,
+      "sha256": "1f82fafe98bcf8905f3c77b579a00728351d54a60f04eaf764816a4c74e4e561"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-c8-browser-20261005.json",
+      "bytes": 35171,
+      "sha256": "14354ff7a0b4ac32857c77cac1b0ff735caea2f4fc324dbae9571f29d06998ad"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-cached-policy-20261005.json",
+      "bytes": 19163,
+      "sha256": "99066ae30f5f1dfc34942d3e29a51f4f623695f1352d30cfed846f5dd1322356"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-deploy-receipt-20261005.json",
+      "bytes": 562,
+      "sha256": "04f31dfb83af4f89a5857a00248d3b5c5b284eef75438c3f848b7b1c007f2414"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-http-smoke-20261005.json",
+      "bytes": 989,
+      "sha256": "1ac9bf4f6cba183ef50367c56b2123805a947c7f985267b08bf7f28166fa9a4f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-native-capture-copy-20261005.json",
+      "bytes": 3098,
+      "sha256": "8d7086fa21e32be5da540dfa930ac7283918302ccecfe48d9fd8ca7df75f79d3"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-provider-inspect-20261005.json",
+      "bytes": 338,
+      "sha256": "bec9498ea8b9b1e330f1a9d83b491f177edb210ff1a4af7759b3f01866b267ad"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-release-ready-20261005.json",
+      "bytes": 733,
+      "sha256": "cb33d7358a306c721c572632432f07f9235565dea56bd8ce09799a202de26cfc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-s0-browser-20261005.json",
+      "bytes": 2926,
+      "sha256": "ae1c33961213a2d24523eedcf02109c5a9ba4845b5056e359661b35da205d1cc"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-access-staging-smoke-summary-20261005.json",
+      "bytes": 385,
+      "sha256": "9611b3e2ff0ee51b40094864adbe33c989c5595cc92dd5aa0914632565bd7327"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-native-capture-inventory-5056ce2.json",
+      "bytes": 5164,
+      "sha256": "fa774ce37aab041c6a26d3ee41112fed434d8519f5e604014f88eeecc39f94cd"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-internal-release/internal-native-owned-stop-5056ce2-20261005.json",
+      "bytes": 456,
+      "sha256": "07450b2532a230ca86c774cbbdfd0319d5397978f5e82d8d5ce6cf7d21ee6cbf"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/merge-review-internal-access-2026-10-05.md",
+      "bytes": 3665,
+      "sha256": "5dc54a2720013aacd2e4e067596c3911043bda7061b8e09e1314ba2a195c06e3"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/merge-review-studio-release-record-2026-10-05.md",
+      "bytes": 1581,
+      "sha256": "0058f05e2899f51549b3b67dd9d6b357bd161d580cb669ce81e45ab888d4cf4f"
+    },
+    {
+      "path": "governance/evidence/WP-PLATFORM-UI-001/release-internal-access-2026-10-05.md",
+      "bytes": 11503,
+      "sha256": "174a16b0c907528e5c03ae33f4311b81c0c160e8138d7a9d5d4366516823fea0"
+    },
+    {
+      "path": "llms.txt",
+      "bytes": 609,
+      "sha256": "535bb22afd4153b61c9f1075308a5125cdcde8721fc083da8f04484e188bb000"
+    }
+  ]
+}
