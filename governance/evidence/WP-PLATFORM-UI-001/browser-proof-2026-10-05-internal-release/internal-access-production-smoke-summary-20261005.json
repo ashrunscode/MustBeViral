@@ -1,0 +1,16 @@
+{
+  "ExistingSoftwareFilmAccepted": false,
+  "Target": "production",
+  "DeploymentId": "dpl_42vW5NbwXH7zPk8nDFkGGqVcnx2f",
+  "HttpPass": true,
+  "CachedPolicyCases": 16,
+  "CheckedUtc": "2026-10-05T20:01:57.3900764Z",
+  "Captures": 5,
+  "RemoteWrites": 0,
+  "MediaCases": 3,
+  "Pass": true,
+  "FormsSubmitted": 0,
+  "C8Cells": 32,
+  "BrowserPass": true,
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd"
+}

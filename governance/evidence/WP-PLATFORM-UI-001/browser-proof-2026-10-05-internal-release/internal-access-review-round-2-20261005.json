@@ -1,0 +1,22 @@
+{
+  "Session": "01a10d9a-c463-7cb3-b5dd-67523e496647",
+  "Root": "C:/dev/worktrees/mustbeviral/review-5056ce2",
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-prompt-5056ce2.md",
+  "ActualProcessExit": 0,
+  "CodexVersion": "codex-cli 0.160.0",
+  "StartedUtc": "2026-10-05T19:46:45.9039050Z",
+  "Verdict": "VERDICT: PASS",
+  "FinishedUtc": "2026-10-05T19:50:20.1052781Z",
+  "Out": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-5056ce2.md",
+  "Round": 2,
+  "DevelopmentSpend": false,
+  "PriorRoundsPreserved": true,
+  "PromptSha256": "6300d7169f452b1acb8bd466aeacd431c36b35df78dc3fdd5ece4d7370b4ce9c",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-5056ce2.log",
+  "Effort": "xhigh",
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "Pr": 84,
+  "RequiredFlagsRetained": true,
+  "Model": "gpt-6.1-sol",
+  "Base": "66a3ba4e7db6f597ecaa51f7a616fcde6e0712d4"
+}

@@ -1,0 +1,13 @@
+{
+  "Executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "RecordedUtc": "2026-10-05T19:37:48.9675080Z",
+  "Pid": 42276,
+  "TestExit": 0,
+  "StopExit": 0,
+  "CleanSource": true,
+  "NoForcedFixtureDeletion": true,
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "PortsFree": true,
+  "TestsPassed": 22,
+  "CreatedUtc": "2026-10-05T19:23:19.9032760Z"
+}

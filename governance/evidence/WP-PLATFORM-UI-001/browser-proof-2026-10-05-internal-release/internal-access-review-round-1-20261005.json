@@ -1,0 +1,22 @@
+{
+  "PromptSha256": "9a261fd094ae6191f18d9f5a4261fe135be837ca5dcbb6350b0b14ec47f01af7",
+  "Verdict": "VERDICT: PASS",
+  "Session": "01a10d60-8d2d-7182-994c-a58ed9d50fe4",
+  "Pr": 84,
+  "Base": "66a3ba4e7db6f597ecaa51f7a616fcde6e0712d4",
+  "Out": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-986e83e.md",
+  "Head": "986e83e89447888ccdb7f406a1491aff0cffa8c7",
+  "Round": 1,
+  "StartedUtc": "2026-10-05T18:43:11.2991833Z",
+  "DevelopmentSpend": false,
+  "ActualProcessExit": 0,
+  "FinishedUtc": "2026-10-05T18:47:49.9822261Z",
+  "Root": "C:/dev/worktrees/mustbeviral/review-986e83e",
+  "CodexVersion": "codex-cli 0.160.0",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-986e83e.log",
+  "Effort": "xhigh",
+  "RequiredFlagsRetained": true,
+  "Model": "gpt-6.1-sol",
+  "PriorRoundsPreserved": true,
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-prompt-986e83e.md"
+}

@@ -1,0 +1,21 @@
+{
+  "RecordedUtc": "2026-10-05T19:46:43.1538471Z",
+  "Results": [
+    {
+      "CreatedUtc": "2026-10-05T19:43:24.6877990Z",
+      "Pid": 30892,
+      "Kind": "harness",
+      "StopExit": 0
+    },
+    {
+      "CreatedUtc": "2026-10-05T19:38:30.3174860Z",
+      "Pid": 18664,
+      "Kind": "preview",
+      "StopExit": 0
+    }
+  ],
+  "FixtureDeleted": 1,
+  "FixtureCleanupExit": 0,
+  "PortsFree": true,
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8"
+}

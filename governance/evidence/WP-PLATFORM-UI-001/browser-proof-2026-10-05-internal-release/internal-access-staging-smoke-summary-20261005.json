@@ -1,0 +1,15 @@
+{
+  "Captures": 5,
+  "CheckedUtc": "2026-10-05T19:56:16.0633547Z",
+  "FormsSubmitted": 0,
+  "Pass": true,
+  "HttpPass": true,
+  "DeploymentId": "dpl_9QguxAbLhT36J67FYaZZw6ofEiTz",
+  "ExistingSoftwareFilmAccepted": false,
+  "MediaCases": 3,
+  "RemoteWrites": 0,
+  "CachedPolicyCases": 16,
+  "BrowserPass": true,
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "C8Cells": 32
+}

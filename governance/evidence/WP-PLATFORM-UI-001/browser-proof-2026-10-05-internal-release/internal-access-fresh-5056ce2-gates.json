@@ -1,0 +1,93 @@
+{
+  "Versions": {
+    "Supabase": "2.109.1",
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0",
+    "Playwright": "Version 1.61.1"
+  },
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "Checks": [
+    {
+      "Label": "install",
+      "Command": "corepack pnpm install --frozen-lockfile",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-install.log",
+      "FinishedUtc": "2026-10-05T19:03:45.2345271Z",
+      "StartedUtc": "2026-10-05T19:03:21.6970843Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "agent-preflight",
+      "Command": "corepack pnpm agent:preflight",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-agent-preflight.log",
+      "FinishedUtc": "2026-10-05T19:05:13.1714922Z",
+      "StartedUtc": "2026-10-05T19:03:50.3761246Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "governance-check",
+      "Command": "corepack pnpm governance:check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-governance-check.log",
+      "FinishedUtc": "2026-10-05T19:06:44.1530439Z",
+      "StartedUtc": "2026-10-05T19:05:13.1738245Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "governance-test",
+      "Command": "corepack pnpm governance:test",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-governance-test.log",
+      "FinishedUtc": "2026-10-05T19:08:22.6352590Z",
+      "StartedUtc": "2026-10-05T19:06:44.1549795Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "format-check",
+      "Command": "corepack pnpm format:check",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-format-check.log",
+      "FinishedUtc": "2026-10-05T19:08:43.2588511Z",
+      "StartedUtc": "2026-10-05T19:08:22.6376431Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "verify",
+      "Command": "corepack pnpm verify",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-verify.log",
+      "FinishedUtc": "2026-10-05T19:18:01.6833660Z",
+      "StartedUtc": "2026-10-05T19:08:43.2606298Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "migration-list-before",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-migration-list-before.log",
+      "FinishedUtc": "2026-10-05T19:18:04.9468053Z",
+      "StartedUtc": "2026-10-05T19:18:01.8069786Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "migration-up",
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-migration-up.log",
+      "FinishedUtc": "2026-10-05T19:18:08.7399443Z",
+      "StartedUtc": "2026-10-05T19:18:05.5385180Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "migration-list",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-migration-list.log",
+      "FinishedUtc": "2026-10-05T19:18:11.8632084Z",
+      "StartedUtc": "2026-10-05T19:18:08.7416645Z",
+      "ActualExit": 0
+    },
+    {
+      "Label": "supabase-test",
+      "Command": "corepack pnpm supabase:test",
+      "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-internal-access-fresh-5056ce2-supabase-test.log",
+      "FinishedUtc": "2026-10-05T19:18:33.1418021Z",
+      "StartedUtc": "2026-10-05T19:18:12.4659414Z",
+      "ActualExit": 0
+    }
+  ],
+  "Root": "C:/dev/mbv-verify-5056ce2",
+  "LocalDatabaseOnly": true
+}

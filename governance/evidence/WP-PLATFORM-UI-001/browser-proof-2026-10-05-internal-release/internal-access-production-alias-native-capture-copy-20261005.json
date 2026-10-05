@@ -1,0 +1,55 @@
+{
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "Rows": [
+    {
+      "Original": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\internal-access-production-alias-5056ce2-software-375.png",
+      "Path": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-software-375.png",
+      "Sha256": "5ea2acf194931bd0782d6ed9e76bdae2b7bfc2ca82ba75a2fc7f68b5fed7292d",
+      "Bytes": 86735,
+      "PriorInspectedMatch": false,
+      "Matches": [null]
+    },
+    {
+      "Original": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\internal-access-production-alias-5056ce2-software-1280.png",
+      "Path": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-software-1280.png",
+      "Sha256": "3c6a30072d803e9510c8e7604639286b75a419b4d19924e4b8be7671ae4efa26",
+      "Bytes": 100562,
+      "PriorInspectedMatch": false,
+      "Matches": [null]
+    },
+    {
+      "Original": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\internal-access-production-alias-5056ce2-home-375.png",
+      "Path": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-home-375.png",
+      "Sha256": "4cc94a32e39eb5a9dde558cd1385f1f3519ff0e9a7132501736e2c75ddd3d423",
+      "Bytes": 307000,
+      "PriorInspectedMatch": true,
+      "Matches": [
+        "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-home-375.png"
+      ]
+    },
+    {
+      "Original": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\internal-access-production-alias-5056ce2-es-375.png",
+      "Path": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-es-375.png",
+      "Sha256": "65db5e8a79817c27458ccbd0cb36e419135489e44e06b1737823a2ec8b10cbea",
+      "Bytes": 183534,
+      "PriorInspectedMatch": true,
+      "Matches": [
+        "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-es-375.png"
+      ]
+    },
+    {
+      "Original": "C:\\dev\\projects\\ashrunscode\\MustBeViral\\.playwright-mcp\\internal-access-production-alias-5056ce2-advertising-375.png",
+      "Path": "C:\\dev\\mbv-run\\internal-access-production-alias-native-captures-5056ce2\\internal-access-production-alias-5056ce2-advertising-375.png",
+      "Sha256": "91a1ba07d6e7e741c920aaa76e3e6f8afd4ea08934a16a8a644ce0624b988016",
+      "Bytes": 184282,
+      "PriorInspectedMatch": true,
+      "Matches": [
+        "C:\\dev\\mbv-run\\internal-access-staging-native-captures-5056ce2\\internal-access-staging-5056ce2-advertising-375.png"
+      ]
+    }
+  ],
+  "CanonicalOriginalsRetained": true,
+  "VisualInspectionPending": false,
+  "DeploymentId": "dpl_42vW5NbwXH7zPk8nDFkGGqVcnx2f",
+  "VisualInspection": "Both unique software captures viewed directly; home/es/advertising byte-match inspected staging originals. Existing tiny-type software film remains unaccepted under D4."
+}

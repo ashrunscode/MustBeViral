@@ -1,0 +1,32 @@
+{
+  "Head": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "AllSixSourceHashesMatch": true,
+  "Count": 6,
+  "Rows": [
+    {
+      "Path": "apps/web/app/(en)/studio/[workspace]/internal/page.tsx",
+      "Equal": true
+    },
+    {
+      "Path": "apps/web/src/features/internal/internal-operations-panel.tsx",
+      "Equal": true
+    },
+    {
+      "Path": "apps/web/src/features/internal/internal-operations-panel.test.tsx",
+      "Equal": true
+    },
+    {
+      "Path": "apps/web/e2e/internal-access.spec.ts",
+      "Equal": true
+    },
+    {
+      "Path": "apps/web/src/features/platform/workspace-frame.tsx",
+      "Equal": true
+    },
+    {
+      "Path": "apps/web/src/features/platform/platform.css",
+      "Equal": true
+    }
+  ],
+  "RecordedUtc": "2026-10-05T19:29:19.4262265Z"
+}

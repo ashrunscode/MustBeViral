@@ -1,0 +1,22 @@
+{
+  "SchemaCheckedUtc": "2026-10-05T19:51:26.770Z",
+  "CheckedUtc": "2026-10-05T19:56:27.5465850Z",
+  "ExactServedInventoryMatch": true,
+  "LiveSource": "e661edbe0c60e1b47c40bea17bde9e5d9062a386",
+  "SharedSchemaRuntimeUnchanged": true,
+  "Rollback": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC",
+  "Project": "mustbeviral-web-production",
+  "Aliases": [
+    "mustbeviral.com",
+    "www.mustbeviral.com",
+    "mustbeviral-web-production.vercel.app",
+    "mustbeviral-web-production-ashrunscode-projects.vercel.app"
+  ],
+  "Newest": "dpl_yovUR1fbh1XsNMTUBrwoBHR9c2dC",
+  "Reviewed": "5056ce27a06444ca66099a4e223c278c420e75e8",
+  "OwnedHarnessStopped": true,
+  "Source": "a58328d4bdd604d6c1e8a53fd334b55f6a1781bd",
+  "AgeMinutes": 209.25678965166668,
+  "RemoteDatabaseWrite": false,
+  "NewestJournaled": true
+}
