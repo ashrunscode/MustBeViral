@@ -707,13 +707,15 @@
     },
     {
       "path": "governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-05-tablet-release/l3f-tablet-record-handoff-output-3-20261005.log.txt",
-      "bytes": 377,
-      "sha256": "7305f1ddcecf2fb978b7e46fbda229d52a42dc292e7870dbc882fb70e1245bf0",
+      "bytes": 371,
+      "sha256": "ed711a630b22b541f3e282ae8ee1d7297fb45f688e81333da5ce66da29e5d03c",
       "originalPath": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-l3f-tablet-record-handoff-3-20261005.log",
-      "originalSha256": "7305f1ddcecf2fb978b7e46fbda229d52a42dc292e7870dbc882fb70e1245bf0"
+      "originalSha256": "7305f1ddcecf2fb978b7e46fbda229d52a42dc292e7870dbc882fb70e1245bf0",
+      "normalization": "Git text normalization to LF; original CRLF bytes retained outside and words unchanged."
     }
   ],
   "PostFormatRecordedUtc": "2026-10-05T06:19:56.252Z",
   "ParsedJsonValuesPreserved": true,
-  "ReceiptCopyRecordedUtc": "2026-10-05T06:30:43.871Z"
+  "ReceiptCopyRecordedUtc": "2026-10-05T06:30:43.871Z",
+  "GitNormalizationRecordedUtc": "2026-10-05T07:00:17.016Z"
 }

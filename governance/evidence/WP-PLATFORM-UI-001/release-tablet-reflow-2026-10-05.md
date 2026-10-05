@@ -77,6 +77,10 @@ public-surfaces, regression-gates and browser-proof retain passed status with th
 
 The frozen-author agent:handoff ran 2026-10-05T06:21:29.7523347Z to 2026-10-05T06:29:39.4993258Z, actual exit 0, without a blocker flag. The mandatory two-YAML Prettier and docs:generate steps both exited 0 afterward, ending at 2026-10-05T06:29:46.2585445Z. Only mutable evidence and next-action fields and generated status projections change. Acceptance statuses, packet authority and production-policy notes are unchanged. Formatting preserved all parsed copied JSON values, capture bytes and four verbatim review outputs. The handoff receipts, output and normalization verification are copied into the release proof with original hashes. The record PR's own documentation gates and independent review belong in its body and the next review-copy record.
 
+## Committed text representation
+
+The initial documentation commit normalized the copied handoff stdout from CRLF to LF under the existing Git text policy. A committed-byte check found exactly that one difference among 102 manifest entries. The final manifest records the 371-byte committed LF representation and keeps the original 377-byte CRLF source hash. The pre-review repair changes no log words, receipt values, captures, reviewer output, runtime or authority. Earlier copy-verification hashes describe their actual precommit representation and remain preserved.
+
 ## Parked
 
 None for this bounded repair. Prior failed regressions, the author connected-test type failure, detached-branch wrapper setup diagnostics and native Canvas FPS failure remain in their original records with their repairs or limits. This record adds no passing claim to those diagnostics.
