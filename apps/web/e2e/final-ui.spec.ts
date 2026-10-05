@@ -385,6 +385,22 @@ test('shows complete selected node details outside the scaled diagram', async ({
   await expect(details.getByText('Verified — Output verified', { exact: true })).toBeVisible();
   await expect(details.getByText('flux-2-klein', { exact: true })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
+  const referenceTypography = await details
+    .getByText('flux-2-klein', { exact: true })
+    .evaluate((element) => {
+      const style = getComputedStyle(element);
+      const firstFamily = (value: string) =>
+        value
+          .split(',')[0]
+          ?.trim()
+          .replace(/^["']|["']$/g, '') ?? '';
+      return {
+        renderedFamily: firstFamily(style.fontFamily),
+        monoFamily: firstFamily(style.getPropertyValue('--font-mono')),
+      };
+    });
+  expect(referenceTypography.monoFamily).not.toBe('');
+  expect(referenceTypography.renderedFamily).toBe(referenceTypography.monoFamily);
   await emulateDoubleText(page);
   const clipped = await details
     .locator('dd')

@@ -994,7 +994,7 @@ export function CanvasFlow({
                     </div>
                     <div>
                       <dt>Reference</dt>
-                      <dd>{selectedNode.model}</dd>
+                      <dd className={styles.nodeReference}>{selectedNode.model}</dd>
                     </div>
                   </dl>
                 </section>

@@ -468,6 +468,9 @@
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
+.nodeReference {
+  font-family: var(--font-mono), monospace;
+}
 
 .sideRail > :last-child {
   border-top: 1px solid var(--line);
