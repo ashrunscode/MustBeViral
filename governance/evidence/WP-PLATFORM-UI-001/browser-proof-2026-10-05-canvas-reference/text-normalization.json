@@ -1,0 +1,50 @@
+{
+  "recordedUtc": "2026-10-05T03:52:30.725Z",
+  "sourceHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "reason": "Preserve diff-check and normal Git line-ending behavior; originals remain outside unchanged.",
+  "preNormalizationCopyVerificationIsHistorical": true,
+  "checkpointFailure": {
+    "RecordedUtc": "2026-10-05 03:52:28 UTC",
+    "ActualExit": 1,
+    "Phase": "git diff --cached --check",
+    "CommitStarted": false,
+    "AuthorHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+    "OwnedStagedFiles": 64,
+    "Cause": "Two trailing spaces in copied native red log; Git also announced CRLF-to-LF conversion for the three copied logs.",
+    "RawOriginalsPreserved": true,
+    "ProductBehaviorFailure": false,
+    "ValidatorCrash": false
+  },
+  "checks": [
+    {
+      "source": "C:/dev/mbv-run/l3f-tablet-reference-font-red-20261005.log",
+      "destination": "regression-red.txt",
+      "rawOriginalSha256": "1865fed0cd3da2cf53639128b59059359faa4eb81405244d33f380b79c3b6756",
+      "copiedNormalizedSha256": "f231bea9d4e2479ee9e643f4c782795a079192da36dd2d90390e01286a7cf9d8",
+      "lineEndings": "LF",
+      "trailingWhitespaceRemoved": true,
+      "allOtherTextUnchanged": true,
+      "rawOriginalRetained": true
+    },
+    {
+      "source": "C:/dev/mbv-run/l3f-tablet-reference-font-green-20261005.log",
+      "destination": "regression-green-before-format.txt",
+      "rawOriginalSha256": "9b878174b46ca1f0ca98e77d7051fa12cf5c4996386e7877c0cf459b10f00d69",
+      "copiedNormalizedSha256": "06b346b10399ed74e4d75380e8c938511d868ecd651b4de49c935e8d043f87d5",
+      "lineEndings": "LF",
+      "trailingWhitespaceRemoved": true,
+      "allOtherTextUnchanged": true,
+      "rawOriginalRetained": true
+    },
+    {
+      "source": "C:/dev/mbv-run/l3f-tablet-reference-font-green-2-20261005.log",
+      "destination": "regression-green-after-format.txt",
+      "rawOriginalSha256": "8b673f1415460c29a1a7d14f20630cd0542dfbdcda4e4acbf680eac933cfe6c7",
+      "copiedNormalizedSha256": "8c9d55d90b98c22d9e281d59b8b357f6acfb346ac19cfefbeb712d38e08ee6df",
+      "lineEndings": "LF",
+      "trailingWhitespaceRemoved": true,
+      "allOtherTextUnchanged": true,
+      "rawOriginalRetained": true
+    }
+  ]
+}

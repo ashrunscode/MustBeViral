@@ -1,0 +1,11 @@
+{
+  "RecordedUtc": "2026-10-05 03:39:40 UTC",
+  "ActualToolIsError": true,
+  "Driver": "Playwright MCP",
+  "Failure": "filename access outside allowed roots was denied before execution",
+  "Script": "C:/dev/mbv-run/capture-l3f-tablet-reference-font-20261005.js",
+  "BeforePageInteraction": true,
+  "ProductValidatorFailure": false,
+  "CanonicalCheckoutWritten": false,
+  "ConfigurationChanged": false
+}

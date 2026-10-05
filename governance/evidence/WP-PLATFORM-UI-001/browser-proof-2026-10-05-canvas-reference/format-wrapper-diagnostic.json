@@ -1,0 +1,8 @@
+{
+  "Retry": "Use narrow glob arguments after verifying each resolves to exactly one declared file.",
+  "ActualExit": 255,
+  "ObservedUtc": "2026-10-05T03:10:52.4764753Z",
+  "Head": "b6f022d2c2531ebd499c104ce6c9b5bcf8357428",
+  "Cause": "cmd.exe interpreted parentheses in unquoted direct path arguments before Prettier started.",
+  "ProductSourceChanged": false
+}

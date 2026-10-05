@@ -1,0 +1,14 @@
+{
+  "Root": "C:/dev/mbv-verify-3082e90-perf",
+  "DeletedNothing": true,
+  "Clean": true,
+  "PreliminaryBrowserProofOnly": true,
+  "Previous": "74b98486204c22e41b76072a6eba833e14609a57",
+  "NoEnvironmentFileCreated": true,
+  "PreservedArtifactRoot": "C:\\dev\\mbv-run\\preserved-tablet-production-74b9848-reference-font-20261005",
+  "Worktrees": 1,
+  "DependenciesUnchanged": true,
+  "Source": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "StartedUtc": "2026-10-05T03:19:30.0722572Z",
+  "FinishedUtc": "2026-10-05T03:19:36.1634606Z"
+}

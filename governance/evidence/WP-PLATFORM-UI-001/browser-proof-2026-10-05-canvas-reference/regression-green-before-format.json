@@ -1,0 +1,23 @@
+{
+  "Log": "C:/dev/mbv-run/l3f-tablet-reference-font-green-20261005.log",
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep shows complete selected node details outside the scaled diagram",
+  "Versions": {
+    "Playwright": "Version 1.61.1",
+    "Pnpm": "11.12.0",
+    "Node": "v24.18.0"
+  },
+  "RemoteWrites": 0,
+  "StartedUtc": "2026-10-05T03:06:50.1660720Z",
+  "Root": "C:/dev/mbv-finish",
+  "ActualExit": 0,
+  "TestSha256": "57762aa6d5558f236877d8262d924cb46db5860fe888ee80401bdddffde16723",
+  "Phase": "green",
+  "FinishedUtc": "2026-10-05T03:07:06.5680214Z",
+  "Head": "b6f022d2c2531ebd499c104ce6c9b5bcf8357428",
+  "OwnedDirtyPaths": [
+    "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.module.css",
+    "apps/web/app/(en)/studio/[workspace]/(workflow)/canvas/canvas-flow.tsx",
+    "apps/web/e2e/final-ui.spec.ts"
+  ],
+  "LocalSyntheticPreviewOnly": true
+}

@@ -1,0 +1,30 @@
+{
+  "sourceHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "noEnvironmentFileCreated": true,
+  "recordedUtc": "2026-10-05T03:36:15.8669977Z",
+  "readyUtc": "2026-10-05T03:36:28.5457280Z",
+  "script": "C:/dev/mbv-run/launch-l3f-tablet-reference-font-production-core-20261005.mjs",
+  "kind": "core",
+  "providersAndQueuesEnabled": false,
+  "root": "C:/dev/mbv-verify-3082e90-perf",
+  "port": 8790,
+  "versionNativeExits": {
+    "pnpm": 0,
+    "node": 0,
+    "wrangler": 0
+  },
+  "productionPreviewBypassEnabled": false,
+  "versions": {
+    "pnpm": "11.12.0",
+    "node": "v24.18.0",
+    "wrangler": "4.110.0"
+  },
+  "readyConfirmed": true,
+  "startedUtc": "2026-10-05T03:36:15.1025866Z",
+  "executable": "C:\\dev\\tools\\runtimes\\node-v24.18.0-win-x64\\node.exe",
+  "log": "C:/dev/mbv-run/l3f-tablet-reference-font-production-core-20261005.log",
+  "errorLog": "C:/dev/mbv-run/l3f-tablet-reference-font-production-core-20261005.err",
+  "pid": 65740,
+  "localOnly": true,
+  "createdUtc": "2026-10-05T03:36:15.1258040Z"
+}

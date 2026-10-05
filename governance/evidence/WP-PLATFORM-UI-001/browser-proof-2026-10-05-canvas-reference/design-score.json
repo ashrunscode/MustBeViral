@@ -1,0 +1,45 @@
+{
+  "RecordedUtc": "2026-10-05 03:48:41 UTC",
+  "SourceHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "Route": "Canvas",
+  "Driver": "Playwright MCP",
+  "BrowserVersion": "154.0.4258.48",
+  "Score": {
+    "Accessibility": 25,
+    "Responsive": 11,
+    "Theming": 10,
+    "Motion": 10,
+    "Performance": 20,
+    "Craft": 17,
+    "Total": 93,
+    "Required": 90
+  },
+  "Basis": {
+    "Accessibility": "No serious or critical axe violations in all nineteen cases; keyboard selection and compact drawer Escape/focus restoration passed. Incomplete contrast entries remain unmeasured numerical contrast.",
+    "Responsive": "No horizontal overflow. Conservative minus three for allowed 15-pixel body type and minus one for the measured 40.5-pixel Skip to content rectangle. BRAND permits the body scale; no product type change is inferred.",
+    "Theming": "Explicit color-scheme light and theme-color; dark OS preference stays readable in the same light theme. No dark theme implementation is claimed.",
+    "Motion": "No running animation in reduced motion, and no broad transition property.",
+    "Performance": "Current 375-pixel production-rendered lab LCP and CLS pass; ordinary console errors zero.",
+    "Craft": "Minus one each for scanning wrapped long references, moving between outline and details on small screens, and reading complete names outside the scaled diagram. These are retained bounded presentation tradeoffs, not a new unmet product contract."
+  },
+  "Lab": {
+    "LcpMs": 452,
+    "LcpTag": "P",
+    "Cls": 0.06351460479405793,
+    "MaximumScriptedEventDurationMs": 56,
+    "FieldINP": "not measured",
+    "UnthrottledLocal": true,
+    "SyntheticGetGraph": true
+  },
+  "OriginalInspection": {
+    "CombinedCaptureAliases": 38,
+    "CombinedDistinctContents": 23,
+    "AllDistinctOriginalsInspected": true,
+    "NewQualityCaptureSha256": "77e56f8401a11db0ed4f45ab3e1a9f46f7042bec7b7d04a2eed9005f16ea6efc",
+    "OriginalDriver": "view_image original"
+  },
+  "ActualBrowserZoom": false,
+  "ActualAssistiveTechnology": false,
+  "IndependentReviewPending": true,
+  "PublicReleasePending": true
+}

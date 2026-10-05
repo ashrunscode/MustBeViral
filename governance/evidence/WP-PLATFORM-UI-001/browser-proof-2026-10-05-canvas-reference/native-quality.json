@@ -1,0 +1,516 @@
+{
+  "recordedUtc": "2026-10-05T03:44:25.799Z",
+  "sourceHead": "0ad0ebf83105010a7d9b8eeb3fdb09f0f74e5015",
+  "driver": "Playwright MCP",
+  "browserVersion": "154.0.4258.48",
+  "renderMode": "Production build, retained local synthetic Auth session, intercepted GET graph/project/mapping; typography and layout mechanics only",
+  "sourceCommitted": true,
+  "productionPreviewBypassEnabled": false,
+  "remoteAuthentication": false,
+  "providerAndQueueExecution": false,
+  "externalWrites": 0,
+  "blockedNonGetRequests": [],
+  "zoom": "CSS viewport and computed-text emulation; no real device or actual browser zoom claim",
+  "fieldINP": "not measured",
+  "newPerformanceClaim": true,
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/studios/7e5d8f3d-8b47-4394-8fa3-36ffddadcd75/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/brands/d2c6d920-8000-47b6-9751-4d90dcdb63aa/access"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workspaces/40c45d77-3df0-488a-9a93-c07d5737f03a/projects/55555555-5555-4555-8555-555555555555/brand"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/canvases/66666666-6666-4666-8666-666666666666"
+    }
+  ],
+  "trees": [
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - button \"Menu\"\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Plan\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/canvas?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - text: Content Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - text: Results\n    - paragraph: Content, Approvals, Results open after a run is confirmed.\n  - region \"Campaign plan\":\n    - text: Canvas revision 77777777\n    - heading \"Campaign\" [level=1]\n    - paragraph:\n      - text: Plan editing needs a desktop. Review the outline and comments here.\n      - link \"Open this plan on a desktop\":\n        - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/canvas?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - button \"Outline and comments\" [expanded]\n    - text: 1 / 1 nodes mounted 0 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\" [disabled]\n    - button \"Checkpoint drafts\" [disabled]\n    - 'button \"Visual gen: Synthetic visual reference, Verified\" [pressed]': Visual gen Verified Synthetic visual reference flux-2-klein Revision pinned\n    - text: Pinned revision 77777777 Route Pinned catalog routes Quote basis Named price on next screen\n    - link \"Review named quote\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666&revision=77777777-7777-4777-8777-777777777777\n  - complementary \"Plan outline and comments\":\n    - heading \"Plan outline and comments\" [level=2]\n    - button \"Close Plan outline and comments\": Close\n    - complementary \"Graph outline\":\n      - text: Outline\n      - heading \"Graph outline\" [level=2]\n      - text: 1 nodes\n      - paragraph: In order. Arrow keys move between nodes.\n      - list:\n        - listitem:\n          - button \"Visual gen Synthetic visual reference Verified\":\n            - text: Visual gen\n            - strong: Synthetic visual reference\n            - text: Verified\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Viewing graph. Draft comments only. Unavailable\n    - group \"Plan parameters\":\n      - region \"Selected node details\":\n        - term: Node\n        - definition: Synthetic visual reference\n        - term: Status\n        - definition: Verified — Revision pinned\n        - term: Reference\n        - definition: flux-2-klein\n      - region \"Collaborative text drafts\":\n        - text: Draft text\n        - heading \"Synthetic visual reference\" [level=3]\n        - text: 2 fields Generation prompt\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Generation prompt\" [disabled]:\n          - /placeholder: Draft the expensive node configuration prompt\n        - text: Configuration notes\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Configuration notes\" [disabled]:\n          - /placeholder: Capture tuning notes before checkpointing\n    - region \"Synthetic visual reference\":\n      - text: Draft comments\n      - heading \"Synthetic visual reference\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n- alert",
+    "- link \"Skip to content\":\n  - /url: \"#platform-main\"\n- complementary \"Studio\":\n  - link \"Must Be Viral\":\n    - /url: /studio\n  - text: Studio Tablet fixture studio\n  - link \"Switch studio\":\n    - /url: /studio\n  - navigation \"Studio navigation\":\n    - link \"Overview\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n    - link \"Brands\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=brands\n    - link \"Calendar\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=calendar\n    - link \"Approvals\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=approvals\n    - link \"Tasks\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=tasks\n    - link \"Creators and partners\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=creators\n    - link \"Reports\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=reports\n    - link \"Team\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=team\n    - link \"Settings\":\n      - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&view=settings\n- banner:\n  - navigation \"Breadcrumb\":\n    - list:\n      - listitem:\n        - link \"Tablet fixture studio\":\n          - /url: /studio?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75\n      - listitem:\n        - text: /\n        - strong: Tablet fixture brand\n      - listitem:\n        - text: /\n        - strong: \"Campaign: Plan\"\n  - text: Owner\n  - button \"Sign out\"\n- 'main \"Campaign: Plan\"':\n  - navigation \"Campaign workflow\":\n    - link \"Brief\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/brief?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa\n    - link \"Plan\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/canvas?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - link \"Budget\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - text: Content Approvals\n    - link \"Collaborators\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/collaborators?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - link \"Calendar\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/calendar?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666\n    - text: Results\n    - paragraph: Content, Approvals, Results open after a run is confirmed.\n  - region \"Campaign plan\":\n    - text: Canvas revision 77777777\n    - heading \"Campaign\" [level=1]\n    - text: 1 / 1 nodes mounted 0 live\n    - button \"Zoom out\": −\n    - text: 100%\n    - button \"Zoom in\": +\n    - button \"Fit\"\n    - button \"Validate graph\"\n    - button \"Checkpoint drafts\" [disabled]\n    - 'button \"Visual gen: Synthetic visual reference, Verified\" [pressed]': Visual gen Verified Synthetic visual reference flux-2-klein Revision pinned\n    - text: Pinned revision 77777777 Route Pinned catalog routes Quote basis Named price on next screen\n    - link \"Review named quote\":\n      - /url: /studio/40c45d77-3df0-488a-9a93-c07d5737f03a/quote?studio=7e5d8f3d-8b47-4394-8fa3-36ffddadcd75&brand=d2c6d920-8000-47b6-9751-4d90dcdb63aa&canvas=66666666-6666-4666-8666-666666666666&revision=77777777-7777-4777-8777-777777777777\n  - complementary \"Plan outline and comments\":\n    - complementary \"Graph outline\":\n      - text: Outline\n      - heading \"Graph outline\" [level=2]\n      - text: 1 nodes\n      - paragraph: In order. Arrow keys move between nodes.\n      - list:\n        - listitem:\n          - button \"Visual gen Synthetic visual reference Verified\":\n            - text: Visual gen\n            - strong: Synthetic visual reference\n            - text: Verified\n    - region \"Collaborator presence\":\n      - list \"Active collaborators\"\n      - text: Live presence\n      - strong: Only you\n      - text: Viewing graph. Draft comments only. Unavailable\n    - group \"Plan parameters\":\n      - region \"Selected node details\":\n        - term: Node\n        - definition: Synthetic visual reference\n        - term: Status\n        - definition: Verified — Revision pinned\n        - term: Reference\n        - definition: flux-2-klein\n      - region \"Collaborative text drafts\":\n        - text: Draft text\n        - heading \"Synthetic visual reference\" [level=3]\n        - text: 2 fields Generation prompt\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Generation prompt\":\n          - /placeholder: Draft the expensive node configuration prompt\n        - text: Configuration notes\n        - status: Edit lease released\n        - paragraph: Focus to acquire an edit lease on expensive node configuration.\n        - textbox \"Configuration notes\":\n          - /placeholder: Capture tuning notes before checkpointing\n    - region \"Synthetic visual reference\":\n      - text: Draft comments\n      - heading \"Synthetic visual reference\" [level=3]\n      - text: 0 threads\n      - paragraph: No draft comments on this anchor yet.\n      - text: Add a draft comment\n      - textbox \"Add a draft comment\":\n        - /placeholder: Share a draft note for collaborators\n      - button \"Post draft comment\" [disabled]\n- alert"
+  ],
+  "rows": [
+    {
+      "cell": "quality-m375",
+      "width": 375,
+      "height": 812,
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "longSyntheticValue": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-05T03:44:17.149Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-m375.png",
+      "detailScreenshot": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-m375-reference.png",
+      "typography": {
+        "text": "flux-2-klein",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\", monospace",
+        "monoToken": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontSize": 12,
+        "wrap": "anywhere",
+        "scrollWidth": 324,
+        "clientWidth": 324,
+        "rect": {
+          "x": 26,
+          "y": 750.875,
+          "width": 324,
+          "height": 16.796875,
+          "top": 750.875,
+          "right": 350,
+          "bottom": 767.671875,
+          "left": 26
+        }
+      },
+      "geometry": {
+        "quality": {
+          "lcpMs": 452,
+          "lcpTag": "P",
+          "cls": 0.06351460479405793,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 40,
+              "interactionId": 2515
+            },
+            {
+              "name": "keypress",
+              "duration": 40,
+              "interactionId": 2515
+            },
+            {
+              "name": "click",
+              "duration": 40,
+              "interactionId": 2515
+            },
+            {
+              "name": "keyup",
+              "duration": 32,
+              "interactionId": 2515
+            },
+            {
+              "name": "keydown",
+              "duration": 56,
+              "interactionId": 2522
+            },
+            {
+              "name": "keypress",
+              "duration": 56,
+              "interactionId": 2522
+            },
+            {
+              "name": "click",
+              "duration": 56,
+              "interactionId": 2522
+            },
+            {
+              "name": "keyup",
+              "duration": 56,
+              "interactionId": 2522
+            }
+          ]
+        },
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "width": 375,
+        "height": 812,
+        "hScroll": false,
+        "mains": 1,
+        "headings": [
+          {
+            "text": "Campaign",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Synthetic visual reference",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "Verified — Revision pinned",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 324,
+            "clientWidth": 324
+          }
+        ],
+        "transitionAll": 0,
+        "runningAnimations": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 0,
+      "compact": true,
+      "escape": {
+        "closed": true,
+        "triggerFocused": true
+      },
+      "errors": [],
+      "responses": [],
+      "checks": {
+        "http": true,
+        "mono": true,
+        "expectedText": true,
+        "noReferenceClip": true,
+        "noDetailsClip": true,
+        "noHorizontalScroll": true,
+        "oneMain": true,
+        "noSeriousOrCritical": true,
+        "noErrors": true,
+        "reducedMotion": true,
+        "keyboardRecovery": true
+      },
+      "pass": true
+    },
+    {
+      "cell": "quality-d1440-light",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "longSyntheticValue": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-05T03:44:21.437Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-light.png",
+      "detailScreenshot": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-light-reference.png",
+      "typography": {
+        "text": "flux-2-klein",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\", monospace",
+        "monoToken": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontSize": 12,
+        "wrap": "anywhere",
+        "scrollWidth": 269,
+        "clientWidth": 269,
+        "rect": {
+          "x": 1146,
+          "y": 844.578125,
+          "width": 269,
+          "height": 16.796875,
+          "top": 844.578125,
+          "right": 1415,
+          "bottom": 861.375,
+          "left": 1146
+        }
+      },
+      "geometry": {
+        "quality": {
+          "lcpMs": 104,
+          "lcpTag": "P",
+          "cls": 0.002346326202685614,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 16,
+              "interactionId": 143
+            },
+            {
+              "name": "keypress",
+              "duration": 16,
+              "interactionId": 143
+            },
+            {
+              "name": "click",
+              "duration": 16,
+              "interactionId": 143
+            },
+            {
+              "name": "keyup",
+              "duration": 16,
+              "interactionId": 143
+            }
+          ]
+        },
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "width": 1440,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "headings": [
+          {
+            "text": "Campaign",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Synthetic visual reference",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Revision pinned",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "transitionAll": 0,
+        "runningAnimations": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 1,
+      "compact": false,
+      "escape": null,
+      "errors": [],
+      "responses": [],
+      "checks": {
+        "http": true,
+        "mono": true,
+        "expectedText": true,
+        "noReferenceClip": true,
+        "noDetailsClip": true,
+        "noHorizontalScroll": true,
+        "oneMain": true,
+        "noSeriousOrCritical": true,
+        "noErrors": true,
+        "reducedMotion": true,
+        "keyboardRecovery": true
+      },
+      "pass": true
+    },
+    {
+      "cell": "quality-d1440-dark",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "dark",
+      "reducedMotion": "no-preference",
+      "forcedColors": "none",
+      "textDouble": false,
+      "longSyntheticValue": false,
+      "httpStatus": 200,
+      "capturedUtc": "2026-10-05T03:44:25.658Z",
+      "screenshot": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-dark.png",
+      "detailScreenshot": "C:/dev/mbv-run/l3f-tablet-reference-font-quality-browser-20261005/canvas-quality-d1440-dark-reference.png",
+      "typography": {
+        "text": "flux-2-klein",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\", monospace",
+        "monoToken": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontSize": 12,
+        "wrap": "anywhere",
+        "scrollWidth": 269,
+        "clientWidth": 269,
+        "rect": {
+          "x": 1146,
+          "y": 844.578125,
+          "width": 269,
+          "height": 16.796875,
+          "top": 844.578125,
+          "right": 1415,
+          "bottom": 861.375,
+          "left": 1146
+        }
+      },
+      "geometry": {
+        "quality": {
+          "lcpMs": 96,
+          "lcpTag": "P",
+          "cls": 0.002346326202685614,
+          "events": [
+            {
+              "name": "keydown",
+              "duration": 24,
+              "interactionId": 1737
+            },
+            {
+              "name": "keypress",
+              "duration": 24,
+              "interactionId": 1737
+            },
+            {
+              "name": "click",
+              "duration": 24,
+              "interactionId": 1737
+            },
+            {
+              "name": "keyup",
+              "duration": 24,
+              "interactionId": 1737
+            }
+          ]
+        },
+        "bodyPx": 15,
+        "colorScheme": "light",
+        "themeColor": true,
+        "smallTargets": [
+          {
+            "name": "Skip to content",
+            "width": 130.796875,
+            "height": 40.5
+          }
+        ],
+        "width": 1440,
+        "height": 900,
+        "hScroll": false,
+        "mains": 1,
+        "headings": [
+          {
+            "text": "Campaign",
+            "px": 13
+          }
+        ],
+        "details": [
+          {
+            "text": "Synthetic visual reference",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "Verified — Revision pinned",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          },
+          {
+            "text": "flux-2-klein",
+            "scrollWidth": 269,
+            "clientWidth": 269
+          }
+        ],
+        "transitionAll": 0,
+        "runningAnimations": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": ["color-contrast"]
+      },
+      "treeIndex": 1,
+      "compact": false,
+      "escape": null,
+      "errors": [],
+      "responses": [],
+      "checks": {
+        "http": true,
+        "mono": true,
+        "expectedText": true,
+        "noReferenceClip": true,
+        "noDetailsClip": true,
+        "noHorizontalScroll": true,
+        "oneMain": true,
+        "noSeriousOrCritical": true,
+        "noErrors": true,
+        "reducedMotion": true,
+        "keyboardRecovery": true
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

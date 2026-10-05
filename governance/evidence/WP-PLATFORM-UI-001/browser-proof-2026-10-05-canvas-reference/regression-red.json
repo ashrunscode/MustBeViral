@@ -1,0 +1,19 @@
+{
+  "OwnedDirtyPaths": ["apps/web/e2e/final-ui.spec.ts"],
+  "ActualExit": 1,
+  "Command": "corepack pnpm exec playwright test apps/web/e2e/final-ui.spec.ts --project=desktop-chromium --grep shows complete selected node details outside the scaled diagram",
+  "Root": "C:/dev/mbv-finish",
+  "Log": "C:/dev/mbv-run/l3f-tablet-reference-font-red-20261005.log",
+  "RemoteWrites": 0,
+  "Phase": "red",
+  "TestSha256": "57762aa6d5558f236877d8262d924cb46db5860fe888ee80401bdddffde16723",
+  "Head": "b6f022d2c2531ebd499c104ce6c9b5bcf8357428",
+  "StartedUtc": "2026-10-05T03:03:44.9744909Z",
+  "FinishedUtc": "2026-10-05T03:03:55.3711089Z",
+  "LocalSyntheticPreviewOnly": true,
+  "Versions": {
+    "Node": "v24.18.0",
+    "Pnpm": "11.12.0",
+    "Playwright": "Version 1.61.1"
+  }
+}
