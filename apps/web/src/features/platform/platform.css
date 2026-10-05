@@ -664,6 +664,9 @@
 .platform-empty {
   justify-items: start;
 }
+.platform-operations .platform-empty > p {
+  max-width: 70ch;
+}
 .platform-segmented {
   display: inline-flex;
   border: 1px solid var(--line);
