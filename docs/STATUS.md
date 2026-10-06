@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — V2 interface program across public, studio, brand, campaign and content surfaces (in_progress) |
-| Active packet | `WP-PLATFORM-UI-001` |
-| Current step | `ui-008-release` |
+| Phase | P4 — Render feasibility, mechanics only until real media exists (planned) |
+| Active packet | `WP-PLATFORM-RENDER-001` |
+| Current step | `render-001-inventory` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Supersede WP-PLATFORM-UI-001 into WP-PLATFORM-RENDER-001 under A2, carrying primary-flows, release-smoke, and the unfinished quality pass without marking them passed.
+Refresh the render preflight inventory, then prove local sharp mechanics on synthetic fixtures and label that proof mechanics only.

@@ -7,12 +7,12 @@ launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P4
-  title: V2 interface program across public, studio, brand, campaign and content surfaces
-  state: in_progress
+  title: Render feasibility, mechanics only until real media exists
+  state: planned
 release_target: full-platform
-active_work_packet: WP-PLATFORM-UI-001
-next_action: Supersede WP-PLATFORM-UI-001 into WP-PLATFORM-RENDER-001 under A2, carrying
-  primary-flows, release-smoke, and the unfinished quality pass without marking them passed.
+active_work_packet: WP-PLATFORM-RENDER-001
+next_action: Refresh the render preflight inventory, then prove local sharp mechanics on synthetic
+  fixtures and label that proof mechanics only.
 decisions_pending: []
 blockers: []
 legacy:
@@ -54,7 +54,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-10-02T03:39:40.622Z
+  at: 2026-10-06T14:01:03.214Z
   by: pnpm agent:supersede
   evidence:
-    - governance/evidence/WP-PLATFORM-W3-001/owner-supersession-decision-2026-10-01.yaml
+    - governance/evidence/WP-PLATFORM-UI-001/owner-supersession-decision-2026-10-06.yaml
