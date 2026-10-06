@@ -11,9 +11,8 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Finish the remaining pre-transition quality pass on this released source, including
-  current route inspection and the real local canvas proof, then carry unproven obligations into
-  RENDER-001 under A2.
+next_action: Supersede WP-PLATFORM-UI-001 into WP-PLATFORM-RENDER-001 under A2, carrying
+  primary-flows, release-smoke, and the unfinished quality pass without marking them passed.
 decisions_pending: []
 blockers: []
 legacy:

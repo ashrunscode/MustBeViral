@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Finish the remaining pre-transition quality pass on this released source, including current route inspection and the real local canvas proof, then carry unproven obligations into RENDER-001 under A2.
+Supersede WP-PLATFORM-UI-001 into WP-PLATFORM-RENDER-001 under A2, carrying primary-flows, release-smoke, and the unfinished quality pass without marking them passed.
