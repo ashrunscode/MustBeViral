@@ -357,8 +357,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: ui-008-release
-  next_action: Fix the studio chooser/overview craft findings and finish the current pre-transition
-    quality pass, then carry unproven obligations into RENDER-001 under A2.
+  next_action: Finish the remaining pre-transition quality pass on this released source, including
+    current route inspection and the real local canvas proof, then carry unproven obligations into
+    RENDER-001 under A2.
   blockers: []
   changed_paths: []
   last_green_checks: []
