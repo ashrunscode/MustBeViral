@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
     const assets = [
       '/films/s0-studio-hero-d55af8ec3d69.mp4',
       '/films/s0-studio-hero-poster-41da8acddb3f.jpg',
+      '/films/s0-studio-hero-en-06371b2bb52f.mp4',
+      '/films/s0-studio-hero-en-poster-e838d8416399.jpg',
+      '/films/s0-studio-hero-en-5a3deeb9fb23.vtt',
     ].map((source) => ({
       source,
       headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],

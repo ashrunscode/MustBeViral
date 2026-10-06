@@ -14,7 +14,13 @@ import { metadata as studioPricingMetadata } from '../../app/(en)/pricing/page';
 import { metadata as privacyMetadata } from '../../app/(en)/privacy/page';
 import { metadata as termsMetadata } from '../../app/(en)/terms/page';
 import { metadata as advertisingMetadata } from '../../app/(en)/advertising/page';
-import { studioEn, studioEs, studioHeroMedia, type StudioHeroMedia } from './public-copy';
+import {
+  studioEn,
+  studioEnHeroMedia,
+  studioEs,
+  studioHeroMedia,
+  type StudioHeroMedia,
+} from './public-copy';
 import { SoftwareLanding } from './software-landing';
 import { SoftwarePricing } from './software-pricing';
 import { StatusScreen } from './status-screen';
@@ -291,14 +297,37 @@ describe('StudioLanding', () => {
     expect(html.indexOf('class="pub-cta"')).toBeLessThan(mediaStart);
   });
 
-  it('ships only the owner-approved English wordless plate with no client-footage claim', () => {
+  it('plays the typed English master on the English homepage and keeps Spanish on the wordless poster', () => {
     expect(studioHeroMedia).toMatchObject({
       poster: { src: '/films/s0-studio-hero-poster-41da8acddb3f.jpg', width: 1920, height: 1080 },
       video: { src: '/films/s0-studio-hero-d55af8ec3d69.mp4' },
       alt: { en: 'Two hands adjust a camera on a gimbal in a generated room.', es: '' },
     });
-    expect(studioHeroMedia?.video).not.toHaveProperty('captions');
-    expect(renderToStaticMarkup(<StudioLanding locale="en" />)).not.toContain('A Houston crew');
+    expect(studioHeroMedia.video).not.toHaveProperty('captions');
+    expect(studioEnHeroMedia).toMatchObject({
+      poster: {
+        src: '/films/s0-studio-hero-en-poster-e838d8416399.jpg',
+        width: 1920,
+        height: 1080,
+      },
+      video: {
+        src: '/films/s0-studio-hero-en-06371b2bb52f.mp4',
+        captions: '/films/s0-studio-hero-en-5a3deeb9fb23.vtt',
+      },
+      alt: {
+        en: 'Two hands adjust a camera on a gimbal in a generated room. The Must Be Viral offer is on the picture.',
+        es: '',
+      },
+    });
+    const english = renderToStaticMarkup(<StudioLanding locale="en" />);
+    const spanish = renderToStaticMarkup(<StudioLanding locale="es" />);
+    expect(english).toContain('s0-studio-hero-en-poster-e838d8416399.jpg');
+    expect(english).toContain('The Must Be Viral offer is on the picture.');
+    expect(english).toContain('This film was made with AI');
+    expect(english).not.toContain('A Houston crew');
+    expect(spanish).toContain('s0-studio-hero-poster-41da8acddb3f.jpg');
+    expect(spanish).not.toContain('s0-studio-hero-en-poster-e838d8416399.jpg');
+    expect(spanish).not.toContain('s0-studio-hero-en-06371b2bb52f.mp4');
     expect(studioEn.offers.map((offer) => offer.name)).toEqual(['Test Shoot', 'Full Package']);
   });
 });

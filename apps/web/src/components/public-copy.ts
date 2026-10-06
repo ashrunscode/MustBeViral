@@ -44,9 +44,30 @@ export const studioHeroMedia: StudioHeroMedia = {
   alt: { en: 'Two hands adjust a camera on a gimbal in a generated room.', es: '' },
 };
 
+/**
+ * Owner instruction 2026-10-06. The English homepage plays this typed master.
+ * The picture is the October 2 plate with the offer burned in afterward.
+ * Spanish keeps the wordless poster above.
+ */
+export const studioEnHeroMedia: StudioHeroMedia = {
+  poster: { src: '/films/s0-studio-hero-en-poster-e838d8416399.jpg', width: 1920, height: 1080 },
+  video: {
+    src: '/films/s0-studio-hero-en-06371b2bb52f.mp4',
+    captions: '/films/s0-studio-hero-en-5a3deeb9fb23.vtt',
+  },
+  alt: {
+    en: 'Two hands adjust a camera on a gimbal in a generated room. The Must Be Viral offer is on the picture.',
+    es: '',
+  },
+};
+
 /** Visible text alternative for the silent plate, from the S0 run report. */
 export const studioFilmDescription =
   'In a generated room, two hands adjust a camera on a gimbal. A calendar and an editing desk follow.';
+
+/** Visible text alternative for the typed English master. */
+export const studioEnFilmDescription =
+  'In a generated room, two hands adjust a camera on a gimbal. The Must Be Viral offer is on the picture. A calendar and an editing desk follow.';
 
 /** A8 requires this exact English disclosure on the hero and the advertising page. */
 export const studioFilmDisclosure =
