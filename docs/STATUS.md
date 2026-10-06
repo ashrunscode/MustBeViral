@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Hold real-media fidelity, private transfer, cancellation, and the cost receipt for owner inputs.
+Put the typed English S0 master on the English homepage, leave the Spanish page on the wordless poster, and keep the October 2 disclosure on the page. Real-media fidelity, private transfer, cancellation, and the cost receipt still wait for owner inputs.
