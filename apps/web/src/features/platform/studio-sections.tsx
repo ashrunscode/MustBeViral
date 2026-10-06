@@ -284,12 +284,22 @@ function StudioOverviewForStudio({
         description="What needs a decision across this studio, then the brands themselves."
       >
         {canWrite ? (
-          <Link
-            className="platform-button platform-primary platform-heading-action"
-            href="#new-brand"
-          >
-            Add a brand
-          </Link>
+          lowerReady ? (
+            <Link
+              className="platform-button platform-primary platform-heading-action"
+              href="#new-brand"
+            >
+              Add a brand
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="platform-button platform-primary platform-heading-action"
+              disabled
+            >
+              Add a brand
+            </button>
+          )
         ) : null}
       </PlatformHeading>
       <section className="platform-card platform-pad platform-stack" aria-labelledby="attention">

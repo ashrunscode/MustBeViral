@@ -381,7 +381,8 @@ describe('studio sections and failed reads', () => {
     expect(
       screen.getByText('What needs a decision across this studio, then the brands themselves.'),
     ).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Add a brand' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Add a brand' }).hasAttribute('disabled')).toBe(true);
+    expect(screen.queryByRole('link', { name: 'Add a brand' })).toBeNull();
     expect(screen.getByRole('heading', { name: 'Needs a decision' })).toBeTruthy();
     expect(screen.getByText('Reading what is open across your brands…')).toBeTruthy();
     expect(document.querySelectorAll('.platform-skeleton').length).toBe(2);
@@ -533,6 +534,9 @@ describe('studio sections and failed reads', () => {
     const view = render(<StudioOverview studio={studio} canWrite />);
     const input = screen.getByRole('textbox', { name: 'Brand name' });
     const form = document.getElementById('new-brand');
+    expect(screen.getByRole('link', { name: 'Add a brand' }).getAttribute('href')).toBe(
+      '#new-brand',
+    );
     expect(form).toBeTruthy();
     expect(input.closest('form')).toBe(form);
     fireEvent.change(input, { target: { value: 'Unsaved draft name' } });
