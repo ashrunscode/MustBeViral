@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-RENDER-001` (in_progress). Current step: `render-001-inventory`.
+Current packet: `WP-PLATFORM-RENDER-001` (in_progress). Current step: `render-003-real-media`.
 
 | Authority topic | Document | Path |
 |---|---|---|

@@ -11,5 +11,8 @@
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
     "test": "vitest run"
+  },
+  "devDependencies": {
+    "sharp": "0.34.5"
   }
 }
