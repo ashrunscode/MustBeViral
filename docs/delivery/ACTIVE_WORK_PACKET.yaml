@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-RENDER-001
-spec_revision: 1
+spec_revision: 2
 title: Render feasibility, mechanics only until real media exists
 phase: P4
 status: in_progress
@@ -36,6 +36,15 @@ scope:
     - llms.txt
     - packages/artifacts/**
     - pnpm-lock.yaml
+    # Owner instruction 2026-10-06: the English homepage plays the typed S0 master.
+    # governance/evidence/WP-PLATFORM-RENDER-001/owner-homepage-master-2026-10-06.md
+    - apps/web/public/films/**
+    - apps/web/src/components/public-copy.ts
+    - apps/web/src/components/studio-landing.tsx
+    - apps/web/src/components/studio-hero-assets.test.ts
+    - apps/web/src/components/signed-out-surfaces.test.tsx
+    - apps/web/next.config.ts
+    - apps/web/src/lib/supabase/proxy.test.ts
   forbidden_paths:
     - .github/workflows/**
     - docs/archive/**
@@ -141,8 +150,9 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: render-003-real-media
-  next_action: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for
-    owner inputs.
+  next_action: Put the typed English S0 master on the English homepage, leave the Spanish
+    page on the wordless poster, and keep the October 2 disclosure on the page. Real-media
+    fidelity, private transfer, cancellation, and the cost receipt still wait for owner inputs.
   blockers: []
   changed_paths: []
   last_green_checks: []

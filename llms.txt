@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-RENDER-001
 current_step: render-003-real-media
-next_action: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for owner inputs.
+next_action: Put the typed English S0 master on the English homepage, leave the Spanish page on the wordless poster, and keep the October 2 disclosure on the page. Real-media fidelity, private transfer, cancellation, and the cost receipt still wait for owner inputs.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
