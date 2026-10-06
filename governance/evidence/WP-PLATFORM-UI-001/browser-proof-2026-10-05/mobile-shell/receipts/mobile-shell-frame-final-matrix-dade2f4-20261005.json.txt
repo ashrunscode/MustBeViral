@@ -1,0 +1,810 @@
+{
+  "source": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "localOnly": true,
+  "remoteWrites": 0,
+  "previewBypass": false,
+  "cells": [
+    {
+      "route": "chooser",
+      "cell": "375-light",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-375-light-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "375-dark",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-375-dark-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "768-light",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-768-light-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "768-dark",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-768-dark-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1280-light",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1280-light-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1280-dark",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1280-dark-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1920-light",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1920-light-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1920-dark",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1920-dark-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1440-light",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1440-light-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1440-dark",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1440-dark-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "375-reduced",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-375-reduced-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "1280-forced",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light dark",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-1280-forced-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "equivalent-200-percent",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-equivalent-200-percent-20261005.png"
+    },
+    {
+      "route": "chooser",
+      "cell": "double-text",
+      "status": 200,
+      "path": "/studio",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Choose a studio.",
+            "fontSize": "56px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 0,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-chooser-double-text-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "375-light",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-375-light-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "375-dark",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-375-dark-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "768-light",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-768-light-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "768-dark",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-768-dark-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1280-light",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1280-light-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1280-dark",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1280-dark-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1920-light",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1920-light-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1920-dark",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1920-dark-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1440-light",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1440-light-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1440-dark",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1440-dark-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "375-reduced",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-375-reduced-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "1280-forced",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light dark",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-1280-forced-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "equivalent-200-percent",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-equivalent-200-percent-20261005.png"
+    },
+    {
+      "route": "studio-overview",
+      "cell": "double-text",
+      "status": 200,
+      "path": "/studio?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=overview",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Studio overview",
+            "fontSize": "56px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 0,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-frame-final-studio-overview-double-text-20261005.png"
+    }
+  ],
+  "labPerformanceUnmeasuredOnDevelopmentServer": true,
+  "visualInspectionPending": true
+}

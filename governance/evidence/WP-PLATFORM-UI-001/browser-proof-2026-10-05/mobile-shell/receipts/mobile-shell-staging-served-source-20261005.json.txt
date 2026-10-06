@@ -1,0 +1,11 @@
+{
+  "CheckedUtc": "2026-10-05T23:28:42.5370337Z",
+  "ReadyState": "READY",
+  "Environment": "staging",
+  "Aliases": [
+    "mustbeviral-web-staging.vercel.app",
+    "mustbeviral-web-staging-ashrunscode-projects.vercel.app"
+  ],
+  "Source": "dd4279f0061c19249a5653f4279be00009ff2b26",
+  "DeploymentId": "dpl_5T4DD199RBa1m1LtU5YF95QRTMVk"
+}

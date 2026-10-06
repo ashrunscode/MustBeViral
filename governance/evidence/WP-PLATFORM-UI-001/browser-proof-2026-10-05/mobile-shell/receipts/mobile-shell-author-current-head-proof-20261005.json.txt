@@ -1,0 +1,95 @@
+{
+  "FocusedFinalConnectedLog": "C:/dev/mbv-run/mobile-shell-connected-restarted-final-20261005.log",
+  "FocusedFinalConnectedActualExit": 0,
+  "FinishedUtc": "2026-10-05T22:40:16.5686790Z",
+  "FinalDeltaBuild": {
+    "Base": "57c61e83330b213457bca892f5b266fa155588d6",
+    "Command": "corepack pnpm --filter @mustbeviral/web build",
+    "Node": "v24.18.0",
+    "CSS": "15a408059f47b8c5b13b9bbdcb8d451af05ac299946ba4cef5f4b7771ece6cff",
+    "ActualExit": 0,
+    "EndedUtc": "2026-10-05T22:19:36.0189742Z"
+  },
+  "UnchangedFiveSourceHashes": true,
+  "OnlyUntestedDelta": "One select max-width override, subsequently built and tested in connected browser",
+  "ReusedEvidencePolicy": "Shared policy and latest owner request; dependencies/configuration/environment unchanged",
+  "Checks": [
+    {
+      "StartedUtc": "2026-10-05T21:56:00.9319474Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-migration-list-before-final-20261005.log",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "EndedUtc": "2026-10-05T21:56:04.7062845Z",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T21:56:05.5189517Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-migration-up-final-20261005.log",
+      "Command": "corepack pnpm exec supabase migration up --local",
+      "EndedUtc": "2026-10-05T21:56:09.2430223Z",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T21:56:10.0296387Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-migration-list-after-final-20261005.log",
+      "Command": "corepack pnpm exec supabase migration list --local",
+      "EndedUtc": "2026-10-05T21:56:13.701221Z",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T21:56:14.3877054Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-agent-verify-final-20261005.log",
+      "Command": "corepack pnpm agent:verify",
+      "EndedUtc": "2026-10-05T22:06:41.8596583Z",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T22:06:42.6101394Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-packet-verify-final-20261005.log",
+      "Command": "corepack pnpm packet:verify",
+      "EndedUtc": "2026-10-05T22:06:44.8472801Z",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T22:06:45.5915978Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-format-final-20261005.log",
+      "Command": "corepack pnpm format:check",
+      "EndedUtc": "2026-10-05T22:07:08.6759005Z",
+      "ActualExit": 0
+    },
+    {
+      "StartedUtc": "2026-10-05T22:07:09.3840616Z",
+      "Log": "C:/dev/mbv-run/mobile-shell-author-scope-final-20261005.log",
+      "Command": "corepack pnpm diff-scope:check --base origin/main --head HEAD",
+      "EndedUtc": "2026-10-05T22:07:11.7807313Z",
+      "ActualExit": 0
+    }
+  ],
+  "SourceHashes": [
+    {
+      "Sha256": "5cb1dcda4c189118089ab6943b0eaa1800de251b2bc965b9c63dbd357a7bd18e",
+      "Path": "apps/web/src/features/platform/platform-frame.tsx"
+    },
+    {
+      "Sha256": "23686af0fd3f6be0babe787f18f382776296bcbc344fe7cbff6122926be9546e",
+      "Path": "apps/web/src/features/platform/brand-workspace.tsx"
+    },
+    {
+      "Sha256": "15a408059f47b8c5b13b9bbdcb8d451af05ac299946ba4cef5f4b7771ece6cff",
+      "Path": "apps/web/src/features/platform/platform.css"
+    },
+    {
+      "Sha256": "a5d817567cd76cbaa7dda2c081dedd073b9a0620282cef659984cbe9c95568d5",
+      "Path": "apps/web/src/features/platform/platform-frame-keyboard.test.tsx"
+    },
+    {
+      "Sha256": "67b031d5e1423d358d30b540bb5d33f9230a99259f8d1d60b3290270a1864e99",
+      "Path": "apps/web/src/features/platform/brand-header-state.test.tsx"
+    },
+    {
+      "Sha256": "392f6ceec63bf2282e9375d01964a0cf02c1dee6caa5a617881e2b9c32aeede8",
+      "Path": "apps/web/e2e/platform-connected.spec.ts"
+    }
+  ],
+  "Complete": true,
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c"
+}

@@ -1,0 +1,22 @@
+{
+  "Head": "dade2f48c01f6c5ee771f3ba25c1a8589e755e4c",
+  "DevelopmentSpend": false,
+  "StartedUtc": "2026-10-05T23:11:24.7900728Z",
+  "Out": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-dade2f4.md",
+  "Model": "gpt-6.1-sol",
+  "Log": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-dade2f4.log",
+  "RequiredFlagsRetained": true,
+  "Pr": 86,
+  "CodexVersion": "codex-cli 0.160.0",
+  "Verdict": "VERDICT: PASS",
+  "Prompt": "C:\\Users\\ernij\\AppData\\Local\\Temp\\mbv-review-prompt-dade2f4.md",
+  "ActualProcessExit": 0,
+  "Base": "57c61e83330b213457bca892f5b266fa155588d6",
+  "Session": "01a10e56-1f88-7390-b960-5993e8cb1f2b",
+  "Root": "C:/dev/worktrees/mustbeviral/review-dade2f4",
+  "PriorRoundsPreserved": true,
+  "PromptSha256": "bb1afbcfed4c37cc65e9c12a9effdd62dcf593a50d97d47c7c8cf8281fc1016e",
+  "Round": 1,
+  "Effort": "xhigh",
+  "FinishedUtc": "2026-10-05T23:16:02.8192263Z"
+}

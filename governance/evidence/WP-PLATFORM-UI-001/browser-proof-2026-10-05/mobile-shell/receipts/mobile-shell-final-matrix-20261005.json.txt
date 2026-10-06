@@ -1,0 +1,810 @@
+{
+  "source": "uncommitted final six-path repair on 57c61e83330b213457bca892f5b266fa155588d6",
+  "localOnly": true,
+  "remoteWrites": 0,
+  "previewBypass": false,
+  "cells": [
+    {
+      "route": "brand-draft",
+      "cell": "375-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-375-light-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "375-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-375-dark-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "768-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-768-light-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "768-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-768-dark-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1280-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1280-light-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1280-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1280-dark-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1920-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1920-light-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1920-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1920-dark-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1440-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1440-light-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1440-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1440-dark-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "375-reduced",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-375-reduced-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "1280-forced",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light dark",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-1280-forced-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "equivalent-200-percent",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-equivalent-200-percent-20261005.png"
+    },
+    {
+      "route": "brand-draft",
+      "cell": "double-text",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=draft",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Make Synthetic quality brand feel like itself.",
+            "fontSize": "56px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 0,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-draft-double-text-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "375-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-375-light-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "375-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-375-dark-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "768-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-768-light-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "768-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-768-dark-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1280-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1280-light-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1280-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1280-dark-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1920-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1920-light-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1920-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1920-dark-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1440-light",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1440-light-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1440-dark",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1440-dark-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "375-reduced",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-375-reduced-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "1280-forced",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light dark",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-1280-forced-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "equivalent-200-percent",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "run": false
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "28px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 1,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-equivalent-200-percent-20261005.png"
+    },
+    {
+      "route": "brand-assets",
+      "cell": "double-text",
+      "status": 200,
+      "path": "/studio/d2416bd2-8b60-4797-9f2c-39af5f9bf133/brands/12b4568b-13eb-44eb-b684-2c15d78939ab?studio=94393ee9-c94d-46c3-bde5-3bfca12d757e&view=assets",
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "probe": {
+        "hScroll": false,
+        "main": 1,
+        "h1": [
+          {
+            "text": "Assets",
+            "fontSize": "56px"
+          }
+        ],
+        "bodyPx": 15,
+        "smallTargets": 0,
+        "theme": "light",
+        "reducedAnimations": 0,
+        "transitionAll": 0,
+        "missingGeometry": 0
+      },
+      "errors": [],
+      "capture": "C:/dev/projects/ashrunscode/MustBeViral/.playwright-mcp/mobile-shell-final-brand-assets-double-text-20261005.png"
+    }
+  ],
+  "labPerformanceUnmeasuredOnDevelopmentServer": true,
+  "visualInspectionPending": true
+}

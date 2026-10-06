@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-UI-001
 current_step: ui-008-release
-next_action: Run the pre-transition quality pass and supersede UI-001 into RENDER-001 under A2, carrying unproven operator permission and primary flows.
+next_action: Fix the studio chooser/overview craft findings and finish the current pre-transition quality pass, then carry unproven obligations into RENDER-001 under A2.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
