@@ -4,14 +4,19 @@ authorized_by: repository-owner
 authorization_source: explicit_user_instruction
 authorized_at: 2026-10-03T02:49:34.984Z
 authorization_statement: >-
-  When the active packet cannot finish only because every unproven row waits on an input only the
-  owner can supply, or needs paths a later roadmap packet owns, Codex may supersede it under
-  ADR-0008.
+  When the active packet cannot finish only because what remains waits on an input only I can
+  supply (footage and rights, a credential, a named reviewer, an owner-only gate), or needs work
+  outside its allowed paths that a later roadmap packet owns, Codex may supersede it under
+  ADR-0008 into the next implementable roadmap packet. Codex may also re-point
+  `completion.successor_packet_id` to that packet. Each supersession commits the authority-only
+  amendment alone first, quotes this sentence as my explicit instruction in the decision record,
+  names the predecessor and the successor, carries every unproven acceptance row and obligation
+  forward, and never marks unfinished acceptance passed.
 selection_statement: >-
-  The successor is selected by this rule: the recorded completion.successor_packet_id, which must
-  be the packet for the next unfinished row of that sequence (UI-001's WP-PLATFORM-RENDER-001 is
-  row 4); otherwise the next row of docs/delivery/ROADMAP.md "Bounded execution sequence after
-  recovery", then W6–W12, whose dependencies are met.
+  Derived from the run procedure, not from the hashed directive. The recorded
+  completion.successor_packet_id is WP-PLATFORM-RENDER-001, roadmap row 4. The other rule, used
+  only when that recorded id is absent, is the next row of the bounded execution sequence, then
+  W6–W12, whose dependencies are met.
 predecessor_packet_id: WP-PLATFORM-UI-001
 predecessor_spec_revision: 5
 successor_packet_id: WP-PLATFORM-RENDER-001

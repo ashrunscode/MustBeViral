@@ -87,6 +87,14 @@ acceptance:
         remote call and uses no customer media.
       status: pending
       evidence: []
+    - id: primary-flows
+      criterion: >-
+        Brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team and
+        settings complete their primary task against the existing handlers, including an idempotent
+        repeated submit and a forced stale-revision failure with recovery, with regression tests
+        that fail if the defect returns.
+      status: pending
+      evidence: []
     - id: real-media
       criterion: >-
         Render feasibility uses a real source image with exact logo/text and a real-footage reel,
@@ -104,19 +112,11 @@ acceptance:
         leaves this row pending.
       status: pending
       evidence: []
-    - id: carried-primary-flows
+    - id: release-smoke
       criterion: >-
-        primary-flows: the composer and content contract (owned by ROADMAP row 18, "Composer and
-        basic calendar"), a durable review reject or send-back with a reason
-        (CANVAS_AND_SCREEN_STATES "Approval and export"), and the missing project-to-brand mapping
-        command (follow-up-2026-10-02.md gap 3).
-      status: pending
-      evidence: []
-    - id: carried-release-smoke
-      criterion: >-
-        release-smoke remains unproven until the signed-in founder journey has a named vault bundle
-        and confirmation that the founder user exists, and until the migration pack has its owner
-        sentence.
+        Staging serves the merge commit with every public route and one signed-in journey smoked,
+        then production serves the same commit on its alias; or the single hard stop that prevented
+        it is recorded with the one sentence that clears it and nothing was crossed.
       status: pending
       evidence: []
 quality_gates:
