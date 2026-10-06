@@ -74,6 +74,139 @@ test.describe('connected platform journeys', () => {
     await expect(page).toHaveURL(new RegExp('^http://127\\.0\\.0\\.1:3111/'));
   });
 
+  test('keeps studio decisions aligned and mobile brand navigation compact without losing edits', async ({
+    page,
+  }) => {
+    test.setTimeout(240_000);
+    const owner = await registerUser(`studio-craft-${randomUUID()}@synthetic.example.test`);
+    await signIn(page, owner.email);
+    await page.getByLabel('Studio name').fill('Synthetic decision layout studio');
+    await page.getByRole('button', { name: 'Create studio', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Add a brand', exact: true })).toBeVisible();
+    const studioId = new URL(page.url()).searchParams.get('studio')!;
+    await page.getByLabel('Brand name').fill('Synthetic decision layout brand');
+    await page.getByRole('button', { name: 'Create brand draft', exact: true }).click();
+    const draftTitle = 'Make Synthetic decision layout brand feel like itself.';
+    await expect(page.getByRole('heading', { name: draftTitle, exact: true })).toBeVisible();
+    const draftUrl = page.url();
+    const brandLocation = new URL(draftUrl);
+
+    for (const width of [375, 767, 768, 1280, 1920]) {
+      await page.setViewportSize({ width, height: 1024 });
+      await page.goto('/studio');
+      const list = page.getByRole('region', { name: 'Your studios' });
+      const track = await list.boundingBox();
+      const card = await list.locator('a.platform-card').boundingBox();
+      expect(track).not.toBeNull();
+      expect(card).not.toBeNull();
+      expect(Math.abs(track!.width - card!.width)).toBeLessThanOrEqual(1);
+
+      await page.goto(`/studio?studio=${studioId}`);
+      await expect(
+        page.getByRole('heading', { name: 'Studio overview', exact: true }),
+      ).toBeVisible();
+      await expect(page.getByText('Not started', { exact: true })).toBeVisible();
+      const decisions = page.locator('section[aria-labelledby="attention"]');
+      const approvals = page.locator('section[aria-labelledby="approvals-now"]');
+      const first = await decisions.boundingBox();
+      const second = await approvals.boundingBox();
+      expect(second!.y - (first!.y + first!.height)).toBeGreaterThanOrEqual(16);
+      const heading = await decisions.getByRole('heading').boundingBox();
+      const item = await decisions.locator('.platform-attention > li').boundingBox();
+      expect(Math.abs(heading!.x - item!.x)).toBeLessThanOrEqual(1);
+      const badge = await decisions.locator('.platform-status').boundingBox();
+      const text = await decisions.locator('.platform-attention__text').boundingBox();
+      expect(badge!.width).toBeLessThan(text!.width);
+      const action = await page
+        .getByRole('link', { name: 'Add a brand', exact: true })
+        .boundingBox();
+      expect(action!.height).toBeLessThanOrEqual(48);
+      await expectNoHorizontalOverflow(page);
+    }
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(draftUrl);
+    await expect(page.getByRole('heading', { name: draftTitle, exact: true })).toBeVisible();
+    const section = page.getByRole('combobox', { name: 'Brand section', exact: true });
+    await expect(section).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Brand navigation' })).toBeHidden();
+    const compact = await section.locator('..').boundingBox();
+    expect(compact!.height).toBeLessThanOrEqual(88);
+
+    for (const value of [
+      'overview',
+      'draft',
+      'findings',
+      'assets',
+      'channels',
+      'campaigns',
+      'content',
+      'calendar',
+      'inbox',
+      'results',
+      'locations',
+      'settings',
+    ]) {
+      await section.selectOption(value);
+      await expect(page).toHaveURL((url) => {
+        return (
+          url.pathname === brandLocation.pathname &&
+          url.searchParams.get('studio') === studioId &&
+          (url.searchParams.get('view') ?? 'overview') === value
+        );
+      });
+      await expect(section).toHaveValue(value);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      await expectNoHorizontalOverflow(page);
+    }
+
+    await expect(
+      page.getByText('Read brand details, Edit brand details, Read locations, Edit locations', {
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(page.getByText('brand:read', { exact: false })).toHaveCount(0);
+    const locations = page.getByRole('checkbox', { name: 'Include locations', exact: true });
+    const checkbox = await locations.boundingBox();
+    const label = locations.locator('..');
+    const labelBox = await label.boundingBox();
+    expect(checkbox!.width).toBeLessThanOrEqual(24);
+    expect(checkbox!.height).toBeLessThanOrEqual(24);
+    expect(labelBox!.height).toBeGreaterThanOrEqual(44);
+    await label.click({ position: { x: labelBox!.width - 10, y: labelBox!.height / 2 } });
+    await expect(locations).not.toBeChecked();
+    await label.click({ position: { x: labelBox!.width - 10, y: labelBox!.height / 2 } });
+    await expect(locations).toBeChecked();
+
+    await section.selectOption('billing');
+    await expect(page).toHaveURL((url) => {
+      return (
+        url.pathname === `/studio/${brandLocation.pathname.split('/')[2]}/billing` &&
+        url.searchParams.get('studio') === studioId &&
+        url.searchParams.get('brand') === brandLocation.pathname.split('/')[4]
+      );
+    });
+    await page.goto(draftUrl);
+    const notes = page.getByLabel('What should we know?');
+    await notes.fill('Synthetic unsaved notes must remain after navigation cancellation.');
+    page.once('dialog', (dialog) => void dialog.dismiss());
+    await section.selectOption('assets');
+    await expect(page).toHaveURL(draftUrl);
+    await expect(section).toHaveValue('draft');
+    await expect(notes).toHaveValue(
+      'Synthetic unsaved notes must remain after navigation cancellation.',
+    );
+    page.once('dialog', (dialog) => void dialog.accept());
+    await section.selectOption('assets');
+    await expect(page.getByRole('heading', { name: 'Assets', exact: true })).toBeVisible();
+
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await expect(section).toBeHidden();
+    await expect(page.getByRole('navigation', { name: 'Brand navigation' })).toBeVisible();
+    await page.getByRole('link', { name: 'Brand draft', exact: true }).click();
+    await expect(page.getByRole('heading', { name: draftTitle, exact: true })).toBeVisible();
+  });
+
   test('keeps studio breadcrumb targets complete and keyboard usable at every supported width', async ({
     page,
   }) => {

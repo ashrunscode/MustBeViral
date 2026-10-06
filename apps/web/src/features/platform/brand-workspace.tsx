@@ -217,7 +217,29 @@ function BrandResource({
             There is no “{unknown}” section for a brand. Showing the overview.
           </p>
         ) : null}
-        <nav className="platform-tabs" aria-label="Brand navigation">
+        <label className="platform-brand-section">
+          Brand section
+          <select
+            value={section}
+            onChange={(event) => {
+              const next = BRAND_SECTIONS.find((tab) => tab.key === event.target.value);
+              const href = next
+                ? brandHref(studioId, workspaceId, brandId, next.key)
+                : event.target.value === 'billing' && current.workspace_owner
+                  ? workspaceBillingHref(workspaceId, studioId, brandId)
+                  : null;
+              if (href && confirmLeave()) router.push(href);
+            }}
+          >
+            {BRAND_SECTIONS.map((tab) => (
+              <option key={tab.key} value={tab.key}>
+                {tab.label}
+              </option>
+            ))}
+            {current.workspace_owner ? <option value="billing">Billing</option> : null}
+          </select>
+        </label>
+        <nav className="platform-tabs platform-brand-tabs" aria-label="Brand navigation">
           {BRAND_SECTIONS.map((tab) => (
             <Link
               key={tab.key}

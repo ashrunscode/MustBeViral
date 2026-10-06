@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const STUDIO = '11111111-1111-4111-8111-111111111111';
@@ -11,8 +11,9 @@ const query = vi.hoisted(() => ({
   brand: { data: undefined as unknown, error: undefined as unknown, loading: true },
   brands: { data: undefined as unknown, error: undefined as unknown, loading: false },
 }));
+const navigation = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: vi.fn() }),
+  useRouter: () => navigation,
   usePathname: () => '/studio',
   useSearchParams: () => new URLSearchParams(),
 }));
@@ -26,13 +27,27 @@ vi.mock('./use-platform-query', () => ({
     refresh: () => undefined,
   }),
 }));
-vi.mock('./brand-draft-editor', () => ({ BrandDraftEditor: () => <h1>Synthetic draft</h1> }));
+vi.mock('./brand-draft-editor', () => ({
+  BrandDraftEditor: ({ onDirty }: { onDirty: (dirty: boolean) => void }) => (
+    <>
+      <h1>Synthetic draft</h1>
+      <button type="button" onClick={() => onDirty(true)}>
+        Synthetic edit
+      </button>
+    </>
+  ),
+}));
 
 import { BrandWorkspace } from './brand-workspace';
 import { PlatformRequestError } from './platform-client';
+import { brandHref, workspaceBillingHref } from './platform-navigation';
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
 beforeEach(() => {
+  navigation.push.mockClear();
   query.studio = { data: undefined, error: undefined, loading: true };
   query.brand = { data: undefined, error: undefined, loading: true };
   query.brands = { data: undefined, error: undefined, loading: false };
@@ -42,8 +57,70 @@ function mount() {
     <BrandWorkspace studioId={STUDIO} workspaceId={WORKSPACE} brandId={BRAND} view="draft" />,
   );
 }
+function resolveAccess(workspaceOwner = true) {
+  query.studio = {
+    data: { studio: { id: STUDIO, name: 'Synthetic studio' }, role: 'owner' },
+    error: undefined,
+    loading: false,
+  };
+  query.brand = {
+    data: {
+      brand: { id: BRAND, name: 'Synthetic brand', workspace_id: WORKSPACE, status: 'active' },
+      actions: ['brand:write'],
+      workspace_owner: workspaceOwner,
+    },
+    error: undefined,
+    loading: false,
+  };
+  query.brands = { data: { items: [], next_cursor: null }, error: undefined, loading: false };
+}
 
 describe('brand header access states', () => {
+  it('routes the compact section control within the selected studio and brand', () => {
+    resolveAccess();
+    mount();
+    const select = screen.getByRole('combobox', { name: 'Brand section' });
+    expect((select as HTMLSelectElement).value).toBe('draft');
+    fireEvent.change(select, { target: { value: 'assets' } });
+    expect(navigation.push).toHaveBeenCalledExactlyOnceWith(
+      brandHref(STUDIO, WORKSPACE, BRAND, 'assets'),
+    );
+  });
+
+  it('offers the existing billing destination only to the workspace owner', () => {
+    resolveAccess(false);
+    const rendered = mount();
+    const select = screen.getByRole('combobox', { name: 'Brand section' });
+    expect(select.querySelector('option[value="billing"]')).toBeNull();
+    fireEvent.change(select, { target: { value: 'billing' } });
+    expect(navigation.push).not.toHaveBeenCalled();
+    resolveAccess();
+    rendered.rerender(
+      <BrandWorkspace studioId={STUDIO} workspaceId={WORKSPACE} brandId={BRAND} view="draft" />,
+    );
+    fireEvent.change(select, { target: { value: 'billing' } });
+    expect(navigation.push).toHaveBeenCalledExactlyOnceWith(
+      workspaceBillingHref(WORKSPACE, STUDIO, BRAND),
+    );
+  });
+
+  it('keeps an unsaved draft on cancellation and navigates only after confirmation', () => {
+    resolveAccess();
+    mount();
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    fireEvent.click(screen.getByRole('button', { name: 'Synthetic edit' }));
+    const select = screen.getByRole('combobox', { name: 'Brand section' });
+    fireEvent.change(select, { target: { value: 'assets' } });
+    expect(confirm).toHaveBeenCalledOnce();
+    expect(navigation.push).not.toHaveBeenCalled();
+    expect((select as HTMLSelectElement).value).toBe('draft');
+    confirm.mockReturnValue(true);
+    fireEvent.change(select, { target: { value: 'assets' } });
+    expect(navigation.push).toHaveBeenCalledExactlyOnceWith(
+      brandHref(STUDIO, WORKSPACE, BRAND, 'assets'),
+    );
+  });
+
   it('reserves loading slots without announcing an identity or offering a switch', () => {
     const { container } = mount();
     expect(screen.getByRole('status').textContent).toContain('Opening the selected brand');

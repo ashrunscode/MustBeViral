@@ -256,7 +256,10 @@ export function StudioOverview({
         description="What needs a decision across this studio, then the brands themselves."
       >
         {canWrite ? (
-          <Link className="platform-button platform-primary" href="#new-brand">
+          <Link
+            className="platform-button platform-primary platform-heading-action"
+            href="#new-brand"
+          >
             Add a brand
           </Link>
         ) : null}
@@ -286,7 +289,7 @@ export function StudioOverview({
             </p>
           )
         ) : (
-          <ol className="platform-attention">
+          <ol className="platform-attention" role="list">
             {items.map((item) => (
               <li key={item.key}>
                 <div className="platform-attention__text">
@@ -316,7 +319,7 @@ export function StudioOverview({
         ) : null}
       </section>
       <section
-        className="platform-card platform-pad platform-stack"
+        className="platform-card platform-pad platform-stack platform-overview-approvals"
         aria-labelledby="approvals-now"
       >
         <div className="platform-row platform-between">
@@ -402,7 +405,10 @@ export function StudioBrands({
         description="Each brand keeps its own voice, original assets and approvals. Switching never touches another account."
       >
         {canWrite ? (
-          <Link className="platform-button platform-primary" href="#new-brand">
+          <Link
+            className="platform-button platform-primary platform-heading-action"
+            href="#new-brand"
+          >
             Add a brand
           </Link>
         ) : null}

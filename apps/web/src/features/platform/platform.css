@@ -39,7 +39,7 @@
   text-underline-offset: 3px;
 }
 /* A text link standing alone in a stack or row keeps a 44px target and a text-width underline. */
-.platform-stack > a:not(.platform-button),
+.platform-stack > a:not(.platform-button):not(.platform-card),
 .platform-row > a:not(.platform-button),
 .platform-section > a:not(.platform-button),
 .platform-attention__text > a:not(.platform-button),
@@ -157,6 +157,9 @@
   width: 20px;
   height: 20px;
   min-height: 0;
+  padding: 0;
+  flex: 0 0 20px;
+  accent-color: var(--signal-fill);
 }
 .platform-review-details > summary {
   min-height: 44px;
@@ -477,6 +480,16 @@
   margin-top: 8px;
   max-width: 70ch;
 }
+.platform-heading > div {
+  min-width: 0;
+}
+.platform-heading-action {
+  flex-shrink: 0;
+  max-width: 100%;
+}
+.platform-overview-approvals {
+  margin-top: 24px;
+}
 .platform-eyebrow {
   font:
     500 10px/1 var(--font-mono),
@@ -640,6 +653,9 @@
   border-bottom: 1px solid var(--line);
   padding-bottom: 12px;
 }
+.platform-brand-section {
+  display: none;
+}
 .platform-tabs a,
 .platform-tabs span {
   display: inline-flex;
@@ -747,6 +763,9 @@
 /* Attention list: one real open item per row with the brand named. */
 .platform-attention {
   display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .platform-attention > li {
   display: flex;
@@ -765,6 +784,9 @@
   display: grid;
   gap: 4px;
   min-width: 0;
+}
+.platform-attention__text > .platform-status {
+  justify-self: start;
 }
 
 /* Calendar */
@@ -948,6 +970,14 @@
   }
   .platform-heading {
     flex-direction: column;
+  }
+  .platform-brand-tabs {
+    display: none;
+  }
+  .platform-brand-section {
+    display: grid;
+    gap: 8px;
+    margin: 0 0 24px;
   }
   .platform-grid,
   .platform-grid--three {
