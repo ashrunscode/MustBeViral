@@ -11,8 +11,9 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-UI-001
-next_action: Fix the studio chooser/overview craft findings and finish the current pre-transition
-  quality pass, then carry unproven obligations into RENDER-001 under A2.
+next_action: Finish the remaining pre-transition quality pass on this released source, including
+  current route inspection and the real local canvas proof, then carry unproven obligations into
+  RENDER-001 under A2.
 decisions_pending: []
 blockers: []
 legacy:

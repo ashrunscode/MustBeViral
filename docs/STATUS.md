@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Fix the studio chooser/overview craft findings and finish the current pre-transition quality pass, then carry unproven obligations into RENDER-001 under A2.
+Finish the remaining pre-transition quality pass on this released source, including current route inspection and the real local canvas proof, then carry unproven obligations into RENDER-001 under A2.
