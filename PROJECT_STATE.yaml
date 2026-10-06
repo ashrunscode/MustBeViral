@@ -11,7 +11,8 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-RENDER-001
-next_action: Refresh the render preflight inventory on the current source.
+next_action: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for
+  owner inputs.
 decisions_pending: []
 blockers: []
 legacy:

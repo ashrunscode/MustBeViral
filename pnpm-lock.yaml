@@ -171,7 +171,11 @@ importers:
 
   packages/ai: {}
 
-  packages/artifacts: {}
+  packages/artifacts:
+    devDependencies:
+      sharp:
+        specifier: 0.34.5
+        version: 0.34.5
 
   packages/billing: {}
 

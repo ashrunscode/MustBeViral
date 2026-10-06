@@ -6,8 +6,8 @@ generation: viralgraph-cleanroom-v2
 launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-RENDER-001
-current_step: render-001-inventory
-next_action: Refresh the render preflight inventory on the current source.
+current_step: render-003-real-media
+next_action: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for owner inputs.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

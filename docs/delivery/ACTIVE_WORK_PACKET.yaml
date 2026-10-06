@@ -65,14 +65,14 @@ public_interfaces:
 steps:
   - id: render-001-inventory
     title: Refresh the render preflight inventory on the current source.
-    status: current
+    status: completed
   - id: render-002-mechanics
     title: Prove local sharp mechanics on synthetic fixtures and label them mechanics only.
-    status: pending
+    status: completed
   - id: render-003-real-media
     title: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for owner
       inputs.
-    status: pending
+    status: current
 acceptance:
   automated:
     - id: mechanics-only
@@ -80,8 +80,9 @@ acceptance:
         A local sharp test creates a synthetic image, composites a deterministic rectangle, and
         checks the output dimensions and hash. The proof is labelled mechanics only. It makes no
         remote call and uses no customer media.
-      status: pending
-      evidence: []
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-RENDER-001/mechanics-only-2026-10-06.md
     - id: primary-flows
       criterion:
         Brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team
@@ -139,8 +140,9 @@ external_effects:
   remote_mutation: none
   destructive_remote_actions: false
 handoff:
-  current_step: render-001-inventory
-  next_action: Refresh the render preflight inventory on the current source.
+  current_step: render-003-real-media
+  next_action: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for
+    owner inputs.
   blockers: []
   changed_paths: []
   last_green_checks: []
