@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-RENDER-001
 current_step: render-001-inventory
-next_action: Refresh the render preflight inventory, then prove local sharp mechanics on synthetic fixtures and label that proof mechanics only.
+next_action: Refresh the render preflight inventory on the current source.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md

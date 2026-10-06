@@ -3,7 +3,7 @@ id: WP-PLATFORM-RENDER-001
 spec_revision: 1
 title: Render feasibility, mechanics only until real media exists
 phase: P4
-status: ready
+status: in_progress
 priority: high
 branch: main
 objective: Prepare render feasibility for roadmap row 4. Refresh the preflight inventory on the
@@ -65,7 +65,7 @@ public_interfaces:
 steps:
   - id: render-001-inventory
     title: Refresh the render preflight inventory on the current source.
-    status: pending
+    status: current
   - id: render-002-mechanics
     title: Prove local sharp mechanics on synthetic fixtures and label them mechanics only.
     status: pending
@@ -140,8 +140,7 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: render-001-inventory
-  next_action: Refresh the render preflight inventory, then prove local sharp mechanics on synthetic
-    fixtures and label that proof mechanics only.
+  next_action: Refresh the render preflight inventory on the current source.
   blockers: []
   changed_paths: []
   last_green_checks: []
