@@ -1,0 +1,370 @@
+schema_version: 1
+id: WP-PLATFORM-UI-001
+spec_revision: 5
+title: V2 interface program across public, studio, brand, campaign and content surfaces
+phase: P4
+status: in_progress
+priority: critical
+branch: main
+objective: Make every surface in the owner's 2026-10-01 directive read and write the real backend or
+  show an honest empty state that names the one legal action and the missing contract. Public studio
+  and software pages, auth and status screens, the signed-in shell and navigation, studio, brand,
+  campaign and content routes, the existing brief, canvas, quote, run, composed review, receipt,
+  billing, API keys, skills, continue and internal operations flows, team and settings. Every screen
+  answers where am I, what is ready, what is blocked, what will this change or cost, and how do I
+  recover. Studio and software voices never share a page. Release the merged commit to the existing
+  V2 web targets through the guarded release. No signup collection, generation, provider call, queue
+  consumer, charge, Drive connection, post or live renderer is enabled, and the WP-PLATFORM-W3-001
+  render benchmark is neither run nor accepted here.
+authority_refs:
+  - product-contract
+  - release-scope
+  - system-overview
+  - data-auth-tenancy
+  - api-mcp-cli
+  - execution-providers-billing
+  - experience-contract
+  - canvas-screen-states
+  - quality-gates
+  - roadmap
+  - local-env-secrets
+  - deploy-rollback-incidents
+  - adr-0007-full-platform
+  - adr-0008-packet-supersession
+  - adr-0009-standing-release-authority
+  - adr-0010-drive-autopilot-saas
+required_skills:
+  - build-mustbeviral
+  - frontend-design
+  - web-design-guidelines
+  - design-qa-loop
+  - vercel-react-best-practices
+  - api-webhook-contracts
+  - git-release-quality
+depends_on:
+  - WP-PLATFORM-W3-001
+scope:
+  allowed_paths:
+    - CLAUDE.md
+    - apps/web/**
+    - apps/core/**
+    - packages/ui/**
+    - packages/contracts/**
+    - packages/domain/**
+    - packages/config/**
+    - packages/db/scripts/**
+    - playwright.config.ts
+    - turbo.json
+    - governance/**
+    - docs/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - brand/context.md
+    - brand/BRAND.md
+    - supabase/tests/database/00003_p0_barrier_and_invariants.test.sql
+  forbidden_paths:
+    - .github/workflows/**
+    - docs/archive/**
+    - legacy-exports/**
+    - supabase/migrations/**
+  required_doc_ids:
+    - product-contract
+    - experience-contract
+    - canvas-screen-states
+    - api-mcp-cli
+    - quality-gates
+    - deploy-rollback-incidents
+    - adr-0009-standing-release-authority
+deliverables:
+  - Inventory the application against the directive's surface list and mark each item wired, fake or
+    missing before editing. For each surface record buyer, arrival moment, fear, believable proof
+    and the single next action in the packet evidence, using brand/context.md section 2 and the
+    experience contract only.
+  - 'Public surfaces: / and /es as a studio frame designed at 375 first with the locked English and
+    Spanish lines, plain-text prices from brand/context.md section 7, one "Book a test shoot."
+    action and the phone as the only secondary; a next/image poster frame reserved as the LCP
+    element with video loading after it, muted, playsInline, preload none or metadata, paused under
+    reduced motion and captioned. If no rights-cleared studio asset exists the frame is built so the
+    asset drops in and that single blocker is recorded. /software and /software/pricing keep the
+    product voice and the provisional catalog with no buy control. /login, /signup,
+    /forgot-password, /reset-password, /verify-email, /maintenance, /unauthorized and not-found use
+    the three-word name, the approved voice and no kill-list word; /signup collects nothing.'
+  - 'Signed-in shell: one navigation for studio (overview, brands, calendar, approvals, tasks,
+    creators and partners, reports, team, settings), brand (overview, intelligence with editable
+    sourced findings, assets with rights, channels, campaigns, content, calendar, inbox, results),
+    campaign (brief, plan, content, collaborators, approvals, calendar, results, budget) and content
+    (source, editor, channel previews, QA, comments, approval, publishing history). Brand name and
+    workspace stay visible; search and switching never touch another account. Each route reads the
+    registered Core command and query handlers. Where no accepted command exists the route ships an
+    honest empty state that names the one legal action and records the missing contract; no fake
+    rows, dead controls, placeholders or internal words on user surfaces.'
+  - "Existing flows stay real and are repaired where they fail the finish line: portfolio, brand
+    draft, brief, canvas, quote, run, composed review, compare, receipt, billing, API keys, skills,
+    continue and internal operations, plus team and settings. Confirm controls name the amount the
+    quote handler returned. Mutations are idempotent, a stale write fails closed and shows the
+    current revision, session expiry explains what was kept and returns to sign-in, wrong tenant
+    renders unauthorized, kill switches render the handler's blocked state, and loading reserves
+    final geometry."
+  - Every changed behavior gets a regression test that fails if the defect returns. Browser proof
+    covers 375, 768 and 1280 plus the wide studio page across empty, loading, error, denied, stale
+    and success states, with the five questions still answered after refresh. Colors change only in
+    packages/ui/src/tokens.ts and components use semantic roles.
+  - "Release through deploy-rollback-incidents under adr-0009-standing-release-authority with the
+    owner's 2026-10-01 directive and 2026-10-02d A1 as the recorded approvals: fresh-clone gates,
+    one pull request, independent review of the exact head, merge commit, staging deploy and smoke,
+    production promotion only after staging passes, Workers only when the pre-deploy checks show no
+    setting change except the exact Core production CORS change recorded below. A hard stop is
+    recorded with the one sentence that clears it and never crossed."
+  - Specification revision 5 authorizes supersession into WP-PLATFORM-RENDER-001 under A2. It
+    carries every unproven row and does not mark unfinished acceptance passed.
+  - "Specification revision 3 retains external_effects.remote_mutation approval-required: the
+    recorded approval is the owner's 2026-10-01 directive
+    (governance/evidence/WP-PLATFORM-W3-001/owner-directive-2026-10-01.md), which approves the
+    guarded release of the merged commit to the existing V2 web targets under
+    adr-0009-standing-release-authority. The owner's adopted 2026-10-02d directive
+    (governance/evidence/WP-PLATFORM-UI-001/owner-directive-2026-10-02d.md) is the additional
+    recorded approval; every other hard stop remains owner-gated."
+  - Owner directive 2026-10-02d A4 permits exactly one NEXT_PUBLIC_APP_ORIGIN update to
+    https://mustbeviral.com on mustbeviral-web-production in Production, then the guarded web
+    release. A6 permits adding the apex and www origins to production CORS_ALLOWED_ORIGINS in
+    apps/core/wrangler.jsonc while keeping the existing origin, then the guarded Core release.
+    Staging Core settings do not change. Confirm the named setting is the only live/config
+    difference before release. Record fresh rollback deployments and Worker versions first. No other
+    environment variable, Worker setting, binding, route, cron or queue changes.
+public_interfaces:
+  - Public routes /, /es, /software, /software/pricing, /login, /signup, /forgot-password,
+    /reset-password, /verify-email, /maintenance, /unauthorized and not-found. Authenticated routes
+    under /studio for studio, brand, campaign and content surfaces over the registered platform,
+    launch-pack and programmatic-access operations. No new database, queue, Durable Object
+    authority, provider route, charge, signup collection, Drive connection, post or live customer
+    renderer. Thin transports only; business rules stay in shared handlers and Postgres.
+steps:
+  - id: ui-001-preflight
+    title:
+      Confirm a clean legal branch and write the wired, fake or missing inventory for every listed
+      surface.
+    status: completed
+  - id: ui-002-public
+    title:
+      Finish the public studio and software pages in both studio languages with the auth and status
+      screens.
+    status: completed
+  - id: ui-003-shell
+    title: Finish the signed-in shell and navigation with every studio, brand, campaign and content route.
+    status: completed
+  - id: ui-004-flows
+    title: Finish brief, canvas, quote, run, composed review, receipt, billing, approvals, composer,
+      team and settings against the handlers.
+    status: completed
+  - id: ui-005-sweep
+    title:
+      Sweep typecheck, lint, unit, integration and journey defects across web, UI, contracts and
+      handlers.
+    status: completed
+  - id: ui-006-browser-proof
+    title:
+      Prove each changed journey in the browser at 375, 768, 1280 and the wide studio page across
+      every state.
+    status: completed
+  - id: ui-007-gates
+    title: Pass agent:verify and the packet governance, design, repository and database gates on the
+      merge candidate.
+    status: completed
+  - id: ui-008-release
+    title:
+      Release the merged commit through the guarded staging and production procedure or record the
+      one hard stop.
+    status: current
+acceptance:
+  automated:
+    - id: public-surfaces
+      criterion:
+        'Every public route meets the finish line: five questions answered, one primary action
+        naming the outcome, locked studio lines and prices only from brand/context.md, product voice
+        only on /software routes, the three-word name everywhere, no kill-list word, the studio
+        poster frame as the LCP element with reserved geometry, and /signup collecting nothing.
+        Rendered-output tests lock the copy separation and the structure.'
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-s0-release/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-s0/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-site-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02d/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/public-site-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02c/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02b/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+    - id: signed-in-surfaces
+      criterion:
+        Each studio, brand, campaign and content route in the directive's surface list loads the
+        server's data through registered handlers or an honest empty state naming the one legal
+        action and the missing contract. Brand and workspace stay visible, switching cannot show
+        another account's data, and session expiry, wrong tenant, revoked grant and kill switches
+        render their states. Component and integration tests cover each state.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-films-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02c/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/inventory-2026-10-01.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02b/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
+    - id: primary-flows
+      criterion:
+        Brief, canvas, quote, run, composed review, receipt, billing, approvals, composer, team
+        and settings complete their primary task against the existing handlers, including an
+        idempotent repeated submit and a forced stale-revision failure with recovery, with
+        regression tests that fail if the defect returns.
+      status: pending
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-films-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02c/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
+    - id: regression-gates
+      criterion:
+        Typecheck, lint, unit, integration, governance, design and database gates pass on the
+        exact merge candidate from a fresh single-worktree clone with frozen dependencies, and every
+        repaired defect has a failing-then-passing test recorded in the repair log.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-site-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/public-site-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-films-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-films-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/merge-review-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+  manual:
+    - id: browser-proof
+      criterion:
+        Browser evidence exists at 375, 768 and 1280 plus the wide studio page for each changed
+        journey across empty, loading, error, denied, stale and success, with keyboard-only
+        completion, reduced motion and forced colors checked, and the five questions still answered
+        after refresh.
+      status: passed
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-s0-release/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-03-s0/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02d/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02c/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02/README.md
+        - governance/evidence/WP-PLATFORM-UI-001/browser-proof-2026-10-02b/README.md
+    - id: release-smoke
+      criterion:
+        Staging serves the merge commit with every public route and one signed-in journey smoked,
+        then production serves the same commit on its alias; or the single hard stop that prevented
+        it is recorded with the one sentence that clears it and nothing was crossed.
+      status: pending
+      evidence:
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+        - governance/evidence/WP-PLATFORM-UI-001/public-site-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-site-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-films-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/films-program-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+        - governance/evidence/WP-PLATFORM-UI-001/cutover-2026-10-02.md
+quality_gates:
+  - id: governance
+    command: pnpm governance:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+  - id: design
+    command: pnpm design:check
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+  - id: repository
+    command: pnpm verify
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+  - id: database-regression
+    command: pnpm supabase:test
+    status: passed
+    evidence:
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-refinement-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-tablet-reflow-2026-10-05.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-receipt-responsive-2026-10-04.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-public-hardening-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-studio-s0-2026-10-03.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-follow-up-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/release-2026-10-02.md
+      - governance/evidence/WP-PLATFORM-UI-001/follow-up-2026-10-02.md
+rollback:
+  strategy: Revert the interface pull request through a reviewed merge commit if needed. Web rolls
+    back by promoting the recorded prior Vercel deployment in each project; Workers roll back to the
+    recorded version with wrangler rollback. No migration, data, branch, backup, rollback material
+    or other session's work is deleted. For the A4 release, promoting the recorded prior web
+    deployment restores its build and environment snapshot without another environment update. For
+    A6, use the recorded prior Core version and record whether its CORS setting was restored; any
+    forward repair of that exact setting follows the reviewed guarded release. No other provider,
+    route, secret or environment value changes.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: approval-required
+  destructive_remote_actions: false
+handoff:
+  current_step: ui-008-release
+  next_action: Supersede WP-PLATFORM-UI-001 into WP-PLATFORM-RENDER-001 under A2, carrying
+    primary-flows, release-smoke, and the unfinished quality pass without marking them passed.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: WP-PLATFORM-RENDER-001
+  evidence_paths: []
+  completed_at: null
