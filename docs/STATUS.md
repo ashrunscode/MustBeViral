@@ -12,7 +12,7 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Render feasibility, mechanics only until real media exists (planned) |
+| Phase | P4 — Render feasibility, mechanics only until real media exists (in_progress) |
 | Active packet | `WP-PLATFORM-RENDER-001` |
 | Current step | `render-001-inventory` |
 | Release target | `full-platform` |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Refresh the render preflight inventory, then prove local sharp mechanics on synthetic fixtures and label that proof mechanics only.
+Refresh the render preflight inventory on the current source.

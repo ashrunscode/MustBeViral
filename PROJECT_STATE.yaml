@@ -8,11 +8,10 @@ project_state: active
 phase:
   id: P4
   title: Render feasibility, mechanics only until real media exists
-  state: planned
+  state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-RENDER-001
-next_action: Refresh the render preflight inventory, then prove local sharp mechanics on synthetic
-  fixtures and label that proof mechanics only.
+next_action: Refresh the render preflight inventory on the current source.
 decisions_pending: []
 blockers: []
 legacy:
