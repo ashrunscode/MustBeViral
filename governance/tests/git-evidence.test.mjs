@@ -44,6 +44,21 @@ test('binds evidence to the exact committed HEAD blob', (t) => {
   assert.match(inspection.gitBlobOid, /^[a-f0-9]{40}$/);
 });
 
+test('treats a CRLF checkout of an LF blob as the same committed evidence', (t) => {
+  const { root, evidencePath } = repository(t);
+  const committed = execFileSync('git', ['show', `HEAD:${evidencePath}`], {
+    cwd: root,
+    encoding: 'buffer',
+  });
+  writeFileSync(path.join(root, evidencePath), committed.toString('utf8').replaceAll('\n', '\r\n'));
+  const inspection = inspectHeadEvidence({ root, relativePath: evidencePath });
+  assert.equal(inspection.contentMatchesHead, true);
+  assert.equal(inspection.sha256, inspection.headSha256);
+  assert.equal(inspection.gitBlobOid, git(root, ['rev-parse', `HEAD:${evidencePath}`]));
+  writeFileSync(path.join(root, evidencePath), 'changed proof\r\n');
+  assert.equal(inspectHeadEvidence({ root, relativePath: evidencePath }).contentMatchesHead, false);
+});
+
 test('detects modified tracked and staged-new evidence before finish', (t) => {
   const { root, evidencePath } = repository(t);
   writeFileSync(path.join(root, evidencePath), 'modified proof\n', 'utf8');
