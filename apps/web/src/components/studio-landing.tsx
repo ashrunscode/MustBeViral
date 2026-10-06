@@ -4,6 +4,8 @@ import { PublicFooter } from './public-footer';
 import { PublicHeader } from './public-header';
 import {
   studioCopy,
+  studioEnFilmDescription,
+  studioEnHeroMedia,
   studioFilmDescription,
   studioFilmDisclosure,
   studioHeroMedia,
@@ -18,14 +20,14 @@ import { StudioOffers } from './studio-offers';
 /**
  * The studio page is a frame at screen width, designed at 375 first. The first screen is the
  * decision: the locked line, the two prices as titles, one action with the phone as the only
- * secondary. The owner-approved generated plate follows the decision on phones and sits beside
- * it on desktop, with its geometry reserved. Below the frame, type and space carry the rank: the two offers in
+ * secondary. The typed English master follows the decision on phones and sits beside
+ * it on desktop. Spanish keeps the wordless poster. Below the frame, type and space carry the rank: the two offers in
  * full, the cadence, six composed rows in the owner's words, the objection with its answer, the
  * close, and the one footer.
  */
 export function StudioLanding({
   locale,
-  media = studioHeroMedia,
+  media,
   origin,
 }: Readonly<{
   locale: StudioLocale;
@@ -33,6 +35,10 @@ export function StudioLanding({
   origin?: string | undefined;
 }>) {
   const copy = studioCopy[locale];
+  const resolvedMedia =
+    media === undefined ? (locale === 'en' ? studioEnHeroMedia : studioHeroMedia) : media;
+  const filmDescription =
+    media === undefined && locale === 'en' ? studioEnFilmDescription : studioFilmDescription;
 
   return (
     <div className="pub-page pub-page--studio" lang={locale}>
@@ -45,7 +51,7 @@ export function StudioLanding({
           <section
             className="studio-frame"
             aria-labelledby="studio-heading"
-            data-media={media === null ? 'none' : 'poster'}
+            data-media={resolvedMedia === null ? 'none' : 'poster'}
           >
             <div className="studio-frame__lead">
               <h1 id="studio-heading">{copy.h1}</h1>
@@ -63,16 +69,20 @@ export function StudioLanding({
                 </div>
               ))}
             </dl>
-            {media === null ? null : (
+            {resolvedMedia === null ? null : (
               <StudioHeroMedia
-                alt={media.alt[locale]}
-                media={locale === 'es' ? { poster: media.poster, alt: media.alt } : media}
+                alt={resolvedMedia.alt[locale]}
+                media={
+                  locale === 'es'
+                    ? { poster: resolvedMedia.poster, alt: resolvedMedia.alt }
+                    : resolvedMedia
+                }
                 playLabel={copy.playFilm}
               />
             )}
-            {media === null ? null : (
+            {resolvedMedia === null ? null : (
               <div className="studio-frame__notes" lang="en">
-                <p>{studioFilmDescription}</p>
+                <p>{filmDescription}</p>
                 <p>{studioFilmDisclosure}</p>
               </div>
             )}

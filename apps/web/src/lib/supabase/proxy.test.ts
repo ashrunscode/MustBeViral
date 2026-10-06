@@ -334,6 +334,7 @@ describe('protected routes and canonical host', () => {
     '/',
     '/software?ref=synthetic',
     '/films/s0-studio-hero-d55af8ec3d69.mp4',
+    '/films/s0-studio-hero-en-06371b2bb52f.mp4',
     '/_next/static/fixture.js',
   ])('canonically redirects www%s before any session work', async (path) => {
     const response = await proxy(
@@ -349,6 +350,7 @@ describe('protected routes and canonical host', () => {
     '/',
     '/software?ref=synthetic',
     '/films/s0-studio-hero-d55af8ec3d69.mp4',
+    '/films/s0-studio-hero-en-06371b2bb52f.mp4',
     '/_next/static/fixture.js',
   ])('uses the original www Host when Next normalizes its request URL: %s', async (path) => {
     const incoming = new NextRequest(`http://127.0.0.1:3115${path}`, {
@@ -387,6 +389,7 @@ describe('protected routes and canonical host', () => {
   it('matches www assets for canonicalization while keeping apex assets outside session middleware', () => {
     for (const path of [
       '/films/s0-studio-hero-d55af8ec3d69.mp4',
+      '/films/s0-studio-hero-en-06371b2bb52f.mp4',
       '/_next/static/fixture.js',
       '/og/studio-en.png',
     ]) {

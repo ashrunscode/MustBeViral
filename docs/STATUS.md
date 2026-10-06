@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Put the typed English S0 master on the English homepage, leave the Spanish page on the wordless poster, and keep the October 2 disclosure on the page. Real-media fidelity, private transfer, cancellation, and the cost receipt still wait for owner inputs.
+Release the English homepage master through the guarded web deploy. Spanish stays on the wordless poster, and the October 2 disclosure stays on the page. Real-media fidelity, private transfer, cancellation, and the cost receipt still wait for owner inputs.
