@@ -1818,3 +1818,87 @@ test('gives Retry lease a 44px hit area clear of its textarea', async ({ page })
   );
   expect(faults).toEqual([]);
 });
+
+test('keeps synthetic populated attention card padding and complete focus outline', async ({
+  page,
+}) => {
+  // Synthetic local fixture for CSS isolation. These lists are not a studio screen. They use the
+  // platform stylesheet this preview already loaded, beside the real-component role coverage.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/internal');
+  await expect(page.getByRole('main', { name: 'Operations', exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    host.dataset.testid = 'synthetic-populated-attention-fixture';
+    host.dataset.syntheticFixture = 'local-css-isolation';
+    host.innerHTML = `
+      <p>Synthetic local fixture for CSS isolation. Not studio content.</p>
+      <ol class="platform-attention platform-card platform-pad" data-attention-fixture="populated-card" role="list">
+        <li>
+          <div class="platform-attention__text">
+            <span class="platform-status platform-status--attention">Ready to approve</span>
+            <strong>Synthetic Brand</strong>
+            <span class="platform-muted">Draft version 4, first approval.</span>
+          </div>
+          <a class="platform-button platform-primary" href="#synthetic-populated-attention-approve">Review and approve Synthetic Brand</a>
+        </li>
+      </ol>
+      <section class="platform-card platform-pad platform-stack" data-attention-fixture="overview-card">
+        <ol class="platform-attention" data-attention-fixture="overview-list" role="list">
+          <li>
+            <div class="platform-attention__text">
+              <span class="platform-status platform-status--attention">Open question</span>
+              <strong>Synthetic Brand: 1 question needs an answer</strong>
+              <span class="platform-muted">Which price?</span>
+            </div>
+            <a class="platform-button" href="#synthetic-populated-attention-answer">Answer</a>
+          </li>
+        </ol>
+      </section>
+    `;
+    document.getElementById('platform-main')?.prepend(host);
+  });
+  const loaded = await page
+    .locator('[data-attention-fixture="populated-card"]')
+    .evaluate((element) => getComputedStyle(element).display);
+  expect(loaded, 'the loaded platform stylesheet sets attention lists to grid').toBe('grid');
+
+  for (const width of [768, 1280, 1920, 375]) {
+    await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
+    const card = page.locator('[data-attention-fixture="populated-card"]');
+    const overview = page.locator('[data-attention-fixture="overview-list"]');
+    const inset = width >= 768 ? '24px' : '20px';
+    for (const side of ['top', 'right', 'bottom', 'left'] as const) {
+      await expect(card, `populated card padding-${side} at ${String(width)}px`).toHaveCSS(
+        `padding-${side}`,
+        inset,
+      );
+    }
+    await expect(overview, `overview list keeps zero indent at ${String(width)}px`).toHaveCSS(
+      'padding-left',
+      '0px',
+    );
+    await expect(overview).toHaveCSS('padding-top', '0px');
+    await expect(overview).toHaveCSS('margin-top', '0px');
+    await expect(overview).toHaveCSS('margin-left', '0px');
+    await expect(overview).toHaveCSS('list-style-type', 'none');
+    await expect(overview.locator('.platform-status')).toHaveCSS('justify-self', 'start');
+
+    const cardControl = card.locator('.platform-button');
+    await cardControl.scrollIntoViewIfNeeded();
+    await cardControl.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(cardControl).toBeFocused();
+    await expectCompleteFocusOutline(cardControl);
+
+    const overviewControl = overview.locator('.platform-button');
+    await overviewControl.scrollIntoViewIfNeeded();
+    await overviewControl.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(overviewControl).toBeFocused();
+    await expectCompleteFocusOutline(overviewControl);
+  }
+});

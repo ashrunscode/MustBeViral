@@ -43,6 +43,50 @@ const brand = (id: string, name: string) => ({
   version: 1,
 });
 
+function readyReview() {
+  return {
+    record: { id: 'ready-record', version: 4 },
+    draft_hash: 'draft-4',
+    extract_pending: false,
+    current_questions: [],
+    current_assertions: [{ id: 'assertion-1' }],
+    current_proposals: [],
+    approved_version: null,
+  };
+}
+
+function waitingReview() {
+  return {
+    record: { id: 'waiting-record', version: 2 },
+    draft_hash: null,
+    extract_pending: false,
+    current_questions: [],
+    current_assertions: [],
+    current_proposals: [],
+    approved_version: null,
+  };
+}
+
+function questionReview() {
+  return {
+    record: { id: 'question-record', version: 1 },
+    draft_hash: 'draft-q',
+    extract_pending: false,
+    current_questions: [{ id: 'q1', status: 'open', prompt: 'Which price?' }],
+    current_assertions: [{ id: 'assertion-q' }],
+    current_proposals: [],
+    approved_version: null,
+  };
+}
+
+function expectExplicitAttentionLists(lists: NodeListOf<Element>) {
+  expect(lists.length).toBeGreaterThan(0);
+  for (const list of lists) {
+    expect(list.getAttribute('role'), list.className).toBe('list');
+    expect(list.querySelectorAll(':scope > li').length).toBeGreaterThan(0);
+  }
+}
+
 afterEach(() => cleanup());
 
 describe('studio sections and failed reads', () => {
@@ -222,5 +266,113 @@ describe('studio sections and failed reads', () => {
     render(<StudioApprovals studio={studio} />);
     expect(screen.queryByText('No brand version is waiting for approval.')).toBeNull();
     expect(screen.getByRole('alert').textContent).toContain('UnPile');
+  });
+
+  it('exposes populated approval, waiting and unread lists as lists', () => {
+    state.brands = {
+      data: {
+        items: [brand('b1', 'UnPile'), brand('b2', 'WashBodega'), brand('b3', 'North Brand')],
+      },
+      error: undefined,
+      loading: false,
+    };
+    state.reviews = {
+      reviews: [
+        { brand: brand('b1', 'UnPile'), review: null, error: new Error('timeout') },
+        { brand: brand('b2', 'WashBodega'), review: readyReview(), error: undefined },
+        { brand: brand('b3', 'North Brand'), review: waitingReview(), error: undefined },
+      ],
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    const { container } = render(<StudioApprovals studio={studio} />);
+    const unread = container.querySelector('[role="alert"] ul.platform-attention');
+    const ready = container.querySelector('ol.platform-attention.platform-card.platform-pad');
+    const waiting = container.querySelector('ul.platform-attention.platform-card.platform-pad');
+    expect(unread?.textContent).toContain('UnPile');
+    expect(ready?.textContent).toContain('Ready to approve');
+    expect(ready?.textContent).toContain('WashBodega');
+    expect(waiting?.textContent).toContain('North Brand');
+    expect(waiting?.textContent).toContain('No findings captured yet.');
+    expectExplicitAttentionLists(
+      container.querySelectorAll('ol.platform-attention, ul.platform-attention'),
+    );
+    expect(container.querySelectorAll('ol.platform-attention, ul.platform-attention').length).toBe(
+      3,
+    );
+  });
+
+  it('exposes populated task questions, invitations and unread lists as lists', () => {
+    state.brands = {
+      data: { items: [brand('b1', 'UnPile'), brand('b2', 'WashBodega')] },
+      error: undefined,
+      loading: false,
+    };
+    state.invitations = {
+      data: {
+        items: [
+          {
+            invitation: {
+              id: 'inv-1',
+              role: 'editor',
+              expires_at: '2026-12-01T00:00:00.000Z',
+            },
+            studio_name: 'Harbor Studio',
+          },
+        ],
+      },
+      error: undefined,
+      loading: false,
+    };
+    state.reviews = {
+      reviews: [
+        { brand: brand('b1', 'UnPile'), review: null, error: new Error('timeout') },
+        { brand: brand('b2', 'WashBodega'), review: questionReview(), error: undefined },
+      ],
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    const { container } = render(<StudioTasks studio={studio} />);
+    const unread = container.querySelector('[role="alert"] ul.platform-attention');
+    const questions = container.querySelector('ol.platform-attention.platform-card.platform-pad');
+    const invitations = container.querySelector('ul.platform-attention.platform-card.platform-pad');
+    expect(unread?.textContent).toContain('UnPile');
+    expect(questions?.textContent).toContain('Open question');
+    expect(questions?.textContent).toContain('Which price?');
+    expect(invitations?.textContent).toContain('Harbor Studio');
+    expect(invitations?.textContent).toContain('Editor');
+    expectExplicitAttentionLists(
+      container.querySelectorAll('ol.platform-attention, ul.platform-attention'),
+    );
+    expect(container.querySelectorAll('ol.platform-attention, ul.platform-attention').length).toBe(
+      3,
+    );
+  });
+
+  it('keeps the populated overview decision list explicit and outside the card padding', () => {
+    state.brands = {
+      data: { items: [brand('b2', 'WashBodega')] },
+      error: undefined,
+      loading: false,
+    };
+    state.invitations = { data: { items: [] }, error: undefined, loading: false };
+    state.reviews = {
+      reviews: [{ brand: brand('b2', 'WashBodega'), review: questionReview(), error: undefined }],
+      loading: false,
+      truncated: false,
+      refresh: () => undefined,
+    };
+    const { container } = render(<StudioOverview studio={studio} canWrite={false} />);
+    const lists = container.querySelectorAll('ol.platform-attention, ul.platform-attention');
+    expect(lists.length).toBe(1);
+    const decisions = lists[0];
+    expect(decisions?.tagName).toBe('OL');
+    expect(decisions?.getAttribute('role')).toBe('list');
+    expect(decisions?.classList.contains('platform-pad')).toBe(false);
+    expect(decisions?.classList.contains('platform-card')).toBe(false);
+    expect(decisions?.textContent).toContain('Open question');
+    expect(decisions?.textContent).toContain('WashBodega');
   });
 });

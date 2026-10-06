@@ -764,8 +764,10 @@
 .platform-attention {
   display: grid;
   margin: 0;
-  padding: 0;
   list-style: none;
+}
+.platform-attention:not(.platform-pad) {
+  padding: 0;
 }
 .platform-attention > li {
   display: flex;

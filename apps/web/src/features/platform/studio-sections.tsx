@@ -143,7 +143,7 @@ function BrandReadFailures({
         Their open questions and approvals are not counted on this page. Nothing changed. Try again,
         or open the brand directly.
       </p>
-      <ul className="platform-attention">
+      <ul className="platform-attention" role="list">
         {failures.map(({ brand }) => (
           <li key={brand.id}>
             <div className="platform-attention__text">
@@ -531,7 +531,7 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
         />
       ) : null}
       {ready.length > 0 ? (
-        <ol className="platform-attention platform-card platform-pad">
+        <ol className="platform-attention platform-card platform-pad" role="list">
           {ready.map(({ brand, review }) => (
             <li key={brand.id}>
               <div className="platform-attention__text">
@@ -561,7 +561,7 @@ export function StudioApprovals({ studio }: Readonly<{ studio: Studio }>) {
           <div className="platform-section">
             <h2>Not ready yet</h2>
           </div>
-          <ul className="platform-attention platform-card platform-pad">
+          <ul className="platform-attention platform-card platform-pad" role="list">
             {waiting.map(({ brand, review }) => {
               const questions = openQuestions(review).length;
               const reason = review?.extract_pending
@@ -644,7 +644,7 @@ export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
         />
       ) : null}
       {questions.length > 0 ? (
-        <ol className="platform-attention platform-card platform-pad">
+        <ol className="platform-attention platform-card platform-pad" role="list">
           {questions.map(({ brand, question }) => (
             <li key={question.id}>
               <div className="platform-attention__text">
@@ -667,7 +667,7 @@ export function StudioTasks({ studio }: Readonly<{ studio: Studio }>) {
           <div className="platform-section">
             <h2>Invitations</h2>
           </div>
-          <ul className="platform-attention platform-card platform-pad">
+          <ul className="platform-attention platform-card platform-pad" role="list">
             {invitations.data?.items.map(({ invitation, studio_name }) => (
               <li key={invitation.id}>
                 <div className="platform-attention__text">
