@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-UI-001
-spec_revision: 4
+spec_revision: 5
 title: V2 interface program across public, studio, brand, campaign and content surfaces
 phase: P4
 status: in_progress
@@ -115,6 +115,8 @@ deliverables:
     production promotion only after staging passes, Workers only when the pre-deploy checks show no
     setting change except the exact Core production CORS change recorded below. A hard stop is
     recorded with the one sentence that clears it and never crossed."
+  - Specification revision 5 authorizes supersession into WP-PLATFORM-RENDER-001 under A2. It
+    carries every unproven row and does not mark unfinished acceptance passed.
   - "Specification revision 3 retains external_effects.remote_mutation approval-required: the
     recorded approval is the owner's 2026-10-01 directive
     (governance/evidence/WP-PLATFORM-W3-001/owner-directive-2026-10-01.md), which approves the

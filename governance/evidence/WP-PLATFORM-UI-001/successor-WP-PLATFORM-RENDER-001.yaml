@@ -1,0 +1,159 @@
+schema_version: 1
+id: WP-PLATFORM-RENDER-001
+spec_revision: 1
+title: Render feasibility, mechanics only until real media exists
+phase: P4
+status: ready
+priority: high
+branch: main
+objective: >-
+  Prepare render feasibility for roadmap row 4. Refresh the preflight inventory on the current
+  source. Prove local sharp mechanics on synthetic fixtures and label that proof mechanics only.
+  Do not accept real-media fidelity, a connected runtime, customer rendering, or the architecture
+  decision while footage, an approved font, and the literal offer are missing. Carry the unfinished
+  interface rows without marking them passed.
+authority_refs:
+  - product-contract
+  - release-scope
+  - execution-providers-billing
+  - experience-contract
+  - canvas-screen-states
+  - quality-gates
+  - roadmap
+  - adr-0007-full-platform
+  - adr-0008-packet-supersession
+  - adr-0009-standing-release-authority
+  - adr-0010-drive-autopilot-saas
+required_skills:
+  - build-mustbeviral
+  - git-release-quality
+depends_on:
+  - WP-PLATFORM-UI-001
+scope:
+  allowed_paths:
+    - governance/**
+    - docs/**
+    - PROJECT_STATE.yaml
+    - llms.txt
+    - packages/artifacts/**
+    - pnpm-lock.yaml
+  forbidden_paths:
+    - .github/workflows/**
+    - docs/archive/**
+    - legacy-exports/**
+    - supabase/migrations/**
+  required_doc_ids:
+    - product-contract
+    - quality-gates
+    - roadmap
+    - adr-0009-standing-release-authority
+    - adr-0010-drive-autopilot-saas
+deliverables:
+  - >-
+    Refresh the render preflight inventory against the current source. Record sharp's resolved
+    version, the artifacts package boundary, and the still-missing real-media inputs. Inventory is
+    not acceptance.
+  - >-
+    Add local sharp mechanics on synthetic fixtures in packages/artifacts. The test creates the
+    pixels, composites a deterministic rectangle, and checks dimensions and a hash. Label the proof
+    mechanics only. No remote call, no customer media, and no claim of brand fidelity.
+  - >-
+    Leave real-media acceptance pending: an actual source image with exact logo and text, a
+    real-footage reel, captions, fonts, cover, audio rights, private transfer, cancellation, a cost
+    receipt, and the measured architecture decision.
+  - >-
+    Carry primary-flows and release-smoke from WP-PLATFORM-UI-001, and the four carried obligations
+    from the 2026-10-01 W3 supersession, without marking any of them passed.
+public_interfaces:
+  - >-
+    No new public route, provider call, queue, charge, or live customer renderer. Sharp mechanics
+    stay inside packages/artifacts and its tests.
+steps:
+  - id: render-001-inventory
+    title: Refresh the render preflight inventory on the current source.
+    status: pending
+  - id: render-002-mechanics
+    title: Prove local sharp mechanics on synthetic fixtures and label them mechanics only.
+    status: pending
+  - id: render-003-real-media
+    title: Hold real-media fidelity, private transfer, cancellation, and the cost receipt for owner inputs.
+    status: pending
+acceptance:
+  automated:
+    - id: mechanics-only
+      criterion: >-
+        A local sharp test creates a synthetic image, composites a deterministic rectangle, and
+        checks the output dimensions and hash. The proof is labelled mechanics only. It makes no
+        remote call and uses no customer media.
+      status: pending
+      evidence: []
+    - id: real-media
+      criterion: >-
+        Render feasibility uses a real source image with exact logo/text and a real-footage reel,
+        including captions, fonts, cover, audio rights, private transfer, cancellation and a cost
+        receipt. Predeclare memory/duration/cost thresholds against the selected runtime and record
+        measured results before committing its implementation decision. HEIC/HEIF support needs
+        real-fixture normalization proof.
+      status: pending
+      evidence: []
+  manual:
+    - id: architecture-decision
+      criterion: >-
+        The measured architecture decision required by ADR-0010 is committed only after the
+        real-media measurements exist. Missing footage, an approved font, or the literal offer
+        leaves this row pending.
+      status: pending
+      evidence: []
+    - id: carried-primary-flows
+      criterion: >-
+        primary-flows: the composer and content contract (owned by ROADMAP row 18, "Composer and
+        basic calendar"), a durable review reject or send-back with a reason
+        (CANVAS_AND_SCREEN_STATES "Approval and export"), and the missing project-to-brand mapping
+        command (follow-up-2026-10-02.md gap 3).
+      status: pending
+      evidence: []
+    - id: carried-release-smoke
+      criterion: >-
+        release-smoke remains unproven until the signed-in founder journey has a named vault bundle
+        and confirmation that the founder user exists, and until the migration pack has its owner
+        sentence.
+      status: pending
+      evidence: []
+quality_gates:
+  - id: governance
+    command: pnpm governance:check
+    status: pending
+    evidence: []
+  - id: design
+    command: pnpm design:check
+    status: pending
+    evidence: []
+  - id: repository
+    command: pnpm verify
+    status: pending
+    evidence: []
+  - id: database-regression
+    command: pnpm supabase:test
+    status: pending
+    evidence: []
+rollback:
+  strategy: >-
+    Revert the render packet through a reviewed merge commit if needed. No migration, data, branch,
+    backup, rollback material, or other session's work is deleted. No provider, route, secret, or
+    environment value changes. Local synthetic fixtures are not customer media.
+  remote_actions_required: false
+external_effects:
+  remote_mutation: none
+  destructive_remote_actions: false
+handoff:
+  current_step: render-001-inventory
+  next_action: >-
+    Refresh the render preflight inventory, then prove local sharp mechanics on synthetic fixtures
+    and label that proof mechanics only.
+  blockers: []
+  changed_paths: []
+  last_green_checks: []
+completion:
+  successor_packet_id: WP-PLATFORM-W3-002
+  evidence_paths: []
+  completed_at: null
