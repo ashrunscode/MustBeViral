@@ -7,6 +7,22 @@ function sha256(content) {
   return createHash('sha256').update(content).digest('hex');
 }
 
+function withoutCrLfMarks(buffer) {
+  const kept = [];
+  for (let index = 0; index < buffer.length; index += 1) {
+    if (buffer[index] === 0x0d && buffer[index + 1] === 0x0a) continue;
+    kept.push(buffer[index]);
+  }
+  return Buffer.from(kept);
+}
+
+function sameCommittedBytes(workingContent, headContent) {
+  return (
+    workingContent.equals(headContent) ||
+    withoutCrLfMarks(workingContent).equals(withoutCrLfMarks(headContent))
+  );
+}
+
 function safePath(root, relativePath) {
   if (
     !relativePath ||
@@ -49,6 +65,10 @@ export function inspectHeadEvidence({ root, relativePath, head = 'HEAD' }) {
   }
   const workingContent =
     exists && file.isFile() && !file.isSymbolicLink() ? readFileSync(absolutePath) : null;
+  const matchesCommittedText =
+    workingContent !== null &&
+    headContent !== null &&
+    sameCommittedBytes(workingContent, headContent);
 
   return {
     exists,
@@ -56,9 +76,10 @@ export function inspectHeadEvidence({ root, relativePath, head = 'HEAD' }) {
     symbolicLink: file?.isSymbolicLink() ?? false,
     size: file?.size ?? 0,
     headContained: headContent !== null,
-    contentMatchesHead:
-      workingContent !== null && headContent !== null && workingContent.equals(headContent),
-    sha256: workingContent === null ? null : sha256(workingContent),
+    // A Windows checkout may store CRLF for an LF blob. That is the same committed text.
+    contentMatchesHead: matchesCommittedText,
+    sha256:
+      workingContent === null ? null : sha256(matchesCommittedText ? headContent : workingContent),
     headSha256: headContent === null ? null : sha256(headContent),
     gitBlobOid,
   };
