@@ -790,6 +790,11 @@
 .platform-attention__text > .platform-status {
   justify-self: start;
 }
+/* Tab autoscroll aligns the border box with the viewport. The 2px outline and 2px offset need
+   clearance. 16px is lightfieldTokens.space[4]; spacing tokens are not emitted as custom properties. */
+.platform-attention a.platform-button {
+  scroll-margin-block: 16px;
+}
 
 /* Calendar */
 .platform-calendar {

@@ -1902,3 +1902,96 @@ test('keeps synthetic populated attention card padding and complete focus outlin
     await expectCompleteFocusOutline(overviewControl);
   }
 });
+
+test('keeps synthetic CSS-isolation attention controls inside the viewport after Tab autoscroll', async ({
+  page,
+}) => {
+  // Synthetic local fixture for CSS isolation. The lists are not a studio screen. The stylesheet
+  // is the one this preview already loaded. Tab starts with the controls below the viewport.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/internal');
+  await expect(page.getByRole('main', { name: 'Operations', exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    host.dataset.testid = 'synthetic-attention-tab-autoscroll-fixture';
+    host.dataset.syntheticFixture = 'local-css-isolation';
+    host.innerHTML = `
+      <p>Synthetic local fixture for CSS isolation. Not studio content.</p>
+      <a href="#synthetic-attention-tab-autoscroll-before">Synthetic autoscroll before</a>
+      <div data-synthetic-spacer="below-viewport"></div>
+      <ol class="platform-attention" data-attention-fixture="tab-autoscroll-overview" role="list">
+        <li>
+          <div class="platform-attention__text">
+            <span class="platform-status platform-status--attention">Open question</span>
+            <strong>Synthetic Brand: 1 question needs an answer</strong>
+            <span class="platform-muted">Which price?</span>
+          </div>
+          <a class="platform-button" href="#synthetic-attention-tab-autoscroll-answer">Synthetic autoscroll answer</a>
+        </li>
+        <li>
+          <div class="platform-attention__text">
+            <span class="platform-status platform-status--attention">Needs a decision</span>
+            <strong>Synthetic Brand: a brand version is ready to approve</strong>
+            <span class="platform-muted">Nothing is approved for this brand yet.</span>
+          </div>
+          <a class="platform-button" href="#synthetic-attention-tab-autoscroll-approve">Synthetic autoscroll approve</a>
+        </li>
+      </ol>
+      <div data-synthetic-spacer="after" style="block-size: 160vh"></div>
+    `;
+    document.getElementById('platform-main')?.prepend(host);
+  });
+  const list = page.locator('[data-attention-fixture="tab-autoscroll-overview"]');
+  await expect(list).toHaveCSS('display', 'grid');
+  const before = page.getByRole('link', { name: 'Synthetic autoscroll before', exact: true });
+  const controls = [
+    page.getByRole('link', { name: 'Synthetic autoscroll answer', exact: true }),
+    page.getByRole('link', { name: 'Synthetic autoscroll approve', exact: true }),
+  ];
+
+  for (const viewport of [
+    { width: 375, height: 812, label: '375x812' },
+    { width: 640, height: 450, label: '640x450 equivalent 200%' },
+  ]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.evaluate(() => {
+      const spacer = document.querySelector<HTMLElement>(
+        '[data-synthetic-spacer="below-viewport"]',
+      );
+      const button = document.querySelector<HTMLElement>(
+        '[data-attention-fixture="tab-autoscroll-overview"] a.platform-button',
+      );
+      if (spacer === null || button === null) return;
+      spacer.style.blockSize = '0px';
+      const rect = button.getBoundingClientRect();
+      const targetTop = window.innerHeight - rect.height / 2;
+      spacer.style.blockSize = `${Math.max(targetTop - rect.top, 0)}px`;
+    });
+    const partial = await controls[0]!.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return { top: rect.top, bottom: rect.bottom, viewport: window.innerHeight };
+    });
+    expect(partial.top, `${viewport.label}: first control starts inside the viewport`).toBeLessThan(
+      partial.viewport,
+    );
+    expect(
+      partial.bottom,
+      `${viewport.label}: first control extends below the viewport`,
+    ).toBeGreaterThan(partial.viewport);
+    await expect(before, `${viewport.label}: prior anchor stays onscreen`).toBeInViewport();
+    await before.focus();
+    const stillPartial = await controls[0]!.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > window.innerHeight;
+    });
+    expect(
+      stillPartial,
+      `${viewport.label}: focusing the prior anchor keeps the first control partial`,
+    ).toBe(true);
+    await page.keyboard.press('Tab');
+    await expect(controls[0]!, viewport.label).toBeFocused();
+    await expectCompleteFocusOutline(controls[0]!);
+  }
+});

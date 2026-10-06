@@ -234,13 +234,41 @@ function attentionItems(
   return items;
 }
 
+/** Brand, knowledge-review, and invitation reads. An error is settled; unset data is not success. */
+function overviewReadsPending(
+  brands: { loading: boolean; data: unknown; error: unknown },
+  invitations: { loading: boolean; data: unknown; error: unknown },
+  reviewing: boolean,
+  reviews: unknown,
+): boolean {
+  if (brands.loading || invitations.loading) return true;
+  if (invitations.data === undefined && invitations.error === undefined) return true;
+  // useBrandReviews stays undefined, with loading false, until the brand list exists.
+  if (brands.error !== undefined) return false;
+  if (brands.data === undefined) return true;
+  return reviewing || reviews === undefined;
+}
+
 export function StudioOverview({
+  studio,
+  canWrite,
+}: Readonly<{ studio: Studio; canWrite: boolean }>) {
+  return <StudioOverviewForStudio key={studio.id} studio={studio} canWrite={canWrite} />;
+}
+
+function StudioOverviewForStudio({
   studio,
   canWrite,
 }: Readonly<{ studio: Studio; canWrite: boolean }>) {
   const brands = usePlatformQuery('list_studio_brands', { studio_id: studio.id, limit: 20 });
   const invitations = usePlatformQuery('list_my_invitations', {});
   const { reviews, loading: reviewing, truncated } = useBrandReviews(brands.data?.items);
+  const pending = overviewReadsPending(brands, invitations, reviewing, reviews);
+  // The first settled pass paints the sections below the decision card. A later refresh of this
+  // same mounted studio hides stale query data without unmounting the new-brand form. The studio
+  // key above discards that pass, the draft, and the creation slug together.
+  const [lowerReady, setLowerReady] = useState(false);
+  if (!pending && !lowerReady) setLowerReady(true);
   const items = attentionItems(studio.id, reviews, invitations.data?.items);
   const invitationsFailed = invitations.error !== undefined;
   const approvable = (reviews ?? []).filter((entry) => draftIsApprovable(entry.review)).length;
@@ -273,7 +301,7 @@ export function StudioOverview({
             </span>
           ) : null}
         </div>
-        {brands.loading || reviewing || invitations.loading ? (
+        {pending ? (
           <PlatformLoading label="Reading what is open across your brands…" rows={2} />
         ) : brands.error !== undefined ? (
           <PlatformRecovery error={brands.error} retry={brands.refresh} />
@@ -318,61 +346,67 @@ export function StudioOverview({
           <PlatformRecovery error={invitations.error} retry={invitations.refresh} />
         ) : null}
       </section>
-      <section
-        className="platform-card platform-pad platform-stack platform-overview-approvals"
-        aria-labelledby="approvals-now"
-      >
-        <div className="platform-row platform-between">
-          <h2 id="approvals-now">
-            {brands.loading || reviewing
-              ? 'Checking approvals…'
-              : brands.error !== undefined || reviews === undefined
-                ? 'Approvals could not be read'
-                : unread > 0
-                  ? `${approvable} ready to approve, ${unread} ${unread === 1 ? 'brand' : 'brands'} not read`
-                  : partial
-                    ? `${approvable} ready to approve in ${readScope(inspected)}`
-                    : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
-          </h2>
-          <Link href={studioHref(studio.id, 'approvals')}>Open approvals</Link>
-        </div>
-        <p className="platform-muted">
-          Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel is
-          connected: neither is part of this release yet.
-        </p>
-      </section>
-      <div className="platform-section">
-        <h2>Your brands</h2>
-        <Link href={studioHref(studio.id, 'brands')}>All brands and search</Link>
-      </div>
-      {brands.loading ? <PlatformLoading label="Finding your brands…" /> : null}
-      {brands.data?.items.length === 0 ? (
-        <div className="platform-card platform-pad platform-stack">
-          <h3>Make room for your first brand.</h3>
-          <p>
-            {canWrite
-              ? 'Start with a name. Add the website and details as you go.'
-              : 'A workspace owner needs to share a brand with this studio.'}
-          </p>
-        </div>
-      ) : null}
-      <div className="platform-grid platform-grid--three">
-        {brands.data?.items.slice(0, 6).map((brand) => {
-          const entry = reviews?.find((candidate) => candidate.brand.id === brand.id);
-          const status =
-            entry?.review?.approved_version !== null &&
-            entry?.review?.approved_version !== undefined
-              ? `Approved version ${entry.review.approved_version.version}`
-              : entry?.review?.record
-                ? 'Draft in review'
-                : undefined;
-          return <BrandCard key={brand.id} brand={brand} studioId={studio.id} status={status} />;
-        })}
-      </div>
-      {canWrite ? (
-        <div className="platform-section">
-          <NewBrandForm studioId={studio.id} />
-        </div>
+      {lowerReady ? (
+        <>
+          <section
+            className="platform-card platform-pad platform-stack platform-overview-approvals"
+            aria-labelledby="approvals-now"
+          >
+            <div className="platform-row platform-between">
+              <h2 id="approvals-now">
+                {brands.loading || reviewing
+                  ? 'Checking approvals…'
+                  : brands.error !== undefined || reviews === undefined
+                    ? 'Approvals could not be read'
+                    : unread > 0
+                      ? `${approvable} ready to approve, ${unread} ${unread === 1 ? 'brand' : 'brands'} not read`
+                      : partial
+                        ? `${approvable} ready to approve in ${readScope(inspected)}`
+                        : `${approvable} brand ${approvable === 1 ? 'version' : 'versions'} ready to approve`}
+              </h2>
+              <Link href={studioHref(studio.id, 'approvals')}>Open approvals</Link>
+            </div>
+            <p className="platform-muted">
+              Approving pins the exact draft campaigns will use. Nothing is scheduled and no channel
+              is connected: neither is part of this release yet.
+            </p>
+          </section>
+          <div className="platform-section">
+            <h2>Your brands</h2>
+            <Link href={studioHref(studio.id, 'brands')}>All brands and search</Link>
+          </div>
+          {brands.loading ? <PlatformLoading label="Finding your brands…" /> : null}
+          {brands.data?.items.length === 0 ? (
+            <div className="platform-card platform-pad platform-stack">
+              <h3>Make room for your first brand.</h3>
+              <p>
+                {canWrite
+                  ? 'Start with a name. Add the website and details as you go.'
+                  : 'A workspace owner needs to share a brand with this studio.'}
+              </p>
+            </div>
+          ) : null}
+          <div className="platform-grid platform-grid--three">
+            {brands.data?.items.slice(0, 6).map((brand) => {
+              const entry = reviews?.find((candidate) => candidate.brand.id === brand.id);
+              const status =
+                entry?.review?.approved_version !== null &&
+                entry?.review?.approved_version !== undefined
+                  ? `Approved version ${entry.review.approved_version.version}`
+                  : entry?.review?.record
+                    ? 'Draft in review'
+                    : undefined;
+              return (
+                <BrandCard key={brand.id} brand={brand} studioId={studio.id} status={status} />
+              );
+            })}
+          </div>
+          {canWrite ? (
+            <div className="platform-section">
+              <NewBrandForm studioId={studio.id} />
+            </div>
+          ) : null}
+        </>
       ) : null}
     </>
   );
