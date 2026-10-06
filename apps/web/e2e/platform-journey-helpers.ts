@@ -200,11 +200,35 @@ export function holdBrandPathGets(page: Page, brandId: string, leaf: string) {
   };
 }
 
+/** Open a studio rail destination, expanding the collapsed mobile menu first. */
+export async function openStudioLink(page: Page, label: string) {
+  const link =
+    label === 'Switch studio'
+      ? page.getByRole('link', { name: label, exact: true })
+      : page
+          .getByRole('navigation', { name: 'Studio navigation' })
+          .getByRole('link', { name: label, exact: true });
+  const menu = page.getByRole('button', { name: 'Menu', exact: true });
+  if ((await menu.isVisible()) && !(await link.isVisible())) await menu.click();
+  await link.click();
+}
+
+/** Use the compact section control below 768px and the tab list from 768px up. */
+export async function openBrandSection(page: Page, label: string) {
+  const section = page.getByRole('combobox', { name: 'Brand section' });
+  const link = page
+    .getByRole('navigation', { name: 'Brand navigation' })
+    .getByRole('link', { name: label, exact: true });
+  await expect(section.or(link)).toBeVisible();
+  if (await section.isVisible()) {
+    await section.selectOption({ label });
+    return;
+  }
+  await link.click();
+}
+
 /** Open a brand card from the studio overview or brands list and move to its draft. */
 export async function openBrandDraft(page: Page, name: string) {
   await page.getByRole('link', { name: `Open ${name}` }).click();
-  await page
-    .getByRole('navigation', { name: 'Brand navigation' })
-    .getByRole('link', { name: 'Brand draft' })
-    .click();
+  await openBrandSection(page, 'Brand draft');
 }

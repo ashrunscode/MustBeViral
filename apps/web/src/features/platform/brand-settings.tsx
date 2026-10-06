@@ -6,6 +6,15 @@ import { platformMutationErrorMessage } from './platform-client';
 import { usePlatformQuery } from './use-platform-query';
 import { usePlatformMutation } from './platform-mutation';
 
+const ACCESS_ACTION_LABELS: Readonly<
+  Record<PlatformOutput<'list_workspace_access_grants'>['items'][number]['actions'][number], string>
+> = {
+  'brand:read': 'Read brand details',
+  'brand:write': 'Edit brand details',
+  'location:read': 'Read locations',
+  'location:write': 'Edit locations',
+};
+
 export function BrandSettings({
   studioId,
   brand,
@@ -210,11 +219,11 @@ function BrandAccessGrants({
               ))}
             </select>
           </label>
-          <label>
+          <label className="platform-check">
             <input type="checkbox" name="write" defaultChecked /> Editors may update this brand’s
             saved details
           </label>
-          <label>
+          <label className="platform-check">
             <input type="checkbox" name="locations" defaultChecked /> Include locations
           </label>
           <button type="submit" className="platform-primary">
@@ -242,7 +251,9 @@ function BrandAccessGrants({
           <article key={grant.id} className="platform-row platform-between">
             <div>
               <strong>{grant.brand_id ? 'This brand only' : 'All brands in the workspace'}</strong>
-              <p className="platform-muted">{grant.actions.join(', ')}</p>
+              <p className="platform-muted">
+                {grant.actions.map((action) => ACCESS_ACTION_LABELS[action]).join(', ')}
+              </p>
               <span className="platform-tag">{grant.status}</span>
             </div>
             {grant.status === 'active' && (

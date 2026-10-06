@@ -1818,3 +1818,180 @@ test('gives Retry lease a 44px hit area clear of its textarea', async ({ page })
   );
   expect(faults).toEqual([]);
 });
+
+test('keeps synthetic populated attention card padding and complete focus outline', async ({
+  page,
+}) => {
+  // Synthetic local fixture for CSS isolation. These lists are not a studio screen. They use the
+  // platform stylesheet this preview already loaded, beside the real-component role coverage.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/internal');
+  await expect(page.getByRole('main', { name: 'Operations', exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    host.dataset.testid = 'synthetic-populated-attention-fixture';
+    host.dataset.syntheticFixture = 'local-css-isolation';
+    host.innerHTML = `
+      <p>Synthetic local fixture for CSS isolation. Not studio content.</p>
+      <ol class="platform-attention platform-card platform-pad" data-attention-fixture="populated-card" role="list">
+        <li>
+          <div class="platform-attention__text">
+            <span class="platform-status platform-status--attention">Ready to approve</span>
+            <strong>Synthetic Brand</strong>
+            <span class="platform-muted">Draft version 4, first approval.</span>
+          </div>
+          <a class="platform-button platform-primary" href="#synthetic-populated-attention-approve">Review and approve Synthetic Brand</a>
+        </li>
+      </ol>
+      <section class="platform-card platform-pad platform-stack" data-attention-fixture="overview-card">
+        <ol class="platform-attention" data-attention-fixture="overview-list" role="list">
+          <li>
+            <div class="platform-attention__text">
+              <span class="platform-status platform-status--attention">Open question</span>
+              <strong>Synthetic Brand: 1 question needs an answer</strong>
+              <span class="platform-muted">Which price?</span>
+            </div>
+            <a class="platform-button" href="#synthetic-populated-attention-answer">Answer</a>
+          </li>
+        </ol>
+      </section>
+    `;
+    document.getElementById('platform-main')?.prepend(host);
+  });
+  const loaded = await page
+    .locator('[data-attention-fixture="populated-card"]')
+    .evaluate((element) => getComputedStyle(element).display);
+  expect(loaded, 'the loaded platform stylesheet sets attention lists to grid').toBe('grid');
+
+  for (const width of [768, 1280, 1920, 375]) {
+    await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
+    const card = page.locator('[data-attention-fixture="populated-card"]');
+    const overview = page.locator('[data-attention-fixture="overview-list"]');
+    const inset = width >= 768 ? '24px' : '20px';
+    for (const side of ['top', 'right', 'bottom', 'left'] as const) {
+      await expect(card, `populated card padding-${side} at ${String(width)}px`).toHaveCSS(
+        `padding-${side}`,
+        inset,
+      );
+    }
+    await expect(overview, `overview list keeps zero indent at ${String(width)}px`).toHaveCSS(
+      'padding-left',
+      '0px',
+    );
+    await expect(overview).toHaveCSS('padding-top', '0px');
+    await expect(overview).toHaveCSS('margin-top', '0px');
+    await expect(overview).toHaveCSS('margin-left', '0px');
+    await expect(overview).toHaveCSS('list-style-type', 'none');
+    await expect(overview.locator('.platform-status')).toHaveCSS('justify-self', 'start');
+
+    const cardControl = card.locator('.platform-button');
+    await cardControl.scrollIntoViewIfNeeded();
+    await cardControl.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(cardControl).toBeFocused();
+    await expectCompleteFocusOutline(cardControl);
+
+    const overviewControl = overview.locator('.platform-button');
+    await overviewControl.scrollIntoViewIfNeeded();
+    await overviewControl.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(overviewControl).toBeFocused();
+    await expectCompleteFocusOutline(overviewControl);
+  }
+});
+
+test('keeps synthetic CSS-isolation attention controls inside the viewport after Tab autoscroll', async ({
+  page,
+}) => {
+  // Synthetic local fixture for CSS isolation. The lists are not a studio screen. The stylesheet
+  // is the one this preview already loaded. Tab starts with the controls below the viewport.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/studio/lumen-skin/internal');
+  await expect(page.getByRole('main', { name: 'Operations', exact: true })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    host.dataset.testid = 'synthetic-attention-tab-autoscroll-fixture';
+    host.dataset.syntheticFixture = 'local-css-isolation';
+    host.innerHTML = `
+      <p>Synthetic local fixture for CSS isolation. Not studio content.</p>
+      <a href="#synthetic-attention-tab-autoscroll-before">Synthetic autoscroll before</a>
+      <div data-synthetic-spacer="below-viewport"></div>
+      <ol class="platform-attention" data-attention-fixture="tab-autoscroll-overview" role="list">
+        <li>
+          <div class="platform-attention__text">
+            <span class="platform-status platform-status--attention">Open question</span>
+            <strong>Synthetic Brand: 1 question needs an answer</strong>
+            <span class="platform-muted">Which price?</span>
+          </div>
+          <a class="platform-button" href="#synthetic-attention-tab-autoscroll-answer">Synthetic autoscroll answer</a>
+        </li>
+        <li>
+          <div class="platform-attention__text">
+            <span class="platform-status platform-status--attention">Needs a decision</span>
+            <strong>Synthetic Brand: a brand version is ready to approve</strong>
+            <span class="platform-muted">Nothing is approved for this brand yet.</span>
+          </div>
+          <a class="platform-button" href="#synthetic-attention-tab-autoscroll-approve">Synthetic autoscroll approve</a>
+        </li>
+      </ol>
+      <div data-synthetic-spacer="after" style="block-size: 160vh"></div>
+    `;
+    document.getElementById('platform-main')?.prepend(host);
+  });
+  const list = page.locator('[data-attention-fixture="tab-autoscroll-overview"]');
+  await expect(list).toHaveCSS('display', 'grid');
+  const before = page.getByRole('link', { name: 'Synthetic autoscroll before', exact: true });
+  const controls = [
+    page.getByRole('link', { name: 'Synthetic autoscroll answer', exact: true }),
+    page.getByRole('link', { name: 'Synthetic autoscroll approve', exact: true }),
+  ];
+
+  for (const viewport of [
+    { width: 375, height: 812, label: '375x812' },
+    { width: 640, height: 450, label: '640x450 equivalent 200%' },
+  ]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.evaluate(() => {
+      const spacer = document.querySelector<HTMLElement>(
+        '[data-synthetic-spacer="below-viewport"]',
+      );
+      const button = document.querySelector<HTMLElement>(
+        '[data-attention-fixture="tab-autoscroll-overview"] a.platform-button',
+      );
+      if (spacer === null || button === null) return;
+      spacer.style.blockSize = '0px';
+      const rect = button.getBoundingClientRect();
+      const targetTop = window.innerHeight - rect.height / 2;
+      spacer.style.blockSize = `${Math.max(targetTop - rect.top, 0)}px`;
+    });
+    const partial = await controls[0]!.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return { top: rect.top, bottom: rect.bottom, viewport: window.innerHeight };
+    });
+    expect(partial.top, `${viewport.label}: first control starts inside the viewport`).toBeLessThan(
+      partial.viewport,
+    );
+    expect(
+      partial.bottom,
+      `${viewport.label}: first control extends below the viewport`,
+    ).toBeGreaterThan(partial.viewport);
+    await expect(before, `${viewport.label}: prior anchor stays onscreen`).toBeInViewport();
+    await before.focus();
+    const stillPartial = await controls[0]!.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > window.innerHeight;
+    });
+    expect(
+      stillPartial,
+      `${viewport.label}: focusing the prior anchor keeps the first control partial`,
+    ).toBe(true);
+    await page.keyboard.press('Tab');
+    await expect(controls[0]!, viewport.label).toBeFocused();
+    await expectCompleteFocusOutline(controls[0]!);
+  }
+});

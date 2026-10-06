@@ -20,6 +20,7 @@ import {
   signIn,
   switchToBrand,
   openBrandDraft,
+  openBrandSection,
 } from './platform-journey-helpers';
 
 const connected =
@@ -403,7 +404,7 @@ test.describe('connected brand knowledge journeys', () => {
     await page.getByTestId('candidate-page_title').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('UnPile Wash And Fold Hours');
     await switchToBrand(page, 'WashBodega');
-    await page.getByRole('link', { name: 'Intelligence' }).click();
+    await openBrandSection(page, 'Intelligence');
     await page.getByTestId('candidate-page_title').click();
     await expect(page.getByTestId('candidate-value')).toHaveText('WashBodega Laundromat Hours');
     await expect(page.getByText('UNPILE_DOC_LARGE')).toHaveCount(0);
@@ -498,7 +499,7 @@ test.describe('connected brand knowledge journeys', () => {
       await expect(page.getByText('Loading brand findings')).toBeVisible();
       await held.waitForAuthorizedCapture();
       await switchToBrand(page, 'UnPile');
-      await page.getByRole('link', { name: 'Intelligence' }).click();
+      await openBrandSection(page, 'Intelligence');
       await expectSelectedCandidate(page, 'candidate-page_title', 'UnPile Wash And Fold Hours');
       await held.release();
       await expectSelectedCandidate(page, 'candidate-page_title', 'UnPile Wash And Fold Hours');
@@ -521,7 +522,7 @@ test.describe('connected brand knowledge journeys', () => {
       await signIn(editorPage, editor.email);
       await editorPage.getByRole('button', { name: 'Accept invitation' }).click();
       await openBrandDraft(editorPage, 'UnPile');
-      await editorPage.getByRole('link', { name: 'Intelligence' }).click();
+      await openBrandSection(editorPage, 'Intelligence');
       await expectSelectedCandidate(
         editorPage,
         'candidate-page_title',
