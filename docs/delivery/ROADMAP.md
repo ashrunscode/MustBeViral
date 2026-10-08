@@ -254,6 +254,25 @@ rights, review, consent, cross-brand and recovery requirements are not optional.
 needed by earlier automation retain existing containment until W11 commercial acceptance; a pilot
 does not establish new-price production charging readiness.
 
+### Operator-first pilot path (owner direction, October 7, 2026)
+
+The owner instructed "start the pilot on V2, all approved" after the independent blueprint audit
+and the reproduction of the recorded W0.3 complaints. The pilot completes V2 incrementally; it does
+not replace the accepted architecture. The owner's studio operates the product for two to five real
+local-business clients in review mode before self-service, automation or more channels.
+
+Pilot packets take bounded rows in this order: 5, 6, 7, 9 (approved logo, fonts and colors only),
+10, 11, 12, 13 (Facebook Page and Instagram only), then 18 (durable drafts, schedule, cancel,
+timezone and partial-success recovery only). Row 10 includes a local-service brief that does not
+require product packshots. Row 18 includes a durable campaign list and workflow navigation that
+keeps canvas and revision context from the Brief step. The pilot then runs in review mode with
+confirmed publication and available metrics. Rows 8, 14–17 and 19–23 follow the pilot. Row 24 and
+every W0–W12 unit remain owed; no row, acceptance criterion or release gate is removed or waived.
+
+Owner-only prerequisites stay outside agent authority: Meta Business Verification and App Review,
+the Google Cloud OAuth client and Picker key, the Supabase Google provider setting, real client
+photographs with usage rights, and any public posting.
+
 ### Packet preparation contract
 
 Before activation, instantiate the existing packet schema with the exact base/local branch, allowed

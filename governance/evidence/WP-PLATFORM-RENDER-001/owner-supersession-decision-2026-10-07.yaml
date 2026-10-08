@@ -1,0 +1,66 @@
+schema_version: 1
+action: supersede
+authorized_by: repository-owner
+authorization_source: explicit_user_instruction
+authorized_at: 2026-10-08T03:17:20Z
+authorization_statement: >-
+  Owner instruction in chat on 2026-10-07 (US Central): "start the pilot on V2, all approved". It
+  follows the owner's request the same evening to reproduce the recorded complaints and act on the
+  independent blueprint audit, whose correction plan defines the operator-first pilot on V2. It
+  also applies the standing owner instruction recorded in
+  governance/evidence/WP-PLATFORM-UI-001/owner-supersession-decision-2026-10-06.yaml: "When the
+  active packet cannot finish only because what remains waits on an input only I can supply
+  (footage and rights, a credential, a named reviewer, an owner-only gate), or needs work outside
+  its allowed paths that a later roadmap packet owns, Codex may supersede it under ADR-0008 into
+  the next implementable roadmap packet." Under the shared workstation policy the agent's vendor
+  does not change that authority.
+selection_statement: >-
+  The recorded completion.successor_packet_id of WP-PLATFORM-RENDER-001 is WP-PLATFORM-W3-002,
+  roadmap bounded execution row 5 (asset originals and rights). It is also the first packet of the
+  operator-first pilot path recorded in docs/delivery/ROADMAP.md on 2026-10-07. Source plan:
+  C:\Users\ernij\Documents\MustBeViral-Blueprint-Independent-Audit\audit-20261007-1848-claude-opus-5-5\CORRECTION-PLAN.md,
+  step 2.
+predecessor_packet_id: WP-PLATFORM-RENDER-001
+predecessor_spec_revision: 3
+successor_packet_id: WP-PLATFORM-W3-002
+successor_spec_revision: 1
+branch: main
+source_plan_sha256: a1af1593a9b3d950aaea897007d48bcc104f248d8007e5cfb9353ccadf922360
+reason: >-
+  WP-PLATFORM-RENDER-001 cannot finish because render-003-real-media, real-media and
+  architecture-decision wait on owner-supplied inputs (actual footage and rights, an approved font
+  and the literal current offer), primary-flows waits on the composer and content contract owned by
+  roadmap row 18, and release-smoke waits on the founder bundle and the migration pack. Asset
+  originals and rights (row 5) are implementable now and are the first pilot dependency, because
+  the pilot's real client photographs must be stored privately with verified hashes and rights
+  before any composition. This decision carries every unfinished row and marks none passed.
+carried_release_obligations:
+  - >-
+    real-media: render feasibility with an actual source image and exact logo/text, a real-footage
+    reel, captions, fonts, cover, audio rights, private transfer, cancellation and a cost receipt,
+    with predeclared and measured runtime thresholds and HEIC/HEIF real-fixture proof. Still waits
+    on owner-supplied footage, an approved font and the literal offer.
+  - >-
+    architecture-decision: the measured architecture decision required by ADR-0010, committed only
+    after real-media measurements exist.
+  - >-
+    primary-flows: brief, canvas, quote, run, composed review, receipt, billing, approvals,
+    composer, team and settings complete their primary task with idempotent resubmit and stale
+    revision recovery. Includes the composer and content contract (ROADMAP row 18), a durable review
+    reject or send-back with a reason, and the missing project-to-brand mapping command. The
+    2026-10-07 reproduction adds: no command lists a workspace's campaigns, plans or runs, and the
+    Brief workflow tab drops canvas and revision context.
+  - >-
+    release-smoke: the signed-in founder journey still needs a named vault bundle and confirmation
+    that the founder account exists; the migration pack still needs its owner sentence.
+  - >-
+    WP-PLATFORM-W3-001 render feasibility remains unaccepted, and the remaining bounded execution
+    rows 6 through 24 stay owed in the order recorded in docs/delivery/ROADMAP.md.
+  - 'WP-P3-009 observation-window: pending, continuous private observation remains unproved.'
+  - 'WP-P3-009 fresh-traffic-decision: pending, no owner approval of public traffic.'
+  - >-
+    Owner-only pilot prerequisites, not authorized by this decision: Meta Business Verification and
+    App Review for Facebook Page and Instagram publishing, a Google Cloud OAuth client and Picker
+    key for Drive selection and Google sign-in, the Supabase Google provider configuration, real
+    client photographs with usage rights, and any public posting.
+external_effects: none

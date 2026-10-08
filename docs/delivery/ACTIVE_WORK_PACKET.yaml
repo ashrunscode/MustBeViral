@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-RENDER-001
-spec_revision: 2
+spec_revision: 3
 title: Render feasibility, mechanics only until real media exists
 phase: P4
 status: in_progress
@@ -68,6 +68,9 @@ deliverables:
     receipt, and the measured architecture decision.'
   - Carry primary-flows and release-smoke from WP-PLATFORM-UI-001, and the four carried obligations
     from the 2026-10-01 W3 supersession, without marking any of them passed.
+  - Specification revision 3 authorizes supersession into WP-PLATFORM-W3-002 under the owner's
+    2026-10-07 instruction to start the operator-first pilot on V2. It carries every unproven row
+    and does not mark unfinished acceptance passed.
 public_interfaces:
   - No new public route, provider call, queue, charge, or live customer renderer. Sharp mechanics
     stay inside packages/artifacts and its tests.
