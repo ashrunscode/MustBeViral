@@ -7,14 +7,12 @@ launch_customer: brand_operators_and_multi_brand_studios
 project_state: active
 phase:
   id: P4
-  title: Render feasibility, mechanics only until real media exists
-  state: in_progress
+  title: Asset originals and rights, first operator-first pilot packet
+  state: planned
 release_target: full-platform
-active_work_packet: WP-PLATFORM-RENDER-001
-next_action: Production serves c5c7e42 (dpl_FSqZ9Cb6tFkAjcfZoPZyQKbScTTS) and staging serves
-  it too (dpl_C64AqgnPQgLEYRqTGGPwcUHeUxsT). The English homepage plays the typed S0 master.
-  Spanish keeps the wordless poster. Real-media fidelity, private transfer, cancellation, and
-  the cost receipt still wait for owner inputs.
+active_work_packet: WP-PLATFORM-W3-002
+next_action: Map the existing artifact and pending-upload schema, then add the asset original and
+  rights migration with forced RLS and pgTAP denial tests before any handler or UI work.
 decisions_pending: []
 blockers: []
 legacy:
@@ -56,7 +54,7 @@ environments:
     generation: viralgraph-cleanroom-v2
     state: not_created
 last_transition:
-  at: 2026-10-06T14:01:03.214Z
+  at: 2026-10-08T10:15:46.070Z
   by: pnpm agent:supersede
   evidence:
-    - governance/evidence/WP-PLATFORM-UI-001/owner-supersession-decision-2026-10-06.yaml
+    - governance/evidence/WP-PLATFORM-RENDER-001/owner-supersession-decision-2026-10-07.yaml

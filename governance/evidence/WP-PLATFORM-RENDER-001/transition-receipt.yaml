@@ -1,0 +1,41 @@
+schema_version: 2
+status: superseded
+packet_id: WP-PLATFORM-RENDER-001
+spec_revision: 3
+phase: P4
+branch: main
+superseded_at: 2026-10-08T10:15:46.070Z
+successor_packet_id: WP-PLATFORM-W3-002
+successor_spec_revision: 1
+successor_packet_path: governance/evidence/WP-PLATFORM-RENDER-001/successor-WP-PLATFORM-W3-002.yaml
+successor_packet_sha256: fcc27ffd159716a0ddedd2c8d7fae02a2ebf9cd7a4ddbd26f24be54a0224cff7
+predecessor_head: 5c9a7a98379f825d7d94690a0f9794293e5246f0
+closed_packet_path: governance/evidence/WP-PLATFORM-RENDER-001/superseded-work-packet.yaml
+closed_packet_sha256: 5cd0a9ba19e856389e99777c17c89fe6597cebfebd77e253f85e38bebec0bcb6
+decision_path: governance/evidence/WP-PLATFORM-RENDER-001/owner-supersession-decision-2026-10-07.yaml
+evidence_entries:
+  - path: governance/evidence/WP-PLATFORM-RENDER-001/local-timing-2026-10-06.md
+    sha256: 7dd1fd4d5dc390db5e6fad35eda38eb3c075a1602e7ad155469e60f794a5de59
+    git_blob_oid: 6fdaf6fabe711629e166039097ce2da7966a69df
+  - path: governance/evidence/WP-PLATFORM-RENDER-001/mechanics-only-2026-10-06.md
+    sha256: 81fd977f2dc5f6b73128c04897494031a0c298eb1f1fd1b8cd81fa5670cb7571
+    git_blob_oid: b5532d064711e850845cbe4adb097460153ee589
+  - path: governance/evidence/WP-PLATFORM-RENDER-001/owner-homepage-master-2026-10-06.md
+    sha256: 2e000effbcd4e865a84938a7787042465fa0a6657909e7f8f6492bc2b20c9b0f
+    git_blob_oid: 90929a9f31e948a1075eb42e2c2c367db95ac8b6
+  - path: governance/evidence/WP-PLATFORM-RENDER-001/owner-supersession-decision-2026-10-07.yaml
+    sha256: 020802cb885bb2dcd611ebe18b2dac20b151e7a1c2bb98743c8cc048efa3e221
+    git_blob_oid: 213c503fb1cbdba065a65f336073aab7fbcbf344
+  - path: governance/evidence/WP-PLATFORM-RENDER-001/render-preflight-inventory-2026-10-06.md
+    sha256: 1f1184085ce33b01e06dbe5221da5eff60ccdb49599276957718858532a5fe76
+    git_blob_oid: f6c8e4319f1f35e8d56d36901a95931df96a1f0b
+  - path: governance/evidence/WP-PLATFORM-RENDER-001/successor-WP-PLATFORM-W3-002.yaml
+    sha256: 072f4a51c7853938016973ff6d32e80064278573241345b26320040687907a2e
+    git_blob_oid: c05f985a81434f3a833af9a18bc7eb8a709cd33d
+unfinished_step_ids:
+  - render-003-real-media
+unproved_acceptance_ids:
+  - primary-flows
+  - real-media
+  - architecture-decision
+  - release-smoke
