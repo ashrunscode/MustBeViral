@@ -4,7 +4,7 @@ doc_id: generated-traceability
 
 # DO NOT EDIT — Generated traceability reference
 
-Current packet: `WP-PLATFORM-W3-002` (ready). Current step: `w3-002-contract`.
+Current packet: `WP-PLATFORM-W3-002` (in_progress). Current step: `w3-002-contract`.
 
 | Authority topic | Document | Path |
 |---|---|---|
