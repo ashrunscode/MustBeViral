@@ -12,9 +12,9 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 | Engine | ViralGraph |
 | Generation | `viralgraph-cleanroom-v2` |
 | Launch customer | `brand_operators_and_multi_brand_studios` |
-| Phase | P4 — Render feasibility, mechanics only until real media exists (in_progress) |
-| Active packet | `WP-PLATFORM-RENDER-001` |
-| Current step | `render-003-real-media` |
+| Phase | P4 — Asset originals and rights, first operator-first pilot packet (planned) |
+| Active packet | `WP-PLATFORM-W3-002` |
+| Current step | `w3-002-contract` |
 | Release target | `full-platform` |
 | Pending decisions | None |
 | Blockers | None |
@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Production serves c5c7e42 (dpl_FSqZ9Cb6tFkAjcfZoPZyQKbScTTS) and staging serves it too (dpl_C64AqgnPQgLEYRqTGGPwcUHeUxsT). The English homepage plays the typed S0 master. Spanish keeps the wordless poster. Real-media fidelity, private transfer, cancellation, and the cost receipt still wait for owner inputs.
+Map the existing artifact and pending-upload schema, then add the asset original and rights migration with forced RLS and pgTAP denial tests before any handler or UI work.

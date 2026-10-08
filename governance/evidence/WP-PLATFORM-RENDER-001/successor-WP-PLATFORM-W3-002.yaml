@@ -6,10 +6,11 @@ phase: P4
 status: ready
 priority: high
 branch: main
-objective: Deliver roadmap row 5 (W3.1) as the first packet of the owner's operator-first pilot on
-  V2 (2026-10-07). Each brand gets reusable private originals for photos, logos, documents and
-  video, with verified hash, MIME, size and dimensions, recovery from an interrupted upload, rights
-  and recognizable-person release records with expiry and revocation, and denial across clients. No
+objective: >-
+  Deliver roadmap row 5 (W3.1) as the first packet of the owner's operator-first pilot on V2
+  (2026-10-07). Each brand gets reusable private originals for photos, logos, documents and video,
+  with verified hash, MIME, size and dimensions, recovery from an interrupted upload, rights and
+  recognizable-person release records with expiry and revocation, and denial across clients. No
   Drive connection, publishing, generation, queue or charge is enabled. A new Assets surface ships
   only after its named desktop and mobile frames are approved under the visual approval gate.
 authority_refs:
@@ -68,29 +69,36 @@ scope:
     - adr-0009-standing-release-authority
     - adr-0010-drive-autopilot-saas
 deliverables:
-  - Asset original and rights data model as additive migrations. Ownership uses composite workspace
+  - >-
+    Asset original and rights data model as additive migrations. Ownership uses composite workspace
     and brand keys, RLS is forced, original metadata (SHA-256, MIME, byte length, dimensions or
     duration) is immutable, and a rights grant records allowed uses, recognizable-person release,
     expiry and revocation. An asset is usable only when its bytes are verified and its rights are
     current. Existing artifact and pending-upload tables are reused where they fit; the database
     schema documentation is regenerated.
-  - 'Shared command and query contracts with Core handlers: begin an upload intent (brand, purpose,
+  - >-
+    Shared command and query contracts with Core handlers: begin an upload intent (brand, purpose,
     MIME, byte length, SHA-256, rights reference), expiring private upload access, verify the
     uploaded bytes, list and get usable assets, and create or revoke a rights grant. Generated
-    OpenAPI, MCP and CLI projections stay thin.'
-  - Interrupted-upload recovery. An expired or interrupted upload can be resumed or restarted
-    without a duplicate asset. Incomplete or mismatched bytes never become usable, and repeated
-    verify calls are idempotent.
-  - "Denial suite (pgTAP and handler tests): forged workspace, brand and asset IDs; revoked
+    OpenAPI, MCP and CLI projections stay thin.
+  - >-
+    Interrupted-upload recovery. An expired or interrupted upload can be resumed or restarted without
+    a duplicate asset. Incomplete or mismatched bytes never become usable, and repeated verify calls
+    are idempotent.
+  - >-
+    Denial suite (pgTAP and handler tests): forged workspace, brand and asset IDs; revoked
     membership or studio grant; another client's assets; download signing only after current
-    membership and rights checks; expired or revoked rights blocking new use."
-  - Named desktop and mobile frames in .superdesign/hifi for the brand Assets surface (upload,
+    membership and rights checks; expired or revoked rights blocking new use.
+  - >-
+    Named desktop and mobile frames in .superdesign/hifi for the brand Assets surface (upload,
     rights questions, readiness, interrupted and failed states), submitted for owner approval.
     Production Assets UI follows only after that approval is recorded.
-  - Carry every unproven RENDER-001 row and the carried release obligations without marking any of
+  - >-
+    Carry every unproven RENDER-001 row and the carried release obligations without marking any of
     them passed.
 public_interfaces:
-  - New authenticated Core commands and queries for asset upload intents, verification, listing,
+  - >-
+    New authenticated Core commands and queries for asset upload intents, verification, listing,
     retrieval and rights grants, with generated contracts. No public bucket, Drive connection,
     provider call, queue, publication, charge or new cloud resource. No Worker vars, bindings,
     routes, cron, queue consumer or workers_dev change.
@@ -113,27 +121,27 @@ steps:
 acceptance:
   automated:
     - id: originals-verified
-      criterion:
-        An upload intent followed by the bytes and a verify call records an immutable SHA-256,
-        MIME, byte length and dimensions or duration. Mismatched hash, MIME or length, and
-        incomplete bytes, never become usable. Repeated verification is idempotent.
+      criterion: >-
+        An upload intent followed by the bytes and a verify call records an immutable SHA-256, MIME,
+        byte length and dimensions or duration. Mismatched hash, MIME or length, and incomplete
+        bytes, never become usable. Repeated verification is idempotent.
       status: pending
       evidence: []
     - id: interrupted-upload
-      criterion:
-        An interrupted or expired upload resumes or restarts without creating a duplicate asset.
-        A closed browser does not lose the saved intent. Tests fail if either defect returns.
+      criterion: >-
+        An interrupted or expired upload resumes or restarts without creating a duplicate asset. A
+        closed browser does not lose the saved intent. Tests fail if either defect returns.
       status: pending
       evidence: []
     - id: rights-enforced
-      criterion:
+      criterion: >-
         Every usable asset references a rights grant. Expired or revoked rights make the asset
         unusable for new work while preserving history. A recognizable-person release is recorded
         separately from the photograph's usage rights.
       status: pending
       evidence: []
     - id: cross-tenant-denial
-      criterion:
+      criterion: >-
         Forged workspace, brand and asset IDs, revoked membership and a revoked studio grant are
         denied for list, get, verify, rights changes and download signing, proven by pgTAP and Core
         handler tests across two clients served by one studio.
@@ -141,17 +149,17 @@ acceptance:
       evidence: []
   manual:
     - id: frames-approved
-      criterion:
-        The owner approves named desktop and mobile frames for the brand Assets surface before
-        its production components ship, as the visual approval gate requires.
+      criterion: >-
+        The owner approves named desktop and mobile frames for the brand Assets surface before its
+        production components ship, as the visual approval gate requires.
       status: pending
       evidence: []
     - id: release-smoke
-      criterion:
+      criterion: >-
         Staging serves the merge commit with the additive migration applied through the guarded
         release, every public route and one signed-in asset upload smoked, then production serves
-        the same commit; or the single hard stop that prevented it is recorded with the one sentence
-        that clears it and nothing was crossed.
+        the same commit; or the single hard stop that prevented it is recorded with the one
+        sentence that clears it and nothing was crossed.
       status: pending
       evidence: []
 quality_gates:
@@ -172,18 +180,20 @@ quality_gates:
     status: pending
     evidence: []
 rollback:
-  strategy: Revert application changes through a reviewed merge commit. Migrations are additive and
-    are not reverted by deleting data; a forward fix restores behavior. No migration, data, branch,
-    backup, rollback material or other session's work is deleted. No provider, route, secret,
-    environment value or Worker setting changes.
+  strategy: >-
+    Revert application changes through a reviewed merge commit. Migrations are additive and are not
+    reverted by deleting data; a forward fix restores behavior. No migration, data, branch, backup,
+    rollback material or other session's work is deleted. No provider, route, secret, environment
+    value or Worker setting changes.
   remote_actions_required: false
 external_effects:
   remote_mutation: none
   destructive_remote_actions: false
 handoff:
   current_step: w3-002-contract
-  next_action: Map the existing artifact and pending-upload schema, then add the asset original and
-    rights migration with forced RLS and pgTAP denial tests before any handler or UI work.
+  next_action: >-
+    Map the existing artifact and pending-upload schema, then add the asset original and rights
+    migration with forced RLS and pgTAP denial tests before any handler or UI work.
   blockers: []
   changed_paths: []
   last_green_checks: []
