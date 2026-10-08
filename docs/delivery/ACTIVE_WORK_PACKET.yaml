@@ -1,6 +1,6 @@
 schema_version: 1
 id: WP-PLATFORM-W3-002
-spec_revision: 1
+spec_revision: 2
 title: Asset originals and rights, first operator-first pilot packet
 phase: P4
 status: ready
@@ -27,10 +27,16 @@ authority_refs:
   - adr-0008-packet-supersession
   - adr-0009-standing-release-authority
   - adr-0010-drive-autopilot-saas
+  - deploy-rollback-incidents
+  - local-env-secrets
 required_skills:
   - build-mustbeviral
   - git-release-quality
   - supabase-postgres-best-practices
+  - api-webhook-contracts
+  - frontend-design
+  - web-design-guidelines
+  - design-qa-loop
 depends_on:
   - WP-PLATFORM-RENDER-001
 scope:
@@ -72,8 +78,8 @@ deliverables:
     and brand keys, RLS is forced, original metadata (SHA-256, MIME, byte length, dimensions or
     duration) is immutable, and a rights grant records allowed uses, recognizable-person release,
     expiry and revocation. An asset is usable only when its bytes are verified and its rights are
-    current. Existing artifact and pending-upload tables are reused where they fit; the database
-    schema documentation is regenerated.
+    current. As DATA_AUTH_AND_TENANCY requires, extend the existing artifact store and do not
+    create a second media library; the database schema documentation is regenerated.
   - 'Shared command and query contracts with Core handlers: begin an upload intent (brand, purpose,
     MIME, byte length, SHA-256, rights reference), expiring private upload access, verify the
     uploaded bytes, list and get usable assets, and create or revoke a rights grant. Generated
@@ -89,6 +95,11 @@ deliverables:
     Production Assets UI follows only after that approval is recorded.
   - Carry every unproven RENDER-001 row and the carried release obligations without marking any of
     them passed.
+  - Specification revision 2 applies the independent review of pull request 100. Before
+    w3-002-release, a separate authority-only amendment sets remote_mutation to authorized for the
+    guarded staging release of the merged additive migration and existing targets, and names the
+    synthetic smoke identity and fixture. A production migration still waits for the owner
+    sentence that ADR-0009 requires.
 public_interfaces:
   - New authenticated Core commands and queries for asset upload intents, verification, listing,
     retrieval and rights grants, with generated contracts. No public bucket, Drive connection,
