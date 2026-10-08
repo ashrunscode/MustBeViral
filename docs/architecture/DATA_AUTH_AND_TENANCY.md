@@ -267,9 +267,14 @@ one-time revocation. Both force RLS through `platform_can`, deny direct client w
 deletion. User operations are `platform_asset_command` (`create_asset_rights`, `revoke_asset_rights`,
 `begin_asset_upload`, `reassign_asset_rights`) and `platform_asset_query` (`get_brand_asset`,
 `list_brand_assets`, `list_asset_rights`). The same bytes in one brand resolve to one asset, so a
-restarted upload replays its intent. `finalize_brand_asset_upload` is a service_role machine RPC that
-rechecks the persisted initiating actor with `platform_can_for` before marking measured bytes
-available. An asset is usable only with verified bytes, current rights and an active brand.
+restarted upload replays its current intent; the same bytes under different rights or purpose fail
+with `ASSET_EXISTS`, and rights change only through `reassign_asset_rights`. `asset_metadata` holds
+the current rights; the artifact attestation records only the initial rights.
+`finalize_brand_asset_upload` is a service_role machine RPC. Core names the authenticated user who
+uploaded the bytes and reports the measured hash, length, sniffed MIME and dimensions or duration;
+the function takes the portfolio lock order, rechecks that actor's current brand write authority
+with `platform_can_for`, and refuses any mismatch. An asset is usable only with verified bytes,
+current rights and an active brand.
 
 - Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
 - Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.

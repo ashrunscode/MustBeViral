@@ -22,4 +22,4 @@ DO NOT EDIT — generated from `PROJECT_STATE.yaml` and the active packet.
 
 ## One next action
 
-Add Core upload intent, byte streaming and verification, listing and rights handlers over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with interrupted-upload and denial tests and generated contracts.
+Regenerate packages/db database types, then add Core upload intent, byte streaming and verification with sniffed MIME, listing and rights handlers over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with interrupted-upload and denial tests and generated contracts.

@@ -213,7 +213,25 @@ begin
         raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
       end if;
     elsif k = 'expires_at' then
-      if jsonb_typeof(v) <> 'string' or (p_input->>k) !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+(Z|[+-][0-9]{2}:[0-9]{2})$' then
+      if jsonb_typeof(v) <> 'string' or (p_input->>k) !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{1,6})?)?(Z|[+-][0-9]{2}:[0-9]{2})$' then
+        raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
+      end if;
+      begin
+        perform (p_input->>k)::timestamptz;
+      exception when others then
+        raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
+      end;
+    elsif k in ('filename', 'note', 'reason', 'release_reference') then
+      -- Filenames reach Content-Disposition later: no control characters or bidi overrides.
+      if jsonb_typeof(v) <> 'string'
+        or (k <> 'note' and (p_input->>k) ~ '[[:cntrl:]]')
+        or (k = 'note' and translate(p_input->>k, E'\n\t', '') ~ '[[:cntrl:]]')
+        or (p_input->>k) ~ ('[' || chr(8234) || '-' || chr(8238) || chr(8294) || '-' || chr(8297) || ']')
+        or (k = 'filename' and char_length(p_input->>k) not between 1 and 200) then
+        raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
+      end if;
+    elsif k = 'purpose' then
+      if jsonb_typeof(v) <> 'string' or (p_input->>k) not in ('photo', 'logo', 'document', 'video') then
         raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
       end if;
     elsif k = 'content_sha256' then
@@ -288,7 +306,14 @@ begin
       and idempotency_key = p_idempotency_key;
   if found then
     if replay.request_hash <> payload_hash then raise exception using errcode = 'P0001', message = 'IDEMPOTENCY_CONFLICT'; end if;
-    return replay.response_payload;
+    if p_operation <> 'begin_asset_upload' then return replay.response_payload; end if;
+    -- An upload intent replays its current state so a verified original never asks for bytes again.
+    select * into meta from public.asset_metadata
+      where workspace_id = ws and brand_id = br and id = (replay.response_payload->'record'->>'id')::uuid;
+    select * into art from public.artifacts where workspace_id = ws and id = meta.artifact_id;
+    if meta.id is null or art.id is null then raise exception using errcode = 'P0002', message = 'NOT_FOUND'; end if;
+    return jsonb_build_object('record', app_private.brand_asset_json(meta),
+      'object_key', art.object_key, 'upload_required', art.status = 'pending', 'replayed', true);
   end if;
 
   case p_operation
@@ -326,9 +351,7 @@ begin
       entity := rights.id;
       result := jsonb_build_object('record', app_private.asset_rights_json(rights));
     when 'begin_asset_upload' then
-      if (p_input->>'purpose') not in ('photo', 'logo', 'document', 'video')
-        or char_length(p_input->>'filename') not between 1 and 200
-        or not app_private.brand_original_media_allowed(p_input->>'purpose', p_input->>'mime_type', (p_input->>'byte_size')::bigint) then
+      if not app_private.brand_original_media_allowed(p_input->>'purpose', p_input->>'mime_type', (p_input->>'byte_size')::bigint) then
         raise exception using errcode = '22023', message = 'MEDIA_UNSUPPORTED';
       end if;
       select * into rights from public.asset_rights
@@ -344,6 +367,11 @@ begin
         if art.mime_type <> p_input->>'mime_type' or art.byte_size <> (p_input->>'byte_size')::bigint then
           raise exception using errcode = 'P0001', message = 'IDEMPOTENCY_CONFLICT';
         end if;
+        -- The same bytes keep one asset. Different rights or purpose are never applied silently;
+        -- rights change only through reassign_asset_rights.
+        if meta.rights_id <> rights.id or meta.purpose <> p_input->>'purpose' then
+          raise exception using errcode = 'P0001', message = 'ASSET_EXISTS', detail = meta.id::text;
+        end if;
         entity := meta.id;
         result := jsonb_build_object('record', app_private.brand_asset_json(meta),
           'object_key', art.object_key, 'upload_required', art.status = 'pending', 'replayed', true);
@@ -354,7 +382,7 @@ begin
           values (new_artifact, ws, null, 'brand_original', 'pending',
             'workspaces/' || ws::text || '/brands/' || br::text || '/originals/' || new_artifact::text,
             p_input->>'content_sha256', p_input->>'mime_type', (p_input->>'byte_size')::bigint,
-            jsonb_build_object('rights_id', rights.id, 'request_id', p_request_id))
+            jsonb_build_object('initial_rights_id', rights.id, 'request_id', p_request_id))
           returning * into art;
         insert into public.asset_metadata (workspace_id, brand_id, artifact_id, rights_id, purpose, filename,
           content_sha256, created_by)
@@ -458,31 +486,40 @@ begin
 end;
 $$;
 
--- Machine path: Core streamed the bytes to the pinned private key and measured them. It acts for the
--- persisted initiating actor and rechecks that actor's current write authority in this transaction.
+-- Machine path: Core streamed the bytes to the pinned private key and measured them. Core names the
+-- authenticated user who uploaded the bytes; that actor's current brand write authority is
+-- rechecked here under the portfolio lock order before the original can become usable.
 create function public.finalize_brand_asset_upload(
   p_artifact_id uuid,
   p_content_sha256 text,
   p_byte_size bigint,
+  p_mime_type text,
   p_actor_id uuid,
   p_width_px integer default null,
   p_height_px integer default null,
   p_duration_ms integer default null
 )
 returns jsonb language plpgsql security definer set search_path = pg_catalog as $$
-declare art public.artifacts%rowtype; meta public.asset_metadata%rowtype;
+declare art public.artifacts%rowtype; meta public.asset_metadata%rowtype; ws uuid;
 begin
   if p_artifact_id is null or p_actor_id is null or p_content_sha256 is null
-    or p_content_sha256 !~ '^[0-9a-f]{64}$' or p_byte_size is null or p_byte_size < 1 then
+    or p_content_sha256 !~ '^[0-9a-f]{64}$' or p_byte_size is null or p_byte_size < 1
+    or p_mime_type is null or char_length(p_mime_type) not between 1 and 160
+    or (p_width_px is null) <> (p_height_px is null)
+    or (p_width_px is not null and (p_width_px not between 1 and 20000 or p_height_px not between 1 and 20000))
+    or (p_duration_ms is not null and p_duration_ms not between 1 and 3600000) then
     raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
   end if;
-  select * into art from public.artifacts where id = p_artifact_id for update;
-  select * into meta from public.asset_metadata where artifact_id = p_artifact_id for update;
+  select workspace_id into ws from public.artifacts where id = p_artifact_id;
+  if ws is null then raise exception using errcode = 'P0002', message = 'NOT_FOUND'; end if;
+  perform app_private.lock_platform_workspace_for(p_actor_id, ws);
+  select * into art from public.artifacts where workspace_id = ws and id = p_artifact_id for update;
+  select * into meta from public.asset_metadata where workspace_id = ws and artifact_id = p_artifact_id for update;
   if art.id is null or meta.id is null or art.artifact_kind <> 'brand_original'
     or not app_private.platform_can_for(p_actor_id, meta.workspace_id, meta.brand_id, 'brand:write') then
     raise exception using errcode = 'P0002', message = 'NOT_FOUND';
   end if;
-  if art.content_hash <> p_content_sha256 or art.byte_size <> p_byte_size then
+  if art.content_hash <> p_content_sha256 or art.byte_size <> p_byte_size or art.mime_type <> p_mime_type then
     raise exception using errcode = 'P0001', message = 'BYTES_MISMATCH';
   end if;
   if art.status = 'available' then
@@ -490,10 +527,10 @@ begin
   end if;
   if art.status <> 'pending' then raise exception using errcode = 'P0001', message = 'CONFLICT'; end if;
   if (meta.purpose in ('photo', 'logo') and art.mime_type <> 'image/svg+xml'
-      and (p_width_px is null or p_height_px is null or p_duration_ms is not null))
+      and (p_width_px is null or p_duration_ms is not null))
     or (meta.purpose = 'logo' and art.mime_type = 'image/svg+xml' and p_duration_ms is not null)
-    or (meta.purpose = 'video' and (p_duration_ms is null or p_width_px is null or p_height_px is null))
-    or (meta.purpose = 'document' and (p_width_px is not null or p_height_px is not null or p_duration_ms is not null)) then
+    or (meta.purpose = 'video' and (p_duration_ms is null or p_width_px is null))
+    or (meta.purpose = 'document' and (p_width_px is not null or p_duration_ms is not null)) then
     raise exception using errcode = '22023', message = 'VALIDATION_FAILED';
   end if;
   update public.artifacts set status = 'available' where id = art.id;
@@ -510,18 +547,18 @@ $$;
 
 revoke all on function public.platform_asset_command(text, jsonb, text, text),
   public.platform_asset_query(text, jsonb),
-  public.finalize_brand_asset_upload(uuid, text, bigint, uuid, integer, integer, integer)
+  public.finalize_brand_asset_upload(uuid, text, bigint, text, uuid, integer, integer, integer)
   from public, anon, authenticated, service_role;
 grant execute on function public.platform_asset_command(text, jsonb, text, text),
   public.platform_asset_query(text, jsonb) to authenticated;
-grant execute on function public.finalize_brand_asset_upload(uuid, text, bigint, uuid, integer, integer, integer)
+grant execute on function public.finalize_brand_asset_upload(uuid, text, bigint, text, uuid, integer, integer, integer)
   to service_role;
 
 comment on function public.platform_asset_command(text, jsonb, text, text) is
   'User-scoped brand asset and rights commands: platform_can brand:write, idempotent, audited.';
 comment on function public.platform_asset_query(text, jsonb) is
   'User-scoped brand asset and rights reads through platform_can brand:read with scoped cursors.';
-comment on function public.finalize_brand_asset_upload(uuid, text, bigint, uuid, integer, integer, integer) is
+comment on function public.finalize_brand_asset_upload(uuid, text, bigint, text, uuid, integer, integer, integer) is
   'Machine-only verification of a pending brand original after Core wrote and measured the pinned bytes.';
 
 commit;

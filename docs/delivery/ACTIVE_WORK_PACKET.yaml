@@ -193,9 +193,11 @@ external_effects:
   destructive_remote_actions: false
 handoff:
   current_step: w3-002-handlers
-  next_action: Add Core upload intent, byte streaming and verification, listing and rights handlers
-    over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with
-    interrupted-upload and denial tests and generated contracts.
+  next_action:
+    Regenerate packages/db database types, then add Core upload intent, byte streaming and
+    verification with sniffed MIME, listing and rights handlers over platform_asset_command,
+    platform_asset_query and finalize_brand_asset_upload, with interrupted-upload and denial tests
+    and generated contracts.
   blockers: []
   changed_paths:
     - supabase/migrations/20261008010000_platform_brand_asset_originals.sql

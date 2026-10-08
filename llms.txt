@@ -7,7 +7,7 @@ launch_customer: brand_operators_and_multi_brand_studios
 phase: P4
 active_packet: WP-PLATFORM-W3-002
 current_step: w3-002-handlers
-next_action: Add Core upload intent, byte streaming and verification, listing and rights handlers over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with interrupted-upload and denial tests and generated contracts.
+next_action: Regenerate packages/db database types, then add Core upload intent, byte streaming and verification with sniffed MIME, listing and rights handlers over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with interrupted-upload and denial tests and generated contracts.
 agent_protocol: AGENTS.md
 current_state: PROJECT_STATE.yaml
 documentation_index: docs/INDEX.md
