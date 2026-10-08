@@ -268,10 +268,14 @@ require product packshots. Row 18 includes a durable campaign list and workflow 
 keeps canvas and revision context from the Brief step. The pilot then runs in review mode with
 confirmed publication and available metrics. Rows 8, 14–17 and 19–23 follow the pilot. Row 24 and
 every W0–W12 unit remain owed; no row, acceptance criterion or release gate is removed or waived.
+Row 4's measured runtime decision still precedes row 10 implementation, as ADR-0010 requires; pilot
+photographs with recorded rights may supply its static inputs.
 
-Owner-only prerequisites stay outside agent authority: Meta Business Verification and App Review,
-the Google Cloud OAuth client and Picker key, the Supabase Google provider setting, real client
-photographs with usage rights, and any public posting.
+Owner-only prerequisites stay outside agent authority, in addition to every action ADR-0009 leaves
+owner-gated: Meta Business Verification and App Review where hosted Treg or the direct fallback
+requires them, the Google Cloud OAuth client and Picker key for Drive, real client photographs with
+usage rights, and any public posting. Google sign-in is not owned by an accepted row yet and needs
+its own authority amendment before it enters a packet.
 
 ### Packet preparation contract
 
