@@ -108,10 +108,10 @@ public_interfaces:
 steps:
   - id: w3-002-contract
     title: Asset and rights contract, additive migration with forced RLS and pgTAP denial tests.
-    status: current
+    status: completed
   - id: w3-002-handlers
     title: Core upload intent, verification, listing and rights handlers with interrupted-upload recovery.
-    status: pending
+    status: current
   - id: w3-002-frames
     title: Named desktop and mobile Assets frames submitted for owner approval.
     status: pending
@@ -192,10 +192,17 @@ external_effects:
   remote_mutation: none
   destructive_remote_actions: false
 handoff:
-  current_step: w3-002-contract
-  next_action: Asset and rights contract, additive migration with forced RLS and pgTAP denial tests.
+  current_step: w3-002-handlers
+  next_action: Add Core upload intent, byte streaming and verification, listing and rights handlers
+    over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with
+    interrupted-upload and denial tests and generated contracts.
   blockers: []
-  changed_paths: []
+  changed_paths:
+    - supabase/migrations/20261008010000_platform_brand_asset_originals.sql
+    - supabase/tests/database/00054_platform_brand_asset_originals.test.sql
+    - docs/architecture/DATA_AUTH_AND_TENANCY.md
+    - docs/generated/DATABASE_SCHEMA.md
+    - governance/evidence/WP-PLATFORM-W3-002/contract-2026-10-08.md
   last_green_checks: []
 completion:
   successor_packet_id: WP-PLATFORM-W3-003

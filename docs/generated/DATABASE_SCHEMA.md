@@ -63,3 +63,5 @@ Sources: ordered raw SQL under `supabase/migrations`. Generated Supabase types b
 | `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_versions` |
 | `supabase/migrations/20260915010000_platform_knowledge_extraction.sql` | table `public.brand_version_pins` |
 | `supabase/migrations/20260929011000_platform_knowledge_lifecycle.sql` | table `public.brand_knowledge_reviews` |
+| `supabase/migrations/20261008010000_platform_brand_asset_originals.sql` | table `public.asset_rights` |
+| `supabase/migrations/20261008010000_platform_brand_asset_originals.sql` | table `public.asset_metadata` |

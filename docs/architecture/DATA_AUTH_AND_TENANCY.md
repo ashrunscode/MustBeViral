@@ -258,6 +258,19 @@ assets, approval events or provider jobs. Application rollback retains these add
 guards; it must retain the W2-002 actor-aware extraction caller. Catalog and lifecycle controls may
 be hidden during rollback, but old clients cannot bypass expiry, RLS or immutable history.
 
+W3.1 brand originals extend the artifact store. A `brand_original` artifact has no project and keeps
+its bytes, SHA-256, MIME, size and verification status on `artifacts`; the member artifact read
+policy excludes that kind, so the existing preview path cannot sign an original without a rights
+check. `asset_metadata` adds workspace/brand ownership, purpose, filename and measured dimensions or
+duration, and `asset_rights` records basis, permitted uses, recognizable-person release, expiry and
+one-time revocation. Both force RLS through `platform_can`, deny direct client writes and refuse
+deletion. User operations are `platform_asset_command` (`create_asset_rights`, `revoke_asset_rights`,
+`begin_asset_upload`, `reassign_asset_rights`) and `platform_asset_query` (`get_brand_asset`,
+`list_brand_assets`, `list_asset_rights`). The same bytes in one brand resolve to one asset, so a
+restarted upload replays its intent. `finalize_brand_asset_upload` is a service_role machine RPC that
+rechecks the persisted initiating actor with `platform_can_for` before marking measured bytes
+available. An asset is usable only with verified bytes, current rights and an active brand.
+
 - Inventory existing workspaces, projects, kits, artifacts, runs, and schedules before migration design. This planning task did not read customer records.
 - Create brand records and explicit project-to-brand mappings without guessing ambiguous ownership. Preserve original IDs and historical lineage.
 - Support old campaign links through authenticated resolution and redirects to the corresponding durable resource.

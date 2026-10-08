@@ -11,7 +11,9 @@ phase:
   state: in_progress
 release_target: full-platform
 active_work_packet: WP-PLATFORM-W3-002
-next_action: Asset and rights contract, additive migration with forced RLS and pgTAP denial tests.
+next_action: Add Core upload intent, byte streaming and verification, listing and rights handlers
+  over platform_asset_command, platform_asset_query and finalize_brand_asset_upload, with
+  interrupted-upload and denial tests and generated contracts.
 decisions_pending: []
 blockers: []
 legacy:
