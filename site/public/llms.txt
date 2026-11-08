@@ -1,0 +1,9 @@
+# Must Be Viral
+
+> An AI social autopilot in development for local businesses. A business adds its own photos and clips; Must Be Viral cuts them into short reels, plans the week, posts to the business's own accounts after the owner approves, and brings the numbers back. Made by Axiom & Alloy, Inc., Texas.
+
+Status on 2026-11-08: in development and not for sale. No price is set. The reel engine, the craft rules and critic, and folder intake are in use on the builders' own brands. The customer dashboard is being built. Posting, numbers back and a text assistant are planned.
+
+- [Home](https://mustbeviral.com/): what it is, where it stands, the house rules, the waitlist
+- [Privacy](https://mustbeviral.com/privacy/)
+- [Terms](https://mustbeviral.com/terms/)

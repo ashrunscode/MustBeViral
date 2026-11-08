@@ -1,0 +1,51 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mustbeviral-site",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-01",
+
+  // Never on workers.dev or preview URLs. The site answers only on its own domains.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  // Every request runs the Worker first, so it can add headers and redirect www.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mustbeviral-site",
+      "database_id": "93621a40-eb5b-4ec7-b831-a418c9de7cde",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Five sign-up attempts a minute per IP address. The address is not stored.
+  "ratelimits": [
+    {
+      "name": "WAITLIST_LIMIT",
+      "namespace_id": "20261108",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ],
+
+  // The bare domain is the site; www redirects to it (src/index.ts).
+  // next.mustbeviral.com stays as a noindex preview host.
+  "routes": [
+    { "pattern": "mustbeviral.com", "custom_domain": true },
+    { "pattern": "www.mustbeviral.com", "custom_domain": true },
+    { "pattern": "next.mustbeviral.com", "custom_domain": true }
+  ],
+
+  "vars": {
+    "CANONICAL_HOST": "mustbeviral.com"
+  },
+
+  "observability": { "enabled": true }
+}
