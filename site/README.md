@@ -45,23 +45,19 @@ Read the sign-ups:
 npx wrangler d1 execute mustbeviral-site --remote --command "SELECT created_at, email, business_type, business_name, city, utm_source, utm_campaign FROM waitlist ORDER BY created_at DESC"
 ```
 
-## Moving mustbeviral.com from Vercel to this Worker
+## mustbeviral.com moved from Vercel on 2026-11-08
 
-Zone `mustbeviral.com`. Before the move the apex and www were CNAMEs to Vercel, not proxied:
+The owner approved the preview on 2026-11-08. In one API call the two Vercel CNAMEs below were deleted and `mustbeviral.com` and `www.mustbeviral.com` were attached to this Worker as custom domains, so the gap was about a second. `routes` in `wrangler.jsonc` now lists all three hostnames. The Worker sends www to the bare domain with a 301.
 
-| Record id | Name | Content |
+Before the move the apex and www were CNAMEs to Vercel, not proxied:
+
+| Old record id | Name | Content |
 |---|---|---|
 | `d500a73252c01bf3ceccde5a14c721a6` | `mustbeviral.com` | `3a62e7409b89bdf6.vercel-dns-016.com` |
 | `901d9de42bcdff77492415252e8be9e4` | `www.mustbeviral.com` | `3a62e7409b89bdf6.vercel-dns-016.com` |
 
-Steps:
+Never touched: the Google MX on the apex, the SPF and site-verification TXT on the apex, `google._domainkey`, `_dmarc`, `resend._domainkey`, and the SES MX and SPF on `send`. After the move all eight were compared with the snapshot taken before it and were unchanged, and 1.1.1.1 and 8.8.8.8 returned the same MX, SPF, DKIM and DMARC answers.
 
-1. Delete those two CNAMEs. Nothing else in the zone is touched.
-2. Add `mustbeviral.com` and `www.mustbeviral.com` to `routes` as custom domains and deploy. The Worker sends www to the bare domain with a 301.
-3. Check the mail records match the snapshot below, then run `node scripts/check-site.mjs https://mustbeviral.com`.
+Rollback: take `mustbeviral.com` and `www.mustbeviral.com` out of `routes` and deploy, or detach them in the dashboard, then recreate the two CNAMEs above, not proxied. Vercel serves again as soon as DNS resolves.
 
-Leave alone: the Google MX on the apex, the SPF and site-verification TXT on the apex, `google._domainkey`, `_dmarc`, `resend._domainkey`, and the SES MX and SPF on `send`.
-
-Rollback: remove the two custom domains (`wrangler deploy` without them, or delete them in the dashboard), then recreate the two CNAMEs above, not proxied. Vercel serves again as soon as DNS resolves.
-
-The Vercel project stays until the new site has run cleanly on the bare domain for a while. Deleting it is the owner's call.
+The Vercel project still exists. It no longer receives traffic for this domain. Deleting it is the owner's call.

@@ -35,8 +35,11 @@
     }
   ],
 
-  // Preview first. mustbeviral.com and www are added only after the owner approves.
+  // The bare domain is the site; www redirects to it (src/index.ts).
+  // next.mustbeviral.com stays as a noindex preview host.
   "routes": [
+    { "pattern": "mustbeviral.com", "custom_domain": true },
+    { "pattern": "www.mustbeviral.com", "custom_domain": true },
     { "pattern": "next.mustbeviral.com", "custom_domain": true }
   ],
 
