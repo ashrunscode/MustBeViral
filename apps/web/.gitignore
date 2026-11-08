@@ -1,3 +1,0 @@
-.vercel
-.env*
-# Env files stay local and ignored, including production.
